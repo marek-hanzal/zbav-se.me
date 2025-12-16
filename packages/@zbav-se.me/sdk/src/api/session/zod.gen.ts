@@ -28,6 +28,68 @@ export const zCursor = z.object({
 export type zCursor = z.infer<typeof zCursor>;
 
 /**
+ * Location data
+ */
+export const zLocation = z.object({
+    id: z.string(),
+    query: z.string().register(z.globalRegistry, {
+        description: 'The query that was used to get the location'
+    }),
+    lang: z.string().register(z.globalRegistry, {
+        description: 'The language that was used to get the location'
+    }),
+    country: z.string().register(z.globalRegistry, {
+        description: 'The country that the location is in'
+    }),
+    code: z.string().register(z.globalRegistry, {
+        description: 'Country code'
+    }),
+    county: z.union([
+        z.string(),
+        z.null()
+    ]),
+    municipality: z.union([
+        z.string(),
+        z.null()
+    ]),
+    state: z.union([
+        z.string(),
+        z.null()
+    ]),
+    address: z.string().register(z.globalRegistry, {
+        description: 'Full address preview of a location'
+    }),
+    city: z.union([
+        z.string(),
+        z.null()
+    ]),
+    street: z.union([
+        z.string(),
+        z.null()
+    ]),
+    zip: z.union([
+        z.string(),
+        z.null()
+    ]),
+    confidence: z.number().register(z.globalRegistry, {
+        description: 'Confidence score of the location (based on query)'
+    }),
+    hash: z.string().register(z.globalRegistry, {
+        description: 'Used to uniquely identify this location entry'
+    }),
+    lat: z.number().register(z.globalRegistry, {
+        description: 'Latitude of the location'
+    }),
+    lon: z.number().register(z.globalRegistry, {
+        description: 'Longitude of the location'
+    })
+}).register(z.globalRegistry, {
+    description: 'Location data'
+});
+
+export type zLocation = z.infer<typeof zLocation>;
+
+/**
  * Category data
  */
 export const zCategory = z.object({
@@ -54,68 +116,6 @@ export const zCategory = z.object({
 });
 
 export type zCategory = z.infer<typeof zCategory>;
-
-/**
- * Location data
- */
-export const zLocation = z.object({
-    id: z.string(),
-    query: z.string().register(z.globalRegistry, {
-        description: 'The query that was used to get the location'
-    }),
-    lang: z.string().register(z.globalRegistry, {
-        description: 'The language that was used to get the location'
-    }),
-    country: z.string().register(z.globalRegistry, {
-        description: 'The country that the location is in'
-    }),
-    code: z.string().register(z.globalRegistry, {
-        description: 'Country code'
-    }),
-    county: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    municipality: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    state: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    address: z.string().register(z.globalRegistry, {
-        description: 'Full address preview of a location'
-    }),
-    city: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    street: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    zip: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    confidence: z.number().register(z.globalRegistry, {
-        description: 'Confidence score of the location (based on query)'
-    }),
-    hash: z.string().register(z.globalRegistry, {
-        description: 'Used to uniquely identify this location entry'
-    }),
-    lat: z.number().register(z.globalRegistry, {
-        description: 'Latitude of the location'
-    }),
-    lon: z.number().register(z.globalRegistry, {
-        description: 'Longitude of the location'
-    })
-}).register(z.globalRegistry, {
-    description: 'Location data'
-});
-
-export type zLocation = z.infer<typeof zLocation>;
 
 /**
  * Field for location sort
@@ -242,64 +242,6 @@ export const zLocationAutocomplete = z.object({
 export type zLocationAutocomplete = z.infer<typeof zLocationAutocomplete>;
 
 /**
- * Count data
- */
-export const zCount = z.object({
-    where: z.number().register(z.globalRegistry, {
-        description: 'Count of items based on provided where query.'
-    }),
-    filter: z.number().register(z.globalRegistry, {
-        description: 'Count of items based on provided filter query.'
-    }),
-    total: z.number().register(z.globalRegistry, {
-        description: 'Total count of items (no filters applied).'
-    })
-}).register(z.globalRegistry, {
-    description: 'Count data'
-});
-
-export type zCount = z.infer<typeof zCount>;
-
-/**
- * Collection of categories
- */
-export const zCategoryCollection = z.object({
-    data: z.array(zCategory),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of categories'
-});
-
-export type zCategoryCollection = z.infer<typeof zCategoryCollection>;
-
-/**
- * Field of the category sort
- */
-export const zCategorySortField = z.enum([
-    'group',
-    'category',
-    'sort'
-]).register(z.globalRegistry, {
-    description: 'Field of the category sort'
-});
-
-export type zCategorySortField = z.infer<typeof zCategorySortField>;
-
-/**
- * Sort object for category collection
- */
-export const zCategorySort = z.object({
-    field: zCategorySortField,
-    direction: zOrderEnum
-}).register(z.globalRegistry, {
-    description: 'Sort object for category collection'
-});
-
-export type zCategorySort = z.infer<typeof zCategorySort>;
-
-/**
  * App-based filters
  */
 export const zCategoryWhere = z.object({
@@ -362,6 +304,76 @@ export const zCategoryFilter = z.object({
 export type zCategoryFilter = z.infer<typeof zCategoryFilter>;
 
 /**
+ * Query object for category count
+ */
+export const zCategoryCountQuery = z.object({
+    filter: z.optional(zCategoryFilter),
+    where: z.optional(zCategoryWhere)
+}).register(z.globalRegistry, {
+    description: 'Query object for category count'
+});
+
+export type zCategoryCountQuery = z.infer<typeof zCategoryCountQuery>;
+
+/**
+ * Count data
+ */
+export const zCount = z.object({
+    where: z.number().register(z.globalRegistry, {
+        description: 'Count of items based on provided where query.'
+    }),
+    filter: z.number().register(z.globalRegistry, {
+        description: 'Count of items based on provided filter query.'
+    }),
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total count of items (no filters applied).'
+    })
+}).register(z.globalRegistry, {
+    description: 'Count data'
+});
+
+export type zCount = z.infer<typeof zCount>;
+
+/**
+ * Collection of categories
+ */
+export const zCategoryCollection = z.object({
+    data: z.array(zCategory),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of categories'
+});
+
+export type zCategoryCollection = z.infer<typeof zCategoryCollection>;
+
+/**
+ * Field of the category sort
+ */
+export const zCategorySortField = z.enum([
+    'group',
+    'category',
+    'sort'
+]).register(z.globalRegistry, {
+    description: 'Field of the category sort'
+});
+
+export type zCategorySortField = z.infer<typeof zCategorySortField>;
+
+/**
+ * Sort object for category collection
+ */
+export const zCategorySort = z.object({
+    field: zCategorySortField,
+    direction: zOrderEnum
+}).register(z.globalRegistry, {
+    description: 'Sort object for category collection'
+});
+
+export type zCategorySort = z.infer<typeof zCategorySort>;
+
+/**
  * Category query parameters
  */
 export const zCategoryQuery = z.object({
@@ -389,18 +401,18 @@ export const zMessageTypeEnum = z.enum([
 export type zMessageTypeEnum = z.infer<typeof zMessageTypeEnum>;
 
 /**
- * Message data
+ * Just a note sent from various reasons, usually when something is fucked up.
  */
-export const zMessage = z.object({
+export const zNotice = z.object({
     message: z.string().register(z.globalRegistry, {
         description: 'Message'
     }),
     type: zMessageTypeEnum
 }).register(z.globalRegistry, {
-    description: 'Message data'
+    description: 'Just a note sent from various reasons, usually when something is fucked up.'
 });
 
-export type zMessage = z.infer<typeof zMessage>;
+export type zNotice = z.infer<typeof zNotice>;
 
 export const zApiCategoryFetchData = z.object({
     body: z.optional(zCategoryQuery),
@@ -433,7 +445,7 @@ export const zApiCategoryCollectionResponse = zCategoryCollection;
 export type zapiCategoryCollectionResponse = z.infer<typeof zApiCategoryCollectionResponse>;
 
 export const zApiCategoryCountData = z.object({
-    body: z.optional(zCategoryQuery),
+    body: z.optional(zCategoryCountQuery),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });

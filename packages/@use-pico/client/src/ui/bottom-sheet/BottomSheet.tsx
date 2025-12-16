@@ -1,30 +1,42 @@
 import { tvc } from "@use-pico/cls";
 import { motion, useTransform } from "motion/react";
-import { type ComponentProps, type FC, type PropsWithChildren, useRef } from "react";
+import {
+	type ComponentProps,
+	type FC,
+	type PropsWithChildren,
+	type ReactNode,
+	useRef,
+} from "react";
 import { Sheet, type SheetRef } from "react-modal-sheet";
-import { ArrowLeftIcon } from "../../icon";
-import type { UiProps } from "../../type/UiProps";
-import { Badge } from "../badge";
-import { Button } from "../button";
+import { useMergeRefs } from "../../hook/useMergeRefs";
+import { Container } from "../container";
 import { Tx } from "../tx";
 
 export namespace BottomSheet {
+	export namespace Header {
+		export interface Props {
+			close(): void;
+		}
+
+		export type RenderFn = (props: Props) => {
+			title?: string;
+			right?: ReactNode;
+		};
+	}
+
 	export interface Props
-		extends UiProps<PropsWithChildren<Omit<ComponentProps<typeof Sheet>, "children">>> {
+		extends PropsWithChildren<Omit<ComponentProps<typeof Sheet>, "children">> {
 		containerProps?: ComponentProps<typeof Sheet.Container>;
 		contentProps?: ComponentProps<typeof Sheet.Content>;
 		withHeader?: boolean;
-		header?: {
-			close?: boolean;
-			title?: string;
-		};
+		header?: BottomSheet.Header.RenderFn;
 	}
 
 	export type PropsEx = Omit<Props, "isOpen" | "onClose">;
 }
 
 export const BottomSheet: FC<BottomSheet.Props> = ({
-	ui,
+	ref,
 	containerProps,
 	contentProps,
 	withHeader = false,
@@ -33,17 +45,24 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 	...props
 }) => {
 	const sheetRef = useRef<SheetRef>(null);
+	const mergedRef = useMergeRefs([
+		sheetRef,
+		ref,
+	]);
 	const fade = useTransform(() => {
 		const y = sheetRef.current?.y.get() ?? 0;
 		const height = sheetRef.current?.height ?? 1;
 
 		return 1 - Math.min(Math.max(y / height, 0), 1);
 	});
+	const $header = header?.({
+		close: props.onClose,
+	});
 
 	return (
 		<Sheet
-			ref={sheetRef}
-			data-ui={ui ?? "BottomSheet-root"}
+			ref={mergedRef}
+			data-ui={"BottomSheet[Sheet]"}
 			tweenConfig={{
 				ease: "easeOut",
 				duration: 0.15,
@@ -51,58 +70,41 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 			{...props}
 		>
 			<Sheet.Container
-				data-ui={"BottomSheet-Container"}
+				data-ui={"BottomSheet-[SheetContainer]"}
 				{...containerProps}
 			>
-				{withHeader ? <Sheet.Header data-ui={"BottomSheet-Header"} /> : null}
+				{withHeader ? <Sheet.Header data-ui={"BottomSheet-[SheetHeader]"} /> : null}
 
-				{header ? (
-					<Badge
-						round={"md"}
-						tone={"unset"}
-						theme={"unset"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"flex",
-										"flex-row",
-										"items-center",
-										"justify-start",
-										"gap-2",
-										"h-fit",
-										"p-2",
-										"border-none",
-										"w-full",
-									],
-								},
-							},
+				{$header ? (
+					<Container
+						data-ui={"BottomSheet-[Container.header-wrapper]"}
+						ui={{
+							tone: "neutral",
+							theme: "light",
+							layout: "horizontal-flex",
+							items: "center",
+							justify: "space-between",
+							gap: "default",
+							inner: "default",
+							shadow: true,
 						}}
 					>
-						{header.close ? (
-							<Button
-								iconEnabled={ArrowLeftIcon}
-								onClick={props.onClose}
-								iconProps={{
-									size: "sm",
-								}}
-								round={"full"}
-								tone={"secondary"}
-								theme={"light"}
-							/>
-						) : (
-							<div />
-						)}
-
-						{header?.title ? (
+						{$header.title ? (
 							<Tx
-								label={header.title}
-								tone={"primary"}
-								theme={"light"}
+								label={$header.title}
 								preset={"subheader"}
+								ui={{
+									tone: "primary",
+									theme: "light",
+									text: "lg",
+									color: "lead",
+									truncate: true,
+								}}
 							/>
 						) : null}
-					</Badge>
+
+						{$header.right ?? <div />}
+					</Container>
 				) : null}
 
 				<Sheet.Content

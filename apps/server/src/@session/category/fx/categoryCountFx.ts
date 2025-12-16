@@ -1,17 +1,15 @@
 import { withCount } from "@use-pico/common/count";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withCategoryQueryBuilder } from "../db/withCategoryQueryBuilder";
 import { withCategorySelect } from "../db/withCategorySelect";
-import type { CategoryQuerySchema } from "../schema/CategoryQuerySchema";
+import type { CategoryCountQuerySchema } from "../schema/CategoryCountQuerySchema";
 
 export namespace categoryCountFx {
-	export interface Props {
-		query: Omit<CategoryQuerySchema.Type, "cursor" | "sort">;
-	}
+	export type Props = CategoryCountQuerySchema.Type;
 }
 
-export const categoryCountFx = ({ query }: categoryCountFx.Props) => {
+export const categoryCountFx = (query: categoryCountFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 

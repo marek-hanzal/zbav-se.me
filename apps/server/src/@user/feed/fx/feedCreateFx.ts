@@ -38,10 +38,8 @@ export const feedCreateFx = ({ data: { name, locationId, query } }: feedCreateFx
 		});
 
 		return yield* feedFetchFx({
-			query: {
-				where: {
-					id,
-				},
+			where: {
+				id,
 			},
 		});
 	});

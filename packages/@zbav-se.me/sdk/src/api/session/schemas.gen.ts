@@ -27,6 +27,138 @@ export const sCursor = {
     ]
 } as const;
 
+export const sLocation = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        query: {
+            type: 'string'
+        },
+        lang: {
+            type: 'string'
+        },
+        country: {
+            type: 'string'
+        },
+        code: {
+            type: 'string'
+        },
+        county: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        municipality: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        state: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        address: {
+            type: 'string'
+        },
+        city: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        street: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        zip: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        confidence: {
+            type: 'number'
+        },
+        hash: {
+            type: 'string'
+        },
+        lat: {
+            type: 'number'
+        },
+        lon: {
+            type: 'number'
+        }
+    },
+    required: [
+        'id',
+        'query',
+        'lang',
+        'country',
+        'code',
+        'county',
+        'municipality',
+        'state',
+        'address',
+        'city',
+        'street',
+        'zip',
+        'confidence',
+        'hash',
+        'lat',
+        'lon'
+    ]
+} as const;
+
 export const sCategory = {
     type: 'object',
     properties: {
@@ -56,90 +188,6 @@ export const sCategory = {
         'slug',
         'sort',
         'locale'
-    ]
-} as const;
-
-export const sLocation = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        query: {
-            type: 'string'
-        },
-        lang: {
-            type: 'string'
-        },
-        country: {
-            type: 'string'
-        },
-        code: {
-            type: 'string'
-        },
-        county: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        municipality: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        state: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        address: {
-            type: 'string'
-        },
-        city: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        street: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        zip: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        confidence: {
-            type: 'number'
-        },
-        hash: {
-            type: 'string'
-        },
-        lat: {
-            type: 'number'
-        },
-        lon: {
-            type: 'number'
-        }
-    },
-    required: [
-        'id',
-        'query',
-        'lang',
-        'country',
-        'code',
-        'address',
-        'confidence',
-        'hash',
-        'lat',
-        'lon'
     ]
 } as const;
 
@@ -274,6 +322,84 @@ export const sLocationAutocomplete = {
     ]
 } as const;
 
+export const sCategoryCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            $ref: '#/components/schemas/CategoryFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/CategoryWhere'
+        }
+    }
+} as const;
+
+export const sCategoryWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        group: {
+            type: 'string'
+        },
+        category: {
+            type: 'string'
+        },
+        locale: {
+            type: 'string'
+        },
+        localeIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        }
+    }
+} as const;
+
+export const sCategoryFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        group: {
+            type: 'string'
+        },
+        category: {
+            type: 'string'
+        },
+        locale: {
+            type: 'string'
+        },
+        localeIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        }
+    }
+} as const;
+
 export const sCount = {
     type: 'object',
     properties: {
@@ -359,73 +485,7 @@ export const sCategorySort = {
     ]
 } as const;
 
-export const sCategoryWhere = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        group: {
-            type: 'string'
-        },
-        category: {
-            type: 'string'
-        },
-        locale: {
-            type: 'string'
-        },
-        localeIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        }
-    }
-} as const;
-
-export const sCategoryFilter = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        group: {
-            type: 'string'
-        },
-        category: {
-            type: 'string'
-        },
-        locale: {
-            type: 'string'
-        },
-        localeIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        }
-    }
-} as const;
-
-export const sMessage = {
+export const sNotice = {
     type: 'object',
     properties: {
         message: {

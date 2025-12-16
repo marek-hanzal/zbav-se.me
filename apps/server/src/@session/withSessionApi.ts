@@ -1,6 +1,6 @@
 import type { WithDatabase } from "../database/WithDatabase";
 import type { Routes } from "../hono/Routes";
-import type { MessageSchema } from "../schema/MessageSchema";
+import type { NoticeSchema } from "../schema/NoticeSchema";
 import { withCategoryApi } from "./category/withCategoryApi";
 import { withLocationApi } from "./location/withLocationApi";
 
@@ -16,7 +16,7 @@ export const withSessionApi: Routes.FnWithDeps<{
 		const session = c.get("session");
 		const user = c.get("user");
 		if (!session || !user) {
-			return c.json<MessageSchema.Type, 401>(
+			return c.json<NoticeSchema.Type, 401>(
 				{
 					type: "error",
 					message: "Shooooo! Shooo!",

@@ -1,0 +1,36 @@
+import { withCount } from "@use-pico/common/count";
+import { Effect } from "effect";
+import { withFlagQueryBuilder } from "~/app/flag/db/withFlagQueryBuilder";
+import { withFlagSelect } from "~/app/flag/db/withFlagSelect";
+import type { FlagCountQuerySchema } from "~/app/flag/schema/FlagCountQuerySchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+
+export namespace flagCountFx {
+	export type Props = FlagCountQuerySchema.Type;
+}
+
+export const flagCountFx = (query: flagCountFx.Props) => {
+	const { filter, where } = query;
+	return Effect.gen(function* () {
+		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
+
+		return yield* Effect.tryPromise(async () => {
+			return withCount({
+				select: withFlagSelect({
+					database,
+					sort: undefined,
+				}),
+				filter,
+				where: {
+					...where,
+					userId: user.id,
+				},
+				query: withFlagQueryBuilder,
+			});
+		});
+	});
+};
+
+export type flagCountFx = ReturnType<typeof flagCountFx>;

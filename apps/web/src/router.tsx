@@ -25,8 +25,10 @@ export function getRouter() {
 		defaultNotFoundComponent() {
 			return (
 				<Container
-					layout="vertical-centered"
-					items={"center"}
+					ui={{
+						layout: "vertical-centered",
+						height: "full",
+					}}
 				>
 					<div>4😞4</div>
 				</Container>
@@ -35,10 +37,10 @@ export function getRouter() {
 		defaultPendingComponent() {
 			return (
 				<Container
-					layout={"vertical-centered"}
-					items={"center"}
-					tone={"secondary"}
-					theme={"light"}
+					ui={{
+						layout: "vertical-centered",
+						height: "full",
+					}}
 				>
 					<Logo />
 				</Container>

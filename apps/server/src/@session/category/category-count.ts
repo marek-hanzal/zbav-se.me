@@ -1,11 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
-import type { Routes } from "../../hono/Routes";
-import { CountSchema } from "../../schema/CountSchema";
-import { MessageSchema } from "../../schema/MessageSchema";
+import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import type { Routes } from "~/hono/Routes";
+import { CountSchema } from "~/schema/CountSchema";
+import { NoticeSchema } from "~/schema/NoticeSchema";
 import { categoryCountFx } from "./fx/categoryCountFx";
-import { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
+import { CategoryCountQuerySchema } from "./schema/CategoryCountQuerySchema";
 
 export const withCategoryCountApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -18,7 +18,7 @@ export const withCategoryCountApi: Routes.Fn = ({ sessionHono }) => {
 				body: {
 					content: {
 						"application/json": {
-							schema: CategoryQuerySchema,
+							schema: CategoryCountQuerySchema,
 						},
 					},
 				},
@@ -35,7 +35,7 @@ export const withCategoryCountApi: Routes.Fn = ({ sessionHono }) => {
 				500: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Internal server error",
@@ -49,9 +49,7 @@ export const withCategoryCountApi: Routes.Fn = ({ sessionHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<CountSchema.Type, 200>(
-					yield* categoryCountFx({
-						query: c.req.valid("json"),
-					}),
+					yield* categoryCountFx(c.req.valid("json")),
 					200,
 				);
 			}).pipe(
@@ -65,7 +63,7 @@ export const withCategoryCountApi: Routes.Fn = ({ sessionHono }) => {
 									_tag: "UnknownException",
 								},
 								() => {
-									return c.json<MessageSchema.Type, 500>(
+									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
 											message: e.message,

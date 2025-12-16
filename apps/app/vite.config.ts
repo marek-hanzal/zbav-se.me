@@ -1,3 +1,5 @@
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import ViteYaml from "@modyfi/vite-plugin-yaml";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
@@ -10,10 +12,17 @@ import { qrcode } from "vite-plugin-qrcode";
 import wasm from "vite-plugin-wasm";
 import paths from "vite-tsconfig-paths";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 export default defineConfig(({ isSsrBuild, mode }) => {
 	return {
 		clearScreen: false,
 		base: process.env.VITE_APP_ASSETS,
+		resolve: {
+			alias: {
+				"~": path.resolve(__dirname, "src"),
+			},
+		},
 		plugins: [
 			tanstackStart({
 				router: {
@@ -33,9 +42,7 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 			}),
 			mode === "production"
 				? nitro({
-						config: {
-							preset: "vercel",
-						},
+						preset: "vercel",
 					})
 				: undefined,
 		],

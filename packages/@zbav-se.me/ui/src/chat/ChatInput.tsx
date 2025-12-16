@@ -28,7 +28,8 @@ export namespace ChatInput {
 		}
 	}
 
-	export interface Props extends ChatInputCls.Props<Omit<Container.Props, "onSubmit">> {
+	export interface Props
+		extends ChatInputCls.Props<Omit<Container.Props, "onSubmit" | "onChange">> {
 		value: string;
 		onChange(value: string): void;
 		onSubmit(value: string): void;
@@ -49,6 +50,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 	menu,
 	cls = ChatInputCls,
 	tweak,
+	ui,
 	...props
 }) => {
 	const { slots } = useCls(cls, tweak);
@@ -86,7 +88,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 		if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
 			e.preventDefault();
 
-			if (props.disabled) {
+			if (ui?.disabled) {
 				return;
 			}
 
@@ -100,111 +102,102 @@ export const ChatInput: FC<ChatInput.Props> = ({
 
 	return (
 		<Container
-			layout={"horizontal-flex"}
-			gap={"md"}
-			tone={"unset"}
-			theme={"unset"}
+			data-ui={"ChatInput-Container"}
+			ui={{
+				layout: "horizontal-flex",
+				gap: "md",
+				...ui,
+			}}
 			{...props}
 		>
+			{menu ? (
+				<>
+					<Button
+						data-ui={"ChatInput-Button-menu"}
+						iconEnabled={PlusIcon}
+						onClick={() => setIsMenu((prev) => !prev)}
+						ui={{
+							tone: "link",
+						}}
+					/>
+
+					<BottomSheet
+						data-ui={"ChatInput-BottomSheet-menu"}
+						isOpen={isMenu}
+						onClose={() => setIsMenu(false)}
+						{...menu.props}
+					>
+						<Container
+							data-ui={"ChatInput-BottomSheet-Container"}
+							ui={{
+								layout: "vertical-flex",
+								gap: "md",
+								inner: "default",
+							}}
+						>
+							{menu.content}
+						</Container>
+					</BottomSheet>
+				</>
+			) : null}
+
 			<div
 				className={tvc([
 					"flex",
-					"flex-row",
-					"gap-2",
-					"items-end",
+					"flex-col",
+					"items-center",
 					"justify-center",
 					"w-full",
 				])}
 			>
-				{menu ? (
-					<>
-						<Button
-							iconEnabled={PlusIcon}
-							tone={"link"}
-							theme={"light"}
-							onClick={() => setIsMenu((prev) => !prev)}
-						/>
-
-						<BottomSheet
-							isOpen={isMenu}
-							onClose={() => setIsMenu(false)}
-							{...menu.props}
-						>
-							<Container
-								layout={"vertical-flex"}
-								gap={"md"}
-								square={"md"}
-								tone={"unset"}
-								theme={"unset"}
-							>
-								{menu.content}
-							</Container>
-						</BottomSheet>
-					</>
-				) : null}
-
 				<div
-					className={tvc([
-						"flex",
-						"flex-col",
-						"items-center",
-						"justify-center",
-						"w-full",
-					])}
-				>
-					<div
-						className={slots.default({
-							slot: {
-								default: {
-									class: [
-										"flex",
-										"flex-col",
-										"items-center",
-										"justify-center",
-										"border-2",
-										"border-slate-200",
-										"bg-slate-100",
-										"min-h-0",
-										"h-fit",
-										"w-full",
-									],
-									token: [
-										"square.md",
-										"round.default",
-									],
-								},
+					className={slots.default({
+						slot: {
+							default: {
+								class: [
+									"flex",
+									"flex-col",
+									"items-center",
+									"justify-center",
+									"border-2",
+									"border-slate-200",
+									"bg-slate-100",
+									"min-h-0",
+									"h-fit",
+									"w-full",
+								],
+								token: [
+									"square.md",
+									"round.default",
+								],
 							},
-						})}
-					>
-						<textarea
-							ref={textareaRef}
-							id={areaId}
-							rows={1}
-							value={value}
-							disabled={props.disabled}
-							onChange={(e) => onChange(e.target.value)}
-							onKeyDown={handleKeyDown}
-							placeholder={placeholder}
-							className={slots.input()}
-						/>
-					</div>
+						},
+					})}
+				>
+					<textarea
+						ref={textareaRef}
+						id={areaId}
+						rows={1}
+						value={value}
+						disabled={ui?.disabled}
+						onChange={(e) => onChange(e.target.value)}
+						onKeyDown={handleKeyDown}
+						placeholder={placeholder}
+						className={slots.input()}
+					/>
 				</div>
-
-				<Button
-					iconEnabled={SendMessageIcon}
-					iconProps={{
-						size: "md",
-					}}
-					tone={"primary"}
-					theme={"light"}
-					disabled={loading || value.length === 0}
-					loading={loading}
-					onClick={() => {
-						onSubmit(value);
-						onChange("");
-					}}
-				/>
 			</div>
+
+			<Button
+				data-ui={"ChatInput-Button-send"}
+				iconEnabled={SendMessageIcon}
+				disabled={loading || value.length === 0}
+				loading={loading}
+				onClick={() => {
+					onSubmit(value);
+					onChange("");
+				}}
+			/>
 		</Container>
 	);
 };

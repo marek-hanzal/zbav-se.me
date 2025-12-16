@@ -1,12 +1,15 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { withTransactionFx } from "../../../database/fx/withTransactionFx";
-import { listingCheckIfOwnFx } from "../../listing/fx/listingCheckIfOwnFx";
-import { ListingScoreContextFx, type ListingScoreType } from "./ListingScoreContextFx";
-import { listingScoreRateLimitFx } from "./listingScoreRateLimitFx";
+import { listingCheckIfOwnFx } from "~/@user/listing/fx/listingCheckIfOwnFx";
+import {
+	ListingScoreContextFx,
+	type ListingScoreType,
+} from "~/@user/listing-score/fx/ListingScoreContextFx";
+import { listingScoreRateLimitFx } from "~/@user/listing-score/fx/listingScoreRateLimitFx";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace listingScoreCreateFx {
 	export interface Props {
@@ -38,7 +41,7 @@ export const listingScoreCreateFx = ({ listingId, score }: listingScoreCreateFx.
 				 * Some of the scores may have different implementations.
 				 */
 				return match(score)
-					.with("cart", "flag", async (score) => {
+					.with("favourite", "flag", async (score) => {
 						const row = await database
 							.selectFrom("listing_score")
 							.selectAll()

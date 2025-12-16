@@ -1,17 +1,20 @@
 import { z } from "@hono/zod-openapi";
-import { UserSideEnumSchema } from "../../../app/user-ex/schema/UserSideEnumSchema";
+import { UserExDbSchema } from "~/app/user-ex/schema/UserExDbSchema";
 
 export const UserExPatchSchema = z
 	.object({
-		locationId: z.string().nullish().openapi({
-			description: "Default location for the user - used for listings & listing sorting",
-		}),
-		side: z
-			.union([
-				UserSideEnumSchema,
-				z.null(),
-			])
-			.optional(),
+		patch: z
+			.object({
+				...UserExDbSchema.shape,
+			})
+			.omit({
+				id: true,
+				userId: true,
+			})
+			.partial()
+			.openapi({
+				description: "Fields to update (all optional)",
+			}),
 	})
 	.openapi("UserExPatch", {
 		description: "Data for patching a user ex",

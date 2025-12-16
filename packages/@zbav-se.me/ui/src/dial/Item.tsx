@@ -11,8 +11,8 @@ export namespace Item {
 	}
 }
 
-export const Item: FC<Item.Props> = ({ icon, disabled, onClick, ...props }) => {
-	const rootRef = useRef<HTMLDivElement>(null);
+export const Item: FC<Item.Props> = ({ icon, disabled, onClick, ui, ...props }) => {
+	const rootRef = useRef<HTMLButtonElement>(null);
 
 	const { contextSafe } = useAnim({
 		scope: rootRef,
@@ -36,33 +36,26 @@ export const Item: FC<Item.Props> = ({ icon, disabled, onClick, ...props }) => {
 
 	return (
 		<Button
-			wrapperRef={rootRef}
+			ref={rootRef}
+			data-ui={"Item[Button]"}
 			iconEnabled={icon}
+			iconProps={{
+				ui: {
+					text: "2xl",
+				},
+			}}
 			disabled={disabled}
 			onClick={() => {
 				onClick();
 				onItemClick();
 			}}
-			tone={"primary"}
-			size={"xl"}
-			tweak={{
-				slot: {
-					wrapper: {
-						class: [
-							"Dial-Item-root",
-							"w-full",
-							"h-full",
-							"min-h-0",
-						],
-					},
-					root: {
-						class: [
-							"w-full",
-							"h-full",
-							"min-h-0",
-						],
-					},
-				},
+			ui={{
+				size: "xl",
+				items: "center",
+				justify: "center",
+				height: "full",
+				width: "full",
+				...ui,
 			}}
 			{...props}
 		/>

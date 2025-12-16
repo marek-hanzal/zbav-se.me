@@ -1,42 +1,35 @@
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { withTransactionFx } from "../../../database/fx/withTransactionFx";
-import type { FeedPatchSchema } from "../schema/FeedPatchSchema";
-import { feedFetchFx } from "./feedFetchFx";
+import { feedFetchFx } from "~/@user/feed/fx/feedFetchFx";
+import type { FeedPatchSchema } from "~/@user/feed/schema/FeedPatchSchema";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace feedPatchFx {
 	export type Props = FeedPatchSchema.Type;
 }
 
-export const feedPatchFx = ({ id, name, locationId, uploadId, query }: feedPatchFx.Props) => {
+export const feedPatchFx = ({ patch, query }: feedPatchFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
-			const user = yield* UserContextFx;
 
-			const now = new Date();
+			const feed = yield* feedFetchFx(query);
 
 			yield* Effect.tryPromise(async () => {
 				return database
 					.updateTable("feed")
 					.set({
-						name,
-						locationId,
-						uploadId,
-						query: query ? (JSON.stringify(query) as any) : undefined,
-						updatedAt: now,
+						...patch,
+						query: patch.query ? (JSON.stringify(patch.query) as any) : patch.query,
+						updatedAt: new Date(),
 					})
-					.where("id", "=", id)
-					.where("userId", "=", user.id)
+					.where("id", "=", feed.id)
 					.executeTakeFirst();
 			});
 
 			return yield* feedFetchFx({
-				query: {
-					where: {
-						id,
-					},
+				where: {
+					id: feed.id,
 				},
 			});
 		}),

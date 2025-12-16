@@ -1,19 +1,17 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { NotFoundError } from "../../../error/NotFoundError";
-import { withUploadQueryBuilder } from "../db/withUploadQueryBuilder";
-import { withUploadSelect } from "../db/withUploadSelect";
-import type { UploadQuerySchema } from "../schema/UploadQuerySchema";
+import { withUploadQueryBuilder } from "~/app/upload/db/withUploadQueryBuilder";
+import { withUploadSelect } from "~/app/upload/db/withUploadSelect";
+import type { UploadQuerySchema } from "~/app/upload/schema/UploadQuerySchema";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { NotFoundError } from "~/error/NotFoundError";
 import { UploadSchema } from "../schema/UploadSchema";
 
 export namespace uploadFetchFx {
-	export interface Props {
-		query: Omit<UploadQuerySchema.Type, "cursor">;
-	}
+	export type Props = UploadQuerySchema.Type;
 }
 
-export const uploadFetchFx = ({ query }: uploadFetchFx.Props) => {
+export const uploadFetchFx = (query: uploadFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 

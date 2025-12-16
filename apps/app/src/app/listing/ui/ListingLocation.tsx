@@ -1,34 +1,38 @@
 import { Badge } from "@use-pico/client/ui/badge";
+import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import type { FC } from "react";
 
 export namespace ListingLocation {
 	export interface Props extends Badge.Props {
-		location: string;
+		location: tLocation;
 	}
 }
 
 export const ListingLocation: FC<ListingLocation.Props> = ({
 	location,
 	children,
-	className = [],
+	className,
+	ui,
 	...props
 }) => {
 	return (
 		<Badge
-			ui={"ListingLocation-root"}
-			tone={"secondary"}
-			theme={"light"}
-			round={"default"}
+			data-ui={"ListingLocation-root"}
 			className={[
-				"flex",
-				"flex-col",
-				"h-fit",
-				"py-2",
-				"gap-0",
+				"flex flex-col h-fit py-2 gap-0",
+				className,
 			]}
+			ui={{
+				tone: "secondary",
+				theme: "light",
+				size: "md",
+				color: "lead",
+				font: "semibold",
+				...ui,
+			}}
 			{...props}
 		>
-			{location}
+			{location.address}
 
 			{children}
 		</Badge>

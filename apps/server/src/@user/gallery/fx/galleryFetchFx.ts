@@ -1,20 +1,18 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { NotFoundError } from "../../../error/NotFoundError";
-import { withGalleryQueryBuilder } from "../db/withGalleryQueryBuilder";
-import { withGallerySelect } from "../db/withGallerySelect";
-import type { GalleryQuerySchema } from "../schema/GalleryQuerySchema";
+import { withGalleryQueryBuilder } from "~/app/gallery/db/withGalleryQueryBuilder";
+import { withGallerySelect } from "~/app/gallery/db/withGallerySelect";
+import type { GalleryQuerySchema } from "~/app/gallery/schema/GalleryQuerySchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { NotFoundError } from "~/error/NotFoundError";
 import { GallerySchema } from "../schema/GallerySchema";
 
 export namespace galleryFetchFx {
-	export interface Props {
-		query: Omit<GalleryQuerySchema.Type, "cursor">;
-	}
+	export type Props = GalleryQuerySchema.Type;
 }
 
-export const galleryFetchFx = ({ query }: galleryFetchFx.Props) => {
+export const galleryFetchFx = (query: galleryFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

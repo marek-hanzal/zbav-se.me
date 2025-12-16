@@ -1,19 +1,11 @@
-import { UserIcon } from "@use-pico/client/icon";
+import type { uiIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { tvc } from "@use-pico/cls";
-import {
-	CartIcon,
-	FeedIcon,
-	ListingIcon,
-	SellerIcon,
-	ShopIcon,
-	TransactionIcon,
-} from "@zbav-se.me/ui/icon";
-import { Tile } from "@zbav-se.me/ui/tile";
+import { Tx } from "@use-pico/client/ui/tx";
+import { FavouriteIcon, FeedIcon, ListingIcon, MessageIcon } from "@zbav-se.me/ui/icon";
+import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import { useRef } from "react";
-import { SignOutButton } from "~/app/auth/ui/SignOutButton";
 
 export namespace BuyerMenu {
 	export interface Props extends Container.Props {
@@ -21,136 +13,109 @@ export namespace BuyerMenu {
 	}
 }
 
-export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
-	const spacing = tvc([
-		"w-full",
-		"flex",
-		"flex-col",
-		"gap-2",
-		"py-4",
-	]);
+export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
+	const icon: uiIcon.Ui = {
+		text: "3xl",
+	};
+
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	return (
-		<Container position={"relative"}>
+		<Container
+			data-ui={"BuyerMenu[Container]"}
+			ui={{
+				position: "relative",
+				height: "full",
+				width: "full",
+				...ui,
+			}}
+			{...props}
+		>
 			<Fade scrollableRef={containerRef} />
 
 			<Container
+				data-ui={"BuyerMenu-[Container.scroll]"}
 				ref={containerRef}
-				layout={"vertical-flex"}
-				scroll={"vertical"}
-				gap={"sm"}
-				items={"center"}
-				{...props}
+				ui={{
+					layout: "vertical-flex",
+					scroll: "vertical",
+					height: "full",
+					inner: "default",
+					items: "center",
+					gap: "lg",
+				}}
 			>
 				<LinkTo
+					{...uiMenuButton({
+						className: [],
+					})}
+					icon={ListingIcon}
+					iconProps={{
+						ui: {
+							...icon,
+						},
+					}}
 					to="/$locale/buyer/feed/default"
 					params={{
 						locale,
 					}}
-					full
 				>
-					<Tile
-						iconEnabled={ListingIcon}
-						label={"Listings (label)"}
-						tone={"secondary"}
-					/>
+					<Tx label="Listings (label)" />
 				</LinkTo>
 
-				<div className={spacing}>
-					<LinkTo
-						to="/$locale/buyer/cart/list"
-						params={{
-							locale,
-						}}
-						full
-					>
-						<Tile
-							iconEnabled={CartIcon}
-							label={"Cart (label)"}
-						/>
-					</LinkTo>
-
-					<LinkTo
-						to="/$locale/buyer/transaction/list"
-						params={{
-							locale,
-						}}
-						full
-					>
-						<Tile
-							iconEnabled={TransactionIcon}
-							label={"Transactions (label)"}
-						/>
-					</LinkTo>
-
-					<LinkTo
-						to="/$locale/buyer/feed/select"
-						params={{
-							locale,
-						}}
-						full
-					>
-						<Tile
-							iconEnabled={FeedIcon}
-							label={"Feed (label)"}
-						/>
-					</LinkTo>
-				</div>
-
 				<LinkTo
-					to="/$locale/buyer/shop"
+					{...uiMenuButton({
+						className: [],
+					})}
+					icon={MessageIcon}
+					iconProps={{
+						ui: {
+							...icon,
+						},
+					}}
+					to="/$locale/ui/buyer/message/list"
 					params={{
 						locale,
 					}}
-					full
 				>
-					<Tile
-						iconEnabled={ShopIcon}
-						label={"Shop (label)"}
-					/>
+					<Tx label="Messages (label)" />
 				</LinkTo>
 
-				<div className={spacing}>
-					<LinkTo
-						to="/$locale/seller"
-						params={{
-							locale,
-						}}
-						full
-					>
-						<Tile
-							iconEnabled={SellerIcon}
-							label={"To seller (label)"}
-						/>
-					</LinkTo>
-
-					<LinkTo
-						to="/$locale/buyer/user"
-						params={{
-							locale,
-						}}
-						full
-					>
-						<Tile
-							iconEnabled={UserIcon}
-							label={"User profile (label)"}
-						/>
-					</LinkTo>
-				</div>
-
-				<SignOutButton
-					locale={locale}
-					tweak={{
-						slot: {
-							wrapper: {
-								class: [
-									"mx-auto",
-								],
-							},
+				<LinkTo
+					{...uiMenuButton({
+						className: [],
+					})}
+					icon={FeedIcon}
+					iconProps={{
+						ui: {
+							...icon,
 						},
 					}}
-				/>
+					to="/$locale/ui/buyer/feed/select"
+					params={{
+						locale,
+					}}
+				>
+					<Tx label="Feed (label)" />
+				</LinkTo>
+
+				<LinkTo
+					{...uiMenuButton({
+						className: [],
+					})}
+					icon={FavouriteIcon}
+					iconProps={{
+						ui: {
+							...icon,
+						},
+					}}
+					to="/$locale/ui/buyer/favourite/list"
+					params={{
+						locale,
+					}}
+				>
+					<Tx label="Favourites (label)" />
+				</LinkTo>
 			</Container>
 		</Container>
 	);

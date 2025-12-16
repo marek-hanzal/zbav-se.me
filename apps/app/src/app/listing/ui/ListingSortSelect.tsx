@@ -1,36 +1,32 @@
 import { TrashIcon } from "@use-pico/client/icon";
-import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
+import type { StateType } from "@use-pico/common/type";
 import type { tListingSort, tListingSortField } from "@zbav-se.me/sdk/api/user";
+import { uiSelectButton } from "@zbav-se.me/ui/ui";
 import { type FC, useId } from "react";
 
 export namespace ListingSortSelect {
-	export interface Props extends Container.Props {
+	export interface Props extends Omit<Container.Props, "onChange"> {
 		withGeo: boolean | undefined;
-		value: tListingSort[];
-		onChange(sort: (prev: tListingSort[]) => tListingSort[]): void;
+		state: StateType.Simple<tListingSort[]>;
 	}
 }
 
-export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
-	withGeo,
-	value,
-	onChange,
-	...props
-}) => {
+export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state, ...props }) => {
 	const sortKeyId = useId();
 
 	return (
 		<Container
-			layout={"vertical-flex"}
-			scroll={"vertical"}
-			gap={"sm"}
-			height={"auto"}
-			width={"fit"}
-			tone={"unset"}
-			theme={"unset"}
+			data-ui={"ListingSortSelect"}
+			ui={{
+				layout: "vertical-flex",
+				scroll: "vertical",
+				gap: "sm",
+				height: "auto",
+				width: "full",
+			}}
 			{...props}
 		>
 			{(
@@ -43,105 +39,89 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 					] satisfies (tListingSortField | undefined)[]
 				).filter(Boolean) as tListingSortField[]
 			).map((sortValue) => {
-				const current = value.find((s) => s.field === sortValue);
+				const current = state.value.find((s) => s.field === sortValue);
 
 				const position = current
-					? value.findIndex((s) => s.field === sortValue) + 1
+					? state.value.findIndex((s) => s.field === sortValue) + 1
 					: undefined;
 
 				return (
 					<Button
 						key={`${sortKeyId}-${sortValue}`}
-						size={"xl"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"justify-start",
-										"text-left",
-										"py-2",
-										"px-3",
-										"h-18",
-									],
-								},
-							},
-						}}
-						full
 						onClick={() => {
-							onChange((prev) => {
-								const idx = prev.findIndex((s) => s.field === sortValue);
+							const idx = state.value.findIndex((s) => s.field === sortValue);
 
-								if (idx < 0) {
-									return [
-										...prev,
-										{
-											field: sortValue,
-											direction: "asc",
-										} satisfies tListingSort,
-									];
-								}
+							if (idx < 0) {
+								state.set([
+									...state.value,
+									{
+										field: sortValue,
+										direction: "asc",
+									} satisfies tListingSort,
+								]);
+								return;
+							}
 
-								const cur = prev[idx];
+							const cur = state.value[idx];
 
-								if (!cur || cur.field !== sortValue) {
-									return prev;
-								}
+							if (!cur || cur.field !== sortValue) {
+								return;
+							}
 
-								if (cur.direction === "asc") {
-									const next = [
-										...prev,
-									];
-									next[idx] = {
-										field: cur.field,
-										direction: "desc",
-									} satisfies tListingSort;
-									return next;
-								}
+							if (cur.direction === "asc") {
+								const next = [
+									...state.value,
+								];
+								next[idx] = {
+									field: cur.field,
+									direction: "desc",
+								} satisfies tListingSort;
+								state.set(next);
+								return;
+							}
 
-								return prev.filter((_, i) => i !== idx);
-							});
+							state.set(state.value.filter((_, i) => i !== idx));
 						}}
+						{...uiSelectButton({
+							isSelected: Boolean(current?.direction),
+							ui: {
+								size: "default",
+							},
+							className: [],
+						})}
 					>
-						<div className="flex gap-2 items-center justify-between w-full">
+						<Container
+							ui={{
+								flow: "horizontal",
+								justify: "space-between",
+								items: "center",
+								gap: "sm",
+								width: "full",
+							}}
+						>
 							<Tx
 								label={`Listing common sort value ${sortValue} - ${current?.direction ?? "unused"}`}
-								font={position ? "bold" : "normal"}
+								ui={{
+									font: position ? "bold" : "normal",
+								}}
 							/>
 
-							{position ? (
-								<Badge
-									tone={"primary"}
-									theme={"dark"}
-									size={"sm"}
-									tweak={{
-										slot: {
-											root: {
-												class: [
-													"py-2",
-													"px-4",
-												],
-											},
-										},
-									}}
-								>
-									{position}
-								</Badge>
-							) : null}
-						</div>
+							{position}
+						</Container>
 					</Button>
 				);
 			})}
 
 			<Button
 				iconEnabled={TrashIcon}
-				size={"xl"}
-				tone={"danger"}
 				label={"Clear all sorts (button)"}
-				full
 				onClick={() => {
-					onChange(() => {
-						return [];
-					});
+					state.set([]);
+				}}
+				ui={{
+					tone: "warning",
+					theme: "light",
+					size: "default",
 				}}
 			/>
 		</Container>

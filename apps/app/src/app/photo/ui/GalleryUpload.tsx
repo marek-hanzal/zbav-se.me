@@ -24,38 +24,29 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 
 	return (
 		<Container
-			ui={"GalleryUpload-root"}
-			position={"relative"}
-			tone={"unset"}
-			theme={"unset"}
+			data-ui={"GalleryUpload-[Container]"}
+			ui={{
+				position: "relative",
+				height: "full",
+			}}
 			{...props}
 		>
 			<SnapperNav
+				data-ui={"GalleryUpload-[SnapperNav]"}
 				snapperNav={snapperNav}
-				orientation={"horizontal"}
-				iconProps={() => ({
-					size: "sm",
-				})}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"bottom-1",
-								"transition-opacity",
-								state.value.length > 0 ? "opacity-60" : "opacity-0",
-							],
-						},
-					},
-				}}
-				subtle={false}
 			/>
 
 			<Container
+				data-ui={"GalleryUpload-[Container.photos]"}
 				ref={snapperRef}
-				layout="horizontal-full"
-				snap={"horizontal-start"}
-				gap={"md"}
-				round={"default"}
+				ui={{
+					layout: "horizontal-full",
+					snap: "horizontal",
+					snapAlign: "center",
+					gap: "default",
+					height: "full",
+					round: "default",
+				}}
 			>
 				{Array.from({
 					length: limit,
@@ -65,7 +56,6 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 					return (
 						<PhotoUpload
 							key={`${uploadRootId}-${slot + 1}`}
-							disabled={disabled}
 							value={state.value[slot]}
 							onChange={(uploadId) => {
 								state.set((prev) => {
@@ -78,6 +68,9 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 
 									return compact;
 								});
+							}}
+							ui={{
+								disabled,
 							}}
 						/>
 					);

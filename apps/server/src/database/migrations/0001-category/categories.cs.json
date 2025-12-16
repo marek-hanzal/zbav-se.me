@@ -1052,6 +1052,157 @@
 		"category": "Boxy a organizéry do kuchyně"
 	},
 	{
+		"slug": "jidlo--detske-prikrmy",
+		"locale": "cs",
+		"spotlight": [
+			"dětské příkrmy",
+			"prikrm",
+			"příkrm",
+			"kojenecký příkrm",
+			"baby food",
+			"kendamil",
+			"hipp",
+			"gerber",
+			"sunar"
+		],
+		"group": "Jídlo",
+		"category": "Dětské příkrmy"
+	},
+	{
+		"slug": "jidlo--kojenecka-vyziva",
+		"locale": "cs",
+		"spotlight": [
+			"kojenecká výživa",
+			"kojenecké jídlo",
+			"dětská výživa",
+			"baby nutrition",
+			"bio příkrmy"
+		],
+		"group": "Jídlo",
+		"category": "Kojenecká výživa"
+	},
+	{
+		"slug": "jidlo--umela-mleka-a-pokracovaci-mleka",
+		"locale": "cs",
+		"spotlight": [
+			"umělé mléko",
+			"umela vyziva",
+			"pokračovací mléko",
+			"sunar",
+			"kendamil",
+			"nutrilon",
+			"bebivita",
+			"formula"
+		],
+		"group": "Jídlo",
+		"category": "Umělá mléka a pokračovací mléka"
+	},
+	{
+		"slug": "jidlo--detske-kase",
+		"locale": "cs",
+		"spotlight": [
+			"dětská kaše",
+			"kaše",
+			"rýžová kaše",
+			"ovesná kaše",
+			"krupicová",
+			"cereals",
+			"porridge"
+		],
+		"group": "Jídlo",
+		"category": "Dětské kaše"
+	},
+	{
+		"slug": "jidlo--doplnky-stravy-a-vitaminy",
+		"locale": "cs",
+		"spotlight": [
+			"vitamíny",
+			"doplněk stravy",
+			"omega 3",
+			"probiotika",
+			"minerály",
+			"suplementy"
+		],
+		"group": "Jídlo",
+		"category": "Doplňky stravy a vitamíny"
+	},
+	{
+		"slug": "jidlo--bezlepkove-a-specialni-potraviny",
+		"locale": "cs",
+		"spotlight": [
+			"bezlepkové",
+			"gluten free",
+			"bez laktózy",
+			"lactose free",
+			"vegan",
+			"bio",
+			"speciální dieta"
+		],
+		"group": "Jídlo",
+		"category": "Bezlepkové a speciální potraviny"
+	},
+	{
+		"slug": "jidlo--trvanlive-potraviny",
+		"locale": "cs",
+		"spotlight": [
+			"trvanlivé potraviny",
+			"konzervy",
+			"těstoviny",
+			"ryže",
+			"luštěniny",
+			"mouka",
+			"cukr"
+		],
+		"group": "Jídlo",
+		"category": "Trvanlivé potraviny"
+	},
+	{
+		"slug": "jidlo--sladkosti-a-snacky",
+		"locale": "cs",
+		"spotlight": [
+			"sladkosti",
+			"čokoláda",
+			"bonbóny",
+			"sušenky",
+			"snacky",
+			"krekry",
+			"tyčinky"
+		],
+		"group": "Jídlo",
+		"category": "Sladkosti a snacky"
+	},
+	{
+		"slug": "jidlo--napoje",
+		"locale": "cs",
+		"spotlight": [
+			"nápoje",
+			"džus",
+			"juice",
+			"sirup",
+			"minerálka",
+			"voda",
+			"limonáda"
+		],
+		"group": "Jídlo",
+		"category": "Nápoje"
+	},
+	{
+		"slug": "jidlo--caj-a-kava",
+		"locale": "cs",
+		"spotlight": [
+			"čaj",
+			"káva",
+			"kafe",
+			"espresso",
+			"zrnková káva",
+			"sypaný čaj",
+			"tea",
+			"coffee"
+		],
+		"group": "Jídlo",
+		"category": "Čaj a káva"
+	},
+	{
 		"slug": "sport-a-outdoor--kola-a-prislusenstvi",
 		"locale": "cs",
 		"spotlight": [
@@ -1415,6 +1566,244 @@
 		],
 		"group": "Domácí zvířata",
 		"category": "Klece a přepravky"
+	},
+	{
+		"slug": "domaci-zvirata--kralici",
+		"locale": "cs",
+		"spotlight": [
+			"králík",
+			"kralik",
+			"zakrslý králík",
+			"králíček",
+			"bunny",
+			"rabbit"
+		],
+		"group": "Domácí zvířata",
+		"category": "Králíci"
+	},
+	{
+		"slug": "domaci-zvirata--morcata",
+		"locale": "cs",
+		"spotlight": [
+			"morče",
+			"morce",
+			"guinea pig",
+			"morčátko"
+		],
+		"group": "Domácí zvířata",
+		"category": "Morčata"
+	},
+	{
+		"slug": "domaci-zvirata--krecici",
+		"locale": "cs",
+		"spotlight": [
+			"křeček",
+			"krecek",
+			"hamster",
+			"křečík"
+		],
+		"group": "Domácí zvířata",
+		"category": "Křečci"
+	},
+	{
+		"slug": "domaci-zvirata--potkani-a-mysi",
+		"locale": "cs",
+		"spotlight": [
+			"potkan",
+			"myš",
+			"mys",
+			"rat",
+			"mouse",
+			"hlodavec"
+		],
+		"group": "Domácí zvířata",
+		"category": "Potkani a myši"
+	},
+	{
+		"slug": "domaci-zvirata--papousci-a-ptaci",
+		"locale": "cs",
+		"spotlight": [
+			"papoušek",
+			"korela",
+			"andulka",
+			"pták",
+			"ptáci",
+			"bird",
+			"parrot"
+		],
+		"group": "Domácí zvířata",
+		"category": "Papoušci a ptáci"
+	},
+	{
+		"slug": "domaci-zvirata--rybicky",
+		"locale": "cs",
+		"spotlight": [
+			"rybičky",
+			"ryby",
+			"akvarijní ryby",
+			"akvarium",
+			"fish"
+		],
+		"group": "Domácí zvířata",
+		"category": "Rybičky"
+	},
+	{
+		"slug": "domaci-zvirata--agamy-a-jesteri",
+		"locale": "cs",
+		"spotlight": [
+			"agama",
+			"agamy",
+			"vousatá agama",
+			"pogona",
+			"ještěr",
+			"lizard",
+			"gekon",
+			"chameleon"
+		],
+		"group": "Domácí zvířata",
+		"category": "Agamy a ještěři"
+	},
+	{
+		"slug": "domaci-zvirata--hadi",
+		"locale": "cs",
+		"spotlight": [
+			"had",
+			"hadi",
+			"snake",
+			"užovka",
+			"python",
+			"krajta",
+			"korálovka"
+		],
+		"group": "Domácí zvířata",
+		"category": "Hadi"
+	},
+	{
+		"slug": "domaci-zvirata--zelvy",
+		"locale": "cs",
+		"spotlight": [
+			"želva",
+			"zelva",
+			"turtle",
+			"terrapin"
+		],
+		"group": "Domácí zvířata",
+		"category": "Želvy"
+	},
+	{
+		"slug": "domaci-zvirata--kocky",
+		"locale": "cs",
+		"spotlight": [
+			"kočka",
+			"kocka",
+			"kittens",
+			"kotě",
+			"kote",
+			"cat"
+		],
+		"group": "Domácí zvířata",
+		"category": "Kočky"
+	},
+	{
+		"slug": "domaci-zvirata--psi",
+		"locale": "cs",
+		"spotlight": [
+			"pes",
+			"psi",
+			"štěně",
+			"stene",
+			"dog",
+			"puppy"
+		],
+		"group": "Domácí zvířata",
+		"category": "Psi"
+	},
+	{
+		"slug": "domaci-zvirata--krmivo-a-pamlsky",
+		"locale": "cs",
+		"spotlight": [
+			"krmivo",
+			"granule",
+			"konzervy",
+			"pamlsky",
+			"treats",
+			"hay",
+			"seno"
+		],
+		"group": "Domácí zvířata",
+		"category": "Krmivo a pamlsky"
+	},
+	{
+		"slug": "domaci-zvirata--stelivo-a-podestylka",
+		"locale": "cs",
+		"spotlight": [
+			"stelivo",
+			"podestýlka",
+			"hobliny",
+			"litter",
+			"cat litter",
+			"toaleta"
+		],
+		"group": "Domácí zvířata",
+		"category": "Stelivo a podestýlka"
+	},
+	{
+		"slug": "domaci-zvirata--terarijni-vybaveni",
+		"locale": "cs",
+		"spotlight": [
+			"terárium",
+			"terarijní",
+			"žárovka",
+			"UVB",
+			"topná podložka",
+			"vlhkoměr",
+			"substrát"
+		],
+		"group": "Domácí zvířata",
+		"category": "Terarijní vybavení"
+	},
+	{
+		"slug": "domaci-zvirata--akvarijni-vybaveni",
+		"locale": "cs",
+		"spotlight": [
+			"akvarijní",
+			"filtr",
+			"ohřívač",
+			"vzduchování",
+			"osvětlení",
+			"akvarijní technika"
+		],
+		"group": "Domácí zvířata",
+		"category": "Akvarijní vybavení"
+	},
+	{
+		"slug": "domaci-zvirata--pece-a-hygiena",
+		"locale": "cs",
+		"spotlight": [
+			"péče",
+			"hygiena",
+			"šampon",
+			"kartáč",
+			"odčervení",
+			"stříhání drápů",
+			"grooming"
+		],
+		"group": "Domácí zvířata",
+		"category": "Péče a hygiena"
+	},
+	{
+		"slug": "domaci-zvirata--veterinarni-doplnky",
+		"locale": "cs",
+		"spotlight": [
+			"veterina",
+			"vitamíny",
+			"doplněk stravy",
+			"antiparazitika",
+			"pipeta",
+			"obojek proti klíšťatům"
+		],
+		"group": "Domácí zvířata",
+		"category": "Veterinární doplňky"
 	},
 	{
 		"slug": "knihy-filmy-a-hudba--knihy",

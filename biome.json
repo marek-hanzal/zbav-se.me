@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.3.9/schema.json",
 	"vcs": {
 		"enabled": false,
 		"clientKind": "git",
@@ -51,6 +51,9 @@
 			},
 			"security": {
 				"noDangerouslySetInnerHtml": "off"
+			},
+			"style": {
+				"useComponentExportOnlyModules": "off"
 			},
 			"complexity": {
 				"noBannedTypes": "off"

@@ -1,8 +1,8 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
-import type { Routes } from "../../hono/Routes";
-import { MessageSchema } from "../../schema/MessageSchema";
+import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import type { Routes } from "~/hono/Routes";
+import { NoticeSchema } from "~/schema/NoticeSchema";
 import { locationAutocompleteFx } from "./fx/locationAutocompleteFx";
 import { LocationAutocompleteSchema } from "./schema/LocationAutocompleteSchema";
 import { LocationSchema } from "./schema/LocationSchema";
@@ -44,7 +44,7 @@ export const withLocationAutocompleteApi: Routes.Fn = ({ sessionHono }) => {
 				400: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Text too short",
@@ -52,7 +52,7 @@ export const withLocationAutocompleteApi: Routes.Fn = ({ sessionHono }) => {
 				500: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Internal server error",
@@ -94,7 +94,7 @@ export const withLocationAutocompleteApi: Routes.Fn = ({ sessionHono }) => {
 									_tag: "UnknownException",
 								},
 								() => {
-									return c.json<MessageSchema.Type, 500>(
+									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
 											message: e.message,

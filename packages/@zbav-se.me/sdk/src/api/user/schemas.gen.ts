@@ -3,26 +3,41 @@
 export const sUserExPatch = {
     type: 'object',
     properties: {
-        locationId: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        side: {
-            anyOf: [
-                {
-                    $ref: '#/components/schemas/UserSideEnum'
+        patch: {
+            type: 'object',
+            properties: {
+                locationId: {
+                    anyOf: [
+                        {
+                            type: 'string'
+                        },
+                        {
+                            type: 'null'
+                        },
+                        {
+                            type: 'null'
+                        }
+                    ]
                 },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
+                side: {
+                    anyOf: [
+                        {
+                            $ref: '#/components/schemas/UserSideEnum'
+                        },
+                        {
+                            type: 'null'
+                        },
+                        {
+                            type: 'null'
+                        }
+                    ]
                 }
-            ]
+            }
         }
-    }
+    },
+    required: [
+        'patch'
+    ]
 } as const;
 
 export const sUserSideEnum = {
@@ -40,9 +55,16 @@ export const sUserEx = {
             type: 'string'
         },
         locationId: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         side: {
@@ -60,8 +82,57 @@ export const sUserEx = {
         }
     },
     required: [
-        'id'
+        'id',
+        'locationId'
     ]
+} as const;
+
+export const sUploadCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            $ref: '#/components/schemas/UploadFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/UploadWhere'
+        }
+    }
+} as const;
+
+export const sUploadWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sUploadFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        }
+    }
 } as const;
 
 export const sUploadCollection = {
@@ -152,42 +223,6 @@ export const sUploadSort = {
     ]
 } as const;
 
-export const sUploadWhere = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sUploadFilter = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        }
-    }
-} as const;
-
 export const sCursor = {
     type: 'object',
     properties: {
@@ -220,104 +255,186 @@ export const sUploadCreate = {
     ]
 } as const;
 
-export const sAllowedContentTypesEnum = {
-    type: 'string',
-    enum: [
-        'image/jpeg',
-        'image/png',
-        'image/webp',
-        'image/avif',
-        'image/heic',
-        'image/heif'
-    ]
-} as const;
-
-export const sAllowedExtensionsEnum = {
-    type: 'string',
-    enum: [
-        'webp',
-        'png',
-        'jpg',
-        'jpeg',
-        'avif',
-        'heic',
-        'heif'
-    ]
-} as const;
-
-export const sListingTransactionStatusReject = {
+export const sTransactionStatusReject = {
     type: 'object',
     properties: {
-        listingTransactionId: {
+        transactionId: {
             type: 'string'
         }
     },
     required: [
-        'listingTransactionId'
+        'transactionId'
     ]
 } as const;
 
-export const sListingTransactionStatusAccept = {
+export const sTransactionStatusAccept = {
     type: 'object',
     properties: {
-        listingTransactionId: {
+        transactionId: {
             type: 'string'
         }
     },
     required: [
-        'listingTransactionId'
+        'transactionId'
     ]
 } as const;
 
-export const sListingTransactionMessageCreate = {
+export const sTransactionStatus = {
     type: 'object',
     properties: {
-        listingTransactionId: {
+        id: {
             type: 'string'
         },
-        message: {
+        transactionId: {
+            type: 'string'
+        },
+        side: {
+            $ref: '#/components/schemas/TransactionSideEnum'
+        },
+        status: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/TransactionStatusEnum'
+                },
+                {}
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        event: {
+            type: 'string',
+            enum: [
+                'status'
+            ]
+        }
+    },
+    required: [
+        'id',
+        'transactionId',
+        'side',
+        'status',
+        'createdAt',
+        'event'
+    ]
+} as const;
+
+export const sTransactionStatusEnum = {
+    type: 'string',
+    enum: [
+        'request',
+        'accepted',
+        'rejected',
+        'success',
+        'closed',
+        'expired'
+    ]
+} as const;
+
+export const sTransactionSideEnum = {
+    type: 'string',
+    enum: [
+        'seller',
+        'buyer',
+        'transaction',
+        'system',
+        'unknown'
+    ]
+} as const;
+
+export const sTransactionBuyerInfo = {
+    type: 'object',
+    properties: {
+        registered: {
+            type: 'string'
+        },
+        score: {
+            type: 'number',
+            example: 0
+        }
+    },
+    required: [
+        'registered',
+        'score'
+    ]
+} as const;
+
+export const sTransactionSellerInfo = {
+    type: 'object',
+    properties: {
+        registered: {
+            type: 'string'
+        },
+        score: {
+            type: 'number',
+            example: 0
+        }
+    },
+    required: [
+        'registered',
+        'score'
+    ]
+} as const;
+
+export const sTransactionCreate = {
+    type: 'object',
+    properties: {
+        listingId: {
             type: 'string'
         }
     },
     required: [
-        'listingTransactionId',
-        'message'
+        'listingId'
     ]
 } as const;
 
-export const sListingTransactionLogQuery = {
+export const sTransactionQuery = {
     type: 'object',
     properties: {
         cursor: {
             $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            $ref: '#/components/schemas/ListingTransactionLogFilter'
+            $ref: '#/components/schemas/TransactionFilter'
         },
         where: {
-            $ref: '#/components/schemas/ListingTransactionLogWhere'
+            $ref: '#/components/schemas/TransactionWhere'
         },
         sort: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/ListingTransactionLogSort'
+                $ref: '#/components/schemas/TransactionSort'
             }
+        },
+        meta: {
+            $ref: '#/components/schemas/TransactionMeta'
         }
     }
 } as const;
 
-export const sListingTransactionLogSortField = {
+export const sTransactionMeta = {
+    type: 'object',
+    properties: {
+        side: {
+            $ref: '#/components/schemas/UserSideEnum'
+        }
+    }
+} as const;
+
+export const sTransactionSortField = {
     type: 'string',
     enum: [
-        'createdAt'
+        'createdAt',
+        'updatedAt',
+        'expiresAt'
     ]
 } as const;
 
-export const sListingTransactionLogSort = {
+export const sTransactionSort = {
     type: 'object',
     properties: {
         field: {
-            $ref: '#/components/schemas/ListingTransactionLogSortField'
+            $ref: '#/components/schemas/TransactionSortField'
         },
         direction: {
             $ref: '#/components/schemas/OrderEnum'
@@ -329,7 +446,7 @@ export const sListingTransactionLogSort = {
     ]
 } as const;
 
-export const sListingTransactionLogWhere = {
+export const sTransactionWhere = {
     type: 'object',
     properties: {
         id: {
@@ -344,30 +461,30 @@ export const sListingTransactionLogWhere = {
         fulltext: {
             type: 'string'
         },
-        listingTransactionId: {
-            type: 'string'
-        },
-        side: {
-            $ref: '#/components/schemas/ListingTransactionSideEnum'
-        },
         userId: {
             type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        },
+        status: {
+            $ref: '#/components/schemas/TransactionStatusEnum'
+        },
+        statusIn: {
+            type: 'array',
+            items: {
+                allOf: [
+                    {
+                        $ref: '#/components/schemas/TransactionStatusEnum'
+                    },
+                    {}
+                ]
+            }
         }
     }
 } as const;
 
-export const sListingTransactionSideEnum = {
-    type: 'string',
-    enum: [
-        'seller',
-        'buyer',
-        'transaction',
-        'system',
-        'unknown'
-    ]
-} as const;
-
-export const sListingTransactionLogFilter = {
+export const sTransactionFilter = {
     type: 'object',
     properties: {
         id: {
@@ -382,25 +499,36 @@ export const sListingTransactionLogFilter = {
         fulltext: {
             type: 'string'
         },
-        listingTransactionId: {
-            type: 'string'
-        },
-        side: {
-            $ref: '#/components/schemas/ListingTransactionSideEnum'
-        },
         userId: {
             type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        },
+        status: {
+            $ref: '#/components/schemas/TransactionStatusEnum'
+        },
+        statusIn: {
+            type: 'array',
+            items: {
+                allOf: [
+                    {
+                        $ref: '#/components/schemas/TransactionStatusEnum'
+                    },
+                    {}
+                ]
+            }
         }
     }
 } as const;
 
-export const sListingTransactionLogCollection = {
+export const sTransactionCollection = {
     type: 'object',
     properties: {
         data: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/ListingTransactionLog'
+                $ref: '#/components/schemas/Transaction'
             }
         },
         more: {
@@ -410,6 +538,151 @@ export const sListingTransactionLogCollection = {
     required: [
         'data',
         'more'
+    ]
+} as const;
+
+export const sLocation = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        query: {
+            type: 'string'
+        },
+        lang: {
+            type: 'string'
+        },
+        country: {
+            type: 'string'
+        },
+        code: {
+            type: 'string'
+        },
+        county: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        municipality: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        state: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        address: {
+            type: 'string'
+        },
+        city: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        street: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        zip: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        confidence: {
+            type: 'number'
+        },
+        hash: {
+            type: 'string'
+        },
+        lat: {
+            type: 'number'
+        },
+        lon: {
+            type: 'number'
+        }
+    },
+    required: [
+        'id',
+        'query',
+        'lang',
+        'country',
+        'code',
+        'county',
+        'municipality',
+        'state',
+        'address',
+        'city',
+        'street',
+        'zip',
+        'confidence',
+        'hash',
+        'lat',
+        'lon'
+    ]
+} as const;
+
+export const sCurrencyListEnum = {
+    type: 'string',
+    enum: [
+        'CZK',
+        'EUR',
+        'USD',
+        'GBP',
+        'PLN',
+        'HUF',
+        'CHF'
     ]
 } as const;
 
@@ -460,427 +733,16 @@ export const sGallery = {
     ]
 } as const;
 
-export const sListingTransactionGallery = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        listingTransactionId: {
-            type: 'string'
-        },
-        side: {
-            $ref: '#/components/schemas/ListingTransactionSideEnum'
-        },
-        galleryId: {
-            type: 'string'
-        },
-        createdAt: {
-            type: 'string'
-        },
-        event: {
-            type: 'string',
-            enum: [
-                'gallery'
-            ]
-        },
-        gallery: {
-            $ref: '#/components/schemas/Gallery'
-        }
-    },
-    required: [
-        'id',
-        'listingTransactionId',
-        'side',
-        'galleryId',
-        'createdAt',
-        'event',
-        'gallery'
-    ]
-} as const;
-
-export const sListingTransactionLocation = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        listingTransactionId: {
-            type: 'string'
-        },
-        side: {
-            $ref: '#/components/schemas/ListingTransactionSideEnum'
-        },
-        locationId: {
-            type: 'string'
-        },
-        time: {
-            type: 'string'
-        },
-        createdAt: {
-            type: 'string'
-        },
-        event: {
-            type: 'string',
-            enum: [
-                'location'
-            ]
-        }
-    },
-    required: [
-        'id',
-        'listingTransactionId',
-        'side',
-        'locationId',
-        'time',
-        'createdAt',
-        'event'
-    ]
-} as const;
-
-export const sListingTransactionMessage = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        listingTransactionId: {
-            type: 'string'
-        },
-        side: {
-            $ref: '#/components/schemas/ListingTransactionSideEnum'
-        },
-        message: {
-            type: 'string'
-        },
-        createdAt: {
-            type: 'string'
-        },
-        event: {
-            type: 'string',
-            enum: [
-                'message'
-            ]
-        }
-    },
-    required: [
-        'id',
-        'listingTransactionId',
-        'side',
-        'message',
-        'createdAt',
-        'event'
-    ]
-} as const;
-
-export const sListingTransactionStatusEnum = {
-    type: 'string',
-    enum: [
-        'request',
-        'accepted',
-        'rejected',
-        'success',
-        'closed',
-        'expired'
-    ]
-} as const;
-
-export const sListingTransactionStatus = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        listingTransactionId: {
-            type: 'string'
-        },
-        side: {
-            $ref: '#/components/schemas/ListingTransactionSideEnum'
-        },
-        status: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/ListingTransactionStatusEnum'
-                },
-                {}
-            ]
-        },
-        createdAt: {
-            type: 'string'
-        },
-        event: {
-            type: 'string',
-            enum: [
-                'status'
-            ]
-        }
-    },
-    required: [
-        'id',
-        'listingTransactionId',
-        'side',
-        'status',
-        'createdAt',
-        'event'
-    ]
-} as const;
-
-export const sListingTransactionLog = {
-    anyOf: [
-        {
-            $ref: '#/components/schemas/ListingTransactionStatus'
-        },
-        {
-            $ref: '#/components/schemas/ListingTransactionMessage'
-        },
-        {
-            $ref: '#/components/schemas/ListingTransactionLocation'
-        },
-        {
-            $ref: '#/components/schemas/ListingTransactionGallery'
-        }
-    ]
-} as const;
-
-export const sListingTransactionGalleryCreate = {
-    type: 'object',
-    properties: {
-        listingTransactionId: {
-            type: 'string'
-        },
-        uploadIds: {
-            type: 'array',
-            items: {
-                type: 'string'
-            },
-            minItems: 1
-        }
-    },
-    required: [
-        'listingTransactionId',
-        'uploadIds'
-    ]
-} as const;
-
-export const sListingTransactionBuyerInfo = {
-    type: 'object',
-    properties: {
-        registered: {
-            type: 'string'
-        },
-        score: {
-            type: 'number',
-            example: 0
-        }
-    },
-    required: [
-        'registered',
-        'score'
-    ]
-} as const;
-
-export const sListingTransactionSellerInfo = {
-    type: 'object',
-    properties: {
-        registered: {
-            type: 'string'
-        },
-        score: {
-            type: 'number',
-            example: 0
-        }
-    },
-    required: [
-        'registered',
-        'score'
-    ]
-} as const;
-
-export const sListingTransactionCreate = {
-    type: 'object',
-    properties: {
-        listingId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'listingId'
-    ]
-} as const;
-
-export const sListingTransactionQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
-        },
-        filter: {
-            $ref: '#/components/schemas/ListingTransactionFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingTransactionWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingTransactionSort'
-            }
-        },
-        meta: {
-            $ref: '#/components/schemas/ListingTransactionMeta'
-        }
-    }
-} as const;
-
-export const sListingTransactionMeta = {
-    type: 'object',
-    properties: {
-        side: {
-            $ref: '#/components/schemas/UserSideEnum'
-        }
-    }
-} as const;
-
-export const sListingTransactionSortField = {
-    type: 'string',
-    enum: [
-        'createdAt',
-        'updatedAt',
-        'expiresAt'
-    ]
-} as const;
-
-export const sListingTransactionSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/ListingTransactionSortField'
-        },
-        direction: {
-            $ref: '#/components/schemas/OrderEnum'
-        }
-    },
-    required: [
-        'field',
-        'direction'
-    ]
-} as const;
-
-export const sListingTransactionWhere = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        },
-        status: {
-            $ref: '#/components/schemas/ListingTransactionStatusEnum'
-        },
-        statusIn: {
-            type: 'array',
-            items: {
-                allOf: [
-                    {
-                        $ref: '#/components/schemas/ListingTransactionStatusEnum'
-                    },
-                    {}
-                ]
-            }
-        }
-    }
-} as const;
-
-export const sListingTransactionFilter = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        },
-        status: {
-            $ref: '#/components/schemas/ListingTransactionStatusEnum'
-        },
-        statusIn: {
-            type: 'array',
-            items: {
-                allOf: [
-                    {
-                        $ref: '#/components/schemas/ListingTransactionStatusEnum'
-                    },
-                    {}
-                ]
-            }
-        }
-    }
-} as const;
-
-export const sListingTransactionCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingTransaction'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
-export const sCurrencyListEnum = {
-    type: 'string',
-    enum: [
-        'CZK',
-        'EUR',
-        'USD',
-        'GBP',
-        'PLN',
-        'HUF',
-        'CHF'
-    ]
-} as const;
-
-export const sListingTransaction = {
+export const sTransaction = {
     type: 'object',
     properties: {
         id: {
             type: 'string'
         },
         listingId: {
+            type: 'string'
+        },
+        messageThreadId: {
             type: 'string'
         },
         createdAt: {
@@ -896,7 +758,12 @@ export const sListingTransaction = {
             type: 'string'
         },
         gallery: {
-            $ref: '#/components/schemas/Gallery'
+            allOf: [
+                {
+                    $ref: '#/components/schemas/Gallery'
+                },
+                {}
+            ]
         },
         price: {
             type: 'number'
@@ -905,12 +772,13 @@ export const sListingTransaction = {
             $ref: '#/components/schemas/CurrencyListEnum'
         },
         location: {
-            type: 'string'
+            $ref: '#/components/schemas/Location'
         }
     },
     required: [
         'id',
         'listingId',
+        'messageThreadId',
         'createdAt',
         'updatedAt',
         'expiresAt',
@@ -919,6 +787,82 @@ export const sListingTransaction = {
         'price',
         'currency',
         'location'
+    ]
+} as const;
+
+export const sAllowedContentTypesEnum = {
+    type: 'string',
+    enum: [
+        'image/jpeg',
+        'image/png',
+        'image/webp',
+        'image/avif',
+        'image/heic',
+        'image/heif'
+    ]
+} as const;
+
+export const sAllowedExtensionsEnum = {
+    type: 'string',
+    enum: [
+        'webp',
+        'png',
+        'jpg',
+        'jpeg',
+        'avif',
+        'heic',
+        'heif'
+    ]
+} as const;
+
+export const sMessageTextCreate = {
+    type: 'object',
+    properties: {
+        messageThreadId: {
+            type: 'string'
+        },
+        message: {
+            type: 'string'
+        }
+    },
+    required: [
+        'messageThreadId',
+        'message'
+    ]
+} as const;
+
+export const sMessageText = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        messageThreadId: {
+            type: 'string'
+        },
+        text: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string'
+        },
+        type: {
+            type: 'string',
+            enum: [
+                'text'
+            ]
+        }
+    },
+    required: [
+        'id',
+        'userId',
+        'messageThreadId',
+        'text',
+        'createdAt',
+        'type'
     ]
 } as const;
 
@@ -945,7 +889,7 @@ export const sListingScoreTypeEnum = {
         'ignore',
         'flag',
         'view',
-        'cart'
+        'favourite'
     ]
 } as const;
 
@@ -1101,357 +1045,214 @@ export const sListingScore = {
     ]
 } as const;
 
-export const sListingIgnoreToggle = {
+export const sListingMetrics = {
     type: 'object',
     properties: {
-        toggle: {
-            type: 'boolean'
+        listing: {
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         },
-        listingId: {
-            type: 'string'
+        listingScore: {
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        views: {
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        viewsScore: {
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        favourite: {
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        favouriteScore: {
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        ignore: {
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        ignoreScore: {
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        flag: {
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        flagScore: {
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        score: {
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         }
     },
     required: [
-        'toggle',
-        'listingId'
+        'listing',
+        'listingScore',
+        'views',
+        'viewsScore',
+        'favourite',
+        'favouriteScore',
+        'ignore',
+        'ignoreScore',
+        'flag',
+        'flagScore',
+        'score'
     ]
 } as const;
 
-export const sListingIgnoreCountQuery = {
+export const sListingCountQuery = {
     type: 'object',
     properties: {
         filter: {
-            $ref: '#/components/schemas/ListingIgnoreFilter'
+            $ref: '#/components/schemas/ListingFilter'
         },
         where: {
-            $ref: '#/components/schemas/ListingIgnoreWhere'
+            $ref: '#/components/schemas/ListingWhere'
+        },
+        meta: {
+            $ref: '#/components/schemas/ListingMeta'
         }
     }
-} as const;
-
-export const sListingIgnoreWhere = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sListingIgnoreFilter = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sListingIgnoreQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
-        },
-        filter: {
-            $ref: '#/components/schemas/ListingIgnoreFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingIgnoreWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingIgnoreSort'
-            }
-        }
-    }
-} as const;
-
-export const sListingIgnoreSortField = {
-    type: 'string',
-    enum: [
-        'createdAt'
-    ]
-} as const;
-
-export const sListingIgnoreSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/ListingIgnoreSortField'
-        },
-        direction: {
-            $ref: '#/components/schemas/OrderEnum'
-        }
-    },
-    required: [
-        'field',
-        'direction'
-    ]
-} as const;
-
-export const sListingIgnoreCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingIgnore'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
-export const sListingIgnore = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'id',
-        'listingId'
-    ]
-} as const;
-
-export const sListingFlagToggle = {
-    type: 'object',
-    properties: {
-        toggle: {
-            type: 'boolean'
-        },
-        listingId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'toggle',
-        'listingId'
-    ]
-} as const;
-
-export const sListingFlagCountQuery = {
-    type: 'object',
-    properties: {
-        filter: {
-            $ref: '#/components/schemas/ListingFlagFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingFlagCountWhere'
-        }
-    }
-} as const;
-
-export const sListingFlagCountWhere = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sListingFlagFilter = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sListingFlagQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
-        },
-        filter: {
-            $ref: '#/components/schemas/ListingFlagFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingFlagWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingFlagSort'
-            }
-        }
-    }
-} as const;
-
-export const sListingFlagSortField = {
-    type: 'string',
-    enum: [
-        'createdAt'
-    ]
-} as const;
-
-export const sListingFlagSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/ListingFlagSortField'
-        },
-        direction: {
-            $ref: '#/components/schemas/OrderEnum'
-        }
-    },
-    required: [
-        'field',
-        'direction'
-    ]
-} as const;
-
-export const sListingFlagWhere = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sListingFlagCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingFlag'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
-export const sListingFlag = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'id',
-        'listingId'
-    ]
-} as const;
-
-export const sListingCartFeedCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingCartFeed'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
 } as const;
 
 export const sLatLon = {
@@ -1496,35 +1297,6 @@ export const sFeedId = {
     minLength: 1
 } as const;
 
-export const sListingSortField = {
-    type: 'string',
-    enum: [
-        'price',
-        'condition',
-        'age',
-        'createdAt',
-        'updatedAt',
-        'expiresAt',
-        'geo'
-    ]
-} as const;
-
-export const sListingSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/ListingSortField'
-        },
-        direction: {
-            $ref: '#/components/schemas/OrderEnum'
-        }
-    },
-    required: [
-        'field',
-        'direction'
-    ]
-} as const;
-
 export const sListingWhere = {
     type: 'object',
     properties: {
@@ -1538,6 +1310,9 @@ export const sListingWhere = {
             }
         },
         fulltext: {
+            type: 'string'
+        },
+        userId: {
             type: 'string'
         },
         priceMin: {
@@ -1617,7 +1392,7 @@ export const sListingWhere = {
         withIgnored: {
             type: 'boolean'
         },
-        inCart: {
+        isFavourite: {
             type: 'boolean'
         },
         feedId: {
@@ -1685,6 +1460,9 @@ export const sListingFilter = {
         fulltext: {
             type: 'string'
         },
+        userId: {
+            type: 'string'
+        },
         priceMin: {
             $ref: '#/components/schemas/PriceMin'
         },
@@ -1762,7 +1540,7 @@ export const sListingFilter = {
         withIgnored: {
             type: 'boolean'
         },
-        inCart: {
+        isFavourite: {
             type: 'boolean'
         },
         feedId: {
@@ -1773,347 +1551,6 @@ export const sListingFilter = {
         },
         transaction: {
             type: 'boolean'
-        }
-    }
-} as const;
-
-export const sListingQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
-        },
-        filter: {
-            $ref: '#/components/schemas/ListingFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingSort'
-            }
-        },
-        meta: {
-            $ref: '#/components/schemas/ListingMeta'
-        }
-    }
-} as const;
-
-export const sListingCartFeed = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        locationId: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        uploadId: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        name: {
-            type: 'string'
-        },
-        query: {
-            $ref: '#/components/schemas/ListingQuery'
-        },
-        upload: {
-            anyOf: [
-                {
-                    $ref: '#/components/schemas/Upload'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        count: {
-            type: 'number'
-        }
-    },
-    required: [
-        'id',
-        'name',
-        'query',
-        'upload',
-        'count'
-    ]
-} as const;
-
-export const sListingCartToggle = {
-    type: 'object',
-    properties: {
-        toggle: {
-            type: 'boolean'
-        },
-        feedId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'toggle',
-        'feedId',
-        'listingId'
-    ]
-} as const;
-
-export const sListingCartCountQuery = {
-    type: 'object',
-    properties: {
-        filter: {
-            $ref: '#/components/schemas/ListingCartFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingCartWhere'
-        }
-    }
-} as const;
-
-export const sListingCartWhere = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sListingCartFilter = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sListingCartQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
-        },
-        filter: {
-            $ref: '#/components/schemas/ListingCartFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingCartWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingCartSort'
-            }
-        }
-    }
-} as const;
-
-export const sListingCartSortField = {
-    type: 'string',
-    enum: [
-        'createdAt'
-    ]
-} as const;
-
-export const sListingCartSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/ListingCartSortField'
-        },
-        direction: {
-            $ref: '#/components/schemas/OrderEnum'
-        }
-    },
-    required: [
-        'field',
-        'direction'
-    ]
-} as const;
-
-export const sListingCartCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingCart'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
-export const sListingCart = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        feedId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        },
-        createdAt: {
-            type: 'string'
-        }
-    },
-    required: [
-        'id',
-        'feedId',
-        'listingId',
-        'createdAt'
-    ]
-} as const;
-
-export const sListingMetrics = {
-    type: 'object',
-    properties: {
-        listing: {
-            type: [
-                'number',
-                'null'
-            ]
-        },
-        listingScore: {
-            type: [
-                'number',
-                'null'
-            ]
-        },
-        views: {
-            type: [
-                'number',
-                'null'
-            ]
-        },
-        viewsScore: {
-            type: [
-                'number',
-                'null'
-            ]
-        },
-        cart: {
-            type: [
-                'number',
-                'null'
-            ]
-        },
-        cartScore: {
-            type: [
-                'number',
-                'null'
-            ]
-        },
-        ignore: {
-            type: [
-                'number',
-                'null'
-            ]
-        },
-        ignoreScore: {
-            type: [
-                'number',
-                'null'
-            ]
-        },
-        flag: {
-            type: [
-                'number',
-                'null'
-            ]
-        },
-        flagScore: {
-            type: [
-                'number',
-                'null'
-            ]
-        },
-        score: {
-            type: [
-                'number',
-                'null'
-            ]
-        }
-    },
-    required: [
-        'listing',
-        'listingScore',
-        'views',
-        'viewsScore',
-        'cart',
-        'cartScore',
-        'ignore',
-        'ignoreScore',
-        'flag',
-        'flagScore',
-        'score'
-    ]
-} as const;
-
-export const sListingCountQuery = {
-    type: 'object',
-    properties: {
-        filter: {
-            $ref: '#/components/schemas/ListingFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingWhere'
-        },
-        meta: {
-            $ref: '#/components/schemas/ListingMeta'
         }
     }
 } as const;
@@ -2158,14 +1595,14 @@ export const sListingCreate = {
         age: {
             type: 'number'
         },
+        draftId: {
+            type: 'string'
+        },
         locationId: {
             type: 'string'
         },
         categoryId: {
             type: 'string'
-        },
-        currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
         },
         expiresAt: {
             $ref: '#/components/schemas/ListingExpireEnum'
@@ -2176,8 +1613,18 @@ export const sListingCreate = {
             maxLength: 72
         },
         description: {
-            type: 'string',
-            maxLength: 2048
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 2048
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         },
         uploadIds: {
             type: 'array',
@@ -2193,7 +1640,6 @@ export const sListingCreate = {
         'age',
         'locationId',
         'categoryId',
-        'currency',
         'expiresAt',
         'title',
         'uploadIds'
@@ -2209,221 +1655,213 @@ export const sListingExpireEnum = {
     ]
 } as const;
 
-export const sListing = {
+export const sIgnoreToggle = {
     type: 'object',
     properties: {
-        id: {
-            type: 'string'
-        },
-        price: {
-            type: 'number'
-        },
-        currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
-        },
-        condition: {
-            type: 'number'
-        },
-        age: {
-            type: 'number'
-        },
-        locationId: {
-            type: 'string'
-        },
-        categoryId: {
-            type: 'string'
-        },
-        expiresAt: {
-            type: 'string'
-        },
-        title: {
-            type: 'string'
-        },
-        description: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        createdAt: {
-            type: 'string'
-        },
-        updatedAt: {
-            type: 'string'
-        },
-        location: {
-            $ref: '#/components/schemas/Location'
-        },
-        category: {
-            $ref: '#/components/schemas/Category'
-        },
-        gallery: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/Gallery'
-                },
-                {}
-            ]
-        },
-        isInCart: {
+        toggle: {
             type: 'boolean'
         },
-        isIgnored: {
-            type: 'boolean'
-        },
-        hasFlag: {
-            type: 'boolean'
-        },
-        transactionId: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
+        listingId: {
+            type: 'string'
         }
     },
     required: [
-        'id',
-        'price',
-        'currency',
-        'condition',
-        'age',
-        'locationId',
-        'categoryId',
-        'expiresAt',
-        'title',
-        'createdAt',
-        'updatedAt',
-        'location',
-        'category',
-        'gallery',
-        'isInCart',
-        'isIgnored',
-        'hasFlag',
-        'transactionId'
+        'toggle',
+        'listingId'
     ]
 } as const;
 
-export const sCategory = {
+export const sIgnoreCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            $ref: '#/components/schemas/IgnoreFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/IgnoreWhere'
+        }
+    }
+} as const;
+
+export const sIgnoreWhere = {
     type: 'object',
     properties: {
         id: {
             type: 'string'
         },
-        group: {
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
             type: 'string'
         },
-        category: {
+        userId: {
             type: 'string'
         },
-        slug: {
+        listingId: {
             type: 'string'
+        }
+    }
+} as const;
+
+export const sIgnoreFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sIgnoreQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/IgnoreFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/IgnoreWhere'
         },
         sort: {
-            type: 'number'
-        },
-        locale: {
-            type: 'string'
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/IgnoreSort'
+            }
         }
-    },
-    required: [
-        'id',
-        'group',
-        'category',
-        'slug',
-        'sort',
-        'locale'
+    }
+} as const;
+
+export const sIgnoreSortField = {
+    type: 'string',
+    enum: [
+        'createdAt'
     ]
 } as const;
 
-export const sLocation = {
+export const sIgnoreSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/IgnoreSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sIgnoreCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/Ignore'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sIgnore = {
     type: 'object',
     properties: {
         id: {
             type: 'string'
         },
-        query: {
+        listingId: {
             type: 'string'
-        },
-        lang: {
-            type: 'string'
-        },
-        country: {
-            type: 'string'
-        },
-        code: {
-            type: 'string'
-        },
-        county: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        municipality: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        state: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        address: {
-            type: 'string'
-        },
-        city: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        street: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        zip: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        confidence: {
-            type: 'number'
-        },
-        hash: {
-            type: 'string'
-        },
-        lat: {
-            type: 'number'
-        },
-        lon: {
-            type: 'number'
         }
     },
     required: [
         'id',
-        'query',
-        'lang',
-        'country',
-        'code',
-        'address',
-        'confidence',
-        'hash',
-        'lat',
-        'lon'
+        'listingId'
     ]
+} as const;
+
+export const sGalleryCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            $ref: '#/components/schemas/GalleryFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/GalleryWhere'
+        }
+    }
+} as const;
+
+export const sGalleryWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sGalleryFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        }
+    }
 } as const;
 
 export const sGalleryCollection = {
@@ -2432,7 +1870,12 @@ export const sGalleryCollection = {
         data: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/Gallery'
+                allOf: [
+                    {
+                        $ref: '#/components/schemas/Gallery'
+                    },
+                    {}
+                ]
             }
         },
         more: {
@@ -2489,7 +1932,35 @@ export const sGallerySort = {
     ]
 } as const;
 
-export const sGalleryWhere = {
+export const sFlagToggle = {
+    type: 'object',
+    properties: {
+        toggle: {
+            type: 'boolean'
+        },
+        listingId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'toggle',
+        'listingId'
+    ]
+} as const;
+
+export const sFlagCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            $ref: '#/components/schemas/FlagFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/FlagCountWhere'
+        }
+    }
+} as const;
+
+export const sFlagCountWhere = {
     type: 'object',
     properties: {
         id: {
@@ -2505,12 +1976,15 @@ export const sGalleryWhere = {
             type: 'string'
         },
         userId: {
+            type: 'string'
+        },
+        listingId: {
             type: 'string'
         }
     }
 } as const;
 
-export const sGalleryFilter = {
+export const sFlagFilter = {
     type: 'object',
     properties: {
         id: {
@@ -2527,8 +2001,252 @@ export const sGalleryFilter = {
         },
         userId: {
             type: 'string'
+        },
+        listingId: {
+            type: 'string'
         }
     }
+} as const;
+
+export const sFlagQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/FlagFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/FlagWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/FlagSort'
+            }
+        }
+    }
+} as const;
+
+export const sFlagSortField = {
+    type: 'string',
+    enum: [
+        'createdAt'
+    ]
+} as const;
+
+export const sFlagSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/FlagSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sFlagWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sFlagCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/Flag'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sFlag = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'listingId'
+    ]
+} as const;
+
+export const sFeedFavouriteCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/FeedFavourite'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sListingSortField = {
+    type: 'string',
+    enum: [
+        'price',
+        'condition',
+        'age',
+        'createdAt',
+        'updatedAt',
+        'expiresAt',
+        'geo'
+    ]
+} as const;
+
+export const sListingSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/ListingSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sListingQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/ListingFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/ListingWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/ListingSort'
+            }
+        },
+        meta: {
+            $ref: '#/components/schemas/ListingMeta'
+        }
+    }
+} as const;
+
+export const sFeedFavourite = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        locationId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        uploadId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        name: {
+            type: 'string'
+        },
+        query: {
+            $ref: '#/components/schemas/ListingQuery'
+        },
+        upload: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/Upload'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        count: {
+            type: 'number'
+        }
+    },
+    required: [
+        'id',
+        'locationId',
+        'uploadId',
+        'name',
+        'query',
+        'upload',
+        'count'
+    ]
 } as const;
 
 export const sFeedGalleryCreate = {
@@ -2551,114 +2269,16 @@ export const sFeedGalleryCreate = {
     ]
 } as const;
 
-export const sFeedCollection = {
+export const sFeedCountQuery = {
     type: 'object',
     properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/Feed'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
-export const sFeed = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        locationId: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        uploadId: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        name: {
-            type: 'string'
-        },
-        query: {
-            $ref: '#/components/schemas/ListingQuery'
-        },
-        upload: {
-            anyOf: [
-                {
-                    $ref: '#/components/schemas/Upload'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        }
-    },
-    required: [
-        'id',
-        'name',
-        'query',
-        'upload'
-    ]
-} as const;
-
-export const sFeedQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
-        },
         filter: {
             $ref: '#/components/schemas/FeedFilter'
         },
         where: {
             $ref: '#/components/schemas/FeedWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/FeedSort'
-            }
         }
     }
-} as const;
-
-export const sFeedSortField = {
-    type: 'string',
-    enum: [
-        'createdAt',
-        'updatedAt'
-    ]
-} as const;
-
-export const sFeedSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/FeedSortField'
-        },
-        direction: {
-            $ref: '#/components/schemas/OrderEnum'
-        }
-    },
-    required: [
-        'field',
-        'direction'
-    ]
 } as const;
 
 export const sFeedWhere = {
@@ -2703,33 +2323,204 @@ export const sFeedFilter = {
     }
 } as const;
 
+export const sFeedCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'string',
+                        minLength: 1
+                    }
+                },
+                required: [
+                    'id'
+                ]
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
 export const sFeedPatch = {
     type: 'object',
     properties: {
-        id: {
-            type: 'string',
-            minLength: 1
+        patch: {
+            type: 'object',
+            properties: {
+                id: {
+                    type: 'string'
+                },
+                locationId: {
+                    anyOf: [
+                        {
+                            type: 'string'
+                        },
+                        {
+                            type: 'null'
+                        },
+                        {
+                            type: 'null'
+                        }
+                    ]
+                },
+                uploadId: {
+                    anyOf: [
+                        {
+                            type: 'string'
+                        },
+                        {
+                            type: 'null'
+                        },
+                        {
+                            type: 'null'
+                        }
+                    ]
+                },
+                name: {
+                    type: 'string'
+                },
+                query: {
+                    $ref: '#/components/schemas/ListingQuery'
+                }
+            }
         },
+        query: {
+            $ref: '#/components/schemas/FeedQuery'
+        }
+    },
+    required: [
+        'patch',
+        'query'
+    ]
+} as const;
+
+export const sFeedSortField = {
+    type: 'string',
+    enum: [
+        'createdAt',
+        'updatedAt'
+    ]
+} as const;
+
+export const sFeedSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/FeedSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sFeedQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/FeedFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/FeedWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/FeedSort'
+            }
+        }
+    }
+} as const;
+
+export const sFeedCreate = {
+    type: 'object',
+    properties: {
         name: {
             type: 'string',
             minLength: 1
         },
         locationId: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        uploadId: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         query: {
+            $ref: '#/components/schemas/ListingQuery'
+        }
+    },
+    required: [
+        'name',
+        'query'
+    ]
+} as const;
+
+export const sFeed = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        locationId: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ListingQuery'
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        uploadId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        name: {
+            type: 'string'
+        },
+        query: {
+            $ref: '#/components/schemas/ListingQuery'
+        },
+        upload: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/Upload'
                 },
                 {
                     type: 'null'
@@ -2741,30 +2532,866 @@ export const sFeedPatch = {
         }
     },
     required: [
-        'id'
+        'id',
+        'locationId',
+        'uploadId',
+        'name',
+        'query',
+        'upload'
     ]
 } as const;
 
-export const sFeedCreate = {
+export const sFavouriteToggle = {
     type: 'object',
     properties: {
-        name: {
-            type: 'string',
-            minLength: 1
+        toggle: {
+            type: 'boolean'
         },
-        locationId: {
-            type: [
-                'string',
-                'null'
-            ]
+        feedId: {
+            type: 'string'
         },
-        query: {
-            $ref: '#/components/schemas/ListingQuery'
+        listingId: {
+            type: 'string'
         }
     },
     required: [
-        'name',
+        'toggle',
+        'feedId',
+        'listingId'
+    ]
+} as const;
+
+export const sListing = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        price: {
+            type: 'number'
+        },
+        currency: {
+            $ref: '#/components/schemas/CurrencyListEnum'
+        },
+        condition: {
+            type: 'number'
+        },
+        age: {
+            type: 'number'
+        },
+        locationId: {
+            type: 'string'
+        },
+        categoryId: {
+            type: 'string'
+        },
+        galleryId: {
+            type: 'string'
+        },
+        draftId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        expiresAt: {
+            type: 'string'
+        },
+        title: {
+            type: 'string'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        updatedAt: {
+            type: 'string'
+        },
+        location: {
+            $ref: '#/components/schemas/Location'
+        },
+        category: {
+            $ref: '#/components/schemas/Category'
+        },
+        gallery: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/Gallery'
+                },
+                {}
+            ]
+        },
+        isFavourite: {
+            type: 'boolean'
+        },
+        isIgnored: {
+            type: 'boolean'
+        },
+        hasFlag: {
+            type: 'boolean'
+        },
+        transactionId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        }
+    },
+    required: [
+        'id',
+        'price',
+        'currency',
+        'condition',
+        'age',
+        'locationId',
+        'categoryId',
+        'galleryId',
+        'draftId',
+        'expiresAt',
+        'title',
+        'description',
+        'createdAt',
+        'updatedAt',
+        'location',
+        'category',
+        'gallery',
+        'isFavourite',
+        'isIgnored',
+        'hasFlag',
+        'transactionId'
+    ]
+} as const;
+
+export const sCategory = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        group: {
+            type: 'string'
+        },
+        category: {
+            type: 'string'
+        },
+        slug: {
+            type: 'string'
+        },
+        sort: {
+            type: 'number'
+        },
+        locale: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'group',
+        'category',
+        'slug',
+        'sort',
+        'locale'
+    ]
+} as const;
+
+export const sFavouriteCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            $ref: '#/components/schemas/FavouriteFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/FavouriteWhere'
+        }
+    }
+} as const;
+
+export const sFavouriteWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sFavouriteFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sFavouriteQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/FavouriteFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/FavouriteWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/FavouriteSort'
+            }
+        }
+    }
+} as const;
+
+export const sFavouriteSortField = {
+    type: 'string',
+    enum: [
+        'createdAt'
+    ]
+} as const;
+
+export const sFavouriteSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/FavouriteSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sFavouriteCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/Favourite'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sFavourite = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        feedId: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'feedId',
+        'listingId',
+        'createdAt'
+    ]
+} as const;
+
+export const sDraftPatch = {
+    type: 'object',
+    properties: {
+        patch: {
+            $ref: '#/components/schemas/DraftPatchData'
+        },
+        query: {
+            $ref: '#/components/schemas/DraftQuery'
+        }
+    },
+    required: [
+        'patch',
         'query'
+    ]
+} as const;
+
+export const sDraftSortField = {
+    type: 'string',
+    enum: [
+        'createdAt',
+        'updatedAt'
+    ]
+} as const;
+
+export const sDraftSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/DraftSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sDraftWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        updatedAtGte: {
+            type: 'string'
+        },
+        updatedAtLte: {
+            type: 'string'
+        },
+        usedAtIsNull: {
+            type: 'boolean'
+        }
+    }
+} as const;
+
+export const sDraftFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        updatedAtGte: {
+            type: 'string'
+        },
+        updatedAtLte: {
+            type: 'string'
+        },
+        usedAtIsNull: {
+            type: 'boolean'
+        }
+    }
+} as const;
+
+export const sDraftQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/DraftFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/DraftWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/DraftSort'
+            }
+        }
+    }
+} as const;
+
+export const sDraftPatchData = {
+    type: 'object',
+    properties: {
+        price: {
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        condition: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        age: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        locationId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        categoryId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        galleryId: {
+            type: 'string'
+        },
+        expiresAt: {
+            anyOf: [
+                {
+                    type: 'null'
+                },
+                {
+                    $ref: '#/components/schemas/ListingExpireEnum'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        title: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        usedAt: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sDraftGalleryCreate = {
+    type: 'object',
+    properties: {
+        draftId: {
+            type: 'string'
+        },
+        uploadIds: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            minItems: 1
+        }
+    },
+    required: [
+        'draftId',
+        'uploadIds'
+    ]
+} as const;
+
+export const sDraftCreate = {
+    type: 'object',
+    properties: {
+        price: {
+            type: 'number'
+        },
+        condition: {
+            type: 'number'
+        },
+        age: {
+            type: 'number'
+        },
+        locationId: {
+            type: 'string'
+        },
+        categoryId: {
+            type: 'string'
+        },
+        expiresAt: {
+            $ref: '#/components/schemas/ListingExpireEnum'
+        },
+        title: {
+            type: 'string',
+            minLength: 5,
+            maxLength: 72
+        },
+        description: {
+            type: 'string',
+            maxLength: 2048
+        },
+        uploadIds: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        }
+    }
+} as const;
+
+export const sDraft = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        price: {
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        currency: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/CurrencyListEnum'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        condition: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        age: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        locationId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        categoryId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        galleryId: {
+            type: 'string'
+        },
+        expiresAt: {
+            anyOf: [
+                {
+                    type: 'null'
+                },
+                {
+                    $ref: '#/components/schemas/ListingExpireEnum'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        title: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        updatedAt: {
+            type: 'string'
+        },
+        usedAt: {
+            type: 'string'
+        },
+        location: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/Location'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        category: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/Category'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        gallery: {
+            $ref: '#/components/schemas/Gallery'
+        }
+    },
+    required: [
+        'id',
+        'price',
+        'currency',
+        'condition',
+        'age',
+        'locationId',
+        'categoryId',
+        'galleryId',
+        'expiresAt',
+        'title',
+        'description',
+        'createdAt',
+        'updatedAt',
+        'usedAt',
+        'location',
+        'category',
+        'gallery'
+    ]
+} as const;
+
+export const sDraftCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            $ref: '#/components/schemas/DraftFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/DraftWhere'
+        }
+    }
+} as const;
+
+export const sDraftCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'string',
+                        minLength: 1
+                    }
+                },
+                required: [
+                    'id'
+                ]
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
     ]
 } as const;
 
@@ -2788,7 +3415,7 @@ export const sCount = {
     ]
 } as const;
 
-export const sMessage = {
+export const sNotice = {
     type: 'object',
     properties: {
         message: {

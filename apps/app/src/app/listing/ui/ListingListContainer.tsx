@@ -4,11 +4,10 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import { tvc } from "@use-pico/cls";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCollectionQuery, withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { type FC, type ReactNode, useEffect, useId, useMemo, useRef } from "react";
-import { ListingHeroContainer } from "~/app/listing/ui/ListingHeroContainer";
+import { type FC, type ReactNode, useEffect, useId, useRef } from "react";
+import { Hero } from "~/app/listing/ui/Hero";
 
 export namespace ListingListContainer {
 	export interface Props extends Container.Props {
@@ -20,7 +19,6 @@ export namespace ListingListContainer {
 		scrollToId: string | undefined;
 		renderEmptyFn?(): ReactNode;
 		appendix?: ReactNode;
-		overlay: ListingHeroContainer.Overlay.Render;
 		feedId: string;
 		withScore: boolean;
 	}
@@ -33,7 +31,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	scrollToId,
 	renderEmptyFn,
 	appendix,
-	overlay,
 	feedId,
 	withScore,
 	...props
@@ -60,105 +57,112 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		scrollTo,
 	]);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: We don't care about changing "empty" props
-	const emptySlot = useMemo(() => {
-		return renderEmptyFn ? (
-			renderEmptyFn()
-		) : (
-			<Status
-				ui="ListingList-empty"
-				key={`${listingIdPrefix}-no-listings`}
-				icon={"icon-[streamline--sad-face-remix]"}
-				textTitle={"No listings (title)"}
-				action={
-					<LinkTo
-						to={"/$locale/buyer"}
-						params={{
-							locale,
-						}}
-					>
-						<Button
-							iconEnabled={ArrowLeftIcon}
-							tone={"secondary"}
-							label={"Back to home (link)"}
-						/>
-					</LinkTo>
-				}
-			/>
-		);
-	}, [
-		locale,
-	]);
-
 	return (
 		<Container
 			ref={mergedRef}
-			ui="ListingList-root"
-			layout={"vertical-full"}
-			snap={"vertical-start"}
-			className={tvc([
-				"isolate",
-				"overflow-x-clip",
-				"overscroll-contain",
-				"contain-strict",
-				"will-change-scroll",
-			])}
+			data-ui={"ListingListContainer[Container]"}
+			ui={{
+				layout: "vertical-full",
+				snap: "vertical",
+				snapAlign: "center",
+				height: "full",
+			}}
 			{...props}
 		>
 			<withListingCollectionQuery.Suspense
 				data={query}
-				fallback={<SpinnerContainer />}
+				fallback={<SpinnerContainer data-ui={"ListingListContainer-[SpinnerContainer]"} />}
 			>
 				{({ data }) => {
 					if (data.data.length === 0) {
-						return emptySlot;
+						return renderEmptyFn ? (
+							renderEmptyFn()
+						) : (
+							<Status
+								data-ui={"ListingListContainer-[Status-empty]"}
+								key={`${listingIdPrefix}-no-listings`}
+								icon={"icon-[streamline--sad-face-remix]"}
+								textTitle={"No listings (title)"}
+								action={
+									<LinkTo
+										to={"/$locale/ui/buyer"}
+										params={{
+											locale,
+										}}
+									>
+										<Button
+											iconEnabled={ArrowLeftIcon}
+											label={"Back to home (link)"}
+											ui={{
+												tone: "secondary",
+											}}
+										/>
+									</LinkTo>
+								}
+							/>
+						);
 					}
 
-					return data.data.map((listing) => (
-						<VisibleContainer
-							key={`${listingIdPrefix}-${listing.id}`}
-							scrollerRef={containerRef}
-							useProximity
-							overscan={4}
-							delayMs={200}
-							placeholder={(props) => (
-								<SpinnerContainer
-									ui="ListingList-spinner"
-									data-id={listing.id}
-									{...props}
-								/>
-							)}
-							className={tvc([
-								"[content-visibility:auto]",
-								"[contain-intrinsic-size:100dvh]",
-							])}
-						>
-							<withListingFetchQuery.Suspense
-								data={{
-									where: {
-										id: listing.id,
-									},
-								}}
-								fallback={<SpinnerContainer height={"fit"} />}
-							>
-								{({ data: listing }) => {
-									return (
-										<ListingHeroContainer
-											locale={locale}
-											listing={listing}
-											overlay={overlay}
-											feedId={feedId}
-											withScore={withScore}
+					return (
+						<>
+							{data.data.map((listing) => (
+								<VisibleContainer
+									key={`${listingIdPrefix}-${listing.id}`}
+									data-ui="ListingListContainer-[VisibleContainer]"
+									scrollerRef={containerRef}
+									useProximity
+									overscan={4}
+									delayMs={200}
+									placeholder={(props) => (
+										<SpinnerContainer
+											data-ui={
+												"ListingListContainer-[SpinnerContainer.placeholder]"
+											}
+											data-id={listing.id}
+											{...props}
 										/>
-									);
-								}}
-							</withListingFetchQuery.Suspense>
-						</VisibleContainer>
-					));
+									)}
+									ui={{
+										height: "full",
+										width: "full",
+									}}
+								>
+									<withListingFetchQuery.Suspense
+										data={{
+											where: {
+												id: listing.id,
+											},
+										}}
+										fallback={
+											<SpinnerContainer
+												data-ui={
+													"ListingListContainer-[SpinnerContainer.listing-fetch]"
+												}
+											/>
+										}
+									>
+										{({ data: listing }) => {
+											return (
+												<Hero
+													data-ui={
+														"ListingListContainer-[ListingHeroContainer]"
+													}
+													locale={locale}
+													listing={listing}
+													feedId={feedId}
+													withScore={withScore}
+												/>
+											);
+										}}
+									</withListingFetchQuery.Suspense>
+								</VisibleContainer>
+							))}
+
+							{appendix}
+						</>
+					);
 				}}
 			</withListingCollectionQuery.Suspense>
-
-			{appendix}
 		</Container>
 	);
 };

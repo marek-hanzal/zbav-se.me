@@ -1,77 +1,113 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useSnapperNav } from "@use-pico/client/hook";
+import { ArrowRightIcon } from "@use-pico/client/icon";
+import { uiButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import { SnapperNav } from "@use-pico/client/ui/snapper-nav";
-import { VariantProvider } from "@use-pico/cls";
-import { ThemeCls } from "@zbav-se.me/ui/cls";
-import { Fade } from "@zbav-se.me/ui/fade";
-import { useRef } from "react";
-import { ContactSheet } from "~/app/home/ContactSheet";
-import { CtaSheet } from "~/app/home/CtaSheet";
-import { FeaturesSheet } from "~/app/home/FeaturesSheet";
-import { HeroSheet } from "~/app/home/HeroSheet";
-import { useEnterAnim } from "~/app/home/useEnterAnim";
-import { WhatSheet } from "~/app/home/WhatSheet";
+import { LinkTo } from "@use-pico/client/ui/link-to";
+import { Status } from "@use-pico/client/ui/status";
+import { Tx } from "@use-pico/client/ui/tx";
+import { Logo } from "@zbav-se.me/ui/logo";
 
 export const Route = createFileRoute("/$locale/landing")({
 	component() {
 		const { locale } = Route.useParams();
-		const scrollerRef = useRef<HTMLDivElement>(null);
-
-		useEnterAnim(scrollerRef);
-
-		const snapperNav = useSnapperNav({
-			containerRef: scrollerRef,
-			orientation: "vertical",
-			count: 5,
-		});
 
 		return (
-			<Container>
-				<Fade scrollableRef={scrollerRef} />
-
-				<SnapperNav
-					snapperNav={snapperNav}
-					iconProps={() => ({
-						size: "xs",
-						tone: "secondary",
-						theme: "light",
-					})}
-					limit={7}
-					subtle
-					orientation={"vertical"}
-				/>
-
+			<Container
+				data-ui={"/landing-[Container]"}
+				ui={{
+					layout: "vertical-centered",
+					flow: "vertical",
+					height: "full",
+					tone: "brand",
+					theme: "light",
+					background: "alt",
+					inner: "xl",
+					gap: "xl",
+				}}
+			>
 				<Container
-					ref={scrollerRef}
-					layout={"vertical-full"}
-					snap={"vertical-start"}
-					gap={"md"}
+					ui={{
+						layout: "horizontal",
+						height: "auto",
+						width: "full",
+					}}
 				>
-					<HeroSheet locale={locale} />
-
-					<VariantProvider
-						cls={ThemeCls}
-						variant={{
-							tone: "secondary",
-						}}
-					>
-						<WhatSheet />
-					</VariantProvider>
-
-					<FeaturesSheet />
-
-					<VariantProvider
-						cls={ThemeCls}
-						variant={{
-							tone: "secondary",
-						}}
-					>
-						<CtaSheet locale={locale} />
-					</VariantProvider>
-
-					<ContactSheet />
+					<Logo />
 				</Container>
+
+				<Status
+					data-ui="/landing-[Status]"
+					textTitle={"Landing - Hero (title)"}
+					textMessage={"Landing - Hero (subtitle)"}
+					messageProps={{
+						className: "text-center",
+					}}
+					ui={{
+						tone: "primary",
+						theme: "light",
+						color: "lead",
+					}}
+				>
+					<Container
+						ui={{
+							layout: "vertical-flex",
+							inner: "4xl",
+							gap: "xl",
+						}}
+					>
+						<LinkTo
+							{...uiButton({
+								ui: {
+									tone: "secondary",
+									theme: "light",
+									size: "default",
+									text: "xl",
+									justify: "center",
+								},
+								className: [],
+							})}
+							icon={ArrowRightIcon}
+							iconPosition={"right"}
+							iconProps={{
+								ui: {
+									text: "2xl",
+								},
+							}}
+							to={"/$locale/login"}
+							params={{
+								locale,
+							}}
+						>
+							<Tx label={"Login (hero)"} />
+						</LinkTo>
+
+						<LinkTo
+							{...uiButton({
+								ui: {
+									tone: "primary",
+									theme: "light",
+									size: "default",
+									text: "xl",
+									justify: "center",
+								},
+								className: [],
+							})}
+							icon={ArrowRightIcon}
+							iconPosition={"right"}
+							iconProps={{
+								ui: {
+									text: "2xl",
+								},
+							}}
+							to={"/$locale/register"}
+							params={{
+								locale,
+							}}
+						>
+							<Tx label={"Register (hero)"} />
+						</LinkTo>
+					</Container>
+				</Status>
 			</Container>
 		);
 	},

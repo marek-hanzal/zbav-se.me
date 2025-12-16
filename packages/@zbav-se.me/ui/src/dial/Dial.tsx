@@ -1,5 +1,4 @@
 import { Icon } from "@use-pico/client/icon";
-import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
@@ -31,72 +30,79 @@ const icons = {
 } as const;
 
 export namespace Dial {
-	export interface Props extends Container.Props {
+	export interface Props extends Omit<Container.Props, "onChange"> {
 		value: string | undefined;
 		onChange: (value: string | undefined) => void;
 	}
 }
 
-export const Dial: FC<Dial.Props> = ({ ref, value, onChange, ...props }) => {
+export const Dial: FC<Dial.Props> = ({ value, onChange, ui, ...props }) => {
 	return (
 		<Container
-			ui={"Dial-Container"}
-			layout={"vertical-header-content"}
-			height={"fit"}
-			gap={"sm"}
+			data-ui={"Dial"}
+			ui={{
+				layout: "vertical-header-content",
+				height: "full",
+				gap: "sm",
+				...ui,
+			}}
 			{...props}
 		>
-			<Badge
-				tone={"primary"}
-				theme={"light"}
-				size={"xl"}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"inline-flex",
-								"flex-row",
-								"items-center",
-								"justify-between",
-								"w-full",
-							],
-							token: [
-								"round.default",
-								"tone.primary.light.border",
-								"tone.primary.light.shadow",
-							],
-						},
-					},
+			<Container
+				data-ui={"Dial-Badge-value-wrapper"}
+				ui={{
+					tone: "neutral",
+					theme: "light",
+					flow: "horizontal",
+					justify: "space-between",
+					items: "center",
+					inner: "lg",
+					background: "default",
+					shadow: true,
+					border: true,
+					round: "default",
 				}}
 			>
 				{value ? (
 					<Typo
+						data-ui={"Dial-Typo-value"}
 						label={value}
-						size={"xl"}
-						font={"bold"}
-						display={"block"}
+						ui={{
+							text: "xl",
+							font: "bold",
+							display: "block",
+						}}
 					/>
 				) : (
 					<Tx
+						data-ui={"Dial-Typo-value-placeholder"}
 						label={"Price (placeholder)"}
-						size={"xl"}
-						font={"bold"}
-						display={"block"}
+						ui={{
+							text: "xl",
+							font: "bold",
+							display: "block",
+							color: "icon",
+						}}
 					/>
 				)}
 
 				<Icon
+					data-ui={"Dial-Icon-backspace"}
 					icon={BackspaceIcon}
-					tone="secondary"
-					theme="light"
-					disabled={!value}
 					onClick={() => {
 						onChange(value?.slice(0, -1) || undefined);
 					}}
+					ui={{
+						tone: "secondary",
+						theme: "light",
+						disabled: !value,
+						text: "2xl",
+					}}
 				/>
-			</Badge>
+			</Container>
 
 			<div
+				data-ui={"Dial-grid"}
 				className={tvc([
 					"grid",
 					"grid-cols-3",
@@ -119,6 +125,7 @@ export const Dial: FC<Dial.Props> = ({ ref, value, onChange, ...props }) => {
 				))}
 
 				<Item
+					data-ui={"Dial-Item-comma"}
 					icon={"icon-[fluent--comma-20-filled]"}
 					disabled={!value || value.includes(".")}
 					onClick={() => {
@@ -127,6 +134,7 @@ export const Dial: FC<Dial.Props> = ({ ref, value, onChange, ...props }) => {
 				/>
 
 				<Item
+					data-ui={"Dial-Item-zero"}
 					icon={icons[0]}
 					disabled={false}
 					onClick={() => {
@@ -135,6 +143,7 @@ export const Dial: FC<Dial.Props> = ({ ref, value, onChange, ...props }) => {
 				/>
 
 				<Item
+					data-ui={"Dial-Item-clear"}
 					icon={ClearIcon}
 					disabled={!value}
 					onClick={() => {

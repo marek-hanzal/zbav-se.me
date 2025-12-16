@@ -1,12 +1,11 @@
 import { SpinnerIcon } from "@use-pico/client/icon";
-import { Container } from "@use-pico/client/ui/container";
-import { Data } from "@use-pico/client/ui/data";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Progress } from "@use-pico/client/ui/progress";
 import { Status } from "@use-pico/client/ui/status";
 import { withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withUploadFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
-import { Sheet } from "@zbav-se.me/ui/sheet";
+import { HeroImage } from "@zbav-se.me/ui/img";
 import {
 	type ChangeEvent,
 	type FC,
@@ -20,7 +19,7 @@ export namespace PhotoUpload {
 	export type Value = string | undefined;
 	export type OnChangeFn = (uploadId: Value) => void;
 
-	export interface Props extends Omit<Sheet.Props, "slot" | "onChange"> {
+	export interface Props extends Omit<Container.Props, "onChange"> {
 		camera?: boolean;
 		value: Value;
 		onChange: OnChangeFn;
@@ -31,13 +30,10 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	camera = false,
 	value,
 	onChange,
-	tweak,
-	disabled,
+	ui,
 	...props
 }) => {
-	const [current, setCurrent] = useState<string | undefined>(value);
 	const inputRef = useRef<HTMLInputElement>(null);
-	const containerRef = useRef<HTMLDivElement>(null);
 	const [progress, setProgress] = useState(0);
 
 	const setUpload = withUploadFetchQuery.useSet();
@@ -63,7 +59,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				},
 				{
 					where: {
-						id: current,
+						id: value,
 					},
 				},
 			);
@@ -74,21 +70,9 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 					id: result.id,
 				},
 			});
-			setCurrent(result.id);
 			onChange(result.id);
 		},
 	});
-
-	const uploadFetchQuery = withUploadFetchQuery.useQuery(
-		{
-			where: {
-				id: current,
-			},
-		},
-		{
-			enabled: !!current && !uploadMutation.isPending,
-		},
-	);
 
 	const onUpload = useCallback(
 		async (e: ChangeEvent<HTMLInputElement>) => {
@@ -112,9 +96,23 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 
 	return (
 		<Container
-			ref={containerRef}
-			ui="PhotoUpload-Container"
-			position="relative"
+			data-ui={"PhotoUpload[Container]"}
+			ui={{
+				tone: "neutral",
+				theme: "light",
+				round: "default",
+				background: "default",
+				border: true,
+				shadow: true,
+				position: "relative",
+				disabled: (ui?.disabled || uploadMutation.isPending) ?? undefined,
+				width: "full",
+				height: "full",
+				...ui,
+			}}
+			onClick={pick}
+			onKeyDown={onKeyDown}
+			{...props}
 		>
 			<input
 				data-ui="PhotoUpload-Input"
@@ -126,34 +124,20 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				onChange={onUpload}
 			/>
 
-			<Sheet
-				ui="PhotoUpload-Sheet"
-				onClick={pick}
-				onKeyDown={onKeyDown}
-				disabled={disabled || uploadMutation.isPending}
-				tweak={[
-					tweak,
-					{
-						slot: {
-							root: {
-								class: [
-									/**
-									 * Because of internal <img/> uses absolute sizes.
-									 */
-									"relative",
-								],
-							},
-						},
-					},
-				]}
-				{...props}
-			>
-				{uploadMutation.isPending ? (
+			{uploadMutation.isPending ? (
+				<Container
+					data-ui={"PhotoUpload-[Container.spinner]"}
+					ui={{
+						flow: "vertical",
+						height: "full",
+						items: "center",
+						justify: "center",
+					}}
+				>
 					<Status
+						data-ui={"PhotoUpload-[Status.spinner]"}
 						icon={SpinnerIcon}
 						textTitle={"Uploading photo (title)"}
-						tone={"primary"}
-						theme={"light"}
 						action={
 							<Progress
 								value={progress * 100}
@@ -162,43 +146,63 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 								theme={"dark"}
 							/>
 						}
-					/>
-				) : (
-					<Data
-						result={uploadFetchQuery}
-						renderEmpty={() => {
-							return (
-								<Status
-									icon={PhotoIcon}
-									iconProps={{
-										size: "2xl",
-									}}
-									textTitle={"Upload (title)"}
-									titleProps={{
-										size: "2xl",
-									}}
-									textMessage={
-										disabled
-											? "Upload - disabled (placeholder)"
-											: "Listing - upload photo (placeholder)"
-									}
-									messageProps={{
-										size: "xl",
-									}}
-									tone={"primary"}
-								/>
-							);
+						ui={{
+							tone: "primary",
+							theme: "light",
 						}}
-						renderSuccess={({ data }) => (
-							<img
+					/>
+				</Container>
+			) : null}
+
+			{!value && !uploadMutation.isPending ? (
+				<Container
+					data-ui={"PhotoUpload-[Container.placeholder]"}
+					ui={{
+						flow: "vertical",
+						height: "full",
+						items: "center",
+						justify: "center",
+						round: "default",
+					}}
+				>
+					<Status
+						data-ui={"PhotoUpload-[Status.placeholder]"}
+						icon={PhotoIcon}
+						textTitle={"Photo upload placeholder (title)"}
+						textMessage={"Photo upload placeholder (message)"}
+						ui={{
+							tone: ui?.disabled ? "neutral" : "primary",
+							theme: "light",
+							inner: "4xl",
+						}}
+						className={"text-center"}
+					/>
+				</Container>
+			) : null}
+
+			{value && !uploadMutation.isPending ? (
+				<withUploadFetchQuery.Suspense
+					data={{
+						where: {
+							id: value,
+						},
+					}}
+					fallback={<SpinnerContainer />}
+				>
+					{({ data }) => {
+						return (
+							<HeroImage
 								src={data.url}
 								alt={data.id}
-								className="absolute inset-0 h-full w-full object-cover object-center"
+								visible
+								ui={{
+									round: "default",
+								}}
 							/>
-						)}
-					/>
-				)}
-			</Sheet>
+						);
+					}}
+				</withUploadFetchQuery.Suspense>
+			) : null}
 		</Container>
 	);
 };

@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { withTransactionFx } from "../../../database/fx/withTransactionFx";
-import type { FeedQuerySchema } from "../schema/FeedQuerySchema";
+import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { feedFetchFx } from "./feedFetchFx";
 
 export namespace feedDeleteFx {
@@ -17,9 +17,7 @@ export const feedDeleteFx = ({ query }: feedDeleteFx.Props) => {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
 
-			const feed = yield* feedFetchFx({
-				query,
-			});
+			const feed = yield* feedFetchFx(query);
 
 			yield* Effect.tryPromise(async () => {
 				return database

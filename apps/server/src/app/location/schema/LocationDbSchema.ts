@@ -14,27 +14,57 @@ export const LocationDbSchema = z.object({
 	code: z.string().openapi({
 		description: "Country code",
 	}),
-	county: z.string().nullish().openapi({
-		description: "The county that the location is in",
-	}),
-	municipality: z.string().nullish().openapi({
-		description: "The municipality that the location is in",
-	}),
-	state: z.string().nullish().openapi({
-		description: "The state that the location is in",
-	}),
+	county: z
+		.union([
+			z.string(),
+			z.null(),
+		])
+		.openapi({
+			description: "The county that the location is in",
+		}),
+	municipality: z
+		.union([
+			z.string(),
+			z.null(),
+		])
+		.openapi({
+			description: "The municipality that the location is in",
+		}),
+	state: z
+		.union([
+			z.string(),
+			z.null(),
+		])
+		.openapi({
+			description: "The state that the location is in",
+		}),
 	address: z.string().openapi({
 		description: "Full address preview of a location",
 	}),
-	city: z.string().nullish().openapi({
-		description: "The city that the location is in",
-	}),
-	street: z.string().nullish().openapi({
-		description: "The street that the location is on",
-	}),
-	zip: z.string().nullish().openapi({
-		description: "The postal/zip code of the location",
-	}),
+	city: z
+		.union([
+			z.string(),
+			z.null(),
+		])
+		.openapi({
+			description: "The city that the location is in",
+		}),
+	street: z
+		.union([
+			z.string(),
+			z.null(),
+		])
+		.openapi({
+			description: "The street that the location is on",
+		}),
+	zip: z
+		.union([
+			z.string(),
+			z.null(),
+		])
+		.openapi({
+			description: "The postal/zip code of the location",
+		}),
 	confidence: z.coerce.number().openapi({
 		description: "Confidence score of the location (based on query)",
 		type: "number",

@@ -1,4 +1,5 @@
 import { Container } from "@use-pico/client/ui/container";
+import type { Tx } from "@use-pico/client/ui/tx";
 import type { FC, ReactNode } from "react";
 import { Title } from "../title/Title";
 import { BottomContainer } from "./BottomContainer";
@@ -6,6 +7,7 @@ import { BottomContainer } from "./BottomContainer";
 export namespace TitleContainer {
 	export interface Props extends Container.Props {
 		textTitle?: string;
+		textTitleProps?: Tx.PropsEx;
 		textSubtitle?: string;
 		titleProps?: Omit<Title.Props, "textTitle">;
 		left?: ReactNode;
@@ -16,24 +18,32 @@ export namespace TitleContainer {
 
 export const TitleContainer: FC<TitleContainer.Props> = ({
 	textTitle,
+	textTitleProps,
 	textSubtitle,
 	titleProps,
 	left,
 	right,
 	bottom,
 	children,
+	ui,
 	...props
 }) => {
 	return (
 		<Container
-			layout={"vertical-header-content-footer"}
-			square={"md"}
-			gap={"sm"}
+			data-ui={"TitleContainer[Container]"}
+			ui={{
+				layout: "vertical-header-content-footer",
+				height: "full",
+				width: "full",
+				...ui,
+			}}
 			{...props}
 		>
 			{textTitle ? (
 				<Title
+					data-ui={"TitleContainer-[Title]"}
 					textTitle={textTitle}
+					textTitleProps={textTitleProps}
 					textSubtitle={textSubtitle}
 					left={left}
 					right={right}
@@ -45,7 +55,11 @@ export const TitleContainer: FC<TitleContainer.Props> = ({
 
 			{children}
 
-			{bottom ? <BottomContainer>{bottom}</BottomContainer> : null}
+			{bottom ? (
+				<BottomContainer data-ui={"TitleContainer-[BottomContainer]"}>
+					{bottom}
+				</BottomContainer>
+			) : null}
 		</Container>
 	);
 };

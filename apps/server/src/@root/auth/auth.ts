@@ -1,5 +1,5 @@
-import { auth } from "../../auth/auth";
-import type { Routes } from "../../hono/Routes";
+import { auth } from "~/auth/auth";
+import type { Routes } from "~/hono/Routes";
 
 export const withAuthEndpoint: Routes.Fn = ({ root }) => {
 	root.on(

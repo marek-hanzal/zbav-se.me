@@ -1,38 +1,28 @@
-import type { UiProps } from "@use-pico/client/type";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Container, SpinnerContainer, uiContainer } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
-import { type Cls, useCls } from "@use-pico/cls";
-import { type FC, type ImgHTMLAttributes, type ReactNode, useState } from "react";
+import { type ComponentProps, type FC, type ReactNode, useState } from "react";
 import { match } from "ts-pattern";
-import { HeroImageCls } from "./HeroImageCls";
 
 export namespace HeroImage {
-	export interface Props
-		extends HeroImageCls.Props<UiProps<ImgHTMLAttributes<HTMLImageElement>>> {
+	export interface Props extends uiContainer.Component<ComponentProps<"img">> {
 		visible?: boolean;
 		errorStatusProps?: Status.Props;
 		invisible?: ReactNode;
-		round?: Cls.VariantOf<HeroImageCls, "round">;
 	}
 }
 
 export const HeroImage: FC<HeroImage.Props> = ({
-	ui,
 	visible = true,
 	errorStatusProps,
 	invisible,
 	onLoad,
 	onError,
-	round,
-	cls = HeroImageCls,
-	tweak,
+	//
+	ui,
+	className,
+	//
 	...props
 }) => {
-	const { slots } = useCls(cls, tweak, {
-		variant: {
-			round,
-		},
-	});
 	const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
 
 	if (!visible) {
@@ -43,7 +33,19 @@ export const HeroImage: FC<HeroImage.Props> = ({
 		<>
 			{/** biome-ignore lint/a11y/useAltText: Should go from props */}
 			<img
-				data-ui={ui ?? "HeroImage-root"}
+				{...uiContainer({
+					ui: {
+						height: "full",
+						width: "full",
+						...ui,
+					},
+					className: [
+						"object-cover",
+						"object-center",
+						className,
+					],
+				})}
+				//
 				loading={"eager"}
 				fetchPriority={"high"}
 				decoding={"async"}
@@ -63,7 +65,6 @@ export const HeroImage: FC<HeroImage.Props> = ({
 						.with("loaded", () => "block")
 						.exhaustive(),
 				}}
-				className={slots.img()}
 				{...props}
 			/>
 
@@ -72,10 +73,11 @@ export const HeroImage: FC<HeroImage.Props> = ({
 			{state === "error" ? (
 				<Container
 					data-ui={"HeroImage-error"}
-					layout={"vertical-centered"}
-					tone={"primary"}
-					theme={"light"}
-					items={"center"}
+					ui={{
+						layout: "vertical-centered",
+						tone: "primary",
+						theme: "light",
+					}}
 				>
 					<Status
 						icon={"icon-[ph--image-broken-duotone]"}

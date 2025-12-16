@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
-import { GalleryItemDbSchema } from "../../../app/gallery-item/schema/GalleryItemDbSchema";
-import { UploadSchema } from "../../upload/schema/UploadSchema";
+import { UploadSchema } from "~/@user/upload/schema/UploadSchema";
+import { GalleryItemDbSchema } from "~/app/gallery-item/schema/GalleryItemDbSchema";
 
 export const GalleryItemSchema = z
 	.object({

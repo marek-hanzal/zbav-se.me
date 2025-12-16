@@ -7,8 +7,8 @@ import {
 	useParams,
 } from "@tanstack/react-router";
 import { PicoCls } from "@use-pico/client/cls";
-import { Container } from "@use-pico/client/ui/container";
-import { TokenProvider, tvc } from "@use-pico/cls";
+import { uiContainer } from "@use-pico/client/ui/container";
+import { TokenProvider } from "@use-pico/cls";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { Toaster } from "sonner";
 import type { authClient } from "~/app/auth/authClient";
@@ -54,29 +54,24 @@ export const Route = createRootRouteWithContext<{
 					<HeadContent />
 				</head>
 
-				<body>
+				<body
+					{...uiContainer({
+						ui: {
+							height: "viewport",
+							width: "viewport",
+						},
+						className: [
+							"font-roboto",
+						],
+					})}
+				>
 					<TokenProvider cls={PicoCls.use(ThemeCls)}>
 						<Toaster
 							richColors
 							position={"top-center"}
 						/>
 
-						{/** biome-ignore lint/correctness/useUniqueElementIds: I'm OK, bro */}
-						<Container
-							id="root"
-							ui="Root-root"
-							height="viewport"
-							width="viewport"
-							className={tvc([
-								"md:mx-auto",
-								"md:w-1/3",
-								"md:min-w-1/3",
-								"md:max-w-1/3",
-								"bg-white",
-							])}
-						>
-							<Outlet />
-						</Container>
+						<Outlet />
 					</TokenProvider>
 
 					<Scripts />

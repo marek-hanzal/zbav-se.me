@@ -1,15 +1,15 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { withListingQueryBuilder } from "~/@user/listing/db/withListingQueryBuilder";
-import { withListingSelect } from "~/@user/listing/db/withListingSelect";
-import type { ListingQuerySchema } from "~/@user/listing/schema/ListingQuerySchema";
 import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
+import { withListingQueryBuilder } from "~/app/listing/db/withListingQueryBuilder";
+import { withListingSelect } from "~/app/listing/db/withListingSelect";
+import type { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
 
 export namespace listingFetchFx {
-	export type Props = Omit<ListingQuerySchema.Type, "cursor">;
+	export type Props = ListingQuerySchema.Type;
 }
 
 export const listingFetchFx = (query: listingFetchFx.Props) => {

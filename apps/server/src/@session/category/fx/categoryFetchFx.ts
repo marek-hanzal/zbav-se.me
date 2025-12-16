@@ -1,19 +1,17 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { NotFoundError } from "../../../error/NotFoundError";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { NotFoundError } from "~/error/NotFoundError";
 import { withCategoryQueryBuilder } from "../db/withCategoryQueryBuilder";
 import { withCategorySelect } from "../db/withCategorySelect";
 import type { CategoryQuerySchema } from "../schema/CategoryQuerySchema";
 import { CategorySchema } from "../schema/CategorySchema";
 
 export namespace categoryFetchFx {
-	export interface Props {
-		query: Omit<CategoryQuerySchema.Type, "cursor">;
-	}
+	export type Props = CategoryQuerySchema.Type;
 }
 
-export const categoryFetchFx = ({ query }: categoryFetchFx.Props) => {
+export const categoryFetchFx = (query: categoryFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 

@@ -1,5 +1,4 @@
 import { z } from "@hono/zod-openapi";
-import { CurrencyListEnumSchema } from "../../../schema/CurrencyListEnumSchema";
 import { ListingExpireEnumSchema } from "./ListingExpireEnumSchema";
 
 export const ListingCreateSchema = z
@@ -14,20 +13,28 @@ export const ListingCreateSchema = z
 		age: z.number().openapi({
 			description: "Age of the item (0-based index)",
 		}),
+		draftId: z.string().optional().openapi({
+			description: "ID of the draft",
+		}),
 		locationId: z.string().openapi({
 			description: "ID of the location",
 		}),
 		categoryId: z.string().openapi({
 			description: "ID of the category",
 		}),
-		currency: CurrencyListEnumSchema,
 		expiresAt: ListingExpireEnumSchema,
 		title: z.string().min(5).max(72).openapi({
 			description: "Title of the item",
 		}),
-		description: z.string().max(2048).optional().openapi({
-			description: "Description of the item",
-		}),
+		description: z
+			.union([
+				z.string().max(2048),
+				z.null(),
+			])
+			.optional()
+			.openapi({
+				description: "Description of the item",
+			}),
 		uploadIds: z.array(z.string()).min(1, "At least one upload is required").openapi({
 			description: "IDs of the uploads; order of uploads defines order in the gallery",
 		}),

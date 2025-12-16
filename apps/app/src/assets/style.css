@@ -1,24 +1,21 @@
-@import "./font.css";
 @import "tailwindcss";
+@import "./fonts.css";
+
+@import "@use-pico/client/ui.css";
+@import "@zbav-se.me/ui/ui.css";
 
 @plugin "@iconify/tailwind4";
 
 @config "../../tailwind.config.ts";
 
 @theme {
-	--font-sans: "Sansation", sans-serif;
 	--font-limelight: "Limelight", sans-serif;
+	--font-zalando: "Zalando Sans", sans-serif;
+	--font-roboto: "Roboto", sans-serif;
 }
 
-html,
-body {
-	overscroll-behavior: none;
-	overscroll-behavior-y: none;
-	overscroll-behavior-x: none;
-	/* iOS Safari specific - prevents bounce/rubber-band effect */
-	-webkit-overflow-scrolling: touch;
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
+@layer components {
+	body {
+		@apply md:mx-auto md:w-1/3 md:min-w-1/3 md:max-w-1/3 bg-white;
+	}
 }

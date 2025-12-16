@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { database } from "../../../database/kysely";
+import { database } from "~/database/kysely";
 import type { CleanupSchema } from "../schema/CleanupSchema";
 
 export async function cleanupScore(): Promise<CleanupSchema.Type> {

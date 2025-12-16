@@ -29,6 +29,73 @@ export type tCursor = {
 };
 
 /**
+ * Location data
+ */
+export type tLocation = {
+    id: string;
+    /**
+     * The query that was used to get the location
+     */
+    query: string;
+    /**
+     * The language that was used to get the location
+     */
+    lang: string;
+    /**
+     * The country that the location is in
+     */
+    country: string;
+    /**
+     * Country code
+     */
+    code: string;
+    /**
+     * The county that the location is in
+     */
+    county: string | null;
+    /**
+     * The municipality that the location is in
+     */
+    municipality: string | null;
+    /**
+     * The state that the location is in
+     */
+    state: string | null;
+    /**
+     * Full address preview of a location
+     */
+    address: string;
+    /**
+     * The city that the location is in
+     */
+    city: string | null;
+    /**
+     * The street that the location is on
+     */
+    street: string | null;
+    /**
+     * The postal/zip code of the location
+     */
+    zip: string | null;
+    /**
+     * Confidence score of the location (based on query)
+     */
+    confidence: number;
+    /**
+     * Used to uniquely identify this location entry
+     */
+    hash: string;
+    /**
+     * Latitude of the location
+     */
+    lat: number;
+    /**
+     * Longitude of the location
+     */
+    lon: number;
+};
+
+/**
  * Category data
  */
 export type tCategory = {
@@ -56,73 +123,6 @@ export type tCategory = {
      * Locale/language of the category
      */
     locale: string;
-};
-
-/**
- * Location data
- */
-export type tLocation = {
-    id: string;
-    /**
-     * The query that was used to get the location
-     */
-    query: string;
-    /**
-     * The language that was used to get the location
-     */
-    lang: string;
-    /**
-     * The country that the location is in
-     */
-    country: string;
-    /**
-     * Country code
-     */
-    code: string;
-    /**
-     * The county that the location is in
-     */
-    county?: string | null;
-    /**
-     * The municipality that the location is in
-     */
-    municipality?: string | null;
-    /**
-     * The state that the location is in
-     */
-    state?: string | null;
-    /**
-     * Full address preview of a location
-     */
-    address: string;
-    /**
-     * The city that the location is in
-     */
-    city?: string | null;
-    /**
-     * The street that the location is on
-     */
-    street?: string | null;
-    /**
-     * The postal/zip code of the location
-     */
-    zip?: string | null;
-    /**
-     * Confidence score of the location (based on query)
-     */
-    confidence: number;
-    /**
-     * Used to uniquely identify this location entry
-     */
-    hash: string;
-    /**
-     * Latitude of the location
-     */
-    lat: number;
-    /**
-     * Longitude of the location
-     */
-    lon: number;
 };
 
 /**
@@ -249,64 +249,11 @@ export type tLocationAutocomplete = {
 };
 
 /**
- * Count data
+ * Query object for category count
  */
-export type tCount = {
-    /**
-     * Count of items based on provided where query.
-     */
-    where: number;
-    /**
-     * Count of items based on provided filter query.
-     */
-    filter: number;
-    /**
-     * Total count of items (no filters applied).
-     */
-    total: number;
-};
-
-/**
- * Collection of categories
- */
-export type tCategoryCollection = {
-    data: Array<tCategory>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Category query parameters
- */
-export type tCategoryQuery = {
-    cursor?: tCursor;
+export type tCategoryCountQuery = {
     filter?: tCategoryFilter;
     where?: tCategoryWhere;
-    sort?: Array<tCategorySort>;
-};
-
-/**
- * Field of the category sort
- */
-export const tCategorySortField = {
-    group: 'group',
-    category: 'category',
-    sort: 'sort'
-} as const;
-
-/**
- * Field of the category sort
- */
-export type tCategorySortField = typeof tCategorySortField[keyof typeof tCategorySortField];
-
-/**
- * Sort object for category collection
- */
-export type tCategorySort = {
-    field: tCategorySortField;
-    direction: tOrderEnum;
 };
 
 /**
@@ -378,9 +325,70 @@ export type tCategoryFilter = {
 };
 
 /**
- * Message data
+ * Count data
  */
-export type tMessage = {
+export type tCount = {
+    /**
+     * Count of items based on provided where query.
+     */
+    where: number;
+    /**
+     * Count of items based on provided filter query.
+     */
+    filter: number;
+    /**
+     * Total count of items (no filters applied).
+     */
+    total: number;
+};
+
+/**
+ * Collection of categories
+ */
+export type tCategoryCollection = {
+    data: Array<tCategory>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Category query parameters
+ */
+export type tCategoryQuery = {
+    cursor?: tCursor;
+    filter?: tCategoryFilter;
+    where?: tCategoryWhere;
+    sort?: Array<tCategorySort>;
+};
+
+/**
+ * Field of the category sort
+ */
+export const tCategorySortField = {
+    group: 'group',
+    category: 'category',
+    sort: 'sort'
+} as const;
+
+/**
+ * Field of the category sort
+ */
+export type tCategorySortField = typeof tCategorySortField[keyof typeof tCategorySortField];
+
+/**
+ * Sort object for category collection
+ */
+export type tCategorySort = {
+    field: tCategorySortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export type tNotice = {
     /**
      * Message
      */
@@ -416,11 +424,11 @@ export type apiCategoryFetchErrors = {
     /**
      * Category not found
      */
-    404: tMessage;
+    404: tNotice;
     /**
      * Internal server error
      */
-    500: tMessage;
+    500: tNotice;
 };
 
 export type apiCategoryFetchError = apiCategoryFetchErrors[keyof apiCategoryFetchErrors];
@@ -445,7 +453,7 @@ export type apiCategoryCollectionErrors = {
     /**
      * Internal server error
      */
-    500: tMessage;
+    500: tNotice;
 };
 
 export type apiCategoryCollectionError = apiCategoryCollectionErrors[keyof apiCategoryCollectionErrors];
@@ -460,7 +468,7 @@ export type tApiCategoryCollectionResponse = {
 export type apiCategoryCollectionResponse = tApiCategoryCollectionResponse[keyof tApiCategoryCollectionResponse];
 
 export type tApiCategoryCountRequest = {
-    body?: tCategoryQuery;
+    body?: tCategoryCountQuery;
     path?: never;
     query?: never;
     url: '/api/session/category/count';
@@ -470,7 +478,7 @@ export type apiCategoryCountErrors = {
     /**
      * Internal server error
      */
-    500: tMessage;
+    500: tNotice;
 };
 
 export type apiCategoryCountError = apiCategoryCountErrors[keyof apiCategoryCountErrors];
@@ -498,11 +506,11 @@ export type apiLocationAutocompleteErrors = {
     /**
      * Text too short
      */
-    400: tMessage;
+    400: tNotice;
     /**
      * Internal server error
      */
-    500: tMessage;
+    500: tNotice;
 };
 
 export type apiLocationAutocompleteError = apiLocationAutocompleteErrors[keyof apiLocationAutocompleteErrors];
@@ -534,11 +542,11 @@ export type apiLocationFetchErrors = {
     /**
      * Location not found
      */
-    404: tMessage;
+    404: tNotice;
     /**
      * Internal server error
      */
-    500: tMessage;
+    500: tNotice;
 };
 
 export type apiLocationFetchError = apiLocationFetchErrors[keyof apiLocationFetchErrors];

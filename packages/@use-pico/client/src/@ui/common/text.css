@@ -1,0 +1,37 @@
+@layer components {
+	[data-ui-text="default"] {
+		@apply text-base;
+	}
+
+	[data-ui-text="xs"] {
+		@apply text-xs;
+	}
+
+	[data-ui-text="sm"] {
+		@apply text-sm;
+	}
+
+	[data-ui-text="md"] {
+		@apply text-base;
+	}
+
+	[data-ui-text="lg"] {
+		@apply text-lg;
+	}
+
+	[data-ui-text="xl"] {
+		@apply text-2xl;
+	}
+
+	[data-ui-text="2xl"] {
+		@apply text-4xl;
+	}
+
+	[data-ui-text="3xl"] {
+		@apply text-5xl;
+	}
+
+	[data-ui-text="4xl"] {
+		@apply text-6xl;
+	}
+}

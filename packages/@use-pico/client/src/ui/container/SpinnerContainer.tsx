@@ -1,14 +1,14 @@
-import { Icon, type IconCls, SpinnerIcon } from "@use-pico/client/icon";
-import { Container } from "@use-pico/client/ui/container";
-import { Status } from "@use-pico/client/ui/status";
-import type { Cls } from "@use-pico/cls";
+import { Icon, SpinnerIcon } from "@use-pico/client/icon";
 import type { FC } from "react";
+import type { uiIcon } from "../../icon/uiIcon";
+import { Status } from "../status/Status";
+import { Container } from "./Container";
 
 export namespace SpinnerContainer {
 	export interface Props extends Container.Props {
 		statusProps?: Status.Props;
 		iconProps?: Icon.Props;
-		size?: Cls.VariantOf<IconCls, "size">;
+		size?: uiIcon.Size;
 		type?: "icon" | "status";
 	}
 }
@@ -16,23 +16,30 @@ export namespace SpinnerContainer {
 export const SpinnerContainer: FC<SpinnerContainer.Props> = ({
 	statusProps,
 	iconProps,
-	size = "2xl",
+	size = "4xl",
 	type = "status",
+	//
+	ui,
+	//
 	...props
 }) => {
 	return (
 		<Container
-			layout={"vertical-centered"}
-			items={"center"}
-			tone={"unset"}
-			theme={"unset"}
+			ui={{
+				tone: "brand",
+				theme: "light",
+				layout: "vertical-centered",
+				height: "full",
+				text: size,
+				color: "lead",
+				...ui,
+			}}
 			{...props}
 		>
 			{type === "status" ? (
 				<Status
 					icon={SpinnerIcon}
 					iconProps={{
-						size,
 						...iconProps,
 					}}
 					{...statusProps}
@@ -42,7 +49,6 @@ export const SpinnerContainer: FC<SpinnerContainer.Props> = ({
 			{type === "icon" ? (
 				<Icon
 					icon={SpinnerIcon}
-					size={size}
 					{...iconProps}
 				/>
 			) : null}

@@ -2,9 +2,9 @@ import { genId } from "@use-pico/common/gen-id";
 import { keyOf } from "@use-pico/common/key-of";
 import { linkTo } from "@use-pico/common/link-to";
 import { Effect } from "effect";
-import { AppEnv } from "../../../AppEnv";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { s3 } from "../../../s3";
+import { AppEnv } from "~/AppEnv";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { s3 } from "~/s3";
 
 export namespace s3PreSignFx {
 	export interface Props {

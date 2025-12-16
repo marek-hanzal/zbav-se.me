@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { DefaultFilterSchema } from "../../../schema/DefaultFilterSchema";
+import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 
 export const LocationFilterSchema = z
 	.object({

@@ -1,17 +1,16 @@
 import { withCount } from "@use-pico/common/count";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { withUploadQueryBuilder } from "../db/withUploadQueryBuilder";
-import { withUploadSelect } from "../db/withUploadSelect";
-import type { UploadQuerySchema } from "../schema/UploadQuerySchema";
+import { withUploadQueryBuilder } from "~/app/upload/db/withUploadQueryBuilder";
+import { withUploadSelect } from "~/app/upload/db/withUploadSelect";
+import type { UploadCountQuerySchema } from "~/app/upload/schema/UploadCountQuerySchema";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace uploadCountFx {
-	export interface Props {
-		query: Omit<UploadQuerySchema.Type, "cursor" | "sort">;
-	}
+	export type Props = UploadCountQuerySchema.Type;
 }
 
-export const uploadCountFx = ({ query: { filter, where } }: uploadCountFx.Props) => {
+export const uploadCountFx = (query: uploadCountFx.Props) => {
+	const { filter, where } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 

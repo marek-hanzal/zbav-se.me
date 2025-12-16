@@ -1,6 +1,6 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { database } from "../../database/kysely";
-import type { Routes } from "../../hono/Routes";
+import { database } from "~/database/kysely";
+import type { Routes } from "~/hono/Routes";
 import { MigrationSchema } from "./schema/MigrationSchema";
 
 export const withMigrationRunApi: Routes.Fn = ({ publicHono }) => {

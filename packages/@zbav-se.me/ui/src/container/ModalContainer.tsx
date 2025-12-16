@@ -1,8 +1,6 @@
 import { CloseIcon, Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
-import { VariantProvider } from "@use-pico/cls";
 import type { FC } from "react";
-import { ThemeCls } from "../cls";
 import { Title } from "../title";
 
 export namespace ModalContainer {
@@ -20,39 +18,42 @@ export const ModalContainer: FC<ModalContainer.Props> = ({
 	iconProps,
 	close,
 	children,
+	ui,
 	...props
 }) => {
 	return (
-		<VariantProvider
-			cls={ThemeCls}
-			variant={{
-				tone: "unset",
-				theme: "unset",
+		<Container
+			ui={{
+				layout: "vertical-header-content",
+				inner: "default",
+				...ui,
 			}}
+			{...props}
 		>
-			<Container
-				layout={"vertical-header-content"}
-				square={"md"}
-				{...props}
-			>
-				<Title
-					left={
-						<Icon
-							icon={icon}
-							{...iconProps}
-						/>
-					}
-					right={
-						<Icon
-							icon={CloseIcon}
-							onClick={close}
-						/>
-					}
-					textTitle={textTitle}
-				/>
+			<Title
+				left={
+					<Icon
+						icon={icon}
+						{...iconProps}
+					/>
+				}
+				right={
+					<Icon
+						icon={CloseIcon}
+						onClick={close}
+					/>
+				}
+				textTitle={textTitle}
+			/>
 
-				<Container scroll={"vertical"}>{children}</Container>
+			<Container
+				data-ui="ModalContainer-content"
+				ui={{
+					scroll: "vertical",
+				}}
+			>
+				{children}
 			</Container>
-		</VariantProvider>
+		</Container>
 	);
 };

@@ -1,17 +1,16 @@
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router";
-import { useSnapperNav } from "@use-pico/client/hook";
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { Fade } from "@use-pico/client/ui/fade";
 import { FormField } from "@use-pico/client/ui/form";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { SnapperNav } from "@use-pico/client/ui/snapper-nav";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { linkTo } from "@use-pico/common/link-to";
 import { translator } from "@use-pico/common/translator";
-import { Fade } from "@zbav-se.me/ui/fade";
-import { PassKeyIcon, SocialIcon, UnlockIcon } from "@zbav-se.me/ui/icon";
+import { PassKeyIcon, UnlockIcon } from "@zbav-se.me/ui/icon";
 import { Logo } from "@zbav-se.me/ui/logo";
 import { useRef } from "react";
 import { z } from "zod";
@@ -46,7 +45,7 @@ export const Route = createFileRoute("/$locale/login")({
 				return navigate({
 					href: linkTo({
 						base: import.meta.env.VITE_APP_ORIGIN,
-						href: "/:locale/dashboard",
+						href: "/:locale/ui/home",
 						query: {
 							locale,
 						},
@@ -61,7 +60,7 @@ export const Route = createFileRoute("/$locale/login")({
 				await navigate({
 					href: linkTo({
 						base: import.meta.env.VITE_APP_ORIGIN,
-						href: "/:locale/dashboard",
+						href: "/:locale/ui/home",
 						query: {
 							locale,
 						},
@@ -87,40 +86,52 @@ export const Route = createFileRoute("/$locale/login")({
 		});
 
 		const rootRef = useRef<HTMLDivElement>(null);
-		const snapperNav = useSnapperNav({
-			containerRef: rootRef,
-			orientation: "vertical",
-			count: 3,
-		});
 
 		return (
-			<Container position={"relative"}>
-				<SnapperNav
-					snapperNav={snapperNav}
-					iconProps={() => ({
-						size: "xs",
-						tone: "secondary",
-						theme: "light",
-					})}
-					orientation={"vertical"}
-					subtle
-				/>
-
+			<Container
+				data-ui="/login[Container]"
+				ui={{
+					position: "relative",
+					height: "full",
+				}}
+			>
 				<Fade scrollableRef={rootRef} />
 
 				<Container
+					data-ui="/login-[Container.scrollable]"
 					ref={rootRef}
-					layout={"vertical-full"}
-					snap={"vertical-center"}
-					gap={"md"}
-					square={"md"}
-					round={"lg"}
+					ui={{
+						layout: "vertical-full",
+						gap: "default",
+						snap: "vertical",
+						snapAlign: "center",
+						height: "full",
+					}}
 				>
 					<Container
-						layout={"vertical-centered"}
-						items={"center"}
+						data-ui="/login-[Container.content]"
+						ui={{
+							layout: "vertical-centered",
+							height: "full",
+							width: "full",
+						}}
 					>
-						<Status icon={<Logo />}>
+						<Status
+							icon={
+								<LinkTo
+									to={"/$locale/landing"}
+									params={{
+										locale,
+									}}
+								>
+									<Logo />
+								</LinkTo>
+							}
+							ui={{
+								width: "full",
+								inner: "xl",
+							}}
+						>
 							<form
 								onSubmit={(e) => {
 									e.preventDefault();
@@ -194,24 +205,17 @@ export const Route = createFileRoute("/$locale/login")({
 								)}
 
 								<Container
-									layout={"vertical-flex"}
-									items={"center"}
-									gap={"sm"}
-									width={"fit"}
-									tone={"unset"}
-									theme={"unset"}
+									ui={{
+										layout: "vertical-flex",
+										width: "full",
+										items: "end",
+										gap: "lg",
+									}}
 								>
 									<form.SubmitButton
-										iconEnabled={UnlockIcon}
-										iconDisabled={UnlockIcon}
-										iconProps={{
-											size: "sm",
-										}}
+										iconEnabled={ArrowRightIcon}
+										iconPosition={"right"}
 										disabled={signInMutation.isPending}
-										tone={"primary"}
-										theme={"dark"}
-										size={"xl"}
-										full
 									>
 										{signInMutation.isPending ? (
 											<Tx label={"Please wait..."} />
@@ -228,7 +232,12 @@ export const Route = createFileRoute("/$locale/login")({
 									>
 										<Tx
 											label={"Register (link)"}
-											tone={"link"}
+											ui={{
+												tone: "link",
+												theme: "light",
+												text: "md",
+												color: "lead",
+											}}
 										/>
 									</LinkTo>
 								</Container>
@@ -237,8 +246,10 @@ export const Route = createFileRoute("/$locale/login")({
 					</Container>
 
 					<Container
-						layout={"vertical-centered"}
-						items={"center"}
+						ui={{
+							layout: "vertical-centered",
+							height: "full",
+						}}
 					>
 						<Status
 							icon={PassKeyIcon}
@@ -247,34 +258,28 @@ export const Route = createFileRoute("/$locale/login")({
 							action={
 								<Button
 									iconEnabled={UnlockIcon}
-									iconDisabled={UnlockIcon}
 									iconProps={{
-										size: "sm",
+										ui: {
+											text: "2xl",
+										},
 									}}
 									onClick={() => {
 										passkeyMutation.mutate();
 									}}
 									disabled={passkeyMutation.isPending}
-									size={"xl"}
-									full
-									tone={"primary"}
-									theme={"dark"}
+									ui={{
+										size: "xl",
+										tone: "primary",
+										theme: "light",
+										text: "lg",
+									}}
 									label={"Login with passkey"}
 								/>
 							}
-						/>
-					</Container>
-
-					<Container
-						layout={"vertical-centered"}
-						items={"center"}
-					>
-						<Status
-							icon={SocialIcon}
-							textTitle={"Login with social (title)"}
-							textMessage={"Login with social (message)"}
-							tone={"primary"}
-							theme={"light"}
+							ui={{
+								inner: "4xl",
+							}}
+							className={"text-center"}
 						/>
 					</Container>
 				</Container>

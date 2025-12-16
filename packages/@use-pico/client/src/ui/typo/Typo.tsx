@@ -1,42 +1,19 @@
-import { type Cls, useCls } from "@use-pico/cls";
-import type { FC, ReactNode, Ref } from "react";
-import { TypoCls } from "./TypoCls";
+import type { ComponentProps, FC, ReactNode } from "react";
+import { uiTypo } from "./uiTypo";
 
-export namespace Typo {
-	export type Value = ReactNode;
-	export type Preset = "none" | "header" | "subheader" | "label" | "paragraph" | "blockquote";
-
-	export interface Props extends TypoCls.Props {
-		ref?: Ref<HTMLDivElement>;
-		label: Value;
-		truncate?: boolean;
-		preset?: Preset;
-		display?: Cls.VariantOf<TypoCls, "display">;
-		text?: Cls.VariantOf<TypoCls, "text">;
-		wrap?: Cls.VariantOf<TypoCls, "wrap">;
-		size?: Cls.VariantOf<TypoCls, "size">;
-		font?: Cls.VariantOf<TypoCls, "font">;
-		tone?: Cls.VariantOf<TypoCls, "tone">;
-		theme?: Cls.VariantOf<TypoCls, "theme">;
-		italic?: boolean;
-	}
-
-	export type PropsEx = Omit<Props, "label">;
-}
-
-const presets: Record<Typo.Preset, Cls.VariantsOf<TypoCls>> = {
+const presets: Record<Typo.Preset, uiTypo.Ui> = {
 	none: {},
 	label: {
-		size: "lg",
+		text: "lg",
 		font: "bold",
 	},
 	header: {
-		size: "3xl",
+		text: "3xl",
 		font: "bold",
 		display: "block",
 	},
 	subheader: {
-		size: "xl",
+		text: "xl",
 		font: "bold",
 		display: "block",
 	},
@@ -44,50 +21,41 @@ const presets: Record<Typo.Preset, Cls.VariantsOf<TypoCls>> = {
 	paragraph: {},
 };
 
+export namespace Typo {
+	export type Value = ReactNode;
+
+	export type Preset = "none" | "header" | "subheader" | "label" | "paragraph" | "blockquote";
+
+	export interface Props extends uiTypo.Component<ComponentProps<"span">> {
+		label: Value;
+		preset?: Preset;
+	}
+
+	export type PropsEx = Omit<Props, "label">;
+}
+
 export const Typo: FC<Typo.Props> = ({
 	label,
 	preset = "none",
-	truncate,
-	display,
-	text,
-	wrap,
-	size,
-	font,
-	tone,
-	theme,
-	italic = false,
-	cls = TypoCls,
-	tweak,
-	ref,
+	//
+	ui,
+	className,
+	...props
 }) => {
-	const { slots } = useCls(
-		cls,
-		tweak,
-		{
-			variant: presets[preset],
-		},
-		{
-			variant: {
-				truncate,
-				display,
-				text,
-				wrap,
-				size,
-				font,
-				italic,
-				tone,
-				theme,
-			},
-		},
-	);
-
 	return (
-		<div
-			data-ui="Typo-root"
-			ref={ref}
-			className={slots.root()}
+		<span
+			{...uiTypo({
+				ui: {
+					...presets[preset],
+					...ui,
+				},
+				//
+				className,
+			})}
+			//
+			{...props}
 		>
 			{label}
-		</div>
+		</span>
 	);
 };

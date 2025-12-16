@@ -12,13 +12,12 @@ import {
 	type tCategory,
 } from "@zbav-se.me/sdk/api/session";
 import {
-	apiListingCartToggle,
+	apiFavouriteToggle,
+	apiFlagToggle,
+	apiIgnoreToggle,
 	apiListingCollection,
 	apiListingCount,
 	apiListingCreate,
-	apiListingFlagToggle,
-	apiListingIgnoreToggle,
-	tCurrencyListEnum,
 	tListingExpireEnum,
 	type tListingSort,
 } from "@zbav-se.me/sdk/api/user";
@@ -65,7 +64,6 @@ export namespace seedListings {
 }
 
 const seedListings = async ({ categories, locationIds, uploadIds }: seedListings.Props) => {
-	const currencies = Object.values(tCurrencyListEnum);
 	const category = list(categories);
 	const title = titles[category.slug as keyof typeof titles] ?? [
 		"Random Title",
@@ -78,7 +76,6 @@ const seedListings = async ({ categories, locationIds, uploadIds }: seedListings
 			condition: rangedom(1, 6),
 			categoryId: category.id,
 			price: rangedom(0, 99_999),
-			currency: list(currencies),
 			title: list(title),
 			expiresAt: object(tListingExpireEnum),
 			locationId: list(locationIds),
@@ -321,7 +318,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						queue.add(async () => {
 							return listingScoreMutation.mutateAsync({
 								listingId: listing.id,
-								score: "cart",
+								score: "favourite",
 							});
 						});
 
@@ -338,7 +335,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 			},
 		});
 
-		const seedCartFlagIgnoreMutation = useMutation({
+		const seedFavouriteFlagIgnoreMutation = useMutation({
 			async mutationFn() {
 				const queue = new PQueue({
 					concurrency: 12,
@@ -347,7 +344,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 				for (const listing of await fetchRandomListings()) {
 					Math.random() < 0.07 &&
 						queue.add(async () => {
-							return apiListingFlagToggle({
+							return apiFlagToggle({
 								body: {
 									listingId: listing.id,
 									toggle: true,
@@ -357,7 +354,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 
 					Math.random() < 0.175 &&
 						queue.add(async () => {
-							return apiListingCartToggle({
+							return apiFavouriteToggle({
 								body: {
 									feedId: feed.id,
 									listingId: listing.id,
@@ -368,7 +365,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 
 					Math.random() < 0.25 &&
 						queue.add(async () => {
-							return apiListingIgnoreToggle({
+							return apiIgnoreToggle({
 								body: {
 									listingId: listing.id,
 									toggle: true,
@@ -383,22 +380,29 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 
 		return (
 			<Container
-				layout={"vertical-centered"}
-				items={"center"}
-				gap={"md"}
-				tone={"secondary"}
-				theme={"light"}
+				data-ui={"Seed-root"}
+				ui={{
+					layout: "vertical-centered",
+					gap: "default",
+					height: "full",
+				}}
 			>
-				<div className={"space-y-2"}>
+				<Container
+					ui={{
+						layout: "vertical-flex",
+						gap: "default",
+						inner: "4xl",
+					}}
+				>
 					<Button
 						loading={registerUsersMutation.isPending}
 						onClick={() => {
 							registerUsersMutation.mutate();
 						}}
-						tone={"secondary"}
-						theme={"dark"}
-						size={"xl"}
-						full
+						ui={{
+							tone: "brand",
+							theme: "light",
+						}}
 					>
 						Prepare users
 					</Button>
@@ -413,10 +417,11 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 								password: "12345678",
 							});
 						}}
-						tone={"secondary"}
-						theme={"dark"}
-						size={"xl"}
-						full
+						ui={{
+							tone: "secondary",
+							theme: "dark",
+							size: "xl",
+						}}
 					>
 						Random user
 					</Button>
@@ -425,19 +430,11 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						onClick={() => seedMutation.mutate()}
 						disabled={seedMutation.isPending}
 						loading={seedMutation.isPending}
-						tweak={{
-							slot: {
-								wrapper: {
-									class: [
-										"mx-auto",
-									],
-								},
-							},
+						ui={{
+							tone: "secondary",
+							theme: "dark",
+							size: "xl",
 						}}
-						tone={"secondary"}
-						theme={"dark"}
-						size={"xl"}
-						full
 					>
 						Seed Listings
 					</Button>
@@ -446,44 +443,28 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						onClick={() => seedScoresMutation.mutate()}
 						disabled={seedScoresMutation.isPending}
 						loading={seedScoresMutation.isPending}
-						tweak={{
-							slot: {
-								wrapper: {
-									class: [
-										"mx-auto",
-									],
-								},
-							},
+						ui={{
+							tone: "secondary",
+							theme: "dark",
+							size: "xl",
 						}}
-						tone={"secondary"}
-						theme={"dark"}
-						size={"xl"}
-						full
 					>
 						Seed scores
 					</Button>
 
 					<Button
-						onClick={() => seedCartFlagIgnoreMutation.mutate()}
-						disabled={seedCartFlagIgnoreMutation.isPending}
-						loading={seedCartFlagIgnoreMutation.isPending}
-						tweak={{
-							slot: {
-								wrapper: {
-									class: [
-										"mx-auto",
-									],
-								},
-							},
+						onClick={() => seedFavouriteFlagIgnoreMutation.mutate()}
+						disabled={seedFavouriteFlagIgnoreMutation.isPending}
+						loading={seedFavouriteFlagIgnoreMutation.isPending}
+						ui={{
+							tone: "secondary",
+							theme: "dark",
+							size: "xl",
 						}}
-						tone={"secondary"}
-						theme={"dark"}
-						size={"xl"}
-						full
 					>
-						Seed cart/flag/ignore
+						Seed favourite/flag/ignore
 					</Button>
-				</div>
+				</Container>
 			</Container>
 		);
 	},

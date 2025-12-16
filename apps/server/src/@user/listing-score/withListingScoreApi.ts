@@ -1,10 +1,10 @@
-import type { Routes } from "../../hono/Routes";
-import { withListingScoreCollectionApi } from "./listing-score-collection";
-import { withListingScoreCountApi } from "./listing-score-count";
-import { withListingScoreCreateApi } from "./listing-score-create";
+import type { Routes } from "~/hono/Routes";
+import { withCollectionApi } from "./collection";
+import { withCountApi } from "./count";
+import { withCreateApi } from "./create";
 
 export const withListingScoreApi: Routes.Fn = (routes) => {
-	withListingScoreCollectionApi(routes);
-	withListingScoreCountApi(routes);
-	withListingScoreCreateApi(routes);
+	withCollectionApi(routes);
+	withCountApi(routes);
+	withCreateApi(routes);
 };

@@ -1,5 +1,5 @@
-import { AppEnv } from "../../AppEnv";
-import type { Routes } from "../../hono/Routes";
+import { AppEnv } from "~/AppEnv";
+import type { Routes } from "~/hono/Routes";
 
 export const withOriginEndpoint: Routes.Fn = ({ root }) => {
 	root.get("/origin", (c) =>

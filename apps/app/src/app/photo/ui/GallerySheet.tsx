@@ -2,6 +2,7 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import type { tUpload } from "@zbav-se.me/sdk/api/user";
+import { CloseButton } from "@zbav-se.me/ui/button";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef } from "react";
 
@@ -16,39 +17,38 @@ export const GallerySheet: FC<GallerySheet.Props> = ({ uploads, ...props }) => {
 
 	return (
 		<BottomSheet
-			ui={"GalleryButton-bottom-sheet"}
+			data-ui={"GalleryButton[BottomSheet]"}
 			detent={"full"}
-			header={{
-				close: true,
+			header={({ close }) => ({
 				title: "Gallery (title)",
-			}}
+				right: <CloseButton onClick={close} />,
+			})}
 			contentProps={{
 				disableScroll: true,
 			}}
 			{...props}
 		>
 			<Container
-				ui={"GalleryButton-root"}
-				position={"relative"}
-				height={"fit"}
-				tone={"unset"}
-				theme={"unset"}
+				data-ui={"GalleryButton-[Container.wrapper]"}
+				ui={{
+					position: "relative",
+					height: "full",
+					inner: "default",
+					round: "default",
+				}}
 			>
-				<Fade
-					scrollableRef={containerRef}
-					theme={"dark"}
-				/>
+				<Fade scrollableRef={containerRef} />
 
 				<Container
 					ref={containerRef}
-					ui={"GalleryButton-container"}
-					layout={"vertical-full"}
-					gap={"sm"}
-					height={"content"}
-					snap={"vertical-center"}
-					square={"md"}
-					tone={"unset"}
-					theme={"unset"}
+					data-ui={"GalleryButton-[Container.content]"}
+					ui={{
+						layout: "vertical-full",
+						height: "full",
+						snap: "vertical",
+						snapAlign: "center",
+						gap: "default",
+					}}
 				>
 					{uploads.map((upload) => {
 						return (
@@ -56,7 +56,10 @@ export const GallerySheet: FC<GallerySheet.Props> = ({ uploads, ...props }) => {
 								key={upload.id}
 								src={upload.url}
 								alt={"Gallery image"}
-								round
+								ui={{
+									height: "full",
+									round: "default",
+								}}
 							/>
 						);
 					})}

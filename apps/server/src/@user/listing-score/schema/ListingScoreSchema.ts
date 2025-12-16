@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingScoreDbSchema } from "../../../app/listing-score/schema/ListingScoreDbSchema";
+import { ListingScoreDbSchema } from "~/app/listing-score/schema/ListingScoreDbSchema";
 
 export const ListingScoreSchema = z
 	.object({

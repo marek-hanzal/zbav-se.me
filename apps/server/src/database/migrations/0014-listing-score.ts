@@ -9,7 +9,7 @@ export const ListingScoreMigration: Migration = {
 				"ignore",
 				"flag",
 				"view",
-				"cart",
+				"favourite",
 			])
 			.execute();
 

@@ -1,1 +1,1 @@
-export const FeedIcon = "icon-[fluent--document-one-page-multiple-16-regular]";
+export const FeedIcon = "icon-[fluent--apps-list-20-regular]";

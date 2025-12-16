@@ -1,11 +1,11 @@
 import { z } from "@hono/zod-openapi";
-import { LatLonSchema } from "../../../schema/LatLonSchema";
+import { LatLonSchema } from "~/schema/LatLonSchema";
 
 export const ListingMetaSchema = z
 	.object({
 		latLon: LatLonSchema.optional(),
 		feedId: z.string().min(1, "Feed ID is required").optional().openapi("FeedId", {
-			description: "Reference feed to do counts e.g. like is in cart",
+			description: "Reference feed to do counts e.g. like is in favourites",
 		}),
 	})
 	.openapi("ListingMeta", {

@@ -7,8 +7,8 @@ import {
 	useParams,
 } from "@tanstack/react-router";
 import { PicoCls } from "@use-pico/client/cls";
-import { Container } from "@use-pico/client/ui/container";
-import { TokenProvider, tvc } from "@use-pico/cls";
+import { uiContainer } from "@use-pico/client/ui/container";
+import { TokenProvider } from "@use-pico/cls";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import styles from "~/assets/style.css?url";
 
@@ -51,29 +51,19 @@ export const Route = createRootRouteWithContext<{
 					<HeadContent />
 				</head>
 
-				<body>
+				<body
+					{...uiContainer({
+						ui: {
+							height: "viewport",
+							width: "viewport",
+						},
+						className: [
+							"font-roboto",
+						],
+					})}
+				>
 					<TokenProvider cls={PicoCls.use(ThemeCls)}>
-						<Container
-							height="viewport"
-							width="viewport"
-							tweak={{
-								slot: {
-									root: {
-										token: [
-											"tone.primary.dark.bg",
-										],
-									},
-								},
-							}}
-							className={tvc([
-								"md:mx-auto",
-								"md:w-1/3",
-								"md:min-w-1/3",
-								"md:max-w-1/3",
-							])}
-						>
-							<Outlet />
-						</Container>
+						<Outlet />
 					</TokenProvider>
 
 					<Scripts />

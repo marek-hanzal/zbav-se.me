@@ -68,7 +68,9 @@ export const Fulltext: FC<Fulltext.Props> = ({
 			>
 				<Icon
 					icon={"icon-[material-symbols-light--search]"}
-					size={"sm"}
+					ui={{
+						text: "sm",
+					}}
 				/>
 			</div>
 
@@ -101,24 +103,22 @@ export const Fulltext: FC<Fulltext.Props> = ({
 				>
 					<Icon
 						icon={"icon-[lucide--send]"}
-						size="sm"
 						onClick={handleSubmit}
-						tone={"neutral"}
-						tweak={{
-							slot: {
-								root: {
-									class: isDisabled
-										? [
-												"opacity-25",
-												"cursor-not-allowed",
-											]
-										: [
-												"opacity-50",
-												"hover:opacity-75",
-												"cursor-pointer",
-											],
-								},
-							},
+						className={
+							isDisabled
+								? [
+										"opacity-25",
+										"cursor-not-allowed",
+									]
+								: [
+										"opacity-50",
+										"hover:opacity-75",
+										"cursor-pointer",
+									]
+						}
+						ui={{
+							tone: "neutral",
+							text: "sm",
 						}}
 					/>
 				</div>
@@ -130,11 +130,13 @@ export const Fulltext: FC<Fulltext.Props> = ({
 					>
 						<Icon
 							icon={"icon-[gridicons--cross]"}
-							size="sm"
-							tone={"secondary"}
 							onClick={() => {
 								setSearch("");
 								set(undefined);
+							}}
+							ui={{
+								tone: "secondary",
+								text: "sm",
 							}}
 						/>
 					</div>

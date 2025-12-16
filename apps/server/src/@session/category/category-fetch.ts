@@ -1,8 +1,8 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
-import type { Routes } from "../../hono/Routes";
-import { MessageSchema } from "../../schema/MessageSchema";
+import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import type { Routes } from "~/hono/Routes";
+import { NoticeSchema } from "~/schema/NoticeSchema";
 import { categoryFetchFx } from "./fx/categoryFetchFx";
 import { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
 import { CategorySchema } from "./schema/CategorySchema";
@@ -36,7 +36,7 @@ export const withCategoryFetchApi: Routes.Fn = ({ sessionHono }) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Category not found",
@@ -44,7 +44,7 @@ export const withCategoryFetchApi: Routes.Fn = ({ sessionHono }) => {
 				500: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Internal server error",
@@ -58,9 +58,7 @@ export const withCategoryFetchApi: Routes.Fn = ({ sessionHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<CategorySchema.Type, 200>(
-					yield* categoryFetchFx({
-						query: c.req.valid("json"),
-					}),
+					yield* categoryFetchFx(c.req.valid("json")),
 					200,
 				);
 			}).pipe(
@@ -74,7 +72,7 @@ export const withCategoryFetchApi: Routes.Fn = ({ sessionHono }) => {
 									_tag: "NotFoundError",
 								},
 								() => {
-									return c.json<MessageSchema.Type, 404>(
+									return c.json<NoticeSchema.Type, 404>(
 										{
 											type: "error",
 											message: e.message,
@@ -88,7 +86,7 @@ export const withCategoryFetchApi: Routes.Fn = ({ sessionHono }) => {
 									_tag: "UnknownException",
 								},
 								() => {
-									return c.json<MessageSchema.Type, 500>(
+									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
 											message: e.message,

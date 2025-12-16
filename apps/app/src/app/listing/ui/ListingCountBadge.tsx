@@ -19,32 +19,30 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 	locale,
 	count,
 	query,
+	ui,
 	...props
 }) => {
 	return (
 		<Badge
-			size={"md"}
-			round={"default"}
-			tone={"secondary"}
-			theme={"light"}
-			tweak={{
-				slot: {
-					root: {
-						class: [
-							"flex-shrink-0",
-							"border-none",
-							"flex-row",
-							"items-center",
-							"gap-1",
-						],
-					},
-				},
+			ui={{
+				tone: "secondary",
+				theme: "light",
+				flow: "horizontal",
+				items: "center",
+				justify: "space-between",
+				size: "md",
+				round: "default",
+				gap: "default",
+				inner: "default",
+				...ui,
 			}}
 			{...props}
 		>
 			<Icon
 				icon={ListingIcon}
-				size={"xs"}
+				ui={{
+					text: "xl",
+				}}
 			/>
 
 			<Typo
@@ -57,28 +55,20 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 					) : (
 						<withListingCountQuery.Suspense
 							data={query}
-							fallback={
-								<Icon
-									icon={SpinnerIcon}
-									size={"xs"}
-								/>
-							}
+							fallback={<Icon icon={SpinnerIcon} />}
 						>
 							{({ data }) => {
-								return (
-									<Typo
-										label={toLocaleNumber({
-											locale,
-											number: data.filter,
-										})}
-										font={"bold"}
-									/>
-								);
+								return `${toLocaleNumber({
+									locale,
+									number: data.filter,
+								})}`;
 							}}
 						</withListingCountQuery.Suspense>
 					)
 				}
-				font={"bold"}
+				ui={{
+					font: "bold",
+				}}
 			/>
 		</Badge>
 	);

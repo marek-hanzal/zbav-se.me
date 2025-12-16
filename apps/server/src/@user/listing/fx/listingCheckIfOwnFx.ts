@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { InvalidRequestError } from "../../../error/InvalidRequestError";
-import { NotFoundError } from "../../../error/NotFoundError";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { NotFoundError } from "~/error/NotFoundError";
 
 export namespace listingCheckIfOwnFx {
 	export interface Props {

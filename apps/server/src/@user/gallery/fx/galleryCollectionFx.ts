@@ -1,21 +1,18 @@
 import { withCollection } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { withGalleryQueryBuilder } from "../db/withGalleryQueryBuilder";
-import { withGallerySelect } from "../db/withGallerySelect";
-import type { GalleryQuerySchema } from "../schema/GalleryQuerySchema";
+import { withGalleryQueryBuilder } from "~/app/gallery/db/withGalleryQueryBuilder";
+import { withGallerySelect } from "~/app/gallery/db/withGallerySelect";
+import type { GalleryQuerySchema } from "~/app/gallery/schema/GalleryQuerySchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { GallerySchema } from "../schema/GallerySchema";
 
 export namespace galleryCollectionFx {
-	export interface Props {
-		query: GalleryQuerySchema.Type;
-	}
+	export type Props = GalleryQuerySchema.Type;
 }
 
-export const galleryCollectionFx = ({
-	query: { cursor, filter, where, sort },
-}: galleryCollectionFx.Props) => {
+export const galleryCollectionFx = (query: galleryCollectionFx.Props) => {
+	const { cursor, filter, where, sort } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

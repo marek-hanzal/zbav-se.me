@@ -9,7 +9,7 @@ export namespace withLikeEx {
 export function withLikeEx<DB, TB extends keyof DB>(
 	column: ReferenceExpression<DB, TB>,
 	term: string | undefined | null,
-	mode: withLikeEx.Mode = "start",
+	mode: withLikeEx.Mode = "both",
 ) {
 	const tokens = term
 		?.split(/\s+/g)
@@ -30,7 +30,7 @@ export function withLikeEx<DB, TB extends keyof DB>(
 		.with("both", () => {
 			return tokens.map(
 				(token) =>
-					sql<boolean>`lower(unaccent(${column})) like '%' || ${sql`lower(unaccent(${token})) || '%'`}`,
+					sql<boolean>`lower(unaccent(${column})) ilike '%' || ${sql`lower(unaccent(${token})) || '%'`}`,
 			);
 		})
 		.exhaustive();

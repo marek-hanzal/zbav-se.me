@@ -1,4 +1,4 @@
-import type { Routes } from "../../hono/Routes";
+import type { Routes } from "~/hono/Routes";
 
 export const withCorsProxyApi: Routes.Fn = ({ root }) => {
 	root.options("/api/cors-proxy", (c) => {

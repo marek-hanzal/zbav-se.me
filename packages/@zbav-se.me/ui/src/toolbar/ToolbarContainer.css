@@ -1,0 +1,5 @@
+@layer components {
+	.ToolbarContainer[data-ui-flip="true"] {
+		flex-direction: row-reverse;
+	}
+}

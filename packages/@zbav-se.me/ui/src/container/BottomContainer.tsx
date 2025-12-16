@@ -8,19 +8,7 @@ export namespace BottomContainer {
 export const BottomContainer: FC<BottomContainer.Props> = (props) => {
 	return (
 		<Container
-			ui="BottomContainer-root"
-			tweak={{
-				slot: {
-					root: {
-						class: [
-							"flex",
-							"flex-row",
-							"justify-between",
-							"items-center",
-						],
-					},
-				},
-			}}
+			data-ui={"BottomContainer"}
 			{...props}
 		/>
 	);

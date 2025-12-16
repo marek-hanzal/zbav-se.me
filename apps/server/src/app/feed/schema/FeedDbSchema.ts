@@ -7,12 +7,23 @@ export const FeedDbSchema = z.object({
 	userId: z.string().openapi({
 		description: "ID of the user who created the feed",
 	}),
-	locationId: z.string().nullish().openapi({
-		description: "ID of the location associated with the feed",
-	}),
-	uploadId: z.string().nullish().openapi({
-		description: "Hero image for this feed (usually selected from the listings in the feed)",
-	}),
+	locationId: z
+		.union([
+			z.string(),
+			z.null(),
+		])
+		.openapi({
+			description: "ID of the location associated with the feed",
+		}),
+	uploadId: z
+		.union([
+			z.string(),
+			z.null(),
+		])
+		.openapi({
+			description:
+				"Hero image for this feed (usually selected from the listings in the feed)",
+		}),
 	//
 	name: z.string().openapi({
 		description: "Name of the feed",

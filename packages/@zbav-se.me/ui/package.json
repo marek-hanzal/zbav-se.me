@@ -4,27 +4,29 @@
 	"version": "workspace:*",
 	"type": "module",
 	"scripts": {
-		"typecheck": "tsc --noEmit"
+		"typecheck": "tsgo --noEmit"
 	},
 	"dependencies": {
 		"@gsap/react": "2.1.2",
-		"@tanstack/react-form": "1.27.1",
+		"@tanstack/react-form": "1.27.4",
 		"@use-pico/client": "workspace:*",
 		"@use-pico/cls": "workspace:*",
 		"@use-pico/common": "workspace:*",
 		"gsap": "3.13.0",
-		"react": "19.2.1",
-		"react-dom": "19.2.1",
+		"react": "19.2.3",
+		"react-dom": "19.2.3",
 		"ts-pattern": "5.9.0"
 	},
 	"devDependencies": {
-		"@types/node": "24.10.1",
+		"@types/node": "25.0.2",
 		"@types/react": "19.2.7",
 		"@types/react-dom": "19.2.3",
+		"@typescript/native-preview": "7.0.0-dev.20251208.1",
 		"@use-pico/tsconfig": "5.0.0",
 		"typescript": "5.9.3"
 	},
 	"exports": {
+		"./ui.css": "./src/ui.css",
 		"./*": {
 			"import": "./src/*/index.ts",
 			"require": "./src/*/index.ts"

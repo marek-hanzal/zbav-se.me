@@ -3,7 +3,6 @@ import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { Sheet } from "@zbav-se.me/ui/sheet";
 
 export const Route = createFileRoute("/$locale/seller/listing/$id/view")({
 	component() {
@@ -15,37 +14,35 @@ export const Route = createFileRoute("/$locale/seller/listing/$id/view")({
 		});
 
 		return (
-			<Container square={"md"}>
-				<Sheet>
-					<div className={"flex flex-col gap-2 px-4"}>
-						<div>
-							<PriceInline
-								locale={locale}
-								price={listingQuery.data.price}
-								currency={listingQuery.data.currency}
-							/>
-						</div>
-						{listingQuery.data.location.address}
-
-						<LinkTo
-							to={"/$locale/dashboard"}
-							params={{
-								locale,
-							}}
-						>
-							[Dashboard]
-						</LinkTo>
-
-						{listingQuery.data.gallery.items.map((image) => (
-							<img
-								key={image.id}
-								className={"w-full"}
-								src={image.upload.url}
-								alt={image.id}
-							/>
-						))}
+			<Container>
+				<div className={"flex flex-col gap-2 px-4"}>
+					<div>
+						<PriceInline
+							locale={locale}
+							price={listingQuery.data.price}
+							currency={listingQuery.data.currency}
+						/>
 					</div>
-				</Sheet>
+					{listingQuery.data.location.address}
+
+					<LinkTo
+						to={"/$locale/ui/home"}
+						params={{
+							locale,
+						}}
+					>
+						[Dashboard]
+					</LinkTo>
+
+					{listingQuery.data.gallery.items.map((image) => (
+						<img
+							key={image.id}
+							className={"w-full"}
+							src={image.upload.url}
+							alt={image.id}
+						/>
+					))}
+				</div>
 			</Container>
 		);
 	},

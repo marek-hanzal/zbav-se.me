@@ -1,79 +1,92 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import { VariantProvider } from "@use-pico/cls";
 import type { FC, ReactNode } from "react";
-import { ThemeCls } from "../cls";
 
 export namespace Title {
 	export interface Props extends Container.Props {
 		textTitle: string;
+		textTitleProps?: Tx.PropsEx;
 		textSubtitle?: string;
 		right?: ReactNode;
 		left?: ReactNode;
 	}
 }
 
-export const Title: FC<Title.Props> = ({ textTitle, textSubtitle, right, left, ...props }) => {
+export const Title: FC<Title.Props> = ({
+	textTitle,
+	textTitleProps,
+	textSubtitle,
+	right,
+	left,
+	//
+	ui,
+	...props
+}) => {
 	return (
-		<VariantProvider
-			cls={ThemeCls}
-			variant={{
-				tone: "primary",
+		<Container
+			data-ui={"Title[Container]"}
+			ui={{
+				layout: "horizontal-flex",
+				items: "center",
+				justify: "space-between",
+				inner: "xl",
+				width: "full",
+				color: "lead",
+				tone: "brand",
 				theme: "light",
+				background: "alt",
+				shadow: true,
+				...ui,
 			}}
+			{...props}
 		>
 			<Container
-				ui="Title-root"
-				round={"lg"}
-				tone={"unset"}
-				theme={"unset"}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"inline-flex",
-								"items-center",
-								"justify-between",
-								"gap-xs",
-							],
-						},
-					},
+				data-ui={"Title-[Container.wrapper]"}
+				ui={{
+					layout: "vertical-flex",
+					items: "start",
+					justify: "center",
 				}}
-				{...props}
 			>
-				<div
-					data-ui="Title-title"
-					className="inline-flex flex-col gap-0 items-start justify-center min-w-0"
+				<Container
+					data-ui={"Title-[Container.title]"}
+					ui={{
+						layout: "horizontal-flex",
+						items: "center",
+						justify: "center",
+						gap: "sm",
+					}}
 				>
-					<div className="inline-flex flex-row gap-2 items-center justify-center min-w-0 max-w-full">
-						{left ? (
-							<div className="flex flex-row items-center justify-center">{left}</div>
-						) : null}
-						<Tx
-							label={textTitle}
-							font={"bold"}
-							size={"xl"}
-							truncate
-						/>
-					</div>
+					{left}
 
-					{textSubtitle ? (
-						<Tx
-							label={textSubtitle}
-							size={"sm"}
-						/>
-					) : null}
-				</div>
+					<Tx
+						data-ui={"Title-[Tx.title]"}
+						label={textTitle}
+						{...textTitleProps}
+						ui={{
+							text: "lg",
+							font: "bold",
+							display: "block",
+							truncate: true,
+							...textTitleProps?.ui,
+						}}
+					/>
+				</Container>
 
-				{right ? (
-					<div
-						data-ui="Title-right"
-						className="inline-flex flex-row gap-1 items-end justify-center max-w-[50%]"
-					>
-						{right}
-					</div>
+				{textSubtitle ? (
+					<Tx
+						data-ui={"Title-[Tx.subtitle]"}
+						label={textSubtitle}
+						ui={{
+							tone: "secondary",
+							theme: "light",
+							text: "md",
+						}}
+					/>
 				) : null}
 			</Container>
-		</VariantProvider>
+
+			{right}
+		</Container>
 	);
 };

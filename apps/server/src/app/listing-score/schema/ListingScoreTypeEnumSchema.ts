@@ -6,7 +6,7 @@ export const ListingScoreTypeEnumSchema = z
 		"ignore",
 		"flag",
 		"view",
-		"cart",
+		"favourite",
 	])
 	.openapi("ListingScoreTypeEnum", {
 		description: "Type of listing score",

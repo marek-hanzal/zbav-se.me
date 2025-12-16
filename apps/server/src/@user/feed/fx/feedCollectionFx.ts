@@ -1,32 +1,29 @@
 import { withCollection } from "@use-pico/common/collection";
+import { EntitySchema } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { withFeedQueryBuilder } from "../db/withFeedQueryBuilder";
-import { withFeedSelect } from "../db/withFeedSelect";
-import type { FeedQuerySchema } from "../schema/FeedQuerySchema";
-import { FeedSchema } from "../schema/FeedSchema";
+import { withFeedCollectionSelect } from "~/app/feed/db/withFeedCollectionSelect";
+import { withFeedQueryBuilder } from "~/app/feed/db/withFeedQueryBuilder";
+import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace feedCollectionFx {
-	export interface Props {
-		query: FeedQuerySchema.Type;
-	}
+	export type Props = FeedQuerySchema.Type;
 }
 
-export const feedCollectionFx = ({
-	query: { cursor, filter, where, sort },
-}: feedCollectionFx.Props) => {
+export const feedCollectionFx = (query: feedCollectionFx.Props) => {
+	const { cursor, filter, where, sort } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
 		return yield* Effect.tryPromise(async () => {
 			return withCollection({
-				select: withFeedSelect({
+				select: withFeedCollectionSelect({
 					database,
 					sort,
 				}),
-				output: FeedSchema,
+				output: EntitySchema,
 				cursor: cursor ?? {
 					page: 0,
 					size: 10,

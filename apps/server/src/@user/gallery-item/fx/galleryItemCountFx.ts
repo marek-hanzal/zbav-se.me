@@ -1,18 +1,17 @@
 import { withCount } from "@use-pico/common/count";
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { withGalleryItemQueryBuilder } from "../db/withGalleryItemQueryBuilder";
-import { withGalleryItemSelect } from "../db/withGalleryItemSelect";
-import type { GalleryItemQuerySchema } from "../schema/GalleryItemQuerySchema";
+import { withGalleryItemQueryBuilder } from "~/app/gallery-item/db/withGalleryItemQueryBuilder";
+import { withGalleryItemSelect } from "~/app/gallery-item/db/withGalleryItemSelect";
+import type { GalleryItemCountQuerySchema } from "~/app/gallery-item/schema/GalleryItemCountQuerySchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace galleryItemCountFx {
-	export interface Props {
-		query: Omit<GalleryItemQuerySchema.Type, "cursor" | "sort">;
-	}
+	export type Props = GalleryItemCountQuerySchema.Type;
 }
 
-export const galleryItemCountFx = ({ query: { filter, where } }: galleryItemCountFx.Props) => {
+export const galleryItemCountFx = (query: galleryItemCountFx.Props) => {
+	const { filter, where } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

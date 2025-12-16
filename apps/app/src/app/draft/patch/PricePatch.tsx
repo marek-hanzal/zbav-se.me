@@ -1,0 +1,77 @@
+import { Container } from "@use-pico/client/ui/container";
+import type { tDraft } from "@zbav-se.me/sdk/api/user";
+import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
+import { TitleContainer } from "@zbav-se.me/ui/container";
+import { Dial } from "@zbav-se.me/ui/dial";
+import { type FC, useState } from "react";
+import { SaveControl } from "~/app/control/SaveControl";
+
+export namespace PricePatch {
+	export interface Props extends TitleContainer.Props {
+		draft: tDraft;
+		onCancel(): void;
+		onSettled?(): void;
+	}
+}
+
+export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
+	const patch = withDraftFetchQuery.useSet();
+	const [price, setPrice] = useState<string | undefined>(
+		draft.price ? String(draft.price) : undefined,
+	);
+
+	const mutation = withDraftPatchMutation.useMutation({
+		onSuccess(draft) {
+			patch(() => draft, {
+				where: {
+					id: draft.id,
+				},
+			});
+		},
+		onSettled() {
+			onSettled?.();
+		},
+	});
+
+	return (
+		<TitleContainer
+			data-ui={"Setup-[TitleContainer.price]"}
+			textTitle={"Price (title)"}
+			{...props}
+		>
+			<Container
+				ui={{
+					layout: "vertical-content-footer",
+					height: "full",
+					width: "full",
+					inner: "default",
+					gap: "default",
+				}}
+			>
+				<Dial
+					value={price}
+					onChange={setPrice}
+				/>
+
+				<SaveControl
+					onCancel={onCancel}
+					onSave={() => {
+						mutation.mutate({
+							patch: {
+								price: price ? parseFloat(price) : null,
+							},
+							query: {
+								where: {
+									id: draft.id,
+								},
+							},
+						});
+					}}
+					loading={mutation.isPending}
+					disabled={!price}
+				/>
+			</Container>
+		</TitleContainer>
+	);
+};

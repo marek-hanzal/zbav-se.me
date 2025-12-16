@@ -1,5 +1,6 @@
 import React, { type FC, useEffect, useRef, useState } from "react";
 import { Button } from "./Button";
+import { uiButton } from "./uiButton";
 
 export namespace ConfirmButton {
 	export interface Props extends Button.Props {
@@ -30,6 +31,7 @@ export const ConfirmButton: FC<ConfirmButton.Props> = ({
 	confirmProps,
 	confirmTimeout = 3000,
 	onReset,
+	ui,
 	...props
 }) => {
 	const [isConfirm, setIsConfirm] = useState(false);
@@ -63,10 +65,19 @@ export const ConfirmButton: FC<ConfirmButton.Props> = ({
 		};
 	}, []);
 
+	const conditionalProps = isConfirm ? confirmProps : buttonProps;
+
 	return (
 		<Button
 			{...props}
-			{...(isConfirm ? confirmProps : buttonProps)}
+			{...conditionalProps}
+			{...uiButton({
+				ui: {
+					...ui,
+					...conditionalProps?.ui,
+				},
+				className: [],
+			})}
 			onClick={handleClick}
 		/>
 	);

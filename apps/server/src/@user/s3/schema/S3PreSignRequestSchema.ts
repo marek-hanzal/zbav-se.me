@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
-import { AllowedContentTypesEnumSchema } from "../../../schema/AllowedContentTypesEnumSchema";
-import { AllowedExtensionsEnumSchema } from "../../../schema/AllowedExtensionsEnumSchema";
+import { AllowedContentTypesEnumSchema } from "~/schema/AllowedContentTypesEnumSchema";
+import { AllowedExtensionsEnumSchema } from "~/schema/AllowedExtensionsEnumSchema";
 
 export const S3PreSignRequestSchema = z.object({
 	path: z.string().min(3).openapi({

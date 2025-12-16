@@ -1,23 +1,23 @@
-import { embedMinHash, embedNumberRange } from "@use-pico/common/embedding";
+import { embedMinHash } from "@use-pico/common/embedding";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import pgvector from "pgvector";
 import { match } from "ts-pattern";
+import { galleryCreateFx as coolGalleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
+import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import type { ListingCreateSchema } from "~/@user/listing/schema/ListingCreateSchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { galleryCreateFx } from "./galleryCreateFx";
+import { InvalidRequestError } from "~/error/InvalidRequestError";
 import { listingFetchFx } from "./listingFetchFx";
 
 export namespace listingCreateFx {
-	export interface Props {
-		data: ListingCreateSchema.Type;
-	}
+	export type Props = ListingCreateSchema.Type;
 }
 
-export const listingCreateFx = ({ data }: listingCreateFx.Props) => {
+export const listingCreateFx = ({ uploadIds, ...data }: listingCreateFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
@@ -26,44 +26,40 @@ export const listingCreateFx = ({ data }: listingCreateFx.Props) => {
 			const id = genId();
 			const now = new Date();
 
+			if (uploadIds.length === 0) {
+				return yield* new InvalidRequestError({
+					message: "At least one upload is required",
+				});
+			}
+
+			const gallery = yield* coolGalleryCreateFx();
+
+			let sort = 0;
+			for (const uploadId of uploadIds) {
+				yield* galleryItemCreateFx({
+					galleryId: gallery.id,
+					uploadId,
+					sort,
+				});
+				sort++;
+			}
+
 			yield* Effect.tryPromise(async () => {
 				return database
 					.insertInto("listing")
 					.values({
 						id,
 						userId: user.id,
-						price: data.price,
-						priceVec: pgvector.toSql([
-							data.price,
-						]),
-						condition: data.condition,
-						conditionVec: pgvector.toSql(
-							embedNumberRange({
-								min: 0,
-								max: 6,
-								value: data.condition,
-							}),
-						),
-						age: data.age,
-						ageVec: pgvector.toSql(
-							embedNumberRange({
-								min: 0,
-								max: 6,
-								value: data.age,
-							}),
-						),
-						locationId: data.locationId,
-						categoryId: data.categoryId,
+						galleryId: gallery.id,
 						createdAt: now,
 						updatedAt: now,
-						currency: data.currency,
-						title: data.title,
+						currency: "CZK",
+						...data,
 						titleVec: pgvector.toSql(
 							embedMinHash({
 								value: data.title,
 							}),
 						),
-						description: data.description,
 						expiresAt: match(data.expiresAt)
 							.with("7-days", () =>
 								DateTime.now()
@@ -91,10 +87,20 @@ export const listingCreateFx = ({ data }: listingCreateFx.Props) => {
 					.execute();
 			});
 
-			yield* galleryCreateFx({
-				listingId: id,
-				uploadIds: data.uploadIds,
-			});
+			if (data.draftId) {
+				const draftId = data.draftId;
+				yield* Effect.tryPromise(async () => {
+					return database
+						.updateTable("draft")
+						.set({
+							usedAt: now,
+							updatedAt: now,
+						})
+						.where("id", "=", draftId)
+						.where("userId", "=", user.id)
+						.execute();
+				});
+			}
 
 			return yield* listingFetchFx({
 				where: {

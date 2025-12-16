@@ -1,17 +1,15 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { withTransactionFx } from "../../../database/fx/withTransactionFx";
-import type { UserExPatchSchema } from "../schema/UserExPatchSchema";
+import type { UserExPatchSchema } from "~/@user/user-ex/schema/UserExPatchSchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace userExPatchFx {
-	export interface Props {
-		data: UserExPatchSchema.Type;
-	}
+	export type Props = UserExPatchSchema.Type;
 }
 
-export const userExPatchFx = ({ data }: userExPatchFx.Props) => {
+export const userExPatchFx = ({ patch }: userExPatchFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
@@ -32,7 +30,7 @@ export const userExPatchFx = ({ data }: userExPatchFx.Props) => {
 						.values({
 							id: genId(),
 							userId: user.id,
-							...data,
+							...patch,
 						})
 						.returningAll()
 						.executeTakeFirstOrThrow();
@@ -42,10 +40,7 @@ export const userExPatchFx = ({ data }: userExPatchFx.Props) => {
 			return yield* Effect.tryPromise(async () => {
 				return database
 					.updateTable("user_ex")
-					.set({
-						...userEx,
-						...data,
-					})
+					.set(patch)
 					.where("id", "=", userEx.id)
 					.returningAll()
 					.executeTakeFirstOrThrow();

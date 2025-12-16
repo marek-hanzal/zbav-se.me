@@ -1,20 +1,18 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { NotFoundError } from "../../../error/NotFoundError";
-import { withFeedQueryBuilder } from "../db/withFeedQueryBuilder";
-import { withFeedSelect } from "../db/withFeedSelect";
-import type { FeedQuerySchema } from "../schema/FeedQuerySchema";
+import { withFeedQueryBuilder } from "~/app/feed/db/withFeedQueryBuilder";
+import { withFeedSelect } from "~/app/feed/db/withFeedSelect";
+import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { NotFoundError } from "~/error/NotFoundError";
 import { FeedSchema } from "../schema/FeedSchema";
 
 export namespace feedFetchFx {
-	export interface Props {
-		query: Omit<FeedQuerySchema.Type, "cursor">;
-	}
+	export type Props = FeedQuerySchema.Type;
 }
 
-export const feedFetchFx = ({ query }: feedFetchFx.Props) => {
+export const feedFetchFx = (query: feedFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

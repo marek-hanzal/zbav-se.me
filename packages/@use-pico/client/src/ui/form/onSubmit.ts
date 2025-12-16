@@ -1,8 +1,14 @@
+import type { UseMutationResult } from "@tanstack/react-query";
 import { cleanOf } from "@use-pico/common/clean-of";
 import { mapEmptyToNull } from "@use-pico/common/map";
-import type { Form } from "./Form";
 
 export namespace onSubmit {
+	export type Mutation<TValues extends object, TOutput = any> = UseMutationResult<
+		TOutput,
+		any,
+		TValues
+	>;
+
 	export namespace Map {
 		export interface Props<TValues extends object, TData extends object> {
 			/**
@@ -25,7 +31,7 @@ export namespace onSubmit {
 	}
 
 	export interface Props<TValues extends object, TData extends object> {
-		mutation: Form.Props.Mutation<TData>;
+		mutation: Mutation<TData>;
 		/**
 		 * Map form values to mutation request values (output of this goes directly into mutation).
 		 *

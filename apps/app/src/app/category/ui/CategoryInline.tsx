@@ -31,17 +31,22 @@ export const CategoryInline: FC<CategoryInline.Props> = ({
 		>
 			<div className={"flex flex-col gap-0.5 items-start"}>
 				<Typo
-					tone={"secondary"}
-					theme={"light"}
 					label={category.group}
-					size={"xs"}
+					ui={{
+						tone: "secondary",
+						theme: "light",
+						text: "xs",
+					}}
 					{...textGroupProps}
 				/>
 
 				<Typo
-					tone={"secondary"}
-					theme={"light"}
 					label={category.category}
+					ui={{
+						tone: "secondary",
+						theme: "light",
+						text: "default",
+					}}
 					{...textCategoryProps}
 				/>
 			</div>

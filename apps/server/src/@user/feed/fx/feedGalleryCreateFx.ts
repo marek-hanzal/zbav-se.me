@@ -58,10 +58,8 @@ export const feedGalleryCreateFx = ({ feedId, uploadIds }: feedGalleryCreateFx.P
 			}
 
 			const gallery = yield* galleryFetchFx({
-				query: {
-					where: {
-						id: feed.id,
-					},
+				where: {
+					id: feed.id,
 				},
 			});
 
@@ -91,15 +89,19 @@ export const feedGalleryCreateFx = ({ feedId, uploadIds }: feedGalleryCreateFx.P
 			}
 
 			yield* feedPatchFx({
-				id: feed.id,
-				uploadId: uploadIds[0],
+				patch: {
+					uploadId: uploadIds[0],
+				},
+				query: {
+					where: {
+						id: feed.id,
+					},
+				},
 			});
 
 			return yield* galleryFetchFx({
-				query: {
-					where: {
-						id: gallery.id,
-					},
+				where: {
+					id: gallery.id,
 				},
 			});
 		}),

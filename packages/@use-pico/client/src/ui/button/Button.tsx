@@ -1,34 +1,12 @@
-import { type Cls, useCls, VariantProvider } from "@use-pico/cls";
-import type { ButtonHTMLAttributes, FC, Ref } from "react";
+import type { ComponentProps, FC } from "react";
 import { useMemo } from "react";
-import { PicoCls } from "../../cls/PicoCls";
 import { Icon } from "../../icon/Icon";
-import type { IconCls } from "../../icon/IconCls";
 import { SpinnerIcon } from "../../icon/SpinnerIcon";
-import type { UiProps } from "../../type/UiProps";
 import { Tx } from "../tx/Tx";
-import { ButtonCls } from "./ButtonCls";
-
-const ICON_SIZE_MAP: Partial<
-	Record<Cls.VariantOf<ButtonCls, "size">, Cls.VariantOf<IconCls, "size">>
-> = {
-	sm: "xs",
-	md: "xs",
-	lg: "sm",
-	xl: "md",
-} as const;
+import { uiButton } from "./uiButton";
 
 export namespace Button {
-	export interface Props
-		extends UiProps<ButtonCls.Props<ButtonHTMLAttributes<HTMLButtonElement>>> {
-		/**
-		 * Ref to the wrapper div element.
-		 */
-		wrapperRef?: Ref<HTMLDivElement>;
-		/**
-		 * Ref to the button element.
-		 */
-		buttonRef?: Ref<HTMLButtonElement>;
+	export interface Props extends uiButton.Component<ComponentProps<"button">> {
 		/**
 		 * Goes through translation; in general buttons should _not_ have
 		 * any complex content, thus the "label" only.
@@ -63,69 +41,14 @@ export namespace Button {
 		 */
 		loading?: boolean;
 		/**
-		 * Whether to show the border.
-		 * @default true
-		 */
-		border?: boolean;
-		/**
-		 * Whether the button should take full width of its container.
-		 * @default false
-		 */
-		full?: boolean;
-		/**
-		 * Menu-like button
-		 * @default false
-		 */
-		menu?: boolean;
-		/**
-		 * Whether to show the background.
-		 * @default true
-		 */
-		background?: boolean;
-		/**
-		 * Size of the button (affects padding and font size).
-		 * @default "md"
-		 */
-		size?: Cls.VariantOf<ButtonCls, "size">;
-		/**
-		 * Color tone of the button (affects background, text, border, and shadow colors).
-		 * @default "primary"
-		 */
-		tone?: Cls.VariantOf<ButtonCls, "tone">;
-		/**
-		 * Theme variant (light or dark).
-		 * @default "light"
-		 */
-		theme?: Cls.VariantOf<ButtonCls, "theme">;
-		/**
-		 * Border radius of the button.
-		 * @default "default"
-		 */
-		round?: Cls.VariantOf<ButtonCls, "round">;
-		/**
 		 * Whether to truncate text that overflows the button width.
 		 * @default false
 		 */
 		truncate?: boolean;
-		/**
-		 * Whether to render the button with equal width and height.
-		 * When not provided, it defaults to true when neither children nor label are present.
-		 * @default false
-		 */
-		square?: boolean;
-		/**
-		 * Absolute positioning for snapping the button to corners of a parent container.
-		 * Requires the parent element to have relative positioning.
-		 * @default "unset"
-		 */
-		snapTo?: Cls.VariantOf<ButtonCls, "snap-to">;
 	}
 }
 
 export const Button: FC<Button.Props> = ({
-	ui,
-	wrapperRef,
-	buttonRef,
 	label,
 	iconEnabled,
 	iconDisabled,
@@ -133,66 +56,28 @@ export const Button: FC<Button.Props> = ({
 	iconProps,
 	iconPosition = "left",
 	loading,
-	size,
-	tone,
-	theme,
-	round,
-	border,
-	background,
-	full,
-	menu,
-	truncate,
-	square,
-	snapTo,
-	//
-	cls = ButtonCls,
-	tweak,
-	//
 	disabled,
+	//
+	truncate,
 	children,
+	//
+	ui,
+	className,
+	//
 	...props
 }) => {
-	const { slots, variant } = useCls(
-		cls,
-		/**
-		 * Component tweak has lowest precedence
-		 */
-		tweak,
-		/**
-		 * Component props has highest precedence
-		 */
-		{
-			variant: {
-				disabled,
-				theme,
-				tone,
-				size,
-				round,
-				border,
-				background,
-				full,
-				menu,
-				truncate,
-				square: square ?? (!children && !label),
-				"snap-to": snapTo,
-			},
-		},
-	);
-
-	const iconSize = ICON_SIZE_MAP[variant.size] ?? variant.size;
-
 	const renderIcon = useMemo(
 		() =>
 			disabled ? (
 				<Icon
+					data-ui={"Button-[Icon]"}
 					icon={loading === true ? iconLoading : (iconDisabled ?? iconEnabled)}
-					size={iconSize}
 					{...iconProps}
 				/>
 			) : (
 				<Icon
+					data-ui={"Button-[Icon]"}
 					icon={loading === true ? iconLoading : iconEnabled}
-					size={iconSize}
 					{...iconProps}
 				/>
 			),
@@ -202,47 +87,40 @@ export const Button: FC<Button.Props> = ({
 			iconLoading,
 			iconDisabled,
 			iconEnabled,
-			iconSize,
 			iconProps,
 		],
 	);
 
 	return (
-		<VariantProvider
-			cls={PicoCls}
-			variant={{
-				tone: variant.tone,
-				theme: variant.theme,
-			}}
+		<button
+			type={"button"}
+			disabled={disabled}
+			//
+			{...uiButton({
+				ui: {
+					disabled,
+					...ui,
+				},
+				className,
+			})}
+			{...props}
 		>
-			<div
-				data-ui={ui ?? "Button-wrapper"}
-				ref={wrapperRef}
-				className={slots.wrapper()}
-			>
-				<button
-					data-ui="Button-root"
-					ref={buttonRef}
-					className={slots.root()}
-					type={"button"}
-					disabled={disabled}
-					{...props}
-				>
-					{iconPosition === "left" && renderIcon}
+			{iconPosition === "left" && renderIcon}
 
-					{label ? (
-						<Tx
-							label={label}
-							display={"block"}
-							truncate={truncate}
-						/>
-					) : null}
+			{label ? (
+				<Tx
+					data-ui={"Button-[Tx.label]"}
+					label={label}
+					ui={{
+						display: "block",
+						truncate,
+					}}
+				/>
+			) : null}
 
-					{children}
+			{children}
 
-					{iconPosition === "right" && renderIcon}
-				</button>
-			</div>
-		</VariantProvider>
+			{iconPosition === "right" && renderIcon}
+		</button>
 	);
 };

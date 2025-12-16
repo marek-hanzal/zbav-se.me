@@ -48,18 +48,20 @@ export const listingMetricsFx = ({ listingId }: listingMetricsFx.Props) => {
 						.as("viewsScore"),
 					//
 					eb.fn
-						.sum<number>(eb.case().when("ls.type", "=", "cart").then(1).else(0).end())
-						.as("cart"),
+						.sum<number>(
+							eb.case().when("ls.type", "=", "favourite").then(1).else(0).end(),
+						)
+						.as("favourite"),
 					eb.fn
 						.sum<number>(
 							eb
 								.case()
-								.when("ls.type", "=", "cart")
+								.when("ls.type", "=", "favourite")
 								.then(eb.ref("ls.score"))
 								.else(0)
 								.end(),
 						)
-						.as("cartScore"),
+						.as("favouriteScore"),
 					//
 					eb.fn
 						.sum<number>(eb.case().when("ls.type", "=", "ignore").then(1).else(0).end())

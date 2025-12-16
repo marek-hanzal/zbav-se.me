@@ -8,6 +8,9 @@
 	"files.readonlyInclude": {
 		"**/_route.ts": true
 	},
+	"files.associations": {
+		"*.css": "tailwindcss"
+	},
 	"cSpell.words": [
 		"adduser",
 		"airpods",
@@ -83,6 +86,7 @@
 		"fajn",
 		"fastcgi",
 		"Favourite",
+		"favourites",
 		"feedu",
 		"feedů",
 		"fflate",
@@ -191,6 +195,7 @@
 		"minkowski",
 		"mirrorless",
 		"missingok",
+		"modelcontextprotocol",
 		"modtime",
 		"modyfi",
 		"Momentík",
@@ -224,11 +229,13 @@
 		"noninteractive",
 		"nopan",
 		"notifempty",
+		"nowrap",
 		"npkill",
 		"numkeys",
 		"obsahuju",
 		"odstaveček",
 		"officedocument",
+		"oklab",
 		"oled",
 		"opcache",
 		"openhands",
@@ -240,6 +247,7 @@
 		"overclicking",
 		"overlappings",
 		"overscan",
+		"overscroll",
 		"Packeta",
 		"pannable",
 		"paralleldrive",
@@ -255,6 +263,7 @@
 		"PHPSTORM",
 		"picsum",
 		"pipefail",
+		"pneu",
 		"poladil",
 		"poladit",
 		"pořešit",
@@ -283,6 +292,7 @@
 		"raycaster",
 		"rclone",
 		"reactour",
+		"rgba",
 		"Rhosts",
 		"rootfs",
 		"rpcinterface",
@@ -307,6 +317,7 @@
 		"soundbary",
 		"spreadsheetml",
 		"sqlocal",
+		"srgb",
 		"SRID",
 		"SSAO",
 		"sshpass",
@@ -329,6 +340,7 @@
 		"toolbelt",
 		"trgm",
 		"tseslint",
+		"tsgo",
 		"tsquery",
 		"Turborepo",
 		"twotone",
@@ -338,6 +350,7 @@
 		"uicons",
 		"ultrawide",
 		"unaccent",
+		"Uncapitalize",
 		"Unfilter",
 		"ÚOOÚ",
 		"urlcat",
@@ -367,6 +380,7 @@
 		"webfonts",
 		"webglob",
 		"webp",
+		"wght",
 		"workerpool",
 		"Worley",
 		"worleyjs",
@@ -401,5 +415,6 @@
 	},
 	"[mdx]": {
 		"editor.defaultFormatter": "unifiedjs.vscode-mdx"
-	}
+	},
+	"typescript.experimental.useTsgo": false
 }

@@ -1,4 +1,4 @@
-import type { Routes } from "../../hono/Routes";
+import type { Routes } from "~/hono/Routes";
 import { withLocationAutocompleteApi } from "./location-autocomplete";
 import { withLocationFetchApi } from "./location-fetch";
 

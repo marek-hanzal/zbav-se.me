@@ -8,6 +8,7 @@ export { useMergeRefs } from "./useMergeRefs";
 export { usePatchCollection } from "./usePatchCollection";
 export { useScrollTo } from "./useScrollTo";
 export { useSelection } from "./useSelection";
+export { useSentinel } from "./useSentinel";
 export { useSetUnset } from "./useSetUnset";
 export { useSnapperNav } from "./useSnapperNav";
 export { useStopEvent } from "./useStopEvent";

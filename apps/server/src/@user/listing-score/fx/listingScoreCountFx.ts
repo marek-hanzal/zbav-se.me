@@ -1,18 +1,17 @@
 import { withCount } from "@use-pico/common/count";
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { withListingScoreQueryBuilder } from "../db/withListingScoreQueryBuilder";
-import { withListingScoreSelect } from "../db/withListingScoreSelect";
-import type { ListingScoreCountQuerySchema } from "../schema/ListingScoreCountQuerySchema";
+import { withListingScoreQueryBuilder } from "~/app/listing-score/db/withListingScoreQueryBuilder";
+import { withListingScoreSelect } from "~/app/listing-score/db/withListingScoreSelect";
+import type { ListingScoreCountQuerySchema } from "~/app/listing-score/schema/ListingScoreCountQuerySchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace listingScoreCountFx {
-	export interface Props {
-		query: ListingScoreCountQuerySchema.Type;
-	}
+	export type Props = ListingScoreCountQuerySchema.Type;
 }
 
-export const listingScoreCountFx = ({ query: { filter, where } }: listingScoreCountFx.Props) => {
+export const listingScoreCountFx = (query: listingScoreCountFx.Props) => {
+	const { filter, where } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

@@ -1,18 +1,18 @@
-import type { Routes } from "../../hono/Routes";
-import { withFeedCollectionApi } from "./feed-collection";
-import { withFeedCountApi } from "./feed-count";
-import { withFeedCreateApi } from "./feed-create";
-import { withFeedDeleteApi } from "./feed-delete";
-import { withFeedFetchApi } from "./feed-fetch";
-import { withFeedGalleryCreateApi } from "./feed-gallery-create";
-import { withFeedPatchApi } from "./feed-patch";
+import type { Routes } from "~/hono/Routes";
+import { withCollectionApi } from "./collection";
+import { withCountApi } from "./count";
+import { withCreateApi } from "./create";
+import { withDeleteApi } from "./delete";
+import { withFetchApi } from "./fetch";
+import { withGalleryCreateApi } from "./gallery-create";
+import { withPatchApi } from "./patch";
 
 export const withFeedApi: Routes.Fn = (routes) => {
-	withFeedCreateApi(routes);
-	withFeedPatchApi(routes);
-	withFeedFetchApi(routes);
-	withFeedCollectionApi(routes);
-	withFeedCountApi(routes);
-	withFeedDeleteApi(routes);
-	withFeedGalleryCreateApi(routes);
+	withCreateApi(routes);
+	withPatchApi(routes);
+	withFetchApi(routes);
+	withCollectionApi(routes);
+	withCountApi(routes);
+	withDeleteApi(routes);
+	withGalleryCreateApi(routes);
 };

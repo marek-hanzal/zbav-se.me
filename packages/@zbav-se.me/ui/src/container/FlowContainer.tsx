@@ -15,14 +15,28 @@ export namespace FlowContainer {
  *
  * @param props Props extending `Container.Props`, supporting an optional `left` node for sticky actions.
  */
-export const FlowContainer: FC<FlowContainer.Props> = ({ left, children, ...props }) => {
+export const FlowContainer: FC<FlowContainer.Props> = ({ left, children, ui, ...props }) => {
 	return (
 		<Container
-			position={"relative"}
+			data-ui={"FlowContainer[Container]"}
+			ui={{
+				position: "relative",
+				height: "full",
+				width: "full",
+				...ui,
+			}}
 			{...props}
 		>
 			{left ? (
-				<div className="absolute left-2 top-2 w-fit h-fit isolate z-5">{left}</div>
+				<Container
+					data-ui={"FlowContainer-[Container.left]"}
+					ui={{
+						snapTo: "top-left",
+						zIndex: true,
+					}}
+				>
+					{left}
+				</Container>
 			) : null}
 
 			{children}

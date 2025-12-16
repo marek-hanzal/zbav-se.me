@@ -1,0 +1,1 @@
+export { withUploadFetchQuery } from "./withUploadFetchQuery";
