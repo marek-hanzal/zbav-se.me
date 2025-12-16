@@ -59,9 +59,17 @@ export const View = <TView extends string, TProps>({
 	// Restore scroll position helper
 	const restoreScroll = useCallback((element: HTMLDivElement, view: TView) => {
 		const position = scrollPositionsRef.current.get(view) ?? 0;
+		if (scrollElementRef.current !== element) {
+			return;
+		}
+
+		// Ensure restoring scroll doesn't animate (e.g. scroll-behavior: smooth).
+		const prevScrollBehavior = element.style.scrollBehavior;
+		element.style.scrollBehavior = "auto";
+		element.scrollTop = position;
 		requestAnimationFrame(() => {
 			if (scrollElementRef.current === element) {
-				element.scrollTop = position;
+				element.style.scrollBehavior = prevScrollBehavior;
 			}
 		});
 	}, []);
