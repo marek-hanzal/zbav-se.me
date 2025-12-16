@@ -1,5 +1,6 @@
 import type { MarkSuspense } from "@use-pico/client/type";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Container } from "@use-pico/client/ui/container";
+import { translator } from "@use-pico/common/translator";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedCollectionQuery, withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { type FC, useId, useState } from "react";
@@ -59,13 +60,26 @@ export const Content: FC<Content.Props> = ({
 							},
 						}}
 						fallback={
-							<SpinnerContainer data-ui={"FeedList-[SpinnerContainer.feed-fetch]"} />
+							<Item
+								locale={locale}
+								feed={{
+									id: feedId,
+									locationId: null,
+									name: translator.text("Loading... (label)"),
+									query: {},
+									upload: null,
+									uploadId: null,
+								}}
+								defaultOpen={defaultOpenId === feedId}
+								tools={tools}
+								linkTo={linkTo}
+							/>
 						}
 					>
-						{({ data: feedData }) => {
+						{({ data: feed }) => {
 							return (
 								<Item
-									feed={feedData}
+									feed={feed}
 									locale={locale}
 									defaultOpen={defaultOpenId === feedId}
 									tools={tools}
