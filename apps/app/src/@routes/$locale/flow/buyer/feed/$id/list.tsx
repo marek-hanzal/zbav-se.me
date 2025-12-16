@@ -514,6 +514,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 									value: isFeedSettings,
 									set: setIsFeedSettings,
 								}}
+								noDelete
 							>
 								<Button
 									onClick={() => {
