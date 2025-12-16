@@ -4,7 +4,6 @@ import {
 	type ReactNode,
 	type RefObject,
 	useCallback,
-	useId,
 	useLayoutEffect,
 	useMemo,
 	useRef,
@@ -37,7 +36,6 @@ export const View = <TView extends string, TProps>({
 	views,
 	children,
 }: View.Props<TView, TProps>) => {
-	const activityRootId = useId();
 	const scrollElementRef = useRef<HTMLDivElement | null>(null);
 	const scrollPositionsRef = useRef(new Map<TView, number>());
 	const currentViewRef = useRef(state.value);
