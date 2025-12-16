@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router";
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
@@ -9,7 +10,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { linkTo } from "@use-pico/common/link-to";
 import { translator } from "@use-pico/common/translator";
-import { PassKeyIcon, SocialIcon, UnlockIcon } from "@zbav-se.me/ui/icon";
+import { PassKeyIcon, UnlockIcon } from "@zbav-se.me/ui/icon";
 import { Logo } from "@zbav-se.me/ui/logo";
 import { useRef } from "react";
 import { z } from "zod";
@@ -207,8 +208,8 @@ export const Route = createFileRoute("/$locale/login")({
 									}}
 								>
 									<form.SubmitButton
-										iconEnabled={UnlockIcon}
-										iconDisabled={UnlockIcon}
+										iconEnabled={ArrowRightIcon}
+										iconPosition={"right"}
 										disabled={signInMutation.isPending}
 									>
 										{signInMutation.isPending ? (
@@ -242,6 +243,7 @@ export const Route = createFileRoute("/$locale/login")({
 					<Container
 						ui={{
 							layout: "vertical-centered",
+							height: "full",
 						}}
 					>
 						<Status
@@ -251,7 +253,11 @@ export const Route = createFileRoute("/$locale/login")({
 							action={
 								<Button
 									iconEnabled={UnlockIcon}
-									iconDisabled={UnlockIcon}
+									iconProps={{
+										ui: {
+											text: "2xl",
+										},
+									}}
 									onClick={() => {
 										passkeyMutation.mutate();
 									}}
@@ -259,27 +265,16 @@ export const Route = createFileRoute("/$locale/login")({
 									ui={{
 										size: "xl",
 										tone: "primary",
-										theme: "dark",
+										theme: "light",
+										text: "lg",
 									}}
 									label={"Login with passkey"}
 								/>
 							}
-						/>
-					</Container>
-
-					<Container
-						ui={{
-							layout: "vertical-centered",
-						}}
-					>
-						<Status
-							icon={SocialIcon}
-							textTitle={"Login with social (title)"}
-							textMessage={"Login with social (message)"}
 							ui={{
-								tone: "primary",
-								theme: "light",
+								inner: "4xl",
 							}}
+							className={"text-center"}
 						/>
 					</Container>
 				</Container>

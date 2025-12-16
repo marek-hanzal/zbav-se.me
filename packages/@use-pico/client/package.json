@@ -40,7 +40,7 @@
 		"use-debounce": "10.0.6",
 		"uuid": "13.0.0",
 		"write-excel-file": "2.3.10",
-		"zod": "4.2.0",
+		"zod": "4.2.1",
 		"zustand": "5.0.9"
 	},
 	"devDependencies": {
@@ -52,7 +52,7 @@
 		"@types/react": "19.2.7",
 		"@typescript/native-preview": "7.0.0-dev.20251208.1",
 		"@use-pico/tsconfig": "5.0.0",
-		"rollup": "4.53.3",
+		"rollup": "4.53.5",
 		"rollup-plugin-dts": "6.3.0",
 		"typescript": "5.9.3"
 	},

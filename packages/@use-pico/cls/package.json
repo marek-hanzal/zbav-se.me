@@ -21,7 +21,7 @@
 		"@rollup/plugin-node-resolve": "16.0.3",
 		"@rollup/plugin-typescript": "12.3.0",
 		"@testing-library/jest-dom": "6.9.1",
-		"@testing-library/react": "16.3.0",
+		"@testing-library/react": "16.3.1",
 		"@types/node": "25.0.2",
 		"@types/react": "19.2.7",
 		"@types/react-dom": "19.2.3",
@@ -31,7 +31,7 @@
 		"@vitejs/plugin-react": "5.1.2",
 		"jsdom": "27.3.0",
 		"npm-run-all2": "8.0.4",
-		"rollup": "4.53.3",
+		"rollup": "4.53.5",
 		"rollup-plugin-dts": "6.3.0",
 		"typescript": "5.9.3",
 		"vitest": "4.0.15"
