@@ -86,7 +86,6 @@ export const View = <TView extends string, TProps>({
 				return scrollElementRef.current;
 			},
 			set current(node: HTMLDivElement | null) {
-				// Remove listener from previous element
 				if (attachedElement) {
 					attachedElement.removeEventListener("scroll", scrollHandlerRef.current);
 				}
@@ -94,7 +93,6 @@ export const View = <TView extends string, TProps>({
 				scrollElementRef.current = node;
 				attachedElement = node;
 
-				// Attach listener and restore scroll for new element
 				if (node) {
 					node.addEventListener("scroll", scrollHandlerRef.current, {
 						passive: true,
