@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "vite build",
 		"dev": "vite",
-		"preview": "NODE_ENV=production vite build --mode production && PORT=3031 node .output/server/index.mjs",
+		"preview": "NITRO_PRESET=node_server NODE_ENV=production PORT=3031 vite build --mode production && node .output/server/index.mjs",
 		"translations": "bun ./cli/translations.ts",
 		"typecheck": "tsc --noEmit",
 		"knip": "knip"
@@ -59,6 +59,7 @@
 		"tailwindcss": "4.1.18",
 		"terser": "5.44.1",
 		"typescript": "5.9.3",
+		"vercel": "50.1.0",
 		"vite": "7.3.0",
 		"vite-plugin-dynamic-import": "1.6.0",
 		"vite-plugin-qrcode": "0.3.0",

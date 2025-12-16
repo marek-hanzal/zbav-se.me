@@ -42,7 +42,7 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 			}),
 			mode === "production"
 				? nitro({
-						preset: "vercel",
+						preset: process.env.NITRO_PRESET || "vercel",
 					})
 				: undefined,
 		],
