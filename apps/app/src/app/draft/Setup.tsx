@@ -1,5 +1,4 @@
 import { SaveIcon } from "@use-pico/client/icon";
-import { uiButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
@@ -141,13 +140,15 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 											text: "2xl",
 										},
 									}}
-									{...uiButton({
-										ui: {
-											inner: "md",
-											text: "lg",
-										},
-										className: [],
-									})}
+									ui={{
+										tone: "neutral",
+										theme: "light",
+										size: "default",
+										background: "default",
+										round: "default",
+										border: true,
+										shadow: true,
+									}}
 								>
 									<Container
 										ui={{

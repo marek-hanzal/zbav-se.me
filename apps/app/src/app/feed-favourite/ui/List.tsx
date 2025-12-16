@@ -22,10 +22,17 @@ export namespace List {
  *
  * @see {@link Item} - The component used to render individual feed items
  */
-export const List: FC<List.Props> = ({ locale, query, linkTo, ...props }) => {
+export const List: FC<List.Props> = ({ locale, query, linkTo, ui, ...props }) => {
 	return (
 		<Container
 			data-ui={"List[Container]"}
+			ui={{
+				layout: "vertical-flex",
+				scroll: "vertical",
+				gap: "default",
+				inner: "default",
+				height: "full",
+			}}
 			{...props}
 		>
 			<withFeedFavouriteCollectionQuery.Suspense

@@ -31,6 +31,10 @@ export const Route = createFileRoute("/$locale/ui/buyer/favourite/list")({
 									locale,
 									id: feedId,
 								}}
+								ui={{
+									display: "block",
+									height: "full",
+								}}
 							>
 								{children}
 							</LinkTo>
