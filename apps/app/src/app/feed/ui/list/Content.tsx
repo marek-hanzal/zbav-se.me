@@ -2,16 +2,17 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedCollectionQuery, withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { type FC, useId } from "react";
+import { type FC, useId, useState } from "react";
+import { CreateButton } from "~/app/feed/ui/button/CreateButton";
 import { Item } from "./Item";
 
 export namespace Content {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		locale: string;
 		query: tFeedQuery;
-		defaultOpenId?: string;
 		tools: Item.Tools[];
 		linkTo: Item.LinkTo;
+		isLimitReached: boolean;
 	}
 }
 
@@ -19,9 +20,9 @@ export const Content: FC<Content.Props> = ({
 	_suspense,
 	locale,
 	query,
-	defaultOpenId,
 	tools,
 	linkTo,
+	isLimitReached,
 	...props
 }) => {
 	const feedRootId = useId();
@@ -30,6 +31,10 @@ export const Content: FC<Content.Props> = ({
 	 * This is intentional to trigger parent suspense
 	 */
 	const feedCollectionQuery = withFeedCollectionQuery.useSuspenseQuery(query);
+	/**
+	 * We're keeping locale state just for "after creation" open state
+	 */
+	const [defaultOpenId, setDefaultOpenId] = useState<string | undefined>(undefined);
 
 	if (feedCollectionQuery.data.data.length === 0) {
 		return null;
@@ -71,6 +76,14 @@ export const Content: FC<Content.Props> = ({
 					</withFeedFetchQuery.Suspense>
 				);
 			})}
+
+			<CreateButton
+				disabled={isLimitReached}
+				onCreate={(data) => {
+					setDefaultOpenId(data.id);
+				}}
+				isLimitReached={isLimitReached}
+			/>
 		</Container>
 	);
 };

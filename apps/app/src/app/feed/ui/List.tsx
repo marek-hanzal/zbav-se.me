@@ -1,9 +1,8 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedCountQuery } from "@zbav-se.me/sdk/query/user";
-import { type FC, useState } from "react";
+import type { FC } from "react";
 import type { Item } from "~/app/feed/ui/list/Item";
-import { CreateButton } from "./button/CreateButton";
 import { Content } from "./list/Content";
 
 export namespace List {
@@ -17,11 +16,6 @@ export namespace List {
 }
 
 export const List: FC<List.Props> = ({ locale, query, limit = 10, tools, linkTo, ...props }) => {
-	/**
-	 * We're keeping locale state just for "after creation" open state
-	 */
-	const [defaultOpenId, setDefaultOpenId] = useState<string | undefined>(undefined);
-
 	return (
 		<withFeedCountQuery.Suspense
 			data={{}}
@@ -38,33 +32,18 @@ export const List: FC<List.Props> = ({ locale, query, limit = 10, tools, linkTo,
 							scroll: "vertical",
 							gap: "default",
 							inner: "default",
+							height: "full",
 						}}
 						{...props}
 					>
-						<Container
-							ui={{
-								flow: "vertical",
-								height: "content",
-								gap: "default",
-							}}
-						>
-							<Content
-								_suspense={"I know"}
-								locale={locale}
-								query={query}
-								defaultOpenId={defaultOpenId}
-								tools={tools}
-								linkTo={linkTo}
-							/>
-
-							<CreateButton
-								disabled={isLimitReached}
-								onCreate={(data) => {
-									setDefaultOpenId(data.id);
-								}}
-								isLimitReached={isLimitReached}
-							/>
-						</Container>
+						<Content
+							_suspense={"I know"}
+							locale={locale}
+							query={query}
+							tools={tools}
+							linkTo={linkTo}
+							isLimitReached={isLimitReached}
+						/>
 					</Container>
 				);
 			}}

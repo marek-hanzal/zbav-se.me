@@ -31,7 +31,7 @@ export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
 				}}
 			>
 				<List
-					data-ui={"/buyer/feed/select[FeedListContainer]"}
+					data-ui={"/buyer/feed/select[List]"}
 					locale={locale}
 					query={{
 						cursor: {
