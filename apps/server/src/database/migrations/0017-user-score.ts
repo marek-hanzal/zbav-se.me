@@ -19,7 +19,7 @@ export const UserScoreMigration: Migration = {
 			.addColumn("toUserId", "text", (col) => col.notNull())
 			.addColumn("score", "integer", (col) => col.notNull())
 			.addColumn("type", sql`user_score_type_enum`, (col) => col.notNull())
-			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
+			.addColumn("createdAt", "timestamp", (col) => col.notNull())
 			.addForeignKeyConstraint(
 				"user_score_[fromUserId]_fk",
 				[

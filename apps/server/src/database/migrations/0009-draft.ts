@@ -23,8 +23,8 @@ export const DraftMigration: Migration = {
 			.addColumn("description", "text")
 			.addColumn("expiresAt", "text")
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
-			.addColumn("updatedAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
+			.addColumn("createdAt", "timestamp", (col) => col.notNull())
+			.addColumn("updatedAt", "timestamp", (col) => col.notNull())
 			.addColumn("usedAt", "timestamp")
 			.addForeignKeyConstraint(
 				"draft_[userId]_fk",

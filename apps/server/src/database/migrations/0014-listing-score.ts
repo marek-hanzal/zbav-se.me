@@ -20,7 +20,7 @@ export const ListingScoreMigration: Migration = {
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("score", "integer", (col) => col.notNull())
 			.addColumn("type", sql`listing_score_type_enum`, (col) => col.notNull())
-			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
+			.addColumn("createdAt", "timestamp", (col) => col.notNull())
 			.addForeignKeyConstraint(
 				"listing_score_[listingId]_fk",
 				[

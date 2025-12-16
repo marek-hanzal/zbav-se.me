@@ -7,7 +7,7 @@ export const GalleryMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			//
 			.addColumn("userId", "text", (col) => col.notNull())
-			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
+			.addColumn("createdAt", "timestamp", (col) => col.notNull())
 			.addForeignKeyConstraint(
 				"gallery_[userId]_fk",
 				[

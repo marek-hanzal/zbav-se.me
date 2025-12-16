@@ -12,7 +12,7 @@ export const TransactionStatusMigration: Migration = {
 			//
 			.addColumn("status", sql`transaction_status_enum`, (col) => col.notNull())
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
+			.addColumn("createdAt", "timestamp", (col) => col.notNull())
 			//
 			.addForeignKeyConstraint(
 				"transaction_status_[transactionId]_fk",

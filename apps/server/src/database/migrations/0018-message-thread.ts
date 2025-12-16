@@ -5,8 +5,8 @@ export const MessageThreadMigration: Migration = {
 		await db.schema
 			.createTable("message_thread")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
-			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
-			.addColumn("updatedAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
+			.addColumn("createdAt", "timestamp", (col) => col.notNull())
+			.addColumn("updatedAt", "timestamp", (col) => col.notNull())
 			.execute();
 
 		await db.schema

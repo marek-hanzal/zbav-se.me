@@ -10,7 +10,7 @@ export const MessageThreadUserMigration: Migration = {
 			.addColumn("messageThreadId", "text", (col) => col.notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
+			.addColumn("createdAt", "timestamp", (col) => col.notNull())
 			//
 			.addForeignKeyConstraint(
 				"message_thread_user_[messageThreadId]_fk",

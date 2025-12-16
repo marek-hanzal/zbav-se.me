@@ -15,7 +15,7 @@ export const MessageGalleryMigration: Migration = {
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("galleryId", "text", (col) => col.notNull())
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
+			.addColumn("createdAt", "timestamp", (col) => col.notNull())
 			//
 			.addForeignKeyConstraint(
 				"message_gallery_[userId]_fk",
