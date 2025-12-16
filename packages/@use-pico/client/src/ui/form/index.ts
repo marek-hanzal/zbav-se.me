@@ -1,4 +1,3 @@
-export { FormCls } from "./FormCls";
 export { FormError } from "./FormError";
 export { FormField } from "./FormField";
 export { FormFieldCls } from "./FormFieldCls";
