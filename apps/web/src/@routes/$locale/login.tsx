@@ -91,9 +91,6 @@ export const Route = createFileRoute("/$locale/login")({
 			<Container
 				data-ui="/login[Container]"
 				ui={{
-					tone: "brand",
-					theme: "light",
-					background: "alt",
 					position: "relative",
 					height: "full",
 				}}

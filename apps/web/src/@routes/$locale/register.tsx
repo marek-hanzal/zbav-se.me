@@ -83,9 +83,6 @@ export const Route = createFileRoute("/$locale/register")({
 				data-ui="/register[Container]"
 				ui={{
 					layout: "vertical-centered",
-					tone: "brand",
-					theme: "light",
-					background: "alt",
 					position: "relative",
 					height: "full",
 					width: "full",
