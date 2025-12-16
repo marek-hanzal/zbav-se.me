@@ -33,7 +33,6 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 			paths(),
 			qrcode(),
 			tailwindcss(),
-			react({}),
 			wasm(),
 			dynamicImport(),
 			ViteYaml(),
@@ -45,6 +44,7 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 						preset: process.env.NITRO_PRESET || "vercel",
 					})
 				: undefined,
+			react({}),
 		],
 		worker: {
 			format: "es",
