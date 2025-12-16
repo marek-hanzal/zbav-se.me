@@ -197,16 +197,6 @@ export const Route = createFileRoute("/$locale/register")({
 								)}
 							</form.AppField>
 
-							{registerMutation.isError && (
-								<div className={"rounded-md bg-red-50 p-3 text-red-700"}>
-									{registerMutation.error instanceof Error ? (
-										registerMutation.error.message
-									) : (
-										<Tx label={"Registration failed"} />
-									)}
-								</div>
-							)}
-
 							<Container
 								ui={{
 									layout: "vertical-flex",

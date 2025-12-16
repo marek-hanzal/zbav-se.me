@@ -67,7 +67,7 @@ export const FormField: FC<FormField.Props> = (props) => {
 
 	return (
 		<div
-			data-ui="FormField-root"
+			data-ui="FormField"
 			className={slots.root()}
 		>
 			{label || meta?.errors?.length || hint ? (
