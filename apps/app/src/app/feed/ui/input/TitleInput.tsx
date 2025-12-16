@@ -46,7 +46,7 @@ export const TitleInput: FC<TitleInput.Props> = ({
 				<Status
 					textTitle={"Feed title (title)"}
 					action={
-						<FormField full>
+						<FormField>
 							{(props) => (
 								<TextInput
 									value={title}

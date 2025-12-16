@@ -50,7 +50,7 @@ export const NameInput: FC<NameInput.Props> = ({
 				<Status
 					textTitle={"Feed name (title)"}
 					action={
-						<FormField full>
+						<FormField>
 							{(props) => (
 								<TextInput
 									value={name}
