@@ -80,6 +80,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 					}),
 					contentProps: {
 						disableScroll: true,
+						unstyled: true,
 					},
 				},
 				metrics: {

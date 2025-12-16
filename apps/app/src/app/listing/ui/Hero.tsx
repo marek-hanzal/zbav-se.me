@@ -3,9 +3,8 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Overlay } from "@use-pico/client/ui/overlay";
 import type { tGalleryItem, tListing } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, useState } from "react";
+import type { FC } from "react";
 import { useListingScore } from "~/app/listing/hook/useListingScore";
-import { ListingSheet } from "~/app/listing/ui/ListingSheet";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 
 export namespace Hero {
@@ -34,8 +33,6 @@ export const Hero: FC<Hero.Props> = ({ locale, ref, listing, feedId, withScore, 
 		...tGalleryItem[],
 	];
 
-	const [detail, setDetail] = useState(false);
-
 	const useVisibilityStore = useVisibilityContext();
 	const visible = useVisibilityStore((store) => store.isVisible);
 
@@ -47,51 +44,35 @@ export const Hero: FC<Hero.Props> = ({ locale, ref, listing, feedId, withScore, 
 	});
 
 	return (
-		<>
-			<Container
-				data-id={listing.id}
-				data-ui={"ListingHeroContainer[Container]"}
-				ui={{
-					height: "full",
-					width: "full",
-					position: "relative",
-				}}
-				onClick={() => {
-					setDetail((prev) => !prev);
-				}}
-				{...props}
-			>
-				{listing.isIgnored ? <Overlay type={"subtle"} /> : null}
+		<Container
+			data-id={listing.id}
+			data-ui={"ListingHeroContainer[Container]"}
+			ui={{
+				height: "full",
+				width: "full",
+				position: "relative",
+			}}
+			{...props}
+		>
+			{listing.isIgnored ? <Overlay type={"subtle"} /> : null}
 
-				<ListingOverlay
-					data-ui={"ListingHeroContainer-[ListingOverlay]"}
-					locale={locale}
-					listing={listing}
-				/>
-
-				<HeroImage
-					data-ui={"ListingHeroContainer-[HeroImage]"}
-					src={hero.upload.url}
-					alt={`Hero image for listing ${listing.id}`}
-					visible={visible}
-					invisible={
-						<SpinnerContainer
-							data-ui={"ListingHeroContainer-[SpinnerContainer.invisible]"}
-						/>
-					}
-				/>
-			</Container>
-
-			<ListingSheet
+			<ListingOverlay
+				data-ui={"ListingHeroContainer-[ListingOverlay]"}
 				locale={locale}
 				listing={listing}
-				state={{
-					value: detail,
-					set: setDetail,
-				}}
-				withScore={withScore}
-				feedId={feedId}
 			/>
-		</>
+
+			<HeroImage
+				data-ui={"ListingHeroContainer-[HeroImage]"}
+				src={hero.upload.url}
+				alt={`Hero image for listing ${listing.id}`}
+				visible={visible}
+				invisible={
+					<SpinnerContainer
+						data-ui={"ListingHeroContainer-[SpinnerContainer.invisible]"}
+					/>
+				}
+			/>
+		</Container>
 	);
 };
