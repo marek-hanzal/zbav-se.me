@@ -14,6 +14,10 @@ export namespace uiLinkTo {
 		snapTo?: CoolUi.SnapTo;
 		color?: CoolUi.Color;
 		flow?: CoolUi.Flow;
+		display?: CoolUi.Display;
+		width?: CoolUi.Width;
+		height?: CoolUi.Height;
+		opacity?: CoolUi.Opacity;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;

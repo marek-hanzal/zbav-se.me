@@ -66,7 +66,7 @@ export namespace Ui {
 		| "full"
 		| "none";
 	export type Font = "light" | "normal" | "semibold" | "bold";
-	export type Display = "block" | "inline";
+	export type Display = "block" | "inline" | "inline-block";
 	export type Color = "text" | "lead" | "icon";
 	export type Background = "default" | "alt";
 	export type BackgroundActive = Background;

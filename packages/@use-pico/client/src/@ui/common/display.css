@@ -6,4 +6,8 @@
 	[data-ui-display="inline"] {
 		display: inline;
 	}
+
+	[data-ui-display="inline-block"] {
+		display: inline-block;
+	}
 }
