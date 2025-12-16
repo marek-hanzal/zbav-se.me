@@ -1,6 +1,6 @@
-import { type FC, type ReactNode, useId } from "react";
-import { Badge } from "../badge/Badge";
+import type { FC, ReactNode } from "react";
 import { Tx } from "../tx/Tx";
+import { Typo } from "../typo";
 
 export namespace FormError {
 	export type Type =
@@ -19,48 +19,49 @@ export namespace FormError {
 	}
 
 	export interface Props {
-		meta: Meta;
+		meta?: Meta;
 	}
 }
 
 export const FormError: FC<FormError.Props> = ({ meta }) => {
-	const errorId = useId();
-	const [error] = meta.errors ?? [];
-	const isError = meta.isTouched && meta.errors && meta.errors.length > 0;
+	const [error] = meta?.errors ?? [];
+	const isError = meta?.isTouched && meta?.errors && meta?.errors?.length > 0;
 
 	if (!isError || !error) {
-		return null;
+		return (
+			<Typo
+				label={"\u00A0"}
+				ui={{
+					text: "xs",
+				}}
+			/>
+		);
 	}
 
 	if ("component" in error) {
-		return (
-			<Badge
-				key={errorId}
-				ui={{
-					tone: "danger",
-					theme: "light",
-					size: "xs",
-				}}
-			>
-				{error.component}
-			</Badge>
-		);
+		return error.component;
 	}
 
 	if ("message" in error) {
 		return (
-			<Badge
-				key={errorId}
+			<Tx
+				label={error.message}
 				ui={{
-					tone: "danger",
+					tone: "neutral",
 					theme: "light",
-					size: "xs",
+					color: "text",
+					text: "xs",
 				}}
-			>
-				<Tx label={error.message} />
-			</Badge>
+			/>
 		);
 	}
 
-	return null;
+	return (
+		<Typo
+			label={"&nbsp;"}
+			ui={{
+				text: "xs",
+			}}
+		/>
+	);
 };

@@ -78,32 +78,23 @@ export const FormField: FC<FormField.Props> = (props) => {
 			}}
 			{...rest}
 		>
-			{label || meta?.errors?.length || hint ? (
-				<Container data-ui="FormField-[Container.header]">
-					{label || meta?.errors?.length ? (
-						<Container
-							data-ui="FormField-[Container.header-label]"
+			{label || hint ? (
+				<Container
+					data-ui="FormField-[Container.header]"
+					ui={{
+						layout: "vertical-flex",
+						gap: "xs",
+					}}
+				>
+					{label ? (
+						<Typo
+							label={label}
 							ui={{
-								layout: "horizontal-flex",
-								items: "end",
-								justify: "space-between",
+								text: "md",
+								font: "normal",
+								color: "lead",
 							}}
-						>
-							{label ? (
-								<Typo
-									label={label}
-									ui={{
-										text: "md",
-										font: "normal",
-										color: "lead",
-									}}
-								/>
-							) : (
-								<div />
-							)}
-
-							{meta?.errors?.length ? <FormError meta={meta} /> : null}
-						</Container>
+						/>
 					) : null}
 
 					{hint ? (
@@ -133,6 +124,8 @@ export const FormField: FC<FormField.Props> = (props) => {
 				},
 				className: [],
 			})}
+
+			<FormError meta={meta} />
 		</Container>
 	);
 };

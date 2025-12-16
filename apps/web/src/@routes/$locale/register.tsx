@@ -96,7 +96,7 @@ export const Route = createFileRoute("/$locale/register")({
 				<Container
 					ref={scrollerRef}
 					ui={{
-						layout: "vertical-centered",
+						layout: "vertical-flex",
 						scroll: "vertical",
 						width: "full",
 						height: "full",
@@ -124,7 +124,7 @@ export const Route = createFileRoute("/$locale/register")({
 								e.stopPropagation();
 								form.handleSubmit();
 							}}
-							className={"space-y-4"}
+							className={"space-y-2"}
 						>
 							<form.AppField name={"email"}>
 								{(field) => (
