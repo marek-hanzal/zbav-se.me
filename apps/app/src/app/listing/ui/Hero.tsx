@@ -1,13 +1,11 @@
 import { useVisibilityContext } from "@use-pico/client/context";
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Overlay } from "@use-pico/client/ui/overlay";
 import type { tGalleryItem, tListing } from "@zbav-se.me/sdk/api/user";
-import { CloseButton } from "@zbav-se.me/ui/button";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, useId, useState } from "react";
+import { type FC, useState } from "react";
 import { useListingScore } from "~/app/listing/hook/useListingScore";
-import { ListingDetail } from "~/app/listing/ui/ListingDetail";
+import { ListingSheet } from "~/app/listing/ui/ListingSheet";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 
 export namespace Hero {
@@ -36,7 +34,6 @@ export const Hero: FC<Hero.Props> = ({ locale, ref, listing, feedId, withScore, 
 		...tGalleryItem[],
 	];
 
-	const detailSheetId = useId();
 	const [detail, setDetail] = useState(false);
 
 	const useVisibilityStore = useVisibilityContext();
@@ -85,34 +82,16 @@ export const Hero: FC<Hero.Props> = ({ locale, ref, listing, feedId, withScore, 
 				/>
 			</Container>
 
-			<BottomSheet
-				data-ui={"ListingHeroContainer-[BottomSheet]"}
-				data-id={listing.id}
-				id={detailSheetId}
-				isOpen={detail}
-				onClose={() => setDetail(false)}
-				detent={"full"}
-				header={({ close }) => ({
-					title: listing.title,
-					right: <CloseButton onClick={close} />,
-				})}
-			>
-				<ListingDetail
-					data-ui={"ListingHeroContainer-[ListingDetailContainer]"}
-					parentSheetId={detailSheetId}
-					locale={locale}
-					listing={listing}
-					withScore={withScore}
-					feedId={feedId}
-					tools={[
-						"destructive",
-						"hero",
-					]}
-					ui={{
-						inner: "default",
-					}}
-				/>
-			</BottomSheet>
+			<ListingSheet
+				locale={locale}
+				listing={listing}
+				state={{
+					value: detail,
+					set: setDetail,
+				}}
+				withScore={withScore}
+				feedId={feedId}
+			/>
 		</>
 	);
 };
