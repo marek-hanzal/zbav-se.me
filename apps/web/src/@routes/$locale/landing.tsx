@@ -180,9 +180,9 @@ export const Route = createFileRoute("/$locale/landing")({
 
 				<Container
 					ui={{
-						layout: "vertical-centered",
 						height: "full",
 						width: "full",
+						inner: "xl",
 					}}
 				>
 					<History />

@@ -7,6 +7,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { GitHubHistorySchema } from "./schema/GitHubHistorySchema";
 
 const REPO = "marek-hanzal/zbav-se.me";
+const HISTORY_DAYS = Math.ceil(365 / 2);
 
 const parseRepo = (repo: string) => {
 	const [owner, name] = repo.split("/");
@@ -21,8 +22,7 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 		createRoute({
 			method: "get",
 			path: "/github/history",
-			description:
-				"Syncs commit history from the last year into local cache and returns daily commit counts for the last 365 days.",
+			description: `Syncs commit history into local cache and returns daily commit counts for the last ${HISTORY_DAYS} days.`,
 			operationId: "apiGithubHistory",
 			responses: {
 				200: {
@@ -54,8 +54,12 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 
 				const { owner, name } = parseRepo(REPO);
 
-				const since = new Date();
-				since.setFullYear(since.getFullYear() - 1);
+				// We return "last N days (including today)", so derive everything from the same range.
+				const endUtc = DateTime.utc().startOf("day");
+				const startUtc = endUtc.minus({
+					days: HISTORY_DAYS - 1,
+				});
+				const sinceIso = startUtc.toISO() ?? startUtc.toJSDate().toISOString();
 
 				const query = `
 					query RepoHistorySince($owner: String!, $name: String!, $since: GitTimestamp!, $after: String) {
@@ -95,7 +99,7 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 							variables: {
 								owner,
 								name,
-								since: since.toISOString(),
+								since: sinceIso,
 								after,
 							},
 						}),
@@ -189,12 +193,7 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 					}
 				}
 
-				// Return cached history aggregated into UTC days (last 365 days, including today).
-				const endUtc = DateTime.utc().startOf("day");
-				const startUtc = endUtc.minus({
-					days: 364,
-				});
-
+				// Return cached history aggregated into UTC days (last N days, including today).
 				const commits = await db
 					.selectFrom("github")
 					.select([
@@ -257,7 +256,7 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 				}
 
 				const days: GitHubHistorySchema.Type[] = [];
-				for (let i = 0; i < 365; i++) {
+				for (let i = 0; i < HISTORY_DAYS; i++) {
 					const key = toYmd(
 						startUtc.plus({
 							days: i,

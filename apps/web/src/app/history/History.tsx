@@ -5,6 +5,7 @@ import { HistoryItem } from "~/app/history/HistoryItem";
 
 const DEFAULT_PALETTE = [
 	"bg-white",
+    //
 	"bg-pink-50",
 	"bg-pink-100",
 	"bg-pink-200",
@@ -15,8 +16,41 @@ const DEFAULT_PALETTE = [
 	"bg-pink-700",
 	"bg-pink-800",
 	"bg-pink-900",
-	// special: >10 commits
-	"bg-pink-900 ring-1 ring-amber-400",
+	//
+	"bg-purple-50",
+	"bg-purple-100",
+	"bg-purple-200",
+	"bg-purple-300",
+	"bg-purple-400",
+	"bg-purple-500",
+	"bg-purple-600",
+	"bg-purple-700",
+	"bg-purple-800",
+	"bg-purple-900",
+	//
+	"bg-violet-50",
+	"bg-violet-100",
+	"bg-violet-200",
+	"bg-violet-300",
+	"bg-violet-400",
+	"bg-violet-500",
+	"bg-violet-600",
+	"bg-violet-700",
+	"bg-violet-800",
+	"bg-violet-900",
+	//
+	"bg-indigo-50",
+	"bg-indigo-100",
+	"bg-indigo-200",
+	"bg-indigo-300",
+	"bg-indigo-400",
+	"bg-indigo-500",
+	"bg-indigo-600",
+	"bg-indigo-700",
+	"bg-indigo-800",
+	"bg-indigo-900",
+	// Special - maxed
+	"bg-amber-400",
 ] as const;
 
 export namespace History {
@@ -37,15 +71,19 @@ export const History = ({ ui, className, ...props }: History.Props) => {
 				return (
 					<Container
 						data-ui="History[Container]"
-						ui={{
-							layout: "vertical-flex",
-							gap: "md",
-							...ui,
-						}}
-						className={className}
+						ui={ui}
+						className={[
+							"grid grid-flow-row grid-cols-7",
+							// Sizing and spacing
+							"gap-1",
+							// Optional: keep it from stretching weirdly
+							"w-full",
+							"h-full",
+							className,
+						]}
 						{...props}
 					>
-						{data.map((item) => (
+						{data.reverse().map((item) => (
 							<HistoryItem
 								key={`${historyRootId}-${item.date}`}
 								item={item}
