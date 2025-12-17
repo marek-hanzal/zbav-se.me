@@ -393,22 +393,22 @@ export type tNotice = {
      * Message
      */
     message: string;
-    type: tMessageTypeEnum;
+    type: tNoticeTypeEnum;
 };
 
 /**
- * Type of message
+ * Type of notice
  */
-export const tMessageTypeEnum = {
+export const tNoticeTypeEnum = {
     info: 'info',
     warning: 'warning',
     error: 'error'
 } as const;
 
 /**
- * Type of message
+ * Type of notice
  */
-export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
+export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
 
 export type tApiCategoryFetchRequest = {
     /**

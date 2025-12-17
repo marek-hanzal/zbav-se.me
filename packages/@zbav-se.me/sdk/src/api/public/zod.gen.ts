@@ -3,17 +3,17 @@
 import { z } from 'zod';
 
 /**
- * Type of message
+ * Type of notice
  */
-export const zMessageTypeEnum = z.enum([
+export const zNoticeTypeEnum = z.enum([
     'info',
     'warning',
     'error'
 ]).register(z.globalRegistry, {
-    description: 'Type of message'
+    description: 'Type of notice'
 });
 
-export type zMessageTypeEnum = z.infer<typeof zMessageTypeEnum>;
+export type zNoticeTypeEnum = z.infer<typeof zNoticeTypeEnum>;
 
 /**
  * Just a note sent from various reasons, usually when something is fucked up.
@@ -22,7 +22,7 @@ export const zNotice = z.object({
     message: z.string().register(z.globalRegistry, {
         description: 'Message'
     }),
-    type: zMessageTypeEnum
+    type: zNoticeTypeEnum
 }).register(z.globalRegistry, {
     description: 'Just a note sent from various reasons, usually when something is fucked up.'
 });

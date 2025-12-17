@@ -1,12 +1,12 @@
 import { z } from "@hono/zod-openapi";
-import { MessageTypeEnumSchema } from "./MessageTypeEnumSchema";
+import { NoticeTypeEnumSchema } from "./NoticeTypeEnumSchema";
 
 export const NoticeSchema = z
 	.object({
 		message: z.string().openapi({
 			description: "Message",
 		}),
-		type: MessageTypeEnumSchema,
+		type: NoticeTypeEnumSchema,
 	})
 	.openapi("Notice", {
 		description: "Just a note sent from various reasons, usually when something is fucked up.",

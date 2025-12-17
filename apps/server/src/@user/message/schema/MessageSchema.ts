@@ -4,7 +4,7 @@ import { MessageLocationSchema } from "~/@user/message-location/schema/MessageLo
 import { MessageTextSchema } from "~/@user/message-text/schema/MessageTextSchema";
 
 export const MessageSchema = z
-	.union([
+	.xor([
 		MessageTextSchema,
 		MessageGallerySchema,
 		MessageLocationSchema,

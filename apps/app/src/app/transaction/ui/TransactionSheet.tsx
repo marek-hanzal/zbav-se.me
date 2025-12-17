@@ -3,6 +3,7 @@ import { SheetView } from "@use-pico/client/ui/sheet-view";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
+import { MessageList } from "~/app/message/MessageList";
 
 export namespace TransactionSheet {
 	export type View = "detail";
@@ -33,7 +34,14 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({ transactionId, ..
 						}}
 						views={{
 							detail: {
-								children: "foo",
+								children: (
+									<MessageList
+										messageThreadId={transaction.messageThreadId}
+										ui={{
+											inner: "default",
+										}}
+									/>
+								),
 								header: ({ close }) => ({
 									title: transaction.title,
 									right: <CloseButton onClick={close} />,

@@ -655,20 +655,142 @@ export const zAllowedExtensionsEnum = z.enum([
 export type zAllowedExtensionsEnum = z.infer<typeof zAllowedExtensionsEnum>;
 
 /**
- * Request to create a listing transaction message
+ * Available sort fields for message collection
  */
-export const zMessageTextCreate = z.object({
-    messageThreadId: z.string().register(z.globalRegistry, {
-        description: 'The ID of the listing transaction to add a message to'
-    }),
-    message: z.string().register(z.globalRegistry, {
-        description: 'The message content'
-    })
-}).register(z.globalRegistry, {
-    description: 'Request to create a listing transaction message'
+export const zMessageSortField = z.enum(['createdAt']).register(z.globalRegistry, {
+    description: 'Available sort fields for message collection'
 });
 
-export type zMessageTextCreate = z.infer<typeof zMessageTextCreate>;
+export type zMessageSortField = z.infer<typeof zMessageSortField>;
+
+/**
+ * Sort parameters for message collection
+ */
+export const zMessageSort = z.object({
+    field: zMessageSortField,
+    direction: zOrderEnum
+}).register(z.globalRegistry, {
+    description: 'Sort parameters for message collection'
+});
+
+export type zMessageSort = z.infer<typeof zMessageSort>;
+
+/**
+ * App-based filters
+ */
+export const zMessageWhere = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    messageThreadId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact messageThreadId'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact userId'
+    })),
+    transactionId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact transactionId'
+    }))
+}).register(z.globalRegistry, {
+    description: 'App-based filters'
+});
+
+export type zMessageWhere = z.infer<typeof zMessageWhere>;
+
+/**
+ * Filter object for message collection
+ */
+export const zMessageFilter = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    messageThreadId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact messageThreadId'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact userId'
+    })),
+    transactionId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact transactionId'
+    }))
+}).register(z.globalRegistry, {
+    description: 'Filter object for message collection'
+});
+
+export type zMessageFilter = z.infer<typeof zMessageFilter>;
+
+/**
+ * Query object for message collection
+ */
+export const zMessageQuery = z.object({
+    cursor: z.optional(zCursor),
+    filter: z.optional(zMessageFilter),
+    where: z.optional(zMessageWhere),
+    sort: z.optional(z.array(zMessageSort))
+}).register(z.globalRegistry, {
+    description: 'Query object for message collection'
+});
+
+export type zMessageQuery = z.infer<typeof zMessageQuery>;
+
+/**
+ * Type of message
+ */
+export const zMessageTypeEnum = z.enum([
+    'text',
+    'gallery',
+    'location'
+]).register(z.globalRegistry, {
+    description: 'Type of message'
+});
+
+export type zMessageTypeEnum = z.infer<typeof zMessageTypeEnum>;
+
+/**
+ * Message location entry
+ */
+export const zMessageLocation = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message location entry'
+    }),
+    locationId: z.string().register(z.globalRegistry, {
+        description: 'ID of the location'
+    }),
+    type: zMessageTypeEnum
+}).register(z.globalRegistry, {
+    description: 'Message location entry'
+});
+
+export type zMessageLocation = z.infer<typeof zMessageLocation>;
+
+/**
+ * Message gallery entry
+ */
+export const zMessageGallery = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message gallery entry'
+    }),
+    galleryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery'
+    }),
+    type: zMessageTypeEnum
+}).register(z.globalRegistry, {
+    description: 'Message gallery entry'
+});
+
+export type zMessageGallery = z.infer<typeof zMessageGallery>;
 
 /**
  * Message entry
@@ -689,14 +811,53 @@ export const zMessageText = z.object({
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
-    type: z.enum(['text']).register(z.globalRegistry, {
-        description: 'Message type'
-    })
+    type: zMessageTypeEnum
 }).register(z.globalRegistry, {
     description: 'Message entry'
 });
 
 export type zMessageText = z.infer<typeof zMessageText>;
+
+/**
+ * Message entry (unified view across all message types)
+ */
+export const zMessage = z.union([
+    zMessageText,
+    zMessageGallery,
+    zMessageLocation
+]);
+
+export type zMessage = z.infer<typeof zMessage>;
+
+/**
+ * Collection of messages
+ */
+export const zMessageCollection = z.object({
+    data: z.array(zMessage),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of messages'
+});
+
+export type zMessageCollection = z.infer<typeof zMessageCollection>;
+
+/**
+ * Request to create a listing transaction message
+ */
+export const zMessageTextCreate = z.object({
+    messageThreadId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the listing transaction to add a message to'
+    }),
+    message: z.string().register(z.globalRegistry, {
+        description: 'The message content'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to create a listing transaction message'
+});
+
+export type zMessageTextCreate = z.infer<typeof zMessageTextCreate>;
 
 /**
  * Type of listing score
@@ -2562,17 +2723,17 @@ export const zCount = z.object({
 export type zCount = z.infer<typeof zCount>;
 
 /**
- * Type of message
+ * Type of notice
  */
-export const zMessageTypeEnum = z.enum([
+export const zNoticeTypeEnum = z.enum([
     'info',
     'warning',
     'error'
 ]).register(z.globalRegistry, {
-    description: 'Type of message'
+    description: 'Type of notice'
 });
 
-export type zMessageTypeEnum = z.infer<typeof zMessageTypeEnum>;
+export type zNoticeTypeEnum = z.infer<typeof zNoticeTypeEnum>;
 
 /**
  * Just a note sent from various reasons, usually when something is fucked up.
@@ -2581,7 +2742,7 @@ export const zNotice = z.object({
     message: z.string().register(z.globalRegistry, {
         description: 'Message'
     }),
-    type: zMessageTypeEnum
+    type: zNoticeTypeEnum
 }).register(z.globalRegistry, {
     description: 'Just a note sent from various reasons, usually when something is fucked up.'
 });
@@ -3130,6 +3291,25 @@ export type zapiMessageTextCreateRequest = z.infer<typeof zApiMessageTextCreateD
 export const zApiMessageTextCreateResponse = zMessageText;
 
 export type zapiMessageTextCreateResponse = z.infer<typeof zApiMessageTextCreateResponse>;
+
+export const zApiMessageThreadMessageCollectionData = z.object({
+    body: z.optional(zMessageQuery),
+    path: z.object({
+        messageThreadId: z.string().register(z.globalRegistry, {
+            description: 'Message thread identifier'
+        })
+    }),
+    query: z.optional(z.never())
+});
+
+export type zapiMessageThreadMessageCollectionRequest = z.infer<typeof zApiMessageThreadMessageCollectionData>;
+
+/**
+ * Access collection of messages based on provided query
+ */
+export const zApiMessageThreadMessageCollectionResponse = zMessageCollection;
+
+export type zapiMessageThreadMessageCollectionResponse = z.infer<typeof zApiMessageThreadMessageCollectionResponse>;
 
 export const zApiS3PresignData = z.object({
     body: z.object({

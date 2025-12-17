@@ -605,17 +605,146 @@ export const tAllowedExtensionsEnum = {
 export type tAllowedExtensionsEnum = typeof tAllowedExtensionsEnum[keyof typeof tAllowedExtensionsEnum];
 
 /**
- * Request to create a listing transaction message
+ * Query object for message collection
  */
-export type tMessageTextCreate = {
+export type tMessageQuery = {
+    cursor?: tCursor;
+    filter?: tMessageFilter;
+    where?: tMessageWhere;
+    sort?: Array<tMessageSort>;
+};
+
+/**
+ * Available sort fields for message collection
+ */
+export const tMessageSortField = { createdAt: 'createdAt' } as const;
+
+/**
+ * Available sort fields for message collection
+ */
+export type tMessageSortField = typeof tMessageSortField[keyof typeof tMessageSortField];
+
+/**
+ * Sort parameters for message collection
+ */
+export type tMessageSort = {
+    field: tMessageSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * App-based filters
+ */
+export type tMessageWhere = {
     /**
-     * The ID of the listing transaction to add a message to
+     * This filter matches the exact id
      */
-    messageThreadId: string;
+    id?: string;
     /**
-     * The message content
+     * This filter matches the ids
      */
-    message: string;
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact messageThreadId
+     */
+    messageThreadId?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact transactionId
+     */
+    transactionId?: string;
+};
+
+/**
+ * Filter object for message collection
+ */
+export type tMessageFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact messageThreadId
+     */
+    messageThreadId?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact transactionId
+     */
+    transactionId?: string;
+};
+
+/**
+ * Collection of messages
+ */
+export type tMessageCollection = {
+    data: Array<tMessage>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Message location entry
+ */
+export type tMessageLocation = {
+    /**
+     * ID of the message location entry
+     */
+    id: string;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+    type: tMessageTypeEnum;
+};
+
+/**
+ * Type of message
+ */
+export const tMessageTypeEnum = {
+    text: 'text',
+    gallery: 'gallery',
+    location: 'location'
+} as const;
+
+/**
+ * Type of message
+ */
+export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
+
+/**
+ * Message gallery entry
+ */
+export type tMessageGallery = {
+    /**
+     * ID of the message gallery entry
+     */
+    id: string;
+    /**
+     * ID of the gallery
+     */
+    galleryId: string;
+    type: tMessageTypeEnum;
 };
 
 /**
@@ -642,10 +771,26 @@ export type tMessageText = {
      * Creation timestamp
      */
     createdAt: string;
+    type: tMessageTypeEnum;
+};
+
+/**
+ * Message entry (unified view across all message types)
+ */
+export type tMessage = tMessageText | tMessageGallery | tMessageLocation;
+
+/**
+ * Request to create a listing transaction message
+ */
+export type tMessageTextCreate = {
     /**
-     * Message type
+     * The ID of the listing transaction to add a message to
      */
-    type: 'text';
+    messageThreadId: string;
+    /**
+     * The message content
+     */
+    message: string;
 };
 
 /**
@@ -2359,22 +2504,22 @@ export type tNotice = {
      * Message
      */
     message: string;
-    type: tMessageTypeEnum;
+    type: tNoticeTypeEnum;
 };
 
 /**
- * Type of message
+ * Type of notice
  */
-export const tMessageTypeEnum = {
+export const tNoticeTypeEnum = {
     info: 'info',
     warning: 'warning',
     error: 'error'
 } as const;
 
 /**
- * Type of message
+ * Type of notice
  */
-export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
+export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
 
 export type tApiDraftCollectionRequest = {
     body?: tDraftQuery;
@@ -3447,6 +3592,40 @@ export type tApiMessageTextCreateResponse = {
 };
 
 export type apiMessageTextCreateResponse = tApiMessageTextCreateResponse[keyof tApiMessageTextCreateResponse];
+
+export type tApiMessageThreadMessageCollectionRequest = {
+    body?: tMessageQuery;
+    path: {
+        /**
+         * Message thread identifier
+         */
+        messageThreadId: string;
+    };
+    query?: never;
+    url: '/api/user/message-thread/{messageThreadId}/message/collection';
+};
+
+export type apiMessageThreadMessageCollectionErrors = {
+    /**
+     * Message thread not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiMessageThreadMessageCollectionError = apiMessageThreadMessageCollectionErrors[keyof apiMessageThreadMessageCollectionErrors];
+
+export type tApiMessageThreadMessageCollectionResponse = {
+    /**
+     * Access collection of messages based on provided query
+     */
+    200: tMessageCollection;
+};
+
+export type apiMessageThreadMessageCollectionResponse = tApiMessageThreadMessageCollectionResponse[keyof tApiMessageThreadMessageCollectionResponse];
 
 export type tApiS3PresignRequest = {
     body: {

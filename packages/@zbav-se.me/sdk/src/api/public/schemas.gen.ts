@@ -7,7 +7,7 @@ export const sNotice = {
             type: 'string'
         },
         type: {
-            $ref: '#/components/schemas/MessageTypeEnum'
+            $ref: '#/components/schemas/NoticeTypeEnum'
         }
     },
     required: [
@@ -16,7 +16,7 @@ export const sNotice = {
     ]
 } as const;
 
-export const sMessageTypeEnum = {
+export const sNoticeTypeEnum = {
     type: 'string',
     enum: [
         'info',

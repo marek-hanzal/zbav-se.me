@@ -1,12 +1,12 @@
 import { z } from "@hono/zod-openapi";
-import type { MessageTypeEnumSchema } from "~/app/message/schema/MessageTypeEnumSchema";
+import { MessageTypeEnumSchema } from "~/app/message/schema/MessageTypeEnumSchema";
 import { MessageLocationDbSchema } from "~/app/message-location/schema/MessageLocationDbSchema";
 
 export const MessageLocationSchema = z
 	.object({
 		...MessageLocationDbSchema.shape,
-		type: z.literal("location" satisfies MessageTypeEnumSchema.Type).openapi({
-			description: "Message type",
+		type: MessageTypeEnumSchema.refine((t): t is "location" => t === "location", {
+			message: `Expected "text"`,
 		}),
 	})
 	.omit({

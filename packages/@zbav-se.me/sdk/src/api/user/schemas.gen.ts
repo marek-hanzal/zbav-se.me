@@ -824,19 +824,169 @@ export const sAllowedExtensionsEnum = {
     ]
 } as const;
 
-export const sMessageTextCreate = {
+export const sMessageQuery = {
     type: 'object',
     properties: {
-        messageThreadId: {
-            type: 'string'
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
         },
-        message: {
-            type: 'string'
+        filter: {
+            $ref: '#/components/schemas/MessageFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/MessageWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/MessageSort'
+            }
+        }
+    }
+} as const;
+
+export const sMessageSortField = {
+    type: 'string',
+    enum: [
+        'createdAt'
+    ]
+} as const;
+
+export const sMessageSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/MessageSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
-        'messageThreadId',
-        'message'
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sMessageWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        messageThreadId: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        transactionId: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sMessageFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        messageThreadId: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        transactionId: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sMessageCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/Message'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sMessageLocation = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        locationId: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/MessageTypeEnum'
+        }
+    },
+    required: [
+        'id',
+        'locationId',
+        'type'
+    ]
+} as const;
+
+export const sMessageTypeEnum = {
+    type: 'string',
+    enum: [
+        'text',
+        'gallery',
+        'location'
+    ]
+} as const;
+
+export const sMessageGallery = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        galleryId: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/MessageTypeEnum'
+        }
+    },
+    required: [
+        'id',
+        'galleryId',
+        'type'
     ]
 } as const;
 
@@ -859,10 +1009,7 @@ export const sMessageText = {
             type: 'string'
         },
         type: {
-            type: 'string',
-            enum: [
-                'text'
-            ]
+            $ref: '#/components/schemas/MessageTypeEnum'
         }
     },
     required: [
@@ -872,6 +1019,36 @@ export const sMessageText = {
         'text',
         'createdAt',
         'type'
+    ]
+} as const;
+
+export const sMessage = {
+    anyOf: [
+        {
+            $ref: '#/components/schemas/MessageText'
+        },
+        {
+            $ref: '#/components/schemas/MessageGallery'
+        },
+        {
+            $ref: '#/components/schemas/MessageLocation'
+        }
+    ]
+} as const;
+
+export const sMessageTextCreate = {
+    type: 'object',
+    properties: {
+        messageThreadId: {
+            type: 'string'
+        },
+        message: {
+            type: 'string'
+        }
+    },
+    required: [
+        'messageThreadId',
+        'message'
     ]
 } as const;
 
@@ -3431,7 +3608,7 @@ export const sNotice = {
             type: 'string'
         },
         type: {
-            $ref: '#/components/schemas/MessageTypeEnum'
+            $ref: '#/components/schemas/NoticeTypeEnum'
         }
     },
     required: [
@@ -3440,7 +3617,7 @@ export const sNotice = {
     ]
 } as const;
 
-export const sMessageTypeEnum = {
+export const sNoticeTypeEnum = {
     type: 'string',
     enum: [
         'info',
