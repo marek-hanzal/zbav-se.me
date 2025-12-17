@@ -20,6 +20,8 @@ export const Route = createFileRoute("/$locale/landing")({
 					width: "full",
 					height: "full",
 					gap: "xl",
+					snap: "vertical",
+					snapAlign: "center",
 				}}
 			>
 				<Container
@@ -47,7 +49,7 @@ export const Route = createFileRoute("/$locale/landing")({
 					<Status
 						data-ui="/landing-[Status]"
 						textTitle={"Landing - Hero (title)"}
-						textMessage={"Landing - Hero (subtitle)"}
+						// textMessage={"Landing - Hero (subtitle)"}
 						messageProps={{
 							className: "text-center",
 						}}
@@ -139,18 +141,18 @@ export const Route = createFileRoute("/$locale/landing")({
 									round: "full",
 								}}
 								className={[
-                                    'aspect-square',
+									"aspect-square",
 									"w-[85%]",
 								]}
 							/>
 						}
 						textTitle={"About me (title)"}
 						textMessage={"About me (message)"}
-                        messageProps={{
-                            ui: {
-                                color:'text',
-                            }
-                        }}
+						messageProps={{
+							ui: {
+								color: "text",
+							},
+						}}
 						ui={{
 							tone: "brand",
 							theme: "light",
