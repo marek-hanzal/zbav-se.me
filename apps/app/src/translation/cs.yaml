@@ -234,6 +234,9 @@
 6404e218d58affb344a49493074e2a22a0bef1cc9743c426c995b49b:
     ref: Feed name (default)
     value: Můj seznam
+66c5975c97c2be7afe44dcec132ec657eac3943eeb2688ad68bd0193:
+    ref: Transaction - send a message (placeholder)
+    value: Co máš na srdci?
 679eb0f6d4d2b7cf7359439e3b87d205ff8b061c3f6f33bfe8052367:
     ref: Empty favourite - category and favourite (title)
     value: Empty favourite - category and favourite (title)

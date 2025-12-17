@@ -1,7 +1,10 @@
 import type { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
+import { Container } from "@use-pico/client/ui/container";
 import { SheetView } from "@use-pico/client/ui/sheet-view";
+import { translator } from "@use-pico/common/translator";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import { CloseButton } from "@zbav-se.me/ui/button";
+import { ChatInput } from "@zbav-se.me/ui/chat";
 import { type FC, useState } from "react";
 import { MessageList } from "~/app/message/MessageList";
 
@@ -31,6 +34,9 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({
 			fallback={null}
 		>
 			{({ data: transaction }) => {
+				// biome-ignore lint/correctness/useHookAtTopLevel: Ssst
+				const [message, setMessage] = useState("");
+
 				return (
 					<SheetView
 						state={{
@@ -40,13 +46,31 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({
 						views={{
 							detail: {
 								children: (
-									<MessageList
-										locale={locale}
-										messageThreadId={transaction.messageThreadId}
+									<Container
 										ui={{
+											layout: "vertical-content-footer",
+											height: "full",
+											gap: "default",
 											inner: "default",
 										}}
-									/>
+									>
+										<MessageList
+											locale={locale}
+											messageThreadId={transaction.messageThreadId}
+										/>
+
+										<ChatInput
+											value={message}
+											onChange={setMessage}
+											onSubmit={() => {
+												//
+											}}
+											placeholder={translator.text(
+												"Transaction - send a message (placeholder)",
+											)}
+											loading={false}
+										/>
+									</Container>
 								),
 								header: ({ close }) => ({
 									title: transaction.title,
