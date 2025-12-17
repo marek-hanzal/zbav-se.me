@@ -1,7 +1,14 @@
 import { Container, SpinnerContainer, uiContainer } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
-import { type ComponentProps, type FC, type ReactNode, useState } from "react";
-import { match } from "ts-pattern";
+import {
+	type ComponentProps,
+	type FC,
+	type ReactNode,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from "react";
 
 export namespace HeroImage {
 	export interface Props extends uiContainer.Component<ComponentProps<"img">> {
@@ -24,6 +31,24 @@ export const HeroImage: FC<HeroImage.Props> = ({
 	...props
 }) => {
 	const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
+	const imgRef = useRef<HTMLImageElement | null>(null);
+
+	useEffect(() => {
+		setState("loading");
+	}, [
+		props.src,
+	]);
+
+	useLayoutEffect(() => {
+		const img = imgRef.current;
+		if (!img) {
+			return;
+		}
+
+		if (img.complete) {
+			setState(img.naturalWidth > 0 ? "loaded" : "error");
+		}
+	});
 
 	if (!visible) {
 		return invisible;
@@ -33,6 +58,8 @@ export const HeroImage: FC<HeroImage.Props> = ({
 		<>
 			{/** biome-ignore lint/a11y/useAltText: Should go from props */}
 			<img
+				ref={imgRef}
+				key={props.src ?? "no-src"}
 				{...uiContainer({
 					ui: {
 						height: "full",
@@ -56,14 +83,13 @@ export const HeroImage: FC<HeroImage.Props> = ({
 					onLoad?.(e);
 				}}
 				onError={(e) => {
+					console.error(e);
 					setState("error");
 					onError?.(e);
 				}}
 				style={{
-					display: match(state)
-						.with("error", "loading", () => "none")
-						.with("loaded", () => "block")
-						.exhaustive(),
+					opacity: state === "loaded" ? 1 : 0,
+					transition: "opacity 120ms ease",
 				}}
 				{...props}
 			/>
