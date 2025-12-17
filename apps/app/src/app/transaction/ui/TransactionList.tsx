@@ -1,7 +1,7 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tTransactionQuery } from "@zbav-se.me/sdk/api/user";
 import { withTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user/transaction";
-import { type FC } from "react";
+import type { FC } from "react";
 import { TransactionItem } from "~/app/transaction/ui/TransactionItem";
 
 export namespace TransactionList {

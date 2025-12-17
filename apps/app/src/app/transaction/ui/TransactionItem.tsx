@@ -3,7 +3,8 @@ import { Tx } from "@use-pico/client/ui/tx";
 import type { tUpload } from "@zbav-se.me/sdk/api/user";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import type { FC } from "react";
+import { type FC, useState } from "react";
+import { TransactionSheet } from "~/app/transaction/ui/TransactionSheet";
 
 export namespace TransactionItem {
 	export interface Props extends Container.Props {
@@ -17,89 +18,101 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 	className,
 	...props
 }) => {
-	return (
-		<withTransactionFetchQuery.Suspense
-			data={{
-				where: {
-					id: transactionId,
-				},
-			}}
-			fallback={
-				<SpinnerContainer
-					type={"icon"}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						background: "default",
-						border: true,
-						shadow: true,
-						round: "default",
-					}}
-					className={[
-						"h-48 md:h-92",
-					]}
-				/>
-			}
-		>
-			{({ data: transaction }) => {
-				const [hero] = transaction.gallery.items.map((item) => item.upload) as [
-					tUpload,
-					...tUpload[],
-				];
+	const [isOpen, setIsOpen] = useState(false);
 
-				return (
-					<Container
+	return (
+		<>
+			<withTransactionFetchQuery.Suspense
+				data={{
+					where: {
+						id: transactionId,
+					},
+				}}
+				fallback={
+					<SpinnerContainer
+						type={"icon"}
 						ui={{
-							position: "relative",
+							tone: "neutral",
+							theme: "light",
+							background: "default",
+							border: true,
+							shadow: true,
 							round: "default",
-							...ui,
 						}}
 						className={[
 							"h-48 md:h-92",
-							className,
 						]}
-						{...props}
-					>
-						<HeroImage
-							src={hero.url}
-							alt={`Hero image for transaction ${transaction.id}`}
-							ui={{
-								round: "default",
-							}}
-						/>
+						onClick={() => setIsOpen((prev) => !prev)}
+					/>
+				}
+			>
+				{({ data: transaction }) => {
+					const [hero] = transaction.gallery.items.map((item) => item.upload) as [
+						tUpload,
+						...tUpload[],
+					];
 
+					return (
 						<Container
 							ui={{
-								tone: "secondary",
-								theme: "light",
-								color: "lead",
-								flow: "vertical",
-								background: "default",
-								border: true,
-								shadow: true,
-								inner: "default",
+								position: "relative",
 								round: "default",
-								snapTo: "bottom",
+								...ui,
 							}}
-							className={"text-center"}
+							className={[
+								"h-48 md:h-92",
+								className,
+							]}
+							onClick={() => setIsOpen((prev) => !prev)}
+							{...props}
 						>
-							<Tx
-								label={transaction.title}
+							<HeroImage
+								src={hero.url}
+								alt={`Hero image for transaction ${transaction.id}`}
 								ui={{
-									font: "bold",
+									round: "default",
 								}}
 							/>
 
-							<Tx
-								label={transaction.location.address}
+							<Container
 								ui={{
-									text: "sm",
+									tone: "secondary",
+									theme: "light",
+									color: "lead",
+									flow: "vertical",
+									background: "default",
+									border: true,
+									shadow: true,
+									inner: "default",
+									round: "default",
+									snapTo: "bottom",
 								}}
-							/>
+								className={"text-center"}
+							>
+								<Tx
+									label={transaction.title}
+									ui={{
+										font: "bold",
+									}}
+								/>
+
+								<Tx
+									label={transaction.location.address}
+									ui={{
+										text: "sm",
+									}}
+								/>
+							</Container>
 						</Container>
-					</Container>
-				);
-			}}
-		</withTransactionFetchQuery.Suspense>
+					);
+				}}
+			</withTransactionFetchQuery.Suspense>
+
+			<TransactionSheet
+				transactionId={transactionId}
+				isOpen={isOpen}
+				onClose={() => setIsOpen(false)}
+			/>
+		</>
 	);
 };
