@@ -22,6 +22,7 @@ export { FavouriteOffIcon } from "./FavouriteOffIcon";
 export { FileIcon } from "./FileIcon";
 export { FilterApplyIcon } from "./FilterApplyIcon";
 export { FilterRemoveIcon } from "./FilterRemoveIcon";
+export { GitHubIcon } from "./GitHubIcon";
 export { GteIcon } from "./GteIcon";
 export { HideIcon } from "./HideIcon";
 export { Icon } from "./Icon";
