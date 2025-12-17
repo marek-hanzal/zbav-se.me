@@ -31,17 +31,17 @@ const DEFAULT_PALETTE = [
 	"bg-purple-300 text-purple-900 border-purple-400",
 	"bg-violet-300 text-violet-900 border-violet-400",
 	//
-	"bg-rose-400 text-rose-900 border-rose-500",
-	"bg-pink-400 text-pink-900 border-pink-500",
-	"bg-fuchsia-400 text-fuchsia-900 border-fuchsia-500",
-	"bg-purple-400 text-purple-900 border-purple-500",
-	"bg-violet-400 text-violet-900 border-violet-500",
+	"bg-rose-400 text-rose-50 border-rose-500",
+	"bg-pink-400 text-pink-50 border-pink-500",
+	"bg-fuchsia-400 text-fuchsia-50 border-fuchsia-500",
+	"bg-purple-400 text-purple-50 border-purple-500",
+	"bg-violet-400 text-violet-50 border-violet-500",
 	//
-	"bg-rose-500 text-rose-900 border-rose-600",
-	"bg-pink-500 text-pink-900 border-pink-600",
-	"bg-fuchsia-500 text-fuchsia-900 border-fuchsia-600",
-	"bg-purple-500 text-purple-900 border-purple-600",
-	"bg-violet-500 text-violet-900 border-violet-600",
+	"bg-rose-500 text-rose-50 border-rose-600",
+	"bg-pink-500 text-pink-50 border-pink-600",
+	"bg-fuchsia-500 text-fuchsia-50 border-fuchsia-600",
+	"bg-purple-500 text-purple-50 border-purple-600",
+	"bg-violet-500 text-violet-50 border-violet-600",
 	//
 	"bg-rose-600 text-rose-50 border-rose-500",
 	"bg-pink-600 text-pink-50 border-pink-500",
@@ -78,7 +78,7 @@ export namespace History {
 
 export const History = ({ ui, className, ...props }: History.Props) => {
 	const historyRootId = useId();
-	const threshold = 3;
+	const threshold = 4;
 
 	return (
 		<withGithubHistoryQuery.Suspense

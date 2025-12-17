@@ -68,7 +68,7 @@ export const HistoryItem: FC<HistoryItem.Props> = ({
 			<Typo
 				label={item.count > 0 ? item.count : "-"}
 				ui={{
-					text: "xs",
+					text: "sm",
 					opacity: "medium",
 					font: "bold",
 				}}
