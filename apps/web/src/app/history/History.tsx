@@ -79,7 +79,7 @@ export namespace History {
 export const History: FC<History.Props> = ({ ui, className, ...props }) => {
 	const historyRootId = useId();
 	const threshold = 4;
-	const weeks = 10;
+	const weeks = 8;
 
 	return (
 		<withGithubHistoryQuery.Suspense
