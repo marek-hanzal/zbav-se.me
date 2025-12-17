@@ -1,4 +1,4 @@
-# ZBAV-SE.ME Source-Available License (ZSL) v1.0
+# zbav-se.me: Source-Available License (ZSL) v1.0
 
 Copyright (c) 2025 Marek  
 All rights reserved.
