@@ -20,9 +20,9 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 };
 
 /**
- * Syncs commit history from the last year into local cache and returns daily commit counts for the last 365 days.
+ * Syncs commit history into local cache and returns daily commit counts for the requested number of weeks.
  */
-export const apiGithubHistory = <ThrowOnError extends boolean = false>(options?: Options<tApiGithubHistoryRequest, ThrowOnError>) => (options?.client ?? client).get<tApiGithubHistoryResponse, apiGithubHistoryErrors, ThrowOnError>({
+export const apiGithubHistory = <ThrowOnError extends boolean = false>(options: Options<tApiGithubHistoryRequest, ThrowOnError>) => (options.client ?? client).get<tApiGithubHistoryResponse, apiGithubHistoryErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiGithubHistoryData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiGithubHistoryResponse.parseAsync(data),

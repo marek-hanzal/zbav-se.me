@@ -46,7 +46,12 @@ export type tGitHubHistory = {
 export type tApiGithubHistoryRequest = {
     body?: never;
     path?: never;
-    query?: never;
+    query: {
+        /**
+         * How many weeks back (including the current week) to return
+         */
+        weeks: number;
+    };
     url: '/api/public/github/history';
 };
 

@@ -79,10 +79,13 @@ export namespace History {
 export const History: FC<History.Props> = ({ ui, className, ...props }) => {
 	const historyRootId = useId();
 	const threshold = 4;
+	const weeks = 10;
 
 	return (
 		<withGithubHistoryQuery.Suspense
-			data={undefined}
+			data={{
+				weeks,
+			}}
 			fallback={<SpinnerContainer />}
 		>
 			{({ data }) => {
@@ -109,6 +112,9 @@ export const History: FC<History.Props> = ({ ui, className, ...props }) => {
 							]}
 						>
 							{[
+								/**
+								 * We're reversing, so we've to prevent mutation of the original data source.
+								 */
 								...data,
 							]
 								.reverse()

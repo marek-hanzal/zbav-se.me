@@ -7,10 +7,17 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { GitHubHistorySchema } from "./schema/GitHubHistorySchema";
 
 const REPO = "marek-hanzal/zbav-se.me";
-// Keep this as "weeks" so the UI grid never ends on a partial week.
-// Half-year ~= 26 weeks.
-const HISTORY_WEEKS = 12;
-const HISTORY_DAYS = HISTORY_WEEKS * 7;
+
+const GitHubHistoryQuerySchema = z
+	.object({
+		weeks: z.coerce.number().int().min(1).max(104).openapi({
+			description: "How many weeks back (including the current week) to return",
+			example: 12,
+		}),
+	})
+	.openapi("GitHubHistoryQuery", {
+		description: "Query parameters for GitHub history",
+	});
 
 const parseRepo = (repo: string) => {
 	const [owner, name] = repo.split("/");
@@ -25,8 +32,12 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 		createRoute({
 			method: "get",
 			path: "/github/history",
-			description: `Syncs commit history into local cache and returns daily commit counts for the last ${HISTORY_WEEKS} weeks.`,
+			description:
+				"Syncs commit history into local cache and returns daily commit counts for the requested number of weeks.",
 			operationId: "apiGithubHistory",
+			request: {
+				query: GitHubHistoryQuerySchema,
+			},
 			responses: {
 				200: {
 					content: {
@@ -55,14 +66,17 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 				// Adjust this line to your actual DB injection.
 				const db = c.var.database;
 
+				const { weeks } = c.req.valid("query");
+				const historyDays = weeks * 7;
+
 				const { owner, name } = parseRepo(REPO);
 
 				// We return "last N days (including today)", so derive everything from the same range.
-				const endUtc = DateTime.utc().startOf("day");
-				const startUtc = endUtc.minus({
-					days: HISTORY_DAYS - 1,
-				});
-				const sinceIso = startUtc.toISO() ?? startUtc.toJSDate().toISOString();
+				const startUtc = DateTime.utc()
+					.startOf("day")
+					.minus({
+						days: historyDays - 1,
+					});
 
 				const query = `
 					query RepoHistorySince($owner: String!, $name: String!, $since: GitTimestamp!, $after: String) {
@@ -102,7 +116,7 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 							variables: {
 								owner,
 								name,
-								since: sinceIso,
+								since: startUtc.toISO(),
 								after,
 							},
 						}),
@@ -172,19 +186,21 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 						break;
 					}
 
-					// Insert only missing.
-					// If you have sha as primary key, this keeps data clean.
-					await db
-						.insertInto("github")
-						.values(
-							missing.map((x) => ({
-								id: genId(),
-								sha: x.sha,
-								date: new Date(x.date),
-								message: x.message,
-							})),
-						)
-						.execute();
+					if (missing.length > 0) {
+						// Insert only missing.
+						// If you have sha as primary key, this keeps data clean.
+						await db
+							.insertInto("github")
+							.values(
+								missing.map((x) => ({
+									id: genId(),
+									sha: x.sha,
+									date: new Date(x.date),
+									message: x.message,
+								})),
+							)
+							.execute();
+					}
 
 					if (!pageInfo?.hasNextPage) {
 						break;
@@ -259,7 +275,7 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 				}
 
 				const days: GitHubHistorySchema.Type[] = [];
-				for (let i = 0; i < HISTORY_DAYS; i++) {
+				for (let i = 0; i < historyDays; i++) {
 					const key = toYmd(
 						startUtc.plus({
 							days: i,

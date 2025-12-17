@@ -48,7 +48,11 @@ export type zGitHubHistory = z.infer<typeof zGitHubHistory>;
 export const zApiGithubHistoryData = z.object({
     body: z.optional(z.never()),
     path: z.optional(z.never()),
-    query: z.optional(z.never())
+    query: z.object({
+        weeks: z.int().gte(1).lte(104).register(z.globalRegistry, {
+            description: 'How many weeks back (including the current week) to return'
+        })
+    })
 });
 
 export type zapiGithubHistoryRequest = z.infer<typeof zApiGithubHistoryData>;
