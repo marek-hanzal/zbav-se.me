@@ -78,7 +78,7 @@ export namespace History {
 
 export const History = ({ ui, className, ...props }: History.Props) => {
 	const historyRootId = useId();
-	const threshold = 4;
+	const threshold = 3;
 
 	return (
 		<withGithubHistoryQuery.Suspense

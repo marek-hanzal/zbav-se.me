@@ -1,6 +1,7 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { tGitHubHistory } from "@zbav-se.me/sdk/api/public";
+import type { FC } from "react";
 
 const clamp = (value: number, min: number, max: number) => {
 	return Math.max(min, Math.min(max, value));
@@ -35,17 +36,17 @@ export namespace HistoryItem {
 		item: tGitHubHistory;
 		palette: readonly string[];
 		/** How many commits are needed to change a color level (default: 5). */
-		threshold?: number;
+		threshold: number;
 	}
 }
 
-export const HistoryItem = ({
+export const HistoryItem: FC<HistoryItem.Props> = ({
 	item,
 	palette,
-	threshold = 3,
+	threshold,
 	className,
 	...props
-}: HistoryItem.Props) => {
+}) => {
 	const slot = getSlot(item.count, palette, threshold);
 	const color = palette[slot] ?? palette[0] ?? "bg-transparent";
 
