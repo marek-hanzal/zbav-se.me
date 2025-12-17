@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { tApiHealthRequest, tApiHealthResponse } from './types.gen';
-import { zApiHealthData, zApiHealthResponse } from './zod.gen';
+import type { apiGithubHistoryErrors, tApiGithubHistoryRequest, tApiGithubHistoryResponse, tApiHealthRequest, tApiHealthResponse } from './types.gen';
+import { zApiGithubHistoryData, zApiGithubHistoryResponse, zApiHealthData, zApiHealthResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -18,6 +18,17 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
      */
     meta?: Record<string, unknown>;
 };
+
+/**
+ * Syncs commit history from the last year into local cache and returns daily commit counts for the last 365 days.
+ */
+export const apiGithubHistory = <ThrowOnError extends boolean = false>(options?: Options<tApiGithubHistoryRequest, ThrowOnError>) => (options?.client ?? client).get<tApiGithubHistoryResponse, apiGithubHistoryErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiGithubHistoryData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiGithubHistoryResponse.parseAsync(data),
+    url: '/api/public/github/history',
+    ...options
+});
 
 /**
  * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.

@@ -2,6 +2,57 @@
 
 import { z } from 'zod';
 
+/**
+ * Type of message
+ */
+export const zMessageTypeEnum = z.enum([
+    'info',
+    'warning',
+    'error'
+]).register(z.globalRegistry, {
+    description: 'Type of message'
+});
+
+export type zMessageTypeEnum = z.infer<typeof zMessageTypeEnum>;
+
+/**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export const zNotice = z.object({
+    message: z.string().register(z.globalRegistry, {
+        description: 'Message'
+    }),
+    type: zMessageTypeEnum
+}).register(z.globalRegistry, {
+    description: 'Just a note sent from various reasons, usually when something is fucked up.'
+});
+
+export type zNotice = z.infer<typeof zNotice>;
+
+export const zApiGithubHistoryData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiGithubHistoryRequest = z.infer<typeof zApiGithubHistoryData>;
+
+/**
+ * GitHub commit history (cached)
+ */
+export const zApiGithubHistoryResponse = z.array(z.object({
+    date: z.string().register(z.globalRegistry, {
+        description: 'UTC day (YYYY-MM-DD)'
+    }),
+    count: z.int().gte(0).register(z.globalRegistry, {
+        description: 'Number of commits on this day'
+    })
+})).register(z.globalRegistry, {
+    description: 'GitHub commit history (cached)'
+});
+
+export type zapiGithubHistoryResponse = z.infer<typeof zApiGithubHistoryResponse>;
+
 export const zApiHealthData = z.object({
     body: z.optional(z.never()),
     path: z.optional(z.never()),

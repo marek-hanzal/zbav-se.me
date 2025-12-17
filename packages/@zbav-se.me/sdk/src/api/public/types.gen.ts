@@ -4,6 +4,65 @@ export type clientOptions = {
     baseURL: 'http://obsidian-ii.local:3032' | (string & {});
 };
 
+/**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export type tNotice = {
+    /**
+     * Message
+     */
+    message: string;
+    type: tMessageTypeEnum;
+};
+
+/**
+ * Type of message
+ */
+export const tMessageTypeEnum = {
+    info: 'info',
+    warning: 'warning',
+    error: 'error'
+} as const;
+
+/**
+ * Type of message
+ */
+export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
+
+export type tApiGithubHistoryRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/github/history';
+};
+
+export type apiGithubHistoryErrors = {
+    /**
+     * Failed to sync/fetch history from GitHub
+     */
+    500: tNotice;
+};
+
+export type apiGithubHistoryError = apiGithubHistoryErrors[keyof apiGithubHistoryErrors];
+
+export type tApiGithubHistoryResponse = {
+    /**
+     * GitHub commit history (cached)
+     */
+    200: Array<{
+        /**
+         * UTC day (YYYY-MM-DD)
+         */
+        date: string;
+        /**
+         * Number of commits on this day
+         */
+        count: number;
+    }>;
+};
+
+export type apiGithubHistoryResponse = tApiGithubHistoryResponse[keyof tApiGithubHistoryResponse];
+
 export type tApiHealthRequest = {
     body?: never;
     path?: never;

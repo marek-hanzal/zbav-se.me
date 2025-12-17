@@ -23,7 +23,7 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 			path: "/github/history",
 			description:
 				"Syncs commit history from the last year into local cache and returns daily commit counts for the last 365 days.",
-			operationId: "apiGithubHistoryYear",
+			operationId: "apiGithubHistory",
 			responses: {
 				200: {
 					content: {
