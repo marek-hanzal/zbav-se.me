@@ -2,6 +2,26 @@
 
 A marketplace application for buying and selling items, built with React, TanStack, and Effect.
 
+## Why this repository is public (but not Open Source)
+
+This repository is intentionally **public**, but it is **not Open Source**.
+
+The source code is available to provide transparency, enable security and quality audits, and allow others to study how the system works.  
+You are welcome to read the code, review it, learn from it, and point out problems or improvements.
+
+However, this project represents an active, living product.  
+The code alone is not the product, but it is still protected.
+
+Commercial use, hosting, redistribution, or operating a competing service based on this code is **not permitted** without explicit permission.  
+Please read the license carefully before using any part of this repository.
+
+In short:
+You can **look**, **learn**, and **help**.  
+You cannot **repackage**, **deploy**, or **profit** from it.
+
+This approach allows openness without pretending that “free code” automatically means “free business”.
+
+
 ## Development Ports
 
 Each application runs on its own port in development mode:
