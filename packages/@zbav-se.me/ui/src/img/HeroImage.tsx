@@ -34,6 +34,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 	const imgRef = useRef<HTMLImageElement | null>(null);
 
 	useEffect(() => {
+		void props.src;
 		setState("loading");
 	}, [
 		props.src,

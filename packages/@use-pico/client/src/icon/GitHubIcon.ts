@@ -1,1 +1,1 @@
-export const GitHubIcon = 'icon-[fa6-brands--github]'
+export const GitHubIcon = "icon-[fa6-brands--github]";

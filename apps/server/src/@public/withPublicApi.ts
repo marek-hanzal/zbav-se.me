@@ -1,5 +1,6 @@
 import type { WithDatabase } from "../database/WithDatabase";
 import type { Routes } from "../hono/Routes";
+import { withGithubApi } from "./github/withGithubApi";
 import { withHealthApi } from "./health/withHealthApi";
 import { withJanitorApi } from "./janitor/withJanitorApi";
 import { withMigrationApi } from "./migration/withMigrationApi";
@@ -12,6 +13,7 @@ export const withPublicApi: Routes.FnWithDeps<{
 		return next();
 	});
 
+	withGithubApi(routes);
 	withHealthApi(routes);
 	withJanitorApi(routes);
 	withMigrationApi(routes);

@@ -27,6 +27,8 @@ const AppEnvSchema = z.object({
 	SERVER_JWT_SECRET: z.string().min(1, "JWT secret is required"),
 	SERVER_GEOAPIFY_TOKEN: z.string().min(1, "Geoapify API key is required"),
 	//
+	SERVER_GITHUB: z.string().min(1, "GitHub token is required"),
+	//
 	...ServerOriginSchema.shape,
 	...ServerDatabaseSchema.shape,
 	...ServerS3Schema.shape,

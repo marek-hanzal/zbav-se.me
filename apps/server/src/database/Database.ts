@@ -7,6 +7,7 @@ import type { FeedDbSchema } from "~/app/feed/schema/FeedDbSchema";
 import type { FlagDbSchema } from "~/app/flag/schema/FlagDbSchema";
 import type { GalleryDbSchema } from "~/app/gallery/schema/GalleryDbSchema";
 import type { GalleryItemDbSchema } from "~/app/gallery-item/schema/GalleryItemDbSchema";
+import type { GitHubDbSchema } from "~/app/github/schema/GitHubDbSchema";
 import type { IgnoreDbSchema } from "~/app/ignore/schema/IgnoreDbSchema";
 import type { ListingDbSchema } from "~/app/listing/schema/ListingDbSchema";
 import type { ListingScoreDbSchema } from "~/app/listing-score/schema/ListingScoreDbSchema";
@@ -32,6 +33,7 @@ export interface Database {
 	flag: FlagDbSchema.Type;
 	gallery_item: GalleryItemDbSchema.Type;
 	gallery: GalleryDbSchema.Type;
+	github: GitHubDbSchema.Type;
 	ignore: IgnoreDbSchema.Type;
 	listing_score: ListingScoreDbSchema.Type;
 	listing: ListingDbSchema.Type;
