@@ -20,6 +20,10 @@ export namespace uiTypo {
 		position?: CoolUi.Position;
 		opacity?: CoolUi.Opacity;
 		inner?: CoolUi.Inner;
+		background?: CoolUi.Background;
+		border?: CoolUi.Border;
+		shadow?: CoolUi.Shadow;
+		round?: CoolUi.Round;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;

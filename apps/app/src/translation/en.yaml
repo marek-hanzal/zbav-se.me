@@ -130,6 +130,9 @@
 43c97e37d539928f112ef93039df9510299f8c68dc170da7c864a3ba:
   ref: Draft list (label)
   value: Draft list (label)
+44730392630376ff51d9117fa4de944bb7209b64056ee497a9b10308:
+  ref: Listing messages (title)
+  value: Listing messages (title)
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
   ref: Uploading photo (title)
   value: Uploading photo (title)
@@ -142,6 +145,9 @@
 489d00517dfd05ee3a0d97637b9717d03aa5ae79bab228d5eed3e1e4:
   ref: Loading... (label)
   value: Loading... (label)
+49db182fc8c4081a6c089d091f99e7000375a7115184448c696ff7bc:
+  ref: Listing metrics (title)
+  value: Listing metrics (title)
 4a01f1f05544dfa1dd97924fcc80908007db6fe0310e8039fc078b4a:
   ref: Listing Score - Raw score (label)
   value: Listing Score - Raw score (label)
@@ -334,9 +340,6 @@ a5fecc06a3719ab30505196a44d06c91c2c7e8497978d8572efb9e30:
 aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
   ref: Photo upload placeholder (title)
   value: Photo upload placeholder (title)
-acd269fe49abe48ed9c3e43a66c796f7114afa4123c863a3cba2ae7e:
-  ref: Listing transactions (title)
-  value: Listing transactions (title)
 b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
   ref: Expire (title)
   value: Expire (title)
