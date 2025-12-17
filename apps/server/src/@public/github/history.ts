@@ -7,7 +7,10 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { GitHubHistorySchema } from "./schema/GitHubHistorySchema";
 
 const REPO = "marek-hanzal/zbav-se.me";
-const HISTORY_DAYS = Math.ceil(365 / 2);
+// Keep this as "weeks" so the UI grid never ends on a partial week.
+// Half-year ~= 26 weeks.
+const HISTORY_WEEKS = 12;
+const HISTORY_DAYS = HISTORY_WEEKS * 7;
 
 const parseRepo = (repo: string) => {
 	const [owner, name] = repo.split("/");
@@ -22,7 +25,7 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 		createRoute({
 			method: "get",
 			path: "/github/history",
-			description: `Syncs commit history into local cache and returns daily commit counts for the last ${HISTORY_DAYS} days.`,
+			description: `Syncs commit history into local cache and returns daily commit counts for the last ${HISTORY_WEEKS} weeks.`,
 			operationId: "apiGithubHistory",
 			responses: {
 				200: {
@@ -193,7 +196,7 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 					}
 				}
 
-				// Return cached history aggregated into UTC days (last N days, including today).
+				// Return cached history aggregated into UTC days (last N weeks).
 				const commits = await db
 					.selectFrom("github")
 					.select([

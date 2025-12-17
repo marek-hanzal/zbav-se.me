@@ -45,6 +45,7 @@
 
 	.Container[data-ui-layout="vertical-centered"] {
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 	}

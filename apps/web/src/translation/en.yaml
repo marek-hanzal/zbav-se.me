@@ -31,6 +31,9 @@
 42888fcc58a5c859961d7ce1f9843868fd000cd931e43e080d44b369:
   ref: Register (hero)
   value: Register (hero)
+435b71e7556a644cd11a2e8059ae87568d2ccd2115317edbb53af97f:
+  ref: History activity (hint)
+  value: History activity (hint)
 451a67f84c10be2ef031071c09e2d990a466b33ae4376b5c8cee64a5:
   ref: Password confirmation is required
   value: Password confirmation is required
@@ -52,9 +55,6 @@
 6facc75794554d433accb2f240799b65ee08b763fef727c9bf711dc7:
   ref: Login (hero)
   value: Login (hero)
-77faad8fd529ab2eae943aa28570e829a88797ad14c2a1506fad6a10:
-  ref: Landing - Hero (subtitle)
-  value: Landing - Hero (subtitle)
 7e0689b27022e61a1b7df254ca32c6b73914488dcf5ab0dad249b407:
   ref: Passwords do not match
   value: Passwords do not match

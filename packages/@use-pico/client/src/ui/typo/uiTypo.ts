@@ -19,6 +19,7 @@ export namespace uiTypo {
 		snapTo?: CoolUi.SnapTo;
 		position?: CoolUi.Position;
 		opacity?: CoolUi.Opacity;
+		inner?: CoolUi.Inner;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;
