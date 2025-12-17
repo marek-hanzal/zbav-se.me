@@ -3,6 +3,7 @@ import { Effect } from "effect";
 import { withMessageLocationQueryBuilder } from "~/app/message-location/db/withMessageLocationQueryBuilder";
 import { withMessageLocationSelect } from "~/app/message-location/db/withMessageLocationSelect";
 import type { MessageLocationQuerySchema } from "~/app/message-location/schema/MessageLocationQuerySchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
 import { MessageLocationSchema } from "../schema/MessageLocationSchema";
@@ -14,6 +15,7 @@ export namespace messageLocationFetchFx {
 export const messageLocationFetchFx = (query: messageLocationFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
 
 		const data = yield* Effect.tryPromise(async () => {
 			const { filter, where, sort } = query;
@@ -22,6 +24,7 @@ export const messageLocationFetchFx = (query: messageLocationFetchFx.Props) => {
 				select: withMessageLocationSelect({
 					database,
 					sort,
+					userId: user.id,
 				}),
 				output: MessageLocationSchema,
 				filter,

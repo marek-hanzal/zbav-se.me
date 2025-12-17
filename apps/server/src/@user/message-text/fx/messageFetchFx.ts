@@ -4,6 +4,7 @@ import { MessageTextSchema } from "~/@user/message-text/schema/MessageTextSchema
 import { withMessageTextQueryBuilder } from "~/app/message-text/db/withMessageTextQueryBuilder";
 import { withMessageTextSelect } from "~/app/message-text/db/withMessageTextSelect";
 import type { MessageTextQuerySchema } from "~/app/message-text/schema/MessageTextQuerySchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
 
@@ -14,6 +15,7 @@ export namespace messageTextFetchFx {
 export const messageTextFetchFx = (query: messageTextFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
 
 		const data = yield* Effect.tryPromise(async () => {
 			const { filter, where, sort } = query;
@@ -22,6 +24,7 @@ export const messageTextFetchFx = (query: messageTextFetchFx.Props) => {
 				select: withMessageTextSelect({
 					database,
 					sort,
+					userId: user.id,
 				}),
 				output: MessageTextSchema,
 				filter,

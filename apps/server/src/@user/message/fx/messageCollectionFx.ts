@@ -22,6 +22,7 @@ export const messageCollectionFx = (query: messageCollectionFx.Props) => {
 				select: withMessageSelect({
 					database,
 					sort,
+					userId: user.id,
 				}),
 				output: MessageSchema,
 				cursor: cursor ?? {

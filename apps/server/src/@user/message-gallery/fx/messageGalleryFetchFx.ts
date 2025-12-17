@@ -3,6 +3,7 @@ import { Effect } from "effect";
 import { withMessageGalleryQueryBuilder } from "~/app/message-gallery/db/withMessageGalleryQueryBuilder";
 import { withMessageGallerySelect } from "~/app/message-gallery/db/withMessageGallerySelect";
 import type { MessageGalleryQuerySchema } from "~/app/message-gallery/schema/MessageGalleryQuerySchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
 import { MessageGallerySchema } from "../schema/MessageGallerySchema";
@@ -14,6 +15,7 @@ export namespace messageGalleryFetchFx {
 export const messageGalleryFetchFx = (query: messageGalleryFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
 
 		const data = yield* Effect.tryPromise(async () => {
 			const { filter, where, sort } = query;
@@ -22,6 +24,7 @@ export const messageGalleryFetchFx = (query: messageGalleryFetchFx.Props) => {
 				select: withMessageGallerySelect({
 					database,
 					sort,
+					userId: user.id,
 				}),
 				output: MessageGallerySchema,
 				filter,
