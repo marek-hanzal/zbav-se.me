@@ -55,6 +55,8 @@ export async function getRouter() {
 		},
 		defaultPendingMs: 100,
 		scrollRestoration: true,
+		//
+		defaultViewTransition: true,
 	});
 
 	persistQueryClient({
