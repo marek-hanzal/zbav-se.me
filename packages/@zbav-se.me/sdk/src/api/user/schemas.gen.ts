@@ -388,156 +388,60 @@ export const sTransactionCreate = {
     ]
 } as const;
 
-export const sTransactionQuery = {
+export const sTransaction = {
     type: 'object',
     properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
+        id: {
+            type: 'string'
         },
-        filter: {
-            $ref: '#/components/schemas/TransactionFilter'
+        listingId: {
+            type: 'string'
         },
-        where: {
-            $ref: '#/components/schemas/TransactionWhere'
+        messageThreadId: {
+            type: 'string'
         },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/TransactionSort'
-            }
+        createdAt: {
+            type: 'string'
         },
-        meta: {
-            $ref: '#/components/schemas/TransactionMeta'
+        updatedAt: {
+            type: 'string'
+        },
+        expiresAt: {
+            type: 'string'
+        },
+        title: {
+            type: 'string'
+        },
+        gallery: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/Gallery'
+                },
+                {}
+            ]
+        },
+        price: {
+            type: 'number'
+        },
+        currency: {
+            $ref: '#/components/schemas/CurrencyListEnum'
+        },
+        location: {
+            $ref: '#/components/schemas/Location'
         }
-    }
-} as const;
-
-export const sTransactionMeta = {
-    type: 'object',
-    properties: {
-        side: {
-            $ref: '#/components/schemas/UserSideEnum'
-        }
-    }
-} as const;
-
-export const sTransactionSortField = {
-    type: 'string',
-    enum: [
+    },
+    required: [
+        'id',
+        'listingId',
+        'messageThreadId',
         'createdAt',
         'updatedAt',
-        'expiresAt'
-    ]
-} as const;
-
-export const sTransactionSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/TransactionSortField'
-        },
-        direction: {
-            $ref: '#/components/schemas/OrderEnum'
-        }
-    },
-    required: [
-        'field',
-        'direction'
-    ]
-} as const;
-
-export const sTransactionWhere = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        },
-        status: {
-            $ref: '#/components/schemas/TransactionStatusEnum'
-        },
-        statusIn: {
-            type: 'array',
-            items: {
-                allOf: [
-                    {
-                        $ref: '#/components/schemas/TransactionStatusEnum'
-                    },
-                    {}
-                ]
-            }
-        }
-    }
-} as const;
-
-export const sTransactionFilter = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        },
-        status: {
-            $ref: '#/components/schemas/TransactionStatusEnum'
-        },
-        statusIn: {
-            type: 'array',
-            items: {
-                allOf: [
-                    {
-                        $ref: '#/components/schemas/TransactionStatusEnum'
-                    },
-                    {}
-                ]
-            }
-        }
-    }
-} as const;
-
-export const sTransactionCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/Transaction'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
+        'expiresAt',
+        'title',
+        'gallery',
+        'price',
+        'currency',
+        'location'
     ]
 } as const;
 
@@ -733,60 +637,165 @@ export const sGallery = {
     ]
 } as const;
 
-export const sTransaction = {
+export const sTransactionQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/TransactionFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/TransactionWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/TransactionSort'
+            }
+        },
+        meta: {
+            $ref: '#/components/schemas/TransactionMeta'
+        }
+    }
+} as const;
+
+export const sTransactionMeta = {
+    type: 'object',
+    properties: {
+        side: {
+            $ref: '#/components/schemas/UserSideEnum'
+        }
+    }
+} as const;
+
+export const sTransactionSortField = {
+    type: 'string',
+    enum: [
+        'createdAt',
+        'updatedAt',
+        'expiresAt'
+    ]
+} as const;
+
+export const sTransactionSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/TransactionSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sTransactionWhere = {
     type: 'object',
     properties: {
         id: {
             type: 'string'
         },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
         listingId: {
             type: 'string'
         },
-        messageThreadId: {
+        status: {
+            $ref: '#/components/schemas/TransactionStatusEnum'
+        },
+        statusIn: {
+            type: 'array',
+            items: {
+                allOf: [
+                    {
+                        $ref: '#/components/schemas/TransactionStatusEnum'
+                    },
+                    {}
+                ]
+            }
+        }
+    }
+} as const;
+
+export const sTransactionFilter = {
+    type: 'object',
+    properties: {
+        id: {
             type: 'string'
         },
-        createdAt: {
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
             type: 'string'
         },
-        updatedAt: {
+        userId: {
             type: 'string'
         },
-        expiresAt: {
+        listingId: {
             type: 'string'
         },
-        title: {
-            type: 'string'
+        status: {
+            $ref: '#/components/schemas/TransactionStatusEnum'
         },
-        gallery: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/Gallery'
+        statusIn: {
+            type: 'array',
+            items: {
+                allOf: [
+                    {
+                        $ref: '#/components/schemas/TransactionStatusEnum'
+                    },
+                    {}
+                ]
+            }
+        }
+    }
+} as const;
+
+export const sTransactionCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'string',
+                        minLength: 1
+                    }
                 },
-                {}
-            ]
+                required: [
+                    'id'
+                ]
+            }
         },
-        price: {
-            type: 'number'
-        },
-        currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
-        },
-        location: {
-            $ref: '#/components/schemas/Location'
+        more: {
+            type: 'boolean'
         }
     },
     required: [
-        'id',
-        'listingId',
-        'messageThreadId',
-        'createdAt',
-        'updatedAt',
-        'expiresAt',
-        'title',
-        'gallery',
-        'price',
-        'currency',
-        'location'
+        'data',
+        'more'
     ]
 } as const;
 

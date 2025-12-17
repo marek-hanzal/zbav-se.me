@@ -1,4 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
+import { EntitySchema } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
@@ -7,7 +8,6 @@ import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { transactionCollectionFx } from "./fx/transactionCollectionFx";
-import { TransactionSchema } from "./schema/TransactionSchema";
 
 export const withCollectionApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
@@ -30,7 +30,7 @@ export const withCollectionApi: Routes.Fn = ({ userHono }) => {
 					content: {
 						"application/json": {
 							schema: withCollectionSchema({
-								schema: TransactionSchema,
+								schema: EntitySchema,
 								type: "TransactionCollection",
 								description: "Collection of transactions",
 							}),
@@ -54,7 +54,7 @@ export const withCollectionApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json<withCollectionSchema.Type<TransactionSchema>, 200>(
+				return c.json<withCollectionSchema.Type<EntitySchema>, 200>(
 					yield* transactionCollectionFx(c.req.valid("json")),
 					200,
 				);

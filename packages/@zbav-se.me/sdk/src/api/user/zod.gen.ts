@@ -336,119 +336,6 @@ export const zTransactionCreate = z.object({
 export type zTransactionCreate = z.infer<typeof zTransactionCreate>;
 
 /**
- * Meta data for transaction collection
- */
-export const zTransactionMeta = z.object({
-    side: z.optional(zUserSideEnum)
-}).register(z.globalRegistry, {
-    description: 'Meta data for transaction collection'
-});
-
-export type zTransactionMeta = z.infer<typeof zTransactionMeta>;
-
-/**
- * Field of the transaction sort
- */
-export const zTransactionSortField = z.enum([
-    'createdAt',
-    'updatedAt',
-    'expiresAt'
-]).register(z.globalRegistry, {
-    description: 'Field of the transaction sort'
-});
-
-export type zTransactionSortField = z.infer<typeof zTransactionSortField>;
-
-/**
- * Sort object for transaction collection
- */
-export const zTransactionSort = z.object({
-    field: zTransactionSortField,
-    direction: zOrderEnum
-}).register(z.globalRegistry, {
-    description: 'Sort object for transaction collection'
-});
-
-export type zTransactionSort = z.infer<typeof zTransactionSort>;
-
-/**
- * App-based filters
- */
-export const zTransactionWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact userId'
-    })),
-    listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact listingId'
-    })),
-    status: z.optional(zTransactionStatusEnum),
-    statusIn: z.optional(z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
-        description: 'Current status of the listing transaction'
-    }))).register(z.globalRegistry, {
-        description: 'This filter matches any of the provided statuses for the current status of the transaction'
-    }))
-}).register(z.globalRegistry, {
-    description: 'App-based filters'
-});
-
-export type zTransactionWhere = z.infer<typeof zTransactionWhere>;
-
-/**
- * Filter object for transaction collection
- */
-export const zTransactionFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact userId'
-    })),
-    listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact listingId'
-    })),
-    status: z.optional(zTransactionStatusEnum),
-    statusIn: z.optional(z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
-        description: 'Current status of the listing transaction'
-    }))).register(z.globalRegistry, {
-        description: 'This filter matches any of the provided statuses for the current status of the transaction'
-    }))
-}).register(z.globalRegistry, {
-    description: 'Filter object for transaction collection'
-});
-
-export type zTransactionFilter = z.infer<typeof zTransactionFilter>;
-
-/**
- * Query object for transaction collection
- */
-export const zTransactionQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zTransactionFilter),
-    where: z.optional(zTransactionWhere),
-    sort: z.optional(z.array(zTransactionSort)),
-    meta: z.optional(zTransactionMeta)
-}).register(z.globalRegistry, {
-    description: 'Query object for transaction collection'
-});
-
-export type zTransactionQuery = z.infer<typeof zTransactionQuery>;
-
-/**
  * Location data
  */
 export const zLocation = z.object({
@@ -606,10 +493,125 @@ export const zTransaction = z.object({
 export type zTransaction = z.infer<typeof zTransaction>;
 
 /**
+ * Meta data for transaction collection
+ */
+export const zTransactionMeta = z.object({
+    side: z.optional(zUserSideEnum)
+}).register(z.globalRegistry, {
+    description: 'Meta data for transaction collection'
+});
+
+export type zTransactionMeta = z.infer<typeof zTransactionMeta>;
+
+/**
+ * Field of the transaction sort
+ */
+export const zTransactionSortField = z.enum([
+    'createdAt',
+    'updatedAt',
+    'expiresAt'
+]).register(z.globalRegistry, {
+    description: 'Field of the transaction sort'
+});
+
+export type zTransactionSortField = z.infer<typeof zTransactionSortField>;
+
+/**
+ * Sort object for transaction collection
+ */
+export const zTransactionSort = z.object({
+    field: zTransactionSortField,
+    direction: zOrderEnum
+}).register(z.globalRegistry, {
+    description: 'Sort object for transaction collection'
+});
+
+export type zTransactionSort = z.infer<typeof zTransactionSort>;
+
+/**
+ * App-based filters
+ */
+export const zTransactionWhere = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact userId'
+    })),
+    listingId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact listingId'
+    })),
+    status: z.optional(zTransactionStatusEnum),
+    statusIn: z.optional(z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'Current status of the listing transaction'
+    }))).register(z.globalRegistry, {
+        description: 'This filter matches any of the provided statuses for the current status of the transaction'
+    }))
+}).register(z.globalRegistry, {
+    description: 'App-based filters'
+});
+
+export type zTransactionWhere = z.infer<typeof zTransactionWhere>;
+
+/**
+ * Filter object for transaction collection
+ */
+export const zTransactionFilter = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact userId'
+    })),
+    listingId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact listingId'
+    })),
+    status: z.optional(zTransactionStatusEnum),
+    statusIn: z.optional(z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'Current status of the listing transaction'
+    }))).register(z.globalRegistry, {
+        description: 'This filter matches any of the provided statuses for the current status of the transaction'
+    }))
+}).register(z.globalRegistry, {
+    description: 'Filter object for transaction collection'
+});
+
+export type zTransactionFilter = z.infer<typeof zTransactionFilter>;
+
+/**
+ * Query object for transaction collection
+ */
+export const zTransactionQuery = z.object({
+    cursor: z.optional(zCursor),
+    filter: z.optional(zTransactionFilter),
+    where: z.optional(zTransactionWhere),
+    sort: z.optional(z.array(zTransactionSort)),
+    meta: z.optional(zTransactionMeta)
+}).register(z.globalRegistry, {
+    description: 'Query object for transaction collection'
+});
+
+export type zTransactionQuery = z.infer<typeof zTransactionQuery>;
+
+/**
  * Collection of transactions
  */
 export const zTransactionCollection = z.object({
-    data: z.array(zTransaction),
+    data: z.array(z.object({
+        id: z.string().min(1)
+    })),
     more: z.boolean().register(z.globalRegistry, {
         description: 'Whether there are more items to fetch'
     })

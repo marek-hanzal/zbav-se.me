@@ -292,116 +292,44 @@ export type tTransactionCreate = {
 };
 
 /**
- * Query object for transaction collection
+ * Transaction data
  */
-export type tTransactionQuery = {
-    cursor?: tCursor;
-    filter?: tTransactionFilter;
-    where?: tTransactionWhere;
-    sort?: Array<tTransactionSort>;
-    meta?: tTransactionMeta;
-};
-
-/**
- * Meta data for transaction collection
- */
-export type tTransactionMeta = {
-    side?: tUserSideEnum;
-};
-
-/**
- * Field of the transaction sort
- */
-export const tTransactionSortField = {
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    expiresAt: 'expiresAt'
-} as const;
-
-/**
- * Field of the transaction sort
- */
-export type tTransactionSortField = typeof tTransactionSortField[keyof typeof tTransactionSortField];
-
-/**
- * Sort object for transaction collection
- */
-export type tTransactionSort = {
-    field: tTransactionSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * App-based filters
- */
-export type tTransactionWhere = {
+export type tTransaction = {
     /**
-     * This filter matches the exact id
+     * ID of the transaction
      */
-    id?: string;
+    id: string;
     /**
-     * This filter matches the ids
+     * ID of the related listing
      */
-    idIn?: Array<string>;
+    listingId: string;
     /**
-     * Runs fulltext on the collection/query.
+     * ID of the message thread associated with the transaction
      */
-    fulltext?: string;
+    messageThreadId: string;
     /**
-     * This filter matches the exact userId
+     * Creation timestamp
      */
-    userId?: string;
+    createdAt: string;
     /**
-     * This filter matches the exact listingId
+     * Last update timestamp
      */
-    listingId?: string;
-    status?: tTransactionStatusEnum;
+    updatedAt: string;
     /**
-     * This filter matches any of the provided statuses for the current status of the transaction
+     * Expiration timestamp
      */
-    statusIn?: Array<tTransactionStatusEnum & unknown>;
-};
-
-/**
- * Filter object for transaction collection
- */
-export type tTransactionFilter = {
+    expiresAt: string;
     /**
-     * This filter matches the exact id
+     * Transaction title
      */
-    id?: string;
+    title: string;
+    gallery: tGallery & unknown;
     /**
-     * This filter matches the ids
+     * Price of the listing
      */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-    status?: tTransactionStatusEnum;
-    /**
-     * This filter matches any of the provided statuses for the current status of the transaction
-     */
-    statusIn?: Array<tTransactionStatusEnum & unknown>;
-};
-
-/**
- * Collection of transactions
- */
-export type tTransactionCollection = {
-    data: Array<tTransaction>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
+    price: number;
+    currency: tCurrencyListEnum;
+    location: tLocation;
 };
 
 /**
@@ -527,44 +455,118 @@ export type tGallery = {
 };
 
 /**
- * Transaction data
+ * Query object for transaction collection
  */
-export type tTransaction = {
+export type tTransactionQuery = {
+    cursor?: tCursor;
+    filter?: tTransactionFilter;
+    where?: tTransactionWhere;
+    sort?: Array<tTransactionSort>;
+    meta?: tTransactionMeta;
+};
+
+/**
+ * Meta data for transaction collection
+ */
+export type tTransactionMeta = {
+    side?: tUserSideEnum;
+};
+
+/**
+ * Field of the transaction sort
+ */
+export const tTransactionSortField = {
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    expiresAt: 'expiresAt'
+} as const;
+
+/**
+ * Field of the transaction sort
+ */
+export type tTransactionSortField = typeof tTransactionSortField[keyof typeof tTransactionSortField];
+
+/**
+ * Sort object for transaction collection
+ */
+export type tTransactionSort = {
+    field: tTransactionSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * App-based filters
+ */
+export type tTransactionWhere = {
     /**
-     * ID of the transaction
+     * This filter matches the exact id
      */
-    id: string;
+    id?: string;
     /**
-     * ID of the related listing
+     * This filter matches the ids
      */
-    listingId: string;
+    idIn?: Array<string>;
     /**
-     * ID of the message thread associated with the transaction
+     * Runs fulltext on the collection/query.
      */
-    messageThreadId: string;
+    fulltext?: string;
     /**
-     * Creation timestamp
+     * This filter matches the exact userId
      */
-    createdAt: string;
+    userId?: string;
     /**
-     * Last update timestamp
+     * This filter matches the exact listingId
      */
-    updatedAt: string;
+    listingId?: string;
+    status?: tTransactionStatusEnum;
     /**
-     * Expiration timestamp
+     * This filter matches any of the provided statuses for the current status of the transaction
      */
-    expiresAt: string;
+    statusIn?: Array<tTransactionStatusEnum & unknown>;
+};
+
+/**
+ * Filter object for transaction collection
+ */
+export type tTransactionFilter = {
     /**
-     * Transaction title
+     * This filter matches the exact id
      */
-    title: string;
-    gallery: tGallery & unknown;
+    id?: string;
     /**
-     * Price of the listing
+     * This filter matches the ids
      */
-    price: number;
-    currency: tCurrencyListEnum;
-    location: tLocation;
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+    status?: tTransactionStatusEnum;
+    /**
+     * This filter matches any of the provided statuses for the current status of the transaction
+     */
+    statusIn?: Array<tTransactionStatusEnum & unknown>;
+};
+
+/**
+ * Collection of transactions
+ */
+export type tTransactionCollection = {
+    data: Array<{
+        id: string;
+    }>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
 };
 
 /**

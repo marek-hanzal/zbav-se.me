@@ -1,7 +1,7 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tTransactionQuery } from "@zbav-se.me/sdk/api/user";
 import { withTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user/transaction";
-import { type FC, useId } from "react";
+import { type FC } from "react";
 import { TransactionItem } from "~/app/transaction/ui/TransactionItem";
 
 export namespace TransactionList {
@@ -12,8 +12,6 @@ export namespace TransactionList {
 }
 
 export const TransactionList: FC<TransactionList.Props> = ({ locale, query, ui, ...props }) => {
-	const transactionRootId = useId();
-
 	return (
 		<Container
 			ui={{
@@ -35,11 +33,11 @@ export const TransactionList: FC<TransactionList.Props> = ({ locale, query, ui, 
 								gap: "default",
 							}}
 						>
-							{data.map((transaction) => (
+							{data.map(({ id }) => (
 								<TransactionItem
-									key={`${transactionRootId}-${transaction.id}`}
-									data-id={transaction.id}
-									transaction={transaction}
+									key={id}
+									data-id={id}
+									transactionId={id}
 								/>
 							))}
 						</Container>

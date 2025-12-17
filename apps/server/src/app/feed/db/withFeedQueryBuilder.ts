@@ -1,13 +1,15 @@
-import type { withFeedSelect } from "~/app/feed/db/withFeedSelect";
+import type { withFeedCollectionSelect } from "~/app/feed/db/withFeedCollectionSelect";
 import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
 
 export namespace withFeedQueryBuilder {
-	export interface Props<TSelect extends withFeedSelect.Select = withFeedSelect.Select> {
+	export interface Props<
+		TSelect extends withFeedCollectionSelect.Select = withFeedCollectionSelect.Select,
+	> {
 		select: TSelect;
 		where?: FeedFilterSchema.Type;
 	}
 
-	export type Callback = <TSelect extends withFeedSelect.Select>(
+	export type Callback = <TSelect extends withFeedCollectionSelect.Select>(
 		props: Props<TSelect>,
 	) => TSelect;
 }
@@ -18,7 +20,7 @@ export namespace withFeedQueryBuilder {
  * Generic to support extended select types that extend from withFeedSelect.Select
  */
 export const withFeedQueryBuilder: withFeedQueryBuilder.Callback = <
-	TSelect extends withFeedSelect.Select,
+	TSelect extends withFeedCollectionSelect.Select,
 >({
 	select,
 	where,

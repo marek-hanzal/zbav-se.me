@@ -1,23 +1,34 @@
 import { match } from "ts-pattern";
 import type { TransactionMetaSchema } from "~/@user/transaction/schema/TransactionMetaSchema";
+import type { withTransactionCollectionSelect } from "~/app/transaction/db/withTransactionCollectionSelect";
 import type { TransactionFilterSchema } from "~/app/transaction/schema/TransactionFilterSchema";
-import type { withTransactionSelect } from "./withTransactionSelect";
 
 export namespace withTransactionQueryBuilder {
-	export interface Props {
-		select: withTransactionSelect.Select;
+	export interface Props<
+		TSelect extends
+			withTransactionCollectionSelect.Select = withTransactionCollectionSelect.Select,
+	> {
+		select: TSelect;
 		where?: TransactionFilterSchema.Type;
 		meta?: TransactionMetaSchema.Type;
 	}
 
-	export type Callback = (props: Props) => withTransactionSelect.Select;
+	export type Callback = <TSelect extends withTransactionCollectionSelect.Select>(
+		props: Props<TSelect>,
+	) => TSelect;
 }
 
-export const withTransactionQueryBuilder: withTransactionQueryBuilder.Callback = ({
+/**
+ * Standalone query builder that applies all filters from TransactionQuerySchema.
+ * Generic to support extended select types (e.g. collection selects returning IDs only).
+ */
+export const withTransactionQueryBuilder: withTransactionQueryBuilder.Callback = <
+	TSelect extends withTransactionCollectionSelect.Select,
+>({
 	select,
 	where,
 	meta,
-}) => {
+}: withTransactionQueryBuilder.Props<TSelect>): TSelect => {
 	if (!where) {
 		return select;
 	}
@@ -25,11 +36,11 @@ export const withTransactionQueryBuilder: withTransactionQueryBuilder.Callback =
 	let query = select;
 
 	if (where.id) {
-		query = query.where("lt.id", "=", where.id);
+		query = query.where("lt.id", "=", where.id) as TSelect;
 	}
 
 	if (where.idIn && where.idIn.length > 0) {
-		query = query.where("lt.id", "in", where.idIn);
+		query = query.where("lt.id", "in", where.idIn) as TSelect;
 	}
 
 	if (where.userId) {
@@ -60,11 +71,11 @@ export const withTransactionQueryBuilder: withTransactionQueryBuilder.Callback =
 					]);
 				})
 				.exhaustive();
-		});
+		}) as TSelect;
 	}
 
 	if (where.listingId) {
-		query = query.where("lt.listingId", "=", where.listingId);
+		query = query.where("lt.listingId", "=", where.listingId) as TSelect;
 	}
 
 	if (where.status) {
@@ -89,7 +100,7 @@ export const withTransactionQueryBuilder: withTransactionQueryBuilder.Callback =
 						);
 					}),
 			);
-		});
+		}) as TSelect;
 	}
 
 	if (where.statusIn && where.statusIn.length > 0) {
@@ -114,7 +125,7 @@ export const withTransactionQueryBuilder: withTransactionQueryBuilder.Callback =
 						);
 					}),
 			);
-		});
+		}) as TSelect;
 	}
 
 	return query;
