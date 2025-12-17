@@ -7,6 +7,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { Logo } from "@zbav-se.me/ui/logo";
+import { History } from "~/app/history/History";
 import face from "~/assets/face.webp";
 
 export const Route = createFileRoute("/$locale/landing")({
@@ -175,6 +176,16 @@ export const Route = createFileRoute("/$locale/landing")({
 							color: "lead",
 						}}
 					/>
+				</Container>
+
+				<Container
+					ui={{
+						layout: "vertical-centered",
+						height: "full",
+						width: "full",
+					}}
+				>
+					<History />
 				</Container>
 			</Container>
 		);

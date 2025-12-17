@@ -1,1 +1,1 @@
-export * from "./withGithubHistoryQuery";
+export { withGithubHistoryQuery } from "./withGithubHistoryQuery";

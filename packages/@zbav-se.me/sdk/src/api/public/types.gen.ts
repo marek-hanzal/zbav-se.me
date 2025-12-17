@@ -29,6 +29,20 @@ export const tMessageTypeEnum = {
  */
 export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
 
+/**
+ * GitHub commit history count
+ */
+export type tGitHubHistory = {
+    /**
+     * UTC day (YYYY-MM-DD)
+     */
+    date: string;
+    /**
+     * Number of commits on this day
+     */
+    count: number;
+};
+
 export type tApiGithubHistoryRequest = {
     body?: never;
     path?: never;
@@ -49,16 +63,7 @@ export type tApiGithubHistoryResponse = {
     /**
      * GitHub commit history (cached)
      */
-    200: Array<{
-        /**
-         * UTC day (YYYY-MM-DD)
-         */
-        date: string;
-        /**
-         * Number of commits on this day
-         */
-        count: number;
-    }>;
+    200: Array<tGitHubHistory>;
 };
 
 export type apiGithubHistoryResponse = tApiGithubHistoryResponse[keyof tApiGithubHistoryResponse];

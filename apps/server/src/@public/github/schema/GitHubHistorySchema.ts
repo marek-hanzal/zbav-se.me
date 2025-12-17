@@ -11,7 +11,9 @@ export const GitHubHistorySchema = z
 			example: 3,
 		}),
 	})
-	.strict();
+	.openapi("GitHubHistory", {
+		description: "GitHub commit history count",
+	});
 
 export type GitHubHistorySchema = typeof GitHubHistorySchema;
 

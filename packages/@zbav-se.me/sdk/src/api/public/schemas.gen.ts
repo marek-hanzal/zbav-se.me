@@ -24,3 +24,22 @@ export const sMessageTypeEnum = {
         'error'
     ]
 } as const;
+
+export const sGitHubHistory = {
+    type: 'object',
+    properties: {
+        date: {
+            type: 'string',
+            example: '2025-12-17'
+        },
+        count: {
+            type: 'integer',
+            minimum: 0,
+            example: 3
+        }
+    },
+    required: [
+        'date',
+        'count'
+    ]
+} as const;

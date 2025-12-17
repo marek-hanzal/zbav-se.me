@@ -22,6 +22,7 @@
 		"@use-pico/cls": "workspace:*",
 		"@use-pico/common": "workspace:*",
 		"@use-pico/server": "workspace:*",
+		"@zbav-se.me/sdk": "workspace:*",
 		"@zbav-se.me/ui": "workspace:*",
 		"axios": "1.13.2",
 		"better-auth": "1.4.7",

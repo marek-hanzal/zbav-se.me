@@ -29,6 +29,22 @@ export const zNotice = z.object({
 
 export type zNotice = z.infer<typeof zNotice>;
 
+/**
+ * GitHub commit history count
+ */
+export const zGitHubHistory = z.object({
+    date: z.string().register(z.globalRegistry, {
+        description: 'UTC day (YYYY-MM-DD)'
+    }),
+    count: z.int().gte(0).register(z.globalRegistry, {
+        description: 'Number of commits on this day'
+    })
+}).register(z.globalRegistry, {
+    description: 'GitHub commit history count'
+});
+
+export type zGitHubHistory = z.infer<typeof zGitHubHistory>;
+
 export const zApiGithubHistoryData = z.object({
     body: z.optional(z.never()),
     path: z.optional(z.never()),
@@ -40,14 +56,7 @@ export type zapiGithubHistoryRequest = z.infer<typeof zApiGithubHistoryData>;
 /**
  * GitHub commit history (cached)
  */
-export const zApiGithubHistoryResponse = z.array(z.object({
-    date: z.string().register(z.globalRegistry, {
-        description: 'UTC day (YYYY-MM-DD)'
-    }),
-    count: z.int().gte(0).register(z.globalRegistry, {
-        description: 'Number of commits on this day'
-    })
-})).register(z.globalRegistry, {
+export const zApiGithubHistoryResponse = z.array(zGitHubHistory).register(z.globalRegistry, {
     description: 'GitHub commit history (cached)'
 });
 
