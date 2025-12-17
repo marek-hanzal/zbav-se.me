@@ -1,12 +1,12 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { genId } from "@use-pico/common/gen-id";
+import { DateTime } from "luxon";
 import { AppEnv } from "~/AppEnv";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { GitHubHistorySchema } from "./schema/GitHubHistorySchema";
 
 const REPO = "marek-hanzal/zbav-se.me";
-const DEFAULT_LIMIT = 20;
 
 const parseRepo = (repo: string) => {
 	const [owner, name] = repo.split("/");
@@ -22,7 +22,7 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 			method: "get",
 			path: "/github/history",
 			description:
-				"Syncs commit history from the last year into local cache and returns recent cached history.",
+				"Syncs commit history from the last year into local cache and returns daily commit counts for the last 365 days.",
 			operationId: "apiGithubHistoryYear",
 			responses: {
 				200: {
@@ -189,18 +189,87 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 					}
 				}
 
-				// Return cached recent history from DB
-				const recent = await db
+				// Return cached history aggregated into UTC days (last 365 days, including today).
+				const endUtc = DateTime.utc().startOf("day");
+				const startUtc = endUtc.minus({
+					days: 364,
+				});
+
+				const commits = await db
 					.selectFrom("github")
 					.select([
-						"sha",
 						"date",
-						"message",
 					])
-					.orderBy("date", "desc")
+					.where("date", ">=", startUtc.toJSDate())
 					.execute();
 
-				return c.json(recent satisfies GitHubHistorySchema.Type[], 200);
+				const toUtcDateTime = (value: unknown) => {
+					if (value instanceof Date) {
+						return DateTime.fromJSDate(value).toUTC();
+					}
+
+					if (typeof value === "string") {
+						const hasZone = /[zZ]$|[+-]\d\d:\d\d$/.test(value);
+
+						// ISO-like formats
+						if (value.includes("T")) {
+							const dt = hasZone
+								? DateTime.fromISO(value, {
+										setZone: true,
+									})
+								: DateTime.fromISO(value, {
+										zone: "utc",
+									});
+							if (dt.isValid) {
+								return dt.toUTC();
+							}
+						}
+
+						// SQL timestamp without timezone (common for Postgres `timestamp`)
+						const sql = DateTime.fromSQL(value, {
+							zone: "utc",
+						});
+						if (sql.isValid) {
+							return sql.toUTC();
+						}
+
+						// Date-only string
+						const dateOnly = DateTime.fromISO(value, {
+							zone: "utc",
+						});
+						if (dateOnly.isValid) {
+							return dateOnly.startOf("day");
+						}
+					}
+
+					return null;
+				};
+
+				const countsByDay = new Map<string, number>();
+				const toYmd = (dt: DateTime) => dt.toUTC().toFormat("yyyy-MM-dd");
+				for (const row of commits) {
+					const dt = toUtcDateTime(row.date);
+					if (!dt || !dt.isValid) {
+						continue;
+					}
+					const key = toYmd(dt); // UTC YYYY-MM-DD
+					countsByDay.set(key, (countsByDay.get(key) ?? 0) + 1);
+				}
+
+				const days: GitHubHistorySchema.Type[] = [];
+				for (let i = 0; i < 365; i++) {
+					const key = toYmd(
+						startUtc.plus({
+							days: i,
+						}),
+					);
+					days.push({
+						date: key,
+						count: countsByDay.get(key) ?? 0,
+					});
+				}
+
+				return c.json(days, 200);
 			} catch (e) {
 				console.error(e);
 				return c.json<NoticeSchema.Type, 500>(

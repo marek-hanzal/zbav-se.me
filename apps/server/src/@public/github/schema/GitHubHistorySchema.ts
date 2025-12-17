@@ -1,13 +1,17 @@
 import { z } from "@hono/zod-openapi";
-import { GitHubDbSchema } from "~/app/github/schema/GitHubDbSchema";
 
 export const GitHubHistorySchema = z
 	.object({
-		...GitHubDbSchema.shape,
+		date: z.string().openapi({
+			description: "UTC day (YYYY-MM-DD)",
+			example: "2025-12-17",
+		}),
+		count: z.number().int().min(0).openapi({
+			description: "Number of commits on this day",
+			example: 3,
+		}),
 	})
-	.omit({
-		id: true,
-	});
+	.strict();
 
 export type GitHubHistorySchema = typeof GitHubHistorySchema;
 
