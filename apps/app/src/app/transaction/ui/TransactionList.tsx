@@ -37,6 +37,7 @@ export const TransactionList: FC<TransactionList.Props> = ({ locale, query, ui, 
 								<TransactionItem
 									key={id}
 									data-id={id}
+									locale={locale}
 									transactionId={id}
 								/>
 							))}

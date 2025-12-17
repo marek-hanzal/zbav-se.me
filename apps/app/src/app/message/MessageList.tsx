@@ -9,13 +9,21 @@ import { MessageText } from "~/app/message/type/MessageText";
 
 export namespace MessageList {
 	export interface Props extends Container.Props {
+		locale: string;
 		messageThreadId: string;
 	}
 }
 
-export const MessageList: FC<MessageList.Props> = ({ messageThreadId, ...props }) => {
+export const MessageList: FC<MessageList.Props> = ({ locale, messageThreadId, ui, ...props }) => {
 	return (
-		<Container {...props}>
+		<Container
+			ui={{
+				flow: "vertical",
+				gap: "default",
+				...ui,
+			}}
+			{...props}
+		>
 			<withMessageThreadMessageCollectionQuery.Suspense
 				data={{
 					path: {
@@ -30,6 +38,7 @@ export const MessageList: FC<MessageList.Props> = ({ messageThreadId, ...props }
 							.with("text", () => (
 								<MessageText
 									key={message.id}
+									locale={locale}
 									message={zMessageText.parse(message)}
 								/>
 							))

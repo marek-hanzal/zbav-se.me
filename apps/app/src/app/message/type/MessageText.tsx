@@ -1,16 +1,19 @@
 import { Container, type uiContainer } from "@use-pico/client/ui/container";
 import { Mx } from "@use-pico/client/ui/mx";
+import { Typo } from "@use-pico/client/ui/typo";
+import { toTimeDiff } from "@use-pico/common/time";
 import type { tMessageText } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
 export namespace MessageText {
 	export interface Props extends Container.Props {
+		locale: string;
 		message: tMessageText;
 	}
 }
 
-export const MessageText: FC<MessageText.Props> = ({ message, ...props }) => {
+export const MessageText: FC<MessageText.Props> = ({ locale, message, ...props }) => {
 	return (
 		<Container
 			ui={{
@@ -41,7 +44,7 @@ export const MessageText: FC<MessageText.Props> = ({ message, ...props }) => {
 					.exhaustive(),
 			}}
 			className={[
-				"max-w-1/3",
+				"w-2/3",
 				message.direction === "in" ? [] : undefined,
 				message.direction === "out"
 					? [
@@ -52,6 +55,18 @@ export const MessageText: FC<MessageText.Props> = ({ message, ...props }) => {
 			{...props}
 		>
 			<Mx label={message.text} />
+
+			<Typo
+				label={toTimeDiff({
+					locale,
+					time: message.createdAt,
+					type: "relative",
+				})}
+				ui={{
+					text: "sm",
+					opacity: "medium",
+				}}
+			/>
 		</Container>
 	);
 };

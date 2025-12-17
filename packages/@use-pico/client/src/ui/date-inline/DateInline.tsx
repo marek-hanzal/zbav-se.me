@@ -6,6 +6,7 @@ import { Typo } from "../typo";
 
 export namespace DateInline {
 	export interface Props extends Omit<Typo.Props, "label"> {
+		locale: string;
 		date?: DateInput;
 		fallback?: DateInput;
 		options?: DateTimeFormatOptions;
@@ -13,6 +14,7 @@ export namespace DateInline {
 }
 
 export const DateInline: FC<DateInline.Props> = ({
+	locale,
 	date,
 	fallback,
 	options = DateTime.DATE_MED,
@@ -20,7 +22,12 @@ export const DateInline: FC<DateInline.Props> = ({
 }) => {
 	return (
 		<Typo
-			label={iso2locale(date, fallback, options)}
+			label={iso2locale({
+				locale,
+				date,
+				fallback,
+				opts: options,
+			})}
 			{...props}
 		/>
 	);

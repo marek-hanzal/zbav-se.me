@@ -9,11 +9,16 @@ export namespace TransactionSheet {
 	export type View = "detail";
 
 	export interface Props extends BottomSheet.Props {
+		locale: string;
 		transactionId: string;
 	}
 }
 
-export const TransactionSheet: FC<TransactionSheet.Props> = ({ transactionId, ...props }) => {
+export const TransactionSheet: FC<TransactionSheet.Props> = ({
+	locale,
+	transactionId,
+	...props
+}) => {
 	const [view, setView] = useState<TransactionSheet.View>("detail");
 
 	return (
@@ -36,6 +41,7 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({ transactionId, ..
 							detail: {
 								children: (
 									<MessageList
+										locale={locale}
 										messageThreadId={transaction.messageThreadId}
 										ui={{
 											inner: "default",
