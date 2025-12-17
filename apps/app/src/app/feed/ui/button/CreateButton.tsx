@@ -48,7 +48,7 @@ export const CreateButton: FC<CreateButton.Props> = ({
 					...ui,
 				}}
 				className={[
-					"h-48",
+					"h-48 md:h-92",
 					className,
 				]}
 				{...props}

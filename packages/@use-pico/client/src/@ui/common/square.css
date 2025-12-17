@@ -9,11 +9,11 @@
 
 	[data-ui-square="default"],
 	[data-ui-square="md"] {
-		@apply h-10 w-10 min-h-10 min-w-10;
+		@apply h-10 w-10 min-h-10 min-w-10 md:h-16 md:w-16 md:min-h-16 md:min-w-16;
 	}
 
 	[data-ui-square="lg"] {
-		@apply h-12 w-12 min-h-12 min-w-12;
+		@apply h-12 w-12 min-h-12 min-w-12 md:h-18 md:w-18 md:min-h-18 md:min-w-18;
 	}
 
 	[data-ui-square="xl"] {

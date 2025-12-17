@@ -60,7 +60,7 @@ export const Item: FC<Item.Props> = ({
 			data-ui={"Item[Container]"}
 			data-id={feed.id}
 			className={tvc([
-				"h-48",
+				"h-48 md:h-92",
 				className,
 			])}
 			ui={{
