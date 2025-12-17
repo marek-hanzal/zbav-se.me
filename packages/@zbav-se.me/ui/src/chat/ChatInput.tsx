@@ -91,6 +91,8 @@ export const ChatInput: FC<ChatInput.Props> = ({
 			data-ui={"ChatInput-Container"}
 			ui={{
 				layout: "horizontal-flex",
+				items: "end",
+				justify: "center",
 				gap: "md",
 				...ui,
 			}}
@@ -127,55 +129,30 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				</>
 			) : null}
 
-			<Container
-				ui={{
-					flow: "vertical",
-					items: "center",
-					justify: "center",
-					height: "content",
-					width: "full",
-				}}
-			>
-				<Container
-					ui={{
-						flow: "vertical",
-						items: "center",
-						justify: "center",
-						square: "md",
+			<textarea
+				ref={textareaRef}
+				id={areaId}
+				rows={1}
+				value={value}
+				disabled={ui?.disabled}
+				onChange={(e) => onChange(e.target.value)}
+				onKeyDown={handleKeyDown}
+				placeholder={placeholder}
+				{...uiInput({
+					ui: {
 						round: "default",
-						border: true,
-						background: "default",
-						height: "content",
-						width: "full",
-					}}
-					className={[
+					},
+					className: [
+						"resize-none",
+						"outline-none",
+						"text-md",
+						"leading-5",
+						"w-full",
+						"h-full",
 						"min-h-0",
-					]}
-				>
-					<textarea
-						ref={textareaRef}
-						id={areaId}
-						rows={1}
-						value={value}
-						disabled={ui?.disabled}
-						onChange={(e) => onChange(e.target.value)}
-						onKeyDown={handleKeyDown}
-						placeholder={placeholder}
-						{...uiInput({
-							ui: {
-								round: "default",
-							},
-							className: [
-								"resize-none",
-								"outline-none",
-								"text-md",
-								"leading-5",
-								"w-full",
-							],
-						})}
-					/>
-				</Container>
-			</Container>
+					],
+				})}
+			/>
 
 			<Button
 				data-ui={"ChatInput-Button-send"}
