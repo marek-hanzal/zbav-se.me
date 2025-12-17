@@ -53,22 +53,21 @@ export const HistoryItem = ({
 		<Container
 			title={`${item.date}: ${item.count}`}
 			ui={{
-				square: "default",
+				square: "md",
 				round: "default",
 			}}
 			className={[
 				"flex items-center justify-center",
-				"border border-slate-200",
+				"border",
 				color,
 				className,
 			]}
 			{...props}
 		>
 			<Typo
-				label={item.count}
+				label={item.count > 0 ? item.count : "-"}
 				ui={{
 					text: "xs",
-					color: "text",
 					opacity: "medium",
 					font: "bold",
 				}}
