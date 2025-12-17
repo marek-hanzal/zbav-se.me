@@ -16,6 +16,9 @@
 323351b9e4c55b173d9f38ae62898421c4bbfb45584093c73f1f2a8c:
   ref: Enter your email
   value: Enter your email
+3323505e78622b0fc96dcca7ff8249ba42f46036e7ee0bf66750f3c4:
+  ref: About me (title)
+  value: About me (title)
 36867b0182ba4840c97c772c1168bf1584a52897b6a292d58dc53dc9:
   ref: Register (title)
   value: Register (title)
@@ -37,6 +40,9 @@
 54c4e7b4b5a3122ed9a673a0ac2b0df248bef02857032624aec47948:
   ref: Register
   value: Register
+5dff2c312c85487ff5ee3fb9ac4ef2e1d4a492a52eeb2f1d0333c94a:
+  ref: About me (message)
+  value: About me (message)
 6212dbd7147760fc25e692c4d4e94e2e429e7adae46d98ca3bc21a07:
   ref: Login (link)
   value: Login (link)
@@ -55,6 +61,9 @@
 7f590474fc7aa21590e42c47aa3f3b5d5f1f5b6e56c2aae5da611958:
   ref: Privacy policy (label)
   value: Privacy policy (label)
+86856c2ffab9a4998ded4e5585299bf873d60db1bcaed1e4f8f13869:
+  ref: Image not available anymore
+  value: Image not available anymore
 91f3a6e4bee345872696ff6ef6b88f3aac5a451a2c531c92ddf20865:
   ref: Login with passkey
   value: Login with passkey

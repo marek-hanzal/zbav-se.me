@@ -17,6 +17,9 @@ export const Route = createFileRoute("/$locale/landing")({
 			<Container
 				ui={{
 					layout: "vertical-full",
+					width: "full",
+					height: "full",
+					gap: "xl",
 				}}
 			>
 				<Container
@@ -116,16 +119,43 @@ export const Route = createFileRoute("/$locale/landing")({
 					</Status>
 				</Container>
 
-				<Container>
+				<Container
+					ui={{
+						layout: "vertical-centered",
+						height: "full",
+						width: "full",
+					}}
+				>
 					<Status
 						icon={
 							<HeroImage
 								src={face}
 								visible
+								ui={{
+									tone: "brand",
+									theme: "dark",
+									border: true,
+									shadow: true,
+									round: "full",
+								}}
+								className={[
+                                    'aspect-square',
+									"w-[85%]",
+								]}
 							/>
 						}
 						textTitle={"About me (title)"}
 						textMessage={"About me (message)"}
+                        messageProps={{
+                            ui: {
+                                color:'text',
+                            }
+                        }}
+						ui={{
+							tone: "brand",
+							theme: "light",
+							color: "lead",
+						}}
 					/>
 				</Container>
 			</Container>
