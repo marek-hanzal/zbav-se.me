@@ -49,19 +49,22 @@ export const Route = createRootRouteWithContext<{
 		});
 
 		return (
-			<html lang={locale}>
+			<html
+				lang={locale}
+				className={"bg-slate-200 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"}
+			>
 				<head>
 					<HeadContent />
 				</head>
 
 				<body
 					{...uiContainer({
-						ui: {
-							height: "viewport",
-							width: "viewport",
-						},
 						className: [
 							"font-roboto",
+							"w-dvw",
+							"h-dvh",
+							"md:mx-auto",
+							"md:w-1/4",
 						],
 					})}
 				>

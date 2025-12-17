@@ -1,10 +1,10 @@
 import type { QueryClient } from "@tanstack/react-query";
 import {
-    createRootRouteWithContext,
-    HeadContent,
-    Outlet,
-    Scripts,
-    useParams,
+	createRootRouteWithContext,
+	HeadContent,
+	Outlet,
+	Scripts,
+	useParams,
 } from "@tanstack/react-router";
 import { PicoCls } from "@use-pico/client/cls";
 import { uiContainer } from "@use-pico/client/ui/container";
