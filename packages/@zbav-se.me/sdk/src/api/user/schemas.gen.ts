@@ -952,12 +952,25 @@ export const sMessageLocation = {
         },
         type: {
             $ref: '#/components/schemas/MessageTypeEnum'
+        },
+        direction: {
+            $ref: '#/components/schemas/MessageDirectionEnum'
         }
     },
     required: [
         'id',
         'locationId',
-        'type'
+        'type',
+        'direction'
+    ]
+} as const;
+
+export const sMessageDirectionEnum = {
+    type: 'string',
+    enum: [
+        'incoming',
+        'outgoing',
+        'system'
     ]
 } as const;
 
@@ -981,12 +994,16 @@ export const sMessageGallery = {
         },
         type: {
             $ref: '#/components/schemas/MessageTypeEnum'
+        },
+        direction: {
+            $ref: '#/components/schemas/MessageDirectionEnum'
         }
     },
     required: [
         'id',
         'galleryId',
-        'type'
+        'type',
+        'direction'
     ]
 } as const;
 
@@ -1010,6 +1027,9 @@ export const sMessageText = {
         },
         type: {
             $ref: '#/components/schemas/MessageTypeEnum'
+        },
+        direction: {
+            $ref: '#/components/schemas/MessageDirectionEnum'
         }
     },
     required: [
@@ -1018,7 +1038,8 @@ export const sMessageText = {
         'messageThreadId',
         'text',
         'createdAt',
-        'type'
+        'type',
+        'direction'
     ]
 } as const;
 

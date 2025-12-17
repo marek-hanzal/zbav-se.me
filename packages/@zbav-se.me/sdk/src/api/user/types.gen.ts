@@ -716,7 +716,22 @@ export type tMessageLocation = {
      */
     locationId: string;
     type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
 };
+
+/**
+ * Direction of the message
+ */
+export const tMessageDirectionEnum = {
+    incoming: 'incoming',
+    outgoing: 'outgoing',
+    system: 'system'
+} as const;
+
+/**
+ * Direction of the message
+ */
+export type tMessageDirectionEnum = typeof tMessageDirectionEnum[keyof typeof tMessageDirectionEnum];
 
 /**
  * Type of message
@@ -745,6 +760,7 @@ export type tMessageGallery = {
      */
     galleryId: string;
     type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
 };
 
 /**
@@ -772,6 +788,7 @@ export type tMessageText = {
      */
     createdAt: string;
     type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
 };
 
 /**

@@ -746,6 +746,19 @@ export const zMessageQuery = z.object({
 export type zMessageQuery = z.infer<typeof zMessageQuery>;
 
 /**
+ * Direction of the message
+ */
+export const zMessageDirectionEnum = z.enum([
+    'incoming',
+    'outgoing',
+    'system'
+]).register(z.globalRegistry, {
+    description: 'Direction of the message'
+});
+
+export type zMessageDirectionEnum = z.infer<typeof zMessageDirectionEnum>;
+
+/**
  * Type of message
  */
 export const zMessageTypeEnum = z.enum([
@@ -768,7 +781,8 @@ export const zMessageLocation = z.object({
     locationId: z.string().register(z.globalRegistry, {
         description: 'ID of the location'
     }),
-    type: zMessageTypeEnum
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum
 }).register(z.globalRegistry, {
     description: 'Message location entry'
 });
@@ -785,7 +799,8 @@ export const zMessageGallery = z.object({
     galleryId: z.string().register(z.globalRegistry, {
         description: 'ID of the gallery'
     }),
-    type: zMessageTypeEnum
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum
 }).register(z.globalRegistry, {
     description: 'Message gallery entry'
 });
@@ -811,7 +826,8 @@ export const zMessageText = z.object({
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
-    type: zMessageTypeEnum
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum
 }).register(z.globalRegistry, {
     description: 'Message entry'
 });

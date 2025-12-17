@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { MessageDirectionEnumSchema } from "~/app/message/schema/MessageDirectionEnumSchema";
 import { MessageTypeEnumSchema } from "~/app/message/schema/MessageTypeEnumSchema";
 import { MessageLocationDbSchema } from "~/app/message-location/schema/MessageLocationDbSchema";
 
@@ -8,6 +9,7 @@ export const MessageLocationSchema = z
 		type: MessageTypeEnumSchema.refine((t): t is "location" => t === "location", {
 			message: `Expected "text"`,
 		}),
+		direction: MessageDirectionEnumSchema,
 	})
 	.omit({
 		messageThreadId: true,
