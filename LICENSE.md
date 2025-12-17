@@ -1,6 +1,6 @@
 # zbav-se.me: Source-Available License (ZSL) v1.0
 
-Copyright (c) 2025 Marek  
+Copyright (c) 2026 Marek Hanzal
 All rights reserved.
 
 This software and its source code (the “Software”) are made publicly available for the purposes of transparency, review, learning, and security auditing.  
