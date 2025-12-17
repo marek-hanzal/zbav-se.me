@@ -14,6 +14,8 @@ export const MessageText: FC<MessageText.Props> = ({ message, ...props }) => {
 	return (
 		<Container
 			ui={{
+				flow: "horizontal",
+				width: "full",
 				justify: match<typeof message.direction, uiContainer.Ui["justify"]>(
 					message.direction,
 				)
