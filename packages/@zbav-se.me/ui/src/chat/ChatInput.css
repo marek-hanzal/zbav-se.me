@@ -1,5 +1,0 @@
-@layer components {
-	[data-ui="ChatInput-Container"] {
-		@apply flex flex-row gap-2 items-end justify-center w-full;
-	}
-}

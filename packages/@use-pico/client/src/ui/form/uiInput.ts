@@ -38,6 +38,8 @@ export const uiInput = ({ ui, className }: uiInput.Props) => {
 	return coolUi<uiInput.Ui>({
 		name: "Input",
 		ui: {
+			tone: "neutral",
+			theme: "light",
 			text: "default",
 			color: "text",
 			background: "default",

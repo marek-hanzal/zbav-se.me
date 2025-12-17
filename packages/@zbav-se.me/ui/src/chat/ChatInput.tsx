@@ -2,7 +2,8 @@ import { PlusIcon } from "@use-pico/client/icon";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import { tvc, useCls } from "@use-pico/cls";
+import { uiInput } from "@use-pico/client/ui/form";
+import type { StateType } from "@use-pico/common/type";
 import {
 	type FC,
 	type KeyboardEventHandler,
@@ -12,24 +13,17 @@ import {
 	useRef,
 } from "react";
 import { SendMessageIcon } from "../icon";
-import { ChatInputCls } from "./ChatInputCls";
 
 export namespace ChatInput {
 	export namespace Menu {
-		export type State = [
-			boolean,
-			(value: boolean | ((value: boolean) => boolean)) => void,
-		];
-
 		export interface Props {
-			state: State;
+			state: StateType.State<boolean>;
 			content: ReactNode;
 			props?: BottomSheet.PropsEx;
 		}
 	}
 
-	export interface Props
-		extends ChatInputCls.Props<Omit<Container.Props, "onSubmit" | "onChange">> {
+	export interface Props extends Omit<Container.Props, "onSubmit" | "onChange"> {
 		value: string;
 		onChange(value: string): void;
 		onSubmit(value: string): void;
@@ -48,19 +42,11 @@ export const ChatInput: FC<ChatInput.Props> = ({
 	maxRows = 6,
 	loading,
 	menu,
-	cls = ChatInputCls,
-	tweak,
 	ui,
 	...props
 }) => {
-	const { slots } = useCls(cls, tweak);
-
 	const areaId = useId();
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-	const [isMenu, setIsMenu] = menu?.state || [
-		false,
-		(value) => !value,
-	];
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We're reacting to value change
 	useLayoutEffect(() => {
@@ -115,7 +101,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 					<Button
 						data-ui={"ChatInput-Button-menu"}
 						iconEnabled={PlusIcon}
-						onClick={() => setIsMenu((prev) => !prev)}
+						onClick={() => menu.state.set((prev) => !prev)}
 						ui={{
 							tone: "link",
 						}}
@@ -123,8 +109,8 @@ export const ChatInput: FC<ChatInput.Props> = ({
 
 					<BottomSheet
 						data-ui={"ChatInput-BottomSheet-menu"}
-						isOpen={isMenu}
-						onClose={() => setIsMenu(false)}
+						isOpen={menu.state.value}
+						onClose={() => menu.state.set(false)}
 						{...menu.props}
 					>
 						<Container
@@ -141,38 +127,30 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				</>
 			) : null}
 
-			<div
-				className={tvc([
-					"flex",
-					"flex-col",
-					"items-center",
-					"justify-center",
-					"w-full",
-				])}
+			<Container
+				ui={{
+					flow: "vertical",
+					items: "center",
+					justify: "center",
+					height: "content",
+					width: "full",
+				}}
 			>
-				<div
-					className={slots.default({
-						slot: {
-							default: {
-								class: [
-									"flex",
-									"flex-col",
-									"items-center",
-									"justify-center",
-									"border-2",
-									"border-slate-200",
-									"bg-slate-100",
-									"min-h-0",
-									"h-fit",
-									"w-full",
-								],
-								token: [
-									"square.md",
-									"round.default",
-								],
-							},
-						},
-					})}
+				<Container
+					ui={{
+						flow: "vertical",
+						items: "center",
+						justify: "center",
+						square: "md",
+						round: "default",
+						border: true,
+						background: "default",
+						height: "content",
+						width: "full",
+					}}
+					className={[
+						"min-h-0",
+					]}
 				>
 					<textarea
 						ref={textareaRef}
@@ -183,19 +161,42 @@ export const ChatInput: FC<ChatInput.Props> = ({
 						onChange={(e) => onChange(e.target.value)}
 						onKeyDown={handleKeyDown}
 						placeholder={placeholder}
-						className={slots.input()}
+						{...uiInput({
+							ui: {
+								round: "default",
+							},
+							className: [
+								"resize-none",
+								"outline-none",
+								"text-md",
+								"leading-5",
+								"w-full",
+							],
+						})}
 					/>
-				</div>
-			</div>
+				</Container>
+			</Container>
 
 			<Button
 				data-ui={"ChatInput-Button-send"}
 				iconEnabled={SendMessageIcon}
+				iconProps={{
+					ui: {
+						text: "xl",
+					},
+				}}
 				disabled={loading || value.length === 0}
 				loading={loading}
 				onClick={() => {
 					onSubmit(value);
 					onChange("");
+				}}
+				ui={{
+					justify: "center",
+					items: "center",
+					tone: "brand",
+					theme: "light",
+					square: "default",
 				}}
 			/>
 		</Container>
