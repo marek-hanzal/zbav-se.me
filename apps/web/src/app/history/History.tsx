@@ -1,7 +1,7 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withGithubHistoryQuery } from "@zbav-se.me/sdk/query/public";
-import { useId } from "react";
+import { type FC, useId } from "react";
 import { HistoryItem } from "~/app/history/HistoryItem";
 
 const DEFAULT_PALETTE = [
@@ -76,7 +76,7 @@ export namespace History {
 	}
 }
 
-export const History = ({ ui, className, ...props }: History.Props) => {
+export const History: FC<History.Props> = ({ ui, className, ...props }) => {
 	const historyRootId = useId();
 	const threshold = 4;
 
