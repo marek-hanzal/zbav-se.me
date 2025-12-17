@@ -2,8 +2,8 @@ import { z } from "@hono/zod-openapi";
 
 export const MessageDirectionEnumSchema = z
 	.enum([
-		"incoming",
-		"outgoing",
+		"in",
+		"out",
 		"system",
 	])
 	.openapi("MessageDirectionEnum", {

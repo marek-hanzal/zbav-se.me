@@ -1,5 +1,5 @@
 import { Container, type uiContainer } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
+import { Mx } from "@use-pico/client/ui/mx";
 import type { tMessageText } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
@@ -14,19 +14,44 @@ export const MessageText: FC<MessageText.Props> = ({ message, ...props }) => {
 	return (
 		<Container
 			ui={{
-				flow: "horizontal",
-				width: "full",
-				justify: match<typeof message.direction, uiContainer.Ui["justify"]>(
-					message.direction,
-				)
-					.with("incoming", () => "start")
-					.with("outgoing", () => "end")
-					.with("system", () => "center")
+				theme: "light",
+				background: "default",
+				border: true,
+				shadow: true,
+				inner: "default",
+				round: "default",
+				...match<typeof message.direction, uiContainer.Ui>(message.direction)
+					.with("in", () => {
+						return {
+							tone: "primary",
+						};
+					})
+					.with("out", () => {
+						return {
+							tone: "secondary",
+							justify: "end",
+						};
+					})
+					.with("system", () => {
+						return {
+							tone: "neutral",
+							justify: "center",
+						};
+					})
 					.exhaustive(),
 			}}
+			className={[
+				"max-w-1/3",
+				message.direction === "in" ? [] : undefined,
+				message.direction === "out"
+					? [
+							"ml-auto",
+						]
+					: undefined,
+			]}
 			{...props}
 		>
-			<Tx label={message.text} />
+			<Mx label={message.text} />
 		</Container>
 	);
 };

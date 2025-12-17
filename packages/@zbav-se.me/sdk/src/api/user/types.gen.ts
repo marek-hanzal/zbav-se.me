@@ -723,8 +723,8 @@ export type tMessageLocation = {
  * Direction of the message
  */
 export const tMessageDirectionEnum = {
-    incoming: 'incoming',
-    outgoing: 'outgoing',
+    in: 'in',
+    out: 'out',
     system: 'system'
 } as const;
 

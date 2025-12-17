@@ -749,8 +749,8 @@ export type zMessageQuery = z.infer<typeof zMessageQuery>;
  * Direction of the message
  */
 export const zMessageDirectionEnum = z.enum([
-    'incoming',
-    'outgoing',
+    'in',
+    'out',
     'system'
 ]).register(z.globalRegistry, {
     description: 'Direction of the message'

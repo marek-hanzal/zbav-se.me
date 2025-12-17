@@ -27,8 +27,8 @@ export const withMessageLocationSelect = ({
 			eb
 				.case()
 				.when("ml.userId", "=", userId)
-				.then<MessageDirectionEnumSchema.Type>("outgoing")
-				.else<MessageDirectionEnumSchema.Type>("incoming")
+				.then<MessageDirectionEnumSchema.Type>("out")
+				.else<MessageDirectionEnumSchema.Type>("in")
 				.end()
 				.as("direction"),
 		);

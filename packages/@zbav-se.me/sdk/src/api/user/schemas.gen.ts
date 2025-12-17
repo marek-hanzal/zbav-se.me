@@ -968,8 +968,8 @@ export const sMessageLocation = {
 export const sMessageDirectionEnum = {
     type: 'string',
     enum: [
-        'incoming',
-        'outgoing',
+        'in',
+        'out',
         'system'
     ]
 } as const;
