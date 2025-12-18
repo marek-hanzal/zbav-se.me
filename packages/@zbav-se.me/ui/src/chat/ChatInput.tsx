@@ -11,6 +11,7 @@ import {
 	useId,
 	useLayoutEffect,
 	useRef,
+	useState,
 } from "react";
 import { SendMessageIcon } from "../icon";
 
@@ -24,8 +25,6 @@ export namespace ChatInput {
 	}
 
 	export interface Props extends Omit<Container.Props, "onSubmit" | "onChange"> {
-		value: string;
-		onChange(value: string): void;
 		onSubmit(value: string): void;
 		placeholder: string;
 		maxRows?: number;
@@ -35,8 +34,6 @@ export namespace ChatInput {
 }
 
 export const ChatInput: FC<ChatInput.Props> = ({
-	value,
-	onChange,
 	onSubmit,
 	placeholder,
 	maxRows = 6,
@@ -45,6 +42,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 	ui,
 	...props
 }) => {
+	const [message, setMessage] = useState("");
 	const areaId = useId();
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -73,7 +71,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 
 		el.style.overflowY = el.scrollHeight > maxHeight ? "auto" : "hidden";
 	}, [
-		value,
+		message,
 		maxRows,
 	]);
 
@@ -89,10 +87,10 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				return;
 			}
 
-			const trimmed = value.trim();
+			const trimmed = message.trim();
 			if (trimmed.length > 0) {
 				onSubmit(trimmed);
-				onChange("");
+				setMessage("");
 			}
 		}
 	};
@@ -144,9 +142,9 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				ref={textareaRef}
 				id={areaId}
 				rows={1}
-				value={value}
+				value={message}
 				disabled={ui?.disabled}
-				onChange={(e) => onChange(e.target.value)}
+				onChange={(e) => setMessage(e.target.value)}
 				onKeyDown={handleKeyDown}
 				placeholder={placeholder}
 				{...uiInput({
@@ -172,11 +170,11 @@ export const ChatInput: FC<ChatInput.Props> = ({
 						text: "xl",
 					},
 				}}
-				disabled={loading || value.length === 0}
+				disabled={loading || message.length === 0}
 				loading={loading}
 				onClick={() => {
-					onSubmit(value);
-					onChange("");
+					onSubmit(message);
+					setMessage("");
 				}}
 				ui={{
 					justify: "center",

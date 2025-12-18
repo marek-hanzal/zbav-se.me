@@ -34,11 +34,10 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({
 			fallback={null}
 		>
 			{({ data: transaction }) => {
-				// biome-ignore lint/correctness/useHookAtTopLevel: Ssst
-				const [message, setMessage] = useState("");
-
 				return (
 					<SheetView
+						data-ui={"TransactionSheet-[SheetView]"}
+						data-id={transactionId}
 						state={{
 							value: view,
 							set: setView,
@@ -47,6 +46,7 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({
 							detail: {
 								children: (
 									<Container
+										data-ui={"TransactionSheet-[Container]"}
 										ui={{
 											layout: "vertical-content-footer",
 											height: "full",
