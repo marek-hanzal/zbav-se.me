@@ -43,7 +43,7 @@ export const Route = createRootRouteWithContext<{
 			},
 		],
 	}),
-	component() {
+	shellComponent() {
 		const { locale } = useParams({
 			from: "/$locale",
 		});

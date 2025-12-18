@@ -15,7 +15,6 @@ import styles from "~/assets/style.css?url";
 export const Route = createRootRouteWithContext<{
 	queryClient: QueryClient;
 }>()({
-	ssr: false,
 	head: () => ({
 		meta: [
 			{
