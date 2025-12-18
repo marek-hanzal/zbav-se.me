@@ -55,12 +55,23 @@ export const ChatInput: FC<ChatInput.Props> = ({
 			return;
 		}
 
-		el.style.height = "auto";
+		const cs = getComputedStyle(el);
 
-		const lineHeight = parseFloat(getComputedStyle(el).lineHeight || "20");
-		const maxHeight = lineHeight * maxRows;
+		const lineHeight = Number.parseFloat(cs.lineHeight || "20");
+		const paddingTop = Number.parseFloat(cs.paddingTop || "0");
+		const paddingBottom = Number.parseFloat(cs.paddingBottom || "0");
+		const borderTop = Number.parseFloat(cs.borderTopWidth || "0");
+		const borderBottom = Number.parseFloat(cs.borderBottomWidth || "0");
 
-		el.style.height = `${Math.min(el.scrollHeight, maxHeight)}px`;
+		const verticalExtras = paddingTop + paddingBottom + borderTop + borderBottom;
+		const maxHeight = lineHeight * maxRows + verticalExtras;
+
+		el.style.height = "0px";
+		const next = Math.min(el.scrollHeight, maxHeight);
+
+		el.style.height = `${next}px`;
+
+		el.style.overflowY = el.scrollHeight > maxHeight ? "auto" : "hidden";
 	}, [
 		value,
 		maxRows,
@@ -91,7 +102,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 			data-ui={"ChatInput-Container"}
 			ui={{
 				layout: "horizontal-flex",
-				items: "end",
+				items: "center",
 				justify: "center",
 				gap: "md",
 				...ui,
@@ -148,7 +159,6 @@ export const ChatInput: FC<ChatInput.Props> = ({
 						"text-md",
 						"leading-5",
 						"w-full",
-						"h-full",
 						"min-h-0",
 					],
 				})}
