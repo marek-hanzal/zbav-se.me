@@ -7,6 +7,7 @@ import { CloseButton } from "@zbav-se.me/ui/button";
 import { ChatInput } from "@zbav-se.me/ui/chat";
 import { type FC, useState } from "react";
 import { MessageList } from "~/app/message/MessageList";
+import { TransactionToolbar } from "~/app/transaction/ui/TransactionToolbar";
 
 export namespace TransactionSheet {
 	export type View = "detail";
@@ -59,9 +60,9 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({
 											messageThreadId={transaction.messageThreadId}
 										/>
 
+										<TransactionToolbar transactionId={transactionId} />
+
 										<ChatInput
-											value={message}
-											onChange={setMessage}
 											onSubmit={() => {
 												//
 											}}
