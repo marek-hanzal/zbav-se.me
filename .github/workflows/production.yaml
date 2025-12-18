@@ -26,8 +26,6 @@ env:
     SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
     SERVER_S3_KEY: ${{ secrets.SERVER_S3_KEY }}
     SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
-    SERVER_WEB_ORIGIN: ${{ vars.SERVER_WEB_ORIGIN }}
-    SERVER_APP_ORIGIN: ${{ vars.SERVER_APP_ORIGIN }}
     SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
     SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
     SERVER_JWT_SECRET: ${{ secrets.SERVER_JWT_SECRET }}
@@ -92,9 +90,9 @@ env:
         SERVER_UPSTASH_REDIS_TOKEN
         SERVER_UPSTASH_REDIS_URL
         VITE_APP_ORIGIN
+        VITE_WEB_ORIGIN
         VITE_DOMAIN
         VITE_SERVER_API
-        VITE_WEB_ORIGIN
 
 jobs:
     validate-common-env:
@@ -106,46 +104,55 @@ jobs:
               run: |
                   set -euo pipefail
 
+                  check_var() {
+                    local var_name="$1"
+                    local var_value="${!var_name:-}"
+                    if [ -z "$var_value" ]; then
+                      echo "Error: Environment variable '$var_name' is missing or empty"
+                      exit 1
+                    fi
+                  }
+
                   # Common env. variables
-                  : "${VITE_DOMAIN:?VITE_DOMAIN missing}"
-                  : "${VITE_SERVER_API:?VITE_SERVER_API missing}"
+                  check_var VITE_DOMAIN
+                  check_var VITE_SERVER_API
 
                   # Server env. variables
-                  : "${SERVER_S3_API:?SERVER_S3_API missing}"
-                  : "${SERVER_S3_BUCKET:?SERVER_S3_BUCKET missing}"
-                  : "${SERVER_S3_KEY:?SERVER_S3_KEY missing}"
-                  : "${SERVER_S3_SECRET:?SERVER_S3_SECRET missing}"
-                  : "${SERVER_WEB_ORIGIN:?SERVER_WEB_ORIGIN missing}"
-                  : "${SERVER_APP_ORIGIN:?SERVER_APP_ORIGIN missing}"
-                  : "${SERVER_BETTER_AUTH_SECRET:?SERVER_BETTER_AUTH_SECRET missing}"
-                  : "${SERVER_GEOAPIFY_TOKEN:?SERVER_GEOAPIFY_TOKEN missing}"
-                  : "${SERVER_JWT_SECRET:?SERVER_JWT_SECRET missing}"
-                  : "${SERVER_UPSTASH_REDIS_TOKEN:?SERVER_UPSTASH_REDIS_TOKEN missing}"
-                  : "${SERVER_UPSTASH_REDIS_URL:?SERVER_UPSTASH_REDIS_URL missing}"
-                  : "${SERVER_CONTENT_CDN:?SERVER_CONTENT_CDN missing}"
-                  : "${SERVER_GITHUB:?SERVER_GITHUB missing}"
+                  check_var SERVER_S3_API
+                  check_var SERVER_S3_BUCKET
+                  check_var SERVER_S3_KEY
+                  check_var SERVER_S3_SECRET
+                  check_var SERVER_WEB_ORIGIN
+                  check_var SERVER_APP_ORIGIN
+                  check_var SERVER_BETTER_AUTH_SECRET
+                  check_var SERVER_GEOAPIFY_TOKEN
+                  check_var SERVER_JWT_SECRET
+                  check_var SERVER_UPSTASH_REDIS_TOKEN
+                  check_var SERVER_UPSTASH_REDIS_URL
+                  check_var SERVER_CONTENT_CDN
+                  check_var SERVER_GITHUB
 
                   # Local (GHA only)
-                  : "${BUNNY_HOST:?BUNNY_HOST missing}"
-                  : "${BUNNY_TOKEN:?BUNNY_TOKEN missing}"
-                  : "${BUNNY_USER:?BUNNY_USER missing}"
+                  check_var BUNNY_HOST
+                  check_var BUNNY_TOKEN
+                  check_var BUNNY_USER
 
-                  : "${NEON_API_KEY:?NEON_API_KEY missing}"
-                  : "${NEON_PROJECT_ID:?NEON_PROJECT_ID missing}"
+                  check_var NEON_API_KEY
+                  check_var NEON_PROJECT_ID
 
-                  : "${VERCEL_ORG_ID:?VERCEL_ORG_ID missing}"
-                  : "${VERCEL_TOKEN:?VERCEL_TOKEN missing}"
-                  : "${VERCEL_WEB_PROJECT_ID:?VERCEL_WEB_PROJECT_ID missing}"
-                  : "${VERCEL_APP_PROJECT_ID:?VERCEL_APP_PROJECT_ID missing}"
-                  : "${VERCEL_SERVER_PROJECT_ID:?VERCEL_SERVER_PROJECT_ID missing}"
+                  check_var VERCEL_ORG_ID
+                  check_var VERCEL_TOKEN
+                  check_var VERCEL_WEB_PROJECT_ID
+                  check_var VERCEL_APP_PROJECT_ID
+                  check_var VERCEL_SERVER_PROJECT_ID
 
                   # Web environment variables
-                  : "${VITE_WEB_ASSETS:?VITE_WEB_ASSETS missing}"
-                  : "${VITE_WEB_ORIGIN:?VITE_WEB_ORIGIN missing}"
+                  check_var VITE_WEB_ASSETS
+                  check_var VITE_WEB_ORIGIN
 
                   # App environment variables
-                  : "${VITE_APP_ASSETS:?VITE_APP_ASSETS missing}"
-                  : "${VITE_APP_ORIGIN:?VITE_APP_ORIGIN missing}"
+                  check_var VITE_APP_ASSETS
+                  check_var VITE_APP_ORIGIN
 
                   echo "OK: required variables present."
 
