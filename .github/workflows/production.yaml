@@ -34,7 +34,7 @@ env:
     SERVER_UPSTASH_REDIS_TOKEN: ${{ secrets.SERVER_UPSTASH_REDIS_TOKEN }}
     SERVER_UPSTASH_REDIS_URL: ${{ secrets.SERVER_UPSTASH_REDIS_URL }}
     SERVER_CONTENT_CDN: ${{ vars.SERVER_CONTENT_CDN }}
-    SERVER_GITHUB: ${{ vars.SERVER_GITHUB }}
+    SERVER_GITHUB: ${{ secrets.SERVER_GITHUB }}
     # -------------------------------
     # Local (GHA only)
     # -------------------------------
