@@ -36,13 +36,15 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 			{...props}
 		>
 			<Container
-				className="
-					grid
-					grid-flow-col
-					auto-cols-max
-					gap-6
-					w-max
-				"
+				ui={{
+					gap: "default",
+				}}
+				className={[
+					"grid",
+					"grid-flow-col",
+					"auto-cols-max",
+					"w-max",
+				]}
 			>
 				<Button
 					label="Seller info"
