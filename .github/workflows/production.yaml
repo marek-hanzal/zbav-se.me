@@ -122,8 +122,6 @@ jobs:
                   check_var SERVER_S3_BUCKET
                   check_var SERVER_S3_KEY
                   check_var SERVER_S3_SECRET
-                  check_var SERVER_WEB_ORIGIN
-                  check_var SERVER_APP_ORIGIN
                   check_var SERVER_BETTER_AUTH_SECRET
                   check_var SERVER_GEOAPIFY_TOKEN
                   check_var SERVER_JWT_SECRET
