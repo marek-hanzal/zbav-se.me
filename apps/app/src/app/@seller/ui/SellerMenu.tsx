@@ -67,24 +67,6 @@ export const SellerMenu = ({ ui, ...props }: SellerMenu.Props) => {
 					{...uiMenuButton({
 						className: [],
 					})}
-					icon={DraftIcon}
-					iconProps={{
-						ui: {
-							...icon,
-						},
-					}}
-					to="/$locale/ui/seller/draft/resolve"
-					params={{
-						locale,
-					}}
-				>
-					<Tx label={"Draft list (label)"} />
-				</LinkTo>
-
-				<LinkTo
-					{...uiMenuButton({
-						className: [],
-					})}
 					icon={MessageIcon}
 					iconProps={{
 						ui: {
@@ -97,6 +79,24 @@ export const SellerMenu = ({ ui, ...props }: SellerMenu.Props) => {
 					}}
 				>
 					<Tx label="Messages (label)" />
+				</LinkTo>
+
+				<LinkTo
+					{...uiMenuButton({
+						className: [],
+					})}
+					icon={DraftIcon}
+					iconProps={{
+						ui: {
+							...icon,
+						},
+					}}
+					to="/$locale/ui/seller/draft/list"
+					params={{
+						locale,
+					}}
+				>
+					<Tx label={"Draft list (label)"} />
 				</LinkTo>
 
 				<LinkTo
