@@ -16,10 +16,10 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 	const buttonUi: uiButton.Ui = {
 		tone: "neutral",
 		theme: "light",
-		size: "xl",
+		inner: "default",
 		round: "default",
 		background: "default",
-		text: "xl",
+		text: "md",
 		border: true,
 		shadow: true,
 		width: "content",
