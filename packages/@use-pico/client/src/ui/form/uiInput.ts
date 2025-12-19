@@ -15,7 +15,7 @@ export namespace uiInput {
 		gap?: CoolUi.Gap;
 		round?: CoolUi.Round;
 		background?: CoolUi.Background;
-		backgroundActive?: CoolUi.Background;
+		backgroundActive?: CoolUi.BackgroundActive;
 		border?: CoolUi.Border;
 		borderActive?: CoolUi.BorderActive;
 		shadow?: CoolUi.Shadow;

@@ -4,7 +4,7 @@ import type { Ui as CoolUi } from "../Ui";
 export namespace uiButton {
 	export type Size = CoolUi.Size;
 
-    export interface Ui {
+	export interface Ui {
 		theme?: CoolUi.Theme;
 		tone?: CoolUi.Tone;
 		//
