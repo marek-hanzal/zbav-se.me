@@ -1,4 +1,4 @@
-import { useMergeRefs, useScrollTo } from "@use-pico/client/hook";
+import { useLocale, useMergeRefs, useScrollTo } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
@@ -11,7 +11,6 @@ import { Hero } from "~/app/listing/ui/Hero";
 
 export namespace ListingListContainer {
 	export interface Props extends Container.Props {
-		locale: string;
 		query: tListingQuery;
 		/**
 		 * Listing ID to scroll to
@@ -26,7 +25,6 @@ export namespace ListingListContainer {
 
 export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	ref,
-	locale,
 	query,
 	scrollToId,
 	renderEmptyFn,
@@ -35,6 +33,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	withScore,
 	...props
 }) => {
+	const locale = useLocale();
 	const listingIdPrefix = useId();
 
 	const containerRef = useRef<HTMLDivElement>(null);

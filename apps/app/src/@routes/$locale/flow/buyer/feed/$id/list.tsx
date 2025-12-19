@@ -1,5 +1,5 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { useSentinel } from "@use-pico/client/hook";
+import { useLocale, useSentinel } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon, RefreshIcon } from "@use-pico/client/icon";
 import { Button, uiButton } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
@@ -22,21 +22,13 @@ import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 
 export namespace SetupButton {
 	export interface Props extends Partial<CoolSetupButton.Props> {
-		locale: string;
 		feed: tFeed;
 		containerRef: RefObject<HTMLDivElement | null>;
 		state: StateType.State<boolean>;
 	}
 }
 
-export const SetupButton: FC<SetupButton.Props> = ({
-	locale,
-	feed,
-	containerRef,
-	state,
-	ui,
-	...props
-}) => {
+export const SetupButton: FC<SetupButton.Props> = ({ feed, containerRef, state, ui, ...props }) => {
 	return (
 		<CoolSetupButton
 			data-ui={"/buyer/feed/$id/list-[FeedSetupButton]"}
@@ -64,21 +56,15 @@ export const SetupButton: FC<SetupButton.Props> = ({
 
 export namespace Appendix {
 	export interface Props extends Container.Props {
-		locale: string;
 		feed: tFeed;
 		containerRef: RefObject<HTMLDivElement | null>;
 		state: StateType.State<boolean>;
 	}
 }
 
-export const Appendix: FC<Appendix.Props> = ({
-	locale,
-	feed,
-	containerRef,
-	state,
-	ui,
-	...props
-}) => {
+export const Appendix: FC<Appendix.Props> = ({ feed, containerRef, state, ui, ...props }) => {
+	const locale = useLocale();
+
 	return (
 		<Container
 			ui={{
@@ -95,7 +81,6 @@ export const Appendix: FC<Appendix.Props> = ({
 				action={
 					<>
 						<SetupButton
-							locale={locale}
 							feed={feed}
 							containerRef={containerRef}
 							state={state}
@@ -166,21 +151,14 @@ export const Appendix: FC<Appendix.Props> = ({
 
 export namespace FeedEmpty {
 	export interface Props extends Container.Props {
-		locale: string;
 		feed: tFeed;
 		containerRef: RefObject<HTMLDivElement | null>;
 		state: StateType.State<boolean>;
 	}
 }
 
-export const FeedEmpty: FC<FeedEmpty.Props> = ({
-	locale,
-	feed,
-	containerRef,
-	state,
-	ui,
-	...props
-}) => {
+export const FeedEmpty: FC<FeedEmpty.Props> = ({ feed, containerRef, state, ui, ...props }) => {
+	const locale = useLocale();
 	return (
 		<Container
 			ui={{
@@ -197,7 +175,6 @@ export const FeedEmpty: FC<FeedEmpty.Props> = ({
 				action={
 					<>
 						<SetupButton
-							locale={locale}
 							feed={feed}
 							containerRef={containerRef}
 							state={state}
@@ -349,7 +326,6 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 				{listing.data.length > 0 ? (
 					<>
 						<SetupButton
-							locale={locale}
 							feed={feed}
 							containerRef={containerRef}
 							state={{
@@ -365,7 +341,6 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 						<ListingListContainer
 							data-ui={"/buyer/feed/$id/list-[ListingListContainer]"}
 							ref={containerRef}
-							locale={locale}
 							feedId={feed.id}
 							/**
 							 * Listings in feed should be scored
@@ -398,7 +373,6 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 							renderEmptyFn={() => (
 								<FeedEmpty
 									ref={sentinelRef}
-									locale={locale}
 									feed={feed}
 									containerRef={containerRef}
 									state={{
@@ -410,7 +384,6 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 							appendix={
 								<Appendix
 									ref={sentinelRef}
-									locale={locale}
 									feed={feed}
 									containerRef={containerRef}
 									state={{
@@ -508,7 +481,6 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 						return (
 							<SetupSheet
 								data-ui={"/buyer/feed/$id/list-[FeedSetupSheet]"}
-								locale={locale}
 								feed={feed}
 								state={{
 									value: isFeedSettings,

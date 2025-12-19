@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useSentinel } from "@use-pico/client/hook";
+import { useLocale, useSentinel } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
@@ -15,11 +15,12 @@ import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 
 export namespace EmptyFavourite {
 	export interface Props extends Status.Props {
-		locale: string;
+		//
 	}
 }
 
-export const EmptyFavourite: FC<EmptyFavourite.Props> = ({ locale, ...props }) => {
+export const EmptyFavourite: FC<EmptyFavourite.Props> = ({ ...props }) => {
+	const locale = useLocale();
 	return (
 		<Status
 			icon={DeadEndIcon}
@@ -76,11 +77,12 @@ export const EmptyFavourite: FC<EmptyFavourite.Props> = ({ locale, ...props }) =
 
 export namespace EmptyFeed {
 	export interface Props extends Container.Props {
-		locale: string;
+		//
 	}
 }
 
-export const EmptyFeed: FC<EmptyFeed.Props> = ({ locale, ...props }) => {
+export const EmptyFeed: FC<EmptyFeed.Props> = ({ ...props }) => {
+	const locale = useLocale();
 	return (
 		<Container
 			ui={{
@@ -161,11 +163,13 @@ export const EmptyFeed: FC<EmptyFeed.Props> = ({ locale, ...props }) => {
 
 export namespace Appendix {
 	export interface Props extends Container.Props {
-		locale: string;
+		//
 	}
 }
 
-export const Appendix: FC<Appendix.Props> = ({ locale, ...props }) => {
+export const Appendix: FC<Appendix.Props> = ({ ...props }) => {
+	const locale = useLocale();
+
 	return (
 		<Container
 			ui={{
@@ -246,8 +250,8 @@ export const Appendix: FC<Appendix.Props> = ({ locale, ...props }) => {
 
 export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/list")({
 	component() {
-		const { locale } = Route.useParams();
 		const { id } = Route.useParams();
+		const locale = useLocale();
 		const containerRef = useRef<HTMLDivElement>(null);
 		const { sentinelRef, inView: isLast } = useSentinel<HTMLDivElement>({
 			containerRef,
@@ -275,7 +279,6 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/lis
 			>
 				<ListingListContainer
 					ref={containerRef}
-					locale={locale}
 					feedId={id}
 					/**
 					 * Don't count score for listings in favourites
@@ -310,30 +313,15 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/lis
 							>
 								{({ data }) => {
 									if (data.filter === 0) {
-										return (
-											<EmptyFavourite
-												ref={sentinelRef}
-												locale={locale}
-											/>
-										);
+										return <EmptyFavourite ref={sentinelRef} />;
 									}
 
-									return (
-										<EmptyFeed
-											ref={sentinelRef}
-											locale={locale}
-										/>
-									);
+									return <EmptyFeed ref={sentinelRef} />;
 								}}
 							</withFavouriteCountQuery.Suspense>
 						);
 					}}
-					appendix={
-						<Appendix
-							ref={sentinelRef}
-							locale={locale}
-						/>
-					}
+					appendix={<Appendix ref={sentinelRef} />}
 				/>
 			</FlowContainer>
 		);
