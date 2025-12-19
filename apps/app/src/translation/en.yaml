@@ -4,6 +4,9 @@
 00baad816ab1db1597309ef7a0b78a93ff4e84b564beac5388c18bbf:
   ref: Buyer info
   value: Buyer info
+022cc5c29a7e44c9fd5d268e2abcc13f44f38fcabbe0552e3d6c0710:
+  ref: Buyer info (button)
+  value: Buyer info (button)
 02d821a7f6c8c860ddf14a10fa006f1668bf485d4832ffa830cf1a82:
   ref: Feed age (title)
   value: Feed age (title)
@@ -76,6 +79,9 @@
 1bbdc9dc7f6591dc1499c568c88587d61a1993247ea04942fc818c14:
   ref: No listings in feed (message)
   value: No listings in feed (message)
+1dcb2f3cf441e457db2a028bf490818c077bc6ce4ec21d35a15b6259:
+  ref: Buyer info (title)
+  value: Buyer info (title)
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
   ref: Location (title)
   value: Location (title)

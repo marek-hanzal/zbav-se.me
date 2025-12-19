@@ -2,6 +2,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { BuyerIcon, GalleryIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import { BuyerInfoButton } from "~/app/transaction/ui/buyer/BuyerInfoButton";
 import { SellerInfoButton } from "~/app/transaction/ui/seller/SellerInfoButton";
 import { useSide } from "~/app/user/useSide";
 
@@ -72,9 +73,8 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 				) : null}
 
 				{side === "seller" ? (
-					<Button
-						iconEnabled={BuyerIcon}
-						label="Buyer info"
+					<BuyerInfoButton
+						transactionId={transactionId}
 						{...buttonUi}
 					/>
 				) : null}
