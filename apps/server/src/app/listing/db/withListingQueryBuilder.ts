@@ -100,6 +100,10 @@ export const withListingQueryBuilder = <TSelect extends withListingCollectionSel
 		query = query.where("l.userId", "!=", userId) as TSelect;
 	}
 
+	if (where.my === true) {
+		query = query.where("l.userId", "=", userId) as TSelect;
+	}
+
 	if (where.withIgnored !== undefined && where.withIgnored !== true) {
 		query = query.where(({ not, exists, selectFrom }) =>
 			not(

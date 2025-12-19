@@ -76,6 +76,9 @@ export const ListingFilterSchema = z
 		withOwn: z.boolean().optional().openapi({
 			description: "This filter matches listings with the user's own listings",
 		}),
+		my: z.boolean().optional().openapi({
+			description: "Return exclusively user's listings when set to true",
+		}),
 		withIgnored: z.boolean().optional().openapi({
 			description: "Include ignored listings",
 		}),

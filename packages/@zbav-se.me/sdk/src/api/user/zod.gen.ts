@@ -1291,6 +1291,9 @@ export const zListingWhere = z.object({
     withOwn: z.optional(z.boolean().register(z.globalRegistry, {
         description: 'This filter matches listings with the user\'s own listings'
     })),
+    my: z.optional(z.boolean().register(z.globalRegistry, {
+        description: 'Return exclusively user\'s listings when set to true'
+    })),
     withIgnored: z.optional(z.boolean().register(z.globalRegistry, {
         description: 'Include ignored listings'
     })),
@@ -1365,6 +1368,9 @@ export const zListingFilter = z.object({
     })),
     withOwn: z.optional(z.boolean().register(z.globalRegistry, {
         description: 'This filter matches listings with the user\'s own listings'
+    })),
+    my: z.optional(z.boolean().register(z.globalRegistry, {
+        description: 'Return exclusively user\'s listings when set to true'
     })),
     withIgnored: z.optional(z.boolean().register(z.globalRegistry, {
         description: 'Include ignored listings'

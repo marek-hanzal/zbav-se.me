@@ -149,6 +149,10 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 													listing={listing}
 													feedId={feedId}
 													withScore={withScore}
+													tools={[
+														"hero",
+														"hero",
+													]}
 												/>
 											);
 										}}

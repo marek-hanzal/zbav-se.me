@@ -1619,6 +1619,9 @@ export const sListingWhere = {
         withOwn: {
             type: 'boolean'
         },
+        my: {
+            type: 'boolean'
+        },
         withIgnored: {
             type: 'boolean'
         },
@@ -1765,6 +1768,9 @@ export const sListingFilter = {
             type: 'string'
         },
         withOwn: {
+            type: 'boolean'
+        },
+        my: {
             type: 'boolean'
         },
         withIgnored: {

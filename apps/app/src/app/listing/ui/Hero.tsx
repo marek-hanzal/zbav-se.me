@@ -6,6 +6,7 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
 import { useListingScore } from "~/app/listing/hook/useListingScore";
+import type { ListingDetail } from "~/app/listing/ui/ListingDetail";
 import { ListingSheet } from "~/app/listing/ui/ListingSheet";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 
@@ -18,8 +19,9 @@ export namespace Hero {
 		 * Listing entity shown inside the hero preview.
 		 */
 		listing: tListing;
-		feedId: string;
+		feedId: string | undefined;
 		withScore: boolean;
+		tools: ListingDetail.Tools[];
 	}
 }
 
@@ -28,7 +30,7 @@ export namespace Hero {
  *
  * @param props Component props extending `Container.Props`.
  */
-export const Hero: FC<Hero.Props> = ({ ref, listing, feedId, withScore, ...props }) => {
+export const Hero: FC<Hero.Props> = ({ ref, listing, feedId, withScore, tools, ...props }) => {
 	const hero = useHeroUpload(listing.gallery.items);
 
 	const useVisibilityStore = useVisibilityContext();
@@ -85,10 +87,7 @@ export const Hero: FC<Hero.Props> = ({ ref, listing, feedId, withScore, ...props
 					}}
 					withScore={withScore}
 					feedId={feedId}
-					tools={[
-						"destructive",
-						"hero",
-					]}
+					tools={tools}
 				/>
 			) : null}
 		</>
