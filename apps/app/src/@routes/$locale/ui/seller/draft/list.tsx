@@ -6,7 +6,16 @@ export const Route = createFileRoute("/$locale/ui/seller/draft/list")({
 	component() {
 		return (
 			<TitleContainer textTitle={"Draft list (title)"}>
-				<DraftList />
+				<DraftList
+					query={{
+						sort: [
+							{
+								field: "createdAt",
+								direction: "asc",
+							},
+						],
+					}}
+				/>
 			</TitleContainer>
 		);
 	},

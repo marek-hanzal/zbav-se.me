@@ -2,11 +2,12 @@ import { useLocale } from "@use-pico/client/hook";
 import { Icon, ShowIcon, SpinnerIcon } from "@use-pico/client/icon";
 import { Container, LabelValue } from "@use-pico/client/ui/container";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import type { tGalleryItem, tListing } from "@zbav-se.me/sdk/api/user";
+import type { tListing } from "@zbav-se.me/sdk/api/user";
 import { withListingFetchQuery, withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
+import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
 import { useListingScore } from "~/app/listing/hook/useListingScore";
 import { FavouriteToggleButton } from "~/app/listing/ui/button/FavouriteToggleButton";
 import { FlagButton } from "~/app/listing/ui/button/FlagButton";
@@ -45,10 +46,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 	...props
 }) => {
 	const locale = useLocale();
-	const [hero] = listing.gallery.items as [
-		tGalleryItem,
-		...tGalleryItem[],
-	];
+	const hero = useHeroUpload(listing.gallery.items);
 
 	useListingScore({
 		enabled: withScore,
@@ -106,7 +104,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 
 						<HeroImage
 							data-ui={"ListingDetail-[HeroImage]"}
-							src={hero.upload.url}
+							src={hero.url}
 							alt={`Hero image for listing ${listing.id}`}
 							onClick={hooks.onGallery}
 							ui={{

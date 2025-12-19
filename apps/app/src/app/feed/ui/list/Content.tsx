@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedCollectionQuery, withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { type FC, useId, useState } from "react";
+import { type FC, useState } from "react";
 import { CreateButton } from "~/app/feed/ui/button/CreateButton";
 import { Item } from "./Item";
 
@@ -24,8 +24,6 @@ export const Content: FC<Content.Props> = ({
 	isLimitReached,
 	...props
 }) => {
-	const feedRootId = useId();
-
 	/**
 	 * This is intentional to trigger parent suspense
 	 */
@@ -51,7 +49,7 @@ export const Content: FC<Content.Props> = ({
 			{feedCollectionQuery.data.data.map(({ id: feedId }) => {
 				return (
 					<withFeedFetchQuery.Suspense
-						key={`${feedRootId}-${feedId}`}
+						key={feedId}
 						data={{
 							where: {
 								id: feedId,

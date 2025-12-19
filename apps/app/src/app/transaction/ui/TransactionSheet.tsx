@@ -1,12 +1,12 @@
 import type { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container } from "@use-pico/client/ui/container";
 import { SheetView } from "@use-pico/client/ui/sheet-view";
-import type { tUpload } from "@zbav-se.me/sdk/api/user";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user/listing";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef, useState } from "react";
+import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
 import { ListingSheet } from "~/app/listing/ui/ListingSheet";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 import { MessageList } from "~/app/message/MessageList";
@@ -36,10 +36,8 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({ transactionId, ..
 			{({ data: transaction }) => {
 				// biome-ignore lint/correctness/useHookAtTopLevel: Ssst
 				const [detail, setDetail] = useState(false);
-				const [hero] = transaction.gallery.items.map((item) => item.upload) as [
-					tUpload,
-					...tUpload[],
-				];
+				// biome-ignore lint/correctness/useHookAtTopLevel: Ssst 2.0
+				const hero = useHeroUpload(transaction.gallery.items);
 
 				return (
 					<SheetView

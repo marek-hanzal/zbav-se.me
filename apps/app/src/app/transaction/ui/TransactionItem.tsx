@@ -1,10 +1,10 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tUpload } from "@zbav-se.me/sdk/api/user";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { match } from "ts-pattern";
+import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
 import { TransactionSheet } from "~/app/transaction/ui/TransactionSheet";
 
 export namespace TransactionItem {
@@ -48,10 +48,8 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 				}
 			>
 				{({ data: transaction }) => {
-					const [hero] = transaction.gallery.items.map((item) => item.upload) as [
-						tUpload,
-						...tUpload[],
-					];
+					// biome-ignore lint/correctness/useHookAtTopLevel: Ssst
+					const hero = useHeroUpload(transaction.gallery.items);
 
 					return (
 						<Container
