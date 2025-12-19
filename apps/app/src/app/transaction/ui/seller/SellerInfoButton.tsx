@@ -5,6 +5,7 @@ import { CloseButton } from "@zbav-se.me/ui/button";
 import { SellerIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
 import { SellerInfo } from "~/app/transaction/ui/seller/SellerInfo";
+import { useSide } from "~/app/user/useSide";
 
 export namespace SellerInfoButton {
 	export interface Props extends Button.Props {
@@ -13,7 +14,12 @@ export namespace SellerInfoButton {
 }
 
 export const SellerInfoButton: FC<SellerInfoButton.Props> = ({ transactionId, ...props }) => {
+	const side = useSide();
 	const [isOpen, setIsOpen] = useState(false);
+
+	if (side === "seller") {
+		return null;
+	}
 
 	return (
 		<>

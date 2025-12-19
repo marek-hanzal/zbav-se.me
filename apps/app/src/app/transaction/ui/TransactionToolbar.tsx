@@ -1,15 +1,11 @@
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import { GalleryIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { match } from "ts-pattern";
-import { useStatus } from "~/app/transaction/hook/useStatus";
 import { AcceptButton } from "~/app/transaction/ui/button/AcceptButton";
 import { RejectButton } from "~/app/transaction/ui/button/RejectButton";
 import { BuyerInfoButton } from "~/app/transaction/ui/buyer/BuyerInfoButton";
 import { SellerInfoButton } from "~/app/transaction/ui/seller/SellerInfoButton";
-import { useSide } from "~/app/user/useSide";
 
 export namespace TransactionToolbar {
 	export interface Props extends Container.Props {
@@ -22,8 +18,6 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 	ui,
 	...props
 }) => {
-	const side = useSide();
-
 	const buttonUi: Button.Props = {
 		iconProps: {
 			ui: {
@@ -70,61 +64,25 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 					"w-max",
 				]}
 			>
-				<withTransactionFetchQuery.Suspense
-					data={{
-						where: {
-							id: transactionId,
-						},
-					}}
-					options={{
-						refetchInterval: 1_000 * 5,
-					}}
-					fallback={null}
-				>
-					{({ data: transaction }) => {
-						// biome-ignore lint/correctness/useHookAtTopLevel: Ssst
-						const { status } = useStatus({
-							transaction,
-						});
+				<AcceptButton
+					transactionId={transactionId}
+					{...buttonUi}
+				/>
 
-						return match(status)
-							.with("request", () => {
-								if (side === "buyer") {
-									return null;
-								}
+				<RejectButton
+					transactionId={transactionId}
+					{...buttonUi}
+				/>
 
-								return (
-									<AcceptButton
-										transaction={transaction}
-										{...buttonUi}
-									/>
-								);
-							})
-							.with("accepted", () => {
-								return (
-									<RejectButton
-										transaction={transaction}
-										{...buttonUi}
-									/>
-								);
-							})
-							.otherwise(() => null);
-					}}
-				</withTransactionFetchQuery.Suspense>
+				<SellerInfoButton
+					transactionId={transactionId}
+					{...buttonUi}
+				/>
 
-				{side === "buyer" ? (
-					<SellerInfoButton
-						transactionId={transactionId}
-						{...buttonUi}
-					/>
-				) : null}
-
-				{side === "seller" ? (
-					<BuyerInfoButton
-						transactionId={transactionId}
-						{...buttonUi}
-					/>
-				) : null}
+				<BuyerInfoButton
+					transactionId={transactionId}
+					{...buttonUi}
+				/>
 
 				<Button
 					iconEnabled={GalleryIcon}
