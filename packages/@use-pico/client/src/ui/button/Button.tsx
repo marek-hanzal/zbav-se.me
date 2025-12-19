@@ -65,20 +65,17 @@ export const Button: FC<Button.Props> = ({
 	//
 	...props
 }) => {
-	const renderIcon = () =>
-		disabled ? (
-			<Icon
-				data-ui={"Button-[Icon]"}
-				icon={loading === true ? iconLoading : (iconDisabled ?? iconEnabled)}
-				{...iconProps}
-			/>
-		) : (
-			<Icon
-				data-ui={"Button-[Icon]"}
-				icon={loading === true ? iconLoading : iconEnabled}
-				{...iconProps}
-			/>
-		);
+	const getIcon = () => {
+		if (loading === true) {
+			return iconLoading;
+		}
+		if (disabled) {
+			return iconDisabled ?? iconEnabled;
+		}
+		return iconEnabled;
+	};
+
+	const icon = getIcon();
 
 	return (
 		<button
@@ -94,7 +91,13 @@ export const Button: FC<Button.Props> = ({
 			})}
 			{...props}
 		>
-			{iconPosition === "left" ? renderIcon() : null}
+			{iconPosition === "left" && icon ? (
+				<Icon
+					data-ui={"Button-[Icon]"}
+					icon={icon}
+					{...iconProps}
+				/>
+			) : null}
 
 			{label ? (
 				<Tx
@@ -109,7 +112,13 @@ export const Button: FC<Button.Props> = ({
 
 			{children}
 
-			{iconPosition === "right" ? renderIcon() : null}
+			{iconPosition === "right" && icon ? (
+				<Icon
+					data-ui={"Button-[Icon]"}
+					icon={icon}
+					{...iconProps}
+				/>
+			) : null}
 		</button>
 	);
 };

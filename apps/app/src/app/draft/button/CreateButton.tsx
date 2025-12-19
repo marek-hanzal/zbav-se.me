@@ -1,4 +1,4 @@
-import { PlusIcon } from "@use-pico/client/icon";
+import { PlusIcon, SpinnerIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
@@ -27,6 +27,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ onSuccess, ui, className,
 			}}
 			disabled={draftCreateMutation.isPending}
 			loading={draftCreateMutation.isPending}
+			iconLoading={null}
 			ui={{
 				tone: "neutral",
 				theme: "light",
@@ -58,7 +59,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ onSuccess, ui, className,
 				}}
 			>
 				<Status
-					icon={PlusIcon}
+					icon={draftCreateMutation.isPending ? SpinnerIcon : PlusIcon}
 					textTitle="Create new draft (title)"
 				/>
 			</Container>
