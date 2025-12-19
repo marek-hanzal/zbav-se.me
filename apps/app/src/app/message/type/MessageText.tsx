@@ -28,12 +28,12 @@ export const MessageText: FC<MessageText.Props> = ({ message, ...props }) => {
 				...match<typeof message.direction, uiContainer.Ui>(message.direction)
 					.with("in", () => {
 						return {
-							tone: "primary",
+							tone: "link",
 						};
 					})
 					.with("out", () => {
 						return {
-							tone: "secondary",
+							tone: "primary",
 							justify: "end",
 						};
 					})

@@ -50,7 +50,7 @@
 	--tone-primary-light-lead-active: color-mix(in srgb, var(--tone-primary-light-lead) 95%, black);
 	--tone-primary-light-bg: color-mix(in srgb, var(--color-pink-300) 70%, white);
 	--tone-primary-light-bg-active: color-mix(in srgb, var(--tone-primary-light-bg) 92.5%, white);
-	--tone-primary-light-bg-alt: color-mix(in srgb, var(--color-pink-400) 70%, white);
+	--tone-primary-light-bg-alt: color-mix(in srgb, var(--color-pink-400) 15%, white);
 	--tone-primary-light-bg-alt-active: color-mix(
 		in srgb,
 		var(--tone-primary-light-bg-alt) 92.5%,

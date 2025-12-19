@@ -1,6 +1,9 @@
 004c2d8c48721c30d51a0ac1fee6dd63e3ef793ceb45c8dc20cba5ed:
   ref: Feed title (placeholder)
   value: Feed title (placeholder)
+00baad816ab1db1597309ef7a0b78a93ff4e84b564beac5388c18bbf:
+  ref: Buyer info
+  value: Buyer info
 02d821a7f6c8c860ddf14a10fa006f1668bf485d4832ffa830cf1a82:
   ref: Feed age (title)
   value: Feed age (title)
@@ -163,9 +166,15 @@
 4ef6b46bcbfc54a9f2aa64abf2856c01cded2d9bf090cbaec1bbd32d:
   ref: Create first listing (button)
   value: Create first listing (button)
+4f04083c52884888c6258c7fe83a35ff1ce96d78ee8c600a0397392c:
+  ref: Seller info (button)
+  value: Seller info (button)
 5216a97ce804ea83d2142778cf1659ad70adc72c670ea7365e396fcb:
   ref: Go home (welcome)
   value: Go home (welcome)
+523bef97e177163c4710b0138d4a2f8166cce50ebb8930b74298d0f8:
+  ref: relative
+  value: relative
 56093b0ee9cd3eadf7db4a59a8ec98132bacd22fa07691fdac66874a:
   ref: Buyer - shop (title)
   value: Buyer - shop (title)
@@ -277,6 +286,9 @@
 8ad39860649daeaa240849b5f8b11601c75b062f71eb258cc4557169:
   ref: Feed sorting (hint)
   value: Feed sorting (hint)
+8b45608bd106d13d544cc9d7aa8d9c7fdb279ac083715341bc1afbb8:
+  ref: User registered (label)
+  value: User registered (label)
 8c6d2bdeb456deef3c09b5cf942ad58c1aae654bebec45a62cd2599c:
   ref: Ignore listing - confirm (button)
   value: Ignore listing - confirm (button)
@@ -307,6 +319,9 @@
 99a01d47de05fca49beed74c16c785a68dec6e729694b5a3e7076e1c:
   ref: No items in favourites (title)
   value: No items in favourites (title)
+9a23de247d53984321cd59852cc78c51be5369fcae87518e33d8b38b:
+  ref: Seller info (title)
+  value: Seller info (title)
 9b7458c481fd08b7afd860d8537e178cc9c6b202e12918923906e59c:
   ref: Buyer home (title)
   value: Buyer home (title)
@@ -370,6 +385,9 @@ ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
 babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
   ref: Location search (placeholder)
   value: Location search (placeholder)
+bb5e50b301be27567cdb705ba4f700188154893f0faee5a597fd9284:
+  ref: User score (label)
+  value: User score (label)
 bda14ae9f8cb30b7b7440f39407eb24b991ad4b512e8118780fac091:
   ref: Expiration date not set
   value: Expiration date not set
@@ -378,6 +396,9 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     message than this :(
   value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
     better message than this :(
+c1a0a76b8d17b3386b15a9e5b1fbd0f5b4bc8a290fa14cb9d0e50d9c:
+  ref: Gallery
+  value: Gallery
 c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
   ref: Feed title not filled
   value: Feed title not filled

@@ -18,7 +18,7 @@ export const MessageList: FC<MessageList.Props> = ({ messageThreadId, ui, ...pro
 		<Container
 			ui={{
 				flow: "vertical",
-				gap: "default",
+				gap: "lg",
 				...ui,
 			}}
 			{...props}

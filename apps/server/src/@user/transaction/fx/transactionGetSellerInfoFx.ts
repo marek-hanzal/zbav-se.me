@@ -14,7 +14,7 @@ export const transactionGetSellerInfoFx = ({ transactionId }: transactionGetSell
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		const userInfo = yield* Effect.promise(async () => {
+		const seller = yield* Effect.promise(async () => {
 			return database
 				.selectFrom("user")
 				.selectAll()
@@ -31,7 +31,7 @@ export const transactionGetSellerInfoFx = ({ transactionId }: transactionGetSell
 				.executeTakeFirst();
 		});
 
-		if (!userInfo) {
+		if (!seller) {
 			return yield* new NotFoundError({
 				resource: "transaction-seller-info",
 				message: "Seller info not available",
@@ -39,7 +39,7 @@ export const transactionGetSellerInfoFx = ({ transactionId }: transactionGetSell
 		}
 
 		return yield* Effect.succeed({
-			registered: userInfo.createdAt,
+			registered: seller.createdAt,
 			score: 0,
 		});
 	});
