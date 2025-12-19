@@ -18,7 +18,7 @@ export const MessageText: FC<MessageText.Props> = ({ locale, message, ...props }
 		<Container
 			ui={{
 				theme: "light",
-				background: "default",
+				background: "alt",
 				border: true,
 				shadow: true,
 				inner: "default",

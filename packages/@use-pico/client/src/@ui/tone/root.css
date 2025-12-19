@@ -118,7 +118,7 @@
 		var(--tone-secondary-light-bg) 92.5%,
 		white
 	);
-	--tone-secondary-light-bg-alt: color-mix(in srgb, var(--color-violet-300) 65%, white);
+	--tone-secondary-light-bg-alt: color-mix(in srgb, var(--tone-secondary-light-bg) 35%, white);
 	--tone-secondary-light-bg-alt-active: color-mix(
 		in srgb,
 		var(--tone-secondary-light-bg-alt) 92.5%,

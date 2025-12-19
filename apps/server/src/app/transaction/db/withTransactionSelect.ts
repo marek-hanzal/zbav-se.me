@@ -1,9 +1,10 @@
 import { sql } from "kysely";
-import { jsonObjectFrom } from "kysely/helpers/postgres";
+import { jsonArrayFrom, jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { withGallerySelect } from "~/app/gallery/db/withGallerySelect";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import type { TransactionSortSchema } from "~/app/transaction/schema/TransactionSortSchema";
+import { withTransactionStatusSelect } from "~/app/transaction-status/db/withTransactionStatusSelect";
 import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withTransactionSelect {
@@ -37,6 +38,18 @@ export const withTransactionSelect = ({ database, sort }: withTransactionSelect.
 				)
 					.$notNull()
 					.as("gallery"),
+			(eb) =>
+				jsonArrayFrom(
+					withTransactionStatusSelect({
+						database,
+						sort: [
+							{
+								field: "createdAt",
+								direction: "desc",
+							},
+						],
+					}).whereRef("lts.transactionId", "=", eb.ref("lt.id")),
+				).as("status"),
 		]);
 
 	for (const item of sort ?? []) {
