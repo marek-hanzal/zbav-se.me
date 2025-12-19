@@ -17,6 +17,7 @@ export namespace ListingSheet {
 		state: StateType.State<boolean>;
 		withScore: boolean;
 		feedId: string | undefined;
+		tools: ListingDetail.Tools[];
 	}
 }
 
@@ -25,6 +26,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 	state,
 	withScore,
 	feedId,
+	tools,
 	...props
 }) => {
 	const [view, setView] = useState<ListingSheet.View>("detail");
@@ -49,10 +51,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 							listing={listing}
 							withScore={withScore}
 							feedId={feedId}
-							tools={[
-								"destructive",
-								"hero",
-							]}
+							tools={tools}
 							ui={{
 								inner: "default",
 							}}

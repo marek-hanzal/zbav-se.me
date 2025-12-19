@@ -87,6 +87,10 @@ export const Hero: FC<Hero.Props> = ({ ref, listing, feedId, withScore, ...props
 					}}
 					withScore={withScore}
 					feedId={feedId}
+					tools={[
+						"destructive",
+						"hero",
+					]}
 				/>
 			) : null}
 		</>

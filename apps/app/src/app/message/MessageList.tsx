@@ -22,8 +22,8 @@ export namespace MessageList {
 
 export const MessageList: FC<MessageList.Props> = ({
 	messageThreadId,
-	ui,
 	containerRef,
+	ui,
 	...props
 }) => {
 	const contentRef = useRef<HTMLDivElement>(null);
@@ -68,8 +68,10 @@ export const MessageList: FC<MessageList.Props> = ({
 				flow: "vertical",
 				gap: "lg",
 				height: "content",
+				...ui,
 			}}
 			className={"py-1"}
+			{...props}
 		>
 			<withMessageThreadMessageCollectionQuery.Suspense
 				data={{
