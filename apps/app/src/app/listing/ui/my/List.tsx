@@ -7,7 +7,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
-import type { FC } from "react";
+import { useRef, type FC } from "react";
 import { Content } from "./Content";
 
 export namespace List {
@@ -18,6 +18,7 @@ export namespace List {
 
 export const List: FC<List.Props> = ({ query, ...props }) => {
 	const locale = useLocale();
+    const scrollerRef = useRef<HTMLDivElement>(null);
 
 	return (
 		<Container
@@ -84,6 +85,7 @@ export const List: FC<List.Props> = ({ query, ...props }) => {
 						<Content
 							_suspense={"I know"}
 							query={query}
+                            scrollerRef={scrollerRef}
 						/>
 					);
 				}}

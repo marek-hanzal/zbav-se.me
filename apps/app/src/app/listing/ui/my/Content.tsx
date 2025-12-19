@@ -1,19 +1,19 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
-import { tvc } from "@use-pico/cls";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCollectionQuery, withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { type FC, useId, useRef } from "react";
+import { type FC, type RefObject, useId, useRef } from "react";
 import { CreateButton } from "~/app/draft/button/CreateButton";
 import { Hero } from "~/app/listing/ui/Hero";
 
 export namespace Content {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		query: tListingQuery;
+		scrollerRef: RefObject<HTMLDivElement | null>;
 	}
 }
 
-export const Content: FC<Content.Props> = ({ _suspense, query, ...props }) => {
+export const Content: FC<Content.Props> = ({ _suspense, query, scrollerRef, ...props }) => {
 	/**
 	 * This is intentional to trigger parent suspense
 	 */
@@ -51,46 +51,56 @@ export const Content: FC<Content.Props> = ({ _suspense, query, ...props }) => {
 								{...props}
 							/>
 						)}
-						className={tvc([
+						className={[
 							"h-48 md:h-92",
-						])}
+						]}
 						ui={{
 							width: "full",
 							position: "relative",
 							round: "lg",
 						}}
 					>
-						<withListingFetchQuery.Suspense
-							data={{
-								where: {
-									id: listingId,
-								},
+						<VisibleContainer
+							scrollerRef={scrollerRef}
+							placeholder={(props) => {
+								return <SpinnerContainer {...props} />;
 							}}
-							fallback={
-								<SpinnerContainer
-									data-ui={"MyListing-[SpinnerContainer.listing-fetch]"}
-								/>
-							}
+							useProximity
+							overscan={4}
+							delayMs={200}
 						>
-							{({ data: listing }) => {
-								return (
-									<Hero
-										data-ui={"MyListing-[Hero]"}
-										listing={listing}
-										feedId={undefined}
-										withScore={false}
-										tools={[
-											"hero",
-										]}
-										herImageProps={{
-											ui: {
-												round: "default",
-											},
-										}}
+							<withListingFetchQuery.Suspense
+								data={{
+									where: {
+										id: listingId,
+									},
+								}}
+								fallback={
+									<SpinnerContainer
+										data-ui={"MyListing-[SpinnerContainer.listing-fetch]"}
 									/>
-								);
-							}}
-						</withListingFetchQuery.Suspense>
+								}
+							>
+								{({ data: listing }) => {
+									return (
+										<Hero
+											data-ui={"MyListing-[Hero]"}
+											listing={listing}
+											feedId={undefined}
+											withScore={false}
+											tools={[
+												"hero",
+											]}
+											herImageProps={{
+												ui: {
+													round: "default",
+												},
+											}}
+										/>
+									);
+								}}
+							</withListingFetchQuery.Suspense>
+						</VisibleContainer>
 					</VisibleContainer>
 				);
 			})}

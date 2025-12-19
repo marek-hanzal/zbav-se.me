@@ -6,7 +6,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCollectionQuery, withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { type FC, type ReactNode, useEffect, useId, useRef } from "react";
+import { type FC, type ReactNode, useEffect, useRef } from "react";
 import { Hero } from "~/app/listing/ui/Hero";
 
 export namespace ListingListContainer {
@@ -34,7 +34,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	...props
 }) => {
 	const locale = useLocale();
-	const listingIdPrefix = useId();
 
 	const containerRef = useRef<HTMLDivElement>(null);
 	const mergedRef = useMergeRefs([
@@ -79,7 +78,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 						) : (
 							<Status
 								data-ui={"ListingListContainer-[Status-empty]"}
-								key={`${listingIdPrefix}-no-listings`}
+								key={"no-listings"}
 								icon={"icon-[streamline--sad-face-remix]"}
 								textTitle={"No listings (title)"}
 								action={
@@ -106,7 +105,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 						<>
 							{data.data.map((listing) => (
 								<VisibleContainer
-									key={`${listingIdPrefix}-${listing.id}`}
+									key={listing.id}
 									data-ui="ListingListContainer-[VisibleContainer]"
 									scrollerRef={containerRef}
 									useProximity
