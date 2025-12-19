@@ -1,5 +1,4 @@
 import type { ComponentProps, FC } from "react";
-import { useMemo } from "react";
 import { Icon } from "../../icon/Icon";
 import { SpinnerIcon } from "../../icon/SpinnerIcon";
 import { Tx } from "../tx/Tx";
@@ -66,30 +65,20 @@ export const Button: FC<Button.Props> = ({
 	//
 	...props
 }) => {
-	const renderIcon = useMemo(
-		() =>
-			disabled ? (
-				<Icon
-					data-ui={"Button-[Icon]"}
-					icon={loading === true ? iconLoading : (iconDisabled ?? iconEnabled)}
-					{...iconProps}
-				/>
-			) : (
-				<Icon
-					data-ui={"Button-[Icon]"}
-					icon={loading === true ? iconLoading : iconEnabled}
-					{...iconProps}
-				/>
-			),
-		[
-			disabled,
-			loading,
-			iconLoading,
-			iconDisabled,
-			iconEnabled,
-			iconProps,
-		],
-	);
+	const renderIcon = () =>
+		disabled ? (
+			<Icon
+				data-ui={"Button-[Icon]"}
+				icon={loading === true ? iconLoading : (iconDisabled ?? iconEnabled)}
+				{...iconProps}
+			/>
+		) : (
+			<Icon
+				data-ui={"Button-[Icon]"}
+				icon={loading === true ? iconLoading : iconEnabled}
+				{...iconProps}
+			/>
+		);
 
 	return (
 		<button
@@ -105,7 +94,7 @@ export const Button: FC<Button.Props> = ({
 			})}
 			{...props}
 		>
-			{iconPosition === "left" && renderIcon}
+			{iconPosition === "left" ? renderIcon() : null}
 
 			{label ? (
 				<Tx
@@ -120,7 +109,7 @@ export const Button: FC<Button.Props> = ({
 
 			{children}
 
-			{iconPosition === "right" && renderIcon}
+			{iconPosition === "right" ? renderIcon() : null}
 		</button>
 	);
 };
