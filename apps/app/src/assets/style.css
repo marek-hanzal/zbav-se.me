@@ -22,9 +22,7 @@
 
 html,
 body {
-	overscroll-behavior: none;
-	overscroll-behavior-y: none;
-	overscroll-behavior-x: none;
+	overscroll-behavior: contain;
 	/* iOS Safari specific - prevents bounce/rubber-band effect */
 	-webkit-overflow-scrolling: touch;
 	position: fixed;

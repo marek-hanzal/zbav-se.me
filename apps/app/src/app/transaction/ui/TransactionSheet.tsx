@@ -39,7 +39,6 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({ transactionId, ..
 						contentProps={{
 							disableScroll: true,
 						}}
-						avoidKeyboard
 						views={{
 							detail: {
 								children: (
