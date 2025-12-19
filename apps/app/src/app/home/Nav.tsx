@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { UserIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -7,11 +8,12 @@ import { uiNavButton } from "~/app/home/uiNavButton";
 
 export namespace Nav {
 	export interface Props extends Container.Props {
-		locale: string;
+		//
 	}
 }
 
-export const Nav: FC<Nav.Props> = ({ locale, className, ...props }) => {
+export const Nav: FC<Nav.Props> = ({ className, ...props }) => {
+	const locale = useLocale();
 	const activeUi: uiNavButton.Ui = {
 		tone: "brand",
 	};

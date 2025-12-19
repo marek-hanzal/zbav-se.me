@@ -4,8 +4,6 @@ import { Nav } from "~/app/home/Nav";
 
 export const Route = createFileRoute("/$locale/ui")({
 	component() {
-		const { locale } = Route.useParams();
-
 		return (
 			<Container
 				data-ui="/ui[Container]"
@@ -27,7 +25,7 @@ export const Route = createFileRoute("/$locale/ui")({
 					<Outlet />
 				</Container>
 
-				<Nav locale={locale} />
+				<Nav />
 			</Container>
 		);
 	},

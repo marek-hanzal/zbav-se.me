@@ -180,7 +180,6 @@ export const Item: FC<Item.Props> = ({
 			) : null}
 
 			<ListingCountBadge
-				locale={locale}
 				query={feed.query}
 				count={count}
 				ui={{

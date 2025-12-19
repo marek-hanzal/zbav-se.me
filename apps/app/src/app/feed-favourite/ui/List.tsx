@@ -41,7 +41,7 @@ export const List: FC<List.Props> = ({ locale, query, linkTo, ui, ...props }) =>
 			>
 				{({ data }) => {
 					if (data.data.length === 0) {
-						return <EmptyStatus locale={locale} />;
+						return <EmptyStatus />;
 					}
 
 					return (

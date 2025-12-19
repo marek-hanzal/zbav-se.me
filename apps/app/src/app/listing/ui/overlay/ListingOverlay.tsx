@@ -5,18 +5,16 @@ import { ListingPrice } from "~/app/listing/ui/ListingPrice";
 
 export namespace ListingOverlay {
 	export interface Props {
-		locale: string;
 		listing: Pick<tListing, "price" | "currency" | "location">;
 	}
 }
 
-export const ListingOverlay: FC<ListingOverlay.Props> = ({ locale, listing }) => {
+export const ListingOverlay: FC<ListingOverlay.Props> = ({ listing }) => {
 	return (
 		<>
 			<ListingPrice
 				data-ui={"ListingOverlay-[ListingPrice]"}
 				price={listing.price}
-				locale={locale}
 				currency={listing.currency}
 				ui={{
 					snapTo: "top-center",

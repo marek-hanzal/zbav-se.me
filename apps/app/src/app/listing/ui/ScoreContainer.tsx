@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { Container, LabelValue } from "@use-pico/client/ui/container";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tListingMetrics } from "@zbav-se.me/sdk/api/user";
@@ -5,17 +6,12 @@ import type { FC } from "react";
 
 export namespace ScoreContainer {
 	export interface Props extends Container.Props {
-		locale: string;
 		listingMetrics: tListingMetrics;
 	}
 }
 
-export const ScoreContainer: FC<ScoreContainer.Props> = ({
-	locale,
-	listingMetrics,
-	ui,
-	...props
-}) => {
+export const ScoreContainer: FC<ScoreContainer.Props> = ({ listingMetrics, ui, ...props }) => {
+	const locale = useLocale();
 	return (
 		<Container
 			ui={{

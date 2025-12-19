@@ -8,7 +8,6 @@ import { withSessionQuery } from "~/app/auth/query/withSessionQuery";
 
 export const Route = createFileRoute("/$locale/ui/seller/")({
 	component() {
-		const { locale } = Route.useParams();
 		const queryClient = useQueryClient();
 		const mutation = withUserExPatchMutation.useMutation({
 			onSuccess() {
@@ -34,7 +33,7 @@ export const Route = createFileRoute("/$locale/ui/seller/")({
 					theme: "light",
 				}}
 			>
-				<SellerMenu locale={locale} />
+				<SellerMenu />
 			</TitleContainer>
 		);
 	},

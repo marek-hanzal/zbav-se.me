@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { Icon, ShowIcon, SpinnerIcon } from "@use-pico/client/icon";
 import { Container, LabelValue } from "@use-pico/client/ui/container";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
@@ -23,7 +24,6 @@ export namespace ListingDetail {
 	}
 
 	export interface Props extends Container.Props {
-		locale: string;
 		feedId: string | undefined;
 		listing: tListing;
 		/**
@@ -36,7 +36,6 @@ export namespace ListingDetail {
 }
 
 export const ListingDetail: FC<ListingDetail.Props> = ({
-	locale,
 	feedId,
 	listing,
 	withScore,
@@ -45,6 +44,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 	hooks,
 	...props
 }) => {
+	const locale = useLocale();
 	const [hero] = listing.gallery.items as [
 		tGalleryItem,
 		...tGalleryItem[],
@@ -77,7 +77,6 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					>
 						<ListingOverlay
 							data-ui={"ListingDetail-[ListingOverlay]"}
-							locale={locale}
 							listing={listing}
 						/>
 
@@ -118,7 +117,6 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					</Container>
 
 					<TransactionButton
-						locale={locale}
 						listing={listing}
 						onTransaction={hooks.onTransaction}
 					/>

@@ -13,7 +13,6 @@ export namespace Hero {
 	 * Props for `ListingHeroContainer`.
 	 */
 	export interface Props extends Container.Props {
-		locale: string;
 		/**
 		 * Listing entity shown inside the hero preview.
 		 */
@@ -28,7 +27,7 @@ export namespace Hero {
  *
  * @param props Component props extending `Container.Props`.
  */
-export const Hero: FC<Hero.Props> = ({ locale, ref, listing, feedId, withScore, ...props }) => {
+export const Hero: FC<Hero.Props> = ({ ref, listing, feedId, withScore, ...props }) => {
 	const [hero] = listing.gallery.items as [
 		tGalleryItem,
 		...tGalleryItem[],
@@ -63,7 +62,6 @@ export const Hero: FC<Hero.Props> = ({ locale, ref, listing, feedId, withScore, 
 
 				<ListingOverlay
 					data-ui={"ListingHeroContainer-[ListingOverlay]"}
-					locale={locale}
 					listing={listing}
 				/>
 
@@ -82,7 +80,6 @@ export const Hero: FC<Hero.Props> = ({ locale, ref, listing, feedId, withScore, 
 
 			{visible ? (
 				<ListingSheet
-					locale={locale}
 					listing={listing}
 					state={{
 						value: detail,

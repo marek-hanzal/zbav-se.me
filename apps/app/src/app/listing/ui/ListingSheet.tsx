@@ -13,7 +13,6 @@ export namespace ListingSheet {
 	export type View = "detail" | "messages" | "metrics" | "gallery";
 
 	export interface Props extends BottomSheet.PropsEx {
-		locale: string;
 		listing: tListing;
 		state: StateType.State<boolean>;
 		withScore: boolean;
@@ -22,7 +21,6 @@ export namespace ListingSheet {
 }
 
 export const ListingSheet: FC<ListingSheet.Props> = ({
-	locale,
 	listing,
 	state,
 	withScore,
@@ -48,7 +46,6 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 					children: (
 						<ListingDetail
 							data-ui={"ListingSheet-[ListingDetailContainer]"}
-							locale={locale}
 							listing={listing}
 							withScore={withScore}
 							feedId={feedId}
@@ -89,7 +86,6 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				metrics: {
 					children: (
 						<Metrics
-							locale={locale}
 							listingId={listing.id}
 							ui={{
 								inner: "default",

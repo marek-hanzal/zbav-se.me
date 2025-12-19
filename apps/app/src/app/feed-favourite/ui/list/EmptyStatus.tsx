@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { ArrowRightIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -9,11 +10,12 @@ import type { FC } from "react";
 
 export namespace EmptyStatus {
 	export interface Props extends Status.Props {
-		locale: string;
+		//
 	}
 }
 
-export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
+export const EmptyStatus: FC<EmptyStatus.Props> = ({ ...props }) => {
+	const locale = useLocale();
 	return (
 		<Container
 			data-ui={"EmptyStatus[Container]"}

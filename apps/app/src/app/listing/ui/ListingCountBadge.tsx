@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { Icon, SpinnerIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Typo } from "@use-pico/client/ui/typo";
@@ -9,19 +10,13 @@ import type { FC } from "react";
 
 export namespace ListingCountBadge {
 	export interface Props extends Badge.Props {
-		locale: string;
 		count?: number;
 		query: tListingQuery;
 	}
 }
 
-export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
-	locale,
-	count,
-	query,
-	ui,
-	...props
-}) => {
+export const ListingCountBadge: FC<ListingCountBadge.Props> = ({ count, query, ui, ...props }) => {
+	const locale = useLocale();
 	return (
 		<Badge
 			ui={{

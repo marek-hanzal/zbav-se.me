@@ -147,7 +147,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 													data-ui={
 														"ListingListContainer-[ListingHeroContainer]"
 													}
-													locale={locale}
 													listing={listing}
 													feedId={feedId}
 													withScore={withScore}

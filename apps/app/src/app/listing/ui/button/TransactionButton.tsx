@@ -6,14 +6,12 @@ import { CreateButton } from "~/app/transaction/ui/CreateButton";
 
 export namespace TransactionButton {
 	export interface Props extends Button.Props {
-		locale: string;
 		listing: tListing;
 		onTransaction(): void;
 	}
 }
 
 export const TransactionButton: FC<TransactionButton.Props> = ({
-	locale,
 	listing,
 	ui,
 	onTransaction,

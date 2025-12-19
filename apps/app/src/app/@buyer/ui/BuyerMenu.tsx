@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import type { uiIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
@@ -6,15 +7,15 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { FavouriteIcon, FeedIcon, ListingIcon, MessageIcon } from "@zbav-se.me/ui/icon";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import { useRef } from "react";
-import { useSide } from "~/app/user/useSide";
 
 export namespace BuyerMenu {
 	export interface Props extends Container.Props {
-		locale: string;
+		//
 	}
 }
 
-export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
+export const BuyerMenu = ({ ui, ...props }: BuyerMenu.Props) => {
+	const locale = useLocale();
 	const icon: uiIcon.Ui = {
 		text: "3xl",
 	};
@@ -33,8 +34,6 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 			{...props}
 		>
 			<Fade scrollableRef={containerRef} />
-
-			<div>{useSide()}</div>
 
 			<Container
 				data-ui={"BuyerMenu-[Container.scroll]"}

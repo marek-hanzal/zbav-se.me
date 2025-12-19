@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { EditIcon, Icon } from "@use-pico/client/icon";
 import { LabelValue } from "@use-pico/client/ui/container";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
@@ -8,11 +9,11 @@ import type { FC } from "react";
 export namespace PriceValue {
 	export interface Props extends Omit<LabelValue.Props, "textValue"> {
 		draft: tDraft;
-		locale: string;
 	}
 }
 
-export const PriceValue: FC<PriceValue.Props> = ({ draft, locale, ...props }) => {
+export const PriceValue: FC<PriceValue.Props> = ({ draft, ...props }) => {
+	const locale = useLocale();
 	return (
 		<LabelValue
 			data-ui={"PriceValue[LabelValue]"}

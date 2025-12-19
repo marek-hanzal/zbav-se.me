@@ -5,12 +5,11 @@ import { ScoreContainer } from "~/app/listing/ui/ScoreContainer";
 
 export namespace Metrics {
 	export interface Props extends Container.Props {
-		locale: string;
 		listingId: string;
 	}
 }
 
-export const Metrics: FC<Metrics.Props> = ({ locale, listingId, ...props }) => {
+export const Metrics: FC<Metrics.Props> = ({ listingId, ...props }) => {
 	return (
 		<withListingMetricsFetchQuery.Suspense
 			data={listingId}
@@ -20,7 +19,6 @@ export const Metrics: FC<Metrics.Props> = ({ locale, listingId, ...props }) => {
 				return (
 					<ScoreContainer
 						data-ui={"ListingDetail-[ScoreContainer]"}
-						locale={locale}
 						listingMetrics={data}
 						{...props}
 					/>
