@@ -40,15 +40,15 @@ export const Hero: FC<Hero.Props> = ({
 	herImageProps,
 	...props
 }) => {
-	const hero = useHeroUpload(listing.gallery.items);
-
 	const useVisibilityStore = useVisibilityContext();
 	const visible = useVisibilityStore((store) => store.isVisible);
+
+	const hero = useHeroUpload(listing.gallery.items);
 
 	const [detail, setDetail] = useState<boolean>(false);
 
 	useListingScore({
-		enabled: withScore,
+		enabled: withScore && visible,
 		listingId: listing.id,
 		type: "listing",
 		timeoutMs: 1_600,
