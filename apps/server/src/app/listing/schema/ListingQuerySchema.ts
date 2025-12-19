@@ -7,7 +7,10 @@ import { ListingSortSchema } from "./ListingSortSchema";
 
 export const ListingQuerySchema = z
 	.object({
-		cursor: CursorSchema.optional(),
+		cursor: CursorSchema.optional().default({
+			page: 0,
+			size: 256,
+		}),
 		filter: ListingFilterSchema.optional(),
 		where: ListingWhereSchema.optional().openapi("ListingWhere", {
 			description: "App-based filters",

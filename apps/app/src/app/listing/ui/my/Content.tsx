@@ -82,6 +82,11 @@ export const Content: FC<Content.Props> = ({ _suspense, query, ...props }) => {
 										tools={[
 											"hero",
 										]}
+										herImageProps={{
+											ui: {
+												round: "default",
+											},
+										}}
 									/>
 								);
 							}}

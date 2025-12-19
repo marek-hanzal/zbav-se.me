@@ -17,13 +17,6 @@ export const Route = createFileRoute("/$locale/ui/seller/listing/my")({
 								direction: "desc",
 							},
 						],
-						cursor: {
-							page: 0,
-							/**
-							 * Maximum limit of active listings
-							 */
-							size: 200,
-						},
 					}}
 				/>
 			</TitleContainer>

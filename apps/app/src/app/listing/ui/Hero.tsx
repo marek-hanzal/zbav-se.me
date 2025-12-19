@@ -21,6 +21,7 @@ export namespace Hero {
 		listing: tListing;
 		feedId: string | undefined;
 		withScore: boolean;
+		herImageProps?: HeroImage.Props;
 		tools: ListingDetail.Tools[];
 	}
 }
@@ -30,7 +31,15 @@ export namespace Hero {
  *
  * @param props Component props extending `Container.Props`.
  */
-export const Hero: FC<Hero.Props> = ({ ref, listing, feedId, withScore, tools, ...props }) => {
+export const Hero: FC<Hero.Props> = ({
+	ref,
+	listing,
+	feedId,
+	withScore,
+	tools,
+	herImageProps,
+	...props
+}) => {
 	const hero = useHeroUpload(listing.gallery.items);
 
 	const useVisibilityStore = useVisibilityContext();
@@ -75,6 +84,7 @@ export const Hero: FC<Hero.Props> = ({ ref, listing, feedId, withScore, tools, .
 							data-ui={"ListingHeroContainer-[SpinnerContainer.invisible]"}
 						/>
 					}
+					{...herImageProps}
 				/>
 			</Container>
 
