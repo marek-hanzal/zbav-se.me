@@ -12,18 +12,12 @@ export namespace TransactionSheet {
 	export type View = "detail";
 
 	export interface Props extends BottomSheet.Props {
-		locale: string;
 		side: tUserSideEnum;
 		transactionId: string;
 	}
 }
 
-export const TransactionSheet: FC<TransactionSheet.Props> = ({
-	locale,
-	side,
-	transactionId,
-	...props
-}) => {
+export const TransactionSheet: FC<TransactionSheet.Props> = ({ side, transactionId, ...props }) => {
 	const [view, setView] = useState<TransactionSheet.View>("detail");
 
 	return (
@@ -57,7 +51,6 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({
 										}}
 									>
 										<MessageList
-											locale={locale}
 											messageThreadId={transaction.messageThreadId}
 										/>
 

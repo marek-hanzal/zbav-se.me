@@ -6,6 +6,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { DraftIcon, ListingIcon, MessageIcon } from "@zbav-se.me/ui/icon";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import { useRef } from "react";
+import { useSide } from "~/app/user/useSide";
 
 export namespace SellerMenu {
 	export interface Props extends Container.Props {
@@ -32,6 +33,8 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 			{...props}
 		>
 			<Fade scrollableRef={containerRef} />
+
+			<div>{useSide()}</div>
 
 			<Container
 				data-ui={"SellerMenu-container"}

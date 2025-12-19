@@ -4,6 +4,7 @@ export { useElementVisibility } from "./useElementVisibility";
 export { useEvent } from "./useEvent";
 export { useHighlightRectangle } from "./useHighlightRectangle";
 export { useInViewport } from "./useInViewport";
+export { useLocale } from "./useLocale";
 export { useMergeRefs } from "./useMergeRefs";
 export { usePatchCollection } from "./usePatchCollection";
 export { useScrollTo } from "./useScrollTo";

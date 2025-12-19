@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { Container, type uiContainer } from "@use-pico/client/ui/container";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Typo } from "@use-pico/client/ui/typo";
@@ -8,12 +9,13 @@ import { match } from "ts-pattern";
 
 export namespace MessageText {
 	export interface Props extends Container.Props {
-		locale: string;
 		message: tMessageText;
 	}
 }
 
-export const MessageText: FC<MessageText.Props> = ({ locale, message, ...props }) => {
+export const MessageText: FC<MessageText.Props> = ({ message, ...props }) => {
+	const locale = useLocale();
+
 	return (
 		<Container
 			ui={{

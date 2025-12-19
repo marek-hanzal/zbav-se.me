@@ -1,4 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { LocaleContext } from "@use-pico/client/context";
 import { translator } from "@use-pico/common/translator";
 
 export const Route = createFileRoute("/$locale")({
@@ -12,6 +13,7 @@ export const Route = createFileRoute("/$locale")({
 	},
 	staleTime: 1000 * 60 * 60,
 	component() {
+		const { locale } = Route.useParams();
 		/**
 		 * Ugly as hell, but for now I don't have better solution how to do this
 		 * both on server and client side.
@@ -21,6 +23,14 @@ export const Route = createFileRoute("/$locale")({
 		 */
 		translator.push(Route.useLoaderData());
 
-		return <Outlet />;
+		return (
+			<LocaleContext
+				value={{
+					locale,
+				}}
+			>
+				<Outlet />
+			</LocaleContext>
+		);
 	},
 });

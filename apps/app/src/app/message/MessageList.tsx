@@ -9,12 +9,11 @@ import { MessageText } from "~/app/message/type/MessageText";
 
 export namespace MessageList {
 	export interface Props extends Container.Props {
-		locale: string;
 		messageThreadId: string;
 	}
 }
 
-export const MessageList: FC<MessageList.Props> = ({ locale, messageThreadId, ui, ...props }) => {
+export const MessageList: FC<MessageList.Props> = ({ messageThreadId, ui, ...props }) => {
 	return (
 		<Container
 			ui={{
@@ -38,7 +37,6 @@ export const MessageList: FC<MessageList.Props> = ({ locale, messageThreadId, ui
 							.with("text", () => (
 								<MessageText
 									key={message.id}
-									locale={locale}
 									message={zMessageText.parse(message)}
 								/>
 							))

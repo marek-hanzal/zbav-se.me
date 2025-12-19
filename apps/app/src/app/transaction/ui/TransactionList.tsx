@@ -1,24 +1,16 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import type { tTransactionQuery, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
+import type { tTransactionQuery } from "@zbav-se.me/sdk/api/user";
 import { withTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import type { FC } from "react";
 import { TransactionItem } from "~/app/transaction/ui/TransactionItem";
 
 export namespace TransactionList {
 	export interface Props extends Container.Props {
-		locale: string;
-		side: tUserSideEnum;
 		query: tTransactionQuery;
 	}
 }
 
-export const TransactionList: FC<TransactionList.Props> = ({
-	locale,
-	side,
-	query,
-	ui,
-	...props
-}) => {
+export const TransactionList: FC<TransactionList.Props> = ({ query, ui, ...props }) => {
 	return (
 		<Container
 			ui={{
@@ -44,9 +36,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 								<TransactionItem
 									key={id}
 									data-id={id}
-									locale={locale}
 									transactionId={id}
-									side={side}
 								/>
 							))}
 						</Container>

@@ -8,14 +8,12 @@ import { TransactionSheet } from "~/app/transaction/ui/TransactionSheet";
 
 export namespace TransactionItem {
 	export interface Props extends Container.Props {
-		locale: string;
 		transactionId: string;
 		side: tUserSideEnum;
 	}
 }
 
 export const TransactionItem: FC<TransactionItem.Props> = ({
-	locale,
 	transactionId,
 	side,
 	ui,
@@ -113,7 +111,6 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 			</withTransactionFetchQuery.Suspense>
 
 			<TransactionSheet
-				locale={locale}
 				side={side}
 				transactionId={transactionId}
 				isOpen={isOpen}

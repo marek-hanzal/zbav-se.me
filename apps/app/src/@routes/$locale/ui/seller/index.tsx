@@ -1,13 +1,20 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useEffect } from "react";
 import { SellerMenu } from "~/app/@seller/ui/SellerMenu";
+import { withSessionQuery } from "~/app/auth/query/withSessionQuery";
 
 export const Route = createFileRoute("/$locale/ui/seller/")({
 	component() {
 		const { locale } = Route.useParams();
-		const mutation = withUserExPatchMutation.useMutation();
+		const queryClient = useQueryClient();
+		const mutation = withUserExPatchMutation.useMutation({
+			onSuccess() {
+				withSessionQuery.invalidate(queryClient);
+			},
+		});
 
 		useEffect(() => {
 			mutation.mutate({

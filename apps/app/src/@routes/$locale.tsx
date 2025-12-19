@@ -1,4 +1,5 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { LocaleContext } from "@use-pico/client/context";
 import { linkTo } from "@use-pico/common/link-to";
 import { translator } from "@use-pico/common/translator";
 import { withSessionQuery } from "~/app/auth/query/withSessionQuery";
@@ -44,6 +45,7 @@ export const Route = createFileRoute("/$locale")({
 		}
 	},
 	component() {
+		const { locale } = Route.useParams();
 		/**
 		 * Ugly as hell, but for now I don't have better solution how to do this
 		 * both on server and client side.
@@ -53,6 +55,14 @@ export const Route = createFileRoute("/$locale")({
 		 */
 		translator.push(Route.useLoaderData().translations);
 
-		return <Outlet />;
+		return (
+			<LocaleContext
+				value={{
+					locale,
+				}}
+			>
+				<Outlet />
+			</LocaleContext>
+		);
 	},
 });
