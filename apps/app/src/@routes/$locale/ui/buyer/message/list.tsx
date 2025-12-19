@@ -14,6 +14,9 @@ export const Route = createFileRoute("/$locale/ui/buyer/message/list")({
 								direction: "desc",
 							},
 						],
+						meta: {
+							side: "buyer",
+						},
 					}}
 					ui={{
 						inner: "default",

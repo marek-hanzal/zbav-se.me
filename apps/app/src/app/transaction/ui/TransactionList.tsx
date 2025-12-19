@@ -1,8 +1,15 @@
+import { useLocale } from "@use-pico/client/hook";
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { LinkTo } from "@use-pico/client/ui/link-to";
+import { Status } from "@use-pico/client/ui/status";
+import { Tx } from "@use-pico/client/ui/tx";
 import type { tTransactionQuery } from "@zbav-se.me/sdk/api/user";
 import { withTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user/transaction";
+import { DeadEndIcon, MessageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { TransactionItem } from "~/app/transaction/ui/TransactionItem";
+import { useSide } from "~/app/user/useSide";
 
 export namespace TransactionList {
 	export interface Props extends Container.Props {
@@ -11,6 +18,9 @@ export namespace TransactionList {
 }
 
 export const TransactionList: FC<TransactionList.Props> = ({ query, ui, ...props }) => {
+	const side = useSide();
+	const locale = useLocale();
+
 	return (
 		<Container
 			ui={{
@@ -25,6 +35,58 @@ export const TransactionList: FC<TransactionList.Props> = ({ query, ui, ...props
 				fallback={<SpinnerContainer />}
 			>
 				{({ data: { data } }) => {
+					if (side === "seller" && data.length === 0) {
+						return (
+							<Container
+								ui={{
+									layout: "vertical-centered",
+									height: "full",
+								}}
+							>
+								<Status
+									icon={MessageIcon}
+									textTitle={"No transactions as seller (title)"}
+									textMessage={"No transactions as seller (message)"}
+									action={
+										<LinkTo
+											icon={ArrowRightIcon}
+											iconPosition={"right"}
+											to={"/$locale/ui/seller/listing/my"}
+											params={{
+												locale,
+											}}
+											ui={{
+												background: "default",
+												border: true,
+												shadow: true,
+												round: "default",
+												size: "default",
+											}}
+										>
+											<Tx label={"Go to my listings (button)"} />
+										</LinkTo>
+									}
+									ui={{
+										tone: "brand",
+										theme: "light",
+										inner: "4xl",
+									}}
+									className="text-center"
+								/>
+							</Container>
+						);
+					}
+
+					if (side === "buyer" && data.length === 0) {
+						return (
+							<Status
+								icon={DeadEndIcon}
+								textTitle={"No transactions as buyer (title)"}
+								textMessage={"No transactions as buyer (message)"}
+							/>
+						);
+					}
+
 					return (
 						<Container
 							ui={{

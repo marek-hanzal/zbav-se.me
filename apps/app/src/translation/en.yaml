@@ -307,6 +307,9 @@
 8d5224a1dcfa23a630c6e76f7921d15195a42e649e050d26a7b5c8f8:
   ref: Delete draft (button)
   value: Delete draft (button)
+8df15cc86b6018c3f7f2cf9dd1799775eb374add9037534d7354766c:
+  ref: No transactions as seller (title)
+  value: No transactions as seller (title)
 93766f804027b28f5ce55c85ccb887c09c3d8e78a84074aed256ca9a:
   ref: Listing title (title)
   value: Listing title (title)
@@ -358,6 +361,9 @@ a5fecc06a3719ab30505196a44d06c91c2c7e8497978d8572efb9e30:
 aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
   ref: Photo upload placeholder (title)
   value: Photo upload placeholder (title)
+b0a721169f47da108f0195d392e3d788b2d417564f50dd126981465a:
+  ref: No transactions as seller (message)
+  value: No transactions as seller (message)
 b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
   ref: Expire (title)
   value: Expire (title)
@@ -379,6 +385,9 @@ b6c76a2cd866bcc2fc175c7fb66093264226f4695f2dfe3c41d7056f:
 b70f97dbf4be95b0c508538e1bc69c56771f4a6e2fc8e03f6bcea25d:
   ref: Listing Score - Ignore (label)
   value: Listing Score - Ignore (label)
+b8ff3ed6b71e3332fcbe61d56e37ad7a849b09934d4514084cc0b710:
+  ref: No transactions as buyer (message)
+  value: No transactions as buyer (message)
 ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
   ref: My listings (label)
   value: My listings (label)
@@ -492,9 +501,15 @@ f3f9c0a66a107af2911fa0f9019dc4526940d1afe4a957e1445e3447:
 f542390407cec6e7359028bb4c89623a355be9cb790e086164c3c4c2:
   ref: My listings (title)
   value: My listings (title)
+f614ee6abd82ea21f37d43a4669a4ccdcda5dfb0553501b5cd572420:
+  ref: No transactions as buyer (title)
+  value: No transactions as buyer (title)
 f7656349927879425de1f295c96260d551349336336a22ada2d9ff70:
   ref: Clear all (button)
   value: Clear all (button)
+f7e0ec1bfc4a3e3a1766b4f3f07644ce4a036f0e83bd3f138796434b:
+  ref: Go to my listings (button)
+  value: Go to my listings (button)
 f807d8f885d618d3ba330d91e5719faba4383e66108e44f61570ab43:
   ref: Listing seller hint (label)
   value: Listing seller hint (label)

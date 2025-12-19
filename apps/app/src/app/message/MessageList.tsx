@@ -29,6 +29,11 @@ export const MessageList: FC<MessageList.Props> = ({ messageThreadId, ui, ...pro
 						messageThreadId,
 					},
 				}}
+				options={
+					{
+						// refetchInterval: 1_000 * 10,
+					}
+				}
 				fallback={<SpinnerContainer />}
 			>
 				{({ data }) => {
