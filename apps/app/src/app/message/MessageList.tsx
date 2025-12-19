@@ -80,6 +80,14 @@ export const MessageList: FC<MessageList.Props> = ({ messageThreadId, ui, ...pro
 						path: {
 							messageThreadId,
 						},
+						body: {
+							sort: [
+								{
+									field: "createdAt",
+									direction: "asc",
+								},
+							],
+						},
 					}}
 					options={{
 						refetchInterval: 1_000 * 10,
