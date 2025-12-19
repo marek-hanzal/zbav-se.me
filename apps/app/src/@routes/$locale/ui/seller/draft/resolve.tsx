@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withDraftCreateMutation } from "@zbav-se.me/sdk/mutation/user/draft";
-import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
+import { withDraftCollectionQuery, withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
 import { DateTime } from "luxon";
 
 export const Route = createFileRoute("/$locale/ui/seller/draft/resolve")({
@@ -30,6 +30,7 @@ export const Route = createFileRoute("/$locale/ui/seller/draft/resolve")({
 		}
 
 		const draft = await withDraftCreateMutation.mutate(queryClient, {});
+		await withDraftCollectionQuery.invalidate(queryClient);
 
 		throw redirect({
 			to: "/$locale/ui/seller/draft/$id/edit",

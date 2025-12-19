@@ -103,12 +103,11 @@ export const DraftDbSchema = z
 		}),
 		usedAt: z
 			.union([
-				z.coerce.date(),
 				z.null(),
+				z.coerce.date(),
 			])
 			.openapi({
 				description: "Timestamp when the draft was used to create a listing",
-				type: "string",
 			}),
 	})
 	.strip();

@@ -2354,7 +2354,7 @@ export type tDraftPatchData = {
     /**
      * Timestamp when the draft was used to create a listing
      */
-    usedAt?: string;
+    usedAt?: null | string | null;
 };
 
 /**
@@ -2469,7 +2469,7 @@ export type tDraft = {
     /**
      * Timestamp when the draft was used to create a listing
      */
-    usedAt: string;
+    usedAt: null | string | null;
     /**
      * Location data
      */

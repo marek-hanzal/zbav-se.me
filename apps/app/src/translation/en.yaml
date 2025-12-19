@@ -220,6 +220,9 @@
 5b876ebf0baeb9151587119a072df35bfc9ca2d5569b4ff537ae0305:
   ref: Flag listing - confirm (button)
   value: Flag listing - confirm (button)
+5c8983bc9f6b82b7d54e9d2de54f4a5e12120ac5ec4c523d723b166b:
+  ref: Continue listing (label)
+  value: Continue listing (label)
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
   ref: Listing age (label)
   value: Listing age (label)
