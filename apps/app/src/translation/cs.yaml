@@ -1,6 +1,12 @@
 004c2d8c48721c30d51a0ac1fee6dd63e3ef793ceb45c8dc20cba5ed:
     ref: Feed title (placeholder)
     value: Např. "iPhone" nebo "Bosh"
+00f16a194e7daae1530847faf9e54e5afb5544e0c1d4b16200055761:
+    ref: request
+    value: request
+00fe87831f1cf10d096e179276a76be35428b05897001db72f3850be:
+    ref: Chat - transaction closed (message)
+    value: Vše vyřízeno, chat je vypnutý.
 022cc5c29a7e44c9fd5d268e2abcc13f44f38fcabbe0552e3d6c0710:
     ref: Buyer info (button)
     value: Informace o kupujícím
@@ -61,6 +67,9 @@
 1127abe5ce9696ad1b6477d3c6557314bacdf45155e4e890091f1d3e:
     ref: Save (button)
     value: Uložit
+1251277d9ed5b1d65b9592d9c9c95ec5e6b943e99fc35e791642150b:
+    ref: accepted
+    value: accepted
 14663fea507627f6c98c1360a9aa3c6d275ed885e44051e7d88af28a:
     ref: Feed age (hint)
     value: >
@@ -131,6 +140,9 @@
 36e3a2076a652d8613c8604b631fa834372b465cfc2497d82b2c4b04:
     ref: seller
     value: seller
+376b4e9c64fcef908876651b54c8c0d6a03a96798a140ba2a9c865f2:
+    ref: rejected
+    value: rejected
 37e1cb2b4f78786fb70f260332ccd707e7a0ad66fdf52bf3a4f4239c:
     ref: Listing Score - Feed views (label)
     value: Listing Score - Feed views (label)
@@ -252,6 +264,9 @@
 6404e218d58affb344a49493074e2a22a0bef1cc9743c426c995b49b:
     ref: Feed name (default)
     value: Můj seznam
+64330c4baddecdf72a3e12b12827c2f9fc66b0966292e042eab4d26f:
+    ref: expired
+    value: expired
 66c5975c97c2be7afe44dcec132ec657eac3943eeb2688ad68bd0193:
     ref: Transaction - send a message (placeholder)
     value: Co máš na srdci?
@@ -478,6 +493,9 @@ Listing common sort value price - desc:
 Listing common sort value price - unused:
     static: true
     value: Cena (bez řazení)
+Seller accepted the transaction (message):
+    value: Prodejce přijal transakci.
+    static: true
 Seller rejected the transaction (message):
     value: Prodejce odmítl transakci.
     static: true
@@ -497,6 +515,9 @@ a46be85abba5f0371038aa633d7378f4fd8376be6b7e7a9b7b22ec05:
 a5fecc06a3719ab30505196a44d06c91c2c7e8497978d8572efb9e30:
     ref: Remove from favourite (button)
     value: Remove from favourite (button)
+a62fb7339fce50f73673412c11f10a25880e1e7b942b7261366a8529:
+    ref: closed
+    value: closed
 aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
     ref: Photo upload placeholder (title)
     value: Nahraj obrázek
@@ -513,6 +534,9 @@ b46060e6e02e9a672bd27f869c2d7206d0c7a0584e298065557d7954:
     ref: Draft expire (hint)
     value: |
         Nemusíš se bát, čas se spustí až po zveřejnění inzerátu.
+b48018d27bcd6409768ac5c0dd69a1a716d97c25a2dbfe6713cf393b:
+    ref: success
+    value: success
 b49bad57cdc02b972afcf4abfd99fdc6a5528e28c68f76e0e1997d59:
     ref: "- skore + link -"
     value: "- skore + link -"
@@ -546,9 +570,6 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
         message than this :(
     value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
         better message than this :(
-c1a0a76b8d17b3386b15a9e5b1fbd0f5b4bc8a290fa14cb9d0e50d9c:
-    ref: Gallery
-    value: Gallery
 c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
     ref: Feed title not filled
     value: Všechno
@@ -695,6 +716,3 @@ fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
 ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
     ref: No categories found (title)
     value: Ajajaj, nic jsme nenašli!
-Seller accepted the transaction (message):
-    value: Prodejce přijal transakci.
-    static: true

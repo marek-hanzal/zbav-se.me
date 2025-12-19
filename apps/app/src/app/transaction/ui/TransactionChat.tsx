@@ -9,6 +9,7 @@ import {
 } from "@zbav-se.me/sdk/query/user";
 import { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC } from "react";
+import { match } from "ts-pattern";
 import { TransactionToolbar } from "~/app/transaction/ui/TransactionToolbar";
 import { useSide } from "~/app/user/useSide";
 
@@ -44,53 +45,69 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transactionId, ui, 
 				fallback={<SpinnerContainer />}
 			>
 				{({ data: transaction }) => {
-					if (transaction.status !== "accepted") {
-						return (
-							<Tx
-								label={
-									side === "seller"
-										? "Transaction not accepted - seller (message)"
-										: "Transaction not accepted - buyer (message)"
-								}
-								ui={{
-									width: "full",
-									text: "sm",
-									opacity: "medium",
-								}}
-								className="text-center"
-							/>
-						);
-					}
-
-					return (
-						<ChatInput
-							onSubmit={(message) => {
-								messageMutation.mutate(
-									{
-										messageThreadId: transaction.messageThreadId,
-										message,
-									},
-									{
-										onSuccess() {
-											withMessageThreadMessageCollectionQuery.invalidate(
-												queryClient,
-												{
-													path: {
-														messageThreadId:
-															transaction.messageThreadId,
-													},
+					return match(transaction.status)
+						.with("accepted", () => {
+							return (
+								<ChatInput
+									onSubmit={(message) => {
+										messageMutation.mutate(
+											{
+												messageThreadId: transaction.messageThreadId,
+												message,
+											},
+											{
+												onSuccess() {
+													withMessageThreadMessageCollectionQuery.invalidate(
+														queryClient,
+														{
+															path: {
+																messageThreadId:
+																	transaction.messageThreadId,
+															},
+														},
+													);
 												},
-											);
-										},
-									},
-								);
-							}}
-							placeholder={translator.text(
-								"Transaction - send a message (placeholder)",
-							)}
-							loading={messageMutation.isPending}
-						/>
-					);
+											},
+										);
+									}}
+									placeholder={translator.text(
+										"Transaction - send a message (placeholder)",
+									)}
+									loading={messageMutation.isPending}
+								/>
+							);
+						})
+						.with("request", () => {
+							return (
+								<Tx
+									label={
+										side === "seller"
+											? "Transaction not accepted - seller (message)"
+											: "Transaction not accepted - buyer (message)"
+									}
+									ui={{
+										width: "full",
+										text: "sm",
+										opacity: "medium",
+									}}
+									className="text-center"
+								/>
+							);
+						})
+						.with("success", "closed", "expired", "rejected", () => {
+							return (
+								<Tx
+									label={"Chat - transaction closed (message)"}
+									ui={{
+										width: "full",
+										text: "sm",
+										opacity: "medium",
+									}}
+									className="text-center"
+								/>
+							);
+						})
+						.exhaustive();
 				}}
 			</withTransactionFetchQuery.Suspense>
 		</Container>
