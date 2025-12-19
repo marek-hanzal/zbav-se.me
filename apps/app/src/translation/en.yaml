@@ -1,9 +1,6 @@
 004c2d8c48721c30d51a0ac1fee6dd63e3ef793ceb45c8dc20cba5ed:
   ref: Feed title (placeholder)
   value: Feed title (placeholder)
-00baad816ab1db1597309ef7a0b78a93ff4e84b564beac5388c18bbf:
-  ref: Buyer info
-  value: Buyer info
 022cc5c29a7e44c9fd5d268e2abcc13f44f38fcabbe0552e3d6c0710:
   ref: Buyer info (button)
   value: Buyer info (button)
@@ -429,12 +426,18 @@ c68690759b1f3a6cf13d49b52c69b6e23d6283ab1edc17681d363407:
 c7011d532414a06429fe3823d5c970b1de99d6e19fd0f06ea309c7c3:
   ref: First listing (message)
   value: First listing (message)
+c7147aaa47c54e90b7023be8ee57d73010a71c259e352067aaad48e6:
+  ref: Reject transaction (button)
+  value: Reject transaction (button)
 cb8c6bb348b937ffa8d1caf9789deeba0ad9997b963f584fa58a535d:
   ref: Feed location (title)
   value: Feed location (title)
 cbac5f835956010c5b45bed61ee098674baef1e75ef17acc19462ac1:
   ref: Flag listing (button)
   value: Flag listing (button)
+cce3e05a5e2cf26a26d41e907d0fade717c5fbffe10b7f77fd83e8db:
+  ref: Accept transaction (button)
+  value: Accept transaction (button)
 ceeb32aea866f45126224f7ff0fc5a65a8fa268c581d023ffe309e03:
   ref: Unflag listing (button)
   value: Unflag listing (button)
