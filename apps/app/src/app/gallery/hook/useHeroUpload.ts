@@ -1,7 +1,8 @@
 import type { tGalleryItem, tUpload } from "@zbav-se.me/sdk/api/user";
+import { useMaybeHeroUpload } from "./useMaybeHeroUpload";
 
 export const useHeroUpload = (items: tGalleryItem[]): tUpload => {
-	const [hero] = items.map((item) => item.upload);
+	const hero = useMaybeHeroUpload(items);
 
 	if (!hero) {
 		throw new Error("Hero upload not found");

@@ -7,7 +7,7 @@ import { tvc } from "@use-pico/cls";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
-import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
+import { useMaybeHeroUpload } from "~/app/gallery/hook/useMaybeHeroUpload";
 
 export namespace DraftItem {
 	export interface Props extends Omit<Badge.Props, "children"> {
@@ -17,7 +17,7 @@ export namespace DraftItem {
 
 export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props }) => {
 	const locale = useLocale();
-	const hero = useHeroUpload(draft.gallery.items);
+	const hero = useMaybeHeroUpload(draft.gallery.items);
 
 	return (
 		<Container
