@@ -5,6 +5,7 @@ import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/u
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import { CancelIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import { useStatus } from "~/app/transaction/hook/useStatus";
 
 export namespace RejectButton {
 	export interface Props extends Button.Props {
@@ -35,6 +36,15 @@ export const RejectButton: FC<RejectButton.Props> = ({ transactionId, ...props }
 			}
 		>
 			{({ data: transaction }) => {
+				// biome-ignore lint/correctness/useHookAtTopLevel: Ssst
+				const { status } = useStatus({
+					transaction,
+				});
+
+				if (status !== "accepted") {
+					return null;
+				}
+
 				return (
 					<Button
 						data-ui="RejectButton[Button]"
