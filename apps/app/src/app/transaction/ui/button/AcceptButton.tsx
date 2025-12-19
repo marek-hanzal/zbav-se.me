@@ -1,23 +1,30 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@use-pico/client/ui/button";
+import type { tTransaction } from "@zbav-se.me/sdk/api/user";
 import { withTransactionStatusAcceptMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
+import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace AcceptButton {
 	export interface Props extends Button.Props {
-		transactionId: string;
+		transaction: tTransaction;
 	}
 }
 
-export const AcceptButton: FC<AcceptButton.Props> = ({ transactionId, ...props }) => {
+export const AcceptButton: FC<AcceptButton.Props> = ({ transaction, ...props }) => {
 	const queryClient = useQueryClient();
 	const mutation = withTransactionStatusAcceptMutation.useMutation({
 		onSuccess() {
 			withTransactionFetchQuery.invalidate(queryClient, {
 				where: {
-					id: transactionId,
+					id: transaction.id,
+				},
+			});
+			withMessageThreadMessageCollectionQuery.invalidate(queryClient, {
+				path: {
+					messageThreadId: transaction.messageThreadId,
 				},
 			});
 		},
@@ -30,7 +37,7 @@ export const AcceptButton: FC<AcceptButton.Props> = ({ transactionId, ...props }
 			iconEnabled={CheckIcon}
 			onClick={() => {
 				mutation.mutate({
-					transactionId,
+					transactionId: transaction.id,
 				});
 			}}
 			loading={mutation.isPending}

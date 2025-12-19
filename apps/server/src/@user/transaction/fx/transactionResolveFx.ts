@@ -26,6 +26,7 @@ export const transactionResolveFx = ({
 					.innerJoin("listing as l", "lt.listingId", "l.id")
 					.select([
 						"lt.id",
+						"lt.messageThreadId",
 						"l.userId as sellerId",
 						"lt.userId as buyerId",
 					])
@@ -68,11 +69,8 @@ export const transactionResolveFx = ({
 		}
 
 		return {
-			transactionId: transaction.id,
-			buyerId: transaction.buyerId,
-			sellerId: transaction.sellerId,
+			...transaction,
 			side: transaction.buyerId === user.id ? "buyer" : "seller",
-			status: transaction.status,
 		} as const;
 	});
 };

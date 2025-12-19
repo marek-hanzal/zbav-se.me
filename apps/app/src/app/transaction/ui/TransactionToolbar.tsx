@@ -76,6 +76,9 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 							id: transactionId,
 						},
 					}}
+					options={{
+						refetchInterval: 1_000 * 5,
+					}}
 					fallback={null}
 				>
 					{({ data: transaction }) => {
@@ -92,7 +95,7 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 
 								return (
 									<AcceptButton
-										transactionId={transactionId}
+										transaction={transaction}
 										{...buttonUi}
 									/>
 								);
@@ -100,7 +103,7 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 							.with("accepted", () => {
 								return (
 									<RejectButton
-										transactionId={transactionId}
+										transaction={transaction}
 										{...buttonUi}
 									/>
 								);

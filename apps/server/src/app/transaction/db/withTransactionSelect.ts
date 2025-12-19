@@ -45,7 +45,7 @@ export const withTransactionSelect = ({ database, sort }: withTransactionSelect.
 						sort: [
 							{
 								field: "createdAt",
-								direction: "desc",
+								direction: "asc",
 							},
 						],
 					}).whereRef("lts.transactionId", "=", eb.ref("lt.id")),
