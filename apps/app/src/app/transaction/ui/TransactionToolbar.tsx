@@ -1,22 +1,22 @@
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import type { tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import { BuyerIcon, GalleryIcon, SellerIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import { useSide } from "~/app/user/useSide";
 
 export namespace TransactionToolbar {
 	export interface Props extends Container.Props {
 		transactionId: string;
-		side: tUserSideEnum;
 	}
 }
 
 export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 	transactionId,
-	side,
 	ui,
 	...props
 }) => {
+	const side = useSide();
+
 	const buttonUi: Button.Props = {
 		iconProps: {
 			ui: {

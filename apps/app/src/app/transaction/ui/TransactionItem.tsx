@@ -1,6 +1,6 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tUpload, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
+import type { tUpload } from "@zbav-se.me/sdk/api/user";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
@@ -9,13 +9,11 @@ import { TransactionSheet } from "~/app/transaction/ui/TransactionSheet";
 export namespace TransactionItem {
 	export interface Props extends Container.Props {
 		transactionId: string;
-		side: tUserSideEnum;
 	}
 }
 
 export const TransactionItem: FC<TransactionItem.Props> = ({
 	transactionId,
-	side,
 	ui,
 	className,
 	...props
@@ -111,7 +109,6 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 			</withTransactionFetchQuery.Suspense>
 
 			<TransactionSheet
-				side={side}
 				transactionId={transactionId}
 				isOpen={isOpen}
 				onClose={() => setIsOpen(false)}

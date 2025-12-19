@@ -1,6 +1,5 @@
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import type { tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC } from "react";
 import { TransactionToolbar } from "~/app/transaction/ui/TransactionToolbar";
@@ -8,16 +7,10 @@ import { TransactionToolbar } from "~/app/transaction/ui/TransactionToolbar";
 export namespace TransactionChat {
 	export interface Props extends Container.Props {
 		transactionId: string;
-		side: tUserSideEnum;
 	}
 }
 
-export const TransactionChat: FC<TransactionChat.Props> = ({
-	transactionId,
-	side,
-	ui,
-	...props
-}) => {
+export const TransactionChat: FC<TransactionChat.Props> = ({ transactionId, ui, ...props }) => {
 	return (
 		<Container
 			ui={{
@@ -27,10 +20,8 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 			}}
 			{...props}
 		>
-			<TransactionToolbar
-				transactionId={transactionId}
-				side={side}
-			/>
+			<TransactionToolbar transactionId={transactionId} />
+
 			<ChatInput
 				onSubmit={() => {
 					//
