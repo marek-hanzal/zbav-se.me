@@ -711,6 +711,10 @@ export type tMessageSystem = {
      * Message content
      */
     text: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
     type: tMessageTypeEnum;
     direction: tMessageDirectionEnum;
 };
@@ -784,14 +788,6 @@ export type tMessageText = {
      * ID of the message entry
      */
     id: string;
-    /**
-     * ID of the user who sent the message
-     */
-    userId: string;
-    /**
-     * ID of the message thread referenced by the message
-     */
-    messageThreadId: string;
     /**
      * Message content (database column name)
      */

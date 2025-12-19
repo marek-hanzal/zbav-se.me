@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { messageTextCreateFx } from "~/@user/message-text/fx/messageCreateFx";
+import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
@@ -25,7 +25,7 @@ export const transactionStatusRejectFx = ({ transactionId }: transactionStatusRe
 			},
 		});
 
-		yield* messageTextCreateFx({
+		yield* messageSystemCreateFx({
 			messageThreadId: transaction.messageThreadId,
 			message:
 				transaction.side === "buyer"

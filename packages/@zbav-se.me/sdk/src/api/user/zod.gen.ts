@@ -779,6 +779,9 @@ export const zMessageSystem = z.object({
     text: z.string().register(z.globalRegistry, {
         description: 'Message content'
     }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
     type: zMessageTypeEnum,
     direction: zMessageDirectionEnum
 }).register(z.globalRegistry, {
@@ -829,12 +832,6 @@ export type zMessageGallery = z.infer<typeof zMessageGallery>;
 export const zMessageText = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the message entry'
-    }),
-    userId: z.string().register(z.globalRegistry, {
-        description: 'ID of the user who sent the message'
-    }),
-    messageThreadId: z.string().register(z.globalRegistry, {
-        description: 'ID of the message thread referenced by the message'
     }),
     text: z.string().register(z.globalRegistry, {
         description: 'Message content (database column name)'

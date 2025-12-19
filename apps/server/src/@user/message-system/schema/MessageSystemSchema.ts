@@ -13,7 +13,6 @@ export const MessageSystemSchema = z
 	})
 	.omit({
 		messageThreadId: true,
-		createdAt: true,
 	})
 	.openapi("MessageSystem", {
 		description: "Message system entry",

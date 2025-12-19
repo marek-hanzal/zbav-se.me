@@ -946,6 +946,9 @@ export const sMessageSystem = {
         text: {
             type: 'string'
         },
+        createdAt: {
+            type: 'string'
+        },
         type: {
             $ref: '#/components/schemas/MessageTypeEnum'
         },
@@ -956,6 +959,7 @@ export const sMessageSystem = {
     required: [
         'id',
         'text',
+        'createdAt',
         'type',
         'direction'
     ]
@@ -1034,12 +1038,6 @@ export const sMessageText = {
         id: {
             type: 'string'
         },
-        userId: {
-            type: 'string'
-        },
-        messageThreadId: {
-            type: 'string'
-        },
         text: {
             type: 'string'
         },
@@ -1055,8 +1053,6 @@ export const sMessageText = {
     },
     required: [
         'id',
-        'userId',
-        'messageThreadId',
         'text',
         'createdAt',
         'type',

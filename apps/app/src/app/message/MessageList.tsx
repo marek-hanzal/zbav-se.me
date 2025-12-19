@@ -1,5 +1,10 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import { zMessageGallery, zMessageLocation, zMessageText } from "@zbav-se.me/sdk/api/user";
+import {
+	zMessageGallery,
+	zMessageLocation,
+	zMessageSystem,
+	zMessageText,
+} from "@zbav-se.me/sdk/api/user";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { type FC, useLayoutEffect, useRef } from "react";
 import { match } from "ts-pattern";
@@ -88,6 +93,12 @@ export const MessageList: FC<MessageList.Props> = ({ messageThreadId, ui, ...pro
 									<MessageText
 										key={message.id}
 										message={zMessageText.parse(message)}
+									/>
+								))
+								.with("system", () => (
+									<MessageText
+										key={message.id}
+										message={zMessageSystem.parse(message)}
 									/>
 								))
 								.with("gallery", () => (

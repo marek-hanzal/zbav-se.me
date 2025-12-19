@@ -11,6 +11,10 @@ export const MessageTextSchema = z
 		}),
 		direction: MessageDirectionEnumSchema,
 	})
+	.omit({
+		userId: true,
+		messageThreadId: true,
+	})
 	.openapi("MessageText", {
 		description: "Message entry",
 	});
