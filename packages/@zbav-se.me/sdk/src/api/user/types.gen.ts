@@ -197,63 +197,6 @@ export type tTransactionStatusAccept = {
 };
 
 /**
- * Listing transaction status entry
- */
-export type tTransactionStatus = {
-    /**
-     * ID of the transaction status entry
-     */
-    id: string;
-    /**
-     * ID of the transaction referenced by the status
-     */
-    transactionId: string;
-    side: tTransactionSideEnum;
-    status: tTransactionStatusEnum & unknown;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    /**
-     * Event type
-     */
-    event: 'status';
-};
-
-/**
- * This filter matches the current status of the transaction
- */
-export const tTransactionStatusEnum = {
-    request: 'request',
-    accepted: 'accepted',
-    rejected: 'rejected',
-    success: 'success',
-    closed: 'closed',
-    expired: 'expired'
-} as const;
-
-/**
- * This filter matches the current status of the transaction
- */
-export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
-
-/**
- * Who initiated or affected the transaction change
- */
-export const tTransactionSideEnum = {
-    seller: 'seller',
-    buyer: 'buyer',
-    transaction: 'transaction',
-    system: 'system',
-    unknown: 'unknown'
-} as const;
-
-/**
- * Who initiated or affected the transaction change
- */
-export type tTransactionSideEnum = typeof tTransactionSideEnum[keyof typeof tTransactionSideEnum];
-
-/**
  * Buyer info for the transaction
  */
 export type tTransactionBuyerInfo = {
@@ -323,6 +266,10 @@ export type tTransaction = {
      * Transaction title
      */
     title: string;
+    /**
+     * Transaction statuses (ordered)
+     */
+    status: Array<tTransactionStatus>;
     gallery: tGallery & unknown;
     /**
      * Price of the listing
@@ -452,6 +399,55 @@ export type tGallery = {
      * Gallery items sorted by sort order
      */
     items: Array<tGalleryItem>;
+};
+
+/**
+ * This filter matches the current status of the transaction
+ */
+export const tTransactionStatusEnum = {
+    request: 'request',
+    accepted: 'accepted',
+    rejected: 'rejected',
+    success: 'success',
+    closed: 'closed',
+    expired: 'expired'
+} as const;
+
+/**
+ * This filter matches the current status of the transaction
+ */
+export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
+
+/**
+ * Who initiated or affected the transaction change
+ */
+export const tTransactionSideEnum = {
+    seller: 'seller',
+    buyer: 'buyer',
+    transaction: 'transaction',
+    system: 'system',
+    unknown: 'unknown'
+} as const;
+
+/**
+ * Who initiated or affected the transaction change
+ */
+export type tTransactionSideEnum = typeof tTransactionSideEnum[keyof typeof tTransactionSideEnum];
+
+/**
+ * Listing transaction status entry
+ */
+export type tTransactionStatus = {
+    /**
+     * ID of the transaction status entry
+     */
+    id: string;
+    /**
+     * ID of the transaction referenced by the status
+     */
+    transactionId: string;
+    side: tTransactionSideEnum;
+    status: tTransactionStatusEnum & unknown;
 };
 
 /**

@@ -279,69 +279,6 @@ export const sTransactionStatusAccept = {
     ]
 } as const;
 
-export const sTransactionStatus = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        transactionId: {
-            type: 'string'
-        },
-        side: {
-            $ref: '#/components/schemas/TransactionSideEnum'
-        },
-        status: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/TransactionStatusEnum'
-                },
-                {}
-            ]
-        },
-        createdAt: {
-            type: 'string'
-        },
-        event: {
-            type: 'string',
-            enum: [
-                'status'
-            ]
-        }
-    },
-    required: [
-        'id',
-        'transactionId',
-        'side',
-        'status',
-        'createdAt',
-        'event'
-    ]
-} as const;
-
-export const sTransactionStatusEnum = {
-    type: 'string',
-    enum: [
-        'request',
-        'accepted',
-        'rejected',
-        'success',
-        'closed',
-        'expired'
-    ]
-} as const;
-
-export const sTransactionSideEnum = {
-    type: 'string',
-    enum: [
-        'seller',
-        'buyer',
-        'transaction',
-        'system',
-        'unknown'
-    ]
-} as const;
-
 export const sTransactionBuyerInfo = {
     type: 'object',
     properties: {
@@ -412,6 +349,12 @@ export const sTransaction = {
         title: {
             type: 'string'
         },
+        status: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/TransactionStatus'
+            }
+        },
         gallery: {
             allOf: [
                 {
@@ -438,6 +381,7 @@ export const sTransaction = {
         'updatedAt',
         'expiresAt',
         'title',
+        'status',
         'gallery',
         'price',
         'currency',
@@ -634,6 +578,58 @@ export const sGallery = {
     required: [
         'id',
         'items'
+    ]
+} as const;
+
+export const sTransactionStatusEnum = {
+    type: 'string',
+    enum: [
+        'request',
+        'accepted',
+        'rejected',
+        'success',
+        'closed',
+        'expired'
+    ]
+} as const;
+
+export const sTransactionSideEnum = {
+    type: 'string',
+    enum: [
+        'seller',
+        'buyer',
+        'transaction',
+        'system',
+        'unknown'
+    ]
+} as const;
+
+export const sTransactionStatus = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        transactionId: {
+            type: 'string'
+        },
+        side: {
+            $ref: '#/components/schemas/TransactionSideEnum'
+        },
+        status: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/TransactionStatusEnum'
+                },
+                {}
+            ]
+        }
+    },
+    required: [
+        'id',
+        'transactionId',
+        'side',
+        'status'
     ]
 } as const;
 

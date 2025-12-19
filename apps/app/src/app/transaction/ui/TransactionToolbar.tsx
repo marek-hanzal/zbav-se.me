@@ -1,16 +1,19 @@
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import type { tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import { BuyerIcon, GalleryIcon, SellerIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace TransactionToolbar {
 	export interface Props extends Container.Props {
 		transactionId: string;
+		side: tUserSideEnum;
 	}
 }
 
 export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 	transactionId,
+	side,
 	ui,
 	...props
 }) => {
@@ -58,16 +61,22 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 					"w-max",
 				]}
 			>
-				<Button
-					iconEnabled={SellerIcon}
-					label="Seller info"
-					{...buttonUi}
-				/>
-				<Button
-					iconEnabled={BuyerIcon}
-					label="Buyer info"
-					{...buttonUi}
-				/>
+				{side === "buyer" ? (
+					<Button
+						iconEnabled={SellerIcon}
+						label="Seller info"
+						{...buttonUi}
+					/>
+				) : null}
+
+				{side === "seller" ? (
+					<Button
+						iconEnabled={BuyerIcon}
+						label="Buyer info"
+						{...buttonUi}
+					/>
+				) : null}
+
 				<Button
 					iconEnabled={GalleryIcon}
 					label="Gallery"

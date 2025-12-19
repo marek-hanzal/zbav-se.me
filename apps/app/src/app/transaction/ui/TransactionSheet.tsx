@@ -1,6 +1,7 @@
 import type { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container } from "@use-pico/client/ui/container";
 import { SheetView } from "@use-pico/client/ui/sheet-view";
+import type { tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
@@ -12,12 +13,14 @@ export namespace TransactionSheet {
 
 	export interface Props extends BottomSheet.Props {
 		locale: string;
+		side: tUserSideEnum;
 		transactionId: string;
 	}
 }
 
 export const TransactionSheet: FC<TransactionSheet.Props> = ({
 	locale,
+	side,
 	transactionId,
 	...props
 }) => {
@@ -33,8 +36,6 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({
 			fallback={null}
 		>
 			{({ data: transaction }) => {
-                // const status = transaction.
-
 				return (
 					<SheetView
 						data-ui={"TransactionSheet-[SheetView]"}
@@ -60,7 +61,10 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({
 											messageThreadId={transaction.messageThreadId}
 										/>
 
-										<TransactionChat transactionId={transaction.id} />
+										<TransactionChat
+											transactionId={transaction.id}
+											side={side}
+										/>
 									</Container>
 								),
 								header: ({ close }) => ({
