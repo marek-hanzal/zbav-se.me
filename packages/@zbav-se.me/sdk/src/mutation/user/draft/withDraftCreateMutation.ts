@@ -6,8 +6,6 @@ import type {
 	tApiDraftCreateResponse,
 	tDraftCreate,
 } from "../../../api/user/types.gen";
-import { withDraftCollectionQuery } from "../../../query/user/draft/withDraftCollectionQuery";
-import { withDraftCountQuery } from "../../../query/user/draft/withDraftCountQuery";
 
 export const withDraftCreateMutation = withMutation<
 	tDraftCreate,
@@ -28,8 +26,5 @@ export const withDraftCreateMutation = withMutation<
 			}),
 		);
 	},
-	invalidate: [
-		withDraftCollectionQuery,
-		withDraftCountQuery,
-	],
+	invalidate: [],
 });

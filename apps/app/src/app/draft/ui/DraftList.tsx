@@ -44,7 +44,12 @@ export const DraftList: FC<DraftList.Props> = ({ query, onSuccess, ui, ...props 
 												id: draftId,
 											},
 										}}
-										fallback={<SpinnerContainer />}
+										fallback={
+											<SpinnerContainer
+												data-ui="DraftList-[SpinnerContainer]"
+												type="icon"
+											/>
+										}
 									>
 										{({ data: draft }) => {
 											return (
