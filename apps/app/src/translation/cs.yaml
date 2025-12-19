@@ -512,7 +512,7 @@ b70f97dbf4be95b0c508538e1bc69c56771f4a6e2fc8e03f6bcea25d:
     value: Listing Score - Ignore (label)
 b8ff3ed6b71e3332fcbe61d56e37ad7a849b09934d4514084cc0b710:
     ref: No transactions as buyer (message)
-    value: No transactions as buyer (message)
+    value: Podívej se na nějaké inzeráty, zda ti něco nepadne do oka.
 ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
     ref: My listings (label)
     value: Moje inzeráty
@@ -585,6 +585,9 @@ db19de463c98378f66569f482fa6839883350859bf1fe5f4d577fd96:
 dc94036d98327a4965255fa6f5996fa3e1d2ade02e6d494ae1d96695:
     ref: Listing Score - Favourite (label)
     value: Listing Score - Favourite (label)
+de8832ba89f066ff957f2387c53ed8c543d4ed977d7fac554ab3f590:
+    ref: Go to my feed (button)
+    value: Inzeráty
 dfd5f9139a820075df69d7895015360b76d0360f3d4b77a845689614:
     ref: "0"
     value: "0"
@@ -637,7 +640,7 @@ f542390407cec6e7359028bb4c89623a355be9cb790e086164c3c4c2:
     value: Moje inzeráty
 f614ee6abd82ea21f37d43a4669a4ccdcda5dfb0553501b5cd572420:
     ref: No transactions as buyer (title)
-    value: No transactions as buyer (title)
+    value: Zatím tu nic nemáš
 f7656349927879425de1f295c96260d551349336336a22ada2d9ff70:
     ref: Clear all (button)
     value: Vyčistit vše

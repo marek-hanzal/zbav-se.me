@@ -50,7 +50,7 @@
 	--tone-primary-light-lead-active: color-mix(in srgb, var(--tone-primary-light-lead) 95%, black);
 	--tone-primary-light-bg: color-mix(in srgb, var(--color-pink-300) 70%, white);
 	--tone-primary-light-bg-active: color-mix(in srgb, var(--tone-primary-light-bg) 92.5%, white);
-	--tone-primary-light-bg-alt: color-mix(in srgb, var(--color-pink-400) 15%, white);
+	--tone-primary-light-bg-alt: color-mix(in srgb, var(--color-pink-400) 10%, white);
 	--tone-primary-light-bg-alt-active: color-mix(
 		in srgb,
 		var(--tone-primary-light-bg-alt) 92.5%,
@@ -398,7 +398,7 @@
 	--tone-link-light-lead-active: color-mix(in srgb, var(--tone-link-light-lead) 95%, black);
 	--tone-link-light-bg: color-mix(in srgb, var(--color-blue-50) 75%, white);
 	--tone-link-light-bg-active: color-mix(in srgb, var(--tone-link-light-bg) 92.5%, white);
-	--tone-link-light-bg-alt: color-mix(in srgb, var(--color-blue-100) 70%, white);
+	--tone-link-light-bg-alt: color-mix(in srgb, var(--color-blue-100) 25%, white);
 	--tone-link-light-bg-alt-active: color-mix(in srgb, var(--tone-link-light-bg-alt) 92.5%, black);
 	--tone-link-light-border: color-mix(in srgb, var(--color-blue-400) 10%, transparent);
 	--tone-link-light-border-active: color-mix(in srgb, var(--tone-link-light-border) 92.5%, black);

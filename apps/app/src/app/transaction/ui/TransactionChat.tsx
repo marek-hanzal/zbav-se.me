@@ -22,6 +22,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transactionId, ui, 
 
 	return (
 		<Container
+			data-ui="TransactionChat[Container]"
 			ui={{
 				layout: "vertical-flex",
 				width: "full",

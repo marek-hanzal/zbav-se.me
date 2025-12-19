@@ -36,6 +36,9 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({ transactionId, ..
 							value: view,
 							set: setView,
 						}}
+						contentProps={{
+							disableScroll: true,
+						}}
 						views={{
 							detail: {
 								children: (
@@ -44,7 +47,7 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({ transactionId, ..
 										ui={{
 											layout: "vertical-content-footer",
 											height: "full",
-											gap: "default",
+											gap: "xs",
 											inner: "default",
 										}}
 									>
