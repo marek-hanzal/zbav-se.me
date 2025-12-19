@@ -51,7 +51,9 @@ export const Route = createRootRouteWithContext<{
 		return (
 			<html
 				lang={locale}
-				className={"bg-slate-200 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"}
+				className={
+					"bg-slate-200 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+				}
 			>
 				<head>
 					<HeadContent />
