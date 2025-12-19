@@ -116,6 +116,9 @@
 26a562bfcfee8d3595e7d3f87dd79a4174db90edc3b52f5bdc5dc683:
     ref: First listing (title)
     value: Buď jednička!
+27199be77960fa6b867fcd30bf00eb0f6d4ff1e4279ba9b3d99b82ca:
+    ref: Create new draft (title)
+    value: Nová šablona
 29b5698dbd428037dfdf3d01534751de7b9bbdce4a6eeb4df2655548:
     ref: Price not set
     value: Cenu nemáš vyplněnou
@@ -662,6 +665,9 @@ e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
 e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
     ref: Feed location not selected
     value: Nemáš uvedenou
+eb18c941e11fe2d241983a0df227512b3e3691c12cc66af2303bc987:
+    ref: Draft (label)
+    value: (Bez názvu)
 ebff4121130dcb1e32bc8706a7005ec0c78e811db18e0ae28a6abb4c:
     ref: Close draft (hint)
     value: Později můžeš pokračovat, kdy jsi skončil.
