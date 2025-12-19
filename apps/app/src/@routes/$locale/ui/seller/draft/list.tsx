@@ -15,6 +15,9 @@ export const Route = createFileRoute("/$locale/ui/seller/draft/list")({
 							},
 						],
 					}}
+					ui={{
+						inner: "default",
+					}}
 				/>
 			</TitleContainer>
 		);

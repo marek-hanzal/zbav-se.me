@@ -1,4 +1,5 @@
 import { useLocale } from "@use-pico/client/hook";
+import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -44,17 +45,47 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 					locale,
 					id: draft.id,
 				}}
+				ui={{
+					height: "full",
+				}}
 			>
-				<HeroImage
-					data-ui={"DraftItem-[HeroImage]"}
-					src={hero.url}
-					alt={`Hero image for draft ${draft.id}`}
-					visible
-					ui={{
-						round: "lg",
-						width: "full",
-					}}
-				/>
+				{hero ? (
+					<HeroImage
+						data-ui={"DraftItem-[HeroImage]"}
+						src={hero.url}
+						alt={`Hero image for draft ${draft.id}`}
+						visible
+						ui={{
+							round: "lg",
+							width: "full",
+						}}
+					/>
+				) : (
+					<Container
+						ui={{
+							tone: "subtle",
+							theme: "light",
+							width: "full",
+							height: "full",
+							round: "lg",
+							flow: "horizontal",
+							items: "center",
+							justify: "center",
+							background: "default",
+							position: "relative",
+						}}
+					>
+						<Icon
+							icon={ArrowRightIcon}
+							ui={{
+								text: "3xl",
+								color: "text",
+								opacity: "medium",
+								snapTo: "right-center",
+							}}
+						/>
+					</Container>
+				)}
 			</LinkTo>
 
 			<Badge
