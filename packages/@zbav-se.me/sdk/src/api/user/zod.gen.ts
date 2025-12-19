@@ -761,12 +761,31 @@ export type zMessageDirectionEnum = z.infer<typeof zMessageDirectionEnum>;
 export const zMessageTypeEnum = z.enum([
     'text',
     'gallery',
-    'location'
+    'location',
+    'system'
 ]).register(z.globalRegistry, {
     description: 'Type of message'
 });
 
 export type zMessageTypeEnum = z.infer<typeof zMessageTypeEnum>;
+
+/**
+ * Message system entry
+ */
+export const zMessageSystem = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message entry'
+    }),
+    text: z.string().register(z.globalRegistry, {
+        description: 'Message content'
+    }),
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Message system entry'
+});
+
+export type zMessageSystem = z.infer<typeof zMessageSystem>;
 
 /**
  * Message location entry
@@ -837,7 +856,8 @@ export type zMessageText = z.infer<typeof zMessageText>;
 export const zMessage = z.union([
     zMessageText,
     zMessageGallery,
-    zMessageLocation
+    zMessageLocation,
+    zMessageSystem
 ]);
 
 export type zMessage = z.infer<typeof zMessage>;

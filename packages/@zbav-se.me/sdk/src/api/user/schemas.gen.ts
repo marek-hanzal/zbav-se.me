@@ -937,6 +937,49 @@ export const sMessageCollection = {
     ]
 } as const;
 
+export const sMessageSystem = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        text: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/MessageTypeEnum'
+        },
+        direction: {
+            $ref: '#/components/schemas/MessageDirectionEnum'
+        }
+    },
+    required: [
+        'id',
+        'text',
+        'type',
+        'direction'
+    ]
+} as const;
+
+export const sMessageDirectionEnum = {
+    type: 'string',
+    enum: [
+        'in',
+        'out',
+        'system'
+    ]
+} as const;
+
+export const sMessageTypeEnum = {
+    type: 'string',
+    enum: [
+        'text',
+        'gallery',
+        'location',
+        'system'
+    ]
+} as const;
+
 export const sMessageLocation = {
     type: 'object',
     properties: {
@@ -958,24 +1001,6 @@ export const sMessageLocation = {
         'locationId',
         'type',
         'direction'
-    ]
-} as const;
-
-export const sMessageDirectionEnum = {
-    type: 'string',
-    enum: [
-        'in',
-        'out',
-        'system'
-    ]
-} as const;
-
-export const sMessageTypeEnum = {
-    type: 'string',
-    enum: [
-        'text',
-        'gallery',
-        'location'
     ]
 } as const;
 
@@ -1049,6 +1074,9 @@ export const sMessage = {
         },
         {
             $ref: '#/components/schemas/MessageLocation'
+        },
+        {
+            $ref: '#/components/schemas/MessageSystem'
         }
     ]
 } as const;

@@ -700,17 +700,17 @@ export type tMessageCollection = {
 };
 
 /**
- * Message location entry
+ * Message system entry
  */
-export type tMessageLocation = {
+export type tMessageSystem = {
     /**
-     * ID of the message location entry
+     * ID of the message entry
      */
     id: string;
     /**
-     * ID of the location
+     * Message content
      */
-    locationId: string;
+    text: string;
     type: tMessageTypeEnum;
     direction: tMessageDirectionEnum;
 };
@@ -735,13 +735,30 @@ export type tMessageDirectionEnum = typeof tMessageDirectionEnum[keyof typeof tM
 export const tMessageTypeEnum = {
     text: 'text',
     gallery: 'gallery',
-    location: 'location'
+    location: 'location',
+    system: 'system'
 } as const;
 
 /**
  * Type of message
  */
 export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
+
+/**
+ * Message location entry
+ */
+export type tMessageLocation = {
+    /**
+     * ID of the message location entry
+     */
+    id: string;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+};
 
 /**
  * Message gallery entry
@@ -790,7 +807,7 @@ export type tMessageText = {
 /**
  * Message entry (unified view across all message types)
  */
-export type tMessage = tMessageText | tMessageGallery | tMessageLocation;
+export type tMessage = tMessageText | tMessageGallery | tMessageLocation | tMessageSystem;
 
 /**
  * Request to create a listing transaction message
