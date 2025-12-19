@@ -6,7 +6,6 @@ import { ListContainer } from "./location-select/ListContainer";
 
 export namespace LocationSelect {
 	export interface Props extends Omit<Container.Props, "onChange"> {
-		locale: string;
 		value: string | undefined | null;
 		onChange(value: string): void;
 		onLocation?(value: tLocation): void;
@@ -15,7 +14,6 @@ export namespace LocationSelect {
 }
 
 export const LocationSelect: FC<LocationSelect.Props> = ({
-	locale,
 	value,
 	onChange,
 	onLocation,
@@ -57,7 +55,6 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 			/>
 
 			<ListContainer
-				locale={locale}
 				textHint={textHint}
 				search={search}
 				value={value}

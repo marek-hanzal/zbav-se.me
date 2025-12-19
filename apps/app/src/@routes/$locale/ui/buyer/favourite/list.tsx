@@ -11,7 +11,6 @@ export const Route = createFileRoute("/$locale/ui/buyer/favourite/list")({
 			<TitleContainer textTitle={"Your favourites (title)"}>
 				<List
 					data-ui={"/buyer/favourite/list[FeedFavouriteList]"}
-					locale={locale}
 					query={{
 						sort: [
 							{

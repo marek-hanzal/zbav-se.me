@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useLocale } from "@use-pico/client/hook";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
 import { Setup } from "~/app/draft/Setup";
@@ -6,7 +7,7 @@ import { Setup } from "~/app/draft/Setup";
 export const Route = createFileRoute("/$locale/ui/seller/draft/$id/edit")({
 	component() {
 		const { id } = Route.useParams();
-		const { locale } = Route.useParams();
+		const locale = useLocale();
 		const navigate = Route.useNavigate();
 
 		return (
@@ -20,7 +21,6 @@ export const Route = createFileRoute("/$locale/ui/seller/draft/$id/edit")({
 			>
 				{({ data }) => (
 					<Setup
-						locale={locale}
 						draft={data}
 						onListing={async () => {
 							await navigate({

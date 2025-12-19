@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { SaveIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -39,14 +40,14 @@ export namespace Setup {
 		| "expireAt";
 
 	export interface Props {
-		locale: string;
 		draft: tDraft;
 		onListing(listing: tListing): Promise<any>;
 		onDelete(): Promise<any>;
 	}
 }
 
-export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) => {
+export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
+	const locale = useLocale();
 	const [view, setView] = useState<Setup.View>("default");
 
 	return (
@@ -97,7 +98,6 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 
 								<PriceValue
 									draft={draft}
-									locale={locale}
 									onClick={() => {
 										setView("price");
 									}}
@@ -188,7 +188,6 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 				location: {
 					children: (
 						<LocationPatch
-							locale={locale}
 							draft={draft}
 							onCancel={() => setView("default")}
 							onSettled={() => setView("default")}
@@ -207,7 +206,6 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 				category: {
 					children: (
 						<CategoryPatch
-							locale={locale}
 							draft={draft}
 							onCancel={() => setView("default")}
 							onSettled={() => setView("default")}

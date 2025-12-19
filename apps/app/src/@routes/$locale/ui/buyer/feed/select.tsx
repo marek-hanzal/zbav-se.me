@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useLocale } from "@use-pico/client/hook";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
@@ -18,7 +19,7 @@ export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
 		}
 	},
 	component() {
-		const { locale } = Route.useParams();
+		const locale = useLocale();
 
 		const feedCountLimit = 3;
 
@@ -32,7 +33,6 @@ export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
 			>
 				<List
 					data-ui={"/buyer/feed/select[List]"}
-					locale={locale}
 					query={{
 						cursor: {
 							page: 0,

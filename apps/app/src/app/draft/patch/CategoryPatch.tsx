@@ -11,7 +11,6 @@ import { SaveControl } from "~/app/control/SaveControl";
 
 export namespace CategoryPatch {
 	export interface Props extends TitleContainer.Props {
-		locale: string;
 		draft: tDraft;
 		onCancel(): void;
 		onSettled?(): void;
@@ -19,7 +18,6 @@ export namespace CategoryPatch {
 }
 
 export const CategoryPatch: FC<CategoryPatch.Props> = ({
-	locale,
 	draft,
 	onCancel,
 	onSettled,
@@ -68,7 +66,6 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 				}}
 			>
 				<CategorySelect
-					locale={locale}
 					selection={selection}
 					categoryId={categoryId ?? undefined}
 				/>

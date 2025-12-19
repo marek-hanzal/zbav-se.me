@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { WarningIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
@@ -13,7 +14,6 @@ import type { FC } from "react";
 
 export namespace ListContainer {
 	export interface Props extends Omit<Container.Props, "onChange"> {
-		locale: string;
 		textHint?: string;
 		search: Fulltext.Value;
 		value: string | undefined | null;
@@ -23,7 +23,6 @@ export namespace ListContainer {
 }
 
 export const ListContainer: FC<ListContainer.Props> = ({
-	locale,
 	textHint,
 	search,
 	value,
@@ -32,6 +31,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 	ui,
 	...props
 }) => {
+	const locale = useLocale();
 	const text = search ?? value ?? "";
 
 	if (text.length < 3) {

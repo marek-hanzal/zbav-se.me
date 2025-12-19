@@ -9,7 +9,6 @@ import { Item } from "./Item";
 
 export namespace Content {
 	export interface Props extends Container.Props, MarkSuspense.Props {
-		locale: string;
 		query: tFeedQuery;
 		tools: Item.Tools[];
 		linkTo: Item.LinkTo;
@@ -19,7 +18,6 @@ export namespace Content {
 
 export const Content: FC<Content.Props> = ({
 	_suspense,
-	locale,
 	query,
 	tools,
 	linkTo,
@@ -61,7 +59,6 @@ export const Content: FC<Content.Props> = ({
 						}}
 						fallback={
 							<Item
-								locale={locale}
 								feed={{
 									id: feedId,
 									locationId: null,
@@ -80,7 +77,6 @@ export const Content: FC<Content.Props> = ({
 							return (
 								<Item
 									feed={feed}
-									locale={locale}
 									defaultOpen={defaultOpenId === feedId}
 									tools={tools}
 									linkTo={linkTo}

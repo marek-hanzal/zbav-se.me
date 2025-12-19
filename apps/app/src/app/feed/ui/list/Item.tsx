@@ -15,7 +15,6 @@ export namespace Item {
 
 	export namespace LinkTo {
 		export interface Props extends PropsWithChildren {
-			locale: string;
 			feedId: string;
 		}
 
@@ -33,7 +32,6 @@ export namespace Item {
 	}
 
 	export interface Props extends Omit<Badge.Props, "children"> {
-		locale: string;
 		feed: tFeed;
 		defaultOpen: boolean;
 		tools: Tools[];
@@ -43,7 +41,6 @@ export namespace Item {
 }
 
 export const Item: FC<Item.Props> = ({
-	locale,
 	feed,
 	defaultOpen,
 	tools,
@@ -75,7 +72,6 @@ export const Item: FC<Item.Props> = ({
 			{...props}
 		>
 			{linkTo.header({
-				locale,
 				feedId: feed.id,
 				children: feed.upload ? (
 					<HeroImage
@@ -169,7 +165,6 @@ export const Item: FC<Item.Props> = ({
 
 					<SetupSheet
 						data-ui={"Item-[FeedSetupSheet]"}
-						locale={locale}
 						feed={feed}
 						state={{
 							value: isFeedSettings,

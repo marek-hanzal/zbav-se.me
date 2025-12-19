@@ -7,7 +7,6 @@ import { EmptyStatus } from "~/app/feed-favourite/ui/list/EmptyStatus";
 
 export namespace List {
 	export interface Props extends Container.Props {
-		locale: string;
 		query: tFeedQuery;
 		linkTo: Item.LinkTo;
 	}
@@ -22,7 +21,7 @@ export namespace List {
  *
  * @see {@link Item} - The component used to render individual feed items
  */
-export const List: FC<List.Props> = ({ locale, query, linkTo, ui, ...props }) => {
+export const List: FC<List.Props> = ({ query, linkTo, ui, ...props }) => {
 	return (
 		<Container
 			data-ui={"List[Container]"}
@@ -56,7 +55,6 @@ export const List: FC<List.Props> = ({ locale, query, linkTo, ui, ...props }) =>
 								<Item
 									data-ui={"List-[Item]"}
 									key={feed.id}
-									locale={locale}
 									feed={feed}
 									defaultOpen={false}
 									count={feed.count}

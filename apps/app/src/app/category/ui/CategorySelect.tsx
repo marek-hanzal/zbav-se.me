@@ -7,14 +7,12 @@ import { ListContainer } from "./category-select/ListContainer";
 
 export namespace CategorySelect {
 	export interface Props extends Container.Props {
-		locale: string;
 		selection: useSelection.Selection<EntitySchema.Type>;
 		categoryId: string | undefined;
 	}
 }
 
 export const CategorySelect: FC<CategorySelect.Props> = ({
-	locale,
 	selection,
 	categoryId,
 	ui,
@@ -44,7 +42,6 @@ export const CategorySelect: FC<CategorySelect.Props> = ({
 			<Suspense fallback={<SpinnerContainer />}>
 				<ListContainer
 					_suspense={"I know"}
-					locale={locale}
 					fulltext={fulltext}
 					selection={selection}
 					categoryId={categoryId}

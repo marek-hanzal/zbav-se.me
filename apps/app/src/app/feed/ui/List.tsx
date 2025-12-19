@@ -7,7 +7,6 @@ import { Content } from "./list/Content";
 
 export namespace List {
 	export interface Props extends Container.Props {
-		locale: string;
 		query: tFeedQuery;
 		limit?: number;
 		tools: Item.Tools[];
@@ -15,7 +14,7 @@ export namespace List {
 	}
 }
 
-export const List: FC<List.Props> = ({ locale, query, limit = 10, tools, linkTo, ...props }) => {
+export const List: FC<List.Props> = ({ query, limit = 10, tools, linkTo, ...props }) => {
 	return (
 		<withFeedCountQuery.Suspense
 			data={{}}
@@ -38,7 +37,6 @@ export const List: FC<List.Props> = ({ locale, query, limit = 10, tools, linkTo,
 					>
 						<Content
 							_suspense={"I know"}
-							locale={locale}
 							query={query}
 							tools={tools}
 							linkTo={linkTo}

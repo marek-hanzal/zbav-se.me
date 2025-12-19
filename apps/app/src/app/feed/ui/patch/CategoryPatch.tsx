@@ -10,20 +10,13 @@ import { SaveControl } from "~/app/control/SaveControl";
 
 export namespace CategoryPatch {
 	export interface Props extends Container.Props {
-		locale: string;
 		feed: tFeed;
 		onSettled?(): void;
 		onCancel(): void;
 	}
 }
 
-export const CategoryPatch: FC<CategoryPatch.Props> = ({
-	locale,
-	feed,
-	onSettled,
-	onCancel,
-	...props
-}) => {
+export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
 	const patch = withFeedFetchQuery.useSet();
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
@@ -60,7 +53,6 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 			{...props}
 		>
 			<CategorySelect
-				locale={locale}
 				selection={selection}
 				categoryId={categoryId ?? undefined}
 			/>

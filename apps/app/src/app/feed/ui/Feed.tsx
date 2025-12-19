@@ -34,10 +34,6 @@ export namespace Feed {
 	 */
 	export interface Props extends Container.Props {
 		/**
-		 * Locale string for internationalized content
-		 */
-		locale: string;
-		/**
 		 * Feed data to display and edit
 		 */
 		feed: tFeed;
@@ -61,14 +57,12 @@ export namespace Feed {
  * @example
  * ```tsx
  * <Feed
- *   locale="en"
  *   feed={feedData}
  *   noDelete={false}
  * />
  * ```
  */
 export const Feed: FC<Feed.Props> = ({
-	locale,
 	feed,
 	values,
 	noDelete = false,

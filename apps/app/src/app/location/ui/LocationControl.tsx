@@ -6,7 +6,6 @@ import { LocationSelect } from "~/app/location/ui/LocationSelect";
 
 export namespace LocationControl {
 	export interface Props extends Container.Props {
-		locale: string;
 		value: string | undefined | null;
 		onCancel(): void;
 		onSave(props: { locationId: string; location: tLocation }): void;
@@ -15,7 +14,6 @@ export namespace LocationControl {
 }
 
 export const LocationControl: FC<LocationControl.Props> = ({
-	locale,
 	value,
 	onCancel,
 	onSave,
@@ -37,7 +35,6 @@ export const LocationControl: FC<LocationControl.Props> = ({
 			{...props}
 		>
 			<LocationSelect
-				locale={locale}
 				value={locationId}
 				onLocation={setLocation}
 				onChange={setLocationId}

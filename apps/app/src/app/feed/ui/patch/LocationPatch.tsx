@@ -7,20 +7,13 @@ import { LocationControl } from "~/app/location/ui/LocationControl";
 
 export namespace LocationPatch {
 	export interface Props extends Container.Props {
-		locale: string;
 		feed: tFeed;
 		onSettled?(): void;
 		onCancel(): void;
 	}
 }
 
-export const LocationPatch: FC<LocationPatch.Props> = ({
-	locale,
-	feed,
-	onSettled,
-	onCancel,
-	...props
-}) => {
+export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
 	const patch = withFeedFetchQuery.useSet();
 	const mutation = withFeedPatchMutation.useMutation({
 		onSuccess(feed) {
@@ -37,7 +30,6 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 
 	return (
 		<LocationControl
-			locale={locale}
 			onCancel={onCancel}
 			onSave={({ locationId, location }) => {
 				mutation.mutate({

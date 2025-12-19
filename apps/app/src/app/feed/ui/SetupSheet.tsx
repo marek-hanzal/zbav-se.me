@@ -30,7 +30,6 @@ export namespace SetupSheet {
 		| "title";
 
 	export interface Props extends BottomSheet.PropsEx {
-		locale: string;
 		feed: tFeed;
 		noDelete?: boolean;
 		state: StateType.State<boolean>;
@@ -38,7 +37,6 @@ export namespace SetupSheet {
 }
 
 export const SetupSheet: FC<SetupSheet.Props> = ({
-	locale,
 	feed,
 	state,
 	noDelete = false,
@@ -65,7 +63,6 @@ export const SetupSheet: FC<SetupSheet.Props> = ({
 					children: (
 						<Feed
 							data-ui={"FeedSetupButton-[FeedDetailContainer]"}
-							locale={locale}
 							feed={feed}
 							noDelete={noDelete}
 							ui={{
@@ -172,7 +169,6 @@ export const SetupSheet: FC<SetupSheet.Props> = ({
 				category: {
 					children: (
 						<CategoryPatch
-							locale={locale}
 							feed={feed}
 							onSettled={() => setView("detail")}
 							onCancel={() => setView("detail")}
@@ -185,7 +181,6 @@ export const SetupSheet: FC<SetupSheet.Props> = ({
 				location: {
 					children: (
 						<LocationPatch
-							locale={locale}
 							feed={feed}
 							onSettled={() => setView("detail")}
 							onCancel={() => setView("detail")}

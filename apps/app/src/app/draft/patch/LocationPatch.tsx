@@ -7,7 +7,6 @@ import { LocationControl } from "~/app/location/ui/LocationControl";
 
 export namespace LocationPatch {
 	export interface Props extends TitleContainer.Props {
-		locale: string;
 		draft: tDraft;
 		onCancel(): void;
 		onSettled?(): void;
@@ -15,7 +14,6 @@ export namespace LocationPatch {
 }
 
 export const LocationPatch: FC<LocationPatch.Props> = ({
-	locale,
 	draft,
 	onCancel,
 	onSettled,
@@ -42,7 +40,6 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 			{...props}
 		>
 			<LocationControl
-				locale={locale}
 				onCancel={onCancel}
 				onSave={({ locationId }) => {
 					mutation.mutate({
