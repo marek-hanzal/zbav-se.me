@@ -4,6 +4,7 @@ import type { tUpload } from "@zbav-se.me/sdk/api/user";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
+import { match } from "ts-pattern";
 import { TransactionSheet } from "~/app/transaction/ui/TransactionSheet";
 
 export namespace TransactionItem {
@@ -66,6 +67,29 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 							onClick={() => setIsOpen((prev) => !prev)}
 							{...props}
 						>
+							{match(transaction.status)
+								.with("rejected", "closed", "expired", () => {
+									return (
+										<Container
+											data-ui="TransactionItem-[Overlay]"
+											ui={{
+												tone: "neutral",
+												theme: "light",
+												background: "default",
+												opacity: "low",
+											}}
+											className={[
+												"absolute",
+												"inset-0",
+											]}
+										/>
+									);
+								})
+								.with("accepted", "success", "request", () => {
+									return null;
+								})
+								.exhaustive()}
+
 							<HeroImage
 								src={hero.url}
 								alt={`Hero image for transaction ${transaction.id}`}

@@ -5,7 +5,6 @@ import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/u
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { useStatus } from "~/app/transaction/hook/useStatus";
 import { useSide } from "~/app/user/useSide";
 
 export namespace AcceptButton {
@@ -42,12 +41,7 @@ export const AcceptButton: FC<AcceptButton.Props> = ({ transactionId, ...props }
 			}
 		>
 			{({ data: transaction }) => {
-				// biome-ignore lint/correctness/useHookAtTopLevel: Ssst
-				const { status } = useStatus({
-					transaction,
-				});
-
-				if (status !== "request") {
+				if (transaction.status !== "request") {
 					return null;
 				}
 

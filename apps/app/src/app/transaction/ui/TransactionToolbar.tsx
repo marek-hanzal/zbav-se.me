@@ -1,6 +1,5 @@
-import { Button } from "@use-pico/client/ui/button";
+import type { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import { GalleryIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { AcceptButton } from "~/app/transaction/ui/button/AcceptButton";
 import { RejectButton } from "~/app/transaction/ui/button/RejectButton";
@@ -81,12 +80,6 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 
 				<BuyerInfoButton
 					transactionId={transactionId}
-					{...buttonUi}
-				/>
-
-				<Button
-					iconEnabled={GalleryIcon}
-					label="Gallery"
 					{...buttonUi}
 				/>
 			</Container>

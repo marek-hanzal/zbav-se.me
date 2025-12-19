@@ -34,13 +34,11 @@ export const MessageText: FC<MessageText.Props> = ({ message, ...props }) => {
 					.with("out", () => {
 						return {
 							tone: "primary",
-							justify: "end",
 						};
 					})
 					.with("system", () => {
 						return {
 							tone: "neutral",
-							justify: "center",
 						};
 					})
 					.exhaustive(),
@@ -51,6 +49,12 @@ export const MessageText: FC<MessageText.Props> = ({ message, ...props }) => {
 				message.direction === "out"
 					? [
 							"ml-auto",
+						]
+					: undefined,
+				message.direction === "system"
+					? [
+							"mx-auto",
+							"text-center",
 						]
 					: undefined,
 			]}

@@ -3,7 +3,7 @@
     value: Např. "iPhone" nebo "Bosh"
 022cc5c29a7e44c9fd5d268e2abcc13f44f38fcabbe0552e3d6c0710:
     ref: Buyer info (button)
-    value: Kupující
+    value: Informace o kupujícím
 02d821a7f6c8c860ddf14a10fa006f1668bf485d4832ffa830cf1a82:
     ref: Feed age (title)
     value: Věk, co tě zajímá
@@ -128,6 +128,9 @@
 36446a1dd7dd20bdfb36bbbe57ab18e8413e7f446d937fa6f2cdd00f:
     ref: Feed setup (button)
     value: Nastavení seznamu
+36e3a2076a652d8613c8604b631fa834372b465cfc2497d82b2c4b04:
+    ref: seller
+    value: seller
 37e1cb2b4f78786fb70f260332ccd707e7a0ad66fdf52bf3a4f4239c:
     ref: Listing Score - Feed views (label)
     value: Listing Score - Feed views (label)
@@ -197,7 +200,7 @@
     value: Chci být první
 4f04083c52884888c6258c7fe83a35ff1ce96d78ee8c600a0397392c:
     ref: Seller info (button)
-    value: Prodejce
+    value: Informace o prodejci
 5216a97ce804ea83d2142778cf1659ad70adc72c670ea7365e396fcb:
     ref: Go home (welcome)
     value: Jdeme na to!
@@ -210,6 +213,9 @@
 5611e161fc48366fdb56f2529712795617513c1b346552e32a53ff19:
     ref: Loading... (button)
     value: ...Rozjímám...
+57cf1f27b485ad4ccfff9487dc973c5a5a9d3582b03670f822646bc0:
+    ref: Transaction not accepted - seller (message)
+    value: Zprávy můžeš psát až po přijetí transakce.
 58a92c1f41bf1041dacdc744234255b7bcbfda299f147f7ddbf60fe2:
     ref: Feed category (title)
     value: Kategorie
@@ -379,8 +385,11 @@
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
     ref: Fulltext (placeholder)
     value: Co hledáme?
+Buyer rejected the transaction (message):
+    value: Kupující odmítl transakci.
+    static: true
 "Buyer: Transaction request created (message)":
-    value: Mám zájem!
+    value: Nový zájemce!
     static: true
 Condition - Age [1] (hint):
     static: true
@@ -469,6 +478,9 @@ Listing common sort value price - desc:
 Listing common sort value price - unused:
     static: true
     value: Cena (bez řazení)
+Seller rejected the transaction (message):
+    value: Prodejce odmítl transakci.
+    static: true
 a038a4da09ca1bfcd3d73f545e72575a33516d5e7ef37b09b4f5b397:
     ref: Welcome (title)
     value: Klikej. Zkoumej. Nemáš tu co posrat.
@@ -671,6 +683,9 @@ fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
 fa8d4af882062a1148f43f806622a6851ff29ff80f66467624617d7a:
     ref: Listing location (hint)
     value: Pozor, umístění je veřejný údaj, ale můžeš napsat třeba název obce.
+faecab53142a1792e02de1dfa45f39cc83797a47dc171d3687e10fa0:
+    ref: Transaction not accepted - buyer (message)
+    value: Zprávy můžeš psát až po přijetí transakce prodávajícím.
 fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
     ref: Back to home (link)
     value: Zpět domů
@@ -680,9 +695,3 @@ fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
 ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
     ref: No categories found (title)
     value: Ajajaj, nic jsme nenašli!
-Buyer rejected the transaction (message):
-    value: Kupující odmítl transakci.
-    static: true
-Seller rejected the transaction (message):
-    value: Prodejce odmítl transakci.
-    static: true

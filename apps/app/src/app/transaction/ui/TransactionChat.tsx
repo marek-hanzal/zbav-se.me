@@ -1,5 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import { withMessageTextCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import {
@@ -9,6 +10,7 @@ import {
 import { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC } from "react";
 import { TransactionToolbar } from "~/app/transaction/ui/TransactionToolbar";
+import { useSide } from "~/app/user/useSide";
 
 export namespace TransactionChat {
 	export interface Props extends Container.Props {
@@ -17,6 +19,7 @@ export namespace TransactionChat {
 }
 
 export const TransactionChat: FC<TransactionChat.Props> = ({ transactionId, ui, ...props }) => {
+	const side = useSide();
 	const queryClient = useQueryClient();
 	const messageMutation = withMessageTextCreateMutation.useMutation();
 
@@ -41,6 +44,24 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transactionId, ui, 
 				fallback={<SpinnerContainer />}
 			>
 				{({ data: transaction }) => {
+					if (transaction.status !== "accepted") {
+						return (
+							<Tx
+								label={
+									side === "seller"
+										? "Transaction not accepted - seller (message)"
+										: "Transaction not accepted - buyer (message)"
+								}
+								ui={{
+									width: "full",
+									text: "sm",
+									opacity: "medium",
+								}}
+								className="text-center"
+							/>
+						);
+					}
+
 					return (
 						<ChatInput
 							onSubmit={(message) => {

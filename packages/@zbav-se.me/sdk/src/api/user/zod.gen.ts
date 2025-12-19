@@ -234,6 +234,57 @@ export const zTransactionStatusAccept = z.object({
 export type zTransactionStatusAccept = z.infer<typeof zTransactionStatusAccept>;
 
 /**
+ * This filter matches the current status of the transaction
+ */
+export const zTransactionStatusEnum = z.enum([
+    'request',
+    'accepted',
+    'rejected',
+    'success',
+    'closed',
+    'expired'
+]).register(z.globalRegistry, {
+    description: 'This filter matches the current status of the transaction'
+});
+
+export type zTransactionStatusEnum = z.infer<typeof zTransactionStatusEnum>;
+
+/**
+ * Who initiated or affected the transaction change
+ */
+export const zTransactionSideEnum = z.enum([
+    'seller',
+    'buyer',
+    'transaction',
+    'system',
+    'unknown'
+]).register(z.globalRegistry, {
+    description: 'Who initiated or affected the transaction change'
+});
+
+export type zTransactionSideEnum = z.infer<typeof zTransactionSideEnum>;
+
+/**
+ * Listing transaction status entry
+ */
+export const zTransactionStatus = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction status entry'
+    }),
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction referenced by the status'
+    }),
+    side: zTransactionSideEnum,
+    status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'Current status of the listing transaction'
+    }))
+}).register(z.globalRegistry, {
+    description: 'Listing transaction status entry'
+});
+
+export type zTransactionStatus = z.infer<typeof zTransactionStatus>;
+
+/**
  * Buyer info for the transaction
  */
 export const zTransactionBuyerInfo = z.object({
@@ -397,57 +448,6 @@ export const zGallery = z.object({
 export type zGallery = z.infer<typeof zGallery>;
 
 /**
- * This filter matches the current status of the transaction
- */
-export const zTransactionStatusEnum = z.enum([
-    'request',
-    'accepted',
-    'rejected',
-    'success',
-    'closed',
-    'expired'
-]).register(z.globalRegistry, {
-    description: 'This filter matches the current status of the transaction'
-});
-
-export type zTransactionStatusEnum = z.infer<typeof zTransactionStatusEnum>;
-
-/**
- * Who initiated or affected the transaction change
- */
-export const zTransactionSideEnum = z.enum([
-    'seller',
-    'buyer',
-    'transaction',
-    'system',
-    'unknown'
-]).register(z.globalRegistry, {
-    description: 'Who initiated or affected the transaction change'
-});
-
-export type zTransactionSideEnum = z.infer<typeof zTransactionSideEnum>;
-
-/**
- * Listing transaction status entry
- */
-export const zTransactionStatus = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the transaction status entry'
-    }),
-    transactionId: z.string().register(z.globalRegistry, {
-        description: 'ID of the transaction referenced by the status'
-    }),
-    side: zTransactionSideEnum,
-    status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
-        description: 'Current status of the listing transaction'
-    }))
-}).register(z.globalRegistry, {
-    description: 'Listing transaction status entry'
-});
-
-export type zTransactionStatus = z.infer<typeof zTransactionStatus>;
-
-/**
  * Transaction data
  */
 export const zTransaction = z.object({
@@ -472,9 +472,9 @@ export const zTransaction = z.object({
     title: z.string().register(z.globalRegistry, {
         description: 'Transaction title'
     }),
-    status: z.array(zTransactionStatus).register(z.globalRegistry, {
-        description: 'Transaction statuses (ordered)'
-    }),
+    status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'Current status of the listing transaction'
+    })),
     gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
         description: 'Gallery data with items'
     })),
@@ -506,7 +506,8 @@ export type zTransactionMeta = z.infer<typeof zTransactionMeta>;
 export const zTransactionSortField = z.enum([
     'createdAt',
     'updatedAt',
-    'expiresAt'
+    'expiresAt',
+    'status'
 ]).register(z.globalRegistry, {
     description: 'Field of the transaction sort'
 });

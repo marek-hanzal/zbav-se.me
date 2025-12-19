@@ -13,7 +13,11 @@ export const Route = createFileRoute("/$locale/ui/seller/message/list")({
 					query={{
 						sort: [
 							{
-								field: "updatedAt",
+								field: "status",
+								direction: "asc",
+							},
+							{
+								field: "createdAt",
 								direction: "desc",
 							},
 						],

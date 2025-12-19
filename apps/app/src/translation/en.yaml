@@ -106,6 +106,9 @@
 36446a1dd7dd20bdfb36bbbe57ab18e8413e7f446d937fa6f2cdd00f:
   ref: Feed setup (button)
   value: Feed setup (button)
+36e3a2076a652d8613c8604b631fa834372b465cfc2497d82b2c4b04:
+  ref: seller
+  value: seller
 37e1cb2b4f78786fb70f260332ccd707e7a0ad66fdf52bf3a4f4239c:
   ref: Listing Score - Feed views (label)
   value: Listing Score - Feed views (label)
@@ -184,6 +187,9 @@
 5611e161fc48366fdb56f2529712795617513c1b346552e32a53ff19:
   ref: Loading... (button)
   value: Loading... (button)
+57cf1f27b485ad4ccfff9487dc973c5a5a9d3582b03670f822646bc0:
+  ref: Transaction not accepted - seller (message)
+  value: Transaction not accepted - seller (message)
 58a92c1f41bf1041dacdc744234255b7bcbfda299f147f7ddbf60fe2:
   ref: Feed category (title)
   value: Feed category (title)
@@ -537,6 +543,9 @@ fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
 fa8d4af882062a1148f43f806622a6851ff29ff80f66467624617d7a:
   ref: Listing location (hint)
   value: Listing location (hint)
+faecab53142a1792e02de1dfa45f39cc83797a47dc171d3687e10fa0:
+  ref: Transaction not accepted - buyer (message)
+  value: Transaction not accepted - buyer (message)
 fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
   ref: Back to home (link)
   value: Back to home (link)
