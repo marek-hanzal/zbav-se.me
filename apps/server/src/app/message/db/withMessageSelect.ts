@@ -70,7 +70,22 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 			.as("direction"),
 	]);
 
-	const unionQuery = textQuery.unionAll(galleryQuery).unionAll(locationQuery);
+	const systemQuery = database.selectFrom("message_system as ms").select([
+		"ms.id",
+		"ms.messageThreadId",
+		"ms.createdAt",
+		sql<MessageTypeEnumSchema.Type>`'system'`.as("type"),
+		sql<string>`''`.as("userId"),
+		"ms.text",
+		sql<string | null>`null`.as("galleryId"),
+		sql<string | null>`null`.as("locationId"),
+		sql<MessageDirectionEnumSchema.Type>`'system'`.as("direction"),
+	]);
+
+	const unionQuery = textQuery
+		.unionAll(galleryQuery)
+		.unionAll(locationQuery)
+		.unionAll(systemQuery);
 
 	let query = database.selectFrom(unionQuery.as("msg")).selectAll("msg");
 

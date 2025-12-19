@@ -19,11 +19,12 @@ import { UserScoreMigration } from "./0017-user-score";
 import { MessageThreadMigration } from "./0018-message-thread";
 import { MessageThreadUserMigration } from "./0019-message-thread-user";
 import { MessageTextMigration } from "./0020-message-text";
-import { MessageGalleryMigration } from "./0021-message-gallery";
-import { MessageLocationMigration } from "./0022-message-location";
-import { TransactionMigration } from "./0023-transaction";
-import { TransactionStatusMigration } from "./0024-transaction-status";
-import { GitHubMigration } from "./0025-github";
+import { MessageSystemMigration } from "./0021-message-system";
+import { MessageGalleryMigration } from "./0022-message-gallery";
+import { MessageLocationMigration } from "./0023-message-location";
+import { TransactionMigration } from "./0024-transaction";
+import { TransactionStatusMigration } from "./0025-transaction-status";
+import { GitHubMigration } from "./0026-github";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -47,9 +48,10 @@ export const migrations = {
 	"0018-message-thread": MessageThreadMigration,
 	"0019-message-thread-user": MessageThreadUserMigration,
 	"0020-message-text": MessageTextMigration,
-	"0021-message-gallery": MessageGalleryMigration,
-	"0022-message-location": MessageLocationMigration,
-	"0023-transaction": TransactionMigration,
-	"0024-transaction-status": TransactionStatusMigration,
-	"0025-github": GitHubMigration,
+	"0021-message-system": MessageSystemMigration,
+	"0022-message-gallery": MessageGalleryMigration,
+	"0023-message-location": MessageLocationMigration,
+	"0024-transaction": TransactionMigration,
+	"0025-transaction-status": TransactionStatusMigration,
+	"0026-github": GitHubMigration,
 } as const;

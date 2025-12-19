@@ -1,6 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { MessageGallerySchema } from "~/@user/message-gallery/schema/MessageGallerySchema";
 import { MessageLocationSchema } from "~/@user/message-location/schema/MessageLocationSchema";
+import { MessageSystemSchema } from "~/@user/message-system/schema/MessageSystemSchema";
 import { MessageTextSchema } from "~/@user/message-text/schema/MessageTextSchema";
 
 export const MessageSchema = z
@@ -8,6 +9,7 @@ export const MessageSchema = z
 		MessageTextSchema,
 		MessageGallerySchema,
 		MessageLocationSchema,
+		MessageSystemSchema,
 	])
 	.openapi("Message", {
 		description: "Message entry (unified view across all message types)",
