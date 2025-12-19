@@ -1,5 +1,6 @@
-import { Button, type uiButton } from "@use-pico/client/ui/button";
+import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { BuyerIcon, GalleryIcon, SellerIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace TransactionToolbar {
@@ -13,16 +14,26 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 	ui,
 	...props
 }) => {
-	const buttonUi: uiButton.Ui = {
-		tone: "neutral",
-		theme: "light",
-		inner: "default",
-		round: "default",
-		background: "default",
-		text: "md",
-		border: true,
-		shadow: true,
-		width: "content",
+	const buttonUi: Button.Props = {
+		iconProps: {
+			ui: {
+				text: "xl",
+			},
+		},
+		ui: {
+			tone: "neutral",
+			theme: "light",
+			round: "full",
+			background: "default",
+			text: "sm",
+			border: true,
+			shadow: false,
+			width: "content",
+		},
+		className: [
+			"px-6",
+			"py-1",
+		],
 	};
 
 	return (
@@ -31,6 +42,7 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 				scroll: "horizontal",
 				width: "full",
 				inner: "default",
+				opacity: "low",
 				...ui,
 			}}
 			{...props}
@@ -47,16 +59,19 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 				]}
 			>
 				<Button
+					iconEnabled={SellerIcon}
 					label="Seller info"
-					ui={buttonUi}
+					{...buttonUi}
 				/>
 				<Button
+					iconEnabled={BuyerIcon}
 					label="Buyer info"
-					ui={buttonUi}
+					{...buttonUi}
 				/>
 				<Button
+					iconEnabled={GalleryIcon}
 					label="Gallery"
-					ui={buttonUi}
+					{...buttonUi}
 				/>
 			</Container>
 		</Container>

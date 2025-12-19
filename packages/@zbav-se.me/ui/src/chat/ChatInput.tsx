@@ -167,7 +167,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				iconEnabled={SendMessageIcon}
 				iconProps={{
 					ui: {
-						text: "xl",
+						text: "2xl",
 					},
 				}}
 				disabled={loading || message.length === 0}
@@ -182,6 +182,10 @@ export const ChatInput: FC<ChatInput.Props> = ({
 					tone: "brand",
 					theme: "light",
 					square: "default",
+					background: undefined,
+					border: false,
+					shadow: false,
+					color: "lead",
 				}}
 			/>
 		</Container>

@@ -60,17 +60,25 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({
 											messageThreadId={transaction.messageThreadId}
 										/>
 
-										<TransactionToolbar transactionId={transactionId} />
-
-										<ChatInput
-											onSubmit={() => {
-												//
+										<Container
+											ui={{
+												layout: "vertical-flex",
+												// gap: "default",
+												width: "full",
 											}}
-											placeholder={translator.text(
-												"Transaction - send a message (placeholder)",
-											)}
-											loading={false}
-										/>
+										>
+											<TransactionToolbar transactionId={transactionId} />
+
+											<ChatInput
+												onSubmit={() => {
+													//
+												}}
+												placeholder={translator.text(
+													"Transaction - send a message (placeholder)",
+												)}
+												loading={false}
+											/>
+										</Container>
 									</Container>
 								),
 								header: ({ close }) => ({
