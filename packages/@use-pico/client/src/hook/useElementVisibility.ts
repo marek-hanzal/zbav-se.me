@@ -1,10 +1,10 @@
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { type RefObject, useEffect, useState } from "react";
+import { type RefObject, useEffect, useRef, useState } from "react";
 import { useAnim } from "../gsap/gsap";
 
 export namespace useElementVisibility {
 	export interface Visibility extends ScrollTrigger.StaticVars {
-		setVisible(visible: boolean): void;
+		setVisible?(visible: boolean): void;
 	}
 
 	export interface Proximity extends ScrollTrigger.StaticVars {
@@ -27,6 +27,12 @@ export namespace useElementVisibility {
 		triggerRef: RefObject<HTMLElement | null>;
 		visibility?: Visibility;
 		proximity?: Proximity;
+		/**
+		 * Optional delay in milliseconds before the visibility state update is
+		 * applied. Callbacks are called instantly, but state updates are delayed.
+		 * When undefined or 0, state updates are instant.
+		 */
+		delayMs?: number;
 	}
 
 	export interface Result {
@@ -60,11 +66,17 @@ export function useElementVisibility({
 	triggerRef,
 	visibility,
 	proximity,
+	delayMs,
 }: useElementVisibility.Props): useElementVisibility.Result {
 	const [ready, setReady] = useState(false);
 	const [isVisible, setIsVisible] = useState(false);
 	const [isTop, setIsTop] = useState(false);
 	const [isBottom, setIsBottom] = useState(false);
+
+	// Timer refs for delayed state updates
+	const visibleTimerRef = useRef<NodeJS.Timeout>(undefined);
+	const topTimerRef = useRef<NodeJS.Timeout>(undefined);
+	const bottomTimerRef = useRef<NodeJS.Timeout>(undefined);
 
 	useEffect(() => {
 		if (!scrollerRef.current || !triggerRef.current) {
@@ -76,6 +88,33 @@ export function useElementVisibility({
 		triggerRef,
 	]);
 
+	// Cleanup timers on unmount
+	useEffect(() => {
+		return () => {
+			clearTimeout(visibleTimerRef.current);
+			clearTimeout(topTimerRef.current);
+			clearTimeout(bottomTimerRef.current);
+		};
+	}, []);
+
+	// Helper to update state with optional delay
+	// const delay = (
+	// 	value: boolean,
+	// 	setter: (value: boolean) => void,
+	// 	timerRef: RefObject<NodeJS.Timeout | undefined>,
+	// ) => {
+	// 	clearTimeout(timerRef.current);
+	// 	if (delayMs === undefined || delayMs === 0) {
+	// 		setter(value);
+	// 		return;
+	// 	}
+
+	// 	timerRef.current = setTimeout(() => {
+	// 		setter(value);
+	// 		timerRef.current = undefined;
+	// 	}, delayMs);
+	// };
+
 	useAnim(
 		() => {
 			if (!scrollerRef.current || !triggerRef.current) {
@@ -83,97 +122,111 @@ export function useElementVisibility({
 			}
 
 			if (visibility) {
+				const {
+					setVisible,
+					onEnter,
+					onEnterBack,
+					onLeave,
+					onLeaveBack,
+					start = "top bottom",
+					end = "bottom top",
+					...rest
+				} = visibility;
+
 				ScrollTrigger.create({
 					trigger: triggerRef.current,
 					scroller: scrollerRef.current,
-					start: "top bottom",
-					end: "bottom top",
-					...visibility,
-					onEnter(props) {
+					start,
+					end,
+					...rest,
+					onEnter(event) {
+						setVisible?.(true);
+						onEnter?.(event);
 						setIsVisible(true);
-						visibility?.setVisible(true);
-						visibility?.onEnter?.(props);
 					},
-					onEnterBack(props) {
+					onEnterBack(event) {
+						setVisible?.(true);
+						onEnterBack?.(event);
 						setIsVisible(true);
-						visibility?.setVisible(true);
-						visibility?.onEnterBack?.(props);
 					},
-					onLeave(props) {
+					onLeave(event) {
+						setVisible?.(false);
+						onLeave?.(event);
 						setIsVisible(false);
-						visibility?.setVisible(false);
-						visibility?.onLeave?.(props);
 					},
-					onLeaveBack(props) {
+					onLeaveBack(event) {
+						setVisible?.(false);
+						onLeaveBack?.(event);
 						setIsVisible(false);
-						visibility?.setVisible(false);
-						visibility?.onLeaveBack?.(props);
 					},
 				});
 			}
 
 			if (proximity) {
-				const { overscan = 2, ...proximityProps } = proximity;
+				const {
+					overscan = 2,
+					setTop,
+					setBottom,
+					onEnter,
+					onEnterBack,
+					onLeave,
+					onLeaveBack,
+					...rest
+				} = proximity;
 
-				/**
-				 * Top proximity trigger
-				 */
 				ScrollTrigger.create({
 					trigger: triggerRef.current,
 					scroller: scrollerRef.current,
 					start: "top+=100% bottom",
 					end: `bottom+=${overscan * 100}% top`,
-					...proximityProps,
-					onEnter(props) {
+					...rest,
+					onEnter(event) {
+						setTop?.(true);
+						onEnter?.(event);
 						setIsTop(true);
-						proximity?.setTop?.(true);
-						proximity?.onEnter?.(props);
 					},
-					onEnterBack(props) {
+					onEnterBack(event) {
+						setTop?.(true);
+						onEnterBack?.(event);
 						setIsTop(true);
-						proximity?.setTop?.(true);
-						proximity?.onEnterBack?.(props);
 					},
-					onLeave(props) {
+					onLeave(event) {
+						setTop?.(false);
+						onLeave?.(event);
 						setIsTop(false);
-						proximity?.setTop?.(false);
-						proximity?.onLeave?.(props);
 					},
-					onLeaveBack(props) {
+					onLeaveBack(event) {
+						setTop?.(false);
+						onLeaveBack?.(event);
 						setIsTop(false);
-						proximity?.setTop?.(false);
-						proximity?.onLeaveBack?.(props);
 					},
 				});
 
-				/**
-				 * Bottom proximity trigger
-				 */
 				ScrollTrigger.create({
 					trigger: triggerRef.current,
 					scroller: scrollerRef.current,
 					start: `top-=${overscan * 100}% bottom`,
 					end: "bottom-=100% top",
-					...proximityProps,
-					onEnter(props) {
+					...rest,
+					onEnter(event) {
+						setBottom?.(true);
+						onEnter?.(event);
 						setIsBottom(true);
-						proximity?.setBottom?.(true);
-						proximity?.onEnter?.(props);
 					},
-					onEnterBack(props) {
+					onEnterBack(event) {
+						setBottom?.(true);
+						onEnterBack?.(event);
 						setIsBottom(true);
-						proximity?.setBottom?.(true);
-						proximity?.onEnterBack?.(props);
 					},
-					onLeave(props) {
+					onLeave(event) {
+						setBottom?.(false);
+						onLeave?.(event);
 						setIsBottom(false);
-						proximity?.setBottom?.(false);
-						proximity?.onLeave?.(props);
 					},
-					onLeaveBack(props) {
+					onLeaveBack(event) {
+						setBottom?.(false);
+						onLeaveBack?.(event);
 						setIsBottom(false);
-						proximity?.setBottom?.(false);
-						proximity?.onLeaveBack?.(props);
 					},
 				});
 			}
@@ -182,6 +235,7 @@ export function useElementVisibility({
 			scope: scrollerRef.current ?? undefined,
 			dependencies: [
 				ready,
+				delayMs,
 			],
 		},
 	);

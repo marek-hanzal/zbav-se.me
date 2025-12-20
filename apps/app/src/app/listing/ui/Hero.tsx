@@ -1,4 +1,4 @@
-import { useVisibilityContext } from "@use-pico/client/context";
+import { useVisible } from "@use-pico/client/hook";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Overlay } from "@use-pico/client/ui/overlay";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
@@ -40,8 +40,7 @@ export const Hero: FC<Hero.Props> = ({
 	heroImageProps,
 	...props
 }) => {
-	const useVisibilityStore = useVisibilityContext();
-	const visible = useVisibilityStore((store) => store.isVisible);
+	const visible = useVisible().isVisible;
 
 	const hero = useHeroUpload(listing.gallery.items);
 

@@ -108,8 +108,9 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 									key={listing.id}
 									data-ui="ListingListContainer-[VisibleContainer]"
 									scrollerRef={containerRef}
-									useProximity
-									overscan={4}
+									proximity={{
+										overscan: 4,
+									}}
 									delayMs={200}
 									placeholder={(props) => (
 										<SpinnerContainer

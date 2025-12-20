@@ -1,12 +1,4 @@
-import {
-	type FC,
-	type ReactNode,
-	type RefObject,
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { type FC, type ReactNode, type RefObject, useRef } from "react";
 import { VisibilityProvider } from "../../context/VisibilityProvider";
 import { useElementVisibility } from "../../hook";
 import { Container } from "./Container";
@@ -30,7 +22,7 @@ export namespace VisibleContainer {
 		 * Visibility configuration passed to `useElementVisibility`, except for the
 		 * `setVisible` callback which this component manages internally.
 		 */
-		visibility?: Omit<useElementVisibility.Visibility, "setVisible">;
+		visibility?: useElementVisibility.Visibility;
 		/**
 		 * Overscan factor for proximity triggers.
 		 */
@@ -42,7 +34,7 @@ export namespace VisibleContainer {
 		/**
 		 * If true, content container will render earlier (in the proximity of the scrollable viewport).
 		 */
-		useProximity?: boolean;
+		proximity?: useElementVisibility.Proximity;
 		/**
 		 * Optional delay in milliseconds before the visibility state update is
 		 * applied; defaults to `200ms`.
@@ -59,87 +51,22 @@ export const VisibleContainer: FC<VisibleContainer.Props> = ({
 	scrollerRef,
 	visibility,
 	overscan = 2,
-	useProximity = false,
+	proximity,
 	delayMs = 200,
 	placeholder,
 	...props
 }) => {
 	const triggerRef = useRef<HTMLDivElement>(null);
-	//
-	const [visible, setVisible] = useState(false);
-	const visibleRef = useRef(false);
-	const visibleTimerRef = useRef<NodeJS.Timeout>(undefined);
-	//
-	const [isVisibleState, setIsVisibleState] = useState(false);
-	//
-	const [topProximity, setTopProximity] = useState(false);
-	const topProximityRef = useRef(false);
-	const topProximityTimerRef = useRef<NodeJS.Timeout>(undefined);
-	//
-	const [bottomProximity, setBottomProximity] = useState(false);
-	const bottomProximityRef = useRef(false);
-	const bottomProximityTimerRef = useRef<NodeJS.Timeout>(undefined);
 
-	const isVisible = visible || topProximity || bottomProximity;
-
-	const setState = useCallback(
-		(
-			state: boolean,
-			timerRef: RefObject<NodeJS.Timeout | undefined>,
-			ref: RefObject<boolean>,
-			set: (value: boolean) => void,
-		) => {
-			ref.current = state;
-
-			clearTimeout(timerRef.current);
-
-			timerRef.current = setTimeout(() => {
-				set(state);
-				timerRef.current = undefined;
-			}, delayMs);
-		},
-		[
-			delayMs,
-		],
-	);
-
-	useEffect(() => {
-		return () => {
-			clearTimeout(visibleTimerRef.current);
-			clearTimeout(topProximityTimerRef.current);
-			clearTimeout(bottomProximityTimerRef.current);
-		};
-	}, []);
-
-	useElementVisibility({
+	const state = useElementVisibility({
 		scrollerRef,
 		triggerRef,
-		visibility: {
-			setVisible(state) {
-				setState(state, visibleTimerRef, visibleRef, setVisible);
-				setIsVisibleState(state);
-			},
-			...visibility,
-		},
-		proximity: useProximity
-			? {
-					overscan,
-					setTop: (state) => {
-						setState(state, topProximityTimerRef, topProximityRef, setTopProximity);
-					},
-					setBottom: (state) => {
-						setState(
-							state,
-							bottomProximityTimerRef,
-							bottomProximityRef,
-							setBottomProximity,
-						);
-					},
-				}
-			: undefined,
+		delayMs,
+		visibility,
+		proximity,
 	});
 
-	if (!isVisible) {
+	if (!state.isVisible) {
 		return (
 			<Container
 				ref={triggerRef}
@@ -157,12 +84,7 @@ export const VisibleContainer: FC<VisibleContainer.Props> = ({
 	 * source of truth are states in this component
 	 */
 	return (
-		<VisibilityProvider
-			defaultVisible={visible}
-			defaultIsVisibleState={isVisibleState}
-			defaultTopProximity={topProximity}
-			defaultBottomProximity={bottomProximity}
-		>
+		<VisibilityProvider state={state}>
 			<Container
 				ref={triggerRef}
 				{...props}

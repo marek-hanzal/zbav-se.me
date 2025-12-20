@@ -16,3 +16,4 @@ export { useStopEvent } from "./useStopEvent";
 export { useToken } from "./useToken";
 export { useTokenOf } from "./useTokenOf";
 export { useTokensOf } from "./useTokensOf";
+export { useVisible } from "./useVisible";

@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useVisibilityContext } from "@use-pico/client/context";
+import { useVisible } from "@use-pico/client/hook";
 import type { tListingScoreTypeEnum } from "@zbav-se.me/sdk/api/user";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
@@ -19,8 +19,7 @@ export namespace useListingScore {
 
 export const useListingScore = ({ enabled, listingId, type, timeoutMs }: useListingScore.Props) => {
 	const queryClient = useQueryClient();
-	const useVisibilityStore = useVisibilityContext();
-	const visible = useVisibilityStore((store) => store.isVisibleState);
+	const visible = useVisible();
 	const visibleRef = useRef(visible);
 	const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
@@ -29,7 +28,7 @@ export const useListingScore = ({ enabled, listingId, type, timeoutMs }: useList
 			withListingMetricsFetchQuery.invalidate(queryClient, listingId);
 		},
 		retry() {
-			return visibleRef.current;
+			return visibleRef.current.visible;
 		},
 		retryDelay(count) {
 			if (count >= 3) {
@@ -61,7 +60,7 @@ export const useListingScore = ({ enabled, listingId, type, timeoutMs }: useList
 
 		clearTimeout(timerRef.current);
 
-		if (visible) {
+		if (visible.visible) {
 			timerRef.current = setTimeout(() => {
 				score(listingId, type);
 			}, timeoutMs);
@@ -71,6 +70,6 @@ export const useListingScore = ({ enabled, listingId, type, timeoutMs }: useList
 			clearTimeout(timerRef.current);
 		};
 	}, [
-		visible,
+		visible.visible,
 	]);
 };
