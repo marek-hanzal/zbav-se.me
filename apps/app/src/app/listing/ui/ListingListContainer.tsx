@@ -109,9 +109,9 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 									data-ui="ListingListContainer-[VisibleContainer]"
 									scrollerRef={containerRef}
 									visibility={{}}
-									// proximity={{
-									// 	overscan: 4,
-									// }}
+									proximity={{
+										overscan: 4,
+									}}
 									delayMs={200}
 									placeholder={(props) => (
 										<SpinnerContainer
@@ -151,7 +151,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 													feedId={feedId}
 													withScore={withScore}
 													tools={[
-														"hero",
+														"destructive",
 														"hero",
 													]}
 												/>

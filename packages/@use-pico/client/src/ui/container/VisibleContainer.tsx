@@ -24,10 +24,6 @@ export namespace VisibleContainer {
 		 */
 		visibility?: useElementVisibility.Visibility;
 		/**
-		 * Overscan factor for proximity triggers.
-		 */
-		overscan?: number;
-		/**
 		 * React node displayed while the container itself remains hidden.
 		 */
 		placeholder: Placeholder.Render;
@@ -50,7 +46,6 @@ export namespace VisibleContainer {
 export const VisibleContainer: FC<VisibleContainer.Props> = ({
 	scrollerRef,
 	visibility,
-	overscan = 2,
 	proximity,
 	delayMs = 200,
 	placeholder,

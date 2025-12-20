@@ -25,10 +25,9 @@ export const List: FC<List.Props> = ({ query, ...props }) => {
 			data-ui={"MyListing[Container]"}
 			ref={scrollerRef}
 			ui={{
-				layout: "vertical-flex",
-				scroll: "vertical",
-				gap: "default",
-				inner: "default",
+				layout: "vertical-full",
+				snap: "vertical",
+				snapAlign: "center",
 				height: "full",
 			}}
 			{...props}

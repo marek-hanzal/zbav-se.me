@@ -1,48 +1,35 @@
 import type { MarkSuspense } from "@use-pico/client/type";
-import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
+import { SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCollectionQuery, withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { type FC, type RefObject, useId, useRef } from "react";
+import type { FC, RefObject } from "react";
 import { CreateButton } from "~/app/draft/button/CreateButton";
 import { Hero } from "~/app/listing/ui/Hero";
 
 export namespace Content {
-	export interface Props extends Container.Props, MarkSuspense.Props {
+	export interface Props extends MarkSuspense.Props {
 		query: tListingQuery;
 		scrollerRef: RefObject<HTMLDivElement | null>;
 	}
 }
 
-export const Content: FC<Content.Props> = ({ _suspense, query, scrollerRef, ...props }) => {
+export const Content: FC<Content.Props> = ({ _suspense, query, scrollerRef }) => {
 	/**
 	 * This is intentional to trigger parent suspense
 	 */
 	const listingCollectionQuery = withListingCollectionQuery.useSuspenseQuery(query);
-	const listingIdPrefix = useId();
-	const containerRef = useRef<HTMLDivElement>(null);
 
 	if (listingCollectionQuery.data.data.length === 0) {
 		return null;
 	}
 
 	return (
-		<Container
-			data-ui="MyListing-[Container.content]"
-			ref={containerRef}
-			ui={{
-				layout: "vertical-flex",
-				gap: "default",
-			}}
-			{...props}
-		>
+		<>
 			{listingCollectionQuery.data.data.map(({ id: listingId }) => {
 				return (
 					<VisibleContainer
-						key={`${listingIdPrefix}-${listingId}`}
+						key={listingId}
 						data-ui="MyListing-[VisibleContainer]"
-						className={[
-							"h-48 md:h-92",
-						]}
 						scrollerRef={scrollerRef}
 						visibility={{}}
 						proximity={{
@@ -51,12 +38,12 @@ export const Content: FC<Content.Props> = ({ _suspense, query, scrollerRef, ...p
 						placeholder={(props) => {
 							return <SpinnerContainer {...props} />;
 						}}
-						overscan={4}
 						delayMs={200}
 						ui={{
+							height: "full",
 							width: "full",
-							position: "relative",
-							round: "lg",
+							inner: "default",
+							round: "default",
 						}}
 					>
 						<withListingFetchQuery.Suspense
@@ -95,6 +82,6 @@ export const Content: FC<Content.Props> = ({ _suspense, query, scrollerRef, ...p
 			})}
 
 			<CreateButton />
-		</Container>
+		</>
 	);
 };
