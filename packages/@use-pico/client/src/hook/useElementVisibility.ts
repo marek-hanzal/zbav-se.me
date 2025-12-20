@@ -43,6 +43,7 @@ export function useElementVisibility({
 	proximity,
 }: useElementVisibility.Props) {
 	const [ready, setReady] = useState(false);
+	const [visible, setVisible] = useState(false);
 
 	useEffect(() => {
 		if (!scrollerRef.current || !triggerRef.current) {
@@ -61,38 +62,31 @@ export function useElementVisibility({
 			}
 
 			if (visibility) {
-				const {
-					setVisible,
-					onEnter,
-					onEnterBack,
-					onLeave,
-					onLeaveBack,
-					start = "top bottom",
-					end = "bottom top",
-					...visibleProps
-				} = visibility;
-
 				ScrollTrigger.create({
 					trigger: triggerRef.current,
 					scroller: scrollerRef.current,
-					start,
-					end,
-					...visibleProps,
+					start: "top bottom",
+					end: "bottom top",
+					...visibility,
 					onEnter(props) {
 						setVisible(true);
-						onEnter?.(props);
+						visibility?.setVisible(true);
+						visibility?.onEnter?.(props);
 					},
 					onEnterBack(props) {
 						setVisible(true);
-						onEnterBack?.(props);
+						visibility?.setVisible(true);
+						visibility?.onEnterBack?.(props);
 					},
 					onLeave(props) {
 						setVisible(false);
-						onLeave?.(props);
+						visibility?.setVisible(false);
+						visibility?.onLeave?.(props);
 					},
 					onLeaveBack(props) {
 						setVisible(false);
-						onLeaveBack?.(props);
+						visibility?.setVisible(false);
+						visibility?.onLeaveBack?.(props);
 					},
 				});
 			}
