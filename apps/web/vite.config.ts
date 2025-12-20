@@ -58,7 +58,7 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 			sourcemap: false,
 			manifest: false,
 			rollupOptions: {
-				// treeshake: "smallest",
+				treeshake: false,
 				output: {
 					manualChunks(id) {
 						// Vendor packages - check most specific first
