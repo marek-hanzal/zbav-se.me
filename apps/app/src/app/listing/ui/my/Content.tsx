@@ -45,8 +45,11 @@ export const Content: FC<Content.Props> = ({ _suspense, query, scrollerRef, ...p
 						]}
 						scrollerRef={scrollerRef}
 						visibility={{}}
+						proximity={{
+							overscan: 4,
+						}}
 						placeholder={(props) => {
-							return <div {...props}>premyslim</div>;
+							return <SpinnerContainer {...props} />;
 						}}
 						overscan={4}
 						delayMs={200}
