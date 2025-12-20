@@ -9,11 +9,11 @@
 	},
 	"dependencies": {
 		"@better-auth/passkey": "1.4.7",
-		"@hono/zod-openapi": "1.1.5",
-		"@scalar/hono-api-reference": "0.9.28",
+		"@hono/zod-openapi": "1.2.0",
+		"@scalar/hono-api-reference": "0.9.30",
 		"@use-pico/common": "workspace:*",
 		"better-auth": "1.4.7",
-		"effect": "3.19.12",
+		"effect": "3.19.13",
 		"hono": "4.11.1",
 		"hono-rate-limiter": "0.5.1",
 		"jose": "6.1.3",
@@ -28,7 +28,7 @@
 	},
 	"devDependencies": {
 		"@effect/language-service": "0.62.4",
-		"@types/bun": "1.3.4",
+		"@types/bun": "1.3.5",
 		"@types/luxon": "3.7.1",
 		"@types/node": "25.0.3",
 		"@types/pg": "8.16.0",

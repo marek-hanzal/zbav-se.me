@@ -21,7 +21,7 @@ export namespace Hero {
 		listing: tListing;
 		feedId: string | undefined;
 		withScore: boolean;
-		herImageProps?: HeroImage.Props;
+		heroImageProps?: HeroImage.Props;
 		tools: ListingDetail.Tools[];
 	}
 }
@@ -37,7 +37,7 @@ export const Hero: FC<Hero.Props> = ({
 	feedId,
 	withScore,
 	tools,
-	herImageProps,
+	heroImageProps,
 	...props
 }) => {
 	const useVisibilityStore = useVisibilityContext();
@@ -84,7 +84,7 @@ export const Hero: FC<Hero.Props> = ({
 							data-ui={"ListingHeroContainer-[SpinnerContainer.invisible]"}
 						/>
 					}
-					{...herImageProps}
+					{...heroImageProps}
 				/>
 			</Container>
 

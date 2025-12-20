@@ -18,7 +18,7 @@ export namespace List {
 
 export const List: FC<List.Props> = ({ query, ...props }) => {
 	const locale = useLocale();
-    const scrollerRef = useRef<HTMLDivElement>(null);
+	const scrollerRef = useRef<HTMLDivElement>(null);
 
 	return (
 		<Container
@@ -85,7 +85,7 @@ export const List: FC<List.Props> = ({ query, ...props }) => {
 						<Content
 							_suspense={"I know"}
 							query={query}
-                            scrollerRef={scrollerRef}
+							scrollerRef={scrollerRef}
 						/>
 					);
 				}}

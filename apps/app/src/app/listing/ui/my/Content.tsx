@@ -1,5 +1,5 @@
 import type { MarkSuspense } from "@use-pico/client/type";
-import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCollectionQuery, withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { type FC, type RefObject, useId, useRef } from "react";
@@ -37,20 +37,9 @@ export const Content: FC<Content.Props> = ({ _suspense, query, scrollerRef, ...p
 		>
 			{listingCollectionQuery.data.data.map(({ id: listingId }) => {
 				return (
-					<VisibleContainer
+					<Container
 						key={`${listingIdPrefix}-${listingId}`}
 						data-ui="MyListing-[VisibleContainer]"
-						scrollerRef={containerRef}
-						useProximity
-						overscan={4}
-						delayMs={200}
-						placeholder={(props) => (
-							<SpinnerContainer
-								data-ui={"MyListing-[SpinnerContainer.placeholder]"}
-								data-id={listingId}
-								{...props}
-							/>
-						)}
 						className={[
 							"h-48 md:h-92",
 						]}
@@ -60,48 +49,38 @@ export const Content: FC<Content.Props> = ({ _suspense, query, scrollerRef, ...p
 							round: "lg",
 						}}
 					>
-						<VisibleContainer
-							scrollerRef={scrollerRef}
-							placeholder={(props) => {
-								return <SpinnerContainer {...props} />;
+						<withListingFetchQuery.Suspense
+							data={{
+								where: {
+									id: listingId,
+								},
 							}}
-							useProximity
-							overscan={4}
-							delayMs={200}
+							fallback={
+								<SpinnerContainer
+									data-ui={"MyListing-[SpinnerContainer.listing-fetch]"}
+								/>
+							}
 						>
-							<withListingFetchQuery.Suspense
-								data={{
-									where: {
-										id: listingId,
-									},
-								}}
-								fallback={
-									<SpinnerContainer
-										data-ui={"MyListing-[SpinnerContainer.listing-fetch]"}
+							{({ data: listing }) => {
+								return (
+									<Hero
+										data-ui={"MyListing-[Hero]"}
+										listing={listing}
+										feedId={undefined}
+										withScore={false}
+										tools={[
+											"hero",
+										]}
+										heroImageProps={{
+											ui: {
+												round: "default",
+											},
+										}}
 									/>
-								}
-							>
-								{({ data: listing }) => {
-									return (
-										<Hero
-											data-ui={"MyListing-[Hero]"}
-											listing={listing}
-											feedId={undefined}
-											withScore={false}
-											tools={[
-												"hero",
-											]}
-											herImageProps={{
-												ui: {
-													round: "default",
-												},
-											}}
-										/>
-									);
-								}}
-							</withListingFetchQuery.Suspense>
-						</VisibleContainer>
-					</VisibleContainer>
+								);
+							}}
+						</withListingFetchQuery.Suspense>
+					</Container>
 				);
 			})}
 
