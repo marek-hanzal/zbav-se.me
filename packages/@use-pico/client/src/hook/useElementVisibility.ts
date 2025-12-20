@@ -123,10 +123,8 @@ export function useElementVisibility({
 			if (visibility) {
 				const {
 					setVisible,
-					onEnter,
-					onEnterBack,
-					onLeave,
-					onLeaveBack,
+					//
+					onToggle,
 					start = "top bottom",
 					end = "bottom top",
 					...rest
@@ -138,25 +136,9 @@ export function useElementVisibility({
 					start,
 					end,
 					...rest,
-					onEnter(event) {
-						setVisible?.(true);
-						onEnter?.(event);
-						delay(true, setIsVisible, visibleTimerRef);
-					},
-					onEnterBack(event) {
-						setVisible?.(true);
-						onEnterBack?.(event);
-						delay(true, setIsVisible, visibleTimerRef);
-					},
-					onLeave(event) {
-						setVisible?.(false);
-						onLeave?.(event);
-						delay(false, setIsVisible, visibleTimerRef);
-					},
-					onLeaveBack(event) {
-						setVisible?.(false);
-						onLeaveBack?.(event);
-						delay(false, setIsVisible, visibleTimerRef);
+					onToggle(self) {
+						delay(self.isActive, setIsVisible, visibleTimerRef);
+						onToggle?.(self);
 					},
 				});
 			}
@@ -166,6 +148,7 @@ export function useElementVisibility({
 					overscan = 2,
 					setTop,
 					setBottom,
+					//
 					onEnter,
 					onEnterBack,
 					onLeave,
