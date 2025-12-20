@@ -140,9 +140,16 @@ export const VisibleContainer: FC<VisibleContainer.Props> = ({
 	});
 
 	if (!isVisible) {
-		return placeholder({
-			ref: triggerRef,
-		});
+		return (
+			<Container
+				ref={triggerRef}
+				{...props}
+			>
+				{placeholder({
+					ref: triggerRef,
+				})}
+			</Container>
+		);
 	}
 
 	/**

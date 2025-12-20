@@ -1,5 +1,5 @@
 import type { MarkSuspense } from "@use-pico/client/type";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCollectionQuery, withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { type FC, type RefObject, useId, useRef } from "react";
@@ -37,12 +37,18 @@ export const Content: FC<Content.Props> = ({ _suspense, query, scrollerRef, ...p
 		>
 			{listingCollectionQuery.data.data.map(({ id: listingId }) => {
 				return (
-					<Container
+					<VisibleContainer
 						key={`${listingIdPrefix}-${listingId}`}
 						data-ui="MyListing-[VisibleContainer]"
 						className={[
 							"h-48 md:h-92",
 						]}
+						scrollerRef={scrollerRef}
+						placeholder={(props) => {
+							return <div {...props}>premyslim</div>;
+						}}
+						overscan={4}
+						delayMs={200}
 						ui={{
 							width: "full",
 							position: "relative",
@@ -80,7 +86,7 @@ export const Content: FC<Content.Props> = ({ _suspense, query, scrollerRef, ...p
 								);
 							}}
 						</withListingFetchQuery.Suspense>
-					</Container>
+					</VisibleContainer>
 				);
 			})}
 
