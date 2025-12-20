@@ -97,23 +97,22 @@ export function useElementVisibility({
 		};
 	}, []);
 
-	// Helper to update state with optional delay
-	// const delay = (
-	// 	value: boolean,
-	// 	setter: (value: boolean) => void,
-	// 	timerRef: RefObject<NodeJS.Timeout | undefined>,
-	// ) => {
-	// 	clearTimeout(timerRef.current);
-	// 	if (delayMs === undefined || delayMs === 0) {
-	// 		setter(value);
-	// 		return;
-	// 	}
+	const delay = (
+		value: boolean,
+		setter: (value: boolean) => void,
+		timerRef: RefObject<NodeJS.Timeout | undefined>,
+	) => {
+		clearTimeout(timerRef.current);
+		if (delayMs === undefined || delayMs === 0) {
+			setter(value);
+			return;
+		}
 
-	// 	timerRef.current = setTimeout(() => {
-	// 		setter(value);
-	// 		timerRef.current = undefined;
-	// 	}, delayMs);
-	// };
+		timerRef.current = setTimeout(() => {
+			setter(value);
+			timerRef.current = undefined;
+		}, delayMs);
+	};
 
 	useAnim(
 		() => {
@@ -142,22 +141,22 @@ export function useElementVisibility({
 					onEnter(event) {
 						setVisible?.(true);
 						onEnter?.(event);
-						setIsVisible(true);
+						delay(true, setIsVisible, visibleTimerRef);
 					},
 					onEnterBack(event) {
 						setVisible?.(true);
 						onEnterBack?.(event);
-						setIsVisible(true);
+						delay(true, setIsVisible, visibleTimerRef);
 					},
 					onLeave(event) {
 						setVisible?.(false);
 						onLeave?.(event);
-						setIsVisible(false);
+						delay(false, setIsVisible, visibleTimerRef);
 					},
 					onLeaveBack(event) {
 						setVisible?.(false);
 						onLeaveBack?.(event);
-						setIsVisible(false);
+						delay(false, setIsVisible, visibleTimerRef);
 					},
 				});
 			}
@@ -183,22 +182,22 @@ export function useElementVisibility({
 					onEnter(event) {
 						setTop?.(true);
 						onEnter?.(event);
-						setIsTop(true);
+						delay(true, setIsTop, topTimerRef);
 					},
 					onEnterBack(event) {
 						setTop?.(true);
 						onEnterBack?.(event);
-						setIsTop(true);
+						delay(true, setIsTop, topTimerRef);
 					},
 					onLeave(event) {
 						setTop?.(false);
 						onLeave?.(event);
-						setIsTop(false);
+						delay(false, setIsTop, topTimerRef);
 					},
 					onLeaveBack(event) {
 						setTop?.(false);
 						onLeaveBack?.(event);
-						setIsTop(false);
+						delay(false, setIsTop, topTimerRef);
 					},
 				});
 
@@ -211,22 +210,22 @@ export function useElementVisibility({
 					onEnter(event) {
 						setBottom?.(true);
 						onEnter?.(event);
-						setIsBottom(true);
+						delay(true, setIsBottom, bottomTimerRef);
 					},
 					onEnterBack(event) {
 						setBottom?.(true);
 						onEnterBack?.(event);
-						setIsBottom(true);
+						delay(true, setIsBottom, bottomTimerRef);
 					},
 					onLeave(event) {
 						setBottom?.(false);
 						onLeave?.(event);
-						setIsBottom(false);
+						delay(false, setIsBottom, bottomTimerRef);
 					},
 					onLeaveBack(event) {
 						setBottom?.(false);
 						onLeaveBack?.(event);
-						setIsBottom(false);
+						delay(false, setIsBottom, bottomTimerRef);
 					},
 				});
 			}

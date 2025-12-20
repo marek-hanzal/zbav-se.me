@@ -44,6 +44,7 @@ export const Content: FC<Content.Props> = ({ _suspense, query, scrollerRef, ...p
 							"h-48 md:h-92",
 						]}
 						scrollerRef={scrollerRef}
+						visibility={{}}
 						placeholder={(props) => {
 							return <div {...props}>premyslim</div>;
 						}}
