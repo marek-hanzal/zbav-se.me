@@ -28,6 +28,25 @@ export namespace useElementVisibility {
 		visibility?: Visibility;
 		proximity?: Proximity;
 	}
+
+	export interface Result {
+		/**
+		 * Pure visibility of the tracked element.
+		 */
+		visible: boolean;
+		/**
+		 * In proximity visibility (top/center/bottom)
+		 */
+		isVisible: boolean;
+		/**
+		 * Top proximity visibility.
+		 */
+		top: boolean;
+		/**
+		 * Bottom proximity visibility.
+		 */
+		bottom: boolean;
+	}
 }
 
 /**
@@ -41,9 +60,11 @@ export function useElementVisibility({
 	triggerRef,
 	visibility,
 	proximity,
-}: useElementVisibility.Props) {
+}: useElementVisibility.Props): useElementVisibility.Result {
 	const [ready, setReady] = useState(false);
-	const [visible, setVisible] = useState(false);
+	const [isVisible, setIsVisible] = useState(false);
+	const [isTop, setIsTop] = useState(false);
+	const [isBottom, setIsBottom] = useState(false);
 
 	useEffect(() => {
 		if (!scrollerRef.current || !triggerRef.current) {
@@ -69,22 +90,22 @@ export function useElementVisibility({
 					end: "bottom top",
 					...visibility,
 					onEnter(props) {
-						setVisible(true);
+						setIsVisible(true);
 						visibility?.setVisible(true);
 						visibility?.onEnter?.(props);
 					},
 					onEnterBack(props) {
-						setVisible(true);
+						setIsVisible(true);
 						visibility?.setVisible(true);
 						visibility?.onEnterBack?.(props);
 					},
 					onLeave(props) {
-						setVisible(false);
+						setIsVisible(false);
 						visibility?.setVisible(false);
 						visibility?.onLeave?.(props);
 					},
 					onLeaveBack(props) {
-						setVisible(false);
+						setIsVisible(false);
 						visibility?.setVisible(false);
 						visibility?.onLeaveBack?.(props);
 					},
@@ -92,74 +113,69 @@ export function useElementVisibility({
 			}
 
 			if (proximity) {
-				const {
-					overscan = 2,
-					setTop,
-					setBottom,
-					onEnter,
-					onEnterBack,
-					onLeave,
-					onLeaveBack,
-					...proximityProps
-				} = proximity;
+				const { overscan = 2, ...proximityProps } = proximity;
 
-				if (setTop) {
-					/**
-					 * Top proximity trigger
-					 */
-					ScrollTrigger.create({
-						trigger: triggerRef.current,
-						scroller: scrollerRef.current,
-						start: "top+=100% bottom",
-						end: `bottom+=${overscan * 100}% top`,
-						...proximityProps,
-						onEnter(props) {
-							setTop(true);
-							onEnter?.(props);
-						},
-						onEnterBack(props) {
-							setTop(true);
-							onEnterBack?.(props);
-						},
-						onLeave(props) {
-							setTop(false);
-							onLeave?.(props);
-						},
-						onLeaveBack(props) {
-							setTop(false);
-							onLeaveBack?.(props);
-						},
-					});
-				}
+				/**
+				 * Top proximity trigger
+				 */
+				ScrollTrigger.create({
+					trigger: triggerRef.current,
+					scroller: scrollerRef.current,
+					start: "top+=100% bottom",
+					end: `bottom+=${overscan * 100}% top`,
+					...proximityProps,
+					onEnter(props) {
+						setIsTop(true);
+						proximity?.setTop?.(true);
+						proximity?.onEnter?.(props);
+					},
+					onEnterBack(props) {
+						setIsTop(true);
+						proximity?.setTop?.(true);
+						proximity?.onEnterBack?.(props);
+					},
+					onLeave(props) {
+						setIsTop(false);
+						proximity?.setTop?.(false);
+						proximity?.onLeave?.(props);
+					},
+					onLeaveBack(props) {
+						setIsTop(false);
+						proximity?.setTop?.(false);
+						proximity?.onLeaveBack?.(props);
+					},
+				});
 
 				/**
 				 * Bottom proximity trigger
 				 */
-				if (setBottom) {
-					ScrollTrigger.create({
-						trigger: triggerRef.current,
-						scroller: scrollerRef.current,
-						start: `top-=${overscan * 100}% bottom`,
-						end: "bottom-=100% top",
-						...proximityProps,
-						onEnter(props) {
-							setBottom(true);
-							onEnter?.(props);
-						},
-						onEnterBack(props) {
-							setBottom(true);
-							onEnterBack?.(props);
-						},
-						onLeave(props) {
-							setBottom(false);
-							onLeave?.(props);
-						},
-						onLeaveBack(props) {
-							setBottom(false);
-							onLeaveBack?.(props);
-						},
-					});
-				}
+				ScrollTrigger.create({
+					trigger: triggerRef.current,
+					scroller: scrollerRef.current,
+					start: `top-=${overscan * 100}% bottom`,
+					end: "bottom-=100% top",
+					...proximityProps,
+					onEnter(props) {
+						setIsBottom(true);
+						proximity?.setBottom?.(true);
+						proximity?.onEnter?.(props);
+					},
+					onEnterBack(props) {
+						setIsBottom(true);
+						proximity?.setBottom?.(true);
+						proximity?.onEnterBack?.(props);
+					},
+					onLeave(props) {
+						setIsBottom(false);
+						proximity?.setBottom?.(false);
+						proximity?.onLeave?.(props);
+					},
+					onLeaveBack(props) {
+						setIsBottom(false);
+						proximity?.setBottom?.(false);
+						proximity?.onLeaveBack?.(props);
+					},
+				});
 			}
 		},
 		{
@@ -169,4 +185,11 @@ export function useElementVisibility({
 			],
 		},
 	);
+
+	return {
+		visible: isVisible,
+		isVisible: isVisible || isTop || isBottom,
+		top: isTop,
+		bottom: isBottom,
+	};
 }
