@@ -60,19 +60,6 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 			assetsDir: "assets",
 			assetsInlineLimit: 0,
 			sourcemap: false,
-			rolldownOptions: {
-				output: {
-					advancedChunks: {
-						minSize: 1_024 * 100,
-						maxSize: 1_024 * 250,
-						groups: [
-							{
-								name: "bundle",
-							},
-						],
-					},
-				},
-			},
 		},
 	};
 });
