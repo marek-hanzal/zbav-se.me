@@ -145,6 +145,9 @@ export const Route = createFileRoute("/$locale/landing")({
 									"aspect-square",
 									"w-[85%]",
 								]}
+								loading={"lazy"}
+								decoding={"async"}
+								fetchPriority={"low"}
 							/>
 						}
 						textTitle={"About me (title)"}
