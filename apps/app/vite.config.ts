@@ -58,15 +58,15 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 						if (id.includes("zod")) {
 							return "zod";
 						}
-						if (id.includes("sonner")) {
-							return "sonner";
-						}
 						if (id.includes("js-sha256")) {
 							return "js-sha256";
 						}
-						if (id.includes("effect")) {
-							return "effect";
+						if (id.includes("sonner")) {
+							return "sonner";
 						}
+						// if (id.includes("effect")) {
+						// 	return "effect";
+						// }
 						if (id.includes("luxon")) {
 							return "luxon";
 						}
