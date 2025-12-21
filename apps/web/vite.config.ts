@@ -17,6 +17,7 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 					generatedRouteTree: "./_route.ts",
 				},
 			}),
+			react({}),
 			tailwindcss(),
 			ViteYaml(),
 			assetSizePlugin({
@@ -27,7 +28,6 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 						preset: process.env.NITRO_PRESET || "vercel",
 					})
 				: undefined,
-			react({}),
 		],
 		worker: {
 			format: "es",
@@ -115,8 +115,5 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 		// 		// },
 		// 	},
 		// },
-		json: {
-			stringify: true,
-		},
 	};
 });
