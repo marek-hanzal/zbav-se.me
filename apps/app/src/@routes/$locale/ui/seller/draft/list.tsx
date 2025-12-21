@@ -26,13 +26,13 @@ export const Route = createFileRoute("/$locale/ui/seller/draft/list")({
 								locale,
 								id: draft.id,
 							},
-						})
+						});
 					}}
 					ui={{
 						inner: "default",
 					}}
 				/>
 			</TitleContainer>
-		)
+		);
 	},
 });

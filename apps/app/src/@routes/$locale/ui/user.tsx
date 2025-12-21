@@ -38,6 +38,6 @@ export const Route = createFileRoute("/$locale/ui/user")({
 					/>
 				</Container>
 			</TitleContainer>
-		)
+		);
 	},
 });

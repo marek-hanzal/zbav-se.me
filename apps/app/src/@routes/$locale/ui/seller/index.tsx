@@ -13,14 +13,14 @@ export const Route = createFileRoute("/$locale/ui/seller/")({
 			onSuccess() {
 				withSessionQuery.invalidate(queryClient);
 			},
-		})
+		});
 
 		useEffect(() => {
 			mutation.mutate({
 				patch: {
 					side: "seller",
 				},
-			})
+			});
 		}, []);
 
 		return (
@@ -35,6 +35,6 @@ export const Route = createFileRoute("/$locale/ui/seller/")({
 			>
 				<SellerMenu />
 			</TitleContainer>
-		)
+		);
 	},
 });

@@ -1111,7 +1111,7 @@ export type tListingWhere = {
      */
     expiresAtAfter?: string;
     /**
-     * Range (in meters) around the input location to filter listings
+     * Range (in km) around the input location to filter listings
      */
     range?: number;
     /**
@@ -1231,7 +1231,7 @@ export type tListingFilter = {
      */
     expiresAtAfter?: string;
     /**
-     * Range (in meters) around the input location to filter listings
+     * Range (in km) around the input location to filter listings
      */
     range?: number;
     /**
@@ -2037,6 +2037,10 @@ export type tListing = {
     updatedAt: string;
     location: tLocation;
     category: tCategory;
+    /**
+     * Distance from the input location to the listing (in km; meta lat/lon must be provided)
+     */
+    distance: number | null;
     gallery: tGallery & unknown;
     /**
      * Whether the user has this listing in favourites

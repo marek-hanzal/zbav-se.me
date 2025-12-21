@@ -1280,7 +1280,7 @@ export const zListingWhere = z.object({
         description: 'This filter matches listings that expire after the provided date'
     })),
     range: z.optional(z.number().gte(0).register(z.globalRegistry, {
-        description: 'Range (in meters) around the input location to filter listings'
+        description: 'Range (in km) around the input location to filter listings'
     })),
     title: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches listings with title matching the provided value'
@@ -1355,7 +1355,7 @@ export const zListingFilter = z.object({
         description: 'This filter matches listings that expire after the provided date'
     })),
     range: z.optional(z.number().gte(0).register(z.globalRegistry, {
-        description: 'Range (in meters) around the input location to filter listings'
+        description: 'Range (in km) around the input location to filter listings'
     })),
     title: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches listings with title matching the provided value'
@@ -2267,6 +2267,10 @@ export const zListing = z.object({
     }),
     location: zLocation,
     category: zCategory,
+    distance: z.union([
+        z.number(),
+        z.null()
+    ]),
     gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
         description: 'Listing gallery images'
     })),

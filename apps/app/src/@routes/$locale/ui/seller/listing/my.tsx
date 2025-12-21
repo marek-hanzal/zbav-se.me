@@ -20,6 +20,6 @@ export const Route = createFileRoute("/$locale/ui/seller/listing/my")({
 					}}
 				/>
 			</TitleContainer>
-		)
+		);
 	},
 });

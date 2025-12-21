@@ -57,6 +57,6 @@ export const Route = createFileRoute("/$locale/welcome")({
 					]}
 				/>
 			</Container>
-		)
+		);
 	},
 });

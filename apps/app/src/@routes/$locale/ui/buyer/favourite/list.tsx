@@ -44,6 +44,6 @@ export const Route = createFileRoute("/$locale/ui/buyer/favourite/list")({
 					}}
 				/>
 			</TitleContainer>
-		)
+		);
 	},
 });

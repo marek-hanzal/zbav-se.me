@@ -9,6 +9,10 @@ export const ListingSchema = z
 		...ListingDbSchema.shape,
 		location: LocationSchema,
 		category: CategorySchema,
+		distance: z.number().nullable().openapi({
+			description:
+				"Distance from the input location to the listing (in km; meta lat/lon must be provided)",
+		}),
 		gallery: GallerySchema.openapi({
 			description: "Listing gallery images",
 		}),

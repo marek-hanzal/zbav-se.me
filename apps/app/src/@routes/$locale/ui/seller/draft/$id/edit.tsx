@@ -28,7 +28,7 @@ export const Route = createFileRoute("/$locale/ui/seller/draft/$id/edit")({
 								params: {
 									locale,
 								},
-							})
+							});
 						}}
 						onDelete={async () => {
 							await navigate({
@@ -36,11 +36,11 @@ export const Route = createFileRoute("/$locale/ui/seller/draft/$id/edit")({
 								params: {
 									locale,
 								},
-							})
+							});
 						}}
 					/>
 				)}
 			</withDraftFetchQuery.Suspense>
-		)
+		);
 	},
 });

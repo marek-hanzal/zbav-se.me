@@ -23,6 +23,27 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 		.select((eb) => [
 			sql<LocationDbSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
 			sql<CategoryDbSchema.Type>`to_jsonb(${eb.table("cat")}.*)`.as("category"),
+			eb
+				.case()
+				.when(sql.lit(meta?.latLon != null))
+				.then(
+					sql`
+                        ST_Distance(
+                            ${eb.ref("loc.geo")},
+                            ST_SetSRID(
+                                ST_MakePoint(
+                                    ${eb.val(meta?.latLon?.lon)},
+                                    ${eb.val(meta?.latLon?.lat)}
+                                ),
+                                4326
+                            )::geography
+                        ) / 1000
+		            `,
+				)
+				.else(null)
+				.end()
+				.$castTo<number | null>()
+				.as("distance"),
 
 			jsonObjectFrom(
 				withGallerySelect({

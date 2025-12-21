@@ -12,6 +12,7 @@ import { LocationValue } from "~/app/location/ui/LocationValue";
 import { AgeValue } from "./value/AgeValue";
 import { ConditionValue } from "./value/ConditionValue";
 import { NameValue } from "./value/NameValue";
+import { RangeValue } from "./value/RangeValue";
 import { SortValue } from "./value/SortValue";
 
 export namespace Feed {
@@ -20,6 +21,7 @@ export namespace Feed {
 		name?: Partial<LabelValue.PropsEx>;
 		category?: Partial<CategoryValue.Props>;
 		location?: Partial<LabelValue.PropsEx>;
+		range?: Partial<RangeValue.Props>;
 		sort?: Partial<SortValue.Props>;
 		condition?: Partial<ConditionValue.Props>;
 		age?: Partial<AgeValue.Props>;
@@ -123,6 +125,11 @@ export const Feed: FC<Feed.Props> = ({
 					/>
 				}
 				{...values?.location}
+			/>
+
+			<RangeValue
+				feed={feed}
+				{...values?.range}
 			/>
 
 			<SortValue

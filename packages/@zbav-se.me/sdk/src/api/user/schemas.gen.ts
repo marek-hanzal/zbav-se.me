@@ -2870,6 +2870,12 @@ export const sListing = {
         category: {
             $ref: '#/components/schemas/Category'
         },
+        distance: {
+            type: [
+                'number',
+                'null'
+            ]
+        },
         gallery: {
             allOf: [
                 {
@@ -2918,6 +2924,7 @@ export const sListing = {
         'updatedAt',
         'location',
         'category',
+        'distance',
         'gallery',
         'isFavourite',
         'isIgnored',

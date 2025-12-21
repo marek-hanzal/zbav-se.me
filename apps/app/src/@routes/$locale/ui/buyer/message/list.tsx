@@ -27,6 +27,6 @@ export const Route = createFileRoute("/$locale/ui/buyer/message/list")({
 					}}
 				/>
 			</TitleContainer>
-		)
+		);
 	},
 });

@@ -132,6 +132,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 											where: {
 												id: listing.id,
 											},
+											meta: query.meta,
 										}}
 										fallback={
 											<SpinnerContainer

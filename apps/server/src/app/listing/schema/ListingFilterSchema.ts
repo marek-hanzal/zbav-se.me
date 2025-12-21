@@ -62,7 +62,7 @@ export const ListingFilterSchema = z
 			type: "string",
 		}),
 		range: z.number().gte(0).optional().openapi({
-			description: "Range (in meters) around the input location to filter listings",
+			description: "Range (in km) around the input location to filter listings",
 		}),
 		title: z.string().optional().openapi({
 			description: "This filter matches listings with title matching the provided value",

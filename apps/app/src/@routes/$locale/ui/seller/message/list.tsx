@@ -30,6 +30,6 @@ export const Route = createFileRoute("/$locale/ui/seller/message/list")({
 					}}
 				/>
 			</TitleContainer>
-		)
+		);
 	},
 });

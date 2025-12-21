@@ -15,7 +15,7 @@ export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
 		if (!feed) {
 			await feedCreateDefault({
 				queryClient,
-			})
+			});
 		}
 	},
 	component() {
@@ -69,6 +69,6 @@ export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
 					}}
 				/>
 			</TitleContainer>
-		)
+		);
 	},
 });

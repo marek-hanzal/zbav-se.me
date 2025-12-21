@@ -98,13 +98,14 @@ export const withListingQueryBuilder = <TSelect extends withListingCollectionSel
 
 	if (meta?.latLon && where.range !== undefined) {
 		const { lon, lat } = meta.latLon;
+		const range = where.range * 1_000;
 
 		query = query.where(
 			(eb) =>
 				sql`ST_DWithin(
 					${eb.ref("loc.geo")},
 					ST_SetSRID(ST_MakePoint(${eb.val(lon)}, ${eb.val(lat)}), 4326)::geography,
-					${eb.val(where.range)}
+					${eb.val(range)}
 				)`,
 		) as TSelect;
 	}
