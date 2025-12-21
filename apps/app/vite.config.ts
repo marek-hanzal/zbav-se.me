@@ -7,10 +7,6 @@ import { assetSizePlugin } from "@use-pico/vite-asset-size";
 import react from "@vitejs/plugin-react";
 import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
-import dynamicImport from "vite-plugin-dynamic-import";
-import { qrcode } from "vite-plugin-qrcode";
-import wasm from "vite-plugin-wasm";
-import paths from "vite-tsconfig-paths";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -30,11 +26,7 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 					generatedRouteTree: "./_route.ts",
 				},
 			}),
-			paths(),
-			qrcode(),
 			tailwindcss(),
-			wasm(),
-			dynamicImport(),
 			ViteYaml(),
 			assetSizePlugin({
 				ssr: !!isSsrBuild,
@@ -48,10 +40,6 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 		],
 		worker: {
 			format: "es",
-			plugins: () => [
-				paths(),
-				wasm(),
-			],
 		},
 		server: {
 			host: true,

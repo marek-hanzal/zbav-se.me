@@ -5,10 +5,6 @@ import { assetSizePlugin } from "@use-pico/vite-asset-size";
 import react from "@vitejs/plugin-react";
 import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
-import dynamicImport from "vite-plugin-dynamic-import";
-import { qrcode } from "vite-plugin-qrcode";
-import wasm from "vite-plugin-wasm";
-import paths from "vite-tsconfig-paths";
 
 export default defineConfig(({ isSsrBuild, mode }) => {
 	return {
@@ -21,11 +17,7 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 					generatedRouteTree: "./_route.ts",
 				},
 			}),
-			paths(),
-			qrcode(),
 			tailwindcss(),
-			wasm(),
-			dynamicImport(),
 			ViteYaml(),
 			assetSizePlugin({
 				ssr: !!isSsrBuild,
@@ -39,10 +31,6 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 		],
 		worker: {
 			format: "es",
-			plugins: () => [
-				paths(),
-				wasm(),
-			],
 		},
 		server: {
 			host: true,
@@ -50,83 +38,83 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 			port: 3030,
 			allowedHosts: true,
 		},
-		build: {
-			target: "esnext",
-			assetsDir: "assets",
-			assetsInlineLimit: 0,
-			minify: "terser",
-			sourcemap: false,
-			manifest: false,
-			rollupOptions: {
-				treeshake: false,
-				// output: {
-				// 	manualChunks(id) {
-				// 		// Vendor packages - check most specific first
-				// 		if (id.includes("node_modules/react/") && !id.includes("react-dom")) {
-				// 			return "react";
-				// 		}
-				// 		if (id.includes("react-dom")) {
-				// 			return "react-dom";
-				// 		}
-				// 		if (id.includes("@tanstack/react-form")) {
-				// 			return "tanstack-form";
-				// 		}
-				// 		if (id.includes("zod")) {
-				// 			return "zod";
-				// 		}
-				// 		if (id.includes("gsap")) {
-				// 			return "gsap";
-				// 		}
-				// 		if (id.includes("react-modal-sheet")) {
-				// 			return "react-modal-sheet";
-				// 		}
-				// 		if (id.includes("sonner")) {
-				// 			return "sonner";
-				// 		}
-				// 		if (id.includes("motion")) {
-				// 			return "motion";
-				// 		}
-				// 		if (id.includes("js-sha256")) {
-				// 			return "js-sha256";
-				// 		}
-				// 		if (id.includes("luxon")) {
-				// 			return "luxon";
-				// 		}
-				// 		if (id.includes("@paralleldrive")) {
-				// 			return "paralleldrive";
-				// 		}
-				// 		if (id.includes("@zbav-se.me/")) {
-				// 			return "zbav-se-me";
-				// 		}
-				// 		if (id.includes("@use-pico/")) {
-				// 			return "use-pico";
-				// 		}
-				// 		if (id.includes("axios")) {
-				// 			return "axios";
-				// 		}
-				// 		if (id.includes("better-auth")) {
-				// 			return "better-auth";
-				// 		}
-				// 		if (id.includes("react-markdown")) {
-				// 			return "react-markdown";
-				// 		}
-				// 		if (id.includes("remark-") || id.includes("rehype-")) {
-				// 			return "remark-plugins";
-				// 		}
-				// 		if (id.includes("@escapace")) {
-				// 			return "escapace";
-				// 		}
-				// 		if (
-				// 			id.includes("node_modules/") &&
-				// 			!id.includes("src/") &&
-				// 			!id.includes("tanstack/")
-				// 		) {
-				// 			return "vendor";
-				// 		}
-				// 	},
-				// },
-			},
-		},
+		// build: {
+		// 	target: "esnext",
+		// 	assetsDir: "assets",
+		// 	assetsInlineLimit: 0,
+		// 	minify: "terser",
+		// 	sourcemap: false,
+		// 	manifest: false,
+		// 	rollupOptions: {
+		// 		treeshake: false,
+		// 		// output: {
+		// 		// 	manualChunks(id) {
+		// 		// 		// Vendor packages - check most specific first
+		// 		// 		if (id.includes("node_modules/react/") && !id.includes("react-dom")) {
+		// 		// 			return "react";
+		// 		// 		}
+		// 		// 		if (id.includes("react-dom")) {
+		// 		// 			return "react-dom";
+		// 		// 		}
+		// 		// 		if (id.includes("@tanstack/react-form")) {
+		// 		// 			return "tanstack-form";
+		// 		// 		}
+		// 		// 		if (id.includes("zod")) {
+		// 		// 			return "zod";
+		// 		// 		}
+		// 		// 		if (id.includes("gsap")) {
+		// 		// 			return "gsap";
+		// 		// 		}
+		// 		// 		if (id.includes("react-modal-sheet")) {
+		// 		// 			return "react-modal-sheet";
+		// 		// 		}
+		// 		// 		if (id.includes("sonner")) {
+		// 		// 			return "sonner";
+		// 		// 		}
+		// 		// 		if (id.includes("motion")) {
+		// 		// 			return "motion";
+		// 		// 		}
+		// 		// 		if (id.includes("js-sha256")) {
+		// 		// 			return "js-sha256";
+		// 		// 		}
+		// 		// 		if (id.includes("luxon")) {
+		// 		// 			return "luxon";
+		// 		// 		}
+		// 		// 		if (id.includes("@paralleldrive")) {
+		// 		// 			return "paralleldrive";
+		// 		// 		}
+		// 		// 		if (id.includes("@zbav-se.me/")) {
+		// 		// 			return "zbav-se-me";
+		// 		// 		}
+		// 		// 		if (id.includes("@use-pico/")) {
+		// 		// 			return "use-pico";
+		// 		// 		}
+		// 		// 		if (id.includes("axios")) {
+		// 		// 			return "axios";
+		// 		// 		}
+		// 		// 		if (id.includes("better-auth")) {
+		// 		// 			return "better-auth";
+		// 		// 		}
+		// 		// 		if (id.includes("react-markdown")) {
+		// 		// 			return "react-markdown";
+		// 		// 		}
+		// 		// 		if (id.includes("remark-") || id.includes("rehype-")) {
+		// 		// 			return "remark-plugins";
+		// 		// 		}
+		// 		// 		if (id.includes("@escapace")) {
+		// 		// 			return "escapace";
+		// 		// 		}
+		// 		// 		if (
+		// 		// 			id.includes("node_modules/") &&
+		// 		// 			!id.includes("src/") &&
+		// 		// 			!id.includes("tanstack/")
+		// 		// 		) {
+		// 		// 			return "vendor";
+		// 		// 		}
+		// 		// 	},
+		// 		// },
+		// 	},
+		// },
 		json: {
 			stringify: true,
 		},
