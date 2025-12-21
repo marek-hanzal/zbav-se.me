@@ -58,8 +58,7 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 			sourcemap: false,
 			rolldownOptions: {
 				output: {
-					minify: false,
-					advancedChunks: {                        
+					advancedChunks: {
 						groups: [
 							{
 								test: /node_modules\/react\//,
