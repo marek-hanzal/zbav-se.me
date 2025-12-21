@@ -12,7 +12,11 @@ const Priority = {
 	Leaf: 50,
 	Lib: 30,
 	Common: 10,
-};
+} as const;
+
+const Bundle = {
+	Stable: "stable",
+} as const;
 
 export default defineConfig(({ isSsrBuild, mode }) => {
 	return {
@@ -59,179 +63,11 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 			rolldownOptions: {
 				output: {
 					advancedChunks: {
+						minSize: 1_024 * 100,
+						maxSize: 1_024 * 250,
 						groups: [
 							{
-								test: /node_modules\/react\//,
-								name: "react",
-								priority: Priority.Core,
-							},
-							{
-								test: /node_modules\/react-dom\//,
-								name: "react-dom",
-								priority: Priority.Core,
-							},
-							{
-								test: /node_modules\/tailwind-merge/,
-								name: "tailwind-merge",
-								priority: Priority.Leaf,
-							},
-							{
-								test: /node_modules\/@tanstack\/query-core/,
-								name: "tanstack-query-core",
-								priority: 10,
-							},
-							{
-								test: /node_modules\/@tanstack\/react-query/,
-								name: "tanstack-react-query",
-								priority: 5,
-							},
-							{
-								test: /node_modules\/@tanstack\/query-persist-client-core/,
-								name: "tanstack-query-persist-client-core",
-							},
-							{
-								test: /node_modules\/@tanstack\/query-async-storage-persister/,
-								name: "tanstack-query-async-storage-persister",
-							},
-							{
-								test: /node_modules\/@tanstack\/react-form/,
-								name: "tanstack-react-form",
-								priority: 5,
-							},
-							{
-								test: /node_modules\/@tanstack\/router-core/,
-								name: "tanstack-router-core",
-								priority: 10,
-							},
-							{
-								test: /node_modules\/@tanstack\/react-router/,
-								name: "tanstack-react-router",
-								priority: 5,
-							},
-							{
-								test: /node_modules\/zod/,
-								name: "zod",
-								priority: Priority.Leaf,
-							},
-							{
-								test: /node_modules\/axios/,
-								name: "axios",
-								priority: Priority.Leaf,
-							},
-							{
-								test: /node_modules\/@simplewebauthn/,
-								name: "simplewebauthn",
-							},
-							{
-								test: /node_modules\/better-auth/,
-								name: "better-auth",
-							},
-							{
-								test: /node_modules\/@better-auth\/passkey/,
-								name: "better-auth-passkey",
-							},
-							{
-								test: /node_modules\/sonner/,
-								name: "sonner",
-								priority: Priority.Lib,
-							},
-							{
-								test: /node_modules\/luxon/,
-								name: "luxon",
-								priority: Priority.Leaf,
-							},
-							{
-								test: /node_modules\/@paralleldrive/,
-								name: "paralleldrive",
-								priority: Priority.Leaf,
-							},
-							{
-								test: /node_modules\/ts-pattern/,
-								name: "ts-pattern",
-								priority: Priority.Leaf,
-							},
-							{
-								test: /node_modules\/p-queue/,
-								name: "p-queue",
-								priority: Priority.Leaf,
-							},
-							{
-								test: /node_modules\/use-debounce/,
-								name: "use-debounce",
-								priority: Priority.Lib,
-							},
-							{
-								test: /node_modules\/motion/,
-								name: "motion",
-							},
-							{
-								test: /node_modules\/gsap/,
-								name: "gsap",
-							},
-							{
-								test: /node_modules\/js-sha256/,
-								name: "js-sha256",
-								priority: Priority.Leaf,
-							},
-							{
-								test: /node_modules\/react-markdown/,
-								name: "react-markdown",
-								priority: Priority.Lib,
-							},
-							{
-								test: /node_modules\/remark-gfm/,
-								name: "remark-gfm",
-								priority: Priority.Lib,
-							},
-							{
-								test: /node_modules\/zustand/,
-								name: "zustand",
-								priority: Priority.Lib,
-							},
-							{
-								test: /node_modules\/@floating-ui\/react/,
-								name: "floating-ui-react",
-								priority: Priority.Lib,
-							},
-							{
-								test: /node_modules\/react-dropzone/,
-								name: "react-dropzone",
-								priority: Priority.Lib,
-							},
-							{
-								test: /node_modules\/lexical/,
-								name: "lexical",
-								priority: Priority.Lib,
-							},
-							{
-								test: /node_modules\/kysely/,
-								name: "kysely",
-								priority: Priority.Leaf,
-							},
-							{
-								test: /node_modules\/react-modal-sheet/,
-								name: "react-modal-sheet",
-								priority: Priority.Lib,
-							},
-							{
-								test: /packages\/@use-pico\/cls/,
-								name: "use-pico-cls",
-								priority: Priority.Lib,
-							},
-							{
-								test: /packages\/@use-pico/,
-								name: "use-pico",
-								priority: 5,
-							},
-							{
-								test: /packages\/@zbav-se.me\/sdk/,
-								name: "zbav-se-me-sdk",
-								priority: 5,
-							},
-							{
-								test: /packages\/@zbav-se.me/,
-								name: "zbav-se-me",
-								priority: 5,
+								name: "bundle",
 							},
 						],
 					},
