@@ -1,3 +1,4 @@
+import path from "node:path";
 import ViteYaml from "@modyfi/vite-plugin-yaml";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
@@ -10,6 +11,14 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 	return {
 		clearScreen: false,
 		base: process.env.VITE_APP_ASSETS,
+		resolve:
+			mode === "production"
+				? undefined
+				: {
+						alias: {
+							"~": path.resolve(__dirname, "./src"),
+						},
+					},
 		plugins: [
 			tanstackStart({
 				router: {

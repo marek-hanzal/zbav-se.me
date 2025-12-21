@@ -8,6 +8,8 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 import { Route as rootRouteImport } from './@routes/__root'
 import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
@@ -15,10 +17,11 @@ import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
 import { Route as CsTosRouteImport } from './@routes/cs/tos'
 import { Route as CsPrivacyRouteImport } from './@routes/cs/privacy'
 import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
-import { Route as LocaleRegisterRouteImport } from './@routes/$locale/register'
 import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
-import { Route as LocaleLoginRouteImport } from './@routes/$locale/login'
 import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
+
+const LocaleRegisterLazyRouteImport = createFileRoute('/$locale/register')()
+const LocaleLoginLazyRouteImport = createFileRoute('/$locale/login')()
 
 const LocaleRoute = LocaleRouteImport.update({
   id: '/$locale',
@@ -35,6 +38,20 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LocaleRoute,
 } as any)
+const LocaleRegisterLazyRoute = LocaleRegisterLazyRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => LocaleRoute,
+} as any).lazy(() =>
+  import('./@routes/$locale/register.lazy').then((d) => d.Route),
+)
+const LocaleLoginLazyRoute = LocaleLoginLazyRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => LocaleRoute,
+} as any).lazy(() =>
+  import('./@routes/$locale/login.lazy').then((d) => d.Route),
+)
 const CsTosRoute = CsTosRouteImport.update({
   id: '/cs/tos',
   path: '/cs/tos',
@@ -50,19 +67,9 @@ const LocaleTosRoute = LocaleTosRouteImport.update({
   path: '/tos',
   getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleRegisterRoute = LocaleRegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => LocaleRoute,
-} as any)
 const LocalePrivacyRoute = LocalePrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleLoginRoute = LocaleLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleLandingRoute = LocaleLandingRouteImport.update({
@@ -75,23 +82,23 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
-  '/$locale/login': typeof LocaleLoginRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
-  '/$locale/register': typeof LocaleRegisterRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/cs/privacy': typeof CsPrivacyRoute
   '/cs/tos': typeof CsTosRoute
+  '/$locale/login': typeof LocaleLoginLazyRoute
+  '/$locale/register': typeof LocaleRegisterLazyRoute
   '/$locale/': typeof LocaleIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$locale/landing': typeof LocaleLandingRoute
-  '/$locale/login': typeof LocaleLoginRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
-  '/$locale/register': typeof LocaleRegisterRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/cs/privacy': typeof CsPrivacyRoute
   '/cs/tos': typeof CsTosRoute
+  '/$locale/login': typeof LocaleLoginLazyRoute
+  '/$locale/register': typeof LocaleRegisterLazyRoute
   '/$locale': typeof LocaleIndexRoute
 }
 export interface FileRoutesById {
@@ -99,12 +106,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
-  '/$locale/login': typeof LocaleLoginRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
-  '/$locale/register': typeof LocaleRegisterRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/cs/privacy': typeof CsPrivacyRoute
   '/cs/tos': typeof CsTosRoute
+  '/$locale/login': typeof LocaleLoginLazyRoute
+  '/$locale/register': typeof LocaleRegisterLazyRoute
   '/$locale/': typeof LocaleIndexRoute
 }
 export interface FileRouteTypes {
@@ -113,35 +120,35 @@ export interface FileRouteTypes {
     | '/'
     | '/$locale'
     | '/$locale/landing'
-    | '/$locale/login'
     | '/$locale/privacy'
-    | '/$locale/register'
     | '/$locale/tos'
     | '/cs/privacy'
     | '/cs/tos'
+    | '/$locale/login'
+    | '/$locale/register'
     | '/$locale/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/$locale/landing'
-    | '/$locale/login'
     | '/$locale/privacy'
-    | '/$locale/register'
     | '/$locale/tos'
     | '/cs/privacy'
     | '/cs/tos'
+    | '/$locale/login'
+    | '/$locale/register'
     | '/$locale'
   id:
     | '__root__'
     | '/'
     | '/$locale'
     | '/$locale/landing'
-    | '/$locale/login'
     | '/$locale/privacy'
-    | '/$locale/register'
     | '/$locale/tos'
     | '/cs/privacy'
     | '/cs/tos'
+    | '/$locale/login'
+    | '/$locale/register'
     | '/$locale/'
   fileRoutesById: FileRoutesById
 }
@@ -175,6 +182,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRoute
     }
+    '/$locale/register': {
+      id: '/$locale/register'
+      path: '/register'
+      fullPath: '/$locale/register'
+      preLoaderRoute: typeof LocaleRegisterLazyRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/login': {
+      id: '/$locale/login'
+      path: '/login'
+      fullPath: '/$locale/login'
+      preLoaderRoute: typeof LocaleLoginLazyRouteImport
+      parentRoute: typeof LocaleRoute
+    }
     '/cs/tos': {
       id: '/cs/tos'
       path: '/cs/tos'
@@ -196,25 +217,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleTosRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/register': {
-      id: '/$locale/register'
-      path: '/register'
-      fullPath: '/$locale/register'
-      preLoaderRoute: typeof LocaleRegisterRouteImport
-      parentRoute: typeof LocaleRoute
-    }
     '/$locale/privacy': {
       id: '/$locale/privacy'
       path: '/privacy'
       fullPath: '/$locale/privacy'
       preLoaderRoute: typeof LocalePrivacyRouteImport
-      parentRoute: typeof LocaleRoute
-    }
-    '/$locale/login': {
-      id: '/$locale/login'
-      path: '/login'
-      fullPath: '/$locale/login'
-      preLoaderRoute: typeof LocaleLoginRouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/landing': {
@@ -229,19 +236,19 @@ declare module '@tanstack/react-router' {
 
 interface LocaleRouteChildren {
   LocaleLandingRoute: typeof LocaleLandingRoute
-  LocaleLoginRoute: typeof LocaleLoginRoute
   LocalePrivacyRoute: typeof LocalePrivacyRoute
-  LocaleRegisterRoute: typeof LocaleRegisterRoute
   LocaleTosRoute: typeof LocaleTosRoute
+  LocaleLoginLazyRoute: typeof LocaleLoginLazyRoute
+  LocaleRegisterLazyRoute: typeof LocaleRegisterLazyRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleLandingRoute: LocaleLandingRoute,
-  LocaleLoginRoute: LocaleLoginRoute,
   LocalePrivacyRoute: LocalePrivacyRoute,
-  LocaleRegisterRoute: LocaleRegisterRoute,
   LocaleTosRoute: LocaleTosRoute,
+  LocaleLoginLazyRoute: LocaleLoginLazyRoute,
+  LocaleRegisterLazyRoute: LocaleRegisterLazyRoute,
   LocaleIndexRoute: LocaleIndexRoute,
 }
 

@@ -6,6 +6,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Logo } from "@zbav-se.me/ui/logo";
+import { History } from "~/app/history/History";
 
 export const Route = createFileRoute("/$locale/landing")({
 	component() {
@@ -82,6 +83,7 @@ export const Route = createFileRoute("/$locale/landing")({
 										text: "2xl",
 									},
 								}}
+								preload={"intent"}
 								to={"/$locale/login"}
 								params={{
 									locale,
@@ -108,6 +110,7 @@ export const Route = createFileRoute("/$locale/landing")({
 										text: "2xl",
 									},
 								}}
+								preload={"intent"}
 								to={"/$locale/register"}
 								params={{
 									locale,
@@ -176,7 +179,7 @@ export const Route = createFileRoute("/$locale/landing")({
 							color: "lead",
 						}}
 					/>
-				</Container>
+				</Container>*/}
 
 				<Container
 					ui={{
@@ -186,7 +189,7 @@ export const Route = createFileRoute("/$locale/landing")({
 					}}
 				>
 					<History />
-				</Container> */}
+				</Container>
 			</Container>
 		);
 	},
