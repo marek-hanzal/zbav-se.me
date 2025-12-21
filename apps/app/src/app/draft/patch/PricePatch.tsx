@@ -1,4 +1,5 @@
 import { Container } from "@use-pico/client/ui/container";
+import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
 import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
@@ -52,6 +53,10 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onSettled, .
 				<Dial
 					value={price}
 					onChange={setPrice}
+					placeholder={translator.text("Price (placeholder)")}
+					ui={{
+						inner: "default",
+					}}
 				/>
 
 				<SaveControl

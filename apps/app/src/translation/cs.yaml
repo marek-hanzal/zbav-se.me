@@ -131,9 +131,15 @@
 2bad77ac9199d19ca4cf85d780cf6f7f747cc6520bc1899bb6717029:
     ref: Go to home (link)
     value: Zpět domů
+2f30c1c4a6d75472712f25fde84d88a7087c8e5d41e7aa3b4b3030fc:
+    ref: Feed range not set
+    value: Vzdálenost není nenastavená
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
     ref: Age (title)
     value: Stáří
+339d9753b567b5672f79522f5fbd8264123ec49f0c6601c07043a408:
+    ref: Feed range (description)
+    value: Maximální vzdálenost
 356d8a83f26af88932bbce72d41eafdda319a008f3675379a1fc57d0:
     ref: Go to listings (button)
     value: Přejít k inzerátům
@@ -222,6 +228,9 @@
 4f04083c52884888c6258c7fe83a35ff1ce96d78ee8c600a0397392c:
     ref: Seller info (button)
     value: Informace o prodejci
+4f33d281913ab576aa19c5c0e77df9e293b7f6ddee93358784861015:
+    ref: Feed range (title)
+    value: Maximální vzdálenost
 5216a97ce804ea83d2142778cf1659ad70adc72c670ea7365e396fcb:
     ref: Go home (welcome)
     value: Jdeme na to!
@@ -309,6 +318,9 @@
 7a2ff42f7d0739100696527fd6cd76b05a231a3251e56fe2566d0810:
     ref: Open gallery (button)
     value: Otevřít galerii
+7a82926bb5336fd34c1755025654a057c7419b9e9e71e717eb89c249:
+    ref: Feed range (hint)
+    value: Nastav si okruh v km, v jakém chceš vidět inzeráty; pro tuto funkci si musíš nastavit polohu.
 7b76eaae7e44c7090565c9a3f68a77cc082807fbf7f1c1111dfadb29:
     ref: Unignore listing (button)
     value: Zrušit ignoraci
@@ -318,9 +330,15 @@
 7c4c135a16c52d890c89f22c80c0457270fe347976ad1339098e430e:
     ref: icon
     value: icon
+7f2df328f0f16e7c1fd38d50d6a91a5160b4daf7ba80e34a5907d814:
+    ref: Feed range (placeholder)
+    value: Okruh v km
 80eb01c4f083e6af9055876045562a9157c605f15686e89854ee632b:
     ref: unused
     value: unused
+81c4d07e10662bb6e4aaabc348129b026766ab5f1200c052899255bc:
+    ref: Feed range (label)
+    value: Maximální vzdálenost
 8239714e7da3bb0847e7e0f4bd956f5dff5fe8037a32a4fbbd354331:
     ref: Create transaction (button)
     value: Mám zájem!

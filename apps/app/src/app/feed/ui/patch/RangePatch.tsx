@@ -1,5 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
+import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user/feed";
@@ -79,9 +80,11 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 						text: "sm",
 					}}
 				/>
+
 				<Dial
 					value={rangeValue}
 					onChange={setRangeValue}
+					placeholder={translator.text("Feed range (placeholder)")}
 					ui={{
 						inner: "default",
 					}}

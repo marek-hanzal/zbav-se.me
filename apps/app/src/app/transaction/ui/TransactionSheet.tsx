@@ -83,7 +83,12 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({ transactionId, ..
 													className={"h-42"}
 												/>
 
-												<ListingOverlay listing={transaction} />
+												<ListingOverlay
+													listing={{
+														...transaction,
+														distance: null,
+													}}
+												/>
 											</Container>
 
 											<MessageList

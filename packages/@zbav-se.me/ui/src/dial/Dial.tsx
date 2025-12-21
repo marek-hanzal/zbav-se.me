@@ -1,6 +1,5 @@
 import { Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { tvc } from "@use-pico/cls";
 import type { FC } from "react";
@@ -33,10 +32,11 @@ export namespace Dial {
 	export interface Props extends Omit<Container.Props, "onChange"> {
 		value: string | undefined;
 		onChange: (value: string | undefined) => void;
+		placeholder: string;
 	}
 }
 
-export const Dial: FC<Dial.Props> = ({ value, onChange, ui, ...props }) => {
+export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, ui, ...props }) => {
 	return (
 		<Container
 			data-ui={"Dial"}
@@ -74,9 +74,9 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, ui, ...props }) => {
 						}}
 					/>
 				) : (
-					<Tx
+					<Typo
 						data-ui={"Dial-Typo-value-placeholder"}
-						label={"Price (placeholder)"}
+						label={placeholder}
 						ui={{
 							text: "xl",
 							font: "bold",
