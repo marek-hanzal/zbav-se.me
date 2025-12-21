@@ -65,5 +65,10 @@ export namespace LinkTo {
 }
 
 export const LinkTo: LinkComponent<typeof BaseLinkTo> = (props) => {
-	return <CreateLinkTo {...props} />;
+	return (
+		<CreateLinkTo
+			preload={"intent"}
+			{...props}
+		/>
+	);
 };

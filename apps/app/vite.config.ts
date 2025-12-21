@@ -49,66 +49,127 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 			assetsDir: "assets",
 			assetsInlineLimit: 0,
 			sourcemap: false,
-			rollupOptions: {
-				treeshake: "smallest",
+			rolldownOptions: {
 				output: {
-					manualChunks(id) {
-						// Vendor packages - check most specific first
-						if (id.includes("node_modules/react/") && !id.includes("react-dom")) {
-							return "react";
-						}
-						if (id.includes("react-dom")) {
-							return "react-dom";
-						}
-						if (id.includes("zod")) {
-							return "zod";
-						}
-						if (id.includes("js-sha256")) {
-							return "js-sha256";
-						}
-						if (id.includes("sonner")) {
-							return "sonner";
-						}
-						if (id.includes("better-auth")) {
-							return "better-auth";
-						}
-						if (id.includes("axios")) {
-							return "axios";
-						}
-						if (id.includes("@paralleldrive")) {
-							return "paralleldrive";
-						}
-						if (id.includes("ts-pattern")) {
-							return "ts-pattern";
-						}
-						if (id.includes("p-queue")) {
-							return "p-queue";
-						}
-						if (id.includes("use-debounce")) {
-							return "use-debounce";
-						}
-						// if (id.includes("effect")) {
-						// 	return "effect";
-						// }
-						if (id.includes("luxon")) {
-							return "luxon";
-						}
-						if (id.includes("@zbav-se.me/")) {
-							return "zbav-se-me";
-						}
-						if (id.includes("@use-pico/")) {
-							return "use-pico";
-						}
-						if (id.includes("@escapace")) {
-							return "escapace";
-						}
-						if (
-							id.includes("node_modules/") &&
-							!id.includes("src/") &&
-							!id.includes("tanstack/")
-						) {
-							return "vendor";
-						}
+					minify: false,
+					advancedChunks: {
+						groups: [
+							{
+								test: /node_modules\/react-dom/,
+								name: "react-dom",
+							},
+							{
+								test: /node_modules\/react/,
+								name: "react",
+							},
+							{
+								test: /node_modules\/tailwind-merge/,
+								name: "tailwind-merge",
+							},
+							{
+								test: /node_modules\/@tanstack\/query-core/,
+								name: "tanstack-query-core",
+							},
+							{
+								test: /node_modules\/@tanstack\/react-query/,
+								name: "tanstack-react-query",
+							},
+							{
+								test: /node_modules\/@tanstack\/query-persist-client-core/,
+								name: "tanstack-query-persist-client-core",
+							},
+							{
+								test: /node_modules\/@tanstack\/query-async-storage-persister/,
+								name: "tanstack-query-async-storage-persister",
+							},
+							{
+								test: /node_modules\/@tanstack\/react-form/,
+								name: "tanstack-react-form",
+							},
+							{
+								test: /node_modules\/@tanstack\/router-core/,
+								name: "tanstack-router-core",
+							},
+							{
+								test: /node_modules\/@tanstack\/react-router/,
+								name: "tanstack-react-router",
+							},
+							{
+								test: /node_modules\/zod/,
+								name: "zod",
+							},
+							{
+								test: /node_modules\/axios/,
+								name: "axios",
+							},
+							{
+								test: /node_modules\/@simplewebauthn/,
+								name: "simplewebauthn",
+							},
+							{
+								test: /node_modules\/better-auth/,
+								name: "better-auth",
+							},
+							{
+								test: /node_modules\/@better-auth\/passkey/,
+								name: "better-auth-passkey",
+							},
+							{
+								test: /node_modules\/sonner/,
+								name: "sonner",
+							},
+							{
+								test: /node_modules\/luxon/,
+								name: "luxon",
+							},
+							{
+								test: /node_modules\/@paralleldrive/,
+								name: "paralleldrive",
+							},
+							{
+								test: /node_modules\/ts-pattern/,
+								name: "ts-pattern",
+							},
+							{
+								test: /node_modules\/p-queue/,
+								name: "p-queue",
+							},
+							{
+								test: /node_modules\/use-debounce/,
+								name: "use-debounce",
+							},
+							{
+								test: /node_modules\/motion/,
+								name: "motion",
+							},
+							{
+								test: /node_modules\/gsap/,
+								name: "gsap",
+							},
+							{
+								test: /node_modules\/js-sha256/,
+								name: "js-sha256",
+							},
+							{
+								test: /packages\/@use-pico\/cls/,
+								name: "use-pico-cls",
+							},
+							{
+								test: /packages\/@use-pico/,
+								name: "use-pico",
+							},
+							{
+								test: /packages\/@zbav-se.me\/sdk/,
+								name: "zbav-se-me-sdk",
+							},
+							{
+								test: /packages\/@zbav-se.me/,
+								name: "zbav-se-me",
+							},
+							{
+								name: "bundle",
+							},
+						],
 					},
 				},
 			},
