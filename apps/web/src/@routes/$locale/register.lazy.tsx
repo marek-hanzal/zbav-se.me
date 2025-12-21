@@ -1,4 +1,4 @@
-import { useParams, createLazyFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute, useParams } from "@tanstack/react-router";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { FormField, onSubmit } from "@use-pico/client/ui/form";
@@ -37,7 +37,7 @@ const RegisterSchema = z
 		path: [
 			"confirmPassword",
 		],
-	})
+	});
 
 type RegisterSchema = typeof RegisterSchema;
 
@@ -45,7 +45,7 @@ export const Route = createLazyFileRoute("/$locale/register")({
 	component() {
 		const { locale } = useParams({
 			from: "/$locale",
-		})
+		});
 		const navigate = Route.useNavigate();
 
 		const registerMutation = withRegisterMutation.useMutation({
@@ -58,9 +58,9 @@ export const Route = createLazyFileRoute("/$locale/register")({
 							locale,
 						},
 					}),
-				})
+				});
 			},
-		})
+		});
 
 		const form = useAppForm({
 			defaultValues: {
@@ -74,7 +74,7 @@ export const Route = createLazyFileRoute("/$locale/register")({
 			onSubmit: onSubmit({
 				mutation: registerMutation,
 			}),
-		})
+		});
 
 		const scrollerRef = useRef<HTMLDivElement>(null);
 
@@ -117,9 +117,9 @@ export const Route = createLazyFileRoute("/$locale/register")({
 					>
 						<form
 							onSubmit={(e) => {
-								e.preventDefault()
-								e.stopPropagation()
-								form.handleSubmit()
+								e.preventDefault();
+								e.stopPropagation();
+								form.handleSubmit();
 							}}
 							className={"space-y-2"}
 						>
@@ -276,6 +276,6 @@ export const Route = createLazyFileRoute("/$locale/register")({
 					</Status>
 				</Container>
 			</Container>
-		)
+		);
 	},
 });

@@ -11,14 +11,11 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 	return {
 		clearScreen: false,
 		base: process.env.VITE_APP_ASSETS,
-		resolve:
-			mode === "production"
-				? undefined
-				: {
-						alias: {
-							"~": path.resolve(__dirname, "./src"),
-						},
-					},
+		resolve: {
+			alias: {
+				"~": path.resolve(__dirname, "./src"),
+			},
+		},
 		plugins: [
 			tanstackStart({
 				router: {
@@ -51,7 +48,6 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 			target: "esnext",
 			assetsDir: "assets",
 			assetsInlineLimit: 0,
-			minify: "terser",
 			sourcemap: false,
 			rollupOptions: {
 				treeshake: "smallest",
