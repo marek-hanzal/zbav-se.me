@@ -1,14 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { TransactionList } from "~/app/transaction/ui/TransactionList";
 
-export const Route = createFileRoute("/$locale/ui/seller/message/list")({
+export const Route = createLazyFileRoute("/$locale/ui/buyer/message/list")({
 	component() {
 		return (
-			<TitleContainer
-				data-ui="/seller/message/list[TitleContainer]"
-				textTitle={"Messages (title)"}
-			>
+			<TitleContainer textTitle={"Messages (title)"}>
 				<TransactionList
 					query={{
 						sort: [
@@ -22,7 +19,7 @@ export const Route = createFileRoute("/$locale/ui/seller/message/list")({
 							},
 						],
 						meta: {
-							side: "seller",
+							side: "buyer",
 						},
 					}}
 					ui={{
@@ -30,6 +27,6 @@ export const Route = createFileRoute("/$locale/ui/seller/message/list")({
 					}}
 				/>
 			</TitleContainer>
-		);
+		)
 	},
 });

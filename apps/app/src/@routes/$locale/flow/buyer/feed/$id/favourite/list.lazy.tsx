@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import { useLocale, useSentinel } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
@@ -72,7 +72,7 @@ export const EmptyFavourite: FC<EmptyFavourite.Props> = ({ ...props }) => {
 			}}
 			{...props}
 		/>
-	);
+	)
 };
 
 export namespace EmptyFeed {
@@ -158,7 +158,7 @@ export const EmptyFeed: FC<EmptyFeed.Props> = ({ ...props }) => {
 				className={"text-center"}
 			/>
 		</Container>
-	);
+	)
 };
 
 export namespace Appendix {
@@ -245,10 +245,10 @@ export const Appendix: FC<Appendix.Props> = ({ ...props }) => {
 				className={"text-center"}
 			/>
 		</Container>
-	);
+	)
 };
 
-export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/list")({
+export const Route = createLazyFileRoute("/$locale/flow/buyer/feed/$id/favourite/list")({
 	component() {
 		const { id } = Route.useParams();
 		const locale = useLocale();
@@ -256,7 +256,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/lis
 		const { sentinelRef, inView: isLast } = useSentinel<HTMLDivElement>({
 			containerRef,
 			threshold: 0.25,
-		});
+		})
 
 		return (
 			<FlowContainer
@@ -319,11 +319,11 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/lis
 									return <EmptyFeed ref={sentinelRef} />;
 								}}
 							</withFavouriteCountQuery.Suspense>
-						);
+						)
 					}}
 					appendix={<Appendix ref={sentinelRef} />}
 				/>
 			</FlowContainer>
-		);
+		)
 	},
 });

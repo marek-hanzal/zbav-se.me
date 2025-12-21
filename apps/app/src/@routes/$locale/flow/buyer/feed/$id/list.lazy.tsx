@@ -1,4 +1,4 @@
-import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { useRouter, createLazyFileRoute } from "@tanstack/react-router";
 import { useLocale, useSentinel } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon, RefreshIcon } from "@use-pico/client/icon";
 import { Button, uiButton } from "@use-pico/client/ui/button";
@@ -51,7 +51,7 @@ export const SetupButton: FC<SetupButton.Props> = ({ feed, containerRef, state, 
 			}}
 			{...props}
 		/>
-	);
+	)
 };
 
 export namespace Appendix {
@@ -146,7 +146,7 @@ export const Appendix: FC<Appendix.Props> = ({ feed, containerRef, state, ui, ..
 				]}
 			/>
 		</Container>
-	);
+	)
 };
 
 export namespace FeedEmpty {
@@ -240,10 +240,10 @@ export const FeedEmpty: FC<FeedEmpty.Props> = ({ feed, containerRef, state, ui, 
 				]}
 			/>
 		</Container>
-	);
+	)
 };
 
-export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
+export const Route = createLazyFileRoute("/$locale/flow/buyer/feed/$id/list")({
 	validateSearch: z.object({
 		/**
 		 * If needed, we can restore scroll position to a particular listing
@@ -261,11 +261,11 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 					id,
 				},
 			},
-		});
+		})
 
 		return {
 			feed,
-		};
+		}
 	},
 	/**
 	 * We've loader, so we also need pending component.
@@ -275,7 +275,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 			<FlowContainer>
 				<SpinnerContainer />
 			</FlowContainer>
-		);
+		)
 	},
 	component() {
 		const { locale } = Route.useParams();
@@ -295,12 +295,12 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 				page: 0,
 				size: 1,
 			},
-		});
+		})
 
 		const { sentinelRef, inView: isLast } = useSentinel<HTMLDivElement>({
 			containerRef,
 			threshold: 0.25,
-		});
+		})
 
 		return (
 			<FlowContainer
@@ -490,7 +490,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 							>
 								<Button
 									onClick={() => {
-										setIsFeedSettings(false);
+										setIsFeedSettings(false)
 										setTimeout(() => router.invalidate(), 200);
 									}}
 									iconEnabled={RefreshIcon}
@@ -512,10 +512,10 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 									}}
 								/>
 							</SetupSheet>
-						);
+						)
 					}}
 				</withFeedFetchQuery.Suspense>
 			</FlowContainer>
-		);
+		)
 	},
 });

@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import { UserIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
@@ -6,7 +6,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { SignOutButton } from "~/app/auth/ui/SignOutButton";
 import { useUser } from "~/app/user/useUser";
 
-export const Route = createFileRoute("/$locale/ui/user")({
+export const Route = createLazyFileRoute("/$locale/ui/user")({
 	component() {
 		const user = useUser();
 
@@ -38,6 +38,6 @@ export const Route = createFileRoute("/$locale/ui/user")({
 					/>
 				</Container>
 			</TitleContainer>
-		);
+		)
 	},
 });
