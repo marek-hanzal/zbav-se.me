@@ -1,12 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRightIcon } from "@use-pico/client/icon";
+import { ArrowRightIcon, GitHubIcon, Icon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import { LinkTo } from "@use-pico/client/ui/link-to";
+import { LinkTo, uiLinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
+import { HeroImage } from "@zbav-se.me/ui/img";
 import { Logo } from "@zbav-se.me/ui/logo";
 import { History } from "~/app/history/History";
+import face from "~/assets/face.webp";
 
 export const Route = createFileRoute("/$locale/landing")({
 	component() {
@@ -48,7 +50,6 @@ export const Route = createFileRoute("/$locale/landing")({
 					<Status
 						data-ui="/landing-[Status]"
 						textTitle={"Landing - Hero (title)"}
-						// textMessage={"Landing - Hero (subtitle)"}
 						messageProps={{
 							className: "text-center",
 						}}
@@ -122,7 +123,7 @@ export const Route = createFileRoute("/$locale/landing")({
 					</Status>
 				</Container>
 
-				{/* <Container
+				<Container
 					ui={{
 						layout: "vertical-centered",
 						height: "full",
@@ -179,7 +180,7 @@ export const Route = createFileRoute("/$locale/landing")({
 							color: "lead",
 						}}
 					/>
-				</Container>*/}
+				</Container>
 
 				<Container
 					ui={{
