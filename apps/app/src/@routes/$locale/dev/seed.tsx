@@ -39,12 +39,12 @@ export async function picsum(): Promise<Blob> {
 	const proxy = linkTo({
 		base: import.meta.env.VITE_SERVER_API,
 		href: "/api/cors-proxy",
-	})
+	});
 
 	const target = linkTo({
 		base: "https://picsum.photos",
 		href: `/seed/${sig}/1024/768.jpg`,
-	})
+	});
 
 	return axios
 		.get<Blob>(`${proxy}?url=${encodeURIComponent(target)}`, {
@@ -67,7 +67,7 @@ const seedListings = async ({ categories, locationIds, uploadIds }: seedListings
 	const category = list(categories);
 	const title = titles[category.slug as keyof typeof titles] ?? [
 		"Random Title",
-	]
+	];
 
 	const listing = await apiListingCreate({
 		throwOnError: true,
@@ -96,7 +96,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					textTitle: "Preparing seed (title)",
 				}}
 			/>
-		)
+		);
 	},
 	async loader({ context: { queryClient } }) {
 		const categories = await apiCategoryCollection({
@@ -111,7 +111,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 
 		const locationQueue = new PQueue({
 			concurrency: 12,
-		})
+		});
 
 		const locationIds = await Promise.all<string | undefined>(
 			locations.map((locationName) =>
@@ -131,7 +131,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 		const photos = 64;
 		const uploadQueue = new PQueue({
 			concurrency: 8,
-		})
+		});
 		const uploadIds = await Promise.all<string>(
 			new Array(photos).fill(0).map(() =>
 				uploadQueue.add(async () => {
@@ -143,18 +143,18 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						.then((data) => data.id);
 				}),
 			),
-		)
+		);
 		const feed = await withFeedCreateMutation.mutate(queryClient, {
 			name: genId(),
 			query: {},
-		})
+		});
 
 		return {
 			categories,
 			locationIds,
 			uploadIds,
 			feed,
-		}
+		};
 	},
 	component() {
 		const { categories, locationIds, uploadIds, feed } = Route.useLoaderData();
@@ -169,7 +169,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 
 				const queue = new PQueue({
 					concurrency,
-				})
+				});
 
 				for (let i = 0; i < limit; i++) {
 					queue.add(async () => {
@@ -177,12 +177,12 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 							categories,
 							locationIds,
 							uploadIds,
-						})
-					})
+						});
+					});
 				}
 				await queue.onIdle();
 			},
-		})
+		});
 
 		const registerMutation = withRegisterMutation.useMutation();
 		const registerUsersMutation = useMutation({
@@ -193,11 +193,11 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						length: 26,
 					},
 					(_, index) => String.fromCharCode("a".charCodeAt(0) + index),
-				)
+				);
 
 				const queue = new PQueue({
 					concurrency,
-				})
+				});
 
 				for (const letter of alphabet) {
 					queue.add(() =>
@@ -205,12 +205,12 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 							email: `${letter}@x32.cz`,
 							password: "12345678",
 						}),
-					)
+					);
 				}
 
 				await queue.onIdle();
 			},
-		})
+		});
 
 		const signInMutation = withEmailSignInMutation.useMutation();
 
@@ -281,13 +281,13 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					],
 				},
 			}).then((res) => res.data.data);
-		}
+		};
 
 		const seedScoresMutation = useMutation({
 			async mutationFn() {
 				const queue = new PQueue({
 					concurrency: 12,
-				})
+				});
 
 				for (const listing of await fetchRandomListings()) {
 					Math.random() < 0.5 &&
@@ -295,51 +295,51 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 							return listingScoreMutation.mutateAsync({
 								listingId: listing.id,
 								score: "listing",
-							})
-						})
+							});
+						});
 
 					Math.random() < 0.2 &&
 						queue.add(async () => {
 							return listingScoreMutation.mutateAsync({
 								listingId: listing.id,
 								score: "view",
-							})
-						})
+							});
+						});
 
 					Math.random() < 0.07 &&
 						queue.add(async () => {
 							return listingScoreMutation.mutateAsync({
 								listingId: listing.id,
 								score: "flag",
-							})
-						})
+							});
+						});
 
 					Math.random() < 0.175 &&
 						queue.add(async () => {
 							return listingScoreMutation.mutateAsync({
 								listingId: listing.id,
 								score: "favourite",
-							})
-						})
+							});
+						});
 
 					Math.random() < 0.25 &&
 						queue.add(async () => {
 							return listingScoreMutation.mutateAsync({
 								listingId: listing.id,
 								score: "ignore",
-							})
-						})
+							});
+						});
 				}
 
 				await queue.onIdle();
 			},
-		})
+		});
 
 		const seedFavouriteFlagIgnoreMutation = useMutation({
 			async mutationFn() {
 				const queue = new PQueue({
 					concurrency: 12,
-				})
+				});
 
 				for (const listing of await fetchRandomListings()) {
 					Math.random() < 0.07 &&
@@ -349,8 +349,8 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 									listingId: listing.id,
 									toggle: true,
 								},
-							})
-						})
+							});
+						});
 
 					Math.random() < 0.175 &&
 						queue.add(async () => {
@@ -360,8 +360,8 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 									listingId: listing.id,
 									toggle: true,
 								},
-							})
-						})
+							});
+						});
 
 					Math.random() < 0.25 &&
 						queue.add(async () => {
@@ -370,13 +370,13 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 									listingId: listing.id,
 									toggle: true,
 								},
-							})
-						})
+							});
+						});
 				}
 
 				await queue.onIdle();
 			},
-		})
+		});
 
 		return (
 			<Container
@@ -415,7 +415,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 							signInMutation.mutate({
 								email: `${letter}@x32.cz`,
 								password: "12345678",
-							})
+							});
 						}}
 						ui={{
 							tone: "secondary",
@@ -466,6 +466,6 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					</Button>
 				</Container>
 			</Container>
-		)
+		);
 	},
 });

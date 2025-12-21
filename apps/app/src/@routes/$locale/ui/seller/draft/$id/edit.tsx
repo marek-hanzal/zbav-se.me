@@ -1,10 +1,10 @@
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
 import { Setup } from "~/app/draft/Setup";
 
-export const Route = createLazyFileRoute("/$locale/ui/seller/draft/$id/edit")({
+export const Route = createFileRoute("/$locale/ui/seller/draft/$id/edit")({
 	component() {
 		const { id } = Route.useParams();
 		const locale = useLocale();

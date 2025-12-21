@@ -1,4 +1,4 @@
-import { useRouter, createLazyFileRoute } from "@tanstack/react-router";
+import { useRouter, createFileRoute } from "@tanstack/react-router";
 import { useLocale, useSentinel } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon, RefreshIcon } from "@use-pico/client/icon";
 import { Button, uiButton } from "@use-pico/client/ui/button";
@@ -243,7 +243,7 @@ export const FeedEmpty: FC<FeedEmpty.Props> = ({ feed, containerRef, state, ui, 
 	)
 };
 
-export const Route = createLazyFileRoute("/$locale/flow/buyer/feed/$id/list")({
+export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 	validateSearch: z.object({
 		/**
 		 * If needed, we can restore scroll position to a particular listing

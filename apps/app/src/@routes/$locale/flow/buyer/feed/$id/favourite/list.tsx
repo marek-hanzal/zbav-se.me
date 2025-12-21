@@ -1,4 +1,4 @@
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useLocale, useSentinel } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
@@ -248,7 +248,7 @@ export const Appendix: FC<Appendix.Props> = ({ ...props }) => {
 	)
 };
 
-export const Route = createLazyFileRoute("/$locale/flow/buyer/feed/$id/favourite/list")({
+export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/list")({
 	component() {
 		const { id } = Route.useParams();
 		const locale = useLocale();

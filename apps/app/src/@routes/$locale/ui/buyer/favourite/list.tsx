@@ -1,9 +1,9 @@
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { List } from "~/app/feed-favourite/ui/List";
 
-export const Route = createLazyFileRoute("/$locale/ui/buyer/favourite/list")({
+export const Route = createFileRoute("/$locale/ui/buyer/favourite/list")({
 	component() {
 		const { locale } = Route.useParams();
 

@@ -1,4 +1,4 @@
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRightIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -7,7 +7,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Logo } from "@zbav-se.me/ui/logo";
 
-export const Route = createLazyFileRoute("/$locale/welcome")({
+export const Route = createFileRoute("/$locale/welcome")({
 	component() {
 		const { locale } = Route.useParams();
 

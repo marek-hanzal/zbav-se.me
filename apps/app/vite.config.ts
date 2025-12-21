@@ -7,17 +7,6 @@ import react from "@vitejs/plugin-react";
 import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 
-const Priority = {
-	Core: 100,
-	Leaf: 50,
-	Lib: 30,
-	Common: 10,
-} as const;
-
-const Bundle = {
-	Stable: "stable",
-} as const;
-
 export default defineConfig(({ isSsrBuild, mode }) => {
 	return {
 		clearScreen: false,

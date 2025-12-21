@@ -1,4 +1,4 @@
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
@@ -6,7 +6,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { feedCreateDefault } from "~/app/feed/service/feedCreateDefault";
 import { List } from "~/app/feed/ui/List";
 
-export const Route = createLazyFileRoute("/$locale/ui/buyer/feed/select")({
+export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
 	async loader({ context: { queryClient } }) {
 		/**
 		 * Dummy catch is intentional - we don't care about results here (not found throws an error).

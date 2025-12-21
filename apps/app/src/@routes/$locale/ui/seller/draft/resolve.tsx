@@ -26,7 +26,7 @@ export const Route = createFileRoute("/$locale/ui/seller/draft/resolve")({
 					id: current.id,
 					locale,
 				},
-			})
+			});
 		}
 
 		const draft = await withDraftCreateMutation.mutate(queryClient, {});
@@ -38,7 +38,7 @@ export const Route = createFileRoute("/$locale/ui/seller/draft/resolve")({
 				id: draft.id,
 				locale,
 			},
-		})
+		});
 	},
 	pendingComponent: () => <SpinnerContainer />,
 });

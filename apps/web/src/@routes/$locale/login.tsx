@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { createLazyFileRoute, useNavigate, useParams } from "@tanstack/react-router";
+import { useNavigate, useParams, createFileRoute } from "@tanstack/react-router";
 import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -33,11 +33,11 @@ const LoginSchema = z.object({
 
 type LoginSchema = typeof LoginSchema;
 
-export const Route = createLazyFileRoute("/$locale/login")({
+export const Route = createFileRoute("/$locale/login")({
 	component() {
 		const { locale } = useParams({
 			from: "/$locale",
-		});
+		})
 		const navigate = useNavigate();
 
 		const signInMutation = withEmailSignInMutation.useMutation({
@@ -50,9 +50,9 @@ export const Route = createLazyFileRoute("/$locale/login")({
 							locale,
 						},
 					}),
-				});
+				})
 			},
-		});
+		})
 
 		const passkeyMutation = useMutation({
 			async mutationFn() {
@@ -65,9 +65,9 @@ export const Route = createLazyFileRoute("/$locale/login")({
 							locale,
 						},
 					}),
-				});
+				})
 			},
-		});
+		})
 
 		const form = useAppForm({
 			defaultValues: {
@@ -81,9 +81,9 @@ export const Route = createLazyFileRoute("/$locale/login")({
 				return signInMutation.mutateAsync({
 					email: value.email,
 					password: value.password,
-				});
+				})
 			},
-		});
+		})
 
 		const rootRef = useRef<HTMLDivElement>(null);
 
@@ -134,9 +134,9 @@ export const Route = createLazyFileRoute("/$locale/login")({
 						>
 							<form
 								onSubmit={(e) => {
-									e.preventDefault();
-									e.stopPropagation();
-									form.handleSubmit();
+									e.preventDefault()
+									e.stopPropagation()
+									form.handleSubmit()
 								}}
 								className={"space-y-2"}
 							>
@@ -264,7 +264,7 @@ export const Route = createLazyFileRoute("/$locale/login")({
 										},
 									}}
 									onClick={() => {
-										passkeyMutation.mutate();
+										passkeyMutation.mutate()
 									}}
 									disabled={passkeyMutation.isPending}
 									ui={{
@@ -284,6 +284,6 @@ export const Route = createLazyFileRoute("/$locale/login")({
 					</Container>
 				</Container>
 			</Container>
-		);
+		)
 	},
 });
