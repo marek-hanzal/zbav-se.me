@@ -35,6 +35,7 @@ export const listingCollectionFx = (query: listingCollectionFx.Props) => {
 					return withListingQueryBuilder({
 						...query,
 						userId: user.id,
+						meta,
 					});
 				},
 			});

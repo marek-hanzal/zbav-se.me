@@ -1111,13 +1111,9 @@ export type tListingWhere = {
      */
     expiresAtAfter?: string;
     /**
-     * This filter matches listings with range greater than or equal to the provided value (meters)
+     * Range (in meters) around the input location to filter listings
      */
-    rangeMin?: number;
-    /**
-     * This filter matches listings with range less than or equal to the provided value (meters)
-     */
-    rangeMax?: number;
+    range?: number;
     /**
      * This filter matches listings with title matching the provided value
      */
@@ -1235,13 +1231,9 @@ export type tListingFilter = {
      */
     expiresAtAfter?: string;
     /**
-     * This filter matches listings with range greater than or equal to the provided value (meters)
+     * Range (in meters) around the input location to filter listings
      */
-    rangeMin?: number;
-    /**
-     * This filter matches listings with range less than or equal to the provided value (meters)
-     */
-    rangeMax?: number;
+    range?: number;
     /**
      * This filter matches listings with title matching the provided value
      */
@@ -1752,7 +1744,7 @@ export type tListingSort = {
  * Query object for listing collection
  */
 export type tListingQuery = {
-    cursor?: tCursor;
+    cursor?: tCursor & unknown;
     filter?: tListingFilter;
     where?: tListingWhere;
     sort?: Array<tListingSort>;

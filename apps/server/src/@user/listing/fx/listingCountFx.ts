@@ -15,14 +15,14 @@ export const listingCountFx = (query: listingCountFx.Props) => {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		const { filter, where } = query;
+		const { filter, where, meta } = query;
 
 		return yield* Effect.tryPromise(async () => {
 			return withCount({
 				select: withListingCollectionSelect({
 					database,
 					sort: undefined,
-					meta: undefined,
+					meta,
 				}),
 				filter,
 				where,
@@ -30,6 +30,7 @@ export const listingCountFx = (query: listingCountFx.Props) => {
 					return withListingQueryBuilder({
 						...query,
 						userId: user.id,
+						meta,
 					});
 				},
 			});

@@ -1,3 +1,5 @@
+import { sql } from "kysely";
+import type { ListingMetaSchema } from "~/@user/listing/schema/ListingMetaSchema";
 import type { withListingCollectionSelect } from "~/app/listing/db/withListingCollectionSelect";
 import type { ListingFilterSchema } from "~/app/listing/schema/ListingFilterSchema";
 import { withLikeEx } from "~/database/expression/withLikeEx";
@@ -7,6 +9,7 @@ export namespace withListingQueryBuilder {
 		userId: string;
 		select: TSelect;
 		where?: ListingFilterSchema.Type;
+		meta?: ListingMetaSchema.Type;
 	}
 
 	export type Callback<TSelect extends withListingCollectionSelect.Select> = (
@@ -22,6 +25,7 @@ export const withListingQueryBuilder = <TSelect extends withListingCollectionSel
 	userId,
 	select,
 	where,
+	meta,
 }: withListingQueryBuilder.Props<TSelect>) => {
 	if (!where) {
 		return select;
@@ -90,6 +94,19 @@ export const withListingQueryBuilder = <TSelect extends withListingCollectionSel
 
 	if (where.categoryIdIn && where.categoryIdIn.length > 0) {
 		query = query.where("l.categoryId", "in", where.categoryIdIn) as TSelect;
+	}
+
+	if (meta?.latLon && where.range !== undefined) {
+		const { lon, lat } = meta.latLon;
+
+		query = query.where(
+			(eb) =>
+				sql`ST_DWithin(
+					${eb.ref("loc.geo")},
+					ST_SetSRID(ST_MakePoint(${eb.val(lon)}, ${eb.val(lat)}), 4326)::geography,
+					${eb.val(where.range)}
+				)`,
+		) as TSelect;
 	}
 
 	if (where.title) {

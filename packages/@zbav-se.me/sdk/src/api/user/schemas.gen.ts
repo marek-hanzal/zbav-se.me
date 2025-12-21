@@ -1605,11 +1605,7 @@ export const sListingWhere = {
         expiresAtAfter: {
             type: 'string'
         },
-        rangeMin: {
-            type: 'number',
-            minimum: 0
-        },
-        rangeMax: {
+        range: {
             type: 'number',
             minimum: 0
         },
@@ -1756,11 +1752,7 @@ export const sListingFilter = {
         expiresAtAfter: {
             type: 'string'
         },
-        rangeMin: {
-            type: 'number',
-            minimum: 0
-        },
-        rangeMax: {
+        range: {
             type: 'number',
             minimum: 0
         },
@@ -2399,7 +2391,17 @@ export const sListingQuery = {
     type: 'object',
     properties: {
         cursor: {
-            $ref: '#/components/schemas/Cursor'
+            allOf: [
+                {
+                    $ref: '#/components/schemas/Cursor'
+                },
+                {
+                    default: {
+                        page: 0,
+                        size: 256
+                    }
+                }
+            ]
         },
         filter: {
             $ref: '#/components/schemas/ListingFilter'

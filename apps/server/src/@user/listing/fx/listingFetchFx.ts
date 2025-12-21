@@ -34,6 +34,7 @@ export const listingFetchFx = (query: listingFetchFx.Props) => {
 					return withListingQueryBuilder({
 						...query,
 						userId: user.id,
+						meta,
 					});
 				},
 			});

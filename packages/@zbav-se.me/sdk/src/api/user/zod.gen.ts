@@ -1279,11 +1279,8 @@ export const zListingWhere = z.object({
     expiresAtAfter: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches listings that expire after the provided date'
     })),
-    rangeMin: z.optional(z.number().gte(0).register(z.globalRegistry, {
-        description: 'This filter matches listings with range greater than or equal to the provided value (meters)'
-    })),
-    rangeMax: z.optional(z.number().gte(0).register(z.globalRegistry, {
-        description: 'This filter matches listings with range less than or equal to the provided value (meters)'
+    range: z.optional(z.number().gte(0).register(z.globalRegistry, {
+        description: 'Range (in meters) around the input location to filter listings'
     })),
     title: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches listings with title matching the provided value'
@@ -1357,11 +1354,8 @@ export const zListingFilter = z.object({
     expiresAtAfter: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches listings that expire after the provided date'
     })),
-    rangeMin: z.optional(z.number().gte(0).register(z.globalRegistry, {
-        description: 'This filter matches listings with range greater than or equal to the provided value (meters)'
-    })),
-    rangeMax: z.optional(z.number().gte(0).register(z.globalRegistry, {
-        description: 'This filter matches listings with range less than or equal to the provided value (meters)'
+    range: z.optional(z.number().gte(0).register(z.globalRegistry, {
+        description: 'Range (in meters) around the input location to filter listings'
     })),
     title: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches listings with title matching the provided value'
@@ -1921,7 +1915,7 @@ export type zListingSort = z.infer<typeof zListingSort>;
  * Query object for listing collection
  */
 export const zListingQuery = z.object({
-    cursor: z.optional(zCursor),
+    cursor: z.optional(zCursor.and(z.unknown().default({ page: 0, size: 256 }))),
     filter: z.optional(zListingFilter),
     where: z.optional(zListingWhere),
     sort: z.optional(z.array(zListingSort)),
