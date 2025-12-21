@@ -64,26 +64,14 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 						if (id.includes("sonner")) {
 							return "sonner";
 						}
-						// if (id.includes("effect")) {
-						// 	return "effect";
-						// }
-						if (id.includes("luxon")) {
-							return "luxon";
-						}
-						if (id.includes("@paralleldrive")) {
-							return "paralleldrive";
-						}
-						if (id.includes("@zbav-se.me/")) {
-							return "zbav-se-me";
-						}
-						if (id.includes("@use-pico/")) {
-							return "use-pico";
+						if (id.includes("better-auth")) {
+							return "better-auth";
 						}
 						if (id.includes("axios")) {
 							return "axios";
 						}
-						if (id.includes("better-auth")) {
-							return "better-auth";
+						if (id.includes("@paralleldrive")) {
+							return "paralleldrive";
 						}
 						if (id.includes("ts-pattern")) {
 							return "ts-pattern";
@@ -93,6 +81,18 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 						}
 						if (id.includes("use-debounce")) {
 							return "use-debounce";
+						}
+						// if (id.includes("effect")) {
+						// 	return "effect";
+						// }
+						if (id.includes("luxon")) {
+							return "luxon";
+						}
+						if (id.includes("@zbav-se.me/")) {
+							return "zbav-se-me";
+						}
+						if (id.includes("@use-pico/")) {
+							return "use-pico";
 						}
 						if (id.includes("@escapace")) {
 							return "escapace";
