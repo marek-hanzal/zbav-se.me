@@ -1,6 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { ListingExpireEnumSchema } from "~/@user/listing/schema/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/app/listing/schema/ListingPriceEnumSchema";
+import { ProsConsSchema } from "~/app/listing/schema/ProsConsSchema";
 
 export const DraftCreateSchema = z
 	.object({
@@ -30,6 +31,24 @@ export const DraftCreateSchema = z
 		description: z.string().max(2048).optional().openapi({
 			description: "Description of the item",
 		}),
+		pros: z
+			.union([
+				ProsConsSchema,
+				z.null(),
+			])
+			.optional()
+			.openapi({
+				description: "Pros of the item",
+			}),
+		cons: z
+			.union([
+				ProsConsSchema,
+				z.null(),
+			])
+			.optional()
+			.openapi({
+				description: "Cons of the item",
+			}),
 		uploadIds: z.array(z.string()).optional().openapi({
 			description: "IDs of the uploads; order of uploads defines order in the gallery",
 		}),

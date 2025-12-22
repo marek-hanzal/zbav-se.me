@@ -1928,6 +1928,32 @@ export const sListingCreate = {
                 }
             ]
         },
+        pros: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ProsCons'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        cons: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ProsCons'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
         uploadIds: {
             type: 'array',
             items: {
@@ -1947,6 +1973,15 @@ export const sListingCreate = {
         'title',
         'uploadIds'
     ]
+} as const;
+
+export const sProsCons = {
+    type: 'array',
+    items: {
+        type: 'string',
+        maxLength: 72
+    },
+    maxItems: 5
 } as const;
 
 export const sListingExpireEnum = {
@@ -3109,15 +3144,6 @@ export const sCategory = {
     ]
 } as const;
 
-export const sProsCons = {
-    type: 'array',
-    items: {
-        type: 'string',
-        maxLength: 72
-    },
-    maxItems: 5
-} as const;
-
 export const sFavouriteCountQuery = {
     type: 'object',
     properties: {
@@ -3632,6 +3658,32 @@ export const sDraftCreate = {
         description: {
             type: 'string',
             maxLength: 2048
+        },
+        pros: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ProsCons'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        cons: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ProsCons'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         },
         uploadIds: {
             type: 'array',

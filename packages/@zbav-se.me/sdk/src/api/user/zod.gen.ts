@@ -1448,6 +1448,15 @@ export const zListingCollection = z.object({
 export type zListingCollection = z.infer<typeof zListingCollection>;
 
 /**
+ * Array of pros or cons, max 5 items, each string max 72 characters
+ */
+export const zProsCons = z.array(z.string().max(72)).max(5).register(z.globalRegistry, {
+    description: 'Array of pros or cons, max 5 items, each string max 72 characters'
+});
+
+export type zProsCons = z.infer<typeof zProsCons>;
+
+/**
  * Expiration time of the listing
  */
 export const zListingExpireEnum = z.enum([
@@ -1495,6 +1504,14 @@ export const zListingCreate = z.object({
     }),
     description: z.optional(z.union([
         z.string().max(2048),
+        z.null()
+    ])),
+    pros: z.optional(z.union([
+        zProsCons,
+        z.null()
+    ])),
+    cons: z.optional(z.union([
+        zProsCons,
         z.null()
     ])),
     uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
@@ -2262,15 +2279,6 @@ export const zCategory = z.object({
 export type zCategory = z.infer<typeof zCategory>;
 
 /**
- * Array of pros or cons, max 5 items, each string max 72 characters
- */
-export const zProsCons = z.array(z.string().max(72)).max(5).register(z.globalRegistry, {
-    description: 'Array of pros or cons, max 5 items, each string max 72 characters'
-});
-
-export type zProsCons = z.infer<typeof zProsCons>;
-
-/**
  * Listing data
  */
 export const zListing = z.object({
@@ -2717,6 +2725,14 @@ export const zDraftCreate = z.object({
     description: z.optional(z.string().max(2048).register(z.globalRegistry, {
         description: 'Description of the item'
     })),
+    pros: z.optional(z.union([
+        zProsCons,
+        z.null()
+    ])),
+    cons: z.optional(z.union([
+        zProsCons,
+        z.null()
+    ])),
     uploadIds: z.optional(z.array(z.string()).register(z.globalRegistry, {
         description: 'IDs of the uploads; order of uploads defines order in the gallery'
     }))

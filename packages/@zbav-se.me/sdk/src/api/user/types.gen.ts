@@ -1351,10 +1351,23 @@ export type tListingCreate = {
      */
     description?: string | null;
     /**
+     * Pros of the item
+     */
+    pros?: tProsCons | null;
+    /**
+     * Cons of the item
+     */
+    cons?: tProsCons | null;
+    /**
      * IDs of the uploads; order of uploads defines order in the gallery
      */
     uploadIds: Array<string>;
 };
+
+/**
+ * Array of pros or cons, max 5 items, each string max 72 characters
+ */
+export type tProsCons = Array<string>;
 
 /**
  * Expiration time of the listing
@@ -2142,11 +2155,6 @@ export type tCategory = {
 };
 
 /**
- * Array of pros or cons, max 5 items, each string max 72 characters
- */
-export type tProsCons = Array<string>;
-
-/**
  * Query object for favourite count
  */
 export type tFavouriteCountQuery = {
@@ -2481,6 +2489,14 @@ export type tDraftCreate = {
      * Description of the item
      */
     description?: string;
+    /**
+     * Pros of the item
+     */
+    pros?: tProsCons | null;
+    /**
+     * Cons of the item
+     */
+    cons?: tProsCons | null;
     /**
      * IDs of the uploads; order of uploads defines order in the gallery
      */
