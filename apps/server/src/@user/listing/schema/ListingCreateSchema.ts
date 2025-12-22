@@ -30,12 +30,12 @@ export const ListingCreateSchema = z
 			}),
 		delivery: z
 			.union([
-				ListingDeliveryEnumSchema,
+				z.array(ListingDeliveryEnumSchema),
 				z.null(),
 			])
 			.optional()
 			.openapi({
-				description: "Delivery method for the listing",
+				description: "Delivery methods for the listing",
 			}),
 		draftId: z.string().optional().openapi({
 			description: "ID of the draft",

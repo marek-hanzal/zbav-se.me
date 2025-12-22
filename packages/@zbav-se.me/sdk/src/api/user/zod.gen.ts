@@ -1436,6 +1436,20 @@ export const zListingExpireEnum = z.enum([
 export type zListingExpireEnum = z.infer<typeof zListingExpireEnum>;
 
 /**
+ * Delivery method for the listing
+ */
+export const zListingDeliveryEnum = z.enum([
+    'personal',
+    'post',
+    'package',
+    'other'
+]).register(z.globalRegistry, {
+    description: 'Delivery method for the listing'
+});
+
+export type zListingDeliveryEnum = z.infer<typeof zListingDeliveryEnum>;
+
+/**
  * Data for creating a new listing
  */
 export const zListingCreate = z.object({
@@ -1451,6 +1465,10 @@ export const zListingCreate = z.object({
         z.number(),
         z.null()
     ]),
+    delivery: z.optional(z.union([
+        z.array(zListingDeliveryEnum),
+        z.null()
+    ])),
     draftId: z.optional(z.string().register(z.globalRegistry, {
         description: 'ID of the draft'
     })),
@@ -2252,6 +2270,10 @@ export const zListing = z.object({
         z.number(),
         z.null()
     ]),
+    delivery: z.union([
+        z.array(zListingDeliveryEnum),
+        z.null()
+    ]),
     locationId: z.string().register(z.globalRegistry, {
         description: 'ID of the location'
     }),
@@ -2562,6 +2584,10 @@ export const zDraftPatchData = z.object({
         z.number(),
         z.null()
     ])),
+    delivery: z.optional(z.union([
+        z.array(zListingDeliveryEnum),
+        z.null()
+    ])),
     locationId: z.optional(z.union([
         z.string(),
         z.null()
@@ -2692,6 +2718,10 @@ export const zDraft = z.object({
     ]),
     age: z.union([
         z.number(),
+        z.null()
+    ]),
+    delivery: z.union([
+        z.array(zListingDeliveryEnum),
         z.null()
     ]),
     locationId: z.union([

@@ -59,11 +59,11 @@ export const DraftDbSchema = z
 		//
 		delivery: z
 			.union([
-				ListingDeliveryEnumSchema,
+				z.array(ListingDeliveryEnumSchema),
 				z.null(),
 			])
 			.openapi({
-				description: "Delivery method for the draft",
+				description: "Delivery methods for the draft",
 			}),
 		//
 		locationId: z

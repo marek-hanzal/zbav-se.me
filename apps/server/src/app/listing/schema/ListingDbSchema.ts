@@ -43,11 +43,11 @@ export const ListingDbSchema = z
 		//
 		delivery: z
 			.union([
-				ListingDeliveryEnumSchema,
+				z.array(ListingDeliveryEnumSchema),
 				z.null(),
 			])
 			.openapi({
-				description: "Delivery method for the listing",
+				description: "Delivery methods for the listing",
 			}),
 		//
 		locationId: z.string().openapi({

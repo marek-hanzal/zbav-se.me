@@ -1304,6 +1304,10 @@ export type tListingCreate = {
      */
     age: number | null;
     /**
+     * Delivery methods for the listing
+     */
+    delivery?: Array<tListingDeliveryEnum> | null;
+    /**
      * ID of the draft
      */
     draftId?: string;
@@ -1343,6 +1347,21 @@ export const tListingExpireEnum = {
  * Expiration time of the listing
  */
 export type tListingExpireEnum = typeof tListingExpireEnum[keyof typeof tListingExpireEnum];
+
+/**
+ * Delivery method for the listing
+ */
+export const tListingDeliveryEnum = {
+    personal: 'personal',
+    post: 'post',
+    package: 'package',
+    other: 'other'
+} as const;
+
+/**
+ * Delivery method for the listing
+ */
+export type tListingDeliveryEnum = typeof tListingDeliveryEnum[keyof typeof tListingDeliveryEnum];
 
 /**
  * Data for toggling a listing in ignore list
@@ -2013,6 +2032,10 @@ export type tListing = {
      */
     age: number | null;
     /**
+     * Delivery methods for the listing
+     */
+    delivery: Array<tListingDeliveryEnum> | null;
+    /**
      * ID of the location
      */
     locationId: string;
@@ -2349,6 +2372,10 @@ export type tDraftPatchData = {
      */
     age?: number | null;
     /**
+     * Delivery methods for the draft
+     */
+    delivery?: Array<tListingDeliveryEnum> | null;
+    /**
      * ID of the location
      */
     locationId?: string | null;
@@ -2460,6 +2487,10 @@ export type tDraft = {
      * Age of the item (0-based index)
      */
     age: number | null;
+    /**
+     * Delivery methods for the draft
+     */
+    delivery: Array<tListingDeliveryEnum> | null;
     /**
      * ID of the location
      */
