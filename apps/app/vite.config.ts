@@ -49,6 +49,13 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 			assetsDir: "assets",
 			assetsInlineLimit: 0,
 			sourcemap: false,
+			//
+			rolldownOptions: {
+				output: {
+					minify: false,
+					sourcemap: "inline",
+				},
+			},
 		},
 	};
 });

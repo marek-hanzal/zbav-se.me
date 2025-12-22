@@ -836,7 +836,7 @@ fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
     value: Vybrané stavy
 fa65ccecdeb5bdcf00a832c72eb27cdaca5a549ea59fc48ad7267ab9:
     ref: Delivery not selected
-    value: Delivery not selected
+    value: Možnost předání nemáš vybranou
 fa8d4af882062a1148f43f806622a6851ff29ff80f66467624617d7a:
     ref: Listing location (hint)
     value: Pozor, umístění je veřejný údaj, ale můžeš napsat třeba název obce.

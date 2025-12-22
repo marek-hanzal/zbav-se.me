@@ -1,5 +1,7 @@
+import { useNavigate } from "@tanstack/react-router";
+import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
-import { SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
+import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCollectionQuery, withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC, RefObject } from "react";
@@ -14,6 +16,8 @@ export namespace Content {
 }
 
 export const Content: FC<Content.Props> = ({ _suspense, query, scrollerRef }) => {
+	const navigate = useNavigate();
+	const locale = useLocale();
 	/**
 	 * This is intentional to trigger parent suspense
 	 */
@@ -81,7 +85,27 @@ export const Content: FC<Content.Props> = ({ _suspense, query, scrollerRef }) =>
 				);
 			})}
 
-			<CreateButton />
+			<Container
+				ui={{
+					inner: "default",
+					height: "full",
+				}}
+			>
+				<CreateButton
+					ui={{
+						height: "full",
+					}}
+					onSuccess={(draft) => {
+						navigate({
+							to: "/$locale/ui/seller/draft/$id/edit",
+							params: {
+								locale,
+								id: draft.id,
+							},
+						});
+					}}
+				/>
+			</Container>
 		</>
 	);
 };
