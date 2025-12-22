@@ -13,6 +13,7 @@ import { DeleteButton } from "~/app/draft/button/DeleteButton";
 import { AgePatch } from "~/app/draft/patch/AgePatch";
 import { CategoryPatch } from "~/app/draft/patch/CategoryPatch";
 import { ConditionPatch } from "~/app/draft/patch/ConditionPatch";
+import { DeliveryPatch } from "~/app/draft/patch/DeliveryPatch";
 import { DescriptionPatch } from "~/app/draft/patch/DescriptionPatch";
 import { ExpireAtPatch } from "~/app/draft/patch/ExpireAtPatch";
 import { GalleryPatch } from "~/app/draft/patch/GalleryPatch";
@@ -23,6 +24,7 @@ import { TitlePatch } from "~/app/draft/patch/TitlePatch";
 import { AgeValue } from "~/app/draft/value/AgeValue";
 import { CategoryValue } from "~/app/draft/value/CategoryValue";
 import { ConditionValue } from "~/app/draft/value/ConditionValue";
+import { DeliveryValue } from "~/app/draft/value/DeliveryValue";
 import { DescriptionValue } from "~/app/draft/value/DescriptionValue";
 import { ExpireAtValue } from "~/app/draft/value/ExpireAtValue";
 import { LocationValue } from "~/app/draft/value/LocationValue";
@@ -41,6 +43,7 @@ export namespace Setup {
 		| "category"
 		| "condition"
 		| "age"
+		| "delivery"
 		| "gallery"
 		| "expireAt"
 		| "description";
@@ -158,6 +161,13 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 									draft={draft}
 									onClick={() => {
 										setView("age");
+									}}
+								/>
+
+								<DeliveryValue
+									draft={draft}
+									onClick={() => {
+										setView("delivery");
 									}}
 								/>
 
@@ -289,6 +299,15 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 				age: {
 					children: (
 						<AgePatch
+							draft={draft}
+							onCancel={() => setView("default")}
+							onSettled={() => setView("default")}
+						/>
+					),
+				},
+				delivery: {
+					children: (
+						<DeliveryPatch
 							draft={draft}
 							onCancel={() => setView("default")}
 							onSettled={() => setView("default")}
