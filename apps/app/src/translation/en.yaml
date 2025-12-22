@@ -43,6 +43,9 @@
 0e2d6ae59d756678e034197ebd80f4723aecad41dc953699684a443e:
   ref: Listings (label)
   value: Listings (label)
+0f44d510d8a8cf53325df192dfac3d02f4299c2d9a4a5dbe2dad9a6f:
+  ref: Price type not set
+  value: Price type not set
 1033ff575b4fcc2a5f68f0546b255961c4cf9514267255fbd76e2920:
   ref: Listing title not filled
   value: Listing title not filled
@@ -61,6 +64,9 @@
 14c26d2816c7d80dbb0d3d6314d8229e7c3eb85ea3089c55c570051a:
   ref: Condition (title)
   value: Condition (title)
+15edabc6931564b26e9e7c4e83be79266953662d2a96c4544f5988e5:
+  ref: Price type (title)
+  value: Price type (title)
 16e1f53d97e50b6ca414cf36d052667d99adcf92c2076887e7567d01:
   ref: Feed condition not selected
   value: Feed condition not selected

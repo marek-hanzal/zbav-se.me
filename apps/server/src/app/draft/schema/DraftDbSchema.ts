@@ -1,5 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { ListingExpireEnumSchema } from "~/@user/listing/schema/ListingExpireEnumSchema";
+import { ListingPriceEnumSchema } from "~/app/listing/schema/ListingPriceEnumSchema";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 
 export const DraftDbSchema = z
@@ -18,6 +19,14 @@ export const DraftDbSchema = z
 			])
 			.openapi({
 				description: "Price of the draft",
+			}),
+		priceType: z
+			.union([
+				ListingPriceEnumSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Price type of the draft",
 			}),
 		//
 		currency: z
@@ -86,7 +95,7 @@ export const DraftDbSchema = z
 		//
 		description: z
 			.union([
-				z.string(),
+				z.string().max(2048),
 				z.null(),
 			])
 			.openapi({

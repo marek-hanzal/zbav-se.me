@@ -3272,6 +3272,19 @@ export const sDraftPatchData = {
                 }
             ]
         },
+        priceType: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ListingPriceEnum'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
         condition: {
             anyOf: [
                 {
@@ -3412,6 +3425,14 @@ export const sDraftCreate = {
         price: {
             type: 'number'
         },
+        priceType: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/ListingPriceEnum'
+                },
+                {}
+            ]
+        },
         condition: {
             type: 'number'
         },
@@ -3458,6 +3479,19 @@ export const sDraft = {
                         'number',
                         'null'
                     ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        priceType: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ListingPriceEnum'
                 },
                 {
                     type: 'null'
@@ -3630,6 +3664,7 @@ export const sDraft = {
     required: [
         'id',
         'price',
+        'priceType',
         'currency',
         'condition',
         'age',

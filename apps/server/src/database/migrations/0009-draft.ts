@@ -6,11 +6,20 @@ export const DraftMigration: Migration = {
 		await sql`CREATE EXTENSION IF NOT EXISTS vector;`.execute(db);
 
 		await db.schema
+			.createType("listing_price_enum")
+			.asEnum([
+				"closed",
+				"open",
+			])
+			.execute();
+
+		await db.schema
 			.createTable("draft")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			//
 			.addColumn("price", "decimal(10, 2)")
+			.addColumn("priceType", sql`listing_price_enum`)
 			.addColumn("currency", "text")
 			.addColumn("condition", "integer")
 			.addColumn("age", "integer")
@@ -73,30 +82,6 @@ export const DraftMigration: Migration = {
 			.execute();
 
 		await db.schema.createIndex("draft_[userId]_idx").on("draft").column("userId").execute();
-
-		await db.schema
-			.createIndex("draft_[galleryId]_idx")
-			.on("draft")
-			.column("galleryId")
-			.execute();
-
-		await db.schema
-			.createIndex("draft_[createdAt]_idx")
-			.on("draft")
-			.column("createdAt")
-			.execute();
-
-		await db.schema
-			.createIndex("draft_[updatedAt]_idx")
-			.on("draft")
-			.column("updatedAt")
-			.execute();
-
-		await db.schema
-			.createIndex("draft_[expiresAt]_idx")
-			.on("draft")
-			.column("expiresAt")
-			.execute();
 
 		await db.schema.createIndex("draft_[usedAt]_idx").on("draft").column("usedAt").execute();
 	},

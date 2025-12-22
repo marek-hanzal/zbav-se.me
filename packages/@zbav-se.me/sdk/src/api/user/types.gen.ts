@@ -2337,6 +2337,10 @@ export type tDraftPatchData = {
      */
     price?: number | null | null;
     /**
+     * Price type of the draft
+     */
+    priceType?: tListingPriceEnum | null;
+    /**
      * Condition of the item (0-based index)
      */
     condition?: number | null;
@@ -2396,6 +2400,7 @@ export type tDraftCreate = {
      * Price of the draft
      */
     price?: number;
+    priceType?: tListingPriceEnum & unknown;
     /**
      * Condition of the item (0-based index)
      */
@@ -2439,6 +2444,10 @@ export type tDraft = {
      * Price of the draft
      */
     price: number | null | null;
+    /**
+     * Price type of the draft
+     */
+    priceType: tListingPriceEnum | null;
     /**
      * Currency of the draft
      */

@@ -6,14 +6,6 @@ export const ListingMigration: Migration = {
 		await sql`CREATE EXTENSION IF NOT EXISTS vector;`.execute(db);
 
 		await db.schema
-			.createType("listing_price_enum")
-			.asEnum([
-				"closed",
-				"open",
-			])
-			.execute();
-
-		await db.schema
 			.createTable("listing")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())

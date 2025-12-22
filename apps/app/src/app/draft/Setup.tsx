@@ -17,12 +17,14 @@ import { ExpireAtPatch } from "~/app/draft/patch/ExpireAtPatch";
 import { GalleryPatch } from "~/app/draft/patch/GalleryPatch";
 import { LocationPatch } from "~/app/draft/patch/LocationPatch";
 import { PricePatch } from "~/app/draft/patch/PricePatch";
+import { PriceTypePatch } from "~/app/draft/patch/PriceTypePatch";
 import { TitlePatch } from "~/app/draft/patch/TitlePatch";
 import { AgeValue } from "~/app/draft/value/AgeValue";
 import { CategoryValue } from "~/app/draft/value/CategoryValue";
 import { ConditionValue } from "~/app/draft/value/ConditionValue";
 import { ExpireAtValue } from "~/app/draft/value/ExpireAtValue";
 import { LocationValue } from "~/app/draft/value/LocationValue";
+import { PriceTypeValue } from "~/app/draft/value/PriceTypeValue";
 import { PriceValue } from "~/app/draft/value/PriceValue";
 import { TitleValue } from "~/app/draft/value/TitleValue";
 import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
@@ -33,6 +35,7 @@ export namespace Setup {
 		| "title"
 		| "location"
 		| "price"
+		| "priceType"
 		| "category"
 		| "condition"
 		| "age"
@@ -100,6 +103,13 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 									draft={draft}
 									onClick={() => {
 										setView("price");
+									}}
+								/>
+
+								<PriceTypeValue
+									draft={draft}
+									onClick={() => {
+										setView("priceType");
 									}}
 								/>
 
@@ -197,6 +207,15 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 				price: {
 					children: (
 						<PricePatch
+							draft={draft}
+							onCancel={() => setView("default")}
+							onSettled={() => setView("default")}
+						/>
+					),
+				},
+				priceType: {
+					children: (
+						<PriceTypePatch
 							draft={draft}
 							onCancel={() => setView("default")}
 							onSettled={() => setView("default")}

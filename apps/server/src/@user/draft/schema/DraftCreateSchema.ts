@@ -1,11 +1,15 @@
 import { z } from "@hono/zod-openapi";
 import { ListingExpireEnumSchema } from "~/@user/listing/schema/ListingExpireEnumSchema";
+import { ListingPriceEnumSchema } from "~/app/listing/schema/ListingPriceEnumSchema";
 
 export const DraftCreateSchema = z
 	.object({
 		price: z.coerce.number().optional().openapi({
 			description: "Price of the draft",
 			type: "number",
+		}),
+		priceType: ListingPriceEnumSchema.optional().openapi({
+			description: "Price type of the draft",
 		}),
 		condition: z.number().optional().openapi({
 			description: "Condition of the item (0-based index)",

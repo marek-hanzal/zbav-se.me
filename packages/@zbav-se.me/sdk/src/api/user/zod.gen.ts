@@ -2546,6 +2546,10 @@ export const zDraftPatchData = z.object({
         ]),
         z.null()
     ])),
+    priceType: z.optional(z.union([
+        zListingPriceEnum,
+        z.null()
+    ])),
     condition: z.optional(z.union([
         z.number(),
         z.null()
@@ -2625,6 +2629,9 @@ export const zDraftCreate = z.object({
     price: z.optional(z.number().register(z.globalRegistry, {
         description: 'Price of the draft'
     })),
+    priceType: z.optional(zListingPriceEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'Price type of the draft'
+    }))),
     condition: z.optional(z.number().register(z.globalRegistry, {
         description: 'Condition of the item (0-based index)'
     })),
@@ -2665,6 +2672,10 @@ export const zDraft = z.object({
             z.number(),
             z.null()
         ]),
+        z.null()
+    ]),
+    priceType: z.union([
+        zListingPriceEnum,
         z.null()
     ]),
     currency: z.union([
