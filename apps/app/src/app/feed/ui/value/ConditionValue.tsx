@@ -30,14 +30,7 @@ export const ConditionValue: FC<ConditionValue.Props> = ({ feed, ...props }) => 
 				id: String(item),
 				condition: String(item),
 			}))}
-			renderFn={(item) => (
-				<Tx
-					label={`Condition - Overall [${item.condition}] (hint)`}
-					ui={{
-						tone: "secondary",
-					}}
-				/>
-			)}
+			renderFn={(item) => <Tx label={`Condition - Overall [${item.condition}] (hint)`} />}
 			action={
 				<Icon
 					icon={EditIcon}

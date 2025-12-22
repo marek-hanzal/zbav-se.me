@@ -5,12 +5,12 @@ import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 
-export namespace AgeValue {
+export namespace DeliveryValue {
 	export interface Props
 		extends Omit<
 			ValueList.PropsEx<{
 				id: string;
-				age: string;
+				delivery: string;
 			}>,
 			"items" | "renderFn"
 		> {
@@ -18,20 +18,19 @@ export namespace AgeValue {
 	}
 }
 
-export const AgeValue: FC<AgeValue.Props> = ({ feed, ...props }) => {
-	const ageIn = feed.query?.filter?.ageIn;
+export const DeliveryValue: FC<DeliveryValue.Props> = ({ feed, ...props }) => {
+	const deliveryIn = feed.query?.filter?.deliveryIn;
 
 	return (
 		<ValueList
-			data-ui={"AgeValue[ValueList]"}
-			textLabel={translator.text("Feed age (label)")}
-			textEmpty={translator.text("Feed age not selected")}
-			textHint={translator.text("Feed age (hint)")}
-			items={(ageIn ?? []).map((item) => ({
-				id: String(item),
-				age: String(item),
+			data-ui={"DeliveryValue[ValueList]"}
+			textLabel={translator.text("Feed delivery (label)")}
+			textEmpty={translator.text("Feed delivery not selected")}
+			items={(deliveryIn ?? []).map((item) => ({
+				id: item,
+				delivery: item,
 			}))}
-			renderFn={(item) => <Tx label={`Condition - Age [${item.age}] (hint)`} />}
+			renderFn={(item) => <Tx label={`Listing delivery - ${item.delivery}`} />}
 			action={
 				<Icon
 					icon={EditIcon}

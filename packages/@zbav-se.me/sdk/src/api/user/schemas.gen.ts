@@ -1599,6 +1599,9 @@ export const sListingWhere = {
                 maximum: 6
             }
         },
+        deliveryIn: {
+            $ref: '#/components/schemas/DeliveryIn'
+        },
         categoryId: {
             $ref: '#/components/schemas/CategoryId'
         },
@@ -1676,6 +1679,23 @@ export const sCategoryId = {
     minLength: 1
 } as const;
 
+export const sListingDeliveryEnum = {
+    type: 'string',
+    enum: [
+        'personal',
+        'post',
+        'package',
+        'other'
+    ]
+} as const;
+
+export const sDeliveryIn = {
+    type: 'array',
+    items: {
+        $ref: '#/components/schemas/ListingDeliveryEnum'
+    }
+} as const;
+
 export const sPriceMax = {
     type: 'number',
     minimum: 0
@@ -1745,6 +1765,9 @@ export const sListingFilter = {
                 minimum: 0,
                 maximum: 6
             }
+        },
+        deliveryIn: {
+            $ref: '#/components/schemas/DeliveryIn'
         },
         categoryId: {
             $ref: '#/components/schemas/CategoryId'
@@ -1932,16 +1955,6 @@ export const sListingExpireEnum = {
         '7-days',
         '14-days',
         '1-month'
-    ]
-} as const;
-
-export const sListingDeliveryEnum = {
-    type: 'string',
-    enum: [
-        'personal',
-        'post',
-        'package',
-        'other'
     ]
 } as const;
 

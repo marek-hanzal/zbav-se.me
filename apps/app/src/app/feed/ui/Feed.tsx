@@ -11,6 +11,7 @@ import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
 import { LocationValue } from "~/app/location/ui/LocationValue";
 import { AgeValue } from "./value/AgeValue";
 import { ConditionValue } from "./value/ConditionValue";
+import { DeliveryValue } from "./value/DeliveryValue";
 import { NameValue } from "./value/NameValue";
 import { RangeValue } from "./value/RangeValue";
 import { SortValue } from "./value/SortValue";
@@ -25,6 +26,7 @@ export namespace Feed {
 		sort?: Partial<SortValue.Props>;
 		condition?: Partial<ConditionValue.Props>;
 		age?: Partial<AgeValue.Props>;
+		delivery?: Partial<DeliveryValue.Props>;
 		title?: Partial<TitleValue.Props>;
 	}
 
@@ -145,6 +147,11 @@ export const Feed: FC<Feed.Props> = ({
 			<AgeValue
 				feed={feed}
 				{...values?.age}
+			/>
+
+			<DeliveryValue
+				feed={feed}
+				{...values?.delivery}
 			/>
 
 			<TitleValue

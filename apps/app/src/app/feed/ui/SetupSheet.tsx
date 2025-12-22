@@ -11,6 +11,7 @@ import { Feed } from "~/app/feed/ui/Feed";
 import { AgePatch } from "~/app/feed/ui/patch/AgePatch";
 import { CategoryPatch } from "~/app/feed/ui/patch/CategoryPatch";
 import { ConditionPatch } from "~/app/feed/ui/patch/ConditionPatch";
+import { DeliveryPatch } from "~/app/feed/ui/patch/DeliveryPatch";
 import { LocationPatch } from "~/app/feed/ui/patch/LocationPatch";
 import { NamePatch } from "~/app/feed/ui/patch/NamePatch";
 import { RangePatch } from "~/app/feed/ui/patch/RangePatch";
@@ -28,6 +29,7 @@ export namespace SetupSheet {
 		| "sort"
 		| "condition"
 		| "age"
+		| "delivery"
 		| "gallery"
 		| "title";
 
@@ -94,6 +96,9 @@ export const SetupSheet: FC<SetupSheet.Props> = ({
 								},
 								age: {
 									onClick: () => setView("age"),
+								},
+								delivery: {
+									onClick: () => setView("delivery"),
 								},
 								title: {
 									onClick: () => setView("title"),
@@ -241,6 +246,18 @@ export const SetupSheet: FC<SetupSheet.Props> = ({
 					),
 					header: () => ({
 						title: translator.text("Feed age (title)"),
+					}),
+				},
+				delivery: {
+					children: (
+						<DeliveryPatch
+							feed={feed}
+							onSettled={() => setView("detail")}
+							onCancel={() => setView("detail")}
+						/>
+					),
+					header: () => ({
+						title: translator.text("Feed delivery (title)"),
 					}),
 				},
 				title: {

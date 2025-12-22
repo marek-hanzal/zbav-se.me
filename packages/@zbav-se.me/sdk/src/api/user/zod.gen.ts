@@ -1226,6 +1226,29 @@ export const zCategoryId = z.string().min(1).register(z.globalRegistry, {
 export type zCategoryId = z.infer<typeof zCategoryId>;
 
 /**
+ * Delivery method for the listing
+ */
+export const zListingDeliveryEnum = z.enum([
+    'personal',
+    'post',
+    'package',
+    'other'
+]).register(z.globalRegistry, {
+    description: 'Delivery method for the listing'
+});
+
+export type zListingDeliveryEnum = z.infer<typeof zListingDeliveryEnum>;
+
+/**
+ * This filter matches listings with delivery methods overlapping the provided array
+ */
+export const zDeliveryIn = z.array(zListingDeliveryEnum).register(z.globalRegistry, {
+    description: 'This filter matches listings with delivery methods overlapping the provided array'
+});
+
+export type zDeliveryIn = z.infer<typeof zDeliveryIn>;
+
+/**
  * Sets the maximum price for the listings
  */
 export const zPriceMax = z.number().gte(0).register(z.globalRegistry, {
@@ -1279,6 +1302,7 @@ export const zListingWhere = z.object({
     ageIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
         description: 'This filter matches listings with ages in the provided array'
     })),
+    deliveryIn: z.optional(zDeliveryIn),
     categoryId: z.optional(zCategoryId),
     categoryIdIn: z.optional(zCategoryIdIn),
     currency: z.optional(zCurrencyListEnum),
@@ -1354,6 +1378,7 @@ export const zListingFilter = z.object({
     ageIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
         description: 'This filter matches listings with ages in the provided array'
     })),
+    deliveryIn: z.optional(zDeliveryIn),
     categoryId: z.optional(zCategoryId),
     categoryIdIn: z.optional(zCategoryIdIn),
     currency: z.optional(zCurrencyListEnum),
@@ -1434,20 +1459,6 @@ export const zListingExpireEnum = z.enum([
 });
 
 export type zListingExpireEnum = z.infer<typeof zListingExpireEnum>;
-
-/**
- * Delivery method for the listing
- */
-export const zListingDeliveryEnum = z.enum([
-    'personal',
-    'post',
-    'package',
-    'other'
-]).register(z.globalRegistry, {
-    description: 'Delivery method for the listing'
-});
-
-export type zListingDeliveryEnum = z.infer<typeof zListingDeliveryEnum>;
 
 /**
  * Data for creating a new listing

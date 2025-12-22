@@ -1109,6 +1109,7 @@ export type tListingWhere = {
      * This filter matches listings with ages in the provided array
      */
     ageIn?: Array<number>;
+    deliveryIn?: tDeliveryIn;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
     currency?: tCurrencyListEnum;
@@ -1174,6 +1175,26 @@ export type tCategoryIdIn = Array<string>;
 export type tCategoryId = string;
 
 /**
+ * Delivery method for the listing
+ */
+export const tListingDeliveryEnum = {
+    personal: 'personal',
+    post: 'post',
+    package: 'package',
+    other: 'other'
+} as const;
+
+/**
+ * Delivery method for the listing
+ */
+export type tListingDeliveryEnum = typeof tListingDeliveryEnum[keyof typeof tListingDeliveryEnum];
+
+/**
+ * This filter matches listings with delivery methods overlapping the provided array
+ */
+export type tDeliveryIn = Array<tListingDeliveryEnum>;
+
+/**
  * Sets the maximum price for the listings
  */
 export type tPriceMax = number;
@@ -1229,6 +1250,7 @@ export type tListingFilter = {
      * This filter matches listings with ages in the provided array
      */
     ageIn?: Array<number>;
+    deliveryIn?: tDeliveryIn;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
     currency?: tCurrencyListEnum;
@@ -1347,21 +1369,6 @@ export const tListingExpireEnum = {
  * Expiration time of the listing
  */
 export type tListingExpireEnum = typeof tListingExpireEnum[keyof typeof tListingExpireEnum];
-
-/**
- * Delivery method for the listing
- */
-export const tListingDeliveryEnum = {
-    personal: 'personal',
-    post: 'post',
-    package: 'package',
-    other: 'other'
-} as const;
-
-/**
- * Delivery method for the listing
- */
-export type tListingDeliveryEnum = typeof tListingDeliveryEnum[keyof typeof tListingDeliveryEnum];
 
 /**
  * Data for toggling a listing in ignore list

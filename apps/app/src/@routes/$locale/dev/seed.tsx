@@ -18,6 +18,7 @@ import {
 	apiListingCollection,
 	apiListingCount,
 	apiListingCreate,
+	tListingDeliveryEnum,
 	tListingExpireEnum,
 	tListingPriceEnum,
 	type tListingSort,
@@ -70,6 +71,15 @@ const seedListings = async ({ categories, locationIds, uploadIds }: seedListings
 		"Random Title",
 	];
 
+	const allDeliveryMethods = Object.values(tListingDeliveryEnum);
+	const deliveryCount = rangedom(0, allDeliveryMethods.length);
+	const delivery =
+		deliveryCount > 0
+			? Array.from(allDeliveryMethods)
+					.sort(() => Math.random() - 0.5)
+					.slice(0, deliveryCount)
+			: null;
+
 	const listing = await apiListingCreate({
 		throwOnError: true,
 		body: {
@@ -81,6 +91,7 @@ const seedListings = async ({ categories, locationIds, uploadIds }: seedListings
 			title: list(title),
 			expiresAt: object(tListingExpireEnum),
 			locationId: list(locationIds),
+			delivery,
 			uploadIds: Array.from(uploadIds)
 				.sort(() => Math.random() - 0.5)
 				.slice(0, rangedom(0, 10)),
