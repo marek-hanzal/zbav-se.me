@@ -66,6 +66,37 @@ export namespace seedListings {
 	}
 }
 
+const generateProsCons = (): string[] | null => {
+	const count = rangedom(0, 5);
+	if (count === 0) return null;
+
+	const samples = [
+		"Výborný stav, jako nové",
+		"Původní krabice a příslušenství",
+		"Záruka ještě platná",
+		"Pravidelná údržba, bez vad",
+		"Rychlé jednání, osobní předání",
+		"Funguje bez problémů",
+		"Sleva oproti novému",
+		"Všechny součástky kompletní",
+		"Používané s péčí",
+		"Možnost výměny",
+		"Lehké známky použití",
+		"Bez krabice",
+		"Chybí některé příslušenství",
+		"Starší model",
+		"Po záruce",
+		"Částečně funkční",
+		"Vhodné pro kutily",
+		"Známky opotřebení",
+	];
+
+	return Array.from(samples)
+		.sort(() => Math.random() - 0.5)
+		.slice(0, count)
+		.map((item) => item.slice(0, 72));
+};
+
 const seedListings = async ({ categories, locationIds, uploadIds }: seedListings.Props) => {
 	const category = list(categories);
 	const title = titles[category.slug as keyof typeof titles] ?? [
@@ -82,6 +113,9 @@ const seedListings = async ({ categories, locationIds, uploadIds }: seedListings
 					.slice(0, deliveryCount)
 			: null;
 
+	const pros = generateProsCons();
+	const cons = generateProsCons();
+
 	const listing = await apiListingCreate({
 		throwOnError: true,
 		body: {
@@ -95,6 +129,8 @@ const seedListings = async ({ categories, locationIds, uploadIds }: seedListings
 			expiresAt: object(tListingExpireEnum),
 			locationId: list(locationIds),
 			delivery,
+			pros,
+			cons,
 			uploadIds: Array.from(uploadIds)
 				.sort(() => Math.random() - 0.5)
 				.slice(0, rangedom(0, 10)),
