@@ -128,15 +128,19 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					gap: "default",
 				}}
 			>
-				<LabelValue
-					textLabel={"Listing condition (label)"}
-					textValue={`Condition - Overall [${listing.condition}] (hint)`}
-				/>
+				{listing.condition !== null ? (
+					<LabelValue
+						textLabel={"Listing condition (label)"}
+						textValue={`Condition - Overall [${listing.condition}] (hint)`}
+					/>
+				) : null}
 
-				<LabelValue
-					textLabel={"Listing age (label)"}
-					textValue={`Condition - Age [${listing.age}] (hint)`}
-				/>
+				{listing.age !== null ? (
+					<LabelValue
+						textLabel={"Listing age (label)"}
+						textValue={`Condition - Age [${listing.age}] (hint)`}
+					/>
+				) : null}
 
 				<LabelValue
 					textLabel={"Listing score hint (label)"}

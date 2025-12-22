@@ -1833,10 +1833,30 @@ export const sListingCreate = {
             $ref: '#/components/schemas/ListingPriceEnum'
         },
         condition: {
-            type: 'number'
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         },
         age: {
-            type: 'number'
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         },
         draftId: {
             type: 'string'
@@ -2831,10 +2851,30 @@ export const sListing = {
             $ref: '#/components/schemas/CurrencyListEnum'
         },
         condition: {
-            type: 'number'
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         },
         age: {
-            type: 'number'
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         },
         locationId: {
             type: 'string'
@@ -3369,7 +3409,8 @@ export const sDraftPatchData = {
         description: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 2048
                 },
                 {
                     type: 'null'
@@ -3598,7 +3639,8 @@ export const sDraft = {
         description: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'string',
+                    maxLength: 2048
                 },
                 {
                     type: 'null'

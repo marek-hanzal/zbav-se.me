@@ -1443,12 +1443,14 @@ export const zListingCreate = z.object({
         description: 'Price of the listing'
     }),
     priceType: zListingPriceEnum,
-    condition: z.number().register(z.globalRegistry, {
-        description: 'Condition of the item (0-based index)'
-    }),
-    age: z.number().register(z.globalRegistry, {
-        description: 'Age of the item (0-based index)'
-    }),
+    condition: z.union([
+        z.number(),
+        z.null()
+    ]),
+    age: z.union([
+        z.number(),
+        z.null()
+    ]),
     draftId: z.optional(z.string().register(z.globalRegistry, {
         description: 'ID of the draft'
     })),
@@ -2242,12 +2244,14 @@ export const zListing = z.object({
     }),
     priceType: zListingPriceEnum,
     currency: zCurrencyListEnum,
-    condition: z.number().register(z.globalRegistry, {
-        description: 'Condition of the item (0-based index)'
-    }),
-    age: z.number().register(z.globalRegistry, {
-        description: 'Age of the item (0-based index)'
-    }),
+    condition: z.union([
+        z.number(),
+        z.null()
+    ]),
+    age: z.union([
+        z.number(),
+        z.null()
+    ]),
     locationId: z.string().register(z.globalRegistry, {
         description: 'ID of the location'
     }),
@@ -2578,7 +2582,7 @@ export const zDraftPatchData = z.object({
         z.null()
     ])),
     description: z.optional(z.union([
-        z.string(),
+        z.string().max(2048),
         z.null()
     ])),
     usedAt: z.optional(z.union([
@@ -2710,7 +2714,7 @@ export const zDraft = z.object({
         z.null()
     ]),
     description: z.union([
-        z.string(),
+        z.string().max(2048),
         z.null()
     ]),
     createdAt: z.string().register(z.globalRegistry, {

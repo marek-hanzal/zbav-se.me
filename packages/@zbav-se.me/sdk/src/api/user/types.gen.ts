@@ -1298,11 +1298,11 @@ export type tListingCreate = {
     /**
      * Condition of the item (0-based index)
      */
-    condition: number;
+    condition: number | null;
     /**
      * Age of the item (0-based index)
      */
-    age: number;
+    age: number | null;
     /**
      * ID of the draft
      */
@@ -2007,11 +2007,11 @@ export type tListing = {
     /**
      * Condition of the item (0-based index)
      */
-    condition: number;
+    condition: number | null;
     /**
      * Age of the item (0-based index)
      */
-    age: number;
+    age: number | null;
     /**
      * ID of the location
      */

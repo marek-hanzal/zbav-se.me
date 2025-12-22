@@ -11,12 +11,22 @@ export const ListingCreateSchema = z
 		priceType: ListingPriceEnumSchema.openapi({
 			description: "Price type of the listing",
 		}),
-		condition: z.number().openapi({
-			description: "Condition of the item (0-based index)",
-		}),
-		age: z.number().openapi({
-			description: "Age of the item (0-based index)",
-		}),
+		condition: z
+			.union([
+				z.number(),
+				z.null(),
+			])
+			.openapi({
+				description: "Condition of the item (0-based index)",
+			}),
+		age: z
+			.union([
+				z.number(),
+				z.null(),
+			])
+			.openapi({
+				description: "Age of the item (0-based index)",
+			}),
 		draftId: z.string().optional().openapi({
 			description: "ID of the draft",
 		}),

@@ -22,13 +22,23 @@ export const ListingDbSchema = z
 		//
 		currency: CurrencyListEnumSchema,
 		//
-		condition: z.number().openapi({
-			description: "Condition of the item (0-based index)",
-		}),
+		condition: z
+			.union([
+				z.number(),
+				z.null(),
+			])
+			.openapi({
+				description: "Condition of the item (0-based index)",
+			}),
 		//
-		age: z.number().openapi({
-			description: "Age of the item (0-based index)",
-		}),
+		age: z
+			.union([
+				z.number(),
+				z.null(),
+			])
+			.openapi({
+				description: "Age of the item (0-based index)",
+			}),
 		//
 		locationId: z.string().openapi({
 			description: "ID of the location",
