@@ -789,3 +789,15 @@ fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
 ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
     ref: No categories found (title)
     value: Ajajaj, nic jsme nenašli!
+Listing delivery - personal:
+    static: true
+    value: Osobní převzetí
+Listing delivery - post:
+    static: true
+    value: Pošta
+Listing delivery - package:
+    static: true
+    value: Balík (kurýr)
+Listing delivery - other:
+    static: true
+    value: Domluvou/ostatní

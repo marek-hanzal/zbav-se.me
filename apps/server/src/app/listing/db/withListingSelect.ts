@@ -3,6 +3,7 @@ import { jsonObjectFrom } from "kysely/helpers/postgres";
 import type { CategoryDbSchema } from "~/app/category/schema/CategoryDbSchema";
 import { withGallerySelect } from "~/app/gallery/db/withGallerySelect";
 import { withListingCollectionSelect } from "~/app/listing/db/withListingCollectionSelect";
+import type { ListingDeliveryEnumSchema } from "~/app/listing/schema/ListingDeliveryEnumSchema";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 
 export namespace withListingSelect {
@@ -23,6 +24,9 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 		.select((eb) => [
 			sql<LocationDbSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
 			sql<CategoryDbSchema.Type>`to_jsonb(${eb.table("cat")}.*)`.as("category"),
+			sql<ListingDeliveryEnumSchema.Type[] | null>`to_jsonb(${eb.ref("l.delivery")})`.as(
+				"delivery",
+			),
 			eb
 				.case()
 				.when(sql.lit(meta?.latLon != null))
