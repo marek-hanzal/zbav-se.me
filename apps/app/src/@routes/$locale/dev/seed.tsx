@@ -32,6 +32,7 @@ import axios from "axios";
 import PQueue from "p-queue";
 import { withEmailSignInMutation } from "~/app/auth/withEmailSignInMutation";
 import { withRegisterMutation } from "~/app/auth/withRegisterMutation";
+import descriptions from "./descriptions.json";
 import locations from "./location.json";
 import titles from "./titles.json";
 
@@ -70,6 +71,7 @@ const seedListings = async ({ categories, locationIds, uploadIds }: seedListings
 	const title = titles[category.slug as keyof typeof titles] ?? [
 		"Random Title",
 	];
+	const description = list(descriptions.descriptions);
 
 	const allDeliveryMethods = Object.values(tListingDeliveryEnum);
 	const deliveryCount = rangedom(0, allDeliveryMethods.length);
@@ -89,6 +91,7 @@ const seedListings = async ({ categories, locationIds, uploadIds }: seedListings
 			price: rangedom(0, 99_999),
 			priceType: object(tListingPriceEnum),
 			title: list(title),
+			description,
 			expiresAt: object(tListingExpireEnum),
 			locationId: list(locationIds),
 			delivery,
