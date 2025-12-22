@@ -19,6 +19,7 @@ import {
 	apiListingCount,
 	apiListingCreate,
 	tListingExpireEnum,
+	tListingPriceEnum,
 	type tListingSort,
 } from "@zbav-se.me/sdk/api/user";
 import {
@@ -76,6 +77,7 @@ const seedListings = async ({ categories, locationIds, uploadIds }: seedListings
 			condition: rangedom(1, 6),
 			categoryId: category.id,
 			price: rangedom(0, 99_999),
+			priceType: object(tListingPriceEnum),
 			title: list(title),
 			expiresAt: object(tListingExpireEnum),
 			locationId: list(locationIds),

@@ -1,6 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
+import { ListingPriceEnumSchema } from "~/app/listing/schema/ListingPriceEnumSchema";
 import { TransactionDbSchema } from "~/app/transaction/schema/ListingTransactionDbSchema";
 import { TransactionStatusEnumSchema } from "~/app/transaction/schema/ListingTransactionStatusEnumSchema";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
@@ -19,6 +20,7 @@ export const TransactionSchema = z
 			description: "Price of the listing",
 			type: "number",
 		}),
+		priceType: ListingPriceEnumSchema,
 		currency: CurrencyListEnumSchema,
 		//
 		location: LocationSchema,

@@ -26,6 +26,7 @@ export const withTransactionSelect = ({ database, sort }: withTransactionSelect.
 		.select([
 			"l.title",
 			"l.price",
+			"l.priceType",
 			"l.currency",
 			(eb) => sql<LocationDbSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
 			(eb) =>

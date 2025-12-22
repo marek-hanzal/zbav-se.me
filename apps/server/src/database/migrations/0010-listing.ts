@@ -8,7 +8,6 @@ export const ListingMigration: Migration = {
 		await db.schema
 			.createType("listing_price_enum")
 			.asEnum([
-				"unset",
 				"closed",
 				"open",
 			])
@@ -137,13 +136,17 @@ export const ListingMigration: Migration = {
 			.execute();
 
 		await db.schema
+			.createIndex("listing_[priceType]_idx")
+			.on("listing")
+			.column("priceType")
+			.execute();
+
+		await db.schema
 			.createIndex("listing_[title]_trgm_idx")
 			.on("listing")
 			.using("gin")
 			.expression(sql`lower(title) gin_trgm_ops`)
 			.execute();
-
-		// TODO We can use CREATE INDEX CONCURRENTLY (out of transaction, so we've to talk to kysely about this)
 
 		// Title vector (e.g., simhash/char-ngrams): cosine
 		await sql`

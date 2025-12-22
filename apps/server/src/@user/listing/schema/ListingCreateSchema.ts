@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { ListingPriceEnumSchema } from "~/app/listing/schema/ListingPriceEnumSchema";
 import { ListingExpireEnumSchema } from "./ListingExpireEnumSchema";
 
 export const ListingCreateSchema = z
@@ -6,6 +7,9 @@ export const ListingCreateSchema = z
 		price: z.coerce.number().openapi({
 			description: "Price of the listing",
 			type: "number",
+		}),
+		priceType: ListingPriceEnumSchema.openapi({
+			description: "Price type of the listing",
 		}),
 		condition: z.number().openapi({
 			description: "Condition of the item (0-based index)",

@@ -2,17 +2,27 @@ import { useLocale } from "@use-pico/client/hook";
 import { Badge } from "@use-pico/client/ui/badge";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
+import type { tListingPriceEnum } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
+import { match } from "ts-pattern";
 
 export namespace ListingPrice {
 	export interface Props extends Badge.Props {
 		price: number;
+		priceType: tListingPriceEnum;
 		currency: string;
 	}
 }
 
-export const ListingPrice: FC<ListingPrice.Props> = ({ price, currency, ui, ...props }) => {
+export const ListingPrice: FC<ListingPrice.Props> = ({
+	price,
+	priceType,
+	currency,
+	ui,
+	...props
+}) => {
 	const locale = useLocale();
+
 	return (
 		<Badge
 			data-ui={"ListingPrice[Badge]"}
@@ -24,16 +34,39 @@ export const ListingPrice: FC<ListingPrice.Props> = ({ price, currency, ui, ...p
 				text: "lg",
 				size: "sm",
 				color: "lead",
+				flow: "vertical",
+				items: "center",
+				justify: "center",
 				...ui,
 			}}
 			{...props}
 		>
 			{price > 0 ? (
-				<PriceInline
-					price={price}
-					locale={locale}
-					currency={currency}
-				/>
+				<>
+					<PriceInline
+						price={price}
+						locale={locale}
+						currency={currency}
+					/>
+
+					{match(priceType)
+						/**
+						 * This hack only marks the place with dynamic translation, so it's easy to find it when source
+						 * changes.
+						 */
+						.with("closed", "open", () => {
+							return (
+								<Tx
+									label={`Listing price - ${priceType}`}
+									ui={{
+										text: "sm",
+										opacity: "2xl",
+									}}
+								/>
+							);
+						})
+						.exhaustive()}
+				</>
 			) : (
 				<Tx label={"Price - free"} />
 			)}

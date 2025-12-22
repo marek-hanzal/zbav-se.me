@@ -409,6 +409,15 @@ export const zCurrencyListEnum = z.enum([
 export type zCurrencyListEnum = z.infer<typeof zCurrencyListEnum>;
 
 /**
+ * Price type of the listing
+ */
+export const zListingPriceEnum = z.enum(['closed', 'open']).register(z.globalRegistry, {
+    description: 'Price type of the listing'
+});
+
+export type zListingPriceEnum = z.infer<typeof zListingPriceEnum>;
+
+/**
  * Gallery item data
  */
 export const zGalleryItem = z.object({
@@ -481,6 +490,7 @@ export const zTransaction = z.object({
     price: z.number().register(z.globalRegistry, {
         description: 'Price of the listing'
     }),
+    priceType: zListingPriceEnum,
     currency: zCurrencyListEnum,
     location: zLocation
 }).register(z.globalRegistry, {
@@ -1432,6 +1442,7 @@ export const zListingCreate = z.object({
     price: z.number().register(z.globalRegistry, {
         description: 'Price of the listing'
     }),
+    priceType: zListingPriceEnum,
     condition: z.number().register(z.globalRegistry, {
         description: 'Condition of the item (0-based index)'
     }),
@@ -2229,6 +2240,7 @@ export const zListing = z.object({
     price: z.number().register(z.globalRegistry, {
         description: 'Price of the listing'
     }),
+    priceType: zListingPriceEnum,
     currency: zCurrencyListEnum,
     condition: z.number().register(z.globalRegistry, {
         description: 'Condition of the item (0-based index)'

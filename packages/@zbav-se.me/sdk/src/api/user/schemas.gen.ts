@@ -420,6 +420,9 @@ export const sTransaction = {
         price: {
             type: 'number'
         },
+        priceType: {
+            $ref: '#/components/schemas/ListingPriceEnum'
+        },
         currency: {
             $ref: '#/components/schemas/CurrencyListEnum'
         },
@@ -438,6 +441,7 @@ export const sTransaction = {
         'status',
         'gallery',
         'price',
+        'priceType',
         'currency',
         'location'
     ]
@@ -585,6 +589,14 @@ export const sCurrencyListEnum = {
         'PLN',
         'HUF',
         'CHF'
+    ]
+} as const;
+
+export const sListingPriceEnum = {
+    type: 'string',
+    enum: [
+        'closed',
+        'open'
     ]
 } as const;
 
@@ -1817,6 +1829,9 @@ export const sListingCreate = {
         price: {
             type: 'number'
         },
+        priceType: {
+            $ref: '#/components/schemas/ListingPriceEnum'
+        },
         condition: {
             type: 'number'
         },
@@ -1864,6 +1879,7 @@ export const sListingCreate = {
     },
     required: [
         'price',
+        'priceType',
         'condition',
         'age',
         'locationId',
@@ -2808,6 +2824,9 @@ export const sListing = {
         price: {
             type: 'number'
         },
+        priceType: {
+            $ref: '#/components/schemas/ListingPriceEnum'
+        },
         currency: {
             $ref: '#/components/schemas/CurrencyListEnum'
         },
@@ -2910,6 +2929,7 @@ export const sListing = {
     required: [
         'id',
         'price',
+        'priceType',
         'currency',
         'condition',
         'age',

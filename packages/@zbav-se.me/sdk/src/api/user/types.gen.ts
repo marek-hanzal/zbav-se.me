@@ -321,6 +321,7 @@ export type tTransaction = {
      * Price of the listing
      */
     price: number;
+    priceType: tListingPriceEnum;
     currency: tCurrencyListEnum;
     location: tLocation;
 };
@@ -409,6 +410,16 @@ export const tCurrencyListEnum = {
  * List of available currencies
  */
 export type tCurrencyListEnum = typeof tCurrencyListEnum[keyof typeof tCurrencyListEnum];
+
+/**
+ * Price type of the listing
+ */
+export const tListingPriceEnum = { closed: 'closed', open: 'open' } as const;
+
+/**
+ * Price type of the listing
+ */
+export type tListingPriceEnum = typeof tListingPriceEnum[keyof typeof tListingPriceEnum];
 
 /**
  * Gallery item data
@@ -1283,6 +1294,7 @@ export type tListingCreate = {
      * Price of the listing
      */
     price: number;
+    priceType: tListingPriceEnum;
     /**
      * Condition of the item (0-based index)
      */
@@ -1990,6 +2002,7 @@ export type tListing = {
      * Price of the listing
      */
     price: number;
+    priceType: tListingPriceEnum;
     currency: tCurrencyListEnum;
     /**
      * Condition of the item (0-based index)

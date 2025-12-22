@@ -1,6 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 import { VectorSchema } from "~/schema/VectorSchema";
+import { ListingPriceEnumSchema } from "./ListingPriceEnumSchema";
 
 export const ListingDbSchema = z
 	.looseObject({
@@ -14,6 +15,9 @@ export const ListingDbSchema = z
 		price: z.coerce.number().openapi({
 			description: "Price of the listing",
 			type: "number",
+		}),
+		priceType: ListingPriceEnumSchema.openapi({
+			description: "Price type of the listing",
 		}),
 		//
 		currency: CurrencyListEnumSchema,
