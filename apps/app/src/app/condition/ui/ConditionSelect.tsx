@@ -1,25 +1,35 @@
-import type { useSelection } from "@use-pico/client/hook";
-import type { Container } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
 import { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
-import { conditionHint, conditionLabel } from "~/app/condition/util/conditionLabel";
 
 export namespace ConditionSelect {
-	export interface Props extends Container.Props {
-		selection: useSelection.Selection<Rating.RatingItem>;
+	export interface Props extends Rating.Props {
+		//
 	}
 }
 
-export const ConditionSelect: FC<ConditionSelect.Props> = ({ selection, ui, ...props }) => {
+export const ConditionSelect: FC<ConditionSelect.Props> = ({ ...props }) => {
 	return (
 		<Rating
 			data-ui="ConditionSelect[Rating]"
-			textLabel={conditionLabel}
-			textHint={conditionHint}
-			selection={selection}
-			ui={{
-				...ui,
-			}}
+			renderPrefix={() => (
+				<Tx
+					label="Condition - from best (label)"
+					ui={{
+						color: "icon",
+					}}
+					className={"text-center"}
+				/>
+			)}
+			renderSuffix={() => (
+				<Tx
+					label="Condition - from worst (label)"
+					ui={{
+						color: "icon",
+					}}
+					className={"text-center"}
+				/>
+			)}
 			{...props}
 		/>
 	);

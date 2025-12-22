@@ -49,6 +49,9 @@
 0e6cf0e3ce32e8ff03c1c483fa275fb0f2baa4ec9e5e3dcc47b5442f:
   ref: Delivery (title)
   value: Delivery (title)
+0ef8e3349b91f51d6e11abf6652cfd85f7dfb2b5866e60f3399f72e6:
+  ref: xl
+  value: xl
 0f44d510d8a8cf53325df192dfac3d02f4299c2d9a4a5dbe2dad9a6f:
   ref: Price type not set
   value: Price type not set
@@ -112,6 +115,9 @@
 27199be77960fa6b867fcd30bf00eb0f6d4ff1e4279ba9b3d99b82ca:
   ref: Create new draft (title)
   value: Create new draft (title)
+2859860f0fbe866d9afaae1eb7cf9a5d30c144214a21772397315050:
+  ref: Condition - from worst (label)
+  value: Condition - from worst (label)
 29b5698dbd428037dfdf3d01534751de7b9bbdce4a6eeb4df2655548:
   ref: Price not set
   value: Price not set
@@ -415,6 +421,9 @@
 9b7458c481fd08b7afd860d8537e178cc9c6b202e12918923906e59c:
   ref: Buyer home (title)
   value: Buyer home (title)
+9c3fe974c3406ab797b01c788fe766c42ecec159dffdb93ffdbb2940:
+  ref: Condition - from best (label)
+  value: Condition - from best (label)
 9c9daf461c6095205f5fde4031225d9f27b27b90b6b55aa197c67948:
   ref: No categories found (message)
   value: No categories found (message)
@@ -451,6 +460,9 @@ a62fb7339fce50f73673412c11f10a25880e1e7b942b7261366a8529:
 aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
   ref: Photo upload placeholder (title)
   value: Photo upload placeholder (title)
+b00de300bf157b03b1058da19b680a271fa960ab182ee923c3994e03:
+  ref: Listing condition (hint)
+  value: Listing condition (hint)
 b0a721169f47da108f0195d392e3d788b2d417564f50dd126981465a:
   ref: No transactions as seller (message)
   value: No transactions as seller (message)

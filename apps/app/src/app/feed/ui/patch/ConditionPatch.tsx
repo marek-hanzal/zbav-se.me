@@ -56,7 +56,10 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 			}}
 			{...props}
 		>
-			<ConditionSelect selection={selection} />
+			<ConditionSelect
+				selection={selection}
+				allowClear
+			/>
 
 			<SaveControl
 				onCancel={onCancel}

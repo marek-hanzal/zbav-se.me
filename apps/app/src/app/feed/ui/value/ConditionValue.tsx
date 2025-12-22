@@ -1,10 +1,9 @@
 import { EditIcon, Icon } from "@use-pico/client/icon";
 import { ValueList } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
+import { RatingToIcon } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
-import { conditionLabel } from "~/app/condition/util/conditionLabel";
 
 export namespace ConditionValue {
 	export interface Props
@@ -31,7 +30,14 @@ export const ConditionValue: FC<ConditionValue.Props> = ({ feed, ...props }) => 
 				id: String(item),
 				condition: String(item),
 			}))}
-			renderFn={(item) => <Tx label={conditionLabel(Number(item.condition))} />}
+			renderFn={(item) => (
+				<Icon
+					icon={RatingToIcon[Number(item.condition) as RatingToIcon.Value]}
+					ui={{
+						text: "2xl",
+					}}
+				/>
+			)}
 			action={
 				<Icon
 					icon={EditIcon}

@@ -1,23 +1,35 @@
-import type { useSelection } from "@use-pico/client/hook";
-import type { Container } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
 import { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 
 export namespace AgeSelection {
-	export interface Props extends Container.Props {
-		selection: useSelection.Selection<Rating.RatingItem>;
+	export interface Props extends Rating.Props {
+		//
 	}
 }
 
-export const AgeSelection: FC<AgeSelection.Props> = ({ selection, ui, ...props }) => {
+export const AgeSelection: FC<AgeSelection.Props> = ({ ...props }) => {
 	return (
 		<Rating
 			data-ui="AgeSelection[Rating]"
-			textLabel={(value) => `Condition - Age [${value}] (hint)`}
-			selection={selection}
-			ui={{
-				...ui,
-			}}
+			renderPrefix={() => (
+				<Tx
+					label="Age - from youngest (label)"
+					ui={{
+						color: "icon",
+					}}
+					className={"text-center"}
+				/>
+			)}
+			renderSuffix={() => (
+				<Tx
+					label="Age - from oldest (label)"
+					ui={{
+						color: "icon",
+					}}
+					className={"text-center"}
+				/>
+			)}
 			{...props}
 		/>
 	);

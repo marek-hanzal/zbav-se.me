@@ -49,7 +49,10 @@ export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettled, onCancel, ...pro
 			}}
 			{...props}
 		>
-			<AgeSelection selection={selection} />
+			<AgeSelection
+				selection={selection}
+				allowClear
+			/>
 
 			<SaveControl
 				onCancel={onCancel}
