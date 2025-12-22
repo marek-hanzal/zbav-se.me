@@ -25,6 +25,9 @@
 065d90dd69a514382210796119a244615affeef496284f86ceeb388d:
     ref: Feed sorting (label)
     value: Řazení inzerátů
+06daab7b2990f20995e68b97e1294770e4a81d9fe49bd931a2930d47:
+    ref: Feed delivery (title)
+    value: Možnosti předání
 08f72ffcbaab104481353781fb5142ff29a99fb6dff9f34a65d0c991:
     ref: Gallery (title)
     value: Galerie
@@ -119,6 +122,9 @@
 1dcb2f3cf441e457db2a028bf490818c077bc6ce4ec21d35a15b6259:
     ref: Buyer info (title)
     value: Informace o kupujícím
+2250c7f0548b5cbe0fbdac80837ac558866128e004997e4f6b879f72:
+    ref: Feed delivery not selected
+    value: Jakékoli
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
     ref: Location (title)
     value: Lokalita inzerátu
@@ -631,6 +637,9 @@ b70f97dbf4be95b0c508538e1bc69c56771f4a6e2fc8e03f6bcea25d:
 b8ff3ed6b71e3332fcbe61d56e37ad7a849b09934d4514084cc0b710:
     ref: No transactions as buyer (message)
     value: Podívej se na nějaké inzeráty, zda ti něco nepadne do oka.
+b9280e542386de06015c0360e53e55cfccee8b1bf03cea7ef44c26c0:
+    ref: Feed delivery (label)
+    value: Možnosti předání
 ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
     ref: My listings (label)
     value: Moje inzeráty

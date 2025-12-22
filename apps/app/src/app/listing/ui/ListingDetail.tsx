@@ -1,7 +1,9 @@
 import { useLocale } from "@use-pico/client/hook";
 import { Icon, ShowIcon, SpinnerIcon } from "@use-pico/client/icon";
-import { Container, LabelValue } from "@use-pico/client/ui/container";
+import { Container, LabelValue, ValueList } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
+import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
 import { withListingFetchQuery, withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
@@ -141,6 +143,17 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 						textValue={`Condition - Age [${listing.age}] (hint)`}
 					/>
 				) : null}
+
+				<ValueList
+					data-ui={"ListingDetail[DeliveryValue]"}
+					textLabel={translator.text("Listing delivery (label)")}
+					textEmpty={translator.text("Delivery not selected")}
+					items={(listing.delivery ?? []).map((delivery) => ({
+						id: delivery,
+						delivery,
+					}))}
+					renderFn={(item) => <Tx label={`Listing delivery - ${item.delivery}`} />}
+				/>
 
 				<LabelValue
 					textLabel={"Listing score hint (label)"}
