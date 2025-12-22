@@ -223,6 +223,9 @@
 5611e161fc48366fdb56f2529712795617513c1b346552e32a53ff19:
   ref: Loading... (button)
   value: Loading... (button)
+563cf82f9c7a157200839bedd8ac219fbcf8727857b117482dd5300b:
+  ref: Description (placeholder)
+  value: Description (placeholder)
 57cf1f27b485ad4ccfff9487dc973c5a5a9d3582b03670f822646bc0:
   ref: Transaction not accepted - seller (message)
   value: Transaction not accepted - seller (message)
@@ -373,6 +376,9 @@
 8df15cc86b6018c3f7f2cf9dd1799775eb374add9037534d7354766c:
   ref: No transactions as seller (title)
   value: No transactions as seller (title)
+8e2fc55a3696f2163e1e926bfcecab6b1eedd38aefc5d37abb4ebc0c:
+  ref: Description (message)
+  value: Description (message)
 93766f804027b28f5ce55c85ccb887c09c3d8e78a84074aed256ca9a:
   ref: Listing title (title)
   value: Listing title (title)
@@ -504,6 +510,9 @@ cce3e05a5e2cf26a26d41e907d0fade717c5fbffe10b7f77fd83e8db:
 ceeb32aea866f45126224f7ff0fc5a65a8fa268c581d023ffe309e03:
   ref: Unflag listing (button)
   value: Unflag listing (button)
+d123af005af0e5af73b3d1a3f223b7cbc7a4457fbf74669fd87c5690:
+  ref: Description not filled
+  value: Description not filled
 d23c8b151ddf6f4eaf6a6fde7cff150ae7ce6671543f43f712b88545:
   ref: Location not found (badge)
   value: Location not found (badge)
@@ -597,6 +606,9 @@ f8e11e40da643ca8591082d562def7e52fe18e6922da04ac3e53b8ef:
 f9cf1337b7ea576370fd65ccd16343099c3d316564ea46381241d7a1:
   ref: Listing location not selected
   value: Listing location not selected
+fa6165a1f31837973b2b0797274535b064db2f341bf26976563565aa:
+  ref: Description (title)
+  value: Description (title)
 fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
   ref: Feed condition (label)
   value: Feed condition (label)

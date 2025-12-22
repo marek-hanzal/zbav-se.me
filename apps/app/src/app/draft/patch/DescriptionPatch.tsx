@@ -1,6 +1,7 @@
 import { Container } from "@use-pico/client/ui/container";
 import { FormField, uiInput } from "@use-pico/client/ui/form";
 import { Status } from "@use-pico/client/ui/status";
+import { translator } from "@use-pico/common/translator";
 import { sDraftCreate, type tDraft } from "@zbav-se.me/sdk/api/user";
 import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
@@ -69,7 +70,7 @@ export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 									onChange={(e) => {
 										setDescription(e.target.value);
 									}}
-									placeholder={"Description (placeholder)"}
+									placeholder={translator.text("Description (placeholder)")}
 									maxLength={sDraftCreate.properties.description.maxLength}
 									rows={10}
 									{...uiInput({
