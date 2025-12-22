@@ -5,13 +5,12 @@
 	"type": "module",
 	"sideEffects": false,
 	"scripts": {
-		"typecheck": "tsgo --noEmit",
+		"typecheck": "tsc --noEmit",
 		"build:bundle": "bun x rollup -c",
 		"no:build": "bun run build:bundle"
 	},
 	"dependencies": {
 		"@floating-ui/react": "0.27.16",
-		"@gsap/react": "2.1.2",
 		"@lexical/list": "0.39.0",
 		"@lexical/react": "0.39.0",
 		"@lexical/utils": "0.39.0",
@@ -21,7 +20,6 @@
 		"@use-pico/cls": "workspace:*",
 		"@use-pico/common": "workspace:*",
 		"axios": "1.13.2",
-		"gsap": "3.13.0",
 		"kysely": "0.28.9",
 		"lexical": "0.39.0",
 		"luxon": "3.7.2",

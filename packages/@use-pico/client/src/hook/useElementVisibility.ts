@@ -1,13 +1,11 @@
-import ScrollTrigger from "gsap/ScrollTrigger";
 import { type RefObject, useEffect, useRef, useState } from "react";
-import { useAnim } from "../gsap/gsap";
 
 export namespace useElementVisibility {
-	export interface Visibility extends ScrollTrigger.StaticVars {
+	export interface Visibility {
 		setVisible?(visible: boolean): void;
 	}
 
-	export interface Proximity extends ScrollTrigger.StaticVars {
+	export interface Proximity {
 		overscan?: number;
 		setTop?(proximity: boolean): void;
 		setBottom?(proximity: boolean): void;
@@ -113,114 +111,6 @@ export function useElementVisibility({
 			timerRef.current = undefined;
 		}, delayMs);
 	};
-
-	useAnim(
-		() => {
-			if (!scrollerRef.current || !triggerRef.current) {
-				return;
-			}
-
-			if (visibility) {
-				const {
-					setVisible,
-					//
-					onToggle,
-					start = "top bottom",
-					end = "bottom top",
-					...rest
-				} = visibility;
-
-				ScrollTrigger.create({
-					trigger: triggerRef.current,
-					scroller: scrollerRef.current,
-					start,
-					end,
-					...rest,
-					onToggle(self) {
-						delay(self.isActive, setIsVisible, visibleTimerRef);
-						onToggle?.(self);
-					},
-				});
-			}
-
-			if (proximity) {
-				const {
-					overscan = 2,
-					setTop,
-					setBottom,
-					//
-					onEnter,
-					onEnterBack,
-					onLeave,
-					onLeaveBack,
-					...rest
-				} = proximity;
-
-				ScrollTrigger.create({
-					trigger: triggerRef.current,
-					scroller: scrollerRef.current,
-					start: "top+=100% bottom",
-					end: `bottom+=${overscan * 100}% top`,
-					...rest,
-					onEnter(event) {
-						setTop?.(true);
-						onEnter?.(event);
-						delay(true, setIsTop, topTimerRef);
-					},
-					onEnterBack(event) {
-						setTop?.(true);
-						onEnterBack?.(event);
-						delay(true, setIsTop, topTimerRef);
-					},
-					onLeave(event) {
-						setTop?.(false);
-						onLeave?.(event);
-						delay(false, setIsTop, topTimerRef);
-					},
-					onLeaveBack(event) {
-						setTop?.(false);
-						onLeaveBack?.(event);
-						delay(false, setIsTop, topTimerRef);
-					},
-				});
-
-				ScrollTrigger.create({
-					trigger: triggerRef.current,
-					scroller: scrollerRef.current,
-					start: `top-=${overscan * 100}% bottom`,
-					end: "bottom-=100% top",
-					...rest,
-					onEnter(event) {
-						setBottom?.(true);
-						onEnter?.(event);
-						delay(true, setIsBottom, bottomTimerRef);
-					},
-					onEnterBack(event) {
-						setBottom?.(true);
-						onEnterBack?.(event);
-						delay(true, setIsBottom, bottomTimerRef);
-					},
-					onLeave(event) {
-						setBottom?.(false);
-						onLeave?.(event);
-						delay(false, setIsBottom, bottomTimerRef);
-					},
-					onLeaveBack(event) {
-						setBottom?.(false);
-						onLeaveBack?.(event);
-						delay(false, setIsBottom, bottomTimerRef);
-					},
-				});
-			}
-		},
-		{
-			scope: scrollerRef.current ?? undefined,
-			dependencies: [
-				ready,
-				delayMs,
-			],
-		},
-	);
 
 	return {
 		visible: isVisible,

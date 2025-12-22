@@ -80,7 +80,6 @@ This is a monorepo managed by Bun workspaces, containing:
 
 - **`ui`** - Common UI component library
   - Reusable React components
-  - GSAP animations
   - Tailwind CSS styling
   - No domain-specific logic
 
@@ -175,7 +174,6 @@ Legend:
 - **TanStack Router** - Type-safe routing
 - **TanStack Query** - Data fetching and caching
 - **TanStack Form** - Form management
-- **GSAP** - Animations
 - **Tailwind CSS 4** - Styling
 - **Vite** - Build tool
 - **Docusaurus 3** - Blog platform
