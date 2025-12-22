@@ -13,6 +13,7 @@ import { DeleteButton } from "~/app/draft/button/DeleteButton";
 import { AgePatch } from "~/app/draft/patch/AgePatch";
 import { CategoryPatch } from "~/app/draft/patch/CategoryPatch";
 import { ConditionPatch } from "~/app/draft/patch/ConditionPatch";
+import { ConsPatch } from "~/app/draft/patch/ConsPatch";
 import { DeliveryPatch } from "~/app/draft/patch/DeliveryPatch";
 import { DescriptionPatch } from "~/app/draft/patch/DescriptionPatch";
 import { ExpireAtPatch } from "~/app/draft/patch/ExpireAtPatch";
@@ -20,16 +21,19 @@ import { GalleryPatch } from "~/app/draft/patch/GalleryPatch";
 import { LocationPatch } from "~/app/draft/patch/LocationPatch";
 import { PricePatch } from "~/app/draft/patch/PricePatch";
 import { PriceTypePatch } from "~/app/draft/patch/PriceTypePatch";
+import { ProsPatch } from "~/app/draft/patch/ProsPatch";
 import { TitlePatch } from "~/app/draft/patch/TitlePatch";
 import { AgeValue } from "~/app/draft/value/AgeValue";
 import { CategoryValue } from "~/app/draft/value/CategoryValue";
 import { ConditionValue } from "~/app/draft/value/ConditionValue";
+import { ConsLabel } from "~/app/draft/value/ConsLabel";
 import { DeliveryValue } from "~/app/draft/value/DeliveryValue";
 import { DescriptionValue } from "~/app/draft/value/DescriptionValue";
 import { ExpireAtValue } from "~/app/draft/value/ExpireAtValue";
 import { LocationValue } from "~/app/draft/value/LocationValue";
 import { PriceTypeValue } from "~/app/draft/value/PriceTypeValue";
 import { PriceValue } from "~/app/draft/value/PriceValue";
+import { ProsLabel } from "~/app/draft/value/ProsLabel";
 import { TitleValue } from "~/app/draft/value/TitleValue";
 import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
 
@@ -46,7 +50,9 @@ export namespace Setup {
 		| "delivery"
 		| "gallery"
 		| "expireAt"
-		| "description";
+		| "description"
+		| "pros"
+		| "cons";
 
 	export interface Props {
 		draft: tDraft;
@@ -175,6 +181,20 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 									draft={draft}
 									onClick={() => {
 										setView("description");
+									}}
+								/>
+
+								<ProsLabel
+									draft={draft}
+									onClick={() => {
+										setView("pros");
+									}}
+								/>
+
+								<ConsLabel
+									draft={draft}
+									onClick={() => {
+										setView("cons");
 									}}
 								/>
 
@@ -336,6 +356,24 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 				description: {
 					children: (
 						<DescriptionPatch
+							draft={draft}
+							onCancel={() => setView("default")}
+							onSettled={() => setView("default")}
+						/>
+					),
+				},
+				pros: {
+					children: (
+						<ProsPatch
+							draft={draft}
+							onCancel={() => setView("default")}
+							onSettled={() => setView("default")}
+						/>
+					),
+				},
+				cons: {
+					children: (
+						<ConsPatch
 							draft={draft}
 							onCancel={() => setView("default")}
 							onSettled={() => setView("default")}
