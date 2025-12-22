@@ -43,6 +43,9 @@
 0e2d6ae59d756678e034197ebd80f4723aecad41dc953699684a443e:
   ref: Listings (label)
   value: Listings (label)
+0e6cf0e3ce32e8ff03c1c483fa275fb0f2baa4ec9e5e3dcc47b5442f:
+  ref: Delivery (title)
+  value: Delivery (title)
 0f44d510d8a8cf53325df192dfac3d02f4299c2d9a4a5dbe2dad9a6f:
   ref: Price type not set
   value: Price type not set
@@ -319,6 +322,9 @@
 7f2df328f0f16e7c1fd38d50d6a91a5160b4daf7ba80e34a5907d814:
   ref: Feed range (placeholder)
   value: Feed range (placeholder)
+7f89976c181499cadaa8961f43343f08d5d5660f0188347e382dc807:
+  ref: Listing delivery (label)
+  value: Listing delivery (label)
 80eb01c4f083e6af9055876045562a9157c605f15686e89854ee632b:
   ref: unused
   value: unused
@@ -621,6 +627,9 @@ fa6165a1f31837973b2b0797274535b064db2f341bf26976563565aa:
 fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
   ref: Feed condition (label)
   value: Feed condition (label)
+fa65ccecdeb5bdcf00a832c72eb27cdaca5a549ea59fc48ad7267ab9:
+  ref: Delivery not selected
+  value: Delivery not selected
 fa8d4af882062a1148f43f806622a6851ff29ff80f66467624617d7a:
   ref: Listing location (hint)
   value: Listing location (hint)

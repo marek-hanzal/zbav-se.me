@@ -31,6 +31,7 @@ export namespace ValueList {
 		 */
 		action?: ReactNode;
 		loading?: boolean;
+		wrapperProps?: Container.Props;
 	}
 
 	export type PropsEx<TItem extends EntitySchema.Type> = Omit<
@@ -47,6 +48,7 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 	renderFn,
 	action,
 	loading,
+	wrapperProps,
 	ui,
 	...props
 }: ValueList.Props<TItem>) => {
@@ -69,6 +71,7 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 		>
 			<Container
 				data-ui={"ValueList-[Container.label-wrapper]"}
+				{...wrapperProps}
 				ui={{
 					tone: "primary",
 					theme: "light",
@@ -77,6 +80,7 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 					justify: "space-between",
 					gap: "default",
 					color: "lead",
+					...wrapperProps?.ui,
 				}}
 			>
 				<Tx

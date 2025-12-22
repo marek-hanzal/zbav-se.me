@@ -88,6 +88,14 @@ export const withListingQueryBuilder = <TSelect extends withListingCollectionSel
 		query = query.where("l.age", "in", where.ageIn) as TSelect;
 	}
 
+	if (where.deliveryIn && where.deliveryIn.length > 0) {
+		const deliveryIn = where.deliveryIn;
+
+		query = query.where(
+			(eb) => sql`${eb.ref("l.delivery")} && ${sql.val(deliveryIn)}::listing_delivery_enum[]`,
+		) as TSelect;
+	}
+
 	if (where.categoryId) {
 		query = query.where("l.categoryId", "=", where.categoryId) as TSelect;
 	}

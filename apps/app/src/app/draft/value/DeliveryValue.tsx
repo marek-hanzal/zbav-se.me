@@ -24,14 +24,7 @@ export const DeliveryValue: FC<DeliveryValue.Props> = ({ draft, onClick }) => {
 			textLabel={translator.text("Listing delivery (label)")}
 			textEmpty={translator.text("Delivery not selected")}
 			items={deliveryItems}
-			renderFn={(item) => (
-				<Tx
-					label={`Listing delivery - ${item.delivery}`}
-					ui={{
-						tone: "secondary",
-					}}
-				/>
-			)}
+			renderFn={(item) => <Tx label={`Listing delivery - ${item.delivery}`} />}
 			action={
 				<Icon
 					icon={EditIcon}
@@ -42,8 +35,10 @@ export const DeliveryValue: FC<DeliveryValue.Props> = ({ draft, onClick }) => {
 				/>
 			}
 			onClick={onClick}
-			ui={{
-				tone: deliveryItems.length > 0 ? "neutral" : "secondary",
+			wrapperProps={{
+				ui: {
+					tone: deliveryItems.length > 0 ? "neutral" : "secondary",
+				},
 			}}
 		/>
 	);

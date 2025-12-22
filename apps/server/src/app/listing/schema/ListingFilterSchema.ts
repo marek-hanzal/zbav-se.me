@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { ListingDeliveryEnumSchema } from "~/app/listing/schema/ListingDeliveryEnumSchema";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 import { PriceSchema } from "~/schema/PriceSchema";
@@ -38,6 +39,10 @@ export const ListingFilterSchema = z
 		}),
 		ageIn: z.array(z.number().gte(0).lte(6)).optional().openapi({
 			description: "This filter matches listings with ages in the provided array",
+		}),
+		deliveryIn: z.array(ListingDeliveryEnumSchema).optional().openapi("DeliveryIn", {
+			description:
+				"This filter matches listings with delivery methods overlapping the provided array",
 		}),
 		categoryId: z.string().min(1, "Category ID is required").optional().openapi("CategoryId", {
 			description: "ID of the category",
