@@ -16,7 +16,7 @@ export const ConditionValue: FC<ConditionValue.Props> = ({ draft, ...props }) =>
 			data-ui={"ConditionValue[LabelValue]"}
 			wrapperProps={{
 				ui: {
-					tone: draft.condition ? "neutral" : "primary",
+					tone: draft.condition ? "neutral" : "secondary",
 				},
 			}}
 			action={

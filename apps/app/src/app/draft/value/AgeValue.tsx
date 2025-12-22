@@ -16,7 +16,7 @@ export const AgeValue: FC<AgeValue.Props> = ({ draft, ...props }) => {
 			data-ui={"AgeValue[LabelValue]"}
 			wrapperProps={{
 				ui: {
-					tone: draft.age ? "neutral" : "primary",
+					tone: draft.age ? "neutral" : "secondary",
 				},
 			}}
 			action={

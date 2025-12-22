@@ -8,9 +8,13 @@ const presets: Record<Typo.Preset, uiTypo.Ui> = {
 		font: "bold",
 	},
 	header: {
-		text: "3xl",
+		tone: "brand",
+		theme: "light",
+		text: "lg",
+		color: "lead",
 		font: "bold",
 		display: "block",
+		opacity: "low",
 	},
 	subheader: {
 		text: "xl",

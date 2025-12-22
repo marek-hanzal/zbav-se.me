@@ -247,6 +247,9 @@
 5c8983bc9f6b82b7d54e9d2de54f4a5e12120ac5ec4c523d723b166b:
   ref: Continue listing (label)
   value: Continue listing (label)
+5dc3ea5f4971a9d3d71980e83f4d740bae8b6fb905950d61523b432a:
+  ref: Draft - bunch of required (title)
+  value: Draft - bunch of required (title)
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
   ref: Listing age (label)
   value: Listing age (label)
@@ -385,6 +388,9 @@
 93e4f0b9a0dc4d17c33a08d475281a1a736fff83763a516958a1f693:
   ref: Feed title (title)
   value: Feed title (title)
+957897e367a94096dcbfda99c8cf5bd4dc9f4d2a2292065c65990299:
+  ref: Draft - action section (title)
+  value: Draft - action section (title)
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
   ref: Create listing (label)
   value: Create listing (label)
@@ -549,6 +555,9 @@ dfec30446df33c9964dde3bb9c8be06978e570503cd029ffd4447dde:
 e14a7b455d617b56b9ff6118784b59871a8191a5b9db34d76e02d9fa:
   ref: Back to favourites (link)
   value: Back to favourites (link)
+e24d776c431f2cb9d46c2bbd22e31dcbf906057798f788ae78b0e9c8:
+  ref: Draft - those others (title)
+  value: Draft - those others (title)
 e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
   ref: Listing title (required)
   value: Listing title (required)

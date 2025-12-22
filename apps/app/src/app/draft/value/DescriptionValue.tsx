@@ -16,7 +16,7 @@ export const DescriptionValue: FC<DescriptionValue.Props> = ({ draft, ...props }
 			data-ui={"DescriptionValue[LabelValue]"}
 			wrapperProps={{
 				ui: {
-					tone: "neutral",
+					tone: draft.description ? "neutral" : "secondary",
 				},
 			}}
 			action={

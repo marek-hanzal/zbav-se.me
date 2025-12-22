@@ -81,6 +81,18 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 									onClick={() => setView("gallery")}
 								/>
 
+								<Tx
+									label={"Draft - bunch of required (title)"}
+									ui={{
+										tone: "brand",
+										theme: "light",
+										text: "md",
+										color: "lead",
+										opacity: "low",
+									}}
+									className={"text-center"}
+								/>
+
 								<TitleValue
 									draft={draft}
 									onClick={() => {
@@ -116,6 +128,25 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 									}}
 								/>
 
+								<ExpireAtValue
+									draft={draft}
+									onClick={() => {
+										setView("expireAt");
+									}}
+								/>
+
+								<Tx
+									label={"Draft - those others (title)"}
+									ui={{
+										tone: "secondary",
+										theme: "light",
+										text: "md",
+										color: "lead",
+										opacity: "low",
+									}}
+									className={"text-center"}
+								/>
+
 								<ConditionValue
 									draft={draft}
 									onClick={() => {
@@ -130,18 +161,23 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 									}}
 								/>
 
-								<ExpireAtValue
-									draft={draft}
-									onClick={() => {
-										setView("expireAt");
-									}}
-								/>
-
 								<DescriptionValue
 									draft={draft}
 									onClick={() => {
 										setView("description");
 									}}
+								/>
+
+								<Tx
+									label={"Draft - action section (title)"}
+									ui={{
+										tone: "neutral",
+										theme: "light",
+										text: "md",
+										color: "lead",
+										opacity: "low",
+									}}
+									className={"text-center"}
 								/>
 
 								<CreateListingButton
