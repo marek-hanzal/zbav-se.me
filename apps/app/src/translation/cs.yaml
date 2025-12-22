@@ -493,22 +493,40 @@ Condition - Age [6] (hint):
     value: Čerstvá novinka
 Condition - Overall [1] (label):
     static: true
-    value: Nefunkční, na díly
+    value: Nefunkční
+Condition - Overall [1] (hint):
+    static: true
+    value: Nadále neplní původní funkci; je třeba péče nad standardní úrovni
 Condition - Overall [2] (label):
     static: true
-    value: Nefunkční, opravitelné
+    value: Špatný
+Condition - Overall [2] (hint):
+    static: true
+    value: Je třeba zásah, aktivní péče
 Condition - Overall [3] (label):
     static: true
-    value: Velmi opotřebené
+    value: Horší
+Condition - Overall [3] (hint):
+    static: true
+    value: Např. velmi zatížené, zvíře s nemocí, atd.
 Condition - Overall [4] (label):
     static: true
-    value: Běžné opotřebení
+    value: Běžný
+Condition - Overall [4] (hint):
+    static: true
+    value: Např. odpovídá použití/věku
 Condition - Overall [5] (label):
     static: true
-    value: Jako nové, kompletní
+    value: Velmi dobrý
+Condition - Overall [5] (hint):
+    static: true
+    value: Např. jako nové, bez známek poškození
 Condition - Overall [6] (label):
     static: true
-    value: Zcela nové, zabalené
+    value: Perfektní
+Condition - Overall [6] (hint):
+    static: true
+    value: Např. zabalené, kompletní, zdravé (u zvířat)
 Expire in 1-month:
     static: true
     value: Za měsíc

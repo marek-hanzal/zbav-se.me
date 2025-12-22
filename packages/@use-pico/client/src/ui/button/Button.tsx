@@ -136,6 +136,7 @@ export const Button: FC<Button.Props> = ({
 								color: "icon",
 								opacity: "low",
 							}}
+							className={"text-start"}
 						/>
 					) : null}
 				</Container>
