@@ -491,22 +491,22 @@ Condition - Age [5] (hint):
 Condition - Age [6] (hint):
     static: true
     value: Čerstvá novinka
-Condition - Overall [1] (hint):
+Condition - Overall [1] (label):
     static: true
     value: Nefunkční, na díly
-Condition - Overall [2] (hint):
+Condition - Overall [2] (label):
     static: true
     value: Nefunkční, opravitelné
-Condition - Overall [3] (hint):
+Condition - Overall [3] (label):
     static: true
     value: Velmi opotřebené
-Condition - Overall [4] (hint):
+Condition - Overall [4] (label):
     static: true
     value: Běžné opotřebení
-Condition - Overall [5] (hint):
+Condition - Overall [5] (label):
     static: true
     value: Jako nové, kompletní
-Condition - Overall [6] (hint):
+Condition - Overall [6] (label):
     static: true
     value: Zcela nové, zabalené
 Expire in 1-month:

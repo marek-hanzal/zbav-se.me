@@ -3,6 +3,7 @@ import { LabelValue } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
+import { conditionLabel } from "~/app/condition/util/conditionLabel";
 
 export namespace ConditionValue {
 	export interface Props extends Omit<LabelValue.Props, "textValue"> {
@@ -28,11 +29,7 @@ export const ConditionValue: FC<ConditionValue.Props> = ({ draft, ...props }) =>
 				/>
 			}
 			textLabel={translator.text("Listing condition (label)")}
-			textValue={
-				draft.condition
-					? translator.text(`Condition - Overall [${draft.condition}] (hint)`)
-					: null
-			}
+			textValue={draft.condition ? translator.text(conditionLabel(draft.condition)) : null}
 			textEmpty={translator.text("Condition not selected")}
 			{...props}
 		/>

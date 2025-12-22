@@ -13,7 +13,7 @@ export const AgeSelection: FC<AgeSelection.Props> = ({ selection, ui, ...props }
 	return (
 		<Rating
 			data-ui="AgeSelection[Rating]"
-			textHint={(value) => `Condition - Age [${value}] (hint)`}
+			textLabel={(value) => `Condition - Age [${value}] (hint)`}
 			selection={selection}
 			ui={{
 				...ui,

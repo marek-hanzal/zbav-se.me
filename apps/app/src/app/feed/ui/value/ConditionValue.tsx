@@ -4,6 +4,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
+import { conditionLabel } from "~/app/condition/util/conditionLabel";
 
 export namespace ConditionValue {
 	export interface Props
@@ -30,7 +31,7 @@ export const ConditionValue: FC<ConditionValue.Props> = ({ feed, ...props }) => 
 				id: String(item),
 				condition: String(item),
 			}))}
-			renderFn={(item) => <Tx label={`Condition - Overall [${item.condition}] (hint)`} />}
+			renderFn={(item) => <Tx label={conditionLabel(Number(item.condition))} />}
 			action={
 				<Icon
 					icon={EditIcon}

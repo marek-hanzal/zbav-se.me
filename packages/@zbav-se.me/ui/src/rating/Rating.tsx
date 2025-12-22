@@ -3,7 +3,7 @@ import { TrashIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { type FC, useId, useMemo } from "react";
+import { type FC, useMemo } from "react";
 import { uiSelectButton } from "../ui";
 import { RatingToIcon } from "./RatingToIcon";
 
@@ -25,15 +25,14 @@ export namespace Rating {
 	export interface RatingItem extends EntitySchema.Type {}
 
 	export interface Props extends Container.Props {
-		textHint(value: number): string;
+		textLabel(value: number): string;
+		textHint?(value: number): string;
 		selection: useSelection.Selection<RatingItem>;
 	}
 }
 
-export const Rating: FC<Rating.Props> = ({ textHint, selection, ui, ...props }) => {
+export const Rating: FC<Rating.Props> = ({ textLabel, textHint, selection, ui, ...props }) => {
 	const limit = 6;
-
-	const itemId = useId();
 
 	const ratingItems = useMemo<Rating.RatingItem[]>(() => withRatingItems(limit), []);
 
@@ -60,7 +59,7 @@ export const Rating: FC<Rating.Props> = ({ textHint, selection, ui, ...props }) 
 
 				return (
 					<Button
-						key={`rating-${itemId}-${value}`}
+						key={value}
 						onClick={() => {
 							selection.toggle(item);
 						}}
@@ -70,7 +69,8 @@ export const Rating: FC<Rating.Props> = ({ textHint, selection, ui, ...props }) 
 								text: "xl",
 							},
 						}}
-						label={textHint(value)}
+						label={textLabel(value)}
+						hint={textHint?.(value)}
 						{...uiSelectButton({
 							isSelected: selected,
 							ui: {

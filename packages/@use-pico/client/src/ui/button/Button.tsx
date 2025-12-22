@@ -1,6 +1,7 @@
 import type { ComponentProps, FC } from "react";
 import { Icon } from "../../icon/Icon";
 import { SpinnerIcon } from "../../icon/SpinnerIcon";
+import { Container } from "../container";
 import { Tx } from "../tx/Tx";
 import { uiButton } from "./uiButton";
 
@@ -11,6 +12,10 @@ export namespace Button {
 		 * any complex content, thus the "label" only.
 		 */
 		label?: string | null;
+		/**
+		 * Smaller hint under the label
+		 */
+		hint?: string | null;
 		/**
 		 * Icon to display when the button is enabled and not loading.
 		 */
@@ -49,6 +54,7 @@ export namespace Button {
 
 export const Button: FC<Button.Props> = ({
 	label,
+	hint,
 	iconEnabled,
 	iconDisabled,
 	iconLoading = SpinnerIcon,
@@ -100,14 +106,39 @@ export const Button: FC<Button.Props> = ({
 			) : null}
 
 			{label ? (
-				<Tx
-					data-ui={"Button-[Tx.label]"}
-					label={label}
+				<Container
 					ui={{
-						display: "block",
-						truncate,
+						flow: "vertical",
+						items: "start",
+						justify: "start",
+						width: "full",
 					}}
-				/>
+				>
+					{label ? (
+						<Tx
+							data-ui={"Button-[Tx.label]"}
+							label={label}
+							ui={{
+								display: "block",
+								truncate,
+							}}
+						/>
+					) : null}
+
+					{hint ? (
+						<Tx
+							data-ui={"Button-[Tx.hint]"}
+							label={hint}
+							ui={{
+								text: "sm",
+								display: "block",
+								wrap: "wrap",
+								color: "icon",
+								opacity: "low",
+							}}
+						/>
+					) : null}
+				</Container>
 			) : null}
 
 			{children}
