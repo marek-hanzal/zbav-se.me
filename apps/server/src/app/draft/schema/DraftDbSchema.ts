@@ -1,5 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { ListingExpireEnumSchema } from "~/@user/listing/schema/ListingExpireEnumSchema";
+import { ListingDeliveryEnumSchema } from "~/app/listing/schema/ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "~/app/listing/schema/ListingPriceEnumSchema";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 
@@ -54,6 +55,15 @@ export const DraftDbSchema = z
 			])
 			.openapi({
 				description: "Age of the item (0-based index)",
+			}),
+		//
+		delivery: z
+			.union([
+				ListingDeliveryEnumSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Delivery method for the draft",
 			}),
 		//
 		locationId: z

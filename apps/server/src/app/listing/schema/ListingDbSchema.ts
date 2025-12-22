@@ -1,6 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 import { VectorSchema } from "~/schema/VectorSchema";
+import { ListingDeliveryEnumSchema } from "./ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "./ListingPriceEnumSchema";
 
 export const ListingDbSchema = z
@@ -38,6 +39,15 @@ export const ListingDbSchema = z
 			])
 			.openapi({
 				description: "Age of the item (0-based index)",
+			}),
+		//
+		delivery: z
+			.union([
+				ListingDeliveryEnumSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Delivery method for the listing",
 			}),
 		//
 		locationId: z.string().openapi({

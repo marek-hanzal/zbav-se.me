@@ -14,6 +14,16 @@ export const DraftMigration: Migration = {
 			.execute();
 
 		await db.schema
+			.createType("listing_delivery_enum")
+			.asEnum([
+				"personal",
+				"post",
+				"package",
+				"other",
+			])
+			.execute();
+
+		await db.schema
 			.createTable("draft")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
@@ -23,6 +33,7 @@ export const DraftMigration: Migration = {
 			.addColumn("currency", "text")
 			.addColumn("condition", "integer")
 			.addColumn("age", "integer")
+			.addColumn("delivery", sql`listing_delivery_enum`)
 			.addColumn("locationId", "text")
 			.addColumn("categoryId", "text")
 			.addColumn("galleryId", "text", (col) => col.notNull())
