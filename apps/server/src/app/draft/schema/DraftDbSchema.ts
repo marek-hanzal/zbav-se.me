@@ -2,6 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { ListingExpireEnumSchema } from "~/@user/listing/schema/ListingExpireEnumSchema";
 import { ListingDeliveryEnumSchema } from "~/app/listing/schema/ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "~/app/listing/schema/ListingPriceEnumSchema";
+import { ProsConsSchema } from "~/app/listing/schema/ProsConsSchema";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 
 export const DraftDbSchema = z
@@ -110,6 +111,23 @@ export const DraftDbSchema = z
 			])
 			.openapi({
 				description: "Description of the item",
+			}),
+		//
+		pros: z
+			.union([
+				ProsConsSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Pros of the item",
+			}),
+		cons: z
+			.union([
+				ProsConsSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Cons of the item",
 			}),
 		//
 		createdAt: z.coerce.date().openapi({

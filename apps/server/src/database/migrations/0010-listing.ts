@@ -25,6 +25,8 @@ export const ListingMigration: Migration = {
 			.addColumn("titleVec", sql`vector(64)`)
 			//
 			.addColumn("description", "text")
+			.addColumn("pros", sql`text[]`)
+			.addColumn("cons", sql`text[]`)
 			.addColumn("expiresAt", "timestamp", (col) => col.notNull())
 			//
 			.addColumn("createdAt", "timestamp", (col) => col.notNull())

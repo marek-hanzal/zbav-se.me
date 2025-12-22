@@ -3,6 +3,7 @@ import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 import { VectorSchema } from "~/schema/VectorSchema";
 import { ListingDeliveryEnumSchema } from "./ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "./ListingPriceEnumSchema";
+import { ProsConsSchema } from "./ProsConsSchema";
 
 export const ListingDbSchema = z
 	.looseObject({
@@ -86,6 +87,23 @@ export const ListingDbSchema = z
 			])
 			.openapi({
 				description: "Description of the item",
+			}),
+		//
+		pros: z
+			.union([
+				ProsConsSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Pros of the item",
+			}),
+		cons: z
+			.union([
+				ProsConsSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Cons of the item",
 			}),
 		//
 		createdAt: z.coerce.date().openapi({

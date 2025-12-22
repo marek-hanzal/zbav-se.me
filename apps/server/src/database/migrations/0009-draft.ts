@@ -41,6 +41,8 @@ export const DraftMigration: Migration = {
 			.addColumn("title", "text")
 			//
 			.addColumn("description", "text")
+			.addColumn("pros", sql`text[]`)
+			.addColumn("cons", sql`text[]`)
 			.addColumn("expiresAt", "text")
 			//
 			.addColumn("createdAt", "timestamp", (col) => col.notNull())

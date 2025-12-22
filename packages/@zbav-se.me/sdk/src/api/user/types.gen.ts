@@ -2071,6 +2071,14 @@ export type tListing = {
      */
     description: string | null;
     /**
+     * Pros of the item
+     */
+    pros: tProsCons | null;
+    /**
+     * Cons of the item
+     */
+    cons: tProsCons | null;
+    /**
      * Creation timestamp
      */
     createdAt: string;
@@ -2132,6 +2140,11 @@ export type tCategory = {
      */
     locale: string;
 };
+
+/**
+ * Array of pros or cons, max 5 items, each string max 72 characters
+ */
+export type tProsCons = Array<string>;
 
 /**
  * Query object for favourite count
@@ -2407,6 +2420,14 @@ export type tDraftPatchData = {
      */
     description?: string | null;
     /**
+     * Pros of the item
+     */
+    pros?: tProsCons | null;
+    /**
+     * Cons of the item
+     */
+    cons?: tProsCons | null;
+    /**
      * Timestamp when the draft was used to create a listing
      */
     usedAt?: null | string | null;
@@ -2522,6 +2543,14 @@ export type tDraft = {
      * Description of the item
      */
     description: string | null;
+    /**
+     * Pros of the item
+     */
+    pros: tProsCons | null;
+    /**
+     * Cons of the item
+     */
+    cons: tProsCons | null;
     /**
      * Creation timestamp
      */

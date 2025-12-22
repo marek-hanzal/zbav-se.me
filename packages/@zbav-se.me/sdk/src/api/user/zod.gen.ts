@@ -2262,6 +2262,15 @@ export const zCategory = z.object({
 export type zCategory = z.infer<typeof zCategory>;
 
 /**
+ * Array of pros or cons, max 5 items, each string max 72 characters
+ */
+export const zProsCons = z.array(z.string().max(72)).max(5).register(z.globalRegistry, {
+    description: 'Array of pros or cons, max 5 items, each string max 72 characters'
+});
+
+export type zProsCons = z.infer<typeof zProsCons>;
+
+/**
  * Listing data
  */
 export const zListing = z.object({
@@ -2306,6 +2315,14 @@ export const zListing = z.object({
     }),
     description: z.union([
         z.string(),
+        z.null()
+    ]),
+    pros: z.union([
+        zProsCons,
+        z.null()
+    ]),
+    cons: z.union([
+        zProsCons,
         z.null()
     ]),
     createdAt: z.string().register(z.globalRegistry, {
@@ -2622,6 +2639,14 @@ export const zDraftPatchData = z.object({
         z.string().max(2048),
         z.null()
     ])),
+    pros: z.optional(z.union([
+        zProsCons,
+        z.null()
+    ])),
+    cons: z.optional(z.union([
+        zProsCons,
+        z.null()
+    ])),
     usedAt: z.optional(z.union([
         z.null(),
         z.union([
@@ -2756,6 +2781,14 @@ export const zDraft = z.object({
     ]),
     description: z.union([
         z.string().max(2048),
+        z.null()
+    ]),
+    pros: z.union([
+        zProsCons,
+        z.null()
+    ]),
+    cons: z.union([
+        zProsCons,
         z.null()
     ]),
     createdAt: z.string().register(z.globalRegistry, {

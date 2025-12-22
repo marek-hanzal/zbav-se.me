@@ -24,6 +24,8 @@ export const withDraftSelect = ({ database, sort }: withDraftSelect.Props) => {
 			sql<ListingDeliveryEnumSchema.Type[] | null>`to_jsonb(${eb.ref("d.delivery")})`.as(
 				"delivery",
 			),
+			sql<string[] | null>`to_jsonb(${eb.ref("d.pros")})`.as("pros"),
+			sql<string[] | null>`to_jsonb(${eb.ref("d.cons")})`.as("cons"),
 
 			jsonObjectFrom(
 				withGallerySelect({

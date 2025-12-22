@@ -2972,6 +2972,32 @@ export const sListing = {
                 }
             ]
         },
+        pros: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ProsCons'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        cons: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ProsCons'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
         createdAt: {
             type: 'string'
         },
@@ -3036,6 +3062,8 @@ export const sListing = {
         'expiresAt',
         'title',
         'description',
+        'pros',
+        'cons',
         'createdAt',
         'updatedAt',
         'location',
@@ -3079,6 +3107,15 @@ export const sCategory = {
         'sort',
         'locale'
     ]
+} as const;
+
+export const sProsCons = {
+    type: 'array',
+    items: {
+        type: 'string',
+        maxLength: 72
+    },
+    maxItems: 5
 } as const;
 
 export const sFavouriteCountQuery = {
@@ -3492,6 +3529,32 @@ export const sDraftPatchData = {
                 }
             ]
         },
+        pros: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ProsCons'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        cons: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ProsCons'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
         usedAt: {
             anyOf: [
                 {
@@ -3738,6 +3801,32 @@ export const sDraft = {
                 }
             ]
         },
+        pros: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ProsCons'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        cons: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ProsCons'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
         createdAt: {
             type: 'string'
         },
@@ -3805,6 +3894,8 @@ export const sDraft = {
         'expiresAt',
         'title',
         'description',
+        'pros',
+        'cons',
         'createdAt',
         'updatedAt',
         'usedAt',

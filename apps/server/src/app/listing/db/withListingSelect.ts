@@ -27,6 +27,8 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 			sql<ListingDeliveryEnumSchema.Type[] | null>`to_jsonb(${eb.ref("l.delivery")})`.as(
 				"delivery",
 			),
+			sql<string[] | null>`to_jsonb(${eb.ref("l.pros")})`.as("pros"),
+			sql<string[] | null>`to_jsonb(${eb.ref("l.cons")})`.as("cons"),
 			eb
 				.case()
 				.when(sql.lit(meta?.latLon != null))
