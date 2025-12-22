@@ -21,8 +21,8 @@ export const ConsLabel: FC<ConsLabel.Props> = ({ draft, onClick }) => {
 	return (
 		<ValueList
 			data-ui={"ConsLabel[ValueList]"}
-			textLabel={translator.text("Cons (label)")}
-			textEmpty={translator.text("Cons not filled")}
+			textLabel={translator.text("Listing - Cons (label)")}
+			textEmpty={translator.text("Listing - Cons not filled")}
 			items={consItems}
 			renderFn={(item) => <Tx label={item.con} />}
 			action={

@@ -2,7 +2,6 @@ import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
-import { translator } from "@use-pico/common/translator";
 import { sProsCons, type tDraft } from "@zbav-se.me/sdk/api/user";
 import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
@@ -51,7 +50,7 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onSettled, ...
 	return (
 		<TitleContainer
 			data-ui={"Setup-[TitleContainer.cons]"}
-			textTitle={"Cons (title)"}
+			textTitle={"Listing - Cons (title)"}
 			{...props}
 		>
 			<Container
@@ -70,14 +69,12 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onSettled, ...
 						gap: "default",
 					}}
 				>
-					<Status
-						textTitle={"Cons (title)"}
-						textMessage={"Cons (message)"}
-					>
+					<Status textMessage={"Listing - Cons (message)"}>
 						<Container
 							ui={{
 								layout: "vertical-flex",
 								width: "full",
+								scroll: "vertical",
 							}}
 						>
 							{Array.from({
@@ -92,7 +89,6 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onSettled, ...
 											onChange={(e) => {
 												updateItem(index, e.target.value);
 											}}
-											placeholder={translator.text("Cons (placeholder)")}
 											maxLength={sProsCons.items.maxLength}
 											{...props}
 										/>

@@ -1,8 +1,7 @@
 import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
-import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
-import { translator } from "@use-pico/common/translator";
+import { Tx } from "@use-pico/client/ui/tx";
 import { sProsCons, type tDraft } from "@zbav-se.me/sdk/api/user";
 import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
@@ -51,56 +50,51 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...
 	return (
 		<TitleContainer
 			data-ui={"Setup-[TitleContainer.pros]"}
-			textTitle={"Pros (title)"}
+			textTitle={"Listing - Pros (title)"}
 			{...props}
 		>
 			<Container
 				ui={{
-					layout: "vertical-content-footer",
+					layout: "vertical-header-content-footer",
 					height: "full",
-					width: "full",
+					scroll: "vertical",
 					inner: "default",
-					gap: "default",
 				}}
 			>
+				<Tx
+					label={"Listing - Pros (message)"}
+					ui={{
+						text: "lg",
+						opacity: "low",
+						color: "text",
+					}}
+					className={"text-center"}
+				/>
+
 				<Container
 					ui={{
-						layout: "vertical-centered",
-						height: "full",
-						gap: "default",
+						flow: "vertical",
+						width: "full",
 					}}
 				>
-					<Status
-						textTitle={"Pros (title)"}
-						textMessage={"Pros (message)"}
-					>
-						<Container
-							ui={{
-								layout: "vertical-flex",
-								width: "full",
-							}}
-						>
-							{Array.from({
-								length: sProsCons.maxItems,
-							}).map((_, index) => (
-								// biome-ignore lint/suspicious/noArrayIndexKey: Static array of 5 fields
-								<FormField key={`pros-field-${index}`}>
-									{(props) => (
-										<TextInput
-											type="text"
-											value={items[index] ?? ""}
-											onChange={(e) => {
-												updateItem(index, e.target.value);
-											}}
-											placeholder={translator.text("Pros (placeholder)")}
-											maxLength={sProsCons.items.maxLength}
-											{...props}
-										/>
-									)}
-								</FormField>
-							))}
-						</Container>
-					</Status>
+					{Array.from({
+						length: sProsCons.maxItems,
+					}).map((_, index) => (
+						// biome-ignore lint/suspicious/noArrayIndexKey: Static array of 5 fields
+						<FormField key={`pros-field-${index}`}>
+							{(props) => (
+								<TextInput
+									type="text"
+									value={items[index] ?? ""}
+									onChange={(e) => {
+										updateItem(index, e.target.value);
+									}}
+									maxLength={sProsCons.items.maxLength}
+									{...props}
+								/>
+							)}
+						</FormField>
+					))}
 				</Container>
 
 				<SaveControl

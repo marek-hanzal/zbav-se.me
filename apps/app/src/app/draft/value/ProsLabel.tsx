@@ -21,8 +21,8 @@ export const ProsLabel: FC<ProsLabel.Props> = ({ draft, onClick }) => {
 	return (
 		<ValueList
 			data-ui={"ProsLabel[ValueList]"}
-			textLabel={translator.text("Pros (label)")}
-			textEmpty={translator.text("Pros not filled")}
+			textLabel={translator.text("Listing - Pros (label)")}
+			textEmpty={translator.text("Listing - Pros not filled")}
 			items={prosItems}
 			renderFn={(item) => <Tx label={item.pro} />}
 			action={

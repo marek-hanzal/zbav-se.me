@@ -13,6 +13,9 @@
 02d821a7f6c8c860ddf14a10fa006f1668bf485d4832ffa830cf1a82:
   ref: Feed age (title)
   value: Feed age (title)
+032bf5ced2d92548bee53096a31662b5527c60c21a75a711303d95de:
+  ref: Age - from oldest (label)
+  value: Age - from oldest (label)
 03dd4711e2aaba77a79e582ae21f6acf1aaa8b9bcd089b1b8e2de80e:
   ref: Close draft (button)
   value: Close draft (button)
@@ -25,12 +28,18 @@
 065d90dd69a514382210796119a244615affeef496284f86ceeb388d:
   ref: Feed sorting (label)
   value: Feed sorting (label)
+069a14aec9bb4a553c78c2032f6e521d3b8dccbbb4cfac68e67fa1c1:
+  ref: Listing - Pros (title)
+  value: Listing - Pros (title)
 06daab7b2990f20995e68b97e1294770e4a81d9fe49bd931a2930d47:
   ref: Feed delivery (title)
   value: Feed delivery (title)
 08f72ffcbaab104481353781fb5142ff29a99fb6dff9f34a65d0c991:
   ref: Gallery (title)
   value: Gallery (title)
+0a5c73cd28c41a15c8769a38be34b6d388bcba18e90ca7e28b762bc9:
+  ref: Listing - Cons (title)
+  value: Listing - Cons (title)
 0bfcff0fd8397bbe2de9284b3fe89a16ac4fbf192d890b04a396258b:
   ref: Draft edit (title)
   value: Draft edit (title)
@@ -49,9 +58,6 @@
 0e6cf0e3ce32e8ff03c1c483fa275fb0f2baa4ec9e5e3dcc47b5442f:
   ref: Delivery (title)
   value: Delivery (title)
-0ef8e3349b91f51d6e11abf6652cfd85f7dfb2b5866e60f3399f72e6:
-  ref: xl
-  value: xl
 0f44d510d8a8cf53325df192dfac3d02f4299c2d9a4a5dbe2dad9a6f:
   ref: Price type not set
   value: Price type not set
@@ -130,12 +136,18 @@
 2bad77ac9199d19ca4cf85d780cf6f7f747cc6520bc1899bb6717029:
   ref: Go to home (link)
   value: Go to home (link)
+2cc1b252ceb60737beda798ecfadb01526f931e1cfd851b0bec1a11a:
+  ref: Listing - Pros (placeholder)
+  value: Listing - Pros (placeholder)
 2f30c1c4a6d75472712f25fde84d88a7087c8e5d41e7aa3b4b3030fc:
   ref: Feed range not set
   value: Feed range not set
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
   ref: Age (title)
   value: Age (title)
+318a99c187d3d8f3a5362513928a7589e883e0a83ca13ac8136e9b4f:
+  ref: Age - from youngest (label)
+  value: Age - from youngest (label)
 339d9753b567b5672f79522f5fbd8264123ec49f0c6601c07043a408:
   ref: Feed range (description)
   value: Feed range (description)
@@ -154,6 +166,9 @@
 37e1cb2b4f78786fb70f260332ccd707e7a0ad66fdf52bf3a4f4239c:
   ref: Listing Score - Feed views (label)
   value: Listing Score - Feed views (label)
+39506faaa681b27e6ed65d4237e07c6a2c63838b44f9495159f1ec8b:
+  ref: Listing - Pros not filled
+  value: Listing - Pros not filled
 3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
   ref: Price (placeholder)
   value: Price (placeholder)
@@ -253,6 +268,9 @@
 59934a1f13d42118882c0a0a64cf3f270c5ad2f54185826385cb2abf:
   ref: Go to feed (link)
   value: Go to feed (link)
+5a5a2baed8c4a4673ac53e4bffc4d31e2508fb9c8c1fb184da880680:
+  ref: Listing - Pros (message)
+  value: Listing - Pros (message)
 5b65a4cf7255c3e4465c81b9bc1b31317d2f4aa306b4c038a4a5b00c:
   ref: Feed category (label)
   value: Feed category (label)
@@ -298,6 +316,9 @@
 679eb0f6d4d2b7cf7359439e3b87d205ff8b061c3f6f33bfe8052367:
   ref: Empty favourite - category and favourite (title)
   value: Empty favourite - category and favourite (title)
+689fe7e74ce92585be4ccf137ca4787a8d74c2e05f6e1ae1a444150a:
+  ref: 2xl
+  value: 2xl
 6986d09f4aa2bbe69df817149dd90758babe79f2f510910b43cfe310:
   ref: secondary
   value: secondary
@@ -457,6 +478,9 @@ a5fecc06a3719ab30505196a44d06c91c2c7e8497978d8572efb9e30:
 a62fb7339fce50f73673412c11f10a25880e1e7b942b7261366a8529:
   ref: closed
   value: closed
+a64e91c4e68c901ac59593d15028b96e00c9b01c7163080eb97502c2:
+  ref: Listing - Cons (message)
+  value: Listing - Cons (message)
 aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
   ref: Photo upload placeholder (title)
   value: Photo upload placeholder (title)
@@ -505,6 +529,9 @@ babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
 bb5e50b301be27567cdb705ba4f700188154893f0faee5a597fd9284:
   ref: User score (label)
   value: User score (label)
+bcd9934e20e9f9156bc934d5ff4ae78c96d19fdc0ec072a3a20e1371:
+  ref: Listing - Pros (label)
+  value: Listing - Pros (label)
 bda14ae9f8cb30b7b7440f39407eb24b991ad4b512e8118780fac091:
   ref: Expiration date not set
   value: Expiration date not set
@@ -543,6 +570,9 @@ cce3e05a5e2cf26a26d41e907d0fade717c5fbffe10b7f77fd83e8db:
 ceeb32aea866f45126224f7ff0fc5a65a8fa268c581d023ffe309e03:
   ref: Unflag listing (button)
   value: Unflag listing (button)
+cf07f8ef398a12baec9f7ce95c03328d6fcaac83ea30fc0940302802:
+  ref: Listing - Cons not filled
+  value: Listing - Cons not filled
 d123af005af0e5af73b3d1a3f223b7cbc7a4457fbf74669fd87c5690:
   ref: Description not filled
   value: Description not filled
@@ -555,6 +585,9 @@ d30ca5022499ee9c8ab4d9d4a2bb4f65292849e295cbb63503707671:
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
   ref: Listing condition (label)
   value: Listing condition (label)
+d67e2f39d31f8fb31b31dea5db6baec70e4f363d468784f3fa1cadbe:
+  ref: Listing - Cons (placeholder)
+  value: Listing - Cons (placeholder)
 d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
   ref: Feed title (hint)
   value: Feed title (hint)
@@ -639,6 +672,9 @@ f807d8f885d618d3ba330d91e5719faba4383e66108e44f61570ab43:
 f8e11e40da643ca8591082d562def7e52fe18e6922da04ac3e53b8ef:
   ref: Feed age not selected
   value: Feed age not selected
+f913b44b2e4a6e6c285a180b07437d54bbfc97fbdeb8bb1e6df7ff58:
+  ref: Listing - Cons (label)
+  value: Listing - Cons (label)
 f9cf1337b7ea576370fd65ccd16343099c3d316564ea46381241d7a1:
   ref: Listing location not selected
   value: Listing location not selected
