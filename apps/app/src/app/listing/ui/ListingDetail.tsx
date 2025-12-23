@@ -2,6 +2,7 @@ import { useLocale } from "@use-pico/client/hook";
 import { Icon, ShowIcon, SpinnerIcon } from "@use-pico/client/icon";
 import { Container, LabelValue, ValueList } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
+import { Typo } from "@use-pico/client/ui/typo";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
@@ -155,6 +156,32 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					}))}
 					renderFn={(item) => <Tx label={`Listing delivery - ${item.delivery}`} />}
 				/>
+
+				{listing.pros?.length ? (
+					<ValueList
+						data-ui={"ListingDetail[ProsValue]"}
+						textLabel={translator.text("Listing - Pros (label)")}
+						textEmpty={translator.text("Listing - Pros not filled")}
+						items={listing.pros.map((pro, index) => ({
+							id: String(index),
+							pro,
+						}))}
+						renderFn={(item) => <Typo label={item.pro} />}
+					/>
+				) : null}
+
+				{listing.cons?.length ? (
+					<ValueList
+						data-ui={"ListingDetail[ConsValue]"}
+						textLabel={translator.text("Listing - Cons (label)")}
+						textEmpty={translator.text("Listing - Cons not filled")}
+						items={listing.cons.map((con, index) => ({
+							id: String(index),
+							con,
+						}))}
+						renderFn={(item) => <Typo label={item.con} />}
+					/>
+				) : null}
 
 				<LabelValue
 					textLabel={"Listing score hint (label)"}
