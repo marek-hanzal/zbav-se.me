@@ -49,7 +49,7 @@ export function getRouter() {
 		defaultPendingMs: 100,
 		scrollRestoration: true,
 		//
-		// defaultViewTransition: true,
+		defaultViewTransition: true,
 	});
 
 	setupRouterSsrQueryIntegration({
