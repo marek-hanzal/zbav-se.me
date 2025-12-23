@@ -27,8 +27,8 @@ function applyWithDelay(
 }
 
 export namespace useElementVisibility {
-	export interface Visibility {
-		setVisible?(visible: boolean): void;
+	export interface Visible {
+		threshold?: number;
 	}
 
 	export interface Proximity {
@@ -38,9 +38,17 @@ export namespace useElementVisibility {
 	}
 
 	export interface Props {
+		/**
+		 * Primary scrolling container - only direct children are monitored by MutationObserver.
+		 */
 		scrollerRef: RefObject<HTMLElement | null>;
-		visibility?: Visibility;
-		proximity?: Proximity;
+		/**
+		 * Enable tracking of visible element (in scrollerRef)
+		 */
+		visible?: Visible;
+		/**
+		 * Delay in ms before setting visible state; prevent flooding state changes.
+		 */
 		delayMs?: number;
 	}
 
@@ -58,8 +66,8 @@ export namespace useElementVisibility {
 
 export function useElementVisibility({
 	scrollerRef,
-	visibility,
-	proximity,
+	visible,
+	// proximity,
 	delayMs,
 }: useElementVisibility.Props): useElementVisibility.Result {
 	const byIdRef = useRef(new Map<string, useElementVisibility.State>());
@@ -85,17 +93,66 @@ export function useElementVisibility({
 
 		console.log("Starting useElementVisibility", scrollerRef.current);
 
-		const mo = new MutationObserver((el) => {
-			console.log("Mutated!", el);
+		/**
+		 * Setup core visibility observer: this one provides "visibility" flag.
+		 */
+		const visibleIo = new IntersectionObserver(
+			(entries) => {
+				for (const e of entries) {
+					console.log("IO:", {
+						target: e.target,
+						isIntersecting: e.isIntersecting,
+						ratio: e.intersectionRatio,
+					});
+				}
+			},
+			{
+				root: scrollerRef.current,
+				threshold: visible?.threshold ?? 0,
+				rootMargin: "0px",
+			},
+		);
+
+		/**
+		 * Handles dynamic updates to scroller container.
+		 */
+		const mo = new MutationObserver((mutations) => {
+			for (const mutation of mutations) {
+				if (mutation.type !== "childList") {
+					continue;
+				}
+
+				for (const node of mutation.addedNodes) {
+					if (node instanceof Element) {
+						visibleIo.observe(node);
+					}
+				}
+
+				for (const node of mutation.removedNodes) {
+					if (node instanceof Element) {
+						visibleIo.unobserve(node);
+					}
+				}
+			}
 		});
+
 		mo.observe(scrollerRef.current, {
 			childList: true,
 			subtree: false,
 		});
 
+		/**
+		 * Default list of nodes already available in the container.
+		 */
+		for (const node of Array.from(scrollerRef.current.children)) {
+			visibleIo.observe(node);
+		}
+
 		return () => {
 			byIdRef.current.clear();
+			//
 			mo.disconnect();
+			visibleIo.disconnect();
 		};
 	}, []);
 
