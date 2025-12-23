@@ -15,6 +15,7 @@ import { DeliveryValue } from "./value/DeliveryValue";
 import { NameValue } from "./value/NameValue";
 import { RangeValue } from "./value/RangeValue";
 import { SortValue } from "./value/SortValue";
+import { WarrantyValue } from "./value/WarrantyValue";
 
 export namespace Feed {
 	export interface Value {
@@ -27,6 +28,7 @@ export namespace Feed {
 		condition?: Partial<ConditionValue.Props>;
 		age?: Partial<AgeValue.Props>;
 		delivery?: Partial<DeliveryValue.Props>;
+		warranty?: Partial<WarrantyValue.Props>;
 		title?: Partial<TitleValue.Props>;
 	}
 
@@ -152,6 +154,11 @@ export const Feed: FC<Feed.Props> = ({
 			<DeliveryValue
 				feed={feed}
 				{...values?.delivery}
+			/>
+
+			<WarrantyValue
+				feed={feed}
+				{...values?.warranty}
 			/>
 
 			<TitleValue

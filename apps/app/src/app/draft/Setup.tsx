@@ -159,34 +159,6 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 									className={"text-center"}
 								/>
 
-								<ConditionValue
-									draft={draft}
-									onClick={() => {
-										setView("condition");
-									}}
-								/>
-
-								<AgeValue
-									draft={draft}
-									onClick={() => {
-										setView("age");
-									}}
-								/>
-
-								<DeliveryValue
-									draft={draft}
-									onClick={() => {
-										setView("delivery");
-									}}
-								/>
-
-								<WarrantyValue
-									draft={draft}
-									onClick={() => {
-										setView("warranty");
-									}}
-								/>
-
 								<DescriptionValue
 									draft={draft}
 									onClick={() => {
@@ -205,6 +177,34 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 									draft={draft}
 									onClick={() => {
 										setView("cons");
+									}}
+								/>
+
+								<DeliveryValue
+									draft={draft}
+									onClick={() => {
+										setView("delivery");
+									}}
+								/>
+
+								<WarrantyValue
+									draft={draft}
+									onClick={() => {
+										setView("warranty");
+									}}
+								/>
+
+								<ConditionValue
+									draft={draft}
+									onClick={() => {
+										setView("condition");
+									}}
+								/>
+
+								<AgeValue
+									draft={draft}
+									onClick={() => {
+										setView("age");
 									}}
 								/>
 

@@ -190,6 +190,13 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					/>
 				) : null}
 
+				{listing.warranty !== null ? (
+					<LabelValue
+						textLabel={translator.text("Listing warranty (label)")}
+						textValue={<Tx label={`Listing warranty - ${listing.warranty}`} />}
+					/>
+				) : null}
+
 				{listing.condition !== null ? (
 					<LabelValue
 						textLabel={"Listing condition (label)"}

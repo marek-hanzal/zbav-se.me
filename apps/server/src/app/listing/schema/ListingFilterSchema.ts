@@ -1,5 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { ListingDeliveryEnumSchema } from "~/app/listing/schema/ListingDeliveryEnumSchema";
+import { ListingWarrantyEnumSchema } from "~/app/listing/schema/ListingWarrantyEnumSchema";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 import { PriceSchema } from "~/schema/PriceSchema";
@@ -43,6 +44,9 @@ export const ListingFilterSchema = z
 		deliveryIn: z.array(ListingDeliveryEnumSchema).optional().openapi("DeliveryIn", {
 			description:
 				"This filter matches listings with delivery methods overlapping the provided array",
+		}),
+		warrantyIn: z.array(ListingWarrantyEnumSchema).optional().openapi("WarrantyIn", {
+			description: "This filter matches listings with warranty types in the provided array",
 		}),
 		categoryId: z.string().min(1, "Category ID is required").optional().openapi("CategoryId", {
 			description: "ID of the category",

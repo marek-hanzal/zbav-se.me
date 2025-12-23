@@ -1110,6 +1110,7 @@ export type tListingWhere = {
      */
     ageIn?: Array<number>;
     deliveryIn?: tDeliveryIn;
+    warrantyIn?: tWarrantyIn;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
     currency?: tCurrencyListEnum;
@@ -1173,6 +1174,25 @@ export type tCategoryIdIn = Array<string>;
  * ID of the category
  */
 export type tCategoryId = string;
+
+/**
+ * Warranty type for the listing
+ */
+export const tListingWarrantyEnum = {
+    warranty: 'warranty',
+    'no-warranty': 'no-warranty',
+    custom: 'custom'
+} as const;
+
+/**
+ * Warranty type for the listing
+ */
+export type tListingWarrantyEnum = typeof tListingWarrantyEnum[keyof typeof tListingWarrantyEnum];
+
+/**
+ * This filter matches listings with warranty types in the provided array
+ */
+export type tWarrantyIn = Array<tListingWarrantyEnum>;
 
 /**
  * Delivery method for the listing
@@ -1251,6 +1271,7 @@ export type tListingFilter = {
      */
     ageIn?: Array<number>;
     deliveryIn?: tDeliveryIn;
+    warrantyIn?: tWarrantyIn;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
     currency?: tCurrencyListEnum;
@@ -1386,20 +1407,6 @@ export const tListingExpireEnum = {
  * Expiration time of the listing
  */
 export type tListingExpireEnum = typeof tListingExpireEnum[keyof typeof tListingExpireEnum];
-
-/**
- * Warranty type for the listing
- */
-export const tListingWarrantyEnum = {
-    warranty: 'warranty',
-    'no-warranty': 'no-warranty',
-    custom: 'custom'
-} as const;
-
-/**
- * Warranty type for the listing
- */
-export type tListingWarrantyEnum = typeof tListingWarrantyEnum[keyof typeof tListingWarrantyEnum];
 
 /**
  * Data for toggling a listing in ignore list

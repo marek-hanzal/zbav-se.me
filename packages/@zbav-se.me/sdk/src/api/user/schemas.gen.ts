@@ -1602,6 +1602,9 @@ export const sListingWhere = {
         deliveryIn: {
             $ref: '#/components/schemas/DeliveryIn'
         },
+        warrantyIn: {
+            $ref: '#/components/schemas/WarrantyIn'
+        },
         categoryId: {
             $ref: '#/components/schemas/CategoryId'
         },
@@ -1677,6 +1680,22 @@ export const sCategoryIdIn = {
 export const sCategoryId = {
     type: 'string',
     minLength: 1
+} as const;
+
+export const sListingWarrantyEnum = {
+    type: 'string',
+    enum: [
+        'warranty',
+        'no-warranty',
+        'custom'
+    ]
+} as const;
+
+export const sWarrantyIn = {
+    type: 'array',
+    items: {
+        $ref: '#/components/schemas/ListingWarrantyEnum'
+    }
 } as const;
 
 export const sListingDeliveryEnum = {
@@ -1768,6 +1787,9 @@ export const sListingFilter = {
         },
         deliveryIn: {
             $ref: '#/components/schemas/DeliveryIn'
+        },
+        warrantyIn: {
+            $ref: '#/components/schemas/WarrantyIn'
         },
         categoryId: {
             $ref: '#/components/schemas/CategoryId'
@@ -2003,15 +2025,6 @@ export const sListingExpireEnum = {
         '7-days',
         '14-days',
         '1-month'
-    ]
-} as const;
-
-export const sListingWarrantyEnum = {
-    type: 'string',
-    enum: [
-        'warranty',
-        'no-warranty',
-        'custom'
     ]
 } as const;
 
