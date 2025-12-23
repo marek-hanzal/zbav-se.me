@@ -31,8 +31,6 @@ import {
 } from "@zbav-se.me/sdk/mutation/user";
 import axios from "axios";
 import PQueue from "p-queue";
-import { withEmailSignInMutation } from "~/app/auth/withEmailSignInMutation";
-import { withRegisterMutation } from "~/app/auth/withRegisterMutation";
 import descriptions from "./descriptions.json";
 import locations from "./location.json";
 import titles from "./titles.json";
@@ -244,36 +242,6 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 				await queue.onIdle();
 			},
 		});
-
-		const registerMutation = withRegisterMutation.useMutation();
-		const registerUsersMutation = useMutation({
-			async mutationFn() {
-				const concurrency = 4;
-				const alphabet = Array.from(
-					{
-						length: 26,
-					},
-					(_, index) => String.fromCharCode("a".charCodeAt(0) + index),
-				);
-
-				const queue = new PQueue({
-					concurrency,
-				});
-
-				for (const letter of alphabet) {
-					queue.add(() =>
-						registerMutation.mutateAsync({
-							email: `${letter}@x32.cz`,
-							password: "12345678",
-						}),
-					);
-				}
-
-				await queue.onIdle();
-			},
-		});
-
-		const signInMutation = withEmailSignInMutation.useMutation();
 
 		const listingEventMutation = withListingEventCreateMutation.useMutation();
 
@@ -487,38 +455,6 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						inner: "4xl",
 					}}
 				>
-					<Button
-						loading={registerUsersMutation.isPending}
-						onClick={() => {
-							registerUsersMutation.mutate();
-						}}
-						ui={{
-							tone: "brand",
-							theme: "light",
-						}}
-					>
-						Prepare users
-					</Button>
-
-					<Button
-						loading={signInMutation.isPending}
-						onClick={() => {
-							const letter = String.fromCharCode("a".charCodeAt(0) + rangedom(0, 25));
-
-							signInMutation.mutate({
-								email: `${letter}@x32.cz`,
-								password: "12345678",
-							});
-						}}
-						ui={{
-							tone: "secondary",
-							theme: "dark",
-							size: "xl",
-						}}
-					>
-						Random user
-					</Button>
-
 					<Button
 						onClick={() => seedMutation.mutate()}
 						disabled={seedMutation.isPending}
