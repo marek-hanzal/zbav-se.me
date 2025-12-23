@@ -61,12 +61,14 @@ export function useElementVisibility({
 	const storeRef = useRef(createVisibilityStore());
 
 	const visibleTimers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
-	const proximityTimers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
+	const topTimers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
+	const bottomTimers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
 
 	useEffect(() => {
 		return () => {
 			clearTimerMap(visibleTimers.current);
-			clearTimerMap(proximityTimers.current);
+			clearTimerMap(topTimers.current);
+			clearTimerMap(bottomTimers.current);
 		};
 	}, []);
 
@@ -129,7 +131,7 @@ export function useElementVisibility({
 					delayById(
 						id,
 						() => store.getState().setTop(id, entry.intersectionRatio > 0),
-						proximityTimers.current,
+						topTimers.current,
 						delayMs,
 					);
 
@@ -160,7 +162,7 @@ export function useElementVisibility({
 					delayById(
 						id,
 						() => store.getState().setBottom(id, entry.intersectionRatio > 0),
-						proximityTimers.current,
+						bottomTimers.current,
 						delayMs,
 					);
 
@@ -200,7 +202,8 @@ export function useElementVisibility({
 			if (id) {
 				store.getState().removeById(id);
 				visibleTimers.current.delete(id);
-				proximityTimers.current.delete(id);
+				topTimers.current.delete(id);
+				bottomTimers.current.delete(id);
 			}
 		};
 
@@ -236,7 +239,8 @@ export function useElementVisibility({
 			store.getState().clear();
 			//
 			clearTimerMap(visibleTimers.current);
-			clearTimerMap(proximityTimers.current);
+			clearTimerMap(topTimers.current);
+			clearTimerMap(bottomTimers.current);
 			//
 			mo.disconnect();
 			//
