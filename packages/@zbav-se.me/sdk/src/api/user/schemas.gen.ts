@@ -1897,6 +1897,19 @@ export const sListingCreate = {
                 }
             ]
         },
+        warranty: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ListingWarrantyEnum'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
         draftId: {
             type: 'string'
         },
@@ -1990,6 +2003,15 @@ export const sListingExpireEnum = {
         '7-days',
         '14-days',
         '1-month'
+    ]
+} as const;
+
+export const sListingWarrantyEnum = {
+    type: 'string',
+    enum: [
+        'warranty',
+        'no-warranty',
+        'custom'
     ]
 } as const;
 
@@ -2966,6 +2988,19 @@ export const sListing = {
                 }
             ]
         },
+        warranty: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ListingWarrantyEnum'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
         locationId: {
             type: 'string'
         },
@@ -3090,6 +3125,7 @@ export const sListing = {
         'condition',
         'age',
         'delivery',
+        'warranty',
         'locationId',
         'categoryId',
         'galleryId',
@@ -3486,6 +3522,19 @@ export const sDraftPatchData = {
                 }
             ]
         },
+        warranty: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ListingWarrantyEnum'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
         locationId: {
             anyOf: [
                 {
@@ -3641,6 +3690,19 @@ export const sDraftCreate = {
         age: {
             type: 'number'
         },
+        warranty: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ListingWarrantyEnum'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
         locationId: {
             type: 'string'
         },
@@ -3775,6 +3837,19 @@ export const sDraft = {
                     items: {
                         $ref: '#/components/schemas/ListingDeliveryEnum'
                     }
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        warranty: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ListingWarrantyEnum'
                 },
                 {
                     type: 'null'
@@ -3940,6 +4015,7 @@ export const sDraft = {
         'condition',
         'age',
         'delivery',
+        'warranty',
         'locationId',
         'categoryId',
         'galleryId',

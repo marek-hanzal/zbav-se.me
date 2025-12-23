@@ -1470,6 +1470,19 @@ export const zListingExpireEnum = z.enum([
 export type zListingExpireEnum = z.infer<typeof zListingExpireEnum>;
 
 /**
+ * Warranty type for the listing
+ */
+export const zListingWarrantyEnum = z.enum([
+    'warranty',
+    'no-warranty',
+    'custom'
+]).register(z.globalRegistry, {
+    description: 'Warranty type for the listing'
+});
+
+export type zListingWarrantyEnum = z.infer<typeof zListingWarrantyEnum>;
+
+/**
  * Data for creating a new listing
  */
 export const zListingCreate = z.object({
@@ -1487,6 +1500,10 @@ export const zListingCreate = z.object({
     ]),
     delivery: z.optional(z.union([
         z.array(zListingDeliveryEnum),
+        z.null()
+    ])),
+    warranty: z.optional(z.union([
+        zListingWarrantyEnum,
         z.null()
     ])),
     draftId: z.optional(z.string().register(z.globalRegistry, {
@@ -2302,6 +2319,10 @@ export const zListing = z.object({
         z.array(zListingDeliveryEnum),
         z.null()
     ]),
+    warranty: z.union([
+        zListingWarrantyEnum,
+        z.null()
+    ]),
     locationId: z.string().register(z.globalRegistry, {
         description: 'ID of the location'
     }),
@@ -2624,6 +2645,10 @@ export const zDraftPatchData = z.object({
         z.array(zListingDeliveryEnum),
         z.null()
     ])),
+    warranty: z.optional(z.union([
+        zListingWarrantyEnum,
+        z.null()
+    ])),
     locationId: z.optional(z.union([
         z.string(),
         z.null()
@@ -2712,6 +2737,10 @@ export const zDraftCreate = z.object({
     age: z.optional(z.number().register(z.globalRegistry, {
         description: 'Age of the item (0-based index)'
     })),
+    warranty: z.optional(z.union([
+        zListingWarrantyEnum,
+        z.null()
+    ])),
     locationId: z.optional(z.string().register(z.globalRegistry, {
         description: 'ID of the location'
     })),
@@ -2774,6 +2803,10 @@ export const zDraft = z.object({
     ]),
     delivery: z.union([
         z.array(zListingDeliveryEnum),
+        z.null()
+    ]),
+    warranty: z.union([
+        zListingWarrantyEnum,
         z.null()
     ]),
     locationId: z.union([

@@ -1330,6 +1330,10 @@ export type tListingCreate = {
      */
     delivery?: Array<tListingDeliveryEnum> | null;
     /**
+     * Warranty type for the listing
+     */
+    warranty?: tListingWarrantyEnum | null;
+    /**
      * ID of the draft
      */
     draftId?: string;
@@ -1382,6 +1386,20 @@ export const tListingExpireEnum = {
  * Expiration time of the listing
  */
 export type tListingExpireEnum = typeof tListingExpireEnum[keyof typeof tListingExpireEnum];
+
+/**
+ * Warranty type for the listing
+ */
+export const tListingWarrantyEnum = {
+    warranty: 'warranty',
+    'no-warranty': 'no-warranty',
+    custom: 'custom'
+} as const;
+
+/**
+ * Warranty type for the listing
+ */
+export type tListingWarrantyEnum = typeof tListingWarrantyEnum[keyof typeof tListingWarrantyEnum];
 
 /**
  * Data for toggling a listing in ignore list
@@ -2056,6 +2074,10 @@ export type tListing = {
      */
     delivery: Array<tListingDeliveryEnum> | null;
     /**
+     * Warranty type for the listing
+     */
+    warranty: tListingWarrantyEnum | null;
+    /**
      * ID of the location
      */
     locationId: string;
@@ -2404,6 +2426,10 @@ export type tDraftPatchData = {
      */
     delivery?: Array<tListingDeliveryEnum> | null;
     /**
+     * Warranty type for the draft
+     */
+    warranty?: tListingWarrantyEnum | null;
+    /**
      * ID of the location
      */
     locationId?: string | null;
@@ -2473,6 +2499,10 @@ export type tDraftCreate = {
      */
     age?: number;
     /**
+     * Warranty type for the draft
+     */
+    warranty?: tListingWarrantyEnum | null;
+    /**
      * ID of the location
      */
     locationId?: string;
@@ -2535,6 +2565,10 @@ export type tDraft = {
      * Delivery methods for the draft
      */
     delivery: Array<tListingDeliveryEnum> | null;
+    /**
+     * Warranty type for the draft
+     */
+    warranty: tListingWarrantyEnum | null;
     /**
      * ID of the location
      */
