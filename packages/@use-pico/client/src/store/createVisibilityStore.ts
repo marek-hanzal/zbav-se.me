@@ -84,13 +84,11 @@ export const createVisibilityStore = (): createVisibilityStore.Hook => {
 					bottom: current.bottom,
 				};
 
-				const state: createVisibilityStore.State = {
+				next.set(id, {
 					...current,
 					...base,
 					...derive(base),
-				};
-
-				next.set(id, state);
+				});
 
 				return {
 					byId: next,
@@ -116,13 +114,11 @@ export const createVisibilityStore = (): createVisibilityStore.Hook => {
 					bottom: current.bottom,
 				};
 
-				const state: createVisibilityStore.State = {
+				next.set(id, {
 					...current,
 					...base,
 					...derive(base),
-				};
-
-				next.set(id, state);
+				});
 
 				return {
 					byId: next,
@@ -148,13 +144,11 @@ export const createVisibilityStore = (): createVisibilityStore.Hook => {
 					bottom,
 				};
 
-				const state: createVisibilityStore.State = {
+				next.set(id, {
 					...current,
 					...base,
 					...derive(base),
-				};
-
-				next.set(id, state);
+				});
 
 				return {
 					byId: next,
