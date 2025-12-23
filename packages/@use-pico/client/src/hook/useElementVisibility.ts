@@ -111,7 +111,7 @@ export function useElementVisibility({
 						continue;
 					}
 
-					const visible = entry.isIntersecting;
+					const visible = entry.intersectionRatio > 0;
 
 					byIdRef.current.set(id, {
 						bottom: false,
@@ -120,6 +120,10 @@ export function useElementVisibility({
 						visible: visible,
 					});
 				}
+
+				console.log("State", [
+					...byIdRef.current,
+				]);
 			},
 			{
 				root: scrollerRef.current,
