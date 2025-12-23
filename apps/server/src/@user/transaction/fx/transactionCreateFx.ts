@@ -1,6 +1,7 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
+import { listingEventCreateFx } from "~/@user/listing-event/fx/listingEventCreateFx";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { messageThreadCreateFx } from "~/@user/message-thread/fx/messageThreadCreateFx";
 import { messageUserCreateFx } from "~/@user/message-thread-user/fx/messageUserCreateFx";
@@ -87,6 +88,11 @@ export const transactionCreateFx = ({ listingId }: transactionCreateFx.Props) =>
 				side: "buyer",
 				status: "request",
 			});
+
+			yield* listingEventCreateFx({
+				listingId,
+				event: "transaction",
+			}).pipe(Effect.ignore);
 
 			yield* messageSystemCreateFx({
 				messageThreadId: messageThread.id,
