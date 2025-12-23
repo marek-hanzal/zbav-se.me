@@ -2,7 +2,7 @@ import { useSnapperNav } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import { SnapperNav } from "@use-pico/client/ui/snapper-nav";
 import type { StateType } from "@use-pico/common/type";
-import { type FC, useId, useRef } from "react";
+import { type FC, useRef } from "react";
 import { PhotoUpload } from "./PhotoUpload";
 
 export namespace GalleryUpload {
@@ -13,7 +13,6 @@ export namespace GalleryUpload {
 }
 
 export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props }) => {
-	const uploadRootId = useId();
 	const snapperRef = useRef<HTMLDivElement>(null);
 
 	const snapperNav = useSnapperNav({
@@ -55,7 +54,7 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 
 					return (
 						<PhotoUpload
-							key={`${uploadRootId}-${slot + 1}`}
+							key={`${slot + 1}`}
 							value={state.value[slot]}
 							onChange={(uploadId) => {
 								state.set((prev) => {

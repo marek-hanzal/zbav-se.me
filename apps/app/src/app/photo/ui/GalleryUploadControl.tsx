@@ -33,7 +33,6 @@ export const GalleryUploadControl = <TData extends GalleryUploadControl.Uploads>
 	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
 	const mutation = withMutation.useMutation({
 		async onPostMutation() {
-			setUploadIds([]);
 			onSuccess();
 		},
 	});
@@ -59,7 +58,7 @@ export const GalleryUploadControl = <TData extends GalleryUploadControl.Uploads>
 
 			<SaveControl
 				onCancel={() => {
-					setUploadIds([]);
+					setUploadIds(defaultUploadIds);
 					onCancel();
 				}}
 				onSave={() => {

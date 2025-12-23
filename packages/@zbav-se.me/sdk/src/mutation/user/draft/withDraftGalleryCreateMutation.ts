@@ -6,9 +6,6 @@ import type {
 	tApiDraftGalleryCreateResponse,
 	tDraftGalleryCreate,
 } from "../../../api/user/types.gen";
-import { withDraftCollectionQuery } from "../../../query/user/draft/withDraftCollectionQuery";
-import { withDraftFetchQuery } from "../../../query/user/draft/withDraftFetchQuery";
-import { withGalleryFetchQuery } from "../../../query/user/gallery/withGalleryFetchQuery";
 
 export const withDraftGalleryCreateMutation = withMutation<
 	tDraftGalleryCreate,
@@ -29,9 +26,5 @@ export const withDraftGalleryCreateMutation = withMutation<
 			}),
 		);
 	},
-	invalidate: [
-		withDraftCollectionQuery,
-		withDraftFetchQuery,
-		withGalleryFetchQuery,
-	],
+	invalidate: [],
 });
