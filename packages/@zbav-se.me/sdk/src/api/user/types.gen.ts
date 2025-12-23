@@ -872,7 +872,9 @@ export const tListingEventEnum = {
     unflag: 'unflag',
     transaction: 'transaction',
     favourite: 'favourite',
-    unfavourite: 'unfavourite'
+    unfavourite: 'unfavourite',
+    like: 'like',
+    dislike: 'dislike'
 } as const;
 
 /**

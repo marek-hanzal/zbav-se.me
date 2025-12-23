@@ -1,4 +1,4 @@
-import { CloseIcon } from "@use-pico/client/icon";
+import { DislikeIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { withFeedbackCreateMutation } from "@zbav-se.me/sdk/mutation/user/feedback";
 import type { FC } from "react";
@@ -26,7 +26,7 @@ export const FeedbackDislikeButton: FC<FeedbackDislikeButton.Props> = ({
 	return (
 		<Button
 			label={"Dislike listing (button)"}
-			iconEnabled={CloseIcon}
+			iconEnabled={DislikeIcon}
 			iconProps={{
 				ui: {
 					text: "xl",

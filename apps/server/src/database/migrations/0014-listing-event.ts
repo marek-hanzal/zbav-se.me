@@ -29,6 +29,14 @@ export const ListingEventMigration: Migration = {
 				"transaction",
 				"favourite",
 				"unfavourite",
+				/**
+				 * Positive feedback on the listing
+				 */
+				"like",
+				/**
+				 * Negative feedback on the listing
+				 */
+				"dislike",
 			])
 			.execute();
 

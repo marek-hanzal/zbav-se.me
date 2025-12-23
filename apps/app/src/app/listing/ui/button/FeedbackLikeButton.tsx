@@ -1,4 +1,4 @@
-import { CheckIcon } from "@use-pico/client/icon";
+import { LikeIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { withFeedbackCreateMutation } from "@zbav-se.me/sdk/mutation/user/feedback";
 import type { FC } from "react";
@@ -22,7 +22,7 @@ export const FeedbackLikeButton: FC<FeedbackLikeButton.Props> = ({ listingId, ui
 	return (
 		<Button
 			label={"Like listing (button)"}
-			iconEnabled={CheckIcon}
+			iconEnabled={LikeIcon}
 			iconProps={{
 				ui: {
 					text: "xl",

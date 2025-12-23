@@ -1159,7 +1159,9 @@ export const sListingEventEnum = {
         'unflag',
         'transaction',
         'favourite',
-        'unfavourite'
+        'unfavourite',
+        'like',
+        'dislike'
     ]
 } as const;
 

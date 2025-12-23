@@ -935,7 +935,9 @@ export const zListingEventEnum = z.enum([
     'unflag',
     'transaction',
     'favourite',
-    'unfavourite'
+    'unfavourite',
+    'like',
+    'dislike'
 ]).register(z.globalRegistry, {
     description: 'Type of listing event'
 });

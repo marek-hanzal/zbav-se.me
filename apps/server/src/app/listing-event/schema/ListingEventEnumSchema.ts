@@ -26,6 +26,14 @@ export const ListingEventEnumSchema = z
 		"transaction",
 		"favourite",
 		"unfavourite",
+		/**
+		 * Positive feedback on the listing
+		 */
+		"like",
+		/**
+		 * Negative feedback on the listing
+		 */
+		"dislike",
 	])
 	.openapi("ListingEventEnum", {
 		description: "Type of listing event",
