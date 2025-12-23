@@ -1,6 +1,7 @@
 export * from "./draft";
 export * from "./favourite";
 export * from "./feed";
+export * from "./feedback";
 export * from "./flag";
 export * from "./ignore";
 export * from "./listing";
