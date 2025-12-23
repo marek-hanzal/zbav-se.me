@@ -586,6 +586,15 @@ Listing price - closed:
 Listing price - open:
     static: true
     value: K vyjednávání
+Listing warranty - warranty:
+    static: true
+    value: Se zárukou
+Listing warranty - no-warranty:
+    static: true
+    value: Bez záruky
+Listing warranty - custom:
+    static: true
+    value: Vlastní
 Seller accepted the transaction (message):
     value: Prodejce přijal transakci.
     static: true
