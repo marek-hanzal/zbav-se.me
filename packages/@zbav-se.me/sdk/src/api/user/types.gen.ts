@@ -869,6 +869,20 @@ export const tListingEventEnum = {
 export type tListingEventEnum = typeof tListingEventEnum[keyof typeof tListingEventEnum];
 
 /**
+ * Seller info for the listing
+ */
+export type tSellerInfo = {
+    /**
+     * Registration date
+     */
+    registered: string;
+    /**
+     * Seller score
+     */
+    score: number;
+};
+
+/**
  * Query object for listing count
  */
 export type tListingCountQuery = {
@@ -3457,6 +3471,40 @@ export type tApiListingCountResponse = {
 };
 
 export type apiListingCountResponse = tApiListingCountResponse[keyof tApiListingCountResponse];
+
+export type tApiListingSellerInfoRequest = {
+    body?: never;
+    path: {
+        /**
+         * ID of the listing
+         */
+        listingId: string;
+    };
+    query?: never;
+    url: '/api/user/listing/{listingId}/seller-info';
+};
+
+export type apiListingSellerInfoErrors = {
+    /**
+     * Listing not found or seller info not available
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiListingSellerInfoError = apiListingSellerInfoErrors[keyof apiListingSellerInfoErrors];
+
+export type tApiListingSellerInfoResponse = {
+    /**
+     * Seller info
+     */
+    200: tSellerInfo;
+};
+
+export type apiListingSellerInfoResponse = tApiListingSellerInfoResponse[keyof tApiListingSellerInfoResponse];
 
 export type tApiListingEventCreateRequest = {
     /**

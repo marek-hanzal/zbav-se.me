@@ -943,6 +943,22 @@ export const zListingEventCreate = z.object({
 export type zListingEventCreate = z.infer<typeof zListingEventCreate>;
 
 /**
+ * Seller info for the listing
+ */
+export const zSellerInfo = z.object({
+    registered: z.string().register(z.globalRegistry, {
+        description: 'Registration date'
+    }),
+    score: z.number().register(z.globalRegistry, {
+        description: 'Seller score'
+    })
+}).register(z.globalRegistry, {
+    description: 'Seller info for the listing'
+});
+
+export type zSellerInfo = z.infer<typeof zSellerInfo>;
+
+/**
  * Latitude and longitude coordinates
  */
 export const zLatLon = z.object({
@@ -3219,6 +3235,25 @@ export type zapiListingCountRequest = z.infer<typeof zApiListingCountData>;
 export const zApiListingCountResponse = zCount;
 
 export type zapiListingCountResponse = z.infer<typeof zApiListingCountResponse>;
+
+export const zApiListingSellerInfoData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        listingId: z.string().register(z.globalRegistry, {
+            description: 'ID of the listing'
+        })
+    }),
+    query: z.optional(z.never())
+});
+
+export type zapiListingSellerInfoRequest = z.infer<typeof zApiListingSellerInfoData>;
+
+/**
+ * Seller info
+ */
+export const zApiListingSellerInfoResponse = zSellerInfo;
+
+export type zapiListingSellerInfoResponse = z.infer<typeof zApiListingSellerInfoResponse>;
 
 export const zApiListingEventCreateData = z.object({
     body: z.optional(zListingEventCreate),

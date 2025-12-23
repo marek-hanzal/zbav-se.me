@@ -1148,6 +1148,23 @@ export const sListingEventEnum = {
     ]
 } as const;
 
+export const sSellerInfo = {
+    type: 'object',
+    properties: {
+        registered: {
+            type: 'string'
+        },
+        score: {
+            type: 'number',
+            example: 0
+        }
+    },
+    required: [
+        'registered',
+        'score'
+    ]
+} as const;
+
 export const sListingCountQuery = {
     type: 'object',
     properties: {
