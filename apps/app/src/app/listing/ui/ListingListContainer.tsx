@@ -1,4 +1,5 @@
-import { useLocale, useMergeRefs, useScrollTo } from "@use-pico/client/hook";
+import { VisibilityProvider } from "@use-pico/client/context";
+import { useElementVisibility, useLocale, useMergeRefs, useScrollTo } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
@@ -55,6 +56,10 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		scrollTo,
 	]);
 
+	const visibility = useElementVisibility({
+		scrollerRef: containerRef,
+	});
+
 	return (
 		<Container
 			ref={mergedRef}
@@ -102,18 +107,13 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 					}
 
 					return (
-						<>
+						<VisibilityProvider state={visibility}>
 							{data.data.map((listing) => (
 								<VisibleContainer
 									key={listing.id}
+									id={listing.id}
 									data-ui="ListingListContainer-[VisibleContainer]"
-									scrollerRef={containerRef}
-									visibility={{}}
-									// proximity={{
-									// 	overscan: 1,
-									// }}
-									delayMs={200}
-									placeholder={(props) => (
+									placeholder={() => (
 										<SpinnerContainer
 											data-ui={
 												"ListingListContainer-[SpinnerContainer.placeholder]"
@@ -163,7 +163,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							))}
 
 							{appendix}
-						</>
+						</VisibilityProvider>
 					);
 				}}
 			</withListingCollectionQuery.Suspense>

@@ -1,4 +1,4 @@
-import { type RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { type RefObject, useEffect, useLayoutEffect, useRef } from "react";
 
 function clearTimer(ref: RefObject<ReturnType<typeof setTimeout> | undefined>) {
 	if (ref.current) {
@@ -39,54 +39,34 @@ export namespace useElementVisibility {
 
 	export interface Props {
 		scrollerRef: RefObject<HTMLElement | null>;
-		triggerRef: RefObject<HTMLElement | null>;
 		visibility?: Visibility;
 		proximity?: Proximity;
 		delayMs?: number;
 	}
 
-	export interface Result {
+	export interface State {
 		visible: boolean;
 		isVisible: boolean;
 		top: boolean;
 		bottom: boolean;
 	}
+
+	export interface Result {
+		byIdRef: RefObject<Map<string, useElementVisibility.State>>;
+	}
 }
 
-/**
- * Native (IntersectionObserver) replacement for the original GSAP ScrollTrigger logic.
- * Intended to behave 1:1 with the previous implementation:
- *
- * - visibility: active when trigger intersects scroller viewport (like "top bottom" -> "bottom top")
- * - proximity.top: zone derived from start "top+=100% bottom" and end `bottom+=overscan*100% top`
- * - proximity.bottom: zone derived from start `top-=overscan*100% bottom` and end "bottom-=100% top"
- */
 export function useElementVisibility({
 	scrollerRef,
-	triggerRef,
 	visibility,
 	proximity,
 	delayMs,
 }: useElementVisibility.Props): useElementVisibility.Result {
-	const [ready, setReady] = useState(false);
-	const [isVisible, setIsVisible] = useState(false);
-	const [isTop, setIsTop] = useState(false);
-	const [isBottom, setIsBottom] = useState(false);
+	const byIdRef = useRef(new Map<string, useElementVisibility.State>());
 
 	const visibleTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 	const topTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 	const bottomTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
-
-	useEffect(() => {
-		if (!scrollerRef.current || !triggerRef.current) {
-			setReady(false);
-			return;
-		}
-		setReady(true);
-	}, [
-		scrollerRef,
-		triggerRef,
-	]);
 
 	useEffect(() => {
 		return () => {
@@ -96,84 +76,30 @@ export function useElementVisibility({
 		};
 	}, []);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: Ssst
 	useLayoutEffect(() => {
-		const root = scrollerRef.current;
-		const target = triggerRef.current;
-		if (!ready || !root || !target) {
+		if (!scrollerRef.current) {
+			console.warn("scrollerRef.current is not set");
 			return;
 		}
 
-		let visibilityObserver: IntersectionObserver | undefined;
-		let topObserver: IntersectionObserver | undefined;
-		let bottomObserver: IntersectionObserver | undefined;
+		console.log("Starting useElementVisibility", scrollerRef.current);
 
-		if (visibility) {
-			console.log("Starting visibility observer");
-
-			visibilityObserver = new IntersectionObserver(
-				([entry]) => {
-					visibility.setVisible?.(!!entry?.isIntersecting);
-					applyWithDelay(!!entry?.isIntersecting, setIsVisible, visibleTimerRef, delayMs);
-				},
-				{
-					root,
-					threshold: 0.01,
-					rootMargin: "0px",
-				},
-			);
-
-			visibilityObserver.observe(target);
-		}
-
-		if (proximity) {
-			const overscan = proximity.overscan ?? 2;
-
-			topObserver = new IntersectionObserver(
-				([entry]) => {
-					proximity.setTop?.(!!entry?.isIntersecting);
-					applyWithDelay(!!entry?.isIntersecting, setIsTop, topTimerRef, delayMs);
-				},
-				{
-					root,
-					threshold: 0,
-					rootMargin: `${overscan * 100}% 0px 100% 0px`,
-				},
-			);
-			topObserver.observe(target);
-
-			bottomObserver = new IntersectionObserver(
-				([entry]) => {
-					proximity.setBottom?.(!!entry?.isIntersecting);
-					applyWithDelay(!!entry?.isIntersecting, setIsBottom, bottomTimerRef, delayMs);
-				},
-				{
-					root,
-					threshold: 0,
-					rootMargin: `100% 0px ${overscan * 100}% 0px`,
-				},
-			);
-			bottomObserver.observe(target);
-		}
+		const mo = new MutationObserver((el) => {
+			console.log("Mutated!", el);
+		});
+		mo.observe(scrollerRef.current, {
+			childList: true,
+			subtree: false,
+		});
 
 		return () => {
-			console.log("Disconnecting observers");
-			visibilityObserver?.disconnect();
-			topObserver?.disconnect();
-			bottomObserver?.disconnect();
+			byIdRef.current.clear();
+			mo.disconnect();
 		};
-	}, [
-		ready,
-		scrollerRef.current,
-		triggerRef.current,
-		visibility,
-		proximity,
-		delayMs,
-	]);
+	}, []);
 
 	return {
-		visible: isVisible,
-		isVisible: isVisible || isTop || isBottom,
-		top: isTop,
-		bottom: isBottom,
+		byIdRef,
 	};
 }
