@@ -4,6 +4,7 @@ import type { CategoryMissDbSchema } from "~/app/category-miss/schema/CategoryMi
 import type { DraftDbSchema } from "~/app/draft/schema/DraftDbSchema";
 import type { FavouriteDbSchema } from "~/app/favourite/schema/FavouriteDbSchema";
 import type { FeedDbSchema } from "~/app/feed/schema/FeedDbSchema";
+import type { FeedbackDbSchema } from "~/app/feedback/schema/FeedbackDbSchema";
 import type { FlagDbSchema } from "~/app/flag/schema/FlagDbSchema";
 import type { GalleryDbSchema } from "~/app/gallery/schema/GalleryDbSchema";
 import type { GalleryItemDbSchema } from "~/app/gallery-item/schema/GalleryItemDbSchema";
@@ -31,6 +32,7 @@ export interface Database {
 	draft: DraftDbSchema.Type;
 	favourite: FavouriteDbSchema.Type;
 	feed: FeedDbSchema.Type;
+	feedback: FeedbackDbSchema.Type;
 	flag: FlagDbSchema.Type;
 	gallery_item: GalleryItemDbSchema.Type;
 	gallery: GalleryDbSchema.Type;

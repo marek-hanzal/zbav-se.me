@@ -829,11 +829,32 @@ export type tMessageTextCreate = {
 };
 
 /**
- * Data for creating a new listing score
+ * Data for creating a new feedback
+ */
+export type tFeedbackCreate = {
+    /**
+     * ID of the listing
+     */
+    listingId: string;
+    type: tFeedbackEnum;
+};
+
+/**
+ * Type of feedback
+ */
+export const tFeedbackEnum = { like: 'like', dislike: 'dislike' } as const;
+
+/**
+ * Type of feedback
+ */
+export type tFeedbackEnum = typeof tFeedbackEnum[keyof typeof tFeedbackEnum];
+
+/**
+ * Data for creating a new listing event
  */
 export type tListingEventCreate = {
     /**
-     * ID of the listing to score
+     * ID of the listing
      */
     listingId: string;
     event: tListingEventEnum;
@@ -3447,7 +3468,7 @@ export type apiListingCountResponse = tApiListingCountResponse[keyof tApiListing
 
 export type tApiListingEventCreateRequest = {
     /**
-     * Data for creating a new listing score
+     * Data for creating a new listing event
      */
     body?: tListingEventCreate;
     path?: never;
@@ -3457,7 +3478,7 @@ export type tApiListingEventCreateRequest = {
 
 export type apiListingEventCreateErrors = {
     /**
-     * Cannot score your own listing
+     * Cannot create event on your own listing
      */
     400: tNotice;
     /**
@@ -3465,7 +3486,7 @@ export type apiListingEventCreateErrors = {
      */
     404: tNotice;
     /**
-     * Too many requests - please wait between scores
+     * Too many requests - please wait between events
      */
     429: tNotice;
     /**
@@ -3478,7 +3499,33 @@ export type apiListingEventCreateError = apiListingEventCreateErrors[keyof apiLi
 
 export type tApiListingEventCreateResponse = {
     /**
-     * The listing score was created
+     * The listing event was created
+     */
+    201: unknown;
+};
+
+export type tApiFeedbackCreateRequest = {
+    /**
+     * Data for creating a new feedback
+     */
+    body?: tFeedbackCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/feedback/create';
+};
+
+export type apiFeedbackCreateErrors = {
+    /**
+     * Invalid request - duplicate feedback or invalid data
+     */
+    400: tNotice;
+};
+
+export type apiFeedbackCreateError = apiFeedbackCreateErrors[keyof apiFeedbackCreateErrors];
+
+export type tApiFeedbackCreateResponse = {
+    /**
+     * The feedback was created
      */
     201: unknown;
 };

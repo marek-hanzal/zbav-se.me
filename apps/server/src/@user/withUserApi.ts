@@ -6,6 +6,7 @@ import type { NoticeSchema } from "~/schema/NoticeSchema";
 import { withDraftApi } from "./draft/withDraftApi";
 import { withFavouriteApi } from "./favourite/withFavouriteApi";
 import { withFeedApi } from "./feed/withFeedApi";
+import { withFeedbackApi } from "./feedback/withFeedbackApi";
 import { withFlagApi } from "./flag/withFlagApi";
 import { withGalleryApi } from "./gallery/withGalleryApi";
 import { withIgnoreApi } from "./ignore/withIgnoreApi";
@@ -49,6 +50,7 @@ export const withUserApi: Routes.FnWithDeps<{
 	withIgnoreApi(routes);
 	withListingApi(routes);
 	withListingEventApi(routes);
+	withFeedbackApi(routes);
 	withMessageTextApi(routes);
 	withMessageThreadApi(routes);
 	withS3Api(routes);

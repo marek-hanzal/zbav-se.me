@@ -1108,6 +1108,30 @@ export const sMessageTextCreate = {
     ]
 } as const;
 
+export const sFeedbackCreate = {
+    type: 'object',
+    properties: {
+        listingId: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/FeedbackEnum'
+        }
+    },
+    required: [
+        'listingId',
+        'type'
+    ]
+} as const;
+
+export const sFeedbackEnum = {
+    type: 'string',
+    enum: [
+        'like',
+        'dislike'
+    ]
+} as const;
+
 export const sListingEventCreate = {
     type: 'object',
     properties: {
