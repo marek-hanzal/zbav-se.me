@@ -104,7 +104,7 @@ export function useElementVisibility({
 				isVisible: next.visible || next.top || next.bottom,
 			});
 
-			console.log("Setting visible state for", id, {
+			console.log("Setting visible state for", {
 				id,
 				...next,
 				isVisible: next.visible || next.top || next.bottom,
@@ -162,7 +162,7 @@ export function useElementVisibility({
 				root,
 				threshold,
 				//
-				rootMargin: `${overscan * 100}% 0px 100% 0px`,
+				rootMargin: `${overscan * 100}% 0px 0px 0px`,
 			},
 		);
 
