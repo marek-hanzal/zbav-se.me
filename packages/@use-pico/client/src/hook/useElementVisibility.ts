@@ -99,7 +99,13 @@ export function useElementVisibility({
 
 					delayById(
 						id,
-						() => store.getState().setVisible(id, entry.intersectionRatio > 0),
+						() =>
+							store
+								.getState()
+								.setVisible(
+									id,
+									entry.isIntersecting && entry.intersectionRatio > 0,
+								),
 						visibleTimers.current,
 						delayMs,
 					);
@@ -107,6 +113,7 @@ export function useElementVisibility({
 					console.log("=== Visible Observer ===\n", {
 						id,
 						ratio: entry.intersectionRatio,
+						check: entry.isIntersecting && entry.intersectionRatio > 0,
 						isIntersecting: entry.isIntersecting,
 					});
 				}
@@ -130,7 +137,10 @@ export function useElementVisibility({
 
 					delayById(
 						id,
-						() => store.getState().setTop(id, entry.intersectionRatio > 0),
+						() =>
+							store
+								.getState()
+								.setTop(id, entry.isIntersecting && entry.intersectionRatio > 0),
 						topTimers.current,
 						delayMs,
 					);
@@ -138,6 +148,7 @@ export function useElementVisibility({
 					console.log("=== Top Observer ===\n", {
 						id,
 						ratio: entry.intersectionRatio,
+						check: entry.isIntersecting && entry.intersectionRatio > 0,
 						isIntersecting: entry.isIntersecting,
 					});
 				}
@@ -161,7 +172,10 @@ export function useElementVisibility({
 
 					delayById(
 						id,
-						() => store.getState().setBottom(id, entry.intersectionRatio > 0),
+						() =>
+							store
+								.getState()
+								.setBottom(id, entry.isIntersecting && entry.intersectionRatio > 0),
 						bottomTimers.current,
 						delayMs,
 					);
@@ -169,6 +183,7 @@ export function useElementVisibility({
 					console.log("=== Bottom Observer ===\n", {
 						id,
 						ratio: entry.intersectionRatio,
+						check: entry.isIntersecting && entry.intersectionRatio > 0,
 						isIntersecting: entry.isIntersecting,
 					});
 				}
