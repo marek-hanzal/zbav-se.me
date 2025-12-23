@@ -1,10 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { feedbackCreateFx } from "~/@user/feedback/fx/feedbackCreateFx";
+import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { feedbackCreateFx } from "./fx/feedbackCreateFx";
 import { FeedbackCreateSchema } from "./schema/FeedbackCreateSchema";
 
 export const withCreateApi: Routes.Fn = ({ userHono }) => {
@@ -26,7 +27,12 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 			},
 			responses: {
 				201: {
-					description: "The feedback was created",
+					content: {
+						"application/json": {
+							schema: ListingSchema,
+						},
+					},
+					description: "The feedback was created and the updated listing is returned",
 				},
 				400: {
 					content: {
@@ -36,6 +42,22 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 					},
 					description: "Invalid request - duplicate feedback or invalid data",
 				},
+				404: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Listing not found",
+				},
+				500: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"feedback",
@@ -44,9 +66,7 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				yield* feedbackCreateFx(c.req.valid("json"));
-
-				return c.body(null, 201);
+				return c.json(yield* feedbackCreateFx(c.req.valid("json")), 201);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),
@@ -65,6 +85,34 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 											message: e.message,
 										},
 										400,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "NotFoundError",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 404>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										404,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "UnknownException",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 500>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										500,
 									);
 								},
 							),

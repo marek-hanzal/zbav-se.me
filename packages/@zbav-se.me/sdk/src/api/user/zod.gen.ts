@@ -2200,6 +2200,10 @@ export const zListing = z.object({
     transactionId: z.union([
         z.string(),
         z.null()
+    ]),
+    feedback: z.union([
+        zFeedbackEnum,
+        z.null()
     ])
 }).register(z.globalRegistry, {
     description: 'Listing data'
@@ -3247,6 +3251,13 @@ export const zApiFeedbackCreateData = z.object({
 });
 
 export type zapiFeedbackCreateRequest = z.infer<typeof zApiFeedbackCreateData>;
+
+/**
+ * The feedback was created and the updated listing is returned
+ */
+export const zApiFeedbackCreateResponse = zListing;
+
+export type zapiFeedbackCreateResponse = z.infer<typeof zApiFeedbackCreateResponse>;
 
 export const zApiMessageTextCreateData = z.object({
     body: z.optional(zMessageTextCreate),

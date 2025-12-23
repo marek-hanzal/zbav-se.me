@@ -21,7 +21,7 @@ import { TransactionButton } from "~/app/listing/ui/button/TransactionButton";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 
 export namespace ListingDetail {
-	export type Tools = "destructive" | "hero";
+	export type Tools = "destructive" | "hero" | "feedback";
 
 	export interface Hooks {
 		onGallery(): void;
@@ -114,24 +114,6 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 								round: "default",
 							}}
 							className={"h-64"}
-						/>
-					</Container>
-
-					<Container>
-						<FeedbackLikeButton
-							listingId={listing.id}
-							ui={{
-								tone: "primary",
-								theme: "light",
-							}}
-						/>
-
-						<FeedbackDislikeButton
-							listingId={listing.id}
-							ui={{
-								tone: "primary",
-								theme: "light",
-							}}
 						/>
 					</Container>
 
@@ -233,6 +215,21 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					action={<Icon icon={ShowIcon} />}
 				/>
 			</Container>
+
+			{tools.includes("feedback") ? (
+				<Container
+					ui={{
+						layout: "horizontal-flex",
+						width: "full",
+						items: "center",
+						justify: "space-evenly",
+					}}
+				>
+					<FeedbackLikeButton listing={listing} />
+
+					<FeedbackDislikeButton listing={listing} />
+				</Container>
+			) : null}
 
 			{tools.includes("destructive") ? (
 				<withListingFetchQuery.Suspense

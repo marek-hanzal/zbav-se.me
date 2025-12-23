@@ -1,43 +1,55 @@
 import { LikeIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
+import type { tListing } from "@zbav-se.me/sdk/api/user";
 import { withFeedbackCreateMutation } from "@zbav-se.me/sdk/mutation/user/feedback";
+import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
 
 export namespace FeedbackLikeButton {
 	export interface Props extends Button.Props {
-		listingId: string;
+		listing: tListing;
 	}
 }
 
-export const FeedbackLikeButton: FC<FeedbackLikeButton.Props> = ({ listingId, ui, ...props }) => {
+export const FeedbackLikeButton: FC<FeedbackLikeButton.Props> = ({ listing, ui, ...props }) => {
+	const patch = withListingFetchQuery.useSet();
 	const feedbackCreateMutation = withFeedbackCreateMutation.useMutation({
+		onSuccess(listing) {
+			patch(() => listing, {
+				where: {
+					id: listing.id,
+				},
+			});
+		},
 		meta: {
-			mutationId: listingId,
+			mutationId: listing.id,
 		},
 	});
 	const isMutating = withFeedbackCreateMutation.useIsMutating({
-		mutationId: listingId,
+		mutationId: listing.id,
 	});
+
+	const hasFeedback = listing.feedback !== null;
+	const isLiked = listing.feedback === "like";
 
 	return (
 		<Button
-			label={"Like listing (button)"}
 			iconEnabled={LikeIcon}
 			iconProps={{
 				ui: {
 					text: "xl",
 				},
 			}}
-			disabled={isMutating}
+			disabled={hasFeedback || isMutating}
 			loading={feedbackCreateMutation.isPending}
 			onClick={() => {
 				feedbackCreateMutation.mutate({
-					listingId,
+					listingId: listing.id,
 					type: "like",
 				});
 			}}
 			ui={{
-				tone: "primary",
+				tone: isLiked ? "secondary" : "neutral",
 				theme: "light",
 				size: "default",
 				justify: "start",

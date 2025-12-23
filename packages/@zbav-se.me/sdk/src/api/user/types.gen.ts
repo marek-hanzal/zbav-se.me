@@ -2006,6 +2006,10 @@ export type tListing = {
      * Whether the user has a transaction with this listing
      */
     transactionId: string | null;
+    /**
+     * Feedback type provided by the user (like/dislike) or null if not present
+     */
+    feedback: tFeedbackEnum | null;
 };
 
 /**
@@ -3521,16 +3525,26 @@ export type apiFeedbackCreateErrors = {
      * Invalid request - duplicate feedback or invalid data
      */
     400: tNotice;
+    /**
+     * Listing not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
 };
 
 export type apiFeedbackCreateError = apiFeedbackCreateErrors[keyof apiFeedbackCreateErrors];
 
 export type tApiFeedbackCreateResponse = {
     /**
-     * The feedback was created
+     * The feedback was created and the updated listing is returned
      */
-    201: unknown;
+    201: tListing;
 };
+
+export type apiFeedbackCreateResponse = tApiFeedbackCreateResponse[keyof tApiFeedbackCreateResponse];
 
 export type tApiMessageTextCreateRequest = {
     /**

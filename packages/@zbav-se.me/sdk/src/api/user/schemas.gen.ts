@@ -2811,6 +2811,19 @@ export const sListing = {
                     type: 'null'
                 }
             ]
+        },
+        feedback: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/FeedbackEnum'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         }
     },
     required: [
@@ -2840,7 +2853,8 @@ export const sListing = {
         'isFavourite',
         'isIgnored',
         'hasFlag',
-        'transactionId'
+        'transactionId',
+        'feedback'
     ]
 } as const;
 
