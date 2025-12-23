@@ -79,6 +79,7 @@ export function useElementVisibility({
 
 	useEffect(() => {
 		if (!scrollerRef.current || !triggerRef.current) {
+			setReady(false);
 			return;
 		}
 		setReady(true);
@@ -107,6 +108,8 @@ export function useElementVisibility({
 		let bottomObserver: IntersectionObserver | undefined;
 
 		if (visibility) {
+			console.log("Starting visibility observer");
+
 			visibilityObserver = new IntersectionObserver(
 				([entry]) => {
 					visibility.setVisible?.(!!entry?.isIntersecting);
@@ -114,7 +117,7 @@ export function useElementVisibility({
 				},
 				{
 					root,
-					threshold: 0,
+					threshold: 0.01,
 					rootMargin: "0px",
 				},
 			);
@@ -153,6 +156,7 @@ export function useElementVisibility({
 		}
 
 		return () => {
+			console.log("Disconnecting observers");
 			visibilityObserver?.disconnect();
 			topObserver?.disconnect();
 			bottomObserver?.disconnect();
