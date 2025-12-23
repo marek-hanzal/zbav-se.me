@@ -5,10 +5,26 @@ export const ListingScoreMigration: Migration = {
 		await db.schema
 			.createType("listing_score_type_enum")
 			.asEnum([
-				"listing",
-				"ignore",
-				"flag",
+				/**
+				 * From feed, lowest weight
+				 */
+				"impression",
+				/**
+				 * Listing detail, medium weight
+				 */
 				"view",
+				/**
+				 * Explicit ignore of the listing
+				 */
+				"ignore",
+				/**
+				 * Flagged listing
+				 */
+				"flag",
+				/**
+				 * Started transaction by buyer
+				 */
+				"transaction",
 				"favourite",
 			])
 			.execute();
