@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { LikeIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
@@ -12,10 +13,10 @@ export namespace FeedbackLikeButton {
 }
 
 export const FeedbackLikeButton: FC<FeedbackLikeButton.Props> = ({ listing, ui, ...props }) => {
-	const patch = withListingFetchQuery.useSet();
+	const queryClient = useQueryClient();
 	const feedbackCreateMutation = withFeedbackCreateMutation.useMutation({
 		onSuccess(listing) {
-			patch(() => listing, {
+			withListingFetchQuery.invalidate(queryClient, {
 				where: {
 					id: listing.id,
 				},
