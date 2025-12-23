@@ -8,21 +8,20 @@ function clearTimer(ref: RefObject<ReturnType<typeof setTimeout> | undefined>) {
 	}
 }
 
-function applyWithDelay(
-	value: boolean,
-	setter: (value: boolean) => void,
+function delay(
+	apply: () => void,
 	timerRef: RefObject<ReturnType<typeof setTimeout> | undefined>,
 	delayMs: number | undefined,
 ) {
 	clearTimer(timerRef);
 
 	if (!delayMs) {
-		setter(value);
+		apply();
 		return;
 	}
 
 	timerRef.current = setTimeout(() => {
-		setter(value);
+		apply();
 		timerRef.current = undefined;
 	}, delayMs);
 }
@@ -34,28 +33,13 @@ export namespace useElementVisibility {
 
 	export interface Proximity {
 		overscan?: number;
-		setTop?(proximity: boolean): void;
-		setBottom?(proximity: boolean): void;
 	}
 
 	export interface Props {
-		/**
-		 * Primary scrolling container - only direct children are monitored by MutationObserver.
-		 */
 		scrollerRef: RefObject<HTMLElement | null>;
-		/**
-		 * Enable tracking of visible element (in scrollerRef)
-		 */
 		visible?: Visible;
-		/**
-		 * Delay in ms before setting visible state; prevent flooding state changes.
-		 */
+		proximity?: Proximity;
 		delayMs?: number;
-		/**
-		 * Only specific attribute will be tracked (registered) for visibility.
-		 *
-		 * @default "data-visible-item"
-		 */
 		attribute?: string;
 	}
 }
@@ -63,7 +47,7 @@ export namespace useElementVisibility {
 export function useElementVisibility({
 	scrollerRef,
 	visible,
-	// proximity,
+	proximity,
 	delayMs,
 	attribute = "data-visible-item",
 }: useElementVisibility.Props): createVisibilityStore.Hook {
@@ -83,57 +67,154 @@ export function useElementVisibility({
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Ssst
 	useLayoutEffect(() => {
-		if (!scrollerRef.current) {
+		const root = scrollerRef.current;
+		if (!root) {
 			console.warn("scrollerRef.current is not set");
 			return;
 		}
 
-		/**
-		 * Setup core visibility observer: this one provides "visibility" flag.
-		 */
+		const threshold = visible?.threshold ?? 0.005;
+		const overscan = proximity?.overscan ?? 2;
+
+		const api = storeRef.current;
+
+		const updateId = (id: string, patch: Partial<createVisibilityStore.State>) => {
+			const state = api.getState();
+			const current = state.getById(id) ?? {
+				visible: false,
+				isVisible: false,
+				top: false,
+				bottom: false,
+			};
+
+			const next = {
+				...current,
+				...patch,
+			};
+
+			if (next.visible) {
+				next.top = false;
+				next.bottom = false;
+			} else if (next.top || next.bottom) {
+				next.visible = false;
+			}
+
+			state.setById(id, {
+				...next,
+				isVisible: next.visible || next.top || next.bottom,
+			});
+
+			console.log("Setting visible state for", id, {
+				id,
+				...next,
+				isVisible: next.visible || next.top || next.bottom,
+			});
+		};
+
+		const getId = (entry: IntersectionObserverEntry) => {
+			return entry.target.getAttribute(attribute)?.trim() || null;
+		};
+
 		const visibleIo = new IntersectionObserver(
 			(entries) => {
 				for (const entry of entries) {
-					const id = entry.target.getAttribute(attribute)?.trim();
+					const id = getId(entry);
 					if (!id) {
-						console.warn("Skipping unknown element", entry.target);
 						continue;
 					}
 
-					const check = entry.intersectionRatio > 0;
-
-					const state = storeRef.current.getState();
-
-					const current = state.getById(id) ?? {
-						bottom: false,
-						top: false,
-						isVisible: false,
-						visible: false,
-					};
-
-					state.setById(id, {
-						...current,
-						visible: check,
-						isVisible: check || current.top || current.bottom,
-					});
-
-					console.log("Setting visible state for", {
-						id,
-						isIntersecting: entry.isIntersecting,
-						ratio: entry.intersectionRatio,
-					});
+					delay(
+						() =>
+							updateId(id, {
+								visible: entry.intersectionRatio > 0,
+							}),
+						visibleTimerRef,
+						delayMs,
+					);
 				}
 			},
 			{
-				root: scrollerRef.current,
-				threshold: visible?.threshold ?? 0.005,
+				root,
+				threshold,
 				rootMargin: "0px",
 			},
 		);
 
-		/**
-		 * Handles dynamic updates to scroller container.
-		 */
+		const topIo = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					const id = getId(entry);
+					if (!id) {
+						continue;
+					}
+
+					delay(
+						() =>
+							updateId(id, {
+								top: entry.intersectionRatio > 0,
+							}),
+						topTimerRef,
+						delayMs,
+					);
+				}
+			},
+			{
+				root,
+				threshold,
+				//
+				rootMargin: `${overscan * 100}% 0px 100% 0px`,
+			},
+		);
+
+		const bottomIo = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					const id = getId(entry);
+					if (!id) {
+						continue;
+					}
+
+					delay(
+						() =>
+							updateId(id, {
+								bottom: entry.intersectionRatio > 0,
+							}),
+						bottomTimerRef,
+						delayMs,
+					);
+				}
+			},
+			{
+				root,
+				threshold,
+				//
+				rootMargin: `0px 0px ${overscan * 100}% 0px`,
+			},
+		);
+
+		const observe = (node: Element) => {
+			if (!node.hasAttribute(attribute)) {
+				return;
+			}
+			visibleIo.observe(node);
+			topIo.observe(node);
+			bottomIo.observe(node);
+		};
+
+		const unobserve = (node: Element) => {
+			if (!node.hasAttribute(attribute)) {
+				return;
+			}
+			visibleIo.unobserve(node);
+			topIo.unobserve(node);
+			bottomIo.unobserve(node);
+
+			const id = node.getAttribute(attribute)?.trim();
+			if (id) {
+				api.getState().removeById?.(id);
+			}
+		};
+
 		const mo = new MutationObserver((mutations) => {
 			for (const mutation of mutations) {
 				if (mutation.type !== "childList") {
@@ -141,43 +222,35 @@ export function useElementVisibility({
 				}
 
 				for (const node of mutation.addedNodes) {
-					if (node instanceof Element && node.hasAttribute(attribute)) {
-						console.log("Observing new element", node);
-						visibleIo.observe(node);
+					if (node instanceof Element) {
+						observe(node);
 					}
 				}
-
 				for (const node of mutation.removedNodes) {
-					if (node instanceof Element && node.hasAttribute(attribute)) {
-						console.log("Unobserving element", node);
-						visibleIo.unobserve(node);
+					if (node instanceof Element) {
+						unobserve(node);
 					}
 				}
 			}
 		});
 
-		mo.observe(scrollerRef.current, {
+		mo.observe(root, {
 			childList: true,
 			subtree: false,
 		});
 
-		/**
-		 * Default list of nodes already available in the container.
-		 */
-		for (const node of Array.from(scrollerRef.current.children)) {
-			if (!node.hasAttribute(attribute)) {
-				console.warn("Skipping unknown element", node);
-				continue;
-			}
-
-			visibleIo.observe(node);
+		for (const node of Array.from(root.children)) {
+			observe(node);
 		}
 
 		return () => {
-			storeRef.current.getState().clear();
+			api.getState().clear();
 			//
 			mo.disconnect();
+			//
 			visibleIo.disconnect();
+			topIo.disconnect();
+			bottomIo.disconnect();
 		};
 	}, []);
 

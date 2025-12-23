@@ -24,7 +24,7 @@ export const VisibleContainer: FC<VisibleContainer.Props> = ({
 	...props
 }) => {
 	const useStore = useVisible();
-	const visible = useStore((state) => state.getById(id)?.visible ?? false);
+	const visible = useStore((state) => state.getById(id)?.isVisible ?? false);
 
 	return (
 		<Container
