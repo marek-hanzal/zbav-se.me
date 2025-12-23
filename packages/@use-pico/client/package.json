@@ -5,23 +5,21 @@
 	"type": "module",
 	"sideEffects": false,
 	"scripts": {
-		"typecheck": "tsgo --noEmit",
+		"typecheck": "tsc --noEmit",
 		"build:bundle": "bun x rollup -c",
 		"no:build": "bun run build:bundle"
 	},
 	"dependencies": {
 		"@floating-ui/react": "0.27.16",
-		"@gsap/react": "2.1.2",
 		"@lexical/list": "0.39.0",
 		"@lexical/react": "0.39.0",
 		"@lexical/utils": "0.39.0",
 		"@tanstack/react-query": "5.90.12",
-		"@tanstack/react-router": "1.142.11",
+		"@tanstack/react-router": "1.143.3",
 		"@types/luxon": "3.7.1",
 		"@use-pico/cls": "workspace:*",
 		"@use-pico/common": "workspace:*",
 		"axios": "1.13.2",
-		"gsap": "3.13.0",
 		"kysely": "0.28.9",
 		"lexical": "0.39.0",
 		"luxon": "3.7.2",
@@ -34,7 +32,8 @@
 		"remark-gfm": "4.0.1",
 		"ts-pattern": "5.9.0",
 		"use-debounce": "10.0.6",
-		"zod": "4.2.1"
+		"zod": "4.2.1",
+		"zustand": "5.0.9"
 	},
 	"devDependencies": {
 		"@aminnairi/rollup-plugin-external": "0.1.3",

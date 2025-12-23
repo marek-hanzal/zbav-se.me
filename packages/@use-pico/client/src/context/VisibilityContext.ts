@@ -1,9 +1,4 @@
 import { createContext } from "react";
-import type { useElementVisibility } from "../hook/useElementVisibility";
+import type { createVisibilityStore } from "../store/createVisibilityStore";
 
-export const VisibilityContext = createContext<useElementVisibility.Result>({
-	visible: false,
-	isVisible: false,
-	top: false,
-	bottom: false,
-});
+export const VisibilityContext = createContext<createVisibilityStore.Hook | null>(null);

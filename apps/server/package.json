@@ -8,11 +8,11 @@
 		"typecheck": "tsgo --noEmit"
 	},
 	"dependencies": {
-		"@better-auth/passkey": "1.4.7",
+		"@better-auth/passkey": "1.4.8",
 		"@hono/zod-openapi": "1.2.0",
 		"@scalar/hono-api-reference": "0.9.30",
 		"@use-pico/common": "workspace:*",
-		"better-auth": "1.4.7",
+		"better-auth": "1.4.8",
 		"effect": "3.19.13",
 		"hono": "4.11.1",
 		"hono-rate-limiter": "0.5.1",

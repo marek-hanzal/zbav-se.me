@@ -1,231 +1,248 @@
-import ScrollTrigger from "gsap/ScrollTrigger";
-import { type RefObject, useEffect, useRef, useState } from "react";
-import { useAnim } from "../gsap/gsap";
+import { type RefObject, useEffect, useLayoutEffect, useRef } from "react";
+import { createVisibilityStore } from "../store/createVisibilityStore";
+
+function clearTimerMap(map: Map<string, ReturnType<typeof setTimeout>>) {
+	for (const t of map.values()) {
+		clearTimeout(t);
+	}
+	map.clear();
+}
+
+function delayById(
+	id: string,
+	apply: () => void,
+	map: Map<string, ReturnType<typeof setTimeout>>,
+	delayMs: number | undefined,
+) {
+	const existing = map.get(id);
+	if (existing) {
+		clearTimeout(existing);
+		map.delete(id);
+	}
+
+	if (!delayMs) {
+		apply();
+		return;
+	}
+
+	const t = setTimeout(() => {
+		apply();
+		map.delete(id);
+	}, delayMs);
+
+	map.set(id, t);
+}
 
 export namespace useElementVisibility {
-	export interface Visibility extends ScrollTrigger.StaticVars {
-		setVisible?(visible: boolean): void;
+	export interface Visible {
+		threshold?: number;
 	}
 
-	export interface Proximity extends ScrollTrigger.StaticVars {
+	export interface Proximity {
 		overscan?: number;
-		setTop?(proximity: boolean): void;
-		setBottom?(proximity: boolean): void;
 	}
 
-	/**
-	 * Configuration object for `useElementVisibility`.
-	 */
 	export interface Props {
-		/**
-		 * Element that ScrollTrigger observes for scroll position context.
-		 */
 		scrollerRef: RefObject<HTMLElement | null>;
-		/**
-		 * Element whose visibility within the scroller bounds is tracked.
-		 */
-		triggerRef: RefObject<HTMLElement | null>;
-		visibility?: Visibility;
+		visible?: Visible;
 		proximity?: Proximity;
-		/**
-		 * Optional delay in milliseconds before the visibility state update is
-		 * applied. Callbacks are called instantly, but state updates are delayed.
-		 * When undefined or 0, state updates are instant.
-		 */
 		delayMs?: number;
-	}
-
-	export interface Result {
-		/**
-		 * Pure visibility of the tracked element.
-		 */
-		visible: boolean;
-		/**
-		 * In proximity visibility (top/center/bottom)
-		 */
-		isVisible: boolean;
-		/**
-		 * Top proximity visibility.
-		 */
-		top: boolean;
-		/**
-		 * Bottom proximity visibility.
-		 */
-		bottom: boolean;
+		attribute?: string;
 	}
 }
 
-/**
- * Establishes a ScrollTrigger instance that toggles visibility state while a trigger element
- * enters or leaves the viewport of the provided scroller.
- *
- * @param props - Hook configuration.
- */
 export function useElementVisibility({
 	scrollerRef,
-	triggerRef,
-	visibility,
+	visible,
 	proximity,
-	delayMs,
-}: useElementVisibility.Props): useElementVisibility.Result {
-	const [ready, setReady] = useState(false);
-	const [isVisible, setIsVisible] = useState(false);
-	const [isTop, setIsTop] = useState(false);
-	const [isBottom, setIsBottom] = useState(false);
+	delayMs = 200,
+	attribute = "data-visible-item",
+}: useElementVisibility.Props): createVisibilityStore.Hook {
+	const storeRef = useRef(createVisibilityStore());
 
-	// Timer refs for delayed state updates
-	const visibleTimerRef = useRef<NodeJS.Timeout>(undefined);
-	const topTimerRef = useRef<NodeJS.Timeout>(undefined);
-	const bottomTimerRef = useRef<NodeJS.Timeout>(undefined);
+	const visibleTimers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
+	const topTimers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
+	const bottomTimers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
 
-	useEffect(() => {
-		if (!scrollerRef.current || !triggerRef.current) {
-			return;
-		}
-		setReady(true);
-	}, [
-		scrollerRef,
-		triggerRef,
-	]);
-
-	// Cleanup timers on unmount
 	useEffect(() => {
 		return () => {
-			clearTimeout(visibleTimerRef.current);
-			clearTimeout(topTimerRef.current);
-			clearTimeout(bottomTimerRef.current);
+			clearTimerMap(visibleTimers.current);
+			clearTimerMap(topTimers.current);
+			clearTimerMap(bottomTimers.current);
 		};
 	}, []);
 
-	const delay = (
-		value: boolean,
-		setter: (value: boolean) => void,
-		timerRef: RefObject<NodeJS.Timeout | undefined>,
-	) => {
-		clearTimeout(timerRef.current);
-		if (delayMs === undefined || delayMs === 0) {
-			setter(value);
+	// biome-ignore lint/correctness/useExhaustiveDependencies: intentional
+	useLayoutEffect(() => {
+		const root = scrollerRef.current;
+		if (!root) {
 			return;
 		}
 
-		timerRef.current = setTimeout(() => {
-			setter(value);
-			timerRef.current = undefined;
-		}, delayMs);
-	};
+		const threshold = visible?.threshold ?? 0.005;
+		const overscan = proximity?.overscan ?? 2;
 
-	useAnim(
-		() => {
-			if (!scrollerRef.current || !triggerRef.current) {
+		const store = storeRef.current;
+
+		const getId = (entry: IntersectionObserverEntry) =>
+			entry.target.getAttribute(attribute)?.trim() || null;
+
+		/* ───────────────── visible ───────────────── */
+
+		const visibleIo = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					const id = getId(entry);
+					if (!id) {
+						continue;
+					}
+
+					delayById(
+						id,
+						() =>
+							store
+								.getState()
+								.setVisible(
+									id,
+									entry.isIntersecting && entry.intersectionRatio > 0,
+								),
+						visibleTimers.current,
+						delayMs,
+					);
+				}
+			},
+			{
+				root,
+				threshold,
+				rootMargin: "0px",
+			},
+		);
+
+		/* ───────────────── top proximity ───────────────── */
+
+		const topIo = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					const id = getId(entry);
+					if (!id) {
+						continue;
+					}
+
+					delayById(
+						id,
+						() =>
+							store
+								.getState()
+								.setTop(id, entry.isIntersecting && entry.intersectionRatio > 0),
+						topTimers.current,
+						delayMs,
+					);
+				}
+			},
+			{
+				root,
+				threshold,
+				rootMargin: `${overscan * 100}% 0px 0px 0px`,
+			},
+		);
+
+		/* ───────────────── bottom proximity ───────────────── */
+
+		const bottomIo = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					const id = getId(entry);
+					if (!id) {
+						continue;
+					}
+
+					delayById(
+						id,
+						() =>
+							store
+								.getState()
+								.setBottom(id, entry.isIntersecting && entry.intersectionRatio > 0),
+						bottomTimers.current,
+						delayMs,
+					);
+				}
+			},
+			{
+				root,
+				threshold,
+				rootMargin: `0px 0px ${overscan * 100}% 0px`,
+			},
+		);
+
+		const observe = (node: Element) => {
+			if (!node.hasAttribute(attribute)) {
+				return;
+			}
+			visibleIo.observe(node);
+			topIo.observe(node);
+			bottomIo.observe(node);
+		};
+
+		const unobserve = (node: Element) => {
+			if (!node.hasAttribute(attribute)) {
 				return;
 			}
 
-			if (visibility) {
-				const {
-					setVisible,
-					//
-					onToggle,
-					start = "top bottom",
-					end = "bottom top",
-					...rest
-				} = visibility;
+			visibleIo.unobserve(node);
+			topIo.unobserve(node);
+			bottomIo.unobserve(node);
 
-				ScrollTrigger.create({
-					trigger: triggerRef.current,
-					scroller: scrollerRef.current,
-					start,
-					end,
-					...rest,
-					onToggle(self) {
-						delay(self.isActive, setIsVisible, visibleTimerRef);
-						onToggle?.(self);
-					},
-				});
+			const id = node.getAttribute(attribute)?.trim();
+			if (id) {
+				store.getState().removeById(id);
+				visibleTimers.current.delete(id);
+				topTimers.current.delete(id);
+				bottomTimers.current.delete(id);
 			}
+		};
 
-			if (proximity) {
-				const {
-					overscan = 2,
-					setTop,
-					setBottom,
-					//
-					onEnter,
-					onEnterBack,
-					onLeave,
-					onLeaveBack,
-					...rest
-				} = proximity;
+		const mo = new MutationObserver((mutations) => {
+			for (const m of mutations) {
+				if (m.type !== "childList") {
+					continue;
+				}
 
-				ScrollTrigger.create({
-					trigger: triggerRef.current,
-					scroller: scrollerRef.current,
-					start: "top+=100% bottom",
-					end: `bottom+=${overscan * 100}% top`,
-					...rest,
-					onEnter(event) {
-						setTop?.(true);
-						onEnter?.(event);
-						delay(true, setIsTop, topTimerRef);
-					},
-					onEnterBack(event) {
-						setTop?.(true);
-						onEnterBack?.(event);
-						delay(true, setIsTop, topTimerRef);
-					},
-					onLeave(event) {
-						setTop?.(false);
-						onLeave?.(event);
-						delay(false, setIsTop, topTimerRef);
-					},
-					onLeaveBack(event) {
-						setTop?.(false);
-						onLeaveBack?.(event);
-						delay(false, setIsTop, topTimerRef);
-					},
-				});
-
-				ScrollTrigger.create({
-					trigger: triggerRef.current,
-					scroller: scrollerRef.current,
-					start: `top-=${overscan * 100}% bottom`,
-					end: "bottom-=100% top",
-					...rest,
-					onEnter(event) {
-						setBottom?.(true);
-						onEnter?.(event);
-						delay(true, setIsBottom, bottomTimerRef);
-					},
-					onEnterBack(event) {
-						setBottom?.(true);
-						onEnterBack?.(event);
-						delay(true, setIsBottom, bottomTimerRef);
-					},
-					onLeave(event) {
-						setBottom?.(false);
-						onLeave?.(event);
-						delay(false, setIsBottom, bottomTimerRef);
-					},
-					onLeaveBack(event) {
-						setBottom?.(false);
-						onLeaveBack?.(event);
-						delay(false, setIsBottom, bottomTimerRef);
-					},
-				});
+				for (const n of m.addedNodes) {
+					if (n instanceof Element) {
+						observe(n);
+					}
+				}
+				for (const n of m.removedNodes) {
+					if (n instanceof Element) {
+						unobserve(n);
+					}
+				}
 			}
-		},
-		{
-			scope: scrollerRef.current ?? undefined,
-			dependencies: [
-				ready,
-				delayMs,
-			],
-		},
-	);
+		});
 
-	return {
-		visible: isVisible,
-		isVisible: isVisible || isTop || isBottom,
-		top: isTop,
-		bottom: isBottom,
-	};
+		mo.observe(root, {
+			childList: true,
+			subtree: false,
+		});
+
+		for (const node of Array.from(root.children)) {
+			observe(node);
+		}
+
+		return () => {
+			store.getState().clear();
+			//
+			clearTimerMap(visibleTimers.current);
+			clearTimerMap(topTimers.current);
+			clearTimerMap(bottomTimers.current);
+			//
+			mo.disconnect();
+			//
+			visibleIo.disconnect();
+			topIo.disconnect();
+			bottomIo.disconnect();
+		};
+	}, []);
+
+	return storeRef.current;
 }

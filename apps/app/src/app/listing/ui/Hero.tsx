@@ -1,4 +1,3 @@
-import { useVisible } from "@use-pico/client/hook";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Overlay } from "@use-pico/client/ui/overlay";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
@@ -40,14 +39,12 @@ export const Hero: FC<Hero.Props> = ({
 	heroImageProps,
 	...props
 }) => {
-	const visible = useVisible().isVisible;
-
 	const hero = useHeroUpload(listing.gallery.items);
 
 	const [detail, setDetail] = useState<boolean>(false);
 
 	useListingScore({
-		enabled: withScore && visible,
+		enabled: withScore,
 		listingId: listing.id,
 		type: "listing",
 		timeoutMs: 1_600,
@@ -77,7 +74,7 @@ export const Hero: FC<Hero.Props> = ({
 					data-ui={"ListingHeroContainer-[HeroImage]"}
 					src={hero.url}
 					alt={`Hero image for listing ${listing.id}`}
-					visible={visible}
+					visible
 					invisible={
 						<SpinnerContainer
 							data-ui={"ListingHeroContainer-[SpinnerContainer.invisible]"}
@@ -87,18 +84,17 @@ export const Hero: FC<Hero.Props> = ({
 				/>
 			</Container>
 
-			{visible ? (
-				<ListingSheet
-					listing={listing}
-					state={{
-						value: detail,
-						set: setDetail,
-					}}
-					withScore={withScore}
-					feedId={feedId}
-					tools={tools}
-				/>
-			) : null}
+			<ListingSheet
+				listing={listing}
+				data-id={listing.id}
+				state={{
+					value: detail,
+					set: setDetail,
+				}}
+				withScore={withScore}
+				feedId={feedId}
+				tools={tools}
+			/>
 		</>
 	);
 };

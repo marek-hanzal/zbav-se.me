@@ -78,7 +78,6 @@ Text and typography components:
 
 - **React 19.2** - UI framework
 - **TypeScript 5.9** - Type safety
-- **GSAP 3.13** - Advanced animations
 - **@tanstack/react-form** - Form management
 - **@use-pico** - Internal framework utilities
 - **ts-pattern** - Pattern matching for TypeScript
