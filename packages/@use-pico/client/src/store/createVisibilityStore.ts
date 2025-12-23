@@ -92,12 +92,6 @@ export const createVisibilityStore = (): createVisibilityStore.Hook => {
 
 				next.set(id, state);
 
-				console.log("setVisible", {
-					id,
-					value: visible,
-					...state,
-				});
-
 				return {
 					byId: next,
 				};
@@ -130,12 +124,6 @@ export const createVisibilityStore = (): createVisibilityStore.Hook => {
 
 				next.set(id, state);
 
-				console.log("setTop", {
-					id,
-					value: top,
-					...state,
-				});
-
 				return {
 					byId: next,
 				};
@@ -167,12 +155,6 @@ export const createVisibilityStore = (): createVisibilityStore.Hook => {
 				};
 
 				next.set(id, state);
-
-				console.log("setBottom", {
-					id,
-					value: bottom,
-					...state,
-				});
 
 				return {
 					byId: next,

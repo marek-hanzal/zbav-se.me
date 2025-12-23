@@ -109,13 +109,6 @@ export function useElementVisibility({
 						visibleTimers.current,
 						delayMs,
 					);
-
-					console.log("=== Visible Observer ===\n", {
-						id,
-						ratio: entry.intersectionRatio,
-						check: entry.isIntersecting && entry.intersectionRatio > 0,
-						isIntersecting: entry.isIntersecting,
-					});
 				}
 			},
 			{
@@ -144,13 +137,6 @@ export function useElementVisibility({
 						topTimers.current,
 						delayMs,
 					);
-
-					console.log("=== Top Observer ===\n", {
-						id,
-						ratio: entry.intersectionRatio,
-						check: entry.isIntersecting && entry.intersectionRatio > 0,
-						isIntersecting: entry.isIntersecting,
-					});
 				}
 			},
 			{
@@ -179,13 +165,6 @@ export function useElementVisibility({
 						bottomTimers.current,
 						delayMs,
 					);
-
-					console.log("=== Bottom Observer ===\n", {
-						id,
-						ratio: entry.intersectionRatio,
-						check: entry.isIntersecting && entry.intersectionRatio > 0,
-						isIntersecting: entry.isIntersecting,
-					});
 				}
 			},
 			{
