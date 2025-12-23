@@ -9,7 +9,7 @@ import { withListingFetchQuery, withListingMetricsFetchQuery } from "@zbav-se.me
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
-import { conditionLabel } from "~/app/condition/util/conditionLabel";
+import { ConditionIcon } from "~/app/condition/ui/ConditionIcon";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
 import { useListingScore } from "~/app/listing/hook/useListingScore";
 import { FavouriteToggleButton } from "~/app/listing/ui/button/FavouriteToggleButton";
@@ -134,7 +134,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 				{listing.condition !== null ? (
 					<LabelValue
 						textLabel={"Listing condition (label)"}
-						textValue={conditionLabel(listing.condition)}
+						textValue={<ConditionIcon condition={listing.condition} />}
 					/>
 				) : null}
 
