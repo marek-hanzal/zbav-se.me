@@ -301,22 +301,6 @@ export const zTransactionBuyerInfo = z.object({
 export type zTransactionBuyerInfo = z.infer<typeof zTransactionBuyerInfo>;
 
 /**
- * Seller info for the transaction
- */
-export const zTransactionSellerInfo = z.object({
-    registered: z.string().register(z.globalRegistry, {
-        description: 'Registration date'
-    }),
-    score: z.number().register(z.globalRegistry, {
-        description: 'Seller score'
-    })
-}).register(z.globalRegistry, {
-    description: 'Seller info for the transaction'
-});
-
-export type zTransactionSellerInfo = z.infer<typeof zTransactionSellerInfo>;
-
-/**
  * Data for creating a new transaction
  */
 export const zTransactionCreate = z.object({
@@ -3365,21 +3349,6 @@ export type zapiTransactionFetchRequest = z.infer<typeof zApiTransactionFetchDat
 export const zApiTransactionFetchResponse = zTransaction;
 
 export type zapiTransactionFetchResponse = z.infer<typeof zApiTransactionFetchResponse>;
-
-export const zApiTransactionSellerInfoData = z.object({
-    body: z.optional(zTransactionQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export type zapiTransactionSellerInfoRequest = z.infer<typeof zApiTransactionSellerInfoData>;
-
-/**
- * Seller info
- */
-export const zApiTransactionSellerInfoResponse = zTransactionSellerInfo;
-
-export type zapiTransactionSellerInfoResponse = z.infer<typeof zApiTransactionSellerInfoResponse>;
 
 export const zApiTransactionBuyerInfoData = z.object({
     body: z.optional(zTransactionQuery),

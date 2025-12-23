@@ -1,37 +1,37 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { transactionFetchFx } from "./fx/transactionFetchFx";
-import { transactionGetSellerInfoFx } from "./fx/transactionGetSellerInfoFx";
-import { TransactionSellerInfoSchema } from "./schema/TransactionSellerInfoSchema";
+import { listingGetSellerInfoFx } from "./fx/listingGetSellerInfoFx";
+import { SellerInfoSchema } from "./schema/SellerInfoSchema";
+
+const ListingSellerInfoParamsSchema = z
+	.object({
+		listingId: z.string().openapi({
+			description: "ID of the listing",
+		}),
+	})
+	.openapi("ListingSellerInfoParams", {
+		description: "Parameters for listing seller info",
+	});
 
 export const withSellerInfoApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/transaction/seller-info",
-			description:
-				"Return seller info for a transaction. Requires access to the transaction.",
-			operationId: "apiTransactionSellerInfo",
+			path: "/listing/{listingId}/seller-info",
+			description: "Return seller info for a listing.",
+			operationId: "apiListingSellerInfo",
 			request: {
-				body: {
-					content: {
-						"application/json": {
-							schema: TransactionQuerySchema,
-						},
-					},
-					description: "Query object for transaction access validation",
-				},
+				params: ListingSellerInfoParamsSchema,
 			},
 			responses: {
 				200: {
 					content: {
 						"application/json": {
-							schema: TransactionSellerInfoSchema,
+							schema: SellerInfoSchema,
 						},
 					},
 					description: "Seller info",
@@ -42,7 +42,7 @@ export const withSellerInfoApi: Routes.Fn = ({ userHono }) => {
 							schema: NoticeSchema,
 						},
 					},
-					description: "Transaction not found or not accessible",
+					description: "Listing not found or seller info not available",
 				},
 				500: {
 					content: {
@@ -54,17 +54,17 @@ export const withSellerInfoApi: Routes.Fn = ({ userHono }) => {
 				},
 			},
 			tags: [
-				"transaction",
+				"listing",
 				"user",
 			],
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const transaction = yield* transactionFetchFx(c.req.valid("json"));
+				const { listingId } = c.req.valid("param");
 
-				return c.json<TransactionSellerInfoSchema.Type, 200>(
-					yield* transactionGetSellerInfoFx({
-						transactionId: transaction.id,
+				return c.json<SellerInfoSchema.Type, 200>(
+					yield* listingGetSellerInfoFx({
+						listingId,
 					}),
 					200,
 				);

@@ -260,20 +260,6 @@ export type tTransactionBuyerInfo = {
 };
 
 /**
- * Seller info for the transaction
- */
-export type tTransactionSellerInfo = {
-    /**
-     * Registration date
-     */
-    registered: string;
-    /**
-     * Seller score
-     */
-    score: number;
-};
-
-/**
  * Data for creating a new transaction
  */
 export type tTransactionCreate = {
@@ -3746,38 +3732,6 @@ export type tApiTransactionFetchResponse = {
 };
 
 export type apiTransactionFetchResponse = tApiTransactionFetchResponse[keyof tApiTransactionFetchResponse];
-
-export type tApiTransactionSellerInfoRequest = {
-    /**
-     * Query object for transaction access validation
-     */
-    body?: tTransactionQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction/seller-info';
-};
-
-export type apiTransactionSellerInfoErrors = {
-    /**
-     * Transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionSellerInfoError = apiTransactionSellerInfoErrors[keyof apiTransactionSellerInfoErrors];
-
-export type tApiTransactionSellerInfoResponse = {
-    /**
-     * Seller info
-     */
-    200: tTransactionSellerInfo;
-};
-
-export type apiTransactionSellerInfoResponse = tApiTransactionSellerInfoResponse[keyof tApiTransactionSellerInfoResponse];
 
 export type tApiTransactionBuyerInfoRequest = {
     /**
