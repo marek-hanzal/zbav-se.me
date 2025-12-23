@@ -50,6 +50,12 @@ export namespace useElementVisibility {
 		 * Delay in ms before setting visible state; prevent flooding state changes.
 		 */
 		delayMs?: number;
+		/**
+		 * Only specific attribute will be tracked (registered) for visibility.
+		 *
+		 * @default "data-visible-item"
+		 */
+		attribute?: string;
 	}
 
 	export interface State {
@@ -69,6 +75,7 @@ export function useElementVisibility({
 	visible,
 	// proximity,
 	delayMs,
+	attribute = "data-visible-item",
 }: useElementVisibility.Props): useElementVisibility.Result {
 	const byIdRef = useRef(new Map<string, useElementVisibility.State>());
 
@@ -123,13 +130,13 @@ export function useElementVisibility({
 				}
 
 				for (const node of mutation.addedNodes) {
-					if (node instanceof Element) {
+					if (node instanceof Element && node.hasAttribute(attribute)) {
 						visibleIo.observe(node);
 					}
 				}
 
 				for (const node of mutation.removedNodes) {
-					if (node instanceof Element) {
+					if (node instanceof Element && node.hasAttribute(attribute)) {
 						visibleIo.unobserve(node);
 					}
 				}
@@ -145,6 +152,10 @@ export function useElementVisibility({
 		 * Default list of nodes already available in the container.
 		 */
 		for (const node of Array.from(scrollerRef.current.children)) {
+			if (!node.hasAttribute(attribute)) {
+				continue;
+			}
+
 			visibleIo.observe(node);
 		}
 
