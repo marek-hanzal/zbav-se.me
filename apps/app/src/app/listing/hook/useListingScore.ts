@@ -19,8 +19,8 @@ export namespace useListingScore {
 
 export const useListingScore = ({ enabled, listingId, type, timeoutMs }: useListingScore.Props) => {
 	const queryClient = useQueryClient();
-	const visible = useVisible();
-	const visibleRef = useRef(visible);
+	const useStore = useVisible();
+	const visible = useStore((state) => state.getById(listingId)?.visible ?? false);
 	const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
 	const listingScoreCreateMutation = withListingScoreCreateMutation.useMutation({
@@ -28,7 +28,7 @@ export const useListingScore = ({ enabled, listingId, type, timeoutMs }: useList
 			withListingMetricsFetchQuery.invalidate(queryClient, listingId);
 		},
 		retry() {
-			return visibleRef.current.visible;
+			return visible;
 		},
 		retryDelay(count) {
 			if (count >= 3) {
@@ -56,11 +56,9 @@ export const useListingScore = ({ enabled, listingId, type, timeoutMs }: useList
 			return;
 		}
 
-		visibleRef.current = visible;
-
 		clearTimeout(timerRef.current);
 
-		if (visible.visible) {
+		if (visible) {
 			timerRef.current = setTimeout(() => {
 				score(listingId, type);
 			}, timeoutMs);
@@ -70,6 +68,7 @@ export const useListingScore = ({ enabled, listingId, type, timeoutMs }: useList
 			clearTimeout(timerRef.current);
 		};
 	}, [
-		visible.visible,
+		enabled,
+		visible,
 	]);
 };

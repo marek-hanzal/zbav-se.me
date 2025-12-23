@@ -58,6 +58,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 
 	const visibility = useElementVisibility({
 		scrollerRef: containerRef,
+		visible: {},
 	});
 
 	return (

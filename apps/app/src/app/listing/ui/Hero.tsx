@@ -3,7 +3,7 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Overlay } from "@use-pico/client/ui/overlay";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, useState } from "react";
+import { type FC, useEffect, useState } from "react";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
 import { useListingScore } from "~/app/listing/hook/useListingScore";
 import type { ListingDetail } from "~/app/listing/ui/ListingDetail";
@@ -40,11 +40,20 @@ export const Hero: FC<Hero.Props> = ({
 	heroImageProps,
 	...props
 }) => {
-	const visible = useVisible().isVisible;
+	const useStore = useVisible();
+	const visible = useStore((state) => state.getById(listing.id)?.visible ?? false);
 
 	const hero = useHeroUpload(listing.gallery.items);
 
 	const [detail, setDetail] = useState<boolean>(false);
+
+	useEffect(() => {
+		if (!visible) {
+			setDetail(false);
+		}
+	}, [
+		visible,
+	]);
 
 	useListingScore({
 		enabled: withScore && visible,

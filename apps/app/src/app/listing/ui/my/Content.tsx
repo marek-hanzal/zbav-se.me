@@ -33,16 +33,11 @@ export const Content: FC<Content.Props> = ({ _suspense, query, scrollerRef }) =>
 				return (
 					<VisibleContainer
 						key={listingId}
+						id={listingId}
 						data-ui="MyListing-[VisibleContainer]"
-						scrollerRef={scrollerRef}
-						visibility={{}}
-						proximity={{
-							overscan: 4,
+						placeholder={() => {
+							return <SpinnerContainer />;
 						}}
-						placeholder={(props) => {
-							return <SpinnerContainer {...props} />;
-						}}
-						delayMs={200}
 						ui={{
 							height: "full",
 							width: "full",

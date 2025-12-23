@@ -1,4 +1,4 @@
-import { type FC, type ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 import { useVisible } from "../../hook/useVisible";
 import { Container } from "./Container";
 
@@ -23,14 +23,15 @@ export const VisibleContainer: FC<VisibleContainer.Props> = ({
 	children,
 	...props
 }) => {
-	const { byIdRef } = useVisible();
+	const useStore = useVisible();
+	const visible = useStore((state) => state.getById(id)?.visible ?? false);
 
 	return (
 		<Container
 			data-visible-item={id}
 			{...props}
 		>
-			{byIdRef.current.get(id)?.visible ? children : placeholder()}
+			{visible ? children : placeholder()}
 		</Container>
 	);
 };

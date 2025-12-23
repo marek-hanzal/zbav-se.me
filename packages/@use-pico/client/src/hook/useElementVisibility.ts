@@ -1,4 +1,5 @@
 import { type RefObject, useEffect, useLayoutEffect, useRef } from "react";
+import { createVisibilityStore } from "../store/createVisibilityStore";
 
 function clearTimer(ref: RefObject<ReturnType<typeof setTimeout> | undefined>) {
 	if (ref.current) {
@@ -57,17 +58,6 @@ export namespace useElementVisibility {
 		 */
 		attribute?: string;
 	}
-
-	export interface State {
-		visible: boolean;
-		isVisible: boolean;
-		top: boolean;
-		bottom: boolean;
-	}
-
-	export interface Result {
-		byIdRef: RefObject<Map<string, useElementVisibility.State>>;
-	}
 }
 
 export function useElementVisibility({
@@ -76,8 +66,8 @@ export function useElementVisibility({
 	// proximity,
 	delayMs,
 	attribute = "data-visible-item",
-}: useElementVisibility.Props): useElementVisibility.Result {
-	const byIdRef = useRef(new Map<string, useElementVisibility.State>());
+}: useElementVisibility.Props): createVisibilityStore.Hook {
+	const storeRef = useRef(createVisibilityStore());
 
 	const visibleTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 	const topTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -98,8 +88,6 @@ export function useElementVisibility({
 			return;
 		}
 
-		console.log("Starting useElementVisibility", scrollerRef.current);
-
 		/**
 		 * Setup core visibility observer: this one provides "visibility" flag.
 		 */
@@ -108,33 +96,37 @@ export function useElementVisibility({
 				for (const entry of entries) {
 					const id = entry.target.getAttribute(attribute)?.trim();
 					if (!id) {
+						console.warn("Skipping unknown element", entry.target);
 						continue;
 					}
 
 					const check = entry.intersectionRatio > 0;
 
-					const current = byIdRef.current.get(id) || {
+					const state = storeRef.current.getState();
+
+					const current = state.getById(id) ?? {
 						bottom: false,
 						top: false,
 						isVisible: false,
 						visible: false,
 					};
-					const visible = check || current.visible;
 
-					byIdRef.current.set(id, {
+					state.setById(id, {
 						...current,
-						isVisible: visible,
-						visible: visible,
+						visible: check,
+						isVisible: check || current.top || current.bottom,
+					});
+
+					console.log("Setting visible state for", {
+						id,
+						isIntersecting: entry.isIntersecting,
+						ratio: entry.intersectionRatio,
 					});
 				}
-
-				console.log("State", [
-					...byIdRef.current,
-				]);
 			},
 			{
 				root: scrollerRef.current,
-				threshold: visible?.threshold ?? 0,
+				threshold: visible?.threshold ?? 0.005,
 				rootMargin: "0px",
 			},
 		);
@@ -150,12 +142,14 @@ export function useElementVisibility({
 
 				for (const node of mutation.addedNodes) {
 					if (node instanceof Element && node.hasAttribute(attribute)) {
+						console.log("Observing new element", node);
 						visibleIo.observe(node);
 					}
 				}
 
 				for (const node of mutation.removedNodes) {
 					if (node instanceof Element && node.hasAttribute(attribute)) {
+						console.log("Unobserving element", node);
 						visibleIo.unobserve(node);
 					}
 				}
@@ -172,6 +166,7 @@ export function useElementVisibility({
 		 */
 		for (const node of Array.from(scrollerRef.current.children)) {
 			if (!node.hasAttribute(attribute)) {
+				console.warn("Skipping unknown element", node);
 				continue;
 			}
 
@@ -179,14 +174,12 @@ export function useElementVisibility({
 		}
 
 		return () => {
-			byIdRef.current.clear();
+			storeRef.current.getState().clear();
 			//
 			mo.disconnect();
 			visibleIo.disconnect();
 		};
 	}, []);
 
-	return {
-		byIdRef,
-	};
+	return storeRef.current;
 }
