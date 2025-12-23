@@ -142,7 +142,7 @@ const seedListings = async ({ categories, locationIds, uploadIds }: seedListings
 			cons,
 			uploadIds: Array.from(uploadIds)
 				.sort(() => Math.random() - 0.5)
-				.slice(0, rangedom(0, 10)),
+				.slice(0, rangedom(1, Math.min(10, uploadIds.length))),
 		},
 	}).then((res) => res.data);
 
