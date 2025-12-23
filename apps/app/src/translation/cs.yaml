@@ -158,9 +158,6 @@
 2bad77ac9199d19ca4cf85d780cf6f7f747cc6520bc1899bb6717029:
     ref: Go to home (link)
     value: Zpět domů
-2cc1b252ceb60737beda798ecfadb01526f931e1cfd851b0bec1a11a:
-    ref: Listing - Pros (placeholder)
-    value: Co je prima
 2f30c1c4a6d75472712f25fde84d88a7087c8e5d41e7aa3b4b3030fc:
     ref: Feed range not set
     value: Vzdálenost není nenastavená
@@ -344,9 +341,6 @@
 679eb0f6d4d2b7cf7359439e3b87d205ff8b061c3f6f33bfe8052367:
     ref: Empty favourite - category and favourite (title)
     value: Empty favourite - category and favourite (title)
-689fe7e74ce92585be4ccf137ca4787a8d74c2e05f6e1ae1a444150a:
-    ref: 2xl
-    value: 2xl
 6986d09f4aa2bbe69df817149dd90758babe79f2f510910b43cfe310:
     ref: secondary
     value: secondary
@@ -621,6 +615,9 @@ a64e91c4e68c901ac59593d15028b96e00c9b01c7163080eb97502c2:
     ref: Listing - Cons (message)
     value: |
         Upřímné hodnocení ti přidá na důvěře - je něco, na co bys chtěl upozornit?
+a67ea5aaab8eb99644b1412ae291882a3d6e0ddefd49b19cc413abaf:
+    ref: Listing description (label)
+    value: Popis inzerátu
 aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
     ref: Photo upload placeholder (title)
     value: Nahraj obrázek
@@ -729,9 +726,6 @@ d30ca5022499ee9c8ab4d9d4a2bb4f65292849e295cbb63503707671:
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
     ref: Listing condition (label)
     value: Stav
-d67e2f39d31f8fb31b31dea5db6baec70e4f363d468784f3fa1cadbe:
-    ref: Listing - Cons (placeholder)
-    value: Nějaký neduh?
 d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
     ref: Feed title (hint)
     value: >
