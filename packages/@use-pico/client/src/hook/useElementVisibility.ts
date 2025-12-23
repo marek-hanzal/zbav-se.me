@@ -55,7 +55,7 @@ export function useElementVisibility({
 	scrollerRef,
 	visible,
 	proximity,
-	delayMs,
+	delayMs = 200,
 	attribute = "data-visible-item",
 }: useElementVisibility.Props): createVisibilityStore.Hook {
 	const storeRef = useRef(createVisibilityStore());
@@ -104,11 +104,11 @@ export function useElementVisibility({
 						delayMs,
 					);
 
-					// console.log("visible", {
-					// 	id,
-					// 	ratio: entry.intersectionRatio,
-					// 	isIntersecting: entry.isIntersecting,
-					// });
+					console.log("=== Visible Observer ===\n", {
+						id,
+						ratio: entry.intersectionRatio,
+						isIntersecting: entry.isIntersecting,
+					});
 				}
 			},
 			{
@@ -135,11 +135,11 @@ export function useElementVisibility({
 						delayMs,
 					);
 
-					// console.log("top proximity", {
-					// 	id,
-					// 	ratio: entry.intersectionRatio,
-					// 	isIntersecting: entry.isIntersecting,
-					// });
+					console.log("=== Top Observer ===\n", {
+						id,
+						ratio: entry.intersectionRatio,
+						isIntersecting: entry.isIntersecting,
+					});
 				}
 			},
 			{
@@ -166,11 +166,11 @@ export function useElementVisibility({
 						delayMs,
 					);
 
-					// console.log("bottom proximity", {
-					// 	id,
-					// 	ratio: entry.intersectionRatio,
-					// 	isIntersecting: entry.isIntersecting,
-					// });
+					console.log("=== Bottom Observer ===\n", {
+						id,
+						ratio: entry.intersectionRatio,
+						isIntersecting: entry.isIntersecting,
+					});
 				}
 			},
 			{
