@@ -901,254 +901,37 @@ export const zMessageTextCreate = z.object({
 export type zMessageTextCreate = z.infer<typeof zMessageTextCreate>;
 
 /**
- * Type of listing score
+ * Type of listing event
  */
-export const zListingScoreTypeEnum = z.enum([
-    'listing',
-    'ignore',
-    'flag',
+export const zListingEventEnum = z.enum([
+    'impression',
     'view',
-    'favourite'
+    'ignore',
+    'unignore',
+    'flag',
+    'unflag',
+    'transaction',
+    'favourite',
+    'unfavourite'
 ]).register(z.globalRegistry, {
-    description: 'Type of listing score'
+    description: 'Type of listing event'
 });
 
-export type zListingScoreTypeEnum = z.infer<typeof zListingScoreTypeEnum>;
+export type zListingEventEnum = z.infer<typeof zListingEventEnum>;
 
 /**
  * Data for creating a new listing score
  */
-export const zListingScoreCreate = z.object({
+export const zListingEventCreate = z.object({
     listingId: z.string().register(z.globalRegistry, {
         description: 'ID of the listing to score'
     }),
-    score: zListingScoreTypeEnum
+    event: zListingEventEnum
 }).register(z.globalRegistry, {
     description: 'Data for creating a new listing score'
 });
 
-export type zListingScoreCreate = z.infer<typeof zListingScoreCreate>;
-
-/**
- * App-based filters
- */
-export const zListingScoreWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact userId'
-    })),
-    listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact listingId'
-    }))
-}).register(z.globalRegistry, {
-    description: 'App-based filters'
-});
-
-export type zListingScoreWhere = z.infer<typeof zListingScoreWhere>;
-
-/**
- * Filter object for listing score collection
- */
-export const zListingScoreFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact userId'
-    })),
-    listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact listingId'
-    }))
-}).register(z.globalRegistry, {
-    description: 'Filter object for listing score collection'
-});
-
-export type zListingScoreFilter = z.infer<typeof zListingScoreFilter>;
-
-/**
- * Query object for listing score count
- */
-export const zListingScoreCountQuery = z.object({
-    filter: z.optional(zListingScoreFilter),
-    where: z.optional(zListingScoreWhere)
-}).register(z.globalRegistry, {
-    description: 'Query object for listing score count'
-});
-
-export type zListingScoreCountQuery = z.infer<typeof zListingScoreCountQuery>;
-
-/**
- * Field of the listing score sort
- */
-export const zListingScoreSortField = z.enum(['score', 'createdAt']).register(z.globalRegistry, {
-    description: 'Field of the listing score sort'
-});
-
-export type zListingScoreSortField = z.infer<typeof zListingScoreSortField>;
-
-/**
- * Sort object for listing score collection
- */
-export const zListingScoreSort = z.object({
-    field: zListingScoreSortField,
-    direction: zOrderEnum
-}).register(z.globalRegistry, {
-    description: 'Sort object for listing score collection'
-});
-
-export type zListingScoreSort = z.infer<typeof zListingScoreSort>;
-
-/**
- * Query object for listing score collection
- */
-export const zListingScoreQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zListingScoreFilter),
-    where: z.optional(zListingScoreWhere),
-    sort: z.optional(z.array(zListingScoreSort))
-}).register(z.globalRegistry, {
-    description: 'Query object for listing score collection'
-});
-
-export type zListingScoreQuery = z.infer<typeof zListingScoreQuery>;
-
-/**
- * Listing score data
- */
-export const zListingScore = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the score'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing'
-    }),
-    type: zListingScoreTypeEnum,
-    score: z.int().register(z.globalRegistry, {
-        description: 'Score value'
-    }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    })
-}).register(z.globalRegistry, {
-    description: 'Listing score data'
-});
-
-export type zListingScore = z.infer<typeof zListingScore>;
-
-/**
- * Collection of listing scores
- */
-export const zListingScoreCollection = z.object({
-    data: z.array(zListingScore),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of listing scores'
-});
-
-export type zListingScoreCollection = z.infer<typeof zListingScoreCollection>;
-
-/**
- * Score data for the listing
- */
-export const zListingMetrics = z.object({
-    listing: z.union([
-        z.union([
-            z.number(),
-            z.null()
-        ]),
-        z.null()
-    ]),
-    listingScore: z.union([
-        z.union([
-            z.number(),
-            z.null()
-        ]),
-        z.null()
-    ]),
-    views: z.union([
-        z.union([
-            z.number(),
-            z.null()
-        ]),
-        z.null()
-    ]),
-    viewsScore: z.union([
-        z.union([
-            z.number(),
-            z.null()
-        ]),
-        z.null()
-    ]),
-    favourite: z.union([
-        z.union([
-            z.number(),
-            z.null()
-        ]),
-        z.null()
-    ]),
-    favouriteScore: z.union([
-        z.union([
-            z.number(),
-            z.null()
-        ]),
-        z.null()
-    ]),
-    ignore: z.union([
-        z.union([
-            z.number(),
-            z.null()
-        ]),
-        z.null()
-    ]),
-    ignoreScore: z.union([
-        z.union([
-            z.number(),
-            z.null()
-        ]),
-        z.null()
-    ]),
-    flag: z.union([
-        z.union([
-            z.number(),
-            z.null()
-        ]),
-        z.null()
-    ]),
-    flagScore: z.union([
-        z.union([
-            z.number(),
-            z.null()
-        ]),
-        z.null()
-    ]),
-    score: z.union([
-        z.union([
-            z.number(),
-            z.null()
-        ]),
-        z.null()
-    ])
-}).register(z.globalRegistry, {
-    description: 'Score data for the listing'
-});
-
-export type zListingMetrics = z.infer<typeof zListingMetrics>;
+export type zListingEventCreate = z.infer<typeof zListingEventCreate>;
 
 /**
  * Latitude and longitude coordinates
@@ -3424,62 +3207,13 @@ export const zApiListingCountResponse = zCount;
 
 export type zapiListingCountResponse = z.infer<typeof zApiListingCountResponse>;
 
-export const zApiListingMetricsFetchData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.string().register(z.globalRegistry, {
-            description: 'Listing identifier'
-        })
-    }),
-    query: z.optional(z.never())
-});
-
-export type zapiListingMetricsFetchRequest = z.infer<typeof zApiListingMetricsFetchData>;
-
-/**
- * Listing score for the provided identifier
- */
-export const zApiListingMetricsFetchResponse = zListingMetrics;
-
-export type zapiListingMetricsFetchResponse = z.infer<typeof zApiListingMetricsFetchResponse>;
-
-export const zApiListingScoreCollectionData = z.object({
-    body: z.optional(zListingScoreQuery),
+export const zApiListingEventCreateData = z.object({
+    body: z.optional(zListingEventCreate),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });
 
-export type zapiListingScoreCollectionRequest = z.infer<typeof zApiListingScoreCollectionData>;
-
-/**
- * Access collection of listing scores based on provided query
- */
-export const zApiListingScoreCollectionResponse = zListingScoreCollection;
-
-export type zapiListingScoreCollectionResponse = z.infer<typeof zApiListingScoreCollectionResponse>;
-
-export const zApiListingScoreCountData = z.object({
-    body: z.optional(zListingScoreCountQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export type zapiListingScoreCountRequest = z.infer<typeof zApiListingScoreCountData>;
-
-/**
- * Return counts based on provided query
- */
-export const zApiListingScoreCountResponse = zCount;
-
-export type zapiListingScoreCountResponse = z.infer<typeof zApiListingScoreCountResponse>;
-
-export const zApiListingScoreCreateData = z.object({
-    body: z.optional(zListingScoreCreate),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export type zapiListingScoreCreateRequest = z.infer<typeof zApiListingScoreCreateData>;
+export type zapiListingEventCreateRequest = z.infer<typeof zApiListingEventCreateData>;
 
 export const zApiMessageTextCreateData = z.object({
     body: z.optional(zMessageTextCreate),

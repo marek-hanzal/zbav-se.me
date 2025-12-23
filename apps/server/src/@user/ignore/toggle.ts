@@ -5,7 +5,6 @@ import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { ListingScoreContextProvider } from "../listing-score/fx/ListingScoreContextFx";
 import { ignoreToggleFx } from "./fx/ignoreToggleFx";
 import { IgnoreToggleSchema } from "./schema/IgnoreToggleSchema";
 
@@ -73,7 +72,6 @@ export const withToggleApi: Routes.Fn = ({ userHono }) => {
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),
-				ListingScoreContextProvider(),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

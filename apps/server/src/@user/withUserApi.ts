@@ -10,7 +10,7 @@ import { withFlagApi } from "./flag/withFlagApi";
 import { withGalleryApi } from "./gallery/withGalleryApi";
 import { withIgnoreApi } from "./ignore/withIgnoreApi";
 import { withListingApi } from "./listing/withListingApi";
-import { withListingScoreApi } from "./listing-score/withListingScoreApi";
+import { withListingEventApi } from "./listing-event/withListingEventApi";
 import { withMessageTextApi } from "./message-text/withMessageTextApi";
 import { withMessageThreadApi } from "./message-thread/withMessageThreadApi";
 import { withS3Api } from "./s3/withS3Api";
@@ -48,7 +48,7 @@ export const withUserApi: Routes.FnWithDeps<{
 	withGalleryApi(routes);
 	withIgnoreApi(routes);
 	withListingApi(routes);
-	withListingScoreApi(routes);
+	withListingEventApi(routes);
 	withMessageTextApi(routes);
 	withMessageThreadApi(routes);
 	withS3Api(routes);

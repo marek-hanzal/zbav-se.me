@@ -12,7 +12,7 @@ import { ListingMigration } from "./0010-listing";
 import { FeedMigration } from "./0011-feed";
 import { UserExMigration } from "./0012-user-ex";
 import { FavouriteMigration } from "./0013-favourite";
-import { ListingScoreMigration } from "./0014-listing-score";
+import { ListingEventMigration } from "./0014-listing-event";
 import { IgnoreMigration } from "./0015-ignore";
 import { FlagMigration } from "./0016-flag";
 import { UserScoreMigration } from "./0017-user-score";
@@ -41,7 +41,7 @@ export const migrations = {
 	"0011-feed": FeedMigration,
 	"0012-user-ex": UserExMigration,
 	"0013-favourite": FavouriteMigration,
-	"0014-listing-score": ListingScoreMigration,
+	"0014-listing-event": ListingEventMigration,
 	"0015-ignore": IgnoreMigration,
 	"0016-flag": FlagMigration,
 	"0017-user-score": UserScoreMigration,

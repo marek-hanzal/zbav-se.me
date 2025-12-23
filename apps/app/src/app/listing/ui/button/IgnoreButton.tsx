@@ -1,9 +1,8 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { TrashIcon } from "@use-pico/client/icon";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
 import { withIgnoreToggleMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withListingFetchQuery, withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
 
 export namespace IgnoreButton {
@@ -20,7 +19,6 @@ export const IgnoreButton: FC<IgnoreButton.Props> = ({
 	ui,
 	...props
 }) => {
-	const queryClient = useQueryClient();
 	const patch = withListingFetchQuery.useSet();
 	const ignoreToggleMutation = withIgnoreToggleMutation.useMutation({
 		onSuccess(listing) {
@@ -29,7 +27,6 @@ export const IgnoreButton: FC<IgnoreButton.Props> = ({
 					id: listingId,
 				},
 			});
-			withListingMetricsFetchQuery.invalidate(queryClient, listingId);
 		},
 		meta: {
 			mutationId: listingId,
