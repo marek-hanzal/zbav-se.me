@@ -20,6 +20,7 @@ export const ListingOverlay: FC<ListingOverlay.Props> = ({ listing }) => {
 				ui={{
 					snapTo: "top-center",
 					opacity: "low",
+					zIndex: true,
 				}}
 			/>
 
@@ -30,6 +31,7 @@ export const ListingOverlay: FC<ListingOverlay.Props> = ({ listing }) => {
 				ui={{
 					snapTo: "bottom",
 					opacity: "low",
+					zIndex: true,
 				}}
 			/>
 		</>

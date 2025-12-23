@@ -163,6 +163,7 @@ export const createVisibilityStore = (): createVisibilityStore.Hook => {
 				}
 
 				const next = new Map(prev.byId);
+
 				next.delete(id);
 
 				return {

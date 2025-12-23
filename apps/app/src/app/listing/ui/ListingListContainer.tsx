@@ -60,7 +60,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		scrollerRef: containerRef,
 		visible: {},
 		proximity: {
-			overscan: 1,
+			overscan: 4,
 		},
 	});
 
