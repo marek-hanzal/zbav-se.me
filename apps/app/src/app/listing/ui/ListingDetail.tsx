@@ -1,19 +1,17 @@
-import { useLocale } from "@use-pico/client/hook";
-import { Icon, ShowIcon, SpinnerIcon } from "@use-pico/client/icon";
+import { Icon, ShowIcon } from "@use-pico/client/icon";
 import { Container, LabelValue, ValueList } from "@use-pico/client/ui/container";
 import { Markdown } from "@use-pico/client/ui/markdown";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
-import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
-import { withListingFetchQuery, withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
 import { ConditionIcon } from "~/app/condition/ui/ConditionIcon";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
-import { useListingScore } from "~/app/listing/hook/useListingScore";
+import { useListingEvent } from "~/app/listing/hook/useListingEvent";
 import { FavouriteToggleButton } from "~/app/listing/ui/button/FavouriteToggleButton";
 import { FlagButton } from "~/app/listing/ui/button/FlagButton";
 import { IgnoreButton } from "~/app/listing/ui/button/IgnoreButton";
@@ -25,7 +23,6 @@ export namespace ListingDetail {
 
 	export interface Hooks {
 		onGallery(): void;
-		onScore(): void;
 		onTransaction(): void;
 	}
 
@@ -50,13 +47,12 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 	hooks,
 	...props
 }) => {
-	const locale = useLocale();
 	const hero = useHeroUpload(listing.gallery.items);
 
-	useListingScore({
+	useListingEvent({
 		enabled: withScore,
 		listingId: listing.id,
-		type: "view",
+		event: "view",
 		timeoutMs: 2_500,
 	});
 
@@ -210,26 +206,6 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 						textValue={`Condition - Age [${listing.age}] (hint)`}
 					/>
 				) : null}
-
-				<LabelValue
-					textLabel={"Listing score hint (label)"}
-					textValue={
-						<withListingMetricsFetchQuery.Suspense
-							data={listing.id}
-							fallback={<Icon icon={SpinnerIcon} />}
-						>
-							{({ data }) => {
-								return toLocaleNumber({
-									locale,
-									number: data.score,
-									empty: "0",
-								});
-							}}
-						</withListingMetricsFetchQuery.Suspense>
-					}
-					action={<Icon icon={ShowIcon} />}
-					onClick={hooks.onScore}
-				/>
 
 				<LabelValue
 					textLabel={"Listing seller hint (label)"}

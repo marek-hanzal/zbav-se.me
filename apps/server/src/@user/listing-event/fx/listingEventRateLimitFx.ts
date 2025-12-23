@@ -1,34 +1,31 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import type { ListingScoreTypeEnumSchema } from "~/app/listing-score/schema/ListingScoreTypeEnumSchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { ListingEventEnumSchema } from "~/app/listing-event/schema/ListingEventEnumSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { TooManyRequests } from "~/error/TooManyRequests";
 
-export namespace listingScoreRateLimitFx {
+export namespace listingEventRateLimitFx {
 	export interface Props {
 		listingId: string;
-		score: ListingScoreTypeEnumSchema.Type;
+		event: ListingEventEnumSchema.Type;
 		minutes?: number;
 	}
 }
 
-export const listingScoreRateLimitFx = ({
+export const listingEventRateLimitFx = ({
 	listingId,
-	score,
+	event,
 	minutes = 10,
-}: listingScoreRateLimitFx.Props) => {
+}: listingEventRateLimitFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
 
-		const listingScore = yield* Effect.tryPromise(async () => {
+		const listingEvent = yield* Effect.tryPromise(async () => {
 			return database
-				.selectFrom("listing_score")
+				.selectFrom("listing_event")
 				.select("createdAt")
-				.where("userId", "=", user.id)
 				.where("listingId", "=", listingId)
-				.where("type", "=", score)
+				.where("event", "=", event)
 				.where(
 					"createdAt",
 					">=",
@@ -42,9 +39,9 @@ export const listingScoreRateLimitFx = ({
 				.executeTakeFirst();
 		});
 
-		if (listingScore) {
+		if (listingEvent) {
 			return yield* new TooManyRequests({
-				message: "You have already scored this listing",
+				message: "You have already created this event",
 			});
 		}
 
@@ -52,4 +49,4 @@ export const listingScoreRateLimitFx = ({
 	});
 };
 
-export type listingScoreRateLimitFx = ReturnType<typeof listingScoreRateLimitFx>;
+export type listingEventRateLimitFx = ReturnType<typeof listingEventRateLimitFx>;

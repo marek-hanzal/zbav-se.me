@@ -4,7 +4,7 @@ import type { tListing } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
-import { useListingScore } from "~/app/listing/hook/useListingScore";
+import { useListingEvent } from "~/app/listing/hook/useListingEvent";
 import type { ListingDetail } from "~/app/listing/ui/ListingDetail";
 import { ListingSheet } from "~/app/listing/ui/ListingSheet";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
@@ -43,10 +43,10 @@ export const Hero: FC<Hero.Props> = ({
 
 	const [detail, setDetail] = useState<boolean>(false);
 
-	useListingScore({
+	useListingEvent({
 		enabled: withScore,
 		listingId: listing.id,
-		type: "listing",
+		event: "impression",
 		timeoutMs: 1_600,
 	});
 

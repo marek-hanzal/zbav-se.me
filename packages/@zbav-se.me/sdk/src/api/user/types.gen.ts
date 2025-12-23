@@ -831,201 +831,33 @@ export type tMessageTextCreate = {
 /**
  * Data for creating a new listing score
  */
-export type tListingScoreCreate = {
+export type tListingEventCreate = {
     /**
      * ID of the listing to score
      */
     listingId: string;
-    score: tListingScoreTypeEnum;
+    event: tListingEventEnum;
 };
 
 /**
- * Type of listing score
+ * Type of listing event
  */
-export const tListingScoreTypeEnum = {
-    listing: 'listing',
-    ignore: 'ignore',
-    flag: 'flag',
+export const tListingEventEnum = {
+    impression: 'impression',
     view: 'view',
-    favourite: 'favourite'
+    ignore: 'ignore',
+    unignore: 'unignore',
+    flag: 'flag',
+    unflag: 'unflag',
+    transaction: 'transaction',
+    favourite: 'favourite',
+    unfavourite: 'unfavourite'
 } as const;
 
 /**
- * Type of listing score
+ * Type of listing event
  */
-export type tListingScoreTypeEnum = typeof tListingScoreTypeEnum[keyof typeof tListingScoreTypeEnum];
-
-/**
- * Query object for listing score count
- */
-export type tListingScoreCountQuery = {
-    filter?: tListingScoreFilter;
-    where?: tListingScoreWhere;
-};
-
-/**
- * App-based filters
- */
-export type tListingScoreWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Filter object for listing score collection
- */
-export type tListingScoreFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Query object for listing score collection
- */
-export type tListingScoreQuery = {
-    cursor?: tCursor;
-    filter?: tListingScoreFilter;
-    where?: tListingScoreWhere;
-    sort?: Array<tListingScoreSort>;
-};
-
-/**
- * Field of the listing score sort
- */
-export const tListingScoreSortField = { score: 'score', createdAt: 'createdAt' } as const;
-
-/**
- * Field of the listing score sort
- */
-export type tListingScoreSortField = typeof tListingScoreSortField[keyof typeof tListingScoreSortField];
-
-/**
- * Sort object for listing score collection
- */
-export type tListingScoreSort = {
-    field: tListingScoreSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * Collection of listing scores
- */
-export type tListingScoreCollection = {
-    data: Array<tListingScore>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Listing score data
- */
-export type tListingScore = {
-    /**
-     * ID of the score
-     */
-    id: string;
-    /**
-     * ID of the listing
-     */
-    listingId: string;
-    type: tListingScoreTypeEnum;
-    /**
-     * Score value
-     */
-    score: number;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-};
-
-/**
- * Score data for the listing
- */
-export type tListingMetrics = {
-    /**
-     * Number of views from the feed (low attention score)
-     */
-    listing: number | null | null;
-    /**
-     * Overall score gained from listing interactions
-     */
-    listingScore: number | null | null;
-    /**
-     * Number of views from the listing
-     */
-    views: number | null | null;
-    /**
-     * Overall score gained from views
-     */
-    viewsScore: number | null | null;
-    /**
-     * Number of items added to favourites
-     */
-    favourite: number | null | null;
-    /**
-     * Overall score gained from favourite interactions
-     */
-    favouriteScore: number | null | null;
-    /**
-     * Number of items ignored
-     */
-    ignore: number | null | null;
-    /**
-     * Overall score gained from ignore interactions
-     */
-    ignoreScore: number | null | null;
-    /**
-     * Number of items flagged
-     */
-    flag: number | null | null;
-    /**
-     * Overall score gained from flag interactions
-     */
-    flagScore: number | null | null;
-    /**
-     * Raw score of the listing
-     */
-    score: number | null | null;
-};
+export type tListingEventEnum = typeof tListingEventEnum[keyof typeof tListingEventEnum];
 
 /**
  * Query object for listing count
@@ -3613,97 +3445,17 @@ export type tApiListingCountResponse = {
 
 export type apiListingCountResponse = tApiListingCountResponse[keyof tApiListingCountResponse];
 
-export type tApiListingMetricsFetchRequest = {
-    body?: never;
-    path: {
-        /**
-         * Listing identifier
-         */
-        id: string;
-    };
-    query?: never;
-    url: '/api/user/listing/{id}/metrics';
-};
-
-export type apiListingMetricsFetchErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiListingMetricsFetchError = apiListingMetricsFetchErrors[keyof apiListingMetricsFetchErrors];
-
-export type tApiListingMetricsFetchResponse = {
-    /**
-     * Listing score for the provided identifier
-     */
-    200: tListingMetrics;
-};
-
-export type apiListingMetricsFetchResponse = tApiListingMetricsFetchResponse[keyof tApiListingMetricsFetchResponse];
-
-export type tApiListingScoreCollectionRequest = {
-    body?: tListingScoreQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing-score/collection';
-};
-
-export type apiListingScoreCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiListingScoreCollectionError = apiListingScoreCollectionErrors[keyof apiListingScoreCollectionErrors];
-
-export type tApiListingScoreCollectionResponse = {
-    /**
-     * Access collection of listing scores based on provided query
-     */
-    200: tListingScoreCollection;
-};
-
-export type apiListingScoreCollectionResponse = tApiListingScoreCollectionResponse[keyof tApiListingScoreCollectionResponse];
-
-export type tApiListingScoreCountRequest = {
-    body?: tListingScoreCountQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing-score/count';
-};
-
-export type apiListingScoreCountErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiListingScoreCountError = apiListingScoreCountErrors[keyof apiListingScoreCountErrors];
-
-export type tApiListingScoreCountResponse = {
-    /**
-     * Return counts based on provided query
-     */
-    200: tCount;
-};
-
-export type apiListingScoreCountResponse = tApiListingScoreCountResponse[keyof tApiListingScoreCountResponse];
-
-export type tApiListingScoreCreateRequest = {
+export type tApiListingEventCreateRequest = {
     /**
      * Data for creating a new listing score
      */
-    body?: tListingScoreCreate;
+    body?: tListingEventCreate;
     path?: never;
     query?: never;
-    url: '/api/user/listing-score/create';
+    url: '/api/user/listing-event/create';
 };
 
-export type apiListingScoreCreateErrors = {
+export type apiListingEventCreateErrors = {
     /**
      * Cannot score your own listing
      */
@@ -3722,9 +3474,9 @@ export type apiListingScoreCreateErrors = {
     500: tNotice;
 };
 
-export type apiListingScoreCreateError = apiListingScoreCreateErrors[keyof apiListingScoreCreateErrors];
+export type apiListingEventCreateError = apiListingEventCreateErrors[keyof apiListingEventCreateErrors];
 
-export type tApiListingScoreCreateResponse = {
+export type tApiListingEventCreateResponse = {
     /**
      * The listing score was created
      */

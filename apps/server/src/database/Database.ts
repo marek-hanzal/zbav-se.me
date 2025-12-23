@@ -10,7 +10,7 @@ import type { GalleryItemDbSchema } from "~/app/gallery-item/schema/GalleryItemD
 import type { GitHubDbSchema } from "~/app/github/schema/GitHubDbSchema";
 import type { IgnoreDbSchema } from "~/app/ignore/schema/IgnoreDbSchema";
 import type { ListingDbSchema } from "~/app/listing/schema/ListingDbSchema";
-import type { ListingScoreDbSchema } from "~/app/listing-score/schema/ListingScoreDbSchema";
+import type { ListingEventDbSchema } from "~/app/listing-event/schema/ListingEventDbSchema";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import type { MessageGalleryDbSchema } from "~/app/message-gallery/schema/MessageGalleryDbSchema";
 import type { MessageLocationDbSchema } from "~/app/message-location/schema/MessageLocationDbSchema";
@@ -36,7 +36,7 @@ export interface Database {
 	gallery: GalleryDbSchema.Type;
 	github: GitHubDbSchema.Type;
 	ignore: IgnoreDbSchema.Type;
-	listing_score: ListingScoreDbSchema.Type;
+	listing_event: ListingEventDbSchema.Type;
 	listing: ListingDbSchema.Type;
 	location: LocationDbSchema.Type;
 	message_gallery: MessageGalleryDbSchema.Type;

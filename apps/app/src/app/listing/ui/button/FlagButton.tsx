@@ -1,9 +1,8 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Mx } from "@use-pico/client/ui/mx";
 import { translator } from "@use-pico/common/translator";
 import { withFlagToggleMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withListingFetchQuery, withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { FlagIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
 
@@ -22,7 +21,6 @@ export const FlagButton: FC<FlagButton.Props> = ({
 	ui,
 	...props
 }) => {
-	const queryClient = useQueryClient();
 	const patch = withListingFetchQuery.useSet();
 	const flagToggleMutation = withFlagToggleMutation.useMutation({
 		onSuccess(listing) {
@@ -31,7 +29,6 @@ export const FlagButton: FC<FlagButton.Props> = ({
 					id: listingId,
 				},
 			});
-			withListingMetricsFetchQuery.invalidate(queryClient, listingId);
 		},
 		meta: {
 			mutationId: listingId,

@@ -4,30 +4,29 @@ import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { ListingScoreContextProvider } from "./fx/ListingScoreContextFx";
-import { listingScoreCreateFx } from "./fx/listingScoreCreateFx";
-import { ListingScoreCreateSchema } from "./schema/ListingScoreCreateSchema";
+import { listingEventCreateFx } from "./fx/listingEventCreateFx";
+import { ListingEventCreateSchema } from "./schema/ListingEventCreateSchema";
 
 export const withCreateApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/listing-score/create",
-			description: "Create a new listing score",
-			operationId: "apiListingScoreCreate",
+			path: "/listing-event/create",
+			description: "Create a new listing event",
+			operationId: "apiListingEventCreate",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: ListingScoreCreateSchema,
+							schema: ListingEventCreateSchema,
 						},
 					},
-					description: "Data for creating a new listing score",
+					description: "Data for creating a new listing event",
 				},
 			},
 			responses: {
 				201: {
-					description: "The listing score was created",
+					description: "The listing event was created",
 				},
 				400: {
 					content: {
@@ -35,7 +34,7 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 							schema: NoticeSchema,
 						},
 					},
-					description: "Cannot score your own listing",
+					description: "Cannot create event on your own listing",
 				},
 				429: {
 					content: {
@@ -43,7 +42,7 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 							schema: NoticeSchema,
 						},
 					},
-					description: "Too many requests - please wait between scores",
+					description: "Too many requests - please wait between events",
 				},
 				404: {
 					content: {
@@ -63,19 +62,18 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 				},
 			},
 			tags: [
-				"listing-score",
+				"listing-event",
 				"user",
 			],
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				yield* listingScoreCreateFx(c.req.valid("json"));
+				yield* listingEventCreateFx(c.req.valid("json"));
 
 				return c.body(null, 201);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),
-				ListingScoreContextProvider(),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

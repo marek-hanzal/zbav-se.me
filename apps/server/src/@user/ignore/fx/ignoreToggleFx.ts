@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import type { IgnoreToggleSchema } from "~/@user/ignore/schema/IgnoreToggleSchema";
 import { listingCheckIfOwnFx } from "~/@user/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/@user/listing/fx/listingFetchFx";
-import { listingScoreCreateFx } from "~/@user/listing-score/fx/listingScoreCreateFx";
+import { listingEventCreateFx } from "~/@user/listing-event/fx/listingEventCreateFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { ignoreCreateFx } from "./ignoreCreateFx";
 import { ignoreDeleteFx } from "./ignoreDeleteFx";
@@ -26,9 +26,9 @@ export const ignoreToggleFx = ({ toggle, listingId }: ignoreToggleFx.Props) => {
 							listingId,
 						});
 
-						yield* listingScoreCreateFx({
+						yield* listingEventCreateFx({
 							listingId,
-							score: "ignore",
+							event: "ignore",
 						}).pipe(Effect.ignore);
 
 						return yield* listingFetchFx({
@@ -43,6 +43,11 @@ export const ignoreToggleFx = ({ toggle, listingId }: ignoreToggleFx.Props) => {
 						yield* ignoreDeleteFx({
 							listingId,
 						});
+
+						yield* listingEventCreateFx({
+							listingId,
+							event: "unignore",
+						}).pipe(Effect.ignore);
 
 						return yield* listingFetchFx({
 							where: {

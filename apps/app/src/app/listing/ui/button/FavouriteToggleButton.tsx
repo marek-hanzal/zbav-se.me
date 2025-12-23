@@ -5,7 +5,6 @@ import { withFavouriteToggleMutation } from "@zbav-se.me/sdk/mutation/user";
 import {
 	withFeedFavouriteCollectionQuery,
 	withListingFetchQuery,
-	withListingMetricsFetchQuery,
 } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
 
@@ -31,7 +30,6 @@ export const FavouriteToggleButton: FC<FavouriteToggleButton.Props> = ({
 					id: listingId,
 				},
 			});
-			withListingMetricsFetchQuery.invalidate(queryClient, listingId);
 			withFeedFavouriteCollectionQuery.invalidate(queryClient);
 		},
 		meta: {

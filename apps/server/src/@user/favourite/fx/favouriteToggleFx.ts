@@ -4,7 +4,7 @@ import { favouriteDeleteFx } from "~/@user/favourite/fx/favouriteDeleteFx";
 import type { FavouriteToggleSchema } from "~/@user/favourite/schema/FavouriteToggleSchema";
 import { listingCheckIfOwnFx } from "~/@user/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/@user/listing/fx/listingFetchFx";
-import { listingScoreCreateFx } from "~/@user/listing-score/fx/listingScoreCreateFx";
+import { listingEventCreateFx } from "~/@user/listing-event/fx/listingEventCreateFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace favouriteToggleFx {
@@ -27,9 +27,9 @@ export const favouriteToggleFx = ({ feedId, listingId, toggle }: favouriteToggle
 							listingId,
 						});
 
-						yield* listingScoreCreateFx({
+						yield* listingEventCreateFx({
 							listingId,
-							score: "favourite",
+							event: "favourite",
 						}).pipe(Effect.ignore);
 
 						return yield* listingFetchFx({
@@ -44,6 +44,11 @@ export const favouriteToggleFx = ({ feedId, listingId, toggle }: favouriteToggle
 						yield* favouriteDeleteFx({
 							listingId,
 						});
+
+						yield* listingEventCreateFx({
+							listingId,
+							event: "unfavourite",
+						}).pipe(Effect.ignore);
 
 						return yield* listingFetchFx({
 							where: {

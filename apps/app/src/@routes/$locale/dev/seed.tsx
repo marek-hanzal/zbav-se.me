@@ -26,7 +26,7 @@ import {
 } from "@zbav-se.me/sdk/api/user";
 import {
 	withFeedCreateMutation,
-	withListingScoreCreateMutation,
+	withListingEventCreateMutation,
 	withUploadMutation,
 } from "@zbav-se.me/sdk/mutation/user";
 import axios from "axios";
@@ -275,7 +275,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 
 		const signInMutation = withEmailSignInMutation.useMutation();
 
-		const listingScoreMutation = withListingScoreCreateMutation.useMutation();
+		const listingEventMutation = withListingEventCreateMutation.useMutation();
 
 		const fetchRandomListings = async () => {
 			const sort = list([
@@ -353,41 +353,73 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 				for (const listing of await fetchRandomListings()) {
 					Math.random() < 0.5 &&
 						queue.add(async () => {
-							return listingScoreMutation.mutateAsync({
+							return listingEventMutation.mutateAsync({
 								listingId: listing.id,
-								score: "listing",
+								event: "impression",
 							});
 						});
 
 					Math.random() < 0.2 &&
 						queue.add(async () => {
-							return listingScoreMutation.mutateAsync({
+							return listingEventMutation.mutateAsync({
 								listingId: listing.id,
-								score: "view",
-							});
-						});
-
-					Math.random() < 0.07 &&
-						queue.add(async () => {
-							return listingScoreMutation.mutateAsync({
-								listingId: listing.id,
-								score: "flag",
-							});
-						});
-
-					Math.random() < 0.175 &&
-						queue.add(async () => {
-							return listingScoreMutation.mutateAsync({
-								listingId: listing.id,
-								score: "favourite",
+								event: "view",
 							});
 						});
 
 					Math.random() < 0.25 &&
 						queue.add(async () => {
-							return listingScoreMutation.mutateAsync({
+							return listingEventMutation.mutateAsync({
 								listingId: listing.id,
-								score: "ignore",
+								event: "ignore",
+							});
+						});
+
+					Math.random() < 0.1 &&
+						queue.add(async () => {
+							return listingEventMutation.mutateAsync({
+								listingId: listing.id,
+								event: "unignore",
+							});
+						});
+
+					Math.random() < 0.07 &&
+						queue.add(async () => {
+							return listingEventMutation.mutateAsync({
+								listingId: listing.id,
+								event: "flag",
+							});
+						});
+
+					Math.random() < 0.05 &&
+						queue.add(async () => {
+							return listingEventMutation.mutateAsync({
+								listingId: listing.id,
+								event: "unflag",
+							});
+						});
+
+					Math.random() < 0.02 &&
+						queue.add(async () => {
+							return listingEventMutation.mutateAsync({
+								listingId: listing.id,
+								event: "transaction",
+							});
+						});
+
+					Math.random() < 0.175 &&
+						queue.add(async () => {
+							return listingEventMutation.mutateAsync({
+								listingId: listing.id,
+								event: "favourite",
+							});
+						});
+
+					Math.random() < 0.1 &&
+						queue.add(async () => {
+							return listingEventMutation.mutateAsync({
+								listingId: listing.id,
+								event: "unfavourite",
 							});
 						});
 				}

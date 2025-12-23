@@ -1,9 +1,9 @@
 import { type Migration, sql } from "kysely";
 
-export const ListingScoreMigration: Migration = {
+export const ListingEventMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createType("listing_score_type_enum")
+			.createType("listing_event_type_enum")
 			.asEnum([
 				/**
 				 * From feed, lowest weight
@@ -17,28 +17,29 @@ export const ListingScoreMigration: Migration = {
 				 * Explicit ignore of the listing
 				 */
 				"ignore",
+				"unignore",
 				/**
 				 * Flagged listing
 				 */
 				"flag",
+				"unflag",
 				/**
 				 * Started transaction by buyer
 				 */
 				"transaction",
 				"favourite",
+				"unfavourite",
 			])
 			.execute();
 
 		await db.schema
-			.createTable("listing_score")
+			.createTable("listing_event")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
-			.addColumn("userId", "text", (col) => col.notNull())
-			.addColumn("score", "integer", (col) => col.notNull())
-			.addColumn("type", sql`listing_score_type_enum`, (col) => col.notNull())
+			.addColumn("event", sql`listing_event_type_enum`, (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) => col.notNull())
 			.addForeignKeyConstraint(
-				"listing_score_[listingId]_fk",
+				"listing_event_[listingId]_fk",
 				[
 					"listingId",
 				],
@@ -48,34 +49,23 @@ export const ListingScoreMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addForeignKeyConstraint(
-				"listing_score_[userId]_fk",
-				[
-					"userId",
-				],
-				"user",
-				[
-					"id",
-				],
-				(c) => c.onDelete("cascade"),
-			)
 			.execute();
 
 		await db.schema
-			.createIndex("listing_score_[listingId]_idx")
-			.on("listing_score")
+			.createIndex("listing_event_[listingId]_idx")
+			.on("listing_event")
 			.column("listingId")
 			.execute();
 
 		await db.schema
-			.createIndex("listing_score_[userId]_idx")
-			.on("listing_score")
-			.column("userId")
+			.createIndex("listing_event_[event]_idx")
+			.on("listing_event")
+			.column("event")
 			.execute();
 
 		await db.schema
-			.createIndex("listing_score_[createdAt]_idx")
-			.on("listing_score")
+			.createIndex("listing_event_[createdAt]_idx")
+			.on("listing_event")
 			.column("createdAt")
 			.execute();
 	},

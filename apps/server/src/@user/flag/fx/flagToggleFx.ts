@@ -4,7 +4,7 @@ import { flagDeleteFx } from "~/@user/flag/fx/flagDeleteFx";
 import type { FlagToggleSchema } from "~/@user/flag/schema/FlagToggleSchema";
 import { listingCheckIfOwnFx } from "~/@user/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/@user/listing/fx/listingFetchFx";
-import { listingScoreCreateFx } from "~/@user/listing-score/fx/listingScoreCreateFx";
+import { listingEventCreateFx } from "~/@user/listing-event/fx/listingEventCreateFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace flagToggleFx {
@@ -26,9 +26,9 @@ export const flagToggleFx = ({ toggle, listingId }: flagToggleFx.Props) => {
 							listingId,
 						});
 
-						yield* listingScoreCreateFx({
+						yield* listingEventCreateFx({
 							listingId,
-							score: "flag",
+							event: "flag",
 						}).pipe(Effect.ignore);
 
 						return yield* listingFetchFx({
@@ -43,6 +43,11 @@ export const flagToggleFx = ({ toggle, listingId }: flagToggleFx.Props) => {
 						yield* flagDeleteFx({
 							listingId,
 						});
+
+						yield* listingEventCreateFx({
+							listingId,
+							event: "unflag",
+						}).pipe(Effect.ignore);
 
 						return yield* listingFetchFx({
 							where: {
