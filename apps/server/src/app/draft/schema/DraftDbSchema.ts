@@ -2,6 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { ListingExpireEnumSchema } from "~/@user/listing/schema/ListingExpireEnumSchema";
 import { ListingDeliveryEnumSchema } from "~/app/listing/schema/ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "~/app/listing/schema/ListingPriceEnumSchema";
+import { ListingWarrantyEnumSchema } from "~/app/listing/schema/ListingWarrantyEnumSchema";
 import { ProsConsSchema } from "~/app/listing/schema/ProsConsSchema";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 
@@ -65,6 +66,15 @@ export const DraftDbSchema = z
 			])
 			.openapi({
 				description: "Delivery methods for the draft",
+			}),
+		//
+		warranty: z
+			.union([
+				ListingWarrantyEnumSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Warranty type for the draft",
 			}),
 		//
 		locationId: z

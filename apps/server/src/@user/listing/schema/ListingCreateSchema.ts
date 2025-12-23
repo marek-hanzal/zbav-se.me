@@ -1,6 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { ListingDeliveryEnumSchema } from "~/app/listing/schema/ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "~/app/listing/schema/ListingPriceEnumSchema";
+import { ListingWarrantyEnumSchema } from "~/app/listing/schema/ListingWarrantyEnumSchema";
 import { ProsConsSchema } from "~/app/listing/schema/ProsConsSchema";
 import { ListingExpireEnumSchema } from "./ListingExpireEnumSchema";
 
@@ -37,6 +38,15 @@ export const ListingCreateSchema = z
 			.optional()
 			.openapi({
 				description: "Delivery methods for the listing",
+			}),
+		warranty: z
+			.union([
+				ListingWarrantyEnumSchema,
+				z.null(),
+			])
+			.optional()
+			.openapi({
+				description: "Warranty type for the listing",
 			}),
 		draftId: z.string().optional().openapi({
 			description: "ID of the draft",
