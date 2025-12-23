@@ -106,16 +106,23 @@ export function useElementVisibility({
 		const visibleIo = new IntersectionObserver(
 			(entries) => {
 				for (const entry of entries) {
-					const id = entry.target.getAttribute(attribute);
+					const id = entry.target.getAttribute(attribute)?.trim();
 					if (!id) {
 						continue;
 					}
 
-					const visible = entry.intersectionRatio > 0;
+					const check = entry.intersectionRatio > 0;
 
-					byIdRef.current.set(id, {
+					const current = byIdRef.current.get(id) || {
 						bottom: false,
 						top: false,
+						isVisible: check,
+						visible: check,
+					};
+					const visible = check || current.visible;
+
+					byIdRef.current.set(id, {
+						...current,
 						isVisible: visible,
 						visible: visible,
 					});
