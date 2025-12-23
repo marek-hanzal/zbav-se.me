@@ -22,6 +22,7 @@ import {
 	tListingExpireEnum,
 	tListingPriceEnum,
 	type tListingSort,
+	tListingWarrantyEnum,
 } from "@zbav-se.me/sdk/api/user";
 import {
 	withFeedCreateMutation,
@@ -113,6 +114,13 @@ const seedListings = async ({ categories, locationIds, uploadIds }: seedListings
 					.slice(0, deliveryCount)
 			: null;
 
+	const warranty =
+		Math.random() < 0.3
+			? null
+			: (object(tListingWarrantyEnum) as
+					| (typeof tListingWarrantyEnum)[keyof typeof tListingWarrantyEnum]
+					| null);
+
 	const pros = generateProsCons();
 	const cons = generateProsCons();
 
@@ -125,10 +133,11 @@ const seedListings = async ({ categories, locationIds, uploadIds }: seedListings
 			price: rangedom(0, 99_999),
 			priceType: object(tListingPriceEnum),
 			title: list(title),
-			description,
+			description: Math.random() < 0.3 ? null : description,
 			expiresAt: object(tListingExpireEnum),
 			locationId: list(locationIds),
 			delivery,
+			warranty,
 			pros,
 			cons,
 			uploadIds: Array.from(uploadIds)
