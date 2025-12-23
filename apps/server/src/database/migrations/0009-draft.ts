@@ -24,6 +24,15 @@ export const DraftMigration: Migration = {
 			.execute();
 
 		await db.schema
+			.createType("listing_warranty_enum")
+			.asEnum([
+				"warranty",
+				"no-warranty",
+				"custom",
+			])
+			.execute();
+
+		await db.schema
 			.createTable("draft")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
