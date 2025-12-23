@@ -123,7 +123,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 												"ListingListContainer-[SpinnerContainer.placeholder]"
 											}
 											data-id={listing.id}
-											{...props}
 										/>
 									)}
 									ui={{

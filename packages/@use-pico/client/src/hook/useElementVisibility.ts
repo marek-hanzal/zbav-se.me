@@ -82,9 +82,10 @@ export function useElementVisibility({
 
 		const store = storeRef.current;
 
-		const getId = (entry: IntersectionObserverEntry) => {
-			return entry.target.getAttribute(attribute)?.trim() || null;
-		};
+		const getId = (entry: IntersectionObserverEntry) =>
+			entry.target.getAttribute(attribute)?.trim() || null;
+
+		/* ───────────────── visible ───────────────── */
 
 		const visibleIo = new IntersectionObserver(
 			(entries) => {
@@ -94,14 +95,18 @@ export function useElementVisibility({
 						continue;
 					}
 
-					const next = entry.intersectionRatio > 0;
-
 					delayById(
 						id,
-						() => store.getState().setVisible(id, next),
+						() => store.getState().setVisible(id, entry.intersectionRatio > 0),
 						visibleTimers.current,
 						delayMs,
 					);
+
+					// console.log("visible", {
+					// 	id,
+					// 	ratio: entry.intersectionRatio,
+					// 	isIntersecting: entry.isIntersecting,
+					// });
 				}
 			},
 			{
@@ -111,7 +116,9 @@ export function useElementVisibility({
 			},
 		);
 
-		const proximityIo = new IntersectionObserver(
+		/* ───────────────── top proximity ───────────────── */
+
+		const topIo = new IntersectionObserver(
 			(entries) => {
 				for (const entry of entries) {
 					const id = getId(entry);
@@ -119,14 +126,49 @@ export function useElementVisibility({
 						continue;
 					}
 
-					const next = entry.intersectionRatio > 0;
-
 					delayById(
 						id,
-						() => store.getState().setProximity(id, next),
+						() => store.getState().setTop(id, entry.intersectionRatio > 0),
 						proximityTimers.current,
 						delayMs,
 					);
+
+					// console.log("top proximity", {
+					// 	id,
+					// 	ratio: entry.intersectionRatio,
+					// 	isIntersecting: entry.isIntersecting,
+					// });
+				}
+			},
+			{
+				root,
+				threshold,
+				rootMargin: `${overscan * 100}% 0px 0px 0px`,
+			},
+		);
+
+		/* ───────────────── bottom proximity ───────────────── */
+
+		const bottomIo = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					const id = getId(entry);
+					if (!id) {
+						continue;
+					}
+
+					delayById(
+						id,
+						() => store.getState().setBottom(id, entry.intersectionRatio > 0),
+						proximityTimers.current,
+						delayMs,
+					);
+
+					// console.log("bottom proximity", {
+					// 	id,
+					// 	ratio: entry.intersectionRatio,
+					// 	isIntersecting: entry.isIntersecting,
+					// });
 				}
 			},
 			{
@@ -141,7 +183,8 @@ export function useElementVisibility({
 				return;
 			}
 			visibleIo.observe(node);
-			proximityIo.observe(node);
+			topIo.observe(node);
+			bottomIo.observe(node);
 		};
 
 		const unobserve = (node: Element) => {
@@ -150,7 +193,8 @@ export function useElementVisibility({
 			}
 
 			visibleIo.unobserve(node);
-			proximityIo.unobserve(node);
+			topIo.unobserve(node);
+			bottomIo.unobserve(node);
 
 			const id = node.getAttribute(attribute)?.trim();
 			if (id) {
@@ -190,11 +234,15 @@ export function useElementVisibility({
 
 		return () => {
 			store.getState().clear();
+			//
 			clearTimerMap(visibleTimers.current);
 			clearTimerMap(proximityTimers.current);
+			//
 			mo.disconnect();
+			//
 			visibleIo.disconnect();
-			proximityIo.disconnect();
+			topIo.disconnect();
+			bottomIo.disconnect();
 		};
 	}, []);
 

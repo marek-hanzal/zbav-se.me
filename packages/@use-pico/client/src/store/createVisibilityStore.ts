@@ -6,12 +6,24 @@ export namespace createVisibilityStore {
 		 * True visible state (element is actually in viewport)
 		 */
 		visible: boolean;
+
 		/**
-		 * Proximity state (element is near viewport, above or below)
+		 * Top proximity flag (element is above viewport in overscan zone)
+		 */
+		top: boolean;
+
+		/**
+		 * Bottom proximity flag (element is below viewport in overscan zone)
+		 */
+		bottom: boolean;
+
+		/**
+		 * Proximity state (derived): top || bottom
 		 */
 		proximity: boolean;
+
 		/**
-		 * Combined visibility state (visible || proximity)
+		 * Combined visibility state (derived): visible || proximity
 		 */
 		isVisible: boolean;
 	}
@@ -25,7 +37,8 @@ export namespace createVisibilityStore {
 
 		// Write (business logic lives here)
 		setVisible(id: string, visible: boolean): void;
-		setProximity(id: string, proximity: boolean): void;
+		setTop(id: string, top: boolean): void;
+		setBottom(id: string, bottom: boolean): void;
 
 		// Lifecycle
 		removeById(id: string): void;
@@ -33,6 +46,16 @@ export namespace createVisibilityStore {
 	}
 
 	export type Hook = UseBoundStore<StoreApi<Store>>;
+}
+
+function derive(
+	next: Pick<createVisibilityStore.State, "visible" | "top" | "bottom">,
+): Pick<createVisibilityStore.State, "proximity" | "isVisible"> {
+	const proximity = next.top || next.bottom;
+	return {
+		proximity,
+		isVisible: next.visible || proximity,
+	};
 }
 
 export const createVisibilityStore = (): createVisibilityStore.Hook => {
@@ -49,40 +72,108 @@ export const createVisibilityStore = (): createVisibilityStore.Hook => {
 
 				const current = next.get(id) ?? {
 					visible: false,
+					top: false,
+					bottom: false,
 					proximity: false,
 					isVisible: false,
 				};
 
-				const state = {
-					visible: visible,
-					proximity: current.proximity,
-					isVisible: visible || current.proximity,
+				const base = {
+					visible,
+					top: current.top,
+					bottom: current.bottom,
+				};
+
+				const state: createVisibilityStore.State = {
+					...current,
+					...base,
+					...derive(base),
 				};
 
 				next.set(id, state);
+
+				console.log("setVisible", {
+					id,
+					value: visible,
+					...state,
+				});
+
 				return {
 					byId: next,
 				};
 			});
 		},
 
-		setProximity(id, proximity) {
+		setTop(id, top) {
 			set((prev) => {
 				const next = new Map(prev.byId);
 
 				const current = next.get(id) ?? {
 					visible: false,
+					top: false,
+					bottom: false,
 					proximity: false,
 					isVisible: false,
 				};
 
-				const state = {
+				const base = {
 					visible: current.visible,
-					proximity: proximity,
-					isVisible: current.visible || proximity,
+					top,
+					bottom: current.bottom,
+				};
+
+				const state: createVisibilityStore.State = {
+					...current,
+					...base,
+					...derive(base),
 				};
 
 				next.set(id, state);
+
+				console.log("setTop", {
+					id,
+					value: top,
+					...state,
+				});
+
+				return {
+					byId: next,
+				};
+			});
+		},
+
+		setBottom(id, bottom) {
+			set((prev) => {
+				const next = new Map(prev.byId);
+
+				const current = next.get(id) ?? {
+					visible: false,
+					top: false,
+					bottom: false,
+					proximity: false,
+					isVisible: false,
+				};
+
+				const base = {
+					visible: current.visible,
+					top: current.top,
+					bottom,
+				};
+
+				const state: createVisibilityStore.State = {
+					...current,
+					...base,
+					...derive(base),
+				};
+
+				next.set(id, state);
+
+				console.log("setBottom", {
+					id,
+					value: bottom,
+					...state,
+				});
+
 				return {
 					byId: next,
 				};
