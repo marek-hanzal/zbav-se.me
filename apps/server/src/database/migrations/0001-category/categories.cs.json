@@ -2544,5 +2544,245 @@
 		],
 		"group": "Ostatní",
 		"category": "Nezařazené"
+	},
+	{
+		"slug": "sezona--vanoce",
+		"locale": "cs",
+		"spotlight": [
+			"vánoce",
+			"vánoční",
+			"christmas",
+			"vánoční dárky",
+			"vánoční dekorace",
+			"vánoční ozdoby",
+			"betlém",
+			"jesličky",
+			"advent",
+			"mikuláš"
+		],
+		"group": "Sezóna",
+		"category": "Vánoce"
+	},
+	{
+		"slug": "sezona--valentyn",
+		"locale": "cs",
+		"spotlight": [
+			"valentýn",
+			"valentýnský",
+			"valentine",
+			"valentýnské dárky",
+			"svatý valentýn",
+			"14. únor",
+			"romantika",
+			"láska"
+		],
+		"group": "Sezóna",
+		"category": "Valentýn"
+	},
+	{
+		"slug": "sezona--velikonoce",
+		"locale": "cs",
+		"spotlight": [
+			"velikonoce",
+			"velikonoční",
+			"easter",
+			"velikonoční dekorace",
+			"velikonoční vajíčka",
+			"pomlázka",
+			"beránek",
+			"zajíček",
+			"velikonoční košík"
+		],
+		"group": "Sezóna",
+		"category": "Velikonoce"
+	},
+	{
+		"slug": "sezona--halloween",
+		"locale": "cs",
+		"spotlight": [
+			"halloween",
+			"dušičky",
+			"svátek zesnulých",
+			"halloweenské",
+			"dýně",
+			"strašidelný",
+			"kostým",
+			"masky",
+			"31. říjen"
+		],
+		"group": "Sezóna",
+		"category": "Halloween"
+	},
+	{
+		"slug": "sezona--zima",
+		"locale": "cs",
+		"spotlight": [
+			"zima",
+			"zimní",
+			"winter",
+			"zimní oblečení",
+			"zimní boty",
+			"zimní sporty",
+			"lyže",
+			"snowboard",
+			"brusle",
+			"zimní dekorace",
+			"sníh",
+			"mráz"
+		],
+		"group": "Sezóna",
+		"category": "Zima"
+	},
+	{
+		"slug": "sezona--jaro",
+		"locale": "cs",
+		"spotlight": [
+			"jaro",
+			"jarní",
+			"spring",
+			"jarní oblečení",
+			"jarní dekorace",
+			"květiny",
+			"kvetení",
+			"příroda",
+			"jarní úklid",
+			"zahrada",
+			"březen",
+			"duben",
+			"květen"
+		],
+		"group": "Sezóna",
+		"category": "Jaro"
+	},
+	{
+		"slug": "sezona--leto",
+		"locale": "cs",
+		"spotlight": [
+			"léto",
+			"letní",
+			"summer",
+			"letní oblečení",
+			"letní boty",
+			"plavky",
+			"sluneční brýle",
+			"letní dekorace",
+			"dovolená",
+			"prázdniny",
+			"slunce",
+			"pláž",
+			"červen",
+			"červenec",
+			"srpen"
+		],
+		"group": "Sezóna",
+		"category": "Léto"
+	},
+	{
+		"slug": "sezona--podzim",
+		"locale": "cs",
+		"spotlight": [
+			"podzim",
+			"podzimní",
+			"autumn",
+			"fall",
+			"podzimní oblečení",
+			"podzimní dekorace",
+			"listí",
+			"dýně",
+			"sklizeň",
+			"zahrada",
+			"září",
+			"říjen",
+			"listopad"
+		],
+		"group": "Sezóna",
+		"category": "Podzim"
+	},
+	{
+		"slug": "sezona--silvestr",
+		"locale": "cs",
+		"spotlight": [
+			"silvestr",
+			"silvestrovský",
+			"nový rok",
+			"new year",
+			"silvestrovské oslavy",
+			"silvestrovské dekorace",
+			"petardy",
+			"ohňostroj",
+			"party",
+			"oslava",
+			"31. prosinec",
+			"1. leden"
+		],
+		"group": "Sezóna",
+		"category": "Silvestr"
+	},
+	{
+		"slug": "sezona--den-matek",
+		"locale": "cs",
+		"spotlight": [
+			"den matek",
+			"den matek dárky",
+			"mother's day",
+			"maminka",
+			"dárek pro maminku",
+			"květiny",
+			"kytice",
+			"druhá květnová neděle"
+		],
+		"group": "Sezóna",
+		"category": "Den matek"
+	},
+	{
+		"slug": "sezona--den-otcu",
+		"locale": "cs",
+		"spotlight": [
+			"den otců",
+			"den otců dárky",
+			"father's day",
+			"tatínek",
+			"dárek pro tatínka",
+			"dárek pro otce",
+			"třetí červnová neděle"
+		],
+		"group": "Sezóna",
+		"category": "Den otců"
+	},
+	{
+		"slug": "sezona--zacatek-skoly",
+		"locale": "cs",
+		"spotlight": [
+			"začátek školy",
+			"začátek školního roku",
+			"back to school",
+			"školní potřeby",
+			"aktovka",
+			"batoh",
+			"penál",
+			"sešity",
+			"učebnice",
+			"školní pomůcky",
+			"září"
+		],
+		"group": "Sezóna",
+		"category": "Začátek školy"
+	},
+	{
+		"slug": "sezona--maturita",
+		"locale": "cs",
+		"spotlight": [
+			"maturita",
+			"maturitní",
+			"graduation",
+			"promoce",
+			"absolventský",
+			"maturitní ples",
+			"absolvent",
+			"vysvědčení",
+			"konec školy"
+		],
+		"group": "Sezóna",
+		"category": "Maturita"
 	}
 ]
