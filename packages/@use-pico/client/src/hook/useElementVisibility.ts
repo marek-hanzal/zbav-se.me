@@ -1,29 +1,36 @@
 import { type RefObject, useEffect, useLayoutEffect, useRef } from "react";
 import { createVisibilityStore } from "../store/createVisibilityStore";
 
-function clearTimer(ref: RefObject<ReturnType<typeof setTimeout> | undefined>) {
-	if (ref.current) {
-		clearTimeout(ref.current);
-		ref.current = undefined;
+function clearTimerMap(map: Map<string, ReturnType<typeof setTimeout>>) {
+	for (const t of map.values()) {
+		clearTimeout(t);
 	}
+	map.clear();
 }
 
-function delay(
+function delayById(
+	id: string,
 	apply: () => void,
-	timerRef: RefObject<ReturnType<typeof setTimeout> | undefined>,
+	map: Map<string, ReturnType<typeof setTimeout>>,
 	delayMs: number | undefined,
 ) {
-	clearTimer(timerRef);
+	const existing = map.get(id);
+	if (existing) {
+		clearTimeout(existing);
+		map.delete(id);
+	}
 
 	if (!delayMs) {
 		apply();
 		return;
 	}
 
-	timerRef.current = setTimeout(() => {
+	const t = setTimeout(() => {
 		apply();
-		timerRef.current = undefined;
+		map.delete(id);
 	}, delayMs);
+
+	map.set(id, t);
 }
 
 export namespace useElementVisibility {
@@ -53,63 +60,27 @@ export function useElementVisibility({
 }: useElementVisibility.Props): createVisibilityStore.Hook {
 	const storeRef = useRef(createVisibilityStore());
 
-	const visibleTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
-	const topTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
-	const bottomTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+	const visibleTimers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
+	const proximityTimers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
 
 	useEffect(() => {
 		return () => {
-			clearTimer(visibleTimerRef);
-			clearTimer(topTimerRef);
-			clearTimer(bottomTimerRef);
+			clearTimerMap(visibleTimers.current);
+			clearTimerMap(proximityTimers.current);
 		};
 	}, []);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: Ssst
+	// biome-ignore lint/correctness/useExhaustiveDependencies: intentional
 	useLayoutEffect(() => {
 		const root = scrollerRef.current;
 		if (!root) {
-			console.warn("scrollerRef.current is not set");
 			return;
 		}
 
 		const threshold = visible?.threshold ?? 0.005;
 		const overscan = proximity?.overscan ?? 2;
 
-		const api = storeRef.current;
-
-		const updateId = (id: string, patch: Partial<createVisibilityStore.State>) => {
-			const state = api.getState();
-			const current = state.getById(id) ?? {
-				visible: false,
-				isVisible: false,
-				top: false,
-				bottom: false,
-			};
-
-			const next = {
-				...current,
-				...patch,
-			};
-
-			if (next.visible) {
-				next.top = false;
-				next.bottom = false;
-			} else if (next.top || next.bottom) {
-				next.visible = false;
-			}
-
-			state.setById(id, {
-				...next,
-				isVisible: next.visible || next.top || next.bottom,
-			});
-
-			console.log("Setting visible state for", {
-				id,
-				...next,
-				isVisible: next.visible || next.top || next.bottom,
-			});
-		};
+		const store = storeRef.current;
 
 		const getId = (entry: IntersectionObserverEntry) => {
 			return entry.target.getAttribute(attribute)?.trim() || null;
@@ -123,12 +94,12 @@ export function useElementVisibility({
 						continue;
 					}
 
-					delay(
-						() =>
-							updateId(id, {
-								visible: entry.intersectionRatio > 0,
-							}),
-						visibleTimerRef,
+					const next = entry.intersectionRatio > 0;
+
+					delayById(
+						id,
+						() => store.getState().setVisible(id, next),
+						visibleTimers.current,
 						delayMs,
 					);
 				}
@@ -140,7 +111,7 @@ export function useElementVisibility({
 			},
 		);
 
-		const topIo = new IntersectionObserver(
+		const proximityIo = new IntersectionObserver(
 			(entries) => {
 				for (const entry of entries) {
 					const id = getId(entry);
@@ -148,12 +119,12 @@ export function useElementVisibility({
 						continue;
 					}
 
-					delay(
-						() =>
-							updateId(id, {
-								top: entry.intersectionRatio > 0,
-							}),
-						topTimerRef,
+					const next = entry.intersectionRatio > 0;
+
+					delayById(
+						id,
+						() => store.getState().setProximity(id, next),
+						proximityTimers.current,
 						delayMs,
 					);
 				}
@@ -161,33 +132,6 @@ export function useElementVisibility({
 			{
 				root,
 				threshold,
-				//
-				rootMargin: `${overscan * 100}% 0px 0px 0px`,
-			},
-		);
-
-		const bottomIo = new IntersectionObserver(
-			(entries) => {
-				for (const entry of entries) {
-					const id = getId(entry);
-					if (!id) {
-						continue;
-					}
-
-					delay(
-						() =>
-							updateId(id, {
-								bottom: entry.intersectionRatio > 0,
-							}),
-						bottomTimerRef,
-						delayMs,
-					);
-				}
-			},
-			{
-				root,
-				threshold,
-				//
 				rootMargin: `0px 0px ${overscan * 100}% 0px`,
 			},
 		);
@@ -197,38 +141,39 @@ export function useElementVisibility({
 				return;
 			}
 			visibleIo.observe(node);
-			topIo.observe(node);
-			bottomIo.observe(node);
+			proximityIo.observe(node);
 		};
 
 		const unobserve = (node: Element) => {
 			if (!node.hasAttribute(attribute)) {
 				return;
 			}
+
 			visibleIo.unobserve(node);
-			topIo.unobserve(node);
-			bottomIo.unobserve(node);
+			proximityIo.unobserve(node);
 
 			const id = node.getAttribute(attribute)?.trim();
 			if (id) {
-				api.getState().removeById?.(id);
+				store.getState().removeById(id);
+				visibleTimers.current.delete(id);
+				proximityTimers.current.delete(id);
 			}
 		};
 
 		const mo = new MutationObserver((mutations) => {
-			for (const mutation of mutations) {
-				if (mutation.type !== "childList") {
+			for (const m of mutations) {
+				if (m.type !== "childList") {
 					continue;
 				}
 
-				for (const node of mutation.addedNodes) {
-					if (node instanceof Element) {
-						observe(node);
+				for (const n of m.addedNodes) {
+					if (n instanceof Element) {
+						observe(n);
 					}
 				}
-				for (const node of mutation.removedNodes) {
-					if (node instanceof Element) {
-						unobserve(node);
+				for (const n of m.removedNodes) {
+					if (n instanceof Element) {
+						unobserve(n);
 					}
 				}
 			}
@@ -244,13 +189,12 @@ export function useElementVisibility({
 		}
 
 		return () => {
-			api.getState().clear();
-			//
+			store.getState().clear();
+			clearTimerMap(visibleTimers.current);
+			clearTimerMap(proximityTimers.current);
 			mo.disconnect();
-			//
 			visibleIo.disconnect();
-			topIo.disconnect();
-			bottomIo.disconnect();
+			proximityIo.disconnect();
 		};
 	}, []);
 

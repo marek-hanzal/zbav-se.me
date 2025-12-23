@@ -1,4 +1,5 @@
-import { useLocale } from "@use-pico/client/hook";
+import { VisibilityProvider } from "@use-pico/client/context";
+import { useElementVisibility, useLocale } from "@use-pico/client/hook";
 import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -19,6 +20,14 @@ export namespace List {
 export const List: FC<List.Props> = ({ query, ...props }) => {
 	const locale = useLocale();
 	const scrollerRef = useRef<HTMLDivElement>(null);
+
+	const visibility = useElementVisibility({
+		scrollerRef,
+		visible: {},
+		proximity: {
+			overscan: 4,
+		},
+	});
 
 	return (
 		<Container
@@ -82,11 +91,12 @@ export const List: FC<List.Props> = ({ query, ...props }) => {
 					}
 
 					return (
-						<Content
-							_suspense={"I know"}
-							query={query}
-							scrollerRef={scrollerRef}
-						/>
+						<VisibilityProvider store={visibility}>
+							<Content
+								_suspense={"I know"}
+								query={query}
+							/>
+						</VisibilityProvider>
 					);
 				}}
 			</withListingCollectionQuery.Suspense>

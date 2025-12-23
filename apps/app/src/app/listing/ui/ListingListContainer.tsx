@@ -111,7 +111,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 					}
 
 					return (
-						<VisibilityProvider state={visibility}>
+						<VisibilityProvider store={visibility}>
 							{data.data.map((listing) => (
 								<VisibleContainer
 									key={listing.id}

@@ -4,18 +4,17 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCollectionQuery, withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
-import type { FC, RefObject } from "react";
+import type { FC } from "react";
 import { CreateButton } from "~/app/draft/button/CreateButton";
 import { Hero } from "~/app/listing/ui/Hero";
 
 export namespace Content {
 	export interface Props extends MarkSuspense.Props {
 		query: tListingQuery;
-		scrollerRef: RefObject<HTMLDivElement | null>;
 	}
 }
 
-export const Content: FC<Content.Props> = ({ _suspense, query, scrollerRef }) => {
+export const Content: FC<Content.Props> = ({ _suspense, query }) => {
 	const navigate = useNavigate();
 	const locale = useLocale();
 	/**
