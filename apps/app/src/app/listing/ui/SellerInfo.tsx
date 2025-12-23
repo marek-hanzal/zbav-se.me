@@ -1,24 +1,22 @@
 import { useLocale } from "@use-pico/client/hook";
 import { Container, LabelValue, SpinnerContainer } from "@use-pico/client/ui/container";
 import { toTimeDiff } from "@use-pico/common/time";
-import { withTransactionSellerInfoQuery } from "@zbav-se.me/sdk/query/user";
+import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
 
 export namespace SellerInfo {
 	export interface Props extends Container.Props {
-		transactionId: string;
+		listingId: string;
 	}
 }
 
-export const SellerInfo: FC<SellerInfo.Props> = ({ transactionId, ui, ...props }) => {
+export const SellerInfo: FC<SellerInfo.Props> = ({ listingId, ui, ...props }) => {
 	const locale = useLocale();
 
 	return (
-		<withTransactionSellerInfoQuery.Suspense
+		<withListingSellerInfoQuery.Suspense
 			data={{
-				where: {
-					id: transactionId,
-				},
+				listingId,
 			}}
 			fallback={<SpinnerContainer />}
 		>
@@ -48,6 +46,6 @@ export const SellerInfo: FC<SellerInfo.Props> = ({ transactionId, ui, ...props }
 					</Container>
 				);
 			}}
-		</withTransactionSellerInfoQuery.Suspense>
+		</withListingSellerInfoQuery.Suspense>
 	);
 };

@@ -4,16 +4,16 @@ import { translator } from "@use-pico/common/translator";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { SellerIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
-import { SellerInfo } from "~/app/transaction/ui/seller/SellerInfo";
+import { SellerInfo } from "~/app/listing/ui/SellerInfo";
 import { useSide } from "~/app/user/useSide";
 
 export namespace SellerInfoButton {
 	export interface Props extends Button.Props {
-		transactionId: string;
+		listingId: string;
 	}
 }
 
-export const SellerInfoButton: FC<SellerInfoButton.Props> = ({ transactionId, ...props }) => {
+export const SellerInfoButton: FC<SellerInfoButton.Props> = ({ listingId, ...props }) => {
 	const side = useSide();
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -45,7 +45,7 @@ export const SellerInfoButton: FC<SellerInfoButton.Props> = ({ transactionId, ..
 				})}
 			>
 				<SellerInfo
-					transactionId={transactionId}
+					listingId={listingId}
 					ui={{
 						inner: "default",
 					}}
