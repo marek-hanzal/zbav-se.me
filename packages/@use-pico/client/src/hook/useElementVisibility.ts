@@ -1,4 +1,30 @@
-import { type RefObject, useEffect, useRef, useState } from "react";
+import { type RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
+
+function clearTimer(ref: RefObject<ReturnType<typeof setTimeout> | undefined>) {
+	if (ref.current) {
+		clearTimeout(ref.current);
+		ref.current = undefined;
+	}
+}
+
+function applyWithDelay(
+	value: boolean,
+	setter: (value: boolean) => void,
+	timerRef: RefObject<ReturnType<typeof setTimeout> | undefined>,
+	delayMs: number | undefined,
+) {
+	clearTimer(timerRef);
+
+	if (!delayMs) {
+		setter(value);
+		return;
+	}
+
+	timerRef.current = setTimeout(() => {
+		setter(value);
+		timerRef.current = undefined;
+	}, delayMs);
+}
 
 export namespace useElementVisibility {
 	export interface Visibility {
@@ -11,53 +37,29 @@ export namespace useElementVisibility {
 		setBottom?(proximity: boolean): void;
 	}
 
-	/**
-	 * Configuration object for `useElementVisibility`.
-	 */
 	export interface Props {
-		/**
-		 * Element that ScrollTrigger observes for scroll position context.
-		 */
 		scrollerRef: RefObject<HTMLElement | null>;
-		/**
-		 * Element whose visibility within the scroller bounds is tracked.
-		 */
 		triggerRef: RefObject<HTMLElement | null>;
 		visibility?: Visibility;
 		proximity?: Proximity;
-		/**
-		 * Optional delay in milliseconds before the visibility state update is
-		 * applied. Callbacks are called instantly, but state updates are delayed.
-		 * When undefined or 0, state updates are instant.
-		 */
 		delayMs?: number;
 	}
 
 	export interface Result {
-		/**
-		 * Pure visibility of the tracked element.
-		 */
 		visible: boolean;
-		/**
-		 * In proximity visibility (top/center/bottom)
-		 */
 		isVisible: boolean;
-		/**
-		 * Top proximity visibility.
-		 */
 		top: boolean;
-		/**
-		 * Bottom proximity visibility.
-		 */
 		bottom: boolean;
 	}
 }
 
 /**
- * Establishes a ScrollTrigger instance that toggles visibility state while a trigger element
- * enters or leaves the viewport of the provided scroller.
+ * Native (IntersectionObserver) replacement for the original GSAP ScrollTrigger logic.
+ * Intended to behave 1:1 with the previous implementation:
  *
- * @param props - Hook configuration.
+ * - visibility: active when trigger intersects scroller viewport (like "top bottom" -> "bottom top")
+ * - proximity.top: zone derived from start "top+=100% bottom" and end `bottom+=overscan*100% top`
+ * - proximity.bottom: zone derived from start `top-=overscan*100% bottom` and end "bottom-=100% top"
  */
 export function useElementVisibility({
 	scrollerRef,
@@ -71,10 +73,9 @@ export function useElementVisibility({
 	const [isTop, setIsTop] = useState(false);
 	const [isBottom, setIsBottom] = useState(false);
 
-	// Timer refs for delayed state updates
-	const visibleTimerRef = useRef<NodeJS.Timeout>(undefined);
-	const topTimerRef = useRef<NodeJS.Timeout>(undefined);
-	const bottomTimerRef = useRef<NodeJS.Timeout>(undefined);
+	const visibleTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+	const topTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+	const bottomTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
 	useEffect(() => {
 		if (!scrollerRef.current || !triggerRef.current) {
@@ -86,31 +87,84 @@ export function useElementVisibility({
 		triggerRef,
 	]);
 
-	// Cleanup timers on unmount
 	useEffect(() => {
 		return () => {
-			clearTimeout(visibleTimerRef.current);
-			clearTimeout(topTimerRef.current);
-			clearTimeout(bottomTimerRef.current);
+			clearTimer(visibleTimerRef);
+			clearTimer(topTimerRef);
+			clearTimer(bottomTimerRef);
 		};
 	}, []);
 
-	const delay = (
-		value: boolean,
-		setter: (value: boolean) => void,
-		timerRef: RefObject<NodeJS.Timeout | undefined>,
-	) => {
-		clearTimeout(timerRef.current);
-		if (delayMs === undefined || delayMs === 0) {
-			setter(value);
+	useLayoutEffect(() => {
+		const root = scrollerRef.current;
+		const target = triggerRef.current;
+		if (!ready || !root || !target) {
 			return;
 		}
 
-		timerRef.current = setTimeout(() => {
-			setter(value);
-			timerRef.current = undefined;
-		}, delayMs);
-	};
+		let visibilityObserver: IntersectionObserver | undefined;
+		let topObserver: IntersectionObserver | undefined;
+		let bottomObserver: IntersectionObserver | undefined;
+
+		if (visibility) {
+			visibilityObserver = new IntersectionObserver(
+				([entry]) => {
+					visibility.setVisible?.(!!entry?.isIntersecting);
+					applyWithDelay(!!entry?.isIntersecting, setIsVisible, visibleTimerRef, delayMs);
+				},
+				{
+					root,
+					threshold: 0,
+					rootMargin: "0px",
+				},
+			);
+
+			visibilityObserver.observe(target);
+		}
+
+		if (proximity) {
+			const overscan = proximity.overscan ?? 2;
+
+			topObserver = new IntersectionObserver(
+				([entry]) => {
+					proximity.setTop?.(!!entry?.isIntersecting);
+					applyWithDelay(!!entry?.isIntersecting, setIsTop, topTimerRef, delayMs);
+				},
+				{
+					root,
+					threshold: 0,
+					rootMargin: `${overscan * 100}% 0px 100% 0px`,
+				},
+			);
+			topObserver.observe(target);
+
+			bottomObserver = new IntersectionObserver(
+				([entry]) => {
+					proximity.setBottom?.(!!entry?.isIntersecting);
+					applyWithDelay(!!entry?.isIntersecting, setIsBottom, bottomTimerRef, delayMs);
+				},
+				{
+					root,
+					threshold: 0,
+					rootMargin: `100% 0px ${overscan * 100}% 0px`,
+				},
+			);
+			bottomObserver.observe(target);
+		}
+
+		return () => {
+			visibilityObserver?.disconnect();
+			topObserver?.disconnect();
+			bottomObserver?.disconnect();
+		};
+	}, [
+		ready,
+		scrollerRef.current,
+		triggerRef.current,
+		visibility,
+		proximity,
+		delayMs,
+	]);
 
 	return {
 		visible: isVisible,
