@@ -157,6 +157,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 													tools={[
 														"destructive",
 														"hero",
+														"feedback",
 													]}
 												/>
 											);

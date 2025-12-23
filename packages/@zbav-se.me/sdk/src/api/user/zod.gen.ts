@@ -901,6 +901,29 @@ export const zMessageTextCreate = z.object({
 export type zMessageTextCreate = z.infer<typeof zMessageTextCreate>;
 
 /**
+ * Type of feedback
+ */
+export const zFeedbackEnum = z.enum(['like', 'dislike']).register(z.globalRegistry, {
+    description: 'Type of feedback'
+});
+
+export type zFeedbackEnum = z.infer<typeof zFeedbackEnum>;
+
+/**
+ * Data for creating a new feedback
+ */
+export const zFeedbackCreate = z.object({
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing'
+    }),
+    type: zFeedbackEnum
+}).register(z.globalRegistry, {
+    description: 'Data for creating a new feedback'
+});
+
+export type zFeedbackCreate = z.infer<typeof zFeedbackCreate>;
+
+/**
  * Type of listing event
  */
 export const zListingEventEnum = z.enum([
@@ -912,7 +935,9 @@ export const zListingEventEnum = z.enum([
     'unflag',
     'transaction',
     'favourite',
-    'unfavourite'
+    'unfavourite',
+    'like',
+    'dislike'
 ]).register(z.globalRegistry, {
     description: 'Type of listing event'
 });
@@ -920,15 +945,15 @@ export const zListingEventEnum = z.enum([
 export type zListingEventEnum = z.infer<typeof zListingEventEnum>;
 
 /**
- * Data for creating a new listing score
+ * Data for creating a new listing event
  */
 export const zListingEventCreate = z.object({
     listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing to score'
+        description: 'ID of the listing'
     }),
     event: zListingEventEnum
 }).register(z.globalRegistry, {
-    description: 'Data for creating a new listing score'
+    description: 'Data for creating a new listing event'
 });
 
 export type zListingEventCreate = z.infer<typeof zListingEventCreate>;
@@ -2175,6 +2200,10 @@ export const zListing = z.object({
     transactionId: z.union([
         z.string(),
         z.null()
+    ]),
+    feedback: z.union([
+        zFeedbackEnum,
+        z.null()
     ])
 }).register(z.globalRegistry, {
     description: 'Listing data'
@@ -3214,6 +3243,21 @@ export const zApiListingEventCreateData = z.object({
 });
 
 export type zapiListingEventCreateRequest = z.infer<typeof zApiListingEventCreateData>;
+
+export const zApiFeedbackCreateData = z.object({
+    body: z.optional(zFeedbackCreate),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiFeedbackCreateRequest = z.infer<typeof zApiFeedbackCreateData>;
+
+/**
+ * The feedback was created and the updated listing is returned
+ */
+export const zApiFeedbackCreateResponse = zListing;
+
+export type zapiFeedbackCreateResponse = z.infer<typeof zApiFeedbackCreateResponse>;
 
 export const zApiMessageTextCreateData = z.object({
     body: z.optional(zMessageTextCreate),

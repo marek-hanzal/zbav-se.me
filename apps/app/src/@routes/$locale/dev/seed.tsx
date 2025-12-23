@@ -390,6 +390,22 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 								event: "unfavourite",
 							});
 						});
+
+					Math.random() < 0.15 &&
+						queue.add(async () => {
+							return listingEventMutation.mutateAsync({
+								listingId: listing.id,
+								event: "like",
+							});
+						});
+
+					Math.random() < 0.05 &&
+						queue.add(async () => {
+							return listingEventMutation.mutateAsync({
+								listingId: listing.id,
+								event: "dislike",
+							});
+						});
 				}
 
 				await queue.onIdle();

@@ -1,6 +1,7 @@
 import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import type { CategoryDbSchema } from "~/app/category/schema/CategoryDbSchema";
+import type { FeedbackEnumSchema } from "~/app/feedback/schema/FeedbackEnumSchema";
 import { withGallerySelect } from "~/app/gallery/db/withGallerySelect";
 import { withListingCollectionSelect } from "~/app/listing/db/withListingCollectionSelect";
 import type { ListingDeliveryEnumSchema } from "~/app/listing/schema/ListingDeliveryEnumSchema";
@@ -123,5 +124,14 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 				.orderBy("lts.createdAt", "desc")
 				.limit(1)
 				.as("transactionId"),
+
+			eb
+				.selectFrom("feedback as fb")
+				.select("fb.type")
+				.whereRef("fb.listingId", "=", "l.id")
+				.where("fb.userId", "=", userId)
+				.limit(1)
+				.$castTo<FeedbackEnumSchema.Type | null>()
+				.as("feedback"),
 		]);
 };

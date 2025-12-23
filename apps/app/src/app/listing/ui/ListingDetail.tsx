@@ -13,13 +13,15 @@ import { ConditionIcon } from "~/app/condition/ui/ConditionIcon";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
 import { useListingEvent } from "~/app/listing/hook/useListingEvent";
 import { FavouriteToggleButton } from "~/app/listing/ui/button/FavouriteToggleButton";
+import { FeedbackDislikeButton } from "~/app/listing/ui/button/FeedbackDislikeButton";
+import { FeedbackLikeButton } from "~/app/listing/ui/button/FeedbackLikeButton";
 import { FlagButton } from "~/app/listing/ui/button/FlagButton";
 import { IgnoreButton } from "~/app/listing/ui/button/IgnoreButton";
 import { TransactionButton } from "~/app/listing/ui/button/TransactionButton";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 
 export namespace ListingDetail {
-	export type Tools = "destructive" | "hero";
+	export type Tools = "destructive" | "hero" | "feedback";
 
 	export interface Hooks {
 		onGallery(): void;
@@ -213,6 +215,21 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					action={<Icon icon={ShowIcon} />}
 				/>
 			</Container>
+
+			{tools.includes("feedback") ? (
+				<Container
+					ui={{
+						layout: "horizontal-flex",
+						width: "full",
+						items: "center",
+						justify: "space-evenly",
+					}}
+				>
+					<FeedbackLikeButton listing={listing} />
+
+					<FeedbackDislikeButton listing={listing} />
+				</Container>
+			) : null}
 
 			{tools.includes("destructive") ? (
 				<withListingFetchQuery.Suspense

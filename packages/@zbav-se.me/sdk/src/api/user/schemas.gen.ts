@@ -1108,6 +1108,30 @@ export const sMessageTextCreate = {
     ]
 } as const;
 
+export const sFeedbackCreate = {
+    type: 'object',
+    properties: {
+        listingId: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/FeedbackEnum'
+        }
+    },
+    required: [
+        'listingId',
+        'type'
+    ]
+} as const;
+
+export const sFeedbackEnum = {
+    type: 'string',
+    enum: [
+        'like',
+        'dislike'
+    ]
+} as const;
+
 export const sListingEventCreate = {
     type: 'object',
     properties: {
@@ -1135,7 +1159,9 @@ export const sListingEventEnum = {
         'unflag',
         'transaction',
         'favourite',
-        'unfavourite'
+        'unfavourite',
+        'like',
+        'dislike'
     ]
 } as const;
 
@@ -2785,6 +2811,19 @@ export const sListing = {
                     type: 'null'
                 }
             ]
+        },
+        feedback: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/FeedbackEnum'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         }
     },
     required: [
@@ -2814,7 +2853,8 @@ export const sListing = {
         'isFavourite',
         'isIgnored',
         'hasFlag',
-        'transactionId'
+        'transactionId',
+        'feedback'
     ]
 } as const;
 
