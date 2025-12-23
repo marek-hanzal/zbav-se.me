@@ -1,6 +1,7 @@
 import { useLocale } from "@use-pico/client/hook";
 import { Icon, ShowIcon, SpinnerIcon } from "@use-pico/client/icon";
 import { Container, LabelValue, ValueList } from "@use-pico/client/ui/container";
+import { Markdown } from "@use-pico/client/ui/markdown";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
@@ -132,30 +133,21 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					gap: "default",
 				}}
 			>
-				{listing.condition !== null ? (
-					<LabelValue
-						textLabel={"Listing condition (label)"}
-						textValue={<ConditionIcon condition={listing.condition} />}
-					/>
-				) : null}
+				<LabelValue
+					textLabel={"Listing category (label)"}
+					textValue={
+						<CategoryInline
+							category={listing.category}
+							tone="secondary"
+							theme="light"
+						/>
+					}
+				/>
 
-				{listing.age !== null ? (
+				{listing.description ? (
 					<LabelValue
-						textLabel={"Listing age (label)"}
-						textValue={`Condition - Age [${listing.age}] (hint)`}
-					/>
-				) : null}
-
-				{listing.delivery?.length ? (
-					<ValueList
-						data-ui={"ListingDetail[DeliveryValue]"}
-						textLabel={translator.text("Listing delivery (label)")}
-						textEmpty={translator.text("Delivery not selected")}
-						items={(listing.delivery ?? []).map((delivery) => ({
-							id: delivery,
-							delivery,
-						}))}
-						renderFn={(item) => <Tx label={`Listing delivery - ${item.delivery}`} />}
+						textLabel={"Listing description (label)"}
+						textValue={<Markdown>{listing.description}</Markdown>}
 					/>
 				) : null}
 
@@ -185,6 +177,33 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					/>
 				) : null}
 
+				{listing.delivery?.length ? (
+					<ValueList
+						data-ui={"ListingDetail[DeliveryValue]"}
+						textLabel={translator.text("Listing delivery (label)")}
+						textEmpty={translator.text("Delivery not selected")}
+						items={(listing.delivery ?? []).map((delivery) => ({
+							id: delivery,
+							delivery,
+						}))}
+						renderFn={(item) => <Tx label={`Listing delivery - ${item.delivery}`} />}
+					/>
+				) : null}
+
+				{listing.condition !== null ? (
+					<LabelValue
+						textLabel={"Listing condition (label)"}
+						textValue={<ConditionIcon condition={listing.condition} />}
+					/>
+				) : null}
+
+				{listing.age !== null ? (
+					<LabelValue
+						textLabel={"Listing age (label)"}
+						textValue={`Condition - Age [${listing.age}] (hint)`}
+					/>
+				) : null}
+
 				<LabelValue
 					textLabel={"Listing score hint (label)"}
 					textValue={
@@ -209,17 +228,6 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					textLabel={"Listing seller hint (label)"}
 					textValue={"- skore + link -"}
 					action={<Icon icon={ShowIcon} />}
-				/>
-
-				<LabelValue
-					textLabel={"Listing category (label)"}
-					textValue={
-						<CategoryInline
-							category={listing.category}
-							tone="secondary"
-							theme="light"
-						/>
-					}
 				/>
 			</Container>
 
