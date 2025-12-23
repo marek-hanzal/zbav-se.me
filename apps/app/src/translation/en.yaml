@@ -103,6 +103,9 @@
 1b2f63dad0a59127c719c92424917ab45f0be0f48e494174d2e36b69:
   ref: Logo motto (label)
   value: Logo motto (label)
+1b63424af287e8864ce39b0f977235e745ee16c2db56823d017bc4fd:
+  ref: Listing warranty (label)
+  value: Listing warranty (label)
 1bbdc9dc7f6591dc1499c568c88587d61a1993247ea04942fc818c14:
   ref: No listings in feed (message)
   value: No listings in feed (message)
@@ -142,6 +145,9 @@
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
   ref: Age (title)
   value: Age (title)
+3136e34a81ab39a2fb1e4198edccbf10acf6244b0543a98136311b44:
+  ref: Listing warranty (hint)
+  value: Listing warranty (hint)
 318a99c187d3d8f3a5362513928a7589e883e0a83ca13ac8136e9b4f:
   ref: Age - from youngest (label)
   value: Age - from youngest (label)
@@ -379,6 +385,9 @@
 886e7f1206862942937e7dc0ca0620af2e9bf5d3055337548bdba3d9:
   ref: Messages (label)
   value: Messages (label)
+892fa1e47fe46e918f187198c917e00504737676df992315e0c40b8c:
+  ref: Warranty not selected
+  value: Warranty not selected
 8934b7cd7560e4ff51988a56a295f330a17e5109dbdc4cb542b1f6cb:
   ref: Limit reached (title)
   value: Limit reached (title)
@@ -618,6 +627,9 @@ e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
 e4889b76006e4faf6c6b72d87f7711888de501f0e58936e7053832d6:
   ref: Refresh feed (button)
   value: Refresh feed (button)
+e6ae675232ef4ec304588531c21f87323fba1e262aff12e5dccf22d5:
+  ref: Warranty (title)
+  value: Warranty (title)
 e7211199110cc54c79f5341946a86c6828b5a6d84d69bf5123f9b4a0:
   ref: Listing score hint (label)
   value: Listing score hint (label)

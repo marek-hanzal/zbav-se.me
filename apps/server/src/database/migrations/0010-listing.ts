@@ -16,6 +16,7 @@ export const ListingMigration: Migration = {
 			.addColumn("condition", "integer")
 			.addColumn("age", "integer")
 			.addColumn("delivery", sql`listing_delivery_enum[]`)
+			.addColumn("warranty", sql`listing_warranty_enum`)
 			.addColumn("locationId", "text", (col) => col.notNull())
 			.addColumn("categoryId", "text", (col) => col.notNull())
 			.addColumn("galleryId", "text", (col) => col.notNull())
@@ -134,6 +135,12 @@ export const ListingMigration: Migration = {
 			.createIndex("listing_[priceType]_idx")
 			.on("listing")
 			.column("priceType")
+			.execute();
+
+		await db.schema
+			.createIndex("listing_[warranty]_idx")
+			.on("listing")
+			.column("warranty")
 			.execute();
 
 		await db.schema

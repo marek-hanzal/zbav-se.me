@@ -3,20 +3,20 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { tListingPriceEnum } from "@zbav-se.me/sdk/api/user";
+import { tListingWarrantyEnum } from "@zbav-se.me/sdk/api/user";
 import { uiSelectButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
-export namespace PriceTypeSelect {
+export namespace WarrantySelect {
 	export interface Props extends Container.Props {
 		selection: useSelection.Selection<EntitySchema.Type>;
 	}
 }
 
-export const PriceTypeSelect: FC<PriceTypeSelect.Props> = ({ selection, ui, ...props }) => {
+export const WarrantySelect: FC<WarrantySelect.Props> = ({ selection, ui, ...props }) => {
 	return (
 		<Container
-			data-ui="PriceTypeSelect[Container]"
+			data-ui="WarrantySelect[Container]"
 			ui={{
 				layout: "vertical-flex",
 				height: "auto",
@@ -26,15 +26,15 @@ export const PriceTypeSelect: FC<PriceTypeSelect.Props> = ({ selection, ui, ...p
 			}}
 			{...props}
 		>
-			{Object.values(tListingPriceEnum).map((priceType) => {
+			{Object.values(tListingWarrantyEnum).map((warranty) => {
 				const item = {
-					id: priceType,
+					id: warranty,
 				};
-				const isSelected = selection.isSelected(priceType);
+				const isSelected = selection.isSelected(warranty);
 
 				return (
 					<Button
-						key={priceType}
+						key={warranty}
 						onClick={() => {
 							selection.toggle(item);
 						}}
@@ -46,9 +46,9 @@ export const PriceTypeSelect: FC<PriceTypeSelect.Props> = ({ selection, ui, ...p
 							},
 							className: [],
 						})}
-						data-ui={`PriceTypeSelect-[Button.${priceType}]`}
+						data-ui={`WarrantySelect-[Button.${warranty}]`}
 					>
-						<Tx label={`Listing price - ${priceType}`} />
+						<Tx label={`Listing warranty - ${warranty}`} />
 					</Button>
 				);
 			})}

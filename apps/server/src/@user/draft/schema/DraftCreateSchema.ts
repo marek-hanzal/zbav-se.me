@@ -1,6 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { ListingExpireEnumSchema } from "~/@user/listing/schema/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/app/listing/schema/ListingPriceEnumSchema";
+import { ListingWarrantyEnumSchema } from "~/app/listing/schema/ListingWarrantyEnumSchema";
 import { ProsConsSchema } from "~/app/listing/schema/ProsConsSchema";
 
 export const DraftCreateSchema = z
@@ -18,6 +19,15 @@ export const DraftCreateSchema = z
 		age: z.number().optional().openapi({
 			description: "Age of the item (0-based index)",
 		}),
+		warranty: z
+			.union([
+				ListingWarrantyEnumSchema,
+				z.null(),
+			])
+			.optional()
+			.openapi({
+				description: "Warranty type for the draft",
+			}),
 		locationId: z.string().optional().openapi({
 			description: "ID of the location",
 		}),

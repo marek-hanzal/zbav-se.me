@@ -3,6 +3,7 @@ import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 import { VectorSchema } from "~/schema/VectorSchema";
 import { ListingDeliveryEnumSchema } from "./ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "./ListingPriceEnumSchema";
+import { ListingWarrantyEnumSchema } from "./ListingWarrantyEnumSchema";
 import { ProsConsSchema } from "./ProsConsSchema";
 
 export const ListingDbSchema = z
@@ -49,6 +50,15 @@ export const ListingDbSchema = z
 			])
 			.openapi({
 				description: "Delivery methods for the listing",
+			}),
+		//
+		warranty: z
+			.union([
+				ListingWarrantyEnumSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Warranty type for the listing",
 			}),
 		//
 		locationId: z.string().openapi({

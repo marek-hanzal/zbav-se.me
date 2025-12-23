@@ -17,6 +17,7 @@ import { NamePatch } from "~/app/feed/ui/patch/NamePatch";
 import { RangePatch } from "~/app/feed/ui/patch/RangePatch";
 import { SortPatch } from "~/app/feed/ui/patch/SortPatch";
 import { TitlePatch } from "~/app/feed/ui/patch/TitlePatch";
+import { WarrantyPatch } from "~/app/feed/ui/patch/WarrantyPatch";
 import { GalleryUploadControl } from "~/app/photo/ui/GalleryUploadControl";
 
 export namespace SetupSheet {
@@ -30,6 +31,7 @@ export namespace SetupSheet {
 		| "condition"
 		| "age"
 		| "delivery"
+		| "warranty"
 		| "gallery"
 		| "title";
 
@@ -99,6 +101,9 @@ export const SetupSheet: FC<SetupSheet.Props> = ({
 								},
 								delivery: {
 									onClick: () => setView("delivery"),
+								},
+								warranty: {
+									onClick: () => setView("warranty"),
 								},
 								title: {
 									onClick: () => setView("title"),
@@ -258,6 +263,18 @@ export const SetupSheet: FC<SetupSheet.Props> = ({
 					),
 					header: () => ({
 						title: translator.text("Feed delivery (title)"),
+					}),
+				},
+				warranty: {
+					children: (
+						<WarrantyPatch
+							feed={feed}
+							onSettled={() => setView("detail")}
+							onCancel={() => setView("detail")}
+						/>
+					),
+					header: () => ({
+						title: translator.text("Warranty (title)"),
 					}),
 				},
 				title: {

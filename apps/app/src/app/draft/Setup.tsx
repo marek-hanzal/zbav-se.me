@@ -23,6 +23,7 @@ import { PricePatch } from "~/app/draft/patch/PricePatch";
 import { PriceTypePatch } from "~/app/draft/patch/PriceTypePatch";
 import { ProsPatch } from "~/app/draft/patch/ProsPatch";
 import { TitlePatch } from "~/app/draft/patch/TitlePatch";
+import { WarrantyPatch } from "~/app/draft/patch/WarrantyPatch";
 import { AgeValue } from "~/app/draft/value/AgeValue";
 import { CategoryValue } from "~/app/draft/value/CategoryValue";
 import { ConditionValue } from "~/app/draft/value/ConditionValue";
@@ -35,6 +36,7 @@ import { PriceTypeValue } from "~/app/draft/value/PriceTypeValue";
 import { PriceValue } from "~/app/draft/value/PriceValue";
 import { ProsLabel } from "~/app/draft/value/ProsLabel";
 import { TitleValue } from "~/app/draft/value/TitleValue";
+import { WarrantyValue } from "~/app/draft/value/WarrantyValue";
 import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
 
 export namespace Setup {
@@ -48,6 +50,7 @@ export namespace Setup {
 		| "condition"
 		| "age"
 		| "delivery"
+		| "warranty"
 		| "gallery"
 		| "expireAt"
 		| "description"
@@ -156,27 +159,6 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 									className={"text-center"}
 								/>
 
-								<ConditionValue
-									draft={draft}
-									onClick={() => {
-										setView("condition");
-									}}
-								/>
-
-								<AgeValue
-									draft={draft}
-									onClick={() => {
-										setView("age");
-									}}
-								/>
-
-								<DeliveryValue
-									draft={draft}
-									onClick={() => {
-										setView("delivery");
-									}}
-								/>
-
 								<DescriptionValue
 									draft={draft}
 									onClick={() => {
@@ -195,6 +177,34 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 									draft={draft}
 									onClick={() => {
 										setView("cons");
+									}}
+								/>
+
+								<DeliveryValue
+									draft={draft}
+									onClick={() => {
+										setView("delivery");
+									}}
+								/>
+
+								<WarrantyValue
+									draft={draft}
+									onClick={() => {
+										setView("warranty");
+									}}
+								/>
+
+								<ConditionValue
+									draft={draft}
+									onClick={() => {
+										setView("condition");
+									}}
+								/>
+
+								<AgeValue
+									draft={draft}
+									onClick={() => {
+										setView("age");
 									}}
 								/>
 
@@ -328,6 +338,15 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 				delivery: {
 					children: (
 						<DeliveryPatch
+							draft={draft}
+							onCancel={() => setView("default")}
+							onSettled={() => setView("default")}
+						/>
+					),
+				},
+				warranty: {
+					children: (
+						<WarrantyPatch
 							draft={draft}
 							onCancel={() => setView("default")}
 							onSettled={() => setView("default")}

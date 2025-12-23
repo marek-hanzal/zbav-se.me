@@ -1226,6 +1226,28 @@ export const zCategoryId = z.string().min(1).register(z.globalRegistry, {
 export type zCategoryId = z.infer<typeof zCategoryId>;
 
 /**
+ * Warranty type for the listing
+ */
+export const zListingWarrantyEnum = z.enum([
+    'warranty',
+    'no-warranty',
+    'custom'
+]).register(z.globalRegistry, {
+    description: 'Warranty type for the listing'
+});
+
+export type zListingWarrantyEnum = z.infer<typeof zListingWarrantyEnum>;
+
+/**
+ * This filter matches listings with warranty types in the provided array
+ */
+export const zWarrantyIn = z.array(zListingWarrantyEnum).register(z.globalRegistry, {
+    description: 'This filter matches listings with warranty types in the provided array'
+});
+
+export type zWarrantyIn = z.infer<typeof zWarrantyIn>;
+
+/**
  * Delivery method for the listing
  */
 export const zListingDeliveryEnum = z.enum([
@@ -1303,6 +1325,7 @@ export const zListingWhere = z.object({
         description: 'This filter matches listings with ages in the provided array'
     })),
     deliveryIn: z.optional(zDeliveryIn),
+    warrantyIn: z.optional(zWarrantyIn),
     categoryId: z.optional(zCategoryId),
     categoryIdIn: z.optional(zCategoryIdIn),
     currency: z.optional(zCurrencyListEnum),
@@ -1379,6 +1402,7 @@ export const zListingFilter = z.object({
         description: 'This filter matches listings with ages in the provided array'
     })),
     deliveryIn: z.optional(zDeliveryIn),
+    warrantyIn: z.optional(zWarrantyIn),
     categoryId: z.optional(zCategoryId),
     categoryIdIn: z.optional(zCategoryIdIn),
     currency: z.optional(zCurrencyListEnum),
@@ -1487,6 +1511,10 @@ export const zListingCreate = z.object({
     ]),
     delivery: z.optional(z.union([
         z.array(zListingDeliveryEnum),
+        z.null()
+    ])),
+    warranty: z.optional(z.union([
+        zListingWarrantyEnum,
         z.null()
     ])),
     draftId: z.optional(z.string().register(z.globalRegistry, {
@@ -2302,6 +2330,10 @@ export const zListing = z.object({
         z.array(zListingDeliveryEnum),
         z.null()
     ]),
+    warranty: z.union([
+        zListingWarrantyEnum,
+        z.null()
+    ]),
     locationId: z.string().register(z.globalRegistry, {
         description: 'ID of the location'
     }),
@@ -2624,6 +2656,10 @@ export const zDraftPatchData = z.object({
         z.array(zListingDeliveryEnum),
         z.null()
     ])),
+    warranty: z.optional(z.union([
+        zListingWarrantyEnum,
+        z.null()
+    ])),
     locationId: z.optional(z.union([
         z.string(),
         z.null()
@@ -2712,6 +2748,10 @@ export const zDraftCreate = z.object({
     age: z.optional(z.number().register(z.globalRegistry, {
         description: 'Age of the item (0-based index)'
     })),
+    warranty: z.optional(z.union([
+        zListingWarrantyEnum,
+        z.null()
+    ])),
     locationId: z.optional(z.string().register(z.globalRegistry, {
         description: 'ID of the location'
     })),
@@ -2774,6 +2814,10 @@ export const zDraft = z.object({
     ]),
     delivery: z.union([
         z.array(zListingDeliveryEnum),
+        z.null()
+    ]),
+    warranty: z.union([
+        zListingWarrantyEnum,
         z.null()
     ]),
     locationId: z.union([

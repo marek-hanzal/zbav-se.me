@@ -96,6 +96,10 @@ export const withListingQueryBuilder = <TSelect extends withListingCollectionSel
 		) as TSelect;
 	}
 
+	if (where.warrantyIn && where.warrantyIn.length > 0) {
+		query = query.where("l.warranty", "in", where.warrantyIn) as TSelect;
+	}
+
 	if (where.categoryId) {
 		query = query.where("l.categoryId", "=", where.categoryId) as TSelect;
 	}

@@ -1602,6 +1602,9 @@ export const sListingWhere = {
         deliveryIn: {
             $ref: '#/components/schemas/DeliveryIn'
         },
+        warrantyIn: {
+            $ref: '#/components/schemas/WarrantyIn'
+        },
         categoryId: {
             $ref: '#/components/schemas/CategoryId'
         },
@@ -1677,6 +1680,22 @@ export const sCategoryIdIn = {
 export const sCategoryId = {
     type: 'string',
     minLength: 1
+} as const;
+
+export const sListingWarrantyEnum = {
+    type: 'string',
+    enum: [
+        'warranty',
+        'no-warranty',
+        'custom'
+    ]
+} as const;
+
+export const sWarrantyIn = {
+    type: 'array',
+    items: {
+        $ref: '#/components/schemas/ListingWarrantyEnum'
+    }
 } as const;
 
 export const sListingDeliveryEnum = {
@@ -1768,6 +1787,9 @@ export const sListingFilter = {
         },
         deliveryIn: {
             $ref: '#/components/schemas/DeliveryIn'
+        },
+        warrantyIn: {
+            $ref: '#/components/schemas/WarrantyIn'
         },
         categoryId: {
             $ref: '#/components/schemas/CategoryId'
@@ -1888,6 +1910,19 @@ export const sListingCreate = {
                     items: {
                         $ref: '#/components/schemas/ListingDeliveryEnum'
                     }
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        warranty: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ListingWarrantyEnum'
                 },
                 {
                     type: 'null'
@@ -2966,6 +3001,19 @@ export const sListing = {
                 }
             ]
         },
+        warranty: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ListingWarrantyEnum'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
         locationId: {
             type: 'string'
         },
@@ -3090,6 +3138,7 @@ export const sListing = {
         'condition',
         'age',
         'delivery',
+        'warranty',
         'locationId',
         'categoryId',
         'galleryId',
@@ -3486,6 +3535,19 @@ export const sDraftPatchData = {
                 }
             ]
         },
+        warranty: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ListingWarrantyEnum'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
         locationId: {
             anyOf: [
                 {
@@ -3641,6 +3703,19 @@ export const sDraftCreate = {
         age: {
             type: 'number'
         },
+        warranty: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ListingWarrantyEnum'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
         locationId: {
             type: 'string'
         },
@@ -3775,6 +3850,19 @@ export const sDraft = {
                     items: {
                         $ref: '#/components/schemas/ListingDeliveryEnum'
                     }
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        warranty: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ListingWarrantyEnum'
                 },
                 {
                     type: 'null'
@@ -3940,6 +4028,7 @@ export const sDraft = {
         'condition',
         'age',
         'delivery',
+        'warranty',
         'locationId',
         'categoryId',
         'galleryId',
