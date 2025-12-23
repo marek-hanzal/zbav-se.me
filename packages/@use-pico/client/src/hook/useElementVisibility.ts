@@ -116,8 +116,8 @@ export function useElementVisibility({
 					const current = byIdRef.current.get(id) || {
 						bottom: false,
 						top: false,
-						isVisible: check,
-						visible: check,
+						isVisible: false,
+						visible: false,
 					};
 					const visible = check || current.visible;
 
