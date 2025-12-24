@@ -877,7 +877,11 @@ export type tSellerInfo = {
      */
     registered: string;
     /**
-     * Seller score
+     * Number of listings
+     */
+    listings: number;
+    /**
+     * Seller score; 1-6
      */
     score: number;
 };

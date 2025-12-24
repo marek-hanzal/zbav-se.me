@@ -8,33 +8,47 @@ export namespace listingGetSellerInfoFx {
 	}
 }
 
+export namespace listingGetSellerInfoFx {
+	export interface Props {
+		listingId: string;
+	}
+}
+
 export const listingGetSellerInfoFx = ({ listingId }: listingGetSellerInfoFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 
-		const seller = yield* Effect.tryPromise(async () => {
+		const info = yield* Effect.tryPromise(async () => {
 			return database
-				.selectFrom("user")
-				.selectAll()
-				.where(
-					"id",
-					"=",
-					database.selectFrom("listing").select("userId").where("id", "=", listingId),
-				)
+				.selectFrom("listing as l")
+				.innerJoin("user as u", "u.id", "l.userId")
+				.select((eb) => [
+					"u.id as sellerId",
+					"u.createdAt as registered",
+					eb
+						.selectFrom("listing as l2")
+						.select((eb2) => eb2.fn.countAll<number>().as("listings"))
+						.whereRef("l2.userId", "=", "u.id")
+						.$asScalar()
+						.$notNull()
+						.as("listings"),
+				])
+				.where("l.id", "=", listingId)
 				.executeTakeFirst();
 		});
 
-		if (!seller) {
+		if (!info) {
 			return yield* new NotFoundError({
 				resource: "listing-seller-info",
 				message: "Seller info not available",
 			});
 		}
 
-		return yield* Effect.succeed({
-			registered: seller.createdAt,
-			score: 0,
-		});
+		return {
+			registered: info.registered,
+			listings: Number(info.listings),
+			score: 3,
+		};
 	});
 };
 

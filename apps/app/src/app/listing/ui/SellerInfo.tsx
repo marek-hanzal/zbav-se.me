@@ -1,8 +1,10 @@
 import { useLocale } from "@use-pico/client/hook";
 import { Container, LabelValue, SpinnerContainer } from "@use-pico/client/ui/container";
 import { toTimeDiff } from "@use-pico/common/time";
+import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
+import { SellerScoreIcon } from "~/app/listing/ui/SellerScoreIcon";
 
 export namespace SellerInfo {
 	export interface Props extends Container.Props {
@@ -40,8 +42,16 @@ export const SellerInfo: FC<SellerInfo.Props> = ({ listingId, ui, ...props }) =>
 						/>
 
 						<LabelValue
+							textLabel={"Seller - listings (label)"}
+							textValue={toLocaleNumber({
+								locale,
+								number: data.listings,
+							})}
+						/>
+
+						<LabelValue
 							textLabel={"User score (label)"}
-							textValue={data.score}
+							textValue={<SellerScoreIcon score={data.score} />}
 						/>
 					</Container>
 				);

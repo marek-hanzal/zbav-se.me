@@ -6,10 +6,11 @@ import type { tListing } from "@zbav-se.me/sdk/api/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
 import { ListingDetail } from "~/app/listing/ui/ListingDetail";
+import { SellerInfo } from "~/app/listing/ui/SellerInfo";
 import { GalleryContent } from "~/app/photo/ui/GalleryContent";
 
 export namespace ListingSheet {
-	export type View = "detail" | "messages" | "gallery";
+	export type View = "detail" | "messages" | "gallery" | "seller-info";
 
 	export interface Props extends BottomSheet.PropsEx {
 		listing: tListing;
@@ -57,6 +58,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 							hooks={{
 								onGallery: () => setView("gallery"),
 								onTransaction: () => setView("messages"),
+								onSellerInfo: () => setView("seller-info"),
 							}}
 						/>
 					),
@@ -84,6 +86,20 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 					children: "messagesd",
 					header: () => ({
 						title: translator.text("Listing messages (title)"),
+						right: <CloseButton onClick={() => setView("detail")} />,
+					}),
+				},
+				"seller-info": {
+					children: (
+						<SellerInfo
+							listingId={listing.id}
+							ui={{
+								inner: "default",
+							}}
+						/>
+					),
+					header: () => ({
+						title: translator.text("Seller info (title)"),
 						right: <CloseButton onClick={() => setView("detail")} />,
 					}),
 				},

@@ -6,9 +6,13 @@ export const SellerInfoSchema = z
 			description: "Registration date",
 			type: "string",
 		}),
+		listings: z.number().openapi({
+			description: "Number of listings",
+			example: 1,
+		}),
 		score: z.number().openapi({
-			description: "Seller score",
-			example: 0,
+			description: "Seller score; 1-6",
+			example: 1,
 		}),
 	})
 	.openapi("SellerInfo", {

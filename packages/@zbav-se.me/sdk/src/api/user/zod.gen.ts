@@ -949,8 +949,11 @@ export const zSellerInfo = z.object({
     registered: z.string().register(z.globalRegistry, {
         description: 'Registration date'
     }),
+    listings: z.number().register(z.globalRegistry, {
+        description: 'Number of listings'
+    }),
     score: z.number().register(z.globalRegistry, {
-        description: 'Seller score'
+        description: 'Seller score; 1-6'
     })
 }).register(z.globalRegistry, {
     description: 'Seller info for the listing'

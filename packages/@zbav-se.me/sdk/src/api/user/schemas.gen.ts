@@ -1154,13 +1154,18 @@ export const sSellerInfo = {
         registered: {
             type: 'string'
         },
+        listings: {
+            type: 'number',
+            example: 1
+        },
         score: {
             type: 'number',
-            example: 0
+            example: 1
         }
     },
     required: [
         'registered',
+        'listings',
         'score'
     ]
 } as const;
