@@ -12,7 +12,6 @@ import { withGalleryApi } from "./gallery/withGalleryApi";
 import { withIgnoreApi } from "./ignore/withIgnoreApi";
 import { withListingApi } from "./listing/withListingApi";
 import { withListingEventApi } from "./listing-event/withListingEventApi";
-import { withMessageTextApi } from "./message-text/withMessageTextApi";
 import { withMessageThreadApi } from "./message-thread/withMessageThreadApi";
 import { withS3Api } from "./s3/withS3Api";
 import { withTransactionApi } from "./transaction/withTransactionApi";
@@ -54,7 +53,6 @@ export const withUserApi: Routes.FnWithDeps<{
 	withListingApi(routes);
 	withListingEventApi(routes);
 	withFeedbackApi(routes);
-	withMessageTextApi(routes);
 	withMessageThreadApi(routes);
 	withS3Api(routes);
 	withTransactionApi(routes);

@@ -917,22 +917,6 @@ export const zMessageCollection = z.object({
 export type zMessageCollection = z.infer<typeof zMessageCollection>;
 
 /**
- * Request to create a listing transaction message
- */
-export const zMessageTextCreate = z.object({
-    messageThreadId: z.string().register(z.globalRegistry, {
-        description: 'The ID of the listing transaction to add a message to'
-    }),
-    message: z.string().register(z.globalRegistry, {
-        description: 'The message content'
-    })
-}).register(z.globalRegistry, {
-    description: 'Request to create a listing transaction message'
-});
-
-export type zMessageTextCreate = z.infer<typeof zMessageTextCreate>;
-
-/**
  * Type of feedback
  */
 export const zFeedbackEnum = z.enum(['like', 'dislike']).register(z.globalRegistry, {
@@ -3328,21 +3312,6 @@ export type zapiFeedbackCreateRequest = z.infer<typeof zApiFeedbackCreateData>;
 export const zApiFeedbackCreateResponse = zListing;
 
 export type zapiFeedbackCreateResponse = z.infer<typeof zApiFeedbackCreateResponse>;
-
-export const zApiMessageTextCreateData = z.object({
-    body: z.optional(zMessageTextCreate),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export type zapiMessageTextCreateRequest = z.infer<typeof zApiMessageTextCreateData>;
-
-/**
- * Message created
- */
-export const zApiMessageTextCreateResponse = zMessageText;
-
-export type zapiMessageTextCreateResponse = z.infer<typeof zApiMessageTextCreateResponse>;
 
 export const zApiMessageThreadMessageCollectionData = z.object({
     body: z.optional(zMessageQuery),

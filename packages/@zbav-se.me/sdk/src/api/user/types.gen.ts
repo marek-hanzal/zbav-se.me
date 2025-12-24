@@ -843,20 +843,6 @@ export type tMessageText = {
 export type tMessage = tMessageText | tMessageGallery | tMessageLocation | tMessageSystem;
 
 /**
- * Request to create a listing transaction message
- */
-export type tMessageTextCreate = {
-    /**
-     * The ID of the listing transaction to add a message to
-     */
-    messageThreadId: string;
-    /**
-     * The message content
-     */
-    message: string;
-};
-
-/**
  * Data for creating a new feedback
  */
 export type tFeedbackCreate = {
@@ -3625,42 +3611,6 @@ export type tApiFeedbackCreateResponse = {
 };
 
 export type apiFeedbackCreateResponse = tApiFeedbackCreateResponse[keyof tApiFeedbackCreateResponse];
-
-export type tApiMessageTextCreateRequest = {
-    /**
-     * Query object for message creation
-     */
-    body?: tMessageTextCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/message-text/create';
-};
-
-export type apiMessageTextCreateErrors = {
-    /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
-     * Message thread not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiMessageTextCreateError = apiMessageTextCreateErrors[keyof apiMessageTextCreateErrors];
-
-export type tApiMessageTextCreateResponse = {
-    /**
-     * Message created
-     */
-    200: tMessageText;
-};
-
-export type apiMessageTextCreateResponse = tApiMessageTextCreateResponse[keyof tApiMessageTextCreateResponse];
 
 export type tApiMessageThreadMessageCollectionRequest = {
     body?: tMessageQuery;

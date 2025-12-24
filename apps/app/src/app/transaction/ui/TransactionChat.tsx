@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { withMessageTextCreateMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withTransactionMessageTextCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import {
 	withMessageThreadMessageCollectionQuery,
 	withTransactionFetchQuery,
@@ -22,7 +22,7 @@ export namespace TransactionChat {
 export const TransactionChat: FC<TransactionChat.Props> = ({ transactionId, ui, ...props }) => {
 	const side = useSide();
 	const queryClient = useQueryClient();
-	const messageMutation = withMessageTextCreateMutation.useMutation();
+	const messageMutation = withTransactionMessageTextCreateMutation.useMutation();
 
 	return (
 		<Container
@@ -52,7 +52,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transactionId, ui, 
 									onSubmit={(message) => {
 										messageMutation.mutate(
 											{
-												messageThreadId: transaction.messageThreadId,
+												transactionId,
 												message,
 											},
 											{

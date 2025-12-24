@@ -11,7 +11,7 @@ import { withMonthlyEndpoint } from "./monthly";
 export const withCronApi: Routes.Fn = (routes) => {
 	withHourlyEndpoint(routes);
 	withMonthlyEndpoint(routes);
-    //
+	//
 	withDay0Endpoint(routes);
 	withDay4Endpoint(routes);
 	withDay8Endpoint(routes);

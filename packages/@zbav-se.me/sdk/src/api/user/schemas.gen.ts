@@ -1123,22 +1123,6 @@ export const sMessage = {
     ]
 } as const;
 
-export const sMessageTextCreate = {
-    type: 'object',
-    properties: {
-        messageThreadId: {
-            type: 'string'
-        },
-        message: {
-            type: 'string'
-        }
-    },
-    required: [
-        'messageThreadId',
-        'message'
-    ]
-} as const;
-
 export const sFeedbackCreate = {
     type: 'object',
     properties: {
