@@ -9,7 +9,7 @@ export namespace LocationSelect {
 		value: string | undefined | null;
 		onChange(value: string): void;
 		onLocation?(value: tLocation): void;
-		textHint?: string;
+		textHint: string;
 	}
 }
 

@@ -1,3 +1,4 @@
+import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
 import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
@@ -40,6 +41,7 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 			{...props}
 		>
 			<LocationControl
+				textHint={translator.text("Location security (hint)")}
 				onCancel={onCancel}
 				onSave={({ locationId }) => {
 					mutation.mutate({

@@ -14,7 +14,7 @@ import type { FC } from "react";
 
 export namespace ListContainer {
 	export interface Props extends Omit<Container.Props, "onChange"> {
-		textHint?: string;
+		textHint: string;
 		search: Fulltext.Value;
 		value: string | undefined | null;
 		onChange(value: string): void;
@@ -57,7 +57,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 						}}
 					>
 						<Mx
-							label={textHint ?? "Location security (hint)"}
+							label={textHint}
 							ui={{
 								tone: "secondary",
 								theme: "light",

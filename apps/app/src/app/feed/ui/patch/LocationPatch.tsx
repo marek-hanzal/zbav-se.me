@@ -1,4 +1,5 @@
 import type { Container } from "@use-pico/client/ui/container";
+import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user/feed";
@@ -30,6 +31,7 @@ export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCanc
 
 	return (
 		<LocationControl
+			textHint={translator.text("Feed location security (hint)")}
 			onCancel={onCancel}
 			onSave={({ locationId, location }) => {
 				mutation.mutate({

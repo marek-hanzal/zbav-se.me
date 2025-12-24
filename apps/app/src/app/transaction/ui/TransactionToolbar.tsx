@@ -8,6 +8,7 @@ import { type FC, useState } from "react";
 import { SellerInfoButton } from "~/app/listing/ui/button/SellerInfoButton";
 import { GalleryUploadButton } from "~/app/photo/ui/GalleryUploadButton";
 import { AcceptButton } from "~/app/transaction/ui/button/AcceptButton";
+import { LocationButton } from "~/app/transaction/ui/button/LocationButton";
 import { RejectButton } from "~/app/transaction/ui/button/RejectButton";
 import { BuyerInfoButton } from "~/app/transaction/ui/buyer/BuyerInfoButton";
 
@@ -85,6 +86,13 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 								transactionId={transactionId}
 								{...buttonUi}
 							/>
+
+							{transaction.status === "open" ? (
+								<LocationButton
+									transactionId={transactionId}
+									{...buttonUi}
+								/>
+							) : null}
 
 							{transaction.status === "open" ? (
 								<GalleryUploadButton
