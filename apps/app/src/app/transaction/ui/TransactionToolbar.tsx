@@ -86,33 +86,35 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 								{...buttonUi}
 							/>
 
-							<GalleryUploadButton
-								defaultUploadIds={[]}
-								state={{
-									value: isGalleryOpen,
-									set: setIsGalleryOpen,
-								}}
-								withMutation={withTransactionMessageGalleryCreateMutation}
-								toMutation={(uploadIds) => ({
-									messageThreadId: transaction.messageThreadId,
-									uploadIds,
-								})}
-								onSuccess={() => {
-									setIsGalleryOpen(false);
-									withMessageThreadMessageCollectionQuery.invalidate(
-										queryClient,
-										{
-											path: {
-												messageThreadId: transaction.messageThreadId,
+							{transaction.status === "open" ? (
+								<GalleryUploadButton
+									defaultUploadIds={[]}
+									state={{
+										value: isGalleryOpen,
+										set: setIsGalleryOpen,
+									}}
+									withMutation={withTransactionMessageGalleryCreateMutation}
+									toMutation={(uploadIds) => ({
+										messageThreadId: transaction.messageThreadId,
+										uploadIds,
+									})}
+									onSuccess={() => {
+										setIsGalleryOpen(false);
+										withMessageThreadMessageCollectionQuery.invalidate(
+											queryClient,
+											{
+												path: {
+													messageThreadId: transaction.messageThreadId,
+												},
 											},
-										},
-									);
-								}}
-								onCancel={() => {
-									setIsGalleryOpen(false);
-								}}
-								{...buttonUi}
-							/>
+										);
+									}}
+									onCancel={() => {
+										setIsGalleryOpen(false);
+									}}
+									{...buttonUi}
+								/>
+							) : null}
 
 							<SellerInfoButton
 								listingId={transaction.listingId}
