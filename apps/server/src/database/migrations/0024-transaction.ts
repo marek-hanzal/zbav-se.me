@@ -5,11 +5,18 @@ export const TransactionMigration: Migration = {
 		await db.schema
 			.createType("transaction_status_enum")
 			.asEnum([
+				// map to "pending"
 				"request",
+				//
+				// map to "open"
 				"accepted",
+				// keep as is
 				"rejected",
+				// map to "completed"
 				"success",
+				// map to "cancelled"
 				"closed",
+				// keep as is
 				"expired",
 			])
 			.execute();
