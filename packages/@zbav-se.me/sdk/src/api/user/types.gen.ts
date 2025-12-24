@@ -815,6 +815,7 @@ export type tMessageGallery = {
     galleryId: string;
     type: tMessageTypeEnum;
     direction: tMessageDirectionEnum;
+    gallery: tGallery & unknown;
 };
 
 /**

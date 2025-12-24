@@ -862,7 +862,10 @@ export const zMessageGallery = z.object({
         description: 'ID of the gallery'
     }),
     type: zMessageTypeEnum,
-    direction: zMessageDirectionEnum
+    direction: zMessageDirectionEnum,
+    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
+        description: 'Gallery data with items'
+    }))
 }).register(z.globalRegistry, {
     description: 'Message gallery entry'
 });

@@ -1,5 +1,7 @@
 import { sql } from "kysely";
+import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
+import { withGallerySelect } from "~/app/gallery/db/withGallerySelect";
 import type { MessageDirectionEnumSchema } from "~/app/message/schema/MessageDirectionEnumSchema";
 import type { MessageGallerySortSchema } from "~/app/message-gallery/schema/MessageGallerySortSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
@@ -31,7 +33,19 @@ export const withMessageGallerySelect = ({
 				.else<MessageDirectionEnumSchema.Type>("in")
 				.end()
 				.as("direction"),
-		);
+		)
+		.select((eb) => [
+			jsonObjectFrom(
+				withGallerySelect({
+					database,
+					sort: undefined,
+				})
+					.where("gal.id", "=", eb.ref("mg.galleryId"))
+					.limit(1),
+			)
+				.$notNull()
+				.as("gallery"),
+		]);
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

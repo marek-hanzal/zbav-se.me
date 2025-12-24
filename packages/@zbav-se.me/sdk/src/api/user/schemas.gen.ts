@@ -1072,13 +1072,22 @@ export const sMessageGallery = {
         },
         direction: {
             $ref: '#/components/schemas/MessageDirectionEnum'
+        },
+        gallery: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/Gallery'
+                },
+                {}
+            ]
         }
     },
     required: [
         'id',
         'galleryId',
         'type',
-        'direction'
+        'direction',
+        'gallery'
     ]
 } as const;
 
