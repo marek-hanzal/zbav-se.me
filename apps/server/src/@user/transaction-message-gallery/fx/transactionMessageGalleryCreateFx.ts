@@ -33,10 +33,16 @@ export const transactionMessageGalleryCreateFx = ({
 
 			const transaction = yield* Effect.tryPromise(async () => {
 				return database
-					.selectFrom("transaction")
-					.selectAll()
-					.where("messageThreadId", "=", messageThreadId)
-					.where("userId", "=", user.id)
+					.selectFrom("transaction as t")
+					.innerJoin("listing as l", "t.listingId", "l.id")
+					.selectAll("t")
+					.where("t.messageThreadId", "=", messageThreadId)
+					.where((eb) => {
+						return eb.or([
+							eb("t.userId", "=", user.id),
+							eb("l.userId", "=", user.id),
+						]);
+					})
 					.executeTakeFirst();
 			});
 
