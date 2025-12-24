@@ -216,11 +216,11 @@ export type tTransactionStatus = {
  * This filter matches the current status of the transaction
  */
 export const tTransactionStatusEnum = {
-    request: 'request',
-    accepted: 'accepted',
+    pending: 'pending',
+    open: 'open',
     rejected: 'rejected',
-    success: 'success',
-    closed: 'closed',
+    completed: 'completed',
+    cancelled: 'cancelled',
     expired: 'expired'
 } as const;
 

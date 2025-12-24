@@ -237,11 +237,11 @@ export type zTransactionStatusAccept = z.infer<typeof zTransactionStatusAccept>;
  * This filter matches the current status of the transaction
  */
 export const zTransactionStatusEnum = z.enum([
-    'request',
-    'accepted',
+    'pending',
+    'open',
     'rejected',
-    'success',
-    'closed',
+    'completed',
+    'cancelled',
     'expired'
 ]).register(z.globalRegistry, {
     description: 'This filter matches the current status of the transaction'

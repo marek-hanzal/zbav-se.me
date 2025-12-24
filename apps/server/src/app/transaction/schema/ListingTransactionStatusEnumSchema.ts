@@ -2,11 +2,11 @@ import { z } from "@hono/zod-openapi";
 
 export const TransactionStatusEnumSchema = z
 	.enum([
-		"request",
-		"accepted",
+		"pending",
+		"open",
 		"rejected",
-		"success",
-		"closed",
+		"completed",
+		"cancelled",
 		"expired",
 	])
 	.openapi("TransactionStatusEnum", {

@@ -86,7 +86,7 @@ export const transactionCreateFx = ({ listingId }: transactionCreateFx.Props) =>
 			yield* transactionStatusCreateFx({
 				transactionId: id,
 				side: "buyer",
-				status: "request",
+				status: "pending",
 			});
 
 			yield* listingEventCreateFx({

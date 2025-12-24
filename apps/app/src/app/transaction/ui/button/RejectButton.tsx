@@ -38,7 +38,7 @@ export const RejectButton: FC<RejectButton.Props> = ({ transactionId, ...props }
 			}
 		>
 			{({ data: transaction }) => {
-				if (transaction.status !== "accepted" && transaction.status !== "request") {
+				if (transaction.status !== "open" && transaction.status !== "pending") {
 					return null;
 				}
 

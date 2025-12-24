@@ -311,11 +311,11 @@ export const sTransactionStatus = {
 export const sTransactionStatusEnum = {
     type: 'string',
     enum: [
-        'request',
-        'accepted',
+        'pending',
+        'open',
         'rejected',
-        'success',
-        'closed',
+        'completed',
+        'cancelled',
         'expired'
     ]
 } as const;

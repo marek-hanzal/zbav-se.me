@@ -50,11 +50,11 @@ export const withTransactionSelect = ({ database, sort }: withTransactionSelect.
 					(eb) =>
 						eb
 							.case(eb.ref("status.latestStatus"))
-							.when("request")
+							.when("pending")
 							.then(10)
-							.when("accepted")
+							.when("open")
 							.then(20)
-							.when("success")
+							.when("completed")
 							.then(30)
 							.when("rejected")
 							.then(40)

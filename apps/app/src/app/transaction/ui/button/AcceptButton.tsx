@@ -41,7 +41,7 @@ export const AcceptButton: FC<AcceptButton.Props> = ({ transactionId, ...props }
 			}
 		>
 			{({ data: transaction }) => {
-				if (transaction.status !== "request") {
+				if (transaction.status !== "pending") {
 					return null;
 				}
 

@@ -46,7 +46,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transactionId, ui, 
 			>
 				{({ data: transaction }) => {
 					return match(transaction.status)
-						.with("accepted", () => {
+						.with("open", () => {
 							return (
 								<ChatInput
 									onSubmit={(message) => {
@@ -77,7 +77,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transactionId, ui, 
 								/>
 							);
 						})
-						.with("request", () => {
+						.with("pending", () => {
 							return (
 								<Tx
 									label={
@@ -94,7 +94,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transactionId, ui, 
 								/>
 							);
 						})
-						.with("success", "closed", "expired", "rejected", () => {
+						.with("completed", "cancelled", "expired", "rejected", () => {
 							return (
 								<Tx
 									label={"Chat - transaction closed (message)"}
