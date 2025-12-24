@@ -331,6 +331,54 @@ export const sTransactionSideEnum = {
     ]
 } as const;
 
+export const sTransactionMessageTextCreate = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        message: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId',
+        'message'
+    ]
+} as const;
+
+export const sTransactionMessageLocationCreate = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        locationId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId',
+        'locationId'
+    ]
+} as const;
+
+export const sTransactionMessageGalleryCreate = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        galleryId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId',
+        'galleryId'
+    ]
+} as const;
+
 export const sTransactionBuyerInfo = {
     type: 'object',
     properties: {

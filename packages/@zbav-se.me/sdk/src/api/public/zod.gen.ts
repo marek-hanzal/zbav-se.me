@@ -3,6 +3,22 @@
 import { z } from 'zod';
 
 /**
+ * GitHub commit history count
+ */
+export const zGitHubHistory = z.object({
+    date: z.string().register(z.globalRegistry, {
+        description: 'UTC day (YYYY-MM-DD)'
+    }),
+    count: z.int().gte(0).register(z.globalRegistry, {
+        description: 'Number of commits on this day'
+    })
+}).register(z.globalRegistry, {
+    description: 'GitHub commit history count'
+});
+
+export type zGitHubHistory = z.infer<typeof zGitHubHistory>;
+
+/**
  * Type of notice
  */
 export const zNoticeTypeEnum = z.enum([
@@ -29,21 +45,181 @@ export const zNotice = z.object({
 
 export type zNotice = z.infer<typeof zNotice>;
 
-/**
- * GitHub commit history count
- */
-export const zGitHubHistory = z.object({
-    date: z.string().register(z.globalRegistry, {
-        description: 'UTC day (YYYY-MM-DD)'
-    }),
-    count: z.int().gte(0).register(z.globalRegistry, {
-        description: 'Number of commits on this day'
-    })
-}).register(z.globalRegistry, {
-    description: 'GitHub commit history count'
+export const zApiCronHourlyData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
 });
 
-export type zGitHubHistory = z.infer<typeof zGitHubHistory>;
+export type zapiCronHourlyRequest = z.infer<typeof zApiCronHourlyData>;
+
+/**
+ * Hourly cron job executed
+ */
+export const zApiCronHourlyResponse = z.object({
+    status: zNotice,
+    timestamp: z.string().register(z.globalRegistry, {
+        description: 'Timestamp when the cron job was executed'
+    })
+}).register(z.globalRegistry, {
+    description: 'Hourly cron job executed'
+});
+
+export type zapiCronHourlyResponse = z.infer<typeof zApiCronHourlyResponse>;
+
+export const zApiCronMonthlyData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiCronMonthlyRequest = z.infer<typeof zApiCronMonthlyData>;
+
+/**
+ * Monthly cron job executed
+ */
+export const zApiCronMonthlyResponse = z.object({
+    status: zNotice,
+    timestamp: z.string().register(z.globalRegistry, {
+        description: 'Timestamp when the cron job was executed'
+    })
+}).register(z.globalRegistry, {
+    description: 'Monthly cron job executed'
+});
+
+export type zapiCronMonthlyResponse = z.infer<typeof zApiCronMonthlyResponse>;
+
+export const zApiCronDay0Data = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiCronDay0Request = z.infer<typeof zApiCronDay0Data>;
+
+/**
+ * Daily cron job executed (hour 0)
+ */
+export const zApiCronDay0Response = z.object({
+    status: zNotice,
+    timestamp: z.string().register(z.globalRegistry, {
+        description: 'Timestamp when the cron job was executed'
+    })
+}).register(z.globalRegistry, {
+    description: 'Daily cron job executed (hour 0)'
+});
+
+export type zapiCronDay0Response = z.infer<typeof zApiCronDay0Response>;
+
+export const zApiCronDay4Data = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiCronDay4Request = z.infer<typeof zApiCronDay4Data>;
+
+/**
+ * Daily cron job executed (hour 4)
+ */
+export const zApiCronDay4Response = z.object({
+    status: zNotice,
+    timestamp: z.string().register(z.globalRegistry, {
+        description: 'Timestamp when the cron job was executed'
+    })
+}).register(z.globalRegistry, {
+    description: 'Daily cron job executed (hour 4)'
+});
+
+export type zapiCronDay4Response = z.infer<typeof zApiCronDay4Response>;
+
+export const zApiCronDay8Data = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiCronDay8Request = z.infer<typeof zApiCronDay8Data>;
+
+/**
+ * Daily cron job executed (hour 8)
+ */
+export const zApiCronDay8Response = z.object({
+    status: zNotice,
+    timestamp: z.string().register(z.globalRegistry, {
+        description: 'Timestamp when the cron job was executed'
+    })
+}).register(z.globalRegistry, {
+    description: 'Daily cron job executed (hour 8)'
+});
+
+export type zapiCronDay8Response = z.infer<typeof zApiCronDay8Response>;
+
+export const zApiCronDay12Data = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiCronDay12Request = z.infer<typeof zApiCronDay12Data>;
+
+/**
+ * Daily cron job executed (hour 12)
+ */
+export const zApiCronDay12Response = z.object({
+    status: zNotice,
+    timestamp: z.string().register(z.globalRegistry, {
+        description: 'Timestamp when the cron job was executed'
+    })
+}).register(z.globalRegistry, {
+    description: 'Daily cron job executed (hour 12)'
+});
+
+export type zapiCronDay12Response = z.infer<typeof zApiCronDay12Response>;
+
+export const zApiCronDay16Data = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiCronDay16Request = z.infer<typeof zApiCronDay16Data>;
+
+/**
+ * Daily cron job executed (hour 16)
+ */
+export const zApiCronDay16Response = z.object({
+    status: zNotice,
+    timestamp: z.string().register(z.globalRegistry, {
+        description: 'Timestamp when the cron job was executed'
+    })
+}).register(z.globalRegistry, {
+    description: 'Daily cron job executed (hour 16)'
+});
+
+export type zapiCronDay16Response = z.infer<typeof zApiCronDay16Response>;
+
+export const zApiCronDay20Data = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiCronDay20Request = z.infer<typeof zApiCronDay20Data>;
+
+/**
+ * Daily cron job executed (hour 20)
+ */
+export const zApiCronDay20Response = z.object({
+    status: zNotice,
+    timestamp: z.string().register(z.globalRegistry, {
+        description: 'Timestamp when the cron job was executed'
+    })
+}).register(z.globalRegistry, {
+    description: 'Daily cron job executed (hour 20)'
+});
+
+export type zapiCronDay20Response = z.infer<typeof zApiCronDay20Response>;
 
 export const zApiGithubHistoryData = z.object({
     body: z.optional(z.never()),

@@ -285,6 +285,54 @@ export const zTransactionStatus = z.object({
 export type zTransactionStatus = z.infer<typeof zTransactionStatus>;
 
 /**
+ * Request to create a transaction message
+ */
+export const zTransactionMessageTextCreate = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the transaction to add a message to'
+    }),
+    message: z.string().register(z.globalRegistry, {
+        description: 'The message content'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to create a transaction message'
+});
+
+export type zTransactionMessageTextCreate = z.infer<typeof zTransactionMessageTextCreate>;
+
+/**
+ * Request to create a transaction message location
+ */
+export const zTransactionMessageLocationCreate = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the transaction to add a location to'
+    }),
+    locationId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the location'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to create a transaction message location'
+});
+
+export type zTransactionMessageLocationCreate = z.infer<typeof zTransactionMessageLocationCreate>;
+
+/**
+ * Request to create a transaction message gallery
+ */
+export const zTransactionMessageGalleryCreate = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the transaction to add a gallery to'
+    }),
+    galleryId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the gallery'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to create a transaction message gallery'
+});
+
+export type zTransactionMessageGalleryCreate = z.infer<typeof zTransactionMessageGalleryCreate>;
+
+/**
  * Buyer info for the transaction
  */
 export const zTransactionBuyerInfo = z.object({
@@ -3402,6 +3450,51 @@ export type zapiTransactionBuyerInfoRequest = z.infer<typeof zApiTransactionBuye
 export const zApiTransactionBuyerInfoResponse = zTransactionBuyerInfo;
 
 export type zapiTransactionBuyerInfoResponse = z.infer<typeof zApiTransactionBuyerInfoResponse>;
+
+export const zApiTransactionMessageGalleryCreateData = z.object({
+    body: z.optional(zTransactionMessageGalleryCreate),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionMessageGalleryCreateRequest = z.infer<typeof zApiTransactionMessageGalleryCreateData>;
+
+/**
+ * Message gallery created
+ */
+export const zApiTransactionMessageGalleryCreateResponse = zMessageGallery;
+
+export type zapiTransactionMessageGalleryCreateResponse = z.infer<typeof zApiTransactionMessageGalleryCreateResponse>;
+
+export const zApiTransactionMessageLocationCreateData = z.object({
+    body: z.optional(zTransactionMessageLocationCreate),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionMessageLocationCreateRequest = z.infer<typeof zApiTransactionMessageLocationCreateData>;
+
+/**
+ * Message location created
+ */
+export const zApiTransactionMessageLocationCreateResponse = zMessageLocation;
+
+export type zapiTransactionMessageLocationCreateResponse = z.infer<typeof zApiTransactionMessageLocationCreateResponse>;
+
+export const zApiTransactionMessageTextCreateData = z.object({
+    body: z.optional(zTransactionMessageTextCreate),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionMessageTextCreateRequest = z.infer<typeof zApiTransactionMessageTextCreateData>;
+
+/**
+ * Message created
+ */
+export const zApiTransactionMessageTextCreateResponse = zMessageText;
+
+export type zapiTransactionMessageTextCreateResponse = z.infer<typeof zApiTransactionMessageTextCreateResponse>;
 
 export const zApiTransactionStatusAcceptData = z.object({
     body: z.optional(zTransactionStatusAccept),

@@ -246,6 +246,48 @@ export const tTransactionSideEnum = {
 export type tTransactionSideEnum = typeof tTransactionSideEnum[keyof typeof tTransactionSideEnum];
 
 /**
+ * Request to create a transaction message
+ */
+export type tTransactionMessageTextCreate = {
+    /**
+     * The ID of the transaction to add a message to
+     */
+    transactionId: string;
+    /**
+     * The message content
+     */
+    message: string;
+};
+
+/**
+ * Request to create a transaction message location
+ */
+export type tTransactionMessageLocationCreate = {
+    /**
+     * The ID of the transaction to add a location to
+     */
+    transactionId: string;
+    /**
+     * The ID of the location
+     */
+    locationId: string;
+};
+
+/**
+ * Request to create a transaction message gallery
+ */
+export type tTransactionMessageGalleryCreate = {
+    /**
+     * The ID of the transaction to add a gallery to
+     */
+    transactionId: string;
+    /**
+     * The ID of the gallery
+     */
+    galleryId: string;
+};
+
+/**
  * Buyer info for the transaction
  */
 export type tTransactionBuyerInfo = {
@@ -3816,6 +3858,114 @@ export type tApiTransactionBuyerInfoResponse = {
 };
 
 export type apiTransactionBuyerInfoResponse = tApiTransactionBuyerInfoResponse[keyof tApiTransactionBuyerInfoResponse];
+
+export type tApiTransactionMessageGalleryCreateRequest = {
+    /**
+     * Query object for transaction message gallery creation
+     */
+    body?: tTransactionMessageGalleryCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction-message-gallery/create';
+};
+
+export type apiTransactionMessageGalleryCreateErrors = {
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionMessageGalleryCreateError = apiTransactionMessageGalleryCreateErrors[keyof apiTransactionMessageGalleryCreateErrors];
+
+export type tApiTransactionMessageGalleryCreateResponse = {
+    /**
+     * Message gallery created
+     */
+    200: tMessageGallery;
+};
+
+export type apiTransactionMessageGalleryCreateResponse = tApiTransactionMessageGalleryCreateResponse[keyof tApiTransactionMessageGalleryCreateResponse];
+
+export type tApiTransactionMessageLocationCreateRequest = {
+    /**
+     * Query object for transaction message location creation
+     */
+    body?: tTransactionMessageLocationCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction-message-location/create';
+};
+
+export type apiTransactionMessageLocationCreateErrors = {
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionMessageLocationCreateError = apiTransactionMessageLocationCreateErrors[keyof apiTransactionMessageLocationCreateErrors];
+
+export type tApiTransactionMessageLocationCreateResponse = {
+    /**
+     * Message location created
+     */
+    200: tMessageLocation;
+};
+
+export type apiTransactionMessageLocationCreateResponse = tApiTransactionMessageLocationCreateResponse[keyof tApiTransactionMessageLocationCreateResponse];
+
+export type tApiTransactionMessageTextCreateRequest = {
+    /**
+     * Query object for transaction message creation
+     */
+    body?: tTransactionMessageTextCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction-message-text/create';
+};
+
+export type apiTransactionMessageTextCreateErrors = {
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionMessageTextCreateError = apiTransactionMessageTextCreateErrors[keyof apiTransactionMessageTextCreateErrors];
+
+export type tApiTransactionMessageTextCreateResponse = {
+    /**
+     * Message created
+     */
+    200: tMessageText;
+};
+
+export type apiTransactionMessageTextCreateResponse = tApiTransactionMessageTextCreateResponse[keyof tApiTransactionMessageTextCreateResponse];
 
 export type tApiTransactionStatusAcceptRequest = {
     /**
