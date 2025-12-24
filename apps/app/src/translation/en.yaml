@@ -97,9 +97,6 @@
 1ab95d6fcbacebf206a0388ee4204fbc371b89b1ab3d74df245149fa:
   ref: Feed setup (title)
   value: Feed setup (title)
-1ad37c567b9ce5b4ef84ca20ca1ed9252f82e215fe2c985df08a404b:
-  ref: Listing Score - Flag (label)
-  value: Listing Score - Flag (label)
 1b2f63dad0a59127c719c92424917ab45f0be0f48e494174d2e36b69:
   ref: Logo motto (label)
   value: Logo motto (label)
@@ -166,9 +163,6 @@
 376b4e9c64fcef908876651b54c8c0d6a03a96798a140ba2a9c865f2:
   ref: rejected
   value: rejected
-37e1cb2b4f78786fb70f260332ccd707e7a0ad66fdf52bf3a4f4239c:
-  ref: Listing Score - Feed views (label)
-  value: Listing Score - Feed views (label)
 39506faaa681b27e6ed65d4237e07c6a2c63838b44f9495159f1ec8b:
   ref: Listing - Pros not filled
   value: Listing - Pros not filled
@@ -208,9 +202,6 @@
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
   ref: Uploading photo (title)
   value: Uploading photo (title)
-45d5b7e42785af91d8a1ad14ee4c704a800423052577851a641b746b:
-  ref: Listing Score - Views (label)
-  value: Listing Score - Views (label)
 45fd6a456d2df867fc9e5e6b00a48088350c9551963f2be871e604e3:
   ref: No my listings (message)
   value: No my listings (message)
@@ -220,12 +211,6 @@
 489d00517dfd05ee3a0d97637b9717d03aa5ae79bab228d5eed3e1e4:
   ref: Loading... (label)
   value: Loading... (label)
-49db182fc8c4081a6c089d091f99e7000375a7115184448c696ff7bc:
-  ref: Listing metrics (title)
-  value: Listing metrics (title)
-4a01f1f05544dfa1dd97924fcc80908007db6fe0310e8039fc078b4a:
-  ref: Listing Score - Raw score (label)
-  value: Listing Score - Raw score (label)
 4a3927203489e82672dc24ffdae6d9ee72b4b486e2562f0debce4b59:
   ref: That's all for now (message)
   value: That's all for now (message)
@@ -436,6 +421,9 @@
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
   ref: Create listing (label)
   value: Create listing (label)
+990f159a82184824fdafb2ab63fa2ab1f67849d8a138773d04be2fd4:
+  ref: Seller - listings (label)
+  value: Seller - listings (label)
 99a01d47de05fca49beed74c16c785a68dec6e729694b5a3e7076e1c:
   ref: No items in favourites (title)
   value: No items in favourites (title)
@@ -508,18 +496,12 @@ b46060e6e02e9a672bd27f869c2d7206d0c7a0584e298065557d7954:
 b48018d27bcd6409768ac5c0dd69a1a716d97c25a2dbfe6713cf393b:
   ref: success
   value: success
-b49bad57cdc02b972afcf4abfd99fdc6a5528e28c68f76e0e1997d59:
-  ref: "- skore + link -"
-  value: "- skore + link -"
 b4ffae5235999f10f6bbff965753e7d17285ec1f06ba0d8035409f7f:
   ref: Empty favourite feed (title)
   value: Empty favourite feed (title)
 b6c76a2cd866bcc2fc175c7fb66093264226f4695f2dfe3c41d7056f:
   ref: Feed age (label)
   value: Feed age (label)
-b70f97dbf4be95b0c508538e1bc69c56771f4a6e2fc8e03f6bcea25d:
-  ref: Listing Score - Ignore (label)
-  value: Listing Score - Ignore (label)
 b8ff3ed6b71e3332fcbe61d56e37ad7a849b09934d4514084cc0b710:
   ref: No transactions as buyer (message)
   value: No transactions as buyer (message)
@@ -603,15 +585,9 @@ da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
 db19de463c98378f66569f482fa6839883350859bf1fe5f4d577fd96:
   ref: Adjust feed (button)
   value: Adjust feed (button)
-dc94036d98327a4965255fa6f5996fa3e1d2ade02e6d494ae1d96695:
-  ref: Listing Score - Favourite (label)
-  value: Listing Score - Favourite (label)
 de8832ba89f066ff957f2387c53ed8c543d4ed977d7fac554ab3f590:
   ref: Go to my feed (button)
   value: Go to my feed (button)
-dfd5f9139a820075df69d7895015360b76d0360f3d4b77a845689614:
-  ref: "0"
-  value: "0"
 dfec30446df33c9964dde3bb9c8be06978e570503cd029ffd4447dde:
   ref: md
   value: md
@@ -630,9 +606,6 @@ e4889b76006e4faf6c6b72d87f7711888de501f0e58936e7053832d6:
 e6ae675232ef4ec304588531c21f87323fba1e262aff12e5dccf22d5:
   ref: Warranty (title)
   value: Warranty (title)
-e7211199110cc54c79f5341946a86c6828b5a6d84d69bf5123f9b4a0:
-  ref: Listing score hint (label)
-  value: Listing score hint (label)
 e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
   ref: Seller home (title)
   value: Seller home (title)

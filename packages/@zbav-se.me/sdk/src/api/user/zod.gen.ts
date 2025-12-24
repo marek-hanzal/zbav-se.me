@@ -301,22 +301,6 @@ export const zTransactionBuyerInfo = z.object({
 export type zTransactionBuyerInfo = z.infer<typeof zTransactionBuyerInfo>;
 
 /**
- * Seller info for the transaction
- */
-export const zTransactionSellerInfo = z.object({
-    registered: z.string().register(z.globalRegistry, {
-        description: 'Registration date'
-    }),
-    score: z.number().register(z.globalRegistry, {
-        description: 'Seller score'
-    })
-}).register(z.globalRegistry, {
-    description: 'Seller info for the transaction'
-});
-
-export type zTransactionSellerInfo = z.infer<typeof zTransactionSellerInfo>;
-
-/**
  * Data for creating a new transaction
  */
 export const zTransactionCreate = z.object({
@@ -957,6 +941,25 @@ export const zListingEventCreate = z.object({
 });
 
 export type zListingEventCreate = z.infer<typeof zListingEventCreate>;
+
+/**
+ * Seller info for the listing
+ */
+export const zSellerInfo = z.object({
+    registered: z.string().register(z.globalRegistry, {
+        description: 'Registration date'
+    }),
+    listings: z.number().register(z.globalRegistry, {
+        description: 'Number of listings'
+    }),
+    score: z.number().register(z.globalRegistry, {
+        description: 'Seller score; 1-6'
+    })
+}).register(z.globalRegistry, {
+    description: 'Seller info for the listing'
+});
+
+export type zSellerInfo = z.infer<typeof zSellerInfo>;
 
 /**
  * Latitude and longitude coordinates
@@ -3236,6 +3239,25 @@ export const zApiListingCountResponse = zCount;
 
 export type zapiListingCountResponse = z.infer<typeof zApiListingCountResponse>;
 
+export const zApiListingSellerInfoData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        listingId: z.string().register(z.globalRegistry, {
+            description: 'ID of the listing'
+        })
+    }),
+    query: z.optional(z.never())
+});
+
+export type zapiListingSellerInfoRequest = z.infer<typeof zApiListingSellerInfoData>;
+
+/**
+ * Seller info
+ */
+export const zApiListingSellerInfoResponse = zSellerInfo;
+
+export type zapiListingSellerInfoResponse = z.infer<typeof zApiListingSellerInfoResponse>;
+
 export const zApiListingEventCreateData = z.object({
     body: z.optional(zListingEventCreate),
     path: z.optional(z.never()),
@@ -3365,21 +3387,6 @@ export type zapiTransactionFetchRequest = z.infer<typeof zApiTransactionFetchDat
 export const zApiTransactionFetchResponse = zTransaction;
 
 export type zapiTransactionFetchResponse = z.infer<typeof zApiTransactionFetchResponse>;
-
-export const zApiTransactionSellerInfoData = z.object({
-    body: z.optional(zTransactionQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export type zapiTransactionSellerInfoRequest = z.infer<typeof zApiTransactionSellerInfoData>;
-
-/**
- * Seller info
- */
-export const zApiTransactionSellerInfoResponse = zTransactionSellerInfo;
-
-export type zapiTransactionSellerInfoResponse = z.infer<typeof zApiTransactionSellerInfoResponse>;
 
 export const zApiTransactionBuyerInfoData = z.object({
     body: z.optional(zTransactionQuery),

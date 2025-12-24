@@ -1,24 +1,24 @@
 import { useLocale } from "@use-pico/client/hook";
 import { Container, LabelValue, SpinnerContainer } from "@use-pico/client/ui/container";
 import { toTimeDiff } from "@use-pico/common/time";
-import { withTransactionSellerInfoQuery } from "@zbav-se.me/sdk/query/user";
+import { toLocaleNumber } from "@use-pico/common/to-locale-number";
+import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
+import { SellerScoreIcon } from "~/app/listing/ui/SellerScoreIcon";
 
 export namespace SellerInfo {
 	export interface Props extends Container.Props {
-		transactionId: string;
+		listingId: string;
 	}
 }
 
-export const SellerInfo: FC<SellerInfo.Props> = ({ transactionId, ui, ...props }) => {
+export const SellerInfo: FC<SellerInfo.Props> = ({ listingId, ui, ...props }) => {
 	const locale = useLocale();
 
 	return (
-		<withTransactionSellerInfoQuery.Suspense
+		<withListingSellerInfoQuery.Suspense
 			data={{
-				where: {
-					id: transactionId,
-				},
+				listingId,
 			}}
 			fallback={<SpinnerContainer />}
 		>
@@ -42,12 +42,20 @@ export const SellerInfo: FC<SellerInfo.Props> = ({ transactionId, ui, ...props }
 						/>
 
 						<LabelValue
+							textLabel={"Seller - listings (label)"}
+							textValue={toLocaleNumber({
+								locale,
+								number: data.listings,
+							})}
+						/>
+
+						<LabelValue
 							textLabel={"User score (label)"}
-							textValue={data.score}
+							textValue={<SellerScoreIcon score={data.score} />}
 						/>
 					</Container>
 				);
 			}}
-		</withTransactionSellerInfoQuery.Suspense>
+		</withListingSellerInfoQuery.Suspense>
 	);
 };

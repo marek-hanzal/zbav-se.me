@@ -260,20 +260,6 @@ export type tTransactionBuyerInfo = {
 };
 
 /**
- * Seller info for the transaction
- */
-export type tTransactionSellerInfo = {
-    /**
-     * Registration date
-     */
-    registered: string;
-    /**
-     * Seller score
-     */
-    score: number;
-};
-
-/**
  * Data for creating a new transaction
  */
 export type tTransactionCreate = {
@@ -881,6 +867,24 @@ export const tListingEventEnum = {
  * Type of listing event
  */
 export type tListingEventEnum = typeof tListingEventEnum[keyof typeof tListingEventEnum];
+
+/**
+ * Seller info for the listing
+ */
+export type tSellerInfo = {
+    /**
+     * Registration date
+     */
+    registered: string;
+    /**
+     * Number of listings
+     */
+    listings: number;
+    /**
+     * Seller score; 1-6
+     */
+    score: number;
+};
 
 /**
  * Query object for listing count
@@ -3472,6 +3476,40 @@ export type tApiListingCountResponse = {
 
 export type apiListingCountResponse = tApiListingCountResponse[keyof tApiListingCountResponse];
 
+export type tApiListingSellerInfoRequest = {
+    body?: never;
+    path: {
+        /**
+         * ID of the listing
+         */
+        listingId: string;
+    };
+    query?: never;
+    url: '/api/user/listing/{listingId}/seller-info';
+};
+
+export type apiListingSellerInfoErrors = {
+    /**
+     * Listing not found or seller info not available
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiListingSellerInfoError = apiListingSellerInfoErrors[keyof apiListingSellerInfoErrors];
+
+export type tApiListingSellerInfoResponse = {
+    /**
+     * Seller info
+     */
+    200: tSellerInfo;
+};
+
+export type apiListingSellerInfoResponse = tApiListingSellerInfoResponse[keyof tApiListingSellerInfoResponse];
+
 export type tApiListingEventCreateRequest = {
     /**
      * Data for creating a new listing event
@@ -3746,38 +3784,6 @@ export type tApiTransactionFetchResponse = {
 };
 
 export type apiTransactionFetchResponse = tApiTransactionFetchResponse[keyof tApiTransactionFetchResponse];
-
-export type tApiTransactionSellerInfoRequest = {
-    /**
-     * Query object for transaction access validation
-     */
-    body?: tTransactionQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction/seller-info';
-};
-
-export type apiTransactionSellerInfoErrors = {
-    /**
-     * Transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionSellerInfoError = apiTransactionSellerInfoErrors[keyof apiTransactionSellerInfoErrors];
-
-export type tApiTransactionSellerInfoResponse = {
-    /**
-     * Seller info
-     */
-    200: tTransactionSellerInfo;
-};
-
-export type apiTransactionSellerInfoResponse = tApiTransactionSellerInfoResponse[keyof tApiTransactionSellerInfoResponse];
 
 export type tApiTransactionBuyerInfoRequest = {
     /**

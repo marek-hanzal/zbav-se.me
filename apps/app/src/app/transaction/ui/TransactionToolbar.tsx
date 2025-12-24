@@ -1,10 +1,11 @@
 import type { Button } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import type { FC } from "react";
+import { SellerInfoButton } from "~/app/listing/ui/button/SellerInfoButton";
 import { AcceptButton } from "~/app/transaction/ui/button/AcceptButton";
 import { RejectButton } from "~/app/transaction/ui/button/RejectButton";
 import { BuyerInfoButton } from "~/app/transaction/ui/buyer/BuyerInfoButton";
-import { SellerInfoButton } from "~/app/transaction/ui/seller/SellerInfoButton";
 
 export namespace TransactionToolbar {
 	export interface Props extends Container.Props {
@@ -40,49 +41,62 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 	};
 
 	return (
-		<Container
-			ui={{
-				scroll: "horizontal",
-				width: "full",
-				opacity: "low",
-				...ui,
+		<withTransactionFetchQuery.Suspense
+			data={{
+				where: {
+					id: transactionId,
+				},
 			}}
-			className={[
-				"py-1",
-			]}
-			{...props}
+			fallback={<SpinnerContainer />}
 		>
-			<Container
-				ui={{
-					gap: "default",
-				}}
-				className={[
-					"grid",
-					"grid-flow-col",
-					"auto-cols-max",
-					"w-max",
-				]}
-			>
-				<AcceptButton
-					transactionId={transactionId}
-					{...buttonUi}
-				/>
+			{({ data: transaction }) => {
+				return (
+					<Container
+						ui={{
+							scroll: "horizontal",
+							width: "full",
+							opacity: "low",
+							...ui,
+						}}
+						className={[
+							"py-1",
+						]}
+						{...props}
+					>
+						<Container
+							ui={{
+								gap: "default",
+							}}
+							className={[
+								"grid",
+								"grid-flow-col",
+								"auto-cols-max",
+								"w-max",
+							]}
+						>
+							<AcceptButton
+								transactionId={transactionId}
+								{...buttonUi}
+							/>
 
-				<RejectButton
-					transactionId={transactionId}
-					{...buttonUi}
-				/>
+							<RejectButton
+								transactionId={transactionId}
+								{...buttonUi}
+							/>
 
-				<SellerInfoButton
-					transactionId={transactionId}
-					{...buttonUi}
-				/>
+							<SellerInfoButton
+								listingId={transaction.listingId}
+								{...buttonUi}
+							/>
 
-				<BuyerInfoButton
-					transactionId={transactionId}
-					{...buttonUi}
-				/>
-			</Container>
-		</Container>
+							<BuyerInfoButton
+								transactionId={transactionId}
+								{...buttonUi}
+							/>
+						</Container>
+					</Container>
+				);
+			}}
+		</withTransactionFetchQuery.Suspense>
 	);
 };

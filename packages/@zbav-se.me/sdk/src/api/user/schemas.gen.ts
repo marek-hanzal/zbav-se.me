@@ -348,23 +348,6 @@ export const sTransactionBuyerInfo = {
     ]
 } as const;
 
-export const sTransactionSellerInfo = {
-    type: 'object',
-    properties: {
-        registered: {
-            type: 'string'
-        },
-        score: {
-            type: 'number',
-            example: 0
-        }
-    },
-    required: [
-        'registered',
-        'score'
-    ]
-} as const;
-
 export const sTransactionCreate = {
     type: 'object',
     properties: {
@@ -1162,6 +1145,28 @@ export const sListingEventEnum = {
         'unfavourite',
         'like',
         'dislike'
+    ]
+} as const;
+
+export const sSellerInfo = {
+    type: 'object',
+    properties: {
+        registered: {
+            type: 'string'
+        },
+        listings: {
+            type: 'number',
+            example: 1
+        },
+        score: {
+            type: 'number',
+            example: 1
+        }
+    },
+    required: [
+        'registered',
+        'listings',
+        'score'
     ]
 } as const;
 

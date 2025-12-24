@@ -5,7 +5,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { withListingFetchQuery, withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
@@ -19,6 +19,7 @@ import { FlagButton } from "~/app/listing/ui/button/FlagButton";
 import { IgnoreButton } from "~/app/listing/ui/button/IgnoreButton";
 import { TransactionButton } from "~/app/listing/ui/button/TransactionButton";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
+import { SellerScoreIcon } from "~/app/listing/ui/SellerScoreIcon";
 
 export namespace ListingDetail {
 	export type Tools = "destructive" | "hero" | "feedback";
@@ -26,6 +27,7 @@ export namespace ListingDetail {
 	export interface Hooks {
 		onGallery(): void;
 		onTransaction(): void;
+		onSellerInfo(): void;
 	}
 
 	export interface Props extends Container.Props {
@@ -209,11 +211,30 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					/>
 				) : null}
 
-				<LabelValue
-					textLabel={"Listing seller hint (label)"}
-					textValue={"- skore + link -"}
-					action={<Icon icon={ShowIcon} />}
-				/>
+				<withListingSellerInfoQuery.Suspense
+					data={{
+						listingId: listing.id,
+					}}
+					fallback={
+						<LabelValue
+							textLabel={"Listing seller hint (label)"}
+							textValue={null}
+							action={<Icon icon={ShowIcon} />}
+							onClick={hooks.onSellerInfo}
+						/>
+					}
+				>
+					{({ data: sellerInfo }) => {
+						return (
+							<LabelValue
+								textLabel={"Listing seller hint (label)"}
+								textValue={<SellerScoreIcon score={sellerInfo.score} />}
+								action={<Icon icon={ShowIcon} />}
+								onClick={hooks.onSellerInfo}
+							/>
+						);
+					}}
+				</withListingSellerInfoQuery.Suspense>
 			</Container>
 
 			{tools.includes("feedback") ? (
