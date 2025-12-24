@@ -1,5 +1,7 @@
 import { sql } from "kysely";
+import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
+import { withGallerySelect } from "~/app/gallery/db/withGallerySelect";
 import type { MessageDirectionEnumSchema } from "~/app/message/schema/MessageDirectionEnumSchema";
 import type { MessageSortSchema } from "~/app/message/schema/MessageSortSchema";
 import type { MessageTypeEnumSchema } from "~/app/message/schema/MessageTypeEnumSchema";
@@ -25,6 +27,7 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		"mt.text",
 		sql<string | null>`null`.as("galleryId"),
 		sql<string | null>`null`.as("locationId"),
+		sql<unknown>`null`.as("gallery"),
 		eb
 			.case()
 			.when("mt.userId", "=", userId)
@@ -43,6 +46,16 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		sql<string>`null`.as("text"),
 		"mg.galleryId",
 		sql<string | null>`null`.as("locationId"),
+		jsonObjectFrom(
+			withGallerySelect({
+				database,
+				sort: undefined,
+			})
+				.where("gal.id", "=", eb.ref("mg.galleryId"))
+				.limit(1),
+		)
+			.$notNull()
+			.as("gallery"),
 		eb
 			.case()
 			.when("mg.userId", "=", userId)
@@ -61,6 +74,7 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		sql<string>`null`.as("text"),
 		sql<string | null>`null`.as("galleryId"),
 		"ml.locationId",
+		sql<unknown>`null`.as("gallery"),
 		eb
 			.case()
 			.when("ml.userId", "=", userId)
@@ -79,6 +93,7 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		"ms.text",
 		sql<string | null>`null`.as("galleryId"),
 		sql<string | null>`null`.as("locationId"),
+		sql<unknown>`null`.as("gallery"),
 		sql<MessageDirectionEnumSchema.Type>`'system'`.as("direction"),
 	]);
 
