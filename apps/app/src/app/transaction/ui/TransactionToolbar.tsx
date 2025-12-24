@@ -1,8 +1,10 @@
 import type { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { withTransactionMessageGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
-import type { FC } from "react";
+import { type FC, useState } from "react";
 import { SellerInfoButton } from "~/app/listing/ui/button/SellerInfoButton";
+import { GalleryUploadButton } from "~/app/photo/ui/GalleryUploadButton";
 import { AcceptButton } from "~/app/transaction/ui/button/AcceptButton";
 import { RejectButton } from "~/app/transaction/ui/button/RejectButton";
 import { BuyerInfoButton } from "~/app/transaction/ui/buyer/BuyerInfoButton";
@@ -39,6 +41,8 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 			"py-1",
 		],
 	};
+
+	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
 		<withTransactionFetchQuery.Suspense
@@ -79,9 +83,22 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 								{...buttonUi}
 							/>
 
-							<RejectButton
-								transactionId={transactionId}
-								{...buttonUi}
+							<GalleryUploadButton
+								defaultUploadIds={[]}
+								state={{
+									value: isGalleryOpen,
+									set: setIsGalleryOpen,
+								}}
+								withMutation={withTransactionMessageGalleryCreateMutation}
+								toMutation={(props) => ({
+									...props,
+								})}
+								onSuccess={() => {
+									//
+								}}
+								onCancel={() => {
+									//
+								}}
 							/>
 
 							<SellerInfoButton
@@ -90,6 +107,11 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 							/>
 
 							<BuyerInfoButton
+								transactionId={transactionId}
+								{...buttonUi}
+							/>
+
+							<RejectButton
 								transactionId={transactionId}
 								{...buttonUi}
 							/>
