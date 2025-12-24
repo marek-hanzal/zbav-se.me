@@ -320,11 +320,11 @@ export type zTransactionMessageLocationCreate = z.infer<typeof zTransactionMessa
  * Request to create a transaction message gallery
  */
 export const zTransactionMessageGalleryCreate = z.object({
-    transactionId: z.string().register(z.globalRegistry, {
-        description: 'The ID of the transaction to add a gallery to'
+    messageThreadId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the message thread to add a gallery to'
     }),
-    galleryId: z.string().register(z.globalRegistry, {
-        description: 'The ID of the gallery'
+    uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
+        description: 'IDs of the uploads; order of uploads defines order in the gallery'
     })
 }).register(z.globalRegistry, {
     description: 'Request to create a transaction message gallery'

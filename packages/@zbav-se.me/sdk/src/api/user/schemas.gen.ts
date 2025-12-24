@@ -366,16 +366,20 @@ export const sTransactionMessageLocationCreate = {
 export const sTransactionMessageGalleryCreate = {
     type: 'object',
     properties: {
-        transactionId: {
+        messageThreadId: {
             type: 'string'
         },
-        galleryId: {
-            type: 'string'
+        uploadIds: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            minItems: 1
         }
     },
     required: [
-        'transactionId',
-        'galleryId'
+        'messageThreadId',
+        'uploadIds'
     ]
 } as const;
 

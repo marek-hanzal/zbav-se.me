@@ -2,11 +2,11 @@ import { z } from "zod";
 
 export const TransactionMessageGalleryCreateSchema = z
 	.object({
-		transactionId: z.string().openapi({
-			description: "The ID of the transaction to add a gallery to",
+		messageThreadId: z.string().openapi({
+			description: "The ID of the message thread to add a gallery to",
 		}),
-		galleryId: z.string().openapi({
-			description: "The ID of the gallery",
+		uploadIds: z.array(z.string()).min(1, "At least one upload is required").openapi({
+			description: "IDs of the uploads; order of uploads defines order in the gallery",
 		}),
 	})
 	.openapi("TransactionMessageGalleryCreate", {

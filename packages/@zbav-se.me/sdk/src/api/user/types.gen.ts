@@ -278,13 +278,13 @@ export type tTransactionMessageLocationCreate = {
  */
 export type tTransactionMessageGalleryCreate = {
     /**
-     * The ID of the transaction to add a gallery to
+     * The ID of the message thread to add a gallery to
      */
-    transactionId: string;
+    messageThreadId: string;
     /**
-     * The ID of the gallery
+     * IDs of the uploads; order of uploads defines order in the gallery
      */
-    galleryId: string;
+    uploadIds: Array<string>;
 };
 
 /**
@@ -3820,6 +3820,10 @@ export type tApiTransactionMessageGalleryCreateRequest = {
 };
 
 export type apiTransactionMessageGalleryCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
     /**
      * Access denied
      */
