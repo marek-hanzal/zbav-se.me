@@ -1,3 +1,5 @@
+import { VisibilityContext } from "@use-pico/client/context";
+import { createNoopVisibilityStore } from "@use-pico/client/store";
 import type { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container } from "@use-pico/client/ui/container";
 import { SheetView } from "@use-pico/client/ui/sheet-view";
@@ -106,16 +108,20 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({ transactionId, ..
 											>
 												{({ data: listing }) => {
 													return (
-														<ListingSheet
-															listing={listing}
-															state={{
-																value: detail,
-																set: setDetail,
-															}}
-															withScore={false}
-															feedId={undefined}
-															tools={[]}
-														/>
+														<VisibilityContext
+															value={createNoopVisibilityStore()}
+														>
+															<ListingSheet
+																listing={listing}
+																state={{
+																	value: detail,
+																	set: setDetail,
+																}}
+																withScore={false}
+																feedId={undefined}
+																tools={[]}
+															/>
+														</VisibilityContext>
 													);
 												}}
 											</withListingFetchQuery.Suspense>
