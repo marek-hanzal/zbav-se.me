@@ -19,6 +19,7 @@ export const MessageGallery: FC<MessageGallery.Props> = ({ message, ...props }) 
 		<Container
 			className={[
 				"w-2/3",
+				"h-48",
 				message.direction === "in" ? [] : undefined,
 				message.direction === "out"
 					? [
@@ -37,7 +38,6 @@ export const MessageGallery: FC<MessageGallery.Props> = ({ message, ...props }) 
 			<HeroImage
 				src={hero.url}
 				visible
-				className={"h-48"}
 				ui={{
 					theme: "light",
 					background: "alt",
