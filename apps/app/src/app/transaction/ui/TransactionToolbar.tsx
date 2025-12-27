@@ -124,15 +124,19 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 								/>
 							) : null}
 
-							<SellerInfoButton
-								listingId={transaction.listingId}
-								{...buttonUi}
-							/>
+							{transaction.status === "open" ? (
+								<SellerInfoButton
+									listingId={transaction.listingId}
+									{...buttonUi}
+								/>
+							) : null}
 
-							<BuyerInfoButton
-								transactionId={transactionId}
-								{...buttonUi}
-							/>
+							{transaction.status === "open" ? (
+								<BuyerInfoButton
+									transactionId={transactionId}
+									{...buttonUi}
+								/>
+							) : null}
 
 							<RejectButton
 								transactionId={transactionId}
