@@ -1,9 +1,6 @@
 004c2d8c48721c30d51a0ac1fee6dd63e3ef793ceb45c8dc20cba5ed:
   ref: Feed title (placeholder)
   value: Feed title (placeholder)
-00f16a194e7daae1530847faf9e54e5afb5544e0c1d4b16200055761:
-  ref: request
-  value: request
 00fe87831f1cf10d096e179276a76be35428b05897001db72f3850be:
   ref: Chat - transaction closed (message)
   value: Chat - transaction closed (message)
@@ -70,9 +67,6 @@
 1127abe5ce9696ad1b6477d3c6557314bacdf45155e4e890091f1d3e:
   ref: Save (button)
   value: Save (button)
-1251277d9ed5b1d65b9592d9c9c95ec5e6b943e99fc35e791642150b:
-  ref: accepted
-  value: accepted
 14663fea507627f6c98c1360a9aa3c6d275ed885e44051e7d88af28a:
   ref: Feed age (hint)
   value: Feed age (hint)
@@ -85,6 +79,9 @@
 16e1f53d97e50b6ca414cf36d052667d99adcf92c2076887e7567d01:
   ref: Feed condition not selected
   value: Feed condition not selected
+17d657e028b311247a42416aa1a3a6a7bbd603c9ad2640db1a845a89:
+  ref: Feed location security (hint)
+  value: Feed location security (hint)
 1811df87a53f79aa1a04eecb5ca04f535da2826613b2ca23a131e2ba:
   ref: Close (button)
   value: Close (button)
@@ -217,6 +214,9 @@
 4a6d672731040044ea10a6210d1d72de8ce2a49c57e6eab1ba45eb66:
   ref: Feed name (required)
   value: Feed name (required)
+4d603e3fca4e9f047b0fd3fdd009a1808b0b50eda2aa6f12c206a9c7:
+  ref: Share location (button)
+  value: Share location (button)
 4eb3d56cc03fa74ef6b354ce77013a361c781ed09a840f269a732617:
   ref: light
   value: light
@@ -325,6 +325,9 @@
 7a2ff42f7d0739100696527fd6cd76b05a231a3251e56fe2566d0810:
   ref: Open gallery (button)
   value: Open gallery (button)
+7a7a73cef600b945232404a350f48d342722720cd65cb21ebe1786f8:
+  ref: completed
+  value: completed
 7a82926bb5336fd34c1755025654a057c7419b9e9e71e717eb89c249:
   ref: Feed range (hint)
   value: Feed range (hint)
@@ -466,9 +469,6 @@ a46be85abba5f0371038aa633d7378f4fd8376be6b7e7a9b7b22ec05:
 a5fecc06a3719ab30505196a44d06c91c2c7e8497978d8572efb9e30:
   ref: Remove from favourite (button)
   value: Remove from favourite (button)
-a62fb7339fce50f73673412c11f10a25880e1e7b942b7261366a8529:
-  ref: closed
-  value: closed
 a64e91c4e68c901ac59593d15028b96e00c9b01c7163080eb97502c2:
   ref: Listing - Cons (message)
   value: Listing - Cons (message)
@@ -493,9 +493,6 @@ b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
 b46060e6e02e9a672bd27f869c2d7206d0c7a0584e298065557d7954:
   ref: Draft expire (hint)
   value: Draft expire (hint)
-b48018d27bcd6409768ac5c0dd69a1a716d97c25a2dbfe6713cf393b:
-  ref: success
-  value: success
 b4ffae5235999f10f6bbff965753e7d17285ec1f06ba0d8035409f7f:
   ref: Empty favourite feed (title)
   value: Empty favourite feed (title)
@@ -508,6 +505,9 @@ b8ff3ed6b71e3332fcbe61d56e37ad7a849b09934d4514084cc0b710:
 b9280e542386de06015c0360e53e55cfccee8b1bf03cea7ef44c26c0:
   ref: Feed delivery (label)
   value: Feed delivery (label)
+b9c5a03896d71b41f7828f3747be6c509689c279e60f845ab3b23480:
+  ref: pending
+  value: pending
 ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
   ref: My listings (label)
   value: My listings (label)
@@ -546,6 +546,9 @@ c7011d532414a06429fe3823d5c970b1de99d6e19fd0f06ea309c7c3:
 c7147aaa47c54e90b7023be8ee57d73010a71c259e352067aaad48e6:
   ref: Reject transaction (button)
   value: Reject transaction (button)
+cb3a34c7200192f3cf99f4312074d252b890df7647e1e65c2ee986ab:
+  ref: Share location (title)
+  value: Share location (title)
 cb8c6bb348b937ffa8d1caf9789deeba0ad9997b963f584fa58a535d:
   ref: Feed location (title)
   value: Feed location (title)
@@ -612,6 +615,9 @@ e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
 e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
   ref: Feed location not selected
   value: Feed location not selected
+e8b631fdd1fe399644031a3c9fb80ed1dd2745e3a2ff95eabc2e0bb5:
+  ref: cancelled
+  value: cancelled
 eb18c941e11fe2d241983a0df227512b3e3691c12cc66af2303bc987:
   ref: Draft (label)
   value: Draft (label)
@@ -678,6 +684,12 @@ fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
 fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
   ref: Listing title (label)
   value: Listing title (label)
+fe53b76f86226fc536cae35874aff7a3ccfbc38e4700d3ac5c087b9b:
+  ref: Message location security (hint)
+  value: Message location security (hint)
 ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
   ref: No categories found (title)
   value: No categories found (title)
+ff95e127f3feec3ae1c640001d56b07697ca4fa473da4213348be958:
+  ref: open
+  value: open
