@@ -3,7 +3,6 @@ import { Typo } from "@use-pico/client/ui/typo";
 import type { tMessageLocation } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { LocationValue } from "~/app/location/ui/LocationValue";
 
 export namespace MessageLocation {
 	export interface Props extends Container.Props {

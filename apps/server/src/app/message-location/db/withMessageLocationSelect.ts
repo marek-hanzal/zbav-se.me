@@ -26,7 +26,9 @@ export const withMessageLocationSelect = ({
 		.selectAll("ml")
 		.select(sql<"location">`'location'`.as("type"))
 		.select((eb) => [
-			sql<LocationDbSchema.Type | null>`to_json(${eb.table("loc")}.*)`.as("location"),
+			sql<LocationDbSchema.Type | null>`to_json(${eb.table("loc")}.*)`
+				.$notNull()
+				.as("location"),
 			eb
 				.case()
 				.when("ml.userId", "=", userId)
