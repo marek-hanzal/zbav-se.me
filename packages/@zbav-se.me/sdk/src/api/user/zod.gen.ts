@@ -865,6 +865,9 @@ export const zMessageGallery = z.object({
     galleryId: z.string().register(z.globalRegistry, {
         description: 'ID of the gallery'
     }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
     type: zMessageTypeEnum,
     direction: zMessageDirectionEnum,
     gallery: zGallery.and(z.unknown().register(z.globalRegistry, {

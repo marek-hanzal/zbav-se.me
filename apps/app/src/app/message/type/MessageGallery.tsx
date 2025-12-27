@@ -1,4 +1,7 @@
+import { useLocale } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
+import { Typo } from "@use-pico/client/ui/typo";
+import { toTimeDiff } from "@use-pico/common/time";
 import type { tMessageGallery } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
@@ -12,11 +15,15 @@ export namespace MessageGallery {
 }
 
 export const MessageGallery: FC<MessageGallery.Props> = ({ message, ...props }) => {
+	const locale = useLocale();
 	const hero = useHeroUpload(message.gallery.items);
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
 		<Container
+			ui={{
+				position: "relative",
+			}}
 			className={[
 				"w-2/3",
 				"h-48",
@@ -44,6 +51,24 @@ export const MessageGallery: FC<MessageGallery.Props> = ({ message, ...props }) 
 					round: "default",
 				}}
 				onClick={() => setIsGalleryOpen((prev) => !prev)}
+			/>
+
+			<Typo
+				label={toTimeDiff({
+					locale,
+					time: message.createdAt,
+					type: "relative",
+				})}
+				ui={{
+					tone: "neutral",
+					theme: "light",
+					background: "default",
+					text: "sm",
+					round: "default",
+					inner: "default",
+					opacity: "low",
+					snapTo: "bottom-left",
+				}}
 			/>
 
 			<GallerySheet

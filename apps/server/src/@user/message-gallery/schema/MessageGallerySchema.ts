@@ -16,7 +16,6 @@ export const MessageGallerySchema = z
 	.omit({
 		messageThreadId: true,
 		userId: true,
-		createdAt: true,
 	})
 	.openapi("MessageGallery", {
 		description: "Message gallery entry",

@@ -1075,6 +1075,9 @@ export const sMessageGallery = {
         galleryId: {
             type: 'string'
         },
+        createdAt: {
+            type: 'string'
+        },
         type: {
             $ref: '#/components/schemas/MessageTypeEnum'
         },
@@ -1093,6 +1096,7 @@ export const sMessageGallery = {
     required: [
         'id',
         'galleryId',
+        'createdAt',
         'type',
         'direction',
         'gallery'

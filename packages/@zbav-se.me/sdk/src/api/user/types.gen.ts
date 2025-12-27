@@ -818,6 +818,10 @@ export type tMessageGallery = {
      * ID of the gallery
      */
     galleryId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
     type: tMessageTypeEnum;
     direction: tMessageDirectionEnum;
     gallery: tGallery & unknown;
