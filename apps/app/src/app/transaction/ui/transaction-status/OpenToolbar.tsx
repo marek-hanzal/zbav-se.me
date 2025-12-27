@@ -5,6 +5,7 @@ import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/u
 import { type FC, useState } from "react";
 import { GalleryUploadButton } from "~/app/photo/ui/GalleryUploadButton";
 import { LocationButton } from "~/app/transaction/ui/button/LocationButton";
+import { RejectButton } from "~/app/transaction/ui/button/RejectButton";
 import { TransactionButtonUi } from "~/app/transaction/ui/transaction-status/TransactionButtonUi";
 
 export namespace OpenToolbar {
@@ -45,6 +46,11 @@ export const OpenToolbar: FC<OpenToolbar.Props> = ({ transaction }) => {
 			/>
 
 			<LocationButton
+				transaction={transaction}
+				{...TransactionButtonUi}
+			/>
+
+			<RejectButton
 				transaction={transaction}
 				{...TransactionButtonUi}
 			/>

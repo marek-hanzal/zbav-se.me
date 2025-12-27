@@ -23,6 +23,9 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 					id: transactionId,
 				},
 			}}
+			options={{
+				refetchInterval: 2_500,
+			}}
 			fallback={<SpinnerContainer />}
 		>
 			{({ data: transaction }) => {
