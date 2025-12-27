@@ -797,6 +797,10 @@ export type tMessageLocation = {
      * ID of the location
      */
     locationId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
     type: tMessageTypeEnum;
     direction: tMessageDirectionEnum;
     location: tLocation;

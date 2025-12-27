@@ -1043,6 +1043,9 @@ export const sMessageLocation = {
         locationId: {
             type: 'string'
         },
+        createdAt: {
+            type: 'string'
+        },
         type: {
             $ref: '#/components/schemas/MessageTypeEnum'
         },
@@ -1056,6 +1059,7 @@ export const sMessageLocation = {
     required: [
         'id',
         'locationId',
+        'createdAt',
         'type',
         'direction',
         'location'

@@ -16,7 +16,6 @@ export const MessageLocationSchema = z
 	.omit({
 		messageThreadId: true,
 		userId: true,
-		createdAt: true,
 	})
 	.strip()
 	.openapi("MessageLocation", {

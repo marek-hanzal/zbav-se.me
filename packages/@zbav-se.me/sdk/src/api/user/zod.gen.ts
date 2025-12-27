@@ -843,6 +843,9 @@ export const zMessageLocation = z.object({
     locationId: z.string().register(z.globalRegistry, {
         description: 'ID of the location'
     }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
     type: zMessageTypeEnum,
     direction: zMessageDirectionEnum,
     location: zLocation
