@@ -42,7 +42,6 @@ export const MessageGallery: FC<MessageGallery.Props> = ({ message, ...props }) 
 					theme: "light",
 					background: "alt",
 					round: "default",
-					shadow: true,
 				}}
 				onClick={() => setIsGalleryOpen((prev) => !prev)}
 			/>

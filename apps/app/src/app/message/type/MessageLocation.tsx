@@ -17,7 +17,6 @@ export const MessageLocation: FC<MessageLocation.Props> = ({ message, ...props }
 				theme: "light",
 				background: "alt",
 				border: true,
-				shadow: true,
 				inner: "default",
 				round: "default",
 				...match<typeof message.direction, uiContainer.Ui>(message.direction)

@@ -1,38 +1,9 @@
-import { useQueryClient } from "@tanstack/react-query";
-import type { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import { withTransactionMessageGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
-import { type FC, useState } from "react";
-import { SellerInfoButton } from "~/app/listing/ui/button/SellerInfoButton";
-import { GalleryUploadButton } from "~/app/photo/ui/GalleryUploadButton";
-import { AcceptButton } from "~/app/transaction/ui/button/AcceptButton";
-import { LocationButton } from "~/app/transaction/ui/button/LocationButton";
-import { RejectButton } from "~/app/transaction/ui/button/RejectButton";
-import { BuyerInfoButton } from "~/app/transaction/ui/buyer/BuyerInfoButton";
-
-const buttonUi: Button.Props = {
-	iconProps: {
-		ui: {
-			text: "xl",
-		},
-	},
-	ui: {
-		tone: "link",
-		theme: "light",
-		round: "full",
-		background: "default",
-		text: "sm",
-		border: true,
-		shadow: false,
-		width: "content",
-	},
-	className: [
-		"px-2",
-		"py-1",
-	],
-};
+import type { FC } from "react";
+import { match } from "ts-pattern";
+import { OpenToolbar } from "~/app/transaction/ui/transaction-status/OpenToolbar";
+import { PendingToolbar } from "~/app/transaction/ui/transaction-status/PendingToolbar";
 
 export namespace TransactionToolbar {
 	export interface Props extends Container.Props {
@@ -45,9 +16,6 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 	ui,
 	...props
 }) => {
-	const queryClient = useQueryClient();
-	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-
 	return (
 		<withTransactionFetchQuery.Suspense
 			data={{
@@ -82,66 +50,17 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 								"w-max",
 							]}
 						>
-							<AcceptButton
-								transactionId={transactionId}
-								{...buttonUi}
-							/>
-
-							{transaction.status === "open" ? (
-								<LocationButton
-									transactionId={transactionId}
-									{...buttonUi}
-								/>
-							) : null}
-
-							{transaction.status === "open" ? (
-								<GalleryUploadButton
-									defaultUploadIds={[]}
-									state={{
-										value: isGalleryOpen,
-										set: setIsGalleryOpen,
-									}}
-									withMutation={withTransactionMessageGalleryCreateMutation}
-									toMutation={(uploadIds) => ({
-										messageThreadId: transaction.messageThreadId,
-										uploadIds,
-									})}
-									onSuccess={() => {
-										setIsGalleryOpen(false);
-										withMessageThreadMessageCollectionQuery.invalidate(
-											queryClient,
-											{
-												path: {
-													messageThreadId: transaction.messageThreadId,
-												},
-											},
-										);
-									}}
-									onCancel={() => {
-										setIsGalleryOpen(false);
-									}}
-									{...buttonUi}
-								/>
-							) : null}
-
-							{transaction.status === "open" ? (
-								<SellerInfoButton
-									listingId={transaction.listingId}
-									{...buttonUi}
-								/>
-							) : null}
-
-							{transaction.status === "open" ? (
-								<BuyerInfoButton
-									transactionId={transactionId}
-									{...buttonUi}
-								/>
-							) : null}
-
-							<RejectButton
-								transactionId={transactionId}
-								{...buttonUi}
-							/>
+							{match(transaction.status)
+								.with("open", () => {
+									return <OpenToolbar transaction={transaction} />;
+								})
+								.with("pending", () => {
+									return <PendingToolbar transaction={transaction} />;
+								})
+								.with("rejected", "cancelled", "expired", "completed", () => {
+									return "rejected-cancelled-expired";
+								})
+								.exhaustive()}
 						</Container>
 					</Container>
 				);
