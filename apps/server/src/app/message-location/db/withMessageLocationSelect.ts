@@ -1,5 +1,6 @@
 import { sql } from "kysely";
 import { match } from "ts-pattern";
+import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import type { MessageDirectionEnumSchema } from "~/app/message/schema/MessageDirectionEnumSchema";
 import type { MessageLocationSortSchema } from "~/app/message-location/schema/MessageLocationSortSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
@@ -21,9 +22,11 @@ export const withMessageLocationSelect = ({
 }: withMessageLocationSelect.Props) => {
 	let query = database
 		.selectFrom("message_location as ml")
-		.selectAll()
+		.innerJoin("location as loc", "loc.id", "ml.locationId")
+		.selectAll("ml")
 		.select(sql<"location">`'location'`.as("type"))
-		.select((eb) =>
+		.select((eb) => [
+			sql<LocationDbSchema.Type | null>`to_json(${eb.table("loc")}.*)`.as("location"),
 			eb
 				.case()
 				.when("ml.userId", "=", userId)
@@ -31,7 +34,7 @@ export const withMessageLocationSelect = ({
 				.else<MessageDirectionEnumSchema.Type>("in")
 				.end()
 				.as("direction"),
-		);
+		]);
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

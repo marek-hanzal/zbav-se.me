@@ -799,6 +799,7 @@ export type tMessageLocation = {
     locationId: string;
     type: tMessageTypeEnum;
     direction: tMessageDirectionEnum;
+    location: tLocation;
 };
 
 /**

@@ -844,7 +844,8 @@ export const zMessageLocation = z.object({
         description: 'ID of the location'
     }),
     type: zMessageTypeEnum,
-    direction: zMessageDirectionEnum
+    direction: zMessageDirectionEnum,
+    location: zLocation
 }).register(z.globalRegistry, {
     description: 'Message location entry'
 });

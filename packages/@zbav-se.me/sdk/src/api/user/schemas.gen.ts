@@ -1048,13 +1048,17 @@ export const sMessageLocation = {
         },
         direction: {
             $ref: '#/components/schemas/MessageDirectionEnum'
+        },
+        location: {
+            $ref: '#/components/schemas/Location'
         }
     },
     required: [
         'id',
         'locationId',
         'type',
-        'direction'
+        'direction',
+        'location'
     ]
 } as const;
 
