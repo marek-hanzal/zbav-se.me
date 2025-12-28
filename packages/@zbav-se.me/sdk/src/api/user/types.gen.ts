@@ -260,6 +260,32 @@ export type tTransactionMessageTextCreate = {
 };
 
 /**
+ * Request to create a transaction personal message
+ */
+export type tTransactionMessagePersonalCreate = {
+    /**
+     * The ID of the transaction to add a personal message to
+     */
+    transactionId: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Phone number
+     */
+    phone: string;
+    /**
+     * Email address
+     */
+    email: string;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+};
+
+/**
  * Request to create a transaction message location
  */
 export type tTransactionMessageLocationCreate = {
@@ -777,6 +803,7 @@ export const tMessageTypeEnum = {
     text: 'text',
     gallery: 'gallery',
     location: 'location',
+    personal: 'personal',
     system: 'system'
 } as const;
 
@@ -784,6 +811,39 @@ export const tMessageTypeEnum = {
  * Type of message
  */
 export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
+
+/**
+ * Message personal entry
+ */
+export type tMessagePersonal = {
+    /**
+     * ID of the message personal entry
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Phone number
+     */
+    phone: string;
+    /**
+     * Email address
+     */
+    email: string;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+    location: tLocation;
+};
 
 /**
  * Message location entry
@@ -850,7 +910,7 @@ export type tMessageText = {
 /**
  * Message entry (unified view across all message types)
  */
-export type tMessage = tMessageText | tMessageGallery | tMessageLocation | tMessageSystem;
+export type tMessage = tMessageText | tMessageGallery | tMessageLocation | tMessagePersonal | tMessageSystem;
 
 /**
  * Data for creating a new feedback
@@ -3894,6 +3954,42 @@ export type tApiTransactionMessageLocationCreateResponse = {
 };
 
 export type apiTransactionMessageLocationCreateResponse = tApiTransactionMessageLocationCreateResponse[keyof tApiTransactionMessageLocationCreateResponse];
+
+export type tApiTransactionMessagePersonalCreateRequest = {
+    /**
+     * Query object for transaction personal message creation
+     */
+    body?: tTransactionMessagePersonalCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction-message-personal/create';
+};
+
+export type apiTransactionMessagePersonalCreateErrors = {
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionMessagePersonalCreateError = apiTransactionMessagePersonalCreateErrors[keyof apiTransactionMessagePersonalCreateErrors];
+
+export type tApiTransactionMessagePersonalCreateResponse = {
+    /**
+     * Personal message created
+     */
+    200: tMessagePersonal;
+};
+
+export type apiTransactionMessagePersonalCreateResponse = tApiTransactionMessagePersonalCreateResponse[keyof tApiTransactionMessagePersonalCreateResponse];
 
 export type tApiTransactionMessageTextCreateRequest = {
     /**

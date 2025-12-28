@@ -26,6 +26,7 @@ import { TransactionMigration } from "./0024-transaction";
 import { TransactionStatusMigration } from "./0025-transaction-status";
 import { GitHubMigration } from "./0026-github";
 import { FeedbackMigration } from "./0027-feedback";
+import { MessagePersonalMigration } from "./0028-message-personal";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -53,6 +54,7 @@ export const migrations = {
 	"0022-message-gallery": MessageGalleryMigration,
 	"0023-message-location": MessageLocationMigration,
 	"0024-transaction": TransactionMigration,
+	"0028-message-personal": MessagePersonalMigration,
 	"0025-transaction-status": TransactionStatusMigration,
 	"0026-github": GitHubMigration,
 	"0027-feedback": FeedbackMigration,

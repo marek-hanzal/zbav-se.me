@@ -347,6 +347,35 @@ export const sTransactionMessageTextCreate = {
     ]
 } as const;
 
+export const sTransactionMessagePersonalCreate = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        name: {
+            type: 'string'
+        },
+        phone: {
+            type: 'string'
+        },
+        email: {
+            type: 'string',
+            format: 'email'
+        },
+        locationId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId',
+        'name',
+        'phone',
+        'email',
+        'locationId'
+    ]
+} as const;
+
 export const sTransactionMessageLocationCreate = {
     type: 'object',
     properties: {
@@ -1030,7 +1059,53 @@ export const sMessageTypeEnum = {
         'text',
         'gallery',
         'location',
+        'personal',
         'system'
+    ]
+} as const;
+
+export const sMessagePersonal = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        name: {
+            type: 'string'
+        },
+        phone: {
+            type: 'string'
+        },
+        email: {
+            type: 'string',
+            format: 'email'
+        },
+        locationId: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/MessageTypeEnum'
+        },
+        direction: {
+            $ref: '#/components/schemas/MessageDirectionEnum'
+        },
+        location: {
+            $ref: '#/components/schemas/Location'
+        }
+    },
+    required: [
+        'id',
+        'name',
+        'phone',
+        'email',
+        'locationId',
+        'createdAt',
+        'type',
+        'direction',
+        'location'
     ]
 } as const;
 
@@ -1141,6 +1216,9 @@ export const sMessage = {
         },
         {
             $ref: '#/components/schemas/MessageLocation'
+        },
+        {
+            $ref: '#/components/schemas/MessagePersonal'
         },
         {
             $ref: '#/components/schemas/MessageSystem'

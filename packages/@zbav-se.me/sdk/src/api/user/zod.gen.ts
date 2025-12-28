@@ -301,6 +301,31 @@ export const zTransactionMessageTextCreate = z.object({
 export type zTransactionMessageTextCreate = z.infer<typeof zTransactionMessageTextCreate>;
 
 /**
+ * Request to create a transaction personal message
+ */
+export const zTransactionMessagePersonalCreate = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the transaction to add a personal message to'
+    }),
+    name: z.string().register(z.globalRegistry, {
+        description: 'Name'
+    }),
+    phone: z.string().register(z.globalRegistry, {
+        description: 'Phone number'
+    }),
+    email: z.email().register(z.globalRegistry, {
+        description: 'Email address'
+    }),
+    locationId: z.string().register(z.globalRegistry, {
+        description: 'ID of the location'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to create a transaction personal message'
+});
+
+export type zTransactionMessagePersonalCreate = z.infer<typeof zTransactionMessagePersonalCreate>;
+
+/**
  * Request to create a transaction message location
  */
 export const zTransactionMessageLocationCreate = z.object({
@@ -805,6 +830,7 @@ export const zMessageTypeEnum = z.enum([
     'text',
     'gallery',
     'location',
+    'personal',
     'system'
 ]).register(z.globalRegistry, {
     description: 'Type of message'
@@ -832,6 +858,37 @@ export const zMessageSystem = z.object({
 });
 
 export type zMessageSystem = z.infer<typeof zMessageSystem>;
+
+/**
+ * Message personal entry
+ */
+export const zMessagePersonal = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message personal entry'
+    }),
+    name: z.string().register(z.globalRegistry, {
+        description: 'Name'
+    }),
+    phone: z.string().register(z.globalRegistry, {
+        description: 'Phone number'
+    }),
+    email: z.email().register(z.globalRegistry, {
+        description: 'Email address'
+    }),
+    locationId: z.string().register(z.globalRegistry, {
+        description: 'ID of the location'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum,
+    location: zLocation
+}).register(z.globalRegistry, {
+    description: 'Message personal entry'
+});
+
+export type zMessagePersonal = z.infer<typeof zMessagePersonal>;
 
 /**
  * Message location entry
@@ -907,6 +964,7 @@ export const zMessage = z.union([
     zMessageText,
     zMessageGallery,
     zMessageLocation,
+    zMessagePersonal,
     zMessageSystem
 ]);
 
@@ -3459,6 +3517,21 @@ export type zapiTransactionMessageLocationCreateRequest = z.infer<typeof zApiTra
 export const zApiTransactionMessageLocationCreateResponse = zMessageLocation;
 
 export type zapiTransactionMessageLocationCreateResponse = z.infer<typeof zApiTransactionMessageLocationCreateResponse>;
+
+export const zApiTransactionMessagePersonalCreateData = z.object({
+    body: z.optional(zTransactionMessagePersonalCreate),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionMessagePersonalCreateRequest = z.infer<typeof zApiTransactionMessagePersonalCreateData>;
+
+/**
+ * Personal message created
+ */
+export const zApiTransactionMessagePersonalCreateResponse = zMessagePersonal;
+
+export type zapiTransactionMessagePersonalCreateResponse = z.infer<typeof zApiTransactionMessagePersonalCreateResponse>;
 
 export const zApiTransactionMessageTextCreateData = z.object({
     body: z.optional(zTransactionMessageTextCreate),

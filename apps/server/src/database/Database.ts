@@ -15,6 +15,7 @@ import type { ListingEventDbSchema } from "~/app/listing-event/schema/ListingEve
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import type { MessageGalleryDbSchema } from "~/app/message-gallery/schema/MessageGalleryDbSchema";
 import type { MessageLocationDbSchema } from "~/app/message-location/schema/MessageLocationDbSchema";
+import type { MessagePersonalDbSchema } from "~/app/message-personal/schema/MessagePersonalDbSchema";
 import type { MessageSystemDbSchema } from "~/app/message-system/schema/MessageSystemDbSchema";
 import type { MessageTextDbSchema } from "~/app/message-text/schema/MessageTextDbSchema";
 import type { MessageThreadDbSchema } from "~/app/message-thread/schema/MessageThreadDbSchema";
@@ -43,6 +44,7 @@ export interface Database {
 	location: LocationDbSchema.Type;
 	message_gallery: MessageGalleryDbSchema.Type;
 	message_location: MessageLocationDbSchema.Type;
+	message_personal: MessagePersonalDbSchema.Type;
 	message_system: MessageSystemDbSchema.Type;
 	message_text: MessageTextDbSchema.Type;
 	message_thread_user: MessageThreadUserDbSchema.Type;

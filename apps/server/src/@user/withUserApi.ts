@@ -17,6 +17,7 @@ import { withS3Api } from "./s3/withS3Api";
 import { withTransactionApi } from "./transaction/withTransactionApi";
 import { withTransactionMessageGalleryApi } from "./transaction-message-gallery/withTransactionMessageGalleryApi";
 import { withTransactionMessageLocationApi } from "./transaction-message-location/withTransactionMessageLocationApi";
+import { withTransactionMessagePersonalApi } from "./transaction-message-personal/withTransactionMessagePersonalApi";
 import { withTransactionMessageTextApi } from "./transaction-message-text/withTransactionMessageTextApi";
 import { withUploadApi } from "./upload/withUploadApi";
 import { withUserExApi } from "./user-ex/withUserExApi";
@@ -58,6 +59,7 @@ export const withUserApi: Routes.FnWithDeps<{
 	withTransactionApi(routes);
 	withTransactionMessageGalleryApi(routes);
 	withTransactionMessageLocationApi(routes);
+	withTransactionMessagePersonalApi(routes);
 	withTransactionMessageTextApi(routes);
 	withTransactionStatusApi(routes);
 	withUploadApi(routes);

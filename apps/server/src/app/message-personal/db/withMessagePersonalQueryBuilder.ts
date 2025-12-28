@@ -1,0 +1,45 @@
+import type { MessagePersonalFilterSchema } from "~/app/message-personal/schema/MessagePersonalFilterSchema";
+import type { withMessagePersonalSelect } from "./withMessagePersonalSelect";
+
+export namespace withMessagePersonalQueryBuilder {
+	export interface Props<TSelect extends withMessagePersonalSelect.Select> {
+		select: TSelect;
+		where?: MessagePersonalFilterSchema.Type;
+	}
+
+	export type Callback<TSelect extends withMessagePersonalSelect.Select> = (
+		props: Props<TSelect>,
+	) => TSelect;
+}
+
+/**
+ * Standalone query builder that applies all filters from MessagePersonalQuerySchema
+ * Can be used by both list and count queries to ensure consistency
+ */
+export const withMessagePersonalQueryBuilder = <TSelect extends withMessagePersonalSelect.Select>({
+	select,
+	where,
+}: withMessagePersonalQueryBuilder.Props<TSelect>) => {
+	if (!where) {
+		return select;
+	}
+	let query = select;
+
+	if (where.id) {
+		query = query.where("mp.id", "=", where.id) as TSelect;
+	}
+
+	if (where.idIn && where.idIn.length > 0) {
+		query = query.where("mp.id", "in", where.idIn) as TSelect;
+	}
+
+	if (where.messageThreadId) {
+		query = query.where("mp.messageThreadId", "=", where.messageThreadId) as TSelect;
+	}
+
+	if (where.userId) {
+		query = query.where("mp.userId", "=", where.userId) as TSelect;
+	}
+
+	return query;
+};

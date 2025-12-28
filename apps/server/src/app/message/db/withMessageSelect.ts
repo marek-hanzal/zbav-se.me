@@ -25,11 +25,14 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		"mt.createdAt",
 		sql<MessageTypeEnumSchema.Type>`'text'`.as("type"),
 		"mt.userId",
-		"mt.text",
+		sql<string | null>`${eb.ref("mt.text")}`.as("text"),
 		sql<string | null>`null`.as("galleryId"),
 		sql<string | null>`null`.as("locationId"),
 		sql<unknown>`null`.as("gallery"),
 		sql<LocationDbSchema.Type | null>`cast(null as json)`.as("location"),
+		sql<string | null>`null`.as("name"),
+		sql<string | null>`null`.as("phone"),
+		sql<string | null>`null`.as("email"),
 		eb
 			.case()
 			.when("mt.userId", "=", userId)
@@ -45,7 +48,7 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		"mg.createdAt",
 		sql<MessageTypeEnumSchema.Type>`'gallery'`.as("type"),
 		"mg.userId",
-		sql<string>`null`.as("text"),
+		sql<string | null>`null`.as("text"),
 		"mg.galleryId",
 		sql<string | null>`null`.as("locationId"),
 		jsonObjectFrom(
@@ -59,6 +62,9 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 			.$notNull()
 			.as("gallery"),
 		sql<LocationDbSchema.Type | null>`cast(null as json)`.as("location"),
+		sql<string | null>`null`.as("name"),
+		sql<string | null>`null`.as("phone"),
+		sql<string | null>`null`.as("email"),
 		eb
 			.case()
 			.when("mg.userId", "=", userId)
@@ -74,7 +80,7 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		"ml.createdAt",
 		sql<MessageTypeEnumSchema.Type>`'location'`.as("type"),
 		"ml.userId",
-		sql<string>`null`.as("text"),
+		sql<string | null>`null`.as("text"),
 		sql<string | null>`null`.as("galleryId"),
 		"ml.locationId",
 		sql<unknown>`null`.as("gallery"),
@@ -87,6 +93,9 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		)
 			.$castTo<LocationDbSchema.Type>()
 			.as("location"),
+		sql<string | null>`null`.as("name"),
+		sql<string | null>`null`.as("phone"),
+		sql<string | null>`null`.as("email"),
 		eb
 			.case()
 			.when("ml.userId", "=", userId)
@@ -95,6 +104,32 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 			.end()
 			.as("direction"),
 	]);
+
+	const personalQuery = database
+		.selectFrom("message_personal as mp")
+		.innerJoin("location as loc", "loc.id", "mp.locationId")
+		.select((eb) => [
+			"mp.id",
+			"mp.messageThreadId",
+			"mp.createdAt",
+			sql<MessageTypeEnumSchema.Type>`'personal'`.as("type"),
+			"mp.userId",
+			sql<string | null>`null`.as("text"),
+			sql<string | null>`null`.as("galleryId"),
+			sql<string | null>`${eb.ref("mp.locationId")}`.as("locationId"),
+			sql<unknown>`null`.as("gallery"),
+			sql<LocationDbSchema.Type | null>`to_json(${eb.table("loc")}.*)`.as("location"),
+			"mp.name",
+			"mp.phone",
+			"mp.email",
+			eb
+				.case()
+				.when("mp.userId", "=", userId)
+				.then<MessageDirectionEnumSchema.Type>("out")
+				.else<MessageDirectionEnumSchema.Type>("in")
+				.end()
+				.as("direction"),
+		]);
 
 	const systemQuery = database.selectFrom("message_system as ms").select([
 		"ms.id",
@@ -107,12 +142,16 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		sql<string | null>`null`.as("locationId"),
 		sql<unknown>`null`.as("gallery"),
 		sql<LocationDbSchema.Type | null>`cast(null as json)`.as("location"),
+		sql<string | null>`null`.as("name"),
+		sql<string | null>`null`.as("phone"),
+		sql<string | null>`null`.as("email"),
 		sql<MessageDirectionEnumSchema.Type>`'system'`.as("direction"),
 	]);
 
 	const unionQuery = textQuery
 		.unionAll(galleryQuery)
 		.unionAll(locationQuery)
+		.unionAll(personalQuery)
 		.unionAll(systemQuery);
 
 	let query = database.selectFrom(unionQuery.as("msg")).selectAll("msg");
