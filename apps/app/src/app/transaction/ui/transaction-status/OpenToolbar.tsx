@@ -29,7 +29,7 @@ export const OpenToolbar: FC<OpenToolbar.Props> = ({ transaction }) => {
 				}}
 				withMutation={withTransactionMessageGalleryCreateMutation}
 				toMutation={(uploadIds) => ({
-					messageThreadId: transaction.messageThreadId,
+					transactionId: transaction.id,
 					uploadIds,
 				})}
 				onSuccess={() => {
