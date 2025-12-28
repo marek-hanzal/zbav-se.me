@@ -923,6 +923,7 @@ export const sMessageQuery = {
 export const sMessageSortField = {
     type: 'string',
     enum: [
+        'id',
         'createdAt'
     ]
 } as const;
@@ -1206,7 +1207,7 @@ export const sMessageText = {
     ]
 } as const;
 
-export const sMessage = {
+export const sMessagePayload = {
     anyOf: [
         {
             $ref: '#/components/schemas/MessageText'
@@ -1223,6 +1224,26 @@ export const sMessage = {
         {
             $ref: '#/components/schemas/MessageSystem'
         }
+    ]
+} as const;
+
+export const sMessage = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/MessageTypeEnum'
+        },
+        payload: {
+            $ref: '#/components/schemas/MessagePayload'
+        }
+    },
+    required: [
+        'id',
+        'type',
+        'payload'
     ]
 } as const;
 

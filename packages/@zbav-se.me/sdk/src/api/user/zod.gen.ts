@@ -722,7 +722,7 @@ export type zAllowedExtensionsEnum = z.infer<typeof zAllowedExtensionsEnum>;
 /**
  * Available sort fields for message collection
  */
-export const zMessageSortField = z.enum(['createdAt']).register(z.globalRegistry, {
+export const zMessageSortField = z.enum(['id', 'createdAt']).register(z.globalRegistry, {
     description: 'Available sort fields for message collection'
 });
 
@@ -958,15 +958,30 @@ export const zMessageText = z.object({
 export type zMessageText = z.infer<typeof zMessageText>;
 
 /**
- * Message entry (unified view across all message types)
+ * Message payload (unified view across all message types)
  */
-export const zMessage = z.union([
+export const zMessagePayload = z.union([
     zMessageText,
     zMessageGallery,
     zMessageLocation,
     zMessagePersonal,
     zMessageSystem
 ]);
+
+export type zMessagePayload = z.infer<typeof zMessagePayload>;
+
+/**
+ * Message entry (unified view across all message types)
+ */
+export const zMessage = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message entry'
+    }),
+    type: zMessageTypeEnum,
+    payload: zMessagePayload
+}).register(z.globalRegistry, {
+    description: 'Message entry (unified view across all message types)'
+});
 
 export type zMessage = z.infer<typeof zMessage>;
 

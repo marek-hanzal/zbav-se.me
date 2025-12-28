@@ -676,7 +676,7 @@ export type tMessageQuery = {
 /**
  * Available sort fields for message collection
  */
-export const tMessageSortField = { createdAt: 'createdAt' } as const;
+export const tMessageSortField = { id: 'id', createdAt: 'createdAt' } as const;
 
 /**
  * Available sort fields for message collection
@@ -908,9 +908,21 @@ export type tMessageText = {
 };
 
 /**
+ * Message payload (unified view across all message types)
+ */
+export type tMessagePayload = tMessageText | tMessageGallery | tMessageLocation | tMessagePersonal | tMessageSystem;
+
+/**
  * Message entry (unified view across all message types)
  */
-export type tMessage = tMessageText | tMessageGallery | tMessageLocation | tMessagePersonal | tMessageSystem;
+export type tMessage = {
+    /**
+     * ID of the message entry
+     */
+    id: string;
+    type: tMessageTypeEnum;
+    payload: tMessagePayload;
+};
 
 /**
  * Data for creating a new feedback

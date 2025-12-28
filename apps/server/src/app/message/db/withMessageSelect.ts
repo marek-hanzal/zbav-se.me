@@ -1,5 +1,4 @@
 import { sql } from "kysely";
-import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import type { MessageSortSchema } from "~/app/message/schema/MessageSortSchema";
 import type { MessageTypeEnumSchema } from "~/app/message/schema/MessageTypeEnumSchema";
@@ -21,87 +20,63 @@ export namespace withMessageSelect {
 }
 
 export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.Props) => {
-	const textQuery = database.selectFrom("message_text as message_text").select((eb) => [
-		"message_text.id",
+	const textPayload = withMessageTextSelect({
+		database,
+		sort: undefined,
+		userId,
+	}).as("t");
+	const textQuery = database.selectFrom(textPayload).select([
+		"t.id",
 		sql<MessageTypeEnumSchema.Type>`'text'`.as("type"),
-		"message_text.createdAt",
-		jsonObjectFrom(
-			withMessageTextSelect({
-				database,
-				sort: undefined,
-				userId,
-			}).where("mt.id", "=", eb.ref("message_text.id")),
-		)
-			.$notNull()
-			.$castTo<unknown>()
-			.as("payload"),
+		"t.createdAt",
+		sql<unknown>`to_jsonb(t)`.as("payload"),
 	]);
 
-	const galleryQuery = database.selectFrom("message_gallery as message_gallery").select((eb) => [
-		"message_gallery.id",
+	const galleryPayload = withMessageGallerySelect({
+		database,
+		sort: undefined,
+		userId,
+	}).as("g");
+	const galleryQuery = database.selectFrom(galleryPayload).select([
+		"g.id",
 		sql<MessageTypeEnumSchema.Type>`'gallery'`.as("type"),
-		"message_gallery.createdAt",
-		jsonObjectFrom(
-			withMessageGallerySelect({
-				database,
-				sort: undefined,
-				userId,
-			}).where("mg.id", "=", eb.ref("message_gallery.id")),
-		)
-			.$notNull()
-			.$castTo<unknown>()
-			.as("payload"),
+		"g.createdAt",
+		sql<unknown>`to_jsonb(g)`.as("payload"),
 	]);
 
-	const locationQuery = database
-		.selectFrom("message_location as message_location")
-		.select((eb) => [
-			"message_location.id",
-			sql<MessageTypeEnumSchema.Type>`'location'`.as("type"),
-			"message_location.createdAt",
-			jsonObjectFrom(
-				withMessageLocationSelect({
-					database,
-					sort: undefined,
-					userId,
-				}).where("ml.id", "=", eb.ref("message_location.id")),
-			)
-				.$notNull()
-				.$castTo<unknown>()
-				.as("payload"),
-		]);
+	const locationPayload = withMessageLocationSelect({
+		database,
+		sort: undefined,
+		userId,
+	}).as("l");
+	const locationQuery = database.selectFrom(locationPayload).select([
+		"l.id",
+		sql<MessageTypeEnumSchema.Type>`'location'`.as("type"),
+		"l.createdAt",
+		sql<unknown>`to_jsonb(l)`.as("payload"),
+	]);
 
-	const personalQuery = database
-		.selectFrom("message_personal as message_personal")
-		.select((eb) => [
-			"message_personal.id",
-			sql<MessageTypeEnumSchema.Type>`'personal'`.as("type"),
-			"message_personal.createdAt",
-			jsonObjectFrom(
-				withMessagePersonalSelect({
-					database,
-					sort: undefined,
-					userId,
-				}).where("mp.id", "=", eb.ref("message_personal.id")),
-			)
-				.$notNull()
-				.$castTo<unknown>()
-				.as("payload"),
-		]);
+	const personalPayload = withMessagePersonalSelect({
+		database,
+		sort: undefined,
+		userId,
+	}).as("p");
+	const personalQuery = database.selectFrom(personalPayload).select([
+		"p.id",
+		sql<MessageTypeEnumSchema.Type>`'personal'`.as("type"),
+		"p.createdAt",
+		sql<unknown>`to_jsonb(p)`.as("payload"),
+	]);
 
-	const systemQuery = database.selectFrom("message_system as message_system").select((eb) => [
-		"message_system.id",
+	const systemPayload = withMessageSystemSelect({
+		database,
+		sort: undefined,
+	}).as("s");
+	const systemQuery = database.selectFrom(systemPayload).select([
+		"s.id",
 		sql<MessageTypeEnumSchema.Type>`'system'`.as("type"),
-		"message_system.createdAt",
-		jsonObjectFrom(
-			withMessageSystemSelect({
-				database,
-				sort: undefined,
-			}).where("ms.id", "=", eb.ref("message_system.id")),
-		)
-			.$notNull()
-			.$castTo<unknown>()
-			.as("payload"),
+		"s.createdAt",
+		sql<unknown>`to_jsonb(s)`.as("payload"),
 	]);
 
 	const unionQuery = textQuery
