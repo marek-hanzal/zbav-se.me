@@ -42,10 +42,9 @@ export const DateControl: FC<DateControl.Props> = ({ onCancel, onSave, loading, 
 		<Container
 			data-ui="DateControl[Container]"
 			ui={{
-				layout: "vertical-flex",
-				height: "auto",
+				layout: "vertical-content-footer",
+				height: "full",
 				width: "full",
-				gap: "lg",
 				...ui,
 			}}
 			{...props}
@@ -55,7 +54,6 @@ export const DateControl: FC<DateControl.Props> = ({ onCancel, onSave, loading, 
 					layout: "vertical-flex",
 					height: "auto",
 					width: "full",
-					gap: "lg",
 				}}
 			>
 				<form
