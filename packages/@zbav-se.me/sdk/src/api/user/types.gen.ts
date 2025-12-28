@@ -304,9 +304,9 @@ export type tTransactionMessageLocationCreate = {
  */
 export type tTransactionMessageGalleryCreate = {
     /**
-     * The ID of the message thread to add a gallery to
+     * The ID of the transaction to add a gallery to
      */
-    messageThreadId: string;
+    transactionId: string;
     /**
      * IDs of the uploads; order of uploads defines order in the gallery
      */
@@ -3943,6 +3943,10 @@ export type tApiTransactionMessageLocationCreateRequest = {
 
 export type apiTransactionMessageLocationCreateErrors = {
     /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
      * Access denied
      */
     403: tNotice;
@@ -3979,6 +3983,10 @@ export type tApiTransactionMessagePersonalCreateRequest = {
 
 export type apiTransactionMessagePersonalCreateErrors = {
     /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
      * Access denied
      */
     403: tNotice;
@@ -4014,6 +4022,10 @@ export type tApiTransactionMessageTextCreateRequest = {
 };
 
 export type apiTransactionMessageTextCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
     /**
      * Access denied
      */

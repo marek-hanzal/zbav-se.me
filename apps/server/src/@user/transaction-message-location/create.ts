@@ -36,6 +36,14 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 					},
 					description: "Message location created",
 				},
+				400: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Invalid request",
+				},
 				403: {
 					content: {
 						"application/json": {
@@ -82,6 +90,20 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 						Match.value(e).pipe(
 							Match.when(
 								{
+									_tag: "InvalidRequestError",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 400>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										400,
+									);
+								},
+							),
+							Match.when(
+								{
 									_tag: "NotFoundError",
 								},
 								() => {
@@ -91,6 +113,34 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 											message: e.message,
 										},
 										404,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "AccessDeniedError",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 403>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										403,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "RuntimeError",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 500>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										500,
 									);
 								},
 							),

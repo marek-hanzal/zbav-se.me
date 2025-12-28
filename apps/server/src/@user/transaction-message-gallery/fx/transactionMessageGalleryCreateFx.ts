@@ -4,11 +4,10 @@ import { galleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
 import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import { messageGalleryCreateFx } from "~/@user/message-gallery/fx/messageGalleryCreateFx";
 import { TransactionContextFx } from "~/@user/transaction/fx/TransactionContextFx";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { transactionStatusGateFx } from "~/@user/transaction/fx/transactionStatusGateFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
-import { NotFoundError } from "~/error/NotFoundError";
 import type { TransactionMessageGalleryCreateSchema } from "../schema/TransactionMessageGalleryCreateSchema";
 
 export namespace transactionMessageGalleryCreateFx {
@@ -16,13 +15,12 @@ export namespace transactionMessageGalleryCreateFx {
 }
 
 export const transactionMessageGalleryCreateFx = ({
-	messageThreadId,
+	transactionId,
 	uploadIds,
 }: transactionMessageGalleryCreateFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
-			const user = yield* UserContextFx;
 			const config = yield* TransactionContextFx;
 
 			if (uploadIds.length === 0) {
@@ -31,28 +29,12 @@ export const transactionMessageGalleryCreateFx = ({
 				});
 			}
 
-			const transaction = yield* Effect.tryPromise(async () => {
-				return database
-					.selectFrom("transaction as t")
-					.innerJoin("listing as l", "t.listingId", "l.id")
-					.selectAll("t")
-					.where("t.messageThreadId", "=", messageThreadId)
-					.where((eb) => {
-						return eb.or([
-							eb("t.userId", "=", user.id),
-							eb("l.userId", "=", user.id),
-						]);
-					})
-					.executeTakeFirst();
+			const transaction = yield* transactionStatusGateFx({
+				transactionId,
+				allowedStatuses: [
+					"open",
+				],
 			});
-
-			if (!transaction) {
-				return yield* new NotFoundError({
-					resource: "transaction",
-					resourceId: messageThreadId,
-					message: "Transaction not found",
-				});
-			}
 
 			const now = DateTime.now();
 
@@ -91,7 +73,7 @@ export const transactionMessageGalleryCreateFx = ({
 			}
 
 			return yield* messageGalleryCreateFx({
-				messageThreadId,
+				messageThreadId: transaction.messageThreadId,
 				galleryId: gallery.id,
 			});
 		}),

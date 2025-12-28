@@ -1,9 +1,9 @@
-import { z } from "zod";
+import { z } from "@hono/zod-openapi";
 
 export const TransactionMessageGalleryCreateSchema = z
 	.object({
-		messageThreadId: z.string().openapi({
-			description: "The ID of the message thread to add a gallery to",
+		transactionId: z.string().openapi({
+			description: "The ID of the transaction to add a gallery to",
 		}),
 		uploadIds: z.array(z.string()).min(1, "At least one upload is required").openapi({
 			description: "IDs of the uploads; order of uploads defines order in the gallery",

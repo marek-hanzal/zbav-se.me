@@ -2,8 +2,7 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { messagePersonalCreateFx } from "~/@user/message-personal/fx/messageCreateFx";
 import { TransactionContextFx } from "~/@user/transaction/fx/TransactionContextFx";
-import { transactionFetchFx } from "~/@user/transaction/fx/transactionFetchFx";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { transactionStatusGateFx } from "~/@user/transaction/fx/transactionStatusGateFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import type { TransactionMessagePersonalCreateSchema } from "../schema/TransactionMessagePersonalCreateSchema";
 
@@ -20,14 +19,13 @@ export const transactionMessagePersonalCreateFx = ({
 }: transactionMessagePersonalCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
 		const config = yield* TransactionContextFx;
 
-		const transaction = yield* transactionFetchFx({
-			where: {
-				id: transactionId,
-				userId: user.id,
-			},
+		const transaction = yield* transactionStatusGateFx({
+			transactionId,
+			allowedStatuses: [
+				"open",
+			],
 		});
 
 		const now = DateTime.now();
