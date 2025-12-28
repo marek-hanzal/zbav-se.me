@@ -69,6 +69,7 @@ export const MessagePersonal: FC<MessagePersonal.Props> = ({ message, ...props }
 					label={message.name}
 					ui={{
 						wrap: "wrap",
+						font: "bold",
 					}}
 					className={"py-1"}
 				/>
@@ -78,7 +79,6 @@ export const MessagePersonal: FC<MessagePersonal.Props> = ({ message, ...props }
 					ui={{
 						wrap: "wrap",
 					}}
-					className={"py-1"}
 				/>
 
 				<Typo

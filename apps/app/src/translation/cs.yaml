@@ -929,3 +929,6 @@ ff95e127f3feec3ae1c640001d56b07697ca4fa473da4213348be958:
 Invalid URL:
     static: true
     value: Špatně vyplněná adresa
+Invalid email address:
+    static: true
+    value: Špatně vyplněná emailová adresa
