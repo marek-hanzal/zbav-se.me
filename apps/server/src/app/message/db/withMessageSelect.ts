@@ -1,5 +1,6 @@
 import { sql } from "kysely";
 import { match } from "ts-pattern";
+import type { MessagePayloadSchema } from "~/@user/message/schema/MessagePayloadSchema";
 import type { MessageSortSchema } from "~/app/message/schema/MessageSortSchema";
 import type { MessageTypeEnumSchema } from "~/app/message/schema/MessageTypeEnumSchema";
 import { withMessageGallerySelect } from "~/app/message-gallery/db/withMessageGallerySelect";
@@ -29,7 +30,7 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		"t.id",
 		sql<MessageTypeEnumSchema.Type>`'text'`.as("type"),
 		"t.createdAt",
-		sql<unknown>`to_jsonb(t)`.as("payload"),
+		sql<MessagePayloadSchema.Type>`to_jsonb(t)`.as("payload"),
 	]);
 
 	const galleryPayload = withMessageGallerySelect({
@@ -41,7 +42,7 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		"g.id",
 		sql<MessageTypeEnumSchema.Type>`'gallery'`.as("type"),
 		"g.createdAt",
-		sql<unknown>`to_jsonb(g)`.as("payload"),
+		sql<MessagePayloadSchema.Type>`to_jsonb(g)`.as("payload"),
 	]);
 
 	const locationPayload = withMessageLocationSelect({
@@ -53,7 +54,7 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		"l.id",
 		sql<MessageTypeEnumSchema.Type>`'location'`.as("type"),
 		"l.createdAt",
-		sql<unknown>`to_jsonb(l)`.as("payload"),
+		sql<MessagePayloadSchema.Type>`to_jsonb(l)`.as("payload"),
 	]);
 
 	const personalPayload = withMessagePersonalSelect({
@@ -65,7 +66,7 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		"p.id",
 		sql<MessageTypeEnumSchema.Type>`'personal'`.as("type"),
 		"p.createdAt",
-		sql<unknown>`to_jsonb(p)`.as("payload"),
+		sql<MessagePayloadSchema.Type>`to_jsonb(p)`.as("payload"),
 	]);
 
 	const systemPayload = withMessageSystemSelect({
@@ -76,7 +77,7 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		"s.id",
 		sql<MessageTypeEnumSchema.Type>`'system'`.as("type"),
 		"s.createdAt",
-		sql<unknown>`to_jsonb(s)`.as("payload"),
+		sql<MessagePayloadSchema.Type>`to_jsonb(s)`.as("payload"),
 	]);
 
 	const unionQuery = textQuery
