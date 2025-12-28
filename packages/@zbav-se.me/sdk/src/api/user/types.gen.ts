@@ -286,6 +286,24 @@ export type tTransactionMessagePersonalCreate = {
 };
 
 /**
+ * Request to create a transaction message package
+ */
+export type tTransactionMessagePackageCreate = {
+    /**
+     * The ID of the transaction to add a package message to
+     */
+    transactionId: string;
+    /**
+     * Package link
+     */
+    link: string;
+    /**
+     * Tracking number
+     */
+    number: string | null;
+};
+
+/**
  * Request to create a transaction message location
  */
 export type tTransactionMessageLocationCreate = {
@@ -804,6 +822,7 @@ export const tMessageTypeEnum = {
     gallery: 'gallery',
     location: 'location',
     personal: 'personal',
+    package: 'package',
     system: 'system'
 } as const;
 
@@ -811,6 +830,30 @@ export const tMessageTypeEnum = {
  * Type of message
  */
 export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
+
+/**
+ * Message package entry
+ */
+export type tMessagePackage = {
+    /**
+     * ID of the message package entry
+     */
+    id: string;
+    /**
+     * Package link
+     */
+    link: string;
+    /**
+     * Tracking number
+     */
+    number: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+};
 
 /**
  * Message personal entry
@@ -910,7 +953,7 @@ export type tMessageText = {
 /**
  * Message payload (unified view across all message types)
  */
-export type tMessagePayload = tMessageText | tMessageGallery | tMessageLocation | tMessagePersonal | tMessageSystem;
+export type tMessagePayload = tMessageText | tMessageGallery | tMessageLocation | tMessagePersonal | tMessagePackage | tMessageSystem;
 
 /**
  * Message entry (unified view across all message types)
@@ -3970,6 +4013,46 @@ export type tApiTransactionMessageLocationCreateResponse = {
 };
 
 export type apiTransactionMessageLocationCreateResponse = tApiTransactionMessageLocationCreateResponse[keyof tApiTransactionMessageLocationCreateResponse];
+
+export type tApiTransactionMessagePackageCreateRequest = {
+    /**
+     * Query object for transaction message package creation
+     */
+    body?: tTransactionMessagePackageCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction-message-package/create';
+};
+
+export type apiTransactionMessagePackageCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionMessagePackageCreateError = apiTransactionMessagePackageCreateErrors[keyof apiTransactionMessagePackageCreateErrors];
+
+export type tApiTransactionMessagePackageCreateResponse = {
+    /**
+     * Message package created
+     */
+    200: tMessagePackage;
+};
+
+export type apiTransactionMessagePackageCreateResponse = tApiTransactionMessagePackageCreateResponse[keyof tApiTransactionMessagePackageCreateResponse];
 
 export type tApiTransactionMessagePersonalCreateRequest = {
     /**

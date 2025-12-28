@@ -2,6 +2,7 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import {
 	zMessageGallery,
 	zMessageLocation,
+	zMessagePackage,
 	zMessagePersonal,
 	zMessageSystem,
 	zMessageText,
@@ -12,6 +13,7 @@ import { match } from "ts-pattern";
 import { useDebouncedCallback } from "use-debounce";
 import { MessageGallery } from "~/app/message/type/MessageGallery";
 import { MessageLocation } from "~/app/message/type/MessageLocation";
+import { MessagePackage } from "~/app/message/type/MessagePackage";
 import { MessagePersonal } from "~/app/message/type/MessagePersonal";
 import { MessageText } from "~/app/message/type/MessageText";
 
@@ -125,6 +127,12 @@ export const MessageList: FC<MessageList.Props> = ({
 								<MessagePersonal
 									key={message.id}
 									message={zMessagePersonal.parse(message.payload)}
+								/>
+							))
+							.with("package", () => (
+								<MessagePackage
+									key={message.id}
+									message={zMessagePackage.parse(message.payload)}
 								/>
 							))
 							.exhaustive();

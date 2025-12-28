@@ -326,6 +326,26 @@ export const zTransactionMessagePersonalCreate = z.object({
 export type zTransactionMessagePersonalCreate = z.infer<typeof zTransactionMessagePersonalCreate>;
 
 /**
+ * Request to create a transaction message package
+ */
+export const zTransactionMessagePackageCreate = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the transaction to add a package message to'
+    }),
+    link: z.string().register(z.globalRegistry, {
+        description: 'Package link'
+    }),
+    number: z.union([
+        z.string(),
+        z.null()
+    ])
+}).register(z.globalRegistry, {
+    description: 'Request to create a transaction message package'
+});
+
+export type zTransactionMessagePackageCreate = z.infer<typeof zTransactionMessagePackageCreate>;
+
+/**
  * Request to create a transaction message location
  */
 export const zTransactionMessageLocationCreate = z.object({
@@ -831,6 +851,7 @@ export const zMessageTypeEnum = z.enum([
     'gallery',
     'location',
     'personal',
+    'package',
     'system'
 ]).register(z.globalRegistry, {
     description: 'Type of message'
@@ -858,6 +879,31 @@ export const zMessageSystem = z.object({
 });
 
 export type zMessageSystem = z.infer<typeof zMessageSystem>;
+
+/**
+ * Message package entry
+ */
+export const zMessagePackage = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message package entry'
+    }),
+    link: z.url().register(z.globalRegistry, {
+        description: 'Package link'
+    }),
+    number: z.union([
+        z.string(),
+        z.null()
+    ]),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Message package entry'
+});
+
+export type zMessagePackage = z.infer<typeof zMessagePackage>;
 
 /**
  * Message personal entry
@@ -965,6 +1011,7 @@ export const zMessagePayload = z.union([
     zMessageGallery,
     zMessageLocation,
     zMessagePersonal,
+    zMessagePackage,
     zMessageSystem
 ]);
 
@@ -3532,6 +3579,21 @@ export type zapiTransactionMessageLocationCreateRequest = z.infer<typeof zApiTra
 export const zApiTransactionMessageLocationCreateResponse = zMessageLocation;
 
 export type zapiTransactionMessageLocationCreateResponse = z.infer<typeof zApiTransactionMessageLocationCreateResponse>;
+
+export const zApiTransactionMessagePackageCreateData = z.object({
+    body: z.optional(zTransactionMessagePackageCreate),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionMessagePackageCreateRequest = z.infer<typeof zApiTransactionMessagePackageCreateData>;
+
+/**
+ * Message package created
+ */
+export const zApiTransactionMessagePackageCreateResponse = zMessagePackage;
+
+export type zapiTransactionMessagePackageCreateResponse = z.infer<typeof zApiTransactionMessagePackageCreateResponse>;
 
 export const zApiTransactionMessagePersonalCreateData = z.object({
     body: z.optional(zTransactionMessagePersonalCreate),

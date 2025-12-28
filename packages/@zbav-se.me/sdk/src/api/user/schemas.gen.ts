@@ -376,6 +376,29 @@ export const sTransactionMessagePersonalCreate = {
     ]
 } as const;
 
+export const sTransactionMessagePackageCreate = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        link: {
+            type: 'string'
+        },
+        number: {
+            type: [
+                'string',
+                'null'
+            ]
+        }
+    },
+    required: [
+        'transactionId',
+        'link',
+        'number'
+    ]
+} as const;
+
 export const sTransactionMessageLocationCreate = {
     type: 'object',
     properties: {
@@ -1061,7 +1084,44 @@ export const sMessageTypeEnum = {
         'gallery',
         'location',
         'personal',
+        'package',
         'system'
+    ]
+} as const;
+
+export const sMessagePackage = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        link: {
+            type: 'string',
+            format: 'uri'
+        },
+        number: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/MessageTypeEnum'
+        },
+        direction: {
+            $ref: '#/components/schemas/MessageDirectionEnum'
+        }
+    },
+    required: [
+        'id',
+        'link',
+        'number',
+        'createdAt',
+        'type',
+        'direction'
     ]
 } as const;
 
@@ -1220,6 +1280,9 @@ export const sMessagePayload = {
         },
         {
             $ref: '#/components/schemas/MessagePersonal'
+        },
+        {
+            $ref: '#/components/schemas/MessagePackage'
         },
         {
             $ref: '#/components/schemas/MessageSystem'
