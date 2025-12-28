@@ -332,7 +332,7 @@ export const zTransactionMessagePackageCreate = z.object({
     transactionId: z.string().register(z.globalRegistry, {
         description: 'The ID of the transaction to add a package message to'
     }),
-    link: z.string().register(z.globalRegistry, {
+    link: z.url().register(z.globalRegistry, {
         description: 'Package link'
     }),
     number: z.union([
@@ -376,6 +376,22 @@ export const zTransactionMessageGalleryCreate = z.object({
 });
 
 export type zTransactionMessageGalleryCreate = z.infer<typeof zTransactionMessageGalleryCreate>;
+
+/**
+ * Request to create a transaction message date
+ */
+export const zTransactionMessageDateCreate = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the transaction to add a date message to'
+    }),
+    datetime: z.string().register(z.globalRegistry, {
+        description: 'Date and time'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to create a transaction message date'
+});
+
+export type zTransactionMessageDateCreate = z.infer<typeof zTransactionMessageDateCreate>;
 
 /**
  * Buyer info for the transaction
@@ -852,6 +868,7 @@ export const zMessageTypeEnum = z.enum([
     'location',
     'personal',
     'package',
+    'date',
     'system'
 ]).register(z.globalRegistry, {
     description: 'Type of message'
@@ -879,6 +896,27 @@ export const zMessageSystem = z.object({
 });
 
 export type zMessageSystem = z.infer<typeof zMessageSystem>;
+
+/**
+ * Message date entry
+ */
+export const zMessageDate = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message date entry'
+    }),
+    datetime: z.string().register(z.globalRegistry, {
+        description: 'Date and time'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Message date entry'
+});
+
+export type zMessageDate = z.infer<typeof zMessageDate>;
 
 /**
  * Message package entry
@@ -1012,6 +1050,7 @@ export const zMessagePayload = z.union([
     zMessageLocation,
     zMessagePersonal,
     zMessagePackage,
+    zMessageDate,
     zMessageSystem
 ]);
 
@@ -3549,6 +3588,21 @@ export type zapiTransactionBuyerInfoRequest = z.infer<typeof zApiTransactionBuye
 export const zApiTransactionBuyerInfoResponse = zTransactionBuyerInfo;
 
 export type zapiTransactionBuyerInfoResponse = z.infer<typeof zApiTransactionBuyerInfoResponse>;
+
+export const zApiTransactionMessageDateCreateData = z.object({
+    body: z.optional(zTransactionMessageDateCreate),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionMessageDateCreateRequest = z.infer<typeof zApiTransactionMessageDateCreateData>;
+
+/**
+ * Message date created
+ */
+export const zApiTransactionMessageDateCreateResponse = zMessageDate;
+
+export type zapiTransactionMessageDateCreateResponse = z.infer<typeof zApiTransactionMessageDateCreateResponse>;
 
 export const zApiTransactionMessageGalleryCreateData = z.object({
     body: z.optional(zTransactionMessageGalleryCreate),

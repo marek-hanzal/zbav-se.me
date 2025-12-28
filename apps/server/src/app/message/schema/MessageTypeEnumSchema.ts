@@ -7,6 +7,7 @@ export const MessageTypeEnumSchema = z
 		"location",
 		"personal",
 		"package",
+		"date",
 		"system",
 	])
 	.openapi("MessageTypeEnum", {

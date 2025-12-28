@@ -24,10 +24,11 @@ import { MessageGalleryMigration } from "./0022-message-gallery";
 import { MessageLocationMigration } from "./0023-message-location";
 import { MessagePersonalMigration } from "./0024-message-personal";
 import { MessagePackageMigration } from "./0025-message-package";
-import { TransactionMigration } from "./0026-transaction";
-import { TransactionStatusMigration } from "./0027-transaction-status";
-import { GitHubMigration } from "./0028-github";
-import { FeedbackMigration } from "./0029-feedback";
+import { MessageDateMigration } from "./0026-message-date";
+import { TransactionMigration } from "./0027-transaction";
+import { TransactionStatusMigration } from "./0028-transaction-status";
+import { GitHubMigration } from "./0029-github";
+import { FeedbackMigration } from "./0030-feedback";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -56,8 +57,9 @@ export const migrations = {
 	"0023-message-location": MessageLocationMigration,
 	"0024-message-personal": MessagePersonalMigration,
 	"0025-message-package": MessagePackageMigration,
-	"0026-transaction": TransactionMigration,
-	"0027-transaction-status": TransactionStatusMigration,
-	"0028-github": GitHubMigration,
-	"0029-feedback": FeedbackMigration,
+	"0026-message-date": MessageDateMigration,
+	"0027-transaction": TransactionMigration,
+	"0028-transaction-status": TransactionStatusMigration,
+	"0029-github": GitHubMigration,
+	"0030-feedback": FeedbackMigration,
 } as const;

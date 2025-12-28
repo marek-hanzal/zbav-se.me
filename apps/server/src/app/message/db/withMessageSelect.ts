@@ -3,6 +3,7 @@ import { match } from "ts-pattern";
 import type { MessagePayloadSchema } from "~/@user/message/schema/MessagePayloadSchema";
 import type { MessageSortSchema } from "~/app/message/schema/MessageSortSchema";
 import type { MessageTypeEnumSchema } from "~/app/message/schema/MessageTypeEnumSchema";
+import { withMessageDateSelect } from "~/app/message-date/db/withMessageDateSelect";
 import { withMessageGallerySelect } from "~/app/message-gallery/db/withMessageGallerySelect";
 import { withMessageLocationSelect } from "~/app/message-location/db/withMessageLocationSelect";
 import { withMessagePackageSelect } from "~/app/message-package/db/withMessagePackageSelect";
@@ -107,6 +108,23 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 			sql<MessagePayloadSchema.Type>`to_jsonb(pk)`.as("payload"),
 		]);
 
+	const dateQuery = database
+		.selectFrom(
+			withMessageDateSelect({
+				database,
+				sort: undefined,
+				userId,
+			}).as("d"),
+		)
+		.select([
+			"d.id",
+			"d.messageThreadId",
+			"d.userId",
+			sql<MessageTypeEnumSchema.Type>`'date'`.as("type"),
+			"d.createdAt",
+			sql<MessagePayloadSchema.Type>`to_jsonb(d)`.as("payload"),
+		]);
+
 	const systemQuery = database
 		.selectFrom(
 			withMessageSystemSelect({
@@ -128,6 +146,7 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		.unionAll(locationQuery)
 		.unionAll(personalQuery)
 		.unionAll(packageQuery)
+		.unionAll(dateQuery)
 		.unionAll(systemQuery);
 
 	let query = database.selectFrom(unionQuery.as("msg")).selectAll("msg");

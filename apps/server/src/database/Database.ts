@@ -13,6 +13,7 @@ import type { IgnoreDbSchema } from "~/app/ignore/schema/IgnoreDbSchema";
 import type { ListingDbSchema } from "~/app/listing/schema/ListingDbSchema";
 import type { ListingEventDbSchema } from "~/app/listing-event/schema/ListingEventDbSchema";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
+import type { MessageDateDbSchema } from "~/app/message-date/schema/MessageDateDbSchema";
 import type { MessageGalleryDbSchema } from "~/app/message-gallery/schema/MessageGalleryDbSchema";
 import type { MessageLocationDbSchema } from "~/app/message-location/schema/MessageLocationDbSchema";
 import type { MessagePackageDbSchema } from "~/app/message-package/schema/MessagePackageDbSchema";
@@ -43,6 +44,7 @@ export interface Database {
 	listing_event: ListingEventDbSchema.Type;
 	listing: ListingDbSchema.Type;
 	location: LocationDbSchema.Type;
+	message_date: MessageDateDbSchema.Type;
 	message_gallery: MessageGalleryDbSchema.Type;
 	message_location: MessageLocationDbSchema.Type;
 	message_package: MessagePackageDbSchema.Type;

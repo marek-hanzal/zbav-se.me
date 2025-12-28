@@ -332,6 +332,20 @@ export type tTransactionMessageGalleryCreate = {
 };
 
 /**
+ * Request to create a transaction message date
+ */
+export type tTransactionMessageDateCreate = {
+    /**
+     * The ID of the transaction to add a date message to
+     */
+    transactionId: string;
+    /**
+     * Date and time
+     */
+    datetime: string;
+};
+
+/**
  * Buyer info for the transaction
  */
 export type tTransactionBuyerInfo = {
@@ -823,6 +837,7 @@ export const tMessageTypeEnum = {
     location: 'location',
     personal: 'personal',
     package: 'package',
+    date: 'date',
     system: 'system'
 } as const;
 
@@ -830,6 +845,26 @@ export const tMessageTypeEnum = {
  * Type of message
  */
 export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
+
+/**
+ * Message date entry
+ */
+export type tMessageDate = {
+    /**
+     * ID of the message date entry
+     */
+    id: string;
+    /**
+     * Date and time
+     */
+    datetime: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+};
 
 /**
  * Message package entry
@@ -953,7 +988,7 @@ export type tMessageText = {
 /**
  * Message payload (unified view across all message types)
  */
-export type tMessagePayload = tMessageText | tMessageGallery | tMessageLocation | tMessagePersonal | tMessagePackage | tMessageSystem;
+export type tMessagePayload = tMessageText | tMessageGallery | tMessageLocation | tMessagePersonal | tMessagePackage | tMessageDate | tMessageSystem;
 
 /**
  * Message entry (unified view across all message types)
@@ -3933,6 +3968,46 @@ export type tApiTransactionBuyerInfoResponse = {
 };
 
 export type apiTransactionBuyerInfoResponse = tApiTransactionBuyerInfoResponse[keyof tApiTransactionBuyerInfoResponse];
+
+export type tApiTransactionMessageDateCreateRequest = {
+    /**
+     * Query object for transaction message date creation
+     */
+    body?: tTransactionMessageDateCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction-message-date/create';
+};
+
+export type apiTransactionMessageDateCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionMessageDateCreateError = apiTransactionMessageDateCreateErrors[keyof apiTransactionMessageDateCreateErrors];
+
+export type tApiTransactionMessageDateCreateResponse = {
+    /**
+     * Message date created
+     */
+    200: tMessageDate;
+};
+
+export type apiTransactionMessageDateCreateResponse = tApiTransactionMessageDateCreateResponse[keyof tApiTransactionMessageDateCreateResponse];
 
 export type tApiTransactionMessageGalleryCreateRequest = {
     /**
