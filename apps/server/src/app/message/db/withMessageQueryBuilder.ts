@@ -1,6 +1,5 @@
 import type { withMessageSelect } from "~/app/message/db/withMessageSelect";
 import type { MessageFilterSchema } from "~/app/message/schema/MessageFilterSchema";
-import { withLikeEx } from "~/database/expression/withLikeEx";
 
 export namespace withMessageQueryBuilder {
 	export interface Props<TSelect extends withMessageSelect.Select> {
@@ -46,12 +45,6 @@ export const withMessageQueryBuilder = <TSelect extends withMessageSelect.Select
 
 	if (where.idIn && where.idIn.length > 0) {
 		query = query.where("msg.id", "in", where.idIn) as TSelect;
-	}
-
-	if (where.fulltext) {
-		query = query.where((eb) =>
-			withLikeEx(eb.ref("msg.text"), where.fulltext, "both"),
-		) as TSelect;
 	}
 
 	if (where.messageThreadId) {

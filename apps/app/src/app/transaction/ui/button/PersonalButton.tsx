@@ -49,7 +49,7 @@ export const PersonalButton: FC<PersonalButton.Props> = ({ transaction, ...props
 						setIsOpen(false);
 					}}
 					onSave={({ name, phone, email, locationId }) => {
-						mutation.mutate(
+						return mutation.mutateAsync(
 							{
 								transactionId: transaction.id,
 								name,

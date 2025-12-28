@@ -3,13 +3,14 @@ import { MessagePayloadSchema } from "~/@user/message/schema/MessagePayloadSchem
 import { MessageTypeEnumSchema } from "~/app/message/schema/MessageTypeEnumSchema";
 
 export const MessageSchema = z
-	.object({
+	.looseObject({
 		id: z.string().openapi({
 			description: "ID of the message entry",
 		}),
 		type: MessageTypeEnumSchema,
 		payload: MessagePayloadSchema,
 	})
+	.strip()
 	.openapi("Message", {
 		description: "Message entry (unified view across all message types)",
 	});

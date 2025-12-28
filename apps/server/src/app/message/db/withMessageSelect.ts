@@ -32,6 +32,7 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		.select([
 			"t.id",
 			"t.messageThreadId",
+			"t.userId",
 			sql<MessageTypeEnumSchema.Type>`'text'`.as("type"),
 			"t.createdAt",
 			sql<MessagePayloadSchema.Type>`to_jsonb(t)`.as("payload"),
@@ -48,6 +49,7 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		.select([
 			"g.id",
 			"g.messageThreadId",
+			"g.userId",
 			sql<MessageTypeEnumSchema.Type>`'gallery'`.as("type"),
 			"g.createdAt",
 			sql<MessagePayloadSchema.Type>`to_jsonb(g)`.as("payload"),
@@ -64,6 +66,7 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		.select([
 			"l.id",
 			"l.messageThreadId",
+			"l.userId",
 			sql<MessageTypeEnumSchema.Type>`'location'`.as("type"),
 			"l.createdAt",
 			sql<MessagePayloadSchema.Type>`to_jsonb(l)`.as("payload"),
@@ -80,6 +83,7 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		.select([
 			"p.id",
 			"p.messageThreadId",
+			"p.userId",
 			sql<MessageTypeEnumSchema.Type>`'personal'`.as("type"),
 			"p.createdAt",
 			sql<MessagePayloadSchema.Type>`to_jsonb(p)`.as("payload"),
@@ -95,6 +99,7 @@ export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.
 		.select([
 			"s.id",
 			"s.messageThreadId",
+			sql<string>`'system'`.as("userId"),
 			sql<MessageTypeEnumSchema.Type>`'system'`.as("type"),
 			"s.createdAt",
 			sql<MessagePayloadSchema.Type>`to_jsonb(s)`.as("payload"),

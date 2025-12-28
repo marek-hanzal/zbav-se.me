@@ -5,7 +5,7 @@ import { MessageTypeEnumSchema } from "~/app/message/schema/MessageTypeEnumSchem
 import { MessageGalleryDbSchema } from "~/app/message-gallery/schema/MessageGalleryDbSchema";
 
 export const MessageGallerySchema = z
-	.object({
+	.looseObject({
 		...MessageGalleryDbSchema.shape,
 		type: MessageTypeEnumSchema.refine((t): t is "gallery" => t === "gallery", {
 			message: `Expected "text"`,
@@ -17,6 +17,7 @@ export const MessageGallerySchema = z
 		messageThreadId: true,
 		userId: true,
 	})
+	.strip()
 	.openapi("MessageGallery", {
 		description: "Message gallery entry",
 	});

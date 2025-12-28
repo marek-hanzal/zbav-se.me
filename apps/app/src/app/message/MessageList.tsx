@@ -100,31 +100,31 @@ export const MessageList: FC<MessageList.Props> = ({
 							.with("text", () => (
 								<MessageText
 									key={message.id}
-									message={zMessageText.parse(message)}
+									message={zMessageText.parse(message.payload)}
 								/>
 							))
 							.with("system", () => (
 								<MessageText
 									key={message.id}
-									message={zMessageSystem.parse(message)}
+									message={zMessageSystem.parse(message.payload)}
 								/>
 							))
 							.with("gallery", () => (
 								<MessageGallery
 									key={message.id}
-									message={zMessageGallery.parse(message)}
+									message={zMessageGallery.parse(message.payload)}
 								/>
 							))
 							.with("location", () => (
 								<MessageLocation
 									key={message.id}
-									message={zMessageLocation.parse(message)}
+									message={zMessageLocation.parse(message.payload)}
 								/>
 							))
 							.with("personal", () => (
 								<MessagePersonal
 									key={message.id}
-									message={zMessagePersonal.parse(message)}
+									message={zMessagePersonal.parse(message.payload)}
 								/>
 							))
 							.exhaustive();
