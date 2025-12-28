@@ -4,7 +4,9 @@ import { withTransactionMessageGalleryCreateMutation } from "@zbav-se.me/sdk/mut
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { type FC, useState } from "react";
 import { GalleryUploadButton } from "~/app/photo/ui/GalleryUploadButton";
+import { DateButton } from "~/app/transaction/ui/button/DateButton";
 import { LocationButton } from "~/app/transaction/ui/button/LocationButton";
+import { PackageButton } from "~/app/transaction/ui/button/PackageButton";
 import { PersonalButton } from "~/app/transaction/ui/button/PersonalButton";
 import { RejectButton } from "~/app/transaction/ui/button/RejectButton";
 import { TransactionButtonUi } from "~/app/transaction/ui/transaction-status/TransactionButtonUi";
@@ -52,6 +54,16 @@ export const OpenToolbar: FC<OpenToolbar.Props> = ({ transaction }) => {
 			/>
 
 			<PersonalButton
+				transaction={transaction}
+				{...TransactionButtonUi}
+			/>
+
+			<PackageButton
+				transaction={transaction}
+				{...TransactionButtonUi}
+			/>
+
+			<DateButton
 				transaction={transaction}
 				{...TransactionButtonUi}
 			/>
