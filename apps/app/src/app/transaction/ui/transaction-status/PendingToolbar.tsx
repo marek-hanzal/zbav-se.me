@@ -32,10 +32,12 @@ export const PendingToolbar: FC<PendingToolbar.Props> = ({ transaction }) => {
 				/>
 			) : null}
 
-			<AcceptButton
-				transaction={transaction}
-				{...TransactionButtonUi}
-			/>
+			{side === "seller" ? (
+				<AcceptButton
+					transaction={transaction}
+					{...TransactionButtonUi}
+				/>
+			) : null}
 
 			<RejectButton
 				transaction={transaction}
