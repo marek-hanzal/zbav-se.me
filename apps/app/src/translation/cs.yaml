@@ -101,8 +101,10 @@
     value: Cokoliv
 17d657e028b311247a42416aa1a3a6a7bbd603c9ad2640db1a845a89:
     ref: Feed location security (hint)
-    value: |
-        Nastavení polohy seznamu je jenom pro tebe - může to být např. práce, chalupa
+    value: >
+        Nastavení polohy seznamu je jenom pro tebe - může to být např. práce,
+        chalupa
+
         nebo domov - nikdo jiný tuto polohu neuvidí.
 1811df87a53f79aa1a04eecb5ca04f535da2826613b2ca23a131e2ba:
     ref: Close (button)
@@ -113,6 +115,9 @@
 19be7c986ac14c2bf115207f1c2292064ecaad2932ed3e1edecc40e2:
     ref: Clear all sorts (button)
     value: Odstranit všechna řazení
+1a42649744bb921f8df25fa685691c73b59d91161d88967e3519efa9:
+    ref: Personal - Email (label)
+    value: Email
 1ab95d6fcbacebf206a0388ee4204fbc371b89b1ab3d74df245149fa:
     ref: Feed setup (title)
     value: Nastavení seznamu
@@ -133,6 +138,9 @@
 2250c7f0548b5cbe0fbdac80837ac558866128e004997e4f6b879f72:
     ref: Feed delivery not selected
     value: Jakékoli
+23d96471b4cb8b94656db913455c655d345ce88c217df03f385d2750:
+    ref: Personal - Location (label)
+    value: Adresa
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
     ref: Location (title)
     value: Lokalita inzerátu
@@ -232,6 +240,16 @@
 46fc4830636405387727b8b88545e0e351e9227eaeac0426eafdb244:
     ref: Ignore listing (button)
     value: Ignorovat inzerát
+486106a7527d8d2727d2c29ae0bf04b30c60032b353b74b4c1abf20a:
+    ref: Personal - Warning (message)
+    value: |
+        Buď velmi opatrný, s kým sdílíš osobní údaje, jelikož po předání už
+        je nemáme pod kontrolou.
+
+        **Aplikace tyto údaje drží pouze v rámci této transakce, pak je nenávratně smaže.**
+
+        _Nikdy prosím nepiš své jméno ani jiné údaje přímo do chatu, jelikož ten je zachován
+        v archivu a zůstává dostupný._
 489d00517dfd05ee3a0d97637b9717d03aa5ae79bab228d5eed3e1e4:
     ref: Loading... (label)
     value: ...přemýšlím...
@@ -247,6 +265,9 @@
 4d603e3fca4e9f047b0fd3fdd009a1808b0b50eda2aa6f12c206a9c7:
     ref: Share location (button)
     value: Sdílet polohu
+4e8be956938d9f4112c3219e6c3412bc41010bc446c725492d7ec5c2:
+    ref: Personal - Email (placeholder)
+    value: Vyplň emailovou adresu
 4eb3d56cc03fa74ef6b354ce77013a361c781ed09a840f269a732617:
     ref: light
     value: light
@@ -318,6 +339,9 @@
 61324250f05e5b53c0994000ad235a587fa6c894a2414d561a434548:
     ref: Draft list (title)
     value: Seznam šablon
+62f79d721e1f64279cdb9c76ae70447c285af806b3d67a6223a7aa14:
+    ref: Share contact info (title)
+    value: Sdílet osobní údaje
 6311813e1e6c15a1177e1bf2fcc765faef3e9c9aea1851a72163366a:
     ref: View transactions (button)
     value: Zprávy
@@ -330,6 +354,9 @@
 64330c4baddecdf72a3e12b12827c2f9fc66b0966292e042eab4d26f:
     ref: expired
     value: expired
+6526401dc54716accd5e7f420d3f70d39b06beff9a4a9bf64dcd15d0:
+    ref: Share contact info (button)
+    value: Sdílet osobní údaje
 66c5975c97c2be7afe44dcec132ec657eac3943eeb2688ad68bd0193:
     ref: Transaction - send a message (placeholder)
     value: Co máš na srdci?
@@ -365,6 +392,9 @@
     value:
         Nastav si okruh v km, v jakém chceš vidět inzeráty; pro tuto funkci si
         musíš nastavit polohu.
+7b472479e6400e6c2e09906123f97a7c1bd6279166ae118d06b0a53b:
+    ref: Personal - Phone (label)
+    value: Telefon
 7b76eaae7e44c7090565c9a3f68a77cc082807fbf7f1c1111dfadb29:
     ref: Unignore listing (button)
     value: Zrušit ignoraci
@@ -389,6 +419,9 @@
 8239714e7da3bb0847e7e0f4bd956f5dff5fe8037a32a4fbbd354331:
     ref: Create transaction (button)
     value: Mám zájem!
+847f52b94d2fd82f89cf548490067c305182a98ca1342616d166ae6a:
+    ref: Personal - Phone (placeholder)
+    value: Tvoje telefonní číslo
 85ac6be17be3adb14aa92cb457175f48d0dd61a23f5766a50c160d51:
     ref: No listings (title)
     value: Kde nic, tu nic. Ale všechno bude, všechno bude!
@@ -631,6 +664,9 @@ a67ea5aaab8eb99644b1412ae291882a3d6e0ddefd49b19cc413abaf:
 aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
     ref: Photo upload placeholder (title)
     value: Nahraj obrázek
+acf5cd0bee4e6bd74eea745c51c41f0b3a17a1de314afd2d76eb056c:
+    ref: Personal - Warning (title)
+    value: Sdílíš osobní údaje
 b00de300bf157b03b1058da19b680a271fa960ab182ee923c3994e03:
     ref: Listing condition (hint)
     value: Stav má přímý vliv na možnosti doručení inzerátu, přesto se snaž být upřímný.
@@ -640,6 +676,9 @@ b0a721169f47da108f0195d392e3d788b2d417564f50dd126981465a:
 b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
     ref: Expire (title)
     value: Automatické ukončení
+b1c2d0799271082a0dee9aff6d0d911d9ca94c48f4efa8287557e28d:
+    ref: Personal - Name (placeholder)
+    value: Celé jméno
 b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
     ref: Sign out
     value: Odhlásit se
@@ -746,6 +785,9 @@ da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
 db19de463c98378f66569f482fa6839883350859bf1fe5f4d577fd96:
     ref: Adjust feed (button)
     value: Uprav si seznam
+dc9bf90858ca4e7cede4dc10e9939dea37d678f40fb69f16c9b30d9e:
+    ref: Personal - Name (label)
+    value: Celé jméno
 de8832ba89f066ff957f2387c53ed8c543d4ed977d7fac554ab3f590:
     ref: Go to my feed (button)
     value: Inzeráty

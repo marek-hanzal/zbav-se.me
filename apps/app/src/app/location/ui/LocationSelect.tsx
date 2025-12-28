@@ -1,5 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Fulltext } from "@use-pico/client/ui/fulltext";
+import type { Status } from "@use-pico/client/ui/status";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { type FC, useState } from "react";
 import { ListContainer } from "./location-select/ListContainer";
@@ -10,6 +11,7 @@ export namespace LocationSelect {
 		onChange(value: string): void;
 		onLocation?(value: tLocation): void;
 		textHint: string;
+		warningStatusProps?: Status.Props;
 	}
 }
 
@@ -19,6 +21,7 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 	onLocation,
 	textHint,
 	ui,
+	warningStatusProps,
 	...props
 }) => {
 	const [search, setSearch] = useState<Fulltext.Value>();
@@ -60,6 +63,7 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 				value={value}
 				onChange={onChange}
 				onLocation={onLocation}
+				warningStatusProps={warningStatusProps}
 			/>
 		</Container>
 	);

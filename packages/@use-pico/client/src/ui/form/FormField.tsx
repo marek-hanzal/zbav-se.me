@@ -68,7 +68,7 @@ export const FormField: FC<FormField.Props> = (props) => {
 		<Container
 			data-ui="FormField[Container]"
 			ui={{
-				tone,
+				tone: "neutral",
 				theme,
 				layout: "vertical-flex",
 				items: "start",
@@ -91,6 +91,8 @@ export const FormField: FC<FormField.Props> = (props) => {
 						<Typo
 							label={label}
 							ui={{
+								tone,
+								theme,
 								text: "md",
 								font: "normal",
 								color: "lead",
@@ -120,7 +122,7 @@ export const FormField: FC<FormField.Props> = (props) => {
 				ref,
 				required,
 				ui: {
-					tone,
+					tone: "neutral",
 					theme,
 					width: "full",
 				},
