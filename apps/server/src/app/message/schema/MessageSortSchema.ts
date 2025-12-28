@@ -5,6 +5,7 @@ export const MessageSortSchema = z
 	.object({
 		field: z
 			.enum([
+				"id",
 				"createdAt",
 			])
 			.openapi("MessageSortField", {
