@@ -1,6 +1,5 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import {
-	zMessageDate,
 	zMessageGallery,
 	zMessageLocation,
 	zMessagePackage,
@@ -12,7 +11,6 @@ import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/u
 import { type FC, type RefObject, useLayoutEffect, useRef } from "react";
 import { match } from "ts-pattern";
 import { useDebouncedCallback } from "use-debounce";
-import { MessageDate } from "~/app/message/type/MessageDate";
 import { MessageGallery } from "~/app/message/type/MessageGallery";
 import { MessageLocation } from "~/app/message/type/MessageLocation";
 import { MessagePackage } from "~/app/message/type/MessagePackage";
@@ -137,12 +135,7 @@ export const MessageList: FC<MessageList.Props> = ({
 									message={zMessagePackage.parse(message.payload)}
 								/>
 							))
-							.with("date", () => (
-								<MessageDate
-									key={message.id}
-									message={zMessageDate.parse(message.payload)}
-								/>
-							))
+							.with("date", () => null)
 							.exhaustive();
 					});
 				}}

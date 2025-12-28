@@ -1,5 +1,4 @@
 import { z } from "@hono/zod-openapi";
-import { MessageDateSchema } from "~/@user/message-date/schema/MessageDateSchema";
 import { MessageGallerySchema } from "~/@user/message-gallery/schema/MessageGallerySchema";
 import { MessageLocationSchema } from "~/@user/message-location/schema/MessageLocationSchema";
 import { MessagePackageSchema } from "~/@user/message-package/schema/MessagePackageSchema";
@@ -14,7 +13,6 @@ export const MessagePayloadSchema = z
 		MessageLocationSchema,
 		MessagePersonalSchema,
 		MessagePackageSchema,
-		MessageDateSchema,
 		MessageSystemSchema,
 	])
 	.openapi("MessagePayload", {
