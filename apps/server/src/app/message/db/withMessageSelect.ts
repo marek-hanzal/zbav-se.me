@@ -21,64 +21,84 @@ export namespace withMessageSelect {
 }
 
 export const withMessageSelect = ({ database, sort, userId }: withMessageSelect.Props) => {
-	const textPayload = withMessageTextSelect({
-		database,
-		sort: undefined,
-		userId,
-	}).as("t");
-	const textQuery = database.selectFrom(textPayload).select([
-		"t.id",
-		sql<MessageTypeEnumSchema.Type>`'text'`.as("type"),
-		"t.createdAt",
-		sql<MessagePayloadSchema.Type>`to_jsonb(t)`.as("payload"),
-	]);
+	const textQuery = database
+		.selectFrom(
+			withMessageTextSelect({
+				database,
+				sort: undefined,
+				userId,
+			}).as("t"),
+		)
+		.select([
+			"t.id",
+			"t.messageThreadId",
+			sql<MessageTypeEnumSchema.Type>`'text'`.as("type"),
+			"t.createdAt",
+			sql<MessagePayloadSchema.Type>`to_jsonb(t)`.as("payload"),
+		]);
 
-	const galleryPayload = withMessageGallerySelect({
-		database,
-		sort: undefined,
-		userId,
-	}).as("g");
-	const galleryQuery = database.selectFrom(galleryPayload).select([
-		"g.id",
-		sql<MessageTypeEnumSchema.Type>`'gallery'`.as("type"),
-		"g.createdAt",
-		sql<MessagePayloadSchema.Type>`to_jsonb(g)`.as("payload"),
-	]);
+	const galleryQuery = database
+		.selectFrom(
+			withMessageGallerySelect({
+				database,
+				sort: undefined,
+				userId,
+			}).as("g"),
+		)
+		.select([
+			"g.id",
+			"g.messageThreadId",
+			sql<MessageTypeEnumSchema.Type>`'gallery'`.as("type"),
+			"g.createdAt",
+			sql<MessagePayloadSchema.Type>`to_jsonb(g)`.as("payload"),
+		]);
 
-	const locationPayload = withMessageLocationSelect({
-		database,
-		sort: undefined,
-		userId,
-	}).as("l");
-	const locationQuery = database.selectFrom(locationPayload).select([
-		"l.id",
-		sql<MessageTypeEnumSchema.Type>`'location'`.as("type"),
-		"l.createdAt",
-		sql<MessagePayloadSchema.Type>`to_jsonb(l)`.as("payload"),
-	]);
+	const locationQuery = database
+		.selectFrom(
+			withMessageLocationSelect({
+				database,
+				sort: undefined,
+				userId,
+			}).as("l"),
+		)
+		.select([
+			"l.id",
+			"l.messageThreadId",
+			sql<MessageTypeEnumSchema.Type>`'location'`.as("type"),
+			"l.createdAt",
+			sql<MessagePayloadSchema.Type>`to_jsonb(l)`.as("payload"),
+		]);
 
-	const personalPayload = withMessagePersonalSelect({
-		database,
-		sort: undefined,
-		userId,
-	}).as("p");
-	const personalQuery = database.selectFrom(personalPayload).select([
-		"p.id",
-		sql<MessageTypeEnumSchema.Type>`'personal'`.as("type"),
-		"p.createdAt",
-		sql<MessagePayloadSchema.Type>`to_jsonb(p)`.as("payload"),
-	]);
+	const personalQuery = database
+		.selectFrom(
+			withMessagePersonalSelect({
+				database,
+				sort: undefined,
+				userId,
+			}).as("p"),
+		)
+		.select([
+			"p.id",
+			"p.messageThreadId",
+			sql<MessageTypeEnumSchema.Type>`'personal'`.as("type"),
+			"p.createdAt",
+			sql<MessagePayloadSchema.Type>`to_jsonb(p)`.as("payload"),
+		]);
 
-	const systemPayload = withMessageSystemSelect({
-		database,
-		sort: undefined,
-	}).as("s");
-	const systemQuery = database.selectFrom(systemPayload).select([
-		"s.id",
-		sql<MessageTypeEnumSchema.Type>`'system'`.as("type"),
-		"s.createdAt",
-		sql<MessagePayloadSchema.Type>`to_jsonb(s)`.as("payload"),
-	]);
+	const systemQuery = database
+		.selectFrom(
+			withMessageSystemSelect({
+				database,
+				sort: undefined,
+			}).as("s"),
+		)
+		.select([
+			"s.id",
+			"s.messageThreadId",
+			sql<MessageTypeEnumSchema.Type>`'system'`.as("type"),
+			"s.createdAt",
+			sql<MessagePayloadSchema.Type>`to_jsonb(s)`.as("payload"),
+		]);
 
 	const unionQuery = textQuery
 		.unionAll(galleryQuery)
