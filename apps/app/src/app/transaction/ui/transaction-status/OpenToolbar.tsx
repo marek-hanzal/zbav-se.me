@@ -10,6 +10,7 @@ import { PackageButton } from "~/app/transaction/ui/button/PackageButton";
 import { PersonalButton } from "~/app/transaction/ui/button/PersonalButton";
 import { RejectButton } from "~/app/transaction/ui/button/RejectButton";
 import { TransactionButtonUi } from "~/app/transaction/ui/transaction-status/TransactionButtonUi";
+import { useSide } from "~/app/user/useSide";
 
 export namespace OpenToolbar {
 	export interface Props {
@@ -20,6 +21,7 @@ export namespace OpenToolbar {
 export const OpenToolbar: FC<OpenToolbar.Props> = ({ transaction }) => {
 	const queryClient = useQueryClient();
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+	const side = useSide();
 
 	return (
 		<>
@@ -58,10 +60,12 @@ export const OpenToolbar: FC<OpenToolbar.Props> = ({ transaction }) => {
 				{...TransactionButtonUi}
 			/>
 
-			<PackageButton
-				transaction={transaction}
-				{...TransactionButtonUi}
-			/>
+			{side === "seller" ? (
+				<PackageButton
+					transaction={transaction}
+					{...TransactionButtonUi}
+				/>
+			) : null}
 
 			<DateButton
 				transaction={transaction}

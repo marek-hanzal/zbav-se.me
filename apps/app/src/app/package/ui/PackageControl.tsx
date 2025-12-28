@@ -48,10 +48,9 @@ export const PackageControl: FC<PackageControl.Props> = ({
 		<Container
 			data-ui="PackageControl[Container]"
 			ui={{
-				layout: "vertical-flex",
-				height: "auto",
+				layout: "vertical-content-footer",
+				height: "full",
 				width: "full",
-				gap: "lg",
 				...ui,
 			}}
 			{...props}
