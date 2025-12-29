@@ -13,6 +13,9 @@
 032bf5ced2d92548bee53096a31662b5527c60c21a75a711303d95de:
     ref: Age - from oldest (label)
     value: Nejstarší
+035b4a691d02ff22e504324450fa9d11678d834249e37ad92b5a3545:
+    ref: Dispute transaction (button)
+    value: Vyřešit problém
 03dd4711e2aaba77a79e582ae21f6acf1aaa8b9bcd089b1b8e2de80e:
     ref: Close draft (button)
     value: Odložit na později
@@ -416,6 +419,9 @@
 7c4c135a16c52d890c89f22c80c0457270fe347976ad1339098e430e:
     ref: icon
     value: icon
+7dbeb77d3b315a1061d4bcd83875d872181ea3f46593933720e8dc4a:
+    ref: Close transaction (button)
+    value: Uzavřít obchod - vyřešeno
 7f2df328f0f16e7c1fd38d50d6a91a5160b4daf7ba80e34a5907d814:
     ref: Feed range (placeholder)
     value: Okruh v km
@@ -671,6 +677,9 @@ a0d2788aec3760e59aa4f698966708ab8ece9b28608ff2bef10db62d:
 a1afd40fa760408a3d789acdbaf42d52d40d45f34dcc9af5fccedffc:
     ref: Age not selected
     value: Stáří nemáš vybrané
+a221a6d62ef13cc1c9f1269bcb08f09d61d7aea9f0bcea418d744384:
+    ref: Transaction - dispute - send a message (placeholder)
+    value: Je třeba něco dořešit?
 a46be85abba5f0371038aa633d7378f4fd8376be6b7e7a9b7b22ec05:
     ref: Listing age (hint)
     value: |
@@ -678,6 +687,9 @@ a46be85abba5f0371038aa633d7378f4fd8376be6b7e7a9b7b22ec05:
 a5fecc06a3719ab30505196a44d06c91c2c7e8497978d8572efb9e30:
     ref: Remove from favourite (button)
     value: Remove from favourite (button)
+a62fb7339fce50f73673412c11f10a25880e1e7b942b7261366a8529:
+    ref: closed
+    value: closed
 a64e91c4e68c901ac59593d15028b96e00c9b01c7163080eb97502c2:
     ref: Listing - Cons (message)
     value: |
@@ -722,6 +734,9 @@ b48018d27bcd6409768ac5c0dd69a1a716d97c25a2dbfe6713cf393b:
 b4ffae5235999f10f6bbff965753e7d17285ec1f06ba0d8035409f7f:
     ref: Empty favourite feed (title)
     value: Čisto a jasno
+b69e7c81a2cf955f47aaed9418e325ed9cedbe08fda6ee8d438f1752:
+    ref: dispute
+    value: dispute
 b6c76a2cd866bcc2fc175c7fb66093264226f4695f2dfe3c41d7056f:
     ref: Feed age (label)
     value: Stáří

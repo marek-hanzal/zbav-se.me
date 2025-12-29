@@ -4,7 +4,6 @@ import type { FC } from "react";
 import { match } from "ts-pattern";
 import { OpenMessage } from "~/app/transaction/ui/transaction-status/OpenMessage";
 import { PendingMessage } from "~/app/transaction/ui/transaction-status/PendingMessage";
-import { ResolvedMessage } from "~/app/transaction/ui/transaction-status/ResolvedMessage";
 
 export namespace TransactionMessage {
 	export interface Props extends Container.Props {
@@ -22,10 +21,10 @@ export const TransactionMessage: FC<TransactionMessage.Props> = ({ transaction, 
 				.with("open", () => {
 					return <OpenMessage transaction={transaction} />;
 				})
-				.with("resolved", () => {
-					return <ResolvedMessage transaction={transaction} />;
+				.with("dispute", () => {
+					return null;
 				})
-				.with("rejected", "expired", "success", () => {
+				.with("rejected", "resolved", "expired", "success", "closed", () => {
 					return null;
 				})
 				.exhaustive()}

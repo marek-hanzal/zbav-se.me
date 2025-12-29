@@ -177,6 +177,26 @@ export type tUploadCreate = {
 };
 
 /**
+ * Request to close a listing transaction
+ */
+export type tTransactionStatusClose = {
+    /**
+     * The ID of the listing transaction to close
+     */
+    transactionId: string;
+};
+
+/**
+ * Request to dispute a listing transaction
+ */
+export type tTransactionStatusDispute = {
+    /**
+     * The ID of the listing transaction to dispute
+     */
+    transactionId: string;
+};
+
+/**
  * Request to mark a listing transaction as successful
  */
 export type tTransactionStatusSuccess = {
@@ -4308,6 +4328,78 @@ export type tApiTransactionStatusSuccessResponse = {
 };
 
 export type apiTransactionStatusSuccessResponse = tApiTransactionStatusSuccessResponse[keyof tApiTransactionStatusSuccessResponse];
+
+export type tApiTransactionStatusDisputeRequest = {
+    /**
+     * Query object for listing transaction access validation
+     */
+    body?: tTransactionStatusDispute;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction/status/dispute';
+};
+
+export type apiTransactionStatusDisputeErrors = {
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionStatusDisputeError = apiTransactionStatusDisputeErrors[keyof apiTransactionStatusDisputeErrors];
+
+export type tApiTransactionStatusDisputeResponse = {
+    /**
+     * Disputed status created
+     */
+    200: tTransactionStatus;
+};
+
+export type apiTransactionStatusDisputeResponse = tApiTransactionStatusDisputeResponse[keyof tApiTransactionStatusDisputeResponse];
+
+export type tApiTransactionStatusCloseRequest = {
+    /**
+     * Query object for listing transaction access validation
+     */
+    body?: tTransactionStatusClose;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction/status/close';
+};
+
+export type apiTransactionStatusCloseErrors = {
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionStatusCloseError = apiTransactionStatusCloseErrors[keyof apiTransactionStatusCloseErrors];
+
+export type tApiTransactionStatusCloseResponse = {
+    /**
+     * Closed status created
+     */
+    200: tTransactionStatus;
+};
+
+export type apiTransactionStatusCloseResponse = tApiTransactionStatusCloseResponse[keyof tApiTransactionStatusCloseResponse];
 
 export type tApiUploadCreateRequest = {
     /**

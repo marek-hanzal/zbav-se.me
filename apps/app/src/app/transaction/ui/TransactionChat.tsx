@@ -122,7 +122,38 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transactionId, ui, 
 								/>
 							);
 						})
-						.with("rejected", "expired", "success", () => {
+						.with("dispute", () => {
+							return (
+								<ChatInput
+									onSubmit={(message) => {
+										messageMutation.mutate(
+											{
+												transactionId,
+												message,
+											},
+											{
+												onSuccess() {
+													withMessageThreadMessageCollectionQuery.invalidate(
+														queryClient,
+														{
+															path: {
+																messageThreadId:
+																	transaction.messageThreadId,
+															},
+														},
+													);
+												},
+											},
+										);
+									}}
+									placeholder={translator.text(
+										"Transaction - dispute - send a message (placeholder)",
+									)}
+									loading={messageMutation.isPending}
+								/>
+							);
+						})
+						.with("rejected", "expired", "success", "closed", () => {
 							return (
 								<Tx
 									label={"Chat - transaction closed (message)"}

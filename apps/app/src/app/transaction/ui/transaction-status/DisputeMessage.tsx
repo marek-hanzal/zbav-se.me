@@ -6,16 +6,19 @@ import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/u
 import { type FC, useState } from "react";
 import { match } from "ts-pattern";
 import { GalleryUploadButton } from "~/app/photo/ui/GalleryUploadButton";
+import { LocationButton } from "~/app/transaction/ui/button/LocationButton";
+import { PackageButton } from "~/app/transaction/ui/button/PackageButton";
+import { PersonalButton } from "~/app/transaction/ui/button/PersonalButton";
 import { MessageButtonUi } from "~/app/transaction/ui/transaction-status/MessageButtonUi";
 import { useSide } from "~/app/user/useSide";
 
-export namespace ResolvedMessage {
+export namespace DisputeMessage {
 	export interface Props extends Container.Props {
 		transaction: tTransaction;
 	}
 }
 
-export const ResolvedMessage: FC<ResolvedMessage.Props> = ({ transaction, ui, ...props }) => {
+export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...props }) => {
 	const queryClient = useQueryClient();
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 	const side = useSide();
@@ -49,6 +52,13 @@ export const ResolvedMessage: FC<ResolvedMessage.Props> = ({ transaction, ui, ..
 			]}
 			{...props}
 		>
+			{side === "seller" ? (
+				<PackageButton
+					transaction={transaction}
+					{...MessageButtonUi}
+				/>
+			) : null}
+
 			<GalleryUploadButton
 				defaultUploadIds={[]}
 				state={{
@@ -71,6 +81,16 @@ export const ResolvedMessage: FC<ResolvedMessage.Props> = ({ transaction, ui, ..
 				onCancel={() => {
 					setIsGalleryOpen(false);
 				}}
+				{...MessageButtonUi}
+			/>
+
+			<LocationButton
+				transaction={transaction}
+				{...MessageButtonUi}
+			/>
+
+			<PersonalButton
+				transaction={transaction}
 				{...MessageButtonUi}
 			/>
 		</Container>

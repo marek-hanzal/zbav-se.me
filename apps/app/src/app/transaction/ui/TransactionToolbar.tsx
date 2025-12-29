@@ -35,7 +35,10 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({ transaction, 
 				.with("resolved", () => {
 					return <ResolvedToolbar transaction={transaction} />;
 				})
-				.with("pending", "rejected", "expired", "success", () => {
+				.with("dispute", () => {
+					return null;
+				})
+				.with("pending", "rejected", "expired", "success", "closed", () => {
 					return null;
 				})
 				.exhaustive()}

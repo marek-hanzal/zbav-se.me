@@ -6,13 +6,13 @@ import { SuccessButton } from "~/app/transaction/ui/button/SuccessButton";
 import { TransactionButtonUi } from "~/app/transaction/ui/transaction-status/TransactionButtonUi";
 import { useSide } from "~/app/user/useSide";
 
-export namespace OpenToolbar {
+export namespace DisputeToolbar {
 	export interface Props {
 		transaction: tTransaction;
 	}
 }
 
-export const OpenToolbar: FC<OpenToolbar.Props> = ({ transaction }) => {
+export const DisputeToolbar: FC<DisputeToolbar.Props> = ({ transaction }) => {
 	const side = useSide();
 
 	return (

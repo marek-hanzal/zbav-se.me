@@ -255,6 +255,30 @@ export const sUploadCreate = {
     ]
 } as const;
 
+export const sTransactionStatusClose = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId'
+    ]
+} as const;
+
+export const sTransactionStatusDispute = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId'
+    ]
+} as const;
+
 export const sTransactionStatusSuccess = {
     type: 'object',
     properties: {

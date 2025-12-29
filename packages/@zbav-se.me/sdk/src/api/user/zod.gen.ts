@@ -208,6 +208,32 @@ export const zUploadCreate = z.object({
 export type zUploadCreate = z.infer<typeof zUploadCreate>;
 
 /**
+ * Request to close a listing transaction
+ */
+export const zTransactionStatusClose = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the listing transaction to close'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to close a listing transaction'
+});
+
+export type zTransactionStatusClose = z.infer<typeof zTransactionStatusClose>;
+
+/**
+ * Request to dispute a listing transaction
+ */
+export const zTransactionStatusDispute = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the listing transaction to dispute'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to dispute a listing transaction'
+});
+
+export type zTransactionStatusDispute = z.infer<typeof zTransactionStatusDispute>;
+
+/**
  * Request to mark a listing transaction as successful
  */
 export const zTransactionStatusSuccess = z.object({
@@ -3713,6 +3739,36 @@ export type zapiTransactionStatusSuccessRequest = z.infer<typeof zApiTransaction
 export const zApiTransactionStatusSuccessResponse = zTransactionStatus;
 
 export type zapiTransactionStatusSuccessResponse = z.infer<typeof zApiTransactionStatusSuccessResponse>;
+
+export const zApiTransactionStatusDisputeData = z.object({
+    body: z.optional(zTransactionStatusDispute),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionStatusDisputeRequest = z.infer<typeof zApiTransactionStatusDisputeData>;
+
+/**
+ * Disputed status created
+ */
+export const zApiTransactionStatusDisputeResponse = zTransactionStatus;
+
+export type zapiTransactionStatusDisputeResponse = z.infer<typeof zApiTransactionStatusDisputeResponse>;
+
+export const zApiTransactionStatusCloseData = z.object({
+    body: z.optional(zTransactionStatusClose),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionStatusCloseRequest = z.infer<typeof zApiTransactionStatusCloseData>;
+
+/**
+ * Closed status created
+ */
+export const zApiTransactionStatusCloseResponse = zTransactionStatus;
+
+export type zapiTransactionStatusCloseResponse = z.infer<typeof zApiTransactionStatusCloseResponse>;
 
 export const zApiUploadCreateData = z.object({
     body: z.optional(zUploadCreate),
