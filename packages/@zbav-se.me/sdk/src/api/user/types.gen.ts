@@ -239,9 +239,11 @@ export const tTransactionStatusEnum = {
     pending: 'pending',
     open: 'open',
     resolved: 'resolved',
+    dispute: 'dispute',
     rejected: 'rejected',
     expired: 'expired',
-    success: 'success'
+    success: 'success',
+    closed: 'closed'
 } as const;
 
 /**

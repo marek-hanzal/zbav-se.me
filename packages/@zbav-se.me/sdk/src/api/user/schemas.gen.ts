@@ -338,9 +338,11 @@ export const sTransactionStatusEnum = {
         'pending',
         'open',
         'resolved',
+        'dispute',
         'rejected',
         'expired',
-        'success'
+        'success',
+        'closed'
     ]
 } as const;
 

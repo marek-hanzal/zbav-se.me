@@ -8,9 +8,11 @@ export const TransactionMigration: Migration = {
 				"pending",
 				"open",
 				"resolved",
+				"dispute",
 				"rejected",
 				"expired",
 				"success",
+				"closed",
 			])
 			.execute();
 

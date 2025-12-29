@@ -17,6 +17,8 @@ export const TransactionStatusEnumSchema = z
 		"open",
 		// Resolved by seller (only) - e.g. package sent
 		"resolved",
+		// Running, but switched to dispute mode (e.g. buyer has a complaint)
+		"dispute",
 
 		/**
 		 * Terminal states
@@ -28,6 +30,8 @@ export const TransactionStatusEnumSchema = z
 		"expired",
 		// Probably rare one - submitted by buyer he's happy with the result
 		"success",
+        // Explicitly closed with "no emotions"
+		"closed",
 	])
 	.openapi("TransactionStatusEnum", {
 		description: "Current status of the listing transaction",

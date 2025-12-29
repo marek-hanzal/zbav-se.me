@@ -266,9 +266,11 @@ export const zTransactionStatusEnum = z.enum([
     'pending',
     'open',
     'resolved',
+    'dispute',
     'rejected',
     'expired',
-    'success'
+    'success',
+    'closed'
 ]).register(z.globalRegistry, {
     description: 'This filter matches the current status of the transaction'
 });
