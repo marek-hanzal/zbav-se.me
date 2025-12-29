@@ -8,6 +8,7 @@ import { type FC, useState } from "react";
 import { ListingDetail } from "~/app/listing/ui/ListingDetail";
 import { SellerInfo } from "~/app/listing/ui/SellerInfo";
 import { GalleryContent } from "~/app/photo/ui/GalleryContent";
+import { Transaction } from "~/app/transaction/ui/Transaction";
 
 export namespace ListingSheet {
 	export type View = "detail" | "messages" | "gallery" | "seller-info";
@@ -83,7 +84,12 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 					scroller: false,
 				},
 				messages: {
-					children: "messagesd",
+					children: listing.transactionId ? (
+						<Transaction
+							transactionId={listing.transactionId}
+							refresh={2_500}
+						/>
+					) : null,
 					header: () => ({
 						title: translator.text("Listing messages (title)"),
 						right: <CloseButton onClick={() => setView("detail")} />,

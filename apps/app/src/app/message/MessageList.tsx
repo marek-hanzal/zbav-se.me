@@ -21,6 +21,7 @@ export namespace MessageList {
 	export interface Props extends Container.Props {
 		containerRef: RefObject<HTMLDivElement | null>;
 		messageThreadId: string;
+		refresh: number;
 	}
 }
 
@@ -29,13 +30,13 @@ export const MessageList: FC<MessageList.Props> = ({
 	containerRef,
 	ui,
 	children,
+	refresh,
 	...props
 }) => {
 	const contentRef = useRef<HTMLDivElement>(null);
 	const [ready, setReady] = useState(false);
 	const scrollToBottom = useDebouncedCallback(
 		(behavior: ScrollBehavior) => {
-			console.log("scrollToBottom", containerRef.current, containerRef.current?.scrollHeight);
 			containerRef.current?.scrollTo({
 				top: containerRef.current?.scrollHeight,
 				behavior,
@@ -83,11 +84,11 @@ export const MessageList: FC<MessageList.Props> = ({
 
 	return (
 		<Container
+			data-ui="MessageList-[Container]"
 			ref={contentRef}
 			ui={{
 				flow: "vertical",
 				gap: "lg",
-				height: "content",
 				...ui,
 			}}
 			className={"py-1"}
@@ -108,7 +109,7 @@ export const MessageList: FC<MessageList.Props> = ({
 					},
 				}}
 				options={{
-					refetchInterval: 1_000 * 5,
+					refetchInterval: refresh,
 				}}
 				fallback={<SpinnerContainer />}
 			>
