@@ -134,6 +134,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 				transactionId={transactionId}
 				isOpen={isOpen}
 				onClose={() => setIsOpen(false)}
+				refresh={1_000 * 5}
 			/>
 		</>
 	);

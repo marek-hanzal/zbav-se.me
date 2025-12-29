@@ -21,6 +21,7 @@ export namespace MessageList {
 	export interface Props extends Container.Props {
 		containerRef: RefObject<HTMLDivElement | null>;
 		messageThreadId: string;
+		refresh: number;
 	}
 }
 
@@ -29,6 +30,7 @@ export const MessageList: FC<MessageList.Props> = ({
 	containerRef,
 	ui,
 	children,
+	refresh,
 	...props
 }) => {
 	const contentRef = useRef<HTMLDivElement>(null);
@@ -108,7 +110,7 @@ export const MessageList: FC<MessageList.Props> = ({
 					},
 				}}
 				options={{
-					refetchInterval: 1_000 * 5,
+					refetchInterval: refresh,
 				}}
 				fallback={<SpinnerContainer />}
 			>
