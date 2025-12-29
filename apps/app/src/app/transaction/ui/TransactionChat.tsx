@@ -91,7 +91,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transactionId, ui, 
 								/>
 							);
 						})
-						.with("completed", "cancelled", "expired", "rejected", () => {
+						.with("resolved", "rejected", "expired", "success", () => {
 							return (
 								<Tx
 									label={"Chat - transaction closed (message)"}

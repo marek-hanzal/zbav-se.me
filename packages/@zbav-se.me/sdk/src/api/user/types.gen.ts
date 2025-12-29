@@ -177,6 +177,16 @@ export type tUploadCreate = {
 };
 
 /**
+ * Request to mark a listing transaction as successful
+ */
+export type tTransactionStatusSuccess = {
+    /**
+     * The ID of the listing transaction to mark as successful
+     */
+    transactionId: string;
+};
+
+/**
  * Request to resolve a listing transaction
  */
 export type tTransactionStatusResolve = {
@@ -228,10 +238,10 @@ export type tTransactionStatus = {
 export const tTransactionStatusEnum = {
     pending: 'pending',
     open: 'open',
+    resolved: 'resolved',
     rejected: 'rejected',
-    completed: 'completed',
-    cancelled: 'cancelled',
-    expired: 'expired'
+    expired: 'expired',
+    success: 'success'
 } as const;
 
 /**
@@ -4256,6 +4266,46 @@ export type tApiTransactionStatusResolveResponse = {
 };
 
 export type apiTransactionStatusResolveResponse = tApiTransactionStatusResolveResponse[keyof tApiTransactionStatusResolveResponse];
+
+export type tApiTransactionStatusSuccessRequest = {
+    /**
+     * Query object for listing transaction access validation
+     */
+    body?: tTransactionStatusSuccess;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction/status/success';
+};
+
+export type apiTransactionStatusSuccessErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionStatusSuccessError = apiTransactionStatusSuccessErrors[keyof apiTransactionStatusSuccessErrors];
+
+export type tApiTransactionStatusSuccessResponse = {
+    /**
+     * Success status created
+     */
+    200: tTransactionStatus;
+};
+
+export type apiTransactionStatusSuccessResponse = tApiTransactionStatusSuccessResponse[keyof tApiTransactionStatusSuccessResponse];
 
 export type tApiUploadCreateRequest = {
     /**

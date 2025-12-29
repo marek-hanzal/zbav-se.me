@@ -4,6 +4,7 @@ import type { FC } from "react";
 import { match } from "ts-pattern";
 import { OpenToolbar } from "~/app/transaction/ui/transaction-status/OpenToolbar";
 import { PendingToolbar } from "~/app/transaction/ui/transaction-status/PendingToolbar";
+import { ResolvedToolbar } from "~/app/transaction/ui/transaction-status/ResolvedToolbar";
 
 export namespace TransactionToolbar {
 	export interface Props extends Container.Props {
@@ -28,14 +29,17 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({ transaction, 
 			{...props}
 		>
 			{match(transaction.status)
-				.with("open", () => {
-					return <OpenToolbar transaction={transaction} />;
-				})
 				.with("pending", () => {
 					return <PendingToolbar transaction={transaction} />;
 				})
-				.with("rejected", "cancelled", "expired", "completed", () => {
-					return "rejected-cancelled-expired";
+				.with("open", () => {
+					return <OpenToolbar transaction={transaction} />;
+				})
+				.with("resolved", () => {
+					return <ResolvedToolbar transaction={transaction} />;
+				})
+				.with("rejected", "expired", "success", () => {
+					return null;
 				})
 				.exhaustive()}
 		</Container>

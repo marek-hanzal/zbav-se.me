@@ -120,8 +120,9 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 				.where("lts.status", "in", [
 					"pending",
 					"open",
-					"completed",
 					"rejected",
+					"resolved",
+					"success",
 				])
 				.orderBy("lts.createdAt", "desc")
 				.limit(1)

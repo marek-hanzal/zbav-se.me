@@ -21,8 +21,8 @@ export const TransactionMessage: FC<TransactionMessage.Props> = ({ transaction, 
 				.with("open", () => {
 					return <OpenMessage transaction={transaction} />;
 				})
-				.with("rejected", "cancelled", "expired", "completed", () => {
-					return "rejected-cancelled-expired-completed";
+				.with("resolved", "rejected", "expired", "success", () => {
+					return null;
 				})
 				.exhaustive()}
 		</Container>

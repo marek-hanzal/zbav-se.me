@@ -3,23 +3,23 @@ import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCr
 import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
-import type { TransactionStatusResolveSchema } from "~/@user/transaction-status/schema/TransactionStatusResolveSchema";
+import type { TransactionStatusSuccessSchema } from "~/@user/transaction-status/schema/TransactionStatusSuccessSchema";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 
-export namespace transactionStatusResolveFx {
-	export type Props = TransactionStatusResolveSchema.Type;
+export namespace transactionStatusSuccessFx {
+	export type Props = TransactionStatusSuccessSchema.Type;
 }
 
-export const transactionStatusResolveFx = ({ transactionId }: transactionStatusResolveFx.Props) => {
+export const transactionStatusSuccessFx = ({ transactionId }: transactionStatusSuccessFx.Props) => {
 	return Effect.gen(function* () {
 		const transaction = yield* transactionResolveFx({
 			transactionId,
-			message: "You are not allowed to resolve this listing transaction",
+			message: "You are not allowed to mark this listing transaction as successful",
 		});
 
-		if (transaction.side === "buyer") {
+		if (transaction.side === "seller") {
 			return yield* new InvalidRequestError({
-				message: "Buyer cannot resolve a transaction",
+				message: "Seller cannot mark a transaction as successful",
 			});
 		}
 
@@ -34,15 +34,15 @@ export const transactionStatusResolveFx = ({ transactionId }: transactionStatusR
 
 		yield* messageSystemCreateFx({
 			messageThreadId: transaction.messageThreadId,
-			message: "Seller resolved the transaction (message)",
+			message: "Buyer marked the transaction as successful (message)",
 		});
 
 		return yield* transactionStatusCreateFx({
 			transactionId: transaction.id,
-			status: "resolved",
+			status: "success",
 			side: transaction.side,
 		});
 	});
 };
 
-export type transactionStatusResolveFx = ReturnType<typeof transactionStatusResolveFx>;
+export type transactionStatusSuccessFx = ReturnType<typeof transactionStatusSuccessFx>;

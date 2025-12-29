@@ -255,6 +255,18 @@ export const sUploadCreate = {
     ]
 } as const;
 
+export const sTransactionStatusSuccess = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId'
+    ]
+} as const;
+
 export const sTransactionStatusResolve = {
     type: 'object',
     properties: {
@@ -325,10 +337,10 @@ export const sTransactionStatusEnum = {
     enum: [
         'pending',
         'open',
+        'resolved',
         'rejected',
-        'completed',
-        'cancelled',
-        'expired'
+        'expired',
+        'success'
     ]
 } as const;
 

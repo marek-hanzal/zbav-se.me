@@ -208,6 +208,19 @@ export const zUploadCreate = z.object({
 export type zUploadCreate = z.infer<typeof zUploadCreate>;
 
 /**
+ * Request to mark a listing transaction as successful
+ */
+export const zTransactionStatusSuccess = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the listing transaction to mark as successful'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to mark a listing transaction as successful'
+});
+
+export type zTransactionStatusSuccess = z.infer<typeof zTransactionStatusSuccess>;
+
+/**
  * Request to resolve a listing transaction
  */
 export const zTransactionStatusResolve = z.object({
@@ -252,10 +265,10 @@ export type zTransactionStatusAccept = z.infer<typeof zTransactionStatusAccept>;
 export const zTransactionStatusEnum = z.enum([
     'pending',
     'open',
+    'resolved',
     'rejected',
-    'completed',
-    'cancelled',
-    'expired'
+    'expired',
+    'success'
 ]).register(z.globalRegistry, {
     description: 'This filter matches the current status of the transaction'
 });
@@ -3683,6 +3696,21 @@ export type zapiTransactionStatusResolveRequest = z.infer<typeof zApiTransaction
 export const zApiTransactionStatusResolveResponse = zTransactionStatus;
 
 export type zapiTransactionStatusResolveResponse = z.infer<typeof zApiTransactionStatusResolveResponse>;
+
+export const zApiTransactionStatusSuccessData = z.object({
+    body: z.optional(zTransactionStatusSuccess),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionStatusSuccessRequest = z.infer<typeof zApiTransactionStatusSuccessData>;
+
+/**
+ * Success status created
+ */
+export const zApiTransactionStatusSuccessResponse = zTransactionStatus;
+
+export type zapiTransactionStatusSuccessResponse = z.infer<typeof zApiTransactionStatusSuccessResponse>;
 
 export const zApiUploadCreateData = z.object({
     body: z.optional(zUploadCreate),

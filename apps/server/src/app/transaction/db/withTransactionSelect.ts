@@ -54,10 +54,14 @@ export const withTransactionSelect = ({ database, sort }: withTransactionSelect.
 							.then(10)
 							.when("open")
 							.then(20)
-							.when("completed")
+							.when("resolved")
 							.then(30)
 							.when("rejected")
 							.then(40)
+							.when("expired")
+							.then(50)
+							.when("success")
+							.then(60)
 							.else(999)
 							.end(),
 					item.direction,
