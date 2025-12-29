@@ -3,7 +3,6 @@ import type { tTransaction } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { OpenToolbar } from "~/app/transaction/ui/transaction-status/OpenToolbar";
-import { PendingToolbar } from "~/app/transaction/ui/transaction-status/PendingToolbar";
 import { ResolvedToolbar } from "~/app/transaction/ui/transaction-status/ResolvedToolbar";
 
 export namespace TransactionToolbar {
@@ -29,16 +28,13 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({ transaction, 
 			{...props}
 		>
 			{match(transaction.status)
-				.with("pending", () => {
-					return <PendingToolbar transaction={transaction} />;
-				})
 				.with("open", () => {
 					return <OpenToolbar transaction={transaction} />;
 				})
 				.with("resolved", () => {
 					return <ResolvedToolbar transaction={transaction} />;
 				})
-				.with("rejected", "expired", "success", () => {
+				.with("pending", "rejected", "expired", "success", () => {
 					return null;
 				})
 				.exhaustive()}

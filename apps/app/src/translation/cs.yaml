@@ -912,7 +912,7 @@ fa8d4af882062a1148f43f806622a6851ff29ff80f66467624617d7a:
     value: Pozor, umístění je veřejný údaj, ale můžeš napsat třeba název obce.
 faecab53142a1792e02de1dfa45f39cc83797a47dc171d3687e10fa0:
     ref: Transaction not accepted - buyer (message)
-    value: Zprávy můžeš psát až po přijetí transakce prodávajícím.
+    value: Zprávy můžeš psát až po přijetí prodávajícím.
 fb5f656c01caafdecfd1468991d74a7ab481b89ce6df9a8c229d726e:
     ref: Package - Link (label)
     value: Odkaz na zásilku
