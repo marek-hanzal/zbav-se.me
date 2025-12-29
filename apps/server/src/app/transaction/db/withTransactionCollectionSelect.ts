@@ -47,6 +47,8 @@ export const withTransactionCollectionSelect = ({
 							.case(eb.ref("status.latestStatus"))
 							.when("pending")
 							.then(10)
+							.when("dispute")
+							.then(15)
 							.when("open")
 							.then(20)
 							.when("resolved")
@@ -57,6 +59,8 @@ export const withTransactionCollectionSelect = ({
 							.then(50)
 							.when("success")
 							.then(60)
+							.when("closed")
+							.then(70)
 							.else(999)
 							.end(),
 					item.direction,
