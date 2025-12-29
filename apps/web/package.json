@@ -13,8 +13,8 @@
 	"dependencies": {
 		"@better-auth/passkey": "1.4.9",
 		"@escapace/accept-language-parser": "2.1.1",
-		"@tanstack/react-form": "1.27.6",
-		"@tanstack/react-query": "5.90.14",
+		"@tanstack/react-form": "1.27.7",
+		"@tanstack/react-query": "5.90.15",
 		"@tanstack/react-router": "1.144.0",
 		"@tanstack/react-router-ssr-query": "1.144.0",
 		"@tanstack/react-start": "1.145.0",
@@ -34,7 +34,7 @@
 		"zod": "4.2.1"
 	},
 	"devDependencies": {
-		"@iconify/json": "2.2.421",
+		"@iconify/json": "2.2.422",
 		"@iconify/tailwind4": "1.2.0",
 		"@modyfi/vite-plugin-yaml": "1.1.1",
 		"@tailwindcss/vite": "4.1.18",
