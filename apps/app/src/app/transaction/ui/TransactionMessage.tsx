@@ -12,7 +12,7 @@ export namespace TransactionMessage {
 }
 
 export const TransactionMessage: FC<TransactionMessage.Props> = ({ transaction, ...props }) => {
-    return (
+	return (
 		<Container {...props}>
 			{match(transaction.status)
 				.with("pending", () => {

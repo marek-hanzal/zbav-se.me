@@ -208,6 +208,19 @@ export const zUploadCreate = z.object({
 export type zUploadCreate = z.infer<typeof zUploadCreate>;
 
 /**
+ * Request to resolve a listing transaction
+ */
+export const zTransactionStatusResolve = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the listing transaction to resolve'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to resolve a listing transaction'
+});
+
+export type zTransactionStatusResolve = z.infer<typeof zTransactionStatusResolve>;
+
+/**
  * Request to reject a listing transaction
  */
 export const zTransactionStatusReject = z.object({
@@ -3655,6 +3668,21 @@ export type zapiTransactionStatusRejectRequest = z.infer<typeof zApiTransactionS
 export const zApiTransactionStatusRejectResponse = zTransactionStatus;
 
 export type zapiTransactionStatusRejectResponse = z.infer<typeof zApiTransactionStatusRejectResponse>;
+
+export const zApiTransactionStatusResolveData = z.object({
+    body: z.optional(zTransactionStatusResolve),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionStatusResolveRequest = z.infer<typeof zApiTransactionStatusResolveData>;
+
+/**
+ * Resolved status created
+ */
+export const zApiTransactionStatusResolveResponse = zTransactionStatus;
+
+export type zapiTransactionStatusResolveResponse = z.infer<typeof zApiTransactionStatusResolveResponse>;
 
 export const zApiUploadCreateData = z.object({
     body: z.optional(zUploadCreate),

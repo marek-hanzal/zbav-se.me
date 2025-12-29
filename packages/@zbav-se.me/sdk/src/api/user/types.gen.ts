@@ -177,6 +177,16 @@ export type tUploadCreate = {
 };
 
 /**
+ * Request to resolve a listing transaction
+ */
+export type tTransactionStatusResolve = {
+    /**
+     * The ID of the listing transaction to resolve
+     */
+    transactionId: string;
+};
+
+/**
  * Request to reject a listing transaction
  */
 export type tTransactionStatusReject = {
@@ -4206,6 +4216,46 @@ export type tApiTransactionStatusRejectResponse = {
 };
 
 export type apiTransactionStatusRejectResponse = tApiTransactionStatusRejectResponse[keyof tApiTransactionStatusRejectResponse];
+
+export type tApiTransactionStatusResolveRequest = {
+    /**
+     * Query object for listing transaction access validation
+     */
+    body?: tTransactionStatusResolve;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction/status/resolve';
+};
+
+export type apiTransactionStatusResolveErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionStatusResolveError = apiTransactionStatusResolveErrors[keyof apiTransactionStatusResolveErrors];
+
+export type tApiTransactionStatusResolveResponse = {
+    /**
+     * Resolved status created
+     */
+    200: tTransactionStatus;
+};
+
+export type apiTransactionStatusResolveResponse = tApiTransactionStatusResolveResponse[keyof tApiTransactionStatusResolveResponse];
 
 export type tApiUploadCreateRequest = {
     /**
