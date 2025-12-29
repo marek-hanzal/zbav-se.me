@@ -12,7 +12,22 @@ export namespace TransactionToolbar {
 }
 
 export const TransactionToolbar: FC<TransactionToolbar.Props> = ({ transaction, ui, ...props }) => {
-	return (
+	const toolbar = match(transaction.status)
+		.with("open", () => {
+			return <OpenToolbar transaction={transaction} />;
+		})
+		.with("resolved", () => {
+			return <ResolvedToolbar transaction={transaction} />;
+		})
+		.with("dispute", () => {
+			return null;
+		})
+		.with("pending", "rejected", "expired", "success", "closed", () => {
+			return null;
+		})
+		.exhaustive();
+
+	return toolbar ? (
 		<Container
 			ui={{
 				flow: "vertical",
@@ -28,20 +43,7 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({ transaction, 
 			]}
 			{...props}
 		>
-			{match(transaction.status)
-				.with("open", () => {
-					return <OpenToolbar transaction={transaction} />;
-				})
-				.with("resolved", () => {
-					return <ResolvedToolbar transaction={transaction} />;
-				})
-				.with("dispute", () => {
-					return null;
-				})
-				.with("pending", "rejected", "expired", "success", "closed", () => {
-					return null;
-				})
-				.exhaustive()}
+			{toolbar}
 		</Container>
-	);
+	) : null;
 };

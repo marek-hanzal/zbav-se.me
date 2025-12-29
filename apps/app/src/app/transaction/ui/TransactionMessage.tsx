@@ -12,22 +12,20 @@ export namespace TransactionMessage {
 }
 
 export const TransactionMessage: FC<TransactionMessage.Props> = ({ transaction, ...props }) => {
-	return (
-		<Container {...props}>
-			{match(transaction.status)
-				.with("pending", () => {
-					return <PendingMessage transaction={transaction} />;
-				})
-				.with("open", () => {
-					return <OpenMessage transaction={transaction} />;
-				})
-				.with("dispute", () => {
-					return null;
-				})
-				.with("rejected", "resolved", "expired", "success", "closed", () => {
-					return null;
-				})
-				.exhaustive()}
-		</Container>
-	);
+	const message = match(transaction.status)
+		.with("pending", () => {
+			return <PendingMessage transaction={transaction} />;
+		})
+		.with("open", () => {
+			return <OpenMessage transaction={transaction} />;
+		})
+		.with("dispute", () => {
+			return null;
+		})
+		.with("rejected", "resolved", "expired", "success", "closed", () => {
+			return null;
+		})
+		.exhaustive();
+
+	return message ? <Container {...props}>{message}</Container> : null;
 };

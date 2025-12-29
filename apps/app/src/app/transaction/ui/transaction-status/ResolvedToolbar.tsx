@@ -24,10 +24,12 @@ export const ResolvedToolbar: FC<ResolvedToolbar.Props> = ({ transaction }) => {
 				/>
 			) : null}
 
-			<CloseButton
-				transaction={transaction}
-				{...TransactionButtonUi}
-			/>
+			{side === "buyer" ? (
+				<CloseButton
+					transaction={transaction}
+					{...TransactionButtonUi}
+				/>
+			) : null}
 
 			<DisputeButton
 				transaction={transaction}

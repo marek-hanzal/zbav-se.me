@@ -4,6 +4,7 @@ import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
 import type { TransactionStatusCloseSchema } from "~/@user/transaction-status/schema/TransactionStatusCloseSchema";
+import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace transactionStatusCloseFx {
 	export type Props = TransactionStatusCloseSchema.Type;
@@ -15,6 +16,12 @@ export const transactionStatusCloseFx = ({ transactionId }: transactionStatusClo
 			transactionId,
 			message: "You are not allowed to close this listing transaction",
 		});
+
+		if (transaction.side === "seller") {
+			return yield* new InvalidRequestError({
+				message: "Seller cannot close a transaction",
+			});
+		}
 
 		yield* transactionPatchFx({
 			patch: {},

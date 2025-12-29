@@ -30,7 +30,7 @@ export const TransactionStatusEnumSchema = z
 		"expired",
 		// Probably rare one - submitted by buyer he's happy with the result
 		"success",
-        // Explicitly closed with "no emotions"
+		// Explicitly closed with "no emotions"
 		"closed",
 	])
 	.openapi("TransactionStatusEnum", {
