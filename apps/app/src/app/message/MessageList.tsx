@@ -34,6 +34,7 @@ export const MessageList: FC<MessageList.Props> = ({
 	const contentRef = useRef<HTMLDivElement>(null);
 	const scrollToBottom = useDebouncedCallback(
 		(behavior: ScrollBehavior) => {
+			console.log("scrollToBottom", containerRef.current, containerRef.current?.scrollHeight);
 			containerRef.current?.scrollTo({
 				top: containerRef.current?.scrollHeight,
 				behavior,
@@ -47,6 +48,7 @@ export const MessageList: FC<MessageList.Props> = ({
 
 	useLayoutEffect(() => {
 		if (!contentRef.current || !containerRef.current) {
+			console.log("nope- scrollToBottom", containerRef.current);
 			return;
 		}
 

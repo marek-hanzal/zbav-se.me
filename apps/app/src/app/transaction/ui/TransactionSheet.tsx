@@ -35,6 +35,9 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({ transactionId, ..
 					id: transactionId,
 				},
 			}}
+			options={{
+				refetchInterval: 1_500,
+			}}
 			fallback={null}
 		>
 			{({ data: transaction }) => {
@@ -133,7 +136,7 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({ transactionId, ..
 											</withListingFetchQuery.Suspense>
 										</Container>
 
-										<TransactionChat transactionId={transaction.id} />
+										<TransactionChat transaction={transaction} />
 									</Container>
 								),
 								header: ({ close }) => ({
