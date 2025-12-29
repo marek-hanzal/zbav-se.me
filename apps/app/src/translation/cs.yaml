@@ -1003,3 +1003,15 @@ seller - Transaction pending (message):
 
         _V tento okamžik lze obchod bezpečně odmítnout._
     static: true
+seller - Transaction dispute (message):
+    value: |
+        Kupující otevřel řešení problému.
+
+        Teď máte prostor spolu najít řešení, případně odladit nesrovnalosti.
+    static: true
+buyer - Transaction dispute (message):
+    value: |
+        Otevřel jsi řešení problému s obchodníkem - teď máš prostor dořešit nesrovnalosti.
+
+        Buď prosím ohleduplný, pořád jsme lidi a chyby se mohou stát.
+    static: true

@@ -27,10 +27,7 @@ export const transactionStatusDisputeFx = ({ transactionId }: transactionStatusD
 
 		yield* messageSystemCreateFx({
 			messageThreadId: transaction.messageThreadId,
-			message:
-				transaction.side === "buyer"
-					? "Buyer disputed the transaction (message)"
-					: "Seller disputed the transaction (message)",
+			message: "Transaction dispute (message)",
 		});
 
 		return yield* transactionStatusCreateFx({
