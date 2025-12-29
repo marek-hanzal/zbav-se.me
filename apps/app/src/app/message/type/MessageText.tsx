@@ -6,6 +6,7 @@ import { toTimeDiff } from "@use-pico/common/time";
 import type { tMessageText } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import { useSide } from "~/app/user/useSide";
 
 export namespace MessageText {
 	export interface Props extends Container.Props {
@@ -15,6 +16,7 @@ export namespace MessageText {
 
 export const MessageText: FC<MessageText.Props> = ({ message, ...props }) => {
 	const locale = useLocale();
+	const side = useSide();
 
 	return (
 		<Container
@@ -52,14 +54,16 @@ export const MessageText: FC<MessageText.Props> = ({ message, ...props }) => {
 					: undefined,
 				message.direction === "system"
 					? [
-							"mx-auto",
-							"text-center",
+							"w-full",
 						]
 					: undefined,
 			]}
 			{...props}
 		>
-			<Mx label={message.text} />
+			<Mx
+				label={`${side} - ${message.text}`}
+				fallback={message.text}
+			/>
 
 			<Typo
 				label={toTimeDiff({

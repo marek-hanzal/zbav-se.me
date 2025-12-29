@@ -9,7 +9,7 @@ import { CancelIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace RejectButton {
-	export interface Props extends ConfirmButton.Props {
+	export interface Props extends Partial<ConfirmButton.Props> {
 		transaction: tTransaction;
 	}
 }

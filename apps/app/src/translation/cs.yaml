@@ -424,7 +424,7 @@
     value: Možnosti předání
 7fff5a32624ca773f775bae93783cbc55b943a4c968052d2b32e91cd:
     ref: Mark transaction as successful (button)
-    value: Mark transaction as successful (button)
+    value: Jsem spokojený, zavřít
 80eb01c4f083e6af9055876045562a9157c605f15686e89854ee632b:
     ref: unused
     value: unused
@@ -659,11 +659,17 @@ Listing warranty - no-warranty:
 Listing warranty - warranty:
     static: true
     value: Se zárukou
-Seller accepted the transaction (message):
-    value: Prodejce přijal transakci.
+buyer - Seller accepted the transaction (message):
+    value: Prodejce přijal obchod
     static: true
-Seller rejected the transaction (message):
-    value: Prodejce odmítl transakci.
+seller - Seller accepted the transaction (message):
+    value: Přijal jsi obchod
+    static: true
+buyer - Seller rejected the transaction (message):
+    value: Prodejce odmítl, obchod je uzavřený.
+    static: true
+seller - Seller rejected the transaction (message):
+    value: Odmítl jsi zájemce, obchod je uzavřený.
     static: true
 a038a4da09ca1bfcd3d73f545e72575a33516d5e7ef37b09b4f5b397:
     ref: Welcome (title)
@@ -777,7 +783,7 @@ c7011d532414a06429fe3823d5c970b1de99d6e19fd0f06ea309c7c3:
         a jednoduché!
 c7147aaa47c54e90b7023be8ee57d73010a71c259e352067aaad48e6:
     ref: Reject transaction (button)
-    value: Odmítnout
+    value: Odmítnout a zavřít
 cb3a34c7200192f3cf99f4312074d252b890df7647e1e65c2ee986ab:
     ref: Share location (title)
     value: Sdílet polohu
@@ -789,7 +795,7 @@ cbac5f835956010c5b45bed61ee098674baef1e75ef17acc19462ac1:
     value: Nahlásit inzerát
 cce3e05a5e2cf26a26d41e907d0fade717c5fbffe10b7f77fd83e8db:
     ref: Accept transaction (button)
-    value: Přijmout
+    value: Přijmout a pokračovat
 ceeb32aea866f45126224f7ff0fc5a65a8fa268c581d023ffe309e03:
     ref: Unflag listing (button)
     value: Zrušit nahlášení
@@ -941,3 +947,20 @@ ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
 ff95e127f3feec3ae1c640001d56b07697ca4fa473da4213348be958:
     ref: open
     value: open
+seller - Transaction pending (message):
+    value: |
+        **Máš nového zájemce!**
+
+        Můžeš si prohlédnout zájemce a rozhodnout se, zda budeš pokračovat v obchodu.
+
+        _V tento okamžik lze obchod bezpečně odmítnout._
+    static: true
+buyer - Transaction pending (message):
+    value: |
+        **Projevil jsi zájem o inzerát.**
+
+        Abys mohl pokračovat, _prodejce musí obchod přijmout_.
+
+        Obchod můžeš odmítnout, _nicméně ber prosím v potaz_, že prodejce vidí základní údaje o
+        tvém chování (např. otevření a okamžité odmítnutí obchodu).
+    static: true

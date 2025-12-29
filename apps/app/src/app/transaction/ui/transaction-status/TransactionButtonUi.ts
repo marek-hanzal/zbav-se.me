@@ -1,6 +1,6 @@
-import type { Button } from "@use-pico/client/ui/button";
+import type { ConfirmButton } from "@use-pico/client/ui/button";
 
-export const TransactionButtonUi: Button.Props = {
+export const TransactionButtonUi: ConfirmButton.Props = {
 	iconProps: {
 		ui: {
 			text: "xl",
@@ -14,10 +14,7 @@ export const TransactionButtonUi: Button.Props = {
 		text: "sm",
 		border: true,
 		shadow: false,
-		width: "content",
+		width: "full",
+		size: "sm",
 	},
-	className: [
-		"px-2",
-		"py-1",
-	],
 };

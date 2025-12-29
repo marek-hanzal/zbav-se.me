@@ -4,7 +4,7 @@ import type { tTransaction } from "@zbav-se.me/sdk/api/user";
 import { withTransactionStatusSuccessMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
-import { StarIcon } from "@zbav-se.me/ui/icon";
+import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace SuccessButton {
@@ -21,7 +21,7 @@ export const SuccessButton: FC<SuccessButton.Props> = ({ transaction, ...props }
 		<Button
 			data-ui="SuccessButton[Button]"
 			label={"Mark transaction as successful (button)"}
-			iconEnabled={StarIcon}
+			iconEnabled={CheckIcon}
 			onClick={() => {
 				mutation.mutate(
 					{

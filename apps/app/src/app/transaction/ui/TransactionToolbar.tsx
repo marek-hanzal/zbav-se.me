@@ -15,11 +15,12 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({ transaction, 
 	return (
 		<Container
 			ui={{
-				flow: "horizontal",
+				flow: "vertical",
 				opacity: "low",
 				justify: "center",
 				items: "center",
 				gap: "default",
+				width: "full",
 				...ui,
 			}}
 			className={[

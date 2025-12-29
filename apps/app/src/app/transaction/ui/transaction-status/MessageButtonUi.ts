@@ -1,6 +1,6 @@
-import type { Button } from "@use-pico/client/ui/button";
+import type { ConfirmButton } from "@use-pico/client/ui/button";
 
-export const MessageButtonUi: Button.Props = {
+export const MessageButtonUi: ConfirmButton.Props = {
 	iconProps: {
 		ui: {
 			text: "xl",
