@@ -13,6 +13,8 @@ import { ListingSheet } from "~/app/listing/ui/ListingSheet";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 import { MessageList } from "~/app/message/MessageList";
 import { TransactionChat } from "~/app/transaction/ui/TransactionChat";
+import { TransactionMessage } from "~/app/transaction/ui/TransactionMessage";
+import { TransactionToolbar } from "~/app/transaction/ui/TransactionToolbar";
 
 export namespace TransactionSheet {
 	export type View = "detail";
@@ -96,7 +98,11 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({ transactionId, ..
 											<MessageList
 												containerRef={containerRef}
 												messageThreadId={transaction.messageThreadId}
-											/>
+											>
+												<TransactionMessage transaction={transaction} />
+
+												<TransactionToolbar transaction={transaction} />
+											</MessageList>
 
 											<withListingFetchQuery.Suspense
 												data={{

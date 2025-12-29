@@ -10,7 +10,6 @@ import {
 import { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { TransactionToolbar } from "~/app/transaction/ui/TransactionToolbar";
 import { useSide } from "~/app/user/useSide";
 
 export namespace TransactionChat {
@@ -34,8 +33,6 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transactionId, ui, 
 			}}
 			{...props}
 		>
-			<TransactionToolbar transactionId={transactionId} />
-
 			<withTransactionFetchQuery.Suspense
 				data={{
 					where: {

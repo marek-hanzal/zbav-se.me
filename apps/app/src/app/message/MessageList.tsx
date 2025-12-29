@@ -28,6 +28,7 @@ export const MessageList: FC<MessageList.Props> = ({
 	messageThreadId,
 	containerRef,
 	ui,
+	children,
 	...props
 }) => {
 	const contentRef = useRef<HTMLDivElement>(null);
@@ -97,47 +98,53 @@ export const MessageList: FC<MessageList.Props> = ({
 				fallback={<SpinnerContainer />}
 			>
 				{({ data }) => {
-					return data.data.map((message) => {
-						return match(message.type)
-							.with("text", () => (
-								<MessageText
-									key={message.id}
-									message={zMessageText.parse(message.payload)}
-								/>
-							))
-							.with("system", () => (
-								<MessageText
-									key={message.id}
-									message={zMessageSystem.parse(message.payload)}
-								/>
-							))
-							.with("gallery", () => (
-								<MessageGallery
-									key={message.id}
-									message={zMessageGallery.parse(message.payload)}
-								/>
-							))
-							.with("location", () => (
-								<MessageLocation
-									key={message.id}
-									message={zMessageLocation.parse(message.payload)}
-								/>
-							))
-							.with("personal", () => (
-								<MessagePersonal
-									key={message.id}
-									message={zMessagePersonal.parse(message.payload)}
-								/>
-							))
-							.with("package", () => (
-								<MessagePackage
-									key={message.id}
-									message={zMessagePackage.parse(message.payload)}
-								/>
-							))
-							.with("date", () => null)
-							.exhaustive();
-					});
+					return (
+						<>
+							{data.data.map((message) => {
+								return match(message.type)
+									.with("text", () => (
+										<MessageText
+											key={message.id}
+											message={zMessageText.parse(message.payload)}
+										/>
+									))
+									.with("system", () => (
+										<MessageText
+											key={message.id}
+											message={zMessageSystem.parse(message.payload)}
+										/>
+									))
+									.with("gallery", () => (
+										<MessageGallery
+											key={message.id}
+											message={zMessageGallery.parse(message.payload)}
+										/>
+									))
+									.with("location", () => (
+										<MessageLocation
+											key={message.id}
+											message={zMessageLocation.parse(message.payload)}
+										/>
+									))
+									.with("personal", () => (
+										<MessagePersonal
+											key={message.id}
+											message={zMessagePersonal.parse(message.payload)}
+										/>
+									))
+									.with("package", () => (
+										<MessagePackage
+											key={message.id}
+											message={zMessagePackage.parse(message.payload)}
+										/>
+									))
+									.with("date", () => null)
+									.exhaustive();
+							})}
+
+							{children}
+						</>
+					);
 				}}
 			</withMessageThreadMessageCollectionQuery.Suspense>
 		</Container>

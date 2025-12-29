@@ -1,5 +1,5 @@
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
+import { Container } from "@use-pico/client/ui/container";
+import type { tTransaction } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { OpenToolbar } from "~/app/transaction/ui/transaction-status/OpenToolbar";
@@ -7,67 +7,36 @@ import { PendingToolbar } from "~/app/transaction/ui/transaction-status/PendingT
 
 export namespace TransactionToolbar {
 	export interface Props extends Container.Props {
-		transactionId: string;
+		transaction: tTransaction;
 	}
 }
 
-export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
-	transactionId,
-	ui,
-	...props
-}) => {
+export const TransactionToolbar: FC<TransactionToolbar.Props> = ({ transaction, ui, ...props }) => {
 	return (
-		<withTransactionFetchQuery.Suspense
-			data={{
-				where: {
-					id: transactionId,
-				},
+		<Container
+			ui={{
+				flow: "horizontal",
+				opacity: "low",
+				justify: "center",
+				items: "center",
+				...ui,
 			}}
-			options={{
-				refetchInterval: 2_500,
-			}}
-			fallback={<SpinnerContainer />}
+			className={[
+				"py-1",
+			]}
+			{...props}
 		>
-			{({ data: transaction }) => {
-				return (
-					<Container
-						ui={{
-							scroll: "horizontal",
-							width: "full",
-							opacity: "low",
-							...ui,
-						}}
-						className={[
-							"py-1",
-						]}
-						{...props}
-					>
-						<Container
-							ui={{
-								gap: "default",
-							}}
-							className={[
-								"grid",
-								"grid-flow-col",
-								"auto-cols-max",
-								"w-max",
-							]}
-						>
-							{match(transaction.status)
-								.with("open", () => {
-									return <OpenToolbar transaction={transaction} />;
-								})
-								.with("pending", () => {
-									return <PendingToolbar transaction={transaction} />;
-								})
-								.with("rejected", "cancelled", "expired", "completed", () => {
-									return "rejected-cancelled-expired";
-								})
-								.exhaustive()}
-						</Container>
-					</Container>
-				);
-			}}
-		</withTransactionFetchQuery.Suspense>
+			{match(transaction.status)
+				.with("open", () => {
+					return <OpenToolbar transaction={transaction} />;
+				})
+				.with("pending", () => {
+					return <PendingToolbar transaction={transaction} />;
+				})
+				.with("rejected", "cancelled", "expired", "completed", () => {
+					return "rejected-cancelled-expired";
+				})
+				.exhaustive()}
+		</Container>
 	);
 };
