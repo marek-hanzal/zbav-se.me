@@ -74,6 +74,37 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transactionId, ui, 
 								/>
 							);
 						})
+						.with("resolved", () => {
+							return (
+								<ChatInput
+									onSubmit={(message) => {
+										messageMutation.mutate(
+											{
+												transactionId,
+												message,
+											},
+											{
+												onSuccess() {
+													withMessageThreadMessageCollectionQuery.invalidate(
+														queryClient,
+														{
+															path: {
+																messageThreadId:
+																	transaction.messageThreadId,
+															},
+														},
+													);
+												},
+											},
+										);
+									}}
+									placeholder={translator.text(
+										"Transaction - resolved -send a message (placeholder)",
+									)}
+									loading={messageMutation.isPending}
+								/>
+							);
+						})
 						.with("pending", () => {
 							return (
 								<Tx
@@ -91,7 +122,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transactionId, ui, 
 								/>
 							);
 						})
-						.with("resolved", "rejected", "expired", "success", () => {
+						.with("rejected", "expired", "success", () => {
 							return (
 								<Tx
 									label={"Chat - transaction closed (message)"}

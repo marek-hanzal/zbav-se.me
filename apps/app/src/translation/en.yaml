@@ -421,6 +421,9 @@
 8b45608bd106d13d544cc9d7aa8d9c7fdb279ac083715341bc1afbb8:
   ref: User registered (label)
   value: User registered (label)
+8c38d8ac3140e2fb666243047eb1a394a10ec1487ad707d29716fac1:
+  ref: Transaction - resolved -send a message (placeholder)
+  value: Transaction - resolved -send a message (placeholder)
 8c6d2bdeb456deef3c09b5cf942ad58c1aae654bebec45a62cd2599c:
   ref: Ignore listing - confirm (button)
   value: Ignore listing - confirm (button)

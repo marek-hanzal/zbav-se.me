@@ -471,6 +471,9 @@
 8b45608bd106d13d544cc9d7aa8d9c7fdb279ac083715341bc1afbb8:
     ref: User registered (label)
     value: Datum registrace
+8c38d8ac3140e2fb666243047eb1a394a10ec1487ad707d29716fac1:
+    ref: Transaction - resolved -send a message (placeholder)
+    value: Chceš něco dodat?
 8c6d2bdeb456deef3c09b5cf942ad58c1aae654bebec45a62cd2599c:
     ref: Ignore listing - confirm (button)
     value: Opravdu?
@@ -659,18 +662,6 @@ Listing warranty - no-warranty:
 Listing warranty - warranty:
     static: true
     value: Se zárukou
-buyer - Seller accepted the transaction (message):
-    value: Prodejce přijal obchod
-    static: true
-seller - Seller accepted the transaction (message):
-    value: Přijal jsi obchod
-    static: true
-buyer - Seller rejected the transaction (message):
-    value: Prodejce odmítl, obchod je uzavřený.
-    static: true
-seller - Seller rejected the transaction (message):
-    value: Odmítl jsi zájemce, obchod je uzavřený.
-    static: true
 a038a4da09ca1bfcd3d73f545e72575a33516d5e7ef37b09b4f5b397:
     ref: Welcome (title)
     value: Klikej. Zkoumej. Nemáš tu co posrat.
@@ -764,6 +755,33 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
         message than this :(
     value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
         better message than this :(
+buyer - Seller accepted the transaction (message):
+    value: Prodejce přijal obchod
+    static: true
+buyer - Seller rejected the transaction (message):
+    value: Prodejce odmítl, obchod je uzavřený.
+    static: true
+buyer - Seller resolved the transaction (message):
+    value: |
+        Prodejce má vyřízeno.
+
+        Ty máš ještě prostor se vyjádřit, případně obchod úspěšně zavřít.
+
+        _Nic dalšího již není třeba dělat._
+    static: true
+buyer - Transaction pending (message):
+    value: >
+        **Projevil jsi zájem o inzerát.**
+
+
+        Abys mohl pokračovat, _prodejce musí obchod přijmout_.
+
+
+        Obchod můžeš odmítnout, _nicméně ber prosím v potaz_, že prodejce vidí
+        základní údaje o
+
+        tvém chování (např. otevření a okamžité odmítnutí obchodu).
+    static: true
 c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
     ref: Feed title not filled
     value: Všechno
@@ -947,20 +965,23 @@ ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
 ff95e127f3feec3ae1c640001d56b07697ca4fa473da4213348be958:
     ref: open
     value: open
+seller - Seller accepted the transaction (message):
+    value: Přijal jsi obchod
+    static: true
+seller - Seller rejected the transaction (message):
+    value: Odmítl jsi zájemce, obchod je uzavřený.
+    static: true
+seller - Seller resolved the transaction (message):
+    value: Máš vyřízeno, nic dalšího již není třeba dělat.
+    static: true
 seller - Transaction pending (message):
-    value: |
+    value: >
         **Máš nového zájemce!**
 
-        Můžeš si prohlédnout zájemce a rozhodnout se, zda budeš pokračovat v obchodu.
+
+        Můžeš si prohlédnout zájemce a rozhodnout se, zda budeš pokračovat v
+        obchodu.
+
 
         _V tento okamžik lze obchod bezpečně odmítnout._
-    static: true
-buyer - Transaction pending (message):
-    value: |
-        **Projevil jsi zájem o inzerát.**
-
-        Abys mohl pokračovat, _prodejce musí obchod přijmout_.
-
-        Obchod můžeš odmítnout, _nicméně ber prosím v potaz_, že prodejce vidí základní údaje o
-        tvém chování (např. otevření a okamžité odmítnutí obchodu).
     static: true
