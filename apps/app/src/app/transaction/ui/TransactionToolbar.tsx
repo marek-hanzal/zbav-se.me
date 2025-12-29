@@ -19,6 +19,7 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({ transaction, 
 				opacity: "low",
 				justify: "center",
 				items: "center",
+				gap: "default",
 				...ui,
 			}}
 			className={[

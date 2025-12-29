@@ -138,6 +138,9 @@
 2250c7f0548b5cbe0fbdac80837ac558866128e004997e4f6b879f72:
     ref: Feed delivery not selected
     value: Jakékoli
+23609a4b2bc2ea2da20065b7286ff1892586974ad83ab17bf92ab7f0:
+    ref: Resolve transaction (button)
+    value: Vyřízeno
 23d96471b4cb8b94656db913455c655d345ce88c217df03f385d2750:
     ref: Personal - Location (label)
     value: Adresa
@@ -575,6 +578,12 @@ Expire in 14-days:
 Expire in 7-days:
     static: true
     value: Za týden
+Invalid URL:
+    static: true
+    value: Špatně vyplněná adresa
+Invalid email address:
+    static: true
+    value: Špatně vyplněná emailová adresa
 Listing common sort value age - asc:
     static: true
     value: Od nejstaršího
@@ -926,9 +935,3 @@ ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
 ff95e127f3feec3ae1c640001d56b07697ca4fa473da4213348be958:
     ref: open
     value: open
-Invalid URL:
-    static: true
-    value: Špatně vyplněná adresa
-Invalid email address:
-    static: true
-    value: Špatně vyplněná emailová adresa

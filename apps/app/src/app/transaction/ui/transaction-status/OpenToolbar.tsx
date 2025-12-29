@@ -3,6 +3,7 @@ import type { FC } from "react";
 import { RejectButton } from "~/app/transaction/ui/button/RejectButton";
 import { ResolveButton } from "~/app/transaction/ui/button/ResolveButton";
 import { TransactionButtonUi } from "~/app/transaction/ui/transaction-status/TransactionButtonUi";
+import { useSide } from "~/app/user/useSide";
 
 export namespace OpenToolbar {
 	export interface Props {
@@ -11,12 +12,16 @@ export namespace OpenToolbar {
 }
 
 export const OpenToolbar: FC<OpenToolbar.Props> = ({ transaction }) => {
+	const side = useSide();
+
 	return (
 		<>
-			<ResolveButton
-				transaction={transaction}
-				{...TransactionButtonUi}
-			/>
+			{side === "seller" ? (
+				<ResolveButton
+					transaction={transaction}
+					{...TransactionButtonUi}
+				/>
+			) : null}
 
 			<RejectButton
 				transaction={transaction}

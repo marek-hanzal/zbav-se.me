@@ -7,9 +7,9 @@ export const TransactionButtonUi: Button.Props = {
 		},
 	},
 	ui: {
-		tone: "link",
+		tone: "neutral",
 		theme: "light",
-		round: "full",
+		round: "default",
 		background: "default",
 		text: "sm",
 		border: true,
