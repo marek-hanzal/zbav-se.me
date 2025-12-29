@@ -59,6 +59,16 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ transaction, ui, ...props }
 				/>
 			) : null}
 
+			<PersonalButton
+				transaction={transaction}
+				{...MessageButtonUi}
+			/>
+
+			<LocationButton
+				transaction={transaction}
+				{...MessageButtonUi}
+			/>
+
 			<GalleryUploadButton
 				defaultUploadIds={[]}
 				state={{
@@ -81,16 +91,6 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ transaction, ui, ...props }
 				onCancel={() => {
 					setIsGalleryOpen(false);
 				}}
-				{...MessageButtonUi}
-			/>
-
-			<LocationButton
-				transaction={transaction}
-				{...MessageButtonUi}
-			/>
-
-			<PersonalButton
-				transaction={transaction}
 				{...MessageButtonUi}
 			/>
 		</Container>
