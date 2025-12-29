@@ -22,6 +22,7 @@ export const transactionMessageLocationCreateFx = ({
 			transactionId,
 			allowedStatuses: [
 				"open",
+				"dispute",
 			],
 		});
 

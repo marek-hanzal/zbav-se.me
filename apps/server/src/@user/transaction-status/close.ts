@@ -35,6 +35,14 @@ export const withCloseApi: Routes.Fn = ({ userHono }) => {
 					},
 					description: "Closed status created",
 				},
+				400: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Invalid request",
+				},
 				403: {
 					content: {
 						"application/json": {
@@ -104,6 +112,20 @@ export const withCloseApi: Routes.Fn = ({ userHono }) => {
 											message: e.message,
 										},
 										403,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "InvalidRequestError",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 400>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										400,
 									);
 								},
 							),

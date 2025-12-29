@@ -25,6 +25,7 @@ export const transactionMessagePersonalCreateFx = ({
 			transactionId,
 			allowedStatuses: [
 				"open",
+				"dispute",
 			],
 		});
 

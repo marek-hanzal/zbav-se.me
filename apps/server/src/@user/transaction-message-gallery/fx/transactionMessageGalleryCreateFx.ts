@@ -33,6 +33,7 @@ export const transactionMessageGalleryCreateFx = ({
 				transactionId,
 				allowedStatuses: [
 					"open",
+					"dispute",
 				],
 			});
 
