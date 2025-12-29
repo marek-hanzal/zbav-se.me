@@ -29,33 +29,33 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	return (
-		<withTransactionFetchQuery.Suspense
-			data={{
-				where: {
-					id: transactionId,
-				},
+		<BottomSheet
+			data-ui={"TransactionSheet-[SheetView]"}
+			data-id={transactionId}
+			contentProps={{
+				disableScroll: true,
 			}}
-			options={{
-				refetchInterval: refresh,
-			}}
-			fallback={null}
+			detent={"full"}
+			{...props}
 		>
-			{({ data: transaction }) => {
-				// biome-ignore lint/correctness/useHookAtTopLevel: Ssst
-				const [detail, setDetail] = useState(false);
-				// biome-ignore lint/correctness/useHookAtTopLevel: Ssst 2.0
-				const hero = useHeroUpload(transaction.gallery.items);
+			<withTransactionFetchQuery.Suspense
+				data={{
+					where: {
+						id: transactionId,
+					},
+				}}
+				options={{
+					refetchInterval: refresh,
+				}}
+				fallback={null}
+			>
+				{({ data: transaction }) => {
+					// biome-ignore lint/correctness/useHookAtTopLevel: Ssst
+					const [detail, setDetail] = useState(false);
+					// biome-ignore lint/correctness/useHookAtTopLevel: Ssst 2.0
+					const hero = useHeroUpload(transaction.gallery.items);
 
-				return (
-					<BottomSheet
-						data-ui={"TransactionSheet-[SheetView]"}
-						data-id={transactionId}
-						contentProps={{
-							disableScroll: true,
-						}}
-						detent={"full"}
-						{...props}
-					>
+					return (
 						<Container
 							data-ui={"TransactionSheet-[Container]"}
 							ui={{
@@ -133,9 +133,9 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({
 
 							<TransactionChat transaction={transaction} />
 						</Container>
-					</BottomSheet>
-				);
-			}}
-		</withTransactionFetchQuery.Suspense>
+					);
+				}}
+			</withTransactionFetchQuery.Suspense>
+		</BottomSheet>
 	);
 };
