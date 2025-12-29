@@ -774,7 +774,10 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
         better message than this :(
 buyer - Seller accepted the transaction (message):
-    value: Prodejce přijal obchod
+    value: |
+        **Prodejce přijal obchod**
+
+        Teď je na tobě se domluvit, co bude dál.
     static: true
 buyer - Seller rejected the transaction (message):
     value: Prodejce odmítl, obchod je uzavřený.
@@ -984,7 +987,10 @@ ff95e127f3feec3ae1c640001d56b07697ca4fa473da4213348be958:
     ref: open
     value: open
 seller - Seller accepted the transaction (message):
-    value: Přijal jsi obchod
+    value: |
+        **Přijal jsi obchod**
+
+        Kupující o tobě ví, prozatím se od tebe nic nečeká.
     static: true
 seller - Seller rejected the transaction (message):
     value: Odmítl jsi zájemce, obchod je uzavřený.
@@ -1014,4 +1020,16 @@ buyer - Transaction dispute (message):
         Otevřel jsi řešení problému s obchodníkem - teď máš prostor dořešit nesrovnalosti.
 
         Buď prosím ohleduplný, pořád jsme lidi a chyby se mohou stát.
+    static: true
+seller - Transaction successful (message):
+    value: |
+        **Všechno v pohodě, obchod byl úspěšný!**
+
+        Dál už tu nic není.
+    static: true
+buyer - Transaction successful (message):
+    value: |
+        **Jsi spokojený, obchod byl úspěšný!**
+
+        Dál už tu nic není.
     static: true

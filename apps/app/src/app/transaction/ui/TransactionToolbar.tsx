@@ -2,6 +2,7 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tTransaction } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import { DisputeToolbar } from "~/app/transaction/ui/transaction-status/DisputeToolbar";
 import { OpenToolbar } from "~/app/transaction/ui/transaction-status/OpenToolbar";
 import { ResolvedToolbar } from "~/app/transaction/ui/transaction-status/ResolvedToolbar";
 
@@ -20,7 +21,7 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({ transaction, 
 			return <ResolvedToolbar transaction={transaction} />;
 		})
 		.with("dispute", () => {
-			return null;
+			return <DisputeToolbar transaction={transaction} />;
 		})
 		.with("pending", "rejected", "expired", "success", "closed", () => {
 			return null;

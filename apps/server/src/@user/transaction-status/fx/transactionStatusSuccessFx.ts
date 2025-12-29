@@ -34,7 +34,7 @@ export const transactionStatusSuccessFx = ({ transactionId }: transactionStatusS
 
 		yield* messageSystemCreateFx({
 			messageThreadId: transaction.messageThreadId,
-			message: "Buyer marked the transaction as successful (message)",
+			message: "Transaction successful (message)",
 		});
 
 		return yield* transactionStatusCreateFx({
