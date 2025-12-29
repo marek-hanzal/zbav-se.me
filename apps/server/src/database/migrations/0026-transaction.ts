@@ -7,10 +7,10 @@ export const TransactionMigration: Migration = {
 			.asEnum([
 				"pending",
 				"open",
+				"resolved",
 				"rejected",
-				"completed",
-				"cancelled",
 				"expired",
+				"success",
 			])
 			.execute();
 
