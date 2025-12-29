@@ -66,7 +66,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 							{...props}
 						>
 							{match(transaction.status)
-								.with("rejected", "cancelled", "expired", () => {
+								.with("rejected", "expired", "success", () => {
 									return (
 										<Container
 											data-ui="TransactionItem-[Overlay]"
@@ -83,7 +83,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 										/>
 									);
 								})
-								.with("open", "completed", "pending", () => {
+								.with("open", "pending", "resolved", () => {
 									return null;
 								})
 								.exhaustive()}
