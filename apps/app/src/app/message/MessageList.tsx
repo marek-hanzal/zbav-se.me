@@ -8,7 +8,7 @@ import {
 	zMessageText,
 } from "@zbav-se.me/sdk/api/user";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
-import { type FC, type RefObject, useLayoutEffect, useRef } from "react";
+import { type FC, type RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { match } from "ts-pattern";
 import { useDebouncedCallback } from "use-debounce";
 import { MessageGallery } from "~/app/message/type/MessageGallery";
@@ -32,6 +32,7 @@ export const MessageList: FC<MessageList.Props> = ({
 	...props
 }) => {
 	const contentRef = useRef<HTMLDivElement>(null);
+	const [ready, setReady] = useState(false);
 	const scrollToBottom = useDebouncedCallback(
 		(behavior: ScrollBehavior) => {
 			console.log("scrollToBottom", containerRef.current, containerRef.current?.scrollHeight);
@@ -46,9 +47,21 @@ export const MessageList: FC<MessageList.Props> = ({
 		},
 	);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: Ssst
+	useEffect(() => {
+		if (!containerRef.current || !contentRef.current) {
+			return;
+		}
+
+		setReady(true);
+	}, [
+		containerRef.current,
+		contentRef.current,
+	]);
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: Ssst
 	useLayoutEffect(() => {
-		if (!contentRef.current || !containerRef.current) {
-			console.log("nope- scrollToBottom", containerRef.current);
+		if (!contentRef.current || !containerRef.current || !ready) {
 			return;
 		}
 
@@ -65,7 +78,7 @@ export const MessageList: FC<MessageList.Props> = ({
 		};
 	}, [
 		scrollToBottom,
-		containerRef.current,
+		ready,
 	]);
 
 	return (
