@@ -67,6 +67,9 @@
 1127abe5ce9696ad1b6477d3c6557314bacdf45155e4e890091f1d3e:
   ref: Save (button)
   value: Save (button)
+124648485fb6d6f50a0829d36808e384ad3c0904126f300a12fda2e7:
+  ref: Reject transaction - confirm (button)
+  value: Reject transaction - confirm (button)
 14663fea507627f6c98c1360a9aa3c6d275ed885e44051e7d88af28a:
   ref: Feed age (hint)
   value: Feed age (hint)
@@ -349,9 +352,6 @@
 7a2ff42f7d0739100696527fd6cd76b05a231a3251e56fe2566d0810:
   ref: Open gallery (button)
   value: Open gallery (button)
-7a7a73cef600b945232404a350f48d342722720cd65cb21ebe1786f8:
-  ref: completed
-  value: completed
 7a82926bb5336fd34c1755025654a057c7419b9e9e71e717eb89c249:
   ref: Feed range (hint)
   value: Feed range (hint)
@@ -373,6 +373,9 @@
 7f89976c181499cadaa8961f43343f08d5d5660f0188347e382dc807:
   ref: Listing delivery (label)
   value: Listing delivery (label)
+7fff5a32624ca773f775bae93783cbc55b943a4c968052d2b32e91cd:
+  ref: Mark transaction as successful (button)
+  value: Mark transaction as successful (button)
 80eb01c4f083e6af9055876045562a9157c605f15686e89854ee632b:
   ref: unused
   value: unused
@@ -442,6 +445,9 @@
 8e2fc55a3696f2163e1e926bfcecab6b1eedd38aefc5d37abb4ebc0c:
   ref: Description (message)
   value: Description (message)
+92f8ed3e921515bd08034e9707119cb1472e34759a88f45647289475:
+  ref: resolved
+  value: resolved
 93766f804027b28f5ce55c85ccb887c09c3d8e78a84074aed256ca9a:
   ref: Listing title (title)
   value: Listing title (title)
@@ -538,6 +544,9 @@ b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
 b46060e6e02e9a672bd27f869c2d7206d0c7a0584e298065557d7954:
   ref: Draft expire (hint)
   value: Draft expire (hint)
+b48018d27bcd6409768ac5c0dd69a1a716d97c25a2dbfe6713cf393b:
+  ref: success
+  value: success
 b4ffae5235999f10f6bbff965753e7d17285ec1f06ba0d8035409f7f:
   ref: Empty favourite feed (title)
   value: Empty favourite feed (title)
@@ -666,9 +675,6 @@ e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
 e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
   ref: Feed location not selected
   value: Feed location not selected
-e8b631fdd1fe399644031a3c9fb80ed1dd2745e3a2ff95eabc2e0bb5:
-  ref: cancelled
-  value: cancelled
 eb18c941e11fe2d241983a0df227512b3e3691c12cc66af2303bc987:
   ref: Draft (label)
   value: Draft (label)
