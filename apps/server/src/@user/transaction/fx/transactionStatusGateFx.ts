@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import type { TransactionStatusEnumSchema } from "~/app/transaction/schema/ListingTransactionStatusEnumSchema";
+import type { TransactionStatusEnumSchema } from "~/app/transaction/schema/TransactionStatusEnumSchema";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 import { transactionResolveFx } from "./transactionResolveFx";
 

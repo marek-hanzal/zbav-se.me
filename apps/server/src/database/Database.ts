@@ -21,7 +21,7 @@ import type { MessageSystemDbSchema } from "~/app/message-system/schema/MessageS
 import type { MessageTextDbSchema } from "~/app/message-text/schema/MessageTextDbSchema";
 import type { MessageThreadDbSchema } from "~/app/message-thread/schema/MessageThreadDbSchema";
 import type { MessageThreadUserDbSchema } from "~/app/message-thread-user/schema/MessageThreadUserDbSchema";
-import type { TransactionDbSchema } from "~/app/transaction/schema/ListingTransactionDbSchema";
+import type { TransactionDbSchema } from "~/app/transaction/schema/TransactionDbSchema";
 import type { TransactionStatusDbSchema } from "~/app/transaction-status/schema/ListingTransactionStatusDbSchema";
 import type { UploadDbSchema } from "~/app/upload/schema/UploadDbSchema";
 import type { UserExDbSchema } from "~/app/user-ex/schema/UserExDbSchema";
