@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiGithubHistoryErrors, tApiGithubHistoryRequest, tApiGithubHistoryResponse, tApiHealthRequest, tApiHealthResponse } from './types.gen';
-import { zApiGithubHistoryData, zApiGithubHistoryResponse, zApiHealthData, zApiHealthResponse } from './zod.gen';
+import type { apiGithubHistoryErrors, tApiCronDay0Request, tApiCronDay0Response, tApiCronDay12Request, tApiCronDay12Response, tApiCronDay16Request, tApiCronDay16Response, tApiCronDay20Request, tApiCronDay20Response, tApiCronDay4Request, tApiCronDay4Response, tApiCronDay8Request, tApiCronDay8Response, tApiCronHourlyRequest, tApiCronHourlyResponse, tApiCronMonthlyRequest, tApiCronMonthlyResponse, tApiGithubHistoryRequest, tApiGithubHistoryResponse, tApiHealthRequest, tApiHealthResponse } from './types.gen';
+import { zApiCronDay0Data, zApiCronDay0Response, zApiCronDay12Data, zApiCronDay12Response, zApiCronDay16Data, zApiCronDay16Response, zApiCronDay20Data, zApiCronDay20Response, zApiCronDay4Data, zApiCronDay4Response, zApiCronDay8Data, zApiCronDay8Response, zApiCronHourlyData, zApiCronHourlyResponse, zApiCronMonthlyData, zApiCronMonthlyResponse, zApiGithubHistoryData, zApiGithubHistoryResponse, zApiHealthData, zApiHealthResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -18,6 +18,94 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
      */
     meta?: Record<string, unknown>;
 };
+
+/**
+ * Hourly cron job endpoint
+ */
+export const apiCronHourly = <ThrowOnError extends boolean = false>(options?: Options<tApiCronHourlyRequest, ThrowOnError>) => (options?.client ?? client).get<tApiCronHourlyResponse, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiCronHourlyData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiCronHourlyResponse.parseAsync(data),
+    url: '/api/public/cron/hourly',
+    ...options
+});
+
+/**
+ * Monthly cron job endpoint
+ */
+export const apiCronMonthly = <ThrowOnError extends boolean = false>(options?: Options<tApiCronMonthlyRequest, ThrowOnError>) => (options?.client ?? client).get<tApiCronMonthlyResponse, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiCronMonthlyData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiCronMonthlyResponse.parseAsync(data),
+    url: '/api/public/cron/monthly',
+    ...options
+});
+
+/**
+ * Daily cron job endpoint (hour 0)
+ */
+export const apiCronDay0 = <ThrowOnError extends boolean = false>(options?: Options<tApiCronDay0Request, ThrowOnError>) => (options?.client ?? client).get<tApiCronDay0Response, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiCronDay0Data.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiCronDay0Response.parseAsync(data),
+    url: '/api/public/cron/day-0',
+    ...options
+});
+
+/**
+ * Daily cron job endpoint (hour 4)
+ */
+export const apiCronDay4 = <ThrowOnError extends boolean = false>(options?: Options<tApiCronDay4Request, ThrowOnError>) => (options?.client ?? client).get<tApiCronDay4Response, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiCronDay4Data.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiCronDay4Response.parseAsync(data),
+    url: '/api/public/cron/day-4',
+    ...options
+});
+
+/**
+ * Daily cron job endpoint (hour 8)
+ */
+export const apiCronDay8 = <ThrowOnError extends boolean = false>(options?: Options<tApiCronDay8Request, ThrowOnError>) => (options?.client ?? client).get<tApiCronDay8Response, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiCronDay8Data.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiCronDay8Response.parseAsync(data),
+    url: '/api/public/cron/day-8',
+    ...options
+});
+
+/**
+ * Daily cron job endpoint (hour 12)
+ */
+export const apiCronDay12 = <ThrowOnError extends boolean = false>(options?: Options<tApiCronDay12Request, ThrowOnError>) => (options?.client ?? client).get<tApiCronDay12Response, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiCronDay12Data.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiCronDay12Response.parseAsync(data),
+    url: '/api/public/cron/day-12',
+    ...options
+});
+
+/**
+ * Daily cron job endpoint (hour 16)
+ */
+export const apiCronDay16 = <ThrowOnError extends boolean = false>(options?: Options<tApiCronDay16Request, ThrowOnError>) => (options?.client ?? client).get<tApiCronDay16Response, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiCronDay16Data.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiCronDay16Response.parseAsync(data),
+    url: '/api/public/cron/day-16',
+    ...options
+});
+
+/**
+ * Daily cron job endpoint (hour 20)
+ */
+export const apiCronDay20 = <ThrowOnError extends boolean = false>(options?: Options<tApiCronDay20Request, ThrowOnError>) => (options?.client ?? client).get<tApiCronDay20Response, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiCronDay20Data.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiCronDay20Response.parseAsync(data),
+    url: '/api/public/cron/day-20',
+    ...options
+});
 
 /**
  * Syncs commit history into local cache and returns daily commit counts for the requested number of weeks.

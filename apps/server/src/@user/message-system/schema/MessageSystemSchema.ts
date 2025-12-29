@@ -4,7 +4,7 @@ import { MessageTypeEnumSchema } from "~/app/message/schema/MessageTypeEnumSchem
 import { MessageSystemDbSchema } from "~/app/message-system/schema/MessageSystemDbSchema";
 
 export const MessageSystemSchema = z
-	.object({
+	.looseObject({
 		...MessageSystemDbSchema.shape,
 		type: MessageTypeEnumSchema.refine((t): t is "system" => t === "system", {
 			message: `Expected "system"`,
@@ -14,6 +14,7 @@ export const MessageSystemSchema = z
 	.omit({
 		messageThreadId: true,
 	})
+	.strip()
 	.openapi("MessageSystem", {
 		description: "Message system entry",
 	});

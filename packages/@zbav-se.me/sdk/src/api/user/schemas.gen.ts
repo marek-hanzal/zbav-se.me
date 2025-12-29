@@ -255,6 +255,54 @@ export const sUploadCreate = {
     ]
 } as const;
 
+export const sTransactionStatusClose = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId'
+    ]
+} as const;
+
+export const sTransactionStatusDispute = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId'
+    ]
+} as const;
+
+export const sTransactionStatusSuccess = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId'
+    ]
+} as const;
+
+export const sTransactionStatusResolve = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId'
+    ]
+} as const;
+
 export const sTransactionStatusReject = {
     type: 'object',
     properties: {
@@ -311,12 +359,14 @@ export const sTransactionStatus = {
 export const sTransactionStatusEnum = {
     type: 'string',
     enum: [
-        'request',
-        'accepted',
+        'pending',
+        'open',
+        'resolved',
+        'dispute',
         'rejected',
+        'expired',
         'success',
-        'closed',
-        'expired'
+        'closed'
     ]
 } as const;
 
@@ -328,6 +378,111 @@ export const sTransactionSideEnum = {
         'transaction',
         'system',
         'unknown'
+    ]
+} as const;
+
+export const sTransactionMessageTextCreate = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        message: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId',
+        'message'
+    ]
+} as const;
+
+export const sTransactionMessagePersonalCreate = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        name: {
+            type: 'string'
+        },
+        phone: {
+            type: 'string'
+        },
+        email: {
+            type: 'string',
+            format: 'email'
+        },
+        locationId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId',
+        'name',
+        'phone',
+        'email',
+        'locationId'
+    ]
+} as const;
+
+export const sTransactionMessagePackageCreate = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        link: {
+            type: 'string',
+            format: 'uri'
+        },
+        number: {
+            type: [
+                'string',
+                'null'
+            ]
+        }
+    },
+    required: [
+        'transactionId',
+        'link',
+        'number'
+    ]
+} as const;
+
+export const sTransactionMessageLocationCreate = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        locationId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId',
+        'locationId'
+    ]
+} as const;
+
+export const sTransactionMessageGalleryCreate = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        uploadIds: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            minItems: 1
+        }
+    },
+    required: [
+        'transactionId',
+        'uploadIds'
     ]
 } as const;
 
@@ -842,6 +997,7 @@ export const sMessageQuery = {
 export const sMessageSortField = {
     type: 'string',
     enum: [
+        'id',
         'createdAt'
     ]
 } as const;
@@ -978,7 +1134,91 @@ export const sMessageTypeEnum = {
         'text',
         'gallery',
         'location',
+        'personal',
+        'package',
+        'date',
         'system'
+    ]
+} as const;
+
+export const sMessagePackage = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        link: {
+            type: 'string',
+            format: 'uri'
+        },
+        number: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/MessageTypeEnum'
+        },
+        direction: {
+            $ref: '#/components/schemas/MessageDirectionEnum'
+        }
+    },
+    required: [
+        'id',
+        'link',
+        'number',
+        'createdAt',
+        'type',
+        'direction'
+    ]
+} as const;
+
+export const sMessagePersonal = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        name: {
+            type: 'string'
+        },
+        phone: {
+            type: 'string'
+        },
+        email: {
+            type: 'string',
+            format: 'email'
+        },
+        locationId: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/MessageTypeEnum'
+        },
+        direction: {
+            $ref: '#/components/schemas/MessageDirectionEnum'
+        },
+        location: {
+            $ref: '#/components/schemas/Location'
+        }
+    },
+    required: [
+        'id',
+        'name',
+        'phone',
+        'email',
+        'locationId',
+        'createdAt',
+        'type',
+        'direction',
+        'location'
     ]
 } as const;
 
@@ -991,18 +1231,26 @@ export const sMessageLocation = {
         locationId: {
             type: 'string'
         },
+        createdAt: {
+            type: 'string'
+        },
         type: {
             $ref: '#/components/schemas/MessageTypeEnum'
         },
         direction: {
             $ref: '#/components/schemas/MessageDirectionEnum'
+        },
+        location: {
+            $ref: '#/components/schemas/Location'
         }
     },
     required: [
         'id',
         'locationId',
+        'createdAt',
         'type',
-        'direction'
+        'direction',
+        'location'
     ]
 } as const;
 
@@ -1015,18 +1263,31 @@ export const sMessageGallery = {
         galleryId: {
             type: 'string'
         },
+        createdAt: {
+            type: 'string'
+        },
         type: {
             $ref: '#/components/schemas/MessageTypeEnum'
         },
         direction: {
             $ref: '#/components/schemas/MessageDirectionEnum'
+        },
+        gallery: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/Gallery'
+                },
+                {}
+            ]
         }
     },
     required: [
         'id',
         'galleryId',
+        'createdAt',
         'type',
-        'direction'
+        'direction',
+        'gallery'
     ]
 } as const;
 
@@ -1058,7 +1319,7 @@ export const sMessageText = {
     ]
 } as const;
 
-export const sMessage = {
+export const sMessagePayload = {
     anyOf: [
         {
             $ref: '#/components/schemas/MessageText'
@@ -1070,24 +1331,34 @@ export const sMessage = {
             $ref: '#/components/schemas/MessageLocation'
         },
         {
+            $ref: '#/components/schemas/MessagePersonal'
+        },
+        {
+            $ref: '#/components/schemas/MessagePackage'
+        },
+        {
             $ref: '#/components/schemas/MessageSystem'
         }
     ]
 } as const;
 
-export const sMessageTextCreate = {
+export const sMessage = {
     type: 'object',
     properties: {
-        messageThreadId: {
+        id: {
             type: 'string'
         },
-        message: {
-            type: 'string'
+        type: {
+            $ref: '#/components/schemas/MessageTypeEnum'
+        },
+        payload: {
+            $ref: '#/components/schemas/MessagePayload'
         }
     },
     required: [
-        'messageThreadId',
-        'message'
+        'id',
+        'type',
+        'payload'
     ]
 } as const;
 

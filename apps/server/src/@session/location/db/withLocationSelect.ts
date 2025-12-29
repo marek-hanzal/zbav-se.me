@@ -11,24 +11,7 @@ export namespace withLocationSelect {
 }
 
 export const withLocationSelect = ({ database, sort }: withLocationSelect.Props) => {
-	let query = database.selectFrom("location as loc").select([
-		"loc.id",
-		"loc.query",
-		"loc.lang",
-		"loc.country",
-		"loc.code",
-		"loc.county",
-		"loc.municipality",
-		"loc.state",
-		"loc.address",
-		"loc.city",
-		"loc.street",
-		"loc.zip",
-		"loc.confidence",
-		"loc.hash",
-		"loc.lat",
-		"loc.lon",
-	]);
+	let query = database.selectFrom("location as loc").selectAll("loc");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

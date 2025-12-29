@@ -43,6 +43,9 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 				onCancel={onCancel}
 				onSuccess={onSuccess}
 				defaultUploadIds={defaultUploadIds}
+				ui={{
+					inner: "default",
+				}}
 			/>
 		</BottomSheet>
 	);

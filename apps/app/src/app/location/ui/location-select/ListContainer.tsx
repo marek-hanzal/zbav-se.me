@@ -14,11 +14,12 @@ import type { FC } from "react";
 
 export namespace ListContainer {
 	export interface Props extends Omit<Container.Props, "onChange"> {
-		textHint?: string;
+		textHint: string;
 		search: Fulltext.Value;
 		value: string | undefined | null;
 		onChange(value: string): void;
 		onLocation?(value: tLocation): void;
+		warningStatusProps?: Status.Props;
 	}
 }
 
@@ -29,6 +30,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 	onChange,
 	onLocation,
 	ui,
+	warningStatusProps,
 	...props
 }) => {
 	const locale = useLocale();
@@ -50,6 +52,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 					{...uiWarningStatus({
 						className: [],
 					})}
+					{...warningStatusProps}
 				>
 					<Container
 						ui={{
@@ -57,7 +60,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 						}}
 					>
 						<Mx
-							label={textHint ?? "Location security (hint)"}
+							label={textHint}
 							ui={{
 								tone: "secondary",
 								theme: "light",
@@ -106,33 +109,38 @@ export const ListContainer: FC<ListContainer.Props> = ({
 					<Container
 						data-ui="ListContainer[Container.content]"
 						ui={{
-							layout: "vertical-flex",
 							scroll: "vertical",
 							height: "full",
-							gap: "default",
 							...ui,
 						}}
 						{...props}
 					>
-						{data.map((item) => {
-							return (
-								<Button
-									key={item.id}
-									onClick={() => {
-										onChange(item.id);
-										onLocation?.(item);
-									}}
-									truncate
-									label={item.address}
-									{...uiSelectButton({
-										isSelected: value === item.id,
-										ui,
-										className: [],
-									})}
-									data-ui="ListContainer-[Button]"
-								/>
-							);
-						})}
+						<Container
+							ui={{
+								layout: "vertical-flex",
+								gap: "default",
+							}}
+						>
+							{data.map((item) => {
+								return (
+									<Button
+										key={item.id}
+										onClick={() => {
+											onChange(item.id);
+											onLocation?.(item);
+										}}
+										truncate
+										label={item.address}
+										{...uiSelectButton({
+											isSelected: value === item.id,
+											ui,
+											className: [],
+										})}
+										data-ui="ListContainer-[Button]"
+									/>
+								);
+							})}
+						</Container>
 					</Container>
 				);
 			}}

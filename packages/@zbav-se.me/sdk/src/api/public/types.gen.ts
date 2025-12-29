@@ -5,6 +5,20 @@ export type clientOptions = {
 };
 
 /**
+ * GitHub commit history count
+ */
+export type tGitHubHistory = {
+    /**
+     * UTC day (YYYY-MM-DD)
+     */
+    date: string;
+    /**
+     * Number of commits on this day
+     */
+    count: number;
+};
+
+/**
  * Just a note sent from various reasons, usually when something is fucked up.
  */
 export type tNotice = {
@@ -29,19 +43,181 @@ export const tNoticeTypeEnum = {
  */
 export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
 
-/**
- * GitHub commit history count
- */
-export type tGitHubHistory = {
-    /**
-     * UTC day (YYYY-MM-DD)
-     */
-    date: string;
-    /**
-     * Number of commits on this day
-     */
-    count: number;
+export type tApiCronHourlyRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/cron/hourly';
 };
+
+export type tApiCronHourlyResponse = {
+    /**
+     * Hourly cron job executed
+     */
+    200: {
+        status: tNotice;
+        /**
+         * Timestamp when the cron job was executed
+         */
+        timestamp: string;
+    };
+};
+
+export type apiCronHourlyResponse = tApiCronHourlyResponse[keyof tApiCronHourlyResponse];
+
+export type tApiCronMonthlyRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/cron/monthly';
+};
+
+export type tApiCronMonthlyResponse = {
+    /**
+     * Monthly cron job executed
+     */
+    200: {
+        status: tNotice;
+        /**
+         * Timestamp when the cron job was executed
+         */
+        timestamp: string;
+    };
+};
+
+export type apiCronMonthlyResponse = tApiCronMonthlyResponse[keyof tApiCronMonthlyResponse];
+
+export type tApiCronDay0Request = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/cron/day-0';
+};
+
+export type tApiCronDay0Response = {
+    /**
+     * Daily cron job executed (hour 0)
+     */
+    200: {
+        status: tNotice;
+        /**
+         * Timestamp when the cron job was executed
+         */
+        timestamp: string;
+    };
+};
+
+export type apiCronDay0Response = tApiCronDay0Response[keyof tApiCronDay0Response];
+
+export type tApiCronDay4Request = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/cron/day-4';
+};
+
+export type tApiCronDay4Response = {
+    /**
+     * Daily cron job executed (hour 4)
+     */
+    200: {
+        status: tNotice;
+        /**
+         * Timestamp when the cron job was executed
+         */
+        timestamp: string;
+    };
+};
+
+export type apiCronDay4Response = tApiCronDay4Response[keyof tApiCronDay4Response];
+
+export type tApiCronDay8Request = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/cron/day-8';
+};
+
+export type tApiCronDay8Response = {
+    /**
+     * Daily cron job executed (hour 8)
+     */
+    200: {
+        status: tNotice;
+        /**
+         * Timestamp when the cron job was executed
+         */
+        timestamp: string;
+    };
+};
+
+export type apiCronDay8Response = tApiCronDay8Response[keyof tApiCronDay8Response];
+
+export type tApiCronDay12Request = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/cron/day-12';
+};
+
+export type tApiCronDay12Response = {
+    /**
+     * Daily cron job executed (hour 12)
+     */
+    200: {
+        status: tNotice;
+        /**
+         * Timestamp when the cron job was executed
+         */
+        timestamp: string;
+    };
+};
+
+export type apiCronDay12Response = tApiCronDay12Response[keyof tApiCronDay12Response];
+
+export type tApiCronDay16Request = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/cron/day-16';
+};
+
+export type tApiCronDay16Response = {
+    /**
+     * Daily cron job executed (hour 16)
+     */
+    200: {
+        status: tNotice;
+        /**
+         * Timestamp when the cron job was executed
+         */
+        timestamp: string;
+    };
+};
+
+export type apiCronDay16Response = tApiCronDay16Response[keyof tApiCronDay16Response];
+
+export type tApiCronDay20Request = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/cron/day-20';
+};
+
+export type tApiCronDay20Response = {
+    /**
+     * Daily cron job executed (hour 20)
+     */
+    200: {
+        status: tNotice;
+        /**
+         * Timestamp when the cron job was executed
+         */
+        timestamp: string;
+    };
+};
+
+export type apiCronDay20Response = tApiCronDay20Response[keyof tApiCronDay20Response];
 
 export type tApiGithubHistoryRequest = {
     body?: never;

@@ -5,7 +5,6 @@ export * from "./feedback";
 export * from "./flag";
 export * from "./ignore";
 export * from "./listing";
-export * from "./message";
 export * from "./transaction";
 export * from "./upload";
 export * from "./userEx";

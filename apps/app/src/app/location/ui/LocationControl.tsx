@@ -10,6 +10,7 @@ export namespace LocationControl {
 		onCancel(): void;
 		onSave(props: { locationId: string; location: tLocation }): void;
 		loading: boolean;
+		textHint: string;
 	}
 }
 
@@ -18,6 +19,7 @@ export const LocationControl: FC<LocationControl.Props> = ({
 	onCancel,
 	onSave,
 	loading,
+	textHint,
 	ui,
 	...props
 }) => {
@@ -38,6 +40,7 @@ export const LocationControl: FC<LocationControl.Props> = ({
 				value={locationId}
 				onLocation={setLocation}
 				onChange={setLocationId}
+				textHint={textHint}
 			/>
 
 			<SaveControl

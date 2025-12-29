@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { TransactionStatusEnumSchema } from "~/app/transaction/schema/ListingTransactionStatusEnumSchema";
+import { TransactionStatusEnumSchema } from "~/app/transaction/schema/TransactionStatusEnumSchema";
 import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 
 export const TransactionFilterSchema = z

@@ -177,6 +177,46 @@ export type tUploadCreate = {
 };
 
 /**
+ * Request to close a listing transaction
+ */
+export type tTransactionStatusClose = {
+    /**
+     * The ID of the listing transaction to close
+     */
+    transactionId: string;
+};
+
+/**
+ * Request to dispute a listing transaction
+ */
+export type tTransactionStatusDispute = {
+    /**
+     * The ID of the listing transaction to dispute
+     */
+    transactionId: string;
+};
+
+/**
+ * Request to mark a listing transaction as successful
+ */
+export type tTransactionStatusSuccess = {
+    /**
+     * The ID of the listing transaction to mark as successful
+     */
+    transactionId: string;
+};
+
+/**
+ * Request to resolve a listing transaction
+ */
+export type tTransactionStatusResolve = {
+    /**
+     * The ID of the listing transaction to resolve
+     */
+    transactionId: string;
+};
+
+/**
  * Request to reject a listing transaction
  */
 export type tTransactionStatusReject = {
@@ -216,12 +256,14 @@ export type tTransactionStatus = {
  * This filter matches the current status of the transaction
  */
 export const tTransactionStatusEnum = {
-    request: 'request',
-    accepted: 'accepted',
+    pending: 'pending',
+    open: 'open',
+    resolved: 'resolved',
+    dispute: 'dispute',
     rejected: 'rejected',
+    expired: 'expired',
     success: 'success',
-    closed: 'closed',
-    expired: 'expired'
+    closed: 'closed'
 } as const;
 
 /**
@@ -244,6 +286,92 @@ export const tTransactionSideEnum = {
  * Who initiated or affected the transaction change
  */
 export type tTransactionSideEnum = typeof tTransactionSideEnum[keyof typeof tTransactionSideEnum];
+
+/**
+ * Request to create a transaction message
+ */
+export type tTransactionMessageTextCreate = {
+    /**
+     * The ID of the transaction to add a message to
+     */
+    transactionId: string;
+    /**
+     * The message content
+     */
+    message: string;
+};
+
+/**
+ * Request to create a transaction personal message
+ */
+export type tTransactionMessagePersonalCreate = {
+    /**
+     * The ID of the transaction to add a personal message to
+     */
+    transactionId: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Phone number
+     */
+    phone: string;
+    /**
+     * Email address
+     */
+    email: string;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+};
+
+/**
+ * Request to create a transaction message package
+ */
+export type tTransactionMessagePackageCreate = {
+    /**
+     * The ID of the transaction to add a package message to
+     */
+    transactionId: string;
+    /**
+     * Package link
+     */
+    link: string;
+    /**
+     * Tracking number
+     */
+    number: string | null;
+};
+
+/**
+ * Request to create a transaction message location
+ */
+export type tTransactionMessageLocationCreate = {
+    /**
+     * The ID of the transaction to add a location to
+     */
+    transactionId: string;
+    /**
+     * The ID of the location
+     */
+    locationId: string;
+};
+
+/**
+ * Request to create a transaction message gallery
+ */
+export type tTransactionMessageGalleryCreate = {
+    /**
+     * The ID of the transaction to add a gallery to
+     */
+    transactionId: string;
+    /**
+     * IDs of the uploads; order of uploads defines order in the gallery
+     */
+    uploadIds: Array<string>;
+};
 
 /**
  * Buyer info for the transaction
@@ -608,7 +736,7 @@ export type tMessageQuery = {
 /**
  * Available sort fields for message collection
  */
-export const tMessageSortField = { createdAt: 'createdAt' } as const;
+export const tMessageSortField = { id: 'id', createdAt: 'createdAt' } as const;
 
 /**
  * Available sort fields for message collection
@@ -735,6 +863,9 @@ export const tMessageTypeEnum = {
     text: 'text',
     gallery: 'gallery',
     location: 'location',
+    personal: 'personal',
+    package: 'package',
+    date: 'date',
     system: 'system'
 } as const;
 
@@ -742,6 +873,63 @@ export const tMessageTypeEnum = {
  * Type of message
  */
 export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
+
+/**
+ * Message package entry
+ */
+export type tMessagePackage = {
+    /**
+     * ID of the message package entry
+     */
+    id: string;
+    /**
+     * Package link
+     */
+    link: string;
+    /**
+     * Tracking number
+     */
+    number: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+};
+
+/**
+ * Message personal entry
+ */
+export type tMessagePersonal = {
+    /**
+     * ID of the message personal entry
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Phone number
+     */
+    phone: string;
+    /**
+     * Email address
+     */
+    email: string;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+    location: tLocation;
+};
 
 /**
  * Message location entry
@@ -755,8 +943,13 @@ export type tMessageLocation = {
      * ID of the location
      */
     locationId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
     type: tMessageTypeEnum;
     direction: tMessageDirectionEnum;
+    location: tLocation;
 };
 
 /**
@@ -771,8 +964,13 @@ export type tMessageGallery = {
      * ID of the gallery
      */
     galleryId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
     type: tMessageTypeEnum;
     direction: tMessageDirectionEnum;
+    gallery: tGallery & unknown;
 };
 
 /**
@@ -796,22 +994,20 @@ export type tMessageText = {
 };
 
 /**
- * Message entry (unified view across all message types)
+ * Message payload (unified view across all message types)
  */
-export type tMessage = tMessageText | tMessageGallery | tMessageLocation | tMessageSystem;
+export type tMessagePayload = tMessageText | tMessageGallery | tMessageLocation | tMessagePersonal | tMessagePackage | tMessageSystem;
 
 /**
- * Request to create a listing transaction message
+ * Message entry (unified view across all message types)
  */
-export type tMessageTextCreate = {
+export type tMessage = {
     /**
-     * The ID of the listing transaction to add a message to
+     * ID of the message entry
      */
-    messageThreadId: string;
-    /**
-     * The message content
-     */
-    message: string;
+    id: string;
+    type: tMessageTypeEnum;
+    payload: tMessagePayload;
 };
 
 /**
@@ -3584,42 +3780,6 @@ export type tApiFeedbackCreateResponse = {
 
 export type apiFeedbackCreateResponse = tApiFeedbackCreateResponse[keyof tApiFeedbackCreateResponse];
 
-export type tApiMessageTextCreateRequest = {
-    /**
-     * Query object for message creation
-     */
-    body?: tMessageTextCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/message-text/create';
-};
-
-export type apiMessageTextCreateErrors = {
-    /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
-     * Message thread not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiMessageTextCreateError = apiMessageTextCreateErrors[keyof apiMessageTextCreateErrors];
-
-export type tApiMessageTextCreateResponse = {
-    /**
-     * Message created
-     */
-    200: tMessageText;
-};
-
-export type apiMessageTextCreateResponse = tApiMessageTextCreateResponse[keyof tApiMessageTextCreateResponse];
-
 export type tApiMessageThreadMessageCollectionRequest = {
     body?: tMessageQuery;
     path: {
@@ -3817,6 +3977,206 @@ export type tApiTransactionBuyerInfoResponse = {
 
 export type apiTransactionBuyerInfoResponse = tApiTransactionBuyerInfoResponse[keyof tApiTransactionBuyerInfoResponse];
 
+export type tApiTransactionMessageGalleryCreateRequest = {
+    /**
+     * Query object for transaction message gallery creation
+     */
+    body?: tTransactionMessageGalleryCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction-message-gallery/create';
+};
+
+export type apiTransactionMessageGalleryCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionMessageGalleryCreateError = apiTransactionMessageGalleryCreateErrors[keyof apiTransactionMessageGalleryCreateErrors];
+
+export type tApiTransactionMessageGalleryCreateResponse = {
+    /**
+     * Message gallery created
+     */
+    200: tMessageGallery;
+};
+
+export type apiTransactionMessageGalleryCreateResponse = tApiTransactionMessageGalleryCreateResponse[keyof tApiTransactionMessageGalleryCreateResponse];
+
+export type tApiTransactionMessageLocationCreateRequest = {
+    /**
+     * Query object for transaction message location creation
+     */
+    body?: tTransactionMessageLocationCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction-message-location/create';
+};
+
+export type apiTransactionMessageLocationCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionMessageLocationCreateError = apiTransactionMessageLocationCreateErrors[keyof apiTransactionMessageLocationCreateErrors];
+
+export type tApiTransactionMessageLocationCreateResponse = {
+    /**
+     * Message location created
+     */
+    200: tMessageLocation;
+};
+
+export type apiTransactionMessageLocationCreateResponse = tApiTransactionMessageLocationCreateResponse[keyof tApiTransactionMessageLocationCreateResponse];
+
+export type tApiTransactionMessagePackageCreateRequest = {
+    /**
+     * Query object for transaction message package creation
+     */
+    body?: tTransactionMessagePackageCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction-message-package/create';
+};
+
+export type apiTransactionMessagePackageCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionMessagePackageCreateError = apiTransactionMessagePackageCreateErrors[keyof apiTransactionMessagePackageCreateErrors];
+
+export type tApiTransactionMessagePackageCreateResponse = {
+    /**
+     * Message package created
+     */
+    200: tMessagePackage;
+};
+
+export type apiTransactionMessagePackageCreateResponse = tApiTransactionMessagePackageCreateResponse[keyof tApiTransactionMessagePackageCreateResponse];
+
+export type tApiTransactionMessagePersonalCreateRequest = {
+    /**
+     * Query object for transaction personal message creation
+     */
+    body?: tTransactionMessagePersonalCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction-message-personal/create';
+};
+
+export type apiTransactionMessagePersonalCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionMessagePersonalCreateError = apiTransactionMessagePersonalCreateErrors[keyof apiTransactionMessagePersonalCreateErrors];
+
+export type tApiTransactionMessagePersonalCreateResponse = {
+    /**
+     * Personal message created
+     */
+    200: tMessagePersonal;
+};
+
+export type apiTransactionMessagePersonalCreateResponse = tApiTransactionMessagePersonalCreateResponse[keyof tApiTransactionMessagePersonalCreateResponse];
+
+export type tApiTransactionMessageTextCreateRequest = {
+    /**
+     * Query object for transaction message creation
+     */
+    body?: tTransactionMessageTextCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction-message-text/create';
+};
+
+export type apiTransactionMessageTextCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionMessageTextCreateError = apiTransactionMessageTextCreateErrors[keyof apiTransactionMessageTextCreateErrors];
+
+export type tApiTransactionMessageTextCreateResponse = {
+    /**
+     * Message created
+     */
+    200: tMessageText;
+};
+
+export type apiTransactionMessageTextCreateResponse = tApiTransactionMessageTextCreateResponse[keyof tApiTransactionMessageTextCreateResponse];
+
 export type tApiTransactionStatusAcceptRequest = {
     /**
      * Query object for listing transaction access validation
@@ -3888,6 +4248,158 @@ export type tApiTransactionStatusRejectResponse = {
 };
 
 export type apiTransactionStatusRejectResponse = tApiTransactionStatusRejectResponse[keyof tApiTransactionStatusRejectResponse];
+
+export type tApiTransactionStatusResolveRequest = {
+    /**
+     * Query object for listing transaction access validation
+     */
+    body?: tTransactionStatusResolve;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction/status/resolve';
+};
+
+export type apiTransactionStatusResolveErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionStatusResolveError = apiTransactionStatusResolveErrors[keyof apiTransactionStatusResolveErrors];
+
+export type tApiTransactionStatusResolveResponse = {
+    /**
+     * Resolved status created
+     */
+    200: tTransactionStatus;
+};
+
+export type apiTransactionStatusResolveResponse = tApiTransactionStatusResolveResponse[keyof tApiTransactionStatusResolveResponse];
+
+export type tApiTransactionStatusSuccessRequest = {
+    /**
+     * Query object for listing transaction access validation
+     */
+    body?: tTransactionStatusSuccess;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction/status/success';
+};
+
+export type apiTransactionStatusSuccessErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionStatusSuccessError = apiTransactionStatusSuccessErrors[keyof apiTransactionStatusSuccessErrors];
+
+export type tApiTransactionStatusSuccessResponse = {
+    /**
+     * Success status created
+     */
+    200: tTransactionStatus;
+};
+
+export type apiTransactionStatusSuccessResponse = tApiTransactionStatusSuccessResponse[keyof tApiTransactionStatusSuccessResponse];
+
+export type tApiTransactionStatusDisputeRequest = {
+    /**
+     * Query object for listing transaction access validation
+     */
+    body?: tTransactionStatusDispute;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction/status/dispute';
+};
+
+export type apiTransactionStatusDisputeErrors = {
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionStatusDisputeError = apiTransactionStatusDisputeErrors[keyof apiTransactionStatusDisputeErrors];
+
+export type tApiTransactionStatusDisputeResponse = {
+    /**
+     * Disputed status created
+     */
+    200: tTransactionStatus;
+};
+
+export type apiTransactionStatusDisputeResponse = tApiTransactionStatusDisputeResponse[keyof tApiTransactionStatusDisputeResponse];
+
+export type tApiTransactionStatusCloseRequest = {
+    /**
+     * Query object for listing transaction access validation
+     */
+    body?: tTransactionStatusClose;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction/status/close';
+};
+
+export type apiTransactionStatusCloseErrors = {
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionStatusCloseError = apiTransactionStatusCloseErrors[keyof apiTransactionStatusCloseErrors];
+
+export type tApiTransactionStatusCloseResponse = {
+    /**
+     * Closed status created
+     */
+    200: tTransactionStatus;
+};
+
+export type apiTransactionStatusCloseResponse = tApiTransactionStatusCloseResponse[keyof tApiTransactionStatusCloseResponse];
 
 export type tApiUploadCreateRequest = {
     /**

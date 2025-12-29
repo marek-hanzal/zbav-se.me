@@ -1,3 +1,5 @@
+import { VisibilityContext } from "@use-pico/client/context";
+import { createNoopVisibilityStore } from "@use-pico/client/store";
 import type { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container } from "@use-pico/client/ui/container";
 import { SheetView } from "@use-pico/client/ui/sheet-view";
@@ -11,6 +13,8 @@ import { ListingSheet } from "~/app/listing/ui/ListingSheet";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 import { MessageList } from "~/app/message/MessageList";
 import { TransactionChat } from "~/app/transaction/ui/TransactionChat";
+import { TransactionMessage } from "~/app/transaction/ui/TransactionMessage";
+import { TransactionToolbar } from "~/app/transaction/ui/TransactionToolbar";
 
 export namespace TransactionSheet {
 	export type View = "detail";
@@ -30,6 +34,9 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({ transactionId, ..
 				where: {
 					id: transactionId,
 				},
+			}}
+			options={{
+				refetchInterval: 1_500,
 			}}
 			fallback={null}
 		>
@@ -94,7 +101,11 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({ transactionId, ..
 											<MessageList
 												containerRef={containerRef}
 												messageThreadId={transaction.messageThreadId}
-											/>
+											>
+												<TransactionMessage transaction={transaction} />
+
+												<TransactionToolbar transaction={transaction} />
+											</MessageList>
 
 											<withListingFetchQuery.Suspense
 												data={{
@@ -106,22 +117,26 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({ transactionId, ..
 											>
 												{({ data: listing }) => {
 													return (
-														<ListingSheet
-															listing={listing}
-															state={{
-																value: detail,
-																set: setDetail,
-															}}
-															withScore={false}
-															feedId={undefined}
-															tools={[]}
-														/>
+														<VisibilityContext
+															value={createNoopVisibilityStore()}
+														>
+															<ListingSheet
+																listing={listing}
+																state={{
+																	value: detail,
+																	set: setDetail,
+																}}
+																withScore={false}
+																feedId={undefined}
+																tools={[]}
+															/>
+														</VisibilityContext>
 													);
 												}}
 											</withListingFetchQuery.Suspense>
 										</Container>
 
-										<TransactionChat transactionId={transaction.id} />
+										<TransactionChat transaction={transaction} />
 									</Container>
 								),
 								header: ({ close }) => ({

@@ -1,5 +1,6 @@
 import type { WithDatabase } from "../database/WithDatabase";
 import type { Routes } from "../hono/Routes";
+import { withCronApi } from "./cron/withCronApi";
 import { withGithubApi } from "./github/withGithubApi";
 import { withHealthApi } from "./health/withHealthApi";
 import { withJanitorApi } from "./janitor/withJanitorApi";
@@ -13,6 +14,7 @@ export const withPublicApi: Routes.FnWithDeps<{
 		return next();
 	});
 
+	withCronApi(routes);
 	withGithubApi(routes);
 	withHealthApi(routes);
 	withJanitorApi(routes);

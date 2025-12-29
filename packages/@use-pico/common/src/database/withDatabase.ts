@@ -32,7 +32,7 @@ export const withDatabase = <TDatabase>({
 								break;
 							}
 							case "query": {
-								console.log(log.query.sql);
+								// console.log(log.query.sql);
 								break;
 							}
 						}

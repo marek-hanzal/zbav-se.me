@@ -16,13 +16,13 @@ export namespace withMessageTextSelect {
 
 export const withMessageTextSelect = ({ database, sort, userId }: withMessageTextSelect.Props) => {
 	let query = database
-		.selectFrom("message_text as m")
-		.selectAll("m")
+		.selectFrom("message_text as mt")
+		.selectAll("mt")
 		.select(sql<"text">`'text'`.as("type"))
 		.select((eb) =>
 			eb
 				.case()
-				.when("m.userId", "=", userId)
+				.when("mt.userId", "=", userId)
 				.then<MessageDirectionEnumSchema.Type>("out")
 				.else<MessageDirectionEnumSchema.Type>("in")
 				.end()
@@ -31,7 +31,7 @@ export const withMessageTextSelect = ({ database, sort, userId }: withMessageTex
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("m.createdAt", item.direction))
+			.with("createdAt", () => query.orderBy("mt.createdAt", item.direction))
 			.exhaustive();
 	}
 

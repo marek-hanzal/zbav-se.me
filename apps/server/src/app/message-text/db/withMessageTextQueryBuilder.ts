@@ -21,15 +21,15 @@ export const withMessageTextQueryBuilder: withMessageTextQueryBuilder.Callback =
 	let query = select;
 
 	if (where.id) {
-		query = query.where("m.id", "=", where.id);
+		query = query.where("mt.id", "=", where.id);
 	}
 
 	if (where.idIn && where.idIn.length > 0) {
-		query = query.where("m.id", "in", where.idIn);
+		query = query.where("mt.id", "in", where.idIn);
 	}
 
 	if (where.messageThreadId) {
-		query = query.where("m.messageThreadId", "=", where.messageThreadId);
+		query = query.where("mt.messageThreadId", "=", where.messageThreadId);
 	}
 
 	return query;

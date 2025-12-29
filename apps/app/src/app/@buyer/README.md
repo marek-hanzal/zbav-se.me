@@ -15,7 +15,7 @@ The buyer's side of the marketplace - finding stuff, saving searches, and buying
 **Components** (`app/@buyer/`) - reusable UI pieces:
 - `feed/` - feed list, items, wizard for creating new feeds
 - `transaction/` - transaction cards, empty states, seller info
-- `transaction-log/` - status events (request, accepted, rejected, success, closed)
+- `transaction-log/` - status events (pending, open, rejected, completed, cancelled)
 - `ui/` - buyer menu with navigation tiles
 
 ## How it works

@@ -1,102 +1,50 @@
-import type { Button } from "@use-pico/client/ui/button";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
+import { Container } from "@use-pico/client/ui/container";
+import type { tTransaction } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
-import { SellerInfoButton } from "~/app/listing/ui/button/SellerInfoButton";
-import { AcceptButton } from "~/app/transaction/ui/button/AcceptButton";
-import { RejectButton } from "~/app/transaction/ui/button/RejectButton";
-import { BuyerInfoButton } from "~/app/transaction/ui/buyer/BuyerInfoButton";
+import { match } from "ts-pattern";
+import { DisputeToolbar } from "~/app/transaction/ui/transaction-status/DisputeToolbar";
+import { OpenToolbar } from "~/app/transaction/ui/transaction-status/OpenToolbar";
+import { ResolvedToolbar } from "~/app/transaction/ui/transaction-status/ResolvedToolbar";
 
 export namespace TransactionToolbar {
 	export interface Props extends Container.Props {
-		transactionId: string;
+		transaction: tTransaction;
 	}
 }
 
-export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
-	transactionId,
-	ui,
-	...props
-}) => {
-	const buttonUi: Button.Props = {
-		iconProps: {
-			ui: {
-				text: "xl",
-			},
-		},
-		ui: {
-			tone: "link",
-			theme: "light",
-			round: "full",
-			background: "default",
-			text: "sm",
-			border: true,
-			shadow: false,
-			width: "content",
-		},
-		className: [
-			"px-2",
-			"py-1",
-		],
-	};
+export const TransactionToolbar: FC<TransactionToolbar.Props> = ({ transaction, ui, ...props }) => {
+	const toolbar = match(transaction.status)
+		.with("open", () => {
+			return <OpenToolbar transaction={transaction} />;
+		})
+		.with("resolved", () => {
+			return <ResolvedToolbar transaction={transaction} />;
+		})
+		.with("dispute", () => {
+			return <DisputeToolbar transaction={transaction} />;
+		})
+		.with("pending", "rejected", "expired", "success", "closed", () => {
+			return null;
+		})
+		.exhaustive();
 
-	return (
-		<withTransactionFetchQuery.Suspense
-			data={{
-				where: {
-					id: transactionId,
-				},
+	return toolbar ? (
+		<Container
+			ui={{
+				flow: "vertical",
+				opacity: "low",
+				justify: "center",
+				items: "center",
+				gap: "default",
+				width: "full",
+				...ui,
 			}}
-			fallback={<SpinnerContainer />}
+			className={[
+				"py-1",
+			]}
+			{...props}
 		>
-			{({ data: transaction }) => {
-				return (
-					<Container
-						ui={{
-							scroll: "horizontal",
-							width: "full",
-							opacity: "low",
-							...ui,
-						}}
-						className={[
-							"py-1",
-						]}
-						{...props}
-					>
-						<Container
-							ui={{
-								gap: "default",
-							}}
-							className={[
-								"grid",
-								"grid-flow-col",
-								"auto-cols-max",
-								"w-max",
-							]}
-						>
-							<AcceptButton
-								transactionId={transactionId}
-								{...buttonUi}
-							/>
-
-							<RejectButton
-								transactionId={transactionId}
-								{...buttonUi}
-							/>
-
-							<SellerInfoButton
-								listingId={transaction.listingId}
-								{...buttonUi}
-							/>
-
-							<BuyerInfoButton
-								transactionId={transactionId}
-								{...buttonUi}
-							/>
-						</Container>
-					</Container>
-				);
-			}}
-		</withTransactionFetchQuery.Suspense>
-	);
+			{toolbar}
+		</Container>
+	) : null;
 };

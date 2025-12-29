@@ -86,7 +86,7 @@ export const transactionCreateFx = ({ listingId }: transactionCreateFx.Props) =>
 			yield* transactionStatusCreateFx({
 				transactionId: id,
 				side: "buyer",
-				status: "request",
+				status: "pending",
 			});
 
 			yield* listingEventCreateFx({
@@ -96,7 +96,7 @@ export const transactionCreateFx = ({ listingId }: transactionCreateFx.Props) =>
 
 			yield* messageSystemCreateFx({
 				messageThreadId: messageThread.id,
-				message: "Buyer: Transaction request created (message)",
+				message: "Transaction pending (message)",
 			});
 
 			return yield* transactionFetchFx({

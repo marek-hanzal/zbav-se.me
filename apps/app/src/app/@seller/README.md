@@ -13,12 +13,12 @@ The seller's side of the marketplace - posting items, managing listings, and han
 
 **Components** (`app/@seller/`) - reusable UI pieces:
 - `transaction/` - accept/reject buttons, buyer info, empty states
-- `transaction-log/` - status events (request, accepted, rejected, success)
+- `transaction-log/` - status events (pending, open, rejected, completed)
 - `ui/` - seller menu with navigation tiles
 
 ## How it works
 
-Sellers create **listings** by uploading photos and filling in details (what, where, how much, when it expires). Buyers who match the listing criteria get notified. When a buyer is interested, they start a **transaction** request.
+Sellers create **listings** by uploading photos and filling in details (what, where, how much, when it expires). Buyers who match the listing criteria get notified. When a buyer is interested, they start a **transaction** (pending status).
 
 Transaction flow (seller side):
 1. Request → buyer wants it, you decide
