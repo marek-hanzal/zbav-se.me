@@ -46,6 +46,9 @@
 0c0a4ce653f7b616d85e4445a31bdafdb550d7239869be85731a82a4:
   ref: Delete draft - confirm (button)
   value: Delete draft - confirm (button)
+0d29ca1c9c2f361ad6ca220d2f75eb557df9f9035c224ea097261207:
+  ref: _blank
+  value: _blank
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
   ref: Location security (hint)
   value: Location security (hint)
@@ -118,6 +121,9 @@
 2250c7f0548b5cbe0fbdac80837ac558866128e004997e4f6b879f72:
   ref: Feed delivery not selected
   value: Feed delivery not selected
+2289af1a641ed88c830c51264e24fa501b3d0fe0b0c05d5d20077bce:
+  ref: wrap
+  value: wrap
 23609a4b2bc2ea2da20065b7286ff1892586974ad83ab17bf92ab7f0:
   ref: Resolve transaction (button)
   value: Resolve transaction (button)
@@ -346,6 +352,12 @@
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
   ref: Feed sorting not selected
   value: Feed sorting not selected
+7201a0b43309e21b15fefb9dc14ca54a24e4547e10be8950066bb04b:
+  ref: block underline
+  value: block underline
+730685ddac55ab05051064ae829f90b99a300329a4818c287d8f51a5:
+  ref: Tracking number not filled
+  value: Tracking number not filled
 7375db8ba1d4534eb55b16f42a2aa4350c5bb0ed60dfba9f45bc8e3c:
   ref: No listings in feed (title)
   value: No listings in feed (title)
@@ -711,6 +723,9 @@ f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
 f17512f4ea86964511c8c06419c3e45fb8a04a38bbe1ebdc8750b0de:
   ref: Listing title (placeholder)
   value: Listing title (placeholder)
+f18a36932d031042735ffe9b5fbf3fad95a86de7b3b04e8ae3f43986:
+  ref: Tracking number (label)
+  value: Tracking number (label)
 f2a9bcc0bb7a0f3ad780dd42bc9a00c5a6335c480e3cb14512d5934c:
   ref: Favourites (label)
   value: Favourites (label)
@@ -765,6 +780,9 @@ fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
 fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
   ref: Listing title (label)
   value: Listing title (label)
+fcc9463d3dd7e334473f2e8319498e268ee92bfeb56ec07041368960:
+  ref: noopener noreferrer
+  value: noopener noreferrer
 fe53b76f86226fc536cae35874aff7a3ccfbc38e4700d3ac5c087b9b:
   ref: Message location security (hint)
   value: Message location security (hint)

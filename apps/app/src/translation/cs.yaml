@@ -46,6 +46,9 @@
 0c0a4ce653f7b616d85e4445a31bdafdb550d7239869be85731a82a4:
     ref: Delete draft - confirm (button)
     value: Potvrď pro smazání
+0d29ca1c9c2f361ad6ca220d2f75eb557df9f9035c224ea097261207:
+    ref: _blank
+    value: _blank
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
     ref: Location security (hint)
     value: |
@@ -144,6 +147,9 @@
 2250c7f0548b5cbe0fbdac80837ac558866128e004997e4f6b879f72:
     ref: Feed delivery not selected
     value: Jakékoli
+2289af1a641ed88c830c51264e24fa501b3d0fe0b0c05d5d20077bce:
+    ref: wrap
+    value: wrap
 23609a4b2bc2ea2da20065b7286ff1892586974ad83ab17bf92ab7f0:
     ref: Resolve transaction (button)
     value: Vyřízeno
@@ -393,6 +399,12 @@
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
     ref: Feed sorting not selected
     value: Výchozí řazení
+7201a0b43309e21b15fefb9dc14ca54a24e4547e10be8950066bb04b:
+    ref: block underline
+    value: block underline
+730685ddac55ab05051064ae829f90b99a300329a4818c287d8f51a5:
+    ref: Tracking number not filled
+    value: Číslo zásilky není vyplněné
 7375db8ba1d4534eb55b16f42a2aa4350c5bb0ed60dfba9f45bc8e3c:
     ref: No listings in feed (title)
     value: Inzeráty jsou, ale...
@@ -790,6 +802,14 @@ buyer - Seller resolved the transaction (message):
 
         _Nic dalšího již není třeba dělat._
     static: true
+buyer - Transaction dispute (message):
+    value: >
+        Otevřel jsi řešení problému s obchodníkem - teď máš prostor dořešit
+        nesrovnalosti.
+
+
+        Buď prosím ohleduplný, pořád jsme lidi a chyby se mohou stát.
+    static: true
 buyer - Transaction pending (message):
     value: >
         **Projevil jsi zájem o inzerát.**
@@ -802,6 +822,12 @@ buyer - Transaction pending (message):
         základní údaje o
 
         tvém chování (např. otevření a okamžité odmítnutí obchodu).
+    static: true
+buyer - Transaction successful (message):
+    value: |
+        **Jsi spokojený, obchod byl úspěšný!**
+
+        Dál už tu nic není.
     static: true
 c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
     ref: Feed title not filled
@@ -919,6 +945,9 @@ f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
 f17512f4ea86964511c8c06419c3e45fb8a04a38bbe1ebdc8750b0de:
     ref: Listing title (placeholder)
     value: Např. "iPhone 14 Pro Max, 256GB, černá"
+f18a36932d031042735ffe9b5fbf3fad95a86de7b3b04e8ae3f43986:
+    ref: Tracking number (label)
+    value: Číslo zásilky
 f2a9bcc0bb7a0f3ad780dd42bc9a00c5a6335c480e3cb14512d5934c:
     ref: Favourites (label)
     value: Oblíbené
@@ -973,6 +1002,9 @@ fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
 fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
     ref: Listing title (label)
     value: Titulek inzerátu
+fcc9463d3dd7e334473f2e8319498e268ee92bfeb56ec07041368960:
+    ref: noopener noreferrer
+    value: noopener noreferrer
 fe53b76f86226fc536cae35874aff7a3ccfbc38e4700d3ac5c087b9b:
     ref: Message location security (hint)
     value: |
@@ -998,6 +1030,12 @@ seller - Seller rejected the transaction (message):
 seller - Seller resolved the transaction (message):
     value: Máš vyřízeno, nic dalšího již není třeba dělat.
     static: true
+seller - Transaction dispute (message):
+    value: |
+        Kupující otevřel řešení problému.
+
+        Teď máte prostor spolu najít řešení, případně odladit nesrovnalosti.
+    static: true
 seller - Transaction pending (message):
     value: >
         **Máš nového zájemce!**
@@ -1009,27 +1047,21 @@ seller - Transaction pending (message):
 
         _V tento okamžik lze obchod bezpečně odmítnout._
     static: true
-seller - Transaction dispute (message):
-    value: |
-        Kupující otevřel řešení problému.
-
-        Teď máte prostor spolu najít řešení, případně odladit nesrovnalosti.
-    static: true
-buyer - Transaction dispute (message):
-    value: |
-        Otevřel jsi řešení problému s obchodníkem - teď máš prostor dořešit nesrovnalosti.
-
-        Buď prosím ohleduplný, pořád jsme lidi a chyby se mohou stát.
-    static: true
 seller - Transaction successful (message):
     value: |
         **Všechno v pohodě, obchod byl úspěšný!**
 
         Dál už tu nic není.
     static: true
-buyer - Transaction successful (message):
+seller - Transaction closed (message):
     value: |
-        **Jsi spokojený, obchod byl úspěšný!**
+        **Kupující uzavřel obchod.**
+
+        Dál už tu nic není.
+    static: true
+buyer - Transaction closed (message):
+    value: |
+        **Tento obchod jsi uzavřel.**
 
         Dál už tu nic není.
     static: true

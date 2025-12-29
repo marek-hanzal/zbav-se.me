@@ -1,8 +1,11 @@
 import { useLocale } from "@use-pico/client/hook";
-import { Container, type uiContainer } from "@use-pico/client/ui/container";
-import { Typo } from "@use-pico/client/ui/typo";
+import { ExternalIcon, Icon } from "@use-pico/client/icon";
+import { Container, LabelValue, type uiContainer } from "@use-pico/client/ui/container";
+import { Typo, uiTypo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
+import { translator } from "@use-pico/common/translator";
 import type { tMessagePackage } from "@zbav-se.me/sdk/api/user";
+import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
@@ -14,16 +17,14 @@ export namespace MessagePackage {
 
 export const MessagePackage: FC<MessagePackage.Props> = ({ message, ...props }) => {
 	const locale = useLocale();
+	const url = new URL(message.link);
+	const domain = url.hostname.replace(/^www\./, "");
 
 	return (
 		<Container
 			ui={{
-				theme: "light",
-				background: "alt",
-				border: true,
 				flow: "vertical",
-				inner: "default",
-				round: "default",
+				gap: "xs",
 				...match<typeof message.direction, uiContainer.Ui>(message.direction)
 					.with("in", () => {
 						return {
@@ -59,30 +60,54 @@ export const MessagePackage: FC<MessagePackage.Props> = ({ message, ...props }) 
 			]}
 			{...props}
 		>
-			<Container
-				ui={{
-					layout: "vertical-flex",
-					gap: "xs",
-				}}
-			>
-				<Typo
-					label={message.link}
-					ui={{
-						wrap: "wrap",
-					}}
-					className={"py-1"}
-				/>
-
-				{message.number && (
-					<Typo
-						label={message.number}
+			<LabelValue
+				textLabel={domain}
+				textValue={
+					<a
+						href={message.link}
+						target="_blank"
+						rel="noopener noreferrer"
+						{...uiTypo({
+							ui: {
+								wrap: "wrap",
+							},
+							className: [
+								"block underline",
+							],
+						})}
+					>
+						{message.link}
+					</a>
+				}
+				action={
+					<Icon
+						icon={ExternalIcon}
 						ui={{
-							wrap: "wrap",
+							text: "lg",
 						}}
-						className={"py-1"}
 					/>
-				)}
-			</Container>
+				}
+				ui={{
+					shadow: undefined,
+				}}
+			/>
+
+			<LabelValue
+				textLabel={"Tracking number (label)"}
+				textValue={message.number}
+				textEmpty={translator.text("Tracking number not filled")}
+				action={
+					<Icon
+						icon={SendPackageIcon}
+						ui={{
+							text: "lg",
+						}}
+					/>
+				}
+				ui={{
+					shadow: undefined,
+				}}
+			/>
 
 			<Typo
 				label={toTimeDiff({

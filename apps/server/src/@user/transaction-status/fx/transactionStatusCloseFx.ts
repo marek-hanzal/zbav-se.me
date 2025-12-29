@@ -34,10 +34,7 @@ export const transactionStatusCloseFx = ({ transactionId }: transactionStatusClo
 
 		yield* messageSystemCreateFx({
 			messageThreadId: transaction.messageThreadId,
-			message:
-				transaction.side === "buyer"
-					? "Buyer closed the transaction (message)"
-					: "Seller closed the transaction (message)",
+			message: "Transaction closed (message)",
 		});
 
 		return yield* transactionStatusCreateFx({

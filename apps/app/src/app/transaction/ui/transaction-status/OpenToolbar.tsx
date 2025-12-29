@@ -31,10 +31,12 @@ export const OpenToolbar: FC<OpenToolbar.Props> = ({ transaction }) => {
 				/>
 			) : null}
 
-			<CloseButton
-				transaction={transaction}
-				{...TransactionButtonUi}
-			/>
+			{side === "buyer" ? (
+				<CloseButton
+					transaction={transaction}
+					{...TransactionButtonUi}
+				/>
+			) : null}
 		</>
 	);
 };
