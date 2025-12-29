@@ -36,9 +36,9 @@ export const SheetView = <TView extends string>({
 						key={sheetId}
 						{...rest}
 						contentProps={{
+							disableScroll: true,
 							...contentProps,
 							...rest.contentProps,
-							disableScroll: true,
 						}}
 					>
 						{content}

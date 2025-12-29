@@ -37,7 +37,6 @@ export const MessageList: FC<MessageList.Props> = ({
 	const [ready, setReady] = useState(false);
 	const scrollToBottom = useDebouncedCallback(
 		(behavior: ScrollBehavior) => {
-			console.log("scrollToBottom", containerRef.current, containerRef.current?.scrollHeight);
 			containerRef.current?.scrollTo({
 				top: containerRef.current?.scrollHeight,
 				behavior,
@@ -85,11 +84,11 @@ export const MessageList: FC<MessageList.Props> = ({
 
 	return (
 		<Container
+			data-ui="MessageList-[Container]"
 			ref={contentRef}
 			ui={{
 				flow: "vertical",
 				gap: "lg",
-				height: "content",
 				...ui,
 			}}
 			className={"py-1"}

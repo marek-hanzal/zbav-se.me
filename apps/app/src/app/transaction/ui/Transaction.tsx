@@ -25,7 +25,12 @@ export const Transaction: FC<Transaction.Props> = ({ transactionId, refresh, ...
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	return (
-		<Container {...props}>
+		<Container
+			ui={{
+				height: "full",
+			}}
+			{...props}
+		>
 			<withTransactionFetchQuery.Suspense
 				data={{
 					where: {
@@ -54,14 +59,16 @@ export const Transaction: FC<Transaction.Props> = ({ transactionId, refresh, ...
 							}}
 						>
 							<Container
+								data-ui="Transaction-[MessageListContainer]"
 								ref={containerRef}
 								ui={{
 									layout: "vertical-header-content",
+									height: "full",
 									scroll: "vertical",
 								}}
-								className={"h-full"}
 							>
 								<Container
+									data-ui="Transaction-[HeroContainer]"
 									ui={{
 										position: "relative",
 										height: "content",
