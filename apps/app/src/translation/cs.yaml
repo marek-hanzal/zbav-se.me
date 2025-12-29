@@ -1065,3 +1065,18 @@ buyer - Transaction closed (message):
 
         Dál už tu nic není.
     static: true
+buyer - Buyer rejected the transaction (message):
+    value: |
+        **Odmítl jsi obchod.**
+
+        Toto se promítne do údajů, které o tobě prodejce může vidět.
+    static: true
+seller - Buyer rejected the transaction (message):
+    value: |
+        **Kupující odmítl obchod.**
+
+        Tato informace se promítne do údajů, které si můžeš zkontrolovat před
+        otevřením obchodu.
+
+        Nic víc tu teď k řešení není.
+    static: true
