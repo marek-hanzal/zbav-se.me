@@ -1,16 +1,8 @@
 import { z } from "@hono/zod-openapi";
-import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
-import { match } from "ts-pattern";
-import { transactionCollectionFx } from "~/@user/transaction/fx/transactionCollectionFx";
-import { transactionFetchFx } from "~/@user/transaction/fx/transactionFetchFx";
-import { transactionStatusAcceptFx } from "~/@user/transaction-status/fx/transactionStatusAcceptFx";
-import { transactionStatusRejectFx } from "~/@user/transaction-status/fx/transactionStatusRejectFx";
-import { transactionStatusResolveFx } from "~/@user/transaction-status/fx/transactionStatusResolveFx";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { NotFoundError } from "~/error/NotFoundError";
+import { t00_initial } from "~/@public/seed/fx/interaction/t00_initial";
+import { t01_resolve } from "~/@public/seed/fx/interaction/t01_resolve";
+import { t02_buyerReaction } from "~/@public/seed/fx/interaction/t02_buyerReaction";
 
 export const SeedTransactionInteractionRequestSchema = z.object({
 	//
@@ -22,139 +14,19 @@ export namespace SeedTransactionInteractionRequestSchema {
 
 export const seedTransactionInteractionFx = (_: SeedTransactionInteractionRequestSchema.Props) => {
 	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
+		yield* t00_initial({
+			fromMinutes: 5,
+			toMinutes: 60 * 24 * 2,
+		});
 
-		{
-			const transactions = yield* transactionCollectionFx({
-				cursor: {
-					page: 0,
-					size: 1000,
-				},
-			});
+		yield* t01_resolve({
+			fromMinutes: 5,
+			toMinutes: 60 * 24 * 2,
+		});
 
-			for (const transactionId of transactions.data) {
-				const current = yield* Effect.tryPromise(async () => {
-					return database
-						.selectFrom("user as user")
-						.innerJoin("listing as l", "l.userId", "user.id")
-						.innerJoin("transaction as t", "t.listingId", "l.id")
-						.where("t.id", "=", transactionId.id)
-						.selectAll("user")
-						.executeTakeFirst();
-				});
-
-				if (!current) {
-					return yield* new NotFoundError({
-						resource: "user",
-						resourceId: transactionId.id,
-						message: "User not found",
-					});
-				}
-
-				const transaction = yield* transactionFetchFx({
-					where: {
-						id: transactionId.id,
-					},
-				});
-
-				yield* match(
-					list([
-						"accept",
-						"reject-seller",
-						"reject-buyer",
-					] as const),
-				)
-					.with("accept", () => {
-						return Effect.gen(function* () {
-							yield* transactionStatusAcceptFx({
-								transactionId: transactionId.id,
-								createdAt: DateTime.fromJSDate(transaction.createdAt).plus({
-									minute: rangedom(5, 60 * 24),
-								}),
-							}).pipe(UserContextProvider(current));
-						});
-					})
-					.with("reject-seller", () => {
-						return Effect.gen(function* () {
-							yield* transactionStatusRejectFx({
-								transactionId: transactionId.id,
-								createdAt: DateTime.fromJSDate(transaction.createdAt).plus({
-									minute: rangedom(5, 60 * 24),
-								}),
-							}).pipe(UserContextProvider(current));
-						});
-					})
-					.with("reject-buyer", () => {
-						return Effect.gen(function* () {
-							yield* transactionStatusRejectFx({
-								transactionId: transactionId.id,
-								createdAt: DateTime.fromJSDate(transaction.createdAt).plus({
-									minute: rangedom(5, 60 * 24),
-								}),
-							});
-						});
-					})
-					.exhaustive();
-			}
-
-			{
-				const transactions = yield* transactionCollectionFx({
-					cursor: {
-						page: 0,
-						size: 1000,
-					},
-					where: {
-						status: "open",
-					},
-				});
-
-				for (const transactionId of transactions.data) {
-					const current = yield* Effect.tryPromise(async () => {
-						return database
-							.selectFrom("user as user")
-							.innerJoin("listing as l", "l.userId", "user.id")
-							.innerJoin("transaction as t", "t.listingId", "l.id")
-							.where("t.id", "=", transactionId.id)
-							.selectAll("user")
-							.executeTakeFirst();
-					});
-
-					if (!current) {
-						return yield* new NotFoundError({
-							resource: "user",
-							resourceId: transactionId.id,
-							message: "User not found",
-						});
-					}
-
-					const transaction = yield* transactionFetchFx({
-						where: {
-							id: transactionId.id,
-						},
-					});
-
-					yield* match(
-						list([
-							"resolve",
-							"noop",
-						] as const),
-					)
-						.with("resolve", () => {
-							return Effect.gen(function* () {
-								yield* transactionStatusResolveFx({
-									transactionId: transactionId.id,
-									createdAt: DateTime.fromJSDate(transaction.createdAt).plus({
-										minute: rangedom(60 * 24, 60 * 24 * 2),
-									}),
-								}).pipe(UserContextProvider(current));
-							});
-						})
-						.with("noop", () => {
-							return Effect.void;
-						})
-						.exhaustive();
-				}
-			}
-		}
+		yield* t02_buyerReaction({
+			fromMinutes: 5,
+			toMinutes: 60 * 24 * 2,
+		});
 	});
 };
