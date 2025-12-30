@@ -27,6 +27,14 @@ export const withSeedApi: Routes.Fn = ({ publicHono }) => {
 				201: {
 					description: "Seed operation completed",
 				},
+				403: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Access denied",
+				},
 				404: {
 					content: {
 						"application/json": {
@@ -87,6 +95,34 @@ export const withSeedApi: Routes.Fn = ({ publicHono }) => {
 											message: e.message,
 										},
 										500,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "RuntimeError",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 500>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										500,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "AccessDeniedError",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 403>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										403,
 									);
 								},
 							),

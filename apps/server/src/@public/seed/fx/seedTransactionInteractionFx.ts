@@ -1,7 +1,15 @@
 import { z } from "@hono/zod-openapi";
+import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
+import { DateTime } from "luxon";
+import { match } from "ts-pattern";
 import { transactionCollectionFx } from "~/@user/transaction/fx/transactionCollectionFx";
+import { transactionFetchFx } from "~/@user/transaction/fx/transactionFetchFx";
+import { transactionStatusAcceptFx } from "~/@user/transaction-status/fx/transactionStatusAcceptFx";
+import { transactionStatusRejectFx } from "~/@user/transaction-status/fx/transactionStatusRejectFx";
+import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { NotFoundError } from "~/error/NotFoundError";
 
 export const SeedTransactionInteractionRequestSchema = z.object({
 	//
@@ -22,6 +30,59 @@ export const seedTransactionInteractionFx = (_: SeedTransactionInteractionReques
 			},
 		});
 
-        
+		for (const transactionId of transactions.data) {
+			const current = yield* Effect.tryPromise(async () => {
+				return database
+					.selectFrom("user as user")
+					.innerJoin("listing as l", "l.userId", "user.id")
+					.innerJoin("transaction as t", "t.listingId", "l.id")
+					.where("t.id", "=", transactionId.id)
+					.selectAll("user")
+					.executeTakeFirst();
+			});
+
+			if (!current) {
+				return yield* new NotFoundError({
+					resource: "user",
+					resourceId: transactionId.id,
+					message: "User not found",
+				});
+			}
+
+			const transaction = yield* transactionFetchFx({
+				where: {
+					id: transactionId.id,
+				},
+			});
+
+			yield* match(
+				list([
+					"accept",
+					"reject",
+				] as const),
+			)
+				.with("accept", () => {
+					return Effect.gen(function* () {
+						yield* transactionStatusAcceptFx({
+							transactionId: transactionId.id,
+							createdAt: DateTime.fromJSDate(transaction.createdAt).plus({
+								minute: rangedom(10, 60 * 24 * 2),
+							}),
+						});
+					});
+				})
+				.with("reject", () => {
+					return Effect.gen(function* () {
+						yield* transactionStatusRejectFx({
+							transactionId: transactionId.id,
+							createdAt: DateTime.fromJSDate(transaction.createdAt).plus({
+								minute: rangedom(10, 60 * 24 * 2),
+							}),
+						});
+					});
+				})
+				.exhaustive()
+				.pipe(UserContextProvider(current));
+		}
 	});
 };

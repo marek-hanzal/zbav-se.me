@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import type { DateTime } from "luxon";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
@@ -7,10 +8,15 @@ import type { TransactionStatusAcceptSchema } from "~/@user/transaction-status/s
 import { RuntimeError } from "~/error/RuntimeError";
 
 export namespace transactionStatusAcceptFx {
-	export type Props = TransactionStatusAcceptSchema.Type;
+	export interface Props extends TransactionStatusAcceptSchema.Type {
+		createdAt?: DateTime;
+	}
 }
 
-export const transactionStatusAcceptFx = ({ transactionId }: transactionStatusAcceptFx.Props) => {
+export const transactionStatusAcceptFx = ({
+	transactionId,
+	createdAt,
+}: transactionStatusAcceptFx.Props) => {
 	return Effect.gen(function* () {
 		const transaction = yield* transactionResolveFx({
 			transactionId,
@@ -30,17 +36,20 @@ export const transactionStatusAcceptFx = ({ transactionId }: transactionStatusAc
 					id: transaction.id,
 				},
 			},
+			updatedAt: createdAt,
 		});
 
 		yield* messageSystemCreateFx({
 			messageThreadId: transaction.messageThreadId,
 			message: "Seller accepted the transaction (message)",
+			createdAt,
 		});
 
 		return yield* transactionStatusCreateFx({
 			transactionId: transaction.id,
 			status: "open",
 			side: transaction.side,
+			createdAt,
 		});
 	});
 };
