@@ -7,6 +7,7 @@ import { match } from "ts-pattern";
 import { galleryCreateFx as coolGalleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
 import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import type { ListingCreateSchema } from "~/@user/listing/schema/ListingCreateSchema";
+import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
@@ -101,6 +102,14 @@ export const listingCreateFx = ({ uploadIds, ...data }: listingCreateFx.Props) =
 						.execute();
 				});
 			}
+
+			yield* userEventCreateFx({
+				scope: "user",
+				source: "listing",
+				group: id,
+				event: "listing.create",
+				isTerminal: true,
+			});
 
 			return yield* listingFetchFx({
 				where: {

@@ -4,6 +4,7 @@ export const UserEventEnumSchema = z
 	.enum([
 		"like",
 		"dislike",
+		"listing.create",
 		"transaction.create",
 		"transaction.open",
 		"transaction.rejected",
