@@ -9,7 +9,7 @@ import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace transactionStatusCloseFx {
 	export type Props = TransactionStatusCloseSchema.Type & {
-		createdAt: DateTime;
+		createdAt?: DateTime;
 	};
 }
 

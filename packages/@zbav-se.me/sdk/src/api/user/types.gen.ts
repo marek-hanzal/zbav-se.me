@@ -248,8 +248,16 @@ export type tTransactionStatus = {
      * ID of the transaction referenced by the status
      */
     transactionId: string;
+    /**
+     * ID of the listing referenced by the status
+     */
+    listingId: string;
     side: tTransactionSideEnum;
     status: tTransactionStatusEnum & unknown;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
 };
 
 /**
@@ -4376,6 +4384,10 @@ export type tApiTransactionStatusCloseRequest = {
 };
 
 export type apiTransactionStatusCloseErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
     /**
      * Access denied
      */

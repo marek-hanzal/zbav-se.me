@@ -328,10 +328,16 @@ export const zTransactionStatus = z.object({
     transactionId: z.string().register(z.globalRegistry, {
         description: 'ID of the transaction referenced by the status'
     }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing referenced by the status'
+    }),
     side: zTransactionSideEnum,
     status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
         description: 'Current status of the listing transaction'
-    }))
+    })),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    })
 }).register(z.globalRegistry, {
     description: 'Listing transaction status entry'
 });

@@ -3,12 +3,11 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { match } from "ts-pattern";
 import { transactionCollectionFx } from "~/@user/transaction/fx/transactionCollectionFx";
-import { transactionFetchFx } from "~/@user/transaction/fx/transactionFetchFx";
+import { transactionStatusFetchFx } from "~/@user/transaction-status/fx/transactionStatusFetchFx";
 import { transactionStatusResolveFx } from "~/@user/transaction-status/fx/transactionStatusResolveFx";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
-import { transactionStatusFetchFx } from "~/@user/transaction-status/fx/transactionStatusFetchFx";
 
 export namespace t01_resolve {
 	export interface Props {

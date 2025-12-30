@@ -9,7 +9,7 @@ import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace transactionStatusSuccessFx {
 	export type Props = TransactionStatusSuccessSchema.Type & {
-		createdAt: DateTime;
+		createdAt?: DateTime;
 	};
 }
 

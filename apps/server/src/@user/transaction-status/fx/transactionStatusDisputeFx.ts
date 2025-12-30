@@ -8,7 +8,7 @@ import type { TransactionStatusDisputeSchema } from "~/@user/transaction-status/
 
 export namespace transactionStatusDisputeFx {
 	export type Props = TransactionStatusDisputeSchema.Type & {
-		createdAt: DateTime;
+		createdAt?: DateTime;
 	};
 }
 

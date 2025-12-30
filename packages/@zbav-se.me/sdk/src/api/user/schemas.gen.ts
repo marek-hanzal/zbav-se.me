@@ -336,6 +336,9 @@ export const sTransactionStatus = {
         transactionId: {
             type: 'string'
         },
+        listingId: {
+            type: 'string'
+        },
         side: {
             $ref: '#/components/schemas/TransactionSideEnum'
         },
@@ -346,13 +349,18 @@ export const sTransactionStatus = {
                 },
                 {}
             ]
+        },
+        createdAt: {
+            type: 'string'
         }
     },
     required: [
         'id',
         'transactionId',
+        'listingId',
         'side',
-        'status'
+        'status',
+        'createdAt'
     ]
 } as const;
 

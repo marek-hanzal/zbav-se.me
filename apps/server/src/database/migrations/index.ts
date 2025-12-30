@@ -15,19 +15,18 @@ import { FavouriteMigration } from "./0013-favourite";
 import { ListingEventMigration } from "./0014-listing-event";
 import { IgnoreMigration } from "./0015-ignore";
 import { FlagMigration } from "./0016-flag";
-import { UserScoreMigration } from "./0017-user-score";
-import { MessageThreadMigration } from "./0018-message-thread";
-import { MessageThreadUserMigration } from "./0019-message-thread-user";
-import { MessageTextMigration } from "./0020-message-text";
-import { MessageSystemMigration } from "./0021-message-system";
-import { MessageGalleryMigration } from "./0022-message-gallery";
-import { MessageLocationMigration } from "./0023-message-location";
-import { MessagePersonalMigration } from "./0024-message-personal";
-import { MessagePackageMigration } from "./0025-message-package";
-import { TransactionMigration } from "./0026-transaction";
-import { TransactionStatusMigration } from "./0027-transaction-status";
-import { GitHubMigration } from "./0028-github";
-import { FeedbackMigration } from "./0029-feedback";
+import { MessageThreadMigration } from "./0017-message-thread";
+import { MessageThreadUserMigration } from "./0018-message-thread-user";
+import { MessageTextMigration } from "./0019-message-text";
+import { MessageSystemMigration } from "./0020-message-system";
+import { MessageGalleryMigration } from "./0021-message-gallery";
+import { MessageLocationMigration } from "./0022-message-location";
+import { MessagePersonalMigration } from "./0023-message-personal";
+import { MessagePackageMigration } from "./0024-message-package";
+import { TransactionMigration } from "./0025-transaction";
+import { TransactionStatusMigration } from "./0026-transaction-status";
+import { GitHubMigration } from "./0027-github";
+import { FeedbackMigration } from "./0028-feedback";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -47,17 +46,16 @@ export const migrations = {
 	"0014-listing-event": ListingEventMigration,
 	"0015-ignore": IgnoreMigration,
 	"0016-flag": FlagMigration,
-	"0017-user-score": UserScoreMigration,
-	"0018-message-thread": MessageThreadMigration,
-	"0019-message-thread-user": MessageThreadUserMigration,
-	"0020-message-text": MessageTextMigration,
-	"0021-message-system": MessageSystemMigration,
-	"0022-message-gallery": MessageGalleryMigration,
-	"0023-message-location": MessageLocationMigration,
-	"0024-message-personal": MessagePersonalMigration,
-	"0025-message-package": MessagePackageMigration,
-	"0026-transaction": TransactionMigration,
-	"0027-transaction-status": TransactionStatusMigration,
-	"0028-github": GitHubMigration,
-	"0029-feedback": FeedbackMigration,
+	"0017-message-thread": MessageThreadMigration,
+	"0018-message-thread-user": MessageThreadUserMigration,
+	"0019-message-text": MessageTextMigration,
+	"0020-message-system": MessageSystemMigration,
+	"0021-message-gallery": MessageGalleryMigration,
+	"0022-message-location": MessageLocationMigration,
+	"0023-message-personal": MessagePersonalMigration,
+	"0024-message-package": MessagePackageMigration,
+	"0025-transaction": TransactionMigration,
+	"0026-transaction-status": TransactionStatusMigration,
+	"0027-github": GitHubMigration,
+	"0028-feedback": FeedbackMigration,
 } as const;
