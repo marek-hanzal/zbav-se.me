@@ -12,6 +12,9 @@ export const TransactionStatusDbSchema = z.object({
 	listingId: z.string().openapi({
 		description: "ID of the listing referenced by the status",
 	}),
+	userId: z.string().openapi({
+		description: "ID of the user who performed the action",
+	}),
 	side: TransactionSideEnumSchema,
 	status: TransactionStatusEnumSchema,
 	createdAt: z.coerce.date().openapi({
