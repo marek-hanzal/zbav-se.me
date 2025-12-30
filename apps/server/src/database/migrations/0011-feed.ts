@@ -10,8 +10,8 @@ export const FeedMigration: Migration = {
 			.addColumn("uploadId", "text")
 			.addColumn("name", "text", (col) => col.notNull())
 			.addColumn("query", "jsonb", (col) => col.notNull())
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
-			.addColumn("updatedAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
+			.addColumn("updatedAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
 				"feed_[userId]_fk",
 				[

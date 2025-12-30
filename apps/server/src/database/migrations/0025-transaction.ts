@@ -36,9 +36,9 @@ export const TransactionMigration: Migration = {
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("messageThreadId", "text", (col) => col.notNull())
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
-			.addColumn("updatedAt", "timestamp", (col) => col.notNull())
-			.addColumn("expiresAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
+			.addColumn("updatedAt", "timestamptz", (col) => col.notNull())
+			.addColumn("expiresAt", "timestamptz", (col) => col.notNull())
 			//
 			.addForeignKeyConstraint(
 				"transaction_[userId]_fk",

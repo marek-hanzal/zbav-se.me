@@ -15,7 +15,7 @@ export const MessageTextMigration: Migration = {
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("text", "text", (col) => col.notNull())
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			//
 			.addForeignKeyConstraint(
 				"message_text_[userId]_fk",

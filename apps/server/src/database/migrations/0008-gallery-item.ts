@@ -11,7 +11,7 @@ export const GalleryItemMigration: Migration = {
 			.addColumn("sort", "integer", (col) => col.notNull())
 			.addColumn("uploadId", "text", (col) => col.notNull())
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
 				"gallery_item_[galleryId]_fk",
 				[

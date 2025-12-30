@@ -45,7 +45,7 @@ export const ListingEventMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("event", sql`listing_event_type_enum`, (col) => col.notNull())
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
 				"listing_event_[listingId]_fk",
 				[

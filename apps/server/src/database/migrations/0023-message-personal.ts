@@ -19,7 +19,7 @@ export const MessagePersonalMigration: Migration = {
 			// (Home) Address or whatever, used to send a package if needed
 			.addColumn("locationId", "text", (col) => col.notNull())
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			//
 			.addForeignKeyConstraint(
 				"message_personal_[userId]_fk",

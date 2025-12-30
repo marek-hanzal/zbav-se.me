@@ -16,7 +16,7 @@ export const MessagePackageMigration: Migration = {
 			.addColumn("link", "text", (col) => col.notNull())
 			.addColumn("number", "text")
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			//
 			.addForeignKeyConstraint(
 				"message_package_[userId]_fk",

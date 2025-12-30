@@ -16,7 +16,7 @@ export const FeedbackMigration: Migration = {
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("type", sql`feedback_enum`, (col) => col.notNull())
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
 				"feedback_[userId]_fk",
 				[

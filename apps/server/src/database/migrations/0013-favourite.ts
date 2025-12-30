@@ -8,7 +8,7 @@ export const FavouriteMigration: Migration = {
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("feedId", "text", (col) => col.notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
 				"favourite_[userId]_fk",
 				[
