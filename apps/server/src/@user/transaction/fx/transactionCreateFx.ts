@@ -16,10 +16,11 @@ import { transactionFetchFx } from "./transactionFetchFx";
 export namespace transactionCreateFx {
 	export interface Props {
 		listingId: string;
+		createdAt?: DateTime;
 	}
 }
 
-export const transactionCreateFx = ({ listingId }: transactionCreateFx.Props) => {
+export const transactionCreateFx = ({ listingId, createdAt }: transactionCreateFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
@@ -59,6 +60,7 @@ export const transactionCreateFx = ({ listingId }: transactionCreateFx.Props) =>
 					 */
 					listing.userId,
 				],
+				createdAt,
 			});
 
 			const id = genId();
@@ -71,9 +73,9 @@ export const transactionCreateFx = ({ listingId }: transactionCreateFx.Props) =>
 						userId: user.id,
 						listingId,
 						messageThreadId: messageThread.id,
-						createdAt: DateTime.now().toJSDate(),
-						updatedAt: DateTime.now().toJSDate(),
-						expiresAt: DateTime.now()
+						createdAt: (createdAt ?? DateTime.now()).toJSDate(),
+						updatedAt: (createdAt ?? DateTime.now()).toJSDate(),
+						expiresAt: (createdAt ?? DateTime.now())
 							.plus({
 								days: config.expires,
 							})
@@ -87,16 +89,19 @@ export const transactionCreateFx = ({ listingId }: transactionCreateFx.Props) =>
 				transactionId: id,
 				side: "buyer",
 				status: "pending",
+				createdAt,
 			});
 
 			yield* listingEventCreateFx({
 				listingId,
 				event: "transaction",
+				createdAt,
 			}).pipe(Effect.ignore);
 
 			yield* messageSystemCreateFx({
 				messageThreadId: messageThread.id,
 				message: "Transaction pending (message)",
+				createdAt,
 			});
 
 			return yield* transactionFetchFx({

@@ -1,15 +1,21 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
+import { DateTime } from "luxon";
 import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import type { TransactionStatusCreateSchema } from "~/app/transaction-status/schema/TransactionStatusCreateSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { transactionStatusFetchFx } from "./transactionStatusFetchFx";
 
 export namespace transactionStatusCreateFx {
-	export type Props = TransactionStatusCreateSchema.Type;
+	export interface Props extends TransactionStatusCreateSchema.Type {
+		createdAt?: DateTime;
+	}
 }
 
-export const transactionStatusCreateFx = (create: transactionStatusCreateFx.Props) => {
+export const transactionStatusCreateFx = ({
+	createdAt,
+	...create
+}: transactionStatusCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 
@@ -21,7 +27,7 @@ export const transactionStatusCreateFx = (create: transactionStatusCreateFx.Prop
 				.values({
 					id,
 					...create,
-					createdAt: new Date(),
+					createdAt: (createdAt ?? DateTime.now()).toJSDate(),
 				})
 				.returningAll()
 				.executeTakeFirstOrThrow();
@@ -34,6 +40,7 @@ export const transactionStatusCreateFx = (create: transactionStatusCreateFx.Prop
 					id: create.transactionId,
 				},
 			},
+			updatedAt: createdAt ?? DateTime.now(),
 		});
 
 		return yield* transactionStatusFetchFx({

@@ -9,6 +9,7 @@ export namespace listingEventRateLimitFx {
 		listingId: string;
 		event: ListingEventEnumSchema.Type;
 		minutes?: number;
+		createdAt?: DateTime;
 	}
 }
 
@@ -16,6 +17,7 @@ export const listingEventRateLimitFx = ({
 	listingId,
 	event,
 	minutes = 10,
+	createdAt,
 }: listingEventRateLimitFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
@@ -29,7 +31,7 @@ export const listingEventRateLimitFx = ({
 				.where(
 					"createdAt",
 					">=",
-					DateTime.now()
+					(createdAt ?? DateTime.now())
 						.minus({
 							minutes,
 						})

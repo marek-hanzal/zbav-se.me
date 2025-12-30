@@ -1,9 +1,10 @@
 import { z } from "@hono/zod-openapi";
 
 export const MessageThreadCreateSchema = z
-	.object({
+	.looseObject({
 		//
 	})
+	.strip()
 	.openapi("MessageThreadCreate", {
 		description: "Request to create a message thread",
 	});

@@ -3,7 +3,7 @@ import { TransactionSideEnumSchema } from "~/app/transaction/schema/TransactionS
 import { TransactionStatusEnumSchema } from "~/app/transaction/schema/TransactionStatusEnumSchema";
 
 export const TransactionStatusCreateSchema = z
-	.object({
+	.looseObject({
 		transactionId: z.string().openapi({
 			description: "The ID of the transaction",
 		}),
@@ -14,6 +14,7 @@ export const TransactionStatusCreateSchema = z
 			description: "The side that initiated this status change",
 		}),
 	})
+	.strip()
 	.openapi("TransactionStatusCreate", {
 		description: "Request to create a transaction status",
 	});

@@ -1,5 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { Effect } from "effect";
+import { seedTransactionInteractionFx } from "~/@public/seed/fx/seedTransactionInteractionFx";
+import { SeedTransactionsRequestSchema } from "~/@public/seed/fx/seedTransactionsFx";
 import { transactionFx } from "~/@public/seed/fx/transactionFx";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -8,7 +10,9 @@ import { NotFoundError } from "~/error/NotFoundError";
 export const SeedRequestSchema = z.object({
 	user: z.string().openapi({
 		description: "User data for seeding",
+		example: "marek.hanzal@x32.cz",
 	}),
+	transaction: SeedTransactionsRequestSchema,
 });
 
 type SeedRequestSchema = typeof SeedRequestSchema;
@@ -17,7 +21,7 @@ namespace SeedRequestSchema {
 	export type Type = z.infer<SeedRequestSchema>;
 }
 
-export const seedFx = ({ user }: SeedRequestSchema.Type) => {
+export const seedFx = ({ user, transaction }: SeedRequestSchema.Type) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 
@@ -38,8 +42,10 @@ export const seedFx = ({ user }: SeedRequestSchema.Type) => {
 		}
 
 		yield* transactionFx({
-			transaction: "123",
+			transaction,
 		}).pipe(UserContextProvider(current));
+
+		yield* seedTransactionInteractionFx({}).pipe(UserContextProvider(current));
 
 		return yield* Effect.void;
 	});
