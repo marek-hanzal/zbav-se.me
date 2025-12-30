@@ -70,15 +70,30 @@ export const TransactionStatusMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("transaction_status_[side]_idx")
+			.createIndex("transaction_status_[userId-createdAt]_idx")
 			.on("transaction_status")
-			.column("side")
+			.columns([
+				"userId",
+				"createdAt",
+			])
 			.execute();
 
 		await db.schema
-			.createIndex("transaction_status_[status]_idx")
+			.createIndex("transaction_status_[transactionId-createdAt]_idx")
 			.on("transaction_status")
-			.column("status")
+			.columns([
+				"transactionId",
+				"createdAt",
+			])
+			.execute();
+
+		await db.schema
+			.createIndex("transaction_status_[listingId-createdAt]_idx")
+			.on("transaction_status")
+			.columns([
+				"listingId",
+				"createdAt",
+			])
 			.execute();
 	},
 };
