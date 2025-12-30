@@ -42,14 +42,6 @@ export const transactionGetBuyerInfoFx = ({ transactionId }: transactionGetBuyer
 			});
 		}
 
-		const source = yield* Effect.promise(async () => {
-			return database
-				.selectFrom("user_event as ue")
-				// .select
-				.where("lt.id", "=", transactionId)
-				.executeTakeFirst();
-		});
-
 		return yield* Effect.succeed({
 			registered: userInfo.createdAt,
 			score: 0,
