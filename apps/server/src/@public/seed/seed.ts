@@ -27,6 +27,14 @@ export const withSeedApi: Routes.Fn = ({ publicHono }) => {
 				201: {
 					description: "Seed operation completed",
 				},
+				400: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Invalid request",
+				},
 				403: {
 					content: {
 						"application/json": {
@@ -81,6 +89,20 @@ export const withSeedApi: Routes.Fn = ({ publicHono }) => {
 											message: e.message,
 										},
 										404,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "InvalidRequestError",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 400>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										400,
 									);
 								},
 							),

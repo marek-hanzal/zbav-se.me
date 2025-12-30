@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import type { DateTime } from "luxon";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
@@ -7,10 +8,15 @@ import type { TransactionStatusResolveSchema } from "~/@user/transaction-status/
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace transactionStatusResolveFx {
-	export type Props = TransactionStatusResolveSchema.Type;
+	export type Props = TransactionStatusResolveSchema.Type & {
+		createdAt: DateTime;
+	};
 }
 
-export const transactionStatusResolveFx = ({ transactionId }: transactionStatusResolveFx.Props) => {
+export const transactionStatusResolveFx = ({
+	transactionId,
+	createdAt,
+}: transactionStatusResolveFx.Props) => {
 	return Effect.gen(function* () {
 		const transaction = yield* transactionResolveFx({
 			transactionId,
@@ -30,17 +36,20 @@ export const transactionStatusResolveFx = ({ transactionId }: transactionStatusR
 					id: transaction.id,
 				},
 			},
+			updatedAt: createdAt,
 		});
 
 		yield* messageSystemCreateFx({
 			messageThreadId: transaction.messageThreadId,
 			message: "Seller resolved the transaction (message)",
+			createdAt,
 		});
 
 		return yield* transactionStatusCreateFx({
 			transactionId: transaction.id,
 			status: "resolved",
 			side: transaction.side,
+			createdAt,
 		});
 	});
 };
