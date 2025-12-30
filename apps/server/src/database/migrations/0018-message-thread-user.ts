@@ -39,17 +39,5 @@ export const MessageThreadUserMigration: Migration = {
 				"userId",
 			])
 			.execute();
-
-		await db.schema
-			.createIndex("message_thread_user_[messageThreadId]_idx")
-			.on("message_thread_user")
-			.column("messageThreadId")
-			.execute();
-
-		await db.schema
-			.createIndex("message_thread_user_[userId]_idx")
-			.on("message_thread_user")
-			.column("userId")
-			.execute();
 	},
 };
