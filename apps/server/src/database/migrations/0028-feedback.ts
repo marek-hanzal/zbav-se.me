@@ -64,5 +64,14 @@ export const FeedbackMigration: Migration = {
 			.on("feedback")
 			.column("createdAt")
 			.execute();
+
+		await db.schema
+			.createIndex("feedback_[userId-createdAt]_idx")
+			.on("feedback")
+			.columns([
+				"userId",
+				"createdAt",
+			])
+			.execute();
 	},
 };
