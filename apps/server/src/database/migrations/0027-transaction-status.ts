@@ -8,6 +8,7 @@ export const TransactionStatusMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			//
 			.addColumn("transactionId", "text", (col) => col.notNull())
+			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("side", sql`transaction_side_enum`, (col) => col.notNull())
 			//
 			.addColumn("status", sql`transaction_status_enum`, (col) => col.notNull())
@@ -25,12 +26,29 @@ export const TransactionStatusMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
+			.addForeignKeyConstraint(
+				"transaction_status_[listingId]_fk",
+				[
+					"listingId",
+				],
+				"listing",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
 			.execute();
 
 		await db.schema
 			.createIndex("transaction_status_[transactionId]_idx")
 			.on("transaction_status")
 			.column("transactionId")
+			.execute();
+
+		await db.schema
+			.createIndex("transaction_status_[listingId]_idx")
+			.on("transaction_status")
+			.column("listingId")
 			.execute();
 
 		await db.schema
