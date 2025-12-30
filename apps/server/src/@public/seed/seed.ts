@@ -1,11 +1,12 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { Effect } from "effect";
+import { Effect, Match } from "effect";
 import { DatabaseContextFx, DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import { NotFoundError } from "~/error/NotFoundError";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 const SeedRequestSchema = z.object({
-	user: z.any().openapi({
+	user: z.string().openapi({
 		description: "User data for seeding",
 	}),
 });
@@ -19,6 +20,22 @@ namespace SeedRequestSchema {
 const seedFx = (input: SeedRequestSchema.Type) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
+
+		const user = yield* Effect.tryPromise(async () => {
+			return database
+				.selectFrom("user")
+				.where("email", "=", input.user)
+				.selectAll()
+				.executeTakeFirst();
+		});
+
+		if (!user) {
+			return yield* new NotFoundError({
+				resource: "user",
+				resourceId: input.user,
+				message: "User not found",
+			});
+		}
 
 		return yield* Effect.void;
 	});
@@ -45,6 +62,14 @@ export const withSeedApi: Routes.Fn = ({ publicHono }) => {
 				201: {
 					description: "Seed operation completed",
 				},
+				404: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "User not found",
+				},
 				500: {
 					content: {
 						"application/json": {
@@ -61,23 +86,42 @@ export const withSeedApi: Routes.Fn = ({ publicHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				yield* seedFx(c.req.valid("json"));
-				return c.json(
-					{
-						status: "success",
-					},
-					200,
-				);
+				return c.json(yield* seedFx(c.req.valid("json")), 201);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
-				Effect.catchAll(() => {
+				//
+				Effect.catchAll((e) => {
 					return Effect.succeed(
-						c.json<NoticeSchema.Type, 500>(
-							{
-								type: "error",
-								message: "Internal server error",
-							},
-							500,
+						Match.value(e).pipe(
+							Match.when(
+								{
+									_tag: "NotFoundError",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 404>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										404,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "UnknownException",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 500>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										500,
+									);
+								},
+							),
+							Match.exhaustive,
 						),
 					);
 				}),
