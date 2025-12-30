@@ -10,12 +10,15 @@ import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import type { TransactionMessageLocationCreateSchema } from "../schema/TransactionMessageLocationCreateSchema";
 
 export namespace transactionMessageLocationCreateFx {
-	export interface Props extends TransactionMessageLocationCreateSchema.Type {}
+	export interface Props extends TransactionMessageLocationCreateSchema.Type {
+		createdAt?: DateTime;
+	}
 }
 
 export const transactionMessageLocationCreateFx = ({
 	transactionId,
 	locationId,
+	createdAt,
 }: transactionMessageLocationCreateFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
@@ -31,7 +34,7 @@ export const transactionMessageLocationCreateFx = ({
 				],
 			});
 
-			const now = DateTime.now();
+			const now = createdAt ?? DateTime.now();
 
 			yield* Effect.tryPromise(async () => {
 				return database
@@ -55,11 +58,13 @@ export const transactionMessageLocationCreateFx = ({
 				group: transaction.id,
 				event: "transaction.message",
 				isTerminal: false,
+				createdAt,
 			});
 
 			return yield* messageLocationCreateFx({
 				messageThreadId: transaction.messageThreadId,
 				locationId,
+				createdAt,
 			});
 		}),
 	);

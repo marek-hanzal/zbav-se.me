@@ -7,7 +7,9 @@ export const UserEventEnumSchema = z
 		"transaction.create",
 		"transaction.open",
 		"transaction.rejected",
+		"transaction.closed",
 		"transaction.message",
+		"transaction.success",
 	])
 	.openapi("UserEventEnum", {
 		description: "Type of user event",
