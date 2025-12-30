@@ -4,7 +4,6 @@ export const UserEventSourceEnumSchema = z
 	.enum([
 		"listing",
 		"transaction",
-		"message",
 	])
 	.openapi("UserEventSourceEnum", {
 		description: "Source of the user event",
