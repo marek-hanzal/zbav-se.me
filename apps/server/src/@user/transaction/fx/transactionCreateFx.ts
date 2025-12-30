@@ -6,6 +6,7 @@ import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCr
 import { messageThreadCreateFx } from "~/@user/message-thread/fx/messageThreadCreateFx";
 import { messageUserCreateFx } from "~/@user/message-thread-user/fx/messageUserCreateFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
+import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
@@ -103,6 +104,15 @@ export const transactionCreateFx = ({ listingId, createdAt }: transactionCreateF
 				messageThreadId: messageThread.id,
 				message: "Transaction pending (message)",
 				createdAt,
+			});
+
+			yield* userInteractionEventFx({
+				userId: user.id,
+				targetId: listing.userId,
+				source: "transaction",
+				group: id,
+				event: "transaction.create",
+				isTerminal: false,
 			});
 
 			return yield* transactionFetchFx({

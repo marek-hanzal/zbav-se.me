@@ -5,6 +5,8 @@ import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
 import type { TransactionStatusAcceptSchema } from "~/@user/transaction-status/schema/TransactionStatusAcceptSchema";
+import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { RuntimeError } from "~/error/RuntimeError";
 
 export namespace transactionStatusAcceptFx {
@@ -18,6 +20,8 @@ export const transactionStatusAcceptFx = ({
 	createdAt,
 }: transactionStatusAcceptFx.Props) => {
 	return Effect.gen(function* () {
+		const user = yield* UserContextFx;
+
 		const transaction = yield* transactionResolveFx({
 			transactionId,
 			message: "You are not allowed to accept this listing transaction",
@@ -43,6 +47,15 @@ export const transactionStatusAcceptFx = ({
 			messageThreadId: transaction.messageThreadId,
 			message: "Seller accepted the transaction (message)",
 			createdAt,
+		});
+
+		yield* userInteractionEventFx({
+			userId: user.id,
+			targetId: transaction.buyerId,
+			source: "transaction",
+			group: transaction.id,
+			event: "transaction.open",
+			isTerminal: false,
 		});
 
 		return yield* transactionStatusCreateFx({

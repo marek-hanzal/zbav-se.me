@@ -5,6 +5,8 @@ import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
 import type { TransactionStatusRejectSchema } from "~/@user/transaction-status/schema/TransactionStatusRejectSchema";
+import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace transactionStatusRejectFx {
 	export interface Props extends TransactionStatusRejectSchema.Type {
@@ -17,6 +19,8 @@ export const transactionStatusRejectFx = ({
 	createdAt,
 }: transactionStatusRejectFx.Props) => {
 	return Effect.gen(function* () {
+		const user = yield* UserContextFx;
+
 		const transaction = yield* transactionResolveFx({
 			transactionId,
 			message: "You are not allowed to reject this listing transaction",
@@ -39,6 +43,15 @@ export const transactionStatusRejectFx = ({
 					? "Buyer rejected the transaction (message)"
 					: "Seller rejected the transaction (message)",
 			createdAt,
+		});
+
+		yield* userInteractionEventFx({
+			userId: user.id,
+			targetId: transaction.buyerId,
+			source: "transaction",
+			group: transaction.id,
+			event: "transaction.rejected",
+			isTerminal: true,
 		});
 
 		return yield* transactionStatusCreateFx({

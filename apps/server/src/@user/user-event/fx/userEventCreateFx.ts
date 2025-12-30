@@ -1,4 +1,5 @@
 import { genId } from "@use-pico/common/gen-id";
+import { keyOf } from "@use-pico/common/key-of";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import type { UserEventCreateSchema } from "~/@user/user-event/schema/UserEventCreateSchema";
@@ -13,7 +14,12 @@ export namespace userEventCreateFx {
 	}
 }
 
-export const userEventCreateFx = ({ userId, createdAt, ...props }: userEventCreateFx.Props) => {
+export const userEventCreateFx = ({
+	userId,
+	createdAt,
+	group,
+	...props
+}: userEventCreateFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
@@ -25,6 +31,7 @@ export const userEventCreateFx = ({ userId, createdAt, ...props }: userEventCrea
 					.values({
 						id: genId(),
 						...props,
+						group: keyOf(group),
 						userId: userId ?? user.id,
 						createdAt: (createdAt ?? DateTime.now()).toJSDate(),
 					})
