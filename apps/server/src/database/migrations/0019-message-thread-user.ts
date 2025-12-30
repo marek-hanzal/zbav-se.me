@@ -34,6 +34,10 @@ export const MessageThreadUserMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
+			.addUniqueConstraint("message_thread_user_[messageThreadId-userId]_unique_idx", [
+				"messageThreadId",
+				"userId",
+			])
 			.execute();
 
 		await db.schema
@@ -52,6 +56,15 @@ export const MessageThreadUserMigration: Migration = {
 			.createIndex("message_thread_user_[createdAt]_idx")
 			.on("message_thread_user")
 			.column("createdAt")
+			.execute();
+
+		await db.schema
+			.createIndex("message_thread_user_[messageThreadId-userId]_idx")
+			.on("message_thread_user")
+			.columns([
+				"messageThreadId",
+				"userId",
+			])
 			.execute();
 	},
 };
