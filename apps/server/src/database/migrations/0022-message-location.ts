@@ -53,27 +53,21 @@ export const MessageLocationMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("message_location_[userId]_idx")
+			.createIndex("message_location_[messageThreadId-createdAt]_idx")
 			.on("message_location")
-			.column("userId")
+			.columns([
+				"messageThreadId",
+				"createdAt",
+			])
 			.execute();
 
 		await db.schema
-			.createIndex("message_location_[messageThreadId]_idx")
+			.createIndex("message_location_[userId-createdAt]_idx")
 			.on("message_location")
-			.column("messageThreadId")
-			.execute();
-
-		await db.schema
-			.createIndex("message_location_[locationId]_idx")
-			.on("message_location")
-			.column("locationId")
-			.execute();
-
-		await db.schema
-			.createIndex("message_location_[createdAt]_idx")
-			.on("message_location")
-			.column("createdAt")
+			.columns([
+				"userId",
+				"createdAt",
+			])
 			.execute();
 	},
 };

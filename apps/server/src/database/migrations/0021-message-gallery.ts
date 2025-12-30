@@ -53,27 +53,9 @@ export const MessageGalleryMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("message_gallery_[userId]_idx")
-			.on("message_gallery")
-			.column("userId")
-			.execute();
-
-		await db.schema
-			.createIndex("message_gallery_[messageThreadId]_idx")
-			.on("message_gallery")
-			.column("messageThreadId")
-			.execute();
-
-		await db.schema
 			.createIndex("message_gallery_[galleryId]_idx")
 			.on("message_gallery")
 			.column("galleryId")
-			.execute();
-
-		await db.schema
-			.createIndex("message_gallery_[createdAt]_idx")
-			.on("message_gallery")
-			.column("createdAt")
 			.execute();
 
 		await db.schema

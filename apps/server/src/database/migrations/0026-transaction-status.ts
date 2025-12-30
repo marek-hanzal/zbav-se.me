@@ -52,24 +52,6 @@ export const TransactionStatusMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("transaction_status_[transactionId]_idx")
-			.on("transaction_status")
-			.column("transactionId")
-			.execute();
-
-		await db.schema
-			.createIndex("transaction_status_[listingId]_idx")
-			.on("transaction_status")
-			.column("listingId")
-			.execute();
-
-		await db.schema
-			.createIndex("transaction_status_[userId]_idx")
-			.on("transaction_status")
-			.column("userId")
-			.execute();
-
-		await db.schema
 			.createIndex("transaction_status_[userId-createdAt]_idx")
 			.on("transaction_status")
 			.columns([

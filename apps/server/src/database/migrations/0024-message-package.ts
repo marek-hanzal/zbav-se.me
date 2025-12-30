@@ -43,24 +43,6 @@ export const MessagePackageMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("message_package_[userId]_idx")
-			.on("message_package")
-			.column("userId")
-			.execute();
-
-		await db.schema
-			.createIndex("message_package_[messageThreadId]_idx")
-			.on("message_package")
-			.column("messageThreadId")
-			.execute();
-
-		await db.schema
-			.createIndex("message_package_[createdAt]_idx")
-			.on("message_package")
-			.column("createdAt")
-			.execute();
-
-		await db.schema
 			.createIndex("message_package_[messageThreadId-createdAt]_idx")
 			.on("message_package")
 			.columns([

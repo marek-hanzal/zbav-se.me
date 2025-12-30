@@ -76,36 +76,6 @@ export const TransactionMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("transaction_[userId]_idx")
-			.on("transaction")
-			.column("userId")
-			.execute();
-
-		await db.schema
-			.createIndex("transaction_[listingId]_idx")
-			.on("transaction")
-			.column("listingId")
-			.execute();
-
-		await db.schema
-			.createIndex("transaction_[messageThreadId]_idx")
-			.on("transaction")
-			.column("messageThreadId")
-			.execute();
-
-		await db.schema
-			.createIndex("transaction_[createdAt]_idx")
-			.on("transaction")
-			.column("createdAt")
-			.execute();
-
-		await db.schema
-			.createIndex("transaction_[updatedAt]_idx")
-			.on("transaction")
-			.column("updatedAt")
-			.execute();
-
-		await db.schema
 			.createIndex("transaction_[userId-createdAt]_idx")
 			.on("transaction")
 			.columns([

@@ -46,23 +46,12 @@ export const FeedbackMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("feedback_[userId]_idx")
+			.createIndex("feedback_[listingId-type]_idx")
 			.on("feedback")
-			.column("userId")
-			.execute();
-
-		await db.schema
-			.createIndex("feedback_[listingId]_idx")
-			.on("feedback")
-			.column("listingId")
-			.execute();
-
-		await db.schema.createIndex("feedback_[type]_idx").on("feedback").column("type").execute();
-
-		await db.schema
-			.createIndex("feedback_[createdAt]_idx")
-			.on("feedback")
-			.column("createdAt")
+			.columns([
+				"listingId",
+				"type",
+			])
 			.execute();
 
 		await db.schema

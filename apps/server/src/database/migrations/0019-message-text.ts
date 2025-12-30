@@ -42,24 +42,6 @@ export const MessageTextMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("message_text_[userId]_idx")
-			.on("message_text")
-			.column("userId")
-			.execute();
-
-		await db.schema
-			.createIndex("message_text_[messageThreadId]_idx")
-			.on("message_text")
-			.column("messageThreadId")
-			.execute();
-
-		await db.schema
-			.createIndex("message_text_[createdAt]_idx")
-			.on("message_text")
-			.column("createdAt")
-			.execute();
-
-		await db.schema
 			.createIndex("message_text_[messageThreadId-createdAt]_idx")
 			.on("message_text")
 			.columns([
