@@ -3,9 +3,14 @@ import { keyOf } from "@use-pico/common/key-of";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import type { UserEventCreateSchema } from "~/@user/user-event/schema/UserEventCreateSchema";
+import type { UserEventEnumSchema } from "~/app/user-event/schema/UserEventEnumSchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+
+const ignored: UserEventEnumSchema.Type[] = [
+	"listing.create",
+];
 
 export namespace userEventCreateFx {
 	export interface Props extends UserEventCreateSchema.Type {
@@ -24,6 +29,10 @@ export const userEventCreateFx = ({
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
+
+			if (ignored.includes(props.event)) {
+				return yield* Effect.void;
+			}
 
 			return yield* Effect.tryPromise(async () => {
 				return database

@@ -17,8 +17,8 @@ export const UserEventMigration: Migration = {
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("scope", sql`user_event_scope_enum`, (col) => col.notNull())
 			.addColumn("source", "text", (col) => col.notNull())
-			.addColumn("group", "text", (col) => col.notNull())
 			.addColumn("event", "text", (col) => col.notNull())
+			.addColumn("group", "text", (col) => col.notNull())
 			.addColumn("isTerminal", "boolean", (col) => col.notNull())
 			//
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
