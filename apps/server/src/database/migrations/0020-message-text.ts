@@ -58,5 +58,23 @@ export const MessageTextMigration: Migration = {
 			.on("message_text")
 			.column("createdAt")
 			.execute();
+
+		await db.schema
+			.createIndex("message_text_[messageThreadId-createdAt]_idx")
+			.on("message_text")
+			.columns([
+				"messageThreadId",
+				"createdAt",
+			])
+			.execute();
+
+		await db.schema
+			.createIndex("message_text_[userId-createdAt]_idx")
+			.on("message_text")
+			.columns([
+				"userId",
+				"createdAt",
+			])
+			.execute();
 	},
 };

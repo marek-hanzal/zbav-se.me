@@ -40,5 +40,14 @@ export const MessageSystemMigration: Migration = {
 			.on("message_system")
 			.column("createdAt")
 			.execute();
+
+		await db.schema
+			.createIndex("message_system_[messageThreadId-createdAt]_idx")
+			.on("message_system")
+			.columns([
+				"messageThreadId",
+				"createdAt",
+			])
+			.execute();
 	},
 };

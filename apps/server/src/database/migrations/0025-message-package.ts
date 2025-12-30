@@ -59,5 +59,23 @@ export const MessagePackageMigration: Migration = {
 			.on("message_package")
 			.column("createdAt")
 			.execute();
+
+		await db.schema
+			.createIndex("message_package_[messageThreadId-createdAt]_idx")
+			.on("message_package")
+			.columns([
+				"messageThreadId",
+				"createdAt",
+			])
+			.execute();
+
+		await db.schema
+			.createIndex("message_package_[userId-createdAt]_idx")
+			.on("message_package")
+			.columns([
+				"userId",
+				"createdAt",
+			])
+			.execute();
 	},
 };

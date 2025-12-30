@@ -79,5 +79,23 @@ export const MessagePersonalMigration: Migration = {
 			.on("message_personal")
 			.column("createdAt")
 			.execute();
+
+		await db.schema
+			.createIndex("message_personal_[messageThreadId-createdAt]_idx")
+			.on("message_personal")
+			.columns([
+				"messageThreadId",
+				"createdAt",
+			])
+			.execute();
+
+		await db.schema
+			.createIndex("message_personal_[userId-createdAt]_idx")
+			.on("message_personal")
+			.columns([
+				"userId",
+				"createdAt",
+			])
+			.execute();
 	},
 };
