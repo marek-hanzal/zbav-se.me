@@ -13,12 +13,15 @@ import { InvalidRequestError } from "~/error/InvalidRequestError";
 import type { TransactionMessageGalleryCreateSchema } from "../schema/TransactionMessageGalleryCreateSchema";
 
 export namespace transactionMessageGalleryCreateFx {
-	export interface Props extends TransactionMessageGalleryCreateSchema.Type {}
+	export interface Props extends TransactionMessageGalleryCreateSchema.Type {
+		createdAt?: DateTime;
+	}
 }
 
 export const transactionMessageGalleryCreateFx = ({
 	transactionId,
 	uploadIds,
+	createdAt,
 }: transactionMessageGalleryCreateFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
@@ -40,7 +43,7 @@ export const transactionMessageGalleryCreateFx = ({
 				],
 			});
 
-			const now = DateTime.now();
+			const now = createdAt ?? DateTime.now();
 
 			yield* Effect.tryPromise(async () => {
 				return database
@@ -72,6 +75,7 @@ export const transactionMessageGalleryCreateFx = ({
 					galleryId: gallery.id,
 					uploadId,
 					sort,
+					createdAt,
 				});
 				sort++;
 			}
@@ -83,11 +87,13 @@ export const transactionMessageGalleryCreateFx = ({
 				group: transaction.id,
 				event: "transaction.message",
 				isTerminal: false,
+				createdAt,
 			});
 
 			return yield* messageGalleryCreateFx({
 				messageThreadId: transaction.messageThreadId,
 				galleryId: gallery.id,
+				createdAt,
 			});
 		}),
 	);
