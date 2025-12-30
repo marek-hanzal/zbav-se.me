@@ -1,45 +1,9 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { DatabaseContextFx, DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import { NotFoundError } from "~/error/NotFoundError";
+import { SeedRequestSchema, seedFx } from "~/@public/seed/fx/seedFx";
+import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-
-const SeedRequestSchema = z.object({
-	user: z.string().openapi({
-		description: "User data for seeding",
-	}),
-});
-
-type SeedRequestSchema = typeof SeedRequestSchema;
-
-namespace SeedRequestSchema {
-	export type Type = z.infer<typeof SeedRequestSchema>;
-}
-
-const seedFx = (input: SeedRequestSchema.Type) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-
-		const user = yield* Effect.tryPromise(async () => {
-			return database
-				.selectFrom("user")
-				.where("email", "=", input.user)
-				.selectAll()
-				.executeTakeFirst();
-		});
-
-		if (!user) {
-			return yield* new NotFoundError({
-				resource: "user",
-				resourceId: input.user,
-				message: "User not found",
-			});
-		}
-
-		return yield* Effect.void;
-	});
-};
 
 export const withSeedApi: Routes.Fn = ({ publicHono }) => {
 	publicHono.openapi(
