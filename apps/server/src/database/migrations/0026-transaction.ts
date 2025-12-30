@@ -104,5 +104,29 @@ export const TransactionMigration: Migration = {
 			.on("transaction")
 			.column("updatedAt")
 			.execute();
+
+		await db.schema
+			.createIndex("transaction_[userId-createdAt]_idx")
+			.on("transaction")
+			.columns([
+				"userId",
+				"createdAt",
+			])
+			.execute();
+
+		await db.schema
+			.createIndex("transaction_[listingId-createdAt]_idx")
+			.on("transaction")
+			.columns([
+				"listingId",
+				"createdAt",
+			])
+			.execute();
+
+		await db.schema
+			.createIndex("transaction_[expiresAt]_idx")
+			.on("transaction")
+			.column("expiresAt")
+			.execute();
 	},
 };
