@@ -3,7 +3,7 @@ import { type Migration, sql } from "kysely";
 export const UserEventMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createType("user_event_side_enum")
+			.createType("user_event_scope_enum")
 			.asEnum([
 				"user",
 				"foreign",
@@ -15,7 +15,7 @@ export const UserEventMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			//
 			.addColumn("userId", "text", (col) => col.notNull())
-			.addColumn("side", sql`user_event_side_enum`, (col) => col.notNull())
+			.addColumn("scope", sql`user_event_scope_enum`, (col) => col.notNull())
 			.addColumn("source", "text", (col) => col.notNull())
 			.addColumn("group", "text", (col) => col.notNull())
 			.addColumn("event", "text", (col) => col.notNull())
@@ -34,5 +34,21 @@ export const UserEventMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.execute();
+
+		await sql`
+            CREATE INDEX "user_event_[userId-createdAt]_idx" ON "user_event" ("userId", "createdAt" DESC);
+        `.execute(db);
+
+		await sql`
+            CREATE INDEX "user_event_[userId-source-event-createdAt]_idx" ON "user_event" ("userId", "source", "event", "createdAt" DESC);
+        `.execute(db);
+
+		await sql`
+            CREATE INDEX "user_event_[userId-group-createdAt]_idx" ON "user_event" ("userId", "group", "createdAt" DESC);
+        `.execute(db);
+
+		await sql`
+            CREATE INDEX "user_event_[createdAt]_idx" ON "user_event" ("createdAt" DESC);
+        `.execute(db);
 	},
 };
