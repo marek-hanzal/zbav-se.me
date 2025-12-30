@@ -24,6 +24,7 @@ import type { MessageThreadUserDbSchema } from "~/app/message-thread-user/schema
 import type { TransactionDbSchema } from "~/app/transaction/schema/TransactionDbSchema";
 import type { TransactionStatusDbSchema } from "~/app/transaction-status/schema/ListingTransactionStatusDbSchema";
 import type { UploadDbSchema } from "~/app/upload/schema/UploadDbSchema";
+import type { UserEventDbSchema } from "~/app/user-event/schema/UserEventDbSchema";
 import type { UserExDbSchema } from "~/app/user-ex/schema/UserExDbSchema";
 import type { auth } from "~/auth/auth";
 
@@ -54,6 +55,7 @@ export interface Database {
 	transaction_status: TransactionStatusDbSchema.Type;
 	transaction: TransactionDbSchema.Type;
 	upload: UploadDbSchema.Type;
+	user_event: UserEventDbSchema.Type;
 	user_ex: UserExDbSchema.Type;
 	user: typeof auth.$Infer.Session.user;
 }

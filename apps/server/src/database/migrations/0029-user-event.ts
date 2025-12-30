@@ -19,6 +19,7 @@ export const UserEventMigration: Migration = {
 			.addColumn("source", "text", (col) => col.notNull())
 			.addColumn("group", "text", (col) => col.notNull())
 			.addColumn("event", "text", (col) => col.notNull())
+			.addColumn("isTerminal", "boolean", (col) => col.notNull())
 			//
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			//
