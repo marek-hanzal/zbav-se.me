@@ -3,21 +3,20 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { match } from "ts-pattern";
 import { transactionCollectionFx } from "~/@user/transaction/fx/transactionCollectionFx";
-import { transactionFetchFx } from "~/@user/transaction/fx/transactionFetchFx";
-import { transactionStatusResolveFx } from "~/@user/transaction-status/fx/transactionStatusResolveFx";
+import { transactionStatusDisputeFx } from "~/@user/transaction-status/fx/transactionStatusDisputeFx";
+import { transactionStatusFetchFx } from "~/@user/transaction-status/fx/transactionStatusFetchFx";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
-import { transactionStatusFetchFx } from "~/@user/transaction-status/fx/transactionStatusFetchFx";
 
-export namespace t01_resolve {
+export namespace t03_sellerReaction {
 	export interface Props {
 		fromMinutes: number;
 		toMinutes: number;
 	}
 }
 
-export const t01_resolve = ({ fromMinutes, toMinutes }: t01_resolve.Props) => {
+export const t03_sellerReaction = ({ fromMinutes, toMinutes }: t03_sellerReaction.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 
@@ -27,7 +26,7 @@ export const t01_resolve = ({ fromMinutes, toMinutes }: t01_resolve.Props) => {
 				size: 1000,
 			},
 			where: {
-				status: "open",
+				status: "resolved",
 			},
 		});
 
@@ -64,13 +63,13 @@ export const t01_resolve = ({ fromMinutes, toMinutes }: t01_resolve.Props) => {
 
 			yield* match(
 				list([
-					"resolve",
+					"dispute",
 					"noop",
 				] as const),
 			)
-				.with("resolve", () => {
+				.with("dispute", () => {
 					return Effect.gen(function* () {
-						yield* transactionStatusResolveFx({
+						yield* transactionStatusDisputeFx({
 							transactionId: transactionId.id,
 							createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
 								minute: rangedom(fromMinutes, toMinutes),

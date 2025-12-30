@@ -56,6 +56,8 @@ export const t00_initial = ({ fromMinutes, toMinutes }: t00_initial.Props) => {
 			yield* match(
 				list([
 					"accept",
+					"accept",
+					"accept",
 					"reject-seller",
 					"reject-buyer",
 				] as const),
