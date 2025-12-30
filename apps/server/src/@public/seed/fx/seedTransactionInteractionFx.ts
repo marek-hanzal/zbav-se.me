@@ -58,7 +58,8 @@ export const seedTransactionInteractionFx = (_: SeedTransactionInteractionReques
 			yield* match(
 				list([
 					"accept",
-					"reject",
+					"reject-seller",
+					"reject-buyer",
 				] as const),
 			)
 				.with("accept", () => {
@@ -68,10 +69,20 @@ export const seedTransactionInteractionFx = (_: SeedTransactionInteractionReques
 							createdAt: DateTime.fromJSDate(transaction.createdAt).plus({
 								minute: rangedom(10, 60 * 24 * 2),
 							}),
-						});
+						}).pipe(UserContextProvider(current));
 					});
 				})
-				.with("reject", () => {
+				.with("reject-seller", () => {
+					return Effect.gen(function* () {
+						yield* transactionStatusRejectFx({
+							transactionId: transactionId.id,
+							createdAt: DateTime.fromJSDate(transaction.createdAt).plus({
+								minute: rangedom(10, 60 * 24 * 2),
+							}),
+						}).pipe(UserContextProvider(current));
+					});
+				})
+				.with("reject-buyer", () => {
 					return Effect.gen(function* () {
 						yield* transactionStatusRejectFx({
 							transactionId: transactionId.id,
@@ -81,8 +92,7 @@ export const seedTransactionInteractionFx = (_: SeedTransactionInteractionReques
 						});
 					});
 				})
-				.exhaustive()
-				.pipe(UserContextProvider(current));
+				.exhaustive();
 		}
 	});
 };
