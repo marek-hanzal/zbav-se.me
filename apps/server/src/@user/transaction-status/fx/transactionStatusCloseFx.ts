@@ -47,6 +47,7 @@ export const transactionStatusCloseFx = ({
 
 		return yield* transactionStatusCreateFx({
 			transactionId: transaction.id,
+			listingId: transaction.listingId,
 			status: "closed",
 			side: transaction.side,
 			createdAt,

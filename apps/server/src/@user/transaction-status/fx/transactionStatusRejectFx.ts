@@ -43,6 +43,7 @@ export const transactionStatusRejectFx = ({
 
 		return yield* transactionStatusCreateFx({
 			transactionId: transaction.id,
+			listingId: transaction.listingId,
 			status: "rejected",
 			side: transaction.side,
 			createdAt,

@@ -47,6 +47,7 @@ export const transactionStatusSuccessFx = ({
 
 		return yield* transactionStatusCreateFx({
 			transactionId: transaction.id,
+			listingId: transaction.listingId,
 			status: "success",
 			side: transaction.side,
 			createdAt,

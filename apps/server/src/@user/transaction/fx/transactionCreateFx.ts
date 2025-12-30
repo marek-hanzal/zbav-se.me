@@ -87,6 +87,7 @@ export const transactionCreateFx = ({ listingId, createdAt }: transactionCreateF
 
 			yield* transactionStatusCreateFx({
 				transactionId: id,
+				listingId,
 				side: "buyer",
 				status: "pending",
 				createdAt,

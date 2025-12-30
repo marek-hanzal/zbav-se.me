@@ -8,6 +8,7 @@ import { transactionStatusFetchFx } from "./transactionStatusFetchFx";
 
 export namespace transactionStatusCreateFx {
 	export interface Props extends TransactionStatusCreateSchema.Type {
+		listingId: string;
 		createdAt?: DateTime;
 	}
 }

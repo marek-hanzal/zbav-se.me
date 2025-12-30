@@ -9,6 +9,9 @@ export const TransactionStatusDbSchema = z.object({
 	transactionId: z.string().openapi({
 		description: "ID of the transaction referenced by the status",
 	}),
+	listingId: z.string().openapi({
+		description: "ID of the listing referenced by the status",
+	}),
 	side: TransactionSideEnumSchema,
 	status: TransactionStatusEnumSchema,
 	createdAt: z.coerce.date().openapi({
