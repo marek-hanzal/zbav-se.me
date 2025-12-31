@@ -14,18 +14,20 @@ export namespace userEventBuyerInfoFx {
 }
 
 const computeReaction = (source: UserEventDbSchema.Type[]) => {
-	let total = 0;
+	let total = 0; // transaction.create (user)
 	let reactions = 0;
 	const deltasMs: number[] = [];
 
 	let currentGroup: string | null = null;
+
+	let created = false; // counted total for this group
 	let openAtMs: number | null = null;
-	let reacted = false;
 
 	const flushGroup = () => {
 		currentGroup = null;
+
+		created = false;
 		openAtMs = null;
-		reacted = false;
 	};
 
 	for (const event of source) {
@@ -36,28 +38,37 @@ const computeReaction = (source: UserEventDbSchema.Type[]) => {
 
 		const createdAt = event.createdAt.getTime();
 
-		if (event.event === "transaction.open" && event.scope === "foreign") {
-			if (openAtMs === null) {
-				openAtMs = createdAt;
+		// denominator: all created transactions (by user) per group
+		if (event.event === "transaction.create" && event.scope === "user") {
+			if (!created) {
+				created = true;
 				total++;
 			}
 			continue;
 		}
 
+		// reaction window starts at open (foreign)
+		if (event.event === "transaction.open" && event.scope === "foreign") {
+			if (openAtMs === null) {
+				openAtMs = createdAt;
+			}
+			continue;
+		}
+
+		// first user message after open => reaction
 		if (event.event === "transaction.message" && event.scope === "user") {
 			if (openAtMs == null) {
-				continue;
-			}
-			if (reacted) {
 				continue;
 			}
 			if (createdAt < openAtMs) {
 				continue;
 			}
 
-			reacted = true;
 			reactions++;
 			deltasMs.push(createdAt - openAtMs);
+
+			// lock: ensure max 1 reaction per group
+			openAtMs = null;
 		}
 	}
 
@@ -72,19 +83,24 @@ const computeReaction = (source: UserEventDbSchema.Type[]) => {
 };
 
 const computeCloser = (source: UserEventDbSchema.Type[]) => {
-	let total = 0;
+	let total = 0; // transaction.create (user)
 	let closed = 0;
 	const deltasMs: number[] = [];
 
 	let currentGroup: string | null = null;
 
+	let created = false; // counted total for this group
 	let createAtMs: number | null = null;
+
 	let dirty = false;
 	let done = false;
 
 	const flushGroup = () => {
 		currentGroup = null;
+
+		created = false;
 		createAtMs = null;
+
 		dirty = false;
 		done = false;
 	};
@@ -98,21 +114,20 @@ const computeCloser = (source: UserEventDbSchema.Type[]) => {
 		const createdAt = event.createdAt.getTime();
 
 		if (event.event === "transaction.create" && event.scope === "user") {
+			if (!created) {
+				created = true;
+				total++;
+			}
+
 			if (createAtMs === null) {
 				createAtMs = createdAt;
 			}
 			continue;
 		}
 
-		if (createAtMs == null) {
-			continue;
-		}
-		if (createdAt < createAtMs) {
-			continue;
-		}
-		if (done) {
-			continue;
-		}
+		if (createAtMs == null) continue;
+		if (createdAt < createAtMs) continue;
+		if (done) continue;
 
 		const isAllowedBetween = event.event === "transaction.open" && event.scope === "foreign";
 
@@ -123,13 +138,10 @@ const computeCloser = (source: UserEventDbSchema.Type[]) => {
 		if (isEnd) {
 			done = true;
 
-			total++;
-
 			if (!dirty) {
 				closed++;
 				deltasMs.push(createdAt - createAtMs);
 			}
-
 			continue;
 		}
 
