@@ -68,7 +68,7 @@ const computeReaction = (source: UserEventDbSchema.Type[]) => {
 		reactions,
 		medianMs: median(deltasMs),
 		p90Ms: p90(deltasMs),
-	};
+	} satisfies UserEventBuyerSchema.Type["reaction"];
 };
 
 const computeCloser = (source: UserEventDbSchema.Type[]) => {
@@ -145,7 +145,7 @@ const computeCloser = (source: UserEventDbSchema.Type[]) => {
 		closed,
 		medianMs: median(deltasMs),
 		p90Ms: p90(deltasMs),
-	};
+	} satisfies UserEventBuyerSchema.Type["closer"];
 };
 
 export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => {
