@@ -87,8 +87,8 @@ export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => 
 
 		return {
 			reaction: {
-				total: 0,
-				reactions: 0,
+				total,
+				reactions,
 				medianMs: (() => {
 					const n = deltasMs.length;
 					if (n === 0) {
