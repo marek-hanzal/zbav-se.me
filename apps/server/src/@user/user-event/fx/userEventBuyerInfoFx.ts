@@ -108,6 +108,12 @@ export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => 
 					return deltasMs[idx]!;
 				})(),
 			},
+			closer: {
+				total,
+				reactions,
+				medianMs: 0,
+				p90Ms: 0,
+			},
 		} satisfies UserEventBuyerSchema.Type;
 	});
 };
