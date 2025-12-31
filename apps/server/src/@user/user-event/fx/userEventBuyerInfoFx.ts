@@ -94,7 +94,7 @@ const computeReaction = (source: UserEventDbSchema.Type[]) => {
 		total,
 		reactions,
 		terminal,
-		percent: ((reactions + terminal) / total) * 100,
+		percent: total === 0 ? 0 : ((reactions + terminal) / total) * 100,
 		medianMs: median(deltasMs),
 		p90Ms: p90(deltasMs),
 	};
@@ -123,6 +123,15 @@ const computeCloser = (source: UserEventDbSchema.Type[]) => {
 		done = false;
 	};
 
+	const isAllowedBetween = (event: UserEventDbSchema.Type) =>
+		event.event === "transaction.open" && event.scope === "foreign";
+
+	const isEnd = (event: UserEventDbSchema.Type) =>
+		event.scope === "user" &&
+		(event.event === "transaction.closed" ||
+			event.event === "transaction.rejected" ||
+			event.event === "transaction.success");
+
 	for (const event of source) {
 		if (currentGroup !== event.group) {
 			flushGroup();
@@ -147,13 +156,7 @@ const computeCloser = (source: UserEventDbSchema.Type[]) => {
 		if (createdAt < createAtMs) continue;
 		if (done) continue;
 
-		const isAllowedBetween = event.event === "transaction.open" && event.scope === "foreign";
-
-		const isEnd =
-			(event.event === "transaction.closed" || event.event === "transaction.rejected") &&
-			event.scope === "user";
-
-		if (isEnd) {
+		if (isEnd(event)) {
 			done = true;
 
 			if (!dirty) {
@@ -163,7 +166,8 @@ const computeCloser = (source: UserEventDbSchema.Type[]) => {
 			continue;
 		}
 
-		if (!isAllowedBetween) {
+		// anything else between create and end makes it dirty (messages included)
+		if (!isAllowedBetween(event)) {
 			dirty = true;
 		}
 	}
@@ -173,7 +177,7 @@ const computeCloser = (source: UserEventDbSchema.Type[]) => {
 	return {
 		total,
 		closed,
-		percent: (closed / total) * 100,
+		percent: total === 0 ? 0 : (closed / total) * 100,
 		medianMs: median(deltasMs),
 		p90Ms: p90(deltasMs),
 	} satisfies UserEventBuyerSchema.Type["closer"];
