@@ -73,6 +73,10 @@ export const UserEventBuyerSchema = z
 					description: "Total number of decisions (success, closed)",
 					example: 0,
 				}),
+				terminal: z.number().openapi({
+					description: "Total number of terminal decisions (usually from the other side)",
+					example: 0,
+				}),
 				percent: z.number().openapi({
 					description: "Percentage of closed transactions (closed / total)",
 					example: 0,

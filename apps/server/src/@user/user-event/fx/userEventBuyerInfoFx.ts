@@ -192,20 +192,25 @@ const computeCloser = (source: UserEventDbSchema.Type[]) => {
 const computeDecision = (source: UserEventDbSchema.Type[]) => {
 	let total = 0; // transaction.create (user)
 	let decisions = 0;
+	let terminal = 0;
 
 	let currentGroup: string | null = null;
 
 	let created = false; // counted total for this group
-	let decided = false;
+	let done = false; // group resolved (decision OR terminal)
 
 	const flushGroup = () => {
 		currentGroup = null;
 
 		created = false;
-		decided = false;
+		done = false;
 	};
 
-	const isDecision = (event: UserEventDbSchema.Type) =>
+	const isSellerTerminal = (event: UserEventDbSchema.Type) =>
+		(event.event === "transaction.closed" || event.event === "transaction.rejected") &&
+		event.scope === "foreign";
+
+	const isBuyerDecision = (event: UserEventDbSchema.Type) =>
 		event.scope === "user" &&
 		(event.event === "transaction.success" || event.event === "transaction.closed");
 
@@ -224,20 +229,29 @@ const computeDecision = (source: UserEventDbSchema.Type[]) => {
 			continue;
 		}
 
-		if (!created || decided) {
+		if (!created || done) {
 			continue;
 		}
 
-		if (isDecision(event)) {
+		// seller ended it -> buyer had no choice
+		if (isSellerTerminal(event)) {
+			terminal++;
+			done = true;
+			continue;
+		}
+
+		// buyer explicit decision
+		if (isBuyerDecision(event)) {
 			decisions++;
-			decided = true;
+			done = true;
 		}
 	}
 
 	return {
 		total,
 		decisions,
-		percent: total === 0 ? 0 : (decisions / total) * 100,
+		terminal,
+		percent: total === 0 ? 0 : ((decisions + terminal) / total) * 100,
 	} satisfies UserEventBuyerSchema.Type["decision"];
 };
 
