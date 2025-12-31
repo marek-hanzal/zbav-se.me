@@ -255,6 +255,96 @@ const computeDecision = (source: UserEventDbSchema.Type[]) => {
 	} satisfies UserEventBuyerSchema.Type["decision"];
 };
 
+const computeExpired = (source: UserEventDbSchema.Type[]) => {
+	let total = 0; // transaction.create (user)
+	let expired = 0; // transaction.expired OR transaction.resolved (foreign) without buyer action after seller ping
+	let currentGroup: string | null = null;
+
+	let created = false; // counted total for this group
+	let pingAtMs: number | null = null; // seller "ping" moment: open OR last foreign message
+	let done = false;
+
+	const flushGroup = () => {
+		currentGroup = null;
+
+		created = false;
+		pingAtMs = null;
+		done = false;
+	};
+
+	const isSellerOpen = (event: UserEventDbSchema.Type) =>
+		event.event === "transaction.open" && event.scope === "foreign";
+
+	const isSellerMessage = (event: UserEventDbSchema.Type) =>
+		event.event === "transaction.message" && event.scope === "foreign";
+
+	const isSellerEnd = (event: UserEventDbSchema.Type) =>
+		(event.event === "transaction.expired" || event.event === "transaction.resolved") &&
+		event.scope === "foreign";
+
+	// buyer "did something" after ping -> not ghost
+	const isBuyerAction = (event: UserEventDbSchema.Type) =>
+		event.scope === "user" &&
+		(event.event === "transaction.message" ||
+			event.event === "transaction.closed" ||
+			event.event === "transaction.rejected" ||
+			event.event === "transaction.success");
+
+	for (const event of source) {
+		if (currentGroup !== event.group) {
+			flushGroup();
+			currentGroup = event.group;
+		}
+
+		const createdAt = event.createdAt.getTime();
+
+		// denominator: all created transactions (by buyer) per group
+		if (event.event === "transaction.create" && event.scope === "user") {
+			if (!created) {
+				created = true;
+				total++;
+			}
+			continue;
+		}
+
+		if (!created || done) continue;
+
+		// seller "ping" starts (or updates) the expectation window
+		if (isSellerOpen(event)) {
+			if (pingAtMs === null) {
+				pingAtMs = createdAt;
+			}
+			continue;
+		}
+
+		if (pingAtMs != null && isSellerMessage(event)) {
+			// seller nudged -> reset ping moment
+			pingAtMs = createdAt;
+			continue;
+		}
+
+		// buyer acted after ping -> disqualify
+		if (pingAtMs != null && isBuyerAction(event)) {
+			if (createdAt >= pingAtMs) {
+				done = true;
+			}
+			continue;
+		}
+
+		// seller ended as expired/resolved -> count only if we had a ping and buyer didn't act after it
+		if (pingAtMs != null && isSellerEnd(event)) {
+			expired++;
+			done = true;
+		}
+	}
+
+	return {
+		total,
+		expired,
+		percent: total === 0 ? 0 : (expired / total) * 100,
+	} satisfies UserEventBuyerSchema.Type["expired"];
+};
+
 export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => {
 	return Effect.gen(function* () {
 		const { data: source } = yield* userEventCollectionFx({
@@ -286,11 +376,7 @@ export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => 
 			reaction: computeReaction(source),
 			closer: computeCloser(source),
 			decision: computeDecision(source),
-			expired: {
-				total: 0,
-				expired: 0,
-				percent: 0,
-			},
+			expired: computeExpired(source),
 		} satisfies UserEventBuyerSchema.Type;
 	});
 };
