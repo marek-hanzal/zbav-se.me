@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import type { TransactionBuyerInfoSchema } from "~/@user/transaction/schema/TransactionBuyerInfoSchema";
 import { userEventBuyerInfoFx } from "~/@user/user-event/fx/userEventBuyerInfoFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -43,14 +44,12 @@ export const transactionGetBuyerInfoFx = ({ transactionId }: transactionGetBuyer
 			});
 		}
 
-		const buyerReaction = yield* userEventBuyerInfoFx({
-			userId: userInfo.id,
-		});
-
 		return yield* Effect.succeed({
 			registered: userInfo.createdAt,
-			score: 0,
-		});
+			events: yield* userEventBuyerInfoFx({
+				userId: userInfo.id,
+			}),
+		} satisfies TransactionBuyerInfoSchema.Type);
 	});
 };
 

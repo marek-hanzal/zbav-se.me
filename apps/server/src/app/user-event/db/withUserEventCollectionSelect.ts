@@ -21,6 +21,7 @@ export const withUserEventCollectionSelect = ({
 		query = match(item.field)
 			.with("createdAt", () => query.orderBy("ue.createdAt", item.direction))
 			.with("group", () => query.orderBy("ue.group", item.direction))
+			.with("id", () => query.orderBy("ue.id", item.direction))
 			.exhaustive();
 	}
 

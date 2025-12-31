@@ -389,10 +389,36 @@ export type tTransactionBuyerInfo = {
      * Registration date
      */
     registered: string;
+    events: tUserEventBuyer;
+};
+
+/**
+ * Initial reaction on opened transaction by seller.
+ */
+export type tUserEventBuyerReaction = {
     /**
-     * Buyer score
+     * Total number of samples (transactions)
      */
-    score: number;
+    total: number;
+    /**
+     * Total number of reactions
+     */
+    reactions: number;
+    /**
+     * Median milliseconds between transaction opening and reaction
+     */
+    medianMs: number;
+    /**
+     * 90th percentile milliseconds between transaction opening and reaction
+     */
+    p90Ms: number;
+};
+
+/**
+ * Buyer info for the user event
+ */
+export type tUserEventBuyer = {
+    reaction: tUserEventBuyerReaction;
 };
 
 /**

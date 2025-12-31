@@ -500,14 +500,53 @@ export const sTransactionBuyerInfo = {
         registered: {
             type: 'string'
         },
-        score: {
+        events: {
+            $ref: '#/components/schemas/UserEventBuyer'
+        }
+    },
+    required: [
+        'registered',
+        'events'
+    ]
+} as const;
+
+export const sUserEventBuyerReaction = {
+    type: 'object',
+    properties: {
+        total: {
+            type: 'number',
+            example: 0
+        },
+        reactions: {
+            type: 'number',
+            example: 0
+        },
+        medianMs: {
+            type: 'number',
+            example: 0
+        },
+        p90Ms: {
             type: 'number',
             example: 0
         }
     },
     required: [
-        'registered',
-        'score'
+        'total',
+        'reactions',
+        'medianMs',
+        'p90Ms'
+    ]
+} as const;
+
+export const sUserEventBuyer = {
+    type: 'object',
+    properties: {
+        reaction: {
+            $ref: '#/components/schemas/UserEventBuyerReaction'
+        }
+    },
+    required: [
+        'reaction'
     ]
 } as const;
 

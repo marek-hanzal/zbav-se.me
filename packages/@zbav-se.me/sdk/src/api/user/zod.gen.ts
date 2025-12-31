@@ -438,15 +438,46 @@ export const zTransactionMessageGalleryCreate = z.object({
 export type zTransactionMessageGalleryCreate = z.infer<typeof zTransactionMessageGalleryCreate>;
 
 /**
+ * Initial reaction on opened transaction by seller.
+ */
+export const zUserEventBuyerReaction = z.object({
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total number of samples (transactions)'
+    }),
+    reactions: z.number().register(z.globalRegistry, {
+        description: 'Total number of reactions'
+    }),
+    medianMs: z.number().register(z.globalRegistry, {
+        description: 'Median milliseconds between transaction opening and reaction'
+    }),
+    p90Ms: z.number().register(z.globalRegistry, {
+        description: '90th percentile milliseconds between transaction opening and reaction'
+    })
+}).register(z.globalRegistry, {
+    description: 'Initial reaction on opened transaction by seller.'
+});
+
+export type zUserEventBuyerReaction = z.infer<typeof zUserEventBuyerReaction>;
+
+/**
+ * Buyer info for the user event
+ */
+export const zUserEventBuyer = z.object({
+    reaction: zUserEventBuyerReaction
+}).register(z.globalRegistry, {
+    description: 'Buyer info for the user event'
+});
+
+export type zUserEventBuyer = z.infer<typeof zUserEventBuyer>;
+
+/**
  * Buyer info for the transaction
  */
 export const zTransactionBuyerInfo = z.object({
     registered: z.string().register(z.globalRegistry, {
         description: 'Registration date'
     }),
-    score: z.number().register(z.globalRegistry, {
-        description: 'Buyer score'
-    })
+    events: zUserEventBuyer
 }).register(z.globalRegistry, {
     description: 'Buyer info for the transaction'
 });
