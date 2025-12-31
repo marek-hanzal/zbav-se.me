@@ -26,10 +26,10 @@
 		"kysely": "0.28.9",
 		"luxon": "3.7.2",
 		"preferred-locale": "2.0.2",
-		"qs": "6.14.0",
+		"qs": "6.14.1",
 		"ts-pattern": "5.9.0",
 		"xxhash-wasm": "1.1.0",
-		"zod": "4.2.1"
+		"zod": "4.3.2"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "29.0.0",
