@@ -286,6 +286,11 @@ export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => 
 			reaction: computeReaction(source),
 			closer: computeCloser(source),
 			decision: computeDecision(source),
+			expired: {
+				total: 0,
+				expired: 0,
+				percent: 0,
+			},
 		} satisfies UserEventBuyerSchema.Type;
 	});
 };

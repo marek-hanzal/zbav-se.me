@@ -87,6 +87,25 @@ export const UserEventBuyerSchema = z
 				description:
 					"This metric describes if the user is used to close/success transactions",
 			}),
+		expired: z
+			.looseObject({
+				total: z.number().openapi({
+					description: "Total number of samples (transactions)",
+					example: 0,
+				}),
+				expired: z.number().openapi({
+					description: "Total number of expired transactions",
+					example: 0,
+				}),
+				percent: z.number().openapi({
+					description: "Percentage of expired transactions (expired / total)",
+					example: 0,
+				}),
+			})
+			.strip()
+			.openapi("UserEventBuyerExpired", {
+				description: "This metric describes if the user is used to expire transactions (no user's messages)",
+			}),
 	})
 	.strip()
 	.openapi("UserEventBuyer", {
