@@ -173,6 +173,7 @@ const computeCloser = (source: UserEventDbSchema.Type[]) => {
 	return {
 		total,
 		closed,
+		percent: (closed / total) * 100,
 		medianMs: median(deltasMs),
 		p90Ms: p90(deltasMs),
 	} satisfies UserEventBuyerSchema.Type["closer"];

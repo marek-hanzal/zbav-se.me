@@ -44,6 +44,10 @@ export const UserEventBuyerSchema = z
 					description: "Total number of closed transactions",
 					example: 0,
 				}),
+				percent: z.number().openapi({
+					description: "Percentage of closed transactions (closed / total)",
+					example: 0,
+				}),
 				medianMs: z.number().openapi({
 					description: "Median milliseconds between transaction creation and closing",
 					example: 0,
