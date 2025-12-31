@@ -32,17 +32,17 @@ export const UserEventBuyerSchema = z
 					description: "Total number of samples (transactions)",
 					example: 0,
 				}),
-				reactions: z.number().openapi({
-					description: "Total number of reactions",
+				closed: z.number().openapi({
+					description: "Total number of closed transactions",
 					example: 0,
 				}),
 				medianMs: z.number().openapi({
-					description: "Median milliseconds between transaction opening and reaction",
+					description: "Median milliseconds between transaction creation and closing",
 					example: 0,
 				}),
 				p90Ms: z.number().openapi({
 					description:
-						"90th percentile milliseconds between transaction opening and reaction",
+						"90th percentile milliseconds between transaction creation and closing",
 					example: 0,
 				}),
 			})

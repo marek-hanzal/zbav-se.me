@@ -48,14 +48,16 @@ export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => 
 			},
 			closer: {
 				total: 0,
-				reactions: 0,
+				closed: 0,
 				medianMs: 0,
 				p90Ms: 0,
 			},
 		};
 
-		const reactionDeltasMs: number[] = [];
-		const closerDeltasMs: number[] = [];
+		const deltas = {
+			reaction: [] as number[],
+			closer: [] as number[],
+		} as const;
 
 		let currentGroup: string | null = null;
 
@@ -111,8 +113,8 @@ export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => 
 					closerDone = true;
 
 					if (!closerDirty) {
-						response.closer.reactions++;
-						closerDeltasMs.push(createdAt - createAtMs);
+						response.closer.closed++;
+						deltas.closer.push(createdAt - createAtMs);
 					}
 					continue;
 				}
@@ -141,18 +143,18 @@ export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => 
 
 				reacted = true;
 				response.reaction.reactions++;
-				reactionDeltasMs.push(createdAt - openAtMs);
+				deltas.reaction.push(createdAt - openAtMs);
 			}
 		}
 
-		reactionDeltasMs.sort((a, b) => a - b);
-		closerDeltasMs.sort((a, b) => a - b);
+		deltas.reaction.sort((a, b) => a - b);
+		deltas.closer.sort((a, b) => a - b);
 
-		response.reaction.medianMs = median(reactionDeltasMs);
-		response.reaction.p90Ms = p90(reactionDeltasMs);
+		response.reaction.medianMs = median(deltas.reaction);
+		response.reaction.p90Ms = p90(deltas.reaction);
 
-		response.closer.medianMs = median(closerDeltasMs);
-		response.closer.p90Ms = p90(closerDeltasMs);
+		response.closer.medianMs = median(deltas.closer);
+		response.closer.p90Ms = p90(deltas.closer);
 
 		return response;
 	});
