@@ -2,7 +2,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { keyOf } from "@use-pico/common/key-of";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import type { UserEventCreateSchema } from "~/@user/user-event/schema/UserEventCreateSchema";
+import type { UserEventCreateSchema } from "~/app/user-event/schema/UserEventCreateSchema";
 import type { UserEventEnumSchema } from "~/app/user-event/schema/UserEventEnumSchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";

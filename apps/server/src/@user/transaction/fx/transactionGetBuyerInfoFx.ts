@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { userEventBuyerInfoFx } from "~/@user/user-event/fx/userEventBuyerInfoFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
@@ -41,6 +42,10 @@ export const transactionGetBuyerInfoFx = ({ transactionId }: transactionGetBuyer
 				message: "Buyer info not available",
 			});
 		}
+
+		const buyerReaction = yield* userEventBuyerInfoFx({
+			userId: userInfo.id,
+		});
 
 		return yield* Effect.succeed({
 			registered: userInfo.createdAt,

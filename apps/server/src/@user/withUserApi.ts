@@ -21,7 +21,6 @@ import { withTransactionMessagePackageApi } from "./transaction-message-package/
 import { withTransactionMessagePersonalApi } from "./transaction-message-personal/withTransactionMessagePersonalApi";
 import { withTransactionMessageTextApi } from "./transaction-message-text/withTransactionMessageTextApi";
 import { withUploadApi } from "./upload/withUploadApi";
-import { withUserEventApi } from "./user-event/withUserEventApi";
 import { withUserExApi } from "./user-ex/withUserExApi";
 
 export const withUserApi: Routes.FnWithDeps<{
@@ -66,7 +65,6 @@ export const withUserApi: Routes.FnWithDeps<{
 	withTransactionMessageTextApi(routes);
 	withTransactionStatusApi(routes);
 	withUploadApi(routes);
-	withUserEventApi(routes);
 	withUserExApi(routes);
 
 	routes.root.route("/api/user", routes.userHono);

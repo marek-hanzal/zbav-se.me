@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import type { DateTime } from "luxon";
-import type { UserEventCreateSchema } from "~/@user/user-event/schema/UserEventCreateSchema";
+import type { UserEventCreateSchema } from "~/app/user-event/schema/UserEventCreateSchema";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { userEventCreateFx } from "./userEventCreateFx";
 
