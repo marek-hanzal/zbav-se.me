@@ -152,9 +152,15 @@ const computeCloser = (source: UserEventDbSchema.Type[]) => {
 			continue;
 		}
 
-		if (createAtMs == null) continue;
-		if (createdAt < createAtMs) continue;
-		if (done) continue;
+		if (createAtMs == null) {
+			continue;
+		}
+		if (createdAt < createAtMs) {
+			continue;
+		}
+		if (done) {
+			continue;
+		}
 
 		if (isEnd(event)) {
 			done = true;
@@ -181,6 +187,58 @@ const computeCloser = (source: UserEventDbSchema.Type[]) => {
 		medianMs: median(deltasMs),
 		p90Ms: p90(deltasMs),
 	} satisfies UserEventBuyerSchema.Type["closer"];
+};
+
+const computeDecision = (source: UserEventDbSchema.Type[]) => {
+	let total = 0; // transaction.create (user)
+	let decisions = 0;
+
+	let currentGroup: string | null = null;
+
+	let created = false; // counted total for this group
+	let decided = false;
+
+	const flushGroup = () => {
+		currentGroup = null;
+
+		created = false;
+		decided = false;
+	};
+
+	const isDecision = (event: UserEventDbSchema.Type) =>
+		event.scope === "user" &&
+		(event.event === "transaction.success" || event.event === "transaction.closed");
+
+	for (const event of source) {
+		if (currentGroup !== event.group) {
+			flushGroup();
+			currentGroup = event.group;
+		}
+
+		// denominator: all created transactions (by buyer)
+		if (event.event === "transaction.create" && event.scope === "user") {
+			if (!created) {
+				created = true;
+				total++;
+			}
+			continue;
+		}
+
+		if (!created || decided) {
+			continue;
+		}
+
+		if (isDecision(event)) {
+			decisions++;
+			decided = true;
+		}
+	}
+
+	return {
+		total,
+		decisions,
+		percent: total === 0 ? 0 : (decisions / total) * 100,
+	} satisfies UserEventBuyerSchema.Type["decision"];
 };
 
 export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => {
@@ -213,6 +271,7 @@ export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => 
 		return {
 			reaction: computeReaction(source),
 			closer: computeCloser(source),
+			decision: computeDecision(source),
 		} satisfies UserEventBuyerSchema.Type;
 	});
 };
