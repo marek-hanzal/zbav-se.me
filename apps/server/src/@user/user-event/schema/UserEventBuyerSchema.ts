@@ -12,6 +12,14 @@ export const UserEventBuyerSchema = z
 					description: "Total number of reactions",
 					example: 0,
 				}),
+				terminal: z.number().openapi({
+					description: "Total number of terminal reactions (usually from the other side)",
+					example: 0,
+				}),
+				percent: z.number().openapi({
+					description: "Percentage of reactions (reactions + terminal) / total",
+					example: 0,
+				}),
 				medianMs: z.number().openapi({
 					description: "Median milliseconds between transaction opening and reaction",
 					example: 0,

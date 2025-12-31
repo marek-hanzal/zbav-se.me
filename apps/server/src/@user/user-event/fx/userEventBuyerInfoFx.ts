@@ -16,19 +16,32 @@ export namespace userEventBuyerInfoFx {
 const computeReaction = (source: UserEventDbSchema.Type[]) => {
 	let total = 0; // transaction.create (user)
 	let reactions = 0;
+	let terminal = 0;
 	const deltasMs: number[] = [];
 
 	let currentGroup: string | null = null;
 
 	let created = false; // counted total for this group
 	let openAtMs: number | null = null;
+	let done = false; // group resolved (reacted or terminal)
 
 	const flushGroup = () => {
 		currentGroup = null;
 
 		created = false;
 		openAtMs = null;
+		done = false;
 	};
+
+	const isSellerTerminal = (event: UserEventDbSchema.Type) =>
+		(event.event === "transaction.closed" || event.event === "transaction.rejected") &&
+		event.scope === "foreign";
+
+	const isBuyerReaction = (event: UserEventDbSchema.Type) =>
+		event.scope === "user" &&
+		(event.event === "transaction.message" ||
+			event.event === "transaction.closed" ||
+			event.event === "transaction.rejected");
 
 	for (const event of source) {
 		if (currentGroup !== event.group) {
@@ -38,7 +51,7 @@ const computeReaction = (source: UserEventDbSchema.Type[]) => {
 
 		const createdAt = event.createdAt.getTime();
 
-		// denominator: all created transactions (by user) per group
+		// denominator: all created transactions (by buyer) per group
 		if (event.event === "transaction.create" && event.scope === "user") {
 			if (!created) {
 				created = true;
@@ -47,7 +60,9 @@ const computeReaction = (source: UserEventDbSchema.Type[]) => {
 			continue;
 		}
 
-		// reaction window starts at open (foreign)
+		if (!created || done) continue;
+
+		// reaction window starts at open (seller opens)
 		if (event.event === "transaction.open" && event.scope === "foreign") {
 			if (openAtMs === null) {
 				openAtMs = createdAt;
@@ -55,20 +70,21 @@ const computeReaction = (source: UserEventDbSchema.Type[]) => {
 			continue;
 		}
 
-		// first user message after open => reaction
-		if (event.event === "transaction.message" && event.scope === "user") {
-			if (openAtMs == null) {
-				continue;
-			}
-			if (createdAt < openAtMs) {
-				continue;
-			}
+		// seller ended before buyer could react
+		if (isSellerTerminal(event)) {
+			terminal++;
+			done = true;
+			continue;
+		}
+
+		// first buyer reaction after open => reacted (message OR close/reject)
+		if (isBuyerReaction(event)) {
+			if (openAtMs == null) continue;
+			if (createdAt < openAtMs) continue;
 
 			reactions++;
 			deltasMs.push(createdAt - openAtMs);
-
-			// lock: ensure max 1 reaction per group
-			openAtMs = null;
+			done = true;
 		}
 	}
 
@@ -77,9 +93,11 @@ const computeReaction = (source: UserEventDbSchema.Type[]) => {
 	return {
 		total,
 		reactions,
+		terminal,
+		percent: ((reactions + terminal) / total) * 100,
 		medianMs: median(deltasMs),
 		p90Ms: p90(deltasMs),
-	} satisfies UserEventBuyerSchema.Type["reaction"];
+	};
 };
 
 const computeCloser = (source: UserEventDbSchema.Type[]) => {
