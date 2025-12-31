@@ -4,7 +4,6 @@ import { withUserEventCollectionSelect } from "~/app/user-event/db/withUserEvent
 import { withUserEventQueryBuilder } from "~/app/user-event/db/withUserEventQueryBuilder";
 import { UserEventDbSchema } from "~/app/user-event/schema/UserEventDbSchema";
 import type { UserEventQuerySchema } from "~/app/user-event/schema/UserEventQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace userEventCollectionFx {
@@ -15,7 +14,6 @@ export const userEventCollectionFx = (query: userEventCollectionFx.Props) => {
 	const { filter, where, cursor, sort } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
 
 		return yield* Effect.tryPromise(async () => {
 			return withCollection({
@@ -29,10 +27,7 @@ export const userEventCollectionFx = (query: userEventCollectionFx.Props) => {
 					size: 10,
 				},
 				filter,
-				where: {
-					...where,
-					userId: user.id,
-				},
+				where,
 				query: withUserEventQueryBuilder,
 			});
 		});
