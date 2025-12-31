@@ -43,7 +43,7 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 
 						<LabelValue
 							textLabel={"User score (label)"}
-							textValue={data.score}
+							textValue={`${data.events.reaction.reactions} / ${data.events.reaction.reactions}`}
 						/>
 					</Container>
 				);
