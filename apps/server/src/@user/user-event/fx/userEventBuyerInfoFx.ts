@@ -97,7 +97,7 @@ const computeReaction = (source: UserEventDbSchema.Type[]) => {
 		percent: total === 0 ? 0 : ((reactions + terminal) / total) * 100,
 		medianMs: median(deltasMs),
 		p90Ms: p90(deltasMs),
-	};
+	} satisfies UserEventBuyerSchema.Type["reaction"];
 };
 
 const computeCloser = (source: UserEventDbSchema.Type[]) => {

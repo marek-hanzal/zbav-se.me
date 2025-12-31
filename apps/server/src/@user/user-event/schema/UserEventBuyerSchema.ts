@@ -60,7 +60,28 @@ export const UserEventBuyerSchema = z
 			})
 			.strip()
 			.openapi("UserEventBuyerCloser", {
-				description: "Closer info for the user event",
+				description:
+					"This metric describes if the user instantly closes transactions (means - no interaction, just open and kill)",
+			}),
+		decision: z
+			.looseObject({
+				total: z.number().openapi({
+					description: "Total number of samples (transactions)",
+					example: 0,
+				}),
+				decisions: z.number().openapi({
+					description: "Total number of decisions (success, closed)",
+					example: 0,
+				}),
+				percent: z.number().openapi({
+					description: "Percentage of closed transactions (closed / total)",
+					example: 0,
+				}),
+			})
+			.strip()
+			.openapi("UserEventBuyerDecision", {
+				description:
+					"This metric describes if the user is used to close/success transactions",
 			}),
 	})
 	.strip()
