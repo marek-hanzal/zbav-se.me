@@ -19,6 +19,16 @@ export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => 
 				cutoff: 90,
 				userId,
 			},
+			sort: [
+				{
+					field: "group",
+					direction: "asc",
+				},
+				{
+					field: "createdAt",
+					direction: "asc",
+				},
+			],
 		});
 
 		for (const event of source) {

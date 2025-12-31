@@ -20,6 +20,7 @@ export const withUserEventCollectionSelect = ({
 	for (const item of sort ?? []) {
 		query = match(item.field)
 			.with("createdAt", () => query.orderBy("ue.createdAt", item.direction))
+			.with("group", () => query.orderBy("ue.group", item.direction))
 			.exhaustive();
 	}
 

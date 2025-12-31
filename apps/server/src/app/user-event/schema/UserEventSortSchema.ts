@@ -6,6 +6,7 @@ export const UserEventSortSchema = z
 		field: z
 			.enum([
 				"createdAt",
+				"group",
 			])
 			.openapi("UserEventSortField", {
 				description: "Field of the user event sort",
