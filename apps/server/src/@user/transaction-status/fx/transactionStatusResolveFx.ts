@@ -5,6 +5,8 @@ import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
 import type { TransactionStatusResolveSchema } from "~/@user/transaction-status/schema/TransactionStatusResolveSchema";
+import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace transactionStatusResolveFx {
@@ -18,6 +20,8 @@ export const transactionStatusResolveFx = ({
 	createdAt,
 }: transactionStatusResolveFx.Props) => {
 	return Effect.gen(function* () {
+		const user = yield* UserContextFx;
+
 		const transaction = yield* transactionResolveFx({
 			transactionId,
 			message: "You are not allowed to resolve this listing transaction",
@@ -43,6 +47,15 @@ export const transactionStatusResolveFx = ({
 			messageThreadId: transaction.messageThreadId,
 			message: "Seller resolved the transaction (message)",
 			createdAt,
+		});
+
+		yield* userInteractionEventFx({
+			userId: user.id,
+			targetId: transaction.buyerId,
+			source: "transaction",
+			group: transaction.id,
+			event: "transaction.resolved",
+			isTerminal: false,
 		});
 
 		return yield* transactionStatusCreateFx({

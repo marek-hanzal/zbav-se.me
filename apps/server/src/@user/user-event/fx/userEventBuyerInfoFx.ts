@@ -307,7 +307,9 @@ const computeExpired = (source: UserEventDbSchema.Type[]) => {
 			continue;
 		}
 
-		if (!created || done) continue;
+		if (!created || done) {
+			continue;
+		}
 
 		// seller "ping" starts (or updates) the expectation window
 		if (isSellerOpen(event)) {
