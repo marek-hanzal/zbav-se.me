@@ -17,7 +17,7 @@ export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => 
 				size: 1000,
 			},
 			where: {
-				cutoff: 90,
+				// cutoff: 90,
 				userId,
 			},
 			sort: [
