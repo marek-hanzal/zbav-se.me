@@ -13,6 +13,20 @@ export namespace userEventBuyerInfoFx {
 	}
 }
 
+/**
+ * Computes buyer reaction metrics.
+ *
+ * @note Tracks how quickly buyers respond when sellers open transactions, and whether they
+ *          react at all before the seller closes/rejects (terminal).
+ * @note This is a soft metric used to tell seller if buyer reacts and how long
+ *          it usually takes.
+ *
+ * Flow tracked:
+ * 1. transaction.create (user scope) - counts total
+ * 2. transaction.open (foreign scope) - starts reaction window (records openAtMs)
+ * 3a. If transaction.closed/rejected (foreign scope) before buyer reacts -> terminal
+ * 3b. If transaction.message/closed/rejected (user scope) after open -> reaction (records delta from open)
+ */
 const computeReaction = (source: UserEventDbSchema.Type[]) => {
 	let total = 0; // transaction.create (user)
 	let reactions = 0;
@@ -100,6 +114,20 @@ const computeReaction = (source: UserEventDbSchema.Type[]) => {
 	} satisfies UserEventBuyerSchema.Type["reaction"];
 };
 
+/**
+ * Computes buyer closer metrics (transactions closed without interaction).
+ *
+ * @note Tracks transactions where buyers close them directly without any back-and-forth
+ *          interaction (messages, negotiations, etc.).
+ * @note This is a hard metric telling the seller, how often buyer closes the
+ *          transaction without _any_ interaction.
+ *
+ * Flow tracked:
+ * 1. transaction.create (user scope) - counts total (records createAtMs)
+ * 2. transaction.open (foreign scope) - allowed between create and end (doesn't mark as dirty)
+ * 3. Any other event between create and end (including messages) -> marks as dirty
+ * 4. transaction.closed/rejected/success (user scope) - if not dirty, counts as closed (records delta from create)
+ */
 const computeCloser = (source: UserEventDbSchema.Type[]) => {
 	let total = 0; // transaction.create (user)
 	let closed = 0;
@@ -189,6 +217,19 @@ const computeCloser = (source: UserEventDbSchema.Type[]) => {
 	} satisfies UserEventBuyerSchema.Type["closer"];
 };
 
+/**
+ * Computes buyer decision metrics.
+ *
+ * @note Tracks whether buyers actively made decisions (success/close) or if sellers ended
+ *          the transaction before buyers could decide.
+ * @note This is a positive metric telling if the buyer comes back after the transaction to mark
+ *          it as "success/closed".
+ *
+ * Flow tracked:
+ * 1. transaction.create (user scope) - counts total
+ * 2a. If transaction.closed/rejected (foreign scope) -> terminal (seller ended, buyer had no choice)
+ * 2b. If transaction.success/closed (user scope) -> decision (buyer made explicit decision)
+ */
 const computeDecision = (source: UserEventDbSchema.Type[]) => {
 	let total = 0; // transaction.create (user)
 	let decisions = 0;
@@ -255,6 +296,21 @@ const computeDecision = (source: UserEventDbSchema.Type[]) => {
 	} satisfies UserEventBuyerSchema.Type["decision"];
 };
 
+/**
+ * Computes expired/ghosted transaction metrics.
+ *
+ * @note Tracks transactions where sellers reached out (opened or sent messages) but buyers
+ *          never responded, causing them to expire or be resolved without buyer action.
+ * @note This is a negative metric telling if the buyer is used to expire transactions
+ *          (no user's messages).
+ *
+ * Flow tracked:
+ * 1. transaction.create (user scope) - counts total
+ * 2. transaction.open (foreign scope) - sets pingAtMs (seller "ping" moment)
+ * 3. transaction.message (foreign scope) - resets pingAtMs (seller nudged)
+ * 4a. If transaction.message/closed/rejected/success (user scope) after ping -> disqualifies from expired
+ * 4b. If transaction.expired/resolved (foreign scope) after ping without buyer action -> expired
+ */
 const computeExpired = (source: UserEventDbSchema.Type[]) => {
 	let total = 0; // transaction.create (user)
 	let expired = 0; // transaction.expired OR transaction.resolved (foreign) without buyer action after seller ping
