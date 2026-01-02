@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { UserEventSellerSchema } from "~/@user/user-event/schema/UserEventSellerSchema";
 
 export const SellerInfoSchema = z
 	.object({
@@ -10,10 +11,7 @@ export const SellerInfoSchema = z
 			description: "Number of listings",
 			example: 1,
 		}),
-		score: z.number().openapi({
-			description: "Seller score; 1-6",
-			example: 1,
-		}),
+		events: UserEventSellerSchema,
 	})
 	.openapi("SellerInfo", {
 		description: "Seller info for the listing",
