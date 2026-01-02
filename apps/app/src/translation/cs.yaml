@@ -149,7 +149,7 @@
     value: Informace o kupujícím
 1e2825e05d0a8e168a812a6bb29ff8f7b5f58b3c0b29bbffd2c8dfa5:
     ref: Closer p90 (hint)
-    value: Udává čas, za jak dlouho kupující zavře zprávu bez další interakce.
+    value: Udává čas, za jak dlouho kupující obvykle zavře zprávu bez další interakce.
 2250c7f0548b5cbe0fbdac80837ac558866128e004997e4f6b879f72:
     ref: Feed delivery not selected
     value: Jakékoli
@@ -188,7 +188,7 @@
     value: Fotky
 2b8fe8725888d2731e48730886edcba6b89f8bba62b68812a8e5738b:
     ref: Reaction p90 (label)
-    value: Zevrubný reakční čas na zprávu
+    value: Obvyklý reakční čas na zprávu
 2bad77ac9199d19ca4cf85d780cf6f7f747cc6520bc1899bb6717029:
     ref: Go to home (link)
     value: Zpět domů
@@ -200,7 +200,7 @@
     value: Čas zavření zprávy
 2ff3786d4505b98b160e38838692be1ceb7b97965d65a15f2e095e9f:
     ref: Decision rate (label)
-    value: Poměr zavřených zpráv
+    value: Poměr dokončených zpráv
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
     ref: Age (title)
     value: Stáří
@@ -242,11 +242,8 @@
 3b61dc41f15a2b32908b8edd88933f05bf9155117676167a679964d7:
     ref: User score (hint)
     value: >
-        Skóre jsou sloučené hodnoty. Vezmi na vědomé, že běžní uživatelé budou kolem
-        B/C, není na tom nic špatného.
-
-        Tento výsledek ti má pomoci odhalit obecně riziko (tzn. E a F už může
-        znamenat vyšší risk).
+        Skóre rizika odhaduje základní chování kupujícího - obecně A/B/C jsou
+        v pohodě, D zvedlé obočí a E/F už může být risk.
 3c053b1e31a27b42457f488aabe08c89ccd7268700f1cc41b5c77f2f:
     ref: No my listings (title)
     value: Zatím nic neprodáváš
@@ -964,7 +961,7 @@ d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
 d8afcd78535d2c0ab7b58dfcc92c11456c55fe96dab19a1de6a24218:
     ref: Closer rate (hint)
     value: |
-        Důležitá metrika, která říká poměr zavřených zpráv bez další interakce.
+        Důležitá metrika, která říká poměr zavřených zpráv bez další interakce. Nižší číslo je lepší.
 d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
     ref: Feed title (hint)
     value: >
@@ -1175,3 +1172,21 @@ Buyer activity medium:
 Buyer activity high:
     static: true
     value: Vysoká aktivita
+Buyer score 1:
+    static: true
+    value: Potenciálně vysoké riziko
+Buyer score 2:
+    static: true
+    value: Rizikovější profil chování
+Buyer score 3:
+    static: true
+    value: Průměrné riziko
+Buyer score 4:
+    static: true
+    value: Běžný uživatel
+Buyer score 5:
+    static: true
+    value: Nízké riziko
+Buyer score 6:
+    static: true
+    value: Perfektní

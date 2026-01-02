@@ -1,12 +1,14 @@
 import { useLocale } from "@use-pico/client/hook";
 import { Icon } from "@use-pico/client/icon";
 import { Container, LabelValue, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
 import { withTransactionBuyerInfoQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import { RatingToIcon } from "@zbav-se.me/ui/rating";
 import { DateTime } from "luxon";
 import type { FC } from "react";
+import { toBuyerScoreHint } from "~/app/transaction/ui/buyer/toBuyerScoreHint";
 
 const percentLabel = (value: number) => `${Math.round(value)}%`;
 
@@ -58,6 +60,12 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 							className={"px-0"}
 						>
 							<LabelValue
+								textLabel={"Reaction rate (label)"}
+								textHint={translator.text("Reaction rate (hint)")}
+								textValue={percentLabel(events.reaction.percent)}
+							/>
+
+							<LabelValue
 								textLabel={"Reaction p90 (label)"}
 								textHint={translator.text("Reaction p90 (hint)")}
 								textValue={toTimeDiff({
@@ -70,12 +78,6 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 									type: "human",
 								})}
 							/>
-
-							<LabelValue
-								textLabel={"Reaction rate (label)"}
-								textHint={translator.text("Reaction rate (hint)")}
-								textValue={percentLabel(events.reaction.percent)}
-							/>
 						</Container>
 
 						<Container
@@ -86,6 +88,12 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 							}}
 							className={"px-0"}
 						>
+							<LabelValue
+								textLabel={"Closer rate (label)"}
+								textHint={translator.text("Closer rate (hint)")}
+								textValue={percentLabel(events.closer.percent)}
+							/>
+
 							<LabelValue
 								textLabel={"Closer p90 (label)"}
 								textHint={translator.text("Closer p90 (hint)")}
@@ -98,12 +106,6 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 										.toISO(),
 									type: "human",
 								})}
-							/>
-
-							<LabelValue
-								textLabel={"Closer rate (label)"}
-								textHint={translator.text("Closer rate (hint)")}
-								textValue={percentLabel(events.closer.percent)}
 							/>
 						</Container>
 
@@ -146,12 +148,28 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 							textLabel={"User score (label)"}
 							textHint={translator.text("User score (hint)")}
 							textValue={
-								<Icon
-									icon={RatingToIcon[events.score.rank as RatingToIcon.Value]}
+								<Container
 									ui={{
-										text: "2xl",
+										flow: "horizontal",
+										items: "center",
+										justify: "space-between",
+										gap: "default",
 									}}
-								/>
+								>
+									<Icon
+										icon={RatingToIcon[events.score.rank as RatingToIcon.Value]}
+										ui={{
+											text: "2xl",
+										}}
+									/>
+
+									<Tx
+										label={toBuyerScoreHint(events.score.rank)}
+										ui={{
+											wrap: "wrap",
+										}}
+									/>
+								</Container>
 							}
 						/>
 					</Container>
