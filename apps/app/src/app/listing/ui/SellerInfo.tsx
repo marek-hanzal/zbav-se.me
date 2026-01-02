@@ -1,10 +1,15 @@
 import { useLocale } from "@use-pico/client/hook";
+import { Icon } from "@use-pico/client/icon";
 import { Container, LabelValue, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
 import { toTimeDiff } from "@use-pico/common/time";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
+import { translator } from "@use-pico/common/translator";
 import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/user";
+import { RatingToIcon } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 import { SellerScoreIcon } from "~/app/listing/ui/SellerScoreIcon";
+import { toSellerScoreHint } from "~/app/transaction/ui/seller/toSellerScoreHint";
 
 export namespace SellerInfo {
 	export interface Props extends Container.Props {
@@ -51,7 +56,35 @@ export const SellerInfo: FC<SellerInfo.Props> = ({ listingId, ui, ...props }) =>
 
 						<LabelValue
 							textLabel={"User score (label)"}
-							textValue={<SellerScoreIcon score={data.score} />}
+							textHint={translator.text("User score (hint)")}
+							textValue={
+								<Container
+									ui={{
+										flow: "horizontal",
+										items: "center",
+										justify: "space-between",
+										gap: "default",
+									}}
+								>
+									<Icon
+										icon={
+											RatingToIcon[
+												data.events.score.rank as RatingToIcon.Value
+											]
+										}
+										ui={{
+											text: "2xl",
+										}}
+									/>
+
+									<Tx
+										label={toSellerScoreHint(data.events.score.rank)}
+										ui={{
+											wrap: "wrap",
+										}}
+									/>
+								</Container>
+							}
 						/>
 					</Container>
 				);

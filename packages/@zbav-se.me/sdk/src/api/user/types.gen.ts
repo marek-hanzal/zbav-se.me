@@ -1224,10 +1224,158 @@ export type tSellerInfo = {
      * Number of listings
      */
     listings: number;
+    events: tUserEventSeller;
+};
+
+/**
+ * This metric describes the score of the user
+ */
+export type tUserEventSellerScore = {
     /**
-     * Seller score; 1-6
+     * Low-level score value, usually not presented in UI
      */
     score: number;
+    /**
+     * Rank computed from the score (A-F, 1-6)
+     */
+    rank: number;
+};
+
+/**
+ * This metric describes the approx activity of the user
+ */
+export type tUserEventSellerActivity = {
+    /**
+     * Activity type of the seller
+     */
+    bucket: 'low' | 'medium' | 'high';
+};
+
+/**
+ * Masks number of transactions of the seller, basically it tells, how busy seller is.
+ */
+export type tUserEventSellerLoad = {
+    /**
+     * Load type of the seller
+     */
+    bucket: 'low' | 'medium' | 'high';
+};
+
+/**
+ * This metric describes if the user is used to expire transactions (no user's messages)
+ */
+export type tUserEventSellerExpired = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of expired transactions
+     */
+    expired: number;
+    /**
+     * Percentage of expired transactions (expired / total)
+     */
+    percent: number;
+};
+
+/**
+ * This metric describes if the user resolves transactions (success/closed)
+ */
+export type tUserEventSellerResolved = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of resolved transactions (success, closed)
+     */
+    resolved: number;
+    /**
+     * Total number of terminal transactions (usually from the other side)
+     */
+    terminal: number;
+    /**
+     * Percentage of resolved transactions (resolved / total)
+     */
+    percent: number;
+    /**
+     * Median milliseconds until the transaction gets resolved
+     */
+    medianMs: number;
+    /**
+     * 90th percentile milliseconds until the transaction gets resolved
+     */
+    p90Ms: number;
+};
+
+/**
+ * This metric describes if the user rejects transactions without any interaction (no messages between create and reject)
+ */
+export type tUserEventSellerRejected = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of rejected transactions
+     */
+    rejected: number;
+    /**
+     * Percentage of rejected transactions (rejected / total)
+     */
+    percent: number;
+    /**
+     * Median milliseconds between transaction creation and rejection
+     */
+    medianMs: number;
+    /**
+     * 90th percentile milliseconds between transaction creation and rejection
+     */
+    p90Ms: number;
+};
+
+/**
+ * Initial reaction by seller on transaction created by buyer.
+ */
+export type tUserEventSellerReaction = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of reactions
+     */
+    reactions: number;
+    /**
+     * Total number of terminal reactions (usually from the other side)
+     */
+    terminal: number;
+    /**
+     * Percentage of reactions (reactions + terminal) / total
+     */
+    percent: number;
+    /**
+     * Median milliseconds between transaction creation and reaction
+     */
+    medianMs: number;
+    /**
+     * 90th percentile milliseconds between transaction creation and reaction
+     */
+    p90Ms: number;
+};
+
+/**
+ * Seller info for the user event
+ */
+export type tUserEventSeller = {
+    reaction: tUserEventSellerReaction;
+    rejected: tUserEventSellerRejected;
+    resolved: tUserEventSellerResolved;
+    expired: tUserEventSellerExpired;
+    load: tUserEventSellerLoad;
+    activity: tUserEventSellerActivity;
+    score: tUserEventSellerScore;
 };
 
 /**
@@ -4700,6 +4848,36 @@ export type tApiUserEventBuyerResponse = {
 };
 
 export type apiUserEventBuyerResponse = tApiUserEventBuyerResponse[keyof tApiUserEventBuyerResponse];
+
+export type tApiUserEventSellerRequest = {
+    body?: never;
+    path: {
+        /**
+         * ID of the user
+         */
+        userId: string;
+    };
+    query?: never;
+    url: '/api/user/user-event/{userId}/seller';
+};
+
+export type apiUserEventSellerErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiUserEventSellerError = apiUserEventSellerErrors[keyof apiUserEventSellerErrors];
+
+export type tApiUserEventSellerResponse = {
+    /**
+     * Seller info
+     */
+    200: tUserEventSeller;
+};
+
+export type apiUserEventSellerResponse = tApiUserEventSellerResponse[keyof tApiUserEventSellerResponse];
 
 export type tApiUserExPatchRequest = {
     /**

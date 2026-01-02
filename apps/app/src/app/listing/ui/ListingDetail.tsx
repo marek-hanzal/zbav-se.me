@@ -228,7 +228,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 						return (
 							<LabelValue
 								textLabel={"Listing seller hint (label)"}
-								textValue={<SellerScoreIcon score={sellerInfo.score} />}
+								textValue={<SellerScoreIcon score={sellerInfo.events.score.rank} />}
 								action={<Icon icon={ShowIcon} />}
 								onClick={hooks.onSellerInfo}
 							/>

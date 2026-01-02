@@ -1648,14 +1648,235 @@ export const sSellerInfo = {
             type: 'number',
             example: 1
         },
-        score: {
-            type: 'number',
-            example: 1
+        events: {
+            $ref: '#/components/schemas/UserEventSeller'
         }
     },
     required: [
         'registered',
         'listings',
+        'events'
+    ]
+} as const;
+
+export const sUserEventSellerScore = {
+    type: 'object',
+    properties: {
+        score: {
+            type: 'number',
+            example: 0
+        },
+        rank: {
+            type: 'number',
+            example: 2
+        }
+    },
+    required: [
+        'score',
+        'rank'
+    ]
+} as const;
+
+export const sUserEventSellerActivity = {
+    type: 'object',
+    properties: {
+        bucket: {
+            type: 'string',
+            enum: [
+                'low',
+                'medium',
+                'high'
+            ],
+            example: 'low'
+        }
+    },
+    required: [
+        'bucket'
+    ]
+} as const;
+
+export const sUserEventSellerLoad = {
+    type: 'object',
+    properties: {
+        bucket: {
+            type: 'string',
+            enum: [
+                'low',
+                'medium',
+                'high'
+            ],
+            example: 'low'
+        }
+    },
+    required: [
+        'bucket'
+    ]
+} as const;
+
+export const sUserEventSellerExpired = {
+    type: 'object',
+    properties: {
+        total: {
+            type: 'number',
+            example: 0
+        },
+        expired: {
+            type: 'number',
+            example: 0
+        },
+        percent: {
+            type: 'number',
+            example: 0
+        }
+    },
+    required: [
+        'total',
+        'expired',
+        'percent'
+    ]
+} as const;
+
+export const sUserEventSellerResolved = {
+    type: 'object',
+    properties: {
+        total: {
+            type: 'number',
+            example: 0
+        },
+        resolved: {
+            type: 'number',
+            example: 0
+        },
+        terminal: {
+            type: 'number',
+            example: 0
+        },
+        percent: {
+            type: 'number',
+            example: 0
+        },
+        medianMs: {
+            type: 'number',
+            example: 0
+        },
+        p90Ms: {
+            type: 'number',
+            example: 0
+        }
+    },
+    required: [
+        'total',
+        'resolved',
+        'terminal',
+        'percent',
+        'medianMs',
+        'p90Ms'
+    ]
+} as const;
+
+export const sUserEventSellerRejected = {
+    type: 'object',
+    properties: {
+        total: {
+            type: 'number',
+            example: 0
+        },
+        rejected: {
+            type: 'number',
+            example: 0
+        },
+        percent: {
+            type: 'number',
+            example: 0
+        },
+        medianMs: {
+            type: 'number',
+            example: 0
+        },
+        p90Ms: {
+            type: 'number',
+            example: 0
+        }
+    },
+    required: [
+        'total',
+        'rejected',
+        'percent',
+        'medianMs',
+        'p90Ms'
+    ]
+} as const;
+
+export const sUserEventSellerReaction = {
+    type: 'object',
+    properties: {
+        total: {
+            type: 'number',
+            example: 0
+        },
+        reactions: {
+            type: 'number',
+            example: 0
+        },
+        terminal: {
+            type: 'number',
+            example: 0
+        },
+        percent: {
+            type: 'number',
+            example: 0
+        },
+        medianMs: {
+            type: 'number',
+            example: 0
+        },
+        p90Ms: {
+            type: 'number',
+            example: 0
+        }
+    },
+    required: [
+        'total',
+        'reactions',
+        'terminal',
+        'percent',
+        'medianMs',
+        'p90Ms'
+    ]
+} as const;
+
+export const sUserEventSeller = {
+    type: 'object',
+    properties: {
+        reaction: {
+            $ref: '#/components/schemas/UserEventSellerReaction'
+        },
+        rejected: {
+            $ref: '#/components/schemas/UserEventSellerRejected'
+        },
+        resolved: {
+            $ref: '#/components/schemas/UserEventSellerResolved'
+        },
+        expired: {
+            $ref: '#/components/schemas/UserEventSellerExpired'
+        },
+        load: {
+            $ref: '#/components/schemas/UserEventSellerLoad'
+        },
+        activity: {
+            $ref: '#/components/schemas/UserEventSellerActivity'
+        },
+        score: {
+            $ref: '#/components/schemas/UserEventSellerScore'
+        }
+    },
+    required: [
+        'reaction',
+        'rejected',
+        'resolved',
+        'expired',
+        'load',
+        'activity',
         'score'
     ]
 } as const;
