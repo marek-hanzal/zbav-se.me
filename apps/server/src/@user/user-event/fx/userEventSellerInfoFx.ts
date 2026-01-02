@@ -112,22 +112,21 @@ const computeReaction = (source: UserEventDbSchema.Type[]) => {
 };
 
 /**
- * Computes seller rejected metrics (transactions closed without interaction).
+ * Computes seller rejected metrics (transactions rejected without interaction).
  *
- * @note Tracks transactions where sellers close them directly without any back-and-forth
+ * @note Tracks transactions where sellers reject them directly without any back-and-forth
  *          interaction (messages, negotiations, etc.).
- * @note This is a hard metric telling buyers how often seller closes the
+ * @note This is a hard metric telling buyers how often seller rejects the
  *          transaction without _any_ interaction.
  *
  * Flow tracked:
  * 1. transaction.create (foreign scope) - counts total (buyer creates transaction, records createAtMs)
- * 2. transaction.open (user scope) - allowed between create and end (doesn't mark as dirty)
- * 3. Any other event between create and end (including messages) -> marks as dirty
- * 4. transaction.closed/rejected/success (user scope) - if not dirty, counts as rejected (records delta from create)
+ * 2. Any interaction event between create and reject (e.g., transaction.message) -> marks as dirty
+ * 3. transaction.rejected (user scope) - if not dirty, counts as rejected (records delta from create)
  */
 const computeRejected = (source: UserEventDbSchema.Type[]) => {
 	let total = 0; // transaction.create (foreign)
-	let closed = 0;
+	let rejected = 0;
 	const deltasMs: number[] = [];
 
 	let currentGroup: string | null = null;
@@ -148,14 +147,14 @@ const computeRejected = (source: UserEventDbSchema.Type[]) => {
 		done = false;
 	};
 
-	const isAllowedBetween = (event: UserEventDbSchema.Type) =>
-		event.event === "transaction.open" && event.scope === "user";
+	const isSellerRejected = (event: UserEventDbSchema.Type) =>
+		event.event === "transaction.rejected" && event.scope === "user";
 
-	const isEnd = (event: UserEventDbSchema.Type) =>
-		event.scope === "user" &&
-		(event.event === "transaction.closed" ||
-			event.event === "transaction.rejected" ||
-			event.event === "transaction.success");
+	const isInteraction = (event: UserEventDbSchema.Type) =>
+		event.event === "transaction.message" ||
+		event.event === "transaction.open" ||
+		event.event === "transaction.closed" ||
+		event.event === "transaction.success";
 
 	for (const event of source) {
 		if (currentGroup !== event.group) {
@@ -187,18 +186,19 @@ const computeRejected = (source: UserEventDbSchema.Type[]) => {
 			continue;
 		}
 
-		if (isEnd(event)) {
+		// seller rejected the transaction
+		if (isSellerRejected(event)) {
 			done = true;
 
 			if (!dirty) {
-				closed++;
+				rejected++;
 				deltasMs.push(createdAt - createAtMs);
 			}
 			continue;
 		}
 
-		// anything else between create and end makes it dirty (messages included)
-		if (!isAllowedBetween(event)) {
+		// any interaction between create and reject makes it dirty
+		if (isInteraction(event)) {
 			dirty = true;
 		}
 	}
@@ -207,8 +207,8 @@ const computeRejected = (source: UserEventDbSchema.Type[]) => {
 
 	return {
 		total,
-		closed,
-		percent: total === 0 ? 0 : (closed / total) * 100,
+		rejected,
+		percent: total === 0 ? 0 : (rejected / total) * 100,
 		medianMs: median(deltasMs),
 		p90Ms: p90(deltasMs),
 	} satisfies UserEventSellerSchema.Type["rejected"];
