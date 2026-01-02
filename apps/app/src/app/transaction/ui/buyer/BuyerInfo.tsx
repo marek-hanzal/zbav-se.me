@@ -2,6 +2,7 @@ import { useLocale } from "@use-pico/client/hook";
 import { Icon } from "@use-pico/client/icon";
 import { Container, LabelValue, SpinnerContainer } from "@use-pico/client/ui/container";
 import { toTimeDiff } from "@use-pico/common/time";
+import { translator } from "@use-pico/common/translator";
 import { withTransactionBuyerInfoQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import { RatingToIcon } from "@zbav-se.me/ui/rating";
 import { DateTime } from "luxon";
@@ -50,13 +51,15 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 
 						<Container
 							ui={{
+								flow: "vertical",
 								inner: "default",
+								gap: "default",
 							}}
 							className={"px-0"}
 						>
 							<LabelValue
 								textLabel={"Reaction p90 (label)"}
-								textHint={"Reaction p90 (hint)"}
+								textHint={translator.text("Reaction p90 (hint)")}
 								textValue={toTimeDiff({
 									locale,
 									time: DateTime.now()
@@ -70,20 +73,22 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 
 							<LabelValue
 								textLabel={"Reaction rate (label)"}
-								textHint={"Reaction rate (hint)"}
+								textHint={translator.text("Reaction rate (hint)")}
 								textValue={percentLabel(events.reaction.percent)}
 							/>
 						</Container>
 
 						<Container
 							ui={{
+								flow: "vertical",
 								inner: "default",
+								gap: "default",
 							}}
 							className={"px-0"}
 						>
 							<LabelValue
 								textLabel={"Closer p90 (label)"}
-								textHint={"Closer p90 (hint)"}
+								textHint={translator.text("Closer p90 (hint)")}
 								textValue={toTimeDiff({
 									locale,
 									time: DateTime.now()
@@ -97,45 +102,49 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 
 							<LabelValue
 								textLabel={"Closer rate (label)"}
-								textHint={"Closer rate (hint)"}
+								textHint={translator.text("Closer rate (hint)")}
 								textValue={percentLabel(events.closer.percent)}
 							/>
 						</Container>
 
 						<LabelValue
 							textLabel={"Decision rate (label)"}
-							textHint={"Decision rate (hint)"}
+							textHint={translator.text("Decision rate (hint)")}
 							textValue={percentLabel(events.decision.percent)}
 						/>
 
 						<LabelValue
 							textLabel={"Expired rate (label)"}
-							textHint={"Expired rate (hint)"}
+							textHint={translator.text("Expired rate (hint)")}
 							textValue={percentLabel(events.expired.percent)}
 						/>
 
 						<Container
 							ui={{
+								flow: "vertical",
 								inner: "default",
+								gap: "default",
 							}}
 							className={"px-0"}
 						>
 							<LabelValue
 								textLabel={"Buyer load (label)"}
-								textHint={"Buyer load (hint)"}
-								textValue={events.load.bucket}
+								textHint={translator.text("Buyer load (hint)")}
+								textValue={translator.text(`Buyer load ${events.load.bucket}`)}
 							/>
 
 							<LabelValue
 								textLabel={"Buyer activity (label)"}
-								textHint={"Buyer activity (hint)"}
-								textValue={events.activity.bucket}
+								textHint={translator.text("Buyer activity (hint)")}
+								textValue={translator.text(
+									`Buyer activity ${events.activity.bucket}`,
+								)}
 							/>
 						</Container>
 
 						<LabelValue
 							textLabel={"User score (label)"}
-							textHint={"User score (hint)"}
+							textHint={translator.text("User score (hint)")}
 							textValue={
 								<Icon
 									icon={RatingToIcon[events.score.rank as RatingToIcon.Value]}
