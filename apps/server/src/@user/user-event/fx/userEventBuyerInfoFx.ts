@@ -403,6 +403,74 @@ const computeExpired = (source: UserEventDbSchema.Type[]) => {
 	} satisfies UserEventBuyerSchema.Type["expired"];
 };
 
+const computeLoad = (
+	source: UserEventDbSchema.Type[],
+	thresholds = {
+		lowMax: 1,
+		mediumMax: 3,
+	},
+) => {
+	// count of "active" opened transactions (create+open, no end)
+	let count = 0;
+
+	let currentGroup: string | null = null;
+
+	let created = false;
+	let ended = false;
+
+	const flushGroup = () => {
+		currentGroup = null;
+
+		created = false;
+		ended = false;
+	};
+
+	const isEnd = (event: UserEventDbSchema.Type) =>
+		event.event === "transaction.success" ||
+		event.event === "transaction.closed" ||
+		event.event === "transaction.rejected" ||
+		event.event === "transaction.expired" ||
+		event.event === "transaction.resolved";
+
+	const finishGroup = () => {
+		if (created && !ended) {
+			count++;
+		}
+	};
+
+	for (const event of source) {
+		if (currentGroup !== event.group) {
+			// finish previous group before switching
+			if (currentGroup !== null) {
+				finishGroup();
+			}
+			flushGroup();
+			currentGroup = event.group;
+		}
+
+		if (event.event === "transaction.create" && event.scope === "user") {
+			created = true;
+			continue;
+		}
+
+		if (isEnd(event)) {
+			ended = true;
+		}
+	}
+
+	// finish last group
+	if (currentGroup !== null) {
+		finishGroup();
+	}
+
+	const bucket =
+		count <= thresholds.lowMax ? "low" : count <= thresholds.mediumMax ? "medium" : "high";
+
+	return {
+		bucket,
+	} satisfies UserEventBuyerSchema.Type["load"];
+};
+
 export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => {
 	return Effect.gen(function* () {
 		const { data: source } = yield* userEventCollectionFx({
@@ -435,6 +503,7 @@ export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => 
 			closer: computeCloser(source),
 			decision: computeDecision(source),
 			expired: computeExpired(source),
+			load: computeLoad(source),
 		} satisfies UserEventBuyerSchema.Type;
 	});
 };

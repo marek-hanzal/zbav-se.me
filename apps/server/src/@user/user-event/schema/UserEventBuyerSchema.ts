@@ -104,7 +104,26 @@ export const UserEventBuyerSchema = z
 			})
 			.strip()
 			.openapi("UserEventBuyerExpired", {
-				description: "This metric describes if the user is used to expire transactions (no user's messages)",
+				description:
+					"This metric describes if the user is used to expire transactions (no user's messages)",
+			}),
+		load: z
+			.looseObject({
+				bucket: z
+					.enum([
+						"low",
+						"medium",
+						"high",
+					])
+					.openapi({
+						description: "Load type of the buyer",
+						example: "low",
+					}),
+			})
+			.strip()
+			.openapi("UserEventBuyerLoad", {
+				description:
+					"Masks number of transactions of the buyer, basically it tells, how busy buyer is.",
 			}),
 	})
 	.strip()
