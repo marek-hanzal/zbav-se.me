@@ -225,7 +225,8 @@ const computeRejected = (source: UserEventDbSchema.Type[]) => {
  * Flow tracked:
  * 1. transaction.create (foreign scope) - counts total (buyer creates transaction, records createAtMs)
  * 2a. If transaction.closed/rejected (foreign scope) -> terminal (buyer ended, seller had no choice)
- * 2b. If transaction.success/closed (user scope) -> resolved (seller made explicit resolution, records delta from create)
+ * 2b. If transaction.rejected (user scope) -> terminal (seller rejected, not resolved)
+ * 2c. If transaction.success/closed (user scope) -> resolved (seller made explicit resolution, records delta from create)
  */
 const computeResolved = (source: UserEventDbSchema.Type[]) => {
 	let total = 0; // transaction.create (foreign)
@@ -248,12 +249,16 @@ const computeResolved = (source: UserEventDbSchema.Type[]) => {
 	};
 
 	const isBuyerTerminal = (event: UserEventDbSchema.Type) =>
-		(event.event === "transaction.closed" || event.event === "transaction.rejected") &&
+		(event.event === "transaction.closed" ||
+			event.event === "transaction.rejected" ||
+			event.event === "transaction.success") &&
 		event.scope === "foreign";
 
+	const isSellerTerminal = (event: UserEventDbSchema.Type) =>
+		event.event === "transaction.rejected" && event.scope === "user";
+
 	const isSellerResolve = (event: UserEventDbSchema.Type) =>
-		event.scope === "user" &&
-		(event.event === "transaction.success" || event.event === "transaction.closed");
+		event.scope === "user" && event.event === "transaction.resolved";
 
 	for (const event of source) {
 		if (currentGroup !== event.group) {
@@ -286,10 +291,23 @@ const computeResolved = (source: UserEventDbSchema.Type[]) => {
 			continue;
 		}
 
+		// seller rejected it -> terminal (not resolved)
+		if (isSellerTerminal(event)) {
+			if (createAtMs != null && createdAt >= createAtMs) {
+				terminal++;
+				done = true;
+			}
+			continue;
+		}
+
 		// seller explicit resolved
 		if (isSellerResolve(event)) {
-			if (createAtMs == null) continue;
-			if (createdAt < createAtMs) continue;
+			if (createAtMs == null) {
+				continue;
+			}
+			if (createdAt < createAtMs) {
+				continue;
+			}
 
 			resolved++;
 			deltasMs.push(createdAt - createAtMs);
