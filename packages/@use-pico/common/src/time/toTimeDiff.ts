@@ -37,6 +37,7 @@ export const toTimeDiff = ({
 				"day",
 				"hour",
 				"minute",
+				"second",
 			];
 
 			const diff = target.diff(now, baseUnits);
