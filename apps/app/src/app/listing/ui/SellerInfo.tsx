@@ -8,7 +8,6 @@ import { translator } from "@use-pico/common/translator";
 import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/user";
 import { RatingToIcon } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
-import { SellerScoreIcon } from "~/app/listing/ui/SellerScoreIcon";
 import { toSellerScoreHint } from "~/app/transaction/ui/seller/toSellerScoreHint";
 
 export namespace SellerInfo {

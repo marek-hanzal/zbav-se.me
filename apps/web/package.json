@@ -11,7 +11,7 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@better-auth/passkey": "1.4.9",
+		"@better-auth/passkey": "1.4.10",
 		"@escapace/accept-language-parser": "2.1.1",
 		"@tanstack/react-form": "1.27.7",
 		"@tanstack/react-query": "5.90.16",
@@ -25,16 +25,16 @@
 		"@zbav-se.me/sdk": "workspace:*",
 		"@zbav-se.me/ui": "workspace:*",
 		"axios": "1.13.2",
-		"better-auth": "1.4.9",
+		"better-auth": "1.4.10",
 		"motion": "12.23.26",
 		"react": "19.2.3",
 		"react-dom": "19.2.3",
 		"react-markdown": "10.1.0",
 		"remark-gfm": "4.0.1",
-		"zod": "4.3.2"
+		"zod": "4.3.4"
 	},
 	"devDependencies": {
-		"@iconify/json": "2.2.423",
+		"@iconify/json": "2.2.424",
 		"@iconify/tailwind4": "1.2.0",
 		"@modyfi/vite-plugin-yaml": "1.1.1",
 		"@tailwindcss/vite": "4.1.18",

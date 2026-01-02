@@ -11,7 +11,14 @@ export const SellerInfoSchema = z
 			description: "Number of listings",
 			example: 1,
 		}),
-		events: UserEventSellerSchema,
+		events: z
+			.xor([
+				z.null(),
+				UserEventSellerSchema,
+			])
+			.openapi({
+				description: "Seller info may not be available if we don't have enough data",
+			}),
 	})
 	.openapi("SellerInfo", {
 		description: "Seller info for the listing",

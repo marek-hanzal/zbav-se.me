@@ -635,6 +635,10 @@ export const userEventSellerInfoFx = ({ userId }: userEventSellerInfoFx.Props) =
 			],
 		});
 
+		if (source.length === 0) {
+			return null;
+		}
+
 		const result: Omit<UserEventSellerSchema.Type, "score"> = {
 			reaction: computeReaction(source),
 			rejected: computeRejected(source),

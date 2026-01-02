@@ -7,7 +7,14 @@ export const TransactionBuyerInfoSchema = z
 			description: "Registration date",
 			type: "string",
 		}),
-		events: UserEventBuyerSchema,
+		events: z
+			.xor([
+				z.null(),
+				UserEventBuyerSchema,
+			])
+			.openapi({
+				description: "Buyer info may not be available if we don't have enough data",
+			}),
 	})
 	.openapi("TransactionBuyerInfo", {
 		description: "Buyer info for the transaction",
