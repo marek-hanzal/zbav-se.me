@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { UserEventSellerActivitySchema } from "./UserEventSellerActivitySchema";
-import { UserEventSellerCloserSchema } from "./UserEventSellerCloserSchema";
+import { UserEventSellerRejectedSchema } from "./UserEventSellerRejectedSchema";
 import { UserEventSellerExpiredSchema } from "./UserEventSellerExpiredSchema";
 import { UserEventSellerLoadSchema } from "./UserEventSellerLoadSchema";
 import { UserEventSellerReactionSchema } from "./UserEventSellerReactionSchema";
@@ -10,7 +10,7 @@ import { UserEventSellerScoreSchema } from "./UserEventSellerScoreSchema";
 export const UserEventSellerSchema = z
 	.looseObject({
 		reaction: UserEventSellerReactionSchema,
-		closer: UserEventSellerCloserSchema,
+		rejected: UserEventSellerRejectedSchema,
 		resolved: UserEventSellerResolvedSchema,
 		expired: UserEventSellerExpiredSchema,
 		load: UserEventSellerLoadSchema,

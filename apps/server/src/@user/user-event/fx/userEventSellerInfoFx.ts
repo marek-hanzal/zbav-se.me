@@ -112,7 +112,7 @@ const computeReaction = (source: UserEventDbSchema.Type[]) => {
 };
 
 /**
- * Computes seller closer metrics (transactions closed without interaction).
+ * Computes seller rejected metrics (transactions closed without interaction).
  *
  * @note Tracks transactions where sellers close them directly without any back-and-forth
  *          interaction (messages, negotiations, etc.).
@@ -123,9 +123,9 @@ const computeReaction = (source: UserEventDbSchema.Type[]) => {
  * 1. transaction.create (foreign scope) - counts total (buyer creates transaction, records createAtMs)
  * 2. transaction.open (user scope) - allowed between create and end (doesn't mark as dirty)
  * 3. Any other event between create and end (including messages) -> marks as dirty
- * 4. transaction.closed/rejected/success (user scope) - if not dirty, counts as closer (records delta from create)
+ * 4. transaction.closed/rejected/success (user scope) - if not dirty, counts as rejected (records delta from create)
  */
-const computeCloser = (source: UserEventDbSchema.Type[]) => {
+const computeRejected = (source: UserEventDbSchema.Type[]) => {
 	let total = 0; // transaction.create (foreign)
 	let closed = 0;
 	const deltasMs: number[] = [];
@@ -211,7 +211,7 @@ const computeCloser = (source: UserEventDbSchema.Type[]) => {
 		percent: total === 0 ? 0 : (closed / total) * 100,
 		medianMs: median(deltasMs),
 		p90Ms: p90(deltasMs),
-	} satisfies UserEventSellerSchema.Type["closer"];
+	} satisfies UserEventSellerSchema.Type["rejected"];
 };
 
 /**
@@ -286,7 +286,7 @@ const computeResolved = (source: UserEventDbSchema.Type[]) => {
 			continue;
 		}
 
-		// seller explicit resolvevfh
+		// seller explicit resolved
 		if (isSellerResolve(event)) {
 			if (createAtMs == null) continue;
 			if (createdAt < createAtMs) continue;
@@ -516,12 +516,12 @@ const computeActivity = (source: UserEventDbSchema.Type[], days: number) => {
 export const computeScore = (input: {
 	reaction: UserEventSellerSchema.Type["reaction"];
 	resolved: UserEventSellerSchema.Type["resolved"];
-	closer: UserEventSellerSchema.Type["closer"];
+	rejected: UserEventSellerSchema.Type["rejected"];
 	expired: UserEventSellerSchema.Type["expired"];
 	activity: UserEventSellerSchema.Type["activity"];
 	load: UserEventSellerSchema.Type["load"];
 }) => {
-	const { reaction, resolved, closer, expired, activity, load } = input;
+	const { reaction, resolved, rejected, expired, activity, load } = input;
 
 	const bonusActivity = (bucket: "low" | "medium" | "high") =>
 		bucket === "high" ? 2 : bucket === "medium" ? 1 : 0;
@@ -556,8 +556,8 @@ export const computeScore = (input: {
 	const resolvePoints = clamp(resolved.percent, 0, 100) * 0.55; // 0..55
 	const reactionPoints = clamp(reaction.percent, 0, 100) * 0.25; // 0..25
 
-	const closerOver = Math.max(0, closer.percent - 10); // allow up to 10%
-	const closerPenalty = clamp(closerOver, 0, 100) * 0.25; // 0..25
+	const rejectedOver = Math.max(0, rejected.percent - 10); // allow up to 10%
+	const rejectedPenalty = clamp(rejectedOver, 0, 100) * 0.25; // 0..25
 
 	const expiredOver = Math.max(0, expired.percent - 10); // allow up to 10%
 	const expiredPenalty = clamp(expiredOver, 0, 100) * 0.1; // 0..10
@@ -568,7 +568,7 @@ export const computeScore = (input: {
 	// speed bonus
 	const speed = bonusReactionSpeed(reaction); // 0..6
 
-	const raw = resolvePoints + reactionPoints + micro + speed - closerPenalty - expiredPenalty;
+	const raw = resolvePoints + reactionPoints + micro + speed - rejectedPenalty - expiredPenalty;
 	const score = clamp(Math.round(raw), 0, 100);
 
 	return {
@@ -619,7 +619,7 @@ export const userEventSellerInfoFx = ({ userId }: userEventSellerInfoFx.Props) =
 
 		const result: Omit<UserEventSellerSchema.Type, "score"> = {
 			reaction: computeReaction(source),
-			closer: computeCloser(source),
+			rejected: computeRejected(source),
 			resolved: computeResolved(source),
 			expired: computeExpired(source),
 			load: computeLoad(source),

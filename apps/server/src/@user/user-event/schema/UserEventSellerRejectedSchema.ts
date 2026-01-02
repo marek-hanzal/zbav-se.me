@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 
-export const UserEventSellerCloserSchema = z
+export const UserEventSellerRejectedSchema = z
 	.looseObject({
 		total: z.number().openapi({
 			description: "Total number of samples (transactions)",
@@ -24,13 +24,13 @@ export const UserEventSellerCloserSchema = z
 		}),
 	})
 	.strip()
-	.openapi("UserEventSellerCloser", {
+	.openapi("UserEventSellerRejected", {
 		description:
 			"This metric describes if the user instantly closes transactions (means - no interaction, just open and kill)",
 	});
 
-export type UserEventSellerCloserSchema = typeof UserEventSellerCloserSchema;
+export type UserEventSellerRejectedSchema = typeof UserEventSellerRejectedSchema;
 
-export namespace UserEventSellerCloserSchema {
-	export type Type = z.infer<UserEventSellerCloserSchema>;
+export namespace UserEventSellerRejectedSchema {
+	export type Type = z.infer<UserEventSellerRejectedSchema>;
 }
