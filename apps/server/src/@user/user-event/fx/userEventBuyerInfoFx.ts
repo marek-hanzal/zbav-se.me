@@ -471,15 +471,50 @@ const computeLoad = (
 	} satisfies UserEventBuyerSchema.Type["load"];
 };
 
+const computeActivity = (source: UserEventDbSchema.Type[], days: number) => {
+	let lastUserAtMs: number | null = null;
+
+	for (const event of source) {
+		if (event.scope !== "user") continue;
+
+		const t = event.createdAt.getTime();
+		if (lastUserAtMs === null || t > lastUserAtMs) {
+			lastUserAtMs = t;
+		}
+	}
+
+	// "none" -> low
+	if (lastUserAtMs === null) {
+		return {
+			bucket: "low",
+		} satisfies UserEventBuyerSchema.Type["activity"];
+	}
+
+	const nowMs = Date.now();
+	const ageMs = Math.max(0, nowMs - lastUserAtMs);
+	const ageDays = Math.floor(ageMs / (24 * 60 * 60 * 1000));
+
+	// split [0..days) into 3 buckets
+	const tier = Math.max(1, Math.floor(days / 3));
+
+	const bucket = ageDays < tier ? "high" : ageDays < tier * 2 ? "medium" : "low";
+
+	return {
+		bucket,
+	} satisfies UserEventBuyerSchema.Type["activity"];
+};
+
 export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => {
 	return Effect.gen(function* () {
+		const cutoff = 90;
+
 		const { data: source } = yield* userEventCollectionFx({
 			cursor: {
 				page: 0,
 				size: 1000,
 			},
 			where: {
-				cutoff: 90,
+				cutoff,
 				userId,
 			},
 			sort: [
@@ -504,6 +539,7 @@ export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => 
 			decision: computeDecision(source),
 			expired: computeExpired(source),
 			load: computeLoad(source),
+			activity: computeActivity(source, cutoff),
 		} satisfies UserEventBuyerSchema.Type;
 	});
 };

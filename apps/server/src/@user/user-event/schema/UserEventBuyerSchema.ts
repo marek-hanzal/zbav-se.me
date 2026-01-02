@@ -125,6 +125,23 @@ export const UserEventBuyerSchema = z
 				description:
 					"Masks number of transactions of the buyer, basically it tells, how busy buyer is.",
 			}),
+		activity: z
+			.looseObject({
+				bucket: z
+					.enum([
+						"low",
+						"medium",
+						"high",
+					])
+					.openapi({
+						description: "Activity type of the buyer",
+						example: "low",
+					}),
+			})
+			.strip()
+			.openapi("UserEventBuyerActivity", {
+				description: "This metric describes the approx activity of the user",
+			}),
 	})
 	.strip()
 	.openapi("UserEventBuyer", {
