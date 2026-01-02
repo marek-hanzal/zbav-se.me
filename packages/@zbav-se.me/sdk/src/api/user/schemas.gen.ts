@@ -336,6 +336,9 @@ export const sTransactionStatus = {
         transactionId: {
             type: 'string'
         },
+        listingId: {
+            type: 'string'
+        },
         side: {
             $ref: '#/components/schemas/TransactionSideEnum'
         },
@@ -346,13 +349,18 @@ export const sTransactionStatus = {
                 },
                 {}
             ]
+        },
+        createdAt: {
+            type: 'string'
         }
     },
     required: [
         'id',
         'transactionId',
+        'listingId',
         'side',
-        'status'
+        'status',
+        'createdAt'
     ]
 } as const;
 
@@ -492,13 +500,224 @@ export const sTransactionBuyerInfo = {
         registered: {
             type: 'string'
         },
+        events: {
+            $ref: '#/components/schemas/UserEventBuyer'
+        }
+    },
+    required: [
+        'registered',
+        'events'
+    ]
+} as const;
+
+export const sUserEventBuyerScore = {
+    type: 'object',
+    properties: {
         score: {
+            type: 'number',
+            example: 0
+        },
+        rank: {
+            type: 'number',
+            example: 2
+        }
+    },
+    required: [
+        'score',
+        'rank'
+    ]
+} as const;
+
+export const sUserEventBuyerActivity = {
+    type: 'object',
+    properties: {
+        bucket: {
+            type: 'string',
+            enum: [
+                'low',
+                'medium',
+                'high'
+            ],
+            example: 'low'
+        }
+    },
+    required: [
+        'bucket'
+    ]
+} as const;
+
+export const sUserEventBuyerLoad = {
+    type: 'object',
+    properties: {
+        bucket: {
+            type: 'string',
+            enum: [
+                'low',
+                'medium',
+                'high'
+            ],
+            example: 'low'
+        }
+    },
+    required: [
+        'bucket'
+    ]
+} as const;
+
+export const sUserEventBuyerExpired = {
+    type: 'object',
+    properties: {
+        total: {
+            type: 'number',
+            example: 0
+        },
+        expired: {
+            type: 'number',
+            example: 0
+        },
+        percent: {
             type: 'number',
             example: 0
         }
     },
     required: [
-        'registered',
+        'total',
+        'expired',
+        'percent'
+    ]
+} as const;
+
+export const sUserEventBuyerDecision = {
+    type: 'object',
+    properties: {
+        total: {
+            type: 'number',
+            example: 0
+        },
+        decisions: {
+            type: 'number',
+            example: 0
+        },
+        terminal: {
+            type: 'number',
+            example: 0
+        },
+        percent: {
+            type: 'number',
+            example: 0
+        }
+    },
+    required: [
+        'total',
+        'decisions',
+        'terminal',
+        'percent'
+    ]
+} as const;
+
+export const sUserEventBuyerCloser = {
+    type: 'object',
+    properties: {
+        total: {
+            type: 'number',
+            example: 0
+        },
+        closed: {
+            type: 'number',
+            example: 0
+        },
+        percent: {
+            type: 'number',
+            example: 0
+        },
+        medianMs: {
+            type: 'number',
+            example: 0
+        },
+        p90Ms: {
+            type: 'number',
+            example: 0
+        }
+    },
+    required: [
+        'total',
+        'closed',
+        'percent',
+        'medianMs',
+        'p90Ms'
+    ]
+} as const;
+
+export const sUserEventBuyerReaction = {
+    type: 'object',
+    properties: {
+        total: {
+            type: 'number',
+            example: 0
+        },
+        reactions: {
+            type: 'number',
+            example: 0
+        },
+        terminal: {
+            type: 'number',
+            example: 0
+        },
+        percent: {
+            type: 'number',
+            example: 0
+        },
+        medianMs: {
+            type: 'number',
+            example: 0
+        },
+        p90Ms: {
+            type: 'number',
+            example: 0
+        }
+    },
+    required: [
+        'total',
+        'reactions',
+        'terminal',
+        'percent',
+        'medianMs',
+        'p90Ms'
+    ]
+} as const;
+
+export const sUserEventBuyer = {
+    type: 'object',
+    properties: {
+        reaction: {
+            $ref: '#/components/schemas/UserEventBuyerReaction'
+        },
+        closer: {
+            $ref: '#/components/schemas/UserEventBuyerCloser'
+        },
+        decision: {
+            $ref: '#/components/schemas/UserEventBuyerDecision'
+        },
+        expired: {
+            $ref: '#/components/schemas/UserEventBuyerExpired'
+        },
+        load: {
+            $ref: '#/components/schemas/UserEventBuyerLoad'
+        },
+        activity: {
+            $ref: '#/components/schemas/UserEventBuyerActivity'
+        },
+        score: {
+            $ref: '#/components/schemas/UserEventBuyerScore'
+        }
+    },
+    required: [
+        'reaction',
+        'closer',
+        'decision',
+        'expired',
+        'load',
+        'activity',
         'score'
     ]
 } as const;

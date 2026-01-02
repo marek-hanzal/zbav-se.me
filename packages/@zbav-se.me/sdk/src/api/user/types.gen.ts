@@ -248,8 +248,16 @@ export type tTransactionStatus = {
      * ID of the transaction referenced by the status
      */
     transactionId: string;
+    /**
+     * ID of the listing referenced by the status
+     */
+    listingId: string;
     side: tTransactionSideEnum;
     status: tTransactionStatusEnum & unknown;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
 };
 
 /**
@@ -381,10 +389,150 @@ export type tTransactionBuyerInfo = {
      * Registration date
      */
     registered: string;
+    events: tUserEventBuyer;
+};
+
+/**
+ * This metric describes the score of the user
+ */
+export type tUserEventBuyerScore = {
     /**
-     * Buyer score
+     * Low-level score value, usually not presented in UI
      */
     score: number;
+    /**
+     * Rank computed from the score (A-F, 1-6)
+     */
+    rank: number;
+};
+
+/**
+ * This metric describes the approx activity of the user
+ */
+export type tUserEventBuyerActivity = {
+    /**
+     * Activity type of the buyer
+     */
+    bucket: 'low' | 'medium' | 'high';
+};
+
+/**
+ * Masks number of transactions of the buyer, basically it tells, how busy buyer is.
+ */
+export type tUserEventBuyerLoad = {
+    /**
+     * Load type of the buyer
+     */
+    bucket: 'low' | 'medium' | 'high';
+};
+
+/**
+ * This metric describes if the user is used to expire transactions (no user's messages)
+ */
+export type tUserEventBuyerExpired = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of expired transactions
+     */
+    expired: number;
+    /**
+     * Percentage of expired transactions (expired / total)
+     */
+    percent: number;
+};
+
+/**
+ * This metric describes if the user is used to close/success transactions
+ */
+export type tUserEventBuyerDecision = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of decisions (success, closed)
+     */
+    decisions: number;
+    /**
+     * Total number of terminal decisions (usually from the other side)
+     */
+    terminal: number;
+    /**
+     * Percentage of closed transactions (closed / total)
+     */
+    percent: number;
+};
+
+/**
+ * This metric describes if the user instantly closes transactions (means - no interaction, just open and kill)
+ */
+export type tUserEventBuyerCloser = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of closed transactions
+     */
+    closed: number;
+    /**
+     * Percentage of closed transactions (closed / total)
+     */
+    percent: number;
+    /**
+     * Median milliseconds between transaction creation and closing
+     */
+    medianMs: number;
+    /**
+     * 90th percentile milliseconds between transaction creation and closing
+     */
+    p90Ms: number;
+};
+
+/**
+ * Initial reaction on opened transaction by seller.
+ */
+export type tUserEventBuyerReaction = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of reactions
+     */
+    reactions: number;
+    /**
+     * Total number of terminal reactions (usually from the other side)
+     */
+    terminal: number;
+    /**
+     * Percentage of reactions (reactions + terminal) / total
+     */
+    percent: number;
+    /**
+     * Median milliseconds between transaction opening and reaction
+     */
+    medianMs: number;
+    /**
+     * 90th percentile milliseconds between transaction opening and reaction
+     */
+    p90Ms: number;
+};
+
+/**
+ * Buyer info for the user event
+ */
+export type tUserEventBuyer = {
+    reaction: tUserEventBuyerReaction;
+    closer: tUserEventBuyerCloser;
+    decision: tUserEventBuyerDecision;
+    expired: tUserEventBuyerExpired;
+    load: tUserEventBuyerLoad;
+    activity: tUserEventBuyerActivity;
+    score: tUserEventBuyerScore;
 };
 
 /**
@@ -4377,6 +4525,10 @@ export type tApiTransactionStatusCloseRequest = {
 
 export type apiTransactionStatusCloseErrors = {
     /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
      * Access denied
      */
     403: tNotice;
@@ -4518,6 +4670,36 @@ export type tApiUploadCountResponse = {
 };
 
 export type apiUploadCountResponse = tApiUploadCountResponse[keyof tApiUploadCountResponse];
+
+export type tApiUserEventBuyerRequest = {
+    body?: never;
+    path: {
+        /**
+         * ID of the user
+         */
+        userId: string;
+    };
+    query?: never;
+    url: '/api/user/user-event/{userId}/buyer';
+};
+
+export type apiUserEventBuyerErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiUserEventBuyerError = apiUserEventBuyerErrors[keyof apiUserEventBuyerErrors];
+
+export type tApiUserEventBuyerResponse = {
+    /**
+     * Buyer info
+     */
+    200: tUserEventBuyer;
+};
+
+export type apiUserEventBuyerResponse = tApiUserEventBuyerResponse[keyof tApiUserEventBuyerResponse];
 
 export type tApiUserExPatchRequest = {
     /**

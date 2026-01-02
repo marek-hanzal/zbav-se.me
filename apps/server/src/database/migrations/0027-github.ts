@@ -7,7 +7,7 @@ export const GitHubMigration: Migration = {
 			//
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("sha", "text", (col) => col.notNull())
-			.addColumn("date", "timestamp", (col) => col.notNull())
+			.addColumn("date", "timestamptz", (col) => col.notNull())
 			.addColumn("message", "text", (col) => col.notNull())
 			.execute();
 

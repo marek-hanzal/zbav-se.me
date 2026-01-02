@@ -5,22 +5,28 @@ import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx
 import { messageGalleryCreateFx } from "~/@user/message-gallery/fx/messageGalleryCreateFx";
 import { TransactionContextFx } from "~/@user/transaction/fx/TransactionContextFx";
 import { transactionStatusGateFx } from "~/@user/transaction/fx/transactionStatusGateFx";
+import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 import type { TransactionMessageGalleryCreateSchema } from "../schema/TransactionMessageGalleryCreateSchema";
 
 export namespace transactionMessageGalleryCreateFx {
-	export interface Props extends TransactionMessageGalleryCreateSchema.Type {}
+	export interface Props extends TransactionMessageGalleryCreateSchema.Type {
+		createdAt?: DateTime;
+	}
 }
 
 export const transactionMessageGalleryCreateFx = ({
 	transactionId,
 	uploadIds,
+	createdAt,
 }: transactionMessageGalleryCreateFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
+			const user = yield* UserContextFx;
 			const config = yield* TransactionContextFx;
 
 			if (uploadIds.length === 0) {
@@ -37,7 +43,7 @@ export const transactionMessageGalleryCreateFx = ({
 				],
 			});
 
-			const now = DateTime.now();
+			const now = createdAt ?? DateTime.now();
 
 			yield* Effect.tryPromise(async () => {
 				return database
@@ -69,13 +75,25 @@ export const transactionMessageGalleryCreateFx = ({
 					galleryId: gallery.id,
 					uploadId,
 					sort,
+					createdAt,
 				});
 				sort++;
 			}
 
+			yield* userInteractionEventFx({
+				userId: user.id,
+				targetId: transaction.side === "buyer" ? transaction.sellerId : transaction.buyerId,
+				source: "transaction",
+				group: transaction.id,
+				event: "transaction.message",
+				isTerminal: false,
+				createdAt,
+			});
+
 			return yield* messageGalleryCreateFx({
 				messageThreadId: transaction.messageThreadId,
 				galleryId: gallery.id,
+				createdAt,
 			});
 		}),
 	);

@@ -1,17 +1,27 @@
 import { Effect } from "effect";
+import type { DateTime } from "luxon";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
 import type { TransactionStatusAcceptSchema } from "~/@user/transaction-status/schema/TransactionStatusAcceptSchema";
+import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { RuntimeError } from "~/error/RuntimeError";
 
 export namespace transactionStatusAcceptFx {
-	export type Props = TransactionStatusAcceptSchema.Type;
+	export interface Props extends TransactionStatusAcceptSchema.Type {
+		createdAt?: DateTime;
+	}
 }
 
-export const transactionStatusAcceptFx = ({ transactionId }: transactionStatusAcceptFx.Props) => {
+export const transactionStatusAcceptFx = ({
+	transactionId,
+	createdAt,
+}: transactionStatusAcceptFx.Props) => {
 	return Effect.gen(function* () {
+		const user = yield* UserContextFx;
+
 		const transaction = yield* transactionResolveFx({
 			transactionId,
 			message: "You are not allowed to accept this listing transaction",
@@ -30,17 +40,30 @@ export const transactionStatusAcceptFx = ({ transactionId }: transactionStatusAc
 					id: transaction.id,
 				},
 			},
+			updatedAt: createdAt,
 		});
 
 		yield* messageSystemCreateFx({
 			messageThreadId: transaction.messageThreadId,
 			message: "Seller accepted the transaction (message)",
+			createdAt,
+		});
+
+		yield* userInteractionEventFx({
+			userId: user.id,
+			targetId: transaction.buyerId,
+			source: "transaction",
+			group: transaction.id,
+			event: "transaction.open",
+			isTerminal: false,
 		});
 
 		return yield* transactionStatusCreateFx({
 			transactionId: transaction.id,
+			listingId: transaction.listingId,
 			status: "open",
 			side: transaction.side,
+			createdAt,
 		});
 	});
 };

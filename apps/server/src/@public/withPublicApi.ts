@@ -5,6 +5,7 @@ import { withGithubApi } from "./github/withGithubApi";
 import { withHealthApi } from "./health/withHealthApi";
 import { withJanitorApi } from "./janitor/withJanitorApi";
 import { withMigrationApi } from "./migration/withMigrationApi";
+import { withSeedApi } from "./seed/seed";
 
 export const withPublicApi: Routes.FnWithDeps<{
 	database: WithDatabase;
@@ -19,6 +20,7 @@ export const withPublicApi: Routes.FnWithDeps<{
 	withHealthApi(routes);
 	withJanitorApi(routes);
 	withMigrationApi(routes);
+	withSeedApi(routes);
 
 	routes.root.route("/api/public", routes.publicHono);
 };

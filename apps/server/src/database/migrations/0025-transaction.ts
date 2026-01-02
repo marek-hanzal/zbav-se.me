@@ -36,9 +36,9 @@ export const TransactionMigration: Migration = {
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("messageThreadId", "text", (col) => col.notNull())
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
-			.addColumn("updatedAt", "timestamp", (col) => col.notNull())
-			.addColumn("expiresAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
+			.addColumn("updatedAt", "timestamptz", (col) => col.notNull())
+			.addColumn("expiresAt", "timestamptz", (col) => col.notNull())
 			//
 			.addForeignKeyConstraint(
 				"transaction_[userId]_fk",
@@ -76,33 +76,27 @@ export const TransactionMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("transaction_[userId]_idx")
+			.createIndex("transaction_[userId-createdAt]_idx")
 			.on("transaction")
-			.column("userId")
+			.columns([
+				"userId",
+				"createdAt",
+			])
 			.execute();
 
 		await db.schema
-			.createIndex("transaction_[listingId]_idx")
+			.createIndex("transaction_[listingId-createdAt]_idx")
 			.on("transaction")
-			.column("listingId")
+			.columns([
+				"listingId",
+				"createdAt",
+			])
 			.execute();
 
 		await db.schema
-			.createIndex("transaction_[messageThreadId]_idx")
+			.createIndex("transaction_[expiresAt]_idx")
 			.on("transaction")
-			.column("messageThreadId")
-			.execute();
-
-		await db.schema
-			.createIndex("transaction_[createdAt]_idx")
-			.on("transaction")
-			.column("createdAt")
-			.execute();
-
-		await db.schema
-			.createIndex("transaction_[updatedAt]_idx")
-			.on("transaction")
-			.column("updatedAt")
+			.column("expiresAt")
 			.execute();
 	},
 };

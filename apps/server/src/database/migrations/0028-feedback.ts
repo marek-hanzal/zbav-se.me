@@ -16,7 +16,7 @@ export const FeedbackMigration: Migration = {
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("type", sql`feedback_enum`, (col) => col.notNull())
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
 				"feedback_[userId]_fk",
 				[
@@ -46,23 +46,21 @@ export const FeedbackMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("feedback_[userId]_idx")
+			.createIndex("feedback_[listingId-type]_idx")
 			.on("feedback")
-			.column("userId")
+			.columns([
+				"listingId",
+				"type",
+			])
 			.execute();
 
 		await db.schema
-			.createIndex("feedback_[listingId]_idx")
+			.createIndex("feedback_[userId-createdAt]_idx")
 			.on("feedback")
-			.column("listingId")
-			.execute();
-
-		await db.schema.createIndex("feedback_[type]_idx").on("feedback").column("type").execute();
-
-		await db.schema
-			.createIndex("feedback_[createdAt]_idx")
-			.on("feedback")
-			.column("createdAt")
+			.columns([
+				"userId",
+				"createdAt",
+			])
 			.execute();
 	},
 };

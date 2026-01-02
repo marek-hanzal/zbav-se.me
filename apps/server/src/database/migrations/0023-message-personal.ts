@@ -1,9 +1,9 @@
 import type { Migration } from "kysely";
 
-export const MessageLocationMigration: Migration = {
+export const MessagePersonalMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createTable("message_location")
+			.createTable("message_personal")
 			//
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			//
@@ -13,12 +13,16 @@ export const MessageLocationMigration: Migration = {
 			 * Payload
 			 */
 			.addColumn("userId", "text", (col) => col.notNull())
+			.addColumn("name", "text", (col) => col.notNull())
+			.addColumn("phone", "text", (col) => col.notNull())
+			.addColumn("email", "text", (col) => col.notNull())
+			// (Home) Address or whatever, used to send a package if needed
 			.addColumn("locationId", "text", (col) => col.notNull())
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			//
 			.addForeignKeyConstraint(
-				"message_location_[userId]_fk",
+				"message_personal_[userId]_fk",
 				[
 					"userId",
 				],
@@ -29,7 +33,7 @@ export const MessageLocationMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"message_location_[messageThreadId]_fk",
+				"message_personal_[messageThreadId]_fk",
 				[
 					"messageThreadId",
 				],
@@ -40,7 +44,7 @@ export const MessageLocationMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"message_location_[locationId]_fk",
+				"message_personal_[locationId]_fk",
 				[
 					"locationId",
 				],
@@ -53,27 +57,21 @@ export const MessageLocationMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("message_location_[userId]_idx")
-			.on("message_location")
-			.column("userId")
+			.createIndex("message_personal_[messageThreadId-createdAt]_idx")
+			.on("message_personal")
+			.columns([
+				"messageThreadId",
+				"createdAt",
+			])
 			.execute();
 
 		await db.schema
-			.createIndex("message_location_[messageThreadId]_idx")
-			.on("message_location")
-			.column("messageThreadId")
-			.execute();
-
-		await db.schema
-			.createIndex("message_location_[locationId]_idx")
-			.on("message_location")
-			.column("locationId")
-			.execute();
-
-		await db.schema
-			.createIndex("message_location_[createdAt]_idx")
-			.on("message_location")
-			.column("createdAt")
+			.createIndex("message_personal_[userId-createdAt]_idx")
+			.on("message_personal")
+			.columns([
+				"userId",
+				"createdAt",
+			])
 			.execute();
 	},
 };

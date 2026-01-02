@@ -14,7 +14,7 @@ export const MessageSystemMigration: Migration = {
 			 */
 			.addColumn("text", "text", (col) => col.notNull())
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			//
 			.addForeignKeyConstraint(
 				"message_system_[messageThreadId]_fk",
@@ -30,15 +30,12 @@ export const MessageSystemMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("message_system_[messageThreadId]_idx")
+			.createIndex("message_system_[messageThreadId-createdAt]_idx")
 			.on("message_system")
-			.column("messageThreadId")
-			.execute();
-
-		await db.schema
-			.createIndex("message_system_[createdAt]_idx")
-			.on("message_system")
-			.column("createdAt")
+			.columns([
+				"messageThreadId",
+				"createdAt",
+			])
 			.execute();
 	},
 };

@@ -28,10 +28,10 @@ export const ListingMigration: Migration = {
 			.addColumn("description", "text")
 			.addColumn("pros", sql`text[]`)
 			.addColumn("cons", sql`text[]`)
-			.addColumn("expiresAt", "timestamp", (col) => col.notNull())
+			.addColumn("expiresAt", "timestamptz", (col) => col.notNull())
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
-			.addColumn("updatedAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
+			.addColumn("updatedAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
 				"listing_[userId]_fk",
 				[

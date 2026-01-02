@@ -10,7 +10,7 @@ export const MessageThreadUserMigration: Migration = {
 			.addColumn("messageThreadId", "text", (col) => col.notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			//
 			.addForeignKeyConstraint(
 				"message_thread_user_[messageThreadId]_fk",
@@ -34,24 +34,10 @@ export const MessageThreadUserMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.execute();
-
-		await db.schema
-			.createIndex("message_thread_user_[messageThreadId]_idx")
-			.on("message_thread_user")
-			.column("messageThreadId")
-			.execute();
-
-		await db.schema
-			.createIndex("message_thread_user_[userId]_idx")
-			.on("message_thread_user")
-			.column("userId")
-			.execute();
-
-		await db.schema
-			.createIndex("message_thread_user_[createdAt]_idx")
-			.on("message_thread_user")
-			.column("createdAt")
+			.addUniqueConstraint("message_thread_user_[messageThreadId-userId]_unique_idx", [
+				"messageThreadId",
+				"userId",
+			])
 			.execute();
 	},
 };

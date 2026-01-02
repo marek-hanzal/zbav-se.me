@@ -1,4 +1,6 @@
 import { Effect } from "effect";
+import type { TransactionBuyerInfoSchema } from "~/@user/transaction/schema/TransactionBuyerInfoSchema";
+import { userEventBuyerInfoFx } from "~/@user/user-event/fx/userEventBuyerInfoFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
@@ -16,22 +18,23 @@ export const transactionGetBuyerInfoFx = ({ transactionId }: transactionGetBuyer
 
 		const userInfo = yield* Effect.promise(async () => {
 			return database
-				.selectFrom("user")
-				.selectAll()
-				.where(
-					"id",
-					"=",
-					database
-						.selectFrom("transaction as lt")
-						.innerJoin("listing as l", "l.id", "lt.listingId")
-						.select("lt.userId")
-						.where("lt.id", "=", transactionId)
-						/**
-						 * Technically even buyer can see his own data, but for sake of security hardness,
-						 * we keep only seller's point of view.
-						 */
-						.where("l.userId", "=", user.id),
-				)
+				.selectFrom("user as u")
+				.innerJoin("transaction as lt", (eb) => {
+					/**
+					 * We're picking up the buyer (user who created the transaction).
+					 */
+					return eb.onRef("lt.userId", "=", "u.id").on("lt.id", "=", transactionId);
+				})
+				.innerJoin("listing as l", (eb) => {
+					/**
+					 * Ensure current user is owner of the listing
+					 */
+					return eb.onRef("l.id", "=", "lt.listingId").on("l.userId", "=", user.id);
+				})
+				.select([
+					"u.id",
+					"u.createdAt",
+				])
 				.executeTakeFirst();
 		});
 
@@ -44,8 +47,10 @@ export const transactionGetBuyerInfoFx = ({ transactionId }: transactionGetBuyer
 
 		return yield* Effect.succeed({
 			registered: userInfo.createdAt,
-			score: 0,
-		});
+			events: yield* userEventBuyerInfoFx({
+				userId: userInfo.id,
+			}),
+		} satisfies TransactionBuyerInfoSchema.Type);
 	});
 };
 

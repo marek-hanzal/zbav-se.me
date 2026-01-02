@@ -1,5 +1,6 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
+import { DateTime } from "luxon";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -7,10 +8,15 @@ export namespace messageUserCreateFx {
 	export interface Props {
 		messageThreadId: string;
 		userIds: string[];
+		createdAt?: DateTime;
 	}
 }
 
-export const messageUserCreateFx = ({ messageThreadId, userIds }: messageUserCreateFx.Props) => {
+export const messageUserCreateFx = ({
+	messageThreadId,
+	userIds,
+	createdAt,
+}: messageUserCreateFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
@@ -23,7 +29,7 @@ export const messageUserCreateFx = ({ messageThreadId, userIds }: messageUserCre
 							id: genId(),
 							messageThreadId,
 							userId,
-							createdAt: new Date(),
+							createdAt: (createdAt ?? DateTime.now()).toJSDate(),
 						})),
 					)
 					.returningAll()

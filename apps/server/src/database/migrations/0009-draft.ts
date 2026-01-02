@@ -55,9 +55,9 @@ export const DraftMigration: Migration = {
 			.addColumn("cons", sql`text[]`)
 			.addColumn("expiresAt", "text")
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
-			.addColumn("updatedAt", "timestamp", (col) => col.notNull())
-			.addColumn("usedAt", "timestamp")
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
+			.addColumn("updatedAt", "timestamptz", (col) => col.notNull())
+			.addColumn("usedAt", "timestamptz")
 			.addForeignKeyConstraint(
 				"draft_[userId]_fk",
 				[

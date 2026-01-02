@@ -1,5 +1,6 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
+import { DateTime } from "luxon";
 import { messageSystemFetchFx } from "~/@user/message-system/fx/messageSystemFetchFx";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
@@ -10,12 +11,14 @@ export namespace messageSystemCreateFx {
 	export interface Props {
 		messageThreadId: string;
 		message: string;
+		createdAt?: DateTime;
 	}
 }
 
 export const messageSystemCreateFx = ({
 	messageThreadId,
 	message,
+	createdAt,
 }: messageSystemCreateFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
@@ -38,7 +41,7 @@ export const messageSystemCreateFx = ({
 						id,
 						messageThreadId,
 						text: message,
-						createdAt: new Date(),
+						createdAt: (createdAt ?? DateTime.now()).toJSDate(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();

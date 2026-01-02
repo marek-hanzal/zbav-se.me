@@ -1,5 +1,6 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
+import { DateTime } from "luxon";
 import { messageGalleryFetchFx } from "~/@user/message-gallery/fx/messageGalleryFetchFx";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
@@ -8,12 +9,15 @@ import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import type { MessageGalleryCreateSchema } from "../schema/MessageGalleryCreateSchema";
 
 export namespace messageGalleryCreateFx {
-	export interface Props extends MessageGalleryCreateSchema.Type {}
+	export interface Props extends MessageGalleryCreateSchema.Type {
+		createdAt?: DateTime;
+	}
 }
 
 export const messageGalleryCreateFx = ({
 	messageThreadId,
 	galleryId,
+	createdAt,
 }: messageGalleryCreateFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
@@ -37,7 +41,7 @@ export const messageGalleryCreateFx = ({
 						messageThreadId,
 						userId: user.id,
 						galleryId,
-						createdAt: new Date(),
+						createdAt: (createdAt ?? DateTime.now()).toJSDate(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();

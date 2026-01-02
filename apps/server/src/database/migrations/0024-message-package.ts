@@ -1,9 +1,9 @@
 import type { Migration } from "kysely";
 
-export const MessageTextMigration: Migration = {
+export const MessagePackageMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createTable("message_text")
+			.createTable("message_package")
 			//
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			//
@@ -13,12 +13,13 @@ export const MessageTextMigration: Migration = {
 			 * Payload
 			 */
 			.addColumn("userId", "text", (col) => col.notNull())
-			.addColumn("text", "text", (col) => col.notNull())
+			.addColumn("link", "text", (col) => col.notNull())
+			.addColumn("number", "text")
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			//
 			.addForeignKeyConstraint(
-				"message_text_[userId]_fk",
+				"message_package_[userId]_fk",
 				[
 					"userId",
 				],
@@ -29,7 +30,7 @@ export const MessageTextMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"message_text_[messageThreadId]_fk",
+				"message_package_[messageThreadId]_fk",
 				[
 					"messageThreadId",
 				],
@@ -42,21 +43,21 @@ export const MessageTextMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("message_text_[userId]_idx")
-			.on("message_text")
-			.column("userId")
+			.createIndex("message_package_[messageThreadId-createdAt]_idx")
+			.on("message_package")
+			.columns([
+				"messageThreadId",
+				"createdAt",
+			])
 			.execute();
 
 		await db.schema
-			.createIndex("message_text_[messageThreadId]_idx")
-			.on("message_text")
-			.column("messageThreadId")
-			.execute();
-
-		await db.schema
-			.createIndex("message_text_[createdAt]_idx")
-			.on("message_text")
-			.column("createdAt")
+			.createIndex("message_package_[userId-createdAt]_idx")
+			.on("message_package")
+			.columns([
+				"userId",
+				"createdAt",
+			])
 			.execute();
 	},
 };

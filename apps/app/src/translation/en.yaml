@@ -115,9 +115,15 @@
 1bbdc9dc7f6591dc1499c568c88587d61a1993247ea04942fc818c14:
   ref: No listings in feed (message)
   value: No listings in feed (message)
+1db65f00c76028b1ac9c7c45672cbf0ad4130d6fd354960e762f05e4:
+  ref: Reaction rate (hint)
+  value: Reaction rate (hint)
 1dcb2f3cf441e457db2a028bf490818c077bc6ce4ec21d35a15b6259:
   ref: Buyer info (title)
   value: Buyer info (title)
+1e2825e05d0a8e168a812a6bb29ff8f7b5f58b3c0b29bbffd2c8dfa5:
+  ref: Closer p90 (hint)
+  value: Closer p90 (hint)
 2250c7f0548b5cbe0fbdac80837ac558866128e004997e4f6b879f72:
   ref: Feed delivery not selected
   value: Feed delivery not selected
@@ -130,6 +136,9 @@
 23d96471b4cb8b94656db913455c655d345ce88c217df03f385d2750:
   ref: Personal - Location (label)
   value: Personal - Location (label)
+255174a1e467263f9445031755d0c4df78c9c89f4835c67fe40b7e2d:
+  ref: Buyer activity (label)
+  value: Buyer activity (label)
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
   ref: Location (title)
   value: Location (title)
@@ -151,12 +160,21 @@
 2ac60df8de3be5a28fe6e27ec9ca9926b0f06b399189491de2a4480f:
   ref: Listing gallery (title)
   value: Listing gallery (title)
+2b8fe8725888d2731e48730886edcba6b89f8bba62b68812a8e5738b:
+  ref: Reaction p90 (label)
+  value: Reaction p90 (label)
 2bad77ac9199d19ca4cf85d780cf6f7f747cc6520bc1899bb6717029:
   ref: Go to home (link)
   value: Go to home (link)
 2f30c1c4a6d75472712f25fde84d88a7087c8e5d41e7aa3b4b3030fc:
   ref: Feed range not set
   value: Feed range not set
+2fa23e1765e15c1a005abdda3ac938e3dc2ec15fd61a147b8f73f986:
+  ref: Closer p90 (label)
+  value: Closer p90 (label)
+2ff3786d4505b98b160e38838692be1ceb7b97965d65a15f2e095e9f:
+  ref: Decision rate (label)
+  value: Decision rate (label)
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
   ref: Age (title)
   value: Age (title)
@@ -169,6 +187,9 @@
 339d9753b567b5672f79522f5fbd8264123ec49f0c6601c07043a408:
   ref: Feed range (description)
   value: Feed range (description)
+34bdcd50896fe69fe1b0d6c306e1c7283ab8dcb99505410792bd356b:
+  ref: Reaction p90 (hint)
+  value: Reaction p90 (hint)
 356d8a83f26af88932bbce72d41eafdda319a008f3675379a1fc57d0:
   ref: Go to listings (button)
   value: Go to listings (button)
@@ -190,6 +211,9 @@
 3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
   ref: Price (placeholder)
   value: Price (placeholder)
+3b61dc41f15a2b32908b8edd88933f05bf9155117676167a679964d7:
+  ref: User score (hint)
+  value: User score (hint)
 3c053b1e31a27b42457f488aabe08c89ccd7268700f1cc41b5c77f2f:
   ref: No my listings (title)
   value: No my listings (title)
@@ -277,6 +301,9 @@
 563cf82f9c7a157200839bedd8ac219fbcf8727857b117482dd5300b:
   ref: Description (placeholder)
   value: Description (placeholder)
+564debf52b19422fec7c41c13caf2b5416f0c8b03bb2e36a07be7139:
+  ref: Expired rate (label)
+  value: Expired rate (label)
 57cf1f27b485ad4ccfff9487dc973c5a5a9d3582b03670f822646bc0:
   ref: Transaction not accepted - seller (message)
   value: Transaction not accepted - seller (message)
@@ -334,6 +361,9 @@
 64330c4baddecdf72a3e12b12827c2f9fc66b0966292e042eab4d26f:
   ref: expired
   value: expired
+6497eaff1f9488a6d56e36cb92e86be36eac35a43ee18669931093eb:
+  ref: Closer rate (label)
+  value: Closer rate (label)
 6526401dc54716accd5e7f420d3f70d39b06beff9a4a9bf64dcd15d0:
   ref: Share contact info (button)
   value: Share contact info (button)
@@ -343,6 +373,9 @@
 679eb0f6d4d2b7cf7359439e3b87d205ff8b061c3f6f33bfe8052367:
   ref: Empty favourite - category and favourite (title)
   value: Empty favourite - category and favourite (title)
+689fe7e74ce92585be4ccf137ca4787a8d74c2e05f6e1ae1a444150a:
+  ref: 2xl
+  value: 2xl
 6986d09f4aa2bbe69df817149dd90758babe79f2f510910b43cfe310:
   ref: secondary
   value: secondary
@@ -361,6 +394,9 @@
 7375db8ba1d4534eb55b16f42a2aa4350c5bb0ed60dfba9f45bc8e3c:
   ref: No listings in feed (title)
   value: No listings in feed (title)
+762a69754130506fe02ffe5a75e930686249ef4fe12d6ec21706de37:
+  ref: Buyer load (label)
+  value: Buyer load (label)
 770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
   ref: Listing location (label)
   value: Listing location (label)
@@ -379,6 +415,9 @@
 7b76eaae7e44c7090565c9a3f68a77cc082807fbf7f1c1111dfadb29:
   ref: Unignore listing (button)
   value: Unignore listing (button)
+7b93a66595d88c60241f7eb48599cc8738e54decdbca0730a8aa958d:
+  ref: Buyer load (hint)
+  value: Buyer load (hint)
 7bd8fc15e1d93b10be826ce8e00ebabcfb79fbb806b8c52e2fcef824:
   ref: Feed name (title)
   value: Feed name
@@ -418,6 +457,9 @@
 86fded4e70c3438ddd65c42c33c6c2494acbd968db8b5e9b51104a9c:
   ref: Delete feed (button)
   value: Delete feed (button)
+870fc2701477d91f2aa04bf1a3372358f5a880be79c038fb370953f3:
+  ref: Buyer activity (hint)
+  value: Buyer activity (hint)
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
   ref: With VAT
   value: With VAT
@@ -481,6 +523,9 @@
 957897e367a94096dcbfda99c8cf5bd4dc9f4d2a2292065c65990299:
   ref: Draft - action section (title)
   value: Draft - action section (title)
+987bae9b81c35e9840767773141ed1ff4f077d951fa808c85af4250f:
+  ref: Decision rate (hint)
+  value: Decision rate (hint)
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
   ref: Create listing (label)
   value: Create listing (label)
@@ -517,6 +562,9 @@
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
   ref: Fulltext (placeholder)
   value: Fulltext (placeholder)
+a012442134ffb92cd4a9b82e225dcf084a14efd16c7ad75c91f1b338:
+  ref: human
+  value: human
 a038a4da09ca1bfcd3d73f545e72575a33516d5e7ef37b09b4f5b397:
   ref: Welcome (title)
   value: Welcome (title)
@@ -544,6 +592,9 @@ a64e91c4e68c901ac59593d15028b96e00c9b01c7163080eb97502c2:
 a67ea5aaab8eb99644b1412ae291882a3d6e0ddefd49b19cc413abaf:
   ref: Listing description (label)
   value: Listing description (label)
+a78ed5f38f0cf730dc1a618d9df1ca5011cc5d947d61f00075e0c5da:
+  ref: Expired rate (hint)
+  value: Expired rate (hint)
 a92a914e77188202f38d6b42be76d7f92cee60d777d0c00ca5aecbde:
   ref: Package - Tracking number (placeholder)
   value: Package - Tracking number (placeholder)
@@ -663,12 +714,18 @@ d30ca5022499ee9c8ab4d9d4a2bb4f65292849e295cbb63503707671:
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
   ref: Listing condition (label)
   value: Listing condition (label)
+d8afcd78535d2c0ab7b58dfcc92c11456c55fe96dab19a1de6a24218:
+  ref: Closer rate (hint)
+  value: Closer rate (hint)
 d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
   ref: Feed title (hint)
   value: Feed title (hint)
 d93ae180759797f0ad3bc741552efefb4290ee7b7d2c19108209fd2b:
   ref: Feed condition (title)
   value: Feed condition (title)
+d95b6247e69f90b9f6f613b62be4396f37f5c45acb205f993f42dd18:
+  ref: Reaction rate (label)
+  value: Reaction rate (label)
 da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
   ref: Feed sorting (title)
   value: Feed sorting (title)

@@ -1,48 +1,75 @@
 import { Effect } from "effect";
+import type { DateTime } from "luxon";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
 import type { TransactionStatusCloseSchema } from "~/@user/transaction-status/schema/TransactionStatusCloseSchema";
+import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace transactionStatusCloseFx {
-	export type Props = TransactionStatusCloseSchema.Type;
+	export type Props = TransactionStatusCloseSchema.Type & {
+		createdAt?: DateTime;
+	};
 }
 
-export const transactionStatusCloseFx = ({ transactionId }: transactionStatusCloseFx.Props) => {
-	return Effect.gen(function* () {
-		const transaction = yield* transactionResolveFx({
-			transactionId,
-			message: "You are not allowed to close this listing transaction",
-		});
+export const transactionStatusCloseFx = ({
+	transactionId,
+	createdAt,
+}: transactionStatusCloseFx.Props) => {
+	return withTransactionFx(
+		Effect.gen(function* () {
+			const user = yield* UserContextFx;
 
-		if (transaction.side === "seller") {
-			return yield* new InvalidRequestError({
-				message: "Seller cannot close a transaction",
+			const transaction = yield* transactionResolveFx({
+				transactionId,
+				message: "You are not allowed to close this listing transaction",
 			});
-		}
 
-		yield* transactionPatchFx({
-			patch: {},
-			query: {
-				where: {
-					id: transaction.id,
+			if (transaction.side === "seller") {
+				return yield* new InvalidRequestError({
+					message: "Seller cannot close a transaction",
+				});
+			}
+
+			yield* transactionPatchFx({
+				patch: {},
+				query: {
+					where: {
+						id: transaction.id,
+					},
 				},
-			},
-		});
+				updatedAt: createdAt,
+			});
 
-		yield* messageSystemCreateFx({
-			messageThreadId: transaction.messageThreadId,
-			message: "Transaction closed (message)",
-		});
+			yield* messageSystemCreateFx({
+				messageThreadId: transaction.messageThreadId,
+				message: "Transaction closed (message)",
+				createdAt,
+			});
 
-		return yield* transactionStatusCreateFx({
-			transactionId: transaction.id,
-			status: "closed",
-			side: transaction.side,
-		});
-	});
+			yield* userInteractionEventFx({
+				userId: user.id,
+				targetId: transaction.sellerId,
+				source: "transaction",
+				group: transaction.id,
+				event: "transaction.closed",
+				isTerminal: true,
+				createdAt,
+			});
+
+			return yield* transactionStatusCreateFx({
+				transactionId: transaction.id,
+				listingId: transaction.listingId,
+				status: "closed",
+				side: transaction.side,
+				createdAt,
+			});
+		}),
+	);
 };
 
 export type transactionStatusCloseFx = ReturnType<typeof transactionStatusCloseFx>;

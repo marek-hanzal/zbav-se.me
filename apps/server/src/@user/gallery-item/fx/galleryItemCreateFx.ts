@@ -1,5 +1,6 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
+import { DateTime } from "luxon";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -11,15 +12,21 @@ export namespace galleryItemCreateFx {
 		galleryId: string;
 		uploadId: string;
 		sort: number;
+		createdAt?: DateTime;
 	}
 }
 
-export const galleryItemCreateFx = ({ galleryId, uploadId, sort }: galleryItemCreateFx.Props) => {
+export const galleryItemCreateFx = ({
+	galleryId,
+	uploadId,
+	sort,
+	createdAt,
+}: galleryItemCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		const now = new Date();
+		const now = createdAt ?? DateTime.now();
 		const id = genId();
 
 		const gallery = yield* galleryFetchFx({
@@ -45,7 +52,7 @@ export const galleryItemCreateFx = ({ galleryId, uploadId, sort }: galleryItemCr
 					galleryId,
 					uploadId,
 					sort,
-					createdAt: now,
+					createdAt: now.toJSDate(),
 				})
 				.execute();
 		});

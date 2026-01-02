@@ -8,11 +8,13 @@ export const TransactionStatusMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			//
 			.addColumn("transactionId", "text", (col) => col.notNull())
+			.addColumn("listingId", "text", (col) => col.notNull())
+			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("side", sql`transaction_side_enum`, (col) => col.notNull())
 			//
 			.addColumn("status", sql`transaction_status_enum`, (col) => col.notNull())
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			//
 			.addForeignKeyConstraint(
 				"transaction_status_[transactionId]_fk",
@@ -25,24 +27,55 @@ export const TransactionStatusMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
+			.addForeignKeyConstraint(
+				"transaction_status_[listingId]_fk",
+				[
+					"listingId",
+				],
+				"listing",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
+			.addForeignKeyConstraint(
+				"transaction_status_[userId]_fk",
+				[
+					"userId",
+				],
+				"user",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
 			.execute();
 
 		await db.schema
-			.createIndex("transaction_status_[transactionId]_idx")
+			.createIndex("transaction_status_[userId-createdAt]_idx")
 			.on("transaction_status")
-			.column("transactionId")
+			.columns([
+				"userId",
+				"createdAt",
+			])
 			.execute();
 
 		await db.schema
-			.createIndex("transaction_status_[side]_idx")
+			.createIndex("transaction_status_[transactionId-createdAt]_idx")
 			.on("transaction_status")
-			.column("side")
+			.columns([
+				"transactionId",
+				"createdAt",
+			])
 			.execute();
 
 		await db.schema
-			.createIndex("transaction_status_[status]_idx")
+			.createIndex("transaction_status_[listingId-createdAt]_idx")
 			.on("transaction_status")
-			.column("status")
+			.columns([
+				"listingId",
+				"createdAt",
+			])
 			.execute();
 	},
 };

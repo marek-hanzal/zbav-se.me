@@ -1,5 +1,6 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
+import { DateTime } from "luxon";
 import { messageLocationFetchFx } from "~/@user/message-location/fx/messageLocationFetchFx";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
@@ -8,12 +9,15 @@ import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import type { MessageLocationCreateSchema } from "../schema/MessageLocationCreateSchema";
 
 export namespace messageLocationCreateFx {
-	export interface Props extends MessageLocationCreateSchema.Type {}
+	export interface Props extends MessageLocationCreateSchema.Type {
+		createdAt?: DateTime;
+	}
 }
 
 export const messageLocationCreateFx = ({
 	messageThreadId,
 	locationId,
+	createdAt,
 }: messageLocationCreateFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
@@ -37,7 +41,7 @@ export const messageLocationCreateFx = ({
 						messageThreadId,
 						userId: user.id,
 						locationId,
-						createdAt: new Date(),
+						createdAt: (createdAt ?? DateTime.now()).toJSDate(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();

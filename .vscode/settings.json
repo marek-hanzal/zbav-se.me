@@ -340,6 +340,7 @@
 		"Tavíkovice",
 		"teenyicons",
 		"timeoutové",
+		"timestamptz",
 		"toolbelt",
 		"trgm",
 		"tseslint",
@@ -399,7 +400,8 @@
 		"Zmiňuju",
 		"zondicons",
 		"zoneinfo",
-		"zoomable"
+		"zoomable",
+		"zvedlé"
 	],
 	"todo-tree.tree.scanMode": "open files",
 	"editor.codeActionsOnSave": {

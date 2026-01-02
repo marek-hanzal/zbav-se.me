@@ -15,7 +15,7 @@ export const MessageGalleryMigration: Migration = {
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("galleryId", "text", (col) => col.notNull())
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull())
+			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			//
 			.addForeignKeyConstraint(
 				"message_gallery_[userId]_fk",
@@ -53,27 +53,21 @@ export const MessageGalleryMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("message_gallery_[userId]_idx")
+			.createIndex("message_gallery_[messageThreadId-createdAt]_idx")
 			.on("message_gallery")
-			.column("userId")
+			.columns([
+				"messageThreadId",
+				"createdAt",
+			])
 			.execute();
 
 		await db.schema
-			.createIndex("message_gallery_[messageThreadId]_idx")
+			.createIndex("message_gallery_[userId-createdAt]_idx")
 			.on("message_gallery")
-			.column("messageThreadId")
-			.execute();
-
-		await db.schema
-			.createIndex("message_gallery_[galleryId]_idx")
-			.on("message_gallery")
-			.column("galleryId")
-			.execute();
-
-		await db.schema
-			.createIndex("message_gallery_[createdAt]_idx")
-			.on("message_gallery")
-			.column("createdAt")
+			.columns([
+				"userId",
+				"createdAt",
+			])
 			.execute();
 	},
 };

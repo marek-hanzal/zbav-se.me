@@ -141,9 +141,15 @@
     value: >
         ...bohužel jsem nenašel žádné pro tvůj seznam. **Ale určitě se nějaké
         objeví**!
+1db65f00c76028b1ac9c7c45672cbf0ad4130d6fd354960e762f05e4:
+    ref: Reaction rate (hint)
+    value: Udává poměr reakcí na zprávy - vyšší číslo znamená více reakcí.
 1dcb2f3cf441e457db2a028bf490818c077bc6ce4ec21d35a15b6259:
     ref: Buyer info (title)
     value: Informace o kupujícím
+1e2825e05d0a8e168a812a6bb29ff8f7b5f58b3c0b29bbffd2c8dfa5:
+    ref: Closer p90 (hint)
+    value: Udává čas, za jak dlouho kupující obvykle zavře zprávu bez další interakce.
 2250c7f0548b5cbe0fbdac80837ac558866128e004997e4f6b879f72:
     ref: Feed delivery not selected
     value: Jakékoli
@@ -156,6 +162,9 @@
 23d96471b4cb8b94656db913455c655d345ce88c217df03f385d2750:
     ref: Personal - Location (label)
     value: Adresa
+255174a1e467263f9445031755d0c4df78c9c89f4835c67fe40b7e2d:
+    ref: Buyer activity (label)
+    value: Přibližná aktivita
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
     ref: Location (title)
     value: Lokalita inzerátu
@@ -177,12 +186,21 @@
 2ac60df8de3be5a28fe6e27ec9ca9926b0f06b399189491de2a4480f:
     ref: Listing gallery (title)
     value: Fotky
+2b8fe8725888d2731e48730886edcba6b89f8bba62b68812a8e5738b:
+    ref: Reaction p90 (label)
+    value: Obvyklý reakční čas na zprávu
 2bad77ac9199d19ca4cf85d780cf6f7f747cc6520bc1899bb6717029:
     ref: Go to home (link)
     value: Zpět domů
 2f30c1c4a6d75472712f25fde84d88a7087c8e5d41e7aa3b4b3030fc:
     ref: Feed range not set
     value: Vzdálenost není nenastavená
+2fa23e1765e15c1a005abdda3ac938e3dc2ec15fd61a147b8f73f986:
+    ref: Closer p90 (label)
+    value: Čas zavření zprávy
+2ff3786d4505b98b160e38838692be1ceb7b97965d65a15f2e095e9f:
+    ref: Decision rate (label)
+    value: Poměr dokončených zpráv
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
     ref: Age (title)
     value: Stáří
@@ -197,6 +215,9 @@
 339d9753b567b5672f79522f5fbd8264123ec49f0c6601c07043a408:
     ref: Feed range (description)
     value: Maximální vzdálenost
+34bdcd50896fe69fe1b0d6c306e1c7283ab8dcb99505410792bd356b:
+    ref: Reaction p90 (hint)
+    value: Zevrubná doba reakce kupujícího na zprávu (pro zvědavce, p90).
 356d8a83f26af88932bbce72d41eafdda319a008f3675379a1fc57d0:
     ref: Go to listings (button)
     value: Přejít k inzerátům
@@ -218,6 +239,11 @@
 3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
     ref: Price (placeholder)
     value: Cena
+3b61dc41f15a2b32908b8edd88933f05bf9155117676167a679964d7:
+    ref: User score (hint)
+    value: >
+        Skóre rizika odhaduje základní chování kupujícího - obecně A/B/C jsou
+        v pohodě, D zvedlé obočí a E/F už může být risk.
 3c053b1e31a27b42457f488aabe08c89ccd7268700f1cc41b5c77f2f:
     ref: No my listings (title)
     value: Zatím nic neprodáváš
@@ -322,6 +348,9 @@
 563cf82f9c7a157200839bedd8ac219fbcf8727857b117482dd5300b:
     ref: Description (placeholder)
     value: Co nabízíš?
+564debf52b19422fec7c41c13caf2b5416f0c8b03bb2e36a07be7139:
+    ref: Expired rate (label)
+    value: Poměr automaticky zavřených zpráv
 57cf1f27b485ad4ccfff9487dc973c5a5a9d3582b03670f822646bc0:
     ref: Transaction not accepted - seller (message)
     value: Zprávy můžeš psát až po přijetí transakce.
@@ -381,6 +410,9 @@
 64330c4baddecdf72a3e12b12827c2f9fc66b0966292e042eab4d26f:
     ref: expired
     value: expired
+6497eaff1f9488a6d56e36cb92e86be36eac35a43ee18669931093eb:
+    ref: Closer rate (label)
+    value: Poměr zavřených zpráv
 6526401dc54716accd5e7f420d3f70d39b06beff9a4a9bf64dcd15d0:
     ref: Share contact info (button)
     value: Sdílet osobní údaje
@@ -390,6 +422,9 @@
 679eb0f6d4d2b7cf7359439e3b87d205ff8b061c3f6f33bfe8052367:
     ref: Empty favourite - category and favourite (title)
     value: Empty favourite - category and favourite (title)
+689fe7e74ce92585be4ccf137ca4787a8d74c2e05f6e1ae1a444150a:
+    ref: 2xl
+    value: 2xl
 6986d09f4aa2bbe69df817149dd90758babe79f2f510910b43cfe310:
     ref: secondary
     value: secondary
@@ -408,6 +443,9 @@
 7375db8ba1d4534eb55b16f42a2aa4350c5bb0ed60dfba9f45bc8e3c:
     ref: No listings in feed (title)
     value: Inzeráty jsou, ale...
+762a69754130506fe02ffe5a75e930686249ef4fe12d6ec21706de37:
+    ref: Buyer load (label)
+    value: Odhadovaná dostupnost
 770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
     ref: Listing location (label)
     value: Umístění
@@ -428,6 +466,13 @@
 7b76eaae7e44c7090565c9a3f68a77cc082807fbf7f1c1111dfadb29:
     ref: Unignore listing (button)
     value: Zrušit ignoraci
+7b93a66595d88c60241f7eb48599cc8738e54decdbca0730a8aa958d:
+    ref: Buyer load (hint)
+    value: >
+        Pokud kupující odbavuje více zpráv, promítne se to v tomto údaji - tobě to
+        může nastavit očekávání např. v
+
+        čekání na odpověď.
 7bd8fc15e1d93b10be826ce8e00ebabcfb79fbb806b8c52e2fcef824:
     ref: Feed name (title)
     value: Vyber si název
@@ -467,6 +512,13 @@
 86fded4e70c3438ddd65c42c33c6c2494acbd968db8b5e9b51104a9c:
     ref: Delete feed (button)
     value: Smazat nastavení
+870fc2701477d91f2aa04bf1a3372358f5a880be79c038fb370953f3:
+    ref: Buyer activity (hint)
+    value: >
+        Zevrubná aktivita napovídá, zda je kupující jinak aktivní, nastavuje
+        potenciální očekávání
+
+        reakce na zprávy.
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
     ref: With VAT
     value: With VAT
@@ -536,6 +588,13 @@
 957897e367a94096dcbfda99c8cf5bd4dc9f4d2a2292065c65990299:
     ref: Draft - action section (title)
     value: Co dál?
+987bae9b81c35e9840767773141ed1ff4f077d951fa808c85af4250f:
+    ref: Decision rate (hint)
+    value: >
+        Sleduje explicitně dokončené obchody; nízké procento pouze vyjadřuje
+        přirozené chování, kdy např.
+
+        po předání balíčku kupující transakci neodklikne.
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
     ref: Create listing (label)
     value: Nový inzerát
@@ -683,6 +742,9 @@ Listing warranty - no-warranty:
 Listing warranty - warranty:
     static: true
     value: Se zárukou
+a012442134ffb92cd4a9b82e225dcf084a14efd16c7ad75c91f1b338:
+    ref: human
+    value: human
 a038a4da09ca1bfcd3d73f545e72575a33516d5e7ef37b09b4f5b397:
     ref: Welcome (title)
     value: Klikej. Zkoumej. Nemáš tu co posrat.
@@ -712,6 +774,11 @@ a64e91c4e68c901ac59593d15028b96e00c9b01c7163080eb97502c2:
 a67ea5aaab8eb99644b1412ae291882a3d6e0ddefd49b19cc413abaf:
     ref: Listing description (label)
     value: Popis inzerátu
+a78ed5f38f0cf730dc1a618d9df1ca5011cc5d947d61f00075e0c5da:
+    ref: Expired rate (hint)
+    value: >
+        Nastavuje očekávání, kdy se kupující např. po předání balíčku už ke zprávám
+        nevrátí a obchod neuzavře.
 a92a914e77188202f38d6b42be76d7f92cee60d777d0c00ca5aecbde:
     ref: Package - Tracking number (placeholder)
     value: Např. Z488654
@@ -785,6 +852,12 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
         message than this :(
     value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
         better message than this :(
+buyer - Buyer rejected the transaction (message):
+    value: |
+        **Odmítl jsi obchod.**
+
+        Toto se promítne do údajů, které o tobě prodejce může vidět.
+    static: true
 buyer - Seller accepted the transaction (message):
     value: |
         **Prodejce přijal obchod**
@@ -801,6 +874,12 @@ buyer - Seller resolved the transaction (message):
         Ty máš ještě prostor se vyjádřit, případně obchod úspěšně zavřít.
 
         _Nic dalšího již není třeba dělat._
+    static: true
+buyer - Transaction closed (message):
+    value: |
+        **Tento obchod jsi uzavřel.**
+
+        Dál už tu nic není.
     static: true
 buyer - Transaction dispute (message):
     value: >
@@ -879,6 +958,10 @@ d30ca5022499ee9c8ab4d9d4a2bb4f65292849e295cbb63503707671:
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
     ref: Listing condition (label)
     value: Stav
+d8afcd78535d2c0ab7b58dfcc92c11456c55fe96dab19a1de6a24218:
+    ref: Closer rate (hint)
+    value: |
+        Důležitá metrika, která říká poměr zavřených zpráv bez další interakce. Nižší číslo je lepší.
 d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
     ref: Feed title (hint)
     value: >
@@ -886,6 +969,9 @@ d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
 d93ae180759797f0ad3bc741552efefb4290ee7b7d2c19108209fd2b:
     ref: Feed condition (title)
     value: Stavy
+d95b6247e69f90b9f6f613b62be4396f37f5c45acb205f993f42dd18:
+    ref: Reaction rate (label)
+    value: Reakce na zprávy
 da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
     ref: Feed sorting (title)
     value: Řazení
@@ -1018,6 +1104,15 @@ ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
 ff95e127f3feec3ae1c640001d56b07697ca4fa473da4213348be958:
     ref: open
     value: open
+seller - Buyer rejected the transaction (message):
+    value: |
+        **Kupující odmítl obchod.**
+
+        Tato informace se promítne do údajů, které si můžeš zkontrolovat před
+        otevřením obchodu.
+
+        Nic víc tu teď k řešení není.
+    static: true
 seller - Seller accepted the transaction (message):
     value: |
         **Přijal jsi obchod**
@@ -1029,6 +1124,12 @@ seller - Seller rejected the transaction (message):
     static: true
 seller - Seller resolved the transaction (message):
     value: Máš vyřízeno, nic dalšího již není třeba dělat.
+    static: true
+seller - Transaction closed (message):
+    value: |
+        **Kupující uzavřel obchod.**
+
+        Dál už tu nic není.
     static: true
 seller - Transaction dispute (message):
     value: |
@@ -1053,30 +1154,39 @@ seller - Transaction successful (message):
 
         Dál už tu nic není.
     static: true
-seller - Transaction closed (message):
-    value: |
-        **Kupující uzavřel obchod.**
-
-        Dál už tu nic není.
+Buyer load low:
     static: true
-buyer - Transaction closed (message):
-    value: |
-        **Tento obchod jsi uzavřel.**
-
-        Dál už tu nic není.
+    value: Vysoká dostupnost
+Buyer load medium:
     static: true
-buyer - Buyer rejected the transaction (message):
-    value: |
-        **Odmítl jsi obchod.**
-
-        Toto se promítne do údajů, které o tobě prodejce může vidět.
+    value: Střední dostupnost
+Buyer load high:
     static: true
-seller - Buyer rejected the transaction (message):
-    value: |
-        **Kupující odmítl obchod.**
-
-        Tato informace se promítne do údajů, které si můžeš zkontrolovat před
-        otevřením obchodu.
-
-        Nic víc tu teď k řešení není.
+    value: Vysoká dostupnost
+Buyer activity low:
     static: true
+    value: Nízká aktivita
+Buyer activity medium:
+    static: true
+    value: Střední aktivita
+Buyer activity high:
+    static: true
+    value: Vysoká aktivita
+Buyer score 1:
+    static: true
+    value: Potenciálně vysoké riziko
+Buyer score 2:
+    static: true
+    value: Rizikovější profil chování
+Buyer score 3:
+    static: true
+    value: Průměrné riziko
+Buyer score 4:
+    static: true
+    value: Běžný uživatel
+Buyer score 5:
+    static: true
+    value: Nízké riziko
+Buyer score 6:
+    static: true
+    value: Perfektní

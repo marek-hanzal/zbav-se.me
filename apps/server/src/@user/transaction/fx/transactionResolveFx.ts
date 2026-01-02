@@ -26,6 +26,7 @@ export const transactionResolveFx = ({
 					.innerJoin("listing as l", "lt.listingId", "l.id")
 					.select([
 						"lt.id",
+						"lt.listingId",
 						"lt.messageThreadId",
 						"l.userId as sellerId",
 						"lt.userId as buyerId",

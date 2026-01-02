@@ -262,3 +262,25 @@ export const zApiHealthResponse = z.object({
 });
 
 export type zapiHealthResponse = z.infer<typeof zApiHealthResponse>;
+
+export const zApiSeedData = z.object({
+    body: z.optional(z.object({
+        email: z.string().register(z.globalRegistry, {
+            description: 'User data for seeding'
+        }),
+        transaction: z.object({
+            count: z.number().register(z.globalRegistry, {
+                description: 'Number of listings to create transactions for'
+            }),
+            months: z.number().register(z.globalRegistry, {
+                description: 'Number of months to create transactions for'
+            })
+        })
+    }).register(z.globalRegistry, {
+        description: 'User data for seeding'
+    })),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiSeedRequest = z.infer<typeof zApiSeedData>;

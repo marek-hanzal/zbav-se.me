@@ -7,10 +7,12 @@ import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { TransactionContextFx } from "./TransactionContextFx";
 
 export namespace transactionPatchFx {
-	export type Props = TransactionPatchSchema.Type;
+	export interface Props extends TransactionPatchSchema.Type {
+		updatedAt?: DateTime;
+	}
 }
 
-export const transactionPatchFx = ({ patch, query }: transactionPatchFx.Props) => {
+export const transactionPatchFx = ({ patch, query, updatedAt }: transactionPatchFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
@@ -18,7 +20,7 @@ export const transactionPatchFx = ({ patch, query }: transactionPatchFx.Props) =
 
 			const transaction = yield* transactionFetchFx(query);
 
-			const now = DateTime.now();
+			const now = updatedAt ?? DateTime.now();
 
 			yield* Effect.tryPromise(async () => {
 				return database

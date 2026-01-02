@@ -6,7 +6,7 @@ export const TransactionStatusSchema = z
 		...TransactionStatusDbSchema.shape,
 	})
 	.omit({
-		createdAt: true,
+		userId: true,
 	})
 	.openapi("TransactionStatus", {
 		description: "Listing transaction status entry",

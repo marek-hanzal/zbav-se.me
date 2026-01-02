@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiGithubHistoryErrors, tApiCronDay0Request, tApiCronDay0Response, tApiCronDay12Request, tApiCronDay12Response, tApiCronDay16Request, tApiCronDay16Response, tApiCronDay20Request, tApiCronDay20Response, tApiCronDay4Request, tApiCronDay4Response, tApiCronDay8Request, tApiCronDay8Response, tApiCronHourlyRequest, tApiCronHourlyResponse, tApiCronMonthlyRequest, tApiCronMonthlyResponse, tApiGithubHistoryRequest, tApiGithubHistoryResponse, tApiHealthRequest, tApiHealthResponse } from './types.gen';
-import { zApiCronDay0Data, zApiCronDay0Response, zApiCronDay12Data, zApiCronDay12Response, zApiCronDay16Data, zApiCronDay16Response, zApiCronDay20Data, zApiCronDay20Response, zApiCronDay4Data, zApiCronDay4Response, zApiCronDay8Data, zApiCronDay8Response, zApiCronHourlyData, zApiCronHourlyResponse, zApiCronMonthlyData, zApiCronMonthlyResponse, zApiGithubHistoryData, zApiGithubHistoryResponse, zApiHealthData, zApiHealthResponse } from './zod.gen';
+import type { apiGithubHistoryErrors, apiSeedErrors, tApiCronDay0Request, tApiCronDay0Response, tApiCronDay12Request, tApiCronDay12Response, tApiCronDay16Request, tApiCronDay16Response, tApiCronDay20Request, tApiCronDay20Response, tApiCronDay4Request, tApiCronDay4Response, tApiCronDay8Request, tApiCronDay8Response, tApiCronHourlyRequest, tApiCronHourlyResponse, tApiCronMonthlyRequest, tApiCronMonthlyResponse, tApiGithubHistoryRequest, tApiGithubHistoryResponse, tApiHealthRequest, tApiHealthResponse, tApiSeedRequest, tApiSeedResponse } from './types.gen';
+import { zApiCronDay0Data, zApiCronDay0Response, zApiCronDay12Data, zApiCronDay12Response, zApiCronDay16Data, zApiCronDay16Response, zApiCronDay20Data, zApiCronDay20Response, zApiCronDay4Data, zApiCronDay4Response, zApiCronDay8Data, zApiCronDay8Response, zApiCronHourlyData, zApiCronHourlyResponse, zApiCronMonthlyData, zApiCronMonthlyResponse, zApiGithubHistoryData, zApiGithubHistoryResponse, zApiHealthData, zApiHealthResponse, zApiSeedData } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -127,4 +127,17 @@ export const apiHealth = <ThrowOnError extends boolean = false>(options?: Option
     responseValidator: async (data) => await zApiHealthResponse.parseAsync(data),
     url: '/api/public/health',
     ...options
+});
+
+/**
+ * Seed endpoint for user data
+ */
+export const apiSeed = <ThrowOnError extends boolean = false>(options?: Options<tApiSeedRequest, ThrowOnError>) => (options?.client ?? client).post<tApiSeedResponse, apiSeedErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiSeedData.parseAsync(data),
+    url: '/api/public/seed',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
 });

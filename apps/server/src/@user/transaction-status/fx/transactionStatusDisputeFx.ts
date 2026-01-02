@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import type { DateTime } from "luxon";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
@@ -6,10 +7,15 @@ import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transac
 import type { TransactionStatusDisputeSchema } from "~/@user/transaction-status/schema/TransactionStatusDisputeSchema";
 
 export namespace transactionStatusDisputeFx {
-	export type Props = TransactionStatusDisputeSchema.Type;
+	export type Props = TransactionStatusDisputeSchema.Type & {
+		createdAt?: DateTime;
+	};
 }
 
-export const transactionStatusDisputeFx = ({ transactionId }: transactionStatusDisputeFx.Props) => {
+export const transactionStatusDisputeFx = ({
+	transactionId,
+	createdAt,
+}: transactionStatusDisputeFx.Props) => {
 	return Effect.gen(function* () {
 		const transaction = yield* transactionResolveFx({
 			transactionId,
@@ -23,17 +29,21 @@ export const transactionStatusDisputeFx = ({ transactionId }: transactionStatusD
 					id: transaction.id,
 				},
 			},
+			updatedAt: createdAt,
 		});
 
 		yield* messageSystemCreateFx({
 			messageThreadId: transaction.messageThreadId,
 			message: "Transaction dispute (message)",
+			createdAt,
 		});
 
 		return yield* transactionStatusCreateFx({
 			transactionId: transaction.id,
+			listingId: transaction.listingId,
 			status: "dispute",
 			side: transaction.side,
+			createdAt,
 		});
 	});
 };
