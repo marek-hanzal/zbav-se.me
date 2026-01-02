@@ -142,6 +142,21 @@ export const UserEventBuyerSchema = z
 			.openapi("UserEventBuyerActivity", {
 				description: "This metric describes the approx activity of the user",
 			}),
+		score: z
+			.looseObject({
+				score: z.number().openapi({
+					description: "Low-level score value, usually not presented in UI",
+					example: 0,
+				}),
+				rank: z.number().openapi({
+					description: "Rank computed from the score (A-F, 1-6)",
+					example: 2,
+				}),
+			})
+			.strip()
+			.openapi("UserEventBuyerScore", {
+				description: "This metric describes the score of the user",
+			}),
 	})
 	.strip()
 	.openapi("UserEventBuyer", {

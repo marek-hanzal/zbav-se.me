@@ -1,5 +1,6 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Ssst */
 
+import { clamp } from "@use-pico/common/clamp";
 import { median } from "@use-pico/common/median";
 import { p90 } from "@use-pico/common/p90";
 import { Effect } from "effect";
@@ -504,6 +505,81 @@ const computeActivity = (source: UserEventDbSchema.Type[], days: number) => {
 	} satisfies UserEventBuyerSchema.Type["activity"];
 };
 
+export const computeScore = (input: {
+	reaction: UserEventBuyerSchema.Type["reaction"];
+	decision: UserEventBuyerSchema.Type["decision"];
+	closer: UserEventBuyerSchema.Type["closer"];
+	expired: UserEventBuyerSchema.Type["expired"];
+	activity: UserEventBuyerSchema.Type["activity"];
+	load: UserEventBuyerSchema.Type["load"];
+}) => {
+	const { reaction, decision, closer, expired, activity, load } = input;
+
+	const bonusActivity = (bucket: "low" | "medium" | "high") =>
+		bucket === "high" ? 2 : bucket === "medium" ? 1 : 0;
+
+	const bonusLoad = (bucket: "low" | "medium" | "high") =>
+		bucket === "low" ? 2 : bucket === "medium" ? 1 : 0;
+
+	const bonusReactionSpeed = (reaction: { reactions: number; medianMs: number }) => {
+		// bonus only if we actually have reaction samples
+		if (reaction.reactions <= 0) {
+			return 0;
+		}
+
+		const h1 = 1 * 60 * 60 * 1000;
+		const h4 = 4 * 60 * 60 * 1000;
+		const h8 = 8 * 60 * 60 * 1000;
+
+		if (reaction.medianMs <= h1) {
+			return 6;
+		}
+		if (reaction.medianMs <= h4) {
+			return 4;
+		}
+		if (reaction.medianMs <= h8) {
+			return 2;
+		}
+
+		return 0;
+	};
+
+	// positives
+	const decisionPoints = clamp(decision.percent, 0, 100) * 0.55; // 0..55
+	const reactionPoints = clamp(reaction.percent, 0, 100) * 0.25; // 0..25
+
+	const closerOver = Math.max(0, closer.percent - 10); // allow up to 10%
+	const closerPenalty = clamp(closerOver, 0, 100) * 0.25; // 0..25
+
+	const expiredOver = Math.max(0, expired.percent - 10); // allow up to 10%
+	const expiredPenalty = clamp(expiredOver, 0, 100) * 0.1; // 0..10
+
+	// micro context
+	const micro = bonusActivity(activity.bucket) + bonusLoad(load.bucket); // 0..4
+
+	// speed bonus
+	const speed = bonusReactionSpeed(reaction); // 0..6
+
+	const raw = decisionPoints + reactionPoints + micro + speed - closerPenalty - expiredPenalty;
+	const score = clamp(Math.round(raw), 0, 100);
+
+	return {
+		score,
+		rank:
+			score >= 85
+				? 6
+				: score >= 70
+					? 5
+					: score >= 55
+						? 4
+						: score >= 40
+							? 3
+							: score >= 25
+								? 2
+								: 1,
+	} satisfies UserEventBuyerSchema.Type["score"];
+};
+
 export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => {
 	return Effect.gen(function* () {
 		const cutoff = 90;
@@ -533,13 +609,18 @@ export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => 
 			],
 		});
 
-		return {
+		const result: Omit<UserEventBuyerSchema.Type, "score"> = {
 			reaction: computeReaction(source),
 			closer: computeCloser(source),
 			decision: computeDecision(source),
 			expired: computeExpired(source),
 			load: computeLoad(source),
 			activity: computeActivity(source, cutoff),
+		};
+
+		return {
+			...result,
+			score: computeScore(result),
 		} satisfies UserEventBuyerSchema.Type;
 	});
 };
