@@ -62,8 +62,6 @@ export const withDatabase = <TDatabase>({
 				},
 			});
 
-			process.stdout.write("about to migrate\n");
-
 			const { error, results } = await migrator.migrateToLatest();
 
 			if (error) {
@@ -71,8 +69,6 @@ export const withDatabase = <TDatabase>({
 			}
 
 			results?.forEach((result) => {
-				process.stdout.write("something migrated\n");
-
 				switch (result.status) {
 					case "Success":
 						console.log(`Migration "${result.migrationName}" executed successfully`);
@@ -85,8 +81,6 @@ export const withDatabase = <TDatabase>({
 			});
 
 			await onPostMigration?.();
-
-			process.stdout.write("tadaa\n");
 
 			return results;
 		},

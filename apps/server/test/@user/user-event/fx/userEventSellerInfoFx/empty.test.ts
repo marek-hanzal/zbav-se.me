@@ -25,13 +25,9 @@ describe("userEventSellerInfoFx", () => {
 
 		const kysely = await database.kysely();
 
-		console.log("about to create database");
-
 		await sql`CREATE DATABASE ${sql.ref(db)} TEMPLATE test OWNER test`.execute(kysely);
-		console.log("database created");
 
 		await kysely.destroy();
-		console.log("database destroyed");
 	});
 
 	it("runs the effect", async () => {

@@ -145,8 +145,7 @@ export default async function globalSetup(): Promise<SetupResult> {
 
 	const dialect = new PostgresDialect({
 		pool: new Pool({
-			connectionString: DATABASE_URL,
-			database: "test",
+			connectionString: `${DATABASE_URL}/test`,
 		}),
 	});
 	const database = withDatabase<Database>({
