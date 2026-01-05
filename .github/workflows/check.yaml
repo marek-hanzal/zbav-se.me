@@ -5,6 +5,10 @@ on:
         branches-ignore:
             - main
 
+concurrency:
+    group: check
+    cancel-in-progress: false
+
 permissions:
     contents: read
 
@@ -109,6 +113,7 @@ jobs:
     test:
         name: Test
         runs-on: ubuntu-latest
+        environment: staging
         steps:
             - uses: actions/checkout@v4
 
