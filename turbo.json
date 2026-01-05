@@ -58,6 +58,11 @@
 		},
 		"sdk": {
 			"cache": false
+		},
+		"test": {
+			"outputs": [],
+			"outputLogs": "new-only",
+			"cache": false
 		}
 	}
 }
