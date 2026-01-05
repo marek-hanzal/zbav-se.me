@@ -8,9 +8,7 @@ describe("userEventSellerInfoFx", () => {
 		const result = await Effect.runPromise(
 			userEventSellerInfoFx({
 				userId: "test-user-id",
-			}).pipe(
-                DatabaseContextProvider()
-            ),
+			}).pipe(DatabaseContextProvider()),
 		);
 	});
 });
