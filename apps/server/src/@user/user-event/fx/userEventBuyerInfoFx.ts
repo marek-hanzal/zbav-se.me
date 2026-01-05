@@ -609,6 +609,10 @@ export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => 
 			],
 		});
 
+		if (source.length <= 1) {
+			return null;
+		}
+
 		const result: Omit<UserEventBuyerSchema.Type, "score"> = {
 			reaction: computeReaction(source),
 			closer: computeCloser(source),

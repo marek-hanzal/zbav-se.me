@@ -43,6 +43,10 @@
 0a5c73cd28c41a15c8769a38be34b6d388bcba18e90ca7e28b762bc9:
     ref: Listing - Cons (title)
     value: Chci být upřímný
+0ad19851932e8a648ab674bd1e2c9d2b8057d4f4136877c7eb288b32:
+    ref: Transaction buyer info not available (message)
+    value: |
+        Zatím nemám dost dat o kupujícím - teď je to na tvé vlastní intuici.
 0bfcff0fd8397bbe2de9284b3fe89a16ac4fbf192d890b04a396258b:
     ref: Draft edit (title)
     value: Nový inzerát
@@ -200,8 +204,9 @@
     value: Zpět domů
 2cc4d8606ebcda522231e7ebd01a2df339a8f8edc36ec3830eedf4c6:
     ref: Listing seller info not available (message)
-    value: |
-        **Pokročilé metriky** nejsou zatím dostupné, teď je to na tvé vlastní intuici.
+    value: >
+        **Pokročilé metriky** nejsou zatím dostupné, teď je to na tvé vlastní
+        intuici.
 2f30c1c4a6d75472712f25fde84d88a7087c8e5d41e7aa3b4b3030fc:
     ref: Feed range not set
     value: Vzdálenost není nenastavená
@@ -373,6 +378,9 @@
 59934a1f13d42118882c0a0a64cf3f270c5ad2f54185826385cb2abf:
     ref: Go to feed (link)
     value: Inzeráty
+59e4c4c7191a4de1ac5a2debf4ed14ba44d3f4c2af0488a28d835701:
+    ref: Transaction buyer info not available (title)
+    value: Víc toho o kupujícím nevím
 5a5a2baed8c4a4673ac53e4bffc4d31e2508fb9c8c1fb184da880680:
     ref: Listing - Pros (message)
     value: |
