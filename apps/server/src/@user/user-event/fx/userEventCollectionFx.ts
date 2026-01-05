@@ -15,7 +15,7 @@ export const userEventCollectionFx = (query: userEventCollectionFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 
-		return yield* Effect.promise(async () => {
+		return yield* Effect.tryPromise(async () => {
 			return withCollection({
 				select: withUserEventCollectionSelect({
 					database,
