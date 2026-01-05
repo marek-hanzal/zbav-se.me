@@ -7,7 +7,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { listingEventCreateFx } from "./fx/listingEventCreateFx";
 import { ListingEventCreateSchema } from "./schema/ListingEventCreateSchema";
 
-export const withCreateApi: Routes.Fn = ({ userHono }) => {
+export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

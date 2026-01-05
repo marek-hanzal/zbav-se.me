@@ -9,7 +9,7 @@ import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionStatusAcceptSchema } from "./schema/TransactionStatusAcceptSchema";
 
-export const withAcceptApi: Routes.Fn = ({ userHono }) => {
+export const withAcceptApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

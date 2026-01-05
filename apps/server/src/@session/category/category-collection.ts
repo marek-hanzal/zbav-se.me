@@ -8,7 +8,7 @@ import { categoryCollectionFx } from "./fx/categoryCollectionFx";
 import { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
 import { CategorySchema } from "./schema/CategorySchema";
 
-export const withCategoryCollectionApi: Routes.Fn = ({ sessionHono }) => {
+export const withCategoryCollectionApi: Routes.Fn = async ({ sessionHono }) => {
 	sessionHono.openapi(
 		createRoute({
 			method: "post",

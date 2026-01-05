@@ -1,16 +1,22 @@
 import net from "node:net";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { Client } from "pg";
+import { withDatabase } from "@use-pico/common/database";
+import { PostgresDialect } from "kysely";
+import { Client, Pool } from "pg";
+import { runAuthMigration } from "~/auth/runAuthMigration";
+import type { Database } from "~/database/Database";
+import { getMigrations } from "~/database/migrations/getMigrations";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 
 type SetupResult = (() => Promise<void>) | void;
 
 const IMAGE = "zbav-se.me:postgres";
+const CONTAINER_NAME = "zbav-seme-test-postgres";
 
 const DATABASE_PORT = 55432;
-const DATABASE_URL = `postgresql://test:test@127.0.0.1:${DATABASE_PORT}/test`;
+const DATABASE_URL = `postgresql://test:test@127.0.0.1:${DATABASE_PORT}`;
 const REPO_ROOT = path.resolve(HERE, "../../..");
 
 function sh(cmd: string[], hint: string) {
@@ -22,10 +28,21 @@ function sh(cmd: string[], hint: string) {
 	});
 	const stdout = new TextDecoder().decode(proc.stdout).trim();
 	const stderr = new TextDecoder().decode(proc.stderr).trim();
-	if (proc.exitCode !== 0) throw new Error(`${hint}\n${stderr}`.trim());
+	if (proc.exitCode !== 0) {
+		throw new Error(`${hint}\n${stderr}`.trim());
+	}
 	return {
 		stdout,
 	};
+}
+
+function shQuiet(cmd: string[]) {
+	Bun.spawnSync({
+		cmd,
+		cwd: REPO_ROOT,
+		stdout: "ignore",
+		stderr: "ignore",
+	});
 }
 
 function sleep(ms: number) {
@@ -46,7 +63,9 @@ async function waitForTcp(host: string, port: number, timeoutMs = 20_000) {
 			});
 			socket.once("error", () => resolve(false));
 		});
-		if (ok) return;
+		if (ok) {
+			return;
+		}
 		await sleep(150);
 	}
 	throw new Error(`Postgres TCP not reachable on ${host}:${port}`);
@@ -79,7 +98,6 @@ export default async function globalSetup(): Promise<SetupResult> {
 		"Docker is not available",
 	);
 
-	// vždy build (cache to obvykle proletí)
 	sh(
 		[
 			"docker",
@@ -92,11 +110,20 @@ export default async function globalSetup(): Promise<SetupResult> {
 		`Failed to build image "${IMAGE}"`,
 	);
 
-	const { stdout: containerId } = sh(
+	shQuiet([
+		"docker",
+		"rm",
+		"-f",
+		CONTAINER_NAME,
+	]);
+
+	sh(
 		[
 			"docker",
 			"run",
 			"-d",
+			"--name",
+			CONTAINER_NAME,
 			"--rm",
 			"-e",
 			"POSTGRES_USER=test",
@@ -112,28 +139,36 @@ export default async function globalSetup(): Promise<SetupResult> {
 	);
 
 	await waitForTcp("127.0.0.1", DATABASE_PORT);
-	await waitForPostgresConnect(DATABASE_URL);
+	await waitForPostgresConnect(`${DATABASE_URL}/test`);
 
 	process.env.SERVER_DATABASE_URL = DATABASE_URL;
 
-	await (async () => {
-		const { database } = await import("~/database/kysely");
+	const dialect = new PostgresDialect({
+		pool: new Pool({
+			connectionString: DATABASE_URL,
+			database: "test",
+		}),
+	});
+	const database = withDatabase<Database>({
+		async dialect() {
+			return dialect;
+		},
+		onPreMigration: async () => await runAuthMigration(async () => dialect),
+		getMigrations,
+	});
 
-		await database.migrate();
+	const kysely = await database.kysely();
 
-		await database.kysely.destroy();
-	})();
+	await database.migrate();
+
+	await kysely.destroy();
 
 	return async () => {
-		Bun.spawnSync({
-			cmd: [
-				"docker",
-				"rm",
-				"-f",
-				containerId,
-			],
-			stdout: "ignore",
-			stderr: "ignore",
-		});
+		shQuiet([
+			"docker",
+			"rm",
+			"-f",
+			CONTAINER_NAME,
+		]);
 	};
 }

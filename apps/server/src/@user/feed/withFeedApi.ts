@@ -7,12 +7,12 @@ import { withFetchApi } from "./fetch";
 import { withGalleryCreateApi } from "./gallery-create";
 import { withPatchApi } from "./patch";
 
-export const withFeedApi: Routes.Fn = (routes) => {
-	withCreateApi(routes);
-	withPatchApi(routes);
-	withFetchApi(routes);
-	withCollectionApi(routes);
-	withCountApi(routes);
-	withDeleteApi(routes);
-	withGalleryCreateApi(routes);
+export const withFeedApi: Routes.Fn = async (routes) => {
+	await withCreateApi(routes);
+	await withPatchApi(routes);
+	await withFetchApi(routes);
+	await withCollectionApi(routes);
+	await withCountApi(routes);
+	await withDeleteApi(routes);
+	await withGalleryCreateApi(routes);
 };

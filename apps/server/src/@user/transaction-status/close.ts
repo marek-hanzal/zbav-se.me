@@ -9,7 +9,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { transactionStatusCloseFx } from "./fx/transactionStatusCloseFx";
 import { TransactionStatusCloseSchema } from "./schema/TransactionStatusCloseSchema";
 
-export const withCloseApi: Routes.Fn = ({ userHono }) => {
+export const withCloseApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

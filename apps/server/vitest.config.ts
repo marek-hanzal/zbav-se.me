@@ -37,6 +37,7 @@ export default defineConfig({
 		coverage: {
 			enabled: false,
 		},
+		silent: false,
 		ui: false,
 	},
 });

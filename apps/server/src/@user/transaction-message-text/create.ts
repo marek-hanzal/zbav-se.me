@@ -9,7 +9,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { transactionMessageTextCreateFx } from "./fx/transactionMessageTextCreateFx";
 import { TransactionMessageTextCreateSchema } from "./schema/TransactionMessageTextCreateSchema";
 
-export const withCreateApi: Routes.Fn = ({ userHono }) => {
+export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

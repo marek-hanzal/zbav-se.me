@@ -9,7 +9,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { transactionStatusDisputeFx } from "./fx/transactionStatusDisputeFx";
 import { TransactionStatusDisputeSchema } from "./schema/TransactionStatusDisputeSchema";
 
-export const withDisputeApi: Routes.Fn = ({ userHono }) => {
+export const withDisputeApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

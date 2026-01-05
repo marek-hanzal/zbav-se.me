@@ -6,7 +6,7 @@ import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
-export const withSeedApi: Routes.Fn = ({ publicHono }) => {
+export const withSeedApi: Routes.Fn = async ({ publicHono }) => {
 	publicHono.openapi(
 		createRoute({
 			method: "post",

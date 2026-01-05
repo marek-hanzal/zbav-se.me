@@ -1,7 +1,7 @@
 import { AppEnv } from "~/AppEnv";
 import type { Routes } from "~/hono/Routes";
 
-export const withOriginEndpoint: Routes.Fn = ({ root }) => {
+export const withOriginEndpoint: Routes.Fn = async ({ root }) => {
 	root.get("/origin", (c) =>
 		c.json({
 			origin: [

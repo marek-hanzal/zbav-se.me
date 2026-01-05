@@ -14,7 +14,9 @@ export async function cleanupUpload(): Promise<CleanupSchema.Type> {
 		})
 		.toJSDate();
 
-	const uploads = await database.kysely
+	const kysely = await database.kysely();
+
+	const uploads = await kysely
 		.selectFrom("upload as u")
 		.leftJoin("gallery_item as gi", "gi.uploadId", "u.id")
 		.leftJoin("gallery as g", "gi.uploadId", "u.id")

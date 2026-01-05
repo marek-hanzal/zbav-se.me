@@ -8,7 +8,7 @@ import { listingCreateFx } from "./fx/listingCreateFx";
 import { ListingCreateSchema } from "./schema/ListingCreateSchema";
 import { ListingSchema } from "./schema/ListingSchema";
 
-export const withCreateApi: Routes.Fn = ({ userHono }) => {
+export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

@@ -8,7 +8,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { draftDeleteFx } from "./fx/draftDeleteFx";
 import { DraftSchema } from "./schema/DraftSchema";
 
-export const withDeleteApi: Routes.Fn = ({ userHono }) => {
+export const withDeleteApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "delete",

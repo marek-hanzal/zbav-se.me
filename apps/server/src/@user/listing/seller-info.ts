@@ -17,7 +17,7 @@ const ListingSellerInfoParamsSchema = z
 		description: "Parameters for listing seller info",
 	});
 
-export const withSellerInfoApi: Routes.Fn = ({ userHono }) => {
+export const withSellerInfoApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

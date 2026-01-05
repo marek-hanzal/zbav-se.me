@@ -57,5 +57,5 @@ export interface Database {
 	upload: UploadDbSchema.Type;
 	user_event: UserEventDbSchema.Type;
 	user_ex: UserExDbSchema.Type;
-	user: typeof auth.$Infer.Session.user;
+	user: auth.User;
 }

@@ -7,7 +7,7 @@ import { locationFetchFx } from "./fx/locationFetchFx";
 import { LocationQuerySchema } from "./schema/LocationQuerySchema";
 import { LocationSchema } from "./schema/LocationSchema";
 
-export const withLocationFetchApi: Routes.Fn = ({ sessionHono }) => {
+export const withLocationFetchApi: Routes.Fn = async ({ sessionHono }) => {
 	sessionHono.openapi(
 		createRoute({
 			method: "post",

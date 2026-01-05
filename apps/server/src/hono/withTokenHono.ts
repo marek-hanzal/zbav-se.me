@@ -6,7 +6,7 @@ import type { Database } from "../database/Database";
 export const withTokenHono = () => {
 	return new OpenAPIHono<{
 		Variables: {
-			user: typeof auth.$Infer.Session.user;
+			user: auth.User;
 			database: Kysely<Database>;
 		};
 	}>();

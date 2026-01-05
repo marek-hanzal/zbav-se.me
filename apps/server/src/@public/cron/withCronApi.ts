@@ -8,14 +8,14 @@ import { withDay20Endpoint } from "./day-20";
 import { withHourlyEndpoint } from "./hourly";
 import { withMonthlyEndpoint } from "./monthly";
 
-export const withCronApi: Routes.Fn = (routes) => {
-	withHourlyEndpoint(routes);
-	withMonthlyEndpoint(routes);
+export const withCronApi: Routes.Fn = async (routes) => {
+	await withHourlyEndpoint(routes);
+	await withMonthlyEndpoint(routes);
 	//
-	withDay0Endpoint(routes);
-	withDay4Endpoint(routes);
-	withDay8Endpoint(routes);
-	withDay12Endpoint(routes);
-	withDay16Endpoint(routes);
-	withDay20Endpoint(routes);
+	await withDay0Endpoint(routes);
+	await withDay4Endpoint(routes);
+	await withDay8Endpoint(routes);
+	await withDay12Endpoint(routes);
+	await withDay16Endpoint(routes);
+	await withDay20Endpoint(routes);
 };

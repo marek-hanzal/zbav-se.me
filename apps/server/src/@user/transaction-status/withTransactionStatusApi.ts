@@ -6,11 +6,11 @@ import { withRejectApi } from "./reject";
 import { withResolveApi } from "./resolve";
 import { withSuccessApi } from "./success";
 
-export const withTransactionStatusApi: Routes.Fn = (routes) => {
-	withAcceptApi(routes);
-	withRejectApi(routes);
-	withResolveApi(routes);
-	withSuccessApi(routes);
-	withDisputeApi(routes);
-	withCloseApi(routes);
+export const withTransactionStatusApi: Routes.Fn = async (routes) => {
+	await withAcceptApi(routes);
+	await withRejectApi(routes);
+	await withResolveApi(routes);
+	await withSuccessApi(routes);
+	await withDisputeApi(routes);
+	await withCloseApi(routes);
 };

@@ -9,7 +9,7 @@ import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { galleryCollectionFx } from "./fx/galleryCollectionFx";
 import { GallerySchema } from "./schema/GallerySchema";
 
-export const withCollectionApi: Routes.Fn = ({ userHono }) => {
+export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

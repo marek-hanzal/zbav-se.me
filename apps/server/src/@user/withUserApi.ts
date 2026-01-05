@@ -26,7 +26,7 @@ import { withUserExApi } from "./user-ex/withUserExApi";
 
 export const withUserApi: Routes.FnWithDeps<{
 	database: WithDatabase;
-}> = (routes, deps) => {
+}> = async (routes, deps) => {
 	routes.userHono.use(async (c, next) => {
 		c.set("database", deps.database);
 		return next();
@@ -46,28 +46,28 @@ export const withUserApi: Routes.FnWithDeps<{
 		return next();
 	});
 
-	withDraftApi(routes);
-	withFavouriteApi(routes);
-	withFeedApi(routes);
-	withFeedFavouriteApi(routes);
-	withFlagApi(routes);
-	withGalleryApi(routes);
-	withIgnoreApi(routes);
-	withListingApi(routes);
-	withListingEventApi(routes);
-	withFeedbackApi(routes);
-	withMessageThreadApi(routes);
-	withS3Api(routes);
-	withTransactionApi(routes);
-	withTransactionMessageGalleryApi(routes);
-	withTransactionMessageLocationApi(routes);
-	withTransactionMessagePackageApi(routes);
-	withTransactionMessagePersonalApi(routes);
-	withTransactionMessageTextApi(routes);
-	withTransactionStatusApi(routes);
-	withUploadApi(routes);
-	withUserEventApi(routes);
-	withUserExApi(routes);
+	await withDraftApi(routes);
+	await withFavouriteApi(routes);
+	await withFeedApi(routes);
+	await withFeedFavouriteApi(routes);
+	await withFlagApi(routes);
+	await withGalleryApi(routes);
+	await withIgnoreApi(routes);
+	await withListingApi(routes);
+	await withListingEventApi(routes);
+	await withFeedbackApi(routes);
+	await withMessageThreadApi(routes);
+	await withS3Api(routes);
+	await withTransactionApi(routes);
+	await withTransactionMessageGalleryApi(routes);
+	await withTransactionMessageLocationApi(routes);
+	await withTransactionMessagePackageApi(routes);
+	await withTransactionMessagePersonalApi(routes);
+	await withTransactionMessageTextApi(routes);
+	await withTransactionStatusApi(routes);
+	await withUploadApi(routes);
+	await withUserEventApi(routes);
+	await withUserExApi(routes);
 
 	routes.root.route("/api/user", routes.userHono);
 };

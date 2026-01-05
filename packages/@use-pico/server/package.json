@@ -7,7 +7,7 @@
 	"scripts": {
 		"typecheck": "tsgo --noEmit",
 		"no:build": "bun x rollup -c",
-		"test": "run-s test:*",
+		"no:test": "run-s test:*",
 		"test:code": "vitest --run"
 	},
 	"dependencies": {

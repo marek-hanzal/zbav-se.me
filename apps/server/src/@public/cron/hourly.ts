@@ -2,7 +2,7 @@ import { createRoute } from "@hono/zod-openapi";
 import type { Routes } from "~/hono/Routes";
 import { CronSchema } from "./schema/CronSchema";
 
-export const withHourlyEndpoint: Routes.Fn = ({ publicHono }) => {
+export const withHourlyEndpoint: Routes.Fn = async ({ publicHono }) => {
 	publicHono.openapi(
 		createRoute({
 			method: "get",

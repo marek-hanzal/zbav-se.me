@@ -6,7 +6,7 @@ import { withLocationApi } from "./location/withLocationApi";
 
 export const withSessionApi: Routes.FnWithDeps<{
 	database: WithDatabase;
-}> = (routes, deps) => {
+}> = async (routes, deps) => {
 	routes.sessionHono.use(async (c, next) => {
 		c.set("database", deps.database);
 		return next();
@@ -27,8 +27,8 @@ export const withSessionApi: Routes.FnWithDeps<{
 		return next();
 	});
 
-	withCategoryApi(routes);
-	withLocationApi(routes);
+	await withCategoryApi(routes);
+	await withLocationApi(routes);
 
 	routes.root.route("/api/session", routes.sessionHono);
 };

@@ -5,10 +5,10 @@ import { withCreateApi } from "./create";
 import { withFetchApi } from "./fetch";
 import { withSellerInfoApi } from "./seller-info";
 
-export const withListingApi: Routes.Fn = (routes) => {
-	withCreateApi(routes);
-	withFetchApi(routes);
-	withCollectionApi(routes);
-	withCountApi(routes);
-	withSellerInfoApi(routes);
+export const withListingApi: Routes.Fn = async (routes) => {
+	await withCreateApi(routes);
+	await withFetchApi(routes);
+	await withCollectionApi(routes);
+	await withCountApi(routes);
+	await withSellerInfoApi(routes);
 };

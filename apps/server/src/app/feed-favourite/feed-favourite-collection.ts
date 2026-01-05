@@ -9,7 +9,7 @@ import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
-export const withFeedFavouriteCollectionApi: Routes.Fn = ({ userHono }) => {
+export const withFeedFavouriteCollectionApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

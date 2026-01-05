@@ -8,7 +8,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { ignoreToggleFx } from "./fx/ignoreToggleFx";
 import { IgnoreToggleSchema } from "./schema/IgnoreToggleSchema";
 
-export const withToggleApi: Routes.Fn = ({ userHono }) => {
+export const withToggleApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

@@ -6,8 +6,8 @@ import type { Database } from "../database/Database";
 export const withHono = () => {
 	return new OpenAPIHono<{
 		Variables: {
-			user: typeof auth.$Infer.Session.user | null;
-			session: typeof auth.$Infer.Session.session | null;
+			user: auth.User | null;
+			session: auth.Session | null;
 			database: Kysely<Database>;
 		};
 	}>();

@@ -3,7 +3,7 @@ import { database } from "~/database/kysely";
 import type { Routes } from "~/hono/Routes";
 import { MigrationSchema } from "./schema/MigrationSchema";
 
-export const withMigrationRunApi: Routes.Fn = ({ publicHono }) => {
+export const withMigrationRunApi: Routes.Fn = async ({ publicHono }) => {
 	publicHono.openapi(
 		createRoute({
 			method: "get",

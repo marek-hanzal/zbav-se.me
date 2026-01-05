@@ -100,17 +100,19 @@ const routes: Routes = {
 	userHono: withUserHono(),
 };
 
-withRootApi(routes, {
-	database: database.kysely,
+const kysely = await database.kysely();
+
+await withRootApi(routes, {
+	database: kysely,
 });
-withPublicApi(routes, {
-	database: database.kysely,
+await withPublicApi(routes, {
+	database: kysely,
 });
-withSessionApi(routes, {
-	database: database.kysely,
+await withSessionApi(routes, {
+	database: kysely,
 });
-withUserApi(routes, {
-	database: database.kysely,
+await withUserApi(routes, {
+	database: kysely,
 });
 
 export default app;

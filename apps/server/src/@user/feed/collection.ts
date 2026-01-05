@@ -9,7 +9,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { feedCollectionFx } from "./fx/feedCollectionFx";
 
-export const withCollectionApi: Routes.Fn = ({ userHono }) => {
+export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

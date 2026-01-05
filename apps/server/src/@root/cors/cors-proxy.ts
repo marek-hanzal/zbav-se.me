@@ -1,6 +1,6 @@
 import type { Routes } from "~/hono/Routes";
 
-export const withCorsProxyApi: Routes.Fn = ({ root }) => {
+export const withCorsProxyApi: Routes.Fn = async ({ root }) => {
 	root.options("/api/cors-proxy", (c) => {
 		c.header("Access-Control-Allow-Origin", "*");
 		c.header("Access-Control-Allow-Methods", "GET, OPTIONS");

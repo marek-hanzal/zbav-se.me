@@ -4,7 +4,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { cleanup } from "./cleanup/cleanup";
 import { CleanupSchema } from "./schema/CleanupSchema";
 
-export const withJanitorCleanupApi: Routes.Fn = ({ publicHono }) => {
+export const withJanitorCleanupApi: Routes.Fn = async ({ publicHono }) => {
 	publicHono.openapi(
 		createRoute({
 			method: "get",

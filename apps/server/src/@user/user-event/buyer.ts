@@ -17,7 +17,7 @@ const UserEventBuyerParamsSchema = z
 		description: "Parameters for user event buyer info",
 	});
 
-export const withBuyerApi: Routes.Fn = ({ userHono }) => {
+export const withBuyerApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

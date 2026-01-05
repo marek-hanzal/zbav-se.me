@@ -7,7 +7,7 @@ import { locationAutocompleteFx } from "./fx/locationAutocompleteFx";
 import { LocationAutocompleteSchema } from "./schema/LocationAutocompleteSchema";
 import { LocationSchema } from "./schema/LocationSchema";
 
-export const withLocationAutocompleteApi: Routes.Fn = ({ sessionHono }) => {
+export const withLocationAutocompleteApi: Routes.Fn = async ({ sessionHono }) => {
 	sessionHono.openapi(
 		createRoute({
 			method: "post",

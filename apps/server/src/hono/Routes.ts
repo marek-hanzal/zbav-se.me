@@ -6,9 +6,9 @@ export namespace Routes {
 	export type FnWithDeps<TDependencies extends Record<string, unknown> = {}> = (
 		routes: Routes,
 		deps: TDependencies,
-	) => void;
+	) => Promise<void>;
 
-	export type Fn = (routes: Routes) => void;
+	export type Fn = (routes: Routes) => Promise<void>;
 }
 
 export interface Routes {

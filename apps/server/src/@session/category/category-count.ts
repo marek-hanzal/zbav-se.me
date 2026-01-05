@@ -7,7 +7,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { categoryCountFx } from "./fx/categoryCountFx";
 import { CategoryCountQuerySchema } from "./schema/CategoryCountQuerySchema";
 
-export const withCategoryCountApi: Routes.Fn = ({ sessionHono }) => {
+export const withCategoryCountApi: Routes.Fn = async ({ sessionHono }) => {
 	sessionHono.openapi(
 		createRoute({
 			method: "post",

@@ -27,7 +27,7 @@ const parseRepo = (repo: string) => {
 	};
 };
 
-export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
+export const withHistoryApi: Routes.Fn = async ({ publicHono }) => {
 	publicHono.openapi(
 		createRoute({
 			method: "get",

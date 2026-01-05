@@ -4,7 +4,7 @@ import type { Routes } from "~/hono/Routes";
 
 const docsUrl = "/v3/api-docs";
 
-export const withOpenApiEndpoint: Routes.Fn = (routes) => {
+export const withOpenApiEndpoint: Routes.Fn = async (routes) => {
 	routes.root.get(
 		"/",
 		Scalar({

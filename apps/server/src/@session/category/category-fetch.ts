@@ -7,7 +7,7 @@ import { categoryFetchFx } from "./fx/categoryFetchFx";
 import { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
 import { CategorySchema } from "./schema/CategorySchema";
 
-export const withCategoryFetchApi: Routes.Fn = ({ sessionHono }) => {
+export const withCategoryFetchApi: Routes.Fn = async ({ sessionHono }) => {
 	sessionHono.openapi(
 		createRoute({
 			method: "post",

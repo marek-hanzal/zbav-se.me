@@ -9,18 +9,18 @@ import { withSeedApi } from "./seed/seed";
 
 export const withPublicApi: Routes.FnWithDeps<{
 	database: WithDatabase;
-}> = (routes, deps) => {
+}> = async (routes, deps) => {
 	routes.publicHono.use(async (c, next) => {
 		c.set("database", deps.database);
 		return next();
 	});
 
-	withCronApi(routes);
-	withGithubApi(routes);
-	withHealthApi(routes);
-	withJanitorApi(routes);
-	withMigrationApi(routes);
-	withSeedApi(routes);
+	await withCronApi(routes);
+	await withGithubApi(routes);
+	await withHealthApi(routes);
+	await withJanitorApi(routes);
+	await withMigrationApi(routes);
+	await withSeedApi(routes);
 
 	routes.root.route("/api/public", routes.publicHono);
 };

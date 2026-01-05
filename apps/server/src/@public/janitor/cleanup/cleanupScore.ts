@@ -9,12 +9,14 @@ export async function cleanupScore(): Promise<CleanupSchema.Type> {
 		})
 		.toJSDate();
 
-	const total = await database.kysely
+	const kysely = await database.kysely();
+
+	const total = await kysely
 		.selectFrom("listing_event")
 		.select((eb) => eb.fn.count<number>("id").as("count"))
 		.executeTakeFirstOrThrow();
 
-	const result = await database.kysely
+	const result = await kysely
 		.deleteFrom("listing_event")
 		.where("createdAt", "<", cutoffDate)
 		.executeTakeFirst();

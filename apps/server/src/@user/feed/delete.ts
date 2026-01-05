@@ -8,7 +8,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { feedDeleteFx } from "./fx/feedDeleteFx";
 import { FeedSchema } from "./schema/FeedSchema";
 
-export const withDeleteApi: Routes.Fn = ({ userHono }) => {
+export const withDeleteApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "delete",

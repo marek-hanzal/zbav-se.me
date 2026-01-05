@@ -8,7 +8,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { galleryFetchFx } from "./fx/galleryFetchFx";
 import { GallerySchema } from "./schema/GallerySchema";
 
-export const withFetchApi: Routes.Fn = ({ userHono }) => {
+export const withFetchApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

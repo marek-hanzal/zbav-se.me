@@ -8,7 +8,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { listingFetchFx } from "./fx/listingFetchFx";
 import { ListingSchema } from "./schema/ListingSchema";
 
-export const withFetchApi: Routes.Fn = ({ userHono }) => {
+export const withFetchApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

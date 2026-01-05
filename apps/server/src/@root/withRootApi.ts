@@ -1,3 +1,4 @@
+import { dialect } from "~/database/dialect";
 import { auth } from "../auth/auth";
 import type { WithDatabase } from "../database/WithDatabase";
 import type { Routes } from "../hono/Routes";
@@ -8,12 +9,13 @@ import { withOriginApi } from "./origin/withOriginApi";
 
 export const withRootApi: Routes.FnWithDeps<{
 	database: WithDatabase;
-}> = (routes, deps) => {
+}> = async (routes, deps) => {
 	routes.root.use(async (c, next) => {
 		c.set("database", deps.database);
+		const { api } = await auth(async () => dialect);
 
 		try {
-			const session = await auth.api.getSession({
+			const session = await api.getSession({
 				headers: c.req.raw.headers,
 			});
 			if (!session) {
@@ -31,8 +33,8 @@ export const withRootApi: Routes.FnWithDeps<{
 		}
 	});
 
-	withAuthApi(routes);
-	withCorsApi(routes);
-	withOpenApiApi(routes);
-	withOriginApi(routes);
+	await withAuthApi(routes);
+	await withCorsApi(routes);
+	await withOpenApiApi(routes);
+	await withOriginApi(routes);
 };

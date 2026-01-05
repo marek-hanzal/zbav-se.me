@@ -20,7 +20,7 @@ const MessageThreadMessageCollectionParamsSchema = z
 		description: "Parameters for message collection within a message thread",
 	});
 
-export const withMessageCollectionApi: Routes.Fn = ({ userHono }) => {
+export const withMessageCollectionApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

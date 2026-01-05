@@ -8,13 +8,14 @@ export async function cleanupCategory(): Promise<CleanupSchema.Type> {
 			days: 7,
 		})
 		.toJSDate();
+	const kysely = await database.kysely();
 
-	const total = await database.kysely
+	const total = await kysely
 		.selectFrom("category_miss")
 		.select((eb) => eb.fn.count<number>("id").as("count"))
 		.executeTakeFirstOrThrow();
 
-	const result = await database.kysely
+	const result = await kysely
 		.deleteFrom("category_miss")
 		.where("updatedAt", "<", cutoffDate)
 		.executeTakeFirst();

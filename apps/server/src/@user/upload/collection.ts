@@ -8,7 +8,7 @@ import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { uploadCollectionFx } from "./fx/uploadCollectionFx";
 import { UploadSchema } from "./schema/UploadSchema";
 
-export const withCollectionApi: Routes.Fn = ({ userHono }) => {
+export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

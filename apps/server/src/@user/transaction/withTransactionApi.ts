@@ -4,9 +4,9 @@ import { withCollectionApi } from "./collection";
 import { withCreateApi } from "./create";
 import { withFetchApi } from "./fetch";
 
-export const withTransactionApi: Routes.Fn = (routes) => {
-	withCollectionApi(routes);
-	withCreateApi(routes);
-	withFetchApi(routes);
-	withBuyerInfoApi(routes);
+export const withTransactionApi: Routes.Fn = async (routes) => {
+	await withCollectionApi(routes);
+	await withCreateApi(routes);
+	await withFetchApi(routes);
+	await withBuyerInfoApi(routes);
 };

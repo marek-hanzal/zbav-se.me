@@ -2,7 +2,7 @@ import { createRoute } from "@hono/zod-openapi";
 import type { Routes } from "~/hono/Routes";
 import { HealthSchema } from "./schema/HealthSchema";
 
-export const withHealthEndpoint: Routes.Fn = ({ publicHono }) => {
+export const withHealthEndpoint: Routes.Fn = async ({ publicHono }) => {
 	publicHono.openapi(
 		createRoute({
 			method: "get",

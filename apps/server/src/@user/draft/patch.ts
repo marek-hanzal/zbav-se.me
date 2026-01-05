@@ -8,7 +8,7 @@ import { draftPatchFx } from "./fx/draftPatchFx";
 import { DraftPatchSchema } from "./schema/DraftPatchSchema";
 import { DraftSchema } from "./schema/DraftSchema";
 
-export const withPatchApi: Routes.Fn = ({ userHono }) => {
+export const withPatchApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

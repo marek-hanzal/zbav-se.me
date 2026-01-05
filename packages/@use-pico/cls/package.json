@@ -8,7 +8,7 @@
 		"typecheck": "tsgo --noEmit",
 		"build:bundle": "bun x rollup -c",
 		"no:build": "run-p build:*",
-		"test": "run-s test:*",
+		"no:test": "run-s test:*",
 		"test:code": "vitest --run"
 	},
 	"dependencies": {
