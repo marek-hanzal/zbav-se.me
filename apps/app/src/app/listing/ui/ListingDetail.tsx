@@ -228,7 +228,14 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 						return (
 							<LabelValue
 								textLabel={"Listing seller hint (label)"}
-								textValue={<SellerScoreIcon score={sellerInfo.events.score.rank} />}
+								textValue={
+									sellerInfo.events ? (
+										<SellerScoreIcon score={sellerInfo.events.score.rank} />
+									) : null
+								}
+								textEmpty={translator.text(
+									"Listing seller info not available (empty)",
+								)}
 								action={<Icon icon={ShowIcon} />}
 								onClick={hooks.onSellerInfo}
 							/>

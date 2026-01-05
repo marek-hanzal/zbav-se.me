@@ -605,7 +605,10 @@ export const zTransactionBuyerInfo = z.object({
     registered: z.string().register(z.globalRegistry, {
         description: 'Registration date'
     }),
-    events: zUserEventBuyer
+    events: z.union([
+        z.null(),
+        zUserEventBuyer
+    ])
 }).register(z.globalRegistry, {
     description: 'Buyer info for the transaction'
 });
@@ -1501,7 +1504,10 @@ export const zSellerInfo = z.object({
     listings: z.number().register(z.globalRegistry, {
         description: 'Number of listings'
     }),
-    events: zUserEventSeller
+    events: z.union([
+        z.null(),
+        zUserEventSeller
+    ])
 }).register(z.globalRegistry, {
     description: 'Seller info for the listing'
 });
@@ -4192,9 +4198,12 @@ export const zApiUserEventSellerData = z.object({
 export type zapiUserEventSellerRequest = z.infer<typeof zApiUserEventSellerData>;
 
 /**
- * Seller info
+ * Seller info may not be available if we don't have enough data
  */
-export const zApiUserEventSellerResponse = zUserEventSeller;
+export const zApiUserEventSellerResponse = z.union([
+    z.null(),
+    zUserEventSeller
+]);
 
 export type zapiUserEventSellerResponse = z.infer<typeof zApiUserEventSellerResponse>;
 

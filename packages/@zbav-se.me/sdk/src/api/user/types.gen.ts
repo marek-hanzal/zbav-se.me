@@ -389,7 +389,10 @@ export type tTransactionBuyerInfo = {
      * Registration date
      */
     registered: string;
-    events: tUserEventBuyer;
+    /**
+     * Buyer info may not be available if we don't have enough data
+     */
+    events: null | tUserEventBuyer;
 };
 
 /**
@@ -1224,7 +1227,10 @@ export type tSellerInfo = {
      * Number of listings
      */
     listings: number;
-    events: tUserEventSeller;
+    /**
+     * Seller info may not be available if we don't have enough data
+     */
+    events: null | tUserEventSeller;
 };
 
 /**
@@ -4872,9 +4878,9 @@ export type apiUserEventSellerError = apiUserEventSellerErrors[keyof apiUserEven
 
 export type tApiUserEventSellerResponse = {
     /**
-     * Seller info
+     * Seller info may not be available if we don't have enough data
      */
-    200: tUserEventSeller;
+    200: null | tUserEventSeller;
 };
 
 export type apiUserEventSellerResponse = tApiUserEventSellerResponse[keyof tApiUserEventSellerResponse];

@@ -501,7 +501,17 @@ export const sTransactionBuyerInfo = {
             type: 'string'
         },
         events: {
-            $ref: '#/components/schemas/UserEventBuyer'
+            anyOf: [
+                {
+                    type: 'null'
+                },
+                {
+                    $ref: '#/components/schemas/UserEventBuyer'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         }
     },
     required: [
@@ -1649,7 +1659,17 @@ export const sSellerInfo = {
             example: 1
         },
         events: {
-            $ref: '#/components/schemas/UserEventSeller'
+            anyOf: [
+                {
+                    type: 'null'
+                },
+                {
+                    $ref: '#/components/schemas/UserEventSeller'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         }
     },
     required: [

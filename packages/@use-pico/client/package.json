@@ -23,7 +23,7 @@
 		"kysely": "0.28.9",
 		"lexical": "0.39.0",
 		"luxon": "3.7.2",
-		"motion": "12.23.26",
+		"motion": "12.23.27",
 		"react": "19.2.3",
 		"react-dom": "19.2.3",
 		"react-dropzone": "14.3.8",
@@ -32,7 +32,7 @@
 		"remark-gfm": "4.0.1",
 		"ts-pattern": "5.9.0",
 		"use-debounce": "10.0.6",
-		"zod": "4.3.4",
+		"zod": "4.3.5",
 		"zustand": "5.0.9"
 	},
 	"devDependencies": {
