@@ -5,7 +5,8 @@
 	"scripts": {
 		"dev": "PORT=3032 nitro dev --host",
 		"build": "nitro build && bun ./cli/size.ts",
-		"typecheck": "tsgo --noEmit"
+		"typecheck": "tsgo --noEmit",
+		"test": "vitest --run"
 	},
 	"dependencies": {
 		"@better-auth/passkey": "1.4.10",
@@ -36,7 +37,8 @@
 		"@use-pico/tsconfig": "5.0.0",
 		"nitro": "3.0.1-alpha.1",
 		"rolldown": "^1.0.0-beta.53",
-		"typescript": "5.9.3"
+		"typescript": "5.9.3",
+		"vitest": "4.0.16"
 	},
 	"main": "src/index.ts",
 	"types": "src/index.ts",

@@ -229,7 +229,7 @@ const computeRejected = (source: UserEventDbSchema.Type[]) => {
  * 2c. If transaction.success/closed (user scope) -> resolved (seller made explicit resolution, records delta from create)
  */
 const computeResolved = (source: UserEventDbSchema.Type[]) => {
-	let total = 0; // transaction.create (foreign)
+	let total = 0;
 	let resolved = 0;
 	let terminal = 0;
 	const deltasMs: number[] = [];
