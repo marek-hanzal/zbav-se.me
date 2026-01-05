@@ -236,9 +236,9 @@ const computeResolved = (source: UserEventDbSchema.Type[]) => {
 
 	let currentGroup: string | null = null;
 
-	let created = false; // counted total for this group
+	let created = false;
 	let createAtMs: number | null = null;
-	let done = false; // group resolved (resolved OR terminal)
+	let done = false;
 
 	const flushGroup = () => {
 		currentGroup = null;
@@ -635,7 +635,7 @@ export const userEventSellerInfoFx = ({ userId }: userEventSellerInfoFx.Props) =
 			],
 		});
 
-		if (source.length === 0) {
+		if (source.length <= 1) {
 			return null;
 		}
 

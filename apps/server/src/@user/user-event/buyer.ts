@@ -31,7 +31,15 @@ export const withBuyerApi: Routes.Fn = ({ userHono }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: UserEventBuyerSchema,
+							schema: z
+								.xor([
+									z.null(),
+									UserEventBuyerSchema,
+								])
+								.openapi({
+									description:
+										"Buyer info may not be available if we don't have enough data",
+								}),
 						},
 					},
 					description: "Buyer info",
@@ -54,7 +62,7 @@ export const withBuyerApi: Routes.Fn = ({ userHono }) => {
 			return Effect.gen(function* () {
 				const { userId } = c.req.valid("param");
 
-				return c.json<UserEventBuyerSchema.Type, 200>(
+				return c.json<UserEventBuyerSchema.Type | null, 200>(
 					yield* userEventBuyerInfoFx({
 						userId,
 					}),
