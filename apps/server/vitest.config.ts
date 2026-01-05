@@ -18,6 +18,9 @@ export default defineConfig({
 		},
 	},
 	test: {
+		globalSetup: [
+			"./test/init.ts",
+		],
 		environment: "node",
 		setupFiles: [
 			"./test/setup.ts",

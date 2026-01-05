@@ -6,7 +6,7 @@
 		"dev": "PORT=3032 nitro dev --host",
 		"build": "nitro build && bun ./cli/size.ts",
 		"typecheck": "tsgo --noEmit",
-		"test": "vitest --run"
+		"test": "bunx --bun vitest --run"
 	},
 	"dependencies": {
 		"@better-auth/passkey": "1.4.10",

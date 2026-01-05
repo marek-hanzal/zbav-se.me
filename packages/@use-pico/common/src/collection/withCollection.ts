@@ -1,5 +1,5 @@
 import type { SelectQueryBuilder, Simplify } from "kysely";
-import { z } from "zod";
+import z from "zod";
 import type { CursorSchema } from "../schema/CursorSchema";
 import type { FilterSchema } from "../schema/FilterSchema";
 import { tryZodError } from "../schema/tryZodError";

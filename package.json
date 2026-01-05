@@ -12,7 +12,7 @@
 		"lint": "biome check --write .",
 		"knip": "turbo run knip --parallel",
 		"typecheck": "turbo run typecheck --parallel",
-		"test": "turbo run test --parallel",
+		"test": "dotenv -c development -- turbo run test --parallel",
 		"update": "bun update --linker=isolated",
 		"sp:fix": "bun x syncpack fix-mismatches",
 		"sp:format": "bun x syncpack format",
