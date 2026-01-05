@@ -1,16 +1,12 @@
+import { Effect } from "effect";
 import type { SelectQueryBuilder, Simplify } from "kysely";
 import z from "zod";
 import type { CursorSchema } from "../schema/CursorSchema";
 import type { FilterSchema } from "../schema/FilterSchema";
-import { tryZodError } from "../schema/tryZodError";
+import { zodFx } from "../schema/zodFx";
 
-export namespace withCollection {
+export namespace withListFx {
 	export type Output<TOutputSchema extends z.ZodSchema> = Simplify<z.infer<TOutputSchema>>;
-
-	export interface Result<TOutput> {
-		data: TOutput[];
-		more: boolean;
-	}
 
 	export namespace Query {
 		export interface Props<
@@ -35,19 +31,13 @@ export namespace withCollection {
 
 		filter?: TFilter;
 		where?: TFilter;
-		cursor: CursorSchema.Type;
+		cursor?: CursorSchema.Type;
 	}
-
-	export type Callback<
-		TOutputSchema extends z.ZodSchema,
-		TSelect extends SelectQueryBuilder<any, any, Output<TOutputSchema>>,
-		TFilter extends FilterSchema.Type,
-	> = (props: Props<TOutputSchema, TSelect, TFilter>) => Promise<Result<Output<TOutputSchema>>>;
 }
 
-export const withCollection = async <
+export const withListFx = Effect.fn("withListFx")(function* <
 	TOutputSchema extends z.ZodSchema,
-	TSelect extends SelectQueryBuilder<any, any, withCollection.Output<TOutputSchema>>,
+	TSelect extends SelectQueryBuilder<any, any, withListFx.Output<TOutputSchema>>,
 	TFilter extends FilterSchema.Type,
 >({
 	select,
@@ -56,25 +46,31 @@ export const withCollection = async <
 	filter,
 	where,
 	cursor,
-}: withCollection.Props<TOutputSchema, TSelect, TFilter>): Promise<
-	withCollection.Result<z.infer<TOutputSchema>>
-> => {
-	const results = tryZodError(
-		z.array(output),
-		await query({
-			select: query({
-				select,
-				where,
-			}),
-			where: filter,
-		})
-			.limit(cursor.size + 1)
-			.offset(cursor.page * cursor.size)
-			.execute(),
-	);
+}: withListFx.Props<TOutputSchema, TSelect, TFilter>) {
+	const limit = (select: SelectQueryBuilder<any, any, any>): TSelect => {
+		let $select = select;
 
-	return {
-		data: results.slice(0, cursor.size),
-		more: results.length > cursor.size,
+		if (cursor) {
+			$select = select.limit(cursor.size).offset(cursor.page * cursor.size);
+		}
+
+		return $select as TSelect;
 	};
-};
+
+	const result = yield* Effect.promise(async () => {
+		await limit(
+			query({
+				select: query({
+					select,
+					where,
+				}),
+				where: filter,
+			}),
+		).execute();
+	});
+
+	return yield* zodFx({
+		schema: z.array(output),
+		data: result,
+	});
+});

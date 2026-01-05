@@ -8,12 +8,10 @@ import type { UploadCreateSchema } from "../schema/UploadCreateSchema";
 import { uploadFetchFx } from "./uploadFetchFx";
 
 export namespace uploadCreateFx {
-	export interface Props {
-		data: UploadCreateSchema.Type;
-	}
+	export type Props = UploadCreateSchema.Type;
 }
 
-export const uploadCreateFx = ({ data: { url } }: uploadCreateFx.Props) => {
+export const uploadCreateFx = ({ url }: uploadCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

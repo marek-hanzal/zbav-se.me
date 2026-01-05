@@ -1,4 +1,4 @@
-import { withCount } from "@use-pico/common/count";
+import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
 import { withDraftCollectionSelect } from "~/app/draft/db/withDraftCollectionSelect";
 import { withDraftQueryBuilder } from "~/app/draft/db/withDraftQueryBuilder";
@@ -10,28 +10,25 @@ export namespace draftCountFx {
 	export type Props = DraftCountQuerySchema.Type;
 }
 
-export const draftCountFx = (query: draftCountFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+export const draftCountFx = Effect.fn("draftCountFx")(function* ({
+	filter,
+	where,
+}: draftCountFx.Props) {
+	const database = yield* DatabaseContextFx;
+	const user = yield* UserContextFx;
 
-		const { filter, where } = query;
-
-		return yield* Effect.tryPromise(async () => {
-			return withCount({
-				select: withDraftCollectionSelect({
-					database,
-					sort: undefined,
-				}),
-				filter,
-				where: {
-					...where,
-					userId: user.id,
-				},
-				query: withDraftQueryBuilder,
-			});
-		});
+	return yield* withCountFx({
+		select: withDraftCollectionSelect({
+			database,
+			sort: undefined,
+		}),
+		filter,
+		where: {
+			...where,
+			userId: user.id,
+		},
+		query: withDraftQueryBuilder,
 	});
-};
+});
 
 export type draftCountFx = ReturnType<typeof draftCountFx>;

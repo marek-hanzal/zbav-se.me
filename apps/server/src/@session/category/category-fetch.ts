@@ -69,7 +69,7 @@ export const withCategoryFetchApi: Routes.Fn = async ({ sessionHono }) => {
 						Match.value(e).pipe(
 							Match.when(
 								{
-									_tag: "NotFoundError",
+									_tag: "NotFoundErrorFx",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 404>(
@@ -81,9 +81,9 @@ export const withCategoryFetchApi: Routes.Fn = async ({ sessionHono }) => {
 									);
 								},
 							),
-							Match.when(
+                            Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "ZodErrorFx",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 500>(

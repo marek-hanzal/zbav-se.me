@@ -70,5 +70,9 @@ export const withCategoryQueryBuilder = <TSelect extends withCategorySelect.Sele
 		query = query.where("cat.locale", "in", where.localeIn) as typeof select;
 	}
 
+	if (where.slug) {
+		query = query.where("cat.slug", "=", where.slug) as typeof select;
+	}
+
 	return query;
 };

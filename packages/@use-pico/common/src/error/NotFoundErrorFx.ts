@@ -1,6 +1,6 @@
 import { Data } from "effect";
 
-export class NotFoundError extends Data.TaggedError("NotFoundError")<{
+export class NotFoundErrorFx extends Data.TaggedError("NotFoundErrorFx")<{
 	resource: string;
 	resourceId?: string;
 	message: string;

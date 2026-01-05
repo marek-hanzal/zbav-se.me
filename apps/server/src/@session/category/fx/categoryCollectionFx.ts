@@ -1,4 +1,4 @@
-import { withCollection } from "@use-pico/common/collection";
+import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
 import { categoryMissCreateFx } from "~/@session/category-miss/fx/categoryMissCreateFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -11,36 +11,36 @@ export namespace categoryCollectionFx {
 	export type Props = CategoryQuerySchema.Type;
 }
 
-export const categoryCollectionFx = (query: categoryCollectionFx.Props) => {
-	const { cursor, filter, where, sort } = query;
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
+export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* ({
+	cursor,
+	filter,
+	where,
+	sort,
+}: categoryCollectionFx.Props) {
+	const database = yield* DatabaseContextFx;
 
-		const data = yield* Effect.tryPromise(async () => {
-			return withCollection({
-				select: withCategorySelect({
-					database,
-					sort,
-				}),
-				output: CategorySchema,
-				cursor: cursor ?? {
-					page: 0,
-					size: 10,
-				},
-				filter,
-				where,
-				query: withCategoryQueryBuilder,
-			});
-		});
-
-		if (data.data.length === 0) {
-			yield* categoryMissCreateFx({
-				fulltext: filter?.fulltext || where?.fulltext,
-			});
-		}
-
-		return data;
+	const data = yield* withCollectionFx({
+		select: withCategorySelect({
+			database,
+			sort,
+		}),
+		output: CategorySchema,
+		cursor: cursor ?? {
+			page: 0,
+			size: 10,
+		},
+		filter,
+		where,
+		query: withCategoryQueryBuilder,
 	});
-};
+
+	if (data.data.length === 0) {
+		yield* categoryMissCreateFx({
+			fulltext: filter?.fulltext || where?.fulltext,
+		});
+	}
+
+	return data;
+});
 
 export type categoryCollectionFx = ReturnType<typeof categoryCollectionFx>;

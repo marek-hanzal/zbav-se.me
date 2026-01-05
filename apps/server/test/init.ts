@@ -161,13 +161,4 @@ export default async function globalSetup(): Promise<SetupResult> {
 	await database.migrate();
 
 	await kysely.destroy();
-
-	return async () => {
-		shQuiet([
-			"docker",
-			"rm",
-			"-f",
-			CONTAINER_NAME,
-		]);
-	};
 }

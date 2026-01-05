@@ -1,10 +1,17 @@
+import { Effect } from "effect";
 import type { SelectQueryBuilder, Simplify } from "kysely";
-import type { z } from "zod";
+import z from "zod";
+import { zodFx } from "../schema";
+import type { CursorSchema } from "../schema/CursorSchema";
 import type { FilterSchema } from "../schema/FilterSchema";
-import { tryZodError } from "../schema/tryZodError";
 
-export namespace withFetch {
+export namespace withCollectionFx {
 	export type Output<TOutputSchema extends z.ZodSchema> = Simplify<z.infer<TOutputSchema>>;
+
+	export interface Result<TOutput> {
+		data: TOutput[];
+		more: boolean;
+	}
 
 	export namespace Query {
 		export interface Props<
@@ -29,20 +36,13 @@ export namespace withFetch {
 
 		filter?: TFilter;
 		where?: TFilter;
+		cursor: CursorSchema.Type;
 	}
-
-	export type Callback<
-		TOutputSchema extends z.ZodSchema,
-		TSelect extends SelectQueryBuilder<any, any, Output<TOutputSchema>>,
-		TFilter extends FilterSchema.Type,
-	> = (
-		props: Props<TOutputSchema, TSelect, TFilter>,
-	) => Promise<Output<TOutputSchema> | undefined>;
 }
 
-export const withFetch = async <
+export const withCollectionFx = Effect.fn("withCollectionFx")(function* <
 	TOutputSchema extends z.ZodSchema,
-	TSelect extends SelectQueryBuilder<any, any, withFetch.Output<TOutputSchema>>,
+	TSelect extends SelectQueryBuilder<any, any, withCollectionFx.Output<TOutputSchema>>,
 	TFilter extends FilterSchema.Type,
 >({
 	select,
@@ -50,20 +50,26 @@ export const withFetch = async <
 	output,
 	filter,
 	where,
-}: withFetch.Props<TOutputSchema, TSelect, TFilter>): Promise<
-	z.infer<TOutputSchema> | undefined
-> => {
-	const result = await query({
-		select: query({
-			select,
-			where,
+	cursor,
+}: withCollectionFx.Props<TOutputSchema, TSelect, TFilter>) {
+	const results = yield* Effect.promise(async () => {
+		return await query({
+			select: query({
+				select,
+				where,
+			}),
+			where: filter,
+		})
+			.limit(cursor.size + 1)
+			.offset(cursor.page * cursor.size)
+			.execute();
+	});
+
+	return {
+		data: yield* zodFx({
+			schema: z.array(output),
+			data: results.slice(0, cursor.size),
 		}),
-		where: filter,
-	}).executeTakeFirst();
-
-	if (!result) {
-		return undefined;
-	}
-
-	return tryZodError(output, result);
-};
+		more: results.length > cursor.size,
+	};
+});

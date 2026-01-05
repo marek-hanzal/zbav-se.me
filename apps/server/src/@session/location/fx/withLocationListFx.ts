@@ -1,4 +1,4 @@
-import { withList } from "@use-pico/common/list";
+import { withListFx } from "@use-pico/common/list";
 import { Effect } from "effect";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withLocationQueryBuilder } from "../db/withLocationQueryBuilder";
@@ -12,26 +12,22 @@ export namespace withLocationListFx {
 	}
 }
 
-export const withLocationListFx = ({
+export const withLocationListFx = Effect.fn("withLocationListFx")(function* ({
 	query: { filter, where, cursor, sort },
-}: withLocationListFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
+}: withLocationListFx.Props) {
+	const database = yield* DatabaseContextFx;
 
-		return yield* Effect.tryPromise(async () => {
-			return withList({
-				select: withLocationSelect({
-					database,
-					sort,
-				}),
-				output: LocationSchema,
-				filter,
-				where,
-				query: withLocationQueryBuilder,
-				cursor,
-			});
-		});
+	return yield* withListFx({
+		select: withLocationSelect({
+			database,
+			sort,
+		}),
+		output: LocationSchema,
+		filter,
+		where,
+		query: withLocationQueryBuilder,
+		cursor,
 	});
-};
+});
 
 export type withLocationListFx = ReturnType<typeof withLocationListFx>;

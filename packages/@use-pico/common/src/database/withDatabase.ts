@@ -17,6 +17,7 @@ export namespace withDatabase {
 	}
 
 	export interface Instance<DB = any> {
+		dialect(): Promise<Dialect>;
 		kysely(): Promise<Kysely<DB>>;
 		migrate(): Promise<MigrationResult[] | undefined>;
 	}
@@ -28,16 +29,24 @@ export const withDatabase = <TDatabase>({
 	onPostMigration,
 	getMigrations = async () => ({}),
 }: withDatabase.Props): withDatabase.Instance<TDatabase> => {
-	let kysely: Kysely<TDatabase> | null = null;
+	let kyselyInstance: Kysely<TDatabase> | null = null;
+	let dialectInstance: Dialect | null = null;
 
 	return {
-		async kysely() {
-			if (kysely) {
-				return kysely;
+		async dialect() {
+			if (dialectInstance) {
+				return dialectInstance;
 			}
 
-			return (kysely = new Kysely<TDatabase>({
-				dialect: await dialect(),
+			return (dialectInstance = await dialect());
+		},
+		async kysely() {
+			if (kyselyInstance) {
+				return kyselyInstance;
+			}
+
+			return (kyselyInstance = new Kysely<TDatabase>({
+				dialect: await this.dialect(),
 				log(log) {
 					switch (log.level) {
 						case "error": {

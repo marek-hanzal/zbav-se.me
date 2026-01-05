@@ -1,3 +1,4 @@
+import { NotFoundErrorFx } from "@use-pico/common/error";
 import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
@@ -7,7 +8,6 @@ import { transactionStatusFetchFx } from "~/@user/transaction-status/fx/transact
 import { transactionStatusResolveFx } from "~/@user/transaction-status/fx/transactionStatusResolveFx";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { NotFoundError } from "~/error/NotFoundError";
 
 export namespace t01_resolve {
 	export interface Props {
@@ -42,7 +42,7 @@ export const t01_resolve = ({ fromMinutes, toMinutes }: t01_resolve.Props) => {
 			});
 
 			if (!current) {
-				return yield* new NotFoundError({
+				return yield* new NotFoundErrorFx({
 					resource: "user",
 					resourceId: transactionId.id,
 					message: "User not found",

@@ -30,7 +30,6 @@ import { FeedbackMigration } from "./0028-feedback";
 import { UserEventMigration } from "./0029-user-event";
 
 export const getMigrations = async () => {
-	console.log("getMigrations");
 	return {
 		"0000-postgres-extensions": PostgresExtensionsMigration,
 		"0001-category": CategoryMigration,

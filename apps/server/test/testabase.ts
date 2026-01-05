@@ -4,8 +4,8 @@ import { PostgresDialect, sql } from "kysely";
 import { Pool } from "pg";
 import type { Database } from "~/database/Database";
 
-export const testabase = async () => {
-	const db = genId();
+export const testabase = async (id: string = genId()) => {
+	const db = id;
 
 	{
 		const database = withDatabase<Database>({

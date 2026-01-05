@@ -4,7 +4,6 @@ import { DateTime } from "luxon";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { NotFoundError } from "~/error/NotFoundError";
 import { galleryItemFetchFx } from "./galleryItemFetchFx";
 
 export namespace galleryItemCreateFx {
@@ -16,53 +15,46 @@ export namespace galleryItemCreateFx {
 	}
 }
 
-export const galleryItemCreateFx = ({
+export const galleryItemCreateFx = Effect.fn("galleryItemCreateFx")(function* ({
 	galleryId,
 	uploadId,
 	sort,
 	createdAt,
-}: galleryItemCreateFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+}: galleryItemCreateFx.Props) {
+	const database = yield* DatabaseContextFx;
+	const user = yield* UserContextFx;
 
-		const now = createdAt ?? DateTime.now();
-		const id = genId();
+	const now = createdAt ?? DateTime.now();
+	const id = genId();
 
-		const gallery = yield* galleryFetchFx({
-			where: {
-				id: galleryId,
-				userId: user.id,
-			},
-		});
-
-		if (!gallery) {
-			return yield* new NotFoundError({
-				resource: "gallery",
-				resourceId: galleryId,
-				message: "Gallery not found",
-			});
-		}
-
-		yield* Effect.tryPromise(async () => {
-			return database
-				.insertInto("gallery_item")
-				.values({
-					id,
-					galleryId,
-					uploadId,
-					sort,
-					createdAt: now.toJSDate(),
-				})
-				.execute();
-		});
-
-		return yield* galleryItemFetchFx({
-			where: {
-				id,
-			},
-		});
+	/**
+	 * Just ensures the gallery exists with the correct user
+	 */
+	yield* galleryFetchFx({
+		where: {
+			id: galleryId,
+			userId: user.id,
+		},
 	});
-};
+
+	yield* Effect.promise(async () => {
+		return database
+			.insertInto("gallery_item")
+			.values({
+				id,
+				galleryId,
+				uploadId,
+				sort,
+				createdAt: now.toJSDate(),
+			})
+			.execute();
+	});
+
+	return yield* galleryItemFetchFx({
+		where: {
+			id,
+		},
+	});
+});
 
 export type galleryItemCreateFx = ReturnType<typeof galleryItemCreateFx>;

@@ -1,1 +1,1 @@
-export { withCollection } from "./withCollection";
+export { withCollectionFx } from "./withCollectionFx";

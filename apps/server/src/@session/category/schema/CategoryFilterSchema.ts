@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 
 export const CategoryFilterSchema = z
-	.object({
+	.looseObject({
 		...DefaultFilterSchema.shape,
 		group: z.string().optional().openapi({
 			description: "This filter matches the exact group of the category",
@@ -16,7 +16,11 @@ export const CategoryFilterSchema = z
 		localeIn: z.array(z.string()).optional().openapi({
 			description: "This filter matches categories with locales in the provided array",
 		}),
+		slug: z.string().optional().openapi({
+			description: "This filter matches the exact slug of the category",
+		}),
 	})
+	.strip()
 	.openapi("CategoryFilter", {
 		description: "Filter object for category collection",
 	});

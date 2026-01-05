@@ -1,7 +1,6 @@
-import { withFetch } from "@use-pico/common/fetch";
+import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { NotFoundError } from "~/error/NotFoundError";
 import { withCategoryQueryBuilder } from "../db/withCategoryQueryBuilder";
 import { withCategorySelect } from "../db/withCategorySelect";
 import type { CategoryQuerySchema } from "../schema/CategoryQuerySchema";
@@ -11,35 +10,24 @@ export namespace categoryFetchFx {
 	export type Props = CategoryQuerySchema.Type;
 }
 
-export const categoryFetchFx = (query: categoryFetchFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
+export const categoryFetchFx = Effect.fn("categoryFetchFx")(function* ({
+	filter,
+	where,
+	sort,
+}: categoryFetchFx.Props) {
+	const database = yield* DatabaseContextFx;
 
-		const data = yield* Effect.tryPromise(async () => {
-			const { filter, where, sort } = query;
-
-			return withFetch({
-				select: withCategorySelect({
-					database,
-					sort,
-				}),
-				output: CategorySchema,
-				filter,
-				where,
-				query: withCategoryQueryBuilder,
-			});
-		});
-
-		if (!data) {
-			return yield* new NotFoundError({
-				resource: "category",
-				resourceId: "(query)",
-				message: "Category not found",
-			});
-		}
-
-		return data;
+	return yield* withFetchFx({
+		resource: "category",
+		select: withCategorySelect({
+			database,
+			sort,
+		}),
+		output: CategorySchema,
+		filter,
+		where,
+		query: withCategoryQueryBuilder,
 	});
-};
+});
 
 export type categoryFetchFx = ReturnType<typeof categoryFetchFx>;

@@ -1,1 +1,1 @@
-export { withFetch } from "./withFetch";
+export { withFetchFx } from "./withFetchFx";

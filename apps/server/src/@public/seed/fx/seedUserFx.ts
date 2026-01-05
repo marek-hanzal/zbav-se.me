@@ -1,6 +1,6 @@
+import { NotFoundErrorFx } from "@use-pico/common/error";
 import { Effect } from "effect";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { NotFoundError } from "~/error/NotFoundError";
 
 export namespace seedUserFx {
 	export interface Props {
@@ -21,7 +21,7 @@ export const seedUserFx = ({ email }: seedUserFx.Props) => {
 		});
 
 		if (!current) {
-			return yield* new NotFoundError({
+			return yield* new NotFoundErrorFx({
 				resource: "user",
 				resourceId: email,
 				message: "User not found",
