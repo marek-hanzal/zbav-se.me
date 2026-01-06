@@ -9,14 +9,16 @@ export namespace messageThreadCreateFx {
 	export type Props = MessageThreadCreateSchema.Type;
 }
 
-export const messageThreadCreateFx = (_: messageThreadCreateFx.Props) => {
-	return withTransactionFx(
+export const messageThreadCreateFx = Effect.fn("messageThreadCreateFx")(function* (
+	_: messageThreadCreateFx.Props,
+) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 
 			const id = genId();
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.insertInto("message_thread")
 					.values({
@@ -35,6 +37,6 @@ export const messageThreadCreateFx = (_: messageThreadCreateFx.Props) => {
 			});
 		}),
 	);
-};
+});
 
 export type messageThreadCreateFx = ReturnType<typeof messageThreadCreateFx>;

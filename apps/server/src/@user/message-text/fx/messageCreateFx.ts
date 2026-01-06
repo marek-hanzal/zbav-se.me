@@ -17,7 +17,7 @@ export const messageTextCreateFx = Effect.fn("messageTextCreateFx")(function* ({
 	messageThreadId,
 	message,
 }: messageTextCreateFx.Props) {
-	return withTransactionFx(
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;

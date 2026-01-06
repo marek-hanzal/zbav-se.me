@@ -4,7 +4,6 @@ import { TransactionSchema } from "~/@user/transaction/schema/TransactionSchema"
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
-import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionContextProvider } from "./fx/TransactionContextFx";
 import { transactionCreateFx } from "./fx/transactionCreateFx";
 import { TransactionCreateSchema } from "./schema/TransactionCreateSchema";
@@ -35,30 +34,6 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 					},
 					description: "The transaction was created",
 				},
-				403: {
-					content: {
-						"application/json": {
-							schema: NoticeSchema,
-						},
-					},
-					description: "Access denied",
-				},
-				404: {
-					content: {
-						"application/json": {
-							schema: NoticeSchema,
-						},
-					},
-					description: "Listing not found",
-				},
-				500: {
-					content: {
-						"application/json": {
-							schema: NoticeSchema,
-						},
-					},
-					description: "Internal server error",
-				},
 			},
 			tags: [
 				"transaction",
@@ -77,39 +52,7 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {
-					return Effect.succeed(
-						Match.value(e).pipe(
-							Match.when(
-								{
-									_tag: "NotFoundErrorFx",
-								},
-								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
-								},
-							),
-							Match.when(
-								{
-									_tag: "ZodErrorFx",
-								},
-								() => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										500,
-									);
-								},
-							),
-							Match.exhaustive,
-						),
-					);
+					return Effect.succeed(Match.value(e).pipe(Match.exhaustive));
 				}),
 				Effect.runPromise,
 			);
