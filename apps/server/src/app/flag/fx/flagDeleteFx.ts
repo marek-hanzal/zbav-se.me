@@ -1,9 +1,9 @@
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
+import { flagFetchFx } from "~/app/flag/fx/flagFetchFx";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { flagFetchFx } from "./flagFetchFx";
 
 export namespace flagDeleteFx {
 	export interface Props {
