@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import type { DateTime } from "luxon";
+import { userEventCreateFx } from "~/app/user-event/fx/userEventCreateFx";
 import type { UserEventCreateSchema } from "~/app/user-event/schema/UserEventCreateSchema";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { userEventCreateFx } from "./userEventCreateFx";
 
 export namespace userInteractionEventFx {
 	export interface Props extends Omit<UserEventCreateSchema.Type, "scope"> {

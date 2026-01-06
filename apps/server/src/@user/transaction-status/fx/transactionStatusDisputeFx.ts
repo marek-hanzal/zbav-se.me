@@ -2,10 +2,10 @@ import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import type { DateTime } from "luxon";
 import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
-import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
 import type { TransactionStatusDisputeSchema } from "~/@user/transaction-status/schema/TransactionStatusDisputeSchema";
 import { messageSystemCreateFx } from "~/app/message-system/fx/messageSystemCreateFx";
+import { transactionResolveFx } from "~/app/transaction/fx/transactionResolveFx";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace transactionStatusDisputeFx {
@@ -28,6 +28,7 @@ export const transactionStatusDisputeFx = ({
 		});
 
 		yield* transactionPatchFx({
+			userId,
 			patch: {},
 			query: {
 				where: {
@@ -35,6 +36,9 @@ export const transactionStatusDisputeFx = ({
 				},
 			},
 			updatedAt: createdAt,
+			scope: {
+				userId,
+			},
 		});
 
 		yield* messageSystemCreateFx({
@@ -45,6 +49,7 @@ export const transactionStatusDisputeFx = ({
 		});
 
 		return yield* transactionStatusCreateFx({
+			userId,
 			transactionId: transaction.id,
 			listingId: transaction.listingId,
 			status: "dispute",

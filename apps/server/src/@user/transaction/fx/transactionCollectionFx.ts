@@ -1,23 +1,26 @@
 import { withCollectionFx } from "@use-pico/common/collection";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withTransactionCollectionSelectFx } from "~/app/transaction/db/withTransactionCollectionSelectFx";
 import { withTransactionQueryBuilderFx } from "~/app/transaction/db/withTransactionQueryBuilderFx";
+import type { TransactionFilterSchema } from "~/app/transaction/schema/TransactionFilterSchema";
 import type { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace transactionCollectionFx {
-	export type Props = TransactionQuerySchema.Type;
+	export interface Props extends TransactionQuerySchema.Type {
+		scope: TransactionFilterSchema.Type;
+	}
 }
 
 export const transactionCollectionFx = Effect.fn("transactionCollectionFx")(function* ({
 	filter,
 	where,
+	scope,
 	cursor,
 	sort,
 	meta,
 }: transactionCollectionFx.Props) {
-	const user = yield* UserContextFx;
-
 	return yield* withCollectionFx({
 		selectFx: withTransactionCollectionSelectFx({
 			sort,
@@ -27,10 +30,8 @@ export const transactionCollectionFx = Effect.fn("transactionCollectionFx")(func
 			size: 10,
 		},
 		filter,
-		where: {
-			...where,
-			userId: user.id,
-		},
+		where,
+		scope,
 		queryFx(query) {
 			return withTransactionQueryBuilderFx({
 				meta,
@@ -41,3 +42,5 @@ export const transactionCollectionFx = Effect.fn("transactionCollectionFx")(func
 });
 
 export type transactionCollectionFx = ReturnType<typeof transactionCollectionFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<transactionCollectionFx>, UserContextFx>>;

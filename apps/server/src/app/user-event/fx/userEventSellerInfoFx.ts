@@ -4,9 +4,9 @@ import { clamp } from "@use-pico/common/clamp";
 import { median } from "@use-pico/common/median";
 import { p90 } from "@use-pico/common/p90";
 import { Effect } from "effect";
-import { userEventCollectionFx } from "~/@user/user-event/fx/userEventCollectionFx";
-import type { UserEventSellerSchema } from "~/@user/user-event/schema/UserEventSellerSchema";
+import { userEventCollectionFx } from "~/app/user-event/fx/userEventCollectionFx";
 import type { UserEventDbSchema } from "~/app/user-event/schema/UserEventDbSchema";
+import type { UserEventSellerSchema } from "~/app/user-event/schema/UserEventSellerSchema";
 
 export namespace userEventSellerInfoFx {
 	export interface Props {

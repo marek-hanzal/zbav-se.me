@@ -1,4 +1,4 @@
-import type { TransactionContext } from "../fx/TransactionContextFx";
+import type { TransactionContext } from "./TransactionContextFx";
 
 export const DefaultTransactionContext: TransactionContext = {
 	expires: 3,

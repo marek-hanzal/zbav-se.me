@@ -24,13 +24,13 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 	userId,
 	createdAt,
 	group,
-	...props
+	...data
 }: userEventCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 
-			if (ignored.includes(props.event)) {
+			if (ignored.includes(data.event)) {
 				return yield* Effect.void;
 			}
 
@@ -38,7 +38,7 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 				return database
 					.insertInto("user_event")
 					.values({
-						...props,
+						...data,
 						id: genId(),
 						group: keyOf(group),
 						userId,

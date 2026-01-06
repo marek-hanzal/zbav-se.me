@@ -1,12 +1,12 @@
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { TransactionContextFx } from "~/@user/transaction/fx/TransactionContextFx";
-import { transactionStatusGateFx } from "~/@user/transaction/fx/transactionStatusGateFx";
-import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { galleryCreateFx } from "~/app/gallery/fx/galleryCreateFx";
 import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
 import { messageGalleryCreateFx } from "~/app/message-gallery/fx/messageGalleryCreateFx";
+import { TransactionContextFx } from "~/app/transaction/context/TransactionContextFx";
+import { transactionStatusGateFx } from "~/app/transaction/fx/transactionStatusGateFx";
+import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
@@ -39,6 +39,7 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 				}
 
 				const transaction = yield* transactionStatusGateFx({
+					userId,
 					transactionId,
 					allowedStatuses: [
 						"open",

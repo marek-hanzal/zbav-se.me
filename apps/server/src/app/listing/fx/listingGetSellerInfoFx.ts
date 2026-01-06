@@ -3,7 +3,7 @@ import { zodFx } from "@use-pico/common/schema";
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { SellerInfoSchema } from "~/@user/listing/schema/SellerInfoSchema";
-import { userEventSellerInfoFx } from "~/@user/user-event/fx/userEventSellerInfoFx";
+import { userEventSellerInfoFx } from "~/app/user-event/fx/userEventSellerInfoFx";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 

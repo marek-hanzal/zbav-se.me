@@ -1,9 +1,10 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { s3PreSignFx } from "~/app/s3/fx/s3PreSignFx";
+import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { s3PreSignFx } from "./fx/s3PreSignFx";
 import { S3PreSignRequestSchema } from "./schema/S3PreSignRequestSchema";
 import { S3PreSignResponseSchema } from "./schema/S3PreSignResponseSchema";
 
@@ -52,10 +53,16 @@ export const withPresignApi: Routes.Fn = async ({ userHono }) => {
 			const { path, extension } = c.req.valid("json");
 
 			return Effect.gen(function* () {
+				const user = yield* UserContextFx;
+
 				return c.json<S3PreSignResponseSchema.Type, 200>(
-					yield* s3PreSignFx({
-						path,
-						extension,
+					yield* zodFx({
+						schema: S3PreSignResponseSchema,
+						dataFx: s3PreSignFx({
+							userId: user.id,
+							path,
+							extension,
+						}),
 					}),
 					200,
 				);
@@ -67,7 +74,7 @@ export const withPresignApi: Routes.Fn = async ({ userHono }) => {
 						Match.value(e).pipe(
 							Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "ZodErrorFx",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 500>(

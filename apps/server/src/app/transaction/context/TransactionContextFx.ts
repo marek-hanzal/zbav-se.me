@@ -1,5 +1,5 @@
 import { Context, Effect } from "effect";
-import { DefaultTransactionContext } from "../config/DefaultTransactionContext";
+import { DefaultTransactionContext } from "./DefaultTransactionContext";
 
 export interface TransactionContext {
 	/**

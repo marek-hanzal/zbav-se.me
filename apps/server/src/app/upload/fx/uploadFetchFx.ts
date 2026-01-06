@@ -9,7 +9,7 @@ import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace uploadFetchFx {
 	export interface Props extends UploadQuerySchema.Type {
-		scope?: UploadFilterSchema.Type;
+		scope: UploadFilterSchema.Type;
 	}
 }
 

@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { UserEventBuyerSchema } from "~/@user/user-event/schema/UserEventBuyerSchema";
+import { UserEventBuyerSchema } from "~/app/user-event/schema/UserEventBuyerSchema";
 
 export const TransactionBuyerInfoSchema = z
 	.object({

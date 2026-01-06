@@ -2,9 +2,9 @@ import { z } from "@hono/zod-openapi";
 import { UserExDbSchema } from "~/app/user-ex/schema/UserExDbSchema";
 
 export const UserExPatchSchema = z
-	.object({
+	.looseObject({
 		patch: z
-			.object({
+			.looseObject({
 				...UserExDbSchema.shape,
 			})
 			.omit({
@@ -12,10 +12,12 @@ export const UserExPatchSchema = z
 				userId: true,
 			})
 			.partial()
+			.strip()
 			.openapi({
 				description: "Fields to update (all optional)",
 			}),
 	})
+	.strip()
 	.openapi("UserExPatch", {
 		description: "Data for patching a user ex",
 	});

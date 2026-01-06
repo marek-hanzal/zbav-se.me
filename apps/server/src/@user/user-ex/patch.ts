@@ -1,11 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { userExPatchFx } from "~/app/user-ex/fx/userExPatchFx";
+import { UserExPatchSchema } from "~/app/user-ex/schema/UserExPatchSchema";
+import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { userExPatchFx } from "./fx/userExPatchFx";
-import { UserExPatchSchema } from "./schema/UserExPatchSchema";
 import { UserExSchema } from "./schema/UserExSchema";
 
 export const withPatchApi: Routes.Fn = async ({ userHono }) => {
@@ -50,8 +51,16 @@ export const withPatchApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = yield* UserContextFx;
+
 				return c.json<UserExSchema.Type, 200>(
-					yield* userExPatchFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: UserExSchema,
+						dataFx: userExPatchFx({
+							...c.req.valid("json"),
+							userId: user.id,
+						}),
+					}),
 					200,
 				);
 			}).pipe(
@@ -63,7 +72,7 @@ export const withPatchApi: Routes.Fn = async ({ userHono }) => {
 						Match.value(e).pipe(
 							Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "ZodErrorFx",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 500>(

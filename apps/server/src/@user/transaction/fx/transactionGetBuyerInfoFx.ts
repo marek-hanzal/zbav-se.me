@@ -1,22 +1,24 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { zodFx } from "@use-pico/common/schema";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { TransactionBuyerInfoSchema } from "~/@user/transaction/schema/TransactionBuyerInfoSchema";
-import { userEventBuyerInfoFx } from "~/@user/user-event/fx/userEventBuyerInfoFx";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { userEventBuyerInfoFx } from "~/app/user-event/fx/userEventBuyerInfoFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace transactionGetBuyerInfoFx {
 	export interface Props {
+		userId: string;
 		transactionId: string;
 	}
 }
 
 export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(function* ({
+	userId,
 	transactionId,
 }: transactionGetBuyerInfoFx.Props) {
 	const database = yield* DatabaseContextFx;
-	const user = yield* UserContextFx;
 
 	const userInfo = yield* Effect.promise(async () => {
 		return database
@@ -31,7 +33,7 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 				/**
 				 * Ensure current user is owner of the listing
 				 */
-				return eb.onRef("l.id", "=", "lt.listingId").on("l.userId", "=", user.id);
+				return eb.onRef("l.id", "=", "lt.listingId").on("l.userId", "=", userId);
 			})
 			.select([
 				"u.id",
@@ -59,3 +61,7 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 });
 
 export type transactionGetBuyerInfoFx = ReturnType<typeof transactionGetBuyerInfoFx>;
+
+type _NoUser = AssertNever<
+	Extract<Effect.Effect.Context<transactionGetBuyerInfoFx>, UserContextFx>
+>;

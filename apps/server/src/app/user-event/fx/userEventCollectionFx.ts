@@ -6,6 +6,7 @@ import { withUserEventQueryBuilderFx } from "~/app/user-event/db/withUserEventQu
 import type { UserEventFilterSchema } from "~/app/user-event/schema/UserEventFilterSchema";
 import type { UserEventQuerySchema } from "~/app/user-event/schema/UserEventQuerySchema";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
+
 export namespace userEventCollectionFx {
 	export interface Props extends UserEventQuerySchema.Type {
 		scope: UserEventFilterSchema.Type;

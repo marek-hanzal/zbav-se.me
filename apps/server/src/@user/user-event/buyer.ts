@@ -1,11 +1,12 @@
 import { createRoute, z } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { userEventBuyerInfoFx } from "~/app/user-event/fx/userEventBuyerInfoFx";
+import { UserEventBuyerSchema } from "~/app/user-event/schema/UserEventBuyerSchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { userEventBuyerInfoFx } from "./fx/userEventBuyerInfoFx";
-import { UserEventBuyerSchema } from "./schema/UserEventBuyerSchema";
 
 const UserEventBuyerParamsSchema = z
 	.object({
@@ -63,8 +64,11 @@ export const withBuyerApi: Routes.Fn = async ({ userHono }) => {
 				const { userId } = c.req.valid("param");
 
 				return c.json<UserEventBuyerSchema.Type | null, 200>(
-					yield* userEventBuyerInfoFx({
-						userId,
+					yield* zodFx({
+						schema: UserEventBuyerSchema,
+						dataFx: userEventBuyerInfoFx({
+							userId,
+						}),
 					}),
 					200,
 				);
