@@ -1,7 +1,7 @@
 import { genId } from "@use-pico/common/gen-id";
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
+import { galleryFetchFx } from "~/app/gallery/fx/galleryFetchFx";
 import type { GalleryCreateSchema } from "~/app/gallery/schema/GalleryCreateSchema";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";

@@ -1,12 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { galleryCountFx } from "~/app/gallery/fx/galleryCountFx";
 import { GalleryCountQuerySchema } from "~/app/gallery/schema/GalleryCountQuerySchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { galleryCountFx } from "./fx/galleryCountFx";
 
 export const withCountApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
@@ -49,8 +49,15 @@ export const withCountApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = yield* UserContextFx;
+
 				return c.json<CountSchema.Type, 200>(
-					yield* galleryCountFx(c.req.valid("json")),
+					yield* galleryCountFx({
+						...c.req.valid("json"),
+						scope: {
+							userId: user.id,
+						},
+					}),
 					200,
 				);
 			}).pipe(

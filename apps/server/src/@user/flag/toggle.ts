@@ -1,4 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
 import { flagToggleFx } from "~/app/flag/fx/flagToggleFx";
@@ -68,9 +69,12 @@ export const withToggleApi: Routes.Fn = async ({ userHono }) => {
 				const user = yield* UserContextFx;
 
 				return c.json<ListingSchema.Type, 200>(
-					yield* flagToggleFx({
-						...c.req.valid("json"),
-						userId: user.id,
+					yield* zodFx({
+						schema: ListingSchema,
+						dataFx: flagToggleFx({
+							...c.req.valid("json"),
+							userId: user.id,
+						}),
 					}),
 					200,
 				);
