@@ -10,38 +10,39 @@ export namespace categoryMissCreateFx {
 	}
 }
 
-export const categoryMissCreateFx = ({ fulltext, limit = 4 }: categoryMissCreateFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
+export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* ({
+	fulltext,
+	limit = 4,
+}: categoryMissCreateFx.Props) {
+	const database = yield* DatabaseContextFx;
 
-		if (!fulltext || fulltext.length < limit) {
-			return yield* Effect.void;
-		}
-
-		yield* Effect.tryPromise(async () => {
-			return database
-				.insertInto("category_miss")
-				.values({
-					id: genId(),
-					category: fulltext,
-					count: 1,
-					updatedAt: new Date(),
-				})
-				.onConflict((oc) =>
-					oc
-						.columns([
-							"category",
-						])
-						.doUpdateSet({
-							count: sql`category_miss.count + 1`,
-							updatedAt: new Date(),
-						}),
-				)
-				.execute();
-		});
-
+	if (!fulltext || fulltext.length < limit) {
 		return yield* Effect.void;
+	}
+
+	yield* Effect.promise(async () => {
+		return database
+			.insertInto("category_miss")
+			.values({
+				id: genId(),
+				category: fulltext,
+				count: 1,
+				updatedAt: new Date(),
+			})
+			.onConflict((oc) =>
+				oc
+					.columns([
+						"category",
+					])
+					.doUpdateSet({
+						count: sql`category_miss.count + 1`,
+						updatedAt: new Date(),
+					}),
+			)
+			.execute();
 	});
-};
+
+	return yield* Effect.void;
+});
 
 export type categoryMissCreateFx = ReturnType<typeof categoryMissCreateFx>;

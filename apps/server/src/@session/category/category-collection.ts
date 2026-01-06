@@ -1,11 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { categoryCollectionFx } from "~/app/category/fx/categoryCollectionFx";
+import { CategoryQuerySchema } from "~/app/category/schema/CategoryQuerySchema";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
-import { categoryCollectionFx } from "./fx/categoryCollectionFx";
-import { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
 import { CategorySchema } from "./schema/CategorySchema";
 
 export const withCategoryCollectionApi: Routes.Fn = async ({ sessionHono }) => {
@@ -66,20 +66,6 @@ export const withCategoryCollectionApi: Routes.Fn = async ({ sessionHono }) => {
 							Match.when(
 								{
 									_tag: "ZodErrorFx",
-								},
-								() => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										500,
-									);
-								},
-							),
-							Match.when(
-								{
-									_tag: "UnknownException",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 500>(

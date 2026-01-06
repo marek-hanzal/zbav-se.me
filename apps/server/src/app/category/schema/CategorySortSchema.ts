@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { OrderEnumSchema } from "~/schema/OrderEnumSchema";
 
 export const CategorySortSchema = z
-	.object({
+	.looseObject({
 		field: z
 			.enum([
 				"group",
@@ -14,6 +14,7 @@ export const CategorySortSchema = z
 			}),
 		direction: OrderEnumSchema,
 	})
+	.strip()
 	.openapi("CategorySort", {
 		description: "Sort object for category collection",
 	});

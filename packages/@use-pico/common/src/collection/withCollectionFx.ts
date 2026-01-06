@@ -28,10 +28,12 @@ export namespace withCollectionFx {
 		TOutputSchema extends z.ZodSchema,
 		TSelect extends SelectQueryBuilder<any, any, Output<TOutputSchema>>,
 		TFilter extends FilterSchema.Type,
+		TSelectError,
+		TSelectContext,
 		TQueryError,
 		TQueryContext,
 	> {
-		select: TSelect;
+		selectFx: Effect.Effect<TSelect, TSelectError, TSelectContext>;
 		queryFx?(
 			props: Query.Props<TOutputSchema, TSelect, TFilter>,
 		): Effect.Effect<TSelect, TQueryError, TQueryContext>;
@@ -48,16 +50,28 @@ export const withCollectionFx = Effect.fn("withCollectionFx")(function* <
 	const TOutputSchema extends z.ZodSchema,
 	const TSelect extends SelectQueryBuilder<any, any, withCollectionFx.Output<TOutputSchema>>,
 	const TFilter extends FilterSchema.Type,
+	const TSelectError,
+	const TSelectContext,
 	const TQueryError,
 	const TQueryContext,
 >({
-	select,
-	queryFx = () => Effect.succeed(select),
+	selectFx,
+	queryFx = () => selectFx as unknown as Effect.Effect<TSelect, TQueryError, TQueryContext>,
 	output,
 	filter,
 	where,
 	cursor,
-}: withCollectionFx.Props<TOutputSchema, TSelect, TFilter, TQueryError, TQueryContext>) {
+}: withCollectionFx.Props<
+	TOutputSchema,
+	TSelect,
+	TFilter,
+	TSelectError,
+	TSelectContext,
+	TQueryError,
+	TQueryContext
+>) {
+	const select = yield* selectFx;
+
 	const whereSelect = yield* queryFx({
 		select,
 		where,

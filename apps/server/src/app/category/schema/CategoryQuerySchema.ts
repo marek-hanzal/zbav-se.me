@@ -4,7 +4,7 @@ import { CategoryFilterSchema } from "./CategoryFilterSchema";
 import { CategorySortSchema } from "./CategorySortSchema";
 
 export const CategoryQuerySchema = z
-	.object({
+	.looseObject({
 		cursor: CursorSchema.optional(),
 		filter: CategoryFilterSchema.optional(),
 		where: CategoryFilterSchema.openapi("CategoryWhere", {
@@ -12,6 +12,7 @@ export const CategoryQuerySchema = z
 		}).optional(),
 		sort: CategorySortSchema.array().optional(),
 	})
+	.strip()
 	.openapi("CategoryQuery", {
 		description: "Category query parameters",
 	});

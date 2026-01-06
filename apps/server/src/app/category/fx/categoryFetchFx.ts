@@ -1,9 +1,9 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { CategorySchema } from "~/@session/category/schema/CategorySchema";
 import { withCategoryQueryBuilderFx } from "../db/withCategoryQueryBuilderFx";
 import { withCategorySelectFx } from "../db/withCategorySelectFx";
 import type { CategoryQuerySchema } from "../schema/CategoryQuerySchema";
-import { CategorySchema } from "../schema/CategorySchema";
 
 export namespace categoryFetchFx {
 	export type Props = CategoryQuerySchema.Type;
@@ -16,7 +16,7 @@ export const categoryFetchFx = Effect.fn("categoryFetchFx")(function* ({
 }: categoryFetchFx.Props) {
 	return yield* withFetchFx({
 		resource: "category",
-		select: yield* withCategorySelectFx({
+		selectFx: withCategorySelectFx({
 			sort,
 		}),
 		output: CategorySchema,
