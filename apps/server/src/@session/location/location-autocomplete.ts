@@ -1,4 +1,5 @@
 import { createRoute, z } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { AppEnv } from "~/AppEnv";
 import { LocationContextProvider } from "~/app/location/context/LocationContextFx";
@@ -52,7 +53,10 @@ export const withLocationAutocompleteApi: Routes.Fn = async ({ sessionHono }) =>
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<LocationSchema.Type[], 200>(
-					yield* locationAutocompleteFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: z.array(LocationSchema),
+						dataFx: locationAutocompleteFx(c.req.valid("json")),
+					}),
 					200,
 				);
 			}).pipe(

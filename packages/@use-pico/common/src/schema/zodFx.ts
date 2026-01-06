@@ -3,16 +3,19 @@ import type z from "zod";
 import { ZodErrorFx } from "../error/ZodErrorFx";
 
 export namespace zodFx {
-	export interface Props<TSchema extends z.ZodSchema> {
+	export interface Props<TSchema extends z.ZodSchema, TDataError, TDataContext> {
 		schema: TSchema;
-		data: unknown;
+		dataFx: Effect.Effect<unknown, TDataError, TDataContext>;
 	}
 }
 
-export const zodFx = Effect.fn("zodFx")(function* <TSchema extends z.ZodSchema>({
-	schema,
-	data,
-}: zodFx.Props<TSchema>) {
+export const zodFx = Effect.fn("zodFx")(function* <
+	TSchema extends z.ZodSchema,
+	TDataError,
+	TDataContext,
+>({ schema, dataFx }: zodFx.Props<TSchema, TDataError, TDataContext>) {
+	const data = yield* dataFx;
+
 	const result = yield* Effect.promise(async () => {
 		return schema.safeParseAsync(data);
 	});
