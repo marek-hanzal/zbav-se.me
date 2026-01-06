@@ -26,7 +26,7 @@ export const messageSystemFetchFx = Effect.fn("messageSystemFetchFx")(function* 
 		output: MessageSystemSchema,
 		filter,
 		where,
-		query: withMessageSystemQueryBuilder,
+		queryFx: withMessageSystemQueryBuilder,
 	});
 });
 

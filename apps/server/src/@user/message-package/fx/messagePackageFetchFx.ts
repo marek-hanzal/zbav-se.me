@@ -29,7 +29,7 @@ export const messagePackageFetchFx = Effect.fn("messagePackageFetchFx")(function
 		output: MessagePackageSchema,
 		filter,
 		where,
-		query: withMessagePackageQueryBuilder,
+		queryFx: withMessagePackageQueryBuilder,
 	});
 });
 

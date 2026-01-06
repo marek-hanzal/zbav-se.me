@@ -29,7 +29,7 @@ export const messageLocationFetchFx = Effect.fn("messageLocationFetchFx")(functi
 		output: MessageLocationSchema,
 		filter,
 		where,
-		query: withMessageLocationQueryBuilder,
+		queryFx: withMessageLocationQueryBuilder,
 	});
 });
 

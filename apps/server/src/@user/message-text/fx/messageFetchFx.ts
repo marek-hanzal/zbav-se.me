@@ -29,7 +29,7 @@ export const messageTextFetchFx = Effect.fn("messageTextFetchFx")(function* ({
 		output: MessageTextSchema,
 		filter,
 		where,
-		query: withMessageTextQueryBuilder,
+		queryFx: withMessageTextQueryBuilder,
 	});
 });
 

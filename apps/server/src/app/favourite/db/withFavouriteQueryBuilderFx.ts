@@ -1,7 +1,8 @@
+import { Effect } from "effect";
 import type { FavouriteFilterSchema } from "~/app/favourite/schema/FavouriteFilterSchema";
 import type { withFavouriteSelectFx } from "./withFavouriteSelectFx";
 
-export namespace withFavouriteQueryBuilder {
+export namespace withFavouriteQueryBuilderFx {
 	export interface Props {
 		select: withFavouriteSelectFx.Select;
 		where?: FavouriteFilterSchema.Type;
@@ -14,13 +15,14 @@ export namespace withFavouriteQueryBuilder {
  * Standalone query builder that applies all filters from FavouriteQuerySchema
  * Can be used by both list and count queries to ensure consistency
  */
-export const withFavouriteQueryBuilder: withFavouriteQueryBuilder.Callback = ({
+export const withFavouriteQueryBuilderFx = Effect.fn("withFavouriteQueryBuilderFx")(function* ({
 	select,
 	where,
-}) => {
+}: withFavouriteQueryBuilderFx.Props) {
 	if (!where) {
-		return select;
+		return yield* Effect.succeed(select);
 	}
+
 	let query = select;
 
 	if (where.id) {
@@ -39,5 +41,5 @@ export const withFavouriteQueryBuilder: withFavouriteQueryBuilder.Callback = ({
 		query = query.where("f.listingId", "=", where.listingId);
 	}
 
-	return query;
-};
+	return yield* Effect.succeed(query);
+});

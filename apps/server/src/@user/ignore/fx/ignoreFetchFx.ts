@@ -31,7 +31,7 @@ export const ignoreFetchFx = Effect.fn("ignoreFetchFx")(function* ({
 			...where,
 			userId: user.id,
 		},
-		query: withIgnoreQueryBuilder,
+		queryFx: withIgnoreQueryBuilder,
 	});
 });
 

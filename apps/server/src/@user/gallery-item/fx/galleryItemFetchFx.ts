@@ -31,7 +31,7 @@ export const galleryItemFetchFx = Effect.fn("galleryItemFetchFx")(function* ({
 			...where,
 			userId: user.id,
 		},
-		query: withGalleryItemQueryBuilder,
+		queryFx: withGalleryItemQueryBuilder,
 	});
 });
 

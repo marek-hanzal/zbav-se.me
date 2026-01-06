@@ -81,7 +81,7 @@ export const withCategoryFetchApi: Routes.Fn = async ({ sessionHono }) => {
 									);
 								},
 							),
-                            Match.when(
+							Match.when(
 								{
 									_tag: "ZodErrorFx",
 								},

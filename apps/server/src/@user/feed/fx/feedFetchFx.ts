@@ -31,7 +31,7 @@ export const feedFetchFx = Effect.fn("feedFetchFx")(function* ({
 			...where,
 			userId: user.id,
 		},
-		query: withFeedQueryBuilder,
+		queryFx: withFeedQueryBuilder,
 	});
 });
 

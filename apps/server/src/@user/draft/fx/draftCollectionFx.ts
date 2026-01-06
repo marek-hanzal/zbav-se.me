@@ -5,7 +5,6 @@ import { withDraftCollectionSelectFx } from "~/app/draft/db/withDraftCollectionS
 import { withDraftQueryBuilder } from "~/app/draft/db/withDraftQueryBuilder";
 import type { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace draftCollectionFx {
 	export type Props = DraftQuerySchema.Type;
@@ -17,12 +16,10 @@ export const draftCollectionFx = Effect.fn("draftCollectionFx")(function* ({
 	where,
 	sort,
 }: draftCollectionFx.Props) {
-	const database = yield* DatabaseContextFx;
 	const user = yield* UserContextFx;
 
 	return yield* withCollectionFx({
 		select: yield* withDraftCollectionSelectFx({
-			database,
 			sort,
 		}),
 		output: EntitySchema,

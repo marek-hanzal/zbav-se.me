@@ -23,10 +23,14 @@ export namespace withFetchFx {
 		TOutputSchema extends z.ZodSchema,
 		TSelect extends SelectQueryBuilder<any, any, Output<TOutputSchema>>,
 		TFilter extends FilterSchema.Type,
+		TQueryError,
+		TQueryContext,
 	> {
 		resource: string;
 		select: TSelect;
-		query?(props: Query.Props<TOutputSchema, TSelect, TFilter>): TSelect;
+		queryFx?(
+			props: Query.Props<TOutputSchema, TSelect, TFilter>,
+		): Effect.Effect<TSelect, TQueryError, TQueryContext>;
 
 		output: TOutputSchema;
 
@@ -36,25 +40,30 @@ export namespace withFetchFx {
 }
 
 export const withFetchFx = Effect.fn("withFetchFx")(function* <
-	TOutputSchema extends z.ZodSchema,
-	TSelect extends SelectQueryBuilder<any, any, withFetchFx.Output<TOutputSchema>>,
-	TFilter extends FilterSchema.Type,
+	const TOutputSchema extends z.ZodSchema,
+	const TSelect extends SelectQueryBuilder<any, any, withFetchFx.Output<TOutputSchema>>,
+	const TFilter extends FilterSchema.Type,
+	const TQueryError,
+	const TQueryContext,
 >({
 	resource,
 	select,
-	query = () => select,
+	queryFx = () => Effect.succeed(select),
 	output,
 	filter,
 	where,
-}: withFetchFx.Props<TOutputSchema, TSelect, TFilter>) {
+}: withFetchFx.Props<TOutputSchema, TSelect, TFilter, TQueryError, TQueryContext>) {
+	const whereSelect = yield* queryFx({
+		select,
+		where,
+	});
+	const filterSelect = yield* queryFx({
+		select: whereSelect,
+		where: filter,
+	});
+
 	const result = yield* Effect.promise(async () => {
-		return query({
-			select: query({
-				select,
-				where,
-			}),
-			where: filter,
-		}).executeTakeFirst();
+		return filterSelect.executeTakeFirst();
 	});
 
 	if (!result) {

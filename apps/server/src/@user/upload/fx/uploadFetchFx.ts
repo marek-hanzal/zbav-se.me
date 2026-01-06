@@ -22,7 +22,7 @@ export const uploadFetchFx = Effect.fn("uploadFetchFx")(function* ({
 		output: UploadSchema,
 		filter,
 		where,
-		query: withUploadQueryBuilder,
+		queryFx: withUploadQueryBuilder,
 	});
 });
 

@@ -5,6 +5,8 @@ import { CountSchema } from "../schema/CountSchema";
 import type { FilterSchema } from "../schema/FilterSchema";
 
 export namespace withCountFx {
+	export type Count = "total" | "filter" | "where";
+
 	export namespace Query {
 		export interface Props<
 			TSelect extends SelectQueryBuilder<any, any, any>,
@@ -18,46 +20,75 @@ export namespace withCountFx {
 	export interface Props<
 		TSelect extends SelectQueryBuilder<any, any, any>,
 		TFilter extends FilterSchema.Type,
+		TQueryError,
+		TQueryContext,
 	> {
 		select: TSelect;
-		query?(props: Query.Props<TSelect, TFilter>): TSelect;
+		queryFx?(
+			props: Query.Props<TSelect, TFilter>,
+		): Effect.Effect<TSelect, TQueryError, TQueryContext>;
 
 		filter?: TFilter;
 		where?: TFilter;
+		count?: Count[];
 	}
 }
 
 export const withCountFx = Effect.fn("withCountFx")(function* <
-	TSelect extends SelectQueryBuilder<any, any, any>,
-	TFilter extends FilterSchema.Type,
->({ select, query = () => select, filter, where }: withCountFx.Props<TSelect, TFilter>) {
-	const countTotal = yield* Effect.promise(async () => {
-		return await select
-			.clearSelect()
-			.select((eb) => eb.fn.countAll<number>().as("count"))
-			.executeTakeFirstOrThrow();
+	const TSelect extends SelectQueryBuilder<any, any, any>,
+	const TFilter extends FilterSchema.Type,
+	const TQueryError,
+	const TQueryContext,
+>({
+	select,
+	queryFx = () => Effect.succeed(select),
+	filter,
+	where,
+	count = [
+		"total",
+		"filter",
+		"where",
+	],
+}: withCountFx.Props<TSelect, TFilter, TQueryError, TQueryContext>) {
+	const whereSelect = yield* queryFx({
+		select,
+		where,
 	});
-	const countFilter = yield* Effect.promise(async () => {
-		return await query({
-			select: query({
-				select,
-				where,
-			}),
-			where: filter,
-		})
-			.clearSelect()
-			.select((eb) => eb.fn.countAll<number>().as("count"))
-			.executeTakeFirstOrThrow();
+	const filterSelect = yield* queryFx({
+		select: whereSelect,
+		where: filter,
 	});
-	const countWhere = yield* Effect.promise(async () => {
-		return await query({
-			select,
-			where,
-		})
-			.clearSelect()
-			.select((eb) => eb.fn.countAll<number>().as("count"))
-			.executeTakeFirstOrThrow();
-	});
+
+	const countTotal = count.includes("total")
+		? yield* Effect.promise(async () => {
+				return select
+					.clearSelect()
+					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.executeTakeFirstOrThrow();
+			})
+		: {
+				count: 0,
+			};
+	const countFilter = count.includes("filter")
+		? yield* Effect.promise(async () => {
+				return filterSelect
+					.clearSelect()
+					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.executeTakeFirstOrThrow();
+			})
+		: {
+				count: 0,
+			};
+	const countWhere = count.includes("where")
+		? yield* Effect.promise(async () => {
+				return whereSelect
+					.clearSelect()
+					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.executeTakeFirstOrThrow();
+			})
+		: {
+				count: 0,
+			};
 
 	return yield* zodFx({
 		schema: CountSchema,

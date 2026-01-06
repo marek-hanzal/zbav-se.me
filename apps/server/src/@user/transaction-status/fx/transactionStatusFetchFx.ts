@@ -26,7 +26,7 @@ export const transactionStatusFetchFx = Effect.fn("transactionStatusFetchFx")(fu
 		output: TransactionStatusSchema,
 		filter,
 		where,
-		query: withTransactionStatusQueryBuilder,
+		queryFx: withTransactionStatusQueryBuilder,
 	});
 });
 

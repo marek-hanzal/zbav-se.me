@@ -5,7 +5,6 @@ import { withFeedCollectionSelectFx } from "~/app/feed/db/withFeedCollectionSele
 import { withFeedQueryBuilder } from "~/app/feed/db/withFeedQueryBuilder";
 import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace feedCollectionFx {
 	export type Props = FeedQuerySchema.Type;
@@ -17,12 +16,10 @@ export const feedCollectionFx = Effect.fn("feedCollectionFx")(function* ({
 	where,
 	sort,
 }: feedCollectionFx.Props) {
-	const database = yield* DatabaseContextFx;
 	const user = yield* UserContextFx;
 
 	return yield* withCollectionFx({
 		select: yield* withFeedCollectionSelectFx({
-			database,
 			sort,
 		}),
 		output: EntitySchema,

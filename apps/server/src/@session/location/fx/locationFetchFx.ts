@@ -26,7 +26,7 @@ export const locationFetchFx = Effect.fn("locationFetchFx")(function* ({
 		output: LocationSchema,
 		filter,
 		where,
-		query: withLocationQueryBuilder,
+		queryFx: withLocationQueryBuilder,
 	});
 });
 

@@ -31,7 +31,7 @@ export const flagFetchFx = Effect.fn("flagFetchFx")(function* ({
 			...where,
 			userId: user.id,
 		},
-		query: withFlagQueryBuilder,
+		queryFx: withFlagQueryBuilder,
 	});
 });
 

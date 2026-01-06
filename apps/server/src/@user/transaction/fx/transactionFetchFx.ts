@@ -32,7 +32,7 @@ export const transactionFetchFx = Effect.fn("transactionFetchFx")(function* ({
 			...where,
 			userId: user.id,
 		},
-		query(query) {
+		queryFx(query) {
 			return withTransactionQueryBuilder({
 				meta,
 				...query,

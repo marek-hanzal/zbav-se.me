@@ -1,11 +1,10 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
 import { FavouriteSchema } from "~/@user/favourite/schema/FavouriteSchema";
-import { withFavouriteQueryBuilder } from "~/app/favourite/db/withFavouriteQueryBuilder";
+import { withFavouriteQueryBuilderFx } from "~/app/favourite/db/withFavouriteQueryBuilderFx";
 import { withFavouriteSelectFx } from "~/app/favourite/db/withFavouriteSelectFx";
 import type { FavouriteQuerySchema } from "~/app/favourite/schema/FavouriteQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace favouriteFetchFx {
 	export type Props = FavouriteQuerySchema.Type;
@@ -16,13 +15,11 @@ export const favouriteFetchFx = Effect.fn("favouriteFetchFx")(function* ({
 	where,
 	sort,
 }: favouriteFetchFx.Props) {
-	const database = yield* DatabaseContextFx;
 	const user = yield* UserContextFx;
 
 	return yield* withFetchFx({
 		resource: "favourite",
 		select: yield* withFavouriteSelectFx({
-			database,
 			sort,
 		}),
 		output: FavouriteSchema,
@@ -31,7 +28,7 @@ export const favouriteFetchFx = Effect.fn("favouriteFetchFx")(function* ({
 			...where,
 			userId: user.id,
 		},
-		query: withFavouriteQueryBuilder,
+		queryFx: withFavouriteQueryBuilderFx,
 	});
 });
 

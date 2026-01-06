@@ -27,7 +27,7 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 		output: ListingSchema,
 		filter,
 		where,
-		query(query) {
+		queryFx(query) {
 			return withListingQueryBuilder({
 				...query,
 				userId: user.id,

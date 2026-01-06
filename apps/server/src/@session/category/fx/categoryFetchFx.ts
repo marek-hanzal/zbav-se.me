@@ -26,7 +26,7 @@ export const categoryFetchFx = Effect.fn("categoryFetchFx")(function* ({
 		output: CategorySchema,
 		filter,
 		where,
-		query: withCategoryQueryBuilder,
+		queryFx: withCategoryQueryBuilder,
 	});
 });
 

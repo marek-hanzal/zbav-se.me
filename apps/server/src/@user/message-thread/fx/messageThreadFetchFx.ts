@@ -26,7 +26,7 @@ export const messageThreadFetchFx = Effect.fn("messageThreadFetchFx")(function* 
 		output: MessageThreadSchema,
 		filter,
 		where,
-		query: withMessageThreadQueryBuilder,
+		queryFx: withMessageThreadQueryBuilder,
 	});
 });
 

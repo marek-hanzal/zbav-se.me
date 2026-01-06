@@ -22,7 +22,7 @@ export const messageGalleryFetchFx = Effect.fn("messageGalleryFetchFx")(function
 		output: MessageGallerySchema,
 		filter,
 		where,
-		query: withMessageGalleryQueryBuilder,
+		queryFx: withMessageGalleryQueryBuilder,
 	});
 });
 

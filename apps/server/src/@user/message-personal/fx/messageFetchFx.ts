@@ -29,7 +29,7 @@ export const messagePersonalFetchFx = Effect.fn("messagePersonalFetchFx")(functi
 		output: MessagePersonalSchema,
 		filter,
 		where,
-		query: withMessagePersonalQueryBuilder,
+		queryFx: withMessagePersonalQueryBuilder,
 	});
 });
 

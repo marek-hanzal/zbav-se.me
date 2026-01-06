@@ -28,7 +28,7 @@ export const draftFetchFx = Effect.fn("draftFetchFx")(function* ({
 			...where,
 			userId: user.id,
 		},
-		query: withDraftQueryBuilder,
+		queryFx: withDraftQueryBuilder,
 	});
 });
 

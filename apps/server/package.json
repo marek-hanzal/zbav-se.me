@@ -5,7 +5,7 @@
 	"scripts": {
 		"dev": "PORT=3032 nitro dev --host",
 		"build": "nitro build && bun ./cli/size.ts",
-		"typecheck": "tsgo --noEmit",
+		"typecheck": "tsc --noEmit",
 		"test": "bunx --bun vitest --run"
 	},
 	"dependencies": {
@@ -36,7 +36,7 @@
 		"@typescript/native-preview": "7.0.0-dev.20251208.1",
 		"@use-pico/tsconfig": "5.0.0",
 		"nitro": "3.0.1-alpha.1",
-		"rolldown": "^1.0.0-beta.53",
+		"rolldown": "^1.0.0-beta.58",
 		"typescript": "5.9.3",
 		"vitest": "4.0.16"
 	},

@@ -28,9 +28,13 @@ export namespace withCollectionFx {
 		TOutputSchema extends z.ZodSchema,
 		TSelect extends SelectQueryBuilder<any, any, Output<TOutputSchema>>,
 		TFilter extends FilterSchema.Type,
+		TQueryError,
+		TQueryContext,
 	> {
 		select: TSelect;
-		query?(props: Query.Props<TOutputSchema, TSelect, TFilter>): TSelect;
+		queryFx?(
+			props: Query.Props<TOutputSchema, TSelect, TFilter>,
+		): Effect.Effect<TSelect, TQueryError, TQueryContext>;
 
 		output: TOutputSchema;
 
@@ -41,25 +45,30 @@ export namespace withCollectionFx {
 }
 
 export const withCollectionFx = Effect.fn("withCollectionFx")(function* <
-	TOutputSchema extends z.ZodSchema,
-	TSelect extends SelectQueryBuilder<any, any, withCollectionFx.Output<TOutputSchema>>,
-	TFilter extends FilterSchema.Type,
+	const TOutputSchema extends z.ZodSchema,
+	const TSelect extends SelectQueryBuilder<any, any, withCollectionFx.Output<TOutputSchema>>,
+	const TFilter extends FilterSchema.Type,
+	const TQueryError,
+	const TQueryContext,
 >({
 	select,
-	query = () => select,
+	queryFx = () => Effect.succeed(select),
 	output,
 	filter,
 	where,
 	cursor,
-}: withCollectionFx.Props<TOutputSchema, TSelect, TFilter>) {
+}: withCollectionFx.Props<TOutputSchema, TSelect, TFilter, TQueryError, TQueryContext>) {
+	const whereSelect = yield* queryFx({
+		select,
+		where,
+	});
+	const filterSelect = yield* queryFx({
+		select: whereSelect,
+		where: filter,
+	});
+
 	const results = yield* Effect.promise(async () => {
-		return await query({
-			select: query({
-				select,
-				where,
-			}),
-			where: filter,
-		})
+		return filterSelect
 			.limit(cursor.size + 1)
 			.offset(cursor.page * cursor.size)
 			.execute();
