@@ -1,22 +1,31 @@
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { feedFetchFx } from "~/@user/feed/fx/feedFetchFx";
 import type { FeedPatchSchema } from "~/@user/feed/schema/FeedPatchSchema";
+import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
+import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace feedPatchFx {
-	export type Props = FeedPatchSchema.Type;
+	export interface Props extends FeedPatchSchema.Type {
+		scope: FeedFilterSchema.Type;
+	}
 }
 
 export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 	patch,
 	query,
+	scope,
 }: feedPatchFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 
-			const feed = yield* feedFetchFx(query);
+			const feed = yield* feedFetchFx({
+				...query,
+				scope,
+			});
 
 			yield* Effect.promise(async () => {
 				return database
@@ -34,9 +43,12 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 				where: {
 					id: feed.id,
 				},
+				scope: {},
 			});
 		}),
 	);
 });
 
 export type feedPatchFx = ReturnType<typeof feedPatchFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<feedPatchFx>, UserContextFx>>;

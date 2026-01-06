@@ -1,13 +1,20 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { feedFavouriteCollectionFx } from "~/@user/feed-favourite/fx/feedFavouriteCollectionFx";
 import { FeedFavouriteSchema } from "~/@user/feed-favourite/schema/FeedFavouriteSchema";
+import { feedFavouriteCollectionFx } from "~/app/feed/fx/feedFavouriteCollectionFx";
 import { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
+
+const CollectionSchema = withCollectionSchema({
+	schema: FeedFavouriteSchema,
+	type: "FeedFavouriteCollection",
+	description: "Collection of feed items from favourites",
+});
 
 export const withFeedFavouriteCollectionApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
@@ -29,11 +36,7 @@ export const withFeedFavouriteCollectionApi: Routes.Fn = async ({ userHono }) =>
 				200: {
 					content: {
 						"application/json": {
-							schema: withCollectionSchema({
-								schema: FeedFavouriteSchema,
-								type: "FeedFavouriteCollection",
-								description: "Collection of feed items from favourites",
-							}),
+							schema: CollectionSchema,
 						},
 					},
 					description:
@@ -55,8 +58,19 @@ export const withFeedFavouriteCollectionApi: Routes.Fn = async ({ userHono }) =>
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = yield* UserContextFx;
+
 				return c.json<withCollectionSchema.Type<FeedFavouriteSchema>, 200>(
-					yield* feedFavouriteCollectionFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: CollectionSchema,
+						dataFx: feedFavouriteCollectionFx({
+							...c.req.valid("json"),
+							userId: user.id,
+							scope: {
+								userId: user.id,
+							},
+						}),
+					}),
 					200,
 				);
 			}).pipe(

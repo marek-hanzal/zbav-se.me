@@ -1,13 +1,19 @@
 import { createRoute } from "@hono/zod-openapi";
-import { EntitySchema } from "@use-pico/common/schema";
+import { EntitySchema, zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { feedCollectionFx } from "~/app/feed/fx/feedCollectionFx";
 import { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
-import { feedCollectionFx } from "./fx/feedCollectionFx";
+
+const CollectionSchema = withCollectionSchema({
+	schema: EntitySchema,
+	type: "FeedCollection",
+	description: "Collection of feed items",
+});
 
 export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
@@ -29,11 +35,7 @@ export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: withCollectionSchema({
-								schema: EntitySchema,
-								type: "FeedCollection",
-								description: "Collection of feed items",
-							}),
+							schema: CollectionSchema,
 						},
 					},
 					description: "Access collection of feed items based on provided query",
@@ -54,8 +56,18 @@ export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = yield* UserContextFx;
+
 				return c.json<withCollectionSchema.Type<EntitySchema>, 200>(
-					yield* feedCollectionFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: CollectionSchema,
+						dataFx: feedCollectionFx({
+							...c.req.valid("json"),
+							scope: {
+								userId: user.id,
+							},
+						}),
+					}),
 					200,
 				);
 			}).pipe(

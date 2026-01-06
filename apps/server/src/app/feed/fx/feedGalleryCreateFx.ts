@@ -1,10 +1,10 @@
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { feedPatchFx } from "~/@user/feed/fx/feedPatchFx";
-import { feedResolveFx } from "~/@user/feed/fx/feedResolveFx";
 import type { FeedGalleryCreateSchema } from "~/@user/feed/schema/FeedGalleryCreateSchema";
 import { galleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
+import { feedPatchFx } from "~/app/feed/fx/feedPatchFx";
+import { feedResolveFx } from "~/app/feed/fx/feedResolveFx";
 import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -28,6 +28,7 @@ export const feedGalleryCreateFx = Effect.fn("feedGalleryCreateFx")(function* ({
 
 			const feed = yield* feedResolveFx({
 				feedId,
+				userId,
 				message: "You are not allowed to create a gallery for this feed",
 			});
 
@@ -79,6 +80,9 @@ export const feedGalleryCreateFx = Effect.fn("feedGalleryCreateFx")(function* ({
 					where: {
 						id: feed.id,
 					},
+				},
+				scope: {
+					userId,
 				},
 			});
 

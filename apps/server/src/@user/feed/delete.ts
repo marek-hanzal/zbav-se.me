@@ -1,11 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { feedDeleteFx } from "~/app/feed/fx/feedDeleteFx";
 import { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { feedDeleteFx } from "./fx/feedDeleteFx";
 import { FeedSchema } from "./schema/FeedSchema";
 
 export const withDeleteApi: Routes.Fn = async ({ userHono }) => {
@@ -58,9 +59,17 @@ export const withDeleteApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = yield* UserContextFx;
+
 				return c.json<FeedSchema.Type, 200>(
-					yield* feedDeleteFx({
-						query: c.req.valid("json"),
+					yield* zodFx({
+						schema: FeedSchema,
+						dataFx: feedDeleteFx({
+							...c.req.valid("json"),
+							scope: {
+								userId: user.id,
+							},
+						}),
 					}),
 					200,
 				);

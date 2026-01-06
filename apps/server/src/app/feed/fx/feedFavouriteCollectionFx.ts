@@ -1,39 +1,45 @@
 import { withCollectionFx } from "@use-pico/common/collection";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { withFeedFavouriteSelectFx } from "~/@user/feed-favourite/db/withFeedFavouriteSelectFx";
-import { FeedFavouriteSchema } from "~/@user/feed-favourite/schema/FeedFavouriteSchema";
+import { withFeedFavouriteSelectFx } from "~/app/feed/db/withFeedFavouriteSelectFx";
 import { withFeedQueryBuilderFx } from "~/app/feed/db/withFeedQueryBuilderFx";
+import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
 import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace feedFavouriteCollectionFx {
-	export type Props = FeedQuerySchema.Type;
+	export interface Props extends FeedQuerySchema.Type {
+		userId: string;
+		scope: FeedFilterSchema.Type;
+	}
 }
 
 export const feedFavouriteCollectionFx = Effect.fn("feedFavouriteCollectionFx")(function* ({
-	cursor,
+	userId,
 	filter,
 	where,
+	scope,
+	cursor,
 	sort,
 }: feedFavouriteCollectionFx.Props) {
-	const user = yield* UserContextFx;
-
 	return yield* withCollectionFx({
-		select: yield* withFeedFavouriteSelectFx({
+		selectFx: withFeedFavouriteSelectFx({
+			userId,
 			sort,
 		}),
-		output: FeedFavouriteSchema,
 		cursor: cursor ?? {
 			page: 0,
 			size: 10,
 		},
 		filter,
-		where: {
-			...where,
-			userId: user.id,
-		},
+		where,
+		scope,
 		queryFx: withFeedQueryBuilderFx,
 	});
 });
 
 export type feedFavouriteCollectionFx = ReturnType<typeof feedFavouriteCollectionFx>;
+
+type _NoUser = AssertNever<
+	Extract<Effect.Effect.Context<feedFavouriteCollectionFx>, UserContextFx>
+>;

@@ -1,29 +1,35 @@
 import { genId } from "@use-pico/common/gen-id";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { listingCheckIfOwnFx } from "~/@user/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/@user/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/@user/listing-event/fx/listingEventCreateFx";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 import type { FeedbackCreateSchema } from "../schema/FeedbackCreateSchema";
 
 export namespace feedbackCreateFx {
-	export type Props = FeedbackCreateSchema.Type;
+	export interface Props extends FeedbackCreateSchema.Type {
+		userId: string;
+	}
 }
 
 export const feedbackCreateFx = Effect.fn("feedbackCreateFx")(function* ({
+	userId,
 	listingId,
 	type,
+	...data
 }: feedbackCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
-			const user = yield* UserContextFx;
+
 			const id = genId();
 
 			yield* listingCheckIfOwnFx({
+				userId,
 				listingId,
 				message: "You cannot provide feedback on your own listing.",
 			});
@@ -38,8 +44,9 @@ export const feedbackCreateFx = Effect.fn("feedbackCreateFx")(function* ({
 					return database
 						.insertInto("feedback")
 						.values({
+							...data,
 							id,
-							userId: user.id,
+							userId,
 							listingId,
 							type,
 							createdAt: new Date(),
@@ -55,8 +62,12 @@ export const feedbackCreateFx = Effect.fn("feedbackCreateFx")(function* ({
 			});
 
 			return yield* listingFetchFx({
+				userId,
 				where: {
 					id: listingId,
+				},
+				scope: {
+					userId,
 				},
 			});
 		}),
@@ -64,3 +75,5 @@ export const feedbackCreateFx = Effect.fn("feedbackCreateFx")(function* ({
 });
 
 export type feedbackCreateFx = ReturnType<typeof feedbackCreateFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<feedbackCreateFx>, UserContextFx>>;

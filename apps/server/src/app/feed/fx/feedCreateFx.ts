@@ -1,24 +1,26 @@
 import { genId } from "@use-pico/common/gen-id";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import type { FeedCreateSchema } from "~/@user/feed/schema/FeedCreateSchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { feedFetchFx } from "./feedFetchFx";
 
 export namespace feedCreateFx {
-	export interface Props {
-		data: FeedCreateSchema.Type;
+	export interface Props extends FeedCreateSchema.Type {
+		userId: string;
 	}
 }
 
 export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
-	data: { name, locationId, query },
+	userId,
+	query,
+	...data
 }: feedCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
-			const user = yield* UserContextFx;
 
 			const id = genId();
 
@@ -28,11 +30,10 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 				return database
 					.insertInto("feed")
 					.values({
+						...data,
 						id,
-						userId: user.id,
-						locationId,
+						userId,
 						uploadId: null,
-						name,
 						query: JSON.stringify(query) as any,
 						createdAt: now,
 						updatedAt: now,
@@ -45,9 +46,14 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 				where: {
 					id,
 				},
+				scope: {
+					userId,
+				},
 			});
 		}),
 	);
 });
 
 export type feedCreateFx = ReturnType<typeof feedCreateFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<feedCreateFx>, UserContextFx>>;

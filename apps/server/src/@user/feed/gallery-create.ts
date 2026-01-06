@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { FeedGalleryCreateSchema } from "~/@user/feed/schema/FeedGalleryCreateSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { feedGalleryCreateFx } from "~/app/feed/fx/feedGalleryCreateFx";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -76,12 +76,14 @@ export const withGalleryCreateApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = yield* UserContextFx;
+
 				return c.json<GallerySchema.Type, 200>(
 					yield* zodFx({
 						schema: GallerySchema,
 						dataFx: feedGalleryCreateFx({
 							...c.req.valid("json"),
-							userId: c.get("user").id,
+							userId: user.id,
 						}),
 					}),
 					200,

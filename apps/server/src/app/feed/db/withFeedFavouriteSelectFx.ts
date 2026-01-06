@@ -1,10 +1,10 @@
 import { Effect } from "effect";
 import { withFeedSelectFx } from "~/app/feed/db/withFeedSelectFx";
 import type { FeedSortSchema } from "~/app/feed/schema/FeedSortSchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace withFeedFavouriteSelectFx {
 	export interface Props {
+		userId: string;
 		sort?: FeedSortSchema.Type[];
 	}
 
@@ -12,10 +12,9 @@ export namespace withFeedFavouriteSelectFx {
 }
 
 export const withFeedFavouriteSelectFx = Effect.fn("withFeedFavouriteSelectFx")(function* ({
+	userId,
 	sort,
 }: withFeedFavouriteSelectFx.Props) {
-	const user = yield* UserContextFx;
-
 	const feedSelect = yield* withFeedSelectFx({
 		sort,
 	});
@@ -26,12 +25,12 @@ export const withFeedFavouriteSelectFx = Effect.fn("withFeedFavouriteSelectFx")(
 				.selectFrom("favourite")
 				.select((eb) => eb.fn.count<number>("favourite.id").$notNull().as("count"))
 				.whereRef("favourite.feedId", "=", "f.id")
-				.where("favourite.userId", "=", user.id)
+				.where("favourite.userId", "=", userId)
 				.$asScalar()
 				.$notNull()
 				.as("count"),
 		)
 		.where("f.id", "in", (eb) =>
-			eb.selectFrom("favourite").select("feedId").where("userId", "=", user.id),
+			eb.selectFrom("favourite").select("feedId").where("userId", "=", userId),
 		);
 });

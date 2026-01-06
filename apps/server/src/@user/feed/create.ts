@@ -1,10 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { feedCreateFx } from "~/app/feed/fx/feedCreateFx";
+import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { feedCreateFx } from "./fx/feedCreateFx";
 import { FeedCreateSchema } from "./schema/FeedCreateSchema";
 import { FeedSchema } from "./schema/FeedSchema";
 
@@ -58,9 +59,15 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = yield* UserContextFx;
+
 				return c.json<FeedSchema.Type, 201>(
-					yield* feedCreateFx({
-						data: c.req.valid("json"),
+					yield* zodFx({
+						schema: FeedSchema,
+						dataFx: feedCreateFx({
+							...c.req.valid("json"),
+							userId: user.id,
+						}),
 					}),
 					201,
 				);
