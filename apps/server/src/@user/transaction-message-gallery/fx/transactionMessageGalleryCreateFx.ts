@@ -1,11 +1,11 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { galleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
-import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import { messageGalleryCreateFx } from "~/@user/message-gallery/fx/messageGalleryCreateFx";
 import { TransactionContextFx } from "~/@user/transaction/fx/TransactionContextFx";
 import { transactionStatusGateFx } from "~/@user/transaction/fx/transactionStatusGateFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
+import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
@@ -74,6 +74,7 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 						galleryId: gallery.id,
 						uploadId,
 						sort,
+						userId: user.id,
 						createdAt,
 					});
 					sort++;

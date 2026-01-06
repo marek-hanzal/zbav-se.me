@@ -3,8 +3,8 @@ import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import type { DraftCreateSchema } from "~/@user/draft/schema/DraftCreateSchema";
 import { galleryCreateFx as coolGalleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
-import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import { draftFetchFx } from "~/app/draft/fx/draftFetchFx";
+import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
@@ -30,7 +30,6 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 				userId,
 			});
 
-			// Add gallery items if provided
 			if (data.uploadIds && data.uploadIds.length > 0) {
 				let sort = 0;
 				for (const uploadId of data.uploadIds) {
@@ -38,12 +37,12 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 						galleryId: gallery.id,
 						uploadId,
 						sort,
+						userId,
 					});
 					sort++;
 				}
 			}
 
-			// Create draft with galleryId
 			yield* Effect.promise(async () => {
 				return database
 					.insertInto("draft")

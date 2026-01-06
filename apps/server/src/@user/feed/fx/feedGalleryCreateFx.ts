@@ -3,7 +3,7 @@ import { Effect } from "effect";
 import { feedPatchFx } from "~/@user/feed/fx/feedPatchFx";
 import { feedResolveFx } from "~/@user/feed/fx/feedResolveFx";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
-import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
+import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
@@ -87,6 +87,7 @@ export const feedGalleryCreateFx = Effect.fn("feedGalleryCreateFx")(function* ({
 					galleryId: gallery.id,
 					uploadId,
 					sort,
+					userId: user.id,
 				});
 				sort++;
 			}

@@ -5,9 +5,9 @@ import { DateTime } from "luxon";
 import pgvector from "pgvector";
 import { match } from "ts-pattern";
 import { galleryCreateFx as coolGalleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
-import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import type { ListingCreateSchema } from "~/@user/listing/schema/ListingCreateSchema";
 import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
+import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
@@ -46,6 +46,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					galleryId: gallery.id,
 					uploadId,
 					sort,
+					userId: user.id,
 				});
 				sort++;
 			}

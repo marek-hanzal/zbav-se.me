@@ -1,28 +1,27 @@
 import { genId } from "@use-pico/common/gen-id";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
+import type { GalleryItemCreateSchema } from "~/@user/gallery-item/schema/GalleryItemCreateSchema";
 import { galleryItemFetchFx } from "~/app/gallery-item/fx/galleryItemFetchFx";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace galleryItemCreateFx {
-	export interface Props {
-		galleryId: string;
-		uploadId: string;
-		sort: number;
+	export interface Props extends GalleryItemCreateSchema.Type {
+		userId: string;
 		createdAt?: DateTime;
 	}
 }
 
 export const galleryItemCreateFx = Effect.fn("galleryItemCreateFx")(function* ({
+	userId,
 	galleryId,
-	uploadId,
-	sort,
 	createdAt,
+	...data
 }: galleryItemCreateFx.Props) {
 	const database = yield* DatabaseContextFx;
-	const user = yield* UserContextFx;
 
 	const now = createdAt ?? DateTime.now();
 	const id = genId();
@@ -33,7 +32,9 @@ export const galleryItemCreateFx = Effect.fn("galleryItemCreateFx")(function* ({
 	yield* galleryFetchFx({
 		where: {
 			id: galleryId,
-			userId: user.id,
+		},
+		scope: {
+			userId,
 		},
 	});
 
@@ -41,10 +42,9 @@ export const galleryItemCreateFx = Effect.fn("galleryItemCreateFx")(function* ({
 		return database
 			.insertInto("gallery_item")
 			.values({
+				...data,
 				id,
 				galleryId,
-				uploadId,
-				sort,
 				createdAt: now.toJSDate(),
 			})
 			.execute();
@@ -59,3 +59,5 @@ export const galleryItemCreateFx = Effect.fn("galleryItemCreateFx")(function* ({
 });
 
 export type galleryItemCreateFx = ReturnType<typeof galleryItemCreateFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<galleryItemCreateFx>, UserContextFx>>;

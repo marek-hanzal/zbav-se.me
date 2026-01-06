@@ -1,9 +1,8 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { draftResolveFx } from "~/@user/draft/fx/draftResolveFx";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
-import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
+import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
@@ -22,6 +21,7 @@ export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
+			const user = yield* UserContextFx;
 
 			if (uploadIds.length === 0) {
 				return yield* new InvalidRequestError({
@@ -47,6 +47,7 @@ export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* 
 					galleryId: draft.galleryId,
 					uploadId,
 					sort,
+					userId: user.id,
 				});
 				sort++;
 			}
@@ -61,5 +62,3 @@ export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* 
 });
 
 export type draftGalleryCreateFx = ReturnType<typeof draftGalleryCreateFx>;
-
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<draftGalleryCreateFx>, UserContextFx>>;
