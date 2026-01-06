@@ -1,4 +1,4 @@
-import { withCollection } from "@use-pico/common/collection";
+import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
 import { withGalleryItemQueryBuilder } from "~/app/gallery-item/db/withGalleryItemQueryBuilder";
 import { withGalleryItemSelect } from "~/app/gallery-item/db/withGalleryItemSelect";
@@ -11,32 +11,32 @@ export namespace galleryItemCollectionFx {
 	export type Props = GalleryItemQuerySchema.Type;
 }
 
-export const galleryItemCollectionFx = (query: galleryItemCollectionFx.Props) => {
-	const { cursor, filter, where, sort } = query;
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+export const galleryItemCollectionFx = Effect.fn("galleryItemCollectionFx")(function* ({
+	cursor,
+	filter,
+	where,
+	sort,
+}: galleryItemCollectionFx.Props) {
+	const database = yield* DatabaseContextFx;
+	const user = yield* UserContextFx;
 
-		return yield* Effect.tryPromise(async () => {
-			return withCollection({
-				select: withGalleryItemSelect({
-					database,
-					sort,
-				}),
-				output: GalleryItemSchema,
-				cursor: cursor ?? {
-					page: 0,
-					size: 10,
-				},
-				filter,
-				where: {
-					...where,
-					userId: user.id,
-				},
-				query: withGalleryItemQueryBuilder,
-			});
-		});
+	return yield* withCollectionFx({
+		select: withGalleryItemSelect({
+			database,
+			sort,
+		}),
+		output: GalleryItemSchema,
+		cursor: cursor ?? {
+			page: 0,
+			size: 10,
+		},
+		filter,
+		where: {
+			...where,
+			userId: user.id,
+		},
+		query: withGalleryItemQueryBuilder,
 	});
-};
+});
 
 export type galleryItemCollectionFx = ReturnType<typeof galleryItemCollectionFx>;

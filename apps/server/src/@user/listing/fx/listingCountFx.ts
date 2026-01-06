@@ -1,4 +1,4 @@
-import { withCount } from "@use-pico/common/count";
+import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
 import { withListingCollectionSelect } from "~/app/listing/db/withListingCollectionSelect";
 import { withListingQueryBuilder } from "~/app/listing/db/withListingQueryBuilder";
@@ -10,32 +10,30 @@ export namespace listingCountFx {
 	export type Props = ListingCountQuerySchema.Type;
 }
 
-export const listingCountFx = (query: listingCountFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+export const listingCountFx = Effect.fn("listingCountFx")(function* ({
+	filter,
+	where,
+	meta,
+}: listingCountFx.Props) {
+	const database = yield* DatabaseContextFx;
+	const user = yield* UserContextFx;
 
-		const { filter, where, meta } = query;
-
-		return yield* Effect.tryPromise(async () => {
-			return withCount({
-				select: withListingCollectionSelect({
-					database,
-					sort: undefined,
-					meta,
-				}),
-				filter,
-				where,
-				query(query) {
-					return withListingQueryBuilder({
-						...query,
-						userId: user.id,
-						meta,
-					});
-				},
+	return yield* withCountFx({
+		select: withListingCollectionSelect({
+			database,
+			sort: undefined,
+			meta,
+		}),
+		filter,
+		where,
+		query(query) {
+			return withListingQueryBuilder({
+				...query,
+				userId: user.id,
+				meta,
 			});
-		});
+		},
 	});
-};
+});
 
 export type listingCountFx = ReturnType<typeof listingCountFx>;

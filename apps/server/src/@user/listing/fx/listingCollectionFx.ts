@@ -1,4 +1,4 @@
-import { withCollection } from "@use-pico/common/collection";
+import { withCollectionFx } from "@use-pico/common/collection";
 import { EntitySchema } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withListingCollectionSelect } from "~/app/listing/db/withListingCollectionSelect";
@@ -11,36 +11,37 @@ export namespace listingCollectionFx {
 	export type Props = ListingQuerySchema.Type;
 }
 
-export const listingCollectionFx = (query: listingCollectionFx.Props) => {
-	const { cursor, filter, where, sort, meta } = query;
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
+	cursor,
+	filter,
+	where,
+	sort,
+	meta,
+}: listingCollectionFx.Props) {
+	const database = yield* DatabaseContextFx;
+	const user = yield* UserContextFx;
 
-		return yield* Effect.tryPromise(async () => {
-			return withCollection({
-				select: withListingCollectionSelect({
-					database,
-					sort,
-					meta,
-				}),
-				output: EntitySchema,
-				cursor: cursor ?? {
-					page: 0,
-					size: 10,
-				},
-				filter,
-				where,
-				query(query) {
-					return withListingQueryBuilder({
-						...query,
-						userId: user.id,
-						meta,
-					});
-				},
+	return yield* withCollectionFx({
+		select: withListingCollectionSelect({
+			database,
+			sort,
+			meta,
+		}),
+		output: EntitySchema,
+		cursor: cursor ?? {
+			page: 0,
+			size: 10,
+		},
+		filter,
+		where,
+		query(query) {
+			return withListingQueryBuilder({
+				...query,
+				userId: user.id,
+				meta,
 			});
-		});
+		},
 	});
-};
+});
 
 export type listingCollectionFx = ReturnType<typeof listingCollectionFx>;

@@ -1,4 +1,4 @@
-import { withCount } from "@use-pico/common/count";
+import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
 import { withGalleryItemQueryBuilder } from "~/app/gallery-item/db/withGalleryItemQueryBuilder";
 import { withGalleryItemSelect } from "~/app/gallery-item/db/withGalleryItemSelect";
@@ -10,26 +10,24 @@ export namespace galleryItemCountFx {
 	export type Props = GalleryItemCountQuerySchema.Type;
 }
 
-export const galleryItemCountFx = (query: galleryItemCountFx.Props) => {
-	const { filter, where } = query;
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+export const galleryItemCountFx = Effect.fn("galleryItemCountFx")(function* ({
+	filter,
+	where,
+}: galleryItemCountFx.Props) {
+	const database = yield* DatabaseContextFx;
+	const user = yield* UserContextFx;
 
-		return yield* Effect.tryPromise(async () => {
-			return withCount({
-				select: withGalleryItemSelect({
-					database,
-				}),
-				filter,
-				where: {
-					...where,
-					userId: user.id,
-				},
-				query: withGalleryItemQueryBuilder,
-			});
-		});
+	return yield* withCountFx({
+		select: withGalleryItemSelect({
+			database,
+		}),
+		filter,
+		where: {
+			...where,
+			userId: user.id,
+		},
+		query: withGalleryItemQueryBuilder,
 	});
-};
+});
 
 export type galleryItemCountFx = ReturnType<typeof galleryItemCountFx>;

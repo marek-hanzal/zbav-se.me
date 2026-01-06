@@ -1,4 +1,4 @@
-import { withCollection } from "@use-pico/common/collection";
+import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
 import { withUploadQueryBuilder } from "~/app/upload/db/withUploadQueryBuilder";
 import { withUploadSelect } from "~/app/upload/db/withUploadSelect";
@@ -10,28 +10,28 @@ export namespace uploadCollectionFx {
 	export type Props = UploadQuerySchema.Type;
 }
 
-export const uploadCollectionFx = (query: uploadCollectionFx.Props) => {
-	const { cursor, filter, where, sort } = query;
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
+export const uploadCollectionFx = Effect.fn("uploadCollectionFx")(function* ({
+	cursor,
+	filter,
+	where,
+	sort,
+}: uploadCollectionFx.Props) {
+	const database = yield* DatabaseContextFx;
 
-		return yield* Effect.tryPromise(async () => {
-			return withCollection({
-				select: withUploadSelect({
-					database,
-					sort,
-				}),
-				output: UploadSchema,
-				cursor: cursor ?? {
-					page: 0,
-					size: 10,
-				},
-				filter,
-				where,
-				query: withUploadQueryBuilder,
-			});
-		});
+	return yield* withCollectionFx({
+		select: withUploadSelect({
+			database,
+			sort,
+		}),
+		output: UploadSchema,
+		cursor: cursor ?? {
+			page: 0,
+			size: 10,
+		},
+		filter,
+		where,
+		query: withUploadQueryBuilder,
 	});
-};
+});
 
 export type uploadCollectionFx = ReturnType<typeof uploadCollectionFx>;

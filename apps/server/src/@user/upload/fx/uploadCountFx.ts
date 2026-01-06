@@ -1,4 +1,4 @@
-import { withCount } from "@use-pico/common/count";
+import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
 import { withUploadQueryBuilder } from "~/app/upload/db/withUploadQueryBuilder";
 import { withUploadSelect } from "~/app/upload/db/withUploadSelect";
@@ -9,22 +9,20 @@ export namespace uploadCountFx {
 	export type Props = UploadCountQuerySchema.Type;
 }
 
-export const uploadCountFx = (query: uploadCountFx.Props) => {
-	const { filter, where } = query;
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
+export const uploadCountFx = Effect.fn("uploadCountFx")(function* ({
+	filter,
+	where,
+}: uploadCountFx.Props) {
+	const database = yield* DatabaseContextFx;
 
-		return yield* Effect.tryPromise(async () => {
-			return withCount({
-				select: withUploadSelect({
-					database,
-				}),
-				filter,
-				where,
-				query: withUploadQueryBuilder,
-			});
-		});
+	return yield* withCountFx({
+		select: withUploadSelect({
+			database,
+		}),
+		filter,
+		where,
+		query: withUploadQueryBuilder,
 	});
-};
+});
 
 export type uploadCountFx = ReturnType<typeof uploadCountFx>;

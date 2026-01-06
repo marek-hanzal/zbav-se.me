@@ -1,4 +1,4 @@
-import { withCollection } from "@use-pico/common/collection";
+import { withCollectionFx } from "@use-pico/common/collection";
 import { EntitySchema } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withDraftCollectionSelect } from "~/app/draft/db/withDraftCollectionSelect";
@@ -11,32 +11,32 @@ export namespace draftCollectionFx {
 	export type Props = DraftQuerySchema.Type;
 }
 
-export const draftCollectionFx = (query: draftCollectionFx.Props) => {
-	const { cursor, filter, where, sort } = query;
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+export const draftCollectionFx = Effect.fn("draftCollectionFx")(function* ({
+	cursor,
+	filter,
+	where,
+	sort,
+}: draftCollectionFx.Props) {
+	const database = yield* DatabaseContextFx;
+	const user = yield* UserContextFx;
 
-		return yield* Effect.tryPromise(async () => {
-			return withCollection({
-				select: withDraftCollectionSelect({
-					database,
-					sort,
-				}),
-				output: EntitySchema,
-				cursor: cursor ?? {
-					page: 0,
-					size: 10,
-				},
-				filter,
-				where: {
-					...where,
-					userId: user.id,
-				},
-				query: withDraftQueryBuilder,
-			});
-		});
+	return yield* withCollectionFx({
+		select: withDraftCollectionSelect({
+			database,
+			sort,
+		}),
+		output: EntitySchema,
+		cursor: cursor ?? {
+			page: 0,
+			size: 10,
+		},
+		filter,
+		where: {
+			...where,
+			userId: user.id,
+		},
+		query: withDraftQueryBuilder,
 	});
-};
+});
 
 export type draftCollectionFx = ReturnType<typeof draftCollectionFx>;

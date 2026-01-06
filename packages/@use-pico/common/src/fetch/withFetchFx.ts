@@ -47,7 +47,7 @@ export const withFetchFx = Effect.fn("withFetchFx")(function* <
 	filter,
 	where,
 }: withFetchFx.Props<TOutputSchema, TSelect, TFilter>) {
-	const result = Effect.promise(async () => {
+	const result = yield* Effect.promise(async () => {
 		return query({
 			select: query({
 				select,

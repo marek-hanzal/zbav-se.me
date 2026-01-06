@@ -1,4 +1,4 @@
-import { withCount } from "@use-pico/common/count";
+import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
 import { withListingEventQueryBuilder } from "~/app/listing-event/db/withListingEventQueryBuilder";
 import { withListingEventSelect } from "~/app/listing-event/db/withListingEventSelect";
@@ -9,23 +9,21 @@ export namespace listingEventCountFx {
 	export type Props = ListingEventCountQuerySchema.Type;
 }
 
-export const listingEventCountFx = (query: listingEventCountFx.Props) => {
-	const { filter, where } = query;
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
+export const listingEventCountFx = Effect.fn("listingEventCountFx")(function* ({
+	filter,
+	where,
+}: listingEventCountFx.Props) {
+	const database = yield* DatabaseContextFx;
 
-		return yield* Effect.tryPromise(async () => {
-			return withCount({
-				select: withListingEventSelect({
-					database,
-					sort: undefined,
-				}),
-				filter,
-				where,
-				query: withListingEventQueryBuilder,
-			});
-		});
+	return yield* withCountFx({
+		select: withListingEventSelect({
+			database,
+			sort: undefined,
+		}),
+		filter,
+		where,
+		query: withListingEventQueryBuilder,
 	});
-};
+});
 
 export type listingEventCountFx = ReturnType<typeof listingEventCountFx>;

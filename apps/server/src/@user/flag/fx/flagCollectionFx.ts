@@ -1,4 +1,4 @@
-import { withCollection } from "@use-pico/common/collection";
+import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
 import { withFlagQueryBuilder } from "~/app/flag/db/withFlagQueryBuilder";
 import { withFlagSelect } from "~/app/flag/db/withFlagSelect";
@@ -11,32 +11,32 @@ export namespace flagCollectionFx {
 	export type Props = FlagQuerySchema.Type;
 }
 
-export const flagCollectionFx = (query: flagCollectionFx.Props) => {
-	const { cursor, filter, where, sort } = query;
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+export const flagCollectionFx = Effect.fn("flagCollectionFx")(function* ({
+	cursor,
+	filter,
+	where,
+	sort,
+}: flagCollectionFx.Props) {
+	const database = yield* DatabaseContextFx;
+	const user = yield* UserContextFx;
 
-		return yield* Effect.tryPromise(async () => {
-			return withCollection({
-				select: withFlagSelect({
-					database,
-					sort,
-				}),
-				output: FlagSchema,
-				cursor: cursor ?? {
-					page: 0,
-					size: 10,
-				},
-				filter,
-				where: {
-					...where,
-					userId: user.id,
-				},
-				query: withFlagQueryBuilder,
-			});
-		});
+	return yield* withCollectionFx({
+		select: withFlagSelect({
+			database,
+			sort,
+		}),
+		output: FlagSchema,
+		cursor: cursor ?? {
+			page: 0,
+			size: 10,
+		},
+		filter,
+		where: {
+			...where,
+			userId: user.id,
+		},
+		query: withFlagQueryBuilder,
 	});
-};
+});
 
 export type flagCollectionFx = ReturnType<typeof flagCollectionFx>;

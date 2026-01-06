@@ -1,4 +1,4 @@
-import { withCollection } from "@use-pico/common/collection";
+import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
 import { withFeedQueryBuilder } from "~/app/feed/db/withFeedQueryBuilder";
 import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
@@ -11,33 +11,33 @@ export namespace feedFavouriteCollectionFx {
 	export type Props = FeedQuerySchema.Type;
 }
 
-export const feedFavouriteCollectionFx = (query: feedFavouriteCollectionFx.Props) => {
-	const { cursor, filter, where, sort } = query;
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+export const feedFavouriteCollectionFx = Effect.fn("feedFavouriteCollectionFx")(function* ({
+	cursor,
+	filter,
+	where,
+	sort,
+}: feedFavouriteCollectionFx.Props) {
+	const database = yield* DatabaseContextFx;
+	const user = yield* UserContextFx;
 
-		return yield* Effect.tryPromise(async () => {
-			return withCollection({
-				select: withFeedFavouriteSelect({
-					database,
-					sort,
-					userId: user.id,
-				}),
-				output: FeedFavouriteSchema,
-				cursor: cursor ?? {
-					page: 0,
-					size: 10,
-				},
-				filter,
-				where: {
-					...where,
-					userId: user.id,
-				},
-				query: withFeedQueryBuilder,
-			});
-		});
+	return yield* withCollectionFx({
+		select: withFeedFavouriteSelect({
+			database,
+			sort,
+			userId: user.id,
+		}),
+		output: FeedFavouriteSchema,
+		cursor: cursor ?? {
+			page: 0,
+			size: 10,
+		},
+		filter,
+		where: {
+			...where,
+			userId: user.id,
+		},
+		query: withFeedQueryBuilder,
 	});
-};
+});
 
 export type feedFavouriteCollectionFx = ReturnType<typeof feedFavouriteCollectionFx>;

@@ -1,4 +1,4 @@
-import { withCount } from "@use-pico/common/count";
+import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
 import { withIgnoreQueryBuilder } from "~/app/ignore/db/withIgnoreQueryBuilder";
 import { withIgnoreSelect } from "~/app/ignore/db/withIgnoreSelect";
@@ -10,27 +10,25 @@ export namespace ignoreCountFx {
 	export type Props = IgnoreCountQuerySchema.Type;
 }
 
-export const ignoreCountFx = (query: ignoreCountFx.Props) => {
-	const { filter, where } = query;
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+export const ignoreCountFx = Effect.fn("ignoreCountFx")(function* ({
+	filter,
+	where,
+}: ignoreCountFx.Props) {
+	const database = yield* DatabaseContextFx;
+	const user = yield* UserContextFx;
 
-		return yield* Effect.tryPromise(async () => {
-			return withCount({
-				select: withIgnoreSelect({
-					database,
-					sort: undefined,
-				}),
-				filter,
-				where: {
-					...where,
-					userId: user.id,
-				},
-				query: withIgnoreQueryBuilder,
-			});
-		});
+	return yield* withCountFx({
+		select: withIgnoreSelect({
+			database,
+			sort: undefined,
+		}),
+		filter,
+		where: {
+			...where,
+			userId: user.id,
+		},
+		query: withIgnoreQueryBuilder,
 	});
-};
+});
 
 export type ignoreCountFx = ReturnType<typeof ignoreCountFx>;
