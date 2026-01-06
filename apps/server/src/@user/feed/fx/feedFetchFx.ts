@@ -1,6 +1,5 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { withFeedQueryBuilder } from "~/app/feed/db/withFeedQueryBuilder";
 import { withFeedSelectFx } from "~/app/feed/db/withFeedSelectFx";
 import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";

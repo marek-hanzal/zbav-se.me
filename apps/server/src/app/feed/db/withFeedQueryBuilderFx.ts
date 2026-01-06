@@ -1,3 +1,4 @@
+import { Effect } from "effect";
 import type { withFeedCollectionSelectFx } from "~/app/feed/db/withFeedCollectionSelectFx";
 import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
 
@@ -19,12 +20,9 @@ export namespace withFeedQueryBuilder {
  * Can be used by both list and count queries to ensure consistency
  * Generic to support extended select types that extend from withFeedSelectFx.Select
  */
-export const withFeedQueryBuilder: withFeedQueryBuilder.Callback = <
+export const withFeedQueryBuilderFx = Effect.fn("withFeedQueryBuilderFx")(function* <
 	TSelect extends withFeedCollectionSelectFx.Select,
->({
-	select,
-	where,
-}: withFeedQueryBuilder.Props<TSelect>): TSelect => {
+>({ select, where }: withFeedQueryBuilder.Props<TSelect>) {
 	let query = select;
 
 	if (where?.id) {
@@ -39,5 +37,5 @@ export const withFeedQueryBuilder: withFeedQueryBuilder.Callback = <
 		query = query.where("f.userId", "=", where.userId) as TSelect;
 	}
 
-	return query;
-};
+	return yield* Effect.succeed(query);
+});
