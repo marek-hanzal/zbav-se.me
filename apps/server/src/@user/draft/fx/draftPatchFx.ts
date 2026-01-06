@@ -8,14 +8,17 @@ export namespace draftPatchFx {
 	export type Props = DraftPatchSchema.Type;
 }
 
-export const draftPatchFx = ({ patch, query }: draftPatchFx.Props) => {
-	return withTransactionFx(
+export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
+	patch,
+	query,
+}: draftPatchFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 
 			const draft = yield* draftFetchFx(query);
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.updateTable("draft")
 					.set({
@@ -33,6 +36,6 @@ export const draftPatchFx = ({ patch, query }: draftPatchFx.Props) => {
 			});
 		}),
 	);
-};
+});
 
 export type draftPatchFx = ReturnType<typeof draftPatchFx>;

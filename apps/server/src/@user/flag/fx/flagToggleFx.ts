@@ -11,8 +11,11 @@ export namespace flagToggleFx {
 	export type Props = FlagToggleSchema.Type;
 }
 
-export const flagToggleFx = ({ toggle, listingId }: flagToggleFx.Props) => {
-	return withTransactionFx(
+export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
+	toggle,
+	listingId,
+}: flagToggleFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			yield* listingCheckIfOwnFx({
 				listingId,
@@ -59,6 +62,6 @@ export const flagToggleFx = ({ toggle, listingId }: flagToggleFx.Props) => {
 			});
 		}),
 	);
-};
+});
 
 export type flagToggleFx = ReturnType<typeof flagToggleFx>;

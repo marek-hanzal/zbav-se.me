@@ -11,8 +11,11 @@ export namespace ignoreToggleFx {
 	export type Props = IgnoreToggleSchema.Type;
 }
 
-export const ignoreToggleFx = ({ toggle, listingId }: ignoreToggleFx.Props) => {
-	return withTransactionFx(
+export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
+	toggle,
+	listingId,
+}: ignoreToggleFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			yield* listingCheckIfOwnFx({
 				listingId,
@@ -59,6 +62,6 @@ export const ignoreToggleFx = ({ toggle, listingId }: ignoreToggleFx.Props) => {
 			});
 		}),
 	);
-};
+});
 
 export type ignoreToggleFx = ReturnType<typeof ignoreToggleFx>;

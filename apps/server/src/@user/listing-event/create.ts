@@ -120,20 +120,6 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 									);
 								},
 							),
-							Match.when(
-								{
-									_tag: "UnknownException",
-								},
-								() => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										500,
-									);
-								},
-							),
 							Match.exhaustive,
 						),
 					);

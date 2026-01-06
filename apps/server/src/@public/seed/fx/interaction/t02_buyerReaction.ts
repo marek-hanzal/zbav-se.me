@@ -15,69 +15,64 @@ export namespace t02_buyerReaction {
 	}
 }
 
-export const t02_buyerReaction = ({ fromMinutes, toMinutes }: t02_buyerReaction.Props) => {
-	return Effect.gen(function* () {
-		const transactions = yield* transactionCollectionFx({
-			cursor: {
-				page: 0,
-				size: 1000,
-			},
+export const t02_buyerReaction = Effect.fn("t02_buyerReaction")(function* ({
+	fromMinutes,
+	toMinutes,
+}: t02_buyerReaction.Props) {
+	const transactions = yield* transactionCollectionFx({
+		cursor: {
+			page: 0,
+			size: 1000,
+		},
+		where: {
+			status: "resolved",
+		},
+	});
+
+	for (const transactionId of transactions.data) {
+		const transactionStatus = yield* transactionStatusFetchFx({
 			where: {
-				status: "resolved",
+				transactionId: transactionId.id,
 			},
+			sort: [
+				{
+					field: "createdAt",
+					direction: "desc",
+				},
+			],
 		});
 
-		for (const transactionId of transactions.data) {
-			const transactionStatus = yield* transactionStatusFetchFx({
-				where: {
+		yield* match(
+			list([
+				"success",
+				"close",
+				"dispute",
+			] as const),
+		)
+			.with("success", () => {
+				return transactionStatusSuccessFx({
 					transactionId: transactionId.id,
-				},
-				sort: [
-					{
-						field: "createdAt",
-						direction: "desc",
-					},
-				],
-			});
-
-			yield* match(
-				list([
-					"success",
-					"close",
-					"dispute",
-				] as const),
-			)
-				.with("success", () => {
-					return Effect.gen(function* () {
-						yield* transactionStatusSuccessFx({
-							transactionId: transactionId.id,
-							createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
-								minute: rangedom(fromMinutes, toMinutes),
-							}),
-						});
-					});
-				})
-				.with("close", () => {
-					return Effect.gen(function* () {
-						yield* transactionStatusCloseFx({
-							transactionId: transactionId.id,
-							createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
-								minute: rangedom(fromMinutes, toMinutes),
-							}),
-						});
-					});
-				})
-				.with("dispute", () => {
-					return Effect.gen(function* () {
-						yield* transactionStatusDisputeFx({
-							transactionId: transactionId.id,
-							createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
-								minute: rangedom(fromMinutes, toMinutes),
-							}),
-						});
-					});
-				})
-				.exhaustive();
-		}
-	});
-};
+					createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
+						minute: rangedom(fromMinutes, toMinutes),
+					}),
+				});
+			})
+			.with("close", () => {
+				return transactionStatusCloseFx({
+					transactionId: transactionId.id,
+					createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
+						minute: rangedom(fromMinutes, toMinutes),
+					}),
+				});
+			})
+			.with("dispute", () => {
+				return transactionStatusDisputeFx({
+					transactionId: transactionId.id,
+					createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
+						minute: rangedom(fromMinutes, toMinutes),
+					}),
+				});
+			})
+			.exhaustive();
+	}
+});

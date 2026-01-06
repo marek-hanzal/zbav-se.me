@@ -14,45 +14,43 @@ export namespace transactionStatusCreateFx {
 	}
 }
 
-export const transactionStatusCreateFx = ({
+export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(function* ({
 	createdAt,
 	...create
-}: transactionStatusCreateFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+}: transactionStatusCreateFx.Props) {
+	const database = yield* DatabaseContextFx;
+	const user = yield* UserContextFx;
 
-		const id = genId();
+	const id = genId();
 
-		yield* Effect.tryPromise(async () => {
-			return database
-				.insertInto("transaction_status")
-				.values({
-					id,
-					...create,
-					userId: user.id,
-					createdAt: (createdAt ?? DateTime.now()).toJSDate(),
-				})
-				.returningAll()
-				.executeTakeFirstOrThrow();
-		});
-
-		yield* transactionPatchFx({
-			patch: {},
-			query: {
-				where: {
-					id: create.transactionId,
-				},
-			},
-			updatedAt: createdAt ?? DateTime.now(),
-		});
-
-		return yield* transactionStatusFetchFx({
-			where: {
+	yield* Effect.promise(async () => {
+		return database
+			.insertInto("transaction_status")
+			.values({
 				id,
-			},
-		});
+				...create,
+				userId: user.id,
+				createdAt: (createdAt ?? DateTime.now()).toJSDate(),
+			})
+			.returningAll()
+			.executeTakeFirstOrThrow();
 	});
-};
+
+	yield* transactionPatchFx({
+		patch: {},
+		query: {
+			where: {
+				id: create.transactionId,
+			},
+		},
+		updatedAt: createdAt ?? DateTime.now(),
+	});
+
+	return yield* transactionStatusFetchFx({
+		where: {
+			id,
+		},
+	});
+});
 
 export type transactionStatusCreateFx = ReturnType<typeof transactionStatusCreateFx>;

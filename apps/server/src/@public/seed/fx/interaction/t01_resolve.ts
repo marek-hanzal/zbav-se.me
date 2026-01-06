@@ -16,71 +16,70 @@ export namespace t01_resolve {
 	}
 }
 
-export const t01_resolve = ({ fromMinutes, toMinutes }: t01_resolve.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
+export const t01_resolve = Effect.fn("t01_resolve")(function* ({
+	fromMinutes,
+	toMinutes,
+}: t01_resolve.Props) {
+	const database = yield* DatabaseContextFx;
 
-		const transactions = yield* transactionCollectionFx({
-			cursor: {
-				page: 0,
-				size: 1000,
-			},
-			where: {
-				status: "open",
-			},
+	const transactions = yield* transactionCollectionFx({
+		cursor: {
+			page: 0,
+			size: 1000,
+		},
+		where: {
+			status: "open",
+		},
+	});
+
+	for (const transactionId of transactions.data) {
+		const current = yield* Effect.promise(async () => {
+			return database
+				.selectFrom("user as user")
+				.innerJoin("listing as l", "l.userId", "user.id")
+				.innerJoin("transaction as t", "t.listingId", "l.id")
+				.where("t.id", "=", transactionId.id)
+				.selectAll("user")
+				.executeTakeFirst();
 		});
 
-		for (const transactionId of transactions.data) {
-			const current = yield* Effect.tryPromise(async () => {
-				return database
-					.selectFrom("user as user")
-					.innerJoin("listing as l", "l.userId", "user.id")
-					.innerJoin("transaction as t", "t.listingId", "l.id")
-					.where("t.id", "=", transactionId.id)
-					.selectAll("user")
-					.executeTakeFirst();
+		if (!current) {
+			return yield* new NotFoundErrorFx({
+				resource: "user",
+				resourceId: transactionId.id,
+				message: "User not found",
 			});
-
-			if (!current) {
-				return yield* new NotFoundErrorFx({
-					resource: "user",
-					resourceId: transactionId.id,
-					message: "User not found",
-				});
-			}
-
-			const transactionStatus = yield* transactionStatusFetchFx({
-				where: {
-					transactionId: transactionId.id,
-				},
-				sort: [
-					{
-						field: "createdAt",
-						direction: "desc",
-					},
-				],
-			});
-
-			yield* match(
-				list([
-					"resolve",
-					"noop",
-				] as const),
-			)
-				.with("resolve", () => {
-					return Effect.gen(function* () {
-						yield* transactionStatusResolveFx({
-							transactionId: transactionId.id,
-							createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
-								minute: rangedom(fromMinutes, toMinutes),
-							}),
-						}).pipe(UserContextProvider(current));
-					});
-				})
-				.with("noop", () => {
-					return Effect.void;
-				})
-				.exhaustive();
 		}
-	});
-};
+
+		const transactionStatus = yield* transactionStatusFetchFx({
+			where: {
+				transactionId: transactionId.id,
+			},
+			sort: [
+				{
+					field: "createdAt",
+					direction: "desc",
+				},
+			],
+		});
+
+		yield* match(
+			list([
+				"resolve",
+				"noop",
+			] as const),
+		)
+			.with("resolve", () => {
+				return transactionStatusResolveFx({
+					transactionId: transactionId.id,
+					createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
+						minute: rangedom(fromMinutes, toMinutes),
+					}),
+				}).pipe(UserContextProvider(current));
+			})
+			.with("noop", () => {
+				return Effect.void;
+			})
+			.exhaustive();
+	}
+});

@@ -10,8 +10,10 @@ export namespace ignoreDeleteFx {
 	}
 }
 
-export const ignoreDeleteFx = ({ listingId }: ignoreDeleteFx.Props) => {
-	return withTransactionFx(
+export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
+	listingId,
+}: ignoreDeleteFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
@@ -23,7 +25,7 @@ export const ignoreDeleteFx = ({ listingId }: ignoreDeleteFx.Props) => {
 				},
 			});
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.deleteFrom("ignore")
 					.where("userId", "=", user.id)
@@ -34,6 +36,6 @@ export const ignoreDeleteFx = ({ listingId }: ignoreDeleteFx.Props) => {
 			return ignore;
 		}),
 	);
-};
+});
 
 export type ignoreDeleteFx = ReturnType<typeof ignoreDeleteFx>;

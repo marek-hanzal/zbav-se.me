@@ -13,7 +13,10 @@ export namespace messageTextCreateFx {
 	}
 }
 
-export const messageTextCreateFx = ({ messageThreadId, message }: messageTextCreateFx.Props) => {
+export const messageTextCreateFx = Effect.fn("messageTextCreateFx")(function* ({
+	messageThreadId,
+	message,
+}: messageTextCreateFx.Props) {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
@@ -28,7 +31,7 @@ export const messageTextCreateFx = ({ messageThreadId, message }: messageTextCre
 
 			const id = genId();
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.insertInto("message_text")
 					.values({
@@ -49,6 +52,6 @@ export const messageTextCreateFx = ({ messageThreadId, message }: messageTextCre
 			});
 		}),
 	);
-};
+});
 
 export type messageTextCreateFx = ReturnType<typeof messageTextCreateFx>;

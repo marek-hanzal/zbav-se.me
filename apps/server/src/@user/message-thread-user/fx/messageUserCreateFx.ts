@@ -12,16 +12,16 @@ export namespace messageUserCreateFx {
 	}
 }
 
-export const messageUserCreateFx = ({
+export const messageUserCreateFx = Effect.fn("messageUserCreateFx")(function* ({
 	messageThreadId,
 	userIds,
 	createdAt,
-}: messageUserCreateFx.Props) => {
-	return withTransactionFx(
+}: messageUserCreateFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 
-			return yield* Effect.tryPromise(async () => {
+			return yield* Effect.promise(async () => {
 				return database
 					.insertInto("message_thread_user")
 					.values(
@@ -37,6 +37,6 @@ export const messageUserCreateFx = ({
 			});
 		}),
 	);
-};
+});
 
 export type messageUserCreateFx = ReturnType<typeof messageUserCreateFx>;

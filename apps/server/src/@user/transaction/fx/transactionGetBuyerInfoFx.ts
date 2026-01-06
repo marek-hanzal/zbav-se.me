@@ -1,6 +1,7 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import type { TransactionBuyerInfoSchema } from "~/@user/transaction/schema/TransactionBuyerInfoSchema";
+import { TransactionBuyerInfoSchema } from "~/@user/transaction/schema/TransactionBuyerInfoSchema";
 import { userEventBuyerInfoFx } from "~/@user/user-event/fx/userEventBuyerInfoFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -46,12 +47,15 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 		});
 	}
 
-	return {
-		registered: userInfo.createdAt,
-		events: yield* userEventBuyerInfoFx({
-			userId: userInfo.id,
-		}),
-	} satisfies TransactionBuyerInfoSchema.Type;
+	return yield* zodFx({
+		schema: TransactionBuyerInfoSchema,
+		data: {
+			registered: userInfo.createdAt,
+			events: yield* userEventBuyerInfoFx({
+				userId: userInfo.id,
+			}),
+		} satisfies TransactionBuyerInfoSchema.Type,
+	});
 });
 
 export type transactionGetBuyerInfoFx = ReturnType<typeof transactionGetBuyerInfoFx>;

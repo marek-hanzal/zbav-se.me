@@ -11,12 +11,12 @@ export namespace messagePackageCreateFx {
 	export interface Props extends MessagePackageCreateSchema.Type {}
 }
 
-export const messagePackageCreateFx = ({
+export const messagePackageCreateFx = Effect.fn("messagePackageCreateFx")(function* ({
 	messageThreadId,
 	link,
 	number,
-}: messagePackageCreateFx.Props) => {
-	return withTransactionFx(
+}: messagePackageCreateFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
@@ -30,7 +30,7 @@ export const messagePackageCreateFx = ({
 
 			const id = genId();
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.insertInto("message_package")
 					.values({
@@ -52,6 +52,6 @@ export const messagePackageCreateFx = ({
 			});
 		}),
 	);
-};
+});
 
 export type messagePackageCreateFx = ReturnType<typeof messagePackageCreateFx>;

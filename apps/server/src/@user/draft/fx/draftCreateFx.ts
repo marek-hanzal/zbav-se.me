@@ -12,8 +12,8 @@ export namespace draftCreateFx {
 	export type Props = DraftCreateSchema.Type;
 }
 
-export const draftCreateFx = (data: draftCreateFx.Props) => {
-	return withTransactionFx(
+export const draftCreateFx = Effect.fn("draftCreateFx")(function* (data: draftCreateFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
@@ -37,7 +37,7 @@ export const draftCreateFx = (data: draftCreateFx.Props) => {
 			}
 
 			// Create draft with galleryId
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.insertInto("draft")
 					.values({
@@ -60,6 +60,6 @@ export const draftCreateFx = (data: draftCreateFx.Props) => {
 			});
 		}),
 	);
-};
+});
 
 export type draftCreateFx = ReturnType<typeof draftCreateFx>;

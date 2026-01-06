@@ -18,8 +18,11 @@ export namespace listingCreateFx {
 	export type Props = ListingCreateSchema.Type;
 }
 
-export const listingCreateFx = ({ uploadIds, ...data }: listingCreateFx.Props) => {
-	return withTransactionFx(
+export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
+	uploadIds,
+	...data
+}: listingCreateFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
@@ -45,7 +48,7 @@ export const listingCreateFx = ({ uploadIds, ...data }: listingCreateFx.Props) =
 				sort++;
 			}
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.insertInto("listing")
 					.values({
@@ -90,7 +93,7 @@ export const listingCreateFx = ({ uploadIds, ...data }: listingCreateFx.Props) =
 
 			if (data.draftId) {
 				const draftId = data.draftId;
-				yield* Effect.tryPromise(async () => {
+				yield* Effect.promise(async () => {
 					return database
 						.updateTable("draft")
 						.set({
@@ -119,6 +122,6 @@ export const listingCreateFx = ({ uploadIds, ...data }: listingCreateFx.Props) =
 			});
 		}),
 	);
-};
+});
 
 export type listingCreateFx = ReturnType<typeof listingCreateFx>;

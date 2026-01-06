@@ -10,8 +10,10 @@ export namespace favouriteDeleteFx {
 	}
 }
 
-export const favouriteDeleteFx = ({ listingId }: favouriteDeleteFx.Props) => {
-	return withTransactionFx(
+export const favouriteDeleteFx = Effect.fn("favouriteDeleteFx")(function* ({
+	listingId,
+}: favouriteDeleteFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
@@ -23,7 +25,7 @@ export const favouriteDeleteFx = ({ listingId }: favouriteDeleteFx.Props) => {
 				},
 			});
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.deleteFrom("favourite")
 					.where("userId", "=", user.id)
@@ -34,6 +36,6 @@ export const favouriteDeleteFx = ({ listingId }: favouriteDeleteFx.Props) => {
 			return favourite;
 		}),
 	);
-};
+});
 
 export type favouriteDeleteFx = ReturnType<typeof favouriteDeleteFx>;

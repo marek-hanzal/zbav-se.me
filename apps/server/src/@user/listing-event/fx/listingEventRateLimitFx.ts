@@ -13,42 +13,40 @@ export namespace listingEventRateLimitFx {
 	}
 }
 
-export const listingEventRateLimitFx = ({
+export const listingEventRateLimitFx = Effect.fn("listingEventRateLimitFx")(function* ({
 	listingId,
 	event,
 	minutes = 10,
 	createdAt,
-}: listingEventRateLimitFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
+}: listingEventRateLimitFx.Props) {
+	const database = yield* DatabaseContextFx;
 
-		const listingEvent = yield* Effect.tryPromise(async () => {
-			return database
-				.selectFrom("listing_event")
-				.select("createdAt")
-				.where("listingId", "=", listingId)
-				.where("event", "=", event)
-				.where(
-					"createdAt",
-					">=",
-					(createdAt ?? DateTime.now())
-						.minus({
-							minutes,
-						})
-						.toJSDate(),
-				)
-				.orderBy("createdAt", "desc")
-				.executeTakeFirst();
-		});
-
-		if (listingEvent) {
-			return yield* new TooManyRequests({
-				message: "You have already created this event",
-			});
-		}
-
-		return yield* Effect.void;
+	const listingEvent = yield* Effect.promise(async () => {
+		return database
+			.selectFrom("listing_event")
+			.select("createdAt")
+			.where("listingId", "=", listingId)
+			.where("event", "=", event)
+			.where(
+				"createdAt",
+				">=",
+				(createdAt ?? DateTime.now())
+					.minus({
+						minutes,
+					})
+					.toJSDate(),
+			)
+			.orderBy("createdAt", "desc")
+			.executeTakeFirst();
 	});
-};
+
+	if (listingEvent) {
+		return yield* new TooManyRequests({
+			message: "You have already created this event",
+		});
+	}
+
+	return yield* Effect.void;
+});
 
 export type listingEventRateLimitFx = ReturnType<typeof listingEventRateLimitFx>;

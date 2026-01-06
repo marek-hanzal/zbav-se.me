@@ -67,7 +67,7 @@ export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 						Match.value(e).pipe(
 							Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "ZodErrorFx",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 500>(

@@ -11,38 +11,38 @@ export namespace uploadCreateFx {
 	export type Props = UploadCreateSchema.Type;
 }
 
-export const uploadCreateFx = ({ url }: uploadCreateFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
+	url,
+}: uploadCreateFx.Props) {
+	const database = yield* DatabaseContextFx;
+	const user = yield* UserContextFx;
 
-		if (!url.startsWith(AppEnv.SERVER_CONTENT_CDN)) {
-			return yield* new InvalidRequestError({
-				message: "Only content from the CDN can be uploaded",
-			});
-		}
-
-		const id = genId();
-		const now = new Date();
-
-		yield* Effect.tryPromise(async () => {
-			return database
-				.insertInto("upload")
-				.values({
-					id,
-					userId: user.id,
-					url,
-					createdAt: now,
-				})
-				.execute();
+	if (!url.startsWith(AppEnv.SERVER_CONTENT_CDN)) {
+		return yield* new InvalidRequestError({
+			message: "Only content from the CDN can be uploaded",
 		});
+	}
 
-		return yield* uploadFetchFx({
-			where: {
+	const id = genId();
+	const now = new Date();
+
+	yield* Effect.promise(async () => {
+		return database
+			.insertInto("upload")
+			.values({
 				id,
-			},
-		});
+				userId: user.id,
+				url,
+				createdAt: now,
+			})
+			.execute();
 	});
-};
+
+	return yield* uploadFetchFx({
+		where: {
+			id,
+		},
+	});
+});
 
 export type uploadCreateFx = ReturnType<typeof uploadCreateFx>;

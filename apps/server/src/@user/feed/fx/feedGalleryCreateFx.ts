@@ -20,7 +20,7 @@ export const feedGalleryCreateFx = Effect.fn("feedGalleryCreateFx")(function* ({
 	feedId,
 	uploadIds,
 }: feedGalleryCreateFx.Props) {
-	return withTransactionFx(
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;

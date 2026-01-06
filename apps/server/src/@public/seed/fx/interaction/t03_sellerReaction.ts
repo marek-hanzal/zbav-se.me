@@ -16,71 +16,70 @@ export namespace t03_sellerReaction {
 	}
 }
 
-export const t03_sellerReaction = ({ fromMinutes, toMinutes }: t03_sellerReaction.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
+export const t03_sellerReaction = Effect.fn("t03_sellerReaction")(function* ({
+	fromMinutes,
+	toMinutes,
+}: t03_sellerReaction.Props) {
+	const database = yield* DatabaseContextFx;
 
-		const transactions = yield* transactionCollectionFx({
-			cursor: {
-				page: 0,
-				size: 1000,
-			},
-			where: {
-				status: "resolved",
-			},
+	const transactions = yield* transactionCollectionFx({
+		cursor: {
+			page: 0,
+			size: 1000,
+		},
+		where: {
+			status: "resolved",
+		},
+	});
+
+	for (const transactionId of transactions.data) {
+		const current = yield* Effect.promise(async () => {
+			return database
+				.selectFrom("user as user")
+				.innerJoin("listing as l", "l.userId", "user.id")
+				.innerJoin("transaction as t", "t.listingId", "l.id")
+				.where("t.id", "=", transactionId.id)
+				.selectAll("user")
+				.executeTakeFirst();
 		});
 
-		for (const transactionId of transactions.data) {
-			const current = yield* Effect.tryPromise(async () => {
-				return database
-					.selectFrom("user as user")
-					.innerJoin("listing as l", "l.userId", "user.id")
-					.innerJoin("transaction as t", "t.listingId", "l.id")
-					.where("t.id", "=", transactionId.id)
-					.selectAll("user")
-					.executeTakeFirst();
+		if (!current) {
+			return yield* new NotFoundErrorFx({
+				resource: "user",
+				resourceId: transactionId.id,
+				message: "User not found",
 			});
-
-			if (!current) {
-				return yield* new NotFoundErrorFx({
-					resource: "user",
-					resourceId: transactionId.id,
-					message: "User not found",
-				});
-			}
-
-			const transactionStatus = yield* transactionStatusFetchFx({
-				where: {
-					transactionId: transactionId.id,
-				},
-				sort: [
-					{
-						field: "createdAt",
-						direction: "desc",
-					},
-				],
-			});
-
-			yield* match(
-				list([
-					"dispute",
-					"noop",
-				] as const),
-			)
-				.with("dispute", () => {
-					return Effect.gen(function* () {
-						yield* transactionStatusDisputeFx({
-							transactionId: transactionId.id,
-							createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
-								minute: rangedom(fromMinutes, toMinutes),
-							}),
-						}).pipe(UserContextProvider(current));
-					});
-				})
-				.with("noop", () => {
-					return Effect.void;
-				})
-				.exhaustive();
 		}
-	});
-};
+
+		const transactionStatus = yield* transactionStatusFetchFx({
+			where: {
+				transactionId: transactionId.id,
+			},
+			sort: [
+				{
+					field: "createdAt",
+					direction: "desc",
+				},
+			],
+		});
+
+		yield* match(
+			list([
+				"dispute",
+				"noop",
+			] as const),
+		)
+			.with("dispute", () => {
+				return transactionStatusDisputeFx({
+					transactionId: transactionId.id,
+					createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
+						minute: rangedom(fromMinutes, toMinutes),
+					}),
+				}).pipe(UserContextProvider(current));
+			})
+			.with("noop", () => {
+				return Effect.void;
+			})
+			.exhaustive();
+	}
+});

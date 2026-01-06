@@ -4,30 +4,28 @@ import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
-export const galleryCreateFx = () => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* () {
+	const database = yield* DatabaseContextFx;
+	const user = yield* UserContextFx;
 
-		const id = genId();
+	const id = genId();
 
-		yield* Effect.tryPromise(async () => {
-			return database
-				.insertInto("gallery")
-				.values({
-					id,
-					userId: user.id,
-					createdAt: new Date(),
-				})
-				.execute();
-		});
-
-		return yield* galleryFetchFx({
-			where: {
+	yield* Effect.promise(async () => {
+		return database
+			.insertInto("gallery")
+			.values({
 				id,
-			},
-		});
+				userId: user.id,
+				createdAt: new Date(),
+			})
+			.execute();
 	});
-};
+
+	return yield* galleryFetchFx({
+		where: {
+			id,
+		},
+	});
+});
 
 export type galleryCreateFx = ReturnType<typeof galleryCreateFx>;

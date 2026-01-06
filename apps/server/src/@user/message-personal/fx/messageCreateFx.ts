@@ -11,14 +11,14 @@ export namespace messagePersonalCreateFx {
 	export interface Props extends MessagePersonalCreateSchema.Type {}
 }
 
-export const messagePersonalCreateFx = ({
+export const messagePersonalCreateFx = Effect.fn("messagePersonalCreateFx")(function* ({
 	messageThreadId,
 	name,
 	phone,
 	email,
 	locationId,
-}: messagePersonalCreateFx.Props) => {
-	return withTransactionFx(
+}: messagePersonalCreateFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
@@ -32,7 +32,7 @@ export const messagePersonalCreateFx = ({
 
 			const id = genId();
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.insertInto("message_personal")
 					.values({
@@ -56,6 +56,6 @@ export const messagePersonalCreateFx = ({
 			});
 		}),
 	);
-};
+});
 
 export type messagePersonalCreateFx = ReturnType<typeof messagePersonalCreateFx>;

@@ -80,6 +80,20 @@ export const withSeedApi: Routes.Fn = async ({ publicHono }) => {
 						Match.value(e).pipe(
 							Match.when(
 								{
+									_tag: "AccessDeniedError",
+								},
+								(err) => {
+									return c.json<NoticeSchema.Type, 403>(
+										{
+											type: "error",
+											message: err.message,
+										},
+										403,
+									);
+								},
+							),
+							Match.when(
+								{
 									_tag: "NotFoundErrorFx",
 								},
 								(err) => {
@@ -108,7 +122,7 @@ export const withSeedApi: Routes.Fn = async ({ publicHono }) => {
 							),
 							Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "ZodErrorFx",
 								},
 								(err) => {
 									return c.json<NoticeSchema.Type, 500>(
@@ -131,20 +145,6 @@ export const withSeedApi: Routes.Fn = async ({ publicHono }) => {
 											message: err.message,
 										},
 										500,
-									);
-								},
-							),
-							Match.when(
-								{
-									_tag: "AccessDeniedError",
-								},
-								(err) => {
-									return c.json<NoticeSchema.Type, 403>(
-										{
-											type: "error",
-											message: err.message,
-										},
-										403,
 									);
 								},
 							),

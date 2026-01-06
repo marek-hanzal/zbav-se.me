@@ -13,12 +13,12 @@ export namespace listingEventCreateFx {
 	}
 }
 
-export const listingEventCreateFx = ({
+export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* ({
 	listingId,
 	event,
 	createdAt,
-}: listingEventCreateFx.Props) => {
-	return withTransactionFx(
+}: listingEventCreateFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 
@@ -33,7 +33,7 @@ export const listingEventCreateFx = ({
 				createdAt,
 			});
 
-			return yield* Effect.tryPromise(async () => {
+			return yield* Effect.promise(async () => {
 				return database
 					.insertInto("listing_event")
 					.values({
@@ -47,6 +47,6 @@ export const listingEventCreateFx = ({
 			});
 		}),
 	);
-};
+});
 
 export type listingEventCreateFx = ReturnType<typeof listingEventCreateFx>;

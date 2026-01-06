@@ -15,57 +15,55 @@ export namespace transactionStatusAcceptFx {
 	}
 }
 
-export const transactionStatusAcceptFx = ({
+export const transactionStatusAcceptFx = Effect.fn("transactionStatusAcceptFx")(function* ({
 	transactionId,
 	createdAt,
-}: transactionStatusAcceptFx.Props) => {
-	return Effect.gen(function* () {
-		const user = yield* UserContextFx;
+}: transactionStatusAcceptFx.Props) {
+	const user = yield* UserContextFx;
 
-		const transaction = yield* transactionResolveFx({
-			transactionId,
-			message: "You are not allowed to accept this listing transaction",
-		});
-
-		if (transaction.side === "buyer") {
-			return yield* new RuntimeError({
-				message: "Buyer cannot accept a transaction",
-			});
-		}
-
-		yield* transactionPatchFx({
-			patch: {},
-			query: {
-				where: {
-					id: transaction.id,
-				},
-			},
-			updatedAt: createdAt,
-		});
-
-		yield* messageSystemCreateFx({
-			messageThreadId: transaction.messageThreadId,
-			message: "Seller accepted the transaction (message)",
-			createdAt,
-		});
-
-		yield* userInteractionEventFx({
-			userId: user.id,
-			targetId: transaction.buyerId,
-			source: "transaction",
-			group: transaction.id,
-			event: "transaction.open",
-			isTerminal: false,
-		});
-
-		return yield* transactionStatusCreateFx({
-			transactionId: transaction.id,
-			listingId: transaction.listingId,
-			status: "open",
-			side: transaction.side,
-			createdAt,
-		});
+	const transaction = yield* transactionResolveFx({
+		transactionId,
+		message: "You are not allowed to accept this listing transaction",
 	});
-};
+
+	if (transaction.side === "buyer") {
+		return yield* new RuntimeError({
+			message: "Buyer cannot accept a transaction",
+		});
+	}
+
+	yield* transactionPatchFx({
+		patch: {},
+		query: {
+			where: {
+				id: transaction.id,
+			},
+		},
+		updatedAt: createdAt,
+	});
+
+	yield* messageSystemCreateFx({
+		messageThreadId: transaction.messageThreadId,
+		message: "Seller accepted the transaction (message)",
+		createdAt,
+	});
+
+	yield* userInteractionEventFx({
+		userId: user.id,
+		targetId: transaction.buyerId,
+		source: "transaction",
+		group: transaction.id,
+		event: "transaction.open",
+		isTerminal: false,
+	});
+
+	return yield* transactionStatusCreateFx({
+		transactionId: transaction.id,
+		listingId: transaction.listingId,
+		status: "open",
+		side: transaction.side,
+		createdAt,
+	});
+});
 
 export type transactionStatusAcceptFx = ReturnType<typeof transactionStatusAcceptFx>;

@@ -10,8 +10,10 @@ export namespace flagDeleteFx {
 	}
 }
 
-export const flagDeleteFx = ({ listingId }: flagDeleteFx.Props) => {
-	return withTransactionFx(
+export const flagDeleteFx = Effect.fn("flagDeleteFx")(function* ({
+	listingId,
+}: flagDeleteFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
@@ -23,7 +25,7 @@ export const flagDeleteFx = ({ listingId }: flagDeleteFx.Props) => {
 				},
 			});
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.deleteFrom("flag")
 					.where("userId", "=", user.id)
@@ -34,6 +36,6 @@ export const flagDeleteFx = ({ listingId }: flagDeleteFx.Props) => {
 			return flag;
 		}),
 	);
-};
+});
 
 export type flagDeleteFx = ReturnType<typeof flagDeleteFx>;

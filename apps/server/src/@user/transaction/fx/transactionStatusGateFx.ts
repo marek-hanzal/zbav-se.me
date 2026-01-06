@@ -11,26 +11,24 @@ export namespace transactionStatusGateFx {
 	}
 }
 
-export const transactionStatusGateFx = ({
+export const transactionStatusGateFx = Effect.fn("transactionStatusGateFx")(function* ({
 	transactionId,
 	allowedStatuses,
 	message,
-}: transactionStatusGateFx.Props) => {
-	return Effect.gen(function* () {
-		const transaction = yield* transactionResolveFx({
-			transactionId,
-		});
-
-		if (!transaction.status || !allowedStatuses.includes(transaction.status)) {
-			return yield* new InvalidRequestError({
-				message:
-					message ??
-					`Transaction must be in one of the following statuses: ${allowedStatuses.join(", ")}`,
-			});
-		}
-
-		return transaction;
+}: transactionStatusGateFx.Props) {
+	const transaction = yield* transactionResolveFx({
+		transactionId,
 	});
-};
+
+	if (!transaction.status || !allowedStatuses.includes(transaction.status)) {
+		return yield* new InvalidRequestError({
+			message:
+				message ??
+				`Transaction must be in one of the following statuses: ${allowedStatuses.join(", ")}`,
+		});
+	}
+
+	return transaction;
+});
 
 export type transactionStatusGateFx = ReturnType<typeof transactionStatusGateFx>;

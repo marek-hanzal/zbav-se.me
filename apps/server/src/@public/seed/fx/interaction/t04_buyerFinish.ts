@@ -14,62 +14,59 @@ export namespace t04_buyerFinish {
 	}
 }
 
-export const t04_buyerFinish = ({ fromMinutes, toMinutes }: t04_buyerFinish.Props) => {
-	return Effect.gen(function* () {
-		const transactions = yield* transactionCollectionFx({
-			cursor: {
-				page: 0,
-				size: 1000,
-			},
+export const t04_buyerFinish = Effect.fn("t04_buyerFinish")(function* ({
+	fromMinutes,
+	toMinutes,
+}: t04_buyerFinish.Props) {
+	const transactions = yield* transactionCollectionFx({
+		cursor: {
+			page: 0,
+			size: 1000,
+		},
+		where: {
+			statusIn: [
+				"resolved",
+				"open",
+				"dispute",
+			],
+		},
+	});
+
+	for (const transactionId of transactions.data) {
+		const transactionStatus = yield* transactionStatusFetchFx({
 			where: {
-				statusIn: [
-					"resolved",
-					"open",
-					"dispute",
-				],
+				transactionId: transactionId.id,
 			},
+			sort: [
+				{
+					field: "createdAt",
+					direction: "desc",
+				},
+			],
 		});
 
-		for (const transactionId of transactions.data) {
-			const transactionStatus = yield* transactionStatusFetchFx({
-				where: {
+		yield* match(
+			list([
+				"success",
+				"close",
+			] as const),
+		)
+			.with("success", () => {
+				return transactionStatusSuccessFx({
 					transactionId: transactionId.id,
-				},
-				sort: [
-					{
-						field: "createdAt",
-						direction: "desc",
-					},
-				],
-			});
-
-			yield* match(
-				list([
-					"success",
-					"close",
-				] as const),
-			)
-				.with("success", () => {
-					return Effect.gen(function* () {
-						yield* transactionStatusSuccessFx({
-							transactionId: transactionId.id,
-							createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
-								minute: rangedom(fromMinutes, toMinutes),
-							}),
-						});
-					});
-				})
-				.with("close", () => {
-					return Effect.gen(function* () {
-						yield* transactionStatusCloseFx({
-							transactionId: transactionId.id,
-							createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
-								minute: rangedom(fromMinutes, toMinutes),
-							}),
-						});
-					});
-				})
-				.exhaustive();
-		}
-	});
-};
+					createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
+						minute: rangedom(fromMinutes, toMinutes),
+					}),
+				});
+			})
+			.with("close", () => {
+				return transactionStatusCloseFx({
+					transactionId: transactionId.id,
+					createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
+						minute: rangedom(fromMinutes, toMinutes),
+					}),
+				});
+			})
+			.exhaustive();
+	}
+});

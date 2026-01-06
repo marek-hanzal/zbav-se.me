@@ -14,12 +14,12 @@ export namespace messageLocationCreateFx {
 	}
 }
 
-export const messageLocationCreateFx = ({
+export const messageLocationCreateFx = Effect.fn("messageLocationCreateFx")(function* ({
 	messageThreadId,
 	locationId,
 	createdAt,
-}: messageLocationCreateFx.Props) => {
-	return withTransactionFx(
+}: messageLocationCreateFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
@@ -33,7 +33,7 @@ export const messageLocationCreateFx = ({
 
 			const id = genId();
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.insertInto("message_location")
 					.values({
@@ -54,6 +54,6 @@ export const messageLocationCreateFx = ({
 			});
 		}),
 	);
-};
+});
 
 export type messageLocationCreateFx = ReturnType<typeof messageLocationCreateFx>;

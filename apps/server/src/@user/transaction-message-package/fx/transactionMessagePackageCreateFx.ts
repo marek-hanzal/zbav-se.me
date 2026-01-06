@@ -13,59 +13,58 @@ export namespace transactionMessagePackageCreateFx {
 	export interface Props extends TransactionMessagePackageCreateSchema.Type {}
 }
 
-export const transactionMessagePackageCreateFx = ({
-	transactionId,
-	link,
-	number,
-}: transactionMessagePackageCreateFx.Props) => {
-	return withTransactionFx(
-		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
-			const user = yield* UserContextFx;
-			const config = yield* TransactionContextFx;
+export const transactionMessagePackageCreateFx = Effect.fn("transactionMessagePackageCreateFx")(
+	function* ({ transactionId, link, number }: transactionMessagePackageCreateFx.Props) {
+		return yield* withTransactionFx(
+			Effect.gen(function* () {
+				const database = yield* DatabaseContextFx;
+				const user = yield* UserContextFx;
+				const config = yield* TransactionContextFx;
 
-			const transaction = yield* transactionStatusGateFx({
-				transactionId,
-				allowedStatuses: [
-					"open",
-					"dispute",
-				],
-			});
+				const transaction = yield* transactionStatusGateFx({
+					transactionId,
+					allowedStatuses: [
+						"open",
+						"dispute",
+					],
+				});
 
-			const now = DateTime.now();
+				const now = DateTime.now();
 
-			yield* Effect.tryPromise(async () => {
-				return database
-					.updateTable("transaction")
-					.set({
-						updatedAt: now.toJSDate(),
-						expiresAt: now
-							.plus({
-								days: config.extend,
-							})
-							.toJSDate(),
-					})
-					.where("id", "=", transaction.id)
-					.executeTakeFirst();
-			});
+				yield* Effect.promise(async () => {
+					return database
+						.updateTable("transaction")
+						.set({
+							updatedAt: now.toJSDate(),
+							expiresAt: now
+								.plus({
+									days: config.extend,
+								})
+								.toJSDate(),
+						})
+						.where("id", "=", transaction.id)
+						.executeTakeFirst();
+				});
 
-			yield* userInteractionEventFx({
-				userId: user.id,
-				targetId: transaction.side === "buyer" ? transaction.sellerId : transaction.buyerId,
-				source: "transaction",
-				group: transaction.id,
-				event: "transaction.message",
-				isTerminal: false,
-			});
+				yield* userInteractionEventFx({
+					userId: user.id,
+					targetId:
+						transaction.side === "buyer" ? transaction.sellerId : transaction.buyerId,
+					source: "transaction",
+					group: transaction.id,
+					event: "transaction.message",
+					isTerminal: false,
+				});
 
-			return yield* messagePackageCreateFx({
-				messageThreadId: transaction.messageThreadId,
-				link,
-				number,
-			});
-		}),
-	);
-};
+				return yield* messagePackageCreateFx({
+					messageThreadId: transaction.messageThreadId,
+					link,
+					number,
+				});
+			}),
+		);
+	},
+);
 
 export type transactionMessagePackageCreateFx = ReturnType<
 	typeof transactionMessagePackageCreateFx

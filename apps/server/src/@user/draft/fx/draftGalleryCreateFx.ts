@@ -13,8 +13,11 @@ export namespace draftGalleryCreateFx {
 	}
 }
 
-export const draftGalleryCreateFx = ({ draftId, uploadIds }: draftGalleryCreateFx.Props) => {
-	return withTransactionFx(
+export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* ({
+	draftId,
+	uploadIds,
+}: draftGalleryCreateFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 
@@ -29,7 +32,7 @@ export const draftGalleryCreateFx = ({ draftId, uploadIds }: draftGalleryCreateF
 				message: "You are not allowed to create a gallery for this draft",
 			});
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.deleteFrom("gallery_item")
 					.where("galleryId", "=", draft.galleryId)
@@ -53,6 +56,6 @@ export const draftGalleryCreateFx = ({ draftId, uploadIds }: draftGalleryCreateF
 			});
 		}),
 	);
-};
+});
 
 export type draftGalleryCreateFx = ReturnType<typeof draftGalleryCreateFx>;

@@ -11,15 +11,15 @@ export namespace feedDeleteFx {
 	}
 }
 
-export const feedDeleteFx = ({ query }: feedDeleteFx.Props) => {
-	return withTransactionFx(
+export const feedDeleteFx = Effect.fn("feedDeleteFx")(function* ({ query }: feedDeleteFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
 
 			const feed = yield* feedFetchFx(query);
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.deleteFrom("feed")
 					.where("id", "=", feed.id)
@@ -30,6 +30,6 @@ export const feedDeleteFx = ({ query }: feedDeleteFx.Props) => {
 			return feed;
 		}),
 	);
-};
+});
 
 export type feedDeleteFx = ReturnType<typeof feedDeleteFx>;

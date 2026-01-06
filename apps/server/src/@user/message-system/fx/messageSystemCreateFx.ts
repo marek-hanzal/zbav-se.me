@@ -15,12 +15,12 @@ export namespace messageSystemCreateFx {
 	}
 }
 
-export const messageSystemCreateFx = ({
+export const messageSystemCreateFx = Effect.fn("messageSystemCreateFx")(function* ({
 	messageThreadId,
 	message,
 	createdAt,
-}: messageSystemCreateFx.Props) => {
-	return withTransactionFx(
+}: messageSystemCreateFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
@@ -54,6 +54,6 @@ export const messageSystemCreateFx = ({
 			});
 		}),
 	);
-};
+});
 
 export type messageSystemCreateFx = ReturnType<typeof messageSystemCreateFx>;

@@ -11,8 +11,12 @@ export namespace favouriteToggleFx {
 	export type Props = FavouriteToggleSchema.Type;
 }
 
-export const favouriteToggleFx = ({ feedId, listingId, toggle }: favouriteToggleFx.Props) => {
-	return withTransactionFx(
+export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
+	feedId,
+	listingId,
+	toggle,
+}: favouriteToggleFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			yield* listingCheckIfOwnFx({
 				listingId,
@@ -60,6 +64,6 @@ export const favouriteToggleFx = ({ feedId, listingId, toggle }: favouriteToggle
 			});
 		}),
 	);
-};
+});
 
 export type favouriteToggleFx = ReturnType<typeof favouriteToggleFx>;

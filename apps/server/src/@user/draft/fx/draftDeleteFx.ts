@@ -9,15 +9,15 @@ export namespace draftDeleteFx {
 	export type Props = Omit<DraftQuerySchema.Type, "cursor" | "sort">;
 }
 
-export const draftDeleteFx = (query: draftDeleteFx.Props) => {
-	return withTransactionFx(
+export const draftDeleteFx = Effect.fn("draftDeleteFx")(function* (query: draftDeleteFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
 
 			const draft = yield* draftFetchFx(query);
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.deleteFrom("draft")
 					.where("id", "=", draft.id)
@@ -28,6 +28,6 @@ export const draftDeleteFx = (query: draftDeleteFx.Props) => {
 			return draft;
 		}),
 	);
-};
+});
 
 export type draftDeleteFx = ReturnType<typeof draftDeleteFx>;
