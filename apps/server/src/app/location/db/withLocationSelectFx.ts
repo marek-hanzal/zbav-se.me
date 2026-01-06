@@ -29,3 +29,5 @@ export const withLocationSelectFx = Effect.fn("withLocationSelectFx")(function* 
 
 	return query;
 });
+
+export type withLocationSelectFx = ReturnType<typeof withLocationSelectFx>;

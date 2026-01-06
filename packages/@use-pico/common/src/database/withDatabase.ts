@@ -8,7 +8,7 @@ import {
 
 export namespace withDatabase {
 	export interface Props extends Partial<Pick<MigrationProvider, "getMigrations">> {
-		dialect(): Promise<Dialect>;
+		dialect(): Dialect;
 		/**
 		 * Called before the migration is executed.
 		 */
@@ -17,8 +17,8 @@ export namespace withDatabase {
 	}
 
 	export interface Instance<DB = any> {
-		dialect(): Promise<Dialect>;
-		kysely(): Promise<Kysely<DB>>;
+		dialect(): Dialect;
+		kysely(): Kysely<DB>;
 		migrate(): Promise<MigrationResult[] | undefined>;
 	}
 }
@@ -33,20 +33,20 @@ export const withDatabase = <TDatabase>({
 	let dialectInstance: Dialect | null = null;
 
 	return {
-		async dialect() {
+		dialect() {
 			if (dialectInstance) {
 				return dialectInstance;
 			}
 
-			return (dialectInstance = await dialect());
+			return (dialectInstance = dialect());
 		},
-		async kysely() {
+		kysely() {
 			if (kyselyInstance) {
 				return kyselyInstance;
 			}
 
 			return (kyselyInstance = new Kysely<TDatabase>({
-				dialect: await this.dialect(),
+				dialect: this.dialect(),
 				log(log) {
 					switch (log.level) {
 						case "error": {

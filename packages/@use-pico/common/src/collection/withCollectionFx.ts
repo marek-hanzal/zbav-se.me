@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import type { SelectQueryBuilder, Simplify } from "kysely";
-import z from "zod";
-import { zodFx } from "../schema";
+import type z from "zod";
 import type { CursorSchema } from "../schema/CursorSchema";
 import type { FilterSchema } from "../schema/FilterSchema";
 
@@ -15,8 +14,7 @@ export namespace withCollectionFx {
 
 	export namespace Query {
 		export interface Props<
-			TOutputSchema extends z.ZodSchema,
-			TSelect extends SelectQueryBuilder<any, any, Output<TOutputSchema>>,
+			TSelect extends SelectQueryBuilder<any, any, any>,
 			TFilter extends FilterSchema.Type,
 		> {
 			select: TSelect;
@@ -25,20 +23,23 @@ export namespace withCollectionFx {
 	}
 
 	export interface Props<
-		TOutputSchema extends z.ZodSchema,
-		TSelect extends SelectQueryBuilder<any, any, Output<TOutputSchema>>,
+		TDB,
+		TTable extends keyof TDB,
+		TOutput,
 		TFilter extends FilterSchema.Type,
 		TSelectError,
 		TSelectContext,
 		TQueryError,
 		TQueryContext,
 	> {
-		selectFx: Effect.Effect<TSelect, TSelectError, TSelectContext>;
+		selectFx: Effect.Effect<
+			SelectQueryBuilder<TDB, TTable, TOutput>,
+			TSelectError,
+			TSelectContext
+		>;
 		queryFx?(
-			props: Query.Props<TOutputSchema, TSelect, TFilter>,
-		): Effect.Effect<TSelect, TQueryError, TQueryContext>;
-
-		output: TOutputSchema;
+			props: Query.Props<SelectQueryBuilder<TDB, TTable, TOutput>, TFilter>,
+		): Effect.Effect<SelectQueryBuilder<TDB, TTable, TOutput>, TQueryError, TQueryContext>;
 
 		filter?: TFilter;
 		where?: TFilter;
@@ -47,8 +48,9 @@ export namespace withCollectionFx {
 }
 
 export const withCollectionFx = Effect.fn("withCollectionFx")(function* <
-	const TOutputSchema extends z.ZodSchema,
-	const TSelect extends SelectQueryBuilder<any, any, withCollectionFx.Output<TOutputSchema>>,
+	const TDB,
+	const TTable extends keyof TDB,
+	const TOutput,
 	const TFilter extends FilterSchema.Type,
 	const TSelectError,
 	const TSelectContext,
@@ -56,14 +58,19 @@ export const withCollectionFx = Effect.fn("withCollectionFx")(function* <
 	const TQueryContext,
 >({
 	selectFx,
-	queryFx = () => selectFx as unknown as Effect.Effect<TSelect, TQueryError, TQueryContext>,
-	output,
+	queryFx = () =>
+		selectFx as unknown as Effect.Effect<
+			SelectQueryBuilder<TDB, TTable, TOutput>,
+			TQueryError,
+			TQueryContext
+		>,
 	filter,
 	where,
 	cursor,
 }: withCollectionFx.Props<
-	TOutputSchema,
-	TSelect,
+	TDB,
+	TTable,
+	TOutput,
 	TFilter,
 	TSelectError,
 	TSelectContext,
@@ -89,10 +96,7 @@ export const withCollectionFx = Effect.fn("withCollectionFx")(function* <
 	});
 
 	return {
-		data: yield* zodFx({
-			schema: z.array(output),
-			data: results.slice(0, cursor.size),
-		}),
+		data: results.slice(0, cursor.size),
 		more: results.length > cursor.size,
 	};
 });
