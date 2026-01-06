@@ -1,11 +1,11 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withMessageQueryBuilder } from "~/@user/message/db/withMessageQueryBuilder";
 import { MessageSchema } from "~/@user/message/schema/MessageSchema";
 import { withMessageSelect } from "~/app/message/db/withMessageSelect";
 import type { MessageQuerySchema } from "~/app/message/schema/MessageQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { withMessageQueryBuilder } from "../db/withMessageQueryBuilder";
 
 export namespace messageCollectionFx {
 	export type Props = MessageQuerySchema.Type;

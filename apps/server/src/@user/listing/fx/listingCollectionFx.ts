@@ -1,10 +1,10 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { EntitySchema } from "@use-pico/common/schema";
 import { Effect } from "effect";
+import { withListingQueryBuilder } from "~/@user/listing/db/withListingQueryBuilder";
 import { withListingCollectionSelectFx } from "~/app/listing/db/withListingCollectionSelectFx";
 import type { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { withListingQueryBuilder } from "../db/withListingQueryBuilder";
 
 export namespace listingCollectionFx {
 	export type Props = ListingQuerySchema.Type;

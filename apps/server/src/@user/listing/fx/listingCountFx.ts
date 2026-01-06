@@ -1,10 +1,9 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
+import { withListingQueryBuilder } from "~/@user/listing/db/withListingQueryBuilder";
 import { withListingCollectionSelectFx } from "~/app/listing/db/withListingCollectionSelectFx";
 import type { ListingCountQuerySchema } from "~/app/listing/schema/ListingCountQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { withListingQueryBuilder } from "../db/withListingQueryBuilder";
 
 export namespace listingCountFx {
 	export type Props = ListingCountQuerySchema.Type;
@@ -15,13 +14,10 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	where,
 	meta,
 }: listingCountFx.Props) {
-	const database = yield* DatabaseContextFx;
 	const user = yield* UserContextFx;
 
 	return yield* withCountFx({
 		select: yield* withListingCollectionSelectFx({
-			database,
-			sort: undefined,
 			meta,
 		}),
 		filter,

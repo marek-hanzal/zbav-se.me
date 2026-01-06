@@ -1,9 +1,9 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { withMessageGallerySelectFx } from "~/@user/message-gallery/db/withMessageGallerySelectFx";
+import { MessageGallerySchema } from "~/@user/message-gallery/schema/MessageGallerySchema";
 import { withMessageGalleryQueryBuilder } from "~/app/message-gallery/db/withMessageGalleryQueryBuilder";
 import type { MessageGalleryQuerySchema } from "~/app/message-gallery/schema/MessageGalleryQuerySchema";
-import { withMessageGallerySelectFx } from "../db/withMessageGallerySelectFx";
-import { MessageGallerySchema } from "../schema/MessageGallerySchema";
 
 export namespace messageGalleryFetchFx {
 	export type Props = MessageGalleryQuerySchema.Type;

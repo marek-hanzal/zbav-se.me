@@ -1,10 +1,10 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withFeedFavouriteSelectFx } from "~/@user/feed-favourite/db/withFeedFavouriteSelectFx";
 import { FeedFavouriteSchema } from "~/@user/feed-favourite/schema/FeedFavouriteSchema";
 import { withFeedQueryBuilder } from "~/app/feed/db/withFeedQueryBuilder";
 import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { withFeedFavouriteSelectFx } from "../db/withFeedFavouriteSelectFx";
 
 export namespace feedFavouriteCollectionFx {
 	export type Props = FeedQuerySchema.Type;

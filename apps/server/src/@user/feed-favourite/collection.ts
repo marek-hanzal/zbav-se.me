@@ -1,13 +1,13 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
 import { feedFavouriteCollectionFx } from "~/@user/feed-favourite/fx/feedFavouriteCollectionFx";
+import { FeedFavouriteSchema } from "~/@user/feed-favourite/schema/FeedFavouriteSchema";
 import { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
-import { FeedFavouriteSchema } from "./schema/FeedFavouriteSchema";
 
 export const withFeedFavouriteCollectionApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
