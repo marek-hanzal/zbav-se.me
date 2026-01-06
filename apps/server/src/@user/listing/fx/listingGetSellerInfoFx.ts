@@ -1,6 +1,7 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import type { SellerInfoSchema } from "~/@user/listing/schema/SellerInfoSchema";
+import { SellerInfoSchema } from "~/@user/listing/schema/SellerInfoSchema";
 import { userEventSellerInfoFx } from "~/@user/user-event/fx/userEventSellerInfoFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
@@ -41,13 +42,16 @@ export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(functi
 		});
 	}
 
-	return yield* Effect.succeed({
-		registered: userInfo.createdAt,
-		listings: Number(userInfo.listings),
-		events: yield* userEventSellerInfoFx({
-			userId: userInfo.id,
-		}),
-	} satisfies SellerInfoSchema.Type);
+	return yield* zodFx({
+		schema: SellerInfoSchema,
+		data: {
+			registered: userInfo.createdAt,
+			listings: Number(userInfo.listings),
+			events: yield* userEventSellerInfoFx({
+				userId: userInfo.id,
+			}),
+		} satisfies SellerInfoSchema.Type,
+	});
 });
 
 export type listingGetSellerInfoFx = ReturnType<typeof listingGetSellerInfoFx>;
