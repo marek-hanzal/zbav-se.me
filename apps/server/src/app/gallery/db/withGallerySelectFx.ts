@@ -16,7 +16,6 @@ export const withGallerySelectFx = Effect.fn("withGallerySelectFx")(function* ({
 	sort,
 }: withGallerySelectFx.Props) {
 	const database = yield* DatabaseContextFx;
-
 	const galleryItemSelect = yield* withGalleryItemSelectFx({
 		sort: [
 			{

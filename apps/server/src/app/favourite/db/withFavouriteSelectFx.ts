@@ -5,7 +5,7 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withFavouriteSelectFx {
 	export interface Props {
-		sort?: FavouriteSortSchema.Type[];
+		sort: FavouriteSortSchema.Type[] | undefined;
 	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withFavouriteSelectFx>>;
@@ -15,7 +15,6 @@ export const withFavouriteSelectFx = Effect.fn("withFavouriteSelectFx")(function
 	sort,
 }: withFavouriteSelectFx.Props) {
 	const database = yield* DatabaseContextFx;
-
 	let query = database.selectFrom("favourite as f").selectAll("f");
 
 	for (const item of sort ?? []) {

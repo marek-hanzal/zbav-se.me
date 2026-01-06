@@ -1,8 +1,7 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { withCategoryQueryBuilder } from "../db/withCategoryQueryBuilder";
-import { withCategorySelect } from "../db/withCategorySelect";
+import { withCategoryQueryBuilderFx } from "../db/withCategoryQueryBuilderFx";
+import { withCategorySelectFx } from "../db/withCategorySelectFx";
 import type { CategoryQuerySchema } from "../schema/CategoryQuerySchema";
 import { CategorySchema } from "../schema/CategorySchema";
 
@@ -15,18 +14,15 @@ export const categoryFetchFx = Effect.fn("categoryFetchFx")(function* ({
 	where,
 	sort,
 }: categoryFetchFx.Props) {
-	const database = yield* DatabaseContextFx;
-
 	return yield* withFetchFx({
 		resource: "category",
-		select: withCategorySelect({
-			database,
+		select: yield* withCategorySelectFx({
 			sort,
 		}),
 		output: CategorySchema,
 		filter,
 		where,
-		queryFx: withCategoryQueryBuilder,
+		queryFx: withCategoryQueryBuilderFx,
 	});
 });
 

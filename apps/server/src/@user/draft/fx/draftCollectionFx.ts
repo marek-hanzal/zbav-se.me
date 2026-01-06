@@ -2,7 +2,7 @@ import { withCollectionFx } from "@use-pico/common/collection";
 import { EntitySchema } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withDraftCollectionSelectFx } from "~/app/draft/db/withDraftCollectionSelectFx";
-import { withDraftQueryBuilder } from "~/app/draft/db/withDraftQueryBuilder";
+import { withDraftQueryBuilderFx } from "~/app/draft/db/withDraftQueryBuilderFx";
 import type { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 
@@ -32,7 +32,7 @@ export const draftCollectionFx = Effect.fn("draftCollectionFx")(function* ({
 			...where,
 			userId: user.id,
 		},
-		query: withDraftQueryBuilder,
+		queryFx: withDraftQueryBuilderFx,
 	});
 });
 

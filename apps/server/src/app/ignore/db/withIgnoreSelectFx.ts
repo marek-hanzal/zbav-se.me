@@ -5,7 +5,7 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withIgnoreSelectFx {
 	export interface Props {
-		sort?: IgnoreSortSchema.Type[];
+		sort: IgnoreSortSchema.Type[] | undefined;
 	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withIgnoreSelectFx>>;
@@ -15,7 +15,6 @@ export const withIgnoreSelectFx = Effect.fn("withIgnoreSelectFx")(function* ({
 	sort,
 }: withIgnoreSelectFx.Props) {
 	const database = yield* DatabaseContextFx;
-
 	let query = database.selectFrom("ignore as i").select([
 		"i.id",
 		"i.listingId",

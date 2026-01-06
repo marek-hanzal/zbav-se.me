@@ -1,10 +1,9 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { withIgnoreQueryBuilder } from "~/app/ignore/db/withIgnoreQueryBuilder";
+import { withIgnoreQueryBuilderFx } from "~/app/ignore/db/withIgnoreQueryBuilderFx";
 import { withIgnoreSelectFx } from "~/app/ignore/db/withIgnoreSelectFx";
 import type { IgnoreQuerySchema } from "~/app/ignore/schema/IgnoreQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { IgnoreSchema } from "../schema/IgnoreSchema";
 
 export namespace ignoreFetchFx {
@@ -16,13 +15,11 @@ export const ignoreFetchFx = Effect.fn("ignoreFetchFx")(function* ({
 	where,
 	sort,
 }: ignoreFetchFx.Props) {
-	const database = yield* DatabaseContextFx;
 	const user = yield* UserContextFx;
 
 	return yield* withFetchFx({
 		resource: "ignore",
 		select: yield* withIgnoreSelectFx({
-			database,
 			sort,
 		}),
 		output: IgnoreSchema,
@@ -31,7 +28,7 @@ export const ignoreFetchFx = Effect.fn("ignoreFetchFx")(function* ({
 			...where,
 			userId: user.id,
 		},
-		queryFx: withIgnoreQueryBuilder,
+		queryFx: withIgnoreQueryBuilderFx,
 	});
 });
 

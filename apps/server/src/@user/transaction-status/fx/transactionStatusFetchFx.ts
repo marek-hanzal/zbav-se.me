@@ -1,8 +1,8 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
-import { withTransactionStatusQueryBuilder } from "~/app/transaction-status/db/withTransactionStatusQueryBuilder";
-import { withTransactionStatusSelect } from "~/app/transaction-status/db/withTransactionStatusSelect";
+import { withTransactionStatusQueryBuilderFx } from "~/app/transaction-status/db/withTransactionStatusQueryBuilderFx";
+import { withTransactionStatusSelectFx} from "~/app/transaction-status/db/withTransactionStatusSelectFx;
 import type { TransactionStatusQuerySchema } from "~/app/transaction-status/schema/TransactionStatusQuerySchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
@@ -19,14 +19,14 @@ export const transactionStatusFetchFx = Effect.fn("transactionStatusFetchFx")(fu
 
 	return yield* withFetchFx({
 		resource: "transaction-status",
-		select: withTransactionStatusSelect({
+		select: withTransactionStatusSelectFx{
 			database,
 			sort,
 		}),
 		output: TransactionStatusSchema,
 		filter,
 		where,
-		queryFx: withTransactionStatusQueryBuilder,
+		queryFx: withTransactionStatusQueryBuilderFx,
 	});
 });
 

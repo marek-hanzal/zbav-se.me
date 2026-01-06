@@ -1,7 +1,7 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { withMessageThreadQueryBuilder } from "~/app/message-thread/db/withMessageThreadQueryBuilder";
-import { withMessageThreadSelect } from "~/app/message-thread/db/withMessageThreadSelect";
+import { withMessageThreadQueryBuilderFx } from "~/app/message-thread/db/withMessageThreadQueryBuilderFx";
+import { withMessageThreadSelectFx} from "~/app/message-thread/db/withMessageThreadSelectFx;
 import type { MessageThreadQuerySchema } from "~/app/message-thread/schema/MessageThreadQuerySchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { MessageThreadSchema } from "../schema/MessageThreadSchema";
@@ -19,14 +19,14 @@ export const messageThreadFetchFx = Effect.fn("messageThreadFetchFx")(function* 
 
 	return yield* withFetchFx({
 		resource: "messageThread",
-		select: withMessageThreadSelect({
+		select: withMessageThreadSelectFx{
 			database,
 			sort,
 		}),
 		output: MessageThreadSchema,
 		filter,
 		where,
-		queryFx: withMessageThreadQueryBuilder,
+		queryFx: withMessageThreadQueryBuilderFx,
 	});
 });
 

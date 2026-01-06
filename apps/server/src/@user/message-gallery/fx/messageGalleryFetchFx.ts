@@ -2,7 +2,7 @@ import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
 import { withMessageGallerySelectFx } from "~/@user/message-gallery/db/withMessageGallerySelectFx";
 import { MessageGallerySchema } from "~/@user/message-gallery/schema/MessageGallerySchema";
-import { withMessageGalleryQueryBuilder } from "~/app/message-gallery/db/withMessageGalleryQueryBuilder";
+import { withMessageGalleryQueryBuilderFx } from "~/app/message-gallery/db/withMessageGalleryQueryBuilderFx";
 import type { MessageGalleryQuerySchema } from "~/app/message-gallery/schema/MessageGalleryQuerySchema";
 
 export namespace messageGalleryFetchFx {
@@ -22,7 +22,7 @@ export const messageGalleryFetchFx = Effect.fn("messageGalleryFetchFx")(function
 		output: MessageGallerySchema,
 		filter,
 		where,
-		queryFx: withMessageGalleryQueryBuilder,
+		queryFx: withMessageGalleryQueryBuilderFx,
 	});
 });
 

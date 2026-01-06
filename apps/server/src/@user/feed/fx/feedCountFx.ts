@@ -1,5 +1,6 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
+import { withFeedQueryBuilderFx } from "~/app/feed/db/withFeedQueryBuilderFx";
 import { withFeedSelectFx } from "~/app/feed/db/withFeedSelectFx";
 import type { FeedCountQuerySchema } from "~/app/feed/schema/FeedCountQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
@@ -21,7 +22,7 @@ export const feedCountFx = Effect.fn("feedCountFx")(function* ({
 			...where,
 			userId: user.id,
 		},
-		queryFx: withFeedQueryBuilder,
+		queryFx: withFeedQueryBuilderFx,
 	});
 });
 

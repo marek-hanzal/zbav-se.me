@@ -1,6 +1,6 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { withUploadQueryBuilder } from "~/app/upload/db/withUploadQueryBuilder";
+import { withUploadQueryBuilderFx } from "~/app/upload/db/withUploadQueryBuilderFx";
 import { withUploadSelectFx } from "~/app/upload/db/withUploadSelectFx";
 import type { UploadQuerySchema } from "~/app/upload/schema/UploadQuerySchema";
 import { UploadSchema } from "../schema/UploadSchema";
@@ -22,7 +22,7 @@ export const uploadFetchFx = Effect.fn("uploadFetchFx")(function* ({
 		output: UploadSchema,
 		filter,
 		where,
-		queryFx: withUploadQueryBuilder,
+		queryFx: withUploadQueryBuilderFx,
 	});
 });
 

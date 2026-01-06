@@ -1,21 +1,21 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { ListingEventSortSchema } from "~/app/listing-event/schema/ListingEventSortSchema";
-import type { WithDatabase } from "~/database/WithDatabase";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withListingEventSelectFx {
 	export interface Props {
-		database: WithDatabase;
-		sort: ListingEventSortSchema.Type[] | undefined;
+		sort?: ListingEventSortSchema.Type[];
 	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withListingEventSelectFx>>;
 }
 
 export const withListingEventSelectFx = Effect.fn("withListingEventSelectFx")(function* ({
-	database,
 	sort,
 }: withListingEventSelectFx.Props) {
+	const database = yield* DatabaseContextFx;
+
 	let query = database.selectFrom("listing_event as le").selectAll("le");
 
 	for (const item of sort ?? []) {

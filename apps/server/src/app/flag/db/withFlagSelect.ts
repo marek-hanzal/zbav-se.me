@@ -1,21 +1,21 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { FlagSortSchema } from "~/app/flag/schema/FlagSortSchema";
-import type { WithDatabase } from "~/database/WithDatabase";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withFlagSelectFx {
 	export interface Props {
-		database: WithDatabase;
-		sort: FlagSortSchema.Type[] | undefined;
+		sort?: FlagSortSchema.Type[];
 	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withFlagSelectFx>>;
 }
 
 export const withFlagSelectFx = Effect.fn("withFlagSelectFx")(function* ({
-	database,
 	sort,
 }: withFlagSelectFx.Props) {
+	const database = yield* DatabaseContextFx;
+
 	let query = database.selectFrom("flag as f").select([
 		"f.id",
 		"f.listingId",

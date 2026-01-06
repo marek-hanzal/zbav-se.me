@@ -1,11 +1,9 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { withUserEventCollectionSelect } from "~/app/user-event/db/withUserEventCollectionSelect";
-import { withUserEventQueryBuilder } from "~/app/user-event/db/withUserEventQueryBuilder";
+import { withUserEventCollectionSelectFx } from "~/app/user-event/db/withUserEventCollectionSelectFx";
+import { withUserEventQueryBuilderFx } from "~/app/user-event/db/withUserEventQueryBuilderFx";
 import { UserEventDbSchema } from "~/app/user-event/schema/UserEventDbSchema";
 import type { UserEventQuerySchema } from "~/app/user-event/schema/UserEventQuerySchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-
 export namespace userEventCollectionFx {
 	export type Props = UserEventQuerySchema.Type;
 }
@@ -16,11 +14,8 @@ export const userEventCollectionFx = Effect.fn("userEventCollectionFx")(function
 	cursor,
 	sort,
 }: userEventCollectionFx.Props) {
-	const database = yield* DatabaseContextFx;
-
 	return yield* withCollectionFx({
-		select: withUserEventCollectionSelect({
-			database,
+		select: yield* withUserEventCollectionSelectFx({
 			sort,
 		}),
 		output: UserEventDbSchema,
@@ -30,7 +25,7 @@ export const userEventCollectionFx = Effect.fn("userEventCollectionFx")(function
 		},
 		filter,
 		where,
-		query: withUserEventQueryBuilder,
+		queryFx: withUserEventQueryBuilderFx,
 	});
 });
 

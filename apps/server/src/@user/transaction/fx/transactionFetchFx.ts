@@ -1,10 +1,9 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { withTransactionQueryBuilder } from "~/app/transaction/db/withTransactionQueryBuilder";
+import { withTransactionQueryBuilderFx } from "~/app/transaction/db/withTransactionQueryBuilderFx";
 import { withTransactionSelectFx } from "~/app/transaction/db/withTransactionSelectFx";
 import type { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { TransactionSchema } from "../schema/TransactionSchema";
 
 export namespace transactionFetchFx {
@@ -17,13 +16,11 @@ export const transactionFetchFx = Effect.fn("transactionFetchFx")(function* ({
 	sort,
 	meta,
 }: transactionFetchFx.Props) {
-	const database = yield* DatabaseContextFx;
 	const user = yield* UserContextFx;
 
 	return yield* withFetchFx({
 		resource: "transaction",
 		select: yield* withTransactionSelectFx({
-			database,
 			sort,
 		}),
 		output: TransactionSchema,
@@ -33,7 +30,7 @@ export const transactionFetchFx = Effect.fn("transactionFetchFx")(function* ({
 			userId: user.id,
 		},
 		queryFx(query) {
-			return withTransactionQueryBuilder({
+			return withTransactionQueryBuilderFx({
 				meta,
 				...query,
 			});

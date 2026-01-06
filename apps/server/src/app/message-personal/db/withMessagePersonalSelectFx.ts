@@ -1,0 +1,49 @@
+import { Effect } from "effect";
+import { sql } from "kysely";
+import { match } from "ts-pattern";
+import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
+import type { MessageDirectionEnumSchema } from "~/app/message/schema/MessageDirectionEnumSchema";
+import type { MessagePersonalSortSchema } from "~/app/message-personal/schema/MessagePersonalSortSchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+
+export namespace withMessagePersonalSelectFx {
+	export interface Props {
+		sort?: MessagePersonalSortSchema.Type[];
+	}
+
+	export type Select = Effect.Effect.Success<ReturnType<typeof withMessagePersonalSelectFx>>;
+}
+
+export const withMessagePersonalSelectFx = Effect.fn("withMessagePersonalSelectFx")(function* ({
+	sort,
+}: withMessagePersonalSelectFx.Props) {
+	const database = yield* DatabaseContextFx;
+	const user = yield* UserContextFx;
+
+	let query = database
+		.selectFrom("message_personal as mp")
+		.innerJoin("location as loc", "loc.id", "mp.locationId")
+		.selectAll("mp")
+		.select(sql<"personal">`'personal'`.as("type"))
+		.select((eb) => [
+			sql<LocationDbSchema.Type | null>`to_json(${eb.table("loc")}.*)`
+				.$notNull()
+				.as("location"),
+			eb
+				.case()
+				.when("mp.userId", "=", user.id)
+				.then<MessageDirectionEnumSchema.Type>("out")
+				.else<MessageDirectionEnumSchema.Type>("in")
+				.end()
+				.as("direction"),
+		]);
+
+	for (const item of sort ?? []) {
+		query = match(item.field)
+			.with("createdAt", () => query.orderBy("mp.createdAt", item.direction))
+			.exhaustive();
+	}
+
+	return query;
+});

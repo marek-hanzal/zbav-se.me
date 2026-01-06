@@ -1,6 +1,6 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { withListingQueryBuilder } from "~/@user/listing/db/withListingQueryBuilder";
+import { withListingQueryBuilderFx } from "~/@user/listing/db/withListingQueryBuilderFx";
 import { withListingSelectFx } from "~/@user/listing/db/withListingSelectFx";
 import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
 import type { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
@@ -28,7 +28,7 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 		filter,
 		where,
 		queryFx(query) {
-			return withListingQueryBuilder({
+			return withListingQueryBuilderFx({
 				...query,
 				userId: user.id,
 				meta,

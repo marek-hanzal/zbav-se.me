@@ -1,8 +1,8 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
 import { MessageSystemSchema } from "~/@user/message-system/schema/MessageSystemSchema";
-import { withMessageSystemQueryBuilder } from "~/app/message-system/db/withMessageSystemQueryBuilder";
-import { withMessageSystemSelect } from "~/app/message-system/db/withMessageSystemSelect";
+import { withMessageSystemQueryBuilderFx } from "~/app/message-system/db/withMessageSystemQueryBuilderFx";
+import { withMessageSystemSelectFx} from "~/app/message-system/db/withMessageSystemSelectFx;
 import type { MessageSystemQuerySchema } from "~/app/message-system/schema/MessageSystemQuerySchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
@@ -19,14 +19,14 @@ export const messageSystemFetchFx = Effect.fn("messageSystemFetchFx")(function* 
 
 	return yield* withFetchFx({
 		resource: "message-system",
-		select: withMessageSystemSelect({
+		select: withMessageSystemSelectFx{
 			database,
 			sort,
 		}),
 		output: MessageSystemSchema,
 		filter,
 		where,
-		queryFx: withMessageSystemQueryBuilder,
+		queryFx: withMessageSystemQueryBuilderFx,
 	});
 });
 

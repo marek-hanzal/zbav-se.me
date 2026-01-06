@@ -1,10 +1,9 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { withGalleryQueryBuilder } from "~/app/gallery/db/withGalleryQueryBuilder";
+import { withGalleryQueryBuilderFx } from "~/app/gallery/db/withGalleryQueryBuilderFx";
 import { withGallerySelectFx } from "~/app/gallery/db/withGallerySelectFx";
 import type { GalleryQuerySchema } from "~/app/gallery/schema/GalleryQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { GallerySchema } from "../schema/GallerySchema";
 
 export namespace galleryFetchFx {
@@ -16,13 +15,11 @@ export const galleryFetchFx = Effect.fn("galleryFetchFx")(function* ({
 	where,
 	sort,
 }: galleryFetchFx.Props) {
-	const database = yield* DatabaseContextFx;
 	const user = yield* UserContextFx;
 
 	return yield* withFetchFx({
 		resource: "gallery",
 		select: yield* withGallerySelectFx({
-			database,
 			sort,
 		}),
 		output: GallerySchema,
@@ -31,7 +28,7 @@ export const galleryFetchFx = Effect.fn("galleryFetchFx")(function* ({
 			...where,
 			userId: user.id,
 		},
-		queryFx: withGalleryQueryBuilder,
+		queryFx: withGalleryQueryBuilderFx,
 	});
 });
 

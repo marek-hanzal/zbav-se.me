@@ -1,12 +1,9 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { withMessageQueryBuilder } from "~/@user/message/db/withMessageQueryBuilder";
+import { withMessageQueryBuilderFx } from "~/@user/message/db/withMessageQueryBuilderFx";
 import { MessageSchema } from "~/@user/message/schema/MessageSchema";
-import { withMessageSelect } from "~/app/message/db/withMessageSelect";
+import { withMessageSelectFx } from "~/app/message/db/withMessageSelectFx";
 import type { MessageQuerySchema } from "~/app/message/schema/MessageQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-
 export namespace messageCollectionFx {
 	export type Props = MessageQuerySchema.Type;
 }
@@ -17,14 +14,9 @@ export const messageCollectionFx = Effect.fn("messageCollectionFx")(function* ({
 	where,
 	sort,
 }: messageCollectionFx.Props) {
-	const database = yield* DatabaseContextFx;
-	const user = yield* UserContextFx;
-
 	return yield* withCollectionFx({
-		select: withMessageSelect({
-			database,
+		select: yield* withMessageSelectFx({
 			sort,
-			userId: user.id,
 		}),
 		output: MessageSchema,
 		cursor: cursor ?? {
@@ -33,12 +25,7 @@ export const messageCollectionFx = Effect.fn("messageCollectionFx")(function* ({
 		},
 		filter,
 		where,
-		query(props) {
-			return withMessageQueryBuilder({
-				...props,
-				userId: user.id,
-			});
-		},
+		queryFx: withMessageQueryBuilderFx,
 	});
 });
 

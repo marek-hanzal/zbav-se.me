@@ -1,14 +1,15 @@
+import { Effect } from "effect";
+import type { withCategorySelectFx } from "~/@session/category/db/withCategorySelectFx";
 import { withLikeEx } from "~/database/expression/withLikeEx";
 import type { CategoryFilterSchema } from "../schema/CategoryFilterSchema";
-import type { withCategorySelect } from "./withCategorySelect";
 
-export namespace withCategoryQueryBuilder {
-	export interface Props<TSelect extends withCategorySelect.Select> {
+export namespace withCategoryQueryBuilderFx {
+	export interface Props<TSelect extends withCategorySelectFx.Select> {
 		select: TSelect;
 		where?: CategoryFilterSchema.Type;
 	}
 
-	export type Callback<TSelect extends withCategorySelect.Select> = (
+	export type Callback<TSelect extends withCategorySelectFx.Select> = (
 		props: Props<TSelect>,
 	) => TSelect;
 }
@@ -17,14 +18,14 @@ export namespace withCategoryQueryBuilder {
  * Standalone query builder that applies all filters from CategoryQuerySchema
  * Can be used by both list and count queries to ensure consistency
  */
-export const withCategoryQueryBuilder = <TSelect extends withCategorySelect.Select>({
-	select,
-	where,
-}: withCategoryQueryBuilder.Props<TSelect>) => {
-	if (!where) {
-		return select;
-	}
+export const withCategoryQueryBuilderFx = Effect.fn("withCategoryQueryBuilderFx")(function* <
+	TSelect extends withCategorySelectFx.Select,
+>({ select, where }: withCategoryQueryBuilderFx.Props<TSelect>) {
 	let query: typeof select = select;
+
+	if (!where) {
+		return yield* Effect.succeed(select);
+	}
 
 	if (where.id) {
 		query = query.where("cat.id", "=", where.id) as typeof select;
@@ -74,5 +75,5 @@ export const withCategoryQueryBuilder = <TSelect extends withCategorySelect.Sele
 		query = query.where("cat.slug", "=", where.slug) as typeof select;
 	}
 
-	return query;
-};
+	return yield* Effect.succeed(query);
+});

@@ -1,7 +1,7 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { withMessageLocationQueryBuilder } from "~/app/message-location/db/withMessageLocationQueryBuilder";
-import { withMessageLocationSelect } from "~/app/message-location/db/withMessageLocationSelect";
+import { withMessageLocationQueryBuilderFx } from "~/app/message-location/db/withMessageLocationQueryBuilderFx";
+import { withMessageLocationSelectFx} from "~/app/message-location/db/withMessageLocationSelectFx;
 import type { MessageLocationQuerySchema } from "~/app/message-location/schema/MessageLocationQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -21,7 +21,7 @@ export const messageLocationFetchFx = Effect.fn("messageLocationFetchFx")(functi
 
 	return yield* withFetchFx({
 		resource: "message-location",
-		select: withMessageLocationSelect({
+		select: withMessageLocationSelectFx{
 			database,
 			sort,
 			userId: user.id,
@@ -29,7 +29,7 @@ export const messageLocationFetchFx = Effect.fn("messageLocationFetchFx")(functi
 		output: MessageLocationSchema,
 		filter,
 		where,
-		queryFx: withMessageLocationQueryBuilder,
+		queryFx: withMessageLocationQueryBuilderFx,
 	});
 });
 

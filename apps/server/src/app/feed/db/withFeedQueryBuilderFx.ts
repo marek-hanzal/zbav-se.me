@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import type { withFeedCollectionSelectFx } from "~/app/feed/db/withFeedCollectionSelectFx";
 import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
 
-export namespace withFeedQueryBuilder {
+export namespace withFeedQueryBuilderFx {
 	export interface Props<
 		TSelect extends withFeedCollectionSelectFx.Select = withFeedCollectionSelectFx.Select,
 	> {
@@ -22,18 +22,22 @@ export namespace withFeedQueryBuilder {
  */
 export const withFeedQueryBuilderFx = Effect.fn("withFeedQueryBuilderFx")(function* <
 	TSelect extends withFeedCollectionSelectFx.Select,
->({ select, where }: withFeedQueryBuilder.Props<TSelect>) {
+>({ select, where }: withFeedQueryBuilderFx.Props<TSelect>) {
 	let query = select;
 
-	if (where?.id) {
+	if (!where) {
+		return yield* Effect.succeed(select);
+	}
+
+	if (where.id) {
 		query = query.where("f.id", "=", where.id) as TSelect;
 	}
 
-	if (where?.idIn && where.idIn.length > 0) {
+	if (where.idIn && where.idIn.length > 0) {
 		query = query.where("f.id", "in", where.idIn) as TSelect;
 	}
 
-	if (where?.userId) {
+	if (where.userId) {
 		query = query.where("f.userId", "=", where.userId) as TSelect;
 	}
 

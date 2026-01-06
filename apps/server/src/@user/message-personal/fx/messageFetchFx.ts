@@ -1,8 +1,8 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
 import { MessagePersonalSchema } from "~/@user/message-personal/schema/MessagePersonalSchema";
-import { withMessagePersonalQueryBuilder } from "~/app/message-personal/db/withMessagePersonalQueryBuilder";
-import { withMessagePersonalSelect } from "~/app/message-personal/db/withMessagePersonalSelect";
+import { withMessagePersonalQueryBuilderFx } from "~/app/message-personal/db/withMessagePersonalQueryBuilderFx";
+import { withMessagePersonalSelectFx} from "~/app/message-personal/db/withMessagePersonalSelectFx;
 import type { MessagePersonalQuerySchema } from "~/app/message-personal/schema/MessagePersonalQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -21,7 +21,7 @@ export const messagePersonalFetchFx = Effect.fn("messagePersonalFetchFx")(functi
 
 	return yield* withFetchFx({
 		resource: "message_personal",
-		select: withMessagePersonalSelect({
+		select: withMessagePersonalSelectFx{
 			database,
 			sort,
 			userId: user.id,
@@ -29,7 +29,7 @@ export const messagePersonalFetchFx = Effect.fn("messagePersonalFetchFx")(functi
 		output: MessagePersonalSchema,
 		filter,
 		where,
-		queryFx: withMessagePersonalQueryBuilder,
+		queryFx: withMessagePersonalQueryBuilderFx,
 	});
 });
 

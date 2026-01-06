@@ -1,26 +1,30 @@
+import { Effect } from "effect";
+import type { withLocationSelectFx } from "~/@session/location/db/withLocationSelectFx";
 import { withLikeEx } from "~/database/expression/withLikeEx";
 import type { LocationFilterSchema } from "../schema/LocationFilterSchema";
-import type { withLocationSelect } from "./withLocationSelect";
 
-export namespace withLocationQueryBuilder {
+export namespace withLocationQueryBuilderFx {
 	export interface Props {
-		select: withLocationSelect.Select;
+		select: withLocationSelectFx.Select;
 		where?: LocationFilterSchema.Type;
 	}
 
-	export type Callback = (props: Props) => withLocationSelect.Select;
+	export type Callback = (props: Props) => withLocationSelectFx.Select;
 }
 
 /**
  * Standalone query builder that applies all filters from LocationQuerySchema
  * Can be used by both list and count queries to ensure consistency
  */
-export const withLocationQueryBuilder: withLocationQueryBuilder.Callback = ({ select, where }) => {
-	if (!where) {
-		return select;
-	}
-
+export const withLocationQueryBuilderFx = Effect.fn("withLocationQueryBuilderFx")(function* ({
+	select,
+	where,
+}: withLocationQueryBuilderFx.Props) {
 	let query = select;
+
+	if (!where) {
+		return yield* Effect.succeed(select);
+	}
 
 	if (where.id) {
 		query = query.where("loc.id", "=", where.id);
@@ -70,5 +74,5 @@ export const withLocationQueryBuilder: withLocationQueryBuilder.Callback = ({ se
 		query = query.where("loc.confidence", ">=", where.confidenceMin);
 	}
 
-	return query;
-};
+	return yield* Effect.succeed(query);
+});

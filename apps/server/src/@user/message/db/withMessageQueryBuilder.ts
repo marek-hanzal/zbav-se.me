@@ -1,14 +1,15 @@
-import type { withMessageSelect } from "~/app/message/db/withMessageSelect";
+import { Effect } from "effect";
+import type { withMessageSelectFx } from "~/app/message/db/withMessageSelectFx";
 import type { MessageFilterSchema } from "~/app/message/schema/MessageFilterSchema";
 
-export namespace withMessageQueryBuilder {
-	export interface Props<TSelect extends withMessageSelect.Select> {
+export namespace withMessageQueryBuilderFx {
+	export interface Props<TSelect extends withMessageSelectFx.Select> {
 		userId: string;
 		select: TSelect;
 		where?: MessageFilterSchema.Type;
 	}
 
-	export type Callback<TSelect extends withMessageSelect.Select> = (
+	export type Callback<TSelect extends withMessageSelectFx.Select> = (
 		props: Props<TSelect>,
 	) => TSelect;
 }
@@ -17,11 +18,9 @@ export namespace withMessageQueryBuilder {
  * Standalone query builder that applies all filters from MessageQuerySchema.
  * Always enforces access control (user must be a member of the message thread).
  */
-export const withMessageQueryBuilder = <TSelect extends withMessageSelect.Select>({
-	userId,
-	select,
-	where,
-}: withMessageQueryBuilder.Props<TSelect>) => {
+export const withMessageQueryBuilderFx = Effect.fn("withMessageQueryBuilderFx")(function* <
+	TSelect extends withMessageSelectFx.Select,
+>({ userId, select, where }: withMessageQueryBuilderFx.Props<TSelect>) {
 	let query = select;
 
 	// Access control: user must be in the related thread.
@@ -36,7 +35,7 @@ export const withMessageQueryBuilder = <TSelect extends withMessageSelect.Select
 	}) as TSelect;
 
 	if (!where) {
-		return query;
+		return yield* Effect.succeed(query);
 	}
 
 	if (where.id) {
@@ -68,5 +67,5 @@ export const withMessageQueryBuilder = <TSelect extends withMessageSelect.Select
 		}) as TSelect;
 	}
 
-	return query;
-};
+	return yield* Effect.succeed(query);
+});

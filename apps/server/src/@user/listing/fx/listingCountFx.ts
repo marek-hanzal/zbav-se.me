@@ -1,6 +1,6 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
-import { withListingQueryBuilder } from "~/@user/listing/db/withListingQueryBuilder";
+import { withListingQueryBuilderFx } from "~/@user/listing/db/withListingQueryBuilderFx";
 import { withListingCollectionSelectFx } from "~/app/listing/db/withListingCollectionSelectFx";
 import type { ListingCountQuerySchema } from "~/app/listing/schema/ListingCountQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
@@ -22,8 +22,8 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 		}),
 		filter,
 		where,
-		query(query) {
-			return withListingQueryBuilder({
+		queryFx(query) {
+			return withListingQueryBuilderFx({
 				...query,
 				userId: user.id,
 				meta,

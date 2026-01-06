@@ -5,7 +5,7 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withFlagSelectFx {
 	export interface Props {
-		sort?: FlagSortSchema.Type[];
+		sort: FlagSortSchema.Type[] | undefined;
 	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withFlagSelectFx>>;
@@ -15,7 +15,6 @@ export const withFlagSelectFx = Effect.fn("withFlagSelectFx")(function* ({
 	sort,
 }: withFlagSelectFx.Props) {
 	const database = yield* DatabaseContextFx;
-
 	let query = database.selectFrom("flag as f").select([
 		"f.id",
 		"f.listingId",

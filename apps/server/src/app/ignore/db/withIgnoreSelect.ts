@@ -1,21 +1,21 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { IgnoreSortSchema } from "~/app/ignore/schema/IgnoreSortSchema";
-import type { WithDatabase } from "~/database/WithDatabase";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withIgnoreSelectFx {
 	export interface Props {
-		database: WithDatabase;
-		sort: IgnoreSortSchema.Type[] | undefined;
+		sort?: IgnoreSortSchema.Type[];
 	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withIgnoreSelectFx>>;
 }
 
 export const withIgnoreSelectFx = Effect.fn("withIgnoreSelectFx")(function* ({
-	database,
 	sort,
 }: withIgnoreSelectFx.Props) {
+	const database = yield* DatabaseContextFx;
+
 	let query = database.selectFrom("ignore as i").select([
 		"i.id",
 		"i.listingId",

@@ -1,10 +1,9 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { withGalleryItemQueryBuilder } from "~/app/gallery-item/db/withGalleryItemQueryBuilder";
+import { withGalleryItemQueryBuilderFx } from "~/app/gallery-item/db/withGalleryItemQueryBuilderFx";
 import { withGalleryItemSelectFx } from "~/app/gallery-item/db/withGalleryItemSelectFx";
 import type { GalleryItemQuerySchema } from "~/app/gallery-item/schema/GalleryItemQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { GalleryItemSchema } from "../schema/GalleryItemSchema";
 
 export namespace galleryItemCollectionFx {
@@ -17,12 +16,10 @@ export const galleryItemCollectionFx = Effect.fn("galleryItemCollectionFx")(func
 	where,
 	sort,
 }: galleryItemCollectionFx.Props) {
-	const database = yield* DatabaseContextFx;
 	const user = yield* UserContextFx;
 
 	return yield* withCollectionFx({
 		select: yield* withGalleryItemSelectFx({
-			database,
 			sort,
 		}),
 		output: GalleryItemSchema,
@@ -35,7 +32,7 @@ export const galleryItemCollectionFx = Effect.fn("galleryItemCollectionFx")(func
 			...where,
 			userId: user.id,
 		},
-		query: withGalleryItemQueryBuilder,
+		queryFx: withGalleryItemQueryBuilderFx,
 	});
 });
 

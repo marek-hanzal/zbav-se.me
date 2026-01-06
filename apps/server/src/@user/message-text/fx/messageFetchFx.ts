@@ -1,8 +1,8 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
 import { MessageTextSchema } from "~/@user/message-text/schema/MessageTextSchema";
-import { withMessageTextQueryBuilder } from "~/app/message-text/db/withMessageTextQueryBuilder";
-import { withMessageTextSelect } from "~/app/message-text/db/withMessageTextSelect";
+import { withMessageTextQueryBuilderFx } from "~/app/message-text/db/withMessageTextQueryBuilderFx";
+import { withMessageTextSelectFx} from "~/app/message-text/db/withMessageTextSelectFx;
 import type { MessageTextQuerySchema } from "~/app/message-text/schema/MessageTextQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -21,7 +21,7 @@ export const messageTextFetchFx = Effect.fn("messageTextFetchFx")(function* ({
 
 	return yield* withFetchFx({
 		resource: "message-text",
-		select: withMessageTextSelect({
+		select: withMessageTextSelectFx{
 			database,
 			sort,
 			userId: user.id,
@@ -29,7 +29,7 @@ export const messageTextFetchFx = Effect.fn("messageTextFetchFx")(function* ({
 		output: MessageTextSchema,
 		filter,
 		where,
-		queryFx: withMessageTextQueryBuilder,
+		queryFx: withMessageTextQueryBuilderFx,
 	});
 });
 

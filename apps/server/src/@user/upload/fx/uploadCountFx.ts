@@ -1,6 +1,6 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
-import { withUploadQueryBuilder } from "~/app/upload/db/withUploadQueryBuilder";
+import { withUploadQueryBuilderFx } from "~/app/upload/db/withUploadQueryBuilderFx";
 import { withUploadSelectFx } from "~/app/upload/db/withUploadSelectFx";
 import type { UploadCountQuerySchema } from "~/app/upload/schema/UploadCountQuerySchema";
 
@@ -16,7 +16,7 @@ export const uploadCountFx = Effect.fn("uploadCountFx")(function* ({
 		select: yield* withUploadSelectFx({}),
 		filter,
 		where,
-		query: withUploadQueryBuilder,
+		queryFx: withUploadQueryBuilderFx,
 	});
 });
 

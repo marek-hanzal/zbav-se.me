@@ -3,22 +3,21 @@ import { jsonArrayFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import type { GallerySortSchema } from "~/app/gallery/schema/GallerySortSchema";
 import { withGalleryItemSelectFx } from "~/app/gallery-item/db/withGalleryItemSelectFx";
-import type { WithDatabase } from "~/database/WithDatabase";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withGallerySelectFx {
 	export interface Props {
-		database: WithDatabase;
 		sort?: GallerySortSchema.Type[];
 	}
 	export type Select = Effect.Effect.Success<ReturnType<typeof withGallerySelectFx>>;
 }
 
 export const withGallerySelectFx = Effect.fn("withGallerySelectFx")(function* ({
-	database,
 	sort,
 }: withGallerySelectFx.Props) {
+	const database = yield* DatabaseContextFx;
+
 	const galleryItemSelect = yield* withGalleryItemSelectFx({
-		database,
 		sort: [
 			{
 				field: "sort",
