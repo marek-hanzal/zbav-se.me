@@ -2,6 +2,7 @@ import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
 import { draftCountFx } from "~/app/draft/fx/draftCountFx";
 import { DraftCountQuerySchema } from "~/app/draft/schema/DraftCountQuerySchema";
+import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { CountSchema } from "~/schema/CountSchema";
@@ -48,17 +49,20 @@ export const withCountApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = yield* UserContextFx;
+
 				return c.json<CountSchema.Type, 200>(
 					yield* draftCountFx({
 						...c.req.valid("json"),
 						scope: {
-							userId: c.get("user").id,
+							userId: user.id,
 						},
 					}),
 					200,
 				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
+				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
