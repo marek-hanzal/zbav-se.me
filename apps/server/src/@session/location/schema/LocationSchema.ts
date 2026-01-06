@@ -2,12 +2,13 @@ import { z } from "@hono/zod-openapi";
 import { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 
 export const LocationSchema = z
-	.object({
+	.looseObject({
 		...LocationDbSchema.shape,
 	})
 	.omit({
 		geo: true,
 	})
+	.strip()
 	.openapi("Location", {
 		description: "Location data",
 	});

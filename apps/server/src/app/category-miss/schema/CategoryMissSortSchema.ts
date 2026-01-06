@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { OrderEnumSchema } from "~/schema/OrderEnumSchema";
 
 export const CategoryMissSortSchema = z
-	.object({
+	.looseObject({
 		field: z
 			.enum([
 				"category",
@@ -14,6 +14,7 @@ export const CategoryMissSortSchema = z
 			}),
 		direction: OrderEnumSchema,
 	})
+	.strip()
 	.openapi("CategoryMissSort", {
 		description: "Data for category miss sort",
 	});

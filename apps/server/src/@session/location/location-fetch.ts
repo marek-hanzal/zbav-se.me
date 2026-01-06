@@ -1,10 +1,10 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { locationFetchFx } from "~/app/location/fx/locationFetchFx";
+import { LocationQuerySchema } from "~/app/location/schema/LocationQuerySchema";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { locationFetchFx } from "./fx/locationFetchFx";
-import { LocationQuerySchema } from "./schema/LocationQuerySchema";
 import { LocationSchema } from "./schema/LocationSchema";
 
 export const withLocationFetchApi: Routes.Fn = async ({ sessionHono }) => {

@@ -1,9 +1,11 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { AppEnv } from "~/AppEnv";
+import { LocationContextProvider } from "~/app/location/context/LocationContextFx";
+import { locationAutocompleteFx } from "~/app/location/fx/locationAutocompleteFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { locationAutocompleteFx } from "./fx/locationAutocompleteFx";
 import { LocationAutocompleteSchema } from "./schema/LocationAutocompleteSchema";
 import { LocationSchema } from "./schema/LocationSchema";
 
@@ -71,13 +73,18 @@ export const withLocationAutocompleteApi: Routes.Fn = async ({ sessionHono }) =>
 				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
+				LocationContextProvider({
+					geoapifyToken: AppEnv.SERVER_GEOAPIFY_TOKEN,
+					api: "https://api.geoapify.com",
+					autocomplete: "/v1/geocode/autocomplete",
+				}),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
 								{
-									_tag: "TextTooShortError",
+									_tag: "TextTooShortErrorFx",
 								},
 								() => {
 									return c.json<LocationSchema.Type[], 200>([], 200, {

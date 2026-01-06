@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { OrderEnumSchema } from "~/schema/OrderEnumSchema";
 
 export const LocationSortSchema = z
-	.object({
+	.looseObject({
 		field: z
 			.enum([
 				"confidence",
@@ -15,6 +15,7 @@ export const LocationSortSchema = z
 			}),
 		direction: OrderEnumSchema,
 	})
+	.strip()
 	.openapi("LocationSort", {
 		description: "Data for location sort",
 	});

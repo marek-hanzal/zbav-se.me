@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 
 export const LocationFilterSchema = z
-	.object({
+	.looseObject({
 		...DefaultFilterSchema.shape,
 		query: z.string().optional().openapi({
 			description:
@@ -22,6 +22,7 @@ export const LocationFilterSchema = z
 				"This filter matches locations with confidence greater than or equal to the provided value",
 		}),
 	})
+	.strip()
 	.openapi("LocationFilter", {
 		description: "Data for location filter",
 	});

@@ -1,7 +1,7 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
 import { CategorySchema } from "~/@session/category/schema/CategorySchema";
-import { categoryMissCreateFx } from "~/@session/category-miss/fx/categoryMissCreateFx";
+import { categoryMissCreateFx } from "~/app/category-miss/fx/categoryMissCreateFx";
 import { withCategoryQueryBuilderFx } from "../db/withCategoryQueryBuilderFx";
 import { withCategorySelectFx } from "../db/withCategorySelectFx";
 import type { CategoryQuerySchema } from "../schema/CategoryQuerySchema";

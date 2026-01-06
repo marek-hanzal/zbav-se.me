@@ -1,9 +1,9 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { TextTooShortError } from "~/@session/location/error/TextTooShortError";
-import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { TextTooShortErrorFx } from "../error/TextTooShortErrorFx";
+import type { LocationDbSchema } from "../schema/LocationDbSchema";
 import { withLocationListFx } from "./withLocationListFx";
 import { withLocationRequestFx } from "./withLocationRequestFx";
 
@@ -21,7 +21,7 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 	limit = 5,
 }: locationAutocompleteFx.Props) {
 	if (text.length < 3) {
-		return yield* new TextTooShortError({
+		return yield* new TextTooShortErrorFx({
 			message: "Text too short",
 		});
 	}
@@ -84,7 +84,7 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 			})) satisfies Omit<LocationDbSchema.Type, "geo">[] as LocationDbSchema.Type[];
 
 			if (locations.length > 0) {
-				yield* Effect.tryPromise(async () => {
+				yield* Effect.promise(async () => {
 					return trx
 						.insertInto("location")
 						.values(locations)

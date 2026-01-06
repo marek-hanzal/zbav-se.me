@@ -4,7 +4,7 @@ import { LocationFilterSchema } from "./LocationFilterSchema";
 import { LocationSortSchema } from "./LocationSortSchema";
 
 export const LocationQuerySchema = z
-	.object({
+	.looseObject({
 		cursor: CursorSchema.optional(),
 		filter: LocationFilterSchema.optional(),
 		where: LocationFilterSchema.openapi("LocationWhere", {
@@ -12,6 +12,7 @@ export const LocationQuerySchema = z
 		}).optional(),
 		sort: LocationSortSchema.array().optional(),
 	})
+	.strip()
 	.openapi("LocationQuery", {
 		description: "Data for location query",
 	});

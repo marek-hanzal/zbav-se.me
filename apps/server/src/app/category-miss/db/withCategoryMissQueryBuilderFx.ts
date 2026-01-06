@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import type { CategoryMissFilterSchema } from "~/@session/category-miss/schema/CategoryMissFilterSchema";
+import type { CategoryMissFilterSchema } from "../schema/CategoryMissFilterSchema";
 import type { withCategoryMissSelectFx } from "./withCategoryMissSelectFx";
 
 export namespace withCategoryMissQueryBuilderFx {

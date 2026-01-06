@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import type { CategoryMissSortSchema } from "~/@session/category-miss/schema/CategoryMissSortSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import type { CategoryMissSortSchema } from "../schema/CategoryMissSortSchema";
 
 export namespace withCategoryMissSelectFx {
 	export interface Props {

@@ -1,6 +1,6 @@
 import { linkTo } from "@use-pico/common/link-to";
 import { Effect } from "effect";
-import { AppEnv } from "~/AppEnv";
+import { LocationContextFx } from "~/app/location/context/LocationContextFx";
 
 export namespace withLocationRequestFx {
 	/**
@@ -33,29 +33,33 @@ export namespace withLocationRequestFx {
 	}
 }
 
-export const withLocationRequestFx = ({ text, lang, limit = 5 }: withLocationRequestFx.Props) => {
-	return Effect.gen(function* () {
-		const link = linkTo({
-			base: "https://api.geoapify.com",
-			href: "/v1/geocode/autocomplete",
-			query: {
-				text,
-				apiKey: AppEnv.SERVER_GEOAPIFY_TOKEN,
-				lang,
-				limit,
-			},
-		});
+export const withLocationRequestFx = Effect.fn("withLocationRequestFx")(function* ({
+	text,
+	lang,
+	limit = 5,
+}: withLocationRequestFx.Props) {
+	const context = yield* LocationContextFx;
 
-		const { features } = yield* Effect.tryPromise(async () => {
-			return fetch(link).then((res) => {
-				return res.json() as unknown as {
-					features: withLocationRequestFx.Feature[];
-				};
-			});
-		});
-
-		return features;
+	const link = linkTo({
+		base: context.api,
+		href: context.autocomplete,
+		query: {
+			text,
+			apiKey: context.geoapifyToken,
+			lang,
+			limit,
+		},
 	});
-};
+
+	const { features } = yield* Effect.promise(async () => {
+		return fetch(link).then((res) => {
+			return res.json() as unknown as {
+				features: withLocationRequestFx.Feature[];
+			};
+		});
+	});
+
+	return features;
+});
 
 export type withLocationRequestFx = ReturnType<typeof withLocationRequestFx>;

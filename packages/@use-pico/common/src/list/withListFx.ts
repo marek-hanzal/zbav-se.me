@@ -23,10 +23,12 @@ export namespace withListFx {
 		TOutputSchema extends z.ZodSchema,
 		TSelect extends SelectQueryBuilder<any, any, Output<TOutputSchema>>,
 		TFilter extends FilterSchema.Type,
+		TSelectError,
+		TSelectContext,
 		TQueryError,
 		TQueryContext,
 	> {
-		select: TSelect;
+		selectFx: Effect.Effect<TSelect, TSelectError, TSelectContext>;
 		queryFx?(
 			props: Query.Props<TOutputSchema, TSelect, TFilter>,
 		): Effect.Effect<TSelect, TQueryError, TQueryContext>;
@@ -43,16 +45,28 @@ export const withListFx = Effect.fn("withListFx")(function* <
 	const TOutputSchema extends z.ZodSchema,
 	const TSelect extends SelectQueryBuilder<any, any, withListFx.Output<TOutputSchema>>,
 	const TFilter extends FilterSchema.Type,
+	const TSelectError,
+	const TSelectContext,
 	const TQueryError,
 	const TQueryContext,
 >({
-	select,
-	queryFx = () => Effect.succeed(select),
+	selectFx,
+	queryFx = () => selectFx as unknown as Effect.Effect<TSelect, TQueryError, TQueryContext>,
 	output,
 	filter,
 	where,
 	cursor,
-}: withListFx.Props<TOutputSchema, TSelect, TFilter, TQueryError, TQueryContext>) {
+}: withListFx.Props<
+	TOutputSchema,
+	TSelect,
+	TFilter,
+	TSelectError,
+	TSelectContext,
+	TQueryError,
+	TQueryContext
+>) {
+	const select = yield* selectFx;
+
 	const limit = (select: SelectQueryBuilder<any, any, any>): TSelect => {
 		let $select = select;
 
