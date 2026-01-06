@@ -32,9 +32,11 @@ export namespace withListFx {
 		queryFx?(
 			props: Query.Props<SelectQueryBuilder<TDB, TTable, TOutput>, TFilter>,
 		): Effect.Effect<SelectQueryBuilder<TDB, TTable, TOutput>, TQueryError, TQueryContext>;
-
+		//
 		filter?: TFilter;
 		where?: TFilter;
+		scope?: TFilter;
+		//
 		cursor?: CursorSchema.Type;
 	}
 }
@@ -50,14 +52,10 @@ export const withListFx = Effect.fn("withListFx")(function* <
 	const TQueryContext,
 >({
 	selectFx,
-	queryFx = () =>
-		selectFx as unknown as Effect.Effect<
-			SelectQueryBuilder<TDB, TTable, TOutput>,
-			TQueryError,
-			TQueryContext
-		>,
+	queryFx = ({ select }) => Effect.succeed(select),
 	filter,
 	where,
+	scope,
 	cursor,
 }: withListFx.Props<
 	TDB,
@@ -69,7 +67,19 @@ export const withListFx = Effect.fn("withListFx")(function* <
 	TQueryError,
 	TQueryContext
 >) {
-	const select = yield* selectFx;
+	const layers = [
+		filter,
+		where,
+		scope,
+	] as const;
+
+	let qb = yield* selectFx;
+	for (const layer of layers) {
+		qb = yield* queryFx({
+			select: qb,
+			where: layer,
+		});
+	}
 
 	const limit = (select: SelectQueryBuilder<TDB, TTable, TOutput>) => {
 		let $select = select;
@@ -81,16 +91,7 @@ export const withListFx = Effect.fn("withListFx")(function* <
 		return $select;
 	};
 
-	const whereSelect = yield* queryFx({
-		select,
-		where,
-	});
-	const filterSelect = yield* queryFx({
-		select: whereSelect,
-		where: filter,
-	});
-
 	return yield* Effect.promise(async () => {
-		return limit(filterSelect).execute();
+		return limit(qb).execute();
 	});
 });

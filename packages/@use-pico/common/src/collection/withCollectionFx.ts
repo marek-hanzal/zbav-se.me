@@ -40,9 +40,11 @@ export namespace withCollectionFx {
 		queryFx?(
 			props: Query.Props<SelectQueryBuilder<TDB, TTable, TOutput>, TFilter>,
 		): Effect.Effect<SelectQueryBuilder<TDB, TTable, TOutput>, TQueryError, TQueryContext>;
-
+		//
 		filter?: TFilter;
 		where?: TFilter;
+		scope?: TFilter;
+		//
 		cursor: CursorSchema.Type;
 	}
 }
@@ -58,14 +60,10 @@ export const withCollectionFx = Effect.fn("withCollectionFx")(function* <
 	const TQueryContext,
 >({
 	selectFx,
-	queryFx = () =>
-		selectFx as unknown as Effect.Effect<
-			SelectQueryBuilder<TDB, TTable, TOutput>,
-			TQueryError,
-			TQueryContext
-		>,
+	queryFx = ({ select }) => Effect.succeed(select),
 	filter,
 	where,
+	scope,
 	cursor,
 }: withCollectionFx.Props<
 	TDB,
@@ -77,19 +75,22 @@ export const withCollectionFx = Effect.fn("withCollectionFx")(function* <
 	TQueryError,
 	TQueryContext
 >) {
-	const select = yield* selectFx;
-
-	const whereSelect = yield* queryFx({
-		select,
+	const layers = [
+		filter,
 		where,
-	});
-	const filterSelect = yield* queryFx({
-		select: whereSelect,
-		where: filter,
-	});
+		scope,
+	] as const;
+
+	let qb = yield* selectFx;
+	for (const layer of layers) {
+		qb = yield* queryFx({
+			select: qb,
+			where: layer,
+		});
+	}
 
 	const results = yield* Effect.promise(async () => {
-		return filterSelect
+		return qb
 			.limit(cursor.size + 1)
 			.offset(cursor.page * cursor.size)
 			.execute();

@@ -34,8 +34,18 @@ export namespace withFetchFx {
 			props: Query.Props<SelectQueryBuilder<TDB, TTable, TOutput>, TFilter>,
 		): Effect.Effect<SelectQueryBuilder<TDB, TTable, TOutput>, TQueryError, TQueryContext>;
 
+		/**
+		 * User-land filters - lowest priority
+		 */
 		filter?: TFilter;
+		/**
+		 * User-land filter setting default context (e.g. by objectId, whatever)
+		 */
 		where?: TFilter;
+		/**
+		 * Scope is used only by the server - guards against accessing resources outside of the scope (e.g. general userId etc.)
+		 */
+		scope?: TFilter;
 	}
 }
 
@@ -51,14 +61,10 @@ export const withFetchFx = Effect.fn("withFetchFx")(function* <
 >({
 	resource,
 	selectFx,
-	queryFx = () =>
-		selectFx as unknown as Effect.Effect<
-			SelectQueryBuilder<TDB, TTable, TOutput>,
-			TQueryError,
-			TQueryContext
-		>,
+	queryFx = ({ select }) => Effect.succeed(select),
 	filter,
 	where,
+	scope,
 }: withFetchFx.Props<
 	TDB,
 	TTable,
@@ -69,19 +75,22 @@ export const withFetchFx = Effect.fn("withFetchFx")(function* <
 	TQueryError,
 	TQueryContext
 >) {
-	const select = yield* selectFx;
-
-	const whereSelect = yield* queryFx({
-		select,
+	const layers = [
+		filter,
 		where,
-	});
-	const filterSelect = yield* queryFx({
-		select: whereSelect,
-		where: filter,
-	});
+		scope,
+	] as const;
+
+	let qb = yield* selectFx;
+	for (const layer of layers) {
+		qb = yield* queryFx({
+			select: qb,
+			where: layer,
+		});
+	}
 
 	const result = yield* Effect.promise(async () => {
-		return filterSelect.executeTakeFirst();
+		return qb.executeTakeFirst();
 	});
 
 	if (!result) {
@@ -90,6 +99,7 @@ export const withFetchFx = Effect.fn("withFetchFx")(function* <
 			resourceId: JSON.stringify({
 				filter,
 				where,
+				scope,
 			}),
 			message: "Resource not found",
 		});

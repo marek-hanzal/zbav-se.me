@@ -29,9 +29,11 @@ export namespace withCountFx {
 		queryFx?(
 			props: Query.Props<TSelect, TFilter>,
 		): Effect.Effect<TSelect, TQueryError, TQueryContext>;
-
+		//
 		filter?: TFilter;
 		where?: TFilter;
+		scope?: TFilter;
+		//
 		count?: Count[];
 	}
 }
@@ -48,6 +50,7 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 	queryFx = () => selectFx as unknown as Effect.Effect<TSelect, TQueryError, TQueryContext>,
 	filter,
 	where,
+	scope,
 	count = [
 		"total",
 		"filter",
@@ -55,8 +58,13 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 	],
 }: withCountFx.Props<TSelect, TFilter, TSelectError, TSelectContext, TQueryError, TQueryContext>) {
 	const select = yield* selectFx;
-	const whereSelect = yield* queryFx({
+
+	const scopeSelect = yield* queryFx({
 		select,
+		where: scope,
+	});
+	const whereSelect = yield* queryFx({
+		select: scopeSelect,
 		where,
 	});
 	const filterSelect = yield* queryFx({
@@ -66,7 +74,7 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 
 	const countTotal = count.includes("total")
 		? yield* Effect.promise(async () => {
-				return select
+				return scopeSelect
 					.clearSelect()
 					.select((eb) => eb.fn.countAll<number>().as("count"))
 					.executeTakeFirstOrThrow();
@@ -97,10 +105,10 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 
 	return yield* zodFx({
 		schema: CountSchema,
-		data: {
+		dataFx: Effect.succeed({
 			total: countTotal.count,
 			filter: countFilter.count,
 			where: countWhere.count,
-		},
+		}),
 	});
 });

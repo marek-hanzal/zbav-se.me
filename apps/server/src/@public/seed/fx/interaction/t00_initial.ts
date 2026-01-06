@@ -23,14 +23,14 @@ export const t00_initial = Effect.fn("t00_initial")(function* ({
 }: t00_initial.Props) {
 	const database = yield* DatabaseContextFx;
 
-	const transactions = yield* transactionCollectionFx({
+	const { data: transactions } = yield* transactionCollectionFx({
 		cursor: {
 			page: 0,
 			size: 1000,
 		},
 	});
 
-	for (const transactionId of transactions.data) {
+	for (const transactionId of transactions) {
 		const current = yield* Effect.promise(async () => {
 			return database
 				.selectFrom("user as user")

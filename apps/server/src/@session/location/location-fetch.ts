@@ -1,4 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { locationFetchFx } from "~/app/location/fx/locationFetchFx";
 import { LocationQuerySchema } from "~/app/location/schema/LocationQuerySchema";
@@ -58,7 +59,10 @@ export const withLocationFetchApi: Routes.Fn = async ({ sessionHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<LocationSchema.Type, 200>(
-					yield* locationFetchFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: LocationSchema,
+						dataFx: locationFetchFx(c.req.valid("json")),
+					}),
 					200,
 				);
 			}).pipe(

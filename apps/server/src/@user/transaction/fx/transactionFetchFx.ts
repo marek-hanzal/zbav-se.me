@@ -4,7 +4,6 @@ import { withTransactionQueryBuilderFx } from "~/app/transaction/db/withTransact
 import { withTransactionSelectFx } from "~/app/transaction/db/withTransactionSelectFx";
 import type { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { TransactionSchema } from "../schema/TransactionSchema";
 
 export namespace transactionFetchFx {
 	export type Props = TransactionQuerySchema.Type;
@@ -20,10 +19,9 @@ export const transactionFetchFx = Effect.fn("transactionFetchFx")(function* ({
 
 	return yield* withFetchFx({
 		resource: "transaction",
-		select: yield* withTransactionSelectFx({
+		selectFx: withTransactionSelectFx({
 			sort,
 		}),
-		output: TransactionSchema,
 		filter,
 		where: {
 			...where,
