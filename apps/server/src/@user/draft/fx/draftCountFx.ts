@@ -16,7 +16,7 @@ export const draftCountFx = Effect.fn("draftCountFx")(function* ({
 	const user = yield* UserContextFx;
 
 	return yield* withCountFx({
-		select: yield* withDraftCollectionSelectFx({}),
+		selectFx: withDraftCollectionSelectFx({}),
 		filter,
 		where: {
 			...where,

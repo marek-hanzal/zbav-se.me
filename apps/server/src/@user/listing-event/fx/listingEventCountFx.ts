@@ -13,7 +13,7 @@ export const listingEventCountFx = Effect.fn("listingEventCountFx")(function* ({
 	where,
 }: listingEventCountFx.Props) {
 	return yield* withCountFx({
-		select: yield* withListingEventSelectFx({}),
+		selectFx: withListingEventSelectFx({}),
 		filter,
 		where,
 		queryFx: withListingEventQueryBuilderFx,

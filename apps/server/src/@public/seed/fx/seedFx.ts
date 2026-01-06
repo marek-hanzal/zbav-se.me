@@ -20,18 +20,19 @@ namespace SeedRequestSchema {
 	export type Type = z.infer<SeedRequestSchema>;
 }
 
-export const seedFx = ({ email, transaction }: SeedRequestSchema.Type) => {
-	return Effect.gen(function* () {
-		const current = yield* seedUserFx({
-			email,
-		});
-
-		yield* transactionFx({
-			transaction,
-		}).pipe(UserContextProvider(current));
-
-		yield* seedTransactionInteractionFx({}).pipe(UserContextProvider(current));
-
-		return yield* Effect.void;
+export const seedFx = Effect.fn("seedFx")(function* ({
+	email,
+	transaction,
+}: SeedRequestSchema.Type) {
+	const current = yield* seedUserFx({
+		email,
 	});
-};
+
+	yield* transactionFx({
+		transaction,
+	}).pipe(UserContextProvider(current));
+
+	yield* seedTransactionInteractionFx({}).pipe(UserContextProvider(current));
+
+	return yield* Effect.void;
+});

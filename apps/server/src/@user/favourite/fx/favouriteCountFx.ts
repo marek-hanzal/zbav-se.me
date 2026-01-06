@@ -16,7 +16,7 @@ export const favouriteCountFx = Effect.fn("favouriteCountFx")(function* ({
 	const user = yield* UserContextFx;
 
 	return yield* withCountFx({
-		select: yield* withFavouriteSelectFx({}),
+		selectFx: withFavouriteSelectFx({}),
 		filter,
 		where: {
 			...where,

@@ -13,7 +13,7 @@ export const uploadCountFx = Effect.fn("uploadCountFx")(function* ({
 	where,
 }: uploadCountFx.Props) {
 	return yield* withCountFx({
-		select: yield* withUploadSelectFx({}),
+		selectFx: withUploadSelectFx({}),
 		filter,
 		where,
 		queryFx: withUploadQueryBuilderFx,

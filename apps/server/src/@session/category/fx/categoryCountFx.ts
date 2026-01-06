@@ -13,7 +13,7 @@ export const categoryCountFx = Effect.fn("categoryCountFx")(function* ({
 	where,
 }: categoryCountFx.Props) {
 	return yield* withCountFx({
-		select: yield* withCategorySelectFx({}),
+		selectFx: withCategorySelectFx({}),
 		filter,
 		where,
 		queryFx: withCategoryQueryBuilderFx,

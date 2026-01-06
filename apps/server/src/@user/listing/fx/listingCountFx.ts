@@ -17,7 +17,7 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	const user = yield* UserContextFx;
 
 	return yield* withCountFx({
-		select: yield* withListingCollectionSelectFx({
+		selectFx: withListingCollectionSelectFx({
 			meta,
 		}),
 		filter,

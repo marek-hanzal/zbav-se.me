@@ -5,7 +5,7 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withListingEventSelectFx {
 	export interface Props {
-		sort: ListingEventSortSchema.Type[] | undefined;
+		sort?: ListingEventSortSchema.Type[];
 	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withListingEventSelectFx>>;
@@ -15,6 +15,7 @@ export const withListingEventSelectFx = Effect.fn("withListingEventSelectFx")(fu
 	sort,
 }: withListingEventSelectFx.Props) {
 	const database = yield* DatabaseContextFx;
+
 	let query = database.selectFrom("listing_event as le").selectAll("le");
 
 	for (const item of sort ?? []) {
