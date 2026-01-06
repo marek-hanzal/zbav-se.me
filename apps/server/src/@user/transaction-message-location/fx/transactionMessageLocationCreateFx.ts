@@ -1,29 +1,36 @@
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { messageLocationCreateFx } from "~/@user/message-location/fx/messageLocationCreateFx";
 import { TransactionContextFx } from "~/@user/transaction/fx/TransactionContextFx";
 import { transactionStatusGateFx } from "~/@user/transaction/fx/transactionStatusGateFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { messageLocationCreateFx } from "~/app/message-location/fx/messageLocationCreateFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import type { TransactionMessageLocationCreateSchema } from "../schema/TransactionMessageLocationCreateSchema";
 
 export namespace transactionMessageLocationCreateFx {
 	export interface Props extends TransactionMessageLocationCreateSchema.Type {
+		userId: string;
 		createdAt?: DateTime;
 	}
 }
 
 export const transactionMessageLocationCreateFx = Effect.fn("transactionMessageLocationCreateFx")(
-	function* ({ transactionId, locationId, createdAt }: transactionMessageLocationCreateFx.Props) {
+	function* ({
+		userId,
+		transactionId,
+		locationId,
+		createdAt,
+	}: transactionMessageLocationCreateFx.Props) {
 		return yield* withTransactionFx(
 			Effect.gen(function* () {
 				const database = yield* DatabaseContextFx;
-				const user = yield* UserContextFx;
 				const config = yield* TransactionContextFx;
 
 				const transaction = yield* transactionStatusGateFx({
+					userId,
 					transactionId,
 					allowedStatuses: [
 						"open",
@@ -49,7 +56,7 @@ export const transactionMessageLocationCreateFx = Effect.fn("transactionMessageL
 				});
 
 				yield* userInteractionEventFx({
-					userId: user.id,
+					userId,
 					targetId:
 						transaction.side === "buyer" ? transaction.sellerId : transaction.buyerId,
 					source: "transaction",
@@ -60,6 +67,7 @@ export const transactionMessageLocationCreateFx = Effect.fn("transactionMessageL
 				});
 
 				return yield* messageLocationCreateFx({
+					userId,
 					messageThreadId: transaction.messageThreadId,
 					locationId,
 					createdAt,
@@ -71,4 +79,8 @@ export const transactionMessageLocationCreateFx = Effect.fn("transactionMessageL
 
 export type transactionMessageLocationCreateFx = ReturnType<
 	typeof transactionMessageLocationCreateFx
+>;
+
+type _NoUser = AssertNever<
+	Extract<Effect.Effect.Context<transactionMessageLocationCreateFx>, UserContextFx>
 >;

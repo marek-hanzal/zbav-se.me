@@ -1,12 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { ignoreCountFx } from "~/app/ignore/fx/ignoreCountFx";
 import { IgnoreCountQuerySchema } from "~/app/ignore/schema/IgnoreCountQuerySchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { ignoreCountFx } from "./fx/ignoreCountFx";
 
 export const withCountApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
@@ -49,8 +49,15 @@ export const withCountApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = yield* UserContextFx;
+
 				return c.json<CountSchema.Type, 200>(
-					yield* ignoreCountFx(c.req.valid("json")),
+					yield* ignoreCountFx({
+						...c.req.valid("json"),
+						scope: {
+							userId: user.id,
+						},
+					}),
 					200,
 				);
 			}).pipe(

@@ -1,27 +1,30 @@
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { messagePackageCreateFx } from "~/@user/message-package/fx/messagePackageCreateFx";
 import { TransactionContextFx } from "~/@user/transaction/fx/TransactionContextFx";
 import { transactionStatusGateFx } from "~/@user/transaction/fx/transactionStatusGateFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { messagePackageCreateFx } from "~/app/message-package/fx/messagePackageCreateFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import type { TransactionMessagePackageCreateSchema } from "../schema/TransactionMessagePackageCreateSchema";
 
 export namespace transactionMessagePackageCreateFx {
-	export interface Props extends TransactionMessagePackageCreateSchema.Type {}
+	export interface Props extends TransactionMessagePackageCreateSchema.Type {
+		userId: string;
+	}
 }
 
 export const transactionMessagePackageCreateFx = Effect.fn("transactionMessagePackageCreateFx")(
-	function* ({ transactionId, link, number }: transactionMessagePackageCreateFx.Props) {
+	function* ({ userId, transactionId, link, number }: transactionMessagePackageCreateFx.Props) {
 		return yield* withTransactionFx(
 			Effect.gen(function* () {
 				const database = yield* DatabaseContextFx;
-				const user = yield* UserContextFx;
 				const config = yield* TransactionContextFx;
 
 				const transaction = yield* transactionStatusGateFx({
+					userId,
 					transactionId,
 					allowedStatuses: [
 						"open",
@@ -47,7 +50,7 @@ export const transactionMessagePackageCreateFx = Effect.fn("transactionMessagePa
 				});
 
 				yield* userInteractionEventFx({
-					userId: user.id,
+					userId,
 					targetId:
 						transaction.side === "buyer" ? transaction.sellerId : transaction.buyerId,
 					source: "transaction",
@@ -57,6 +60,7 @@ export const transactionMessagePackageCreateFx = Effect.fn("transactionMessagePa
 				});
 
 				return yield* messagePackageCreateFx({
+					userId,
 					messageThreadId: transaction.messageThreadId,
 					link,
 					number,
@@ -68,4 +72,8 @@ export const transactionMessagePackageCreateFx = Effect.fn("transactionMessagePa
 
 export type transactionMessagePackageCreateFx = ReturnType<
 	typeof transactionMessagePackageCreateFx
+>;
+
+type _NoUser = AssertNever<
+	Extract<Effect.Effect.Context<transactionMessagePackageCreateFx>, UserContextFx>
 >;

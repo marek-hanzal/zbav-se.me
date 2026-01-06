@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import type { withMessageGallerySelectFx } from "~/@user/message-gallery/db/withMessageGallerySelectFx";
+import type { withMessageGallerySelectFx } from "~/app/message-gallery/db/withMessageGallerySelectFx";
 import type { MessageGalleryFilterSchema } from "~/app/message-gallery/schema/MessageGalleryFilterSchema";
 
 export namespace withMessageGalleryQueryBuilderFx {

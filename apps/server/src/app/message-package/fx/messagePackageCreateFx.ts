@@ -1,28 +1,24 @@
 import { genId } from "@use-pico/common/gen-id";
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
-import { messageSystemFetchFx } from "~/@user/message-system/fx/messageSystemFetchFx";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
+import { messagePackageFetchFx } from "~/app/message-package/fx/messagePackageFetchFx";
+import type { MessagePackageCreateSchema } from "~/app/message-package/schema/MessagePackageCreateSchema";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
-export namespace messageSystemCreateFx {
-	export interface Props {
+export namespace messagePackageCreateFx {
+	export interface Props extends MessagePackageCreateSchema.Type {
 		userId: string;
-		messageThreadId: string;
-		message: string;
-		createdAt?: DateTime;
 	}
 }
 
-export const messageSystemCreateFx = Effect.fn("messageSystemCreateFx")(function* ({
+export const messagePackageCreateFx = Effect.fn("messagePackageCreateFx")(function* ({
 	userId,
 	messageThreadId,
-	message,
-	createdAt,
-}: messageSystemCreateFx.Props) {
+	...data
+}: messagePackageCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
@@ -38,27 +34,31 @@ export const messageSystemCreateFx = Effect.fn("messageSystemCreateFx")(function
 
 			yield* Effect.promise(async () => {
 				return database
-					.insertInto("message_system")
+					.insertInto("message_package")
 					.values({
+						...data,
 						id,
 						messageThreadId,
-						text: message,
-						createdAt: (createdAt ?? DateTime.now()).toJSDate(),
+						userId,
+						createdAt: new Date(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();
 			});
 
-			return yield* messageSystemFetchFx({
+			return yield* messagePackageFetchFx({
 				where: {
 					id,
 				},
-				scope: {},
+				userId,
+				scope: {
+					userId,
+				},
 			});
 		}),
 	);
 });
 
-export type messageSystemCreateFx = ReturnType<typeof messageSystemCreateFx>;
+export type messagePackageCreateFx = ReturnType<typeof messagePackageCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageSystemCreateFx>, UserContextFx>>;
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<messagePackageCreateFx>, UserContextFx>>;

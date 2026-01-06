@@ -1,13 +1,14 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { genId } from "@use-pico/common/gen-id";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { listingEventCreateFx } from "~/@user/listing-event/fx/listingEventCreateFx";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { messageThreadCreateFx } from "~/@user/message-thread/fx/messageThreadCreateFx";
 import { messageUserCreateFx } from "~/@user/message-thread-user/fx/messageUserCreateFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
+import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
@@ -98,6 +99,7 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 			});
 
 			yield* listingEventCreateFx({
+				userId: user.id,
 				listingId,
 				event: "transaction",
 				createdAt,
@@ -128,3 +130,5 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 });
 
 export type transactionCreateFx = ReturnType<typeof transactionCreateFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<transactionCreateFx>, UserContextFx>>;

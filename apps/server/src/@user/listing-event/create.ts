@@ -1,10 +1,10 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
+import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { listingEventCreateFx } from "./fx/listingEventCreateFx";
 import { ListingEventCreateSchema } from "./schema/ListingEventCreateSchema";
 
 export const withCreateApi: Routes.Fn = async ({ userHono }) => {
@@ -68,9 +68,15 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				yield* listingEventCreateFx(c.req.valid("json"));
+				const user = yield* UserContextFx;
 
-				return c.body(null, 201);
+				return c.json(
+					yield* listingEventCreateFx({
+						...c.req.valid("json"),
+						userId: user.id,
+					}),
+					201,
+				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),

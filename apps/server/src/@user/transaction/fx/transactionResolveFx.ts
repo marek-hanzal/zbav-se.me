@@ -1,22 +1,24 @@
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { AccessDeniedError } from "~/error/AccessDeniedError";
 import { RuntimeError } from "~/error/RuntimeError";
 
 export namespace transactionResolveFx {
 	export interface Props {
+		userId: string;
 		transactionId: string;
 		message?: string;
 	}
 }
 
 export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* ({
+	userId,
 	transactionId,
 	message = "You are not allowed to access this transaction",
 }: transactionResolveFx.Props) {
 	const database = yield* DatabaseContextFx;
-	const user = yield* UserContextFx;
 
 	const transaction = yield* Effect.promise(async () => {
 		return (
@@ -48,8 +50,8 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 				 */
 				.where((eb) => {
 					return eb.or([
-						eb("lt.userId", "=", user.id),
-						eb("l.userId", "=", user.id),
+						eb("lt.userId", "=", userId),
+						eb("l.userId", "=", userId),
 					]);
 				})
 				.executeTakeFirst()
@@ -70,8 +72,10 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 
 	return {
 		...transaction,
-		side: transaction.buyerId === user.id ? "buyer" : "seller",
+		side: transaction.buyerId === userId ? "buyer" : "seller",
 	} as const;
 });
 
 export type transactionResolveFx = ReturnType<typeof transactionResolveFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<transactionResolveFx>, UserContextFx>>;

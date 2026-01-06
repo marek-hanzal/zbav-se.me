@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import type { MessagePayloadSchema } from "~/@user/message/schema/MessagePayloadSchema";
+import type { MessagePayloadSchema } from "~/app/message/schema/MessagePayloadSchema";
 import type { MessageSortSchema } from "~/app/message/schema/MessageSortSchema";
 import type { MessageTypeEnumSchema } from "~/app/message/schema/MessageTypeEnumSchema";
 import { withMessageGallerySelectFx } from "~/app/message-gallery/db/withMessageGallerySelectFx";
@@ -14,6 +14,7 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withMessageSelectFx {
 	export interface Props {
+		userId: string;
 		sort?: MessageSortSchema.Type[];
 	}
 
@@ -21,15 +22,26 @@ export namespace withMessageSelectFx {
 }
 
 export const withMessageSelectFx = Effect.fn("withMessageSelectFx")(function* ({
+	userId,
 	sort,
 }: withMessageSelectFx.Props) {
 	const database = yield* DatabaseContextFx;
 
-	const textSelect = yield* withMessageTextSelectFx({});
-	const gallerySelect = yield* withMessageGallerySelectFx({});
-	const locationSelect = yield* withMessageLocationSelectFx({});
-	const personalSelect = yield* withMessagePersonalSelectFx({});
-	const packageSelect = yield* withMessagePackageSelectFx({});
+	const textSelect = yield* withMessageTextSelectFx({
+		userId,
+	});
+	const gallerySelect = yield* withMessageGallerySelectFx({
+		userId,
+	});
+	const locationSelect = yield* withMessageLocationSelectFx({
+		userId,
+	});
+	const personalSelect = yield* withMessagePersonalSelectFx({
+		userId,
+	});
+	const packageSelect = yield* withMessagePackageSelectFx({
+		userId,
+	});
 	const systemSelect = yield* withMessageSystemSelectFx({});
 
 	const textQuery = database.selectFrom(textSelect.as("t")).select([

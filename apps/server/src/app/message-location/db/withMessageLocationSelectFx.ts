@@ -4,7 +4,6 @@ import { match } from "ts-pattern";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import type { MessageDirectionEnumSchema } from "~/app/message/schema/MessageDirectionEnumSchema";
 import type { MessageLocationSortSchema } from "~/app/message-location/schema/MessageLocationSortSchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withMessageLocationSelectFx {

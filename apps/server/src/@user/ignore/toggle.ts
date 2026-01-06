@@ -1,11 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { ignoreToggleFx } from "~/app/ignore/fx/ignoreToggleFx";
+import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { ignoreToggleFx } from "./fx/ignoreToggleFx";
 import { IgnoreToggleSchema } from "./schema/IgnoreToggleSchema";
 
 export const withToggleApi: Routes.Fn = async ({ userHono }) => {
@@ -65,8 +66,16 @@ export const withToggleApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = yield* UserContextFx;
+
 				return c.json<ListingSchema.Type, 200>(
-					yield* ignoreToggleFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: ListingSchema,
+						dataFx: ignoreToggleFx({
+							...c.req.valid("json"),
+							userId: user.id,
+						}),
+					}),
 					200,
 				);
 			}).pipe(

@@ -1,10 +1,11 @@
 import { createRoute, z } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { listingGetSellerInfoFx } from "~/app/listing/fx/listingGetSellerInfoFx";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { listingGetSellerInfoFx } from "./fx/listingGetSellerInfoFx";
 import { SellerInfoSchema } from "./schema/SellerInfoSchema";
 
 const ListingSellerInfoParamsSchema = z
@@ -63,8 +64,11 @@ export const withSellerInfoApi: Routes.Fn = async ({ userHono }) => {
 				const { listingId } = c.req.valid("param");
 
 				return c.json<SellerInfoSchema.Type, 200>(
-					yield* listingGetSellerInfoFx({
-						listingId,
+					yield* zodFx({
+						schema: SellerInfoSchema,
+						dataFx: listingGetSellerInfoFx({
+							listingId,
+						}),
 					}),
 					200,
 				);

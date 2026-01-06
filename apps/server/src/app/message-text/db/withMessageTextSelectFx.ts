@@ -3,11 +3,11 @@ import { sql } from "kysely";
 import { match } from "ts-pattern";
 import type { MessageDirectionEnumSchema } from "~/app/message/schema/MessageDirectionEnumSchema";
 import type { MessageTextSortSchema } from "~/app/message-text/schema/MessageTextSortSchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withMessageTextSelectFx {
 	export interface Props {
+		userId: string;
 		sort?: MessageTextSortSchema.Type[];
 	}
 
@@ -15,10 +15,10 @@ export namespace withMessageTextSelectFx {
 }
 
 export const withMessageTextSelectFx = Effect.fn("withMessageTextSelectFx")(function* ({
+	userId,
 	sort,
 }: withMessageTextSelectFx.Props) {
 	const database = yield* DatabaseContextFx;
-	const user = yield* UserContextFx;
 
 	let query = database
 		.selectFrom("message_text as mt")
@@ -27,7 +27,7 @@ export const withMessageTextSelectFx = Effect.fn("withMessageTextSelectFx")(func
 		.select((eb) =>
 			eb
 				.case()
-				.when("mt.userId", "=", user.id)
+				.when("mt.userId", "=", userId)
 				.then<MessageDirectionEnumSchema.Type>("out")
 				.else<MessageDirectionEnumSchema.Type>("in")
 				.end()

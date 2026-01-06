@@ -1,8 +1,9 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { MessageLocationSchema } from "~/@user/message-location/schema/MessageLocationSchema";
 import { TransactionContextProvider } from "~/@user/transaction/fx/TransactionContextFx";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { MessageLocationSchema } from "~/app/message-location/schema/MessageLocationSchema";
+import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -76,8 +77,16 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = yield* UserContextFx;
+
 				return c.json<MessageLocationSchema.Type, 200>(
-					yield* transactionMessageLocationCreateFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: MessageLocationSchema,
+						dataFx: transactionMessageLocationCreateFx({
+							...c.req.valid("json"),
+							userId: user.id,
+						}),
+					}),
 					200,
 				);
 			}).pipe(

@@ -1,12 +1,13 @@
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { messageGalleryCreateFx } from "~/@user/message-gallery/fx/messageGalleryCreateFx";
 import { TransactionContextFx } from "~/@user/transaction/fx/TransactionContextFx";
 import { transactionStatusGateFx } from "~/@user/transaction/fx/transactionStatusGateFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { galleryCreateFx } from "~/app/gallery/fx/galleryCreateFx";
 import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { messageGalleryCreateFx } from "~/app/message-gallery/fx/messageGalleryCreateFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
@@ -14,16 +15,21 @@ import type { TransactionMessageGalleryCreateSchema } from "../schema/Transactio
 
 export namespace transactionMessageGalleryCreateFx {
 	export interface Props extends TransactionMessageGalleryCreateSchema.Type {
+		userId: string;
 		createdAt?: DateTime;
 	}
 }
 
 export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGalleryCreateFx")(
-	function* ({ transactionId, uploadIds, createdAt }: transactionMessageGalleryCreateFx.Props) {
+	function* ({
+		userId,
+		transactionId,
+		uploadIds,
+		createdAt,
+	}: transactionMessageGalleryCreateFx.Props) {
 		return yield* withTransactionFx(
 			Effect.gen(function* () {
 				const database = yield* DatabaseContextFx;
-				const user = yield* UserContextFx;
 				const config = yield* TransactionContextFx;
 
 				if (uploadIds.length === 0) {
@@ -58,7 +64,7 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 				});
 
 				const gallery = yield* galleryCreateFx({
-					userId: user.id,
+					userId,
 				});
 
 				yield* Effect.promise(async () => {
@@ -74,14 +80,14 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 						galleryId: gallery.id,
 						uploadId,
 						sort,
-						userId: user.id,
+						userId,
 						createdAt,
 					});
 					sort++;
 				}
 
 				yield* userInteractionEventFx({
-					userId: user.id,
+					userId,
 					targetId:
 						transaction.side === "buyer" ? transaction.sellerId : transaction.buyerId,
 					source: "transaction",
@@ -92,6 +98,7 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 				});
 
 				return yield* messageGalleryCreateFx({
+					userId,
 					messageThreadId: transaction.messageThreadId,
 					galleryId: gallery.id,
 					createdAt,
@@ -103,4 +110,8 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 
 export type transactionMessageGalleryCreateFx = ReturnType<
 	typeof transactionMessageGalleryCreateFx
+>;
+
+type _NoUser = AssertNever<
+	Extract<Effect.Effect.Context<transactionMessageGalleryCreateFx>, UserContextFx>
 >;

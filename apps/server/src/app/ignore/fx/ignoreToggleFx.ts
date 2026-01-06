@@ -1,37 +1,37 @@
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import type { FlagToggleSchema } from "~/@user/flag/schema/FlagToggleSchema";
-import { flagCreateFx } from "~/app/flag/fx/flagCreateFx";
-import { flagDeleteFx } from "~/app/flag/fx/flagDeleteFx";
+import type { IgnoreToggleSchema } from "~/@user/ignore/schema/IgnoreToggleSchema";
+import { ignoreCreateFx } from "~/app/ignore/fx/ignoreCreateFx";
+import { ignoreDeleteFx } from "~/app/ignore/fx/ignoreDeleteFx";
 import { listingCheckIfOwnFx } from "~/app/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/app/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
-export namespace flagToggleFx {
-	export interface Props extends FlagToggleSchema.Type {
+export namespace ignoreToggleFx {
+	export interface Props extends IgnoreToggleSchema.Type {
 		userId: string;
 	}
 }
 
-export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
+export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 	userId,
 	toggle,
 	listingId,
-}: flagToggleFx.Props) {
+}: ignoreToggleFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			yield* listingCheckIfOwnFx({
 				userId,
 				listingId,
-				message: "You cannot flag your own listing",
+				message: "You cannot ignore your own listing",
 			});
 
 			return yield* Effect.if(toggle, {
 				onTrue() {
 					return Effect.gen(function* () {
-						yield* flagCreateFx({
+						yield* ignoreCreateFx({
 							userId,
 							listingId,
 						});
@@ -39,7 +39,7 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 						yield* listingEventCreateFx({
 							userId,
 							listingId,
-							event: "flag",
+							event: "ignore",
 						}).pipe(Effect.ignore);
 
 						return yield* listingFetchFx({
@@ -55,7 +55,7 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 				},
 				onFalse() {
 					return Effect.gen(function* () {
-						yield* flagDeleteFx({
+						yield* ignoreDeleteFx({
 							userId,
 							listingId,
 						});
@@ -63,7 +63,7 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 						yield* listingEventCreateFx({
 							userId,
 							listingId,
-							event: "unflag",
+							event: "unignore",
 						}).pipe(Effect.ignore);
 
 						return yield* listingFetchFx({
@@ -82,6 +82,6 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 	);
 });
 
-export type flagToggleFx = ReturnType<typeof flagToggleFx>;
+export type ignoreToggleFx = ReturnType<typeof ignoreToggleFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<flagToggleFx>, UserContextFx>>;
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<ignoreToggleFx>, UserContextFx>>;
