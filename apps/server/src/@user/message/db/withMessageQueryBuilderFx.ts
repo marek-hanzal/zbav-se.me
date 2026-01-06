@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import type { withMessageSelectFx } from "~/app/message/db/withMessageSelectFx";
 import type { MessageFilterSchema } from "~/app/message/schema/MessageFilterSchema";
 
 export namespace withMessageQueryBuilderFx {

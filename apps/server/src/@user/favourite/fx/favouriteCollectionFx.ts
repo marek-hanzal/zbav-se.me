@@ -5,8 +5,6 @@ import { withFavouriteQueryBuilderFx } from "~/app/favourite/db/withFavouriteQue
 import { withFavouriteSelectFx } from "~/app/favourite/db/withFavouriteSelectFx";
 import type { FavouriteQuerySchema } from "~/app/favourite/schema/FavouriteQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-
 export namespace favouriteCollectionFx {
 	export type Props = FavouriteQuerySchema.Type;
 }
@@ -17,12 +15,10 @@ export const favouriteCollectionFx = Effect.fn("favouriteCollectionFx")(function
 	where,
 	sort,
 }: favouriteCollectionFx.Props) {
-	const database = yield* DatabaseContextFx;
 	const user = yield* UserContextFx;
 
 	return yield* withCollectionFx({
 		select: yield* withFavouriteSelectFx({
-			database,
 			sort,
 		}),
 		output: FavouriteSchema,
@@ -35,7 +31,7 @@ export const favouriteCollectionFx = Effect.fn("favouriteCollectionFx")(function
 			...where,
 			userId: user.id,
 		},
-		query: withFavouriteQueryBuilderFx,
+		queryFx: withFavouriteQueryBuilderFx,
 	});
 });
 

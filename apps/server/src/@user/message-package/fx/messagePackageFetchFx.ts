@@ -1,10 +1,8 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
 import { withMessagePackageQueryBuilderFx } from "~/app/message-package/db/withMessagePackageQueryBuilderFx";
-import { withMessagePackageSelectFx} from "~/app/message-package/db/withMessagePackageSelectFx;
+import { withMessagePackageSelectFx } from "~/app/message-package/db/withMessagePackageSelectFx";
 import type { MessagePackageQuerySchema } from "~/app/message-package/schema/MessagePackageQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { MessagePackageSchema } from "../schema/MessagePackageSchema";
 
 export namespace messagePackageFetchFx {
@@ -16,15 +14,10 @@ export const messagePackageFetchFx = Effect.fn("messagePackageFetchFx")(function
 	where,
 	sort,
 }: messagePackageFetchFx.Props) {
-	const database = yield* DatabaseContextFx;
-	const user = yield* UserContextFx;
-
 	return yield* withFetchFx({
 		resource: "message-package",
-		select: withMessagePackageSelectFx{
-			database,
+		select: yield* withMessagePackageSelectFx({
 			sort,
-			userId: user.id,
 		}),
 		output: MessagePackageSchema,
 		filter,

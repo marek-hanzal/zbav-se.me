@@ -22,7 +22,7 @@ export const favouriteCountFx = Effect.fn("favouriteCountFx")(function* ({
 			...where,
 			userId: user.id,
 		},
-		query: withFavouriteQueryBuilderFx,
+		queryFx: withFavouriteQueryBuilderFx,
 	});
 });
 

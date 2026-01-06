@@ -1,37 +1,40 @@
 import { Effect } from "effect";
 import type { MessageThreadUserFilterSchema } from "~/app/message-thread-user/schema/MessageThreadUserFilterSchema";
-import type { withMessageThreadUserSelectFx} from "./withMessageThreadUserSelectFx;
+import type { withMessageThreadUserSelectFx } from "./withMessageThreadUserSelectFx";
 
 export namespace withMessageThreadUserQueryBuilderFx {
 	export interface Props {
-		select: withMessageThreadUserSelectFxSelect;
+		select: withMessageThreadUserSelectFx.Select;
 		where?: MessageThreadUserFilterSchema.Type;
 	}
 
-	export type Callback = (props: Props) => withMessageThreadUserSelectFxSelect;
+	export type Callback = (props: Props) => withMessageThreadUserSelectFx.Select;
 }
 
-export const withMessageThreadUserQueryBuilderFx = Effect.fn("withMessageThreadUserQueryBuilderFx")(function* ({
-	select,
-	where,
-}: withMessageThreadUserQueryBuilderFx.Props) {
-	let query = select;
+export const withMessageThreadUserQueryBuilderFx = Effect.fn("withMessageThreadUserQueryBuilderFx")(
+	function* ({ select, where }: withMessageThreadUserQueryBuilderFx.Props) {
+		let query = select;
 
-	if (where.id) {
-		query = query.where("mtu.id", "=", where.id);
-	}
+		if (!where) {
+			return yield* Effect.succeed(select);
+		}
 
-	if (where.idIn && where.idIn.length > 0) {
-		query = query.where("mtu.id", "in", where.idIn);
-	}
+		if (where.id) {
+			query = query.where("mtu.id", "=", where.id);
+		}
 
-	if (where.messageThreadId) {
-		query = query.where("mtu.messageThreadId", "=", where.messageThreadId);
-	}
+		if (where.idIn && where.idIn.length > 0) {
+			query = query.where("mtu.id", "in", where.idIn);
+		}
 
-	if (where.userId) {
-		query = query.where("mtu.userId", "=", where.userId);
-	}
+		if (where.messageThreadId) {
+			query = query.where("mtu.messageThreadId", "=", where.messageThreadId);
+		}
 
-	return yield* Effect.succeed(query);
-});
+		if (where.userId) {
+			query = query.where("mtu.userId", "=", where.userId);
+		}
+
+		return yield* Effect.succeed(query);
+	},
+);

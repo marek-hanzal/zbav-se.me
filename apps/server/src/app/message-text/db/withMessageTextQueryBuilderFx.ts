@@ -1,14 +1,14 @@
 import { Effect } from "effect";
 import type { MessageTextFilterSchema } from "~/app/message-text/schema/MessageTextFilterSchema";
-import type { withMessageTextSelectFx} from "./withMessageTextSelectFx;
+import type { withMessageTextSelectFx } from "./withMessageTextSelectFx";
 
 export namespace withMessageTextQueryBuilderFx {
 	export interface Props {
-		select: withMessageTextSelectFxSelect;
+		select: withMessageTextSelectFx.Select;
 		where?: MessageTextFilterSchema.Type;
 	}
 
-	export type Callback = (props: Props) => withMessageTextSelectFxSelect;
+	export type Callback = (props: Props) => withMessageTextSelectFx.Select;
 }
 
 export const withMessageTextQueryBuilderFx = Effect.fn("withMessageTextQueryBuilderFx")(function* ({
@@ -16,6 +16,10 @@ export const withMessageTextQueryBuilderFx = Effect.fn("withMessageTextQueryBuil
 	where,
 }: withMessageTextQueryBuilderFx.Props) {
 	let query = select;
+
+	if (!where) {
+		return yield* Effect.succeed(select);
+	}
 
 	if (where.id) {
 		query = query.where("mt.id", "=", where.id);
