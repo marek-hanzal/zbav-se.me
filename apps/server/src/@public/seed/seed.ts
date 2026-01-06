@@ -80,6 +80,20 @@ export const withSeedApi: Routes.Fn = async ({ publicHono }) => {
 						Match.value(e).pipe(
 							Match.when(
 								{
+									_tag: "InvalidRequestError",
+								},
+								(err) => {
+									return c.json<NoticeSchema.Type, 400>(
+										{
+											type: "error",
+											message: err.message,
+										},
+										400,
+									);
+								},
+							),
+							Match.when(
+								{
 									_tag: "AccessDeniedError",
 								},
 								(err) => {
@@ -103,20 +117,6 @@ export const withSeedApi: Routes.Fn = async ({ publicHono }) => {
 											message: err.message,
 										},
 										404,
-									);
-								},
-							),
-							Match.when(
-								{
-									_tag: "InvalidRequestError",
-								},
-								(err) => {
-									return c.json<NoticeSchema.Type, 400>(
-										{
-											type: "error",
-											message: err.message,
-										},
-										400,
 									);
 								},
 							),

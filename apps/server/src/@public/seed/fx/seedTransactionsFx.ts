@@ -21,43 +21,44 @@ export namespace seedTransactionsFx {
 	export type Props = z.infer<typeof SeedTransactionsRequestSchema>;
 }
 
-export const seedTransactionsFx = ({ count, months }: seedTransactionsFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+export const seedTransactionsFx = Effect.fn("seedTransactionsFx")(function* ({
+	count,
+	months,
+}: seedTransactionsFx.Props) {
+	const database = yield* DatabaseContextFx;
+	const user = yield* UserContextFx;
 
-		yield* Effect.tryPromise(async () => {
-			return database.deleteFrom("transaction").where("userId", "=", user.id).execute();
-		});
+	yield* Effect.promise(async () => {
+		return database.deleteFrom("transaction").where("userId", "=", user.id).execute();
+	});
 
-		const { data: listings } = yield* listingOfFx({
-			count,
-		});
+	const { data: listings } = yield* listingOfFx({
+		count,
+	});
 
-		const now = DateTime.now();
-		const startTime = now.minus({
-			months,
-		});
-		const timeSpanMs = now.diff(startTime, "milliseconds").milliseconds;
+	const now = DateTime.now();
+	const startTime = now.minus({
+		months,
+	});
+	const timeSpanMs = now.diff(startTime, "milliseconds").milliseconds;
 
-		for (let i = 0; i < listings.length; i++) {
-			const listing = listings[i];
-			if (!listing) {
-				continue;
-			}
-
-			// Distribute evenly across the time period
-			const progress = listings.length > 1 ? i / (listings.length - 1) : 0;
-			const createdAt = startTime.plus({
-				milliseconds: Math.round(timeSpanMs * progress),
-			});
-
-			yield* transactionCreateFx({
-				listingId: listing.id,
-				createdAt,
-			});
+	for (let i = 0; i < listings.length; i++) {
+		const listing = listings[i];
+		if (!listing) {
+			continue;
 		}
 
-		return yield* Effect.void;
-	});
-};
+		// Distribute evenly across the time period
+		const progress = listings.length > 1 ? i / (listings.length - 1) : 0;
+		const createdAt = startTime.plus({
+			milliseconds: Math.round(timeSpanMs * progress),
+		});
+
+		yield* transactionCreateFx({
+			listingId: listing.id,
+			createdAt,
+		});
+	}
+
+	return yield* Effect.void;
+});

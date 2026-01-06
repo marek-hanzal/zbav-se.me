@@ -36,3 +36,5 @@ export const seedFx = Effect.fn("seedFx")(function* ({
 
 	return yield* Effect.void;
 });
+
+export type seedFx = ReturnType<typeof seedFx>;

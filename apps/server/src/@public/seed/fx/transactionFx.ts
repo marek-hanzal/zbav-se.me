@@ -7,8 +7,8 @@ export namespace transactionFx {
 	}
 }
 
-export const transactionFx = ({ transaction }: transactionFx.Props) => {
-	return Effect.gen(function* () {
-		yield* seedTransactionsFx(transaction);
-	});
-};
+export const transactionFx = Effect.fn("transactionFx")(function* ({
+	transaction,
+}: transactionFx.Props) {
+	yield* seedTransactionsFx(transaction);
+});
