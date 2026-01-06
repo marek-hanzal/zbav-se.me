@@ -1,11 +1,11 @@
 import { withTransactionStatusApi } from "~/@user/transaction-status/withTransactionStatusApi";
-import { withFeedFavouriteApi } from "~/app/feed-favourite/withFeedFavouriteApi";
 import type { WithDatabase } from "~/database/WithDatabase";
 import type { Routes } from "~/hono/Routes";
 import type { NoticeSchema } from "~/schema/NoticeSchema";
 import { withDraftApi } from "./draft/withDraftApi";
 import { withFavouriteApi } from "./favourite/withFavouriteApi";
 import { withFeedApi } from "./feed/withFeedApi";
+import { withFeedFavouriteApi } from "./feed-favourite/withFeedFavouriteApi";
 import { withFeedbackApi } from "./feedback/withFeedbackApi";
 import { withFlagApi } from "./flag/withFlagApi";
 import { withGalleryApi } from "./gallery/withGalleryApi";
@@ -49,13 +49,13 @@ export const withUserApi: Routes.FnWithDeps<{
 	await withDraftApi(routes);
 	await withFavouriteApi(routes);
 	await withFeedApi(routes);
+	await withFeedbackApi(routes);
 	await withFeedFavouriteApi(routes);
 	await withFlagApi(routes);
 	await withGalleryApi(routes);
 	await withIgnoreApi(routes);
 	await withListingApi(routes);
 	await withListingEventApi(routes);
-	await withFeedbackApi(routes);
 	await withMessageThreadApi(routes);
 	await withS3Api(routes);
 	await withTransactionApi(routes);

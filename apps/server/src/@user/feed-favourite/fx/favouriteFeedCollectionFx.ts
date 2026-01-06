@@ -1,9 +1,9 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { FeedFavouriteSchema } from "~/@user/feed-favourite/schema/FeedFavouriteSchema";
 import { withFeedQueryBuilder } from "~/app/feed/db/withFeedQueryBuilder";
 import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
 import { withFeedFavouriteSelectFx } from "~/app/feed-favourite/db/withFeedFavouriteSelectFx";
-import { FeedFavouriteSchema } from "~/app/feed-favourite/schema/FeedFavouriteSchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace feedFavouriteCollectionFx {
