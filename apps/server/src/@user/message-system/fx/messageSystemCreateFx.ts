@@ -34,7 +34,7 @@ export const messageSystemCreateFx = ({
 
 			const id = genId();
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.insertInto("message_system")
 					.values({

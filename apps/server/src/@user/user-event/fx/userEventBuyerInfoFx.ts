@@ -580,51 +580,51 @@ export const computeScore = (input: {
 	} satisfies UserEventBuyerSchema.Type["score"];
 };
 
-export const userEventBuyerInfoFx = ({ userId }: userEventBuyerInfoFx.Props) => {
-	return Effect.gen(function* () {
-		const cutoff = 90;
+export const userEventBuyerInfoFx = Effect.fn("userEventBuyerInfoFx")(function* ({
+	userId,
+}: userEventBuyerInfoFx.Props) {
+	const cutoff = 90;
 
-		const { data: source } = yield* userEventCollectionFx({
-			cursor: {
-				page: 0,
-				size: 1000,
+	const { data: source } = yield* userEventCollectionFx({
+		cursor: {
+			page: 0,
+			size: 1000,
+		},
+		where: {
+			cutoff,
+			userId,
+		},
+		sort: [
+			{
+				field: "group",
+				direction: "asc",
 			},
-			where: {
-				cutoff,
-				userId,
+			{
+				field: "createdAt",
+				direction: "asc",
 			},
-			sort: [
-				{
-					field: "group",
-					direction: "asc",
-				},
-				{
-					field: "createdAt",
-					direction: "asc",
-				},
-				{
-					field: "id",
-					direction: "asc",
-				},
-			],
-		});
-
-		if (source.length <= 1) {
-			return null;
-		}
-
-		const result: Omit<UserEventBuyerSchema.Type, "score"> = {
-			reaction: computeReaction(source),
-			closer: computeCloser(source),
-			decision: computeDecision(source),
-			expired: computeExpired(source),
-			load: computeLoad(source),
-			activity: computeActivity(source, cutoff),
-		};
-
-		return {
-			...result,
-			score: computeScore(result),
-		} satisfies UserEventBuyerSchema.Type;
+			{
+				field: "id",
+				direction: "asc",
+			},
+		],
 	});
-};
+
+	if (source.length <= 1) {
+		return null;
+	}
+
+	const result: Omit<UserEventBuyerSchema.Type, "score"> = {
+		reaction: computeReaction(source),
+		closer: computeCloser(source),
+		decision: computeDecision(source),
+		expired: computeExpired(source),
+		load: computeLoad(source),
+		activity: computeActivity(source, cutoff),
+	};
+
+	return {
+		...result,
+		score: computeScore(result),
+	} satisfies UserEventBuyerSchema.Type;
+});

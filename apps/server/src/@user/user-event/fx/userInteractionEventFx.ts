@@ -12,13 +12,13 @@ export namespace userInteractionEventFx {
 	}
 }
 
-export const userInteractionEventFx = ({
+export const userInteractionEventFx = Effect.fn("userInteractionEventFx")(function* ({
 	userId,
 	targetId,
 	createdAt,
 	...props
-}: userInteractionEventFx.Props) => {
-	return withTransactionFx(
+}: userInteractionEventFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			yield* userEventCreateFx({
 				userId,
@@ -35,6 +35,6 @@ export const userInteractionEventFx = ({
 			});
 		}),
 	);
-};
+});
 
 export type userInteractionEventFx = ReturnType<typeof userInteractionEventFx>;

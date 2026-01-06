@@ -19,13 +19,13 @@ export namespace userEventCreateFx {
 	}
 }
 
-export const userEventCreateFx = ({
+export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 	userId,
 	createdAt,
 	group,
 	...props
-}: userEventCreateFx.Props) => {
-	return withTransactionFx(
+}: userEventCreateFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
@@ -34,7 +34,7 @@ export const userEventCreateFx = ({
 				return yield* Effect.void;
 			}
 
-			return yield* Effect.tryPromise(async () => {
+			return yield* Effect.promise(async () => {
 				return database
 					.insertInto("user_event")
 					.values({
@@ -49,6 +49,6 @@ export const userEventCreateFx = ({
 			});
 		}),
 	);
-};
+});
 
 export type userEventCreateFx = ReturnType<typeof userEventCreateFx>;

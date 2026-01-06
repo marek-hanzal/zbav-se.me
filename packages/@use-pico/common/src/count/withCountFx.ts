@@ -20,10 +20,12 @@ export namespace withCountFx {
 	export interface Props<
 		TSelect extends SelectQueryBuilder<any, any, any>,
 		TFilter extends FilterSchema.Type,
+		TSelectError,
+		TSelectContext,
 		TQueryError,
 		TQueryContext,
 	> {
-		select: TSelect;
+		selectFx: Effect.Effect<TSelect, TSelectError, TSelectContext>;
 		queryFx?(
 			props: Query.Props<TSelect, TFilter>,
 		): Effect.Effect<TSelect, TQueryError, TQueryContext>;
@@ -37,11 +39,13 @@ export namespace withCountFx {
 export const withCountFx = Effect.fn("withCountFx")(function* <
 	const TSelect extends SelectQueryBuilder<any, any, any>,
 	const TFilter extends FilterSchema.Type,
+	const TSelectError,
+	const TSelectContext,
 	const TQueryError,
 	const TQueryContext,
 >({
-	select,
-	queryFx = () => Effect.succeed(select),
+	selectFx,
+	queryFx = () => selectFx as unknown as Effect.Effect<TSelect, TQueryError, TQueryContext>,
 	filter,
 	where,
 	count = [
@@ -49,7 +53,8 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 		"filter",
 		"where",
 	],
-}: withCountFx.Props<TSelect, TFilter, TQueryError, TQueryContext>) {
+}: withCountFx.Props<TSelect, TFilter, TSelectError, TSelectContext, TQueryError, TQueryContext>) {
+	const select = yield* selectFx;
 	const whereSelect = yield* queryFx({
 		select,
 		where,

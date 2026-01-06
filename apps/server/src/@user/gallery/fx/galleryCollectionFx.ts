@@ -4,7 +4,6 @@ import { withGalleryQueryBuilderFx } from "~/app/gallery/db/withGalleryQueryBuil
 import { withGallerySelectFx } from "~/app/gallery/db/withGallerySelectFx";
 import type { GalleryQuerySchema } from "~/app/gallery/schema/GalleryQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { GallerySchema } from "../schema/GallerySchema";
 
 export namespace galleryCollectionFx {

@@ -16,11 +16,11 @@ export namespace transactionStatusSuccessFx {
 	};
 }
 
-export const transactionStatusSuccessFx = ({
+export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx")(function* ({
 	transactionId,
 	createdAt,
-}: transactionStatusSuccessFx.Props) => {
-	return withTransactionFx(
+}: transactionStatusSuccessFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const user = yield* UserContextFx;
 
@@ -70,6 +70,6 @@ export const transactionStatusSuccessFx = ({
 			});
 		}),
 	);
-};
+});
 
 export type transactionStatusSuccessFx = ReturnType<typeof transactionStatusSuccessFx>;

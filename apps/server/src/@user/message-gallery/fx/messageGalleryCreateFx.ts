@@ -14,12 +14,12 @@ export namespace messageGalleryCreateFx {
 	}
 }
 
-export const messageGalleryCreateFx = ({
+export const messageGalleryCreateFx = Effect.fn("messageGalleryCreateFx")(function* ({
 	messageThreadId,
 	galleryId,
 	createdAt,
-}: messageGalleryCreateFx.Props) => {
-	return withTransactionFx(
+}: messageGalleryCreateFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
@@ -33,7 +33,7 @@ export const messageGalleryCreateFx = ({
 
 			const id = genId();
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.insertInto("message_gallery")
 					.values({
@@ -54,6 +54,6 @@ export const messageGalleryCreateFx = ({
 			});
 		}),
 	);
-};
+});
 
 export type messageGalleryCreateFx = ReturnType<typeof messageGalleryCreateFx>;

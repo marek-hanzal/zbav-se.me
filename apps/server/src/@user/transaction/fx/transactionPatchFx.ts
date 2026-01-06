@@ -12,8 +12,12 @@ export namespace transactionPatchFx {
 	}
 }
 
-export const transactionPatchFx = ({ patch, query, updatedAt }: transactionPatchFx.Props) => {
-	return withTransactionFx(
+export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
+	patch,
+	query,
+	updatedAt,
+}: transactionPatchFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const config = yield* TransactionContextFx;
@@ -22,7 +26,7 @@ export const transactionPatchFx = ({ patch, query, updatedAt }: transactionPatch
 
 			const now = updatedAt ?? DateTime.now();
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.updateTable("transaction")
 					.set({
@@ -45,6 +49,6 @@ export const transactionPatchFx = ({ patch, query, updatedAt }: transactionPatch
 			});
 		}),
 	);
-};
+});
 
 export type transactionPatchFx = ReturnType<typeof transactionPatchFx>;

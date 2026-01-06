@@ -21,6 +21,10 @@ export const withIgnoreQueryBuilderFx = Effect.fn("withIgnoreQueryBuilderFx")(fu
 }: withIgnoreQueryBuilderFx.Props) {
 	let query = select;
 
+	if (!where) {
+		return yield* Effect.succeed(select);
+	}
+
 	if (where.id) {
 		query = query.where("i.id", "=", where.id);
 	}

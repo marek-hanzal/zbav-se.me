@@ -17,6 +17,10 @@ export const withGalleryItemQueryBuilderFx = Effect.fn("withGalleryItemQueryBuil
 }: withGalleryItemQueryBuilderFx.Props) {
 	let query = select;
 
+	if (!where) {
+		return yield* Effect.succeed(select);
+	}
+
 	if (where.id) {
 		query = query.where("gal_item.id", "=", where.id);
 	}

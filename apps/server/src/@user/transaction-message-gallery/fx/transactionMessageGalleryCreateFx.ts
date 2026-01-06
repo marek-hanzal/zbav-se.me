@@ -18,86 +18,85 @@ export namespace transactionMessageGalleryCreateFx {
 	}
 }
 
-export const transactionMessageGalleryCreateFx = ({
-	transactionId,
-	uploadIds,
-	createdAt,
-}: transactionMessageGalleryCreateFx.Props) => {
-	return withTransactionFx(
-		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
-			const user = yield* UserContextFx;
-			const config = yield* TransactionContextFx;
+export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGalleryCreateFx")(
+	function* ({ transactionId, uploadIds, createdAt }: transactionMessageGalleryCreateFx.Props) {
+		return yield* withTransactionFx(
+			Effect.gen(function* () {
+				const database = yield* DatabaseContextFx;
+				const user = yield* UserContextFx;
+				const config = yield* TransactionContextFx;
 
-			if (uploadIds.length === 0) {
-				return yield* new InvalidRequestError({
-					message: "At least one upload is required",
+				if (uploadIds.length === 0) {
+					return yield* new InvalidRequestError({
+						message: "At least one upload is required",
+					});
+				}
+
+				const transaction = yield* transactionStatusGateFx({
+					transactionId,
+					allowedStatuses: [
+						"open",
+						"dispute",
+					],
 				});
-			}
 
-			const transaction = yield* transactionStatusGateFx({
-				transactionId,
-				allowedStatuses: [
-					"open",
-					"dispute",
-				],
-			});
+				const now = createdAt ?? DateTime.now();
 
-			const now = createdAt ?? DateTime.now();
+				yield* Effect.promise(async () => {
+					return database
+						.updateTable("transaction")
+						.set({
+							updatedAt: now.toJSDate(),
+							expiresAt: now
+								.plus({
+									days: config.extend,
+								})
+								.toJSDate(),
+						})
+						.where("id", "=", transaction.id)
+						.executeTakeFirst();
+				});
 
-			yield* Effect.tryPromise(async () => {
-				return database
-					.updateTable("transaction")
-					.set({
-						updatedAt: now.toJSDate(),
-						expiresAt: now
-							.plus({
-								days: config.extend,
-							})
-							.toJSDate(),
-					})
-					.where("id", "=", transaction.id)
-					.executeTakeFirst();
-			});
+				const gallery = yield* galleryCreateFx();
 
-			const gallery = yield* galleryCreateFx();
+				yield* Effect.promise(async () => {
+					return database
+						.deleteFrom("gallery_item")
+						.where("galleryId", "=", gallery.id)
+						.execute();
+				});
 
-			yield* Effect.tryPromise(async () => {
-				return database
-					.deleteFrom("gallery_item")
-					.where("galleryId", "=", gallery.id)
-					.execute();
-			});
+				let sort = 0;
+				for (const uploadId of uploadIds) {
+					yield* galleryItemCreateFx({
+						galleryId: gallery.id,
+						uploadId,
+						sort,
+						createdAt,
+					});
+					sort++;
+				}
 
-			let sort = 0;
-			for (const uploadId of uploadIds) {
-				yield* galleryItemCreateFx({
-					galleryId: gallery.id,
-					uploadId,
-					sort,
+				yield* userInteractionEventFx({
+					userId: user.id,
+					targetId:
+						transaction.side === "buyer" ? transaction.sellerId : transaction.buyerId,
+					source: "transaction",
+					group: transaction.id,
+					event: "transaction.message",
+					isTerminal: false,
 					createdAt,
 				});
-				sort++;
-			}
 
-			yield* userInteractionEventFx({
-				userId: user.id,
-				targetId: transaction.side === "buyer" ? transaction.sellerId : transaction.buyerId,
-				source: "transaction",
-				group: transaction.id,
-				event: "transaction.message",
-				isTerminal: false,
-				createdAt,
-			});
-
-			return yield* messageGalleryCreateFx({
-				messageThreadId: transaction.messageThreadId,
-				galleryId: gallery.id,
-				createdAt,
-			});
-		}),
-	);
-};
+				return yield* messageGalleryCreateFx({
+					messageThreadId: transaction.messageThreadId,
+					galleryId: gallery.id,
+					createdAt,
+				});
+			}),
+		);
+	},
+);
 
 export type transactionMessageGalleryCreateFx = ReturnType<
 	typeof transactionMessageGalleryCreateFx

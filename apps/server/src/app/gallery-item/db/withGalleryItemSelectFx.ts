@@ -16,6 +16,7 @@ export const withGalleryItemSelectFx = Effect.fn("withGalleryItemSelectFx")(func
 	sort,
 }: withGalleryItemSelectFx.Props) {
 	const database = yield* DatabaseContextFx;
+
 	const uploadSelect = yield* withUploadSelectFx({});
 
 	let query = database.selectFrom("gallery_item as gal_item").select([
