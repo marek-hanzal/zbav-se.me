@@ -1,38 +1,40 @@
 import { withCollectionFx } from "@use-pico/common/collection";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { FavouriteSchema } from "~/@user/favourite/schema/FavouriteSchema";
 import { withFavouriteQueryBuilderFx } from "~/app/favourite/db/withFavouriteQueryBuilderFx";
 import { withFavouriteSelectFx } from "~/app/favourite/db/withFavouriteSelectFx";
+import type { FavouriteFilterSchema } from "~/app/favourite/schema/FavouriteFilterSchema";
 import type { FavouriteQuerySchema } from "~/app/favourite/schema/FavouriteQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
+
 export namespace favouriteCollectionFx {
-	export type Props = FavouriteQuerySchema.Type;
+	export interface Props extends FavouriteQuerySchema.Type {
+		scope: FavouriteFilterSchema.Type;
+	}
 }
 
 export const favouriteCollectionFx = Effect.fn("favouriteCollectionFx")(function* ({
-	cursor,
 	filter,
 	where,
+	scope,
+	cursor,
 	sort,
 }: favouriteCollectionFx.Props) {
-	const user = yield* UserContextFx;
-
 	return yield* withCollectionFx({
-		select: yield* withFavouriteSelectFx({
+		selectFx: withFavouriteSelectFx({
 			sort,
 		}),
-		output: FavouriteSchema,
 		cursor: cursor ?? {
 			page: 0,
 			size: 10,
 		},
 		filter,
-		where: {
-			...where,
-			userId: user.id,
-		},
+		where,
+		scope,
 		queryFx: withFavouriteQueryBuilderFx,
 	});
 });
 
 export type favouriteCollectionFx = ReturnType<typeof favouriteCollectionFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<favouriteCollectionFx>, UserContextFx>>;

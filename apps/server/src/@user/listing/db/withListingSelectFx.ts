@@ -7,22 +7,20 @@ import { withGallerySelectFx } from "~/app/gallery/db/withGallerySelectFx";
 import { withListingCollectionSelectFx } from "~/app/listing/db/withListingCollectionSelectFx";
 import type { ListingDeliveryEnumSchema } from "~/app/listing/schema/ListingDeliveryEnumSchema";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace withListingSelectFx {
 	export interface Props extends withListingCollectionSelectFx.Props {
-		//
+		userId: string;
 	}
 
 	export type Select = ReturnType<typeof withListingSelectFx>;
 }
 
 export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
+	userId,
 	sort,
 	meta,
 }: withListingSelectFx.Props) {
-	const user = yield* UserContextFx;
-
 	const listingCollectionSelect = yield* withListingCollectionSelectFx({
 		sort,
 		meta,
@@ -70,7 +68,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					.selectFrom("favourite as f")
 					.select(sql`1`.as("true"))
 					.whereRef("f.listingId", "=", "l.id")
-					.where("f.userId", "=", user.id),
+					.where("f.userId", "=", userId),
 			)
 			.$castTo<boolean>()
 			.as("isFavourite"),
@@ -81,7 +79,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					.selectFrom("ignore as i")
 					.select(sql`1`.as("true"))
 					.whereRef("i.listingId", "=", "l.id")
-					.where("i.userId", "=", user.id),
+					.where("i.userId", "=", userId),
 			)
 			.$castTo<boolean>()
 			.as("isIgnored"),
@@ -92,7 +90,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					.selectFrom("flag as f")
 					.select(sql`1`.as("true"))
 					.whereRef("f.listingId", "=", "l.id")
-					.where("f.userId", "=", user.id),
+					.where("f.userId", "=", userId),
 			)
 			.$castTo<boolean>()
 			.as("hasFlag"),
@@ -117,7 +115,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			)
 			.select("lt.id")
 			.whereRef("lt.listingId", "=", "l.id")
-			.where("lt.userId", "=", user.id)
+			.where("lt.userId", "=", userId)
 			.where("lts.status", "in", [
 				"pending",
 				"open",
@@ -133,7 +131,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			.selectFrom("feedback as fb")
 			.select("fb.type")
 			.whereRef("fb.listingId", "=", "l.id")
-			.where("fb.userId", "=", user.id)
+			.where("fb.userId", "=", userId)
 			.limit(1)
 			.$castTo<FeedbackEnumSchema.Type | null>()
 			.as("feedback"),

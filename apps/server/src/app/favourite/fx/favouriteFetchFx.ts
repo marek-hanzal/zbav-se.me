@@ -1,35 +1,36 @@
 import { withFetchFx } from "@use-pico/common/fetch";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { FavouriteSchema } from "~/@user/favourite/schema/FavouriteSchema";
 import { withFavouriteQueryBuilderFx } from "~/app/favourite/db/withFavouriteQueryBuilderFx";
 import { withFavouriteSelectFx } from "~/app/favourite/db/withFavouriteSelectFx";
+import type { FavouriteFilterSchema } from "~/app/favourite/schema/FavouriteFilterSchema";
 import type { FavouriteQuerySchema } from "~/app/favourite/schema/FavouriteQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace favouriteFetchFx {
-	export type Props = FavouriteQuerySchema.Type;
+	export interface Props extends FavouriteQuerySchema.Type {
+		scope: FavouriteFilterSchema.Type;
+	}
 }
 
 export const favouriteFetchFx = Effect.fn("favouriteFetchFx")(function* ({
 	filter,
 	where,
+	scope,
 	sort,
 }: favouriteFetchFx.Props) {
-	const user = yield* UserContextFx;
-
 	return yield* withFetchFx({
 		resource: "favourite",
-		select: yield* withFavouriteSelectFx({
+		selectFx: withFavouriteSelectFx({
 			sort,
 		}),
-		output: FavouriteSchema,
 		filter,
-		where: {
-			...where,
-			userId: user.id,
-		},
+		where,
+		scope,
 		queryFx: withFavouriteQueryBuilderFx,
 	});
 });
 
 export type favouriteFetchFx = ReturnType<typeof favouriteFetchFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<favouriteFetchFx>, UserContextFx>>;

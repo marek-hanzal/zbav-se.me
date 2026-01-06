@@ -1,8 +1,9 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { draftGalleryCreateFx } from "~/@user/draft/fx/draftGalleryCreateFx";
 import { DraftGalleryCreateSchema } from "~/@user/draft/schema/DraftGalleryCreateSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
+import { draftGalleryCreateFx } from "~/app/draft/fx/draftGalleryCreateFx";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
@@ -75,7 +76,13 @@ export const withGalleryCreateApi: Routes.Fn = async ({ userHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<GallerySchema.Type, 200>(
-					yield* draftGalleryCreateFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: GallerySchema,
+						dataFx: draftGalleryCreateFx({
+							...c.req.valid("json"),
+							userId: c.get("user").id,
+						}),
+					}),
 					200,
 				);
 			}).pipe(

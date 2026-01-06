@@ -1,36 +1,45 @@
 import { genId } from "@use-pico/common/gen-id";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import type { GalleryCreateSchema } from "~/app/gallery/schema/GalleryCreateSchema";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace galleryCreateFx {
-	export type Props = GalleryCreateSchema.Type;
+	export interface Props extends GalleryCreateSchema.Type {
+		userId: string;
+		id?: string;
+	}
 }
 
 export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* ({
 	userId,
+	id,
 	...props
 }: galleryCreateFx.Props) {
 	const database = yield* DatabaseContextFx;
 
-	const id = genId();
+	const galleryId = id ?? genId();
 
 	yield* Effect.promise(async () => {
 		return database
 			.insertInto("gallery")
 			.values({
 				...props,
-				id,
+				id: galleryId,
 				userId,
 				createdAt: new Date(),
+			})
+			.onConflict((eb) => {
+				return eb.doNothing();
 			})
 			.execute();
 	});
 
 	return yield* galleryFetchFx({
 		where: {
-			id,
+			id: galleryId,
 		},
 		scope: {
 			userId,
@@ -39,3 +48,5 @@ export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* ({
 });
 
 export type galleryCreateFx = ReturnType<typeof galleryCreateFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<galleryCreateFx>, UserContextFx>>;

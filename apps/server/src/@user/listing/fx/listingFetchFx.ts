@@ -1,29 +1,31 @@
 import { withFetchFx } from "@use-pico/common/fetch";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withListingQueryBuilderFx } from "~/@user/listing/db/withListingQueryBuilderFx";
 import { withListingSelectFx } from "~/@user/listing/db/withListingSelectFx";
 import type { ListingFilterSchema } from "~/app/listing/schema/ListingFilterSchema";
 import type { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace listingFetchFx {
 	export interface Props extends ListingQuerySchema.Type {
-		scope?: ListingFilterSchema.Type;
+		userId: string;
+		scope: ListingFilterSchema.Type;
 	}
 }
 
 export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
+	userId,
 	filter,
 	where,
 	scope,
 	sort,
 	meta,
 }: listingFetchFx.Props) {
-	const user = yield* UserContextFx;
-
 	return yield* withFetchFx({
 		resource: "listing",
 		selectFx: withListingSelectFx({
+			userId,
 			sort,
 			meta,
 		}),
@@ -33,7 +35,7 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 		queryFx(query) {
 			return withListingQueryBuilderFx({
 				...query,
-				userId: user.id,
+				userId,
 				meta,
 			});
 		},
@@ -41,3 +43,5 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 });
 
 export type listingFetchFx = ReturnType<typeof listingFetchFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<listingFetchFx>, UserContextFx>>;

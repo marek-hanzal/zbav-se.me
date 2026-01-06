@@ -7,6 +7,7 @@ import { withLikeEx } from "~/database/expression/withLikeEx";
 
 export namespace withListingQueryBuilderFx {
 	export interface Props<TSelect extends withListingCollectionSelectFx.Select> {
+		userId: string;
 		select: TSelect;
 		where?: ListingFilterSchema.Type;
 		meta?: ListingMetaSchema.Type;
@@ -23,7 +24,7 @@ export namespace withListingQueryBuilderFx {
  */
 export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(function* <
 	TSelect extends withListingCollectionSelectFx.Select,
->({ select, where, meta }: withListingQueryBuilderFx.Props<TSelect>) {
+>({ userId, select, where, meta }: withListingQueryBuilderFx.Props<TSelect>) {
 	let query = select;
 
 	if (!where) {

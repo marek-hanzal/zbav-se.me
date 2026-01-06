@@ -1,29 +1,32 @@
 import { withCountFx } from "@use-pico/common/count";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withFavouriteQueryBuilderFx } from "~/app/favourite/db/withFavouriteQueryBuilderFx";
 import { withFavouriteSelectFx } from "~/app/favourite/db/withFavouriteSelectFx";
 import type { FavouriteCountQuerySchema } from "~/app/favourite/schema/FavouriteCountQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { FavouriteFilterSchema } from "~/app/favourite/schema/FavouriteFilterSchema";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace favouriteCountFx {
-	export type Props = FavouriteCountQuerySchema.Type;
+	export interface Props extends FavouriteCountQuerySchema.Type {
+		scope: FavouriteFilterSchema.Type;
+	}
 }
 
 export const favouriteCountFx = Effect.fn("favouriteCountFx")(function* ({
 	filter,
 	where,
+	scope,
 }: favouriteCountFx.Props) {
-	const user = yield* UserContextFx;
-
 	return yield* withCountFx({
 		selectFx: withFavouriteSelectFx({}),
 		filter,
-		where: {
-			...where,
-			userId: user.id,
-		},
+		where,
+		scope,
 		queryFx: withFavouriteQueryBuilderFx,
 	});
 });
 
 export type favouriteCountFx = ReturnType<typeof favouriteCountFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<favouriteCountFx>, UserContextFx>>;

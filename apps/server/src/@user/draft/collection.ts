@@ -3,7 +3,6 @@ import { EntitySchema, zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { draftCollectionFx } from "~/app/draft/fx/draftCollectionFx";
 import { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -70,7 +69,6 @@ export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
-				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

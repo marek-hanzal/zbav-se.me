@@ -1,27 +1,28 @@
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { draftResolveFx } from "~/@user/draft/fx/draftResolveFx";
+import type { DraftGalleryCreateSchema } from "~/@user/draft/schema/DraftGalleryCreateSchema";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
+import { draftResolveFx } from "~/app/draft/fx/draftResolveFx";
 import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace draftGalleryCreateFx {
-	export interface Props {
-		draftId: string;
-		uploadIds: string[];
+	export interface Props extends DraftGalleryCreateSchema.Type {
+		userId: string;
 	}
 }
 
 export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* ({
+	userId,
 	draftId,
 	uploadIds,
 }: draftGalleryCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
-			const user = yield* UserContextFx;
 
 			if (uploadIds.length === 0) {
 				return yield* new InvalidRequestError({
@@ -30,6 +31,7 @@ export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* 
 			}
 
 			const draft = yield* draftResolveFx({
+				userId,
 				draftId,
 				message: "You are not allowed to create a gallery for this draft",
 			});
@@ -44,10 +46,10 @@ export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* 
 			let sort = 0;
 			for (const uploadId of uploadIds) {
 				yield* galleryItemCreateFx({
+					userId,
 					galleryId: draft.galleryId,
 					uploadId,
 					sort,
-					userId: user.id,
 				});
 				sort++;
 			}
@@ -56,9 +58,14 @@ export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* 
 				where: {
 					id: draft.galleryId,
 				},
+				scope: {
+					userId,
+				},
 			});
 		}),
 	);
 });
 
 export type draftGalleryCreateFx = ReturnType<typeof draftGalleryCreateFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<draftGalleryCreateFx>, UserContextFx>>;

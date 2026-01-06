@@ -1,11 +1,13 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace listingCheckIfOwnFx {
 	export interface Props {
+		userId: string;
 		listingId: string;
 		message: string;
 	}
@@ -16,12 +18,11 @@ export namespace listingCheckIfOwnFx {
  * Returns the listing's userId if validation passes.
  */
 export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
+	userId,
 	listingId,
 	message,
 }: listingCheckIfOwnFx.Props) {
 	const database = yield* DatabaseContextFx;
-	const user = yield* UserContextFx;
-
 	const listing = yield* Effect.promise(async () => {
 		return database
 			.selectFrom("listing")
@@ -38,7 +39,7 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 		});
 	}
 
-	if (listing.userId === user.id) {
+	if (listing.userId === userId) {
 		return yield* new InvalidRequestError({
 			message,
 		});
@@ -48,3 +49,5 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 });
 
 export type listingCheckIfOwnFx = ReturnType<typeof listingCheckIfOwnFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<listingCheckIfOwnFx>, UserContextFx>>;

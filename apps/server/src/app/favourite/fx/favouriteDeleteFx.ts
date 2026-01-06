@@ -1,36 +1,36 @@
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { favouriteFetchFx } from "~/app/favourite/fx/favouriteFetchFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { favouriteFetchFx } from "./favouriteFetchFx";
 
 export namespace favouriteDeleteFx {
 	export interface Props {
+		userId: string;
 		listingId: string;
 	}
 }
 
 export const favouriteDeleteFx = Effect.fn("favouriteDeleteFx")(function* ({
+	userId,
 	listingId,
 }: favouriteDeleteFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
-			const user = yield* UserContextFx;
 
 			const favourite = yield* favouriteFetchFx({
 				where: {
 					listingId,
-					userId: user.id,
+				},
+				scope: {
+					userId,
 				},
 			});
 
 			yield* Effect.promise(async () => {
-				return database
-					.deleteFrom("favourite")
-					.where("userId", "=", user.id)
-					.where("listingId", "=", listingId)
-					.execute();
+				return database.deleteFrom("favourite").where("id", "=", favourite.id).execute();
 			});
 
 			return favourite;
@@ -39,3 +39,5 @@ export const favouriteDeleteFx = Effect.fn("favouriteDeleteFx")(function* ({
 });
 
 export type favouriteDeleteFx = ReturnType<typeof favouriteDeleteFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<favouriteDeleteFx>, UserContextFx>>;

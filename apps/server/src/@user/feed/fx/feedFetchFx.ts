@@ -1,35 +1,36 @@
 import { withFetchFx } from "@use-pico/common/fetch";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withFeedQueryBuilderFx } from "~/app/feed/db/withFeedQueryBuilderFx";
 import { withFeedSelectFx } from "~/app/feed/db/withFeedSelectFx";
+import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
 import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { FeedSchema } from "../schema/FeedSchema";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace feedFetchFx {
-	export type Props = FeedQuerySchema.Type;
+	export interface Props extends FeedQuerySchema.Type {
+		scope: FeedFilterSchema.Type;
+	}
 }
 
 export const feedFetchFx = Effect.fn("feedFetchFx")(function* ({
 	filter,
 	where,
+	scope,
 	sort,
 }: feedFetchFx.Props) {
-	const user = yield* UserContextFx;
-
 	return yield* withFetchFx({
 		resource: "feed",
-		select: yield* withFeedSelectFx({
+		selectFx: withFeedSelectFx({
 			sort,
 		}),
-		output: FeedSchema,
 		filter,
-		where: {
-			...where,
-			userId: user.id,
-		},
+		where,
+		scope,
 		queryFx: withFeedQueryBuilderFx,
 	});
 });
 
 export type feedFetchFx = ReturnType<typeof feedFetchFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<feedFetchFx>, UserContextFx>>;

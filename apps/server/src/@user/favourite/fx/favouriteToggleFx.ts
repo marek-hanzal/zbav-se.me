@@ -1,17 +1,22 @@
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { favouriteCreateFx } from "~/@user/favourite/fx/favouriteCreateFx";
-import { favouriteDeleteFx } from "~/@user/favourite/fx/favouriteDeleteFx";
 import type { FavouriteToggleSchema } from "~/@user/favourite/schema/FavouriteToggleSchema";
 import { listingCheckIfOwnFx } from "~/@user/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/@user/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/@user/listing-event/fx/listingEventCreateFx";
+import { favouriteCreateFx } from "~/app/favourite/fx/favouriteCreateFx";
+import { favouriteDeleteFx } from "~/app/favourite/fx/favouriteDeleteFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace favouriteToggleFx {
-	export type Props = FavouriteToggleSchema.Type;
+	export interface Props extends FavouriteToggleSchema.Type {
+		userId: string;
+	}
 }
 
 export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
+	userId,
 	feedId,
 	listingId,
 	toggle,
@@ -19,6 +24,7 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			yield* listingCheckIfOwnFx({
+				userId,
 				listingId,
 				message: "You cannot add your own listing to favourites",
 			});
@@ -29,6 +35,7 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 						yield* favouriteCreateFx({
 							feedId,
 							listingId,
+							userId,
 						});
 
 						yield* listingEventCreateFx({
@@ -37,8 +44,12 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 						}).pipe(Effect.ignore);
 
 						return yield* listingFetchFx({
+							userId,
 							where: {
 								id: listingId,
+							},
+							scope: {
+								userId,
 							},
 						});
 					});
@@ -47,6 +58,7 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 					return Effect.gen(function* () {
 						yield* favouriteDeleteFx({
 							listingId,
+							userId,
 						});
 
 						yield* listingEventCreateFx({
@@ -55,8 +67,12 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 						}).pipe(Effect.ignore);
 
 						return yield* listingFetchFx({
+							userId,
 							where: {
 								id: listingId,
+							},
+							scope: {
+								userId,
 							},
 						});
 					});
@@ -67,3 +83,5 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 });
 
 export type favouriteToggleFx = ReturnType<typeof favouriteToggleFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<favouriteToggleFx>, UserContextFx>>;

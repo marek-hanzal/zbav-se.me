@@ -1,12 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { favouriteCountFx } from "~/app/favourite/fx/favouriteCountFx";
 import { FavouriteCountQuerySchema } from "~/app/favourite/schema/FavouriteCountQuerySchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { favouriteCountFx } from "./fx/favouriteCountFx";
 
 export const withCountApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
@@ -49,8 +49,15 @@ export const withCountApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = yield* UserContextFx;
+
 				return c.json<CountSchema.Type, 200>(
-					yield* favouriteCountFx(c.req.valid("json")),
+					yield* favouriteCountFx({
+						...c.req.valid("json"),
+						scope: {
+							userId: user.id,
+						},
+					}),
 					200,
 				);
 			}).pipe(
