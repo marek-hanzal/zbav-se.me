@@ -1,4 +1,5 @@
 import { createRoute, z } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { messageCollectionFx } from "~/@user/message/fx/messageCollectionFx";
 import { MessageSchema } from "~/@user/message/schema/MessageSchema";
@@ -19,6 +20,12 @@ const MessageThreadMessageCollectionParamsSchema = z
 	.openapi("MessageThreadMessageCollectionParams", {
 		description: "Parameters for message collection within a message thread",
 	});
+
+const MessageThreadMessageCollectionSchema = withCollectionSchema({
+	schema: MessageSchema,
+	type: "MessageCollection",
+	description: "Collection of messages",
+});
 
 export const withMessageCollectionApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
@@ -42,11 +49,7 @@ export const withMessageCollectionApi: Routes.Fn = async ({ userHono }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: withCollectionSchema({
-								schema: MessageSchema,
-								type: "MessageCollection",
-								description: "Collection of messages",
-							}),
+							schema: MessageThreadMessageCollectionSchema,
 						},
 					},
 					description: "Access collection of messages based on provided query",
@@ -88,12 +91,14 @@ export const withMessageCollectionApi: Routes.Fn = async ({ userHono }) => {
 				});
 
 				return c.json<withCollectionSchema.Type<MessageSchema>, 200>(
-					yield* messageCollectionFx({
-						...query,
-						where: {
-							...query.where,
-							messageThreadId,
-						},
+					yield* zodFx({
+						schema: MessageThreadMessageCollectionSchema,
+						dataFx: messageCollectionFx({
+							...query,
+							scope: {
+								messageThreadId,
+							},
+						}),
 					}),
 					200,
 				);

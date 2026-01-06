@@ -1,12 +1,18 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { GalleryCreateSchema } from "~/app/gallery/schema/GalleryCreateSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
-export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* () {
+export namespace galleryCreateFx {
+	export type Props = GalleryCreateSchema.Type;
+}
+
+export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* ({
+	userId,
+	...props
+}: galleryCreateFx.Props) {
 	const database = yield* DatabaseContextFx;
-	const user = yield* UserContextFx;
 
 	const id = genId();
 
@@ -14,8 +20,9 @@ export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* () {
 		return database
 			.insertInto("gallery")
 			.values({
+				...props,
 				id,
-				userId: user.id,
+				userId,
 				createdAt: new Date(),
 			})
 			.execute();
@@ -24,6 +31,9 @@ export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* () {
 	return yield* galleryFetchFx({
 		where: {
 			id,
+		},
+		scope: {
+			userId,
 		},
 	});
 });

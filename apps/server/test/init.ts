@@ -149,16 +149,14 @@ export default async function globalSetup(): Promise<SetupResult> {
 		}),
 	});
 	const database = withDatabase<Database>({
-		async dialect() {
+		dialect() {
 			return dialect;
 		},
-		onPreMigration: async () => await runAuthMigration(async () => dialect),
+		onPreMigration: async () => runAuthMigration(() => dialect),
 		getMigrations,
 	});
 
-	const kysely = await database.kysely();
-
 	await database.migrate();
 
-	await kysely.destroy();
+	await database.kysely().destroy();
 }

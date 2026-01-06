@@ -57,7 +57,9 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 						.executeTakeFirst();
 				});
 
-				const gallery = yield* galleryCreateFx();
+				const gallery = yield* galleryCreateFx({
+					userId: user.id,
+				});
 
 				yield* Effect.promise(async () => {
 					return database

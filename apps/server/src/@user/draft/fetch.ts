@@ -1,11 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { draftFetchFx } from "~/app/draft/fx/draftFetchFx";
 import { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { draftFetchFx } from "./fx/draftFetchFx";
 import { DraftSchema } from "./schema/DraftSchema";
 
 export const withFetchApi: Routes.Fn = async ({ userHono }) => {
@@ -58,7 +59,18 @@ export const withFetchApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json<DraftSchema.Type, 200>(yield* draftFetchFx(c.req.valid("json")), 200);
+				return c.json<DraftSchema.Type, 200>(
+					yield* zodFx({
+						schema: DraftSchema,
+						dataFx: draftFetchFx({
+							...c.req.valid("json"),
+							scope: {
+								userId: c.get("user").id,
+							},
+						}),
+					}),
+					200,
+				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),

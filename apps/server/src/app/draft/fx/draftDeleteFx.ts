@@ -1,28 +1,27 @@
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
+import { draftFetchFx } from "~/app/draft/fx/draftFetchFx";
+import type { DraftFilterSchema } from "~/app/draft/schema/DraftFilterSchema";
 import type { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { draftFetchFx } from "./draftFetchFx";
 
 export namespace draftDeleteFx {
-	export type Props = Omit<DraftQuerySchema.Type, "cursor" | "sort">;
+	export interface Props extends Omit<DraftQuerySchema.Type, "cursor" | "sort"> {
+		scope: DraftFilterSchema.Type;
+	}
 }
 
 export const draftDeleteFx = Effect.fn("draftDeleteFx")(function* (query: draftDeleteFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
-			const user = yield* UserContextFx;
 
 			const draft = yield* draftFetchFx(query);
 
 			yield* Effect.promise(async () => {
-				return database
-					.deleteFrom("draft")
-					.where("id", "=", draft.id)
-					.where("userId", "=", user.id)
-					.execute();
+				return database.deleteFrom("draft").where("id", "=", draft.id).execute();
 			});
 
 			return draft;
@@ -31,3 +30,5 @@ export const draftDeleteFx = Effect.fn("draftDeleteFx")(function* (query: draftD
 });
 
 export type draftDeleteFx = ReturnType<typeof draftDeleteFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<draftDeleteFx>, UserContextFx>>;

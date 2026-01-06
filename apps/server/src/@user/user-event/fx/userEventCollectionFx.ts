@@ -2,29 +2,32 @@ import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
 import { withUserEventCollectionSelectFx } from "~/app/user-event/db/withUserEventCollectionSelectFx";
 import { withUserEventQueryBuilderFx } from "~/app/user-event/db/withUserEventQueryBuilderFx";
-import { UserEventDbSchema } from "~/app/user-event/schema/UserEventDbSchema";
+import type { UserEventFilterSchema } from "~/app/user-event/schema/UserEventFilterSchema";
 import type { UserEventQuerySchema } from "~/app/user-event/schema/UserEventQuerySchema";
 export namespace userEventCollectionFx {
-	export type Props = UserEventQuerySchema.Type;
+	export interface Props extends UserEventQuerySchema.Type {
+		scope?: UserEventFilterSchema.Type;
+	}
 }
 
 export const userEventCollectionFx = Effect.fn("userEventCollectionFx")(function* ({
 	filter,
 	where,
+	scope,
 	cursor,
 	sort,
 }: userEventCollectionFx.Props) {
 	return yield* withCollectionFx({
-		select: yield* withUserEventCollectionSelectFx({
+		selectFx: withUserEventCollectionSelectFx({
 			sort,
 		}),
-		output: UserEventDbSchema,
 		cursor: cursor ?? {
 			page: 0,
 			size: 10,
 		},
 		filter,
 		where,
+		scope,
 		queryFx: withUserEventQueryBuilderFx,
 	});
 });

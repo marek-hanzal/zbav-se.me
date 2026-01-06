@@ -1,22 +1,31 @@
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { draftFetchFx } from "~/@user/draft/fx/draftFetchFx";
 import type { DraftPatchSchema } from "~/@user/draft/schema/DraftPatchSchema";
+import { draftFetchFx } from "~/app/draft/fx/draftFetchFx";
+import type { DraftFilterSchema } from "~/app/draft/schema/DraftFilterSchema";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace draftPatchFx {
-	export type Props = DraftPatchSchema.Type;
+	export interface Props extends DraftPatchSchema.Type {
+		scope: DraftFilterSchema.Type;
+	}
 }
 
 export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 	patch,
 	query,
+	scope,
 }: draftPatchFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 
-			const draft = yield* draftFetchFx(query);
+			const draft = yield* draftFetchFx({
+				...query,
+				scope,
+			});
 
 			yield* Effect.promise(async () => {
 				return database
@@ -33,9 +42,12 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 				where: {
 					id: draft.id,
 				},
+				scope: {},
 			});
 		}),
 	);
 });
 
 export type draftPatchFx = ReturnType<typeof draftPatchFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<draftPatchFx>, UserContextFx>>;

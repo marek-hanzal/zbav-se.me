@@ -1,10 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { draftCreateFx } from "~/app/draft/fx/draftCreateFx";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { draftCreateFx } from "./fx/draftCreateFx";
 import { DraftCreateSchema } from "./schema/DraftCreateSchema";
 import { DraftSchema } from "./schema/DraftSchema";
 
@@ -66,8 +67,15 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const body = c.req.valid("json");
 				return c.json<DraftSchema.Type, 201>(
-					yield* draftCreateFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: DraftSchema,
+						dataFx: draftCreateFx({
+							...body,
+							userId: c.get("user").id,
+						}),
+					}),
 					201,
 				);
 			}).pipe(

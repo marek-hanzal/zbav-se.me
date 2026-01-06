@@ -1,4 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { TransactionContextProvider } from "~/@user/transaction/fx/TransactionContextFx";
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
@@ -68,7 +69,10 @@ export const withDisputeApi: Routes.Fn = async ({ userHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<TransactionStatusSchema.Type, 200>(
-					yield* transactionStatusDisputeFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: TransactionStatusSchema,
+						dataFx: transactionStatusDisputeFx(c.req.valid("json")),
+					}),
 					200,
 				);
 			}).pipe(

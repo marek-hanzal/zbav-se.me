@@ -1,29 +1,32 @@
 import { withCountFx } from "@use-pico/common/count";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withDraftCollectionSelectFx } from "~/app/draft/db/withDraftCollectionSelectFx";
 import { withDraftQueryBuilderFx } from "~/app/draft/db/withDraftQueryBuilderFx";
 import type { DraftCountQuerySchema } from "~/app/draft/schema/DraftCountQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { DraftFilterSchema } from "~/app/draft/schema/DraftFilterSchema";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace draftCountFx {
-	export type Props = DraftCountQuerySchema.Type;
+	export interface Props extends DraftCountQuerySchema.Type {
+		scope: DraftFilterSchema.Type;
+	}
 }
 
 export const draftCountFx = Effect.fn("draftCountFx")(function* ({
 	filter,
 	where,
+	scope,
 }: draftCountFx.Props) {
-	const user = yield* UserContextFx;
-
 	return yield* withCountFx({
 		selectFx: withDraftCollectionSelectFx({}),
 		filter,
-		where: {
-			...where,
-			userId: user.id,
-		},
+		where,
+		scope,
 		queryFx: withDraftQueryBuilderFx,
 	});
 });
 
 export type draftCountFx = ReturnType<typeof draftCountFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<draftCountFx>, UserContextFx>>;

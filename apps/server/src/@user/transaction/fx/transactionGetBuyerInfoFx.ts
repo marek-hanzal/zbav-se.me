@@ -49,12 +49,12 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 
 	return yield* zodFx({
 		schema: TransactionBuyerInfoSchema,
-		data: {
+		dataFx: Effect.succeed({
 			registered: userInfo.createdAt,
 			events: yield* userEventBuyerInfoFx({
 				userId: userInfo.id,
 			}),
-		} satisfies TransactionBuyerInfoSchema.Type,
+		} satisfies TransactionBuyerInfoSchema.Type),
 	});
 });
 

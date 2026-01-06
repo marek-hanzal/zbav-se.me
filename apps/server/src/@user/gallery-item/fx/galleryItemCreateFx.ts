@@ -2,9 +2,9 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
+import { galleryItemFetchFx } from "~/app/gallery-item/fx/galleryItemFetchFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { galleryItemFetchFx } from "./galleryItemFetchFx";
 
 export namespace galleryItemCreateFx {
 	export interface Props {
@@ -54,6 +54,7 @@ export const galleryItemCreateFx = Effect.fn("galleryItemCreateFx")(function* ({
 		where: {
 			id,
 		},
+		scope: {},
 	});
 });
 

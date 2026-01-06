@@ -1,4 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { MessageTextSchema } from "~/@user/message-text/schema/MessageTextSchema";
 import { TransactionContextProvider } from "~/@user/transaction/fx/TransactionContextFx";
@@ -77,7 +78,10 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<MessageTextSchema.Type, 200>(
-					yield* transactionMessageTextCreateFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: MessageTextSchema,
+						dataFx: transactionMessageTextCreateFx(c.req.valid("json")),
+					}),
 					200,
 				);
 			}).pipe(

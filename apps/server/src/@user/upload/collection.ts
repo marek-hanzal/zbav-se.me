@@ -1,12 +1,19 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { uploadCollectionFx } from "~/app/upload/fx/uploadCollectionFx";
 import { UploadQuerySchema } from "~/app/upload/schema/UploadQuerySchema";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
-import { uploadCollectionFx } from "./fx/uploadCollectionFx";
 import { UploadSchema } from "./schema/UploadSchema";
+
+const CollectionSchema = withCollectionSchema({
+	schema: UploadSchema,
+	type: "UploadCollection",
+	description: "Collection of upload items",
+});
 
 export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
@@ -28,11 +35,7 @@ export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: withCollectionSchema({
-								schema: UploadSchema,
-								type: "UploadCollection",
-								description: "Collection of upload items",
-							}),
+							schema: CollectionSchema,
 						},
 					},
 					description: "Access collection of upload items based on provided query",
@@ -54,7 +57,13 @@ export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<withCollectionSchema.Type<UploadSchema>, 200>(
-					yield* uploadCollectionFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: CollectionSchema,
+						dataFx: uploadCollectionFx({
+							...c.req.valid("json"),
+							scope: {},
+						}),
+					}),
 					200,
 				);
 			}).pipe(

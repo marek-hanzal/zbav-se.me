@@ -2,32 +2,29 @@ import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
 import { withGalleryQueryBuilderFx } from "~/app/gallery/db/withGalleryQueryBuilderFx";
 import { withGallerySelectFx } from "~/app/gallery/db/withGallerySelectFx";
+import type { GalleryFilterSchema } from "~/app/gallery/schema/GalleryFilterSchema";
 import type { GalleryQuerySchema } from "~/app/gallery/schema/GalleryQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { GallerySchema } from "../schema/GallerySchema";
 
 export namespace galleryFetchFx {
-	export type Props = GalleryQuerySchema.Type;
+	export interface Props extends GalleryQuerySchema.Type {
+		scope?: GalleryFilterSchema.Type;
+	}
 }
 
 export const galleryFetchFx = Effect.fn("galleryFetchFx")(function* ({
 	filter,
 	where,
+	scope,
 	sort,
 }: galleryFetchFx.Props) {
-	const user = yield* UserContextFx;
-
 	return yield* withFetchFx({
 		resource: "gallery",
-		select: yield* withGallerySelectFx({
+		selectFx: withGallerySelectFx({
 			sort,
 		}),
-		output: GallerySchema,
 		filter,
-		where: {
-			...where,
-			userId: user.id,
-		},
+		where,
+		scope,
 		queryFx: withGalleryQueryBuilderFx,
 	});
 });

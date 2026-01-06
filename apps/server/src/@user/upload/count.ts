@@ -1,11 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { uploadCountFx } from "~/app/upload/fx/uploadCountFx";
 import { UploadCountQuerySchema } from "~/app/upload/schema/UploadCountQuerySchema";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { uploadCountFx } from "./fx/uploadCountFx";
 
 export const withCountApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
@@ -49,7 +49,10 @@ export const withCountApi: Routes.Fn = async ({ userHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<CountSchema.Type, 200>(
-					yield* uploadCountFx(c.req.valid("json")),
+					yield* uploadCountFx({
+						...c.req.valid("json"),
+						scope: {},
+					}),
 					200,
 				);
 			}).pipe(

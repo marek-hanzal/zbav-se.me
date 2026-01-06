@@ -9,7 +9,7 @@ export const testabase = async (id: string = genId()) => {
 
 	{
 		const database = withDatabase<Database>({
-			dialect: async () => {
+			dialect() {
 				return new PostgresDialect({
 					pool: new Pool({
 						connectionString: `${process.env.SERVER_DATABASE_URL}/postgres`,
@@ -19,15 +19,15 @@ export const testabase = async (id: string = genId()) => {
 			},
 		});
 
-		const kysely = await database.kysely();
+		await sql`CREATE DATABASE ${sql.ref(db)} TEMPLATE test OWNER test`.execute(
+			database.kysely(),
+		);
 
-		await sql`CREATE DATABASE ${sql.ref(db)} TEMPLATE test OWNER test`.execute(kysely);
-
-		await kysely.destroy();
+		await database.kysely().destroy();
 	}
 
 	return withDatabase<Database>({
-		dialect: async () => {
+		dialect() {
 			return new PostgresDialect({
 				pool: new Pool({
 					connectionString: `${process.env.SERVER_DATABASE_URL}/${db}`,

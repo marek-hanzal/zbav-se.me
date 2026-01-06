@@ -36,7 +36,9 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 				});
 			}
 
-			const gallery = yield* coolGalleryCreateFx();
+			const gallery = yield* coolGalleryCreateFx({
+				userId: user.id,
+			});
 
 			let sort = 0;
 			for (const uploadId of uploadIds) {

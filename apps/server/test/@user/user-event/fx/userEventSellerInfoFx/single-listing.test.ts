@@ -1,22 +1,20 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { categoryFetchFx } from "~/@session/category/fx/categoryFetchFx";
-import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompleteFx";
 import { listingCreateFx } from "~/@user/listing/fx/listingCreateFx";
 import { uploadCreateFx } from "~/@user/upload/fx/uploadCreateFx";
 import { userEventSellerInfoFx } from "~/@user/user-event/fx/userEventSellerInfoFx";
+import { locationAutocompleteFx } from "~/app/location/fx/locationAutocompleteFx";
 import { auth } from "~/auth/auth";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import { testabase } from "../../../../testabase";
+import { categoryFetchFx } from "~/app/category/fx/categoryFetchFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Single listing returns nothing", async () => {
 		const database = await testabase("userEventSellerInfoFx-single-listing");
 
-		const kysely = await database.kysely();
-
-		const { api } = await auth(async () => {
+		const { api } = auth(() => {
 			return database.dialect();
 		});
 

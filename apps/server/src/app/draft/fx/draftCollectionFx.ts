@@ -1,39 +1,40 @@
 import { withCollectionFx } from "@use-pico/common/collection";
-import { EntitySchema } from "@use-pico/common/schema";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withDraftCollectionSelectFx } from "~/app/draft/db/withDraftCollectionSelectFx";
 import { withDraftQueryBuilderFx } from "~/app/draft/db/withDraftQueryBuilderFx";
+import type { DraftFilterSchema } from "~/app/draft/schema/DraftFilterSchema";
 import type { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace draftCollectionFx {
-	export type Props = DraftQuerySchema.Type;
+	export interface Props extends DraftQuerySchema.Type {
+		scope: DraftFilterSchema.Type;
+	}
 }
 
 export const draftCollectionFx = Effect.fn("draftCollectionFx")(function* ({
 	cursor,
 	filter,
 	where,
+	scope,
 	sort,
 }: draftCollectionFx.Props) {
-	const user = yield* UserContextFx;
-
 	return yield* withCollectionFx({
-		select: yield* withDraftCollectionSelectFx({
+		selectFx: withDraftCollectionSelectFx({
 			sort,
 		}),
-		output: EntitySchema,
 		cursor: cursor ?? {
 			page: 0,
 			size: 10,
 		},
 		filter,
-		where: {
-			...where,
-			userId: user.id,
-		},
+		where,
+		scope,
 		queryFx: withDraftQueryBuilderFx,
 	});
 });
 
 export type draftCollectionFx = ReturnType<typeof draftCollectionFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<draftCollectionFx>, UserContextFx>>;

@@ -1,11 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { draftDeleteFx } from "~/app/draft/fx/draftDeleteFx";
 import { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { draftDeleteFx } from "./fx/draftDeleteFx";
 import { DraftSchema } from "./schema/DraftSchema";
 
 export const withDeleteApi: Routes.Fn = async ({ userHono }) => {
@@ -58,8 +59,17 @@ export const withDeleteApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const body = c.req.valid("json");
 				return c.json<DraftSchema.Type, 200>(
-					yield* draftDeleteFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: DraftSchema,
+						dataFx: draftDeleteFx({
+							...body,
+							scope: {
+								userId: c.get("user").id,
+							},
+						}),
+					}),
 					200,
 				);
 			}).pipe(

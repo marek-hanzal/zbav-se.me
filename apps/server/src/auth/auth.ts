@@ -14,8 +14,8 @@ export namespace auth {
 	export type Session = Api["$Infer"]["Session"]["session"];
 }
 
-export const auth = async (dialect: () => Promise<Dialect>) => {
-	const connection = await dialect();
+export const auth = (dialect: () => Dialect) => {
+	const connection = dialect();
 
 	/**
 	 * Necessary - resolves circular dependency
