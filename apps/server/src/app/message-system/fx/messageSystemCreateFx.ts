@@ -2,26 +2,27 @@ import { genId } from "@use-pico/common/gen-id";
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { messageLocationFetchFx } from "~/app/message-location/fx/messageLocationFetchFx";
-import type { MessageLocationCreateSchema } from "~/app/message-location/schema/MessageLocationCreateSchema";
+import { messageSystemFetchFx } from "~/app/message-system/fx/messageSystemFetchFx";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
-export namespace messageLocationCreateFx {
-	export interface Props extends MessageLocationCreateSchema.Type {
+export namespace messageSystemCreateFx {
+	export interface Props {
 		userId: string;
+		messageThreadId: string;
+		message: string;
 		createdAt?: DateTime;
 	}
 }
 
-export const messageLocationCreateFx = Effect.fn("messageLocationCreateFx")(function* ({
+export const messageSystemCreateFx = Effect.fn("messageSystemCreateFx")(function* ({
 	userId,
 	messageThreadId,
-	locationId,
+	message,
 	createdAt,
-}: messageLocationCreateFx.Props) {
+}: messageSystemCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
@@ -37,31 +38,27 @@ export const messageLocationCreateFx = Effect.fn("messageLocationCreateFx")(func
 
 			yield* Effect.promise(async () => {
 				return database
-					.insertInto("message_location")
+					.insertInto("message_system")
 					.values({
 						id,
 						messageThreadId,
-						userId,
-						locationId,
+						text: message,
 						createdAt: (createdAt ?? DateTime.now()).toJSDate(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();
 			});
 
-			return yield* messageLocationFetchFx({
+			return yield* messageSystemFetchFx({
 				where: {
 					id,
 				},
-				userId,
-				scope: {
-					userId,
-				},
+				scope: {},
 			});
 		}),
 	);
 });
 
-export type messageLocationCreateFx = ReturnType<typeof messageLocationCreateFx>;
+export type messageSystemCreateFx = ReturnType<typeof messageSystemCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageLocationCreateFx>, UserContextFx>>;
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageSystemCreateFx>, UserContextFx>>;

@@ -1,17 +1,21 @@
 import { genId } from "@use-pico/common/gen-id";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { messagePersonalFetchFx } from "~/@user/message-personal/fx/messageFetchFx";
-import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
+import { messagePersonalFetchFx } from "~/app/message-personal/fx/messagePersonalFetchFx";
 import type { MessagePersonalCreateSchema } from "~/app/message-personal/schema/MessagePersonalCreateSchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace messagePersonalCreateFx {
-	export interface Props extends MessagePersonalCreateSchema.Type {}
+	export interface Props extends MessagePersonalCreateSchema.Type {
+		userId: string;
+	}
 }
 
 export const messagePersonalCreateFx = Effect.fn("messagePersonalCreateFx")(function* ({
+	userId,
 	messageThreadId,
 	name,
 	phone,
@@ -21,11 +25,10 @@ export const messagePersonalCreateFx = Effect.fn("messagePersonalCreateFx")(func
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
-			const user = yield* UserContextFx;
 
 			yield* messageUserCheckFx({
 				userIds: [
-					user.id,
+					userId,
 				],
 				messageThreadId,
 			});
@@ -38,7 +41,7 @@ export const messagePersonalCreateFx = Effect.fn("messagePersonalCreateFx")(func
 					.values({
 						id,
 						messageThreadId,
-						userId: user.id,
+						userId,
 						name,
 						phone,
 						email,
@@ -53,9 +56,15 @@ export const messagePersonalCreateFx = Effect.fn("messagePersonalCreateFx")(func
 				where: {
 					id,
 				},
+				userId,
+				scope: {
+					userId,
+				},
 			});
 		}),
 	);
 });
 
 export type messagePersonalCreateFx = ReturnType<typeof messagePersonalCreateFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<messagePersonalCreateFx>, UserContextFx>>;

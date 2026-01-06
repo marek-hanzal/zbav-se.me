@@ -1,9 +1,9 @@
 import { genId } from "@use-pico/common/gen-id";
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { messagePackageFetchFx } from "~/app/message-package/fx/messagePackageFetchFx";
 import type { MessagePackageCreateSchema } from "~/app/message-package/schema/MessagePackageCreateSchema";
+import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";

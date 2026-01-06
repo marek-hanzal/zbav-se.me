@@ -1,30 +1,31 @@
 import { Effect } from "effect";
 import type { DateTime } from "luxon";
-import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
 import type { TransactionStatusCloseSchema } from "~/@user/transaction-status/schema/TransactionStatusCloseSchema";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { messageSystemCreateFx } from "~/app/message-system/fx/messageSystemCreateFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
+import type { AssertNever } from "@use-pico/common/type";
 
 export namespace transactionStatusCloseFx {
-	export type Props = TransactionStatusCloseSchema.Type & {
+	export interface Props extends TransactionStatusCloseSchema.Type {
+		userId: string;
 		createdAt?: DateTime;
-	};
+	}
 }
 
 export const transactionStatusCloseFx = Effect.fn("transactionStatusCloseFx")(function* ({
+	userId,
 	transactionId,
 	createdAt,
 }: transactionStatusCloseFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const user = yield* UserContextFx;
-
 			const transaction = yield* transactionResolveFx({
+				userId,
 				transactionId,
 				message: "You are not allowed to close this listing transaction",
 			});
@@ -36,6 +37,7 @@ export const transactionStatusCloseFx = Effect.fn("transactionStatusCloseFx")(fu
 			}
 
 			yield* transactionPatchFx({
+				userId,
 				patch: {},
 				query: {
 					where: {
@@ -43,16 +45,20 @@ export const transactionStatusCloseFx = Effect.fn("transactionStatusCloseFx")(fu
 					},
 				},
 				updatedAt: createdAt,
+				scope: {
+					userId,
+				},
 			});
 
 			yield* messageSystemCreateFx({
+				userId,
 				messageThreadId: transaction.messageThreadId,
 				message: "Transaction closed (message)",
 				createdAt,
 			});
 
 			yield* userInteractionEventFx({
-				userId: user.id,
+				userId,
 				targetId: transaction.sellerId,
 				source: "transaction",
 				group: transaction.id,
@@ -62,6 +68,7 @@ export const transactionStatusCloseFx = Effect.fn("transactionStatusCloseFx")(fu
 			});
 
 			return yield* transactionStatusCreateFx({
+				userId,
 				transactionId: transaction.id,
 				listingId: transaction.listingId,
 				status: "closed",
@@ -73,3 +80,5 @@ export const transactionStatusCloseFx = Effect.fn("transactionStatusCloseFx")(fu
 });
 
 export type transactionStatusCloseFx = ReturnType<typeof transactionStatusCloseFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<transactionStatusCloseFx>, UserContextFx>>;

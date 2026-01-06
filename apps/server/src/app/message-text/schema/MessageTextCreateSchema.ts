@@ -1,16 +1,17 @@
 import { z } from "@hono/zod-openapi";
 
 export const MessageTextCreateSchema = z
-	.object({
+	.looseObject({
 		messageThreadId: z.string().openapi({
-			description: "The ID of the listing transaction to add a message to",
+			description: "The ID of the message thread to add a message to",
 		}),
 		message: z.string().openapi({
 			description: "The message content",
 		}),
 	})
+	.strip()
 	.openapi("MessageTextCreate", {
-		description: "Request to create a listing transaction message",
+		description: "Request to create a message text",
 	});
 
 export type MessageTextCreateSchema = typeof MessageTextCreateSchema;

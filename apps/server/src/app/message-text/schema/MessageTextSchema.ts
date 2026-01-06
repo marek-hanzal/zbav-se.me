@@ -12,12 +12,12 @@ export const MessageTextSchema = z
 		direction: MessageDirectionEnumSchema,
 	})
 	.omit({
-		userId: true,
 		messageThreadId: true,
+		userId: true,
 	})
 	.strip()
 	.openapi("MessageText", {
-		description: "Message entry",
+		description: "Message text entry",
 	});
 
 export type MessageTextSchema = typeof MessageTextSchema;

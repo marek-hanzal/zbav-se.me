@@ -1,28 +1,24 @@
 import { genId } from "@use-pico/common/gen-id";
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
-import { messageSystemFetchFx } from "~/@user/message-system/fx/messageSystemFetchFx";
-import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
+import { messageTextFetchFx } from "~/app/message-text/fx/messageTextFetchFx";
+import type { MessageTextCreateSchema } from "~/app/message-text/schema/MessageTextCreateSchema";
+import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
-export namespace messageSystemCreateFx {
-	export interface Props {
+export namespace messageTextCreateFx {
+	export interface Props extends MessageTextCreateSchema.Type {
 		userId: string;
-		messageThreadId: string;
-		message: string;
-		createdAt?: DateTime;
 	}
 }
 
-export const messageSystemCreateFx = Effect.fn("messageSystemCreateFx")(function* ({
+export const messageTextCreateFx = Effect.fn("messageTextCreateFx")(function* ({
 	userId,
 	messageThreadId,
 	message,
-	createdAt,
-}: messageSystemCreateFx.Props) {
+}: messageTextCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
@@ -38,18 +34,20 @@ export const messageSystemCreateFx = Effect.fn("messageSystemCreateFx")(function
 
 			yield* Effect.promise(async () => {
 				return database
-					.insertInto("message_system")
+					.insertInto("message_text")
 					.values({
 						id,
 						messageThreadId,
+						userId,
 						text: message,
-						createdAt: (createdAt ?? DateTime.now()).toJSDate(),
+						createdAt: new Date(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();
 			});
 
-			return yield* messageSystemFetchFx({
+			return yield* messageTextFetchFx({
+				userId,
 				where: {
 					id,
 				},
@@ -59,6 +57,6 @@ export const messageSystemCreateFx = Effect.fn("messageSystemCreateFx")(function
 	);
 });
 
-export type messageSystemCreateFx = ReturnType<typeof messageSystemCreateFx>;
+export type messageTextCreateFx = ReturnType<typeof messageTextCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageSystemCreateFx>, UserContextFx>>;
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageTextCreateFx>, UserContextFx>>;

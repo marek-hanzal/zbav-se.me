@@ -1,11 +1,12 @@
 import { z } from "@hono/zod-openapi";
 
 export const TransactionCreateSchema = z
-	.object({
+	.looseObject({
 		listingId: z.string().openapi({
 			description: "ID of the listing to start a transaction for",
 		}),
 	})
+	.strip()
 	.openapi("TransactionCreate", {
 		description: "Data for creating a new transaction",
 	});

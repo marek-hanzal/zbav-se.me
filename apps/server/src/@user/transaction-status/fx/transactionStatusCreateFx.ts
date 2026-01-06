@@ -1,25 +1,27 @@
 import { genId } from "@use-pico/common/gen-id";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import type { TransactionStatusCreateSchema } from "~/app/transaction-status/schema/TransactionStatusCreateSchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { transactionStatusFetchFx } from "./transactionStatusFetchFx";
 
 export namespace transactionStatusCreateFx {
 	export interface Props extends TransactionStatusCreateSchema.Type {
+		userId: string;
 		listingId: string;
 		createdAt?: DateTime;
 	}
 }
 
 export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(function* ({
+	userId,
 	createdAt,
 	...create
 }: transactionStatusCreateFx.Props) {
 	const database = yield* DatabaseContextFx;
-	const user = yield* UserContextFx;
 
 	const id = genId();
 
@@ -27,9 +29,9 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 		return database
 			.insertInto("transaction_status")
 			.values({
-				id,
 				...create,
-				userId: user.id,
+				id,
+				userId,
 				createdAt: (createdAt ?? DateTime.now()).toJSDate(),
 			})
 			.returningAll()
@@ -37,6 +39,7 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 	});
 
 	yield* transactionPatchFx({
+		userId,
 		patch: {},
 		query: {
 			where: {
@@ -44,6 +47,9 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 			},
 		},
 		updatedAt: createdAt ?? DateTime.now(),
+		scope: {
+			userId,
+		},
 	});
 
 	return yield* transactionStatusFetchFx({
@@ -54,3 +60,7 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 });
 
 export type transactionStatusCreateFx = ReturnType<typeof transactionStatusCreateFx>;
+
+type _NoUser = AssertNever<
+	Extract<Effect.Effect.Context<transactionStatusCreateFx>, UserContextFx>
+>;

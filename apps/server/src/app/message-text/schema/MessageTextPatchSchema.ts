@@ -3,22 +3,25 @@ import { MessageTextDbSchema } from "~/app/message-text/schema/MessageTextDbSche
 import { MessageTextQuerySchema } from "~/app/message-text/schema/MessageTextQuerySchema";
 
 export const MessageTextPatchSchema = z
-	.object({
+	.looseObject({
 		patch: z
-			.object({
+			.looseObject({
 				...MessageTextDbSchema.shape,
 			})
 			.omit({
 				id: true,
 				messageThreadId: true,
+				userId: true,
 				createdAt: true,
 			})
+			.strip()
 			.partial()
 			.openapi({
 				description: "Fields to update (all optional)",
 			}),
 		query: MessageTextQuerySchema,
 	})
+	.strip()
 	.openapi("MessageTextPatch", {
 		description: "Data for updating an existing message text",
 	});

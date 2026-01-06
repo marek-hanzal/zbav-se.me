@@ -14,8 +14,8 @@ export const MessagePersonalSchema = z
 		location: LocationSchema,
 	})
 	.omit({
-		userId: true,
 		messageThreadId: true,
+		userId: true,
 	})
 	.strip()
 	.openapi("MessagePersonal", {

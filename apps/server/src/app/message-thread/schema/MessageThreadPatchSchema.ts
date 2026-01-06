@@ -3,22 +3,23 @@ import { MessageThreadDbSchema } from "~/app/message-thread/schema/MessageThread
 import { MessageThreadQuerySchema } from "~/app/message-thread/schema/MessageThreadQuerySchema";
 
 export const MessageThreadPatchSchema = z
-	.object({
+	.looseObject({
 		patch: z
-			.object({
+			.looseObject({
 				...MessageThreadDbSchema.shape,
 			})
 			.omit({
 				id: true,
 				createdAt: true,
-				updatedAt: true,
 			})
+			.strip()
 			.partial()
 			.openapi({
 				description: "Fields to update (all optional)",
 			}),
 		query: MessageThreadQuerySchema,
 	})
+	.strip()
 	.openapi("MessageThreadPatch", {
 		description: "Data for updating an existing message thread",
 	});

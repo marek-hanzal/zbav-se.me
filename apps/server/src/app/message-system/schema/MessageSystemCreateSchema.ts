@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
 export const MessageSystemCreateSchema = z
-	.object({
+	.looseObject({
 		messageThreadId: z.string().openapi({
 			description: "The ID of the message thread to add a system message to",
 		}),
@@ -9,6 +9,7 @@ export const MessageSystemCreateSchema = z
 			description: "The message content",
 		}),
 	})
+	.strip()
 	.openapi("MessageSystemCreate", {
 		description: "Request to create a system message",
 	});

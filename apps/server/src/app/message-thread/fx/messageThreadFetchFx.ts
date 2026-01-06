@@ -1,13 +1,15 @@
 import { withFetchFx } from "@use-pico/common/fetch";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withMessageThreadQueryBuilderFx } from "~/app/message-thread/db/withMessageThreadQueryBuilderFx";
 import { withMessageThreadSelectFx } from "~/app/message-thread/db/withMessageThreadSelectFx";
 import type { MessageThreadFilterSchema } from "~/app/message-thread/schema/MessageThreadFilterSchema";
 import type { MessageThreadQuerySchema } from "~/app/message-thread/schema/MessageThreadQuerySchema";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace messageThreadFetchFx {
 	export interface Props extends MessageThreadQuerySchema.Type {
-		scope?: MessageThreadFilterSchema.Type;
+		scope: MessageThreadFilterSchema.Type;
 	}
 }
 
@@ -30,3 +32,5 @@ export const messageThreadFetchFx = Effect.fn("messageThreadFetchFx")(function* 
 });
 
 export type messageThreadFetchFx = ReturnType<typeof messageThreadFetchFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageThreadFetchFx>, UserContextFx>>;

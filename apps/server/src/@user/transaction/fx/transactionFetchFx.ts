@@ -1,32 +1,33 @@
 import { withFetchFx } from "@use-pico/common/fetch";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withTransactionQueryBuilderFx } from "~/app/transaction/db/withTransactionQueryBuilderFx";
 import { withTransactionSelectFx } from "~/app/transaction/db/withTransactionSelectFx";
+import type { TransactionFilterSchema } from "~/app/transaction/schema/TransactionFilterSchema";
 import type { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace transactionFetchFx {
-	export type Props = TransactionQuerySchema.Type;
+	export interface Props extends TransactionQuerySchema.Type {
+		scope: TransactionFilterSchema.Type;
+	}
 }
 
 export const transactionFetchFx = Effect.fn("transactionFetchFx")(function* ({
 	filter,
 	where,
+	scope,
 	sort,
 	meta,
 }: transactionFetchFx.Props) {
-	const user = yield* UserContextFx;
-
 	return yield* withFetchFx({
 		resource: "transaction",
 		selectFx: withTransactionSelectFx({
 			sort,
 		}),
 		filter,
-		where: {
-			...where,
-			userId: user.id,
-		},
+		where,
+		scope,
 		queryFx(query) {
 			return withTransactionQueryBuilderFx({
 				meta,
@@ -37,3 +38,5 @@ export const transactionFetchFx = Effect.fn("transactionFetchFx")(function* ({
 });
 
 export type transactionFetchFx = ReturnType<typeof transactionFetchFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<transactionFetchFx>, UserContextFx>>;

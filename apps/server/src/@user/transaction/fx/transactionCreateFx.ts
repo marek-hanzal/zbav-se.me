@@ -3,33 +3,35 @@ import { genId } from "@use-pico/common/gen-id";
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
-import { messageThreadCreateFx } from "~/@user/message-thread/fx/messageThreadCreateFx";
-import { messageUserCreateFx } from "~/@user/message-thread-user/fx/messageUserCreateFx";
+import type { TransactionCreateSchema } from "~/@user/transaction/schema/TransactionCreateSchema";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { messageSystemCreateFx } from "~/app/message-system/fx/messageSystemCreateFx";
+import { messageThreadCreateFx } from "~/app/message-thread/fx/messageThreadCreateFx";
+import { messageUserCreateFx } from "~/app/message-thread-user/fx/messageUserCreateFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { TransactionContextFx } from "./TransactionContextFx";
 import { transactionFetchFx } from "./transactionFetchFx";
 
 export namespace transactionCreateFx {
-	export interface Props {
-		listingId: string;
+	export interface Props extends TransactionCreateSchema.Type {
+		userId: string;
 		createdAt?: DateTime;
 	}
 }
 
 export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
-	listingId,
+	userId,
 	createdAt,
+	listingId,
+	...data
 }: transactionCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
-			const user = yield* UserContextFx;
 			const config = yield* TransactionContextFx;
 
 			const listing = yield* Effect.promise(async () => {
@@ -59,7 +61,7 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 					/**
 					 * Allow current user executing transaction request
 					 */
-					user.id,
+					userId,
 					/**
 					 * Allow seller to participate in this thread too.
 					 */
@@ -74,8 +76,9 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 				return database
 					.insertInto("transaction")
 					.values({
+						...data,
 						id,
-						userId: user.id,
+						userId,
 						listingId,
 						messageThreadId: messageThread.id,
 						createdAt: (createdAt ?? DateTime.now()).toJSDate(),
@@ -91,6 +94,7 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 			});
 
 			yield* transactionStatusCreateFx({
+				userId,
 				transactionId: id,
 				listingId,
 				side: "buyer",
@@ -99,20 +103,21 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 			});
 
 			yield* listingEventCreateFx({
-				userId: user.id,
+				userId,
 				listingId,
 				event: "transaction",
 				createdAt,
 			}).pipe(Effect.ignore);
 
 			yield* messageSystemCreateFx({
+				userId,
 				messageThreadId: messageThread.id,
 				message: "Transaction pending (message)",
 				createdAt,
 			});
 
 			yield* userInteractionEventFx({
-				userId: user.id,
+				userId,
 				targetId: listing.userId,
 				source: "transaction",
 				group: id,
@@ -123,6 +128,9 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 			return yield* transactionFetchFx({
 				where: {
 					id,
+				},
+				scope: {
+					userId,
 				},
 			});
 		}),

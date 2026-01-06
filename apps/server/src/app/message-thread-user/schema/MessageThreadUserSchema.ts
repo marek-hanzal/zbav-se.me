@@ -2,12 +2,10 @@ import { z } from "@hono/zod-openapi";
 import { MessageThreadUserDbSchema } from "~/app/message-thread-user/schema/MessageThreadUserDbSchema";
 
 export const MessageThreadUserSchema = z
-	.object({
+	.looseObject({
 		...MessageThreadUserDbSchema.shape,
 	})
-	.omit({
-		createdAt: true,
-	})
+	.strip()
 	.openapi("MessageThreadUser", {
 		description: "Message thread user entry",
 	});
