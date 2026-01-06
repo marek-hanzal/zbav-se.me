@@ -1,7 +1,7 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
 import { withTransactionQueryBuilder } from "~/app/transaction/db/withTransactionQueryBuilder";
-import { withTransactionSelect } from "~/app/transaction/db/withTransactionSelect";
+import { withTransactionSelectFx } from "~/app/transaction/db/withTransactionSelectFx";
 import type { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -22,7 +22,7 @@ export const transactionFetchFx = Effect.fn("transactionFetchFx")(function* ({
 
 	return yield* withFetchFx({
 		resource: "transaction",
-		select: withTransactionSelect({
+		select: yield* withTransactionSelectFx({
 			database,
 			sort,
 		}),

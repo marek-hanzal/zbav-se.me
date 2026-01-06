@@ -1,7 +1,7 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
 import { withIgnoreQueryBuilder } from "~/app/ignore/db/withIgnoreQueryBuilder";
-import { withIgnoreSelect } from "~/app/ignore/db/withIgnoreSelect";
+import { withIgnoreSelectFx } from "~/app/ignore/db/withIgnoreSelectFx";
 import type { IgnoreQuerySchema } from "~/app/ignore/schema/IgnoreQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -21,7 +21,7 @@ export const ignoreCollectionFx = Effect.fn("ignoreCollectionFx")(function* ({
 	const user = yield* UserContextFx;
 
 	return yield* withCollectionFx({
-		select: withIgnoreSelect({
+		select: yield* withIgnoreSelectFx({
 			database,
 			sort,
 		}),

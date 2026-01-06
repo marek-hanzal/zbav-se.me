@@ -1,7 +1,7 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
 import { withGalleryItemQueryBuilder } from "~/app/gallery-item/db/withGalleryItemQueryBuilder";
-import { withGalleryItemSelect } from "~/app/gallery-item/db/withGalleryItemSelect";
+import { withGalleryItemSelectFx } from "~/app/gallery-item/db/withGalleryItemSelectFx";
 import type { GalleryItemQuerySchema } from "~/app/gallery-item/schema/GalleryItemQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -21,7 +21,7 @@ export const galleryItemCollectionFx = Effect.fn("galleryItemCollectionFx")(func
 	const user = yield* UserContextFx;
 
 	return yield* withCollectionFx({
-		select: withGalleryItemSelect({
+		select: yield* withGalleryItemSelectFx({
 			database,
 			sort,
 		}),

@@ -1,7 +1,7 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
 import { withFeedQueryBuilder } from "~/app/feed/db/withFeedQueryBuilder";
-import { withFeedSelect } from "~/app/feed/db/withFeedSelect";
+import { withFeedSelectFx } from "~/app/feed/db/withFeedSelectFx";
 import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -21,7 +21,7 @@ export const feedFetchFx = Effect.fn("feedFetchFx")(function* ({
 
 	return yield* withFetchFx({
 		resource: "feed",
-		select: withFeedSelect({
+		select: yield* withFeedSelectFx({
 			database,
 			sort,
 		}),

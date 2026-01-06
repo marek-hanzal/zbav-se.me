@@ -1,7 +1,7 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { EntitySchema } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { withTransactionCollectionSelect } from "~/app/transaction/db/withTransactionCollectionSelect";
+import { withTransactionCollectionSelectFx } from "~/app/transaction/db/withTransactionCollectionSelectFx";
 import { withTransactionQueryBuilder } from "~/app/transaction/db/withTransactionQueryBuilder";
 import type { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
@@ -22,7 +22,7 @@ export const transactionCollectionFx = Effect.fn("transactionCollectionFx")(func
 	const user = yield* UserContextFx;
 
 	return yield* withCollectionFx({
-		select: withTransactionCollectionSelect({
+		select: yield* withTransactionCollectionSelectFx({
 			database,
 			sort,
 		}),

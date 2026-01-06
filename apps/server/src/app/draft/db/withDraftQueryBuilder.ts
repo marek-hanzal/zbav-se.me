@@ -1,15 +1,15 @@
-import type { withDraftCollectionSelect } from "~/app/draft/db/withDraftCollectionSelect";
+import type { withDraftCollectionSelectFx } from "~/app/draft/db/withDraftCollectionSelectFx";
 import type { DraftFilterSchema } from "~/app/draft/schema/DraftFilterSchema";
 
 export namespace withDraftQueryBuilder {
 	export interface Props<
-		TSelect extends withDraftCollectionSelect.Select = withDraftCollectionSelect.Select,
+		TSelect extends withDraftCollectionSelectFx.Select = withDraftCollectionSelectFx.Select,
 	> {
 		select: TSelect;
 		where?: DraftFilterSchema.Type;
 	}
 
-	export type Callback = <TSelect extends withDraftCollectionSelect.Select>(
+	export type Callback = <TSelect extends withDraftCollectionSelectFx.Select>(
 		props: Props<TSelect>,
 	) => TSelect;
 }
@@ -17,10 +17,10 @@ export namespace withDraftQueryBuilder {
 /**
  * Standalone query builder that applies all filters from DraftQuerySchema
  * Can be used by both list and count queries to ensure consistency
- * Generic to support extended select types that extend from withDraftCollectionSelect.Select
+ * Generic to support extended select types that extend from withDraftCollectionSelectFx.Select
  */
 export const withDraftQueryBuilder: withDraftQueryBuilder.Callback = <
-	TSelect extends withDraftCollectionSelect.Select,
+	TSelect extends withDraftCollectionSelectFx.Select,
 >({
 	select,
 	where,

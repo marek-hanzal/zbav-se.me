@@ -1,13 +1,13 @@
 import type { ListingEventFilterSchema } from "~/app/listing-event/schema/ListingEventFilterSchema";
-import type { withListingEventSelect } from "./withListingEventSelect";
+import type { withListingEventSelectFx } from "./withListingEventSelectFx";
 
 export namespace withListingEventQueryBuilder {
 	export interface Props {
-		select: withListingEventSelect.Select;
+		select: withListingEventSelectFx.Select;
 		where?: ListingEventFilterSchema.Type;
 	}
 
-	export type Callback = (props: Props) => withListingEventSelect.Select;
+	export type Callback = (props: Props) => withListingEventSelectFx.Select;
 }
 
 /**

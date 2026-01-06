@@ -1,7 +1,7 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
 import { withFlagQueryBuilder } from "~/app/flag/db/withFlagQueryBuilder";
-import { withFlagSelect } from "~/app/flag/db/withFlagSelect";
+import { withFlagSelectFx } from "~/app/flag/db/withFlagSelectFx";
 import type { FlagQuerySchema } from "~/app/flag/schema/FlagQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -21,7 +21,7 @@ export const flagFetchFx = Effect.fn("flagFetchFx")(function* ({
 
 	return yield* withFetchFx({
 		resource: "flag",
-		select: withFlagSelect({
+		select: yield* withFlagSelectFx({
 			database,
 			sort,
 		}),

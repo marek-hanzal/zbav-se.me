@@ -1,13 +1,13 @@
 import type { FlagFilterSchema } from "~/app/flag/schema/FlagFilterSchema";
-import type { withFlagSelect } from "./withFlagSelect";
+import type { withFlagSelectFx } from "./withFlagSelectFx";
 
 export namespace withFlagQueryBuilder {
 	export interface Props {
-		select: withFlagSelect.Select;
+		select: withFlagSelectFx.Select;
 		where?: FlagFilterSchema.Type;
 	}
 
-	export type Callback = (props: Props) => withFlagSelect.Select;
+	export type Callback = (props: Props) => withFlagSelectFx.Select;
 }
 
 /**

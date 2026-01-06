@@ -1,13 +1,13 @@
 import type { UploadFilterSchema } from "~/app/upload/schema/UploadFilterSchema";
-import type { withUploadSelect } from "./withUploadSelect";
+import type { withUploadSelectFx } from "./withUploadSelectFx";
 
 export namespace withUploadQueryBuilder {
 	export interface Props {
-		select: withUploadSelect.Select;
+		select: withUploadSelectFx.Select;
 		where?: UploadFilterSchema.Type;
 	}
 
-	export type Callback = (props: Props) => withUploadSelect.Select;
+	export type Callback = (props: Props) => withUploadSelectFx.Select;
 }
 
 export const withUploadQueryBuilder: withUploadQueryBuilder.Callback = ({ select, where }) => {

@@ -1,15 +1,15 @@
-import type { withFeedCollectionSelect } from "~/app/feed/db/withFeedCollectionSelect";
+import type { withFeedCollectionSelectFx } from "~/app/feed/db/withFeedCollectionSelectFx";
 import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
 
 export namespace withFeedQueryBuilder {
 	export interface Props<
-		TSelect extends withFeedCollectionSelect.Select = withFeedCollectionSelect.Select,
+		TSelect extends withFeedCollectionSelectFx.Select = withFeedCollectionSelectFx.Select,
 	> {
 		select: TSelect;
 		where?: FeedFilterSchema.Type;
 	}
 
-	export type Callback = <TSelect extends withFeedCollectionSelect.Select>(
+	export type Callback = <TSelect extends withFeedCollectionSelectFx.Select>(
 		props: Props<TSelect>,
 	) => TSelect;
 }
@@ -17,10 +17,10 @@ export namespace withFeedQueryBuilder {
 /**
  * Standalone query builder that applies all filters from FeedQuerySchema
  * Can be used by both list and count queries to ensure consistency
- * Generic to support extended select types that extend from withFeedSelect.Select
+ * Generic to support extended select types that extend from withFeedSelectFx.Select
  */
 export const withFeedQueryBuilder: withFeedQueryBuilder.Callback = <
-	TSelect extends withFeedCollectionSelect.Select,
+	TSelect extends withFeedCollectionSelectFx.Select,
 >({
 	select,
 	where,

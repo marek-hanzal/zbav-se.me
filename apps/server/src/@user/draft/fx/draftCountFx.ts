@@ -1,6 +1,6 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
-import { withDraftCollectionSelect } from "~/app/draft/db/withDraftCollectionSelect";
+import { withDraftCollectionSelectFx } from "~/app/draft/db/withDraftCollectionSelectFx";
 import { withDraftQueryBuilder } from "~/app/draft/db/withDraftQueryBuilder";
 import type { DraftCountQuerySchema } from "~/app/draft/schema/DraftCountQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
@@ -18,7 +18,7 @@ export const draftCountFx = Effect.fn("draftCountFx")(function* ({
 	const user = yield* UserContextFx;
 
 	return yield* withCountFx({
-		select: withDraftCollectionSelect({
+		select: yield* withDraftCollectionSelectFx({
 			database,
 			sort: undefined,
 		}),

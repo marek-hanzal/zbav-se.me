@@ -1,13 +1,13 @@
 import type { IgnoreFilterSchema } from "~/app/ignore/schema/IgnoreFilterSchema";
-import type { withIgnoreSelect } from "./withIgnoreSelect";
+import type { withIgnoreSelectFx } from "./withIgnoreSelectFx";
 
 export namespace withIgnoreQueryBuilder {
 	export interface Props {
-		select: withIgnoreSelect.Select;
+		select: withIgnoreSelectFx.Select;
 		where?: IgnoreFilterSchema.Type;
 	}
 
-	export type Callback = (props: Props) => withIgnoreSelect.Select;
+	export type Callback = (props: Props) => withIgnoreSelectFx.Select;
 }
 
 /**

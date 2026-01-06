@@ -3,12 +3,11 @@ import { sql } from "kysely";
 import { match } from "ts-pattern";
 import type { ListingMetaSchema } from "~/@user/listing/schema/ListingMetaSchema";
 import type { ListingSortSchema } from "~/app/listing/schema/ListingSortSchema";
-import type { WithDatabase } from "~/database/WithDatabase";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withListingCollectionSelectFx {
 	export interface Props {
-		database: WithDatabase;
-		sort: ListingSortSchema.Type[] | undefined;
+		sort?: ListingSortSchema.Type[];
 		meta: ListingMetaSchema.Type | undefined;
 	}
 
@@ -16,10 +15,11 @@ export namespace withListingCollectionSelectFx {
 }
 
 export const withListingCollectionSelectFx = Effect.fn("withListingCollectionSelectFx")(function* ({
-	database,
 	sort,
 	meta,
 }: withListingCollectionSelectFx.Props) {
+	const database = yield* DatabaseContextFx;
+
 	let query = database
 		.selectFrom("listing as l")
 		.innerJoin("location as loc", "loc.id", "l.locationId")

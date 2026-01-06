@@ -7,31 +7,28 @@ import { withGallerySelectFx } from "~/app/gallery/db/withGallerySelectFx";
 import { withListingCollectionSelectFx } from "~/app/listing/db/withListingCollectionSelectFx";
 import type { ListingDeliveryEnumSchema } from "~/app/listing/schema/ListingDeliveryEnumSchema";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace withListingSelectFx {
 	export interface Props extends withListingCollectionSelectFx.Props {
-		userId: string;
+		//
 	}
 
-	export type Select = Effect.Effect.Success<ReturnType<typeof withListingSelectFx>>;
+	export type Select = ReturnType<typeof withListingSelectFx>;
 }
 
 export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
-	database,
-	userId,
 	sort,
 	meta,
 }: withListingSelectFx.Props) {
+	const user = yield* UserContextFx;
+
 	const listingCollectionSelect = yield* withListingCollectionSelectFx({
-		database,
 		sort,
 		meta,
 	});
 
-	const gallerySelect = yield* withGallerySelectFx({
-		database,
-		sort: undefined,
-	});
+	const gallerySelect = yield* withGallerySelectFx({});
 
 	return listingCollectionSelect.selectAll("l").select((eb) => [
 		sql<LocationDbSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
@@ -73,7 +70,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					.selectFrom("favourite as f")
 					.select(sql`1`.as("true"))
 					.whereRef("f.listingId", "=", "l.id")
-					.where("f.userId", "=", userId),
+					.where("f.userId", "=", user.id),
 			)
 			.$castTo<boolean>()
 			.as("isFavourite"),
@@ -84,7 +81,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					.selectFrom("ignore as i")
 					.select(sql`1`.as("true"))
 					.whereRef("i.listingId", "=", "l.id")
-					.where("i.userId", "=", userId),
+					.where("i.userId", "=", user.id),
 			)
 			.$castTo<boolean>()
 			.as("isIgnored"),
@@ -95,7 +92,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 					.selectFrom("flag as f")
 					.select(sql`1`.as("true"))
 					.whereRef("f.listingId", "=", "l.id")
-					.where("f.userId", "=", userId),
+					.where("f.userId", "=", user.id),
 			)
 			.$castTo<boolean>()
 			.as("hasFlag"),
@@ -120,7 +117,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			)
 			.select("lt.id")
 			.whereRef("lt.listingId", "=", "l.id")
-			.where("lt.userId", "=", userId)
+			.where("lt.userId", "=", user.id)
 			.where("lts.status", "in", [
 				"pending",
 				"open",
@@ -136,7 +133,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			.selectFrom("feedback as fb")
 			.select("fb.type")
 			.whereRef("fb.listingId", "=", "l.id")
-			.where("fb.userId", "=", userId)
+			.where("fb.userId", "=", user.id)
 			.limit(1)
 			.$castTo<FeedbackEnumSchema.Type | null>()
 			.as("feedback"),

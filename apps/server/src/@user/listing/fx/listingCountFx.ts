@@ -1,6 +1,6 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
-import { withListingCollectionSelect } from "~/app/listing/db/withListingCollectionSelect";
+import { withListingCollectionSelectFx } from "~/app/listing/db/withListingCollectionSelectFx";
 import { withListingQueryBuilder } from "~/app/listing/db/withListingQueryBuilder";
 import type { ListingCountQuerySchema } from "~/app/listing/schema/ListingCountQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
@@ -19,7 +19,7 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	const user = yield* UserContextFx;
 
 	return yield* withCountFx({
-		select: withListingCollectionSelect({
+		select: yield* withListingCollectionSelectFx({
 			database,
 			sort: undefined,
 			meta,

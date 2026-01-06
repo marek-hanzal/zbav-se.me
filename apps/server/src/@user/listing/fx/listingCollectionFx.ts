@@ -1,7 +1,7 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { EntitySchema } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { withListingCollectionSelect } from "~/app/listing/db/withListingCollectionSelect";
+import { withListingCollectionSelectFx } from "~/app/listing/db/withListingCollectionSelectFx";
 import { withListingQueryBuilder } from "~/app/listing/db/withListingQueryBuilder";
 import type { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
@@ -22,7 +22,7 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 	const user = yield* UserContextFx;
 
 	return yield* withCollectionFx({
-		select: withListingCollectionSelect({
+		select: yield* withListingCollectionSelectFx({
 			database,
 			sort,
 			meta,

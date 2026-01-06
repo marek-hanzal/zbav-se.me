@@ -1,21 +1,21 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { DraftSortSchema } from "~/app/draft/schema/DraftSortSchema";
-import type { WithDatabase } from "~/database/WithDatabase";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withDraftCollectionSelectFx {
 	export interface Props {
-		database: WithDatabase;
-		sort: DraftSortSchema.Type[] | undefined;
+		sort?: DraftSortSchema.Type[];
 	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withDraftCollectionSelectFx>>;
 }
 
 export const withDraftCollectionSelectFx = Effect.fn("withDraftCollectionSelectFx")(function* ({
-	database,
 	sort,
 }: withDraftCollectionSelectFx.Props) {
+	const database = yield* DatabaseContextFx;
+
 	let query = database
 		.selectFrom("draft as d")
 		.leftJoin("location as loc", "loc.id", "d.locationId")

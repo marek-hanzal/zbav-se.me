@@ -1,13 +1,13 @@
 import type { FavouriteFilterSchema } from "~/app/favourite/schema/FavouriteFilterSchema";
-import type { withFavouriteSelect } from "./withFavouriteSelect";
+import type { withFavouriteSelectFx } from "./withFavouriteSelectFx";
 
 export namespace withFavouriteQueryBuilder {
 	export interface Props {
-		select: withFavouriteSelect.Select;
+		select: withFavouriteSelectFx.Select;
 		where?: FavouriteFilterSchema.Type;
 	}
 
-	export type Callback = (props: Props) => withFavouriteSelect.Select;
+	export type Callback = (props: Props) => withFavouriteSelectFx.Select;
 }
 
 /**

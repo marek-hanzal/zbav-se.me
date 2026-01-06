@@ -1,7 +1,7 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
 import { withFavouriteQueryBuilder } from "~/app/favourite/db/withFavouriteQueryBuilder";
-import { withFavouriteSelect } from "~/app/favourite/db/withFavouriteSelect";
+import { withFavouriteSelectFx } from "~/app/favourite/db/withFavouriteSelectFx";
 import type { FavouriteCountQuerySchema } from "~/app/favourite/schema/FavouriteCountQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -18,7 +18,7 @@ export const favouriteCountFx = Effect.fn("favouriteCountFx")(function* ({
 	const user = yield* UserContextFx;
 
 	return yield* withCountFx({
-		select: withFavouriteSelect({
+		select: yield* withFavouriteSelectFx({
 			database,
 			sort: undefined,
 		}),

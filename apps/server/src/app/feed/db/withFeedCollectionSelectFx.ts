@@ -1,21 +1,21 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { FeedSortSchema } from "~/app/feed/schema/FeedSortSchema";
-import type { WithDatabase } from "~/database/WithDatabase";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withFeedCollectionSelectFx {
 	export interface Props {
-		database: WithDatabase;
-		sort: FeedSortSchema.Type[] | undefined;
+		sort?: FeedSortSchema.Type[];
 	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withFeedCollectionSelectFx>>;
 }
 
 export const withFeedCollectionSelectFx = Effect.fn("withFeedCollectionSelectFx")(function* ({
-	database,
 	sort,
 }: withFeedCollectionSelectFx.Props) {
+	const database = yield* DatabaseContextFx;
+
 	let query = database.selectFrom("feed as f").select("f.id");
 
 	for (const item of sort ?? []) {

@@ -1,12 +1,11 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { TransactionSortSchema } from "~/app/transaction/schema/TransactionSortSchema";
-import type { WithDatabase } from "~/database/WithDatabase";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withTransactionCollectionSelectFx {
 	export interface Props {
-		database: WithDatabase;
-		sort: TransactionSortSchema.Type[] | undefined;
+		sort?: TransactionSortSchema.Type[];
 	}
 
 	export type Select = Effect.Effect.Success<
@@ -15,7 +14,9 @@ export namespace withTransactionCollectionSelectFx {
 }
 
 export const withTransactionCollectionSelectFx = Effect.fn("withTransactionCollectionSelectFx")(
-	function* ({ database, sort }: withTransactionCollectionSelectFx.Props) {
+	function* ({ sort }: withTransactionCollectionSelectFx.Props) {
+		const database = yield* DatabaseContextFx;
+
 		let query = database
 			.selectFrom("transaction as lt")
 			.innerJoin("listing as l", "lt.listingId", "l.id")

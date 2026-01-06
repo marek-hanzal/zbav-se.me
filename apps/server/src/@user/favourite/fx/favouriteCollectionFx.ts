@@ -2,7 +2,7 @@ import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
 import { FavouriteSchema } from "~/@user/favourite/schema/FavouriteSchema";
 import { withFavouriteQueryBuilder } from "~/app/favourite/db/withFavouriteQueryBuilder";
-import { withFavouriteSelect } from "~/app/favourite/db/withFavouriteSelect";
+import { withFavouriteSelectFx } from "~/app/favourite/db/withFavouriteSelectFx";
 import type { FavouriteQuerySchema } from "~/app/favourite/schema/FavouriteQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -21,7 +21,7 @@ export const favouriteCollectionFx = Effect.fn("favouriteCollectionFx")(function
 	const user = yield* UserContextFx;
 
 	return yield* withCollectionFx({
-		select: withFavouriteSelect({
+		select: yield* withFavouriteSelectFx({
 			database,
 			sort,
 		}),

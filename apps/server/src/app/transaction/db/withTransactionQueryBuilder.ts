@@ -1,19 +1,19 @@
 import { match } from "ts-pattern";
 import type { TransactionMetaSchema } from "~/@user/transaction/schema/TransactionMetaSchema";
-import type { withTransactionCollectionSelect } from "~/app/transaction/db/withTransactionCollectionSelect";
+import type { withTransactionCollectionSelectFx } from "~/app/transaction/db/withTransactionCollectionSelectFx";
 import type { TransactionFilterSchema } from "~/app/transaction/schema/TransactionFilterSchema";
 
 export namespace withTransactionQueryBuilder {
 	export interface Props<
 		TSelect extends
-			withTransactionCollectionSelect.Select = withTransactionCollectionSelect.Select,
+			withTransactionCollectionSelectFx.Select = withTransactionCollectionSelectFx.Select,
 	> {
 		select: TSelect;
 		where?: TransactionFilterSchema.Type;
 		meta?: TransactionMetaSchema.Type;
 	}
 
-	export type Callback = <TSelect extends withTransactionCollectionSelect.Select>(
+	export type Callback = <TSelect extends withTransactionCollectionSelectFx.Select>(
 		props: Props<TSelect>,
 	) => TSelect;
 }
@@ -23,7 +23,7 @@ export namespace withTransactionQueryBuilder {
  * Generic to support extended select types (e.g. collection selects returning IDs only).
  */
 export const withTransactionQueryBuilder: withTransactionQueryBuilder.Callback = <
-	TSelect extends withTransactionCollectionSelect.Select,
+	TSelect extends withTransactionCollectionSelectFx.Select,
 >({
 	select,
 	where,

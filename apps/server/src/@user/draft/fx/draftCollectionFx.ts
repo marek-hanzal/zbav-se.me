@@ -1,7 +1,7 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { EntitySchema } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { withDraftCollectionSelect } from "~/app/draft/db/withDraftCollectionSelect";
+import { withDraftCollectionSelectFx } from "~/app/draft/db/withDraftCollectionSelectFx";
 import { withDraftQueryBuilder } from "~/app/draft/db/withDraftQueryBuilder";
 import type { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
@@ -21,7 +21,7 @@ export const draftCollectionFx = Effect.fn("draftCollectionFx")(function* ({
 	const user = yield* UserContextFx;
 
 	return yield* withCollectionFx({
-		select: withDraftCollectionSelect({
+		select: yield* withDraftCollectionSelectFx({
 			database,
 			sort,
 		}),

@@ -1,16 +1,20 @@
+import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { UploadSortSchema } from "~/app/upload/schema/UploadSortSchema";
-import type { WithDatabase } from "~/database/WithDatabase";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
-export namespace withUploadSelect {
+export namespace withUploadSelectFx {
 	export interface Props {
-		database: WithDatabase;
 		sort?: UploadSortSchema.Type[];
 	}
-	export type Select = ReturnType<typeof withUploadSelect>;
+	export type Select = Effect.Effect.Success<ReturnType<typeof withUploadSelectFx>>;
 }
 
-export const withUploadSelect = ({ database, sort }: withUploadSelect.Props) => {
+export const withUploadSelectFx = Effect.fn("withUploadSelectFx")(function* ({
+	sort,
+}: withUploadSelectFx.Props) {
+	const database = yield* DatabaseContextFx;
+
 	let query = database.selectFrom("upload as u").select([
 		"u.id",
 		"u.url",
@@ -23,4 +27,4 @@ export const withUploadSelect = ({ database, sort }: withUploadSelect.Props) => 
 	}
 
 	return query;
-};
+});

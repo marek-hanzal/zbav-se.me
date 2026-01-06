@@ -10,22 +10,17 @@ import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 export namespace withDraftSelectFx {
 	export interface Props extends withDraftCollectionSelectFx.Props {}
 
-	export type Select = Effect.Effect.Success<ReturnType<typeof withDraftSelectFx>>;
+	export type Select = ReturnType<typeof withDraftSelectFx>;
 }
 
 export const withDraftSelectFx = Effect.fn("withDraftSelectFx")(function* ({
-	database,
 	sort,
 }: withDraftSelectFx.Props) {
 	const draftCollectionSelect = yield* withDraftCollectionSelectFx({
-		database,
 		sort,
 	});
 
-	const gallerySelect = yield* withGallerySelectFx({
-		database,
-		sort: undefined,
-	});
+	const gallerySelect = yield* withGallerySelectFx({});
 
 	return draftCollectionSelect.selectAll("d").select((eb) => [
 		sql<LocationDbSchema.Type | null>`to_jsonb(${eb.table("loc")}.*)`.as("location"),

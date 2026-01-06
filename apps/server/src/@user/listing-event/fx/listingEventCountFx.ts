@@ -1,7 +1,7 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
 import { withListingEventQueryBuilder } from "~/app/listing-event/db/withListingEventQueryBuilder";
-import { withListingEventSelect } from "~/app/listing-event/db/withListingEventSelect";
+import { withListingEventSelectFx } from "~/app/listing-event/db/withListingEventSelectFx";
 import type { ListingEventCountQuerySchema } from "~/app/listing-event/schema/ListingEventCountQuerySchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
@@ -16,7 +16,7 @@ export const listingEventCountFx = Effect.fn("listingEventCountFx")(function* ({
 	const database = yield* DatabaseContextFx;
 
 	return yield* withCountFx({
-		select: withListingEventSelect({
+		select: yield* withListingEventSelectFx({
 			database,
 			sort: undefined,
 		}),

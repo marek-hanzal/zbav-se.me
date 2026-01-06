@@ -1,7 +1,7 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { EntitySchema } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { withFeedCollectionSelect } from "~/app/feed/db/withFeedCollectionSelect";
+import { withFeedCollectionSelectFx } from "~/app/feed/db/withFeedCollectionSelectFx";
 import { withFeedQueryBuilder } from "~/app/feed/db/withFeedQueryBuilder";
 import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
@@ -21,7 +21,7 @@ export const feedCollectionFx = Effect.fn("feedCollectionFx")(function* ({
 	const user = yield* UserContextFx;
 
 	return yield* withCollectionFx({
-		select: withFeedCollectionSelect({
+		select: yield* withFeedCollectionSelectFx({
 			database,
 			sort,
 		}),

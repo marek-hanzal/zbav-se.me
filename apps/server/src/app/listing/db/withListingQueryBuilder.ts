@@ -1,18 +1,18 @@
 import { sql } from "kysely";
 import type { ListingMetaSchema } from "~/@user/listing/schema/ListingMetaSchema";
-import type { withListingCollectionSelect } from "~/app/listing/db/withListingCollectionSelect";
+import type { withListingCollectionSelectFx } from "~/app/listing/db/withListingCollectionSelectFx";
 import type { ListingFilterSchema } from "~/app/listing/schema/ListingFilterSchema";
 import { withLikeEx } from "~/database/expression/withLikeEx";
 
 export namespace withListingQueryBuilder {
-	export interface Props<TSelect extends withListingCollectionSelect.Select> {
+	export interface Props<TSelect extends withListingCollectionSelectFx.Select> {
 		userId: string;
 		select: TSelect;
 		where?: ListingFilterSchema.Type;
 		meta?: ListingMetaSchema.Type;
 	}
 
-	export type Callback<TSelect extends withListingCollectionSelect.Select> = (
+	export type Callback<TSelect extends withListingCollectionSelectFx.Select> = (
 		props: Props<TSelect>,
 	) => TSelect;
 }
@@ -21,7 +21,7 @@ export namespace withListingQueryBuilder {
  * Standalone query builder that applies all filters from ListingQuerySchema
  * Can be used by both list and count queries to ensure consistency
  */
-export const withListingQueryBuilder = <TSelect extends withListingCollectionSelect.Select>({
+export const withListingQueryBuilder = <TSelect extends withListingCollectionSelectFx.Select>({
 	userId,
 	select,
 	where,

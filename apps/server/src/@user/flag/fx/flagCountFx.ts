@@ -1,7 +1,7 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
 import { withFlagQueryBuilder } from "~/app/flag/db/withFlagQueryBuilder";
-import { withFlagSelect } from "~/app/flag/db/withFlagSelect";
+import { withFlagSelectFx } from "~/app/flag/db/withFlagSelectFx";
 import type { FlagCountQuerySchema } from "~/app/flag/schema/FlagCountQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -18,7 +18,7 @@ export const flagCountFx = Effect.fn("flagCountFx")(function* ({
 	const user = yield* UserContextFx;
 
 	return yield* withCountFx({
-		select: withFlagSelect({
+		select: yield* withFlagSelectFx({
 			database,
 			sort: undefined,
 		}),

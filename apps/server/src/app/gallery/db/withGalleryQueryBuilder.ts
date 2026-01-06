@@ -1,13 +1,13 @@
 import type { GalleryFilterSchema } from "~/app/gallery/schema/GalleryFilterSchema";
-import type { withGallerySelect } from "./withGallerySelect";
+import type { withGallerySelectFx } from "./withGallerySelectFx";
 
 export namespace withGalleryQueryBuilder {
 	export interface Props {
-		select: withGallerySelect.Select;
+		select: withGallerySelectFx.Select;
 		where?: GalleryFilterSchema.Type;
 	}
 
-	export type Callback = (props: Props) => withGallerySelect.Select;
+	export type Callback = (props: Props) => withGallerySelectFx.Select;
 }
 
 export const withGalleryQueryBuilder: withGalleryQueryBuilder.Callback = ({ select, where }) => {

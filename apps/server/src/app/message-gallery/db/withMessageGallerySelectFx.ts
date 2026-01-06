@@ -5,27 +5,24 @@ import { match } from "ts-pattern";
 import { withGallerySelectFx } from "~/app/gallery/db/withGallerySelectFx";
 import type { MessageDirectionEnumSchema } from "~/app/message/schema/MessageDirectionEnumSchema";
 import type { MessageGallerySortSchema } from "~/app/message-gallery/schema/MessageGallerySortSchema";
-import type { WithDatabase } from "~/database/WithDatabase";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withMessageGallerySelectFx {
 	export interface Props {
-		database: WithDatabase;
-		sort: MessageGallerySortSchema.Type[] | undefined;
-		userId: string;
+		sort?: MessageGallerySortSchema.Type[];
 	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withMessageGallerySelectFx>>;
 }
 
 export const withMessageGallerySelectFx = Effect.fn("withMessageGallerySelectFx")(function* ({
-	database,
 	sort,
-	userId,
 }: withMessageGallerySelectFx.Props) {
-	const gallerySelect = yield* withGallerySelectFx({
-		database,
-		sort: undefined,
-	});
+	const database = yield* DatabaseContextFx;
+	const user = yield* UserContextFx;
+
+	const gallerySelect = yield* withGallerySelectFx({});
 
 	let query = database
 		.selectFrom("message_gallery as mg")
@@ -34,7 +31,7 @@ export const withMessageGallerySelectFx = Effect.fn("withMessageGallerySelectFx"
 		.select((eb) =>
 			eb
 				.case()
-				.when("mg.userId", "=", userId)
+				.when("mg.userId", "=", user.id)
 				.then<MessageDirectionEnumSchema.Type>("out")
 				.else<MessageDirectionEnumSchema.Type>("in")
 				.end()

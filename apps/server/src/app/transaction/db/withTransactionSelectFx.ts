@@ -6,30 +6,21 @@ import { withGallerySelectFx } from "~/app/gallery/db/withGallerySelectFx";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import { withTransactionCollectionSelectFx } from "~/app/transaction/db/withTransactionCollectionSelectFx";
 import type { TransactionSortSchema } from "~/app/transaction/schema/TransactionSortSchema";
-import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withTransactionSelectFx {
 	export interface Props {
-		database: WithDatabase;
-		sort: TransactionSortSchema.Type[] | undefined;
+		sort?: TransactionSortSchema.Type[];
 	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withTransactionSelectFx>>;
 }
 
 export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(function* ({
-	database,
 	sort,
 }: withTransactionSelectFx.Props) {
-	const transactionCollectionSelect = yield* withTransactionCollectionSelectFx({
-		database,
-		sort: [],
-	});
+	const transactionCollectionSelect = yield* withTransactionCollectionSelectFx({});
 
-	const gallerySelect = yield* withGallerySelectFx({
-		database,
-		sort: undefined,
-	});
+	const gallerySelect = yield* withGallerySelectFx({});
 
 	let query = transactionCollectionSelect
 		.clearSelect()
