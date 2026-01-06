@@ -33,23 +33,7 @@ export const withLocationAutocompleteApi: Routes.Fn = async ({ sessionHono }) =>
 							schema: z.array(LocationSchema),
 						},
 					},
-					description: "Location(s) found (cache hit)",
-				},
-				201: {
-					content: {
-						"application/json": {
-							schema: z.array(LocationSchema),
-						},
-					},
-					description: "Location(s) created (cache miss)",
-				},
-				400: {
-					content: {
-						"application/json": {
-							schema: NoticeSchema,
-						},
-					},
-					description: "Text too short",
+					description: "Locations, include empty array if no locations found",
 				},
 				500: {
 					content: {
@@ -99,20 +83,6 @@ export const withLocationAutocompleteApi: Routes.Fn = async ({ sessionHono }) =>
 							Match.when(
 								{
 									_tag: "ZodErrorFx",
-								},
-								() => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										500,
-									);
-								},
-							),
-							Match.when(
-								{
-									_tag: "UnknownException",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 500>(
