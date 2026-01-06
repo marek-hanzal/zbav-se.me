@@ -1,7 +1,7 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { feedbackCreateFx } from "~/@user/feedback/fx/feedbackCreateFx";
 import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
+import { feedbackCreateFx } from "~/app/feedback/fx/feedbackCreateFx";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
@@ -66,7 +66,14 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json(yield* feedbackCreateFx(c.req.valid("json")), 201);
+				const body = c.req.valid("json");
+				return c.json(
+					yield* feedbackCreateFx({
+						...body,
+						userId: c.get("user").id,
+					}),
+					201,
+				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),
