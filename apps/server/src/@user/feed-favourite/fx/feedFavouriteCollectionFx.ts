@@ -3,8 +3,8 @@ import { Effect } from "effect";
 import { FeedFavouriteSchema } from "~/@user/feed-favourite/schema/FeedFavouriteSchema";
 import { withFeedQueryBuilder } from "~/app/feed/db/withFeedQueryBuilder";
 import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
-import { withFeedFavouriteSelectFx } from "~/app/feed-favourite/db/withFeedFavouriteSelectFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { withFeedFavouriteSelectFx } from "../db/withFeedFavouriteSelectFx";
 
 export namespace feedFavouriteCollectionFx {
 	export type Props = FeedQuerySchema.Type;
