@@ -1,23 +1,29 @@
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import type { IgnoreToggleSchema } from "~/@user/ignore/schema/IgnoreToggleSchema";
 import { listingCheckIfOwnFx } from "~/@user/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/@user/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/@user/listing-event/fx/listingEventCreateFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { ignoreCreateFx } from "./ignoreCreateFx";
 import { ignoreDeleteFx } from "./ignoreDeleteFx";
 
 export namespace ignoreToggleFx {
-	export type Props = IgnoreToggleSchema.Type;
+	export interface Props extends IgnoreToggleSchema.Type {
+		userId: string;
+	}
 }
 
 export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
+	userId,
 	toggle,
 	listingId,
 }: ignoreToggleFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			yield* listingCheckIfOwnFx({
+				userId,
 				listingId,
 				message: "You cannot ignore your own listing",
 			});
@@ -26,17 +32,23 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 				onTrue() {
 					return Effect.gen(function* () {
 						yield* ignoreCreateFx({
+							userId,
 							listingId,
 						});
 
 						yield* listingEventCreateFx({
+							userId,
 							listingId,
 							event: "ignore",
 						}).pipe(Effect.ignore);
 
 						return yield* listingFetchFx({
+							userId,
 							where: {
 								id: listingId,
+							},
+							scope: {
+								userId,
 							},
 						});
 					});
@@ -48,13 +60,18 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 						});
 
 						yield* listingEventCreateFx({
+							userId,
 							listingId,
 							event: "unignore",
 						}).pipe(Effect.ignore);
 
 						return yield* listingFetchFx({
+							userId,
 							where: {
 								id: listingId,
+							},
+							scope: {
+								userId,
 							},
 						});
 					});
@@ -65,3 +82,5 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 });
 
 export type ignoreToggleFx = ReturnType<typeof ignoreToggleFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<ignoreToggleFx>, UserContextFx>>;

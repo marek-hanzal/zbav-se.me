@@ -1,39 +1,40 @@
 import { withCollectionFx } from "@use-pico/common/collection";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withIgnoreQueryBuilderFx } from "~/app/ignore/db/withIgnoreQueryBuilderFx";
 import { withIgnoreSelectFx } from "~/app/ignore/db/withIgnoreSelectFx";
+import type { IgnoreFilterSchema } from "~/app/ignore/schema/IgnoreFilterSchema";
 import type { IgnoreQuerySchema } from "~/app/ignore/schema/IgnoreQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { IgnoreSchema } from "../schema/IgnoreSchema";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace ignoreCollectionFx {
-	export type Props = IgnoreQuerySchema.Type;
+	export interface Props extends IgnoreQuerySchema.Type {
+		scope: IgnoreFilterSchema.Type;
+	}
 }
 
 export const ignoreCollectionFx = Effect.fn("ignoreCollectionFx")(function* ({
-	cursor,
 	filter,
 	where,
+	scope,
 	sort,
+	cursor,
 }: ignoreCollectionFx.Props) {
-	const user = yield* UserContextFx;
-
 	return yield* withCollectionFx({
-		select: yield* withIgnoreSelectFx({
+		selectFx: withIgnoreSelectFx({
 			sort,
 		}),
-		output: IgnoreSchema,
 		cursor: cursor ?? {
 			page: 0,
 			size: 10,
 		},
 		filter,
-		where: {
-			...where,
-			userId: user.id,
-		},
+		where,
+		scope,
 		queryFx: withIgnoreQueryBuilderFx,
 	});
 });
 
 export type ignoreCollectionFx = ReturnType<typeof ignoreCollectionFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<ignoreCollectionFx>, UserContextFx>>;

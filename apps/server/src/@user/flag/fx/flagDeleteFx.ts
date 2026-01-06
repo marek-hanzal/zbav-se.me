@@ -1,36 +1,36 @@
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { flagFetchFx } from "./flagFetchFx";
 
 export namespace flagDeleteFx {
 	export interface Props {
+		userId: string;
 		listingId: string;
 	}
 }
 
 export const flagDeleteFx = Effect.fn("flagDeleteFx")(function* ({
+	userId,
 	listingId,
 }: flagDeleteFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
-			const user = yield* UserContextFx;
 
 			const flag = yield* flagFetchFx({
 				where: {
 					listingId,
-					userId: user.id,
+				},
+				scope: {
+					userId,
 				},
 			});
 
 			yield* Effect.promise(async () => {
-				return database
-					.deleteFrom("flag")
-					.where("userId", "=", user.id)
-					.where("listingId", "=", listingId)
-					.execute();
+				return database.deleteFrom("flag").where("id", "=", flag.id).execute();
 			});
 
 			return flag;
@@ -39,3 +39,5 @@ export const flagDeleteFx = Effect.fn("flagDeleteFx")(function* ({
 });
 
 export type flagDeleteFx = ReturnType<typeof flagDeleteFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<flagDeleteFx>, UserContextFx>>;

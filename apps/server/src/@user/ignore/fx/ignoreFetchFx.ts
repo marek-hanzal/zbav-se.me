@@ -1,35 +1,36 @@
 import { withFetchFx } from "@use-pico/common/fetch";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withIgnoreQueryBuilderFx } from "~/app/ignore/db/withIgnoreQueryBuilderFx";
 import { withIgnoreSelectFx } from "~/app/ignore/db/withIgnoreSelectFx";
+import type { IgnoreFilterSchema } from "~/app/ignore/schema/IgnoreFilterSchema";
 import type { IgnoreQuerySchema } from "~/app/ignore/schema/IgnoreQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { IgnoreSchema } from "../schema/IgnoreSchema";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace ignoreFetchFx {
-	export type Props = IgnoreQuerySchema.Type;
+	export interface Props extends IgnoreQuerySchema.Type {
+		scope: IgnoreFilterSchema.Type;
+	}
 }
 
 export const ignoreFetchFx = Effect.fn("ignoreFetchFx")(function* ({
 	filter,
 	where,
+	scope,
 	sort,
 }: ignoreFetchFx.Props) {
-	const user = yield* UserContextFx;
-
 	return yield* withFetchFx({
 		resource: "ignore",
-		select: yield* withIgnoreSelectFx({
+		selectFx: withIgnoreSelectFx({
 			sort,
 		}),
-		output: IgnoreSchema,
 		filter,
-		where: {
-			...where,
-			userId: user.id,
-		},
+		where,
+		scope,
 		queryFx: withIgnoreQueryBuilderFx,
 	});
 });
 
 export type ignoreFetchFx = ReturnType<typeof ignoreFetchFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<ignoreFetchFx>, UserContextFx>>;

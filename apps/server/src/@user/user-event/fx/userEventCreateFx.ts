@@ -1,10 +1,11 @@
 import { genId } from "@use-pico/common/gen-id";
 import { keyOf } from "@use-pico/common/key-of";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import type { UserEventCreateSchema } from "~/app/user-event/schema/UserEventCreateSchema";
 import type { UserEventEnumSchema } from "~/app/user-event/schema/UserEventEnumSchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -14,7 +15,7 @@ const ignored: UserEventEnumSchema.Type[] = [
 
 export namespace userEventCreateFx {
 	export interface Props extends UserEventCreateSchema.Type {
-		userId?: string;
+		userId: string;
 		createdAt?: DateTime;
 	}
 }
@@ -28,7 +29,6 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
-			const user = yield* UserContextFx;
 
 			if (ignored.includes(props.event)) {
 				return yield* Effect.void;
@@ -38,10 +38,10 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 				return database
 					.insertInto("user_event")
 					.values({
-						id: genId(),
 						...props,
+						id: genId(),
 						group: keyOf(group),
-						userId: userId ?? user.id,
+						userId,
 						createdAt: (createdAt ?? DateTime.now()).toJSDate(),
 					})
 					.returningAll()
@@ -52,3 +52,5 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 });
 
 export type userEventCreateFx = ReturnType<typeof userEventCreateFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<userEventCreateFx>, UserContextFx>>;

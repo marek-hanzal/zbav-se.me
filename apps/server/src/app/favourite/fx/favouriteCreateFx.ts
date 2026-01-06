@@ -2,8 +2,8 @@ import { genId } from "@use-pico/common/gen-id";
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import type { FavouriteCreateSchema } from "~/@user/favourite/schema/FavouriteCreateSchema";
-import { feedFetchFx } from "~/@user/feed/fx/feedFetchFx";
 import { favouriteFetchFx } from "~/app/favourite/fx/favouriteFetchFx";
+import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 

@@ -1,5 +1,6 @@
 import { embedMinHash } from "@use-pico/common/embedding";
 import { genId } from "@use-pico/common/gen-id";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import pgvector from "pgvector";
@@ -8,24 +9,26 @@ import { galleryCreateFx as coolGalleryCreateFx } from "~/@user/gallery/fx/galle
 import type { ListingCreateSchema } from "~/@user/listing/schema/ListingCreateSchema";
 import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
 import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 import { listingFetchFx } from "./listingFetchFx";
 
 export namespace listingCreateFx {
-	export type Props = ListingCreateSchema.Type;
+	export interface Props extends ListingCreateSchema.Type {
+		userId: string;
+	}
 }
 
 export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
+	userId,
 	uploadIds,
 	...data
 }: listingCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
-			const user = yield* UserContextFx;
 
 			const id = genId();
 			const now = new Date();
@@ -37,7 +40,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			}
 
 			const gallery = yield* coolGalleryCreateFx({
-				userId: user.id,
+				userId,
 			});
 
 			let sort = 0;
@@ -46,7 +49,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					galleryId: gallery.id,
 					uploadId,
 					sort,
-					userId: user.id,
+					userId,
 				});
 				sort++;
 			}
@@ -56,7 +59,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					.insertInto("listing")
 					.values({
 						id,
-						userId: user.id,
+						userId,
 						galleryId: gallery.id,
 						createdAt: now,
 						updatedAt: now,
@@ -104,12 +107,13 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 							updatedAt: now,
 						})
 						.where("id", "=", draftId)
-						.where("userId", "=", user.id)
+						.where("userId", "=", userId)
 						.execute();
 				});
 			}
 
 			yield* userEventCreateFx({
+				userId,
 				scope: "user",
 				source: "listing",
 				group: id,
@@ -118,9 +122,13 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			});
 
 			return yield* listingFetchFx({
+				userId,
 				where: {
 					id,
 					withOwn: true,
+				},
+				scope: {
+					userId,
 				},
 			});
 		}),
@@ -128,3 +136,5 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 });
 
 export type listingCreateFx = ReturnType<typeof listingCreateFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<listingCreateFx>, UserContextFx>>;

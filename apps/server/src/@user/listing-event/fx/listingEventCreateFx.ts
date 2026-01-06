@@ -1,19 +1,23 @@
 import { genId } from "@use-pico/common/gen-id";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { listingCheckIfOwnFx } from "~/@user/listing/fx/listingCheckIfOwnFx";
 import { listingEventRateLimitFx } from "~/@user/listing-event/fx/listingEventRateLimitFx";
 import type { ListingEventCreateSchema } from "~/@user/listing-event/schema/ListingEventCreateSchema";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace listingEventCreateFx {
 	export interface Props extends ListingEventCreateSchema.Type {
+		userId: string;
 		createdAt?: DateTime;
 	}
 }
 
 export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* ({
+	userId,
 	listingId,
 	event,
 	createdAt,
@@ -23,6 +27,7 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 			const database = yield* DatabaseContextFx;
 
 			yield* listingCheckIfOwnFx({
+				userId,
 				listingId,
 				message: "You cannot generate event on your own listing.",
 			});
@@ -50,3 +55,5 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 });
 
 export type listingEventCreateFx = ReturnType<typeof listingEventCreateFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<listingEventCreateFx>, UserContextFx>>;

@@ -1,39 +1,40 @@
 import { withCollectionFx } from "@use-pico/common/collection";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withFlagQueryBuilderFx } from "~/app/flag/db/withFlagQueryBuilderFx";
 import { withFlagSelectFx } from "~/app/flag/db/withFlagSelectFx";
+import type { FlagFilterSchema } from "~/app/flag/schema/FlagFilterSchema";
 import type { FlagQuerySchema } from "~/app/flag/schema/FlagQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { FlagSchema } from "../schema/FlagSchema";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace flagCollectionFx {
-	export type Props = FlagQuerySchema.Type;
+	export interface Props extends FlagQuerySchema.Type {
+		scope: FlagFilterSchema.Type;
+	}
 }
 
 export const flagCollectionFx = Effect.fn("flagCollectionFx")(function* ({
 	cursor,
 	filter,
 	where,
+	scope,
 	sort,
 }: flagCollectionFx.Props) {
-	const user = yield* UserContextFx;
-
 	return yield* withCollectionFx({
-		select: yield* withFlagSelectFx({
+		selectFx: withFlagSelectFx({
 			sort,
 		}),
-		output: FlagSchema,
 		cursor: cursor ?? {
 			page: 0,
 			size: 10,
 		},
 		filter,
-		where: {
-			...where,
-			userId: user.id,
-		},
+		where,
+		scope,
 		queryFx: withFlagQueryBuilderFx,
 	});
 });
 
 export type flagCollectionFx = ReturnType<typeof flagCollectionFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<flagCollectionFx>, UserContextFx>>;

@@ -1,13 +1,20 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { IgnoreQuerySchema } from "~/app/ignore/schema/IgnoreQuerySchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { ignoreCollectionFx } from "./fx/ignoreCollectionFx";
 import { IgnoreSchema } from "./schema/IgnoreSchema";
+
+const CollectionSchema = withCollectionSchema({
+	schema: IgnoreSchema,
+	type: "IgnoreCollection",
+	description: "Collection of ignore items",
+});
 
 export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
@@ -29,11 +36,7 @@ export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: withCollectionSchema({
-								schema: IgnoreSchema,
-								type: "IgnoreCollection",
-								description: "Collection of ignore items",
-							}),
+							schema: CollectionSchema,
 						},
 					},
 					description: "Access collection of ignore items based on provided query",
@@ -54,8 +57,18 @@ export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = yield* UserContextFx;
+
 				return c.json<withCollectionSchema.Type<IgnoreSchema>, 200>(
-					yield* ignoreCollectionFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: CollectionSchema,
+						dataFx: ignoreCollectionFx({
+							...c.req.valid("json"),
+							scope: {
+								userId: user.id,
+							},
+						}),
+					}),
 					200,
 				);
 			}).pipe(

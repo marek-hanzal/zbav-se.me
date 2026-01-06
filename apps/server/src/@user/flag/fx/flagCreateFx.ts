@@ -1,41 +1,39 @@
 import { genId } from "@use-pico/common/gen-id";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { FlagCreateSchema } from "~/app/flag/schema/FlagCreateSchema";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace flagCreateFx {
-	export interface Props {
-		listingId: string;
+	export interface Props extends FlagCreateSchema.Type {
+		userId: string;
 	}
 }
 
-export const flagCreateFx = ({ listingId }: flagCreateFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
-		const id = genId();
+export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
+	userId,
+	listingId,
+}: flagCreateFx.Props) {
+	const database = yield* DatabaseContextFx;
+    
+	const id = genId();
 
-		return yield* Effect.tryPromise({
-			async try() {
-				return database
-					.insertInto("flag")
-					.values({
-						id,
-						userId: user.id,
-						listingId,
-						createdAt: new Date(),
-					})
-					.returningAll()
-					.executeTakeFirstOrThrow();
-			},
-			catch() {
-				return new InvalidRequestError({
-					message: "You have already flagged this listing",
-				});
-			},
-		});
+	return yield* Effect.promise(async () => {
+		return database
+			.insertInto("flag")
+			.values({
+				id,
+				userId,
+				listingId,
+				createdAt: new Date(),
+			})
+			.onConflict((eb) => eb.doNothing())
+			.returningAll()
+			.executeTakeFirstOrThrow();
 	});
-};
+});
 
 export type flagCreateFx = ReturnType<typeof flagCreateFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<flagCreateFx>, UserContextFx>>;

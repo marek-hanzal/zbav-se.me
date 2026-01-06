@@ -592,6 +592,8 @@ export const userEventBuyerInfoFx = Effect.fn("userEventBuyerInfoFx")(function* 
 		},
 		where: {
 			cutoff,
+		},
+		scope: {
 			userId,
 		},
 		sort: [

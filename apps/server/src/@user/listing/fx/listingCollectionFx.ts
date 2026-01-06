@@ -1,40 +1,44 @@
 import { withCollectionFx } from "@use-pico/common/collection";
-import { EntitySchema } from "@use-pico/common/schema";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withListingQueryBuilderFx } from "~/@user/listing/db/withListingQueryBuilderFx";
 import { withListingCollectionSelectFx } from "~/app/listing/db/withListingCollectionSelectFx";
+import type { ListingFilterSchema } from "~/app/listing/schema/ListingFilterSchema";
 import type { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace listingCollectionFx {
-	export type Props = ListingQuerySchema.Type;
+	export interface Props extends ListingQuerySchema.Type {
+		userId: string;
+		scope: ListingFilterSchema.Type;
+	}
 }
 
 export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
+	userId,
 	cursor,
 	filter,
 	where,
+	scope,
 	sort,
 	meta,
 }: listingCollectionFx.Props) {
-	const user = yield* UserContextFx;
-
 	return yield* withCollectionFx({
-		select: yield* withListingCollectionSelectFx({
+		selectFx: withListingCollectionSelectFx({
 			sort,
 			meta,
 		}),
-		output: EntitySchema,
 		cursor: cursor ?? {
 			page: 0,
 			size: 10,
 		},
 		filter,
 		where,
+		scope,
 		queryFx(query) {
 			return withListingQueryBuilderFx({
 				...query,
-				userId: user.id,
+				userId,
 				meta,
 			});
 		},
@@ -42,3 +46,5 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 });
 
 export type listingCollectionFx = ReturnType<typeof listingCollectionFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<listingCollectionFx>, UserContextFx>>;

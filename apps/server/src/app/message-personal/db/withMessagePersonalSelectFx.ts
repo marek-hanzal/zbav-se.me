@@ -4,11 +4,11 @@ import { match } from "ts-pattern";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import type { MessageDirectionEnumSchema } from "~/app/message/schema/MessageDirectionEnumSchema";
 import type { MessagePersonalSortSchema } from "~/app/message-personal/schema/MessagePersonalSortSchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withMessagePersonalSelectFx {
 	export interface Props {
+		userId: string;
 		sort?: MessagePersonalSortSchema.Type[];
 	}
 
@@ -16,10 +16,10 @@ export namespace withMessagePersonalSelectFx {
 }
 
 export const withMessagePersonalSelectFx = Effect.fn("withMessagePersonalSelectFx")(function* ({
+	userId,
 	sort,
 }: withMessagePersonalSelectFx.Props) {
 	const database = yield* DatabaseContextFx;
-	const user = yield* UserContextFx;
 
 	let query = database
 		.selectFrom("message_personal as mp")
@@ -32,7 +32,7 @@ export const withMessagePersonalSelectFx = Effect.fn("withMessagePersonalSelectF
 				.as("location"),
 			eb
 				.case()
-				.when("mp.userId", "=", user.id)
+				.when("mp.userId", "=", userId)
 				.then<MessageDirectionEnumSchema.Type>("out")
 				.else<MessageDirectionEnumSchema.Type>("in")
 				.end()

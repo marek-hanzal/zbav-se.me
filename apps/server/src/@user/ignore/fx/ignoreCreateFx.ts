@@ -1,41 +1,39 @@
 import { genId } from "@use-pico/common/gen-id";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace ignoreCreateFx {
 	export interface Props {
+		userId: string;
 		listingId: string;
 	}
 }
 
-export const ignoreCreateFx = ({ listingId }: ignoreCreateFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
-		const id = genId();
+export const ignoreCreateFx = Effect.fn("ignoreCreateFx")(function* ({
+	userId,
+	listingId,
+}: ignoreCreateFx.Props) {
+	const database = yield* DatabaseContextFx;
 
-		return yield* Effect.tryPromise({
-			async try() {
-				return database
-					.insertInto("ignore")
-					.values({
-						id,
-						userId: user.id,
-						listingId,
-						createdAt: new Date(),
-					})
-					.returningAll()
-					.executeTakeFirstOrThrow();
-			},
-			catch() {
-				return new InvalidRequestError({
-					message: "You have already ignored this listing",
-				});
-			},
-		});
+	const id = genId();
+
+	return yield* Effect.promise(async () => {
+		return database
+			.insertInto("ignore")
+			.values({
+				id,
+				userId,
+				listingId,
+				createdAt: new Date(),
+			})
+			.onConflict((eb) => eb.doNothing())
+			.returningAll()
+			.executeTakeFirstOrThrow();
 	});
-};
+});
 
 export type ignoreCreateFx = ReturnType<typeof ignoreCreateFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<ignoreCreateFx>, UserContextFx>>;

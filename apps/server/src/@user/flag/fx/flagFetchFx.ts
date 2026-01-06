@@ -1,35 +1,36 @@
 import { withFetchFx } from "@use-pico/common/fetch";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withFlagQueryBuilderFx } from "~/app/flag/db/withFlagQueryBuilderFx";
 import { withFlagSelectFx } from "~/app/flag/db/withFlagSelectFx";
+import type { FlagFilterSchema } from "~/app/flag/schema/FlagFilterSchema";
 import type { FlagQuerySchema } from "~/app/flag/schema/FlagQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { FlagSchema } from "../schema/FlagSchema";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace flagFetchFx {
-	export type Props = FlagQuerySchema.Type;
+	export interface Props extends FlagQuerySchema.Type {
+		scope: FlagFilterSchema.Type;
+	}
 }
 
 export const flagFetchFx = Effect.fn("flagFetchFx")(function* ({
 	filter,
 	where,
 	sort,
+	scope,
 }: flagFetchFx.Props) {
-	const user = yield* UserContextFx;
-
 	return yield* withFetchFx({
 		resource: "flag",
-		select: yield* withFlagSelectFx({
+		selectFx: withFlagSelectFx({
 			sort,
 		}),
-		output: FlagSchema,
 		filter,
-		where: {
-			...where,
-			userId: user.id,
-		},
+		where,
+		scope,
 		queryFx: withFlagQueryBuilderFx,
 	});
 });
 
 export type flagFetchFx = ReturnType<typeof flagFetchFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<flagFetchFx>, UserContextFx>>;

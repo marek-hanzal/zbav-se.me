@@ -618,6 +618,8 @@ export const userEventSellerInfoFx = Effect.fn("userEventSellerInfoFx")(function
 		},
 		where: {
 			cutoff,
+		},
+		scope: {
 			userId,
 		},
 		sort: [

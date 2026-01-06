@@ -9,6 +9,7 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withMessageLocationSelectFx {
 	export interface Props {
+		userId: string;
 		sort?: MessageLocationSortSchema.Type[];
 	}
 
@@ -16,10 +17,10 @@ export namespace withMessageLocationSelectFx {
 }
 
 export const withMessageLocationSelectFx = Effect.fn("withMessageLocationSelectFx")(function* ({
+	userId,
 	sort,
 }: withMessageLocationSelectFx.Props) {
 	const database = yield* DatabaseContextFx;
-	const user = yield* UserContextFx;
 
 	let query = database
 		.selectFrom("message_location as ml")
@@ -32,7 +33,7 @@ export const withMessageLocationSelectFx = Effect.fn("withMessageLocationSelectF
 				.as("location"),
 			eb
 				.case()
-				.when("ml.userId", "=", user.id)
+				.when("ml.userId", "=", userId)
 				.then<MessageDirectionEnumSchema.Type>("out")
 				.else<MessageDirectionEnumSchema.Type>("in")
 				.end()

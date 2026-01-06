@@ -6,10 +6,16 @@ import { FlagSortSchema } from "./FlagSortSchema";
 export const FlagQuerySchema = z
 	.object({
 		cursor: CursorSchema.optional(),
-		filter: FlagFilterSchema.optional(),
-		where: FlagFilterSchema.openapi("FlagWhere", {
-			description: "App-based filters",
+		filter: FlagFilterSchema.omit({
+			userId: true,
 		}).optional(),
+		where: FlagFilterSchema.omit({
+			userId: true,
+		})
+			.openapi("FlagWhere", {
+				description: "App-based filters",
+			})
+			.optional(),
 		sort: FlagSortSchema.array().optional(),
 	})
 	.openapi("FlagQuery", {

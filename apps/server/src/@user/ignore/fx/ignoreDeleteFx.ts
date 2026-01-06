@@ -1,36 +1,36 @@
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { ignoreFetchFx } from "./ignoreFetchFx";
 
 export namespace ignoreDeleteFx {
 	export interface Props {
+		userId: string;
 		listingId: string;
 	}
 }
 
 export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
+	userId,
 	listingId,
 }: ignoreDeleteFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
-			const user = yield* UserContextFx;
 
 			const ignore = yield* ignoreFetchFx({
 				where: {
 					listingId,
-					userId: user.id,
+				},
+				scope: {
+					userId,
 				},
 			});
 
 			yield* Effect.promise(async () => {
-				return database
-					.deleteFrom("ignore")
-					.where("userId", "=", user.id)
-					.where("listingId", "=", listingId)
-					.execute();
+				return database.deleteFrom("ignore").where("id", "=", ignore.id).execute();
 			});
 
 			return ignore;
@@ -39,3 +39,5 @@ export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
 });
 
 export type ignoreDeleteFx = ReturnType<typeof ignoreDeleteFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<ignoreDeleteFx>, UserContextFx>>;

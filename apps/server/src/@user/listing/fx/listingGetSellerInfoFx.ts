@@ -1,8 +1,10 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { zodFx } from "@use-pico/common/schema";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { SellerInfoSchema } from "~/@user/listing/schema/SellerInfoSchema";
 import { userEventSellerInfoFx } from "~/@user/user-event/fx/userEventSellerInfoFx";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace listingGetSellerInfoFx {
@@ -42,16 +44,20 @@ export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(functi
 		});
 	}
 
+	const events = yield* userEventSellerInfoFx({
+		userId: userInfo.id,
+	});
+
 	return yield* zodFx({
 		schema: SellerInfoSchema,
-		data: {
+		dataFx: Effect.succeed({
 			registered: userInfo.createdAt,
 			listings: Number(userInfo.listings),
-			events: yield* userEventSellerInfoFx({
-				userId: userInfo.id,
-			}),
-		} satisfies SellerInfoSchema.Type,
+			events,
+		} satisfies SellerInfoSchema.Type),
 	});
 });
 
 export type listingGetSellerInfoFx = ReturnType<typeof listingGetSellerInfoFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<listingGetSellerInfoFx>, UserContextFx>>;

@@ -1,29 +1,36 @@
 import { withFetchFx } from "@use-pico/common/fetch";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { MessageSystemSchema } from "~/@user/message-system/schema/MessageSystemSchema";
 import { withMessageSystemQueryBuilderFx } from "~/app/message-system/db/withMessageSystemQueryBuilderFx";
 import { withMessageSystemSelectFx } from "~/app/message-system/db/withMessageSystemSelectFx";
+import type { MessageSystemFilterSchema } from "~/app/message-system/schema/MessageSystemFilterSchema";
 import type { MessageSystemQuerySchema } from "~/app/message-system/schema/MessageSystemQuerySchema";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace messageSystemFetchFx {
-	export type Props = MessageSystemQuerySchema.Type;
+	export interface Props extends MessageSystemQuerySchema.Type {
+		scope: MessageSystemFilterSchema.Type;
+	}
 }
 
 export const messageSystemFetchFx = Effect.fn("messageSystemFetchFx")(function* ({
 	filter,
 	where,
+	scope,
 	sort,
 }: messageSystemFetchFx.Props) {
 	return yield* withFetchFx({
 		resource: "message-system",
-		select: yield* withMessageSystemSelectFx({
+		selectFx: withMessageSystemSelectFx({
 			sort,
 		}),
-		output: MessageSystemSchema,
 		filter,
 		where,
+		scope,
 		queryFx: withMessageSystemQueryBuilderFx,
 	});
 });
 
 export type messageSystemFetchFx = ReturnType<typeof messageSystemFetchFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageSystemFetchFx>, UserContextFx>>;

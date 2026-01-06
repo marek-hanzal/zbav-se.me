@@ -1,39 +1,40 @@
 import { withCollectionFx } from "@use-pico/common/collection";
+import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withGalleryItemQueryBuilderFx } from "~/app/gallery-item/db/withGalleryItemQueryBuilderFx";
 import { withGalleryItemSelectFx } from "~/app/gallery-item/db/withGalleryItemSelectFx";
+import type { GalleryItemFilterSchema } from "~/app/gallery-item/schema/GalleryItemFilterSchema";
 import type { GalleryItemQuerySchema } from "~/app/gallery-item/schema/GalleryItemQuerySchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { GalleryItemSchema } from "../schema/GalleryItemSchema";
+import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace galleryItemCollectionFx {
-	export type Props = GalleryItemQuerySchema.Type;
+	export interface Props extends GalleryItemQuerySchema.Type {
+		scope: GalleryItemFilterSchema.Type;
+	}
 }
 
 export const galleryItemCollectionFx = Effect.fn("galleryItemCollectionFx")(function* ({
 	cursor,
 	filter,
 	where,
+	scope,
 	sort,
 }: galleryItemCollectionFx.Props) {
-	const user = yield* UserContextFx;
-
 	return yield* withCollectionFx({
-		select: yield* withGalleryItemSelectFx({
+		selectFx: withGalleryItemSelectFx({
 			sort,
 		}),
-		output: GalleryItemSchema,
 		cursor: cursor ?? {
 			page: 0,
 			size: 10,
 		},
 		filter,
-		where: {
-			...where,
-			userId: user.id,
-		},
+		where,
+		scope,
 		queryFx: withGalleryItemQueryBuilderFx,
 	});
 });
 
 export type galleryItemCollectionFx = ReturnType<typeof galleryItemCollectionFx>;
+
+type _NoUser = AssertNever<Extract<Effect.Effect.Context<galleryItemCollectionFx>, UserContextFx>>;
