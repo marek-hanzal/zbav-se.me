@@ -6,7 +6,7 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace withFeedSelectFx {
 	export interface Props {
-		sort: FeedSortSchema.Type[] | undefined;
+		sort?: FeedSortSchema.Type[];
 	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withFeedSelectFx>>;
@@ -16,6 +16,7 @@ export const withFeedSelectFx = Effect.fn("withFeedSelectFx")(function* ({
 	sort,
 }: withFeedSelectFx.Props) {
 	const database = yield* DatabaseContextFx;
+
 	let query = database
 		.selectFrom("feed as f")
 		.selectAll()

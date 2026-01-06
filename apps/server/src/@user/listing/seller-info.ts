@@ -77,7 +77,7 @@ export const withSellerInfoApi: Routes.Fn = async ({ userHono }) => {
 						Match.value(e).pipe(
 							Match.when(
 								{
-									_tag: "NotFoundError",
+									_tag: "NotFoundErrorFx",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 404>(

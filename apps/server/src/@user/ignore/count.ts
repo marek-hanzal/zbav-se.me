@@ -64,11 +64,11 @@ export const withCountApi: Routes.Fn = async ({ userHono }) => {
 								{
 									_tag: "UnknownException",
 								},
-								() => {
+								(err) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: err.message,
 										},
 										500,
 									);

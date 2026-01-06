@@ -16,7 +16,7 @@ export const flagCountFx = Effect.fn("flagCountFx")(function* ({
 	const user = yield* UserContextFx;
 
 	return yield* withCountFx({
-		select: yield* withFlagSelectFx({}),
+		selectFx: withFlagSelectFx({}),
 		filter,
 		where: {
 			...where,

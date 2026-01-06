@@ -60,6 +60,20 @@ export const withCategoryCountApi: Routes.Fn = async ({ sessionHono }) => {
 						Match.value(e).pipe(
 							Match.when(
 								{
+									_tag: "ZodErrorFx",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 500>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										500,
+									);
+								},
+							),
+							Match.when(
+								{
 									_tag: "UnknownException",
 								},
 								() => {

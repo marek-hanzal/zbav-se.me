@@ -1,3 +1,4 @@
+import { NotFoundErrorFx } from "@use-pico/common/error";
 import { Effect } from "effect";
 import { feedPatchFx } from "~/@user/feed/fx/feedPatchFx";
 import { feedResolveFx } from "~/@user/feed/fx/feedResolveFx";
@@ -7,7 +8,6 @@ import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
-import { NotFoundError } from "~/error/NotFoundError";
 
 export namespace feedGalleryCreateFx {
 	export interface Props {
@@ -16,7 +16,10 @@ export namespace feedGalleryCreateFx {
 	}
 }
 
-export const feedGalleryCreateFx = ({ feedId, uploadIds }: feedGalleryCreateFx.Props) => {
+export const feedGalleryCreateFx = Effect.fn("feedGalleryCreateFx")(function* ({
+	feedId,
+	uploadIds,
+}: feedGalleryCreateFx.Props) {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
@@ -34,7 +37,7 @@ export const feedGalleryCreateFx = ({ feedId, uploadIds }: feedGalleryCreateFx.P
 			}
 
 			{
-				const gallery = yield* Effect.tryPromise(async () => {
+				const gallery = yield* Effect.promise(async () => {
 					return database
 						.selectFrom("gallery")
 						.selectAll()
@@ -44,7 +47,7 @@ export const feedGalleryCreateFx = ({ feedId, uploadIds }: feedGalleryCreateFx.P
 				});
 
 				if (!gallery) {
-					yield* Effect.tryPromise(async () => {
+					yield* Effect.promise(async () => {
 						return database
 							.insertInto("gallery")
 							.values({
@@ -64,14 +67,14 @@ export const feedGalleryCreateFx = ({ feedId, uploadIds }: feedGalleryCreateFx.P
 			});
 
 			if (!gallery) {
-				return yield* new NotFoundError({
+				return yield* new NotFoundErrorFx({
 					resource: "gallery",
 					resourceId: feed.id,
 					message: "Gallery not found after creation",
 				});
 			}
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.deleteFrom("gallery_item")
 					.where("galleryId", "=", gallery.id)
@@ -106,6 +109,6 @@ export const feedGalleryCreateFx = ({ feedId, uploadIds }: feedGalleryCreateFx.P
 			});
 		}),
 	);
-};
+});
 
 export type feedGalleryCreateFx = ReturnType<typeof feedGalleryCreateFx>;

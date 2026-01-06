@@ -16,7 +16,7 @@ export const galleryCountFx = Effect.fn("galleryCountFx")(function* ({
 	const user = yield* UserContextFx;
 
 	return yield* withCountFx({
-		select: yield* withGallerySelectFx({}),
+		selectFx: withGallerySelectFx({}),
 		filter,
 		where: {
 			...where,

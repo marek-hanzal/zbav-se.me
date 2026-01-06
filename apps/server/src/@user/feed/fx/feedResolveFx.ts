@@ -1,8 +1,8 @@
+import { NotFoundErrorFx } from "@use-pico/common/error";
 import { Effect } from "effect";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { AccessDeniedError } from "~/error/AccessDeniedError";
-import { NotFoundError } from "~/error/NotFoundError";
 
 export namespace feedResolveFx {
 	export interface Props {
@@ -11,38 +11,32 @@ export namespace feedResolveFx {
 	}
 }
 
-export const feedResolveFx = ({
+export const feedResolveFx = Effect.fn("feedResolveFx")(function* ({
 	feedId,
 	message = "You are not allowed to access this feed",
-}: feedResolveFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+}: feedResolveFx.Props) {
+	const database = yield* DatabaseContextFx;
+	const user = yield* UserContextFx;
 
-		const feed = yield* Effect.tryPromise(async () => {
-			return database
-				.selectFrom("feed")
-				.selectAll()
-				.where("id", "=", feedId)
-				.executeTakeFirst();
-		});
-
-		if (!feed) {
-			return yield* new NotFoundError({
-				resource: "feed",
-				resourceId: feedId,
-				message,
-			});
-		}
-
-		if (feed.userId !== user.id) {
-			return yield* new AccessDeniedError({
-				message,
-			});
-		}
-
-		return feed;
+	const feed = yield* Effect.promise(async () => {
+		return database.selectFrom("feed").selectAll().where("id", "=", feedId).executeTakeFirst();
 	});
-};
+
+	if (!feed) {
+		return yield* new NotFoundErrorFx({
+			resource: "feed",
+			resourceId: feedId,
+			message,
+		});
+	}
+
+	if (feed.userId !== user.id) {
+		return yield* new AccessDeniedError({
+			message,
+		});
+	}
+
+	return feed;
+});
 
 export type feedResolveFx = ReturnType<typeof feedResolveFx>;

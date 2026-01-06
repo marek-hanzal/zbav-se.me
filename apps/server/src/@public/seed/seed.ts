@@ -82,11 +82,11 @@ export const withSeedApi: Routes.Fn = async ({ publicHono }) => {
 								{
 									_tag: "NotFoundErrorFx",
 								},
-								() => {
+								(err) => {
 									return c.json<NoticeSchema.Type, 404>(
 										{
 											type: "error",
-											message: e.message,
+											message: err.message,
 										},
 										404,
 									);
@@ -96,11 +96,11 @@ export const withSeedApi: Routes.Fn = async ({ publicHono }) => {
 								{
 									_tag: "InvalidRequestError",
 								},
-								() => {
+								(err) => {
 									return c.json<NoticeSchema.Type, 400>(
 										{
 											type: "error",
-											message: e.message,
+											message: err.message,
 										},
 										400,
 									);
@@ -110,11 +110,11 @@ export const withSeedApi: Routes.Fn = async ({ publicHono }) => {
 								{
 									_tag: "UnknownException",
 								},
-								() => {
+								(err) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: err.message,
 										},
 										500,
 									);
@@ -124,11 +124,11 @@ export const withSeedApi: Routes.Fn = async ({ publicHono }) => {
 								{
 									_tag: "RuntimeError",
 								},
-								() => {
+								(err) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: err.message,
 										},
 										500,
 									);
@@ -138,11 +138,11 @@ export const withSeedApi: Routes.Fn = async ({ publicHono }) => {
 								{
 									_tag: "AccessDeniedError",
 								},
-								() => {
+								(err) => {
 									return c.json<NoticeSchema.Type, 403>(
 										{
 											type: "error",
-											message: e.message,
+											message: err.message,
 										},
 										403,
 									);

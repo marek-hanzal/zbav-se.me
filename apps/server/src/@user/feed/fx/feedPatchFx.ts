@@ -8,14 +8,17 @@ export namespace feedPatchFx {
 	export type Props = FeedPatchSchema.Type;
 }
 
-export const feedPatchFx = ({ patch, query }: feedPatchFx.Props) => {
-	return withTransactionFx(
+export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
+	patch,
+	query,
+}: feedPatchFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 
 			const feed = yield* feedFetchFx(query);
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.updateTable("feed")
 					.set({
@@ -34,6 +37,6 @@ export const feedPatchFx = ({ patch, query }: feedPatchFx.Props) => {
 			});
 		}),
 	);
-};
+});
 
 export type feedPatchFx = ReturnType<typeof feedPatchFx>;

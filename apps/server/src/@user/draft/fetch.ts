@@ -68,7 +68,7 @@ export const withFetchApi: Routes.Fn = async ({ userHono }) => {
 						Match.value(e).pipe(
 							Match.when(
 								{
-									_tag: "NotFoundError",
+									_tag: "NotFoundErrorFx",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 404>(
@@ -77,6 +77,20 @@ export const withFetchApi: Routes.Fn = async ({ userHono }) => {
 											message: e.message,
 										},
 										404,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "ZodErrorFx",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 500>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										500,
 									);
 								},
 							),

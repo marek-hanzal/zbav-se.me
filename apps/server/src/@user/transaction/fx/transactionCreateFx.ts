@@ -1,3 +1,4 @@
+import { NotFoundErrorFx } from "@use-pico/common/error";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
@@ -10,7 +11,6 @@ import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEve
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { NotFoundError } from "~/error/NotFoundError";
 import { TransactionContextFx } from "./TransactionContextFx";
 import { transactionFetchFx } from "./transactionFetchFx";
 
@@ -21,14 +21,17 @@ export namespace transactionCreateFx {
 	}
 }
 
-export const transactionCreateFx = ({ listingId, createdAt }: transactionCreateFx.Props) => {
-	return withTransactionFx(
+export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
+	listingId,
+	createdAt,
+}: transactionCreateFx.Props) {
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
 			const config = yield* TransactionContextFx;
 
-			const listing = yield* Effect.tryPromise(async () => {
+			const listing = yield* Effect.promise(async () => {
 				return database
 					.selectFrom("listing")
 					.select([
@@ -40,7 +43,7 @@ export const transactionCreateFx = ({ listingId, createdAt }: transactionCreateF
 			});
 
 			if (!listing) {
-				return yield* new NotFoundError({
+				return yield* new NotFoundErrorFx({
 					resource: "listing",
 					resourceId: listingId,
 					message: "Listing not found",
@@ -66,7 +69,7 @@ export const transactionCreateFx = ({ listingId, createdAt }: transactionCreateF
 
 			const id = genId();
 
-			yield* Effect.tryPromise(async () => {
+			yield* Effect.promise(async () => {
 				return database
 					.insertInto("transaction")
 					.values({
@@ -122,6 +125,6 @@ export const transactionCreateFx = ({ listingId, createdAt }: transactionCreateF
 			});
 		}),
 	);
-};
+});
 
 export type transactionCreateFx = ReturnType<typeof transactionCreateFx>;

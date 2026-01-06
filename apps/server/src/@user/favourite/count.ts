@@ -62,6 +62,20 @@ export const withCountApi: Routes.Fn = async ({ userHono }) => {
 						Match.value(e).pipe(
 							Match.when(
 								{
+									_tag: "ZodErrorFx",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 500>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										500,
+									);
+								},
+							),
+							Match.when(
+								{
 									_tag: "UnknownException",
 								},
 								() => {

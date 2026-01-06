@@ -104,7 +104,7 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 							),
 							Match.when(
 								{
-									_tag: "NotFoundError",
+									_tag: "NotFoundErrorFx",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 404>(

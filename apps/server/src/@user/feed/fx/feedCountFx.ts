@@ -16,7 +16,7 @@ export const feedCountFx = Effect.fn("feedCountFx")(function* ({
 	const user = yield* UserContextFx;
 
 	return yield* withCountFx({
-		select: yield* withFeedSelectFx({}),
+		selectFx: withFeedSelectFx({}),
 		filter,
 		where: {
 			...where,
