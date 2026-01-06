@@ -8,7 +8,7 @@ import type { UserEventQuerySchema } from "~/app/user-event/schema/UserEventQuer
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 export namespace userEventCollectionFx {
 	export interface Props extends UserEventQuerySchema.Type {
-		scope?: UserEventFilterSchema.Type;
+		scope: UserEventFilterSchema.Type;
 	}
 }
 
