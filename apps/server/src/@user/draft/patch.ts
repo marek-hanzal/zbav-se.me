@@ -2,13 +2,15 @@ import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { draftPatchFx } from "~/app/draft/fx/draftPatchFx";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { DraftPatchSchema } from "./schema/DraftPatchSchema";
 import { DraftSchema } from "./schema/DraftSchema";
 
-export const withPatchApi: Routes.Fn = async ({ userHono }) => {
+export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
+
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -122,4 +124,4 @@ export const withPatchApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

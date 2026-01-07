@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { listingCollectionFx } from "~/app/listing/fx/listingCollectionFx";
 import { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
@@ -14,7 +14,8 @@ const CollectionSchema = withCollectionSchema({
 	description: "Collection of listings",
 });
 
-export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
+export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -98,4 +99,4 @@ export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

@@ -5,11 +5,12 @@ import { TransactionStatusSchema } from "~/@user/transaction-status/schema/Trans
 import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusCloseFx } from "~/app/transaction-status/fx/transactionStatusCloseFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionStatusCloseSchema } from "./schema/TransactionStatusCloseSchema";
 
-export const withCloseApi: Routes.Fn = async ({ userHono }) => {
+export const withCloseApiFx = Effect.fn("withCloseApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -172,4 +173,4 @@ export const withCloseApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

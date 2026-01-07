@@ -5,10 +5,11 @@ import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { feedGalleryCreateFx } from "~/app/feed/fx/feedGalleryCreateFx";
 import { FeedGalleryCreateSchema } from "~/app/feed/schema/FeedGalleryCreateSchema";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
-export const withGalleryCreateApi: Routes.Fn = async ({ userHono }) => {
+export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -157,4 +158,4 @@ export const withGalleryCreateApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

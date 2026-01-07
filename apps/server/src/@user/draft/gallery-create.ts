@@ -4,11 +4,13 @@ import { Effect, Match } from "effect";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { draftGalleryCreateFx } from "~/app/draft/fx/draftGalleryCreateFx";
 import { DraftGalleryCreateSchema } from "~/app/draft/schema/DraftGalleryCreateSchema";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
-export const withGalleryCreateApi: Routes.Fn = async ({ userHono }) => {
+export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
+
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -156,4 +158,4 @@ export const withGalleryCreateApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

@@ -4,11 +4,12 @@ import { Effect, Match } from "effect";
 import { listingCountFx } from "~/app/listing/fx/listingCountFx";
 import { ListingCountQuerySchema } from "~/app/listing/schema/ListingCountQuerySchema";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
-export const withCountApi: Routes.Fn = async ({ userHono }) => {
+export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -92,4 +93,4 @@ export const withCountApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

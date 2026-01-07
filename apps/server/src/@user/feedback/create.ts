@@ -4,10 +4,11 @@ import { Effect, Match } from "effect";
 import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
 import { feedbackCreateFx } from "~/app/feedback/fx/feedbackCreateFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { FeedbackCreateSchema } from "./schema/FeedbackCreateSchema";
-export const withCreateApi: Routes.Fn = async ({ userHono }) => {
+export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -133,4 +134,4 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

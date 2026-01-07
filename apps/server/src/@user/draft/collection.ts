@@ -3,8 +3,8 @@ import { EntitySchema, zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { draftCollectionFx } from "~/app/draft/fx/draftCollectionFx";
 import { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
@@ -14,7 +14,9 @@ const CollectionSchema = withCollectionSchema({
 	description: "Collection of drafts",
 });
 
-export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
+export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
+
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -97,4 +99,4 @@ export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

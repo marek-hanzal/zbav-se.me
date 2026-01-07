@@ -1,8 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
-import type { Routes } from "~/hono/Routes";
+import { Effect } from "effect";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { CronSchema } from "./schema/CronSchema";
 
-export const withDay16Endpoint: Routes.Fn = async ({ publicHono }) => {
+export const withDay16EndpointFx = Effect.fn("withDay16EndpointFx")(function* () {
+	const { publicHono } = yield* RoutesContextFx;
+
 	publicHono.openapi(
 		createRoute({
 			method: "get",
@@ -34,4 +37,4 @@ export const withDay16Endpoint: Routes.Fn = async ({ publicHono }) => {
 			});
 		},
 	);
-};
+});

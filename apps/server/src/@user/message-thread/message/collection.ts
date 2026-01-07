@@ -6,7 +6,7 @@ import { MessageQuerySchema } from "~/app/message/schema/MessageQuerySchema";
 import { MessageSchema } from "~/app/message/schema/MessageSchema";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
@@ -26,7 +26,8 @@ const CollectionSchema = withCollectionSchema({
 	description: "Collection of messages",
 });
 
-export const withMessageCollectionApi: Routes.Fn = async ({ userHono }) => {
+export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -143,4 +144,4 @@ export const withMessageCollectionApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

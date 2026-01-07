@@ -3,12 +3,13 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { feedCountFx } from "~/app/feed/fx/feedCountFx";
 import { FeedCountQuerySchema } from "~/app/feed/schema/FeedCountQuerySchema";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
-export const withCountApi: Routes.Fn = async ({ userHono }) => {
+export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -91,4 +92,4 @@ export const withCountApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

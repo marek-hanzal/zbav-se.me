@@ -3,8 +3,8 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { SellerInfoSchema } from "~/@user/listing/schema/SellerInfoSchema";
 import { listingGetSellerInfoFx } from "~/app/listing/fx/listingGetSellerInfoFx";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 const ListingSellerInfoParamsSchema = z
@@ -17,7 +17,9 @@ const ListingSellerInfoParamsSchema = z
 		description: "Parameters for listing seller info",
 	});
 
-export const withSellerInfoApi: Routes.Fn = async ({ sessionHono }) => {
+export const withSellerInfoApiFx = Effect.fn("withSellerInfoApiFx")(function* () {
+	const { sessionHono } = yield* RoutesContextFx;
+
 	sessionHono.openapi(
 		createRoute({
 			method: "post",
@@ -113,4 +115,4 @@ export const withSellerInfoApi: Routes.Fn = async ({ sessionHono }) => {
 			);
 		},
 	);
-};
+});

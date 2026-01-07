@@ -3,12 +3,14 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { draftFetchFx } from "~/app/draft/fx/draftFetchFx";
 import { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { DraftSchema } from "./schema/DraftSchema";
 
-export const withFetchApi: Routes.Fn = async ({ userHono }) => {
+export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
+
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -114,4 +116,4 @@ export const withFetchApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

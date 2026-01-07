@@ -1,8 +1,9 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { genId } from "@use-pico/common/gen-id";
+import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { AppEnv } from "~/AppEnv";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { GitHubHistorySchema } from "./schema/GitHubHistorySchema";
 
@@ -27,7 +28,9 @@ const parseRepo = (repo: string) => {
 	};
 };
 
-export const withHistoryApi: Routes.Fn = async ({ publicHono }) => {
+export const withHistoryApiFx = Effect.fn("withHistoryApiFx")(function* () {
+	const { publicHono } = yield* RoutesContextFx;
+
 	publicHono.openapi(
 		createRoute({
 			method: "get",
@@ -300,4 +303,4 @@ export const withHistoryApi: Routes.Fn = async ({ publicHono }) => {
 			}
 		},
 	);
-};
+});

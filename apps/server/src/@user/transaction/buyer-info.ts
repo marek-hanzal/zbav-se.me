@@ -5,11 +5,12 @@ import { transactionFetchFx } from "~/app/transaction/fx/transactionFetchFx";
 import { transactionGetBuyerInfoFx } from "~/app/transaction/fx/transactionGetBuyerInfoFx";
 import { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionBuyerInfoSchema } from "./schema/TransactionBuyerInfoSchema";
 
-export const withBuyerInfoApi: Routes.Fn = async ({ userHono }) => {
+export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -120,4 +121,4 @@ export const withBuyerInfoApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

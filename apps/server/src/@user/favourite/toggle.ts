@@ -4,11 +4,12 @@ import { Effect, Match } from "effect";
 import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
 import { favouriteToggleFx } from "~/app/favourite/fx/favouriteToggleFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { FavouriteToggleSchema } from "./schema/FavouriteToggleSchema";
 
-export const withToggleApi: Routes.Fn = async ({ userHono }) => {
+export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -133,4 +134,4 @@ export const withToggleApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

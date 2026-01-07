@@ -1,0 +1,75 @@
+import { Effect } from "effect";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import type { NoticeSchema } from "~/schema/NoticeSchema";
+import { withDraftApiFx } from "./draft/withDraftApiFx";
+import { withFavouriteApiFx } from "./favourite/withFavouriteApiFx";
+import { withFeedApiFx } from "./feed/withFeedApiFx";
+import { withFeedFavouriteApiFx } from "./feed-favourite/withFeedFavouriteApiFx";
+import { withFeedbackApiFx } from "./feedback/withFeedbackApiFx";
+import { withFlagApiFx } from "./flag/withFlagApiFx";
+import { withGalleryApiFx } from "./gallery/withGalleryApiFx";
+import { withIgnoreApiFx } from "./ignore/withIgnoreApiFx";
+import { withListingApiFx } from "./listing/withListingApiFx";
+import { withListingEventApiFx } from "./listing-event/withListingEventApiFx";
+import { withMessageThreadApiFx } from "./message-thread/withMessageThreadApiFx";
+import { withS3ApiFx } from "./s3/withS3ApiFx";
+import { withTransactionApiFx } from "./transaction/withTransactionApiFx";
+import { withTransactionMessageGalleryApiFx } from "./transaction-message-gallery/withTransactionMessageGalleryApiFx";
+import { withTransactionMessageLocationApiFx } from "./transaction-message-location/withTransactionMessageLocationApiFx";
+import { withTransactionMessagePackageApiFx } from "./transaction-message-package/withTransactionMessagePackageApiFx";
+import { withTransactionMessagePersonalApiFx } from "./transaction-message-personal/withTransactionMessagePersonalApiFx";
+import { withTransactionMessageTextApiFx } from "./transaction-message-text/withTransactionMessageTextApiFx";
+import { withTransactionStatusApiFx } from "./transaction-status/withTransactionStatusApiFx";
+import { withUploadApiFx } from "./upload/withUploadApiFx";
+import { withUserExApiFx } from "./user-ex/withUserExApiFx";
+
+export const withUserApiFx = Effect.fn("withUserApiFx")(function* () {
+	const { root, userHono } = yield* RoutesContextFx;
+	const database = yield* DatabaseContextFx;
+
+	userHono.use(async (c, next) => {
+		c.set("database", database);
+		return next();
+	});
+
+	root.use("/api/user/*", async (c, next) => {
+		const user = c.get("user");
+		if (!user) {
+			return c.json<NoticeSchema.Type, 401>(
+				{
+					type: "error",
+					message: "Shooooo! Shooo!",
+				},
+				401,
+			);
+		}
+		return next();
+	});
+
+	yield* Effect.all([
+		withDraftApiFx(),
+		withFavouriteApiFx(),
+		withFeedApiFx(),
+		withFeedbackApiFx(),
+		withFeedFavouriteApiFx(),
+		withFlagApiFx(),
+		withGalleryApiFx(),
+		withIgnoreApiFx(),
+		withListingApiFx(),
+		withListingEventApiFx(),
+		withMessageThreadApiFx(),
+		withS3ApiFx(),
+		withTransactionApiFx(),
+		withTransactionMessageGalleryApiFx(),
+		withTransactionMessageLocationApiFx(),
+		withTransactionMessagePackageApiFx(),
+		withTransactionMessagePersonalApiFx(),
+		withTransactionMessageTextApiFx(),
+		withTransactionStatusApiFx(),
+		withUploadApiFx(),
+		withUserExApiFx(),
+	]);
+
+	root.route("/api/user", userHono);
+});

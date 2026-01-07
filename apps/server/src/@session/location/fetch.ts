@@ -3,12 +3,14 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { locationFetchFx } from "~/app/location/fx/locationFetchFx";
 import { LocationQuerySchema } from "~/app/location/schema/LocationQuerySchema";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { LocationSchema } from "./schema/LocationSchema";
 
-export const withLocationFetchApi: Routes.Fn = async ({ sessionHono }) => {
+export const withLocationFetchApiFx = Effect.fn("withLocationFetchApiFx")(function* () {
+	const { sessionHono } = yield* RoutesContextFx;
+
 	sessionHono.openapi(
 		createRoute({
 			method: "post",
@@ -109,4 +111,4 @@ export const withLocationFetchApi: Routes.Fn = async ({ sessionHono }) => {
 			);
 		},
 	);
-};
+});

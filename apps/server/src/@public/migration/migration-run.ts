@@ -1,9 +1,12 @@
 import { createRoute, z } from "@hono/zod-openapi";
+import { Effect } from "effect";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { database } from "~/database/kysely";
-import type { Routes } from "~/hono/Routes";
 import { MigrationSchema } from "./schema/MigrationSchema";
 
-export const withMigrationRunApi: Routes.Fn = async ({ publicHono }) => {
+export const withMigrationRunApiFx = Effect.fn("withMigrationRunApiFx")(function* () {
+	const { publicHono } = yield* RoutesContextFx;
+
 	publicHono.openapi(
 		createRoute({
 			method: "get",
@@ -28,4 +31,4 @@ export const withMigrationRunApi: Routes.Fn = async ({ publicHono }) => {
 			return c.json((await database.migrate()) ?? [], 200);
 		},
 	);
-};
+});

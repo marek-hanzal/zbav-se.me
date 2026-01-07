@@ -3,13 +3,15 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { cleanupFx } from "~/@public/janitor/cleanup/cleanupFx";
 import { AppEnv } from "~/AppEnv";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { S3ContextProvider } from "~/app/s3/context/S3ContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { CleanupSchema } from "./schema/CleanupSchema";
 
-export const withJanitorCleanupApi: Routes.Fn = async ({ publicHono }) => {
+export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(function* () {
+	const { publicHono } = yield* RoutesContextFx;
+
 	publicHono.openapi(
 		createRoute({
 			method: "get",
@@ -70,4 +72,4 @@ export const withJanitorCleanupApi: Routes.Fn = async ({ publicHono }) => {
 			}
 		},
 	);
-};
+});

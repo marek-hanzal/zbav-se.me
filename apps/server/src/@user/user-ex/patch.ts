@@ -4,11 +4,12 @@ import { Effect, Match } from "effect";
 import { userExPatchFx } from "~/app/user-ex/fx/userExPatchFx";
 import { UserExPatchSchema } from "~/app/user-ex/schema/UserExPatchSchema";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { UserExSchema } from "./schema/UserExSchema";
 
-export const withPatchApi: Routes.Fn = async ({ userHono }) => {
+export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "patch",
@@ -90,4 +91,4 @@ export const withPatchApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

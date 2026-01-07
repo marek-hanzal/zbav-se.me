@@ -3,12 +3,13 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { feedPatchFx } from "~/app/feed/fx/feedPatchFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { FeedPatchSchema } from "./schema/FeedPatchSchema";
 import { FeedSchema } from "./schema/FeedSchema";
 
-export const withPatchApi: Routes.Fn = async ({ userHono }) => {
+export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "patch",
@@ -114,4 +115,4 @@ export const withPatchApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

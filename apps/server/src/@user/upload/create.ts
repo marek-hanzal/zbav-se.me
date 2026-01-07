@@ -6,11 +6,12 @@ import { UploadContextProvider } from "~/app/upload/context/UploadContextFx";
 import { uploadCreateFx } from "~/app/upload/fx/uploadCreateFx";
 import { UploadCreateSchema } from "~/app/upload/schema/UploadCreateSchema";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { UploadSchema } from "./schema/UploadSchema";
 
-export const withCreateApi: Routes.Fn = async ({ userHono }) => {
+export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -142,4 +143,4 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

@@ -5,12 +5,13 @@ import { AppEnv } from "~/AppEnv";
 import { S3ContextProvider } from "~/app/s3/context/S3ContextFx";
 import { s3PreSignFx } from "~/app/s3/fx/s3PreSignFx";
 import { UploadContextProvider } from "~/app/upload/context/UploadContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { S3PreSignRequestSchema } from "./schema/S3PreSignRequestSchema";
 import { S3PreSignResponseSchema } from "./schema/S3PreSignResponseSchema";
 
-export const withPresignApi: Routes.Fn = async ({ userHono }) => {
+export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -103,4 +104,4 @@ export const withPresignApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

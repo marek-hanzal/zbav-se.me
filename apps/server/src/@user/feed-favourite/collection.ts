@@ -5,7 +5,7 @@ import { FeedFavouriteSchema } from "~/@user/feed-favourite/schema/FeedFavourite
 import { feedFavouriteCollectionFx } from "~/app/feed/fx/feedFavouriteCollectionFx";
 import { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
@@ -15,7 +15,8 @@ const CollectionSchema = withCollectionSchema({
 	description: "Collection of feed items from favourites",
 });
 
-export const withFeedFavouriteCollectionApi: Routes.Fn = async ({ userHono }) => {
+export const withFeedFavouriteCollectionApiFx = Effect.fn("withFeedFavouriteCollectionApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -100,4 +101,4 @@ export const withFeedFavouriteCollectionApi: Routes.Fn = async ({ userHono }) =>
 			);
 		},
 	);
-};
+});

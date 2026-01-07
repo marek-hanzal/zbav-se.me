@@ -5,11 +5,12 @@ import { TransactionStatusSchema } from "~/@user/transaction-status/schema/Trans
 import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusDisputeFx } from "~/app/transaction-status/fx/transactionStatusDisputeFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionStatusDisputeSchema } from "./schema/TransactionStatusDisputeSchema";
 
-export const withDisputeApi: Routes.Fn = async ({ userHono }) => {
+export const withDisputeApiFx = Effect.fn("withDisputeApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -150,4 +151,4 @@ export const withDisputeApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

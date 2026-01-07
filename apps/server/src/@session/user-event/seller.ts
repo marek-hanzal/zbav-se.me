@@ -1,10 +1,10 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { userEventSellerInfoFx } from "~/app/user-event/fx/userEventSellerInfoFx";
 import { UserEventSellerSchema } from "~/app/user-event/schema/UserEventSellerSchema";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 const UserEventSellerParamsSchema = z
@@ -17,7 +17,9 @@ const UserEventSellerParamsSchema = z
 		description: "Parameters for user event seller info",
 	});
 
-export const withSellerApi: Routes.Fn = async ({ sessionHono }) => {
+export const withSellerApiFx = Effect.fn("withSellerApiFx")(function* () {
+	const { sessionHono } = yield* RoutesContextFx;
+
 	sessionHono.openapi(
 		createRoute({
 			method: "post",
@@ -99,4 +101,4 @@ export const withSellerApi: Routes.Fn = async ({ sessionHono }) => {
 			);
 		},
 	);
-};
+});

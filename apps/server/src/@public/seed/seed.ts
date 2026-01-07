@@ -2,12 +2,14 @@ import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { SeedRequestSchema, seedFx } from "~/@public/seed/fx/seedFx";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
-export const withSeedApi: Routes.Fn = async ({ publicHono }) => {
+export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
+	const { publicHono } = yield* RoutesContextFx;
+
 	publicHono.openapi(
 		createRoute({
 			method: "post",
@@ -165,4 +167,4 @@ export const withSeedApi: Routes.Fn = async ({ publicHono }) => {
 			);
 		},
 	);
-};
+});

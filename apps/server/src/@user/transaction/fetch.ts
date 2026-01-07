@@ -4,11 +4,12 @@ import { Effect, Match } from "effect";
 import { transactionFetchFx } from "~/app/transaction/fx/transactionFetchFx";
 import { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionSchema } from "./schema/TransactionSchema";
 
-export const withFetchApi: Routes.Fn = async ({ userHono }) => {
+export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -114,4 +115,4 @@ export const withFetchApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

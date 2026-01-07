@@ -3,8 +3,8 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { favouriteCollectionFx } from "~/app/favourite/fx/favouriteCollectionFx";
 import { FavouriteQuerySchema } from "~/app/favourite/schema/FavouriteQuerySchema";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { FavouriteSchema } from "./schema/FavouriteSchema";
@@ -15,7 +15,9 @@ const CollectionSchema = withCollectionSchema({
 	description: "Collection of favourite items",
 });
 
-export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
+export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
+
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -98,4 +100,4 @@ export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

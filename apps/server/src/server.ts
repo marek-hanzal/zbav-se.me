@@ -1,13 +1,15 @@
+import { Effect } from "effect";
 import { bodyLimit } from "hono/body-limit";
 import { cors } from "hono/cors";
 import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
-import type { RoutesContext } from "~/app/routes/RoutesContextFx";
-import { withPublicApi } from "./@public/withPublicApi";
+import { withPublicApiFx } from "./@public/withPublicApiFx";
 import { withRootApi } from "./@root/withRootApi";
-import { withSessionApi } from "./@session/withSessionApi";
-import { withUserApi } from "./@user/withUserApi";
+import { withSessionApiFx } from "./@session/withSessionApiFx";
+import { withUserApiFx } from "./@user/withUserApiFx";
 import { AppEnv } from "./AppEnv";
+import { RoutesContextProvider } from "./app/routes/RoutesContextFx";
+import { DatabaseContextProvider } from "./database/fx/DatabaseContextFx";
 import { database } from "./database/kysely";
 import { withHono } from "./hono/withHono";
 import { withSessionHono } from "./hono/withSessionHono";
@@ -93,26 +95,20 @@ app.onError((err, c) => {
 
 //
 
-const routes: RoutesContext = {
-	root: app,
-	publicHono: withHono(),
-	sessionHono: withSessionHono(),
-	userHono: withUserHono(),
-};
-
-const kysely = database.kysely();
-
-await withRootApi(routes, {
-	database: kysely,
-});
-await withPublicApi(routes, {
-	database: kysely,
-});
-await withSessionApi(routes, {
-	database: kysely,
-});
-await withUserApi(routes, {
-	database: kysely,
-});
+await Effect.all([
+	withRootApi(),
+	withPublicApiFx(),
+	withSessionApiFx(),
+	withUserApiFx(),
+]).pipe(
+	RoutesContextProvider({
+		root: app,
+		publicHono: withHono(),
+		sessionHono: withSessionHono(),
+		userHono: withUserHono(),
+	}),
+	DatabaseContextProvider(database.kysely()),
+	Effect.runPromise,
+);
 
 export default app;

@@ -3,12 +3,14 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { draftDeleteFx } from "~/app/draft/fx/draftDeleteFx";
 import { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { DraftSchema } from "./schema/DraftSchema";
 
-export const withDeleteApi: Routes.Fn = async ({ userHono }) => {
+export const withDeleteApiFx = Effect.fn("withDeleteApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
+
 	userHono.openapi(
 		createRoute({
 			method: "delete",
@@ -114,4 +116,4 @@ export const withDeleteApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});

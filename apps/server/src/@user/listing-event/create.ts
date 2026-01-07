@@ -3,12 +3,13 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { ListingEventCreateSchema } from "./schema/ListingEventCreateSchema";
 import { ListingEventSchema } from "./schema/ListingEventSchema";
 
-export const withCreateApi: Routes.Fn = async ({ userHono }) => {
+export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -156,4 +157,4 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 			);
 		},
 	);
-};
+});
