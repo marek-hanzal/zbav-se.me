@@ -1,4 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { ignoreCountFx } from "~/app/ignore/fx/ignoreCountFx";
 import { IgnoreCountQuerySchema } from "~/app/ignore/schema/IgnoreCountQuerySchema";
@@ -52,11 +53,14 @@ export const withCountApi: Routes.Fn = async ({ userHono }) => {
 				const user = yield* UserContextFx;
 
 				return c.json<CountSchema.Type, 200>(
-					yield* ignoreCountFx({
-						...c.req.valid("json"),
-						scope: {
-							userId: user.id,
-						},
+					yield* zodFx({
+						schema: CountSchema,
+						dataFx: ignoreCountFx({
+							...c.req.valid("json"),
+							scope: {
+								userId: user.id,
+							},
+						}),
 					}),
 					200,
 				);

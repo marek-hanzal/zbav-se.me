@@ -1,7 +1,5 @@
 import { Effect } from "effect";
 import type { SelectQueryBuilder } from "kysely";
-import { zodFx } from "../schema";
-import { CountSchema } from "../schema/CountSchema";
 import type { FilterSchema } from "../schema/FilterSchema";
 
 export namespace withCountFx {
@@ -110,12 +108,9 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 			})
 		: undefined;
 
-	return yield* zodFx({
-		schema: CountSchema,
-		dataFx: Effect.succeed({
-			total: countTotal?.count ?? 0,
-			filter: countFilter?.count ?? 0,
-			where: countWhere?.count ?? 0,
-		}),
-	});
+	return {
+		total: countTotal?.count ?? 0,
+		filter: countFilter?.count ?? 0,
+		where: countWhere?.count ?? 0,
+	};
 });

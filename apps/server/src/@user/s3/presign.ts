@@ -50,10 +50,9 @@ export const withPresignApi: Routes.Fn = async ({ userHono }) => {
 			],
 		}),
 		async (c) => {
-			const { path, extension } = c.req.valid("json");
-
 			return Effect.gen(function* () {
 				const user = yield* UserContextFx;
+				const { path, extension } = c.req.valid("json");
 
 				return c.json<S3PreSignResponseSchema.Type, 200>(
 					yield* zodFx({

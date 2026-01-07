@@ -1,4 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
 import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
@@ -6,6 +7,7 @@ import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { ListingEventCreateSchema } from "./schema/ListingEventCreateSchema";
+import { ListingEventSchema } from "./schema/ListingEventSchema";
 
 export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 	userHono.openapi(
@@ -26,6 +28,11 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 			},
 			responses: {
 				201: {
+					content: {
+						"application/json": {
+							schema: ListingEventSchema,
+						},
+					},
 					description: "The listing event was created",
 				},
 				400: {
@@ -70,10 +77,13 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 			return Effect.gen(function* () {
 				const user = yield* UserContextFx;
 
-				return c.json(
-					yield* listingEventCreateFx({
-						...c.req.valid("json"),
-						userId: user.id,
+				return c.json<ListingEventSchema.Type, 201>(
+					yield* zodFx({
+						schema: ListingEventSchema,
+						dataFx: listingEventCreateFx({
+							...c.req.valid("json"),
+							userId: user.id,
+						}),
 					}),
 					201,
 				);
@@ -123,6 +133,20 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 											message: e.message,
 										},
 										429,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "ZodErrorFx",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 500>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										500,
 									);
 								},
 							),

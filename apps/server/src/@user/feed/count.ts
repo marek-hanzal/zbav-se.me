@@ -1,4 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { feedCountFx } from "~/app/feed/fx/feedCountFx";
 import { FeedCountQuerySchema } from "~/app/feed/schema/FeedCountQuerySchema";
@@ -52,11 +53,14 @@ export const withCountApi: Routes.Fn = async ({ userHono }) => {
 				const user = yield* UserContextFx;
 
 				return c.json<CountSchema.Type, 200>(
-					yield* feedCountFx({
-						...c.req.valid("json"),
-						scope: {
-							userId: user.id,
-						},
+					yield* zodFx({
+						schema: CountSchema,
+						dataFx: feedCountFx({
+							...c.req.valid("json"),
+							scope: {
+								userId: user.id,
+							},
+						}),
 					}),
 					200,
 				);

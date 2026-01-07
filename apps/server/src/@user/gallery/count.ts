@@ -1,4 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { galleryCountFx } from "~/app/gallery/fx/galleryCountFx";
 import { GalleryCountQuerySchema } from "~/app/gallery/schema/GalleryCountQuerySchema";
@@ -52,11 +53,14 @@ export const withCountApi: Routes.Fn = async ({ userHono }) => {
 				const user = yield* UserContextFx;
 
 				return c.json<CountSchema.Type, 200>(
-					yield* galleryCountFx({
-						...c.req.valid("json"),
-						scope: {
-							userId: user.id,
-						},
+					yield* zodFx({
+						schema: CountSchema,
+						dataFx: galleryCountFx({
+							...c.req.valid("json"),
+							scope: {
+								userId: user.id,
+							},
+						}),
 					}),
 					200,
 				);
