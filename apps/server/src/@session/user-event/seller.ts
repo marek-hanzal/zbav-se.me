@@ -3,7 +3,6 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { userEventSellerInfoFx } from "~/app/user-event/fx/userEventSellerInfoFx";
 import { UserEventSellerSchema } from "~/app/user-event/schema/UserEventSellerSchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -18,8 +17,8 @@ const UserEventSellerParamsSchema = z
 		description: "Parameters for user event seller info",
 	});
 
-export const withSellerApi: Routes.Fn = async ({ userHono }) => {
-	userHono.openapi(
+export const withSellerApi: Routes.Fn = async ({ sessionHono }) => {
+	sessionHono.openapi(
 		createRoute({
 			method: "post",
 			path: "/user-event/{userId}/seller",
@@ -56,7 +55,7 @@ export const withSellerApi: Routes.Fn = async ({ userHono }) => {
 			},
 			tags: [
 				"user-event",
-				"user",
+				"session",
 			],
 		}),
 		async (c) => {
@@ -74,7 +73,6 @@ export const withSellerApi: Routes.Fn = async ({ userHono }) => {
 				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
-				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

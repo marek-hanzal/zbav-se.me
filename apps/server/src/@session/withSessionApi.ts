@@ -2,8 +2,10 @@ import type { WithDatabase } from "../database/WithDatabase";
 import type { Routes } from "../hono/Routes";
 import type { NoticeSchema } from "../schema/NoticeSchema";
 import { withCategoryApi } from "./category/withCategoryApi";
+import { withListingApi } from "./listing/withListingApi";
 import { withLocationApi } from "./location/withLocationApi";
 import { withUploadApi } from "./upload/withUploadApi";
+import { withUserEventApi } from "./user-event/withUserEventApi";
 
 export const withSessionApi: Routes.FnWithDeps<{
 	database: WithDatabase;
@@ -29,8 +31,10 @@ export const withSessionApi: Routes.FnWithDeps<{
 	});
 
 	await withCategoryApi(routes);
+	await withListingApi(routes);
 	await withLocationApi(routes);
 	await withUploadApi(routes);
+	await withUserEventApi(routes);
 
 	routes.root.route("/api/session", routes.sessionHono);
 };

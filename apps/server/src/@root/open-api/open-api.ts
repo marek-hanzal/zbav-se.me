@@ -34,5 +34,16 @@ export const withOpenApiEndpoint: Routes.Fn = async (routes) => {
 				url: AppEnv.VITE_SERVER_API,
 			},
 		],
+		// @ts-expect-error - components is valid in OpenAPI 3.1 but types may not include it
+		components: {
+			securitySchemes: {
+				cookieAuth: {
+					type: "apiKey",
+					in: "cookie",
+					name: "better-auth.session_token",
+					description: "Cookie-based authentication using better-auth session token",
+				},
+			},
+		},
 	});
 };

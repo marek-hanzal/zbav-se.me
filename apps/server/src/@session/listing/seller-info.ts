@@ -1,12 +1,11 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { SellerInfoSchema } from "~/@user/listing/schema/SellerInfoSchema";
 import { listingGetSellerInfoFx } from "~/app/listing/fx/listingGetSellerInfoFx";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { SellerInfoSchema } from "./schema/SellerInfoSchema";
 
 const ListingSellerInfoParamsSchema = z
 	.object({
@@ -18,8 +17,8 @@ const ListingSellerInfoParamsSchema = z
 		description: "Parameters for listing seller info",
 	});
 
-export const withSellerInfoApi: Routes.Fn = async ({ userHono }) => {
-	userHono.openapi(
+export const withSellerInfoApi: Routes.Fn = async ({ sessionHono }) => {
+	sessionHono.openapi(
 		createRoute({
 			method: "post",
 			path: "/listing/{listingId}/seller-info",
@@ -56,7 +55,7 @@ export const withSellerInfoApi: Routes.Fn = async ({ userHono }) => {
 			},
 			tags: [
 				"listing",
-				"user",
+				"session",
 			],
 		}),
 		async (c) => {
@@ -74,7 +73,6 @@ export const withSellerInfoApi: Routes.Fn = async ({ userHono }) => {
 				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
-				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

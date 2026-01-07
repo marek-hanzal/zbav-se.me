@@ -60,6 +60,9 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 					description: "Internal server error",
 				},
 			},
+			security: [
+				{},
+			],
 			tags: [
 				"upload",
 				"user",
