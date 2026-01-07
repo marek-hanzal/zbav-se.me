@@ -1,9 +1,9 @@
 import { withQuery } from "@use-pico/client/query";
-import { apiListingSellerInfo } from "../../../api/user/sdk.gen";
+import { apiListingSellerInfo } from "../../../api/session/sdk.gen";
 import type {
 	tApiListingSellerInfoRequest,
 	tApiListingSellerInfoResponse,
-} from "../../../api/user/types.gen";
+} from "../../../api/session/types.gen";
 
 export const withListingSellerInfoQuery = withQuery<
 	tApiListingSellerInfoRequest["path"],

@@ -6,7 +6,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { toTimeDiff } from "@use-pico/common/time";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { translator } from "@use-pico/common/translator";
-import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/user";
+import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/session/listing";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
 import { RatingToIcon } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
