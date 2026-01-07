@@ -8,7 +8,7 @@ export const testabase = async (id: string = genId()) => {
 	const db = id;
 
 	{
-		const database = withDatabase<Database>({
+		const { kysely } = withDatabase<Database>({
 			dialect() {
 				return new PostgresDialect({
 					pool: new Pool({
@@ -19,9 +19,9 @@ export const testabase = async (id: string = genId()) => {
 			},
 		});
 
-		await sql`CREATE DATABASE ${sql.ref(db)} TEMPLATE test OWNER test`.execute(kysely.kysely());
+		await sql`CREATE DATABASE ${sql.ref(db)} TEMPLATE test OWNER test`.execute(kysely);
 
-		await kysely.kysely().destroy();
+		await kysely.destroy();
 	}
 
 	return withDatabase<Database>({

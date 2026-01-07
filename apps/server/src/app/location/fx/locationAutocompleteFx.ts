@@ -28,25 +28,24 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const trx = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			const results = yield* withLocationListFx({
-				query: {
-					where: {
-						query: text,
-						lang,
-					},
-					sort: [
-						{
-							field: "confidence",
-							direction: "desc",
-						},
-					],
-					cursor: {
-						page: 0,
-						size: limit,
-					},
+				where: {
+					query: text,
+					lang,
 				},
+				sort: [
+					{
+						field: "confidence",
+						direction: "desc",
+					},
+				],
+				cursor: {
+					page: 0,
+					size: limit,
+				},
+				scope: {},
 			});
 
 			if (results.length > 0) {
@@ -85,7 +84,7 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 
 			if (locations.length > 0) {
 				yield* Effect.promise(async () => {
-					return trx
+					return kysely
 						.insertInto("location")
 						.values(locations)
 						.onConflict((oc) =>
@@ -101,22 +100,21 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 			}
 
 			return yield* withLocationListFx({
-				query: {
-					where: {
-						query: text,
-						lang,
-					},
-					sort: [
-						{
-							field: "confidence",
-							direction: "desc",
-						},
-					],
-					cursor: {
-						page: 0,
-						size: limit,
-					},
+				where: {
+					query: text,
+					lang,
 				},
+				sort: [
+					{
+						field: "confidence",
+						direction: "desc",
+					},
+				],
+				cursor: {
+					page: 0,
+					size: limit,
+				},
+				scope: {},
 			});
 		}),
 	);

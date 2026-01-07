@@ -67,7 +67,7 @@ export const withHistoryApiFx = Effect.fn("withHistoryApiFx")(function* () {
 		async (c) => {
 			try {
 				// Adjust this line to your actual DB injection.
-				const db = c.var.database;
+				const db = c.var.kysely.kysely;
 
 				const { weeks } = c.req.valid("query");
 				const historyDays = weeks * 7;

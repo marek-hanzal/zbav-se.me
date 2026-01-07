@@ -16,7 +16,7 @@ describe("userEventSellerInfoFx", () => {
 		const database = await testabase("userEventSellerInfoFx-single-listing");
 
 		const { api } = auth(() => {
-			return kysely.dialect();
+			return database.dialect;
 		});
 
 		const { user: seller } = await api.signUpEmail({
@@ -69,7 +69,7 @@ describe("userEventSellerInfoFx", () => {
 					userId: seller.id,
 				});
 			}).pipe(
-				KyselyContextProvider(kysely.kysely()),
+				KyselyContextProvider(database),
 				LocationContextProvider({
 					api: "",
 					autocomplete: "",

@@ -12,8 +12,8 @@ export namespace withDatabase {
 		/**
 		 * Called before the migration is executed.
 		 */
-		onPreMigration?(): Promise<void>;
-		onPostMigration?(): Promise<void>;
+		onPreMigration?(dialect: Dialect): Promise<void>;
+		onPostMigration?(dialect: Dialect): Promise<void>;
 	}
 
 	export interface Instance<DB = any> {
@@ -62,7 +62,7 @@ export const withDatabase = <TDatabase>({
 			}));
 		},
 		async migrate() {
-			await onPreMigration?.();
+			await onPreMigration?.(this.dialect);
 
 			const migrator = new Migrator({
 				db: this.kysely,
@@ -89,7 +89,7 @@ export const withDatabase = <TDatabase>({
 				}
 			});
 
-			await onPostMigration?.();
+			await onPostMigration?.(this.dialect);
 
 			return results;
 		},

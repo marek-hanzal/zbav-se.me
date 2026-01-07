@@ -1,14 +1,12 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { userEventSellerInfoFx } from "~/@user/user-event/fx/userEventSellerInfoFx";
+import { userEventSellerInfoFx } from "~/app/user-event/fx/userEventSellerInfoFx";
 import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { testabase } from "../../../../testabase";
 
 describe("userEventSellerInfoFx", () => {
 	it("Empty user's info returns nothing", async () => {
-		const database = await testabase("userEventSellerInfoFx-empty");
-
-		const kysely = await kysely.kysely();
+		const kysely = await testabase("userEventSellerInfoFx-empty");
 
 		const result = await Effect.runPromise(
 			Effect.gen(function* () {

@@ -148,15 +148,16 @@ export default async function globalSetup(): Promise<SetupResult> {
 			connectionString: `${DATABASE_URL}/test`,
 		}),
 	});
+
 	const database = withDatabase<Database>({
 		dialect() {
 			return dialect;
 		},
-		onPreMigration: async () => runAuthMigration(() => dialect),
+		onPreMigration: runAuthMigration,
 		getMigrations,
 	});
 
-	await kysely.migrate();
+	await database.migrate();
 
-	await kysely.kysely().destroy();
+	await database.kysely.destroy();
 }
