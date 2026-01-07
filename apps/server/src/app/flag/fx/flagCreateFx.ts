@@ -13,7 +13,7 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 	userId,
 	listingId,
 }: flagCreateFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const id = genId();
 

@@ -14,7 +14,7 @@ export namespace withFlagSelectFx {
 export const withFlagSelectFx = Effect.fn("withFlagSelectFx")(function* ({
 	sort,
 }: withFlagSelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely.selectFrom("flag as f").select([
 		"f.id",

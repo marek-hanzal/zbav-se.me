@@ -22,7 +22,7 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 }: listingEventCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const kysely = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			yield* listingCheckIfOwnFx({
 				userId,

@@ -14,7 +14,7 @@ export namespace withMessageThreadSelectFx {
 export const withMessageThreadSelectFx = Effect.fn("withMessageThreadSelectFx")(function* ({
 	sort,
 }: withMessageThreadSelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely.selectFrom("message_thread as mt").selectAll();
 

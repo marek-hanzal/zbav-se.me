@@ -24,7 +24,7 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 }: transactionPatchFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const kysely = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 			const config = yield* TransactionContextFx;
 
 			const transaction = yield* transactionFetchFx({

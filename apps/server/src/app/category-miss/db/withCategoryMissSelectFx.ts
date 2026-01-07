@@ -14,7 +14,7 @@ export namespace withCategoryMissSelectFx {
 export const withCategoryMissSelectFx = Effect.fn("withCategoryMissSelectFx")(function* ({
 	sort,
 }: withCategoryMissSelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely.selectFrom("category_miss as cm").selectAll("cm");
 

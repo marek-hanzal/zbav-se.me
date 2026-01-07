@@ -9,7 +9,7 @@ export namespace seedUserFx {
 }
 
 export const seedUserFx = Effect.fn("seedUserFx")(function* ({ email }: seedUserFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const current = yield* Effect.promise(async () => {
 		return kysely

@@ -18,7 +18,7 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 }: feedPatchFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const kysely = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			const feed = yield* feedFetchFx({
 				...query,

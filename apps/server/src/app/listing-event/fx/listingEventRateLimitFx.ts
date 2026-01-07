@@ -19,7 +19,7 @@ export const listingEventRateLimitFx = Effect.fn("listingEventRateLimitFx")(func
 	minutes = 10,
 	createdAt,
 }: listingEventRateLimitFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const listingEvent = yield* Effect.promise(async () => {
 		return kysely

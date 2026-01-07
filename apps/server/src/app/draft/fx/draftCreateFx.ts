@@ -19,7 +19,7 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 }: draftCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const kysely = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			const id = genId();
 			const now = new Date();

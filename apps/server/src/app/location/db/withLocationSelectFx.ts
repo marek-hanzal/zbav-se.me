@@ -14,7 +14,7 @@ export namespace withLocationSelectFx {
 export const withLocationSelectFx = Effect.fn("withLocationSelectFx")(function* ({
 	sort,
 }: withLocationSelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely.selectFrom("location as loc").selectAll("loc");
 

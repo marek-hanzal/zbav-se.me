@@ -19,7 +19,7 @@ export const withMessageLocationSelectFx = Effect.fn("withMessageLocationSelectF
 	userId,
 	sort,
 }: withMessageLocationSelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely
 		.selectFrom("message_location as ml")

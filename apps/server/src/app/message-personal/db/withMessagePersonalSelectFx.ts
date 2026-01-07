@@ -19,7 +19,7 @@ export const withMessagePersonalSelectFx = Effect.fn("withMessagePersonalSelectF
 	userId,
 	sort,
 }: withMessagePersonalSelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely
 		.selectFrom("message_personal as mp")

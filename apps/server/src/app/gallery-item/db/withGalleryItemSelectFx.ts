@@ -15,7 +15,7 @@ export namespace withGalleryItemSelectFx {
 export const withGalleryItemSelectFx = Effect.fn("withGalleryItemSelectFx")(function* ({
 	sort,
 }: withGalleryItemSelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const uploadSelect = yield* withUploadSelectFx({});
 

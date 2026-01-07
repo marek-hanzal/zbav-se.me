@@ -16,7 +16,7 @@ export const draftResolveFx = Effect.fn("draftResolveFx")(function* ({
 	draftId,
 	message = "You are not allowed to access this draft",
 }: draftResolveFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const draft = yield* Effect.promise(async () => {
 		return kysely

@@ -20,7 +20,7 @@ export const withMessageGallerySelectFx = Effect.fn("withMessageGallerySelectFx"
 	userId,
 	sort,
 }: withMessageGallerySelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const gallerySelect = yield* withGallerySelectFx({});
 

@@ -19,7 +19,7 @@ export const t01_resolve = Effect.fn("t01_resolve")(function* ({
 	fromMinutes,
 	toMinutes,
 }: t01_resolve.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const transactions = yield* transactionCollectionFx({
 		cursor: {

@@ -6,7 +6,7 @@ import { s3ClientFx } from "~/app/s3/fx/s3ClientFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export const cleanupUploadFx = Effect.fn("cleanupUpload")(function* () {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const { bucket } = yield* S3ContextFx;
 	const client = yield* s3ClientFx();

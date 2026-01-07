@@ -18,7 +18,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 }: draftPatchFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const kysely = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			const draft = yield* draftFetchFx({
 				...query,

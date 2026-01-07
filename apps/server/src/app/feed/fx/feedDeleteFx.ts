@@ -14,7 +14,7 @@ export namespace feedDeleteFx {
 export const feedDeleteFx = Effect.fn("feedDeleteFx")(function* (query: feedDeleteFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const kysely = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			const feed = yield* feedFetchFx(query);
 

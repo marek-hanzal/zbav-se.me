@@ -14,7 +14,7 @@ export namespace withListingEventSelectFx {
 export const withListingEventSelectFx = Effect.fn("withListingEventSelectFx")(function* ({
 	sort,
 }: withListingEventSelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely.selectFrom("listing_event as le").selectAll("le");
 

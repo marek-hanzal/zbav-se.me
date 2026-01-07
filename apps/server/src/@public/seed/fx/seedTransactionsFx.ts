@@ -27,7 +27,7 @@ export const seedTransactionsFx = Effect.fn("seedTransactionsFx")(function* ({
 	count,
 	months,
 }: seedTransactionsFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	yield* Effect.promise(async () => {
 		return kysely.deleteFrom("transaction").where("userId", "=", userId).execute();

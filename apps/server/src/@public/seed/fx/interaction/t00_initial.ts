@@ -20,7 +20,7 @@ export const t00_initial = Effect.fn("t00_initial")(function* ({
 	fromMinutes,
 	toMinutes,
 }: t00_initial.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const { data: transactions } = yield* transactionCollectionFx({
 		cursor: {

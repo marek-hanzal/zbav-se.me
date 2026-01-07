@@ -26,7 +26,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 }: listingCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const kysely = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			const id = genId();
 			const now = new Date();

@@ -29,7 +29,7 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 }: transactionCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const kysely = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 			const config = yield* TransactionContextFx;
 
 			const listing = yield* Effect.promise(async () => {

@@ -14,7 +14,7 @@ export namespace listingGetSellerInfoFx {
 export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(function* ({
 	listingId,
 }: listingGetSellerInfoFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const userInfo = yield* Effect.promise(async () => {
 		return kysely

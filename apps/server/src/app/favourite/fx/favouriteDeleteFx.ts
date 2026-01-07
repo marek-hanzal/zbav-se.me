@@ -16,7 +16,7 @@ export const favouriteDeleteFx = Effect.fn("favouriteDeleteFx")(function* ({
 }: favouriteDeleteFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const kysely = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			const favourite = yield* favouriteFetchFx({
 				where: {

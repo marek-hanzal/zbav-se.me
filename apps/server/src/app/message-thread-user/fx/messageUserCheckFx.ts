@@ -13,7 +13,7 @@ export const messageUserCheckFx = Effect.fn("messageUserCheckFx")(function* ({
 	userIds,
 	messageThreadId,
 }: messageUserCheckFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const result = yield* Effect.promise(async () => {
 		return kysely

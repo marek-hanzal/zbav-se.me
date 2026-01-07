@@ -19,7 +19,7 @@ export const galleryItemCreateFx = Effect.fn("galleryItemCreateFx")(function* ({
 	createdAt,
 	...data
 }: galleryItemCreateFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const now = createdAt ?? DateTime.now();
 	const id = genId();

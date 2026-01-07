@@ -14,7 +14,7 @@ export namespace withIgnoreSelectFx {
 export const withIgnoreSelectFx = Effect.fn("withIgnoreSelectFx")(function* ({
 	sort,
 }: withIgnoreSelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely.selectFrom("ignore as i").select([
 		"i.id",

@@ -13,7 +13,7 @@ export const ignoreCreateFx = Effect.fn("ignoreCreateFx")(function* ({
 	userId,
 	listingId,
 }: ignoreCreateFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const id = genId();
 

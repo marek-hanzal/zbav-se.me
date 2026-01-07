@@ -1,7 +1,6 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { Effect } from "effect";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { database } from "~/database/kysely";
 import { MigrationSchema } from "./schema/MigrationSchema";
 
 export const withMigrationRunApiFx = Effect.fn("withMigrationRunApiFx")(function* () {
@@ -28,7 +27,7 @@ export const withMigrationRunApiFx = Effect.fn("withMigrationRunApiFx")(function
 			],
 		}),
 		async (c) => {
-			return c.json((await kysely.migrate()) ?? [], 200);
+			return c.json((await c.get("kysely").migrate()) ?? [], 200);
 		},
 	);
 });

@@ -16,7 +16,7 @@ export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* ({
 	id,
 	...props
 }: galleryCreateFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const galleryId = id ?? genId();
 

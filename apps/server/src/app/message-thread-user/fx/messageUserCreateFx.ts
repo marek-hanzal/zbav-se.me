@@ -19,7 +19,7 @@ export const messageUserCreateFx = Effect.fn("messageUserCreateFx")(function* ({
 }: messageUserCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const kysely = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			return yield* Effect.promise(async () => {
 				return kysely

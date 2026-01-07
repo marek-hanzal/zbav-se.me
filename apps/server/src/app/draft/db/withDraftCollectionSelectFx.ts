@@ -14,7 +14,7 @@ export namespace withDraftCollectionSelectFx {
 export const withDraftCollectionSelectFx = Effect.fn("withDraftCollectionSelectFx")(function* ({
 	sort,
 }: withDraftCollectionSelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely
 		.selectFrom("draft as d")

@@ -16,7 +16,7 @@ export const flagDeleteFx = Effect.fn("flagDeleteFx")(function* ({
 }: flagDeleteFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const kysely = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			const flag = yield* flagFetchFx({
 				where: {

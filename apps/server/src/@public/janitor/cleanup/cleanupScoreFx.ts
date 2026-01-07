@@ -4,7 +4,7 @@ import type { CleanupSchema } from "~/@public/janitor/schema/CleanupSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export const cleanupScoreFx = Effect.fn("cleanupScoreFx")(function* () {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const cutoffDate = DateTime.now()
 		.minus({

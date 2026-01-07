@@ -18,7 +18,7 @@ export const withMessagePackageSelectFx = Effect.fn("withMessagePackageSelectFx"
 	userId,
 	sort,
 }: withMessagePackageSelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely
 		.selectFrom("message_package as mp")

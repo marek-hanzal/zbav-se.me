@@ -14,7 +14,7 @@ export const withRootApi = Effect.fn("withRootApi")(function* () {
 	root.use(async (c, next) => {
 		c.set("kysely", kysely);
 
-		const { api } = auth(() => kysely.dialect());
+		const { api } = auth(() => kysely.dialect);
 
 		try {
 			const session = await api.getSession({

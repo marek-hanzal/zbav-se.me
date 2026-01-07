@@ -16,7 +16,7 @@ export namespace withMessageSystemSelectFx {
 export const withMessageSystemSelectFx = Effect.fn("withMessageSystemSelectFx")(function* ({
 	sort,
 }: withMessageSystemSelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely
 		.selectFrom("message_system as ms")

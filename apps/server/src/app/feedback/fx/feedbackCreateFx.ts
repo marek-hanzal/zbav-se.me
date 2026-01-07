@@ -21,7 +21,7 @@ export const feedbackCreateFx = Effect.fn("feedbackCreateFx")(function* ({
 }: feedbackCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const kysely = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			const id = genId();
 

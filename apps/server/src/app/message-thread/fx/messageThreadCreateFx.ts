@@ -14,7 +14,7 @@ export const messageThreadCreateFx = Effect.fn("messageThreadCreateFx")(function
 ) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const kysely = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			const id = genId();
 

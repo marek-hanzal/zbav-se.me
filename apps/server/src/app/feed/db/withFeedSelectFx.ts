@@ -15,7 +15,7 @@ export namespace withFeedSelectFx {
 export const withFeedSelectFx = Effect.fn("withFeedSelectFx")(function* ({
 	sort,
 }: withFeedSelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely
 		.selectFrom("feed as f")

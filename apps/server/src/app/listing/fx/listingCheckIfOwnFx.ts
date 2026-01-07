@@ -20,7 +20,7 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 	listingId,
 	message,
 }: listingCheckIfOwnFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 	const listing = yield* Effect.promise(async () => {
 		return kysely
 			.selectFrom("listing")

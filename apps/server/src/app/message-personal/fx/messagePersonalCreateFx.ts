@@ -22,7 +22,7 @@ export const messagePersonalCreateFx = Effect.fn("messagePersonalCreateFx")(func
 }: messagePersonalCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const kysely = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			yield* messageUserCheckFx({
 				userIds: [

@@ -18,7 +18,7 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 }: feedCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const kysely = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			const id = genId();
 

@@ -14,7 +14,7 @@ export namespace withFavouriteSelectFx {
 export const withFavouriteSelectFx = Effect.fn("withFavouriteSelectFx")(function* ({
 	sort,
 }: withFavouriteSelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely.selectFrom("favourite as f").selectAll("f");
 

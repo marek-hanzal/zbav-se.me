@@ -16,7 +16,7 @@ export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
 }: ignoreDeleteFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const kysely = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			const ignore = yield* ignoreFetchFx({
 				where: {

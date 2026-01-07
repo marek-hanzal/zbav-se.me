@@ -14,7 +14,7 @@ export namespace withFeedCollectionSelectFx {
 export const withFeedCollectionSelectFx = Effect.fn("withFeedCollectionSelectFx")(function* ({
 	sort,
 }: withFeedCollectionSelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely.selectFrom("feed as f").select("f.id");
 

@@ -19,7 +19,7 @@ export const t03_sellerReaction = Effect.fn("t03_sellerReaction")(function* ({
 	fromMinutes,
 	toMinutes,
 }: t03_sellerReaction.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const transactions = yield* transactionCollectionFx({
 		cursor: {

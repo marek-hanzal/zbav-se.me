@@ -16,7 +16,7 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 	feedId,
 	...data
 }: favouriteCreateFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const id = genId();
 

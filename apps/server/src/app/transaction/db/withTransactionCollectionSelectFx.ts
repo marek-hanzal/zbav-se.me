@@ -15,7 +15,7 @@ export namespace withTransactionCollectionSelectFx {
 
 export const withTransactionCollectionSelectFx = Effect.fn("withTransactionCollectionSelectFx")(
 	function* ({ sort }: withTransactionCollectionSelectFx.Props) {
-		const kysely = yield* KyselyContextFx;
+		const { kysely } = yield* KyselyContextFx;
 
 		let query = kysely
 			.selectFrom("transaction as lt")

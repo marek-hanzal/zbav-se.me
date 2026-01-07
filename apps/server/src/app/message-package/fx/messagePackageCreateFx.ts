@@ -19,7 +19,7 @@ export const messagePackageCreateFx = Effect.fn("messagePackageCreateFx")(functi
 }: messagePackageCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const kysely = yield* KyselyContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			yield* messageUserCheckFx({
 				userIds: [

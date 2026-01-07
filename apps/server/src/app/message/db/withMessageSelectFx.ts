@@ -25,7 +25,7 @@ export const withMessageSelectFx = Effect.fn("withMessageSelectFx")(function* ({
 	userId,
 	sort,
 }: withMessageSelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const textSelect = yield* withMessageTextSelectFx({
 		userId,

@@ -18,7 +18,7 @@ export const withListingCollectionSelectFx = Effect.fn("withListingCollectionSel
 	sort,
 	meta,
 }: withListingCollectionSelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely
 		.selectFrom("listing as l")

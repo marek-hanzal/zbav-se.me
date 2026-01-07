@@ -20,6 +20,7 @@ export const withSessionApiFx = Effect.fn("withSessionApiFx")(function* () {
 	root.use("/api/session/*", async (c, next) => {
 		const session = c.get("session");
 		const user = c.get("user");
+
 		if (!session || !user) {
 			return c.json<NoticeSchema.Type, 401>(
 				{

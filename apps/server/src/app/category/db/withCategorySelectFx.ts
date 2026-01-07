@@ -14,7 +14,7 @@ export namespace withCategorySelectFx {
 export const withCategorySelectFx = Effect.fn("withCategorySelectFx")(function* ({
 	sort,
 }: withCategorySelectFx.Props) {
-	const kysely = yield* KyselyContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely.selectFrom("category as cat").selectAll("cat");
 
