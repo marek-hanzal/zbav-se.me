@@ -1,4 +1,3 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import type { DateTime } from "luxon";
 import type { TransactionStatusAcceptSchema } from "~/@user/transaction-status/schema/TransactionStatusAcceptSchema";
@@ -74,4 +73,3 @@ export const transactionStatusAcceptFx = Effect.fn("transactionStatusAcceptFx")(
 });
 
 export type transactionStatusAcceptFx = ReturnType<typeof transactionStatusAcceptFx>;
-
