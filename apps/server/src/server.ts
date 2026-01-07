@@ -1,9 +1,8 @@
-import { DialectContextProvider, MigrationContextProvider } from "@use-pico/common/database";
+import { DialectContextProvider } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
 import { AppEnv } from "~/AppEnv";
-import { getMigrations } from "~/database/migrations/getMigrations";
 import { initMiddlewareFx } from "~/middleware/initMiddlewareFx";
 import { withPublicApiFx } from "./@public/withPublicApiFx";
 import { withRootApi } from "./@root/withRootApi";
@@ -60,7 +59,6 @@ const app = await Effect.gen(function* () {
 		sessionHono: withSessionHono(),
 		userHono: withUserHono(),
 	}),
-	MigrationContextProvider(getMigrations()),
 	Effect.runPromise,
 );
 

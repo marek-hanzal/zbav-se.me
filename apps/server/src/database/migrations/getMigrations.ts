@@ -1,3 +1,4 @@
+import { MigrationContextProvider } from "@use-pico/common/database";
 import { PostgresExtensionsMigration } from "./0000-postgres-extensions";
 import { CategoryMigration } from "./0001-category";
 import { CategorySpotlightMigration } from "./0002-category-spotlight";
@@ -30,7 +31,7 @@ import { FeedbackMigration } from "./0028-feedback";
 import { UserEventMigration } from "./0029-user-event";
 
 export const getMigrations = () => {
-	return {
+	return MigrationContextProvider({
 		"0000-postgres-extensions": PostgresExtensionsMigration,
 		"0001-category": CategoryMigration,
 		"0002-category-spotlight": CategorySpotlightMigration,
@@ -61,5 +62,5 @@ export const getMigrations = () => {
 		"0027-github": GitHubMigration,
 		"0028-feedback": FeedbackMigration,
 		"0029-user-event": UserEventMigration,
-	} as const;
+	} as const);
 };

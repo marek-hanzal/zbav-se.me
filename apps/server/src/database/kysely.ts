@@ -1,4 +1,5 @@
 import { withDatabaseFx } from "@use-pico/common/database";
+import { getMigrations } from "~/database/migrations/getMigrations";
 import { runAuthMigration } from "../auth/runAuthMigration";
 import type { Database } from "./Database";
 
@@ -9,4 +10,4 @@ export const database = withDatabaseFx<Database>({
 	async onPreMigration({ dialect }) {
 		await runAuthMigration(dialect);
 	},
-});
+}).pipe(getMigrations());
