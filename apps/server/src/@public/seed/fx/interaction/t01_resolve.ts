@@ -61,6 +61,7 @@ export const t01_resolve = Effect.fn("t01_resolve")(function* ({
 					direction: "desc",
 				},
 			],
+			scope: {},
 		});
 
 		yield* match(

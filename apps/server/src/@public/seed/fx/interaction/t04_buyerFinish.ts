@@ -46,6 +46,7 @@ export const t04_buyerFinish = Effect.fn("t04_buyerFinish")(function* ({
 					direction: "desc",
 				},
 			],
+			scope: {},
 		});
 
 		yield* match(

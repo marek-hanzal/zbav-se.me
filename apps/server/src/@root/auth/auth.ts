@@ -3,7 +3,7 @@ import { dialect } from "~/database/dialect";
 import type { Routes } from "~/hono/Routes";
 
 export const withAuthEndpoint: Routes.Fn = async ({ root }) => {
-	const { handler } = await auth(async () => dialect);
+	const { handler } = auth(() => dialect);
 
 	root.on(
 		[

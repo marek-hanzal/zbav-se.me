@@ -61,6 +61,7 @@ export const t03_sellerReaction = Effect.fn("t03_sellerReaction")(function* ({
 					direction: "desc",
 				},
 			],
+			scope: {},
 		});
 
 		yield* match(

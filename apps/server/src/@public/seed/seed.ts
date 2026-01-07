@@ -1,4 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { SeedRequestSchema, seedFx } from "~/@public/seed/fx/seedFx";
 import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
@@ -67,7 +68,15 @@ export const withSeedApi: Routes.Fn = async ({ publicHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json(yield* seedFx(c.req.valid("json")), 201);
+				return c.json(
+					yield* zodFx({
+						schema: SeedRequestSchema,
+						dataFx: seedFx({
+							...c.req.valid("json"),
+						}),
+					}),
+					201,
+				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				TransactionContextProvider({

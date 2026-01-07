@@ -1,7 +1,12 @@
 import { createRoute, z } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
+import { Effect } from "effect";
+import { cleanupFx } from "~/@public/janitor/cleanup/cleanupFx";
+import { AppEnv } from "~/AppEnv";
+import { S3ContextProvider } from "~/app/s3/context/S3ContextFx";
+import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { cleanup } from "./cleanup/cleanup";
 import { CleanupSchema } from "./schema/CleanupSchema";
 
 export const withJanitorCleanupApi: Routes.Fn = async ({ publicHono }) => {
@@ -35,9 +40,23 @@ export const withJanitorCleanupApi: Routes.Fn = async ({ publicHono }) => {
 		}),
 		async (c) => {
 			try {
-				return c.json(
-					(await Promise.all(cleanup.map((fn) => fn()))) satisfies CleanupSchema.Type[],
-					200,
+				return await Effect.gen(function* () {
+					return c.json(
+						yield* zodFx({
+							schema: z.array(CleanupSchema),
+							dataFx: cleanupFx(),
+						}),
+						200,
+					);
+				}).pipe(
+					DatabaseContextProvider(c.get("database")),
+					S3ContextProvider({
+						api: AppEnv.SERVER_S3_API,
+						key: AppEnv.SERVER_S3_KEY,
+						secret: AppEnv.SERVER_S3_SECRET,
+						bucket: AppEnv.SERVER_S3_BUCKET,
+					}),
+					Effect.runPromise,
 				);
 			} catch (e) {
 				console.error(e);

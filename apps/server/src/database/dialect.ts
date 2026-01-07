@@ -4,6 +4,7 @@ import { ServerDatabaseSchema } from "~/schema/ServerDatabaseSchema";
 
 const { SERVER_DATABASE_URL } = ServerDatabaseSchema.parse(process.env);
 
+// TODO Try to Effectize this
 export const dialect = new PostgresDialect({
 	pool: new Pool({
 		connectionString: SERVER_DATABASE_URL,
