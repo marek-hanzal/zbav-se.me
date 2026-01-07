@@ -1,4 +1,4 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
@@ -10,6 +10,7 @@ import { UserExSchema } from "./schema/UserExSchema";
 
 export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;
+
 	userHono.openapi(
 		createRoute({
 			method: "patch",
@@ -49,8 +50,8 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 				"user",
 			],
 		}),
-		async (c) => {
-			return Effect.gen(function* () {
+		async (c) =>
+			Effect.gen(function* () {
 				const user = c.get("user");
 
 				return c.json<UserExSchema.Type, 200>(
@@ -77,7 +78,7 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: z.prettifyError(e.zod),
 										},
 										500,
 									);
@@ -88,7 +89,6 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 					);
 				}),
 				Effect.runPromise,
-			);
-		},
+			),
 	);
 });

@@ -14,7 +14,7 @@ export const userExPatchFx = Effect.fn("userExPatchFx")(function* ({
 	userId,
 	patch,
 }: userExPatchFx.Props) {
-	return withTransactionFx(
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
 
