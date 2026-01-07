@@ -10,7 +10,6 @@ import { galleryCreateFx as coolGalleryCreateFx } from "~/app/gallery/fx/gallery
 import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
 import { listingFetchFx } from "~/app/listing/fx/listingFetchFx";
 import { userEventCreateFx } from "~/app/user-event/fx/userEventCreateFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
@@ -137,4 +136,3 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 
 export type listingCreateFx = ReturnType<typeof listingCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<listingCreateFx>, UserContextFx>>;

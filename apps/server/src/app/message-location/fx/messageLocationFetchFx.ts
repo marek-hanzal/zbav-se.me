@@ -5,7 +5,6 @@ import { withMessageLocationQueryBuilderFx } from "~/app/message-location/db/wit
 import { withMessageLocationSelectFx } from "~/app/message-location/db/withMessageLocationSelectFx";
 import type { MessageLocationFilterSchema } from "~/app/message-location/schema/MessageLocationFilterSchema";
 import type { MessageLocationQuerySchema } from "~/app/message-location/schema/MessageLocationQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace messageLocationFetchFx {
 	export interface Props extends MessageLocationQuerySchema.Type {
@@ -36,4 +35,3 @@ export const messageLocationFetchFx = Effect.fn("messageLocationFetchFx")(functi
 
 export type messageLocationFetchFx = ReturnType<typeof messageLocationFetchFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageLocationFetchFx>, UserContextFx>>;

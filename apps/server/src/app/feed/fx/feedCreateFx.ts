@@ -3,7 +3,6 @@ import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import type { FeedCreateSchema } from "~/@user/feed/schema/FeedCreateSchema";
 import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -56,4 +55,3 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 
 export type feedCreateFx = ReturnType<typeof feedCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<feedCreateFx>, UserContextFx>>;

@@ -5,13 +5,12 @@ import { messageCollectionFx } from "~/app/message/fx/messageCollectionFx";
 import { MessageQuerySchema } from "~/app/message/schema/MessageQuerySchema";
 import { MessageSchema } from "~/app/message/schema/MessageSchema";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
-import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
-const MessageThreadMessageCollectionParamsSchema = z
+const ParamsSchema = z
 	.object({
 		messageThreadId: z.string().openapi({
 			description: "Message thread identifier",
@@ -36,7 +35,7 @@ export const withMessageCollectionApi: Routes.Fn = async ({ userHono }) => {
 				"Returns messages for a specific message thread based on provided parameters",
 			operationId: "apiMessageThreadMessageCollection",
 			request: {
-				params: MessageThreadMessageCollectionParamsSchema,
+				params: ParamsSchema,
 				body: {
 					content: {
 						"application/json": {
@@ -80,7 +79,7 @@ export const withMessageCollectionApi: Routes.Fn = async ({ userHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				const { messageThreadId } = c.req.valid("param");
-				const user = yield* UserContextFx;
+				const user = c.get("user");
 
 				yield* messageUserCheckFx({
 					messageThreadId: messageThreadId,
@@ -104,7 +103,6 @@ export const withMessageCollectionApi: Routes.Fn = async ({ userHono }) => {
 				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
-				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

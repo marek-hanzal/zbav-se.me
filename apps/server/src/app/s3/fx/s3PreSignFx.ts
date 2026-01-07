@@ -4,7 +4,6 @@ import { linkTo } from "@use-pico/common/link-to";
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { AppEnv } from "~/AppEnv";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { s3 } from "~/s3";
 
 export namespace s3PreSignFx {
@@ -37,4 +36,3 @@ export const s3PreSignFx = Effect.fn("s3PreSignFx")(function* ({
 
 export type s3PreSignFx = ReturnType<typeof s3PreSignFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<s3PreSignFx>, UserContextFx>>;

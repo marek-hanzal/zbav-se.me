@@ -5,7 +5,6 @@ import { withListingEventQueryBuilderFx } from "~/app/listing-event/db/withListi
 import { withListingEventSelectFx } from "~/app/listing-event/db/withListingEventSelectFx";
 import type { ListingEventFilterSchema } from "~/app/listing-event/schema/ListingEventFilterSchema";
 import type { ListingEventQuerySchema } from "~/app/listing-event/schema/ListingEventQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace listingEventCollectionFx {
 	export interface Props extends ListingEventQuerySchema.Type {
@@ -37,4 +36,3 @@ export const listingEventCollectionFx = Effect.fn("listingEventCollectionFx")(fu
 
 export type listingEventCollectionFx = ReturnType<typeof listingEventCollectionFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<listingEventCollectionFx>, UserContextFx>>;

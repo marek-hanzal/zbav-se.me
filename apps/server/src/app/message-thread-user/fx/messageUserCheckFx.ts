@@ -1,7 +1,6 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace messageUserCheckFx {
@@ -40,4 +39,3 @@ export const messageUserCheckFx = Effect.fn("messageUserCheckFx")(function* ({
 
 export type messageUserCheckFx = ReturnType<typeof messageUserCheckFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageUserCheckFx>, UserContextFx>>;

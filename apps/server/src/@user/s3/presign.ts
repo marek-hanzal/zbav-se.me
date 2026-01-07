@@ -2,7 +2,6 @@ import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { s3PreSignFx } from "~/app/s3/fx/s3PreSignFx";
-import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { S3PreSignRequestSchema } from "./schema/S3PreSignRequestSchema";
@@ -51,7 +50,7 @@ export const withPresignApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const user = yield* UserContextFx;
+				const user = c.get("user");
 				const { path, extension } = c.req.valid("json");
 
 				return c.json<S3PreSignResponseSchema.Type, 200>(
@@ -66,7 +65,6 @@ export const withPresignApi: Routes.Fn = async ({ userHono }) => {
 					200,
 				);
 			}).pipe(
-				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

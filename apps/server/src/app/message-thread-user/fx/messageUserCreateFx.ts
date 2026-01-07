@@ -2,7 +2,6 @@ import { genId } from "@use-pico/common/gen-id";
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -43,4 +42,3 @@ export const messageUserCreateFx = Effect.fn("messageUserCreateFx")(function* ({
 
 export type messageUserCreateFx = ReturnType<typeof messageUserCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageUserCreateFx>, UserContextFx>>;

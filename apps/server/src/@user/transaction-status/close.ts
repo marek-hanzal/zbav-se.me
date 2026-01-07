@@ -4,7 +4,6 @@ import { Effect, Match } from "effect";
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
 import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusCloseFx } from "~/app/transaction-status/fx/transactionStatusCloseFx";
-import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -76,7 +75,7 @@ export const withCloseApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const user = yield* UserContextFx;
+				const user = c.get("user");
 
 				return c.json<TransactionStatusSchema.Type, 200>(
 					yield* zodFx({
@@ -91,7 +90,6 @@ export const withCloseApi: Routes.Fn = async ({ userHono }) => {
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				TransactionContextProvider(),
-				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

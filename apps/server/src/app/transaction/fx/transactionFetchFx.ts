@@ -5,7 +5,6 @@ import { withTransactionQueryBuilderFx } from "~/app/transaction/db/withTransact
 import { withTransactionSelectFx } from "~/app/transaction/db/withTransactionSelectFx";
 import type { TransactionFilterSchema } from "~/app/transaction/schema/TransactionFilterSchema";
 import type { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace transactionFetchFx {
 	export interface Props extends TransactionQuerySchema.Type {
@@ -39,4 +38,3 @@ export const transactionFetchFx = Effect.fn("transactionFetchFx")(function* ({
 
 export type transactionFetchFx = ReturnType<typeof transactionFetchFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<transactionFetchFx>, UserContextFx>>;

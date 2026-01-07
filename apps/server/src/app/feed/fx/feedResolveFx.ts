@@ -1,7 +1,6 @@
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { AccessDeniedError } from "~/error/AccessDeniedError";
 
 export namespace feedResolveFx {
@@ -37,4 +36,3 @@ export const feedResolveFx = Effect.fn("feedResolveFx")(function* ({
 
 export type feedResolveFx = ReturnType<typeof feedResolveFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<feedResolveFx>, UserContextFx>>;

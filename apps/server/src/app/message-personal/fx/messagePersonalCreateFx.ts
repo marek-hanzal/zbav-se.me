@@ -4,7 +4,6 @@ import { Effect } from "effect";
 import { messagePersonalFetchFx } from "~/app/message-personal/fx/messagePersonalFetchFx";
 import type { MessagePersonalCreateSchema } from "~/app/message-personal/schema/MessagePersonalCreateSchema";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -67,4 +66,3 @@ export const messagePersonalCreateFx = Effect.fn("messagePersonalCreateFx")(func
 
 export type messagePersonalCreateFx = ReturnType<typeof messagePersonalCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messagePersonalCreateFx>, UserContextFx>>;

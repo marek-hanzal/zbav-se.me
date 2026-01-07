@@ -5,7 +5,6 @@ import { withListingQueryBuilderFx } from "~/app/listing/db/withListingQueryBuil
 import { withListingSelectFx } from "~/app/listing/db/withListingSelectFx";
 import type { ListingFilterSchema } from "~/app/listing/schema/ListingFilterSchema";
 import type { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace listingFetchFx {
 	export interface Props extends ListingQuerySchema.Type {
@@ -44,4 +43,3 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 
 export type listingFetchFx = ReturnType<typeof listingFetchFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<listingFetchFx>, UserContextFx>>;

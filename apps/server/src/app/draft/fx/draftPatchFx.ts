@@ -3,7 +3,6 @@ import { Effect } from "effect";
 import type { DraftPatchSchema } from "~/@user/draft/schema/DraftPatchSchema";
 import { draftFetchFx } from "~/app/draft/fx/draftFetchFx";
 import type { DraftFilterSchema } from "~/app/draft/schema/DraftFilterSchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -50,4 +49,3 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 
 export type draftPatchFx = ReturnType<typeof draftPatchFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<draftPatchFx>, UserContextFx>>;

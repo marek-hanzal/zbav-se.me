@@ -5,7 +5,6 @@ import { withMessageQueryBuilderFx } from "~/app/message/db/withMessageQueryBuil
 import { withMessageSelectFx } from "~/app/message/db/withMessageSelectFx";
 import type { MessageFilterSchema } from "~/app/message/schema/MessageFilterSchema";
 import type { MessageQuerySchema } from "~/app/message/schema/MessageQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace messageCollectionFx {
 	export interface Props extends MessageQuerySchema.Type {
@@ -45,4 +44,3 @@ export const messageCollectionFx = Effect.fn("messageCollectionFx")(function* ({
 
 export type messageCollectionFx = ReturnType<typeof messageCollectionFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageCollectionFx>, UserContextFx>>;

@@ -1,4 +1,3 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import type { TransactionMessageTextCreateSchema } from "~/@user/transaction-message-text/schema/TransactionMessageTextCreateSchema";
@@ -6,7 +5,6 @@ import { messageTextCreateFx } from "~/app/message-text/fx/messageTextCreateFx";
 import { TransactionContextFx } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/app/transaction/fx/transactionStatusGateFx";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -70,7 +68,3 @@ export const transactionMessageTextCreateFx = Effect.fn("transactionMessageTextC
 );
 
 export type transactionMessageTextCreateFx = ReturnType<typeof transactionMessageTextCreateFx>;
-
-type _NoUser = AssertNever<
-	Extract<Effect.Effect.Context<transactionMessageTextCreateFx>, UserContextFx>
->;

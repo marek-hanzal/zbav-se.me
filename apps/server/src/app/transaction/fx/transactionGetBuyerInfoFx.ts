@@ -4,7 +4,6 @@ import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { TransactionBuyerInfoSchema } from "~/@user/transaction/schema/TransactionBuyerInfoSchema";
 import { userEventBuyerInfoFx } from "~/app/user-event/fx/userEventBuyerInfoFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace transactionGetBuyerInfoFx {
@@ -62,6 +61,3 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 
 export type transactionGetBuyerInfoFx = ReturnType<typeof transactionGetBuyerInfoFx>;
 
-type _NoUser = AssertNever<
-	Extract<Effect.Effect.Context<transactionGetBuyerInfoFx>, UserContextFx>
->;

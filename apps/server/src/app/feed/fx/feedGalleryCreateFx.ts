@@ -6,7 +6,6 @@ import { feedResolveFx } from "~/app/feed/fx/feedResolveFx";
 import { galleryCreateFx } from "~/app/gallery/fx/galleryCreateFx";
 import { galleryFetchFx } from "~/app/gallery/fx/galleryFetchFx";
 import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
@@ -100,4 +99,3 @@ export const feedGalleryCreateFx = Effect.fn("feedGalleryCreateFx")(function* ({
 
 export type feedGalleryCreateFx = ReturnType<typeof feedGalleryCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<feedGalleryCreateFx>, UserContextFx>>;

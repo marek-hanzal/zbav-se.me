@@ -6,7 +6,6 @@ import { favouriteDeleteFx } from "~/app/favourite/fx/favouriteDeleteFx";
 import { listingCheckIfOwnFx } from "~/app/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/app/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace favouriteToggleFx {
@@ -86,4 +85,3 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 
 export type favouriteToggleFx = ReturnType<typeof favouriteToggleFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<favouriteToggleFx>, UserContextFx>>;

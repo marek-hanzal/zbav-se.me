@@ -4,7 +4,6 @@ import { Effect } from "effect";
 import type { FavouriteCreateSchema } from "~/@user/favourite/schema/FavouriteCreateSchema";
 import { favouriteFetchFx } from "~/app/favourite/fx/favouriteFetchFx";
 import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace favouriteCreateFx {
@@ -58,4 +57,3 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 
 export type favouriteCreateFx = ReturnType<typeof favouriteCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<favouriteCreateFx>, UserContextFx>>;

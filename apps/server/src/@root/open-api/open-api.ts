@@ -45,5 +45,10 @@ export const withOpenApiEndpoint: Routes.Fn = async (routes) => {
 				},
 			},
 		},
+		security: [
+			{
+				cookieAuth: [],
+			},
+		],
 	});
 };

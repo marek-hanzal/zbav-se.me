@@ -5,7 +5,6 @@ import { DateTime } from "luxon";
 import { messageLocationFetchFx } from "~/app/message-location/fx/messageLocationFetchFx";
 import type { MessageLocationCreateSchema } from "~/app/message-location/schema/MessageLocationCreateSchema";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -64,4 +63,3 @@ export const messageLocationCreateFx = Effect.fn("messageLocationCreateFx")(func
 
 export type messageLocationCreateFx = ReturnType<typeof messageLocationCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageLocationCreateFx>, UserContextFx>>;

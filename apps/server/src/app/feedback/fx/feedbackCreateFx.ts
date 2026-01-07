@@ -5,7 +5,6 @@ import type { FeedbackCreateSchema } from "~/@user/feedback/schema/FeedbackCreat
 import { listingCheckIfOwnFx } from "~/app/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/app/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -70,4 +69,3 @@ export const feedbackCreateFx = Effect.fn("feedbackCreateFx")(function* ({
 
 export type feedbackCreateFx = ReturnType<typeof feedbackCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<feedbackCreateFx>, UserContextFx>>;

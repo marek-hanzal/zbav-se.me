@@ -3,7 +3,6 @@ import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { galleryFetchFx } from "~/app/gallery/fx/galleryFetchFx";
 import type { GalleryCreateSchema } from "~/app/gallery/schema/GalleryCreateSchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace galleryCreateFx {
@@ -49,4 +48,3 @@ export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* ({
 
 export type galleryCreateFx = ReturnType<typeof galleryCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<galleryCreateFx>, UserContextFx>>;

@@ -6,7 +6,6 @@ import { messageSystemCreateFx } from "~/app/message-system/fx/messageSystemCrea
 import { transactionPatchFx } from "~/app/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/app/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/app/transaction-status/fx/transactionStatusCreateFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace transactionStatusDisputeFx {
 	export interface Props extends TransactionStatusDisputeSchema.Type {
@@ -59,6 +58,3 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 
 export type transactionStatusDisputeFx = ReturnType<typeof transactionStatusDisputeFx>;
 
-type _NoUser = AssertNever<
-	Extract<Effect.Effect.Context<transactionStatusDisputeFx>, UserContextFx>
->;

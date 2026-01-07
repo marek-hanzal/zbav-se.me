@@ -5,7 +5,6 @@ import type { TransactionPatchSchema } from "~/@user/transaction/schema/Transact
 import { TransactionContextFx } from "~/app/transaction/context/TransactionContextFx";
 import { transactionFetchFx } from "~/app/transaction/fx/transactionFetchFx";
 import type { TransactionFilterSchema } from "~/app/transaction/schema/TransactionFilterSchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -66,4 +65,3 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 
 export type transactionPatchFx = ReturnType<typeof transactionPatchFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<transactionPatchFx>, UserContextFx>>;

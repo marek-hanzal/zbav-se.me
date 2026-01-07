@@ -5,7 +5,6 @@ import { withDraftCollectionSelectFx } from "~/app/draft/db/withDraftCollectionS
 import { withDraftQueryBuilderFx } from "~/app/draft/db/withDraftQueryBuilderFx";
 import type { DraftCountQuerySchema } from "~/app/draft/schema/DraftCountQuerySchema";
 import type { DraftFilterSchema } from "~/app/draft/schema/DraftFilterSchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace draftCountFx {
 	export interface Props extends DraftCountQuerySchema.Type {
@@ -29,4 +28,3 @@ export const draftCountFx = Effect.fn("draftCountFx")(function* ({
 
 export type draftCountFx = ReturnType<typeof draftCountFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<draftCountFx>, UserContextFx>>;

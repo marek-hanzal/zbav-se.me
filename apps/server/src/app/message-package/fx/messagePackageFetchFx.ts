@@ -5,7 +5,6 @@ import { withMessagePackageQueryBuilderFx } from "~/app/message-package/db/withM
 import { withMessagePackageSelectFx } from "~/app/message-package/db/withMessagePackageSelectFx";
 import type { MessagePackageFilterSchema } from "~/app/message-package/schema/MessagePackageFilterSchema";
 import type { MessagePackageQuerySchema } from "~/app/message-package/schema/MessagePackageQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace messagePackageFetchFx {
 	export interface Props extends MessagePackageQuerySchema.Type {
@@ -36,4 +35,3 @@ export const messagePackageFetchFx = Effect.fn("messagePackageFetchFx")(function
 
 export type messagePackageFetchFx = ReturnType<typeof messagePackageFetchFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messagePackageFetchFx>, UserContextFx>>;

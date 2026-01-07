@@ -3,7 +3,6 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { flagCollectionFx } from "~/app/flag/fx/flagCollectionFx";
 import { FlagQuerySchema } from "~/app/flag/schema/FlagQuerySchema";
-import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -57,7 +56,7 @@ export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const user = yield* UserContextFx;
+				const user = c.get("user");
 
 				return c.json<withCollectionSchema.Type<FlagSchema>, 200>(
 					yield* zodFx({
@@ -73,7 +72,6 @@ export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
-				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

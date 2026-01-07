@@ -5,7 +5,6 @@ import { withGalleryQueryBuilderFx } from "~/app/gallery/db/withGalleryQueryBuil
 import { withGallerySelectFx } from "~/app/gallery/db/withGallerySelectFx";
 import type { GalleryFilterSchema } from "~/app/gallery/schema/GalleryFilterSchema";
 import type { GalleryQuerySchema } from "~/app/gallery/schema/GalleryQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace galleryCollectionFx {
 	export interface Props extends GalleryQuerySchema.Type {
@@ -37,4 +36,3 @@ export const galleryCollectionFx = Effect.fn("galleryCollectionFx")(function* ({
 
 export type galleryCollectionFx = ReturnType<typeof galleryCollectionFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<galleryCollectionFx>, UserContextFx>>;

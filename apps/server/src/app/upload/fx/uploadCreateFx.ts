@@ -1,10 +1,8 @@
 import { genId } from "@use-pico/common/gen-id";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { AppEnv } from "~/AppEnv";
+import { UploadContextFx } from "~/app/upload/context/UploadContextFx";
 import { uploadFetchFx } from "~/app/upload/fx/uploadFetchFx";
 import type { UploadCreateSchema } from "~/app/upload/schema/UploadCreateSchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 
@@ -20,8 +18,9 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 	...data
 }: uploadCreateFx.Props) {
 	const database = yield* DatabaseContextFx;
+	const uploadContext = yield* UploadContextFx;
 
-	if (!url.startsWith(AppEnv.SERVER_CONTENT_CDN)) {
+	if (!url.startsWith(uploadContext.cdn)) {
 		return yield* new InvalidRequestError({
 			message: "Only content from the CDN can be uploaded",
 		});
@@ -52,5 +51,3 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 });
 
 export type uploadCreateFx = ReturnType<typeof uploadCreateFx>;
-
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<uploadCreateFx>, UserContextFx>>;

@@ -3,7 +3,6 @@ import { Effect } from "effect";
 import { draftFetchFx } from "~/app/draft/fx/draftFetchFx";
 import type { DraftFilterSchema } from "~/app/draft/schema/DraftFilterSchema";
 import type { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -31,4 +30,3 @@ export const draftDeleteFx = Effect.fn("draftDeleteFx")(function* (query: draftD
 
 export type draftDeleteFx = ReturnType<typeof draftDeleteFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<draftDeleteFx>, UserContextFx>>;

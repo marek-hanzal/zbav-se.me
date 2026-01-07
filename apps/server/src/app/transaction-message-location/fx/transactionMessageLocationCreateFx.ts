@@ -6,7 +6,6 @@ import { messageLocationCreateFx } from "~/app/message-location/fx/messageLocati
 import { TransactionContextFx } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/app/transaction/fx/transactionStatusGateFx";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -81,6 +80,3 @@ export type transactionMessageLocationCreateFx = ReturnType<
 	typeof transactionMessageLocationCreateFx
 >;
 
-type _NoUser = AssertNever<
-	Extract<Effect.Effect.Context<transactionMessageLocationCreateFx>, UserContextFx>
->;

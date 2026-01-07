@@ -5,7 +5,6 @@ import { DateTime } from "luxon";
 import { messageGalleryFetchFx } from "~/app/message-gallery/fx/messageGalleryFetchFx";
 import type { MessageGalleryCreateSchema } from "~/app/message-gallery/schema/MessageGalleryCreateSchema";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -64,4 +63,3 @@ export const messageGalleryCreateFx = Effect.fn("messageGalleryCreateFx")(functi
 
 export type messageGalleryCreateFx = ReturnType<typeof messageGalleryCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageGalleryCreateFx>, UserContextFx>>;

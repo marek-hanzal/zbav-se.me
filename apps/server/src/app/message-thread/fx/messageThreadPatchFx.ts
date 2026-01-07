@@ -4,7 +4,6 @@ import { messageThreadFetchFx } from "~/app/message-thread/fx/messageThreadFetch
 import type { MessageThreadFilterSchema } from "~/app/message-thread/schema/MessageThreadFilterSchema";
 import type { MessageThreadPatchSchema } from "~/app/message-thread/schema/MessageThreadPatchSchema";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -60,4 +59,3 @@ export const messageThreadPatchFx = Effect.fn("messageThreadPatchFx")(function* 
 
 export type messageThreadPatchFx = ReturnType<typeof messageThreadPatchFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageThreadPatchFx>, UserContextFx>>;

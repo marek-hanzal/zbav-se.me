@@ -5,7 +5,6 @@ import { withFavouriteQueryBuilderFx } from "~/app/favourite/db/withFavouriteQue
 import { withFavouriteSelectFx } from "~/app/favourite/db/withFavouriteSelectFx";
 import type { FavouriteCountQuerySchema } from "~/app/favourite/schema/FavouriteCountQuerySchema";
 import type { FavouriteFilterSchema } from "~/app/favourite/schema/FavouriteFilterSchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace favouriteCountFx {
 	export interface Props extends FavouriteCountQuerySchema.Type {
@@ -29,4 +28,3 @@ export const favouriteCountFx = Effect.fn("favouriteCountFx")(function* ({
 
 export type favouriteCountFx = ReturnType<typeof favouriteCountFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<favouriteCountFx>, UserContextFx>>;

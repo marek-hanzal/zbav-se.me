@@ -3,7 +3,6 @@ import { Effect } from "effect";
 import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
 import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
 import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -31,4 +30,3 @@ export const feedDeleteFx = Effect.fn("feedDeleteFx")(function* (query: feedDele
 
 export type feedDeleteFx = ReturnType<typeof feedDeleteFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<feedDeleteFx>, UserContextFx>>;

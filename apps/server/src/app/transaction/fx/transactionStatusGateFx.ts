@@ -2,7 +2,6 @@ import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { transactionResolveFx } from "~/app/transaction/fx/transactionResolveFx";
 import type { TransactionStatusEnumSchema } from "~/app/transaction/schema/TransactionStatusEnumSchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace transactionStatusGateFx {
@@ -38,4 +37,3 @@ export const transactionStatusGateFx = Effect.fn("transactionStatusGateFx")(func
 
 export type transactionStatusGateFx = ReturnType<typeof transactionStatusGateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<transactionStatusGateFx>, UserContextFx>>;

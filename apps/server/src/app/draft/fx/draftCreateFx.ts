@@ -5,7 +5,6 @@ import type { DraftCreateSchema } from "~/@user/draft/schema/DraftCreateSchema";
 import { draftFetchFx } from "~/app/draft/fx/draftFetchFx";
 import { galleryCreateFx as coolGalleryCreateFx } from "~/app/gallery/fx/galleryCreateFx";
 import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -72,4 +71,3 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 
 export type draftCreateFx = ReturnType<typeof draftCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<draftCreateFx>, UserContextFx>>;

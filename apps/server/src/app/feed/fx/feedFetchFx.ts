@@ -5,7 +5,6 @@ import { withFeedQueryBuilderFx } from "~/app/feed/db/withFeedQueryBuilderFx";
 import { withFeedSelectFx } from "~/app/feed/db/withFeedSelectFx";
 import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
 import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace feedFetchFx {
 	export interface Props extends FeedQuerySchema.Type {
@@ -33,4 +32,3 @@ export const feedFetchFx = Effect.fn("feedFetchFx")(function* ({
 
 export type feedFetchFx = ReturnType<typeof feedFetchFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<feedFetchFx>, UserContextFx>>;

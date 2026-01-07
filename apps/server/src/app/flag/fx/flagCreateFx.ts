@@ -2,7 +2,6 @@ import { genId } from "@use-pico/common/gen-id";
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import type { FlagCreateSchema } from "~/app/flag/schema/FlagCreateSchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace flagCreateFx {
@@ -36,5 +35,4 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 
 export type flagCreateFx = ReturnType<typeof flagCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<flagCreateFx>, UserContextFx>>;
 

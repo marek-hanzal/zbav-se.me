@@ -4,7 +4,6 @@ import { Effect, Match } from "effect";
 import { MessageGallerySchema } from "~/app/message-gallery/schema/MessageGallerySchema";
 import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
 import { transactionMessageGalleryCreateFx } from "~/app/transaction-message-gallery/fx/transactionMessageGalleryCreateFx";
-import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -77,7 +76,7 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const user = yield* UserContextFx;
+				const user = c.get("user");
 
 				return c.json<MessageGallerySchema.Type, 200>(
 					yield* zodFx({
@@ -92,7 +91,6 @@ export const withCreateApi: Routes.Fn = async ({ userHono }) => {
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				TransactionContextProvider(),
-				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

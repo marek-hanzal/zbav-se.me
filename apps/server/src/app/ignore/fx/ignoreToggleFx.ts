@@ -6,7 +6,6 @@ import { ignoreDeleteFx } from "~/app/ignore/fx/ignoreDeleteFx";
 import { listingCheckIfOwnFx } from "~/app/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/app/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace ignoreToggleFx {
@@ -84,4 +83,3 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 
 export type ignoreToggleFx = ReturnType<typeof ignoreToggleFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<ignoreToggleFx>, UserContextFx>>;

@@ -4,7 +4,6 @@ import { Effect, Match } from "effect";
 import { FeedGalleryCreateSchema } from "~/@user/feed/schema/FeedGalleryCreateSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { feedGalleryCreateFx } from "~/app/feed/fx/feedGalleryCreateFx";
-import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -76,7 +75,7 @@ export const withGalleryCreateApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const user = yield* UserContextFx;
+				const user = c.get("user");
 
 				return c.json<GallerySchema.Type, 200>(
 					yield* zodFx({
@@ -90,7 +89,6 @@ export const withGalleryCreateApi: Routes.Fn = async ({ userHono }) => {
 				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
-				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

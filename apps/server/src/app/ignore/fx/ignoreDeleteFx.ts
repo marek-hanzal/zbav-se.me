@@ -1,7 +1,6 @@
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { ignoreFetchFx } from "~/app/ignore/fx/ignoreFetchFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -40,4 +39,3 @@ export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
 
 export type ignoreDeleteFx = ReturnType<typeof ignoreDeleteFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<ignoreDeleteFx>, UserContextFx>>;

@@ -4,7 +4,6 @@ import { Effect } from "effect";
 import { messageTextFetchFx } from "~/app/message-text/fx/messageTextFetchFx";
 import type { MessageTextCreateSchema } from "~/app/message-text/schema/MessageTextCreateSchema";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -59,4 +58,3 @@ export const messageTextCreateFx = Effect.fn("messageTextCreateFx")(function* ({
 
 export type messageTextCreateFx = ReturnType<typeof messageTextCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageTextCreateFx>, UserContextFx>>;

@@ -5,7 +5,6 @@ import { withMessageSystemQueryBuilderFx } from "~/app/message-system/db/withMes
 import { withMessageSystemSelectFx } from "~/app/message-system/db/withMessageSystemSelectFx";
 import type { MessageSystemFilterSchema } from "~/app/message-system/schema/MessageSystemFilterSchema";
 import type { MessageSystemQuerySchema } from "~/app/message-system/schema/MessageSystemQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace messageSystemFetchFx {
 	export interface Props extends MessageSystemQuerySchema.Type {
@@ -33,4 +32,3 @@ export const messageSystemFetchFx = Effect.fn("messageSystemFetchFx")(function* 
 
 export type messageSystemFetchFx = ReturnType<typeof messageSystemFetchFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageSystemFetchFx>, UserContextFx>>;

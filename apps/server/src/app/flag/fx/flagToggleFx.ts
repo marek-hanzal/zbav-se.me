@@ -6,7 +6,6 @@ import { flagDeleteFx } from "~/app/flag/fx/flagDeleteFx";
 import { listingCheckIfOwnFx } from "~/app/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/app/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace flagToggleFx {
@@ -84,4 +83,3 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 
 export type flagToggleFx = ReturnType<typeof flagToggleFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<flagToggleFx>, UserContextFx>>;

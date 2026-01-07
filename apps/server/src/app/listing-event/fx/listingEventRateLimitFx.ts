@@ -2,7 +2,6 @@ import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import type { ListingEventEnumSchema } from "~/app/listing-event/schema/ListingEventEnumSchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { TooManyRequests } from "~/error/TooManyRequests";
 
@@ -53,4 +52,3 @@ export const listingEventRateLimitFx = Effect.fn("listingEventRateLimitFx")(func
 
 export type listingEventRateLimitFx = ReturnType<typeof listingEventRateLimitFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<listingEventRateLimitFx>, UserContextFx>>;

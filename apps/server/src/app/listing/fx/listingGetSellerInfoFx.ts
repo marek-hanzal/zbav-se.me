@@ -4,7 +4,6 @@ import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { SellerInfoSchema } from "~/@user/listing/schema/SellerInfoSchema";
 import { userEventSellerInfoFx } from "~/app/user-event/fx/userEventSellerInfoFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace listingGetSellerInfoFx {
@@ -60,4 +59,3 @@ export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(functi
 
 export type listingGetSellerInfoFx = ReturnType<typeof listingGetSellerInfoFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<listingGetSellerInfoFx>, UserContextFx>>;

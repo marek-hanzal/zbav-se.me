@@ -5,7 +5,6 @@ import { withFlagQueryBuilderFx } from "~/app/flag/db/withFlagQueryBuilderFx";
 import { withFlagSelectFx } from "~/app/flag/db/withFlagSelectFx";
 import type { FlagFilterSchema } from "~/app/flag/schema/FlagFilterSchema";
 import type { FlagQuerySchema } from "~/app/flag/schema/FlagQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace flagFetchFx {
 	export interface Props extends FlagQuerySchema.Type {
@@ -33,4 +32,3 @@ export const flagFetchFx = Effect.fn("flagFetchFx")(function* ({
 
 export type flagFetchFx = ReturnType<typeof flagFetchFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<flagFetchFx>, UserContextFx>>;

@@ -3,7 +3,6 @@ import { Effect } from "effect";
 import type { FeedPatchSchema } from "~/@user/feed/schema/FeedPatchSchema";
 import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
 import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -51,4 +50,3 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 
 export type feedPatchFx = ReturnType<typeof feedPatchFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<feedPatchFx>, UserContextFx>>;

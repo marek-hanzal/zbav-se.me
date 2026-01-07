@@ -5,7 +5,6 @@ import { withIgnoreQueryBuilderFx } from "~/app/ignore/db/withIgnoreQueryBuilder
 import { withIgnoreSelectFx } from "~/app/ignore/db/withIgnoreSelectFx";
 import type { IgnoreCountQuerySchema } from "~/app/ignore/schema/IgnoreCountQuerySchema";
 import type { IgnoreFilterSchema } from "~/app/ignore/schema/IgnoreFilterSchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace ignoreCountFx {
 	export interface Props extends IgnoreCountQuerySchema.Type {
@@ -29,4 +28,3 @@ export const ignoreCountFx = Effect.fn("ignoreCountFx")(function* ({
 
 export type ignoreCountFx = ReturnType<typeof ignoreCountFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<ignoreCountFx>, UserContextFx>>;

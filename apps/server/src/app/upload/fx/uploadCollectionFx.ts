@@ -5,7 +5,6 @@ import { withUploadQueryBuilderFx } from "~/app/upload/db/withUploadQueryBuilder
 import { withUploadSelectFx } from "~/app/upload/db/withUploadSelectFx";
 import type { UploadFilterSchema } from "~/app/upload/schema/UploadFilterSchema";
 import type { UploadQuerySchema } from "~/app/upload/schema/UploadQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace uploadCollectionFx {
 	export interface Props extends UploadQuerySchema.Type {
@@ -37,4 +36,3 @@ export const uploadCollectionFx = Effect.fn("uploadCollectionFx")(function* ({
 
 export type uploadCollectionFx = ReturnType<typeof uploadCollectionFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<uploadCollectionFx>, UserContextFx>>;

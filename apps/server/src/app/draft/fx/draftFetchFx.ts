@@ -5,7 +5,6 @@ import { withDraftQueryBuilderFx } from "~/app/draft/db/withDraftQueryBuilderFx"
 import { withDraftSelectFx } from "~/app/draft/db/withDraftSelectFx";
 import type { DraftFilterSchema } from "~/app/draft/schema/DraftFilterSchema";
 import type { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace draftFetchFx {
 	export interface Props extends DraftQuerySchema.Type {
@@ -33,4 +32,3 @@ export const draftFetchFx = Effect.fn("draftFetchFx")(function* ({
 
 export type draftFetchFx = ReturnType<typeof draftFetchFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<draftFetchFx>, UserContextFx>>;

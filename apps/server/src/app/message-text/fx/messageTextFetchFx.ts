@@ -5,7 +5,6 @@ import { withMessageTextQueryBuilderFx } from "~/app/message-text/db/withMessage
 import { withMessageTextSelectFx } from "~/app/message-text/db/withMessageTextSelectFx";
 import type { MessageTextFilterSchema } from "~/app/message-text/schema/MessageTextFilterSchema";
 import type { MessageTextQuerySchema } from "~/app/message-text/schema/MessageTextQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace messageTextFetchFx {
 	export interface Props extends MessageTextQuerySchema.Type {
@@ -36,4 +35,3 @@ export const messageTextFetchFx = Effect.fn("messageTextFetchFx")(function* ({
 
 export type messageTextFetchFx = ReturnType<typeof messageTextFetchFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageTextFetchFx>, UserContextFx>>;

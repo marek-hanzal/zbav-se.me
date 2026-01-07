@@ -5,7 +5,6 @@ import { withMessagePersonalQueryBuilderFx } from "~/app/message-personal/db/wit
 import { withMessagePersonalSelectFx } from "~/app/message-personal/db/withMessagePersonalSelectFx";
 import type { MessagePersonalFilterSchema } from "~/app/message-personal/schema/MessagePersonalFilterSchema";
 import type { MessagePersonalQuerySchema } from "~/app/message-personal/schema/MessagePersonalQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace messagePersonalFetchFx {
 	export interface Props extends MessagePersonalQuerySchema.Type {
@@ -36,4 +35,3 @@ export const messagePersonalFetchFx = Effect.fn("messagePersonalFetchFx")(functi
 
 export type messagePersonalFetchFx = ReturnType<typeof messagePersonalFetchFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messagePersonalFetchFx>, UserContextFx>>;

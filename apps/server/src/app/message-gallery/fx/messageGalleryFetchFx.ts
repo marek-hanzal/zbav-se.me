@@ -5,7 +5,6 @@ import { withMessageGalleryQueryBuilderFx } from "~/app/message-gallery/db/withM
 import { withMessageGallerySelectFx } from "~/app/message-gallery/db/withMessageGallerySelectFx";
 import type { MessageGalleryFilterSchema } from "~/app/message-gallery/schema/MessageGalleryFilterSchema";
 import type { MessageGalleryQuerySchema } from "~/app/message-gallery/schema/MessageGalleryQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace messageGalleryFetchFx {
 	export interface Props extends MessageGalleryQuerySchema.Type {
@@ -36,4 +35,3 @@ export const messageGalleryFetchFx = Effect.fn("messageGalleryFetchFx")(function
 
 export type messageGalleryFetchFx = ReturnType<typeof messageGalleryFetchFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageGalleryFetchFx>, UserContextFx>>;

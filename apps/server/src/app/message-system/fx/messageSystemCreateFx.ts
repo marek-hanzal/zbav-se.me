@@ -4,7 +4,6 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { messageSystemFetchFx } from "~/app/message-system/fx/messageSystemFetchFx";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -61,4 +60,3 @@ export const messageSystemCreateFx = Effect.fn("messageSystemCreateFx")(function
 
 export type messageSystemCreateFx = ReturnType<typeof messageSystemCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageSystemCreateFx>, UserContextFx>>;

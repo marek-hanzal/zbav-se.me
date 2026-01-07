@@ -1,6 +1,5 @@
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { AccessDeniedError } from "~/error/AccessDeniedError";
 import { RuntimeError } from "~/error/RuntimeError";
@@ -78,4 +77,3 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 
 export type transactionResolveFx = ReturnType<typeof transactionResolveFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<transactionResolveFx>, UserContextFx>>;

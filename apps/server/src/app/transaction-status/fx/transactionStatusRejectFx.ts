@@ -7,7 +7,6 @@ import { transactionPatchFx } from "~/app/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/app/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/app/transaction-status/fx/transactionStatusCreateFx";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace transactionStatusRejectFx {
 	export interface Props extends TransactionStatusRejectSchema.Type {
@@ -72,6 +71,3 @@ export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(
 
 export type transactionStatusRejectFx = ReturnType<typeof transactionStatusRejectFx>;
 
-type _NoUser = AssertNever<
-	Extract<Effect.Effect.Context<transactionStatusRejectFx>, UserContextFx>
->;

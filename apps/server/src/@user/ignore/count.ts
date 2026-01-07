@@ -3,7 +3,6 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { ignoreCountFx } from "~/app/ignore/fx/ignoreCountFx";
 import { IgnoreCountQuerySchema } from "~/app/ignore/schema/IgnoreCountQuerySchema";
-import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { CountSchema } from "~/schema/CountSchema";
@@ -50,7 +49,7 @@ export const withCountApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const user = yield* UserContextFx;
+				const user = c.get("user");
 
 				return c.json<CountSchema.Type, 200>(
 					yield* zodFx({
@@ -66,7 +65,6 @@ export const withCountApi: Routes.Fn = async ({ userHono }) => {
 				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
-				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

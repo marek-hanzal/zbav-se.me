@@ -8,7 +8,6 @@ import { messageGalleryCreateFx } from "~/app/message-gallery/fx/messageGalleryC
 import { TransactionContextFx } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/app/transaction/fx/transactionStatusGateFx";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
@@ -113,6 +112,3 @@ export type transactionMessageGalleryCreateFx = ReturnType<
 	typeof transactionMessageGalleryCreateFx
 >;
 
-type _NoUser = AssertNever<
-	Extract<Effect.Effect.Context<transactionMessageGalleryCreateFx>, UserContextFx>
->;

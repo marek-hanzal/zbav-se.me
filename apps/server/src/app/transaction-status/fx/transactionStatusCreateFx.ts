@@ -5,7 +5,6 @@ import { DateTime } from "luxon";
 import { transactionPatchFx } from "~/app/transaction/fx/transactionPatchFx";
 import { transactionStatusFetchFx } from "~/app/transaction-status/fx/transactionStatusFetchFx";
 import type { TransactionStatusCreateSchema } from "~/app/transaction-status/schema/TransactionStatusCreateSchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace transactionStatusCreateFx {
@@ -62,6 +61,3 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 
 export type transactionStatusCreateFx = ReturnType<typeof transactionStatusCreateFx>;
 
-type _NoUser = AssertNever<
-	Extract<Effect.Effect.Context<transactionStatusCreateFx>, UserContextFx>
->;

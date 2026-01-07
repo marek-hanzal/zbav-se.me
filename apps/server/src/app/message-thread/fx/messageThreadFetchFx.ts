@@ -5,7 +5,6 @@ import { withMessageThreadQueryBuilderFx } from "~/app/message-thread/db/withMes
 import { withMessageThreadSelectFx } from "~/app/message-thread/db/withMessageThreadSelectFx";
 import type { MessageThreadFilterSchema } from "~/app/message-thread/schema/MessageThreadFilterSchema";
 import type { MessageThreadQuerySchema } from "~/app/message-thread/schema/MessageThreadQuerySchema";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 
 export namespace messageThreadFetchFx {
 	export interface Props extends MessageThreadQuerySchema.Type {
@@ -33,4 +32,3 @@ export const messageThreadFetchFx = Effect.fn("messageThreadFetchFx")(function* 
 
 export type messageThreadFetchFx = ReturnType<typeof messageThreadFetchFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<messageThreadFetchFx>, UserContextFx>>;

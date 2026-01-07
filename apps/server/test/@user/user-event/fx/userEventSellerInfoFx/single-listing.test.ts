@@ -1,14 +1,13 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { listingCreateFx } from "~/@user/listing/fx/listingCreateFx";
-import { uploadCreateFx } from "~/@user/upload/fx/uploadCreateFx";
-import { userEventSellerInfoFx } from "~/@user/user-event/fx/userEventSellerInfoFx";
+import { categoryFetchFx } from "~/app/category/fx/categoryFetchFx";
+import { listingCreateFx } from "~/app/listing/fx/listingCreateFx";
 import { locationAutocompleteFx } from "~/app/location/fx/locationAutocompleteFx";
+import { uploadCreateFx } from "~/app/upload/fx/uploadCreateFx";
+import { userEventSellerInfoFx } from "~/app/user-event/fx/userEventSellerInfoFx";
 import { auth } from "~/auth/auth";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import { testabase } from "../../../../testabase";
-import { categoryFetchFx } from "~/app/category/fx/categoryFetchFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Single listing returns nothing", async () => {
@@ -44,6 +43,7 @@ describe("userEventSellerInfoFx", () => {
 
 				const upload = yield* uploadCreateFx({
 					url: "https://cdn.zbav-se.me/test.jpg",
+					userId: seller.id,
 				});
 
 				yield* listingCreateFx({
@@ -59,12 +59,13 @@ describe("userEventSellerInfoFx", () => {
 					uploadIds: [
 						upload.id,
 					],
+					userId: seller.id,
 				});
 
 				return yield* userEventSellerInfoFx({
-					userId: "test-user-id",
+					userId: seller.id,
 				});
-			}).pipe(DatabaseContextProvider(kysely), UserContextProvider(seller)),
+			}).pipe(DatabaseContextProvider(database.kysely())),
 		);
 
 		expect(result).toBeNull();

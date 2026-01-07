@@ -5,7 +5,6 @@ import { DateTime } from "luxon";
 import type { ListingEventCreateSchema } from "~/@user/listing-event/schema/ListingEventCreateSchema";
 import { listingCheckIfOwnFx } from "~/app/listing/fx/listingCheckIfOwnFx";
 import { listingEventRateLimitFx } from "~/app/listing-event/fx/listingEventRateLimitFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -56,4 +55,3 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 
 export type listingEventCreateFx = ReturnType<typeof listingEventCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<listingEventCreateFx>, UserContextFx>>;

@@ -6,7 +6,6 @@ import { messagePersonalCreateFx } from "~/app/message-personal/fx/messagePerson
 import { TransactionContextFx } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/app/transaction/fx/transactionStatusGateFx";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -83,6 +82,3 @@ export type transactionMessagePersonalCreateFx = ReturnType<
 	typeof transactionMessagePersonalCreateFx
 >;
 
-type _NoUser = AssertNever<
-	Extract<Effect.Effect.Context<transactionMessagePersonalCreateFx>, UserContextFx>
->;

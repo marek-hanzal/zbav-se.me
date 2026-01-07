@@ -5,7 +5,6 @@ import { DateTime } from "luxon";
 import type { GalleryItemCreateSchema } from "~/@user/gallery-item/schema/GalleryItemCreateSchema";
 import { galleryFetchFx } from "~/app/gallery/fx/galleryFetchFx";
 import { galleryItemFetchFx } from "~/app/gallery-item/fx/galleryItemFetchFx";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace galleryItemCreateFx {
@@ -60,4 +59,3 @@ export const galleryItemCreateFx = Effect.fn("galleryItemCreateFx")(function* ({
 
 export type galleryItemCreateFx = ReturnType<typeof galleryItemCreateFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<galleryItemCreateFx>, UserContextFx>>;

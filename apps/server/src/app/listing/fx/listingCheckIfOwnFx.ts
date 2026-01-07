@@ -1,7 +1,6 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 
@@ -50,4 +49,3 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 
 export type listingCheckIfOwnFx = ReturnType<typeof listingCheckIfOwnFx>;
 
-type _NoUser = AssertNever<Extract<Effect.Effect.Context<listingCheckIfOwnFx>, UserContextFx>>;
