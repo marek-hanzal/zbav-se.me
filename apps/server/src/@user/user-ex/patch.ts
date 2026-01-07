@@ -67,27 +67,26 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 			}).pipe(
 				KyselyContextProvider(c.get("kysely")),
 				//
-				Effect.catchAll((e) => {
-					return Effect.succeed(
+				Effect.catchAll((e) =>
+					Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
 								{
 									_tag: "ZodErrorFx",
 								},
-								() => {
-									return c.json<NoticeSchema.Type, 500>(
+								({ zod }) =>
+									c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: z.prettifyError(e.zod),
+											message: z.prettifyError(zod),
 										},
 										500,
-									);
-								},
+									),
 							),
 							Match.exhaustive,
 						),
-					);
-				}),
+					),
+				),
 				Effect.runPromise,
 			),
 	);

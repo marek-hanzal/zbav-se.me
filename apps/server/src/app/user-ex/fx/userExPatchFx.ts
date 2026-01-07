@@ -18,7 +18,7 @@ export const userExPatchFx = Effect.fn("userExPatchFx")(function* ({
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
 
-			const userEx = yield* Effect.tryPromise(async () => {
+			const userEx = yield* Effect.promise(async () => {
 				return kysely
 					.selectFrom("user_ex")
 					.where("userId", "=", userId)
