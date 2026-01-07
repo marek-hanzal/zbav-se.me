@@ -38,4 +38,3 @@ export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
 });
 
 export type ignoreDeleteFx = ReturnType<typeof ignoreDeleteFx>;
-

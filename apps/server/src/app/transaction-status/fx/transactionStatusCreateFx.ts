@@ -60,4 +60,3 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 });
 
 export type transactionStatusCreateFx = ReturnType<typeof transactionStatusCreateFx>;
-

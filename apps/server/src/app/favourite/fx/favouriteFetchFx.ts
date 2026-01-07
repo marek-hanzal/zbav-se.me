@@ -31,4 +31,3 @@ export const favouriteFetchFx = Effect.fn("favouriteFetchFx")(function* ({
 });
 
 export type favouriteFetchFx = ReturnType<typeof favouriteFetchFx>;
-

@@ -34,4 +34,3 @@ export const messageTextFetchFx = Effect.fn("messageTextFetchFx")(function* ({
 });
 
 export type messageTextFetchFx = ReturnType<typeof messageTextFetchFx>;
-

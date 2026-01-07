@@ -59,4 +59,3 @@ export const messagePackageCreateFx = Effect.fn("messagePackageCreateFx")(functi
 });
 
 export type messagePackageCreateFx = ReturnType<typeof messagePackageCreateFx>;
-

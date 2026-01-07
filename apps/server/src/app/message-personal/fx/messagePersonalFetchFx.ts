@@ -34,4 +34,3 @@ export const messagePersonalFetchFx = Effect.fn("messagePersonalFetchFx")(functi
 });
 
 export type messagePersonalFetchFx = ReturnType<typeof messagePersonalFetchFx>;
-

@@ -36,4 +36,3 @@ export const transactionStatusGateFx = Effect.fn("transactionStatusGateFx")(func
 });
 
 export type transactionStatusGateFx = ReturnType<typeof transactionStatusGateFx>;
-

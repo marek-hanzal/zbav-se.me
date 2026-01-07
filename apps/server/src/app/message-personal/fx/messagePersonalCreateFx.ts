@@ -65,4 +65,3 @@ export const messagePersonalCreateFx = Effect.fn("messagePersonalCreateFx")(func
 });
 
 export type messagePersonalCreateFx = ReturnType<typeof messagePersonalCreateFx>;
-

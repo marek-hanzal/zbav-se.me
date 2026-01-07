@@ -35,4 +35,3 @@ export const ignoreCollectionFx = Effect.fn("ignoreCollectionFx")(function* ({
 });
 
 export type ignoreCollectionFx = ReturnType<typeof ignoreCollectionFx>;
-

@@ -35,4 +35,3 @@ export const feedCollectionFx = Effect.fn("feedCollectionFx")(function* ({
 });
 
 export type feedCollectionFx = ReturnType<typeof feedCollectionFx>;
-

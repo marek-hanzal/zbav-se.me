@@ -31,4 +31,3 @@ export const draftFetchFx = Effect.fn("draftFetchFx")(function* ({
 });
 
 export type draftFetchFx = ReturnType<typeof draftFetchFx>;
-

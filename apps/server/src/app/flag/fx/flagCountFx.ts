@@ -27,4 +27,3 @@ export const flagCountFx = Effect.fn("flagCountFx")(function* ({
 });
 
 export type flagCountFx = ReturnType<typeof flagCountFx>;
-

@@ -38,4 +38,3 @@ export const flagDeleteFx = Effect.fn("flagDeleteFx")(function* ({
 });
 
 export type flagDeleteFx = ReturnType<typeof flagDeleteFx>;
-

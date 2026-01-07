@@ -35,4 +35,3 @@ export const feedResolveFx = Effect.fn("feedResolveFx")(function* ({
 });
 
 export type feedResolveFx = ReturnType<typeof feedResolveFx>;
-

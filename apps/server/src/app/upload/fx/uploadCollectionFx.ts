@@ -35,4 +35,3 @@ export const uploadCollectionFx = Effect.fn("uploadCollectionFx")(function* ({
 });
 
 export type uploadCollectionFx = ReturnType<typeof uploadCollectionFx>;
-

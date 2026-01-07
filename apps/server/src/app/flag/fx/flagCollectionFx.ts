@@ -35,4 +35,3 @@ export const flagCollectionFx = Effect.fn("flagCollectionFx")(function* ({
 });
 
 export type flagCollectionFx = ReturnType<typeof flagCollectionFx>;
-

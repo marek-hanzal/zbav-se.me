@@ -41,4 +41,3 @@ export const transactionCollectionFx = Effect.fn("transactionCollectionFx")(func
 });
 
 export type transactionCollectionFx = ReturnType<typeof transactionCollectionFx>;
-

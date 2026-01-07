@@ -100,4 +100,3 @@ export const withBuyerApi: Routes.Fn = async ({ sessionHono }) => {
 		},
 	);
 };
-

@@ -31,4 +31,3 @@ export const ignoreFetchFx = Effect.fn("ignoreFetchFx")(function* ({
 });
 
 export type ignoreFetchFx = ReturnType<typeof ignoreFetchFx>;
-

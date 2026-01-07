@@ -35,4 +35,3 @@ export const draftCollectionFx = Effect.fn("draftCollectionFx")(function* ({
 });
 
 export type draftCollectionFx = ReturnType<typeof draftCollectionFx>;
-

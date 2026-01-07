@@ -35,4 +35,3 @@ export const galleryCollectionFx = Effect.fn("galleryCollectionFx")(function* ({
 });
 
 export type galleryCollectionFx = ReturnType<typeof galleryCollectionFx>;
-

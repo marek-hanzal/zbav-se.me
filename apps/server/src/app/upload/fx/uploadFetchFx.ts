@@ -31,4 +31,3 @@ export const uploadFetchFx = Effect.fn("uploadFetchFx")(function* ({
 });
 
 export type uploadFetchFx = ReturnType<typeof uploadFetchFx>;
-

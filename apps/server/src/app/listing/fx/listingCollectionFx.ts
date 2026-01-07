@@ -45,4 +45,3 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 });
 
 export type listingCollectionFx = ReturnType<typeof listingCollectionFx>;
-

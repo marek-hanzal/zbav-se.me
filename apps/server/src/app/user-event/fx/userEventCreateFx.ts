@@ -51,4 +51,3 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 });
 
 export type userEventCreateFx = ReturnType<typeof userEventCreateFx>;
-

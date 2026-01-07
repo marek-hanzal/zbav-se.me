@@ -27,4 +27,3 @@ export const draftCountFx = Effect.fn("draftCountFx")(function* ({
 });
 
 export type draftCountFx = ReturnType<typeof draftCountFx>;
-

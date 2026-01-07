@@ -44,4 +44,3 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 });
 
 export type categoryCollectionFx = ReturnType<typeof categoryCollectionFx>;
-

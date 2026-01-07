@@ -15,7 +15,7 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 	listingId,
 }: flagCreateFx.Props) {
 	const database = yield* DatabaseContextFx;
-    
+
 	const id = genId();
 
 	return yield* Effect.promise(async () => {
@@ -34,5 +34,3 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 });
 
 export type flagCreateFx = ReturnType<typeof flagCreateFx>;
-
-

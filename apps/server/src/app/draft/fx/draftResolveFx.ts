@@ -45,4 +45,3 @@ export const draftResolveFx = Effect.fn("draftResolveFx")(function* ({
 });
 
 export type draftResolveFx = ReturnType<typeof draftResolveFx>;
-

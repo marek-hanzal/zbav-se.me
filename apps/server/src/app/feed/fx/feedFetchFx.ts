@@ -31,4 +31,3 @@ export const feedFetchFx = Effect.fn("feedFetchFx")(function* ({
 });
 
 export type feedFetchFx = ReturnType<typeof feedFetchFx>;
-

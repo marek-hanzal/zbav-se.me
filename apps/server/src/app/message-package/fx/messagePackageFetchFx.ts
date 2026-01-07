@@ -34,4 +34,3 @@ export const messagePackageFetchFx = Effect.fn("messagePackageFetchFx")(function
 });
 
 export type messagePackageFetchFx = ReturnType<typeof messagePackageFetchFx>;
-

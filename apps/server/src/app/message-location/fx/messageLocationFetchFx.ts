@@ -34,4 +34,3 @@ export const messageLocationFetchFx = Effect.fn("messageLocationFetchFx")(functi
 });
 
 export type messageLocationFetchFx = ReturnType<typeof messageLocationFetchFx>;
-

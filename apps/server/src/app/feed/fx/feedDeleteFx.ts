@@ -29,4 +29,3 @@ export const feedDeleteFx = Effect.fn("feedDeleteFx")(function* (query: feedDele
 });
 
 export type feedDeleteFx = ReturnType<typeof feedDeleteFx>;
-

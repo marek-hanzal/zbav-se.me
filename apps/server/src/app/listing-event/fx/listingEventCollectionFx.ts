@@ -35,4 +35,3 @@ export const listingEventCollectionFx = Effect.fn("listingEventCollectionFx")(fu
 });
 
 export type listingEventCollectionFx = ReturnType<typeof listingEventCollectionFx>;
-

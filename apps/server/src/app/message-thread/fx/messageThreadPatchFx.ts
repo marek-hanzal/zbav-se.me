@@ -58,4 +58,3 @@ export const messageThreadPatchFx = Effect.fn("messageThreadPatchFx")(function* 
 });
 
 export type messageThreadPatchFx = ReturnType<typeof messageThreadPatchFx>;
-

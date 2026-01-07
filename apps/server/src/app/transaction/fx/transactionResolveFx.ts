@@ -76,4 +76,3 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 });
 
 export type transactionResolveFx = ReturnType<typeof transactionResolveFx>;
-

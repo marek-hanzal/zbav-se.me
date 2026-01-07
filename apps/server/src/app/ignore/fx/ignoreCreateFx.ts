@@ -34,4 +34,3 @@ export const ignoreCreateFx = Effect.fn("ignoreCreateFx")(function* ({
 });
 
 export type ignoreCreateFx = ReturnType<typeof ignoreCreateFx>;
-

@@ -31,4 +31,3 @@ export const messageThreadFetchFx = Effect.fn("messageThreadFetchFx")(function* 
 });
 
 export type messageThreadFetchFx = ReturnType<typeof messageThreadFetchFx>;
-

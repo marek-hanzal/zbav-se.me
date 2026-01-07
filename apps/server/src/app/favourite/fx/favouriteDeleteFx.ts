@@ -38,4 +38,3 @@ export const favouriteDeleteFx = Effect.fn("favouriteDeleteFx")(function* ({
 });
 
 export type favouriteDeleteFx = ReturnType<typeof favouriteDeleteFx>;
-

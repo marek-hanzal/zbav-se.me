@@ -2,8 +2,8 @@ import { Context, Effect } from "effect";
 
 export interface S3Context {
 	api: string;
-    key: string;
-    secret: string;
+	key: string;
+	secret: string;
 	bucket: string;
 }
 

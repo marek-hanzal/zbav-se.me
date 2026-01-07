@@ -31,4 +31,3 @@ export const galleryItemFetchFx = Effect.fn("galleryItemFetchFx")(function* ({
 });
 
 export type galleryItemFetchFx = ReturnType<typeof galleryItemFetchFx>;
-

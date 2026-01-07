@@ -27,4 +27,3 @@ export const galleryItemCountFx = Effect.fn("galleryItemCountFx")(function* ({
 });
 
 export type galleryItemCountFx = ReturnType<typeof galleryItemCountFx>;
-

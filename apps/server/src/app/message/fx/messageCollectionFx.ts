@@ -43,4 +43,3 @@ export const messageCollectionFx = Effect.fn("messageCollectionFx")(function* ({
 });
 
 export type messageCollectionFx = ReturnType<typeof messageCollectionFx>;
-

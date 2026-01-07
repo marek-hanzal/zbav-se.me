@@ -27,4 +27,3 @@ export const listingEventCountFx = Effect.fn("listingEventCountFx")(function* ({
 });
 
 export type listingEventCountFx = ReturnType<typeof listingEventCountFx>;
-

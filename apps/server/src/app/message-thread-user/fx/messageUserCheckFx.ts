@@ -38,4 +38,3 @@ export const messageUserCheckFx = Effect.fn("messageUserCheckFx")(function* ({
 });
 
 export type messageUserCheckFx = ReturnType<typeof messageUserCheckFx>;
-

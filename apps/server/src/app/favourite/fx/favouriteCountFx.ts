@@ -27,4 +27,3 @@ export const favouriteCountFx = Effect.fn("favouriteCountFx")(function* ({
 });
 
 export type favouriteCountFx = ReturnType<typeof favouriteCountFx>;
-

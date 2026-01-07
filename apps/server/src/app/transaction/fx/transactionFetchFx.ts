@@ -37,4 +37,3 @@ export const transactionFetchFx = Effect.fn("transactionFetchFx")(function* ({
 });
 
 export type transactionFetchFx = ReturnType<typeof transactionFetchFx>;
-

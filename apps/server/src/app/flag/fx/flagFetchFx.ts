@@ -31,4 +31,3 @@ export const flagFetchFx = Effect.fn("flagFetchFx")(function* ({
 });
 
 export type flagFetchFx = ReturnType<typeof flagFetchFx>;
-

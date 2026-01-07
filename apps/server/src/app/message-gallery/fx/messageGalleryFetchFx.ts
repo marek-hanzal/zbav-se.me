@@ -34,4 +34,3 @@ export const messageGalleryFetchFx = Effect.fn("messageGalleryFetchFx")(function
 });
 
 export type messageGalleryFetchFx = ReturnType<typeof messageGalleryFetchFx>;
-

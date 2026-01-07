@@ -35,4 +35,3 @@ export const favouriteCollectionFx = Effect.fn("favouriteCollectionFx")(function
 });
 
 export type favouriteCollectionFx = ReturnType<typeof favouriteCollectionFx>;
-

@@ -29,4 +29,3 @@ export const draftDeleteFx = Effect.fn("draftDeleteFx")(function* (query: draftD
 });
 
 export type draftDeleteFx = ReturnType<typeof draftDeleteFx>;
-

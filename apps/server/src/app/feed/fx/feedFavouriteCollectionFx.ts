@@ -38,4 +38,3 @@ export const feedFavouriteCollectionFx = Effect.fn("feedFavouriteCollectionFx")(
 });
 
 export type feedFavouriteCollectionFx = ReturnType<typeof feedFavouriteCollectionFx>;
-

@@ -42,4 +42,3 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 });
 
 export type listingFetchFx = ReturnType<typeof listingFetchFx>;
-

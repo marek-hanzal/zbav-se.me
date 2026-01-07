@@ -42,4 +42,3 @@ export const messageThreadCreateFx = Effect.fn("messageThreadCreateFx")(function
 });
 
 export type messageThreadCreateFx = ReturnType<typeof messageThreadCreateFx>;
-

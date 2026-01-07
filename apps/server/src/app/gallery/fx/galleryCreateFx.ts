@@ -47,4 +47,3 @@ export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* ({
 });
 
 export type galleryCreateFx = ReturnType<typeof galleryCreateFx>;
-
