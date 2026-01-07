@@ -3,10 +3,10 @@ import { DateTime } from "luxon";
 import type { CleanupSchema } from "~/@public/janitor/schema/CleanupSchema";
 import { S3ContextFx } from "~/app/s3/context/S3ContextFx";
 import { s3ClientFx } from "~/app/s3/fx/s3ClientFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export const cleanupUploadFx = Effect.fn("cleanupUpload")(function* () {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const { bucket } = yield* S3ContextFx;
 	const client = yield* s3ClientFx();
@@ -21,7 +21,7 @@ export const cleanupUploadFx = Effect.fn("cleanupUpload")(function* () {
 		.toJSDate();
 
 	const uploads = yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.selectFrom("upload as u")
 			.leftJoin("gallery_item as gi", "gi.uploadId", "u.id")
 			.leftJoin("gallery as g", "gi.uploadId", "u.id")

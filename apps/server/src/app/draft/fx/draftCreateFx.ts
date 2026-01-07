@@ -4,7 +4,7 @@ import { draftFetchFx } from "~/app/draft/fx/draftFetchFx";
 import type { DraftCreateSchema } from "~/app/draft/schema/DraftCreateSchema";
 import { galleryCreateFx as coolGalleryCreateFx } from "~/app/gallery/fx/galleryCreateFx";
 import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace draftCreateFx {
@@ -19,7 +19,7 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 }: draftCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			const id = genId();
 			const now = new Date();
@@ -42,7 +42,7 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 			}
 
 			yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.insertInto("draft")
 					.values({
 						...data,

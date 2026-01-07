@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import type { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCategoryApiFx } from "./category/withCategoryApiFx";
 import { withListingApiFx } from "./listing/withListingApiFx";
@@ -10,10 +10,10 @@ import { withUserEventApiFx } from "./user-event/withUserEventApiFx";
 
 export const withSessionApiFx = Effect.fn("withSessionApiFx")(function* () {
 	const { root, sessionHono } = yield* RoutesContextFx;
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	sessionHono.use(async (c, next) => {
-		c.set("database", database);
+		c.set("kysely", kysely);
 		return next();
 	});
 

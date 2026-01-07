@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { ListingEventSortSchema } from "~/app/listing-event/schema/ListingEventSortSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withListingEventSelectFx {
 	export interface Props {
@@ -14,9 +14,9 @@ export namespace withListingEventSelectFx {
 export const withListingEventSelectFx = Effect.fn("withListingEventSelectFx")(function* ({
 	sort,
 }: withListingEventSelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
-	let query = database.selectFrom("listing_event as le").selectAll("le");
+	let query = kysely.selectFrom("listing_event as le").selectAll("le");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

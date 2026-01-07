@@ -17,8 +17,8 @@ export namespace withDatabase {
 	}
 
 	export interface Instance<DB = any> {
-		dialect(): Dialect;
-		kysely(): Kysely<DB>;
+		dialect: Dialect;
+		kysely: Kysely<DB>;
 		migrate(): Promise<MigrationResult[] | undefined>;
 	}
 }
@@ -33,20 +33,20 @@ export const withDatabase = <TDatabase>({
 	let dialectInstance: Dialect | null = null;
 
 	return {
-		dialect() {
+		get dialect() {
 			if (dialectInstance) {
 				return dialectInstance;
 			}
 
 			return (dialectInstance = dialect());
 		},
-		kysely() {
+		get kysely() {
 			if (kyselyInstance) {
 				return kyselyInstance;
 			}
 
 			return (kyselyInstance = new Kysely<TDatabase>({
-				dialect: this.dialect(),
+				dialect: this.dialect,
 				log(log) {
 					switch (log.level) {
 						case "error": {
@@ -65,7 +65,7 @@ export const withDatabase = <TDatabase>({
 			await onPreMigration?.();
 
 			const migrator = new Migrator({
-				db: await this.kysely(),
+				db: this.kysely,
 				provider: {
 					getMigrations,
 				},

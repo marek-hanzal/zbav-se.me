@@ -1,7 +1,6 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { ignoreFetchFx } from "~/app/ignore/fx/ignoreFetchFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace ignoreDeleteFx {
@@ -17,7 +16,7 @@ export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
 }: ignoreDeleteFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			const ignore = yield* ignoreFetchFx({
 				where: {
@@ -29,7 +28,7 @@ export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
 			});
 
 			yield* Effect.promise(async () => {
-				return database.deleteFrom("ignore").where("id", "=", ignore.id).execute();
+				return kysely.deleteFrom("ignore").where("id", "=", ignore.id).execute();
 			});
 
 			return ignore;

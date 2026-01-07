@@ -1,8 +1,7 @@
 import { genId } from "@use-pico/common/gen-id";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import type { FlagCreateSchema } from "~/app/flag/schema/FlagCreateSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace flagCreateFx {
 	export interface Props extends FlagCreateSchema.Type {
@@ -14,12 +13,12 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 	userId,
 	listingId,
 }: flagCreateFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const id = genId();
 
 	return yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.insertInto("flag")
 			.values({
 				id,

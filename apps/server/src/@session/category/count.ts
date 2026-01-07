@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { categoryCountFx } from "~/app/category/fx/categoryCountFx";
 import { CategoryCountQuerySchema } from "~/app/category/schema/CategoryCountQuerySchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -62,7 +62,7 @@ export const withCategoryCountApiFx = Effect.fn("withCategoryCountApiFx")(functi
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				KyselyContextProvider(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

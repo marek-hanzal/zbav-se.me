@@ -1,10 +1,10 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { userExPatchFx } from "~/app/user-ex/fx/userExPatchFx";
 import { UserExPatchSchema } from "~/app/user-ex/schema/UserExPatchSchema";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { UserExSchema } from "./schema/UserExSchema";
 
@@ -64,7 +64,7 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				KyselyContextProvider(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

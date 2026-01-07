@@ -9,7 +9,7 @@ import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
 import { listingFetchFx } from "~/app/listing/fx/listingFetchFx";
 import type { ListingCreateSchema } from "~/app/listing/schema/ListingCreateSchema";
 import { userEventCreateFx } from "~/app/user-event/fx/userEventCreateFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 
@@ -26,7 +26,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 }: listingCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			const id = genId();
 			const now = new Date();
@@ -53,7 +53,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			}
 
 			yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.insertInto("listing")
 					.values({
 						id,
@@ -98,7 +98,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			if (data.draftId) {
 				const draftId = data.draftId;
 				yield* Effect.promise(async () => {
-					return database
+					return kysely
 						.updateTable("draft")
 						.set({
 							usedAt: now,

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { DraftSortSchema } from "~/app/draft/schema/DraftSortSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withDraftCollectionSelectFx {
 	export interface Props {
@@ -14,9 +14,9 @@ export namespace withDraftCollectionSelectFx {
 export const withDraftCollectionSelectFx = Effect.fn("withDraftCollectionSelectFx")(function* ({
 	sort,
 }: withDraftCollectionSelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
-	let query = database
+	let query = kysely
 		.selectFrom("draft as d")
 		.leftJoin("location as loc", "loc.id", "d.locationId")
 		.leftJoin("category as cat", "cat.id", "d.categoryId")

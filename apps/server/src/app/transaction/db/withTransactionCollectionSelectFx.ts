@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { TransactionSortSchema } from "~/app/transaction/schema/TransactionSortSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withTransactionCollectionSelectFx {
 	export interface Props {
@@ -15,9 +15,9 @@ export namespace withTransactionCollectionSelectFx {
 
 export const withTransactionCollectionSelectFx = Effect.fn("withTransactionCollectionSelectFx")(
 	function* ({ sort }: withTransactionCollectionSelectFx.Props) {
-		const database = yield* DatabaseContextFx;
+		const kysely = yield* KyselyContextFx;
 
-		let query = database
+		let query = kysely
 			.selectFrom("transaction as lt")
 			.innerJoin("listing as l", "lt.listingId", "l.id")
 			.innerJoin("location as loc", "l.locationId", "loc.id")

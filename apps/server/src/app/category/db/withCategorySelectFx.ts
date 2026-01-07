@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import type { CategorySortSchema } from "../schema/CategorySortSchema";
 
 export namespace withCategorySelectFx {
@@ -14,9 +14,9 @@ export namespace withCategorySelectFx {
 export const withCategorySelectFx = Effect.fn("withCategorySelectFx")(function* ({
 	sort,
 }: withCategorySelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
-	let query = database.selectFrom("category as cat").selectAll("cat");
+	let query = kysely.selectFrom("category as cat").selectAll("cat");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { FlagSortSchema } from "~/app/flag/schema/FlagSortSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withFlagSelectFx {
 	export interface Props {
@@ -14,9 +14,9 @@ export namespace withFlagSelectFx {
 export const withFlagSelectFx = Effect.fn("withFlagSelectFx")(function* ({
 	sort,
 }: withFlagSelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
-	let query = database.selectFrom("flag as f").select([
+	let query = kysely.selectFrom("flag as f").select([
 		"f.id",
 		"f.listingId",
 	]);

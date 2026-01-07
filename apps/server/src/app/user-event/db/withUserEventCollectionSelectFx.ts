@@ -1,11 +1,11 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { UserEventSortSchema } from "~/app/user-event/schema/UserEventSortSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withUserEventCollectionSelectFx {
 	export interface Props {
-		sort: UserEventSortSchema.Type[] | undefined;
+		sort?: UserEventSortSchema.Type[];
 	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withUserEventCollectionSelectFx>>;
@@ -13,8 +13,9 @@ export namespace withUserEventCollectionSelectFx {
 
 export const withUserEventCollectionSelectFx = Effect.fn("withUserEventCollectionSelectFx")(
 	function* ({ sort }: withUserEventCollectionSelectFx.Props) {
-		const database = yield* DatabaseContextFx;
-		let query = database.selectFrom("user_event as ue").selectAll("ue");
+		const { kysely } = yield* KyselyContextFx;
+
+		let query = kysely.selectFrom("user_event as ue").selectAll("ue");
 
 		for (const item of sort ?? []) {
 			query = match(item.field)

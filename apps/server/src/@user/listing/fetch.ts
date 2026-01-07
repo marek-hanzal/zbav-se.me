@@ -4,8 +4,8 @@ import { Effect, Match } from "effect";
 import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
 import { listingFetchFx } from "~/app/listing/fx/listingFetchFx";
 import { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
@@ -75,7 +75,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				KyselyContextProvider(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

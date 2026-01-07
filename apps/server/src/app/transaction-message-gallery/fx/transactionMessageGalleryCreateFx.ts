@@ -7,7 +7,7 @@ import { TransactionContextFx } from "~/app/transaction/context/TransactionConte
 import { transactionStatusGateFx } from "~/app/transaction/fx/transactionStatusGateFx";
 import type { TransactionMessageGalleryCreateSchema } from "~/app/transaction-message-gallery/schema/TransactionMessageGalleryCreateSchema";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 
@@ -27,7 +27,7 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 	}: transactionMessageGalleryCreateFx.Props) {
 		return yield* withTransactionFx(
 			Effect.gen(function* () {
-				const database = yield* DatabaseContextFx;
+				const { kysely } = yield* KyselyContextFx;
 				const config = yield* TransactionContextFx;
 
 				if (uploadIds.length === 0) {
@@ -48,7 +48,7 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 				const now = createdAt ?? DateTime.now();
 
 				yield* Effect.promise(async () => {
-					return database
+					return kysely
 						.updateTable("transaction")
 						.set({
 							updatedAt: now.toJSDate(),
@@ -67,7 +67,7 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 				});
 
 				yield* Effect.promise(async () => {
-					return database
+					return kysely
 						.deleteFrom("gallery_item")
 						.where("galleryId", "=", gallery.id)
 						.execute();

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { MessageThreadSortSchema } from "~/app/message-thread/schema/MessageThreadSortSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withMessageThreadSelectFx {
 	export interface Props {
@@ -14,9 +14,9 @@ export namespace withMessageThreadSelectFx {
 export const withMessageThreadSelectFx = Effect.fn("withMessageThreadSelectFx")(function* ({
 	sort,
 }: withMessageThreadSelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
-	let query = database.selectFrom("message_thread as mt").selectAll();
+	let query = kysely.selectFrom("message_thread as mt").selectAll();
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

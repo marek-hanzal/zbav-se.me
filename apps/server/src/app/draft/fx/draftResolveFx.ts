@@ -1,7 +1,6 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { AccessDeniedError } from "~/error/AccessDeniedError";
 
 export namespace draftResolveFx {
@@ -17,10 +16,10 @@ export const draftResolveFx = Effect.fn("draftResolveFx")(function* ({
 	draftId,
 	message = "You are not allowed to access this draft",
 }: draftResolveFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const draft = yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.selectFrom("draft")
 			.selectAll()
 			.where("id", "=", draftId)

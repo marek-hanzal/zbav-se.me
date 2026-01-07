@@ -3,7 +3,7 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { TransactionBuyerInfoSchema } from "~/app/transaction/schema/TransactionBuyerInfoSchema";
 import { userEventBuyerInfoFx } from "~/app/user-event/fx/userEventBuyerInfoFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace transactionGetBuyerInfoFx {
 	export interface Props {
@@ -16,10 +16,10 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 	userId,
 	transactionId,
 }: transactionGetBuyerInfoFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const userInfo = yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.selectFrom("user as u")
 			.innerJoin("transaction as lt", (eb) => {
 				/**

@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
 import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
 import type { FeedPatchSchema } from "~/app/feed/schema/FeedPatchSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace feedPatchFx {
@@ -18,7 +18,7 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 }: feedPatchFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			const feed = yield* feedFetchFx({
 				...query,
@@ -26,7 +26,7 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 			});
 
 			yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.updateTable("feed")
 					.set({
 						...patch,

@@ -1,6 +1,6 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace seedUserFx {
 	export interface Props {
@@ -9,10 +9,10 @@ export namespace seedUserFx {
 }
 
 export const seedUserFx = Effect.fn("seedUserFx")(function* ({ email }: seedUserFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const current = yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.selectFrom("user")
 			.where("email", "=", email)
 			.selectAll()

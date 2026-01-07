@@ -1,7 +1,7 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { sql } from "kysely";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace categoryMissCreateFx {
 	export interface Props {
@@ -14,14 +14,14 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 	fulltext,
 	limit = 4,
 }: categoryMissCreateFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	if (!fulltext || fulltext.length < limit) {
 		return yield* Effect.void;
 	}
 
 	yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.insertInto("category_miss")
 			.values({
 				id: genId(),

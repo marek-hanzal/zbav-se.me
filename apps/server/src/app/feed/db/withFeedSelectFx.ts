@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import type { FeedSortSchema } from "~/app/feed/schema/FeedSortSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withFeedSelectFx {
 	export interface Props {
@@ -15,9 +15,9 @@ export namespace withFeedSelectFx {
 export const withFeedSelectFx = Effect.fn("withFeedSelectFx")(function* ({
 	sort,
 }: withFeedSelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
-	let query = database
+	let query = kysely
 		.selectFrom("feed as f")
 		.selectAll()
 		.select((eb) =>

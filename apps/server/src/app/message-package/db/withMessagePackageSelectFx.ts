@@ -3,7 +3,7 @@ import { sql } from "kysely";
 import { match } from "ts-pattern";
 import type { MessageDirectionEnumSchema } from "~/app/message/schema/MessageDirectionEnumSchema";
 import type { MessagePackageSortSchema } from "~/app/message-package/schema/MessagePackageSortSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withMessagePackageSelectFx {
 	export interface Props {
@@ -18,9 +18,9 @@ export const withMessagePackageSelectFx = Effect.fn("withMessagePackageSelectFx"
 	userId,
 	sort,
 }: withMessagePackageSelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
-	let query = database
+	let query = kysely
 		.selectFrom("message_package as mp")
 		.selectAll("mp")
 		.select(sql<"package">`'package'`.as("type"))

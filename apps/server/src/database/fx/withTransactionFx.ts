@@ -1,21 +1,24 @@
 import { Effect } from "effect";
-import { DatabaseContextFx, DatabaseContextProvider } from "./DatabaseContextFx";
+import { KyselyContextFx, KyselyContextProvider } from "../context/KyselyContextFx";
 
 export const withTransactionFx = Effect.fn("withTransactionFx")(function* <
 	const A,
 	const E,
 	const R,
 >(effect: Effect.Effect<A, E, R>) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
-	if (database.isTransaction) {
-		return yield* effect.pipe(DatabaseContextProvider(database));
+	if (kysely.kysely.isTransaction) {
+		return yield* effect.pipe(KyselyContextProvider(kysely));
 	}
 
-	const trx = yield* Effect.promise(async () => database.startTransaction().execute());
+	const trx = yield* Effect.promise(async () => kysely.kysely.startTransaction().execute());
 
 	return yield* effect.pipe(
-		DatabaseContextProvider(trx),
+		KyselyContextProvider({
+			...kysely,
+			kysely: trx,
+		}),
 		Effect.matchEffect({
 			onSuccess(value) {
 				return Effect.promise(async () => trx.commit().execute()).pipe(

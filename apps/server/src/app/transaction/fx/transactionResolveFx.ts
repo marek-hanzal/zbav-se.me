@@ -1,6 +1,5 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { AccessDeniedError } from "~/error/AccessDeniedError";
 import { RuntimeError } from "~/error/RuntimeError";
 
@@ -17,11 +16,11 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 	transactionId,
 	message = "You are not allowed to access this transaction",
 }: transactionResolveFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const transaction = yield* Effect.promise(async () => {
 		return (
-			database
+			kysely
 				.selectFrom("transaction as lt")
 				.innerJoin("listing as l", "lt.listingId", "l.id")
 				.select([

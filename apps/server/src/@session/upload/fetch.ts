@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { uploadFetchFx } from "~/app/upload/fx/uploadFetchFx";
 import { UploadQuerySchema } from "~/app/upload/schema/UploadQuerySchema";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { UploadSchema } from "./schema/UploadSchema";
 
@@ -71,7 +71,7 @@ export const withUploadFetchApiFx = Effect.fn("withUploadFetchApiFx")(function* 
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				KyselyContextProvider(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

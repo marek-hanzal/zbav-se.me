@@ -11,7 +11,7 @@ import { transactionFetchFx } from "~/app/transaction/fx/transactionFetchFx";
 import type { TransactionCreateSchema } from "~/app/transaction/schema/TransactionCreateSchema";
 import { transactionStatusCreateFx } from "~/app/transaction-status/fx/transactionStatusCreateFx";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace transactionCreateFx {
@@ -29,11 +29,11 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 }: transactionCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 			const config = yield* TransactionContextFx;
 
 			const listing = yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.selectFrom("listing")
 					.select([
 						"id",
@@ -71,7 +71,7 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 			const id = genId();
 
 			yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.insertInto("transaction")
 					.values({
 						...data,

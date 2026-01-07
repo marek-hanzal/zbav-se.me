@@ -8,7 +8,7 @@ import { UploadContextProvider } from "~/app/upload/context/UploadContextFx";
 import { uploadCreateFx } from "~/app/upload/fx/uploadCreateFx";
 import { userEventSellerInfoFx } from "~/app/user-event/fx/userEventSellerInfoFx";
 import { auth } from "~/auth/auth";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { testabase } from "../../../../testabase";
 
 describe("userEventSellerInfoFx", () => {
@@ -16,7 +16,7 @@ describe("userEventSellerInfoFx", () => {
 		const database = await testabase("userEventSellerInfoFx-single-listing");
 
 		const { api } = auth(() => {
-			return database.dialect();
+			return kysely.dialect();
 		});
 
 		const { user: seller } = await api.signUpEmail({
@@ -69,7 +69,7 @@ describe("userEventSellerInfoFx", () => {
 					userId: seller.id,
 				});
 			}).pipe(
-				DatabaseContextProvider(database.kysely()),
+				KyselyContextProvider(kysely.kysely()),
 				LocationContextProvider({
 					api: "",
 					autocomplete: "",

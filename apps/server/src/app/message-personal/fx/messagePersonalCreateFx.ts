@@ -1,10 +1,9 @@
 import { genId } from "@use-pico/common/gen-id";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { messagePersonalFetchFx } from "~/app/message-personal/fx/messagePersonalFetchFx";
 import type { MessagePersonalCreateSchema } from "~/app/message-personal/schema/MessagePersonalCreateSchema";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace messagePersonalCreateFx {
@@ -23,7 +22,7 @@ export const messagePersonalCreateFx = Effect.fn("messagePersonalCreateFx")(func
 }: messagePersonalCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			yield* messageUserCheckFx({
 				userIds: [
@@ -35,7 +34,7 @@ export const messagePersonalCreateFx = Effect.fn("messagePersonalCreateFx")(func
 			const id = genId();
 
 			yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.insertInto("message_personal")
 					.values({
 						id,

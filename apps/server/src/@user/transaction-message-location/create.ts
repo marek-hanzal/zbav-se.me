@@ -2,15 +2,16 @@ import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { MessageLocationSchema } from "~/app/message-location/schema/MessageLocationSchema";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
 import { transactionMessageLocationCreateFx } from "~/app/transaction-message-location/fx/transactionMessageLocationCreateFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionMessageLocationCreateSchema } from "./schema/TransactionMessageLocationCreateSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;
+
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -90,7 +91,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				KyselyContextProvider(c.get("kysely")),
 				TransactionContextProvider(),
 				//
 				Effect.catchAll((e) => {

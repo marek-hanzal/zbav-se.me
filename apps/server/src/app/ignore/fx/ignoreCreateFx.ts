@@ -1,7 +1,6 @@
 import { genId } from "@use-pico/common/gen-id";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace ignoreCreateFx {
 	export interface Props {
@@ -14,12 +13,12 @@ export const ignoreCreateFx = Effect.fn("ignoreCreateFx")(function* ({
 	userId,
 	listingId,
 }: ignoreCreateFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const id = genId();
 
 	return yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.insertInto("ignore")
 			.values({
 				id,

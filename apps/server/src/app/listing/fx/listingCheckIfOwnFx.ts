@@ -1,7 +1,6 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace listingCheckIfOwnFx {
@@ -21,9 +20,9 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 	listingId,
 	message,
 }: listingCheckIfOwnFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 	const listing = yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.selectFrom("listing")
 			.select("userId")
 			.where("id", "=", listingId)

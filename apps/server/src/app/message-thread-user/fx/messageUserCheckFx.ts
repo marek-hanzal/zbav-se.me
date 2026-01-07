@@ -1,7 +1,6 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace messageUserCheckFx {
 	export interface Props {
@@ -14,10 +13,10 @@ export const messageUserCheckFx = Effect.fn("messageUserCheckFx")(function* ({
 	userIds,
 	messageThreadId,
 }: messageUserCheckFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const result = yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.selectFrom("message_thread_user as mtu")
 			.select("mtu.userId")
 			.where("mtu.messageThreadId", "=", messageThreadId)

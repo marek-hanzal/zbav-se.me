@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { categoryFetchFx } from "~/app/category/fx/categoryFetchFx";
 import { CategoryQuerySchema } from "~/app/category/schema/CategoryQuerySchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { CategorySchema } from "./schema/CategorySchema";
 
@@ -71,7 +71,7 @@ export const withCategoryFetchApiFx = Effect.fn("withCategoryFetchApiFx")(functi
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				KyselyContextProvider(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

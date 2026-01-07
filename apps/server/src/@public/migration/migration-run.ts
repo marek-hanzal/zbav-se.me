@@ -28,7 +28,7 @@ export const withMigrationRunApiFx = Effect.fn("withMigrationRunApiFx")(function
 			],
 		}),
 		async (c) => {
-			return c.json((await database.migrate()) ?? [], 200);
+			return c.json((await kysely.migrate()) ?? [], 200);
 		},
 	);
 });

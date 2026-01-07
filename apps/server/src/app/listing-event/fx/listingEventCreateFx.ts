@@ -4,7 +4,7 @@ import { DateTime } from "luxon";
 import { listingCheckIfOwnFx } from "~/app/listing/fx/listingCheckIfOwnFx";
 import { listingEventRateLimitFx } from "~/app/listing-event/fx/listingEventRateLimitFx";
 import type { ListingEventCreateSchema } from "~/app/listing-event/schema/ListingEventCreateSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace listingEventCreateFx {
@@ -22,7 +22,7 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 }: listingEventCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			yield* listingCheckIfOwnFx({
 				userId,
@@ -37,7 +37,7 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 			});
 
 			return yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.insertInto("listing_event")
 					.values({
 						id: genId(),

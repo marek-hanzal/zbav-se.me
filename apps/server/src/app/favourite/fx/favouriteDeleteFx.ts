@@ -1,7 +1,6 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { favouriteFetchFx } from "~/app/favourite/fx/favouriteFetchFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace favouriteDeleteFx {
@@ -17,7 +16,7 @@ export const favouriteDeleteFx = Effect.fn("favouriteDeleteFx")(function* ({
 }: favouriteDeleteFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			const favourite = yield* favouriteFetchFx({
 				where: {
@@ -29,7 +28,7 @@ export const favouriteDeleteFx = Effect.fn("favouriteDeleteFx")(function* ({
 			});
 
 			yield* Effect.promise(async () => {
-				return database.deleteFrom("favourite").where("id", "=", favourite.id).execute();
+				return kysely.deleteFrom("favourite").where("id", "=", favourite.id).execute();
 			});
 
 			return favourite;

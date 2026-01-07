@@ -1,8 +1,7 @@
 import { genId } from "@use-pico/common/gen-id";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import type { UserExPatchSchema } from "~/app/user-ex/schema/UserExPatchSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace userExPatchFx {
@@ -17,10 +16,10 @@ export const userExPatchFx = Effect.fn("userExPatchFx")(function* ({
 }: userExPatchFx.Props) {
 	return withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			const userEx = yield* Effect.tryPromise(async () => {
-				return database
+				return kysely
 					.selectFrom("user_ex")
 					.where("userId", "=", userId)
 					.selectAll()
@@ -29,7 +28,7 @@ export const userExPatchFx = Effect.fn("userExPatchFx")(function* ({
 
 			if (!userEx) {
 				return yield* Effect.promise(async () => {
-					return database
+					return kysely
 						.insertInto("user_ex")
 						.values({
 							id: genId(),
@@ -42,7 +41,7 @@ export const userExPatchFx = Effect.fn("userExPatchFx")(function* ({
 			}
 
 			return yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.updateTable("user_ex")
 					.set(patch)
 					.where("id", "=", userEx.id)

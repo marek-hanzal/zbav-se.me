@@ -5,7 +5,7 @@ import type { FeedGalleryCreateSchema } from "~/app/feed/schema/FeedGalleryCreat
 import { galleryCreateFx } from "~/app/gallery/fx/galleryCreateFx";
 import { galleryFetchFx } from "~/app/gallery/fx/galleryFetchFx";
 import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 
@@ -22,7 +22,7 @@ export const feedGalleryCreateFx = Effect.fn("feedGalleryCreateFx")(function* ({
 }: feedGalleryCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			const feed = yield* feedResolveFx({
 				feedId,
@@ -53,7 +53,7 @@ export const feedGalleryCreateFx = Effect.fn("feedGalleryCreateFx")(function* ({
 			);
 
 			yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.deleteFrom("gallery_item")
 					.where("galleryId", "=", gallery.id)
 					.execute();

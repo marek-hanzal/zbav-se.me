@@ -156,7 +156,7 @@ export default async function globalSetup(): Promise<SetupResult> {
 		getMigrations,
 	});
 
-	await database.migrate();
+	await kysely.migrate();
 
-	await database.kysely().destroy();
+	await kysely.kysely().destroy();
 }

@@ -3,8 +3,8 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
 import { favouriteToggleFx } from "~/app/favourite/fx/favouriteToggleFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { FavouriteToggleSchema } from "./schema/FavouriteToggleSchema";
 
@@ -79,7 +79,7 @@ export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				KyselyContextProvider(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

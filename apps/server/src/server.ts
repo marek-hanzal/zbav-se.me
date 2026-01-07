@@ -9,7 +9,7 @@ import { withSessionApiFx } from "./@session/withSessionApiFx";
 import { withUserApiFx } from "./@user/withUserApiFx";
 import { AppEnv } from "./AppEnv";
 import { RoutesContextProvider } from "./app/routes/RoutesContextFx";
-import { DatabaseContextProvider } from "./database/fx/DatabaseContextFx";
+import { KyselyContextProvider } from "./database/context/KyselyContextFx";
 import { database } from "./database/kysely";
 import { withHono } from "./hono/withHono";
 import { withSessionHono } from "./hono/withSessionHono";
@@ -107,7 +107,7 @@ await Effect.all([
 		sessionHono: withSessionHono(),
 		userHono: withUserHono(),
 	}),
-	DatabaseContextProvider(database.kysely()),
+	KyselyContextProvider(kysely.kysely()),
 	Effect.runPromise,
 );
 

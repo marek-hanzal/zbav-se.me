@@ -1,9 +1,8 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
 import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
 import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace feedDeleteFx {
@@ -15,12 +14,12 @@ export namespace feedDeleteFx {
 export const feedDeleteFx = Effect.fn("feedDeleteFx")(function* (query: feedDeleteFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			const feed = yield* feedFetchFx(query);
 
 			yield* Effect.promise(async () => {
-				return database.deleteFrom("feed").where("id", "=", feed.id).execute();
+				return kysely.deleteFrom("feed").where("id", "=", feed.id).execute();
 			});
 
 			return feed;

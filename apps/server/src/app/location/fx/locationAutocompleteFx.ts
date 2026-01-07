@@ -1,6 +1,6 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { TextTooShortErrorFx } from "../error/TextTooShortErrorFx";
 import type { LocationDbSchema } from "../schema/LocationDbSchema";
@@ -28,7 +28,7 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const trx = yield* DatabaseContextFx;
+			const trx = yield* KyselyContextFx;
 
 			const results = yield* withLocationListFx({
 				query: {

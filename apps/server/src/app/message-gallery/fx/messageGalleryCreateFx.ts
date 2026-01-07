@@ -1,11 +1,10 @@
 import { genId } from "@use-pico/common/gen-id";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { messageGalleryFetchFx } from "~/app/message-gallery/fx/messageGalleryFetchFx";
 import type { MessageGalleryCreateSchema } from "~/app/message-gallery/schema/MessageGalleryCreateSchema";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace messageGalleryCreateFx {
@@ -23,7 +22,7 @@ export const messageGalleryCreateFx = Effect.fn("messageGalleryCreateFx")(functi
 }: messageGalleryCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			yield* messageUserCheckFx({
 				userIds: [
@@ -35,7 +34,7 @@ export const messageGalleryCreateFx = Effect.fn("messageGalleryCreateFx")(functi
 			const id = genId();
 
 			yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.insertInto("message_gallery")
 					.values({
 						id,

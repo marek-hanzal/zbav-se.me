@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { FeedSortSchema } from "~/app/feed/schema/FeedSortSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withFeedCollectionSelectFx {
 	export interface Props {
@@ -14,9 +14,9 @@ export namespace withFeedCollectionSelectFx {
 export const withFeedCollectionSelectFx = Effect.fn("withFeedCollectionSelectFx")(function* ({
 	sort,
 }: withFeedCollectionSelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
-	let query = database.selectFrom("feed as f").select("f.id");
+	let query = kysely.selectFrom("feed as f").select("f.id");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

@@ -3,7 +3,7 @@ import { sql } from "kysely";
 import { match } from "ts-pattern";
 import type { ListingMetaSchema } from "~/app/listing/schema/ListingMetaSchema";
 import type { ListingSortSchema } from "~/app/listing/schema/ListingSortSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withListingCollectionSelectFx {
 	export interface Props {
@@ -18,9 +18,9 @@ export const withListingCollectionSelectFx = Effect.fn("withListingCollectionSel
 	sort,
 	meta,
 }: withListingCollectionSelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
-	let query = database
+	let query = kysely
 		.selectFrom("listing as l")
 		.innerJoin("location as loc", "loc.id", "l.locationId")
 		.innerJoin("category as cat", "cat.id", "l.categoryId")

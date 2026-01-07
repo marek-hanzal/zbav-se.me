@@ -4,7 +4,7 @@ import type { FeedbackCreateSchema } from "~/app/feedback/schema/FeedbackCreateS
 import { listingCheckIfOwnFx } from "~/app/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/app/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace feedbackCreateFx {
@@ -21,7 +21,7 @@ export const feedbackCreateFx = Effect.fn("feedbackCreateFx")(function* ({
 }: feedbackCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			const id = genId();
 
@@ -38,7 +38,7 @@ export const feedbackCreateFx = Effect.fn("feedbackCreateFx")(function* ({
 			}).pipe(Effect.ignore);
 
 			yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.insertInto("feedback")
 					.values({
 						...data,

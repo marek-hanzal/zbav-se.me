@@ -2,7 +2,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
 import type { FeedCreateSchema } from "~/app/feed/schema/FeedCreateSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace feedCreateFx {
@@ -18,14 +18,14 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 }: feedCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			const id = genId();
 
 			yield* Effect.promise(async () => {
 				const now = new Date();
 
-				return database
+				return kysely
 					.insertInto("feed")
 					.values({
 						...data,

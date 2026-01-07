@@ -1,8 +1,7 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import type { ListingEventEnumSchema } from "~/app/listing-event/schema/ListingEventEnumSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { TooManyRequests } from "~/error/TooManyRequests";
 
 export namespace listingEventRateLimitFx {
@@ -20,10 +19,10 @@ export const listingEventRateLimitFx = Effect.fn("listingEventRateLimitFx")(func
 	minutes = 10,
 	createdAt,
 }: listingEventRateLimitFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const listingEvent = yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.selectFrom("listing_event")
 			.select("createdAt")
 			.where("listingId", "=", listingId)

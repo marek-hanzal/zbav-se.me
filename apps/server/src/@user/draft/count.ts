@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { draftCountFx } from "~/app/draft/fx/draftCountFx";
 import { DraftCountQuerySchema } from "~/app/draft/schema/DraftCountQuerySchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -66,7 +66,7 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				KyselyContextProvider(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

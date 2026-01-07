@@ -1,5 +1,4 @@
 import { withCollectionFx } from "@use-pico/common/collection";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withUploadQueryBuilderFx } from "~/app/upload/db/withUploadQueryBuilderFx";
 import { withUploadSelectFx } from "~/app/upload/db/withUploadSelectFx";
@@ -8,7 +7,7 @@ import type { UploadQuerySchema } from "~/app/upload/schema/UploadQuerySchema";
 
 export namespace uploadCollectionFx {
 	export interface Props extends UploadQuerySchema.Type {
-		scope?: UploadFilterSchema.Type;
+		scope: UploadFilterSchema.Type;
 	}
 }
 

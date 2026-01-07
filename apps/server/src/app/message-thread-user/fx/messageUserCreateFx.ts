@@ -1,8 +1,7 @@
 import { genId } from "@use-pico/common/gen-id";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace messageUserCreateFx {
@@ -20,10 +19,10 @@ export const messageUserCreateFx = Effect.fn("messageUserCreateFx")(function* ({
 }: messageUserCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			return yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.insertInto("message_thread_user")
 					.values(
 						userIds.map((userId) => ({

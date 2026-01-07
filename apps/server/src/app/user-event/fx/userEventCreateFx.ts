@@ -1,11 +1,10 @@
 import { genId } from "@use-pico/common/gen-id";
 import { keyOf } from "@use-pico/common/key-of";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import type { UserEventCreateSchema } from "~/app/user-event/schema/UserEventCreateSchema";
 import type { UserEventEnumSchema } from "~/app/user-event/schema/UserEventEnumSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 const ignored: UserEventEnumSchema.Type[] = [
@@ -27,14 +26,14 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 }: userEventCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const { kysely } = yield* KyselyContextFx;
 
 			if (ignored.includes(data.event)) {
 				return yield* Effect.void;
 			}
 
 			return yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.insertInto("user_event")
 					.values({
 						...data,

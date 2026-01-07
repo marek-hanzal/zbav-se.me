@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { TransactionStatusSortSchema } from "~/app/transaction-status/schema/TransactionStatusSortSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withTransactionStatusSelectFx {
 	export interface Props {
@@ -14,9 +14,9 @@ export namespace withTransactionStatusSelectFx {
 export const withTransactionStatusSelectFx = Effect.fn("withTransactionStatusSelectFx")(function* ({
 	sort,
 }: withTransactionStatusSelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
-	let query = database.selectFrom("transaction_status as lts").selectAll();
+	let query = kysely.selectFrom("transaction_status as lts").selectAll();
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

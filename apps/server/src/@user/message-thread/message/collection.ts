@@ -5,8 +5,8 @@ import { messageCollectionFx } from "~/app/message/fx/messageCollectionFx";
 import { MessageQuerySchema } from "~/app/message/schema/MessageQuerySchema";
 import { MessageSchema } from "~/app/message/schema/MessageSchema";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
@@ -103,7 +103,7 @@ export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx"
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				KyselyContextProvider(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

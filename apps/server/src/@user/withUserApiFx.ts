@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import type { NoticeSchema } from "~/schema/NoticeSchema";
 import { withDraftApiFx } from "./draft/withDraftApiFx";
 import { withFavouriteApiFx } from "./favourite/withFavouriteApiFx";
@@ -26,15 +26,16 @@ import { withUserExApiFx } from "./user-ex/withUserExApiFx";
 
 export const withUserApiFx = Effect.fn("withUserApiFx")(function* () {
 	const { root, userHono } = yield* RoutesContextFx;
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	userHono.use(async (c, next) => {
-		c.set("database", database);
+		c.set("kysely", kysely);
 		return next();
 	});
 
 	root.use("/api/user/*", async (c, next) => {
 		const user = c.get("user");
+
 		if (!user) {
 			return c.json<NoticeSchema.Type, 401>(
 				{

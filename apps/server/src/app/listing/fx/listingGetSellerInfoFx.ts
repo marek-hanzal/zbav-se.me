@@ -3,7 +3,7 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { SellerInfoSchema } from "~/app/listing/schema/SellerInfoSchema";
 import { userEventSellerInfoFx } from "~/app/user-event/fx/userEventSellerInfoFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace listingGetSellerInfoFx {
 	export interface Props {
@@ -14,10 +14,10 @@ export namespace listingGetSellerInfoFx {
 export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(function* ({
 	listingId,
 }: listingGetSellerInfoFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const userInfo = yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.selectFrom("listing as l")
 			.innerJoin("user as u", "u.id", "l.userId")
 			.select((eb) => [

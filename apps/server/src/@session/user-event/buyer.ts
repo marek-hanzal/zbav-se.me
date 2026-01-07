@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { userEventBuyerInfoFx } from "~/app/user-event/fx/userEventBuyerInfoFx";
 import { UserEventBuyerSchema } from "~/app/user-event/schema/UserEventBuyerSchema";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 const UserEventBuyerParamsSchema = z
@@ -74,7 +74,7 @@ export const withBuyerApiFx = Effect.fn("withBuyerApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				KyselyContextProvider(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

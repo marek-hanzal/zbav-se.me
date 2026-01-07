@@ -1,9 +1,8 @@
 import { genId } from "@use-pico/common/gen-id";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { galleryFetchFx } from "~/app/gallery/fx/galleryFetchFx";
 import type { GalleryCreateSchema } from "~/app/gallery/schema/GalleryCreateSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace galleryCreateFx {
 	export interface Props extends GalleryCreateSchema.Type {
@@ -17,12 +16,12 @@ export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* ({
 	id,
 	...props
 }: galleryCreateFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const galleryId = id ?? genId();
 
 	yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.insertInto("gallery")
 			.values({
 				...props,

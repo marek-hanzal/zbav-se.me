@@ -4,8 +4,8 @@ import { Effect, Match } from "effect";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { feedGalleryCreateFx } from "~/app/feed/fx/feedGalleryCreateFx";
 import { FeedGalleryCreateSchema } from "~/app/feed/schema/FeedGalleryCreateSchema";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(function* () {
@@ -89,7 +89,7 @@ export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(functi
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				KyselyContextProvider(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

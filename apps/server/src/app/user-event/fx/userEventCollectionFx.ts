@@ -1,5 +1,4 @@
 import { withCollectionFx } from "@use-pico/common/collection";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withUserEventCollectionSelectFx } from "~/app/user-event/db/withUserEventCollectionSelectFx";
 import { withUserEventQueryBuilderFx } from "~/app/user-event/db/withUserEventQueryBuilderFx";

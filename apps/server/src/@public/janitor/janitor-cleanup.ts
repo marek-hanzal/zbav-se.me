@@ -5,7 +5,7 @@ import { cleanupFx } from "~/@public/janitor/cleanup/cleanupFx";
 import { AppEnv } from "~/AppEnv";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { S3ContextProvider } from "~/app/s3/context/S3ContextFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { CleanupSchema } from "./schema/CleanupSchema";
 
@@ -51,7 +51,7 @@ export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(func
 						200,
 					);
 				}).pipe(
-					DatabaseContextProvider(c.get("database")),
+					KyselyContextProvider(c.get("kysely")),
 					S3ContextProvider({
 						api: AppEnv.SERVER_S3_API,
 						key: AppEnv.SERVER_S3_KEY,

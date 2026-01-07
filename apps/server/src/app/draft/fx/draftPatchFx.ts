@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { draftFetchFx } from "~/app/draft/fx/draftFetchFx";
 import type { DraftFilterSchema } from "~/app/draft/schema/DraftFilterSchema";
 import type { DraftPatchSchema } from "~/app/draft/schema/DraftPatchSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace draftPatchFx {
@@ -18,7 +18,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 }: draftPatchFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			const draft = yield* draftFetchFx({
 				...query,
@@ -26,7 +26,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 			});
 
 			yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.updateTable("draft")
 					.set({
 						...patch,

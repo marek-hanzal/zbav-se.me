@@ -1,10 +1,9 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { messageThreadFetchFx } from "~/app/message-thread/fx/messageThreadFetchFx";
 import type { MessageThreadFilterSchema } from "~/app/message-thread/schema/MessageThreadFilterSchema";
 import type { MessageThreadPatchSchema } from "~/app/message-thread/schema/MessageThreadPatchSchema";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace messageThreadPatchFx {
@@ -22,7 +21,7 @@ export const messageThreadPatchFx = Effect.fn("messageThreadPatchFx")(function* 
 }: messageThreadPatchFx.Props) {
 	return withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			const messageThread = yield* messageThreadFetchFx({
 				...query,
@@ -37,7 +36,7 @@ export const messageThreadPatchFx = Effect.fn("messageThreadPatchFx")(function* 
 			});
 
 			yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.updateTable("message_thread")
 					.set({
 						...patch,

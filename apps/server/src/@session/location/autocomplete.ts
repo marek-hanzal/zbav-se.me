@@ -5,7 +5,7 @@ import { AppEnv } from "~/AppEnv";
 import { LocationContextProvider } from "~/app/location/context/LocationContextFx";
 import { locationAutocompleteFx } from "~/app/location/fx/locationAutocompleteFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { LocationAutocompleteSchema } from "./schema/LocationAutocompleteSchema";
 import { LocationSchema } from "./schema/LocationSchema";
@@ -65,7 +65,7 @@ export const withLocationAutocompleteApiFx = Effect.fn("withLocationAutocomplete
 						200,
 					);
 				}).pipe(
-					DatabaseContextProvider(c.get("database")),
+					KyselyContextProvider(c.get("kysely")),
 					LocationContextProvider({
 						geoapifyToken: AppEnv.SERVER_GEOAPIFY_TOKEN,
 						api: "https://api.geoapify.com",

@@ -20,10 +20,10 @@ export const testabase = async (id: string = genId()) => {
 		});
 
 		await sql`CREATE DATABASE ${sql.ref(db)} TEMPLATE test OWNER test`.execute(
-			database.kysely(),
+			kysely.kysely(),
 		);
 
-		await database.kysely().destroy();
+		await kysely.kysely().destroy();
 	}
 
 	return withDatabase<Database>({

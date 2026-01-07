@@ -4,7 +4,7 @@ import { TransactionContextFx } from "~/app/transaction/context/TransactionConte
 import { transactionFetchFx } from "~/app/transaction/fx/transactionFetchFx";
 import type { TransactionFilterSchema } from "~/app/transaction/schema/TransactionFilterSchema";
 import type { TransactionPatchSchema } from "~/app/transaction/schema/TransactionPatchSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace transactionPatchFx {
@@ -24,7 +24,7 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 }: transactionPatchFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 			const config = yield* TransactionContextFx;
 
 			const transaction = yield* transactionFetchFx({
@@ -35,7 +35,7 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 			const now = updatedAt ?? DateTime.now();
 
 			yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.updateTable("transaction")
 					.set({
 						...patch,

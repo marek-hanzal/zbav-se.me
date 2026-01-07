@@ -1,7 +1,6 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { flagFetchFx } from "~/app/flag/fx/flagFetchFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace flagDeleteFx {
@@ -17,7 +16,7 @@ export const flagDeleteFx = Effect.fn("flagDeleteFx")(function* ({
 }: flagDeleteFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			const flag = yield* flagFetchFx({
 				where: {
@@ -29,7 +28,7 @@ export const flagDeleteFx = Effect.fn("flagDeleteFx")(function* ({
 			});
 
 			yield* Effect.promise(async () => {
-				return database.deleteFrom("flag").where("id", "=", flag.id).execute();
+				return kysely.deleteFrom("flag").where("id", "=", flag.id).execute();
 			});
 
 			return flag;

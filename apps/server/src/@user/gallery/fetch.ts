@@ -3,8 +3,8 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { galleryFetchFx } from "~/app/gallery/fx/galleryFetchFx";
 import { GalleryQuerySchema } from "~/app/gallery/schema/GalleryQuerySchema";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { GallerySchema } from "./schema/GallerySchema";
 
@@ -74,7 +74,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				KyselyContextProvider(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

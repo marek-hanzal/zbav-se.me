@@ -1,9 +1,8 @@
 import { genId } from "@use-pico/common/gen-id";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { messageThreadFetchFx } from "~/app/message-thread/fx/messageThreadFetchFx";
 import type { MessageThreadCreateSchema } from "~/app/message-thread/schema/MessageThreadCreateSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace messageThreadCreateFx {
@@ -15,12 +14,12 @@ export const messageThreadCreateFx = Effect.fn("messageThreadCreateFx")(function
 ) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			const id = genId();
 
 			yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.insertInto("message_thread")
 					.values({
 						id,

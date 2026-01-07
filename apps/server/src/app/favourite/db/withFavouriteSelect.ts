@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { FavouriteSortSchema } from "~/app/favourite/schema/FavouriteSortSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withFavouriteSelectFx {
 	export interface Props {
@@ -14,9 +14,9 @@ export namespace withFavouriteSelectFx {
 export const withFavouriteSelectFx = Effect.fn("withFavouriteSelectFx")(function* ({
 	sort,
 }: withFavouriteSelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
-	let query = database.selectFrom("favourite as f").selectAll("f");
+	let query = kysely.selectFrom("favourite as f").selectAll("f");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

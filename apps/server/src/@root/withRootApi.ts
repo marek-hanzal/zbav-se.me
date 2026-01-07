@@ -1,21 +1,20 @@
 import { Effect } from "effect";
+import { withAuthApiFx } from "~/@root/auth/withAuthApiFx";
+import { withCorsApiFx } from "~/@root/cors/withCorsApiFx";
+import { withOpenApiApiFx } from "~/@root/open-api/withOpenApiApiFx";
 import { withOriginApiFx } from "~/@root/origin/withOriginApiFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { dialect } from "~/database/dialect";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { auth } from "../auth/auth";
-import { withAuthApiFx } from "./auth/withAuthApiFx";
-import { withCorsApiFx } from "./cors/withCorsApiFx";
-import { withOpenApiApiFx } from "./open-api/withOpenApiApiFx";
+import { auth } from "~/auth/auth";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export const withRootApi = Effect.fn("withRootApi")(function* () {
 	const { root } = yield* RoutesContextFx;
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	root.use(async (c, next) => {
-		c.set("database", database);
+		c.set("kysely", kysely);
 
-		const { api } = auth(() => dialect);
+		const { api } = auth(() => kysely.dialect());
 
 		try {
 			const session = await api.getSession({

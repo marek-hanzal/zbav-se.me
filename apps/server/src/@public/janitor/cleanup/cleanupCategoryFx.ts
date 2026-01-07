@@ -1,10 +1,10 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import type { CleanupSchema } from "~/@public/janitor/schema/CleanupSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export const cleanupCategoryFx = Effect.fn("cleanupCategoryFx")(function* () {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const cutoffDate = DateTime.now()
 		.minus({
@@ -13,14 +13,14 @@ export const cleanupCategoryFx = Effect.fn("cleanupCategoryFx")(function* () {
 		.toJSDate();
 
 	const total = yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.selectFrom("category_miss")
 			.select((eb) => eb.fn.count<number>("id").as("count"))
 			.executeTakeFirstOrThrow();
 	});
 
 	const result = yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.deleteFrom("category_miss")
 			.where("updatedAt", "<", cutoffDate)
 			.executeTakeFirst();

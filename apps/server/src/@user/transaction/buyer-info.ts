@@ -1,16 +1,17 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { transactionFetchFx } from "~/app/transaction/fx/transactionFetchFx";
 import { transactionGetBuyerInfoFx } from "~/app/transaction/fx/transactionGetBuyerInfoFx";
 import { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionBuyerInfoSchema } from "./schema/TransactionBuyerInfoSchema";
 
 export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;
+
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -80,7 +81,7 @@ export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				KyselyContextProvider(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

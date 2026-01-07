@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { IgnoreSortSchema } from "~/app/ignore/schema/IgnoreSortSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withIgnoreSelectFx {
 	export interface Props {
@@ -14,9 +14,9 @@ export namespace withIgnoreSelectFx {
 export const withIgnoreSelectFx = Effect.fn("withIgnoreSelectFx")(function* ({
 	sort,
 }: withIgnoreSelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
-	let query = database.selectFrom("ignore as i").select([
+	let query = kysely.selectFrom("ignore as i").select([
 		"i.id",
 		"i.listingId",
 	]);

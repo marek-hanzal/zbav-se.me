@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withCronApiFx } from "./cron/withCronApiFx";
 import { withGithubApiFx } from "./github/withGithubApiFx";
 import { withHealthApiFx } from "./health/withHealthApiFx";
@@ -10,10 +10,10 @@ import { withSeedApiFx } from "./seed/seed";
 
 export const withPublicApiFx = Effect.fn("withPublicApiFx")(function* () {
 	const { root, publicHono } = yield* RoutesContextFx;
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	publicHono.use(async (c, next) => {
-		c.set("database", database);
+		c.set("kysely", kysely);
 		return next();
 	});
 

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import type { LocationSortSchema } from "../schema/LocationSortSchema";
 
 export namespace withLocationSelectFx {
@@ -14,9 +14,9 @@ export namespace withLocationSelectFx {
 export const withLocationSelectFx = Effect.fn("withLocationSelectFx")(function* ({
 	sort,
 }: withLocationSelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
-	let query = database.selectFrom("location as loc").selectAll("loc");
+	let query = kysely.selectFrom("location as loc").selectAll("loc");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

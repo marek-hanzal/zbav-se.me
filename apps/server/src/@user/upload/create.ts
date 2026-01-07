@@ -2,11 +2,11 @@ import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { AppEnv } from "~/AppEnv";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { UploadContextProvider } from "~/app/upload/context/UploadContextFx";
 import { uploadCreateFx } from "~/app/upload/fx/uploadCreateFx";
 import { UploadCreateSchema } from "~/app/upload/schema/UploadCreateSchema";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { UploadSchema } from "./schema/UploadSchema";
 
@@ -85,7 +85,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					201,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				KyselyContextProvider(c.get("kysely")),
 				UploadContextProvider({
 					cdn: AppEnv.SERVER_CONTENT_CDN,
 				}),

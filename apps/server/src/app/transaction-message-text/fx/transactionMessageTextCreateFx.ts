@@ -5,7 +5,7 @@ import { TransactionContextFx } from "~/app/transaction/context/TransactionConte
 import { transactionStatusGateFx } from "~/app/transaction/fx/transactionStatusGateFx";
 import type { TransactionMessageTextCreateSchema } from "~/app/transaction-message-text/schema/TransactionMessageTextCreateSchema";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace transactionMessageTextCreateFx {
@@ -18,7 +18,7 @@ export const transactionMessageTextCreateFx = Effect.fn("transactionMessageTextC
 	function* ({ userId, transactionId, message }: transactionMessageTextCreateFx.Props) {
 		return yield* withTransactionFx(
 			Effect.gen(function* () {
-				const database = yield* DatabaseContextFx;
+				const { kysely } = yield* KyselyContextFx;
 				const config = yield* TransactionContextFx;
 
 				const transaction = yield* transactionStatusGateFx({
@@ -33,7 +33,7 @@ export const transactionMessageTextCreateFx = Effect.fn("transactionMessageTextC
 				const now = DateTime.now();
 
 				yield* Effect.promise(async () => {
-					return database
+					return kysely
 						.updateTable("transaction")
 						.set({
 							updatedAt: now.toJSDate(),

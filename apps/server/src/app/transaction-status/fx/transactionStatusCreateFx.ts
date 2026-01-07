@@ -1,11 +1,10 @@
 import { genId } from "@use-pico/common/gen-id";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { transactionPatchFx } from "~/app/transaction/fx/transactionPatchFx";
 import { transactionStatusFetchFx } from "~/app/transaction-status/fx/transactionStatusFetchFx";
 import type { TransactionStatusCreateSchema } from "~/app/transaction-status/schema/TransactionStatusCreateSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace transactionStatusCreateFx {
 	export interface Props extends TransactionStatusCreateSchema.Type {
@@ -20,12 +19,12 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 	createdAt,
 	...create
 }: transactionStatusCreateFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
 	const id = genId();
 
 	yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.insertInto("transaction_status")
 			.values({
 				...create,

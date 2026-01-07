@@ -7,7 +7,7 @@ import { transactionCollectionFx } from "~/app/transaction/fx/transactionCollect
 import { transactionFetchFx } from "~/app/transaction/fx/transactionFetchFx";
 import { transactionStatusAcceptFx } from "~/app/transaction-status/fx/transactionStatusAcceptFx";
 import { transactionStatusRejectFx } from "~/app/transaction-status/fx/transactionStatusRejectFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace t00_initial {
 	export interface Props {
@@ -20,7 +20,7 @@ export const t00_initial = Effect.fn("t00_initial")(function* ({
 	fromMinutes,
 	toMinutes,
 }: t00_initial.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const { data: transactions } = yield* transactionCollectionFx({
 		cursor: {
@@ -32,7 +32,7 @@ export const t00_initial = Effect.fn("t00_initial")(function* ({
 
 	for (const transactionId of transactions) {
 		const current = yield* Effect.promise(async () => {
-			return database
+			return kysely
 				.selectFrom("user as user")
 				.innerJoin("listing as l", "l.userId", "user.id")
 				.innerJoin("transaction as t", "t.listingId", "l.id")

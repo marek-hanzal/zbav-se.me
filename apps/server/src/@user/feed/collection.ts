@@ -3,8 +3,8 @@ import { EntitySchema, zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { feedCollectionFx } from "~/app/feed/fx/feedCollectionFx";
 import { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
@@ -71,7 +71,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				KyselyContextProvider(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

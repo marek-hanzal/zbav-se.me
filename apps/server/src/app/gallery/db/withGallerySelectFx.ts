@@ -3,7 +3,7 @@ import { jsonArrayFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import type { GallerySortSchema } from "~/app/gallery/schema/GallerySortSchema";
 import { withGalleryItemSelectFx } from "~/app/gallery-item/db/withGalleryItemSelectFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withGallerySelectFx {
 	export interface Props {
@@ -15,7 +15,7 @@ export namespace withGallerySelectFx {
 export const withGallerySelectFx = Effect.fn("withGallerySelectFx")(function* ({
 	sort,
 }: withGallerySelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 	const galleryItemSelect = yield* withGalleryItemSelectFx({
 		sort: [
 			{
@@ -25,7 +25,7 @@ export const withGallerySelectFx = Effect.fn("withGallerySelectFx")(function* ({
 		],
 	});
 
-	let query = database.selectFrom("gallery as gal").select([
+	let query = kysely.selectFrom("gallery as gal").select([
 		"gal.id",
 		(eb) =>
 			jsonArrayFrom(

@@ -5,7 +5,7 @@ import { match } from "ts-pattern";
 import { withGallerySelectFx } from "~/app/gallery/db/withGallerySelectFx";
 import type { MessageDirectionEnumSchema } from "~/app/message/schema/MessageDirectionEnumSchema";
 import type { MessageGallerySortSchema } from "~/app/message-gallery/schema/MessageGallerySortSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withMessageGallerySelectFx {
 	export interface Props {
@@ -20,11 +20,11 @@ export const withMessageGallerySelectFx = Effect.fn("withMessageGallerySelectFx"
 	userId,
 	sort,
 }: withMessageGallerySelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const gallerySelect = yield* withGallerySelectFx({});
 
-	let query = database
+	let query = kysely
 		.selectFrom("message_gallery as mg")
 		.selectAll()
 		.select(sql<"gallery">`'gallery'`.as("type"))

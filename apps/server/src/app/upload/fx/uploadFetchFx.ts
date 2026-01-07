@@ -1,5 +1,4 @@
 import { withFetchFx } from "@use-pico/common/fetch";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withUploadQueryBuilderFx } from "~/app/upload/db/withUploadQueryBuilderFx";
 import { withUploadSelectFx } from "~/app/upload/db/withUploadSelectFx";

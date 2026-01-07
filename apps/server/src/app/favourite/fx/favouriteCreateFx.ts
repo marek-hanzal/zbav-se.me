@@ -3,7 +3,7 @@ import { Effect } from "effect";
 import { favouriteFetchFx } from "~/app/favourite/fx/favouriteFetchFx";
 import type { FavouriteCreateSchema } from "~/app/favourite/schema/FavouriteCreateSchema";
 import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace favouriteCreateFx {
 	export interface Props extends FavouriteCreateSchema.Type {
@@ -16,7 +16,7 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 	feedId,
 	...data
 }: favouriteCreateFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const id = genId();
 
@@ -30,7 +30,7 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 	});
 
 	yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.insertInto("favourite")
 			.values({
 				...data,

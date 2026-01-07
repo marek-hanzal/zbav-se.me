@@ -1,11 +1,10 @@
 import { genId } from "@use-pico/common/gen-id";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { messageLocationFetchFx } from "~/app/message-location/fx/messageLocationFetchFx";
 import type { MessageLocationCreateSchema } from "~/app/message-location/schema/MessageLocationCreateSchema";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace messageLocationCreateFx {
@@ -23,7 +22,7 @@ export const messageLocationCreateFx = Effect.fn("messageLocationCreateFx")(func
 }: messageLocationCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			const database = yield* DatabaseContextFx;
+			const kysely = yield* KyselyContextFx;
 
 			yield* messageUserCheckFx({
 				userIds: [
@@ -35,7 +34,7 @@ export const messageLocationCreateFx = Effect.fn("messageLocationCreateFx")(func
 			const id = genId();
 
 			yield* Effect.promise(async () => {
-				return database
+				return kysely
 					.insertInto("message_location")
 					.values({
 						id,

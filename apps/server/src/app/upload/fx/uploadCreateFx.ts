@@ -3,7 +3,7 @@ import { Effect } from "effect";
 import { UploadContextFx } from "~/app/upload/context/UploadContextFx";
 import { uploadFetchFx } from "~/app/upload/fx/uploadFetchFx";
 import type { UploadCreateSchema } from "~/app/upload/schema/UploadCreateSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace uploadCreateFx {
@@ -17,7 +17,7 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 	url,
 	...data
 }: uploadCreateFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const { kysely } = yield* KyselyContextFx;
 	const uploadContext = yield* UploadContextFx;
 
 	if (!url.startsWith(uploadContext.cdn)) {
@@ -30,7 +30,7 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 	const now = new Date();
 
 	yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.insertInto("upload")
 			.values({
 				...data,

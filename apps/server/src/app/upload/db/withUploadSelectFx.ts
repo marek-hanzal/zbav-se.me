@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { UploadSortSchema } from "~/app/upload/schema/UploadSortSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withUploadSelectFx {
 	export interface Props {
@@ -13,9 +13,9 @@ export namespace withUploadSelectFx {
 export const withUploadSelectFx = Effect.fn("withUploadSelectFx")(function* ({
 	sort,
 }: withUploadSelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const { kysely } = yield* KyselyContextFx;
 
-	let query = database.selectFrom("upload as u").select([
+	let query = kysely.selectFrom("upload as u").select([
 		"u.id",
 		"u.url",
 	]);

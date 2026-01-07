@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import type { CategoryMissSortSchema } from "../schema/CategoryMissSortSchema";
 
 export namespace withCategoryMissSelectFx {
@@ -14,9 +14,9 @@ export namespace withCategoryMissSelectFx {
 export const withCategoryMissSelectFx = Effect.fn("withCategoryMissSelectFx")(function* ({
 	sort,
 }: withCategoryMissSelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
-	let query = database.selectFrom("category_miss as cm").selectAll("cm");
+	let query = kysely.selectFrom("category_miss as cm").selectAll("cm");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

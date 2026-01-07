@@ -4,7 +4,7 @@ import { DateTime } from "luxon";
 import { galleryFetchFx } from "~/app/gallery/fx/galleryFetchFx";
 import { galleryItemFetchFx } from "~/app/gallery-item/fx/galleryItemFetchFx";
 import type { GalleryItemCreateSchema } from "~/app/gallery-item/schema/GalleryItemCreateSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace galleryItemCreateFx {
 	export interface Props extends GalleryItemCreateSchema.Type {
@@ -19,7 +19,7 @@ export const galleryItemCreateFx = Effect.fn("galleryItemCreateFx")(function* ({
 	createdAt,
 	...data
 }: galleryItemCreateFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const now = createdAt ?? DateTime.now();
 	const id = genId();
@@ -37,7 +37,7 @@ export const galleryItemCreateFx = Effect.fn("galleryItemCreateFx")(function* ({
 	});
 
 	yield* Effect.promise(async () => {
-		return database
+		return kysely
 			.insertInto("gallery_item")
 			.values({
 				...data,

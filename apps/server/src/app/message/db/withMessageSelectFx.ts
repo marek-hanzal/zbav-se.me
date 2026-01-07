@@ -10,7 +10,7 @@ import { withMessagePackageSelectFx } from "~/app/message-package/db/withMessage
 import { withMessagePersonalSelectFx } from "~/app/message-personal/db/withMessagePersonalSelectFx";
 import { withMessageSystemSelectFx } from "~/app/message-system/db/withMessageSystemSelectFx";
 import { withMessageTextSelectFx } from "~/app/message-text/db/withMessageTextSelectFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withMessageSelectFx {
 	export interface Props {
@@ -25,7 +25,7 @@ export const withMessageSelectFx = Effect.fn("withMessageSelectFx")(function* ({
 	userId,
 	sort,
 }: withMessageSelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const textSelect = yield* withMessageTextSelectFx({
 		userId,
@@ -44,7 +44,7 @@ export const withMessageSelectFx = Effect.fn("withMessageSelectFx")(function* ({
 	});
 	const systemSelect = yield* withMessageSystemSelectFx({});
 
-	const textQuery = database.selectFrom(textSelect.as("t")).select([
+	const textQuery = kysely.selectFrom(textSelect.as("t")).select([
 		"t.id",
 		"t.messageThreadId",
 		"t.userId",
@@ -53,7 +53,7 @@ export const withMessageSelectFx = Effect.fn("withMessageSelectFx")(function* ({
 		sql<MessagePayloadSchema.Type>`to_jsonb(t)`.as("payload"),
 	]);
 
-	const galleryQuery = database.selectFrom(gallerySelect.as("g")).select([
+	const galleryQuery = kysely.selectFrom(gallerySelect.as("g")).select([
 		"g.id",
 		"g.messageThreadId",
 		"g.userId",
@@ -62,7 +62,7 @@ export const withMessageSelectFx = Effect.fn("withMessageSelectFx")(function* ({
 		sql<MessagePayloadSchema.Type>`to_jsonb(g)`.as("payload"),
 	]);
 
-	const locationQuery = database.selectFrom(locationSelect.as("l")).select([
+	const locationQuery = kysely.selectFrom(locationSelect.as("l")).select([
 		"l.id",
 		"l.messageThreadId",
 		"l.userId",
@@ -71,7 +71,7 @@ export const withMessageSelectFx = Effect.fn("withMessageSelectFx")(function* ({
 		sql<MessagePayloadSchema.Type>`to_jsonb(l)`.as("payload"),
 	]);
 
-	const personalQuery = database.selectFrom(personalSelect.as("p")).select([
+	const personalQuery = kysely.selectFrom(personalSelect.as("p")).select([
 		"p.id",
 		"p.messageThreadId",
 		"p.userId",
@@ -80,7 +80,7 @@ export const withMessageSelectFx = Effect.fn("withMessageSelectFx")(function* ({
 		sql<MessagePayloadSchema.Type>`to_jsonb(p)`.as("payload"),
 	]);
 
-	const packageQuery = database.selectFrom(packageSelect.as("pk")).select([
+	const packageQuery = kysely.selectFrom(packageSelect.as("pk")).select([
 		"pk.id",
 		"pk.messageThreadId",
 		"pk.userId",
@@ -89,7 +89,7 @@ export const withMessageSelectFx = Effect.fn("withMessageSelectFx")(function* ({
 		sql<MessagePayloadSchema.Type>`to_jsonb(pk)`.as("payload"),
 	]);
 
-	const systemQuery = database.selectFrom(systemSelect.as("s")).select([
+	const systemQuery = kysely.selectFrom(systemSelect.as("s")).select([
 		"s.id",
 		"s.messageThreadId",
 		sql<string>`'system'`.as("userId"),
@@ -105,7 +105,7 @@ export const withMessageSelectFx = Effect.fn("withMessageSelectFx")(function* ({
 		.unionAll(packageQuery)
 		.unionAll(systemQuery);
 
-	let query = database.selectFrom(unionQuery.as("msg")).selectAll("msg");
+	let query = kysely.selectFrom(unionQuery.as("msg")).selectAll("msg");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

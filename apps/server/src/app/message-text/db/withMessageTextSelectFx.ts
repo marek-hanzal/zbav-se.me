@@ -3,7 +3,7 @@ import { sql } from "kysely";
 import { match } from "ts-pattern";
 import type { MessageDirectionEnumSchema } from "~/app/message/schema/MessageDirectionEnumSchema";
 import type { MessageTextSortSchema } from "~/app/message-text/schema/MessageTextSortSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withMessageTextSelectFx {
 	export interface Props {
@@ -18,9 +18,9 @@ export const withMessageTextSelectFx = Effect.fn("withMessageTextSelectFx")(func
 	userId,
 	sort,
 }: withMessageTextSelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
-	let query = database
+	let query = kysely
 		.selectFrom("message_text as mt")
 		.selectAll("mt")
 		.select(sql<"text">`'text'`.as("type"))

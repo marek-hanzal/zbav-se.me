@@ -4,7 +4,7 @@ import { match } from "ts-pattern";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import type { MessageDirectionEnumSchema } from "~/app/message/schema/MessageDirectionEnumSchema";
 import type { MessagePersonalSortSchema } from "~/app/message-personal/schema/MessagePersonalSortSchema";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withMessagePersonalSelectFx {
 	export interface Props {
@@ -19,9 +19,9 @@ export const withMessagePersonalSelectFx = Effect.fn("withMessagePersonalSelectF
 	userId,
 	sort,
 }: withMessagePersonalSelectFx.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
-	let query = database
+	let query = kysely
 		.selectFrom("message_personal as mp")
 		.innerJoin("location as loc", "loc.id", "mp.locationId")
 		.selectAll("mp")

@@ -2,10 +2,10 @@ import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusAcceptFx } from "~/app/transaction-status/fx/transactionStatusAcceptFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionStatusAcceptSchema } from "./schema/TransactionStatusAcceptSchema";
 
@@ -81,7 +81,7 @@ export const withAcceptApiFx = Effect.fn("withAcceptApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				KyselyContextProvider(c.get("kysely")),
 				TransactionContextProvider(),
 				//
 				Effect.catchAll((e) => {

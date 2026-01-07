@@ -6,7 +6,7 @@ import { match } from "ts-pattern";
 import { transactionCollectionFx } from "~/app/transaction/fx/transactionCollectionFx";
 import { transactionStatusFetchFx } from "~/app/transaction-status/fx/transactionStatusFetchFx";
 import { transactionStatusResolveFx } from "~/app/transaction-status/fx/transactionStatusResolveFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace t01_resolve {
 	export interface Props {
@@ -19,7 +19,7 @@ export const t01_resolve = Effect.fn("t01_resolve")(function* ({
 	fromMinutes,
 	toMinutes,
 }: t01_resolve.Props) {
-	const database = yield* DatabaseContextFx;
+	const kysely = yield* KyselyContextFx;
 
 	const transactions = yield* transactionCollectionFx({
 		cursor: {
@@ -34,7 +34,7 @@ export const t01_resolve = Effect.fn("t01_resolve")(function* ({
 
 	for (const transactionId of transactions.data) {
 		const current = yield* Effect.promise(async () => {
-			return database
+			return kysely
 				.selectFrom("user as user")
 				.innerJoin("listing as l", "l.userId", "user.id")
 				.innerJoin("transaction as t", "t.listingId", "l.id")
