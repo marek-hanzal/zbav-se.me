@@ -1,8 +1,11 @@
+import { Effect } from "effect";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { auth } from "~/auth/auth";
 import { dialect } from "~/database/dialect";
-import type { Routes } from "~/hono/Routes";
 
-export const withAuthEndpoint: Routes.Fn = async ({ root }) => {
+export const withAuthEndpointFx = Effect.fn("withAuthEndpointFx")(function* () {
+	const { root } = yield* RoutesContextFx;
+
 	const { handler } = auth(() => dialect);
 
 	root.on(
@@ -13,4 +16,4 @@ export const withAuthEndpoint: Routes.Fn = async ({ root }) => {
 		"/api/auth/*",
 		(c) => handler(c.req.raw),
 	);
-};
+});

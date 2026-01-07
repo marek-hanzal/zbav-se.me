@@ -1,11 +1,14 @@
 import { Scalar } from "@scalar/hono-api-reference";
+import { Effect } from "effect";
 import { AppEnv } from "~/AppEnv";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 
 const docsUrl = "/v3/api-docs";
 
-export const withOpenApiEndpoint: Routes.Fn = async (routes) => {
-	routes.root.get(
+export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function* () {
+	const { root } = yield* RoutesContextFx;
+
+	root.get(
 		"/",
 		Scalar({
 			title: "zbav.se.me API",
@@ -23,7 +26,7 @@ export const withOpenApiEndpoint: Routes.Fn = async (routes) => {
 		}),
 	);
 
-	routes.root.doc31(docsUrl, {
+	root.doc31(docsUrl, {
 		openapi: "3.1.0",
 		info: {
 			version: "0.5.0",
@@ -51,4 +54,4 @@ export const withOpenApiEndpoint: Routes.Fn = async (routes) => {
 			},
 		],
 	});
-};
+});

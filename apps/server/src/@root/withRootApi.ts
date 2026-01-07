@@ -1,18 +1,21 @@
+import { Effect } from "effect";
+import { withOriginApiFx } from "~/@root/origin/withOriginApiFx";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { dialect } from "~/database/dialect";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { auth } from "../auth/auth";
-import type { WithDatabase } from "../database/WithDatabase";
-import type { Routes } from "../hono/Routes";
-import { withAuthApi } from "./auth/withAuthApi";
-import { withCorsApi } from "./cors/withCorsApi";
-import { withOpenApiApi } from "./open-api/withOpenApiApi";
-import { withOriginApi } from "./origin/withOriginApi";
+import { withAuthApiFx } from "./auth/withAuthApiFx";
+import { withCorsApiFx } from "./cors/withCorsApiFx";
+import { withOpenApiApiFx } from "./open-api/withOpenApiApiFx";
 
-export const withRootApi: Routes.FnWithDeps<{
-	database: WithDatabase;
-}> = async (routes, deps) => {
-	routes.root.use(async (c, next) => {
-		c.set("database", deps.database);
-		const { api } = await auth(async () => dialect);
+export const withRootApi = Effect.fn("withRootApi")(function* () {
+	const { root } = yield* RoutesContextFx;
+	const database = yield* DatabaseContextFx;
+
+	root.use(async (c, next) => {
+		c.set("database", database);
+
+		const { api } = auth(() => dialect);
 
 		try {
 			const session = await api.getSession({
@@ -33,8 +36,10 @@ export const withRootApi: Routes.FnWithDeps<{
 		}
 	});
 
-	await withAuthApi(routes);
-	await withCorsApi(routes);
-	await withOpenApiApi(routes);
-	await withOriginApi(routes);
-};
+	yield* Effect.all([
+		withAuthApiFx(),
+		withCorsApiFx(),
+		withOpenApiApiFx(),
+		withOriginApiFx(),
+	]);
+});

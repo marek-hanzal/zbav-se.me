@@ -1,7 +1,10 @@
+import { Effect } from "effect";
 import { AppEnv } from "~/AppEnv";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 
-export const withOriginEndpoint: Routes.Fn = async ({ root }) => {
+export const withOriginEndpointFx = Effect.fn("withOriginEndpointFx")(function* () {
+	const { root } = yield* RoutesContextFx;
+
 	root.get("/origin", (c) =>
 		c.json({
 			origin: [
@@ -10,4 +13,4 @@ export const withOriginEndpoint: Routes.Fn = async ({ root }) => {
 			],
 		}),
 	);
-};
+});

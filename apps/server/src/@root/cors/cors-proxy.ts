@@ -1,6 +1,9 @@
-import type { Routes } from "~/hono/Routes";
+import { Effect } from "effect";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 
-export const withCorsProxyApi: Routes.Fn = async ({ root }) => {
+export const withCorsProxyApiFx = Effect.fn("withCorsProxyApiFx")(function* () {
+	const { root } = yield* RoutesContextFx;
+
 	root.options("/api/cors-proxy", (c) => {
 		c.header("Access-Control-Allow-Origin", "*");
 		c.header("Access-Control-Allow-Methods", "GET, OPTIONS");
@@ -53,4 +56,4 @@ export const withCorsProxyApi: Routes.Fn = async ({ root }) => {
 			headers,
 		});
 	});
-};
+});

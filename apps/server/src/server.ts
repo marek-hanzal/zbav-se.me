@@ -2,13 +2,13 @@ import { bodyLimit } from "hono/body-limit";
 import { cors } from "hono/cors";
 import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
+import type { RoutesContext } from "~/app/routes/RoutesContextFx";
 import { withPublicApi } from "./@public/withPublicApi";
 import { withRootApi } from "./@root/withRootApi";
 import { withSessionApi } from "./@session/withSessionApi";
 import { withUserApi } from "./@user/withUserApi";
 import { AppEnv } from "./AppEnv";
 import { database } from "./database/kysely";
-import type { Routes } from "./hono/Routes";
 import { withHono } from "./hono/withHono";
 import { withSessionHono } from "./hono/withSessionHono";
 import { withUserHono } from "./hono/withUserHono";
@@ -93,14 +93,14 @@ app.onError((err, c) => {
 
 //
 
-const routes: Routes = {
+const routes: RoutesContext = {
 	root: app,
 	publicHono: withHono(),
 	sessionHono: withSessionHono(),
 	userHono: withUserHono(),
 };
 
-const kysely = await database.kysely();
+const kysely = database.kysely();
 
 await withRootApi(routes, {
 	database: kysely,
