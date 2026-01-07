@@ -1,7 +1,10 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { AppEnv } from "~/AppEnv";
+import { S3ContextProvider } from "~/app/s3/context/S3ContextFx";
 import { s3PreSignFx } from "~/app/s3/fx/s3PreSignFx";
+import { UploadContextProvider } from "~/app/upload/context/UploadContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { S3PreSignRequestSchema } from "./schema/S3PreSignRequestSchema";
@@ -65,6 +68,15 @@ export const withPresignApi: Routes.Fn = async ({ userHono }) => {
 					200,
 				);
 			}).pipe(
+				S3ContextProvider({
+					api: AppEnv.SERVER_S3_API,
+					key: AppEnv.SERVER_S3_KEY,
+					secret: AppEnv.SERVER_S3_SECRET,
+					bucket: AppEnv.SERVER_S3_BUCKET,
+				}),
+				UploadContextProvider({
+					cdn: AppEnv.SERVER_CONTENT_CDN,
+				}),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

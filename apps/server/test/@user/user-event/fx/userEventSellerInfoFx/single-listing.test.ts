@@ -2,7 +2,9 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { categoryFetchFx } from "~/app/category/fx/categoryFetchFx";
 import { listingCreateFx } from "~/app/listing/fx/listingCreateFx";
+import { LocationContextProvider } from "~/app/location/context/LocationContextFx";
 import { locationAutocompleteFx } from "~/app/location/fx/locationAutocompleteFx";
+import { UploadContextProvider } from "~/app/upload/context/UploadContextFx";
 import { uploadCreateFx } from "~/app/upload/fx/uploadCreateFx";
 import { userEventSellerInfoFx } from "~/app/user-event/fx/userEventSellerInfoFx";
 import { auth } from "~/auth/auth";
@@ -31,6 +33,7 @@ describe("userEventSellerInfoFx", () => {
 					where: {
 						slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
 					},
+					scope: {},
 				});
 
 				const location = yield* locationAutocompleteFx({
@@ -65,7 +68,17 @@ describe("userEventSellerInfoFx", () => {
 				return yield* userEventSellerInfoFx({
 					userId: seller.id,
 				});
-			}).pipe(DatabaseContextProvider(database.kysely())),
+			}).pipe(
+				DatabaseContextProvider(database.kysely()),
+				LocationContextProvider({
+					api: "",
+					autocomplete: "",
+					geoapifyToken: "",
+				}),
+				UploadContextProvider({
+					cdn: "https://cdn.zbav-se.me",
+				}),
+			),
 		);
 
 		expect(result).toBeNull();
