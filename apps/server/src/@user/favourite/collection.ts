@@ -1,4 +1,4 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { favouriteCollectionFx } from "~/app/favourite/fx/favouriteCollectionFx";
@@ -82,11 +82,11 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 								{
 									_tag: "ZodErrorFx",
 								},
-								() => {
+								({ zod }) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: z.prettifyError(zod),
 										},
 										500,
 									);
