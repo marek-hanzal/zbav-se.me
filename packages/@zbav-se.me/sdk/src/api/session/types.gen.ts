@@ -5,27 +5,146 @@ export type clientOptions = {
 };
 
 /**
- * Order
+ * This metric describes the score of the user
  */
-export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
+export type tUserEventBuyerScore = {
+    /**
+     * Low-level score value, usually not presented in UI
+     */
+    score: number;
+    /**
+     * Rank computed from the score (A-F, 1-6)
+     */
+    rank: number;
+};
 
 /**
- * Order
+ * This metric describes the approx activity of the user
  */
-export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
+export type tUserEventBuyerActivity = {
+    /**
+     * Activity type of the buyer
+     */
+    bucket: 'low' | 'medium' | 'high';
+};
 
 /**
- * Cursor for pagination
+ * Masks number of transactions of the buyer, basically it tells, how busy buyer is.
  */
-export type tCursor = {
+export type tUserEventBuyerLoad = {
     /**
-     * Page number (0-indexed)
+     * Load type of the buyer
      */
-    page: number;
+    bucket: 'low' | 'medium' | 'high';
+};
+
+/**
+ * This metric describes if the user is used to expire transactions (no user's messages)
+ */
+export type tUserEventBuyerExpired = {
     /**
-     * Page size
+     * Total number of samples (transactions)
      */
-    size: number;
+    total: number;
+    /**
+     * Total number of expired transactions
+     */
+    expired: number;
+    /**
+     * Percentage of expired transactions (expired / total)
+     */
+    percent: number;
+};
+
+/**
+ * This metric describes if the user is used to close/success transactions
+ */
+export type tUserEventBuyerDecision = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of decisions (success, closed)
+     */
+    decisions: number;
+    /**
+     * Total number of terminal decisions (usually from the other side)
+     */
+    terminal: number;
+    /**
+     * Percentage of closed transactions (closed / total)
+     */
+    percent: number;
+};
+
+/**
+ * This metric describes if the user instantly closes transactions (means - no interaction, just open and kill)
+ */
+export type tUserEventBuyerCloser = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of closed transactions
+     */
+    closed: number;
+    /**
+     * Percentage of closed transactions (closed / total)
+     */
+    percent: number;
+    /**
+     * Median milliseconds between transaction creation and closing
+     */
+    medianMs: number;
+    /**
+     * 90th percentile milliseconds between transaction creation and closing
+     */
+    p90Ms: number;
+};
+
+/**
+ * Initial reaction on opened transaction by seller.
+ */
+export type tUserEventBuyerReaction = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of reactions
+     */
+    reactions: number;
+    /**
+     * Total number of terminal reactions (usually from the other side)
+     */
+    terminal: number;
+    /**
+     * Percentage of reactions (reactions + terminal) / total
+     */
+    percent: number;
+    /**
+     * Median milliseconds between transaction opening and reaction
+     */
+    medianMs: number;
+    /**
+     * 90th percentile milliseconds between transaction opening and reaction
+     */
+    p90Ms: number;
+};
+
+/**
+ * Buyer info for the user event
+ */
+export type tUserEventBuyer = {
+    reaction: tUserEventBuyerReaction;
+    closer: tUserEventBuyerCloser;
+    decision: tUserEventBuyerDecision;
+    expired: tUserEventBuyerExpired;
+    load: tUserEventBuyerLoad;
+    activity: tUserEventBuyerActivity;
+    score: tUserEventBuyerScore;
 };
 
 /**
@@ -96,6 +215,44 @@ export type tLocation = {
 };
 
 /**
+ * Upload file metadata
+ */
+export type tUpload = {
+    /**
+     * ID of the upload
+     */
+    id: string;
+    /**
+     * Public URL to the uploaded file
+     */
+    url: string;
+};
+
+/**
+ * Order
+ */
+export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
+
+/**
+ * Order
+ */
+export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
+
+/**
+ * Cursor for pagination
+ */
+export type tCursor = {
+    /**
+     * Page number (0-indexed)
+     */
+    page: number;
+    /**
+     * Page size
+     */
+    size: number;
+};
+
+/**
  * Category data
  */
 export type tCategory = {
@@ -123,6 +280,70 @@ export type tCategory = {
      * Locale/language of the category
      */
     locale: string;
+};
+
+/**
+ * Data for uploading a file
+ */
+export type tUploadQuery = {
+    cursor?: tCursor;
+    filter?: tUploadFilter;
+    where?: tUploadWhere;
+    sort?: Array<tUploadSort>;
+};
+
+/**
+ * Field for uploading a file
+ */
+export const tUploadSortField = { createdAt: 'createdAt' } as const;
+
+/**
+ * Field for uploading a file
+ */
+export type tUploadSortField = typeof tUploadSortField[keyof typeof tUploadSortField];
+
+/**
+ * Data for uploading a file
+ */
+export type tUploadSort = {
+    field: tUploadSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * App-based filters
+ */
+export type tUploadWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+};
+
+/**
+ * Data for uploading a file
+ */
+export type tUploadFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
 };
 
 /**
@@ -249,6 +470,175 @@ export type tLocationAutocomplete = {
 };
 
 /**
+ * Seller info for the listing
+ */
+export type tSellerInfo = {
+    /**
+     * Registration date
+     */
+    registered: string;
+    /**
+     * Number of listings
+     */
+    listings: number;
+    /**
+     * Seller info may not be available if we don't have enough data
+     */
+    events: null | tUserEventSeller;
+};
+
+/**
+ * This metric describes the score of the user
+ */
+export type tUserEventSellerScore = {
+    /**
+     * Low-level score value, usually not presented in UI
+     */
+    score: number;
+    /**
+     * Rank computed from the score (A-F, 1-6)
+     */
+    rank: number;
+};
+
+/**
+ * This metric describes the approx activity of the user
+ */
+export type tUserEventSellerActivity = {
+    /**
+     * Activity type of the seller
+     */
+    bucket: 'low' | 'medium' | 'high';
+};
+
+/**
+ * Masks number of transactions of the seller, basically it tells, how busy seller is.
+ */
+export type tUserEventSellerLoad = {
+    /**
+     * Load type of the seller
+     */
+    bucket: 'low' | 'medium' | 'high';
+};
+
+/**
+ * This metric describes if the user is used to expire transactions (no user's messages)
+ */
+export type tUserEventSellerExpired = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of expired transactions
+     */
+    expired: number;
+    /**
+     * Percentage of expired transactions (expired / total)
+     */
+    percent: number;
+};
+
+/**
+ * This metric describes if the user resolves transactions (success/closed)
+ */
+export type tUserEventSellerResolved = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of resolved transactions (success, closed)
+     */
+    resolved: number;
+    /**
+     * Total number of terminal transactions (usually from the other side)
+     */
+    terminal: number;
+    /**
+     * Percentage of resolved transactions (resolved / total)
+     */
+    percent: number;
+    /**
+     * Median milliseconds until the transaction gets resolved
+     */
+    medianMs: number;
+    /**
+     * 90th percentile milliseconds until the transaction gets resolved
+     */
+    p90Ms: number;
+};
+
+/**
+ * This metric describes if the user rejects transactions without any interaction (no messages between create and reject)
+ */
+export type tUserEventSellerRejected = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of rejected transactions
+     */
+    rejected: number;
+    /**
+     * Percentage of rejected transactions (rejected / total)
+     */
+    percent: number;
+    /**
+     * Median milliseconds between transaction creation and rejection
+     */
+    medianMs: number;
+    /**
+     * 90th percentile milliseconds between transaction creation and rejection
+     */
+    p90Ms: number;
+};
+
+/**
+ * Initial reaction by seller on transaction created by buyer.
+ */
+export type tUserEventSellerReaction = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of reactions
+     */
+    reactions: number;
+    /**
+     * Total number of terminal reactions (usually from the other side)
+     */
+    terminal: number;
+    /**
+     * Percentage of reactions (reactions + terminal) / total
+     */
+    percent: number;
+    /**
+     * Median milliseconds between transaction creation and reaction
+     */
+    medianMs: number;
+    /**
+     * 90th percentile milliseconds between transaction creation and reaction
+     */
+    p90Ms: number;
+};
+
+/**
+ * Seller info for the user event
+ */
+export type tUserEventSeller = {
+    reaction: tUserEventSellerReaction;
+    rejected: tUserEventSellerRejected;
+    resolved: tUserEventSellerResolved;
+    expired: tUserEventSellerExpired;
+    load: tUserEventSellerLoad;
+    activity: tUserEventSellerActivity;
+    score: tUserEventSellerScore;
+};
+
+/**
  * Query object for category count
  */
 export type tCategoryCountQuery = {
@@ -288,6 +678,10 @@ export type tCategoryWhere = {
      * This filter matches categories with locales in the provided array
      */
     localeIn?: Array<string>;
+    /**
+     * This filter matches the exact slug of the category
+     */
+    slug?: string;
 };
 
 /**
@@ -322,6 +716,10 @@ export type tCategoryFilter = {
      * This filter matches categories with locales in the provided array
      */
     localeIn?: Array<string>;
+    /**
+     * This filter matches the exact slug of the category
+     */
+    slug?: string;
 };
 
 /**
@@ -492,6 +890,40 @@ export type tApiCategoryCountResponse = {
 
 export type apiCategoryCountResponse = tApiCategoryCountResponse[keyof tApiCategoryCountResponse];
 
+export type tApiListingSellerInfoRequest = {
+    body?: never;
+    path: {
+        /**
+         * ID of the listing
+         */
+        listingId: string;
+    };
+    query?: never;
+    url: '/api/session/listing/{listingId}/seller-info';
+};
+
+export type apiListingSellerInfoErrors = {
+    /**
+     * Listing not found or seller info not available
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiListingSellerInfoError = apiListingSellerInfoErrors[keyof apiListingSellerInfoErrors];
+
+export type tApiListingSellerInfoResponse = {
+    /**
+     * Seller info
+     */
+    200: tSellerInfo;
+};
+
+export type apiListingSellerInfoResponse = tApiListingSellerInfoResponse[keyof tApiListingSellerInfoResponse];
+
 export type tApiLocationAutocompleteRequest = {
     /**
      * Request body for location autocomplete
@@ -504,10 +936,6 @@ export type tApiLocationAutocompleteRequest = {
 
 export type apiLocationAutocompleteErrors = {
     /**
-     * Text too short
-     */
-    400: tNotice;
-    /**
      * Internal server error
      */
     500: tNotice;
@@ -517,13 +945,9 @@ export type apiLocationAutocompleteError = apiLocationAutocompleteErrors[keyof a
 
 export type tApiLocationAutocompleteResponse = {
     /**
-     * Location(s) found (cache hit)
+     * Locations, include empty array if no locations found
      */
     200: Array<tLocation>;
-    /**
-     * Location(s) created (cache miss)
-     */
-    201: Array<tLocation>;
 };
 
 export type apiLocationAutocompleteResponse = tApiLocationAutocompleteResponse[keyof tApiLocationAutocompleteResponse];
@@ -559,3 +983,95 @@ export type tApiLocationFetchResponse = {
 };
 
 export type apiLocationFetchResponse = tApiLocationFetchResponse[keyof tApiLocationFetchResponse];
+
+export type tApiUploadFetchRequest = {
+    /**
+     * Query object for upload fetch
+     */
+    body?: tUploadQuery;
+    path?: never;
+    query?: never;
+    url: '/api/session/upload/fetch';
+};
+
+export type apiUploadFetchErrors = {
+    /**
+     * Upload not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiUploadFetchError = apiUploadFetchErrors[keyof apiUploadFetchErrors];
+
+export type tApiUploadFetchResponse = {
+    /**
+     * Return an upload item based on the provided query
+     */
+    200: tUpload;
+};
+
+export type apiUploadFetchResponse = tApiUploadFetchResponse[keyof tApiUploadFetchResponse];
+
+export type tApiUserEventBuyerRequest = {
+    body?: never;
+    path: {
+        /**
+         * ID of the user
+         */
+        userId: string;
+    };
+    query?: never;
+    url: '/api/session/user-event/{userId}/buyer';
+};
+
+export type apiUserEventBuyerErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiUserEventBuyerError = apiUserEventBuyerErrors[keyof apiUserEventBuyerErrors];
+
+export type tApiUserEventBuyerResponse = {
+    /**
+     * Buyer info may not be available if we don't have enough data
+     */
+    200: null | tUserEventBuyer;
+};
+
+export type apiUserEventBuyerResponse = tApiUserEventBuyerResponse[keyof tApiUserEventBuyerResponse];
+
+export type tApiUserEventSellerRequest = {
+    body?: never;
+    path: {
+        /**
+         * ID of the user
+         */
+        userId: string;
+    };
+    query?: never;
+    url: '/api/session/user-event/{userId}/seller';
+};
+
+export type apiUserEventSellerErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiUserEventSellerError = apiUserEventSellerErrors[keyof apiUserEventSellerErrors];
+
+export type tApiUserEventSellerResponse = {
+    /**
+     * Seller info may not be available if we don't have enough data
+     */
+    200: null | tUserEventSeller;
+};
+
+export type apiUserEventSellerResponse = tApiUserEventSellerResponse[keyof tApiUserEventSellerResponse];
