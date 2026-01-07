@@ -22,6 +22,7 @@ export const withMonthlyEndpointFx = Effect.fn("withMonthlyEndpointFx")(function
 					description: "Monthly cron job executed",
 				},
 			},
+			security: [],
 			tags: [
 				"cron",
 				"public",

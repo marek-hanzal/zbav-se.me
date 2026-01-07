@@ -22,6 +22,7 @@ export const withHourlyEndpointFx = Effect.fn("withHourlyEndpointFx")(function* 
 					description: "Hourly cron job executed",
 				},
 			},
+			security: [],
 			tags: [
 				"cron",
 				"public",

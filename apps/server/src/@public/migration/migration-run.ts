@@ -22,6 +22,7 @@ export const withMigrationRunApiFx = Effect.fn("withMigrationRunApiFx")(function
 					description: "Executes app migrations",
 				},
 			},
+			security: [],
 			tags: [
 				"misc",
 			],

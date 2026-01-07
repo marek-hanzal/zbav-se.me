@@ -59,6 +59,7 @@ export const withHistoryApiFx = Effect.fn("withHistoryApiFx")(function* () {
 					description: "Failed to sync/fetch history from GitHub",
 				},
 			},
+			security: [],
 			tags: [
 				"github",
 				"public",

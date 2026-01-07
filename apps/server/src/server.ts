@@ -3,7 +3,7 @@ import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
 import { AppEnv } from "~/AppEnv";
-import { initMiddlewareFx } from "~/middleware/initMiddlewareFx";
+import { initMiddlewareFx } from "~/init/initMiddlewareFx";
 import { withPublicApiFx } from "./@public/withPublicApiFx";
 import { withRootApi } from "./@root/withRootApi";
 import { withSessionApiFx } from "./@session/withSessionApiFx";

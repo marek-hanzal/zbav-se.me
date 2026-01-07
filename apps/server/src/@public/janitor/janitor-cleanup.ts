@@ -36,6 +36,7 @@ export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(func
 					description: "Error during cleanup",
 				},
 			},
+			security: [],
 			tags: [
 				"janitor",
 			],

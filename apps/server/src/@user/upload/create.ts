@@ -62,9 +62,6 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					description: "Internal server error",
 				},
 			},
-			security: [
-				{},
-			],
 			tags: [
 				"upload",
 				"user",

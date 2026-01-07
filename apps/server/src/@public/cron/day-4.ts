@@ -22,6 +22,7 @@ export const withDay4EndpointFx = Effect.fn("withDay4EndpointFx")(function* () {
 					description: "Daily cron job executed (hour 4)",
 				},
 			},
+			security: [],
 			tags: [
 				"cron",
 				"public",

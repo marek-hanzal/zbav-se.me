@@ -63,6 +63,7 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 					description: "Internal server error",
 				},
 			},
+			security: [],
 			tags: [
 				"misc",
 				"public",
