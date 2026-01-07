@@ -1,4 +1,3 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { transactionResolveFx } from "~/app/transaction/fx/transactionResolveFx";
 import type { TransactionStatusEnumSchema } from "~/app/transaction/schema/TransactionStatusEnumSchema";

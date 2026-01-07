@@ -1,5 +1,4 @@
 import { withCollectionFx } from "@use-pico/common/collection";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withTransactionCollectionSelectFx } from "~/app/transaction/db/withTransactionCollectionSelectFx";
 import { withTransactionQueryBuilderFx } from "~/app/transaction/db/withTransactionQueryBuilderFx";

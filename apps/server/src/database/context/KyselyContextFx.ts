@@ -1,8 +1,8 @@
-import type { withDatabase } from "@use-pico/common/database";
+import type { withDatabaseFx } from "@use-pico/common/database";
 import { Context, Effect } from "effect";
 import type { Database } from "~/database/Database";
 
-export type KyselyContext = withDatabase.Instance<Database>;
+export type KyselyContext = withDatabaseFx.Instance<Database>;
 
 export class KyselyContextFx extends Context.Tag("KyselyContextFx")<
 	KyselyContextFx,

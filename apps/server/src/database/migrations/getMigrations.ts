@@ -29,7 +29,7 @@ import { GitHubMigration } from "./0027-github";
 import { FeedbackMigration } from "./0028-feedback";
 import { UserEventMigration } from "./0029-user-event";
 
-export const getMigrations = async () => {
+export const getMigrations = () => {
 	return {
 		"0000-postgres-extensions": PostgresExtensionsMigration,
 		"0001-category": CategoryMigration,

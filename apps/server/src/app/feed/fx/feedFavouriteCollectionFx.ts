@@ -1,5 +1,4 @@
 import { withCollectionFx } from "@use-pico/common/collection";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withFeedFavouriteSelectFx } from "~/app/feed/db/withFeedFavouriteSelectFx";
 import { withFeedQueryBuilderFx } from "~/app/feed/db/withFeedQueryBuilderFx";

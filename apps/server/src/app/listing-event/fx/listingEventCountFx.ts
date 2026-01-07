@@ -1,5 +1,4 @@
 import { withCountFx } from "@use-pico/common/count";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withListingEventQueryBuilderFx } from "~/app/listing-event/db/withListingEventQueryBuilderFx";
 import { withListingEventSelectFx } from "~/app/listing-event/db/withListingEventSelectFx";

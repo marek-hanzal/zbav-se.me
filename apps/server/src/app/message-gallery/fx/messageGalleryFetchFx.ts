@@ -1,5 +1,4 @@
 import { withFetchFx } from "@use-pico/common/fetch";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withMessageGalleryQueryBuilderFx } from "~/app/message-gallery/db/withMessageGalleryQueryBuilderFx";
 import { withMessageGallerySelectFx } from "~/app/message-gallery/db/withMessageGallerySelectFx";

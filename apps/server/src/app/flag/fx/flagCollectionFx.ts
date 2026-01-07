@@ -1,5 +1,4 @@
 import { withCollectionFx } from "@use-pico/common/collection";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withFlagQueryBuilderFx } from "~/app/flag/db/withFlagQueryBuilderFx";
 import { withFlagSelectFx } from "~/app/flag/db/withFlagSelectFx";

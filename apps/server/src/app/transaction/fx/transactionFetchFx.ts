@@ -1,5 +1,4 @@
 import { withFetchFx } from "@use-pico/common/fetch";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withTransactionQueryBuilderFx } from "~/app/transaction/db/withTransactionQueryBuilderFx";
 import { withTransactionSelectFx } from "~/app/transaction/db/withTransactionSelectFx";

@@ -1,5 +1,4 @@
 import { withFetchFx } from "@use-pico/common/fetch";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { withMessageSystemQueryBuilderFx } from "~/app/message-system/db/withMessageSystemQueryBuilderFx";
 import { withMessageSystemSelectFx } from "~/app/message-system/db/withMessageSystemSelectFx";

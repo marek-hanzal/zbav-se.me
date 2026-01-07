@@ -1,4 +1,3 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
 import { AccessDeniedError } from "~/error/AccessDeniedError";

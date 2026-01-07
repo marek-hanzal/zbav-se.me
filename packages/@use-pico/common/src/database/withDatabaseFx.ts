@@ -1,19 +1,20 @@
-import {
-	type Dialect,
-	Kysely,
-	type MigrationProvider,
-	type MigrationResult,
-	Migrator,
-} from "kysely";
+import { Effect } from "effect";
+import { type Dialect, Kysely, type MigrationResult, Migrator } from "kysely";
+import { DialectContextFx } from "./DialectContextFx";
+import { MigrationContextFx } from "./MigrationContextFx";
 
-export namespace withDatabase {
-	export interface Props extends Partial<Pick<MigrationProvider, "getMigrations">> {
-		dialect(): Dialect;
+export namespace withDatabaseFx {
+	export interface Event<TDatabase> {
+		dialect: Dialect;
+		kysely: Kysely<TDatabase>;
+	}
+
+	export interface Props<TDatabase> {
 		/**
 		 * Called before the migration is executed.
 		 */
-		onPreMigration?(dialect: Dialect): Promise<void>;
-		onPostMigration?(dialect: Dialect): Promise<void>;
+		onPreMigration?(event: withDatabaseFx.Event<TDatabase>): Promise<void>;
+		onPostMigration?(event: withDatabaseFx.Event<TDatabase>): Promise<void>;
 	}
 
 	export interface Instance<DB = any> {
@@ -23,23 +24,17 @@ export namespace withDatabase {
 	}
 }
 
-export const withDatabase = <TDatabase>({
-	dialect,
+export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <TDatabase>({
 	onPreMigration,
 	onPostMigration,
-	getMigrations = async () => ({}),
-}: withDatabase.Props): withDatabase.Instance<TDatabase> => {
+}: withDatabaseFx.Props<TDatabase>) {
+	const dialect = yield* DialectContextFx;
+	const migrations = yield* MigrationContextFx;
+
 	let kyselyInstance: Kysely<TDatabase> | null = null;
-	let dialectInstance: Dialect | null = null;
 
 	return {
-		get dialect() {
-			if (dialectInstance) {
-				return dialectInstance;
-			}
-
-			return (dialectInstance = dialect());
-		},
+		dialect,
 		get kysely() {
 			if (kyselyInstance) {
 				return kyselyInstance;
@@ -62,12 +57,15 @@ export const withDatabase = <TDatabase>({
 			}));
 		},
 		async migrate() {
-			await onPreMigration?.(this.dialect);
+			await onPreMigration?.({
+				dialect: this.dialect,
+				kysely: this.kysely,
+			});
 
 			const migrator = new Migrator({
 				db: this.kysely,
 				provider: {
-					getMigrations,
+					getMigrations: async () => migrations,
 				},
 			});
 
@@ -89,9 +87,12 @@ export const withDatabase = <TDatabase>({
 				}
 			});
 
-			await onPostMigration?.(this.dialect);
+			await onPostMigration?.({
+				dialect: this.dialect,
+				kysely: this.kysely,
+			});
 
 			return results;
 		},
 	};
-};
+});
