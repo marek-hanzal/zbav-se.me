@@ -107,7 +107,7 @@ await Effect.all([
 		sessionHono: withSessionHono(),
 		userHono: withUserHono(),
 	}),
-	KyselyContextProvider(kysely.kysely()),
+	KyselyContextProvider(database),
 	Effect.runPromise,
 );
 
