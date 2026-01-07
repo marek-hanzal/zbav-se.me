@@ -12,11 +12,7 @@ export const seedUserFx = Effect.fn("seedUserFx")(function* ({ email }: seedUser
 	const { kysely } = yield* KyselyContextFx;
 
 	const current = yield* Effect.promise(async () => {
-		return kysely
-			.selectFrom("user")
-			.where("email", "=", email)
-			.selectAll()
-			.executeTakeFirst();
+		return kysely.selectFrom("user").where("email", "=", email).selectAll().executeTakeFirst();
 	});
 
 	if (!current) {

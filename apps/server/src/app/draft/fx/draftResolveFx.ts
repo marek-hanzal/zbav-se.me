@@ -19,11 +19,7 @@ export const draftResolveFx = Effect.fn("draftResolveFx")(function* ({
 	const { kysely } = yield* KyselyContextFx;
 
 	const draft = yield* Effect.promise(async () => {
-		return kysely
-			.selectFrom("draft")
-			.selectAll()
-			.where("id", "=", draftId)
-			.executeTakeFirst();
+		return kysely.selectFrom("draft").selectAll().where("id", "=", draftId).executeTakeFirst();
 	});
 
 	if (!draft) {

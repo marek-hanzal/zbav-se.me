@@ -19,9 +19,7 @@ export const testabase = async (id: string = genId()) => {
 			},
 		});
 
-		await sql`CREATE DATABASE ${sql.ref(db)} TEMPLATE test OWNER test`.execute(
-			kysely.kysely(),
-		);
+		await sql`CREATE DATABASE ${sql.ref(db)} TEMPLATE test OWNER test`.execute(kysely.kysely());
 
 		await kysely.kysely().destroy();
 	}
