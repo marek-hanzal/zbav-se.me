@@ -1,38 +1,38 @@
 import { createRoute } from "@hono/zod-openapi";
-import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { uploadFetchFx } from "~/app/upload/fx/uploadFetchFx";
-import { UploadQuerySchema } from "~/app/upload/schema/UploadQuerySchema";
+import { categoryFetchFx } from "~/app/category/fx/categoryFetchFx";
+import { CategoryQuerySchema } from "~/app/category/schema/CategoryQuerySchema";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { UploadSchema } from "./schema/UploadSchema";
+import { CategorySchema } from "./schema/CategorySchema";
+import { zodFx } from "@use-pico/common/schema";
 
-export const withFetchApi: Routes.Fn = async ({ userHono }) => {
-	userHono.openapi(
+export const withCategoryFetchApi: Routes.Fn = async ({ sessionHono }) => {
+	sessionHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/upload/fetch",
-			description: "Return an upload item based on the provided query",
-			operationId: "apiUploadFetch",
+			path: "/category/fetch",
+			description: "Return a category based on the provided query",
+			operationId: "apiCategoryFetch",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: UploadQuerySchema,
+							schema: CategoryQuerySchema,
 						},
 					},
-					description: "Query object for upload fetch",
+					description: "Query object for category fetch",
 				},
 			},
 			responses: {
 				200: {
 					content: {
 						"application/json": {
-							schema: UploadSchema,
+							schema: CategorySchema,
 						},
 					},
-					description: "Return an upload item based on the provided query",
+					description: "Return a category based on the provided query",
 				},
 				404: {
 					content: {
@@ -40,7 +40,7 @@ export const withFetchApi: Routes.Fn = async ({ userHono }) => {
 							schema: NoticeSchema,
 						},
 					},
-					description: "Upload not found",
+					description: "Category not found",
 				},
 				500: {
 					content: {
@@ -52,16 +52,16 @@ export const withFetchApi: Routes.Fn = async ({ userHono }) => {
 				},
 			},
 			tags: [
-				"upload",
-				"user",
+				"category",
+				"session",
 			],
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json<UploadSchema.Type, 200>(
+				return c.json<CategorySchema.Type, 200>(
 					yield* zodFx({
-						schema: UploadSchema,
-						dataFx: uploadFetchFx({
+						schema: CategorySchema,
+						dataFx: categoryFetchFx({
 							...c.req.valid("json"),
 							scope: {},
 						}),

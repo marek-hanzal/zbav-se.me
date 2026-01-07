@@ -3,6 +3,7 @@ import type { Routes } from "../hono/Routes";
 import type { NoticeSchema } from "../schema/NoticeSchema";
 import { withCategoryApi } from "./category/withCategoryApi";
 import { withLocationApi } from "./location/withLocationApi";
+import { withUploadApi } from "./upload/withUploadApi";
 
 export const withSessionApi: Routes.FnWithDeps<{
 	database: WithDatabase;
@@ -29,6 +30,7 @@ export const withSessionApi: Routes.FnWithDeps<{
 
 	await withCategoryApi(routes);
 	await withLocationApi(routes);
+	await withUploadApi(routes);
 
 	routes.root.route("/api/session", routes.sessionHono);
 };

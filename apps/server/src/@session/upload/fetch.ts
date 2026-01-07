@@ -1,36 +1,46 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { categoryCountFx } from "~/app/category/fx/categoryCountFx";
-import { CategoryCountQuerySchema } from "~/app/category/schema/CategoryCountQuerySchema";
+import { uploadFetchFx } from "~/app/upload/fx/uploadFetchFx";
+import { UploadQuerySchema } from "~/app/upload/schema/UploadQuerySchema";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
-import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
+import { UploadSchema } from "./schema/UploadSchema";
 
-export const withCategoryCountApi: Routes.Fn = async ({ sessionHono }) => {
+export const withUploadFetchApi: Routes.Fn = async ({ sessionHono }) => {
 	sessionHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/category/count",
-			description: "Returns count of categories based on provided query",
-			operationId: "apiCategoryCount",
+			path: "/upload/fetch",
+			description: "Return an upload item based on the provided query",
+			operationId: "apiUploadFetch",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: CategoryCountQuerySchema,
+							schema: UploadQuerySchema,
 						},
 					},
+					description: "Query object for upload fetch",
 				},
 			},
 			responses: {
 				200: {
 					content: {
 						"application/json": {
-							schema: CountSchema,
+							schema: UploadSchema,
 						},
 					},
-					description: "Return counts based on provided query",
+					description: "Return an upload item based on the provided query",
+				},
+				404: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Upload not found",
 				},
 				500: {
 					content: {
@@ -42,14 +52,20 @@ export const withCategoryCountApi: Routes.Fn = async ({ sessionHono }) => {
 				},
 			},
 			tags: [
-				"category",
+				"upload",
 				"session",
 			],
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json<CountSchema.Type, 200>(
-					yield* categoryCountFx(c.req.valid("json")),
+				return c.json<UploadSchema.Type, 200>(
+					yield* zodFx({
+						schema: UploadSchema,
+						dataFx: uploadFetchFx({
+							...c.req.valid("json"),
+							scope: {},
+						}),
+					}),
 					200,
 				);
 			}).pipe(
@@ -58,6 +74,20 @@ export const withCategoryCountApi: Routes.Fn = async ({ sessionHono }) => {
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
+							Match.when(
+								{
+									_tag: "NotFoundErrorFx",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 404>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										404,
+									);
+								},
+							),
 							Match.when(
 								{
 									_tag: "ZodErrorFx",

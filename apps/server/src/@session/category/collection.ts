@@ -7,6 +7,13 @@ import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { CategorySchema } from "./schema/CategorySchema";
+import { zodFx } from "@use-pico/common/schema";
+
+const CollectionSchema = withCollectionSchema({
+	schema: CategorySchema,
+	type: "CategoryCollection",
+	description: "Collection of categories",
+});
 
 export const withCategoryCollectionApi: Routes.Fn = async ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -28,11 +35,7 @@ export const withCategoryCollectionApi: Routes.Fn = async ({ sessionHono }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: withCollectionSchema({
-								schema: CategorySchema,
-								type: "CategoryCollection",
-								description: "Collection of categories",
-							}),
+							schema: CollectionSchema,
 						},
 					},
 					description: "Access collection of categories based on provided query",
@@ -54,7 +57,13 @@ export const withCategoryCollectionApi: Routes.Fn = async ({ sessionHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<withCollectionSchema.Type<CategorySchema>, 200>(
-					yield* categoryCollectionFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: CollectionSchema,
+						dataFx: categoryCollectionFx({
+							...c.req.valid("json"),
+							scope: {},
+						}),
+					}),
 					200,
 				);
 			}).pipe(

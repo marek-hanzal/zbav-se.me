@@ -61,7 +61,9 @@ export const withLocationFetchApi: Routes.Fn = async ({ sessionHono }) => {
 				return c.json<LocationSchema.Type, 200>(
 					yield* zodFx({
 						schema: LocationSchema,
-						dataFx: locationFetchFx(c.req.valid("json")),
+						dataFx: locationFetchFx({
+							...c.req.valid("json"),
+						}),
 					}),
 					200,
 				);

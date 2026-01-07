@@ -1,7 +1,7 @@
 import type { Routes } from "~/hono/Routes";
-import { withCategoryCollectionApi } from "./category-collection";
-import { withCategoryCountApi } from "./category-count";
-import { withCategoryFetchApi } from "./category-fetch";
+import { withCategoryCollectionApi } from "./collection";
+import { withCategoryCountApi } from "./count";
+import { withCategoryFetchApi } from "./fetch";
 
 export const withCategoryApi: Routes.Fn = async (routes) => {
 	await withCategoryFetchApi(routes);

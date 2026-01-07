@@ -1,32 +1,25 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { uploadCollectionFx } from "~/app/upload/fx/uploadCollectionFx";
-import { UploadQuerySchema } from "~/app/upload/schema/UploadQuerySchema";
+import { categoryCountFx } from "~/app/category/fx/categoryCountFx";
+import { CategoryCountQuerySchema } from "~/app/category/schema/CategoryCountQuerySchema";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
+import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { withCollectionSchema } from "~/schema/withCollectionSchema";
-import { UploadSchema } from "./schema/UploadSchema";
 
-const CollectionSchema = withCollectionSchema({
-	schema: UploadSchema,
-	type: "UploadCollection",
-	description: "Collection of upload items",
-});
-
-export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
-	userHono.openapi(
+export const withCategoryCountApi: Routes.Fn = async ({ sessionHono }) => {
+	sessionHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/upload/collection",
-			description: "Returns upload items based on provided parameters",
-			operationId: "apiUploadCollection",
+			path: "/category/count",
+			description: "Returns count of categories based on provided query",
+			operationId: "apiCategoryCount",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: UploadQuerySchema,
+							schema: CategoryCountQuerySchema,
 						},
 					},
 				},
@@ -35,10 +28,10 @@ export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: CollectionSchema,
+							schema: CountSchema,
 						},
 					},
-					description: "Access collection of upload items based on provided query",
+					description: "Return counts based on provided query",
 				},
 				500: {
 					content: {
@@ -50,16 +43,16 @@ export const withCollectionApi: Routes.Fn = async ({ userHono }) => {
 				},
 			},
 			tags: [
-				"upload",
-				"user",
+				"category",
+				"session",
 			],
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json<withCollectionSchema.Type<UploadSchema>, 200>(
+				return c.json<CountSchema.Type, 200>(
 					yield* zodFx({
-						schema: CollectionSchema,
-						dataFx: uploadCollectionFx({
+						schema: CountSchema,
+						dataFx: categoryCountFx({
 							...c.req.valid("json"),
 							scope: {},
 						}),

@@ -1,6 +1,6 @@
 import { withQuery } from "@use-pico/client/query";
-import { apiUploadFetch } from "../../../api/user/sdk.gen";
-import type { tApiUploadFetchResponse, tUploadQuery } from "../../../api/user/types.gen";
+import { apiUploadFetch } from "../../../api/session/sdk.gen";
+import type { tApiUploadFetchResponse, tUploadQuery } from "../../../api/session/types.gen";
 
 export const withUploadFetchQuery = withQuery<tUploadQuery, tApiUploadFetchResponse[200]>({
 	keys(variables) {

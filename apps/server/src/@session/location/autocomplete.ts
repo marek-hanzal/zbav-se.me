@@ -55,7 +55,9 @@ export const withLocationAutocompleteApi: Routes.Fn = async ({ sessionHono }) =>
 				return c.json<LocationSchema.Type[], 200>(
 					yield* zodFx({
 						schema: z.array(LocationSchema),
-						dataFx: locationAutocompleteFx(c.req.valid("json")),
+						dataFx: locationAutocompleteFx({
+							...c.req.valid("json"),
+						}),
 					}),
 					200,
 				);

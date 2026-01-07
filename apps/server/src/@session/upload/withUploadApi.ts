@@ -1,6 +1,6 @@
 import type { Routes } from "~/hono/Routes";
-import { withCreateApi } from "./create";
+import { withUploadFetchApi } from "./fetch";
 
 export const withUploadApi: Routes.Fn = async (routes) => {
-	await withCreateApi(routes);
+	await withUploadFetchApi(routes);
 };
