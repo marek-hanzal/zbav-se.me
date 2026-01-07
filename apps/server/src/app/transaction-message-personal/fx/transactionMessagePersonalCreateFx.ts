@@ -1,23 +1,30 @@
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { messageTextCreateFx } from "~/app/message-text/fx/messageTextCreateFx";
+import type { TransactionMessagePersonalCreateSchema } from "~/@user/transaction-message-personal/schema/TransactionMessagePersonalCreateSchema";
+import { messagePersonalCreateFx } from "~/app/message-personal/fx/messagePersonalCreateFx";
 import { TransactionContextFx } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/app/transaction/fx/transactionStatusGateFx";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import type { TransactionMessageTextCreateSchema } from "../schema/TransactionMessageTextCreateSchema";
 
-export namespace transactionMessageTextCreateFx {
-	export interface Props extends TransactionMessageTextCreateSchema.Type {
+export namespace transactionMessagePersonalCreateFx {
+	export interface Props extends TransactionMessagePersonalCreateSchema.Type {
 		userId: string;
 	}
 }
 
-export const transactionMessageTextCreateFx = Effect.fn("transactionMessageTextCreateFx")(
-	function* ({ userId, transactionId, message }: transactionMessageTextCreateFx.Props) {
+export const transactionMessagePersonalCreateFx = Effect.fn("transactionMessagePersonalCreateFx")(
+	function* ({
+		userId,
+		transactionId,
+		name,
+		phone,
+		email,
+		locationId,
+	}: transactionMessagePersonalCreateFx.Props) {
 		return yield* withTransactionFx(
 			Effect.gen(function* () {
 				const database = yield* DatabaseContextFx;
@@ -59,18 +66,23 @@ export const transactionMessageTextCreateFx = Effect.fn("transactionMessageTextC
 					isTerminal: false,
 				});
 
-				return yield* messageTextCreateFx({
+				return yield* messagePersonalCreateFx({
 					userId,
 					messageThreadId: transaction.messageThreadId,
-					message,
+					name,
+					phone,
+					email,
+					locationId,
 				});
 			}),
 		);
 	},
 );
 
-export type transactionMessageTextCreateFx = ReturnType<typeof transactionMessageTextCreateFx>;
+export type transactionMessagePersonalCreateFx = ReturnType<
+	typeof transactionMessagePersonalCreateFx
+>;
 
 type _NoUser = AssertNever<
-	Extract<Effect.Effect.Context<transactionMessageTextCreateFx>, UserContextFx>
+	Extract<Effect.Effect.Context<transactionMessagePersonalCreateFx>, UserContextFx>
 >;

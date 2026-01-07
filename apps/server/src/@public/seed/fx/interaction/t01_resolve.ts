@@ -3,9 +3,9 @@ import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { match } from "ts-pattern";
-import { transactionStatusFetchFx } from "~/@user/transaction-status/fx/transactionStatusFetchFx";
-import { transactionStatusResolveFx } from "~/@user/transaction-status/fx/transactionStatusResolveFx";
 import { transactionCollectionFx } from "~/app/transaction/fx/transactionCollectionFx";
+import { transactionStatusFetchFx } from "~/app/transaction-status/fx/transactionStatusFetchFx";
+import { transactionStatusResolveFx } from "~/app/transaction-status/fx/transactionStatusResolveFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace t01_resolve {

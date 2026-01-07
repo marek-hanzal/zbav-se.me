@@ -3,11 +3,11 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
 import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
+import { transactionStatusRejectFx } from "~/app/transaction-status/fx/transactionStatusRejectFx";
 import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { transactionStatusRejectFx } from "./fx/transactionStatusRejectFx";
 import { TransactionStatusRejectSchema } from "./schema/TransactionStatusRejectSchema";
 
 export const withRejectApi: Routes.Fn = async ({ userHono }) => {

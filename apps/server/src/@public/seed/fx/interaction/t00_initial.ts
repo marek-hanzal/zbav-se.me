@@ -3,10 +3,10 @@ import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { match } from "ts-pattern";
-import { transactionStatusAcceptFx } from "~/@user/transaction-status/fx/transactionStatusAcceptFx";
-import { transactionStatusRejectFx } from "~/@user/transaction-status/fx/transactionStatusRejectFx";
 import { transactionCollectionFx } from "~/app/transaction/fx/transactionCollectionFx";
 import { transactionFetchFx } from "~/app/transaction/fx/transactionFetchFx";
+import { transactionStatusAcceptFx } from "~/app/transaction-status/fx/transactionStatusAcceptFx";
+import { transactionStatusRejectFx } from "~/app/transaction-status/fx/transactionStatusRejectFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace t00_initial {

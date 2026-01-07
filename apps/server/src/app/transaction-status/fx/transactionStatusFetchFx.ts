@@ -7,7 +7,7 @@ import type { TransactionStatusQuerySchema } from "~/app/transaction-status/sche
 
 export namespace transactionStatusFetchFx {
 	export interface Props extends TransactionStatusQuerySchema.Type {
-		scope?: TransactionStatusFilterSchema.Type;
+		scope: TransactionStatusFilterSchema.Type;
 	}
 }
 

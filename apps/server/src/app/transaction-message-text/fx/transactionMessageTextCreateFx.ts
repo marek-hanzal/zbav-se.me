@@ -1,29 +1,23 @@
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { messageLocationCreateFx } from "~/app/message-location/fx/messageLocationCreateFx";
+import type { TransactionMessageTextCreateSchema } from "~/@user/transaction-message-text/schema/TransactionMessageTextCreateSchema";
+import { messageTextCreateFx } from "~/app/message-text/fx/messageTextCreateFx";
 import { TransactionContextFx } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/app/transaction/fx/transactionStatusGateFx";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import type { TransactionMessageLocationCreateSchema } from "../schema/TransactionMessageLocationCreateSchema";
 
-export namespace transactionMessageLocationCreateFx {
-	export interface Props extends TransactionMessageLocationCreateSchema.Type {
+export namespace transactionMessageTextCreateFx {
+	export interface Props extends TransactionMessageTextCreateSchema.Type {
 		userId: string;
-		createdAt?: DateTime;
 	}
 }
 
-export const transactionMessageLocationCreateFx = Effect.fn("transactionMessageLocationCreateFx")(
-	function* ({
-		userId,
-		transactionId,
-		locationId,
-		createdAt,
-	}: transactionMessageLocationCreateFx.Props) {
+export const transactionMessageTextCreateFx = Effect.fn("transactionMessageTextCreateFx")(
+	function* ({ userId, transactionId, message }: transactionMessageTextCreateFx.Props) {
 		return yield* withTransactionFx(
 			Effect.gen(function* () {
 				const database = yield* DatabaseContextFx;
@@ -38,7 +32,7 @@ export const transactionMessageLocationCreateFx = Effect.fn("transactionMessageL
 					],
 				});
 
-				const now = createdAt ?? DateTime.now();
+				const now = DateTime.now();
 
 				yield* Effect.promise(async () => {
 					return database
@@ -63,24 +57,20 @@ export const transactionMessageLocationCreateFx = Effect.fn("transactionMessageL
 					group: transaction.id,
 					event: "transaction.message",
 					isTerminal: false,
-					createdAt,
 				});
 
-				return yield* messageLocationCreateFx({
+				return yield* messageTextCreateFx({
 					userId,
 					messageThreadId: transaction.messageThreadId,
-					locationId,
-					createdAt,
+					message,
 				});
 			}),
 		);
 	},
 );
 
-export type transactionMessageLocationCreateFx = ReturnType<
-	typeof transactionMessageLocationCreateFx
->;
+export type transactionMessageTextCreateFx = ReturnType<typeof transactionMessageTextCreateFx>;
 
 type _NoUser = AssertNever<
-	Extract<Effect.Effect.Context<transactionMessageLocationCreateFx>, UserContextFx>
+	Extract<Effect.Effect.Context<transactionMessageTextCreateFx>, UserContextFx>
 >;

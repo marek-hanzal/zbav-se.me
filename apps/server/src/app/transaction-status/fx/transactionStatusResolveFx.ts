@@ -1,39 +1,39 @@
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import type { DateTime } from "luxon";
-import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
-import type { TransactionStatusSuccessSchema } from "~/@user/transaction-status/schema/TransactionStatusSuccessSchema";
+import type { TransactionStatusResolveSchema } from "~/@user/transaction-status/schema/TransactionStatusResolveSchema";
 import { messageSystemCreateFx } from "~/app/message-system/fx/messageSystemCreateFx";
 import { transactionPatchFx } from "~/app/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/app/transaction/fx/transactionResolveFx";
+import { transactionStatusCreateFx } from "~/app/transaction-status/fx/transactionStatusCreateFx";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 
-export namespace transactionStatusSuccessFx {
-	export interface Props extends TransactionStatusSuccessSchema.Type {
+export namespace transactionStatusResolveFx {
+	export interface Props extends TransactionStatusResolveSchema.Type {
 		userId: string;
 		createdAt?: DateTime;
 	}
 }
 
-export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx")(function* ({
+export const transactionStatusResolveFx = Effect.fn("transactionStatusResolveFx")(function* ({
 	userId,
 	transactionId,
 	createdAt,
-}: transactionStatusSuccessFx.Props) {
+}: transactionStatusResolveFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const transaction = yield* transactionResolveFx({
 				userId,
 				transactionId,
-				message: "You are not allowed to mark this listing transaction as successful",
+				message: "You are not allowed to resolve this listing transaction",
 			});
 
-			if (transaction.side === "seller") {
+			if (transaction.side === "buyer") {
 				return yield* new InvalidRequestError({
-					message: "Seller cannot mark a transaction as successful",
+					message: "Buyer cannot resolve a transaction",
 				});
 			}
 
@@ -54,25 +54,24 @@ export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx"
 			yield* messageSystemCreateFx({
 				userId,
 				messageThreadId: transaction.messageThreadId,
-				message: "Transaction successful (message)",
+				message: "Seller resolved the transaction (message)",
 				createdAt,
 			});
 
 			yield* userInteractionEventFx({
 				userId,
-				targetId: transaction.sellerId,
+				targetId: transaction.buyerId,
 				source: "transaction",
 				group: transaction.id,
-				event: "transaction.success",
-				isTerminal: true,
-				createdAt,
+				event: "transaction.resolved",
+				isTerminal: false,
 			});
 
 			return yield* transactionStatusCreateFx({
 				userId,
 				transactionId: transaction.id,
 				listingId: transaction.listingId,
-				status: "success",
+				status: "resolved",
 				side: transaction.side,
 				createdAt,
 			});
@@ -80,8 +79,8 @@ export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx"
 	);
 });
 
-export type transactionStatusSuccessFx = ReturnType<typeof transactionStatusSuccessFx>;
+export type transactionStatusResolveFx = ReturnType<typeof transactionStatusResolveFx>;
 
 type _NoUser = AssertNever<
-	Extract<Effect.Effect.Context<transactionStatusSuccessFx>, UserContextFx>
+	Extract<Effect.Effect.Context<transactionStatusResolveFx>, UserContextFx>
 >;

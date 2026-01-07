@@ -3,10 +3,10 @@ import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { transactionPatchFx } from "~/app/transaction/fx/transactionPatchFx";
+import { transactionStatusFetchFx } from "~/app/transaction-status/fx/transactionStatusFetchFx";
 import type { TransactionStatusCreateSchema } from "~/app/transaction-status/schema/TransactionStatusCreateSchema";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { transactionStatusFetchFx } from "./transactionStatusFetchFx";
 
 export namespace transactionStatusCreateFx {
 	export interface Props extends TransactionStatusCreateSchema.Type {
@@ -56,6 +56,7 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 		where: {
 			id,
 		},
+		scope: {},
 	});
 });
 

@@ -2,10 +2,10 @@ import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { match } from "ts-pattern";
-import { transactionStatusCloseFx } from "~/@user/transaction-status/fx/transactionStatusCloseFx";
-import { transactionStatusFetchFx } from "~/@user/transaction-status/fx/transactionStatusFetchFx";
-import { transactionStatusSuccessFx } from "~/@user/transaction-status/fx/transactionStatusSuccessFx";
 import { transactionCollectionFx } from "~/app/transaction/fx/transactionCollectionFx";
+import { transactionStatusCloseFx } from "~/app/transaction-status/fx/transactionStatusCloseFx";
+import { transactionStatusFetchFx } from "~/app/transaction-status/fx/transactionStatusFetchFx";
+import { transactionStatusSuccessFx } from "~/app/transaction-status/fx/transactionStatusSuccessFx";
 
 export namespace t04_buyerFinish {
 	export interface Props {

@@ -4,7 +4,7 @@ import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import type { TransactionCreateSchema } from "~/@user/transaction/schema/TransactionCreateSchema";
-import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
+import { transactionStatusCreateFx } from "~/app/transaction-status/fx/transactionStatusCreateFx";
 import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
 import { messageSystemCreateFx } from "~/app/message-system/fx/messageSystemCreateFx";
 import { messageThreadCreateFx } from "~/app/message-thread/fx/messageThreadCreateFx";
