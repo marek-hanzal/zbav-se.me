@@ -30,7 +30,7 @@ export const seedTransactionsFx = Effect.fn("seedTransactionsFx")(function* ({
 	const database = yield* DatabaseContextFx;
 
 	yield* Effect.promise(async () => {
-		return database.deleteFrom("transaction").where("userId", "=", user.id).execute();
+		return database.deleteFrom("transaction").where("userId", "=", userId).execute();
 	});
 
 	const { data: listings } = yield* listingOfFx({

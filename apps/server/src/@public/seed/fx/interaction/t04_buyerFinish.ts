@@ -9,12 +9,14 @@ import { transactionCollectionFx } from "~/app/transaction/fx/transactionCollect
 
 export namespace t04_buyerFinish {
 	export interface Props {
+		userId: string;
 		fromMinutes: number;
 		toMinutes: number;
 	}
 }
 
 export const t04_buyerFinish = Effect.fn("t04_buyerFinish")(function* ({
+	userId,
 	fromMinutes,
 	toMinutes,
 }: t04_buyerFinish.Props) {
@@ -30,7 +32,7 @@ export const t04_buyerFinish = Effect.fn("t04_buyerFinish")(function* ({
 				"dispute",
 			],
 		},
-        scope: {},
+		scope: {},
 	});
 
 	for (const transactionId of transactions.data) {
@@ -54,6 +56,7 @@ export const t04_buyerFinish = Effect.fn("t04_buyerFinish")(function* ({
 		)
 			.with("success", () => {
 				return transactionStatusSuccessFx({
+					userId,
 					transactionId: transactionId.id,
 					createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
 						minute: rangedom(fromMinutes, toMinutes),
@@ -62,6 +65,7 @@ export const t04_buyerFinish = Effect.fn("t04_buyerFinish")(function* ({
 			})
 			.with("close", () => {
 				return transactionStatusCloseFx({
+					userId,
 					transactionId: transactionId.id,
 					createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
 						minute: rangedom(fromMinutes, toMinutes),

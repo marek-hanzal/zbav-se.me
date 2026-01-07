@@ -23,6 +23,7 @@ export const seedTransactionInteractionFx = Effect.fn("seedTransactionInteractio
 		toMinutes: 60 * 24 * 2,
 	});
 	yield* t02_buyerReaction({
+		userId,
 		fromMinutes: 5,
 		toMinutes: 60 * 24 * 2,
 	});
@@ -31,6 +32,7 @@ export const seedTransactionInteractionFx = Effect.fn("seedTransactionInteractio
 		toMinutes: 60 * 24 * 2,
 	});
 	yield* t04_buyerFinish({
+		userId,
 		fromMinutes: 60 * 12,
 		toMinutes: 60 * 24 * 2,
 	});
