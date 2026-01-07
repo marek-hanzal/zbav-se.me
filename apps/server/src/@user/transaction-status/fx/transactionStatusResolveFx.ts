@@ -1,10 +1,10 @@
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import type { DateTime } from "luxon";
-import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
 import type { TransactionStatusResolveSchema } from "~/@user/transaction-status/schema/TransactionStatusResolveSchema";
 import { messageSystemCreateFx } from "~/app/message-system/fx/messageSystemCreateFx";
+import { transactionPatchFx } from "~/app/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/app/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
@@ -52,14 +52,14 @@ export const transactionStatusResolveFx = Effect.fn("transactionStatusResolveFx"
 			});
 
 			yield* messageSystemCreateFx({
-				userId: user.id,
+				userId,
 				messageThreadId: transaction.messageThreadId,
 				message: "Seller resolved the transaction (message)",
 				createdAt,
 			});
 
 			yield* userInteractionEventFx({
-				userId: user.id,
+				userId,
 				targetId: transaction.buyerId,
 				source: "transaction",
 				group: transaction.id,

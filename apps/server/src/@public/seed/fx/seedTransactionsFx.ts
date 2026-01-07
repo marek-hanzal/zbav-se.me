@@ -2,8 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { listingOfFx } from "~/@public/seed/fx/listingOfFx";
-import { transactionCreateFx } from "~/@user/transaction/fx/transactionCreateFx";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { transactionCreateFx } from "~/app/transaction/fx/transactionCreateFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export const SeedTransactionsRequestSchema = z.object({
@@ -18,21 +17,24 @@ export const SeedTransactionsRequestSchema = z.object({
 });
 
 export namespace seedTransactionsFx {
-	export type Props = z.infer<typeof SeedTransactionsRequestSchema>;
+	export interface Props extends z.infer<typeof SeedTransactionsRequestSchema> {
+		userId: string;
+	}
 }
 
 export const seedTransactionsFx = Effect.fn("seedTransactionsFx")(function* ({
+	userId,
 	count,
 	months,
 }: seedTransactionsFx.Props) {
 	const database = yield* DatabaseContextFx;
-	const user = yield* UserContextFx;
 
 	yield* Effect.promise(async () => {
 		return database.deleteFrom("transaction").where("userId", "=", user.id).execute();
 	});
 
 	const { data: listings } = yield* listingOfFx({
+		userId,
 		count,
 	});
 
@@ -55,6 +57,7 @@ export const seedTransactionsFx = Effect.fn("seedTransactionsFx")(function* ({
 		});
 
 		yield* transactionCreateFx({
+			userId,
 			listingId: listing.id,
 			createdAt,
 		});

@@ -3,11 +3,10 @@ import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { match } from "ts-pattern";
-import { transactionCollectionFx } from "~/@user/transaction/fx/transactionCollectionFx";
-import { transactionFetchFx } from "~/@user/transaction/fx/transactionFetchFx";
 import { transactionStatusAcceptFx } from "~/@user/transaction-status/fx/transactionStatusAcceptFx";
 import { transactionStatusRejectFx } from "~/@user/transaction-status/fx/transactionStatusRejectFx";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { transactionCollectionFx } from "~/app/transaction/fx/transactionCollectionFx";
+import { transactionFetchFx } from "~/app/transaction/fx/transactionFetchFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace t00_initial {
@@ -28,6 +27,7 @@ export const t00_initial = Effect.fn("t00_initial")(function* ({
 			page: 0,
 			size: 1000,
 		},
+		scope: {},
 	});
 
 	for (const transactionId of transactions) {
@@ -53,6 +53,7 @@ export const t00_initial = Effect.fn("t00_initial")(function* ({
 			where: {
 				id: transactionId.id,
 			},
+			scope: {},
 		});
 
 		yield* match(
@@ -66,27 +67,30 @@ export const t00_initial = Effect.fn("t00_initial")(function* ({
 		)
 			.with("accept", () => {
 				return transactionStatusAcceptFx({
+					userId: current.id,
 					transactionId: transactionId.id,
 					createdAt: DateTime.fromJSDate(transaction.createdAt).plus({
 						minute: rangedom(fromMinutes, toMinutes),
 					}),
-				}).pipe(UserContextProvider(current));
+				});
 			})
 			.with("reject-seller", () => {
 				return transactionStatusRejectFx({
+					userId: current.id,
 					transactionId: transactionId.id,
 					createdAt: DateTime.fromJSDate(transaction.createdAt).plus({
 						minute: rangedom(fromMinutes, toMinutes),
 					}),
-				}).pipe(UserContextProvider(current));
+				});
 			})
 			.with("reject-buyer", () => {
 				return transactionStatusRejectFx({
+					userId: current.id,
 					transactionId: transactionId.id,
 					createdAt: DateTime.fromJSDate(transaction.createdAt).plus({
 						minute: rangedom(fromMinutes, toMinutes),
 					}),
-				}).pipe(UserContextProvider(current));
+				});
 			})
 			.exhaustive();
 	}

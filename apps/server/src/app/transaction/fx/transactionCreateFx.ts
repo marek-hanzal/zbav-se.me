@@ -10,11 +10,11 @@ import { messageSystemCreateFx } from "~/app/message-system/fx/messageSystemCrea
 import { messageThreadCreateFx } from "~/app/message-thread/fx/messageThreadCreateFx";
 import { messageUserCreateFx } from "~/app/message-thread-user/fx/messageUserCreateFx";
 import { TransactionContextFx } from "~/app/transaction/context/TransactionContextFx";
+import { transactionFetchFx } from "~/app/transaction/fx/transactionFetchFx";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { transactionFetchFx } from "./transactionFetchFx";
 
 export namespace transactionCreateFx {
 	export interface Props extends TransactionCreateSchema.Type {

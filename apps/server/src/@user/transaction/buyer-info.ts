@@ -1,12 +1,13 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { transactionFetchFx } from "~/app/transaction/fx/transactionFetchFx";
+import { transactionGetBuyerInfoFx } from "~/app/transaction/fx/transactionGetBuyerInfoFx";
 import { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { UserContextFx, UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { transactionFetchFx } from "./fx/transactionFetchFx";
-import { transactionGetBuyerInfoFx } from "./fx/transactionGetBuyerInfoFx";
 import { TransactionBuyerInfoSchema } from "./schema/TransactionBuyerInfoSchema";
 
 export const withBuyerInfoApi: Routes.Fn = async ({ userHono }) => {
@@ -59,11 +60,22 @@ export const withBuyerInfoApi: Routes.Fn = async ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const transaction = yield* transactionFetchFx(c.req.valid("json"));
+				const user = yield* UserContextFx;
+
+				const transaction = yield* transactionFetchFx({
+					...c.req.valid("json"),
+					scope: {
+						userId: user.id,
+					},
+				});
 
 				return c.json<TransactionBuyerInfoSchema.Type, 200>(
-					yield* transactionGetBuyerInfoFx({
-						transactionId: transaction.id,
+					yield* zodFx({
+						schema: TransactionBuyerInfoSchema,
+						dataFx: transactionGetBuyerInfoFx({
+							userId: user.id,
+							transactionId: transaction.id,
+						}),
 					}),
 					200,
 				);

@@ -2,20 +2,22 @@ import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { match } from "ts-pattern";
-import { transactionCollectionFx } from "~/@user/transaction/fx/transactionCollectionFx";
 import { transactionStatusCloseFx } from "~/@user/transaction-status/fx/transactionStatusCloseFx";
 import { transactionStatusDisputeFx } from "~/@user/transaction-status/fx/transactionStatusDisputeFx";
 import { transactionStatusFetchFx } from "~/@user/transaction-status/fx/transactionStatusFetchFx";
 import { transactionStatusSuccessFx } from "~/@user/transaction-status/fx/transactionStatusSuccessFx";
+import { transactionCollectionFx } from "~/app/transaction/fx/transactionCollectionFx";
 
 export namespace t02_buyerReaction {
 	export interface Props {
+		userId: string;
 		fromMinutes: number;
 		toMinutes: number;
 	}
 }
 
 export const t02_buyerReaction = Effect.fn("t02_buyerReaction")(function* ({
+	userId,
 	fromMinutes,
 	toMinutes,
 }: t02_buyerReaction.Props) {
@@ -27,6 +29,7 @@ export const t02_buyerReaction = Effect.fn("t02_buyerReaction")(function* ({
 		where: {
 			status: "resolved",
 		},
+		scope: {},
 	});
 
 	for (const transactionId of transactions.data) {
@@ -51,6 +54,7 @@ export const t02_buyerReaction = Effect.fn("t02_buyerReaction")(function* ({
 		)
 			.with("success", () => {
 				return transactionStatusSuccessFx({
+					userId,
 					transactionId: transactionId.id,
 					createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
 						minute: rangedom(fromMinutes, toMinutes),
@@ -59,6 +63,7 @@ export const t02_buyerReaction = Effect.fn("t02_buyerReaction")(function* ({
 			})
 			.with("close", () => {
 				return transactionStatusCloseFx({
+					userId,
 					transactionId: transactionId.id,
 					createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
 						minute: rangedom(fromMinutes, toMinutes),
@@ -67,6 +72,7 @@ export const t02_buyerReaction = Effect.fn("t02_buyerReaction")(function* ({
 			})
 			.with("dispute", () => {
 				return transactionStatusDisputeFx({
+					userId,
 					transactionId: transactionId.id,
 					createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
 						minute: rangedom(fromMinutes, toMinutes),

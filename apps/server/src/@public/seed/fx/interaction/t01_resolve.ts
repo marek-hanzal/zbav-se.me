@@ -3,10 +3,9 @@ import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { match } from "ts-pattern";
-import { transactionCollectionFx } from "~/@user/transaction/fx/transactionCollectionFx";
 import { transactionStatusFetchFx } from "~/@user/transaction-status/fx/transactionStatusFetchFx";
 import { transactionStatusResolveFx } from "~/@user/transaction-status/fx/transactionStatusResolveFx";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { transactionCollectionFx } from "~/app/transaction/fx/transactionCollectionFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace t01_resolve {
@@ -30,6 +29,7 @@ export const t01_resolve = Effect.fn("t01_resolve")(function* ({
 		where: {
 			status: "open",
 		},
+		scope: {},
 	});
 
 	for (const transactionId of transactions.data) {
@@ -71,11 +71,12 @@ export const t01_resolve = Effect.fn("t01_resolve")(function* ({
 		)
 			.with("resolve", () => {
 				return transactionStatusResolveFx({
+					userId: current.id,
 					transactionId: transactionId.id,
 					createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
 						minute: rangedom(fromMinutes, toMinutes),
 					}),
-				}).pipe(UserContextProvider(current));
+				});
 			})
 			.with("noop", () => {
 				return Effect.void;

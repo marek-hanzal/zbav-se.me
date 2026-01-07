@@ -2,7 +2,7 @@ import { genId } from "@use-pico/common/gen-id";
 import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
+import { transactionPatchFx } from "~/app/transaction/fx/transactionPatchFx";
 import type { TransactionStatusCreateSchema } from "~/app/transaction-status/schema/TransactionStatusCreateSchema";
 import type { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";

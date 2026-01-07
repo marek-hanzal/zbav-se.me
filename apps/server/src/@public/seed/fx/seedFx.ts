@@ -4,7 +4,6 @@ import { seedTransactionInteractionFx } from "~/@public/seed/fx/seedTransactionI
 import { SeedTransactionsRequestSchema } from "~/@public/seed/fx/seedTransactionsFx";
 import { seedUserFx } from "~/@public/seed/fx/seedUserFx";
 import { transactionFx } from "~/@public/seed/fx/transactionFx";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
 
 export const SeedRequestSchema = z.object({
 	email: z.string().openapi({
@@ -29,10 +28,13 @@ export const seedFx = Effect.fn("seedFx")(function* ({
 	});
 
 	yield* transactionFx({
+		userId: current.id,
 		transaction,
-	}).pipe(UserContextProvider(current));
+	});
 
-	yield* seedTransactionInteractionFx({}).pipe(UserContextProvider(current));
+	yield* seedTransactionInteractionFx({
+		userId: current.id,
+	});
 
 	return yield* Effect.void;
 });

@@ -3,12 +3,17 @@ import { seedTransactionsFx } from "~/@public/seed/fx/seedTransactionsFx";
 
 export namespace transactionFx {
 	export interface Props {
-		transaction: seedTransactionsFx.Props;
+		userId: string;
+		transaction: Omit<seedTransactionsFx.Props, "userId">;
 	}
 }
 
 export const transactionFx = Effect.fn("transactionFx")(function* ({
+	userId,
 	transaction,
 }: transactionFx.Props) {
-	yield* seedTransactionsFx(transaction);
+	yield* seedTransactionsFx({
+		userId,
+		...transaction,
+	});
 });
