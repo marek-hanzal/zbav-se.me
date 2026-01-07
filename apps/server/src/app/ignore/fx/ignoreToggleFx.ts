@@ -1,8 +1,7 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import type { IgnoreToggleSchema } from "~/@user/ignore/schema/IgnoreToggleSchema";
 import { ignoreCreateFx } from "~/app/ignore/fx/ignoreCreateFx";
 import { ignoreDeleteFx } from "~/app/ignore/fx/ignoreDeleteFx";
+import type { IgnoreToggleSchema } from "~/app/ignore/schema/IgnoreToggleSchema";
 import { listingCheckIfOwnFx } from "~/app/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/app/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
@@ -82,4 +81,3 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 });
 
 export type ignoreToggleFx = ReturnType<typeof ignoreToggleFx>;
-

@@ -1,14 +1,13 @@
 import { embedMinHash } from "@use-pico/common/embedding";
 import { genId } from "@use-pico/common/gen-id";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import pgvector from "pgvector";
 import { match } from "ts-pattern";
-import type { ListingCreateSchema } from "~/@user/listing/schema/ListingCreateSchema";
 import { galleryCreateFx as coolGalleryCreateFx } from "~/app/gallery/fx/galleryCreateFx";
 import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
 import { listingFetchFx } from "~/app/listing/fx/listingFetchFx";
+import type { ListingCreateSchema } from "~/app/listing/schema/ListingCreateSchema";
 import { userEventCreateFx } from "~/app/user-event/fx/userEventCreateFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
@@ -135,4 +134,3 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 });
 
 export type listingCreateFx = ReturnType<typeof listingCreateFx>;
-

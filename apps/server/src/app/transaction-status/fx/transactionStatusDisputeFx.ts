@@ -1,11 +1,10 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import type { DateTime } from "luxon";
-import type { TransactionStatusDisputeSchema } from "~/@user/transaction-status/schema/TransactionStatusDisputeSchema";
 import { messageSystemCreateFx } from "~/app/message-system/fx/messageSystemCreateFx";
 import { transactionPatchFx } from "~/app/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/app/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/app/transaction-status/fx/transactionStatusCreateFx";
+import type { TransactionStatusDisputeSchema } from "~/app/transaction-status/schema/TransactionStatusDisputeSchema";
 
 export namespace transactionStatusDisputeFx {
 	export interface Props extends TransactionStatusDisputeSchema.Type {
@@ -57,4 +56,3 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 });
 
 export type transactionStatusDisputeFx = ReturnType<typeof transactionStatusDisputeFx>;
-

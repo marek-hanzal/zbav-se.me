@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import type { TransactionMessageTextCreateSchema } from "~/@user/transaction-message-text/schema/TransactionMessageTextCreateSchema";
 import { messageTextCreateFx } from "~/app/message-text/fx/messageTextCreateFx";
 import { TransactionContextFx } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/app/transaction/fx/transactionStatusGateFx";
+import type { TransactionMessageTextCreateSchema } from "~/app/transaction-message-text/schema/TransactionMessageTextCreateSchema";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";

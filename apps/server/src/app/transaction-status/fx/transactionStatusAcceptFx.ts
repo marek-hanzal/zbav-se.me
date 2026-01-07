@@ -1,10 +1,10 @@
 import { Effect } from "effect";
 import type { DateTime } from "luxon";
-import type { TransactionStatusAcceptSchema } from "~/@user/transaction-status/schema/TransactionStatusAcceptSchema";
 import { messageSystemCreateFx } from "~/app/message-system/fx/messageSystemCreateFx";
 import { transactionPatchFx } from "~/app/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/app/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/app/transaction-status/fx/transactionStatusCreateFx";
+import type { TransactionStatusAcceptSchema } from "~/app/transaction-status/schema/TransactionStatusAcceptSchema";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
 import { RuntimeError } from "~/error/RuntimeError";
 

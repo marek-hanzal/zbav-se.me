@@ -1,8 +1,7 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { zodFx } from "@use-pico/common/schema";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { TransactionBuyerInfoSchema } from "~/@user/transaction/schema/TransactionBuyerInfoSchema";
+import { TransactionBuyerInfoSchema } from "~/app/transaction/schema/TransactionBuyerInfoSchema";
 import { userEventBuyerInfoFx } from "~/app/user-event/fx/userEventBuyerInfoFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
@@ -60,4 +59,3 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 });
 
 export type transactionGetBuyerInfoFx = ReturnType<typeof transactionGetBuyerInfoFx>;
-

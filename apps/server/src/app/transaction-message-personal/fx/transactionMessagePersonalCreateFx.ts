@@ -1,10 +1,9 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import type { TransactionMessagePersonalCreateSchema } from "~/@user/transaction-message-personal/schema/TransactionMessagePersonalCreateSchema";
 import { messagePersonalCreateFx } from "~/app/message-personal/fx/messagePersonalCreateFx";
 import { TransactionContextFx } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/app/transaction/fx/transactionStatusGateFx";
+import type { TransactionMessagePersonalCreateSchema } from "~/app/transaction-message-personal/schema/TransactionMessagePersonalCreateSchema";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
@@ -81,4 +80,3 @@ export const transactionMessagePersonalCreateFx = Effect.fn("transactionMessageP
 export type transactionMessagePersonalCreateFx = ReturnType<
 	typeof transactionMessagePersonalCreateFx
 >;
-

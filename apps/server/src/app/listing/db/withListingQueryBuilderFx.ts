@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import type { ListingMetaSchema } from "~/@user/listing/schema/ListingMetaSchema";
 import type { withListingCollectionSelectFx } from "~/app/listing/db/withListingCollectionSelectFx";
 import type { ListingFilterSchema } from "~/app/listing/schema/ListingFilterSchema";
+import type { ListingMetaSchema } from "~/app/listing/schema/ListingMetaSchema";
 import { withLikeEx } from "~/database/expression/withLikeEx";
 
 export namespace withListingQueryBuilderFx {

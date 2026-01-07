@@ -1,8 +1,7 @@
 import { genId } from "@use-pico/common/gen-id";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import type { FavouriteCreateSchema } from "~/@user/favourite/schema/FavouriteCreateSchema";
 import { favouriteFetchFx } from "~/app/favourite/fx/favouriteFetchFx";
+import type { FavouriteCreateSchema } from "~/app/favourite/schema/FavouriteCreateSchema";
 import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
@@ -56,4 +55,3 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 });
 
 export type favouriteCreateFx = ReturnType<typeof favouriteCreateFx>;
-

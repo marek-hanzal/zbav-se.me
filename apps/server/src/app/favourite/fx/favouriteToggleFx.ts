@@ -1,8 +1,7 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import type { FavouriteToggleSchema } from "~/@user/favourite/schema/FavouriteToggleSchema";
 import { favouriteCreateFx } from "~/app/favourite/fx/favouriteCreateFx";
 import { favouriteDeleteFx } from "~/app/favourite/fx/favouriteDeleteFx";
+import type { FavouriteToggleSchema } from "~/app/favourite/schema/FavouriteToggleSchema";
 import { listingCheckIfOwnFx } from "~/app/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/app/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
@@ -84,4 +83,3 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 });
 
 export type favouriteToggleFx = ReturnType<typeof favouriteToggleFx>;
-

@@ -1,8 +1,7 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import type { FlagToggleSchema } from "~/@user/flag/schema/FlagToggleSchema";
 import { flagCreateFx } from "~/app/flag/fx/flagCreateFx";
 import { flagDeleteFx } from "~/app/flag/fx/flagDeleteFx";
+import type { FlagToggleSchema } from "~/app/flag/schema/FlagToggleSchema";
 import { listingCheckIfOwnFx } from "~/app/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/app/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
@@ -82,4 +81,3 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 });
 
 export type flagToggleFx = ReturnType<typeof flagToggleFx>;
-

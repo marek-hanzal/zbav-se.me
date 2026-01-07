@@ -1,8 +1,7 @@
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import type { FeedPatchSchema } from "~/@user/feed/schema/FeedPatchSchema";
 import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
 import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
+import type { FeedPatchSchema } from "~/app/feed/schema/FeedPatchSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -49,4 +48,3 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 });
 
 export type feedPatchFx = ReturnType<typeof feedPatchFx>;
-

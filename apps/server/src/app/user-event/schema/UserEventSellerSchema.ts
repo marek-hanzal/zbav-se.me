@@ -1,11 +1,11 @@
 import { z } from "@hono/zod-openapi";
-import { UserEventSellerActivitySchema } from "~/@user/user-event/schema/UserEventSellerActivitySchema";
-import { UserEventSellerExpiredSchema } from "~/@user/user-event/schema/UserEventSellerExpiredSchema";
-import { UserEventSellerLoadSchema } from "~/@user/user-event/schema/UserEventSellerLoadSchema";
-import { UserEventSellerReactionSchema } from "~/@user/user-event/schema/UserEventSellerReactionSchema";
-import { UserEventSellerRejectedSchema } from "~/@user/user-event/schema/UserEventSellerRejectedSchema";
-import { UserEventSellerResolvedSchema } from "~/@user/user-event/schema/UserEventSellerResolvedSchema";
-import { UserEventSellerScoreSchema } from "~/@user/user-event/schema/UserEventSellerScoreSchema";
+import { UserEventSellerActivitySchema } from "./UserEventSellerActivitySchema";
+import { UserEventSellerExpiredSchema } from "./UserEventSellerExpiredSchema";
+import { UserEventSellerLoadSchema } from "./UserEventSellerLoadSchema";
+import { UserEventSellerReactionSchema } from "./UserEventSellerReactionSchema";
+import { UserEventSellerRejectedSchema } from "./UserEventSellerRejectedSchema";
+import { UserEventSellerResolvedSchema } from "./UserEventSellerResolvedSchema";
+import { UserEventSellerScoreSchema } from "./UserEventSellerScoreSchema";
 
 export const UserEventSellerSchema = z
 	.looseObject({

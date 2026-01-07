@@ -1,8 +1,7 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { zodFx } from "@use-pico/common/schema";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import { SellerInfoSchema } from "~/@user/listing/schema/SellerInfoSchema";
+import { SellerInfoSchema } from "~/app/listing/schema/SellerInfoSchema";
 import { userEventSellerInfoFx } from "~/app/user-event/fx/userEventSellerInfoFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
@@ -58,4 +57,3 @@ export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(functi
 });
 
 export type listingGetSellerInfoFx = ReturnType<typeof listingGetSellerInfoFx>;
-

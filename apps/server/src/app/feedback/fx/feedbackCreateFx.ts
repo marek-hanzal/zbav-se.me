@@ -1,7 +1,6 @@
 import { genId } from "@use-pico/common/gen-id";
-import type { AssertNever } from "@use-pico/common/type";
 import { Effect } from "effect";
-import type { FeedbackCreateSchema } from "~/@user/feedback/schema/FeedbackCreateSchema";
+import type { FeedbackCreateSchema } from "~/app/feedback/schema/FeedbackCreateSchema";
 import { listingCheckIfOwnFx } from "~/app/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/app/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
@@ -68,4 +67,3 @@ export const feedbackCreateFx = Effect.fn("feedbackCreateFx")(function* ({
 });
 
 export type feedbackCreateFx = ReturnType<typeof feedbackCreateFx>;
-
