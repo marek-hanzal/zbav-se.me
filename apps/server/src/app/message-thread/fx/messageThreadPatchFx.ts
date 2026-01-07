@@ -19,7 +19,7 @@ export const messageThreadPatchFx = Effect.fn("messageThreadPatchFx")(function* 
 	query,
 	scope,
 }: messageThreadPatchFx.Props) {
-	return withTransactionFx(
+	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
 
