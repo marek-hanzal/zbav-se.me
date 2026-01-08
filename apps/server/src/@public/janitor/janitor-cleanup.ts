@@ -4,8 +4,8 @@ import { Effect } from "effect";
 import { cleanupFx } from "~/@public/janitor/cleanup/cleanupFx";
 import { AppEnv } from "~/AppEnv";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { S3ContextProvider } from "~/app/s3/context/S3ContextFx";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { S3ContextLayer } from "~/app/s3/context/S3ContextLayer";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { CleanupSchema } from "./schema/CleanupSchema";
 
@@ -52,13 +52,15 @@ export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(func
 						200,
 					);
 				}).pipe(
-					KyselyContextProvider(c.get("kysely")),
-					S3ContextProvider({
-						api: AppEnv.SERVER_S3_API,
-						key: AppEnv.SERVER_S3_KEY,
-						secret: AppEnv.SERVER_S3_SECRET,
-						bucket: AppEnv.SERVER_S3_BUCKET,
-					}),
+					Effect.provide(KyselyContextLayer(c.get("kysely"))),
+					Effect.provide(
+						S3ContextLayer({
+							api: AppEnv.SERVER_S3_API,
+							key: AppEnv.SERVER_S3_KEY,
+							secret: AppEnv.SERVER_S3_SECRET,
+							bucket: AppEnv.SERVER_S3_BUCKET,
+						}),
+					),
 					Effect.runPromise,
 				);
 			} catch (e) {

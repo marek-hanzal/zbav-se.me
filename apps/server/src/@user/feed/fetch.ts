@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
 import { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { FeedSchema } from "./schema/FeedSchema";
 
@@ -74,7 +74,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				KyselyContextProvider(c.get("kysely")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

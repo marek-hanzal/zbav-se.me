@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { SeedRequestSchema, seedFx } from "~/@public/seed/fx/seedFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
@@ -81,7 +81,7 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 					201,
 				);
 			}).pipe(
-				KyselyContextProvider(c.get("kysely")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				TransactionContextProvider({
 					expires: 7,
 					extend: 3,

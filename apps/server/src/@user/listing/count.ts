@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { listingCountFx } from "~/app/listing/fx/listingCountFx";
 import { ListingCountQuerySchema } from "~/app/listing/schema/ListingCountQuerySchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -66,7 +66,7 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				KyselyContextProvider(c.get("kysely")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

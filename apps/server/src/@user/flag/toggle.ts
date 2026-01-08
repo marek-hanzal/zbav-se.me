@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
 import { flagToggleFx } from "~/app/flag/fx/flagToggleFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { FlagToggleSchema } from "./schema/FlagToggleSchema";
 
@@ -79,7 +79,7 @@ export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				KyselyContextProvider(c.get("kysely")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

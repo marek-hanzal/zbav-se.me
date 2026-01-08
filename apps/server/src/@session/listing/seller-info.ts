@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { SellerInfoSchema } from "~/@user/listing/schema/SellerInfoSchema";
 import { listingGetSellerInfoFx } from "~/app/listing/fx/listingGetSellerInfoFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 const ListingSellerInfoParamsSchema = z
@@ -74,7 +74,7 @@ export const withSellerInfoApiFx = Effect.fn("withSellerInfoApiFx")(function* ()
 					200,
 				);
 			}).pipe(
-				KyselyContextProvider(c.get("kysely")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

@@ -5,7 +5,7 @@ import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { transactionFetchFx } from "~/app/transaction/fx/transactionFetchFx";
 import { transactionGetBuyerInfoFx } from "~/app/transaction/fx/transactionGetBuyerInfoFx";
 import { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionBuyerInfoSchema } from "./schema/TransactionBuyerInfoSchema";
 
@@ -81,7 +81,7 @@ export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				KyselyContextProvider(c.get("kysely")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

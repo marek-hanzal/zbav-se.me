@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { transactionFetchFx } from "~/app/transaction/fx/transactionFetchFx";
 import { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionSchema } from "./schema/TransactionSchema";
 
@@ -74,7 +74,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				KyselyContextProvider(c.get("kysely")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

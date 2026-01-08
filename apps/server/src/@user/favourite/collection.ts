@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { favouriteCollectionFx } from "~/app/favourite/fx/favouriteCollectionFx";
 import { FavouriteQuerySchema } from "~/app/favourite/schema/FavouriteQuerySchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { FavouriteSchema } from "./schema/FavouriteSchema";
@@ -73,7 +73,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 					200,
 				);
 			}).pipe(
-				KyselyContextProvider(c.get("kysely")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

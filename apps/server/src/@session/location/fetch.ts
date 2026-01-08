@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { locationFetchFx } from "~/app/location/fx/locationFetchFx";
 import { LocationQuerySchema } from "~/app/location/schema/LocationQuerySchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { LocationSchema } from "./schema/LocationSchema";
 
@@ -70,7 +70,7 @@ export const withLocationFetchApiFx = Effect.fn("withLocationFetchApiFx")(functi
 					200,
 				);
 			}).pipe(
-				KyselyContextProvider(c.get("kysely")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

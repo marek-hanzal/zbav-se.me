@@ -3,7 +3,7 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { draftCreateFx } from "~/app/draft/fx/draftCreateFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { DraftCreateSchema } from "./schema/DraftCreateSchema";
 import { DraftSchema } from "./schema/DraftSchema";
@@ -81,7 +81,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					201,
 				);
 			}).pipe(
-				KyselyContextProvider(c.get("kysely")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

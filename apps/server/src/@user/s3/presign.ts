@@ -3,9 +3,9 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { AppEnv } from "~/AppEnv";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { S3ContextProvider } from "~/app/s3/context/S3ContextFx";
+import { S3ContextLayer } from "~/app/s3/context/S3ContextLayer";
 import { s3PreSignFx } from "~/app/s3/fx/s3PreSignFx";
-import { UploadContextProvider } from "~/app/upload/context/UploadContextFx";
+import { UploadContextLayer } from "~/app/upload/context/UploadContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { S3PreSignRequestSchema } from "./schema/S3PreSignRequestSchema";
 import { S3PreSignResponseSchema } from "./schema/S3PreSignResponseSchema";
@@ -69,15 +69,19 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				S3ContextProvider({
-					api: AppEnv.SERVER_S3_API,
-					key: AppEnv.SERVER_S3_KEY,
-					secret: AppEnv.SERVER_S3_SECRET,
-					bucket: AppEnv.SERVER_S3_BUCKET,
-				}),
-				UploadContextProvider({
-					cdn: AppEnv.SERVER_CONTENT_CDN,
-				}),
+				Effect.provide(
+					S3ContextLayer({
+						api: AppEnv.SERVER_S3_API,
+						key: AppEnv.SERVER_S3_KEY,
+						secret: AppEnv.SERVER_S3_SECRET,
+						bucket: AppEnv.SERVER_S3_BUCKET,
+					}),
+				),
+				Effect.provide(
+					UploadContextLayer({
+						cdn: AppEnv.SERVER_CONTENT_CDN,
+					}),
+				),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

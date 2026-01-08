@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { userEventSellerInfoFx } from "~/app/user-event/fx/userEventSellerInfoFx";
 import { UserEventSellerSchema } from "~/app/user-event/schema/UserEventSellerSchema";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 const UserEventSellerParamsSchema = z
@@ -74,7 +74,7 @@ export const withSellerApiFx = Effect.fn("withSellerApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				KyselyContextProvider(c.get("kysely")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

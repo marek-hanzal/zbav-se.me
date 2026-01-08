@@ -5,7 +5,7 @@ import { TransactionStatusSchema } from "~/@user/transaction-status/schema/Trans
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusSuccessFx } from "~/app/transaction-status/fx/transactionStatusSuccessFx";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionStatusSuccessSchema } from "./schema/TransactionStatusSuccessSchema";
 
@@ -90,7 +90,7 @@ export const withSuccessApiFx = Effect.fn("withSuccessApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				KyselyContextProvider(c.get("kysely")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				TransactionContextProvider(),
 				//
 				Effect.catchAll((e) => {

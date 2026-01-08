@@ -5,7 +5,7 @@ import { TransactionStatusSchema } from "~/@user/transaction-status/schema/Trans
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusRejectFx } from "~/app/transaction-status/fx/transactionStatusRejectFx";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionStatusRejectSchema } from "./schema/TransactionStatusRejectSchema";
 
@@ -81,7 +81,7 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				KyselyContextProvider(c.get("kysely")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				TransactionContextProvider(),
 				//
 				Effect.catchAll((e) => {

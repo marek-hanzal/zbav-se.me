@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { flagCollectionFx } from "~/app/flag/fx/flagCollectionFx";
 import { FlagQuerySchema } from "~/app/flag/schema/FlagQuerySchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { FlagSchema } from "./schema/FlagSchema";
@@ -72,7 +72,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 					200,
 				);
 			}).pipe(
-				KyselyContextProvider(c.get("kysely")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

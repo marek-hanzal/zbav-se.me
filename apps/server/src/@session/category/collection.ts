@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { categoryCollectionFx } from "~/app/category/fx/categoryCollectionFx";
 import { CategoryQuerySchema } from "~/app/category/schema/CategoryQuerySchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { CategorySchema } from "./schema/CategorySchema";
@@ -69,7 +69,7 @@ export const withCategoryCollectionApiFx = Effect.fn("withCategoryCollectionApiF
 					200,
 				);
 			}).pipe(
-				KyselyContextProvider(c.get("kysely")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

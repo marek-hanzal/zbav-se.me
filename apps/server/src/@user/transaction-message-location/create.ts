@@ -5,7 +5,7 @@ import { MessageLocationSchema } from "~/app/message-location/schema/MessageLoca
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
 import { transactionMessageLocationCreateFx } from "~/app/transaction-message-location/fx/transactionMessageLocationCreateFx";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionMessageLocationCreateSchema } from "./schema/TransactionMessageLocationCreateSchema";
 
@@ -91,7 +91,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				KyselyContextProvider(c.get("kysely")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				TransactionContextProvider(),
 				//
 				Effect.catchAll((e) => {

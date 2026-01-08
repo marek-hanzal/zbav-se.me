@@ -5,7 +5,7 @@ import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
 import { listingFetchFx } from "~/app/listing/fx/listingFetchFx";
 import { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
@@ -75,7 +75,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				KyselyContextProvider(c.get("kysely")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
