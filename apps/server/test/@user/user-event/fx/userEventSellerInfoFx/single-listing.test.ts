@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { AppEnv } from "~/AppEnv";
 import { categoryFetchFx } from "~/app/category/fx/categoryFetchFx";
 import { listingCreateFx } from "~/app/listing/fx/listingCreateFx";
 import { LocationContextProvider } from "~/app/location/context/LocationContextFx";
@@ -71,9 +72,9 @@ describe("userEventSellerInfoFx", () => {
 			}).pipe(
 				KyselyContextProvider(database),
 				LocationContextProvider({
-					api: "",
-					autocomplete: "",
-					geoapifyToken: "",
+					api: "https://api.geoapify.com",
+					autocomplete: "/v1/geocode/autocomplete",
+					geoapifyToken: AppEnv.SERVER_GEOAPIFY_TOKEN,
 				}),
 				UploadContextProvider({
 					cdn: "https://cdn.zbav-se.me",
