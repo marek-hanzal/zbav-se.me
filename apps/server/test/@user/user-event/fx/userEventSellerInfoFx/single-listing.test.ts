@@ -28,62 +28,61 @@ describe("userEventSellerInfoFx", () => {
 			},
 		});
 
-		const result = await Effect.runPromise(
-			Effect.gen(function* () {
-				const category = yield* categoryFetchFx({
-					where: {
-						slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
-					},
-					scope: {},
-				});
+		const result = await Effect.gen(function* () {
+			const category = yield* categoryFetchFx({
+				where: {
+					slug: "pocitace-a-kancelar--uloziste-ssd-hdd",
+				},
+				scope: {},
+			});
 
-				const location = yield* locationAutocompleteFx({
-					lang: "cs",
-					text: "Praha",
-					limit: 1,
-				});
+			const location = yield* locationAutocompleteFx({
+				lang: "cs",
+				text: "Praha",
+				limit: 1,
+			});
 
-				expect(location).toHaveLength(1);
+			expect(location).toHaveLength(1);
 
-				const upload = yield* uploadCreateFx({
-					url: "https://cdn.zbav-se.me/test.jpg",
-					userId: seller.id,
-				});
+			const upload = yield* uploadCreateFx({
+				url: "https://cdn.zbav-se.me/test.jpg",
+				userId: seller.id,
+			});
 
-				yield* listingCreateFx({
-					age: 1,
-					condition: 1,
-					categoryId: category.id,
-					expiresAt: "1-month",
-					// biome-ignore lint/style/noNonNullAssertion: We've test assertion
-					locationId: location[0]!.id,
-					price: 100,
-					priceType: "open",
-					title: "Some piece of crap",
-					uploadIds: [
-						upload.id,
-					],
-					userId: seller.id,
-				});
+			yield* listingCreateFx({
+				age: 1,
+				condition: 1,
+				categoryId: category.id,
+				expiresAt: "1-month",
+				// biome-ignore lint/style/noNonNullAssertion: We've test assertion
+				locationId: location[0]!.id,
+				price: 100,
+				priceType: "open",
+				title: "Some piece of crap",
+				uploadIds: [
+					upload.id,
+				],
+				userId: seller.id,
+			});
 
-				return yield* userEventSellerInfoFx({
-					userId: seller.id,
-				});
-			}).pipe(
-				Effect.provide(KyselyContextLayer(database)),
-				Effect.provide(
-					LocationContextLayer({
-						api: "https://api.geoapify.com",
-						autocomplete: "/v1/geocode/autocomplete",
-						geoapifyToken: AppEnv.SERVER_GEOAPIFY_TOKEN,
-					}),
-				),
-				Effect.provide(
-					UploadContextLayer({
-						cdn: "https://cdn.zbav-se.me",
-					}),
-				),
+			return yield* userEventSellerInfoFx({
+				userId: seller.id,
+			});
+		}).pipe(
+			Effect.provide(KyselyContextLayer(database)),
+			Effect.provide(
+				LocationContextLayer({
+					api: "https://api.geoapify.com",
+					autocomplete: "/v1/geocode/autocomplete",
+					geoapifyToken: AppEnv.SERVER_GEOAPIFY_TOKEN,
+				}),
 			),
+			Effect.provide(
+				UploadContextLayer({
+					cdn: "https://cdn.zbav-se.me",
+				}),
+			),
+			Effect.runPromise,
 		);
 
 		expect(result).toBeNull();
