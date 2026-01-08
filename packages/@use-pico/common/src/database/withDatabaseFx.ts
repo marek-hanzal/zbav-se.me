@@ -33,37 +33,41 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <TDatabase>(
 
 	let kyselyInstance: Kysely<TDatabase> | null = null;
 
+	const kysely = () => {
+		if (kyselyInstance) {
+			return kyselyInstance;
+		}
+
+		return (kyselyInstance = new Kysely<TDatabase>({
+			dialect,
+			log(log) {
+				switch (log.level) {
+					case "error": {
+						console.error(log.error);
+						break;
+					}
+					case "query": {
+						// console.log(log.query.sql);
+						break;
+					}
+				}
+			},
+		}));
+	};
+
 	return {
 		dialect,
 		get kysely() {
-			if (kyselyInstance) {
-				return kyselyInstance;
-			}
-
-			return (kyselyInstance = new Kysely<TDatabase>({
-				dialect: this.dialect,
-				log(log) {
-					switch (log.level) {
-						case "error": {
-							console.error(log.error);
-							break;
-						}
-						case "query": {
-							// console.log(log.query.sql);
-							break;
-						}
-					}
-				},
-			}));
+			return kysely();
 		},
 		async migrate() {
 			await onPreMigration?.({
-				dialect: this.dialect,
-				kysely: this.kysely,
+				dialect,
+				kysely: kysely(),
 			});
 
 			const migrator = new Migrator({
-				db: this.kysely,
+				db: kysely(),
 				provider: {
 					getMigrations: async () => migrations,
 				},
@@ -88,8 +92,8 @@ export const withDatabaseFx = Effect.fn("withDatabaseFx")(function* <TDatabase>(
 			});
 
 			await onPostMigration?.({
-				dialect: this.dialect,
-				kysely: this.kysely,
+				dialect,
+				kysely: kysely(),
 			});
 
 			return results;
