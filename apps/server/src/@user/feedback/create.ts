@@ -116,11 +116,11 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 								{
 									_tag: "ZodErrorFx",
 								},
-								() => {
+								({ zod }) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: z.prettifyError(zod),
 										},
 										500,
 									);

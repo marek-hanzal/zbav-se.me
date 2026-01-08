@@ -1,4 +1,4 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { ignoreCountFx } from "~/app/ignore/fx/ignoreCountFx";
@@ -74,11 +74,11 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 								{
 									_tag: "ZodErrorFx",
 								},
-								(err) => {
+								({ zod }) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: err.message,
+											message: z.prettifyError(zod),
 										},
 										500,
 									);
