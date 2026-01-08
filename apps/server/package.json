@@ -10,6 +10,8 @@
 	},
 	"dependencies": {
 		"@better-auth/passkey": "1.4.10",
+		"@effect/platform": "0.94.1",
+		"@effect/platform-node": "0.104.0",
 		"@hono/zod-openapi": "1.2.0",
 		"@scalar/hono-api-reference": "0.9.30",
 		"@use-pico/common": "workspace:*",
