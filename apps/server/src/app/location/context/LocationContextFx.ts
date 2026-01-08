@@ -1,4 +1,4 @@
-import { Context, Effect } from "effect";
+import { Context } from "effect";
 
 export interface LocationContext {
 	geoapifyToken: string;
@@ -18,7 +18,3 @@ export class LocationContextFx extends Context.Tag("LocationContextFx")<
 >() {
 	//
 }
-
-export const LocationContextProvider = (context: LocationContext) => {
-	return Effect.provideService(LocationContextFx, context);
-};

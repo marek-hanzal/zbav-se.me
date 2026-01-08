@@ -1,4 +1,4 @@
-import { Context, Effect } from "effect";
+import { Context } from "effect";
 
 export interface UploadContext {
 	/**
@@ -13,7 +13,3 @@ export class UploadContextFx extends Context.Tag("UploadContextFx")<
 >() {
 	//
 }
-
-export const UploadContextProvider = (context: UploadContext) => {
-	return Effect.provideService(UploadContextFx, context);
-};

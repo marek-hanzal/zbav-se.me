@@ -1,15 +1,16 @@
-import { DialectContextProvider } from "@use-pico/common/database";
+import { DialectContextLayer } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
 import { AppEnv } from "~/AppEnv";
+import { RoutesContextLayer } from "~/app/routes/RoutesContextLayer";
+import { KyselyContextLayerFx } from "~/database/context/KyselyContextLayerFx";
 import { initMiddlewareFx } from "~/init/initMiddlewareFx";
 import { withPublicApiFx } from "./@public/withPublicApiFx";
 import { withRootApi } from "./@root/withRootApi";
 import { withSessionApiFx } from "./@session/withSessionApiFx";
 import { withUserApiFx } from "./@user/withUserApiFx";
-import { RoutesContextFx, RoutesContextProvider } from "./app/routes/RoutesContextFx";
-import { KyselyContextProvider } from "./database/context/KyselyContextFx";
+import { RoutesContextFx } from "./app/routes/RoutesContextFx";
 import { database } from "./database/kysely";
 import { withHono } from "./hono/withHono";
 import { withSessionHono } from "./hono/withSessionHono";
@@ -32,16 +33,6 @@ const app = await Effect.gen(function* () {
 		);
 	});
 
-	const databaseInstance = yield* database.pipe(
-		DialectContextProvider(
-			new PostgresDialect({
-				pool: new Pool({
-					connectionString: AppEnv.SERVER_DATABASE_URL,
-					max: 3,
-				}),
-			}),
-		),
-	);
 	yield* initMiddlewareFx();
 
 	yield* Effect.all([
@@ -49,16 +40,35 @@ const app = await Effect.gen(function* () {
 		withPublicApiFx(),
 		withSessionApiFx(),
 		withUserApiFx(),
-	]).pipe(KyselyContextProvider(databaseInstance));
+	]).pipe(
+		Effect.provide(
+			KyselyContextLayerFx(
+				database.pipe(
+					Effect.provide(
+						DialectContextLayer(
+							new PostgresDialect({
+								pool: new Pool({
+									connectionString: AppEnv.SERVER_DATABASE_URL,
+									max: 3,
+								}),
+							}),
+						),
+					),
+				),
+			),
+		),
+	);
 
 	return root;
 }).pipe(
-	RoutesContextProvider({
-		root: withHono(),
-		publicHono: withHono(),
-		sessionHono: withSessionHono(),
-		userHono: withUserHono(),
-	}),
+	Effect.provide(
+		RoutesContextLayer({
+			root: withHono(),
+			publicHono: withHono(),
+			sessionHono: withSessionHono(),
+			userHono: withUserHono(),
+		}),
+	),
 	Effect.runPromise,
 );
 

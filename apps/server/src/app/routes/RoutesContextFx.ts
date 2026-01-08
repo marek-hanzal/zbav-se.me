@@ -1,4 +1,4 @@
-import { Context, Effect } from "effect";
+import { Context } from "effect";
 import type { withHono } from "~/hono/withHono";
 import type { withSessionHono } from "~/hono/withSessionHono";
 import type { withUserHono } from "~/hono/withUserHono";
@@ -32,7 +32,3 @@ export class RoutesContextFx extends Context.Tag("RoutesContextFx")<
 >() {
 	//
 }
-
-export const RoutesContextProvider = (context: RoutesContext) => {
-	return Effect.provideService(RoutesContextFx, context);
-};

@@ -1,11 +1,11 @@
 import net from "node:net";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { DialectContextLayer } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import { Client, Pool } from "pg";
 import { database } from "~/database/kysely";
-import { DialectContextProvider } from "../../../packages/@use-pico/common/src/database/DialectContextFx";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 
@@ -149,12 +149,14 @@ export default async function globalSetup(): Promise<SetupResult> {
 
 		yield* Effect.promise(async () => kysely.destroy());
 	}).pipe(
-		DialectContextProvider(
-			new PostgresDialect({
-				pool: new Pool({
-					connectionString: `${DATABASE_URL}/test`,
+		Effect.provide(
+			DialectContextLayer(
+				new PostgresDialect({
+					pool: new Pool({
+						connectionString: `${DATABASE_URL}/test`,
+					}),
 				}),
-			}),
+			),
 		),
 		Effect.runPromise,
 	);

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { userEventSellerInfoFx } from "~/app/user-event/fx/userEventSellerInfoFx";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { testabase } from "../../../../testabase";
 
 describe("userEventSellerInfoFx", () => {
@@ -13,7 +13,7 @@ describe("userEventSellerInfoFx", () => {
 				return yield* userEventSellerInfoFx({
 					userId: "test-user-id",
 				});
-			}).pipe(KyselyContextProvider(kysely)),
+			}).pipe(Effect.provide(KyselyContextLayer(kysely))),
 		);
 
 		expect(result).toBeNull();

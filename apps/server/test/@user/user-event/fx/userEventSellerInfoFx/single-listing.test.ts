@@ -3,13 +3,13 @@ import { describe, expect, it } from "vitest";
 import { AppEnv } from "~/AppEnv";
 import { categoryFetchFx } from "~/app/category/fx/categoryFetchFx";
 import { listingCreateFx } from "~/app/listing/fx/listingCreateFx";
-import { LocationContextProvider } from "~/app/location/context/LocationContextFx";
+import { LocationContextLayer } from "~/app/location/context/LocationContextLayer";
 import { locationAutocompleteFx } from "~/app/location/fx/locationAutocompleteFx";
-import { UploadContextProvider } from "~/app/upload/context/UploadContextFx";
+import { UploadContextLayer } from "~/app/upload/context/UploadContextLayer";
 import { uploadCreateFx } from "~/app/upload/fx/uploadCreateFx";
 import { userEventSellerInfoFx } from "~/app/user-event/fx/userEventSellerInfoFx";
 import { auth } from "~/auth/auth";
-import { KyselyContextProvider } from "~/database/context/KyselyContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { testabase } from "../../../../testabase";
 
 describe("userEventSellerInfoFx", () => {
@@ -70,15 +70,19 @@ describe("userEventSellerInfoFx", () => {
 					userId: seller.id,
 				});
 			}).pipe(
-				KyselyContextProvider(database),
-				LocationContextProvider({
-					api: "https://api.geoapify.com",
-					autocomplete: "/v1/geocode/autocomplete",
-					geoapifyToken: AppEnv.SERVER_GEOAPIFY_TOKEN,
-				}),
-				UploadContextProvider({
-					cdn: "https://cdn.zbav-se.me",
-				}),
+				Effect.provide(KyselyContextLayer(database)),
+				Effect.provide(
+					LocationContextLayer({
+						api: "https://api.geoapify.com",
+						autocomplete: "/v1/geocode/autocomplete",
+						geoapifyToken: AppEnv.SERVER_GEOAPIFY_TOKEN,
+					}),
+				),
+				Effect.provide(
+					UploadContextLayer({
+						cdn: "https://cdn.zbav-se.me",
+					}),
+				),
 			),
 		);
 
