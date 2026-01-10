@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-import type { DateTime } from "luxon";
 import { messageSystemCreateFx } from "~/app/message-system/fx/messageSystemCreateFx";
 import { transactionPatchFx } from "~/app/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/app/transaction/fx/transactionResolveFx";
@@ -11,14 +10,12 @@ import { RuntimeError } from "~/error/RuntimeError";
 export namespace transactionStatusAcceptFx {
 	export interface Props extends TransactionStatusAcceptSchema.Type {
 		userId: string;
-		createdAt?: DateTime;
 	}
 }
 
 export const transactionStatusAcceptFx = Effect.fn("transactionStatusAcceptFx")(function* ({
 	userId,
 	transactionId,
-	createdAt,
 }: transactionStatusAcceptFx.Props) {
 	const transaction = yield* transactionResolveFx({
 		userId,
@@ -40,7 +37,6 @@ export const transactionStatusAcceptFx = Effect.fn("transactionStatusAcceptFx")(
 				id: transaction.id,
 			},
 		},
-		updatedAt: createdAt,
 		scope: {
 			userId,
 		},
@@ -49,8 +45,7 @@ export const transactionStatusAcceptFx = Effect.fn("transactionStatusAcceptFx")(
 	yield* messageSystemCreateFx({
 		userId,
 		messageThreadId: transaction.messageThreadId,
-		message: "Seller accepted the transaction (message)",
-		createdAt,
+		text: "Seller accepted the transaction (message)",
 	});
 
 	yield* userInteractionEventFx({
@@ -68,7 +63,6 @@ export const transactionStatusAcceptFx = Effect.fn("transactionStatusAcceptFx")(
 		listingId: transaction.listingId,
 		status: "open",
 		side: transaction.side,
-		createdAt,
 	});
 });
 

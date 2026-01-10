@@ -1,7 +1,7 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { keyOf } from "@use-pico/common/key-of";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import type { UserEventCreateSchema } from "~/app/user-event/schema/UserEventCreateSchema";
 import type { UserEventEnumSchema } from "~/app/user-event/schema/UserEventEnumSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
@@ -14,19 +14,18 @@ const ignored: UserEventEnumSchema.Type[] = [
 export namespace userEventCreateFx {
 	export interface Props extends UserEventCreateSchema.Type {
 		userId: string;
-		createdAt?: DateTime;
 	}
 }
 
 export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 	userId,
-	createdAt,
 	group,
 	...data
 }: userEventCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
+			const dateContext = yield* DateContextFx;
 
 			if (ignored.includes(data.event)) {
 				return yield* Effect.void;
@@ -40,7 +39,7 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 						id: genId(),
 						group: keyOf(group),
 						userId,
-						createdAt: (createdAt ?? DateTime.now()).toJSDate(),
+						createdAt: dateContext.now().toJSDate(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();

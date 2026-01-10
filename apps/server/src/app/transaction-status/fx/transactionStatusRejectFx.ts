@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-import type { DateTime } from "luxon";
 import { messageSystemCreateFx } from "~/app/message-system/fx/messageSystemCreateFx";
 import { transactionPatchFx } from "~/app/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/app/transaction/fx/transactionResolveFx";
@@ -10,14 +9,12 @@ import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEvent
 export namespace transactionStatusRejectFx {
 	export interface Props extends TransactionStatusRejectSchema.Type {
 		userId: string;
-		createdAt?: DateTime;
 	}
 }
 
 export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(function* ({
 	userId,
 	transactionId,
-	createdAt,
 }: transactionStatusRejectFx.Props) {
 	const transaction = yield* transactionResolveFx({
 		userId,
@@ -33,7 +30,6 @@ export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(
 				id: transaction.id,
 			},
 		},
-		updatedAt: createdAt,
 		scope: {
 			userId,
 		},
@@ -42,11 +38,10 @@ export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(
 	yield* messageSystemCreateFx({
 		userId,
 		messageThreadId: transaction.messageThreadId,
-		message:
+		text:
 			transaction.side === "buyer"
 				? "Buyer rejected the transaction (message)"
 				: "Seller rejected the transaction (message)",
-		createdAt,
 	});
 
 	yield* userInteractionEventFx({
@@ -64,7 +59,6 @@ export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(
 		listingId: transaction.listingId,
 		status: "rejected",
 		side: transaction.side,
-		createdAt,
 	});
 });
 

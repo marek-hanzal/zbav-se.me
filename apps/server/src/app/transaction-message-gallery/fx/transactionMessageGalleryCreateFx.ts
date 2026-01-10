@@ -1,5 +1,5 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import { galleryCreateFx } from "~/app/gallery/fx/galleryCreateFx";
 import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
 import { messageGalleryCreateFx } from "~/app/message-gallery/fx/messageGalleryCreateFx";
@@ -14,21 +14,16 @@ import { InvalidRequestError } from "~/error/InvalidRequestError";
 export namespace transactionMessageGalleryCreateFx {
 	export interface Props extends TransactionMessageGalleryCreateSchema.Type {
 		userId: string;
-		createdAt?: DateTime;
 	}
 }
 
 export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGalleryCreateFx")(
-	function* ({
-		userId,
-		transactionId,
-		uploadIds,
-		createdAt,
-	}: transactionMessageGalleryCreateFx.Props) {
+	function* ({ userId, transactionId, uploadIds }: transactionMessageGalleryCreateFx.Props) {
 		return yield* withTransactionFx(
 			Effect.gen(function* () {
 				const { kysely } = yield* KyselyContextFx;
 				const config = yield* TransactionContextFx;
+				const dateContext = yield* DateContextFx;
 
 				if (uploadIds.length === 0) {
 					return yield* new InvalidRequestError({
@@ -45,7 +40,7 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 					],
 				});
 
-				const now = createdAt ?? DateTime.now();
+				const now = dateContext.now();
 
 				yield* Effect.promise(async () => {
 					return kysely
@@ -80,7 +75,6 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 						uploadId,
 						sort,
 						userId,
-						createdAt,
 					});
 					sort++;
 				}
@@ -93,14 +87,12 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 					group: transaction.id,
 					event: "transaction.message",
 					isTerminal: false,
-					createdAt,
 				});
 
 				return yield* messageGalleryCreateFx({
 					userId,
 					messageThreadId: transaction.messageThreadId,
 					galleryId: gallery.id,
-					createdAt,
 				});
 			}),
 		);

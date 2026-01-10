@@ -5,7 +5,7 @@ export const MessageSystemCreateSchema = z
 		messageThreadId: z.string().openapi({
 			description: "The ID of the message thread to add a system message to",
 		}),
-		message: z.string().openapi({
+		text: z.string().openapi({
 			description: "The message content",
 		}),
 	})

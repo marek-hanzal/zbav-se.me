@@ -1,5 +1,5 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import { messageLocationCreateFx } from "~/app/message-location/fx/messageLocationCreateFx";
 import { TransactionContextFx } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/app/transaction/fx/transactionStatusGateFx";
@@ -11,21 +11,16 @@ import { withTransactionFx } from "~/database/fx/withTransactionFx";
 export namespace transactionMessageLocationCreateFx {
 	export interface Props extends TransactionMessageLocationCreateSchema.Type {
 		userId: string;
-		createdAt?: DateTime;
 	}
 }
 
 export const transactionMessageLocationCreateFx = Effect.fn("transactionMessageLocationCreateFx")(
-	function* ({
-		userId,
-		transactionId,
-		locationId,
-		createdAt,
-	}: transactionMessageLocationCreateFx.Props) {
+	function* ({ userId, transactionId, locationId }: transactionMessageLocationCreateFx.Props) {
 		return yield* withTransactionFx(
 			Effect.gen(function* () {
 				const { kysely } = yield* KyselyContextFx;
 				const config = yield* TransactionContextFx;
+				const dateContext = yield* DateContextFx;
 
 				const transaction = yield* transactionStatusGateFx({
 					userId,
@@ -36,7 +31,7 @@ export const transactionMessageLocationCreateFx = Effect.fn("transactionMessageL
 					],
 				});
 
-				const now = createdAt ?? DateTime.now();
+				const now = dateContext.now();
 
 				yield* Effect.promise(async () => {
 					return kysely
@@ -61,14 +56,12 @@ export const transactionMessageLocationCreateFx = Effect.fn("transactionMessageL
 					group: transaction.id,
 					event: "transaction.message",
 					isTerminal: false,
-					createdAt,
 				});
 
 				return yield* messageLocationCreateFx({
 					userId,
 					messageThreadId: transaction.messageThreadId,
 					locationId,
-					createdAt,
 				});
 			}),
 		);

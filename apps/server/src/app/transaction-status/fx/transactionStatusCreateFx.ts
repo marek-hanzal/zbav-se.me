@@ -1,6 +1,6 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import { transactionPatchFx } from "~/app/transaction/fx/transactionPatchFx";
 import { transactionStatusFetchFx } from "~/app/transaction-status/fx/transactionStatusFetchFx";
 import type { TransactionStatusCreateSchema } from "~/app/transaction-status/schema/TransactionStatusCreateSchema";
@@ -10,18 +10,18 @@ export namespace transactionStatusCreateFx {
 	export interface Props extends TransactionStatusCreateSchema.Type {
 		userId: string;
 		listingId: string;
-		createdAt?: DateTime;
 	}
 }
 
 export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(function* ({
 	userId,
-	createdAt,
 	...create
 }: transactionStatusCreateFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
+	const dateContext = yield* DateContextFx;
 
 	const id = genId();
+	const now = dateContext.now();
 
 	yield* Effect.promise(async () => {
 		return kysely
@@ -30,7 +30,7 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 				...create,
 				id,
 				userId,
-				createdAt: (createdAt ?? DateTime.now()).toJSDate(),
+				createdAt: now.toJSDate(),
 			})
 			.returningAll()
 			.executeTakeFirstOrThrow();
@@ -44,7 +44,6 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 				id: create.transactionId,
 			},
 		},
-		updatedAt: createdAt ?? DateTime.now(),
 		scope: {
 			userId,
 		},

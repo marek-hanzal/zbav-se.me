@@ -1,3 +1,4 @@
+import { DateContextLayer } from "@use-pico/common/date";
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
@@ -69,28 +70,49 @@ export const t00_initial = Effect.fn("t00_initial")(function* ({
 				return transactionStatusAcceptFx({
 					userId: current.id,
 					transactionId: transactionId.id,
-					createdAt: DateTime.fromJSDate(transaction.createdAt).plus({
-						minute: rangedom(fromMinutes, toMinutes),
-					}),
-				});
+				}).pipe(
+					Effect.provide(
+						DateContextLayer({
+							now() {
+								return DateTime.fromJSDate(transaction.createdAt).plus({
+									minute: rangedom(fromMinutes, toMinutes),
+								});
+							},
+						}),
+					),
+				);
 			})
 			.with("reject-seller", () => {
 				return transactionStatusRejectFx({
 					userId: current.id,
 					transactionId: transactionId.id,
-					createdAt: DateTime.fromJSDate(transaction.createdAt).plus({
-						minute: rangedom(fromMinutes, toMinutes),
-					}),
-				});
+				}).pipe(
+					Effect.provide(
+						DateContextLayer({
+							now() {
+								return DateTime.fromJSDate(transaction.createdAt).plus({
+									minute: rangedom(fromMinutes, toMinutes),
+								});
+							},
+						}),
+					),
+				);
 			})
 			.with("reject-buyer", () => {
 				return transactionStatusRejectFx({
 					userId: current.id,
 					transactionId: transactionId.id,
-					createdAt: DateTime.fromJSDate(transaction.createdAt).plus({
-						minute: rangedom(fromMinutes, toMinutes),
-					}),
-				});
+				}).pipe(
+					Effect.provide(
+						DateContextLayer({
+							now() {
+								return DateTime.fromJSDate(transaction.createdAt).plus({
+									minute: rangedom(fromMinutes, toMinutes),
+								});
+							},
+						}),
+					),
+				);
 			})
 			.exhaustive();
 	}

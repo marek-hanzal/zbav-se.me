@@ -1,5 +1,5 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import type { ListingEventEnumSchema } from "~/app/listing-event/schema/ListingEventEnumSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { TooManyRequests } from "~/error/TooManyRequests";
@@ -9,7 +9,6 @@ export namespace listingEventRateLimitFx {
 		listingId: string;
 		event: ListingEventEnumSchema.Type;
 		minutes?: number;
-		createdAt?: DateTime;
 	}
 }
 
@@ -17,9 +16,9 @@ export const listingEventRateLimitFx = Effect.fn("listingEventRateLimitFx")(func
 	listingId,
 	event,
 	minutes = 10,
-	createdAt,
 }: listingEventRateLimitFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
+	const dateContext = yield* DateContextFx;
 
 	const listingEvent = yield* Effect.promise(async () => {
 		return kysely
@@ -30,7 +29,8 @@ export const listingEventRateLimitFx = Effect.fn("listingEventRateLimitFx")(func
 			.where(
 				"createdAt",
 				">=",
-				(createdAt ?? DateTime.now())
+				dateContext
+					.now()
 					.minus({
 						minutes,
 					})

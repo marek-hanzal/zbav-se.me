@@ -1,6 +1,6 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import { listingCheckIfOwnFx } from "~/app/listing/fx/listingCheckIfOwnFx";
 import { listingEventRateLimitFx } from "~/app/listing-event/fx/listingEventRateLimitFx";
 import type { ListingEventCreateSchema } from "~/app/listing-event/schema/ListingEventCreateSchema";
@@ -10,7 +10,6 @@ import { withTransactionFx } from "~/database/fx/withTransactionFx";
 export namespace listingEventCreateFx {
 	export interface Props extends ListingEventCreateSchema.Type {
 		userId: string;
-		createdAt?: DateTime;
 	}
 }
 
@@ -18,11 +17,11 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 	userId,
 	listingId,
 	event,
-	createdAt,
 }: listingEventCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
+			const dateContext = yield* DateContextFx;
 
 			yield* listingCheckIfOwnFx({
 				userId,
@@ -30,10 +29,11 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 				message: "You cannot generate event on your own listing.",
 			});
 
+			const now = dateContext.now();
+
 			yield* listingEventRateLimitFx({
 				listingId,
 				event,
-				createdAt,
 			});
 
 			return yield* Effect.promise(async () => {
@@ -43,7 +43,7 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 						id: genId(),
 						listingId,
 						event,
-						createdAt: (createdAt ?? DateTime.now()).toJSDate(),
+						createdAt: now.toJSDate(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();

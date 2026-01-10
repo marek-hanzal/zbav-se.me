@@ -1,7 +1,7 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
 import { messageSystemCreateFx } from "~/app/message-system/fx/messageSystemCreateFx";
 import { messageThreadCreateFx } from "~/app/message-thread/fx/messageThreadCreateFx";
@@ -17,13 +17,11 @@ import { withTransactionFx } from "~/database/fx/withTransactionFx";
 export namespace transactionCreateFx {
 	export interface Props extends TransactionCreateSchema.Type {
 		userId: string;
-		createdAt?: DateTime;
 	}
 }
 
 export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 	userId,
-	createdAt,
 	listingId,
 	...data
 }: transactionCreateFx.Props) {
@@ -31,6 +29,7 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
 			const config = yield* TransactionContextFx;
+			const dateContext = yield* DateContextFx;
 
 			const listing = yield* Effect.promise(async () => {
 				return kysely
@@ -52,6 +51,7 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 			}
 
 			const messageThread = yield* messageThreadCreateFx({});
+			const now = dateContext.now();
 
 			yield* messageUserCreateFx({
 				messageThreadId: messageThread.id,
@@ -65,7 +65,6 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 					 */
 					listing.userId,
 				],
-				createdAt,
 			});
 
 			const id = genId();
@@ -79,9 +78,9 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 						userId,
 						listingId,
 						messageThreadId: messageThread.id,
-						createdAt: (createdAt ?? DateTime.now()).toJSDate(),
-						updatedAt: (createdAt ?? DateTime.now()).toJSDate(),
-						expiresAt: (createdAt ?? DateTime.now())
+						createdAt: now.toJSDate(),
+						updatedAt: now.toJSDate(),
+						expiresAt: now
 							.plus({
 								days: config.expires,
 							})
@@ -97,21 +96,18 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 				listingId,
 				side: "buyer",
 				status: "pending",
-				createdAt,
 			});
 
 			yield* listingEventCreateFx({
 				userId,
 				listingId,
 				event: "transaction",
-				createdAt,
 			}).pipe(Effect.ignore);
 
 			yield* messageSystemCreateFx({
 				userId,
 				messageThreadId: messageThread.id,
-				message: "Transaction pending (message)",
-				createdAt,
+				text: "Transaction pending (message)",
 			});
 
 			yield* userInteractionEventFx({

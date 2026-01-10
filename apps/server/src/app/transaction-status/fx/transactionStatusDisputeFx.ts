@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-import type { DateTime } from "luxon";
 import { messageSystemCreateFx } from "~/app/message-system/fx/messageSystemCreateFx";
 import { transactionPatchFx } from "~/app/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/app/transaction/fx/transactionResolveFx";
@@ -9,14 +8,12 @@ import type { TransactionStatusDisputeSchema } from "~/app/transaction-status/sc
 export namespace transactionStatusDisputeFx {
 	export interface Props extends TransactionStatusDisputeSchema.Type {
 		userId: string;
-		createdAt?: DateTime;
 	}
 }
 
 export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx")(function* ({
 	userId,
 	transactionId,
-	createdAt,
 }: transactionStatusDisputeFx.Props) {
 	const transaction = yield* transactionResolveFx({
 		userId,
@@ -32,7 +29,6 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 				id: transaction.id,
 			},
 		},
-		updatedAt: createdAt,
 		scope: {
 			userId,
 		},
@@ -41,8 +37,7 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 	yield* messageSystemCreateFx({
 		userId,
 		messageThreadId: transaction.messageThreadId,
-		message: "Transaction dispute (message)",
-		createdAt,
+		text: "Transaction dispute (message)",
 	});
 
 	return yield* transactionStatusCreateFx({
@@ -51,7 +46,6 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 		listingId: transaction.listingId,
 		status: "dispute",
 		side: transaction.side,
-		createdAt,
 	});
 });
 

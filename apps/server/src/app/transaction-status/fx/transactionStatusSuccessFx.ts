@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-import type { DateTime } from "luxon";
 import { messageSystemCreateFx } from "~/app/message-system/fx/messageSystemCreateFx";
 import { transactionPatchFx } from "~/app/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/app/transaction/fx/transactionResolveFx";
@@ -12,14 +11,12 @@ import { InvalidRequestError } from "~/error/InvalidRequestError";
 export namespace transactionStatusSuccessFx {
 	export interface Props extends TransactionStatusSuccessSchema.Type {
 		userId: string;
-		createdAt?: DateTime;
 	}
 }
 
 export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx")(function* ({
 	userId,
 	transactionId,
-	createdAt,
 }: transactionStatusSuccessFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
@@ -43,7 +40,6 @@ export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx"
 						id: transaction.id,
 					},
 				},
-				updatedAt: createdAt,
 				scope: {
 					userId,
 				},
@@ -52,8 +48,7 @@ export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx"
 			yield* messageSystemCreateFx({
 				userId,
 				messageThreadId: transaction.messageThreadId,
-				message: "Transaction successful (message)",
-				createdAt,
+				text: "Transaction successful (message)",
 			});
 
 			yield* userInteractionEventFx({
@@ -63,7 +58,6 @@ export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx"
 				group: transaction.id,
 				event: "transaction.success",
 				isTerminal: true,
-				createdAt,
 			});
 
 			return yield* transactionStatusCreateFx({
@@ -72,7 +66,6 @@ export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx"
 				listingId: transaction.listingId,
 				status: "success",
 				side: transaction.side,
-				createdAt,
 			});
 		}),
 	);

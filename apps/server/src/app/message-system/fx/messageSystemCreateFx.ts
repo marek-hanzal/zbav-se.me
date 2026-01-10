@@ -1,29 +1,27 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import { messageSystemFetchFx } from "~/app/message-system/fx/messageSystemFetchFx";
+import type { MessageSystemCreateSchema } from "~/app/message-system/schema/MessageSystemCreateSchema";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace messageSystemCreateFx {
-	export interface Props {
+	export interface Props extends MessageSystemCreateSchema.Type {
 		userId: string;
-		messageThreadId: string;
-		message: string;
-		createdAt?: DateTime;
 	}
 }
 
 export const messageSystemCreateFx = Effect.fn("messageSystemCreateFx")(function* ({
 	userId,
 	messageThreadId,
-	message,
-	createdAt,
+	...data
 }: messageSystemCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
+			const dateContext = yield* DateContextFx;
 
 			yield* messageUserCheckFx({
 				userIds: [
@@ -38,10 +36,10 @@ export const messageSystemCreateFx = Effect.fn("messageSystemCreateFx")(function
 				return kysely
 					.insertInto("message_system")
 					.values({
+						...data,
 						id,
 						messageThreadId,
-						text: message,
-						createdAt: (createdAt ?? DateTime.now()).toJSDate(),
+						createdAt: dateContext.now().toJSDate(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();

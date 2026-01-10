@@ -1,6 +1,6 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import { messageLocationFetchFx } from "~/app/message-location/fx/messageLocationFetchFx";
 import type { MessageLocationCreateSchema } from "~/app/message-location/schema/MessageLocationCreateSchema";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
@@ -10,7 +10,6 @@ import { withTransactionFx } from "~/database/fx/withTransactionFx";
 export namespace messageLocationCreateFx {
 	export interface Props extends MessageLocationCreateSchema.Type {
 		userId: string;
-		createdAt?: DateTime;
 	}
 }
 
@@ -18,11 +17,11 @@ export const messageLocationCreateFx = Effect.fn("messageLocationCreateFx")(func
 	userId,
 	messageThreadId,
 	locationId,
-	createdAt,
 }: messageLocationCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
+			const dateContext = yield* DateContextFx;
 
 			yield* messageUserCheckFx({
 				userIds: [
@@ -41,7 +40,7 @@ export const messageLocationCreateFx = Effect.fn("messageLocationCreateFx")(func
 						messageThreadId,
 						userId,
 						locationId,
-						createdAt: (createdAt ?? DateTime.now()).toJSDate(),
+						createdAt: dateContext.now().toJSDate(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();

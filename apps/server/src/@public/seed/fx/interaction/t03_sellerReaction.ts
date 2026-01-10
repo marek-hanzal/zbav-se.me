@@ -1,3 +1,4 @@
+import { DateContextLayer } from "@use-pico/common/date";
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
@@ -74,10 +75,17 @@ export const t03_sellerReaction = Effect.fn("t03_sellerReaction")(function* ({
 				return transactionStatusDisputeFx({
 					userId: current.id,
 					transactionId: transactionId.id,
-					createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
-						minute: rangedom(fromMinutes, toMinutes),
-					}),
-				});
+				}).pipe(
+					Effect.provide(
+						DateContextLayer({
+							now() {
+								return DateTime.fromJSDate(transactionStatus.createdAt).plus({
+									minute: rangedom(fromMinutes, toMinutes),
+								});
+							},
+						}),
+					),
+				);
 			})
 			.with("noop", () => {
 				return Effect.void;

@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { DateContextLayer } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { listingOfFx } from "~/@public/seed/fx/listingOfFx";
@@ -59,8 +60,15 @@ export const seedTransactionsFx = Effect.fn("seedTransactionsFx")(function* ({
 		yield* transactionCreateFx({
 			userId,
 			listingId: listing.id,
-			createdAt,
-		});
+		}).pipe(
+			Effect.provide(
+				DateContextLayer({
+					now() {
+						return createdAt;
+					},
+				}),
+			),
+		);
 	}
 
 	return yield* Effect.void;
