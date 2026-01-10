@@ -1,4 +1,5 @@
 import { createRoute, z } from "@hono/zod-openapi";
+import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { draftPatchFx } from "~/app/draft/fx/draftPatchFx";
@@ -84,6 +85,7 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 				);
 			}).pipe(
 				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				Effect.provide(DateContextLayer(createDateContext())),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

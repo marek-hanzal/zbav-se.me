@@ -1,3 +1,4 @@
+import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { AppEnv } from "~/AppEnv";
@@ -70,6 +71,7 @@ describe("userEventSellerInfoFx", () => {
 			});
 		}).pipe(
 			Effect.provide(KyselyContextLayer(database)),
+			Effect.provide(DateContextLayer(createDateContext())),
 			Effect.provide(
 				LocationContextLayer({
 					api: "https://api.geoapify.com",

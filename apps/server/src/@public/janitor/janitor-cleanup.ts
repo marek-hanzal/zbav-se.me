@@ -1,4 +1,5 @@
 import { createRoute, z } from "@hono/zod-openapi";
+import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { cleanupFx } from "~/@public/janitor/cleanup/cleanupFx";
@@ -53,6 +54,7 @@ export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(func
 					);
 				}).pipe(
 					Effect.provide(KyselyContextLayer(c.get("kysely"))),
+					Effect.provide(DateContextLayer(createDateContext())),
 					Effect.provide(
 						S3ContextLayer({
 							api: AppEnv.SERVER_S3_API,
