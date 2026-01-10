@@ -1,6 +1,6 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import { galleryFetchFx } from "~/app/gallery/fx/galleryFetchFx";
 import { galleryItemFetchFx } from "~/app/gallery-item/fx/galleryItemFetchFx";
 import type { GalleryItemCreateSchema } from "~/app/gallery-item/schema/GalleryItemCreateSchema";
@@ -9,19 +9,18 @@ import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 export namespace galleryItemCreateFx {
 	export interface Props extends GalleryItemCreateSchema.Type {
 		userId: string;
-		createdAt?: DateTime;
 	}
 }
 
 export const galleryItemCreateFx = Effect.fn("galleryItemCreateFx")(function* ({
 	userId,
 	galleryId,
-	createdAt,
 	...data
 }: galleryItemCreateFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
+	const dateContext = yield* DateContextFx;
 
-	const now = createdAt ?? DateTime.now();
+	const now = dateContext.now();
 	const id = genId();
 
 	/**
