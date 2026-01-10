@@ -1,5 +1,5 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import { messageTextCreateFx } from "~/app/message-text/fx/messageTextCreateFx";
 import { TransactionContextFx } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/app/transaction/fx/transactionStatusGateFx";
@@ -20,6 +20,7 @@ export const transactionMessageTextCreateFx = Effect.fn("transactionMessageTextC
 			Effect.gen(function* () {
 				const { kysely } = yield* KyselyContextFx;
 				const config = yield* TransactionContextFx;
+				const dateContext = yield* DateContextFx;
 
 				const transaction = yield* transactionStatusGateFx({
 					userId,
@@ -30,7 +31,7 @@ export const transactionMessageTextCreateFx = Effect.fn("transactionMessageTextC
 					],
 				});
 
-				const now = DateTime.now();
+				const now = dateContext.now();
 
 				yield* Effect.promise(async () => {
 					return kysely

@@ -1,3 +1,4 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { UploadContextFx } from "~/app/upload/context/UploadContextFx";
@@ -19,6 +20,7 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 }: uploadCreateFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 	const uploadContext = yield* UploadContextFx;
+	const dateContext = yield* DateContextFx;
 
 	if (!url.startsWith(uploadContext.cdn)) {
 		return yield* new InvalidRequestError({
@@ -27,7 +29,7 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 	}
 
 	const id = genId();
-	const now = new Date();
+	const now = dateContext.now();
 
 	yield* Effect.promise(async () => {
 		return kysely
@@ -37,7 +39,7 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 				id,
 				userId,
 				url,
-				createdAt: now,
+				createdAt: now.toJSDate(),
 			})
 			.execute();
 	});

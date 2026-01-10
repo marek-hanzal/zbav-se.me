@@ -1,3 +1,4 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
 import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
@@ -19,6 +20,7 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
+			const dateContext = yield* DateContextFx;
 
 			const feed = yield* feedFetchFx({
 				...query,
@@ -31,7 +33,7 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 					.set({
 						...patch,
 						query: patch.query ? (JSON.stringify(patch.query) as any) : patch.query,
-						updatedAt: new Date(),
+						updatedAt: dateContext.now().toJSDate(),
 					})
 					.where("id", "=", feed.id)
 					.executeTakeFirst();

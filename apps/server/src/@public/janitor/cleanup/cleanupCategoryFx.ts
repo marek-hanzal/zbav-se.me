@@ -1,12 +1,14 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import type { CleanupSchema } from "~/@public/janitor/schema/CleanupSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export const cleanupCategoryFx = Effect.fn("cleanupCategoryFx")(function* () {
 	const { kysely } = yield* KyselyContextFx;
+	const dateContext = yield* DateContextFx;
 
-	const cutoffDate = DateTime.now()
+	const cutoffDate = dateContext
+		.now()
 		.minus({
 			days: 7,
 		})

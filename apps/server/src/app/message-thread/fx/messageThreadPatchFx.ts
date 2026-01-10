@@ -1,3 +1,4 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { messageThreadFetchFx } from "~/app/message-thread/fx/messageThreadFetchFx";
 import type { MessageThreadFilterSchema } from "~/app/message-thread/schema/MessageThreadFilterSchema";
@@ -22,6 +23,7 @@ export const messageThreadPatchFx = Effect.fn("messageThreadPatchFx")(function* 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
+			const dateContext = yield* DateContextFx;
 
 			const messageThread = yield* messageThreadFetchFx({
 				...query,
@@ -40,7 +42,7 @@ export const messageThreadPatchFx = Effect.fn("messageThreadPatchFx")(function* 
 					.updateTable("message_thread")
 					.set({
 						...patch,
-						updatedAt: new Date(),
+						updatedAt: dateContext.now().toJSDate(),
 					})
 					.where("id", "=", messageThread.id)
 					.executeTakeFirst();

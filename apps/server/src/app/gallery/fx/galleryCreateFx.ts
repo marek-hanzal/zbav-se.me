@@ -1,3 +1,4 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { galleryFetchFx } from "~/app/gallery/fx/galleryFetchFx";
@@ -17,6 +18,7 @@ export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* ({
 	...props
 }: galleryCreateFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
+	const dateContext = yield* DateContextFx;
 
 	const galleryId = id ?? genId();
 
@@ -27,7 +29,7 @@ export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* ({
 				...props,
 				id: galleryId,
 				userId,
-				createdAt: new Date(),
+				createdAt: dateContext.now().toJSDate(),
 			})
 			.onConflict((eb) => {
 				return eb.doNothing();

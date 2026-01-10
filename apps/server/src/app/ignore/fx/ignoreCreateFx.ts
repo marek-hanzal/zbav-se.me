@@ -1,3 +1,4 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
@@ -14,6 +15,7 @@ export const ignoreCreateFx = Effect.fn("ignoreCreateFx")(function* ({
 	listingId,
 }: ignoreCreateFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
+	const dateContext = yield* DateContextFx;
 
 	const id = genId();
 
@@ -24,7 +26,7 @@ export const ignoreCreateFx = Effect.fn("ignoreCreateFx")(function* ({
 				id,
 				userId,
 				listingId,
-				createdAt: new Date(),
+				createdAt: dateContext.now().toJSDate(),
 			})
 			.onConflict((eb) => eb.doNothing())
 			.returningAll()

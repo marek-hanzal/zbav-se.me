@@ -1,3 +1,4 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { draftFetchFx } from "~/app/draft/fx/draftFetchFx";
 import type { DraftFilterSchema } from "~/app/draft/schema/DraftFilterSchema";
@@ -19,6 +20,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
+			const dateContext = yield* DateContextFx;
 
 			const draft = yield* draftFetchFx({
 				...query,
@@ -30,7 +32,7 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 					.updateTable("draft")
 					.set({
 						...patch,
-						updatedAt: new Date(),
+						updatedAt: dateContext.now().toJSDate(),
 					})
 					.where("id", "=", draft.id)
 					.executeTakeFirst();

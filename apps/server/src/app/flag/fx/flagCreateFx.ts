@@ -1,3 +1,4 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import type { FlagCreateSchema } from "~/app/flag/schema/FlagCreateSchema";
@@ -14,6 +15,7 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 	listingId,
 }: flagCreateFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
+	const dateContext = yield* DateContextFx;
 
 	const id = genId();
 
@@ -24,7 +26,7 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 				id,
 				userId,
 				listingId,
-				createdAt: new Date(),
+				createdAt: dateContext.now().toJSDate(),
 			})
 			.onConflict((eb) => eb.doNothing())
 			.returningAll()

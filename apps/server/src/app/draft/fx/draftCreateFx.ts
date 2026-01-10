@@ -1,3 +1,4 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { draftFetchFx } from "~/app/draft/fx/draftFetchFx";
@@ -20,9 +21,10 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
+			const dateContext = yield* DateContextFx;
 
 			const id = genId();
-			const now = new Date();
+			const now = dateContext.now();
 
 			const gallery = yield* coolGalleryCreateFx({
 				userId,
@@ -49,8 +51,8 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 						userId,
 						id,
 						galleryId: gallery.id,
-						createdAt: now,
-						updatedAt: now,
+						createdAt: now.toJSDate(),
+						updatedAt: now.toJSDate(),
 						currency: "CZK",
 					})
 					.execute();

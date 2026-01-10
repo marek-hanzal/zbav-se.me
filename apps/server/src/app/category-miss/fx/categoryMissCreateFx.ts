@@ -1,3 +1,4 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { sql } from "kysely";
@@ -15,10 +16,13 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 	limit = 4,
 }: categoryMissCreateFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
+	const dateContext = yield* DateContextFx;
 
 	if (!fulltext || fulltext.length < limit) {
 		return yield* Effect.void;
 	}
+
+	const now = dateContext.now();
 
 	yield* Effect.promise(async () => {
 		return kysely
@@ -27,7 +31,7 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 				id: genId(),
 				category: fulltext,
 				count: 1,
-				updatedAt: new Date(),
+				updatedAt: now.toJSDate(),
 			})
 			.onConflict((oc) =>
 				oc
@@ -36,7 +40,7 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 					])
 					.doUpdateSet({
 						count: sql`category_miss.count + 1`,
-						updatedAt: new Date(),
+						updatedAt: now.toJSDate(),
 					}),
 			)
 			.execute();

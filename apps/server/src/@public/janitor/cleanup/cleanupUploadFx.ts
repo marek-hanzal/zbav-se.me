@@ -1,5 +1,5 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import type { CleanupSchema } from "~/@public/janitor/schema/CleanupSchema";
 import { S3ContextFx } from "~/app/s3/context/S3ContextFx";
 import { s3ClientFx } from "~/app/s3/fx/s3ClientFx";
@@ -7,6 +7,7 @@ import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export const cleanupUploadFx = Effect.fn("cleanupUpload")(function* () {
 	const { kysely } = yield* KyselyContextFx;
+	const dateContext = yield* DateContextFx;
 
 	const { bucket } = yield* S3ContextFx;
 	const client = yield* s3ClientFx();
@@ -14,7 +15,8 @@ export const cleanupUploadFx = Effect.fn("cleanupUpload")(function* () {
 	const limit = 512;
 	const maxScan = 5000;
 
-	const cutoffDate = DateTime.now()
+	const cutoffDate = dateContext
+		.now()
 		.minus({
 			days: 3,
 		})

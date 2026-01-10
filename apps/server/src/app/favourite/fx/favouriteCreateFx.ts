@@ -1,3 +1,4 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { favouriteFetchFx } from "~/app/favourite/fx/favouriteFetchFx";
@@ -17,6 +18,7 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 	...data
 }: favouriteCreateFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
+	const dateContext = yield* DateContextFx;
 
 	const id = genId();
 
@@ -37,7 +39,7 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 				id,
 				userId,
 				feedId,
-				createdAt: new Date(),
+				createdAt: dateContext.now().toJSDate(),
 			})
 			.onConflict((eb) => eb.doNothing())
 			.returningAll()

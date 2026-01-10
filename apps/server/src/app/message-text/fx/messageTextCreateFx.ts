@@ -1,3 +1,4 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { messageTextFetchFx } from "~/app/message-text/fx/messageTextFetchFx";
@@ -20,6 +21,7 @@ export const messageTextCreateFx = Effect.fn("messageTextCreateFx")(function* ({
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
+			const dateContext = yield* DateContextFx;
 
 			yield* messageUserCheckFx({
 				userIds: [
@@ -38,7 +40,7 @@ export const messageTextCreateFx = Effect.fn("messageTextCreateFx")(function* ({
 						messageThreadId,
 						userId,
 						text: message,
-						createdAt: new Date(),
+						createdAt: dateContext.now().toJSDate(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();

@@ -1,7 +1,6 @@
 import { z } from "@hono/zod-openapi";
-import { DateContextLayer } from "@use-pico/common/date";
+import { DateContextFx, DateContextLayer } from "@use-pico/common/date";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import { listingOfFx } from "~/@public/seed/fx/listingOfFx";
 import { transactionCreateFx } from "~/app/transaction/fx/transactionCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
@@ -29,6 +28,7 @@ export const seedTransactionsFx = Effect.fn("seedTransactionsFx")(function* ({
 	months,
 }: seedTransactionsFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
+	const dateContext = yield* DateContextFx;
 
 	yield* Effect.promise(async () => {
 		return kysely.deleteFrom("transaction").where("userId", "=", userId).execute();
@@ -39,7 +39,7 @@ export const seedTransactionsFx = Effect.fn("seedTransactionsFx")(function* ({
 		count,
 	});
 
-	const now = DateTime.now();
+	const now = dateContext.now();
 	const startTime = now.minus({
 		months,
 	});

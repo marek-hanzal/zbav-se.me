@@ -1,3 +1,4 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { messageThreadFetchFx } from "~/app/message-thread/fx/messageThreadFetchFx";
@@ -15,16 +16,18 @@ export const messageThreadCreateFx = Effect.fn("messageThreadCreateFx")(function
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
+			const dateContext = yield* DateContextFx;
 
 			const id = genId();
+			const now = dateContext.now();
 
 			yield* Effect.promise(async () => {
 				return kysely
 					.insertInto("message_thread")
 					.values({
 						id,
-						createdAt: new Date(),
-						updatedAt: new Date(),
+						createdAt: now.toJSDate(),
+						updatedAt: now.toJSDate(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();

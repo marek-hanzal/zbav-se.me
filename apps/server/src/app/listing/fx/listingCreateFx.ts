@@ -1,7 +1,7 @@
+import { DateContextFx } from "@use-pico/common/date";
 import { embedMinHash } from "@use-pico/common/embedding";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import pgvector from "pgvector";
 import { match } from "ts-pattern";
 import { galleryCreateFx as coolGalleryCreateFx } from "~/app/gallery/fx/galleryCreateFx";
@@ -27,9 +27,10 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
+			const dateContext = yield* DateContextFx;
 
 			const id = genId();
-			const now = new Date();
+			const now = dateContext.now();
 
 			if (uploadIds.length === 0) {
 				return yield* new InvalidRequestError({
@@ -59,8 +60,8 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						id,
 						userId,
 						galleryId: gallery.id,
-						createdAt: now,
-						updatedAt: now,
+						createdAt: now.toJSDate(),
+						updatedAt: now.toJSDate(),
 						currency: "CZK",
 						...data,
 						titleVec: pgvector.toSql(
@@ -70,21 +71,21 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						),
 						expiresAt: match(data.expiresAt)
 							.with("7-days", () =>
-								DateTime.now()
+								now
 									.plus({
 										days: 7,
 									})
 									.toJSDate(),
 							)
 							.with("14-days", () =>
-								DateTime.now()
+								now
 									.plus({
 										days: 14,
 									})
 									.toJSDate(),
 							)
 							.with("1-month", () =>
-								DateTime.now()
+								now
 									.plus({
 										months: 1,
 									})
@@ -101,8 +102,8 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 					return kysely
 						.updateTable("draft")
 						.set({
-							usedAt: now,
-							updatedAt: now,
+							usedAt: now.toJSDate(),
+							updatedAt: now.toJSDate(),
 						})
 						.where("id", "=", draftId)
 						.where("userId", "=", userId)
