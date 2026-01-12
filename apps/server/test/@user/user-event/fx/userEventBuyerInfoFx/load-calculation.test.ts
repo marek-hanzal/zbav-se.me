@@ -25,7 +25,9 @@ describe("userEventBuyerInfoFx", () => {
 		});
 
 		const buyerId = buyer.id;
-		const baseTime = DateTime.now().minus({ days: 30 });
+		const baseTime = DateTime.now().minus({
+			days: 30,
+		});
 
 		const result = await Effect.gen(function* () {
 			// Active: tx-1 (create only)
@@ -36,11 +38,21 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-1",
 				event: "transaction.create",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => baseTime })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => baseTime,
+					}),
+				),
+			);
 
 			// Ended: tx-2 (create + closed)
-			const t2Create = baseTime.plus({ days: 1 });
-			const t2Close = t2Create.plus({ days: 1 });
+			const t2Create = baseTime.plus({
+				days: 1,
+			});
+			const t2Close = t2Create.plus({
+				days: 1,
+			});
 			yield* userEventCreateFx({
 				userId: buyerId,
 				scope: "user",
@@ -48,7 +60,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-2",
 				event: "transaction.create",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t2Create })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t2Create,
+					}),
+				),
+			);
 			yield* userEventCreateFx({
 				userId: buyerId,
 				scope: "user",
@@ -56,7 +74,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-2",
 				event: "transaction.closed",
 				isTerminal: true,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t2Close })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t2Close,
+					}),
+				),
+			);
 
 			// Active: tx-3 (create only)
 			yield* userEventCreateFx({
@@ -66,7 +90,16 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-3",
 				event: "transaction.create",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => baseTime.plus({ days: 2 }) })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () =>
+							baseTime.plus({
+								days: 2,
+							}),
+					}),
+				),
+			);
 
 			// Active: tx-4 (create only)
 			yield* userEventCreateFx({
@@ -76,11 +109,24 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-4",
 				event: "transaction.create",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => baseTime.plus({ days: 3 }) })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () =>
+							baseTime.plus({
+								days: 3,
+							}),
+					}),
+				),
+			);
 
 			// Ended: tx-5 (create + expired foreign)
-			const t5Create = baseTime.plus({ days: 4 });
-			const t5Expired = t5Create.plus({ days: 3 });
+			const t5Create = baseTime.plus({
+				days: 4,
+			});
+			const t5Expired = t5Create.plus({
+				days: 3,
+			});
 			yield* userEventCreateFx({
 				userId: buyerId,
 				scope: "user",
@@ -88,7 +134,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-5",
 				event: "transaction.create",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t5Create })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t5Create,
+					}),
+				),
+			);
 			yield* userEventCreateFx({
 				userId: buyerId,
 				scope: "foreign",
@@ -96,7 +148,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-5",
 				event: "transaction.expired",
 				isTerminal: true,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t5Expired })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t5Expired,
+					}),
+				),
+			);
 
 			return yield* userEventBuyerInfoFx({
 				userId: buyerId,
@@ -130,7 +188,9 @@ describe("userEventBuyerInfoFx", () => {
 		});
 
 		const buyerId = buyer.id;
-		const baseTime = DateTime.now().minus({ days: 30 });
+		const baseTime = DateTime.now().minus({
+			days: 30,
+		});
 
 		const result = await Effect.gen(function* () {
 			// 5 active transactions (create only)
@@ -146,7 +206,9 @@ describe("userEventBuyerInfoFx", () => {
 					Effect.provide(
 						DateContextLayer({
 							now() {
-								return baseTime.plus({ days: i });
+								return baseTime.plus({
+									days: i,
+								});
 							},
 						}),
 					),

@@ -25,18 +25,32 @@ describe("userEventBuyerInfoFx", () => {
 		});
 
 		const buyerId = buyer.id;
-		const base = DateTime.now().minus({ days: 25 });
+		const base = DateTime.now().minus({
+			days: 25,
+		});
 
 		// tx-1: seller opens (ping), buyer responds, seller expires -> should NOT count as expired
 		const t1Create = base;
-		const t1Open = t1Create.plus({ hours: 1 });
-		const t1BuyerMsg = t1Open.plus({ minutes: 10 });
-		const t1Expired = t1BuyerMsg.plus({ days: 5 });
+		const t1Open = t1Create.plus({
+			hours: 1,
+		});
+		const t1BuyerMsg = t1Open.plus({
+			minutes: 10,
+		});
+		const t1Expired = t1BuyerMsg.plus({
+			days: 5,
+		});
 
 		// tx-2: seller opens (ping), buyer never responds, seller expires -> expired++
-		const t2Create = base.plus({ days: 1 });
-		const t2Open = t2Create.plus({ hours: 1 });
-		const t2Expired = t2Open.plus({ days: 5 });
+		const t2Create = base.plus({
+			days: 1,
+		});
+		const t2Open = t2Create.plus({
+			hours: 1,
+		});
+		const t2Expired = t2Open.plus({
+			days: 5,
+		});
 
 		const result = await Effect.gen(function* () {
 			// tx-1
@@ -47,7 +61,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-1",
 				event: "transaction.create",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t1Create })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t1Create,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -56,7 +76,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-1",
 				event: "transaction.open",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t1Open })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t1Open,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -65,7 +91,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-1",
 				event: "transaction.message",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t1BuyerMsg })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t1BuyerMsg,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -74,7 +106,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-1",
 				event: "transaction.expired",
 				isTerminal: true,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t1Expired })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t1Expired,
+					}),
+				),
+			);
 
 			// tx-2
 			yield* userEventCreateFx({
@@ -84,7 +122,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-2",
 				event: "transaction.create",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t2Create })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t2Create,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -93,7 +137,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-2",
 				event: "transaction.open",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t2Open })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t2Open,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -102,7 +152,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-2",
 				event: "transaction.expired",
 				isTerminal: true,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t2Expired })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t2Expired,
+					}),
+				),
+			);
 
 			return yield* userEventBuyerInfoFx({
 				userId: buyerId,

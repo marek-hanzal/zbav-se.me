@@ -27,7 +27,9 @@ describe("userEventBuyerInfoFx", () => {
 		const buyerId = buyer.id;
 
 		const result = await Effect.gen(function* () {
-			const createTime = DateTime.now().minus({ days: 10 });
+			const createTime = DateTime.now().minus({
+				days: 10,
+			});
 			yield* userEventCreateFx({
 				userId: buyerId,
 				scope: "user",
@@ -35,7 +37,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-1",
 				event: "transaction.create",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => createTime })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => createTime,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -48,7 +56,9 @@ describe("userEventBuyerInfoFx", () => {
 				Effect.provide(
 					DateContextLayer({
 						now() {
-							return DateTime.now().minus({ days: 5 });
+							return DateTime.now().minus({
+								days: 5,
+							});
 						},
 					}),
 				),
@@ -87,7 +97,9 @@ describe("userEventBuyerInfoFx", () => {
 		const buyerId = buyer.id;
 
 		const result = await Effect.gen(function* () {
-			const createTime = DateTime.now().minus({ days: 50 });
+			const createTime = DateTime.now().minus({
+				days: 50,
+			});
 			yield* userEventCreateFx({
 				userId: buyerId,
 				scope: "user",
@@ -95,7 +107,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-1",
 				event: "transaction.create",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => createTime })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => createTime,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -108,7 +126,9 @@ describe("userEventBuyerInfoFx", () => {
 				Effect.provide(
 					DateContextLayer({
 						now() {
-							return DateTime.now().minus({ days: 45 });
+							return DateTime.now().minus({
+								days: 45,
+							});
 						},
 					}),
 				),
@@ -147,7 +167,9 @@ describe("userEventBuyerInfoFx", () => {
 		const buyerId = buyer.id;
 
 		const result = await Effect.gen(function* () {
-			const createTime = DateTime.now().minus({ days: 80 });
+			const createTime = DateTime.now().minus({
+				days: 80,
+			});
 			yield* userEventCreateFx({
 				userId: buyerId,
 				scope: "user",
@@ -155,7 +177,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-1",
 				event: "transaction.create",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => createTime })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => createTime,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -168,7 +196,9 @@ describe("userEventBuyerInfoFx", () => {
 				Effect.provide(
 					DateContextLayer({
 						now() {
-							return DateTime.now().minus({ days: 75 });
+							return DateTime.now().minus({
+								days: 75,
+							});
 						},
 					}),
 				),
@@ -215,7 +245,16 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-1",
 				event: "transaction.open",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => DateTime.now().minus({ days: 10 }) })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () =>
+							DateTime.now().minus({
+								days: 10,
+							}),
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -224,7 +263,16 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-2",
 				event: "transaction.open",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => DateTime.now().minus({ days: 20 }) })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () =>
+							DateTime.now().minus({
+								days: 20,
+							}),
+					}),
+				),
+			);
 
 			return yield* userEventBuyerInfoFx({
 				userId: buyerId,

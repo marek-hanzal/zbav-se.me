@@ -27,29 +27,65 @@ describe("userEventBuyerInfoFx", () => {
 		const buyerId = buyer.id;
 
 		// Earlier (still within cutoff) bad-ish behavior
-		const t1Create = DateTime.now().minus({ days: 80 });
-		const t1Open = t1Create.plus({ hours: 1 });
-		const t1Close = t1Open.plus({ minutes: 2 }); // closer (no other interaction)
+		const t1Create = DateTime.now().minus({
+			days: 80,
+		});
+		const t1Open = t1Create.plus({
+			hours: 1,
+		});
+		const t1Close = t1Open.plus({
+			minutes: 2,
+		}); // closer (no other interaction)
 
-		const t2Create = DateTime.now().minus({ days: 70 });
-		const t2Open = t2Create.plus({ hours: 2 });
-		const t2Expired = t2Open.plus({ days: 5 }); // ghosted -> expired
+		const t2Create = DateTime.now().minus({
+			days: 70,
+		});
+		const t2Open = t2Create.plus({
+			hours: 2,
+		});
+		const t2Expired = t2Open.plus({
+			days: 5,
+		}); // ghosted -> expired
 
 		// Recent good behavior
-		const t3Create = DateTime.now().minus({ days: 20 });
-		const t3Open = t3Create.plus({ minutes: 30 });
-		const t3Msg = t3Open.plus({ minutes: 10 });
-		const t3Success = t3Msg.plus({ days: 2 });
+		const t3Create = DateTime.now().minus({
+			days: 20,
+		});
+		const t3Open = t3Create.plus({
+			minutes: 30,
+		});
+		const t3Msg = t3Open.plus({
+			minutes: 10,
+		});
+		const t3Success = t3Msg.plus({
+			days: 2,
+		});
 
-		const t4Create = DateTime.now().minus({ days: 5 });
-		const t4Open = t4Create.plus({ minutes: 5 });
-		const t4Msg = t4Open.plus({ minutes: 5 });
-		const t4Success = t4Msg.plus({ days: 1 });
+		const t4Create = DateTime.now().minus({
+			days: 5,
+		});
+		const t4Open = t4Create.plus({
+			minutes: 5,
+		});
+		const t4Msg = t4Open.plus({
+			minutes: 5,
+		});
+		const t4Success = t4Msg.plus({
+			days: 1,
+		});
 
-		const t5Create = DateTime.now().minus({ days: 2 });
-		const t5Open = t5Create.plus({ minutes: 10 });
-		const t5Msg = t5Open.plus({ minutes: 10 });
-		const t5Close = DateTime.now().minus({ days: 1 });
+		const t5Create = DateTime.now().minus({
+			days: 2,
+		});
+		const t5Open = t5Create.plus({
+			minutes: 10,
+		});
+		const t5Msg = t5Open.plus({
+			minutes: 10,
+		});
+		const t5Close = DateTime.now().minus({
+			days: 1,
+		});
 
 		const result = await Effect.gen(function* () {
 			// tx-1 closer
@@ -60,7 +96,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-1",
 				event: "transaction.create",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t1Create })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t1Create,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -69,7 +111,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-1",
 				event: "transaction.open",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t1Open })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t1Open,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -78,7 +126,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-1",
 				event: "transaction.closed",
 				isTerminal: true,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t1Close })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t1Close,
+					}),
+				),
+			);
 
 			// tx-2 expired
 			yield* userEventCreateFx({
@@ -88,7 +142,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-2",
 				event: "transaction.create",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t2Create })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t2Create,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -97,7 +157,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-2",
 				event: "transaction.open",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t2Open })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t2Open,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -106,7 +172,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-2",
 				event: "transaction.expired",
 				isTerminal: true,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t2Expired })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t2Expired,
+					}),
+				),
+			);
 
 			// tx-3 good
 			yield* userEventCreateFx({
@@ -116,7 +188,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-3",
 				event: "transaction.create",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t3Create })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t3Create,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -125,7 +203,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-3",
 				event: "transaction.open",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t3Open })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t3Open,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -134,7 +218,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-3",
 				event: "transaction.message",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t3Msg })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t3Msg,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -143,7 +233,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-3",
 				event: "transaction.success",
 				isTerminal: true,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t3Success })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t3Success,
+					}),
+				),
+			);
 
 			// tx-4 good
 			yield* userEventCreateFx({
@@ -153,7 +249,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-4",
 				event: "transaction.create",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t4Create })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t4Create,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -162,7 +264,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-4",
 				event: "transaction.open",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t4Open })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t4Open,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -171,7 +279,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-4",
 				event: "transaction.message",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t4Msg })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t4Msg,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -180,7 +294,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-4",
 				event: "transaction.success",
 				isTerminal: true,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t4Success })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t4Success,
+					}),
+				),
+			);
 
 			// tx-5 good + recent activity
 			yield* userEventCreateFx({
@@ -190,7 +310,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-5",
 				event: "transaction.create",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t5Create })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t5Create,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -199,7 +325,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-5",
 				event: "transaction.open",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t5Open })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t5Open,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -208,7 +340,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-5",
 				event: "transaction.message",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t5Msg })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t5Msg,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -217,7 +355,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-5",
 				event: "transaction.closed",
 				isTerminal: true,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t5Close })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t5Close,
+					}),
+				),
+			);
 
 			return yield* userEventBuyerInfoFx({
 				userId: buyerId,

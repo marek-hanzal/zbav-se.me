@@ -25,12 +25,20 @@ describe("userEventBuyerInfoFx", () => {
 		});
 
 		const buyerId = buyer.id;
-		const tCreate = DateTime.now().minus({ days: 10 });
-		const tSellerClose = tCreate.plus({ hours: 1 });
+		const tCreate = DateTime.now().minus({
+			days: 10,
+		});
+		const tSellerClose = tCreate.plus({
+			hours: 1,
+		});
 
 		// second group to ensure we have > 1 event overall
-		const t2Create = DateTime.now().minus({ days: 9 });
-		const t2SellerReject = t2Create.plus({ hours: 1 });
+		const t2Create = DateTime.now().minus({
+			days: 9,
+		});
+		const t2SellerReject = t2Create.plus({
+			hours: 1,
+		});
 
 		const result = await Effect.gen(function* () {
 			yield* userEventCreateFx({
@@ -40,7 +48,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-1",
 				event: "transaction.create",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => tCreate })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => tCreate,
+					}),
+				),
+			);
 
 			// terminal before any open event exists
 			yield* userEventCreateFx({
@@ -50,7 +64,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-1",
 				event: "transaction.closed",
 				isTerminal: true,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => tSellerClose })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => tSellerClose,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -59,7 +79,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-2",
 				event: "transaction.create",
 				isTerminal: false,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t2Create })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t2Create,
+					}),
+				),
+			);
 
 			yield* userEventCreateFx({
 				userId: buyerId,
@@ -68,7 +94,13 @@ describe("userEventBuyerInfoFx", () => {
 				group: "tx-2",
 				event: "transaction.rejected",
 				isTerminal: true,
-			}).pipe(Effect.provide(DateContextLayer({ now: () => t2SellerReject })));
+			}).pipe(
+				Effect.provide(
+					DateContextLayer({
+						now: () => t2SellerReject,
+					}),
+				),
+			);
 
 			return yield* userEventBuyerInfoFx({
 				userId: buyerId,
