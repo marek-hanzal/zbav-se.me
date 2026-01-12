@@ -8,7 +8,7 @@ export const withMigrationRunApiFx = Effect.fn("withMigrationRunApiFx")(function
 
 	publicHono.openapi(
 		createRoute({
-			method: "get",
+			method: "post",
 			path: "/migration/run",
 			description: "This route directly executes the migrations",
 			operationId: "apiMigrationRun",
