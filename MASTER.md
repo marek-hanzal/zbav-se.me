@@ -255,41 +255,51 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 **Cenový model (měsíčně, CZK):**
 
-* **Buyer Package:** 119 Kč
-* **Seller Package:** 229 Kč
-* **Pro Package:** 499 Kč
-* **Buyer Package** - nástroje pro kupující:
-  * **Přidělené goldíky:** 300 / měsíc.
-  * **Early Access (token, 5×)**
-  * **Limit uložených feedů (pass):** default 3 → Buyer 5.
-  * **Anti-topper (token, 5×)**
-* **Seller Package** - nástroje pro prodávající:
-  * **Přidělené goldíky:** 300 / měsíc.
-  * **Early Delivery (token, 5×)**
-  * **Photo Count (pass):** navýšení počtu fotek z default 3 → 5.
-  * **Mark (token, 5×)**
-  * **Top (token, 3×)**
-  * **Top Maxxi (token, 1×)**
-  * **Multi-Category (token, 3×)**
-  * **Kompenzace za anti-topper (pass)**
-  * **Rozšířená data u inzerátu**
-  * **Kontinuální nabídka (token, 3×)**
-* **Pro Package** - plná kontrola nad trhem (kupující + prodávající):
-  * **Přidělené goldíky:** 600 / měsíc.
-  * Obsahuje **Buyer Package + Seller Package**.
-  * **Anti-topper (pass)**
-  * **Early Access (pass)**
-  * **Limit uložených feedů (pass):** 10.
-  * **Photo count (pass):** 10.
-  * **Multi-Category (pass)**
-  * **Detail protistrany (pass)**
-  * **Kompenzace za anti-topper (pass)**
-  * **Rozšířená data u inzerátu**
-  * **Kontinuální nabídka (token, 5×)**
+#### Buyer Package (119 Kč / měsíc)
+
+> **Co kupuju:** Výhoda proti ostatním kupujícím, dřívější přístup k inzerátům a čistší feed bez případného spamu z topovaných inzerátů
+
+- **Přidělené goldíky:** 300 / měsíc.
+- **Early Access (token, 5×)**
+- **Limit uložených feedů (pass):** default 3 → Buyer 5.
+- **Anti-topper (token, 5×)**
+
+#### Seller Package (229 Kč / měsíc)
+
+> **Co kupuju:** Celkový toolset pro efektivní distribuci a zviditelnění inzerátů - ať už graficky nebo pozičně, zároveň i možnost dostat inzerát dřív k uživatelům (interní poznámka - tohle paradoxně může být nevýhoda, když bude méně platících buyerů, opozdí to časovou distribuci).
+
+- **Přidělené goldíky:** 300 / měsíc.
+- **Early Delivery (token, 5×)**
+- **Photo Count (pass):** navýšení počtu fotek z default 3 → 5.
+- **Mark (token, 5×)**
+- **Top (token, 3×)**
+- **Top Maxxi (token, 1×)**
+- **Multi-Category (token, 3×)**
+- **Kompenzace za anti-topper (pass)**
+- **Rozšířená data u inzerátu**
+- **Kontinuální nabídka (token, 3×)**
+
+#### Pro Package (499 Kč / měsíc)
+
+> **Co kupuju:** Power-set, když jsem na obou stranách a chci dostat z aplikace maximum s minimem sraní. Věci za token jsou teď dostupné jako pass a obecně aplikace méně buzeruje za běžné používání.
+
+- **Přidělené goldíky:** 600 / měsíc.
+- Obsahuje **Buyer Package + Seller Package**.
+- **Anti-topper (pass)**
+- **Early Access (pass)**
+- **Limit uložených feedů (pass):** 10.
+- **Photo count (pass):** 10.
+- **Multi-Category (pass)**
+- **Detail protistrany (pass)**
+- **Kompenzace za anti-topper (pass)**
+- **Rozšířená data u inzerátu**
+- **Kontinuální nabídka (pass)**
 
 ---
 
 ### Goldíky (interní měna)
+
+> **Proč goldík?** Hlavním cílem je roztrhnout u uživatelů vnímání přímých cen jako skutečné peníze a narovnat ceník dostupný uživatelům tak, aby se snáz nabízely a prodávaly dílčí featury aplikace (tokeny/passy).
 
 * Goldík je **trvalá interní měna** (interpretace kreditu / reálných peněz).
 * Nelze jít do mínusu.
@@ -317,6 +327,10 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 ### Bonusy za používání
 
+> **Proč máme bonusy?** Chceme uživatele odměnit za drobnou práci, kterou mají s dobrovolnou interakcí s aplikací, jelikož data, která uživatelé pak generují, se nabízejí dál a bez nich hodně systémových metrik nedává úplně smysl.
+> 
+> Dalším důvodem pak je trošku oživit a podpořit retenci uživatelů, přestože nic moc vysloveně nechtějí, dojdou si pro svůj goldík.
+
 * Bonusy nejsou „odměna za aktivitu“ ani za hygienu inzerátů. Hygiena je základní očekávané chování.
 * Bonusy se dávají **jen za odkliknuté transakce** (success / close / resolved)
   * Když kupující označí obchod jako **success/closed**, dostanou bonus **obě strany** (aktuálně: 5 goldíků).
@@ -328,6 +342,8 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 ---
 
 ### Tokeny & passy
+
+> **K čemu je máme?** Centrální systém řízení oprávnění jak nad uživateli (např. aktivní pass), tak i jinými objekty systému (např. listing) a možnost přidělit dočasné vlastnosti (zpravidla passem, jelikož může mít časové omezení).
 
 * **Token** = jednorázová akce (spotřebuje se). **Token nikdy neexpiruje** (můžeš ho držet neomezeně dlouho).
 * **Pass** = stav oprávnění (může mít konec platnosti, nebo být bez konce).
@@ -382,6 +398,8 @@ Start projektu je **vědomě rozdělen do dvou paralelních, ale sekvenčních f
 
 ### Fáze 1: Online komunitní start (Discord)
 
+> **Proč?** První vlna na Discordu nám má zajistit relativně snadný nástup úvodních uživatelů, včetně určité validace produktu a jeho včasné otestování.
+
 **Primární starting-ground.**
 
 * První spuštění proběhne **v uzavřených tematických komunitách (vapování)**.
@@ -404,6 +422,8 @@ Start projektu je **vědomě rozdělen do dvou paralelních, ale sekvenčních f
 ---
 
 ### Fáze 2: Regionální expanze (Karlovy Vary + Ostrov + Sokolov)
+
+> **Proč?** Tohle je náš cílový trh - jedná se o už docela tuhý start, kde nabereme hlavní část uživatelů a když bude vše v pořádku, bude to také finální (monetizační) fáze, jelikož zasponzoruje vývoj.
 
 * Navazuje na stabilní základ z online komunity.
 * Billboardy už **nevedou do prázdna**, ale do živého systému.
