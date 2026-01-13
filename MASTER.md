@@ -292,6 +292,26 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 * **Ignorované**: počet ignorování inzerátu (uživatel si ho skryl).
 * **Transakce**: počet vzniklých transakcí z akce **„Mám zájem“** (kolik lidí otevřelo obchod).
 
+### Ignorování inzerátu
+
+- V detailu inzerátu je dostupná akce **„Ignorovat“**.
+- Ignorování slouží kupujícímu k tomu, aby si označil inzeráty, které ho vysloveně nezajímají, a **vyhodil je ze svého feedu** (nechce, aby mu znovu lezly do očí).
+- Ignorování je **toggle**:
+  - **Ignorovat** / **Zrušit ignorování**
+  - obě akce zapisují event do **user event logu** (append-only).
+- Ignor je vázaný přímo na **konkrétní inzerát**.
+  - Jakmile uživatel inzerát jednou ignoruje, **neuvidí ho už nikde** (feed, search, listingy, atd.), dokud ignor nezruší.
+  - Pokud se uživatel k ignorovanému inzerátu dostane přímým odkazem, může ho otevřít, jen uvidí stav, že je ignorovaný.
+- Ignorování se promítá do metrik inzerátu jako hodnota **„Ignorované“**.
+  - Počítá se z **user event logu**.
+  - Tyto metriky může vidět prodávající jen jako **placený benefit** v rámci „Rozšířená data u inzerátu“.
+  - Smysl metriky je zpětná vazba: pokud roste ignorace, prodávající si má sám vyhodnotit „co je špatně“ (např. cena, fotky, popis, kategorie, apod.).
+- Ignorování je primárně **uživatelská preference**, ne reputační rozsudek.
+  - **Aktuálně se ignorování nepromítá do Score**.
+- Do budoucna lze ignorování použít jako slabý signál pro:
+  - **znevyhodnění inzerátu** v distribuci (pokud ho dlouhodobě nikdo nechce),
+  - případně i **plosně u prodejce** (pokud bude opakovaně publikovat obsah, který lidé ignorují).
+
 ### Rozšířená data u inzerátu
 
 * Přístup je řízen **passsem**: dokud má prodávající aktivní pass, vidí rozšířená data u **svých** inzerátů.
