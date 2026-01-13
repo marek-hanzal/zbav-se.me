@@ -210,11 +210,13 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
   * **Early Access (pass)**
 
-  * **Limit uložených feedů:** 10.
+  * **Limit uložených feedů (pass):** 10.
 
-  * **Photo count:** 10.
+  * **Photo Count (pass):** 10.
 
   * **Multi-Category (pass)**
+
+  * **Detail protistrany (pass)**
 
   * **Kompenzace za anti-topper (pass)**
 
@@ -249,7 +251,7 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 * Uživatel má k dispozici **historii transakcí** (přírůstky/úbytky).
 
-* Všechny pohyby nad inventářem běží **atomicky v DB transakci** (fail = rollback).
+* Všechny pohyby nad inventářem probíhají **atomicky a transakčně** (fail = rollback).
 
 #### Nákupní balíčky goldíků
 
