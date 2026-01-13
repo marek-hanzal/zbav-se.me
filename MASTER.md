@@ -100,28 +100,19 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 ### Anti-topper
 
 * Premium uživatel platí za **klid**, ne za dominanci.
-
 * Anti-topper má **relativně malý efekt** - u `mark` a `top` schová grafické zvýraznění; u `top` navíc ruší posun v řazení. **Top Maxxi** neovlivňuje.
-
 * Záměrně je **cenově níž** než nástroje zvyšující dosah, protože neslouží k růstu reach, ale k redukci šumu.
-
 * Distribuce pozornosti je řízená v čase.
-
 * Pro uživatele s aktivním anti-topperem se u `mark` / `top` inzerátů **skryje grafické zvýraznění** (vypadají jako běžné).
-
 * U `top` se pro něj v řazení **ignoruje posun**; `mark` je čistě vizuální. **Top Maxxi** zůstává viditelný.
-
 * Anti-topper je **filtr v nastavení feedu**. Pokud má uživatel anti-topper aktivní (pass / Pro), je **defaultně zapnutý**; v nastavení je tedy přepínač, který anti-topper **vypne**.
-
 * `Top Maxxi` je **vždy viditelný** a **vizuálně jasně označený**; systém explicitně komunikuje, že **tohle potlačit nejde**.
-
 * Payback
 
   * Vyhodnocuje se **až po skončení platnosti inzerátu**.
   * Počítá se poměr **běžných vs. potlačených views** (na úrovni **unikátních uživatelů** dle event logu).
   * Pokud podíl **potlačených views > 20 %**, prodávající dostane zpět **20 % jednotkové ceny** použitého zvýraznění (`mark` / `top`).
   * Funguje **jen pro platící prodávající** (Seller Package / Pro) - a jen pokud má prodávající v době vyhodnocení (konec platnosti inzerátu) stále aktivní subscription. Pokud mu mezitím vyprší, payback nevzniká.
-
 * Plátci (prodávající) vidí u inzerátu rozšířená data: např. **palce**, **běžné views**, **potlačené views** (anti-topper), atd.
 
 ### Zvýraznění (Mark / Top / Top Maxxi)
@@ -169,7 +160,10 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 * Umožňuje u expirovaného inzerátu znovu otevřít obchody/transakce (typicky pro dotazy typu „kdy bude další várka/vrh?“).
 * Aktivuje se **explicitně** nad konkrétním (expirovaným) inzerátem.
-* TBD: zda bude dostupné i jako **token** (aktivace za token -> goldíky), nebo jen jako subscription benefit.
+* Je to mechanika postavená na **tokenu** (aktivace za token -> goldíky).
+
+  * Seller Package dostane **3× token Kontinuální nabídky**.
+  * Pro Package dostane **pass Kontinuální nabídky** (bez omezení po dobu trvání předplatného).
 
 ---
 
@@ -208,7 +202,7 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
   * **Multi-Category (token, 3×)**
   * **Kompenzace za anti-topper (pass)**
   * **Rozšířená data u inzerátu**
-  * **Obchody u expirovaných inzerátů**
+  * **Kontinuální nabídka (token, 3×)**
 
 * **Pro Package** - plná kontrola nad trhem (kupující + prodávající):
 
@@ -230,7 +224,7 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
   * **Rozšířená data u inzerátu**
 
-  * **Obchody u expirovaných inzerátů**
+  * **Kontinuální nabídka (pass)**
 
   > Účel: dát uživateli, který systém aktivně používá na obou stranách trhu, **plynulost bez mikromanagementu a větší kontrolu bez agresivní dominance**.
 
