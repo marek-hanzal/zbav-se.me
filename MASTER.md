@@ -285,7 +285,7 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
   * **Limit uložených feedů (pass):** 10.
 
-  * **Photo Count (pass):** 10.
+  * **Photo count (pass):** 10.
 
   * **Multi-Category (pass)**
 
@@ -337,7 +337,7 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 ### Bonusy za používání
 
 * Bonusy nejsou „odměna za aktivitu“ ani za hygienu inzerátů. Hygiena je základní očekávané chování.
-* Bonusy se dávají **jen za odkliknuté transakce** (success / close / resolved).
+* Bonusy se dávají **jen za odkliknuté transakce** (success / close / resolved)
 
   * Když kupující označí obchod jako **success/closed**, dostanou bonus **obě strany** (aktuálně: 5 goldíků).
   * Když prodávající odklikne **resolved**, dostane bonus **jen prodávající** (aktuálně: 5 goldíků).
