@@ -274,15 +274,25 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 ### Kontinuální nabídka
 
-* Kontinuální nabídka u expirovaného inzerátu zpřístupní **stejné flow jako u běžného inzerátu** (žádné speciální stavy ani výjimky).
-* Aktivuje se **explicitně** nad konkrétním expirovaným inzerátem.
-* Kontinuální nabídka je **pass nad inzerátem**. Pokud není uvedeno jinak, platí **1 měsíc** od aktivace.
-* Token Kontinuální nabídky je jen „klíč“: **vygeneruje pass**. Token sám o sobě nic nezapíná.
-  * Flow: prodávající zvolí „Kontinuální nabídka“ → spotřebuje token → vznikne pass na 1 měsíc.
-* Inzerát s aktivní Kontinuální nabídkou je pořád **expirovaný a schovaný**.
-  * Zobrazí se jen uživatelům, kteří si zapnou filtr **Kontinuální nabídky**.
-  * Má grafické označení **badgem**.
-* Monetizačně je to slabší mechanika (omezená distribuce) a je tu možnost, že ji později dropneme, pokud nedá smysl.
+- Kontinuální nabídka je mechanika, která umožní **prodloužit život inzerátu** a vrátit ho zpět do běžného režimu (typicky pro kontinuální prodej / dotazy typu „kdy bude další várka“).
+- Kontinuální nabídka funguje přes **token → pass**:
+  - **Token** pouze **vygeneruje stejnojmenný pass**.
+  - **Pass** je to, co aktivuje chování mechaniky.
+- Aktivace:
+  - Aktivuje ji **vlastník inzerátu**.
+  - Lze ji aktivovat **kdykoliv**:
+    - Pokud je inzerát ještě aktivní (neexpirovaný), prodloužení se **naváže na jeho expiraci** (uživatel nepřichází o čas).
+    - Pokud je inzerát už expirovaný, prodloužení začne **okamžitě**.
+- Trvání:
+  - Pass trvá **1 měsíc**.
+  - Prodloužení se **nestackuje** (nenasčítává se dopředu).
+  - Prodávající může prodlužovat opakovaně (vždy spotřebuje token a vytvoří nový pass na 1 měsíc).
+- Chování inzerátu během aktivního passu:
+  - Inzerát funguje **jako běžný aktivní inzerát** (vrací se do standardního feedu, žádné speciální filtry nejsou potřeba).
+  - Obchody/transakce fungují **stejně jako u běžného inzerátu**.
+  - Po vypršení passu se inzerát vrací zpět do režimu **expirovaný** (defaultně schovaný), pokud není znovu prodloužen.
+- Metriky:
+  - Inzerát se chová normálně, takže metriky (včetně **Transakce**) se počítají standardně.
 
 ### Metriky inzerátu
 
@@ -330,6 +340,12 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 * Cílem není maximalizace výběru, ale dlouhodobý klid a férové použití systému.
 
 ### Subscriptions
+
+#### Subscription bonusy (měsíční příděly)
+
+- Každé předplatné při měsíčním renew přidělí své bonusy **vždy**, bez ohledu na to, kolik už jich uživatel má.
+- Cíl: uživatel si předplatné platí, takže systém se nesnaží “šetřit” tím, že by příděly zastavoval kvůli tomu, že má uživatel zásobu.
+- Tokeny se ukládají do inventáře a **neexpirují** (expiruje pouze pass, pokud je časově omezený).
 
 **Cenový model (měsíčně, CZK):**
 
@@ -459,8 +475,8 @@ Pozn.: **Jednotková cena** u balíčků (např. „5× za 20“) znamená cenu 
 | Detail protistrany  | Token              | 5× použití (každé vygeneruje pass)                               | 50        |
 | Detail protistrany  | Pass               | 7 dnů                                                            | 75        |
 | Photo Count         | Pass               | 1 měsíc (+2 fotky)                                               | 75        |
-| Kontinuální nabídka | Token              | 1× použití (vygeneruje pass)                                     | TBD       |
-| Kontinuální nabídka | Pass               | 1 měsíc (nad inzerátem)                                          | exclusive |
+| Kontinuální nabídka | Token              | 1× použití (vygeneruje pass)                                     | exclusive |
+| Kontinuální nabídka | Pass               | 1 měsíc (prodloužení platnosti inzerátu; inzerát funguje jako běžný aktivní)  | exclusive |
 
 ---
 
