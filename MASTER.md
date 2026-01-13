@@ -312,17 +312,17 @@ Pozn.: **Jednotková cena** u balíčků (např. „5× za 20“) znamená cenu 
 
 | Co                  | Typ (token / pass) | Kolik / na jak dlouho                                            | Cena      |
 | ------------------- | ------------------ | ---------------------------------------------------------------- | --------- |
-| Early Access        | Token              | 1× použití (vygeneruje pass na 7 dnů)                            | 80        |
+| Early Access        | Token              | 1× použití (vygeneruje pass)                                     | 80        |
 | Early Access        | Pass               | +8h náskok po dobu 7 dnů                                         | 70        |
 | Early Delivery      | Token              | 1× použití (ruší release window pro inzerát)                     | 40        |
-| Anti-topper         | Token              | 1× použití (vygeneruje pass na 7 dnů)                            | 40        |
+| Anti-topper         | Token              | 1× použití (vygeneruje pass)                                     | 40        |
 | Anti-topper         | Pass               | 7 dnů                                                            | 30        |
-| Mark                | Token              | 5× použití (každé vytvoří pass na 7 dnů)                         | 20        |
-| Top                 | Token              | 3× použití (každé vytvoří pass na 7 dnů; bump při aktivaci)      | 50        |
-| Top Maxxi           | Token              | 1× použití (vygeneruje pass na 7 dnů)                            | 50        |
+| Mark                | Token              | 5× použití (každé vygeneruje pass)                               | 20        |
+| Top                 | Token              | 3× použití (každé vygeneruje pass; bump při aktivaci)            | 50        |
+| Top Maxxi           | Token              | 1× použití (vygeneruje pass)                                     | 50        |
 | Multi-Category      | Token              | 1× použití (1 + 2 kategorie)                                     | 75        |
 | Multi-Category      | Pass               | po dobu subscription                                             | exclusive |
-| Detail protistrany  | Token              | 5× použití (každé vytvoří pass na 7 dnů)                         | 50        |
+| Detail protistrany  | Token              | 5× použití (každé vygeneruje pass)                               | 50        |
 | Detail protistrany  | Pass               | 7 dnů                                                            | 75        |
 | Photo Count         | Pass               | 1 měsíc (+2 fotky)                                               | 75        |
 | Kontinuální nabídka | Token              | 1× použití (otevře obchody u expirovaného inzerátu); trvání TBD  | TBD       |
