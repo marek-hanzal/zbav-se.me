@@ -192,28 +192,19 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 ### Metriky - Kupující
 
 * **Stáří účtu:** kdy je uživatel registrovaný (relativně).
-
 * **Reaction (reakce na otevřený obchod):**
 
   * reakční míra,
   * rychlost reakce (median + p90).
-
 * **Closer (instant close):**
 
   * podíl obchodů, které kupující rychle zavře (otevře a hned „killne“ bez interakce),
   * rychlost zavření (median + p90).
-
 * **Decision (success/closed):** podíl obchodů, kde kupující dává finální rozhodnutí (success/closed).
-
 * **Expired:** podíl obchodů, které expirují bez zpráv / interakce.
-
 * **Load (vytížení):** bucket low / medium / high.
-
 * **Activity (aktivita):** bucket low / medium / high.
-
 * **Score (souhrnný rank):** agregovaný rank (A-F / 1-6), který shrnuje výše uvedené chování.
-
-* TBD: doplnit později další signály (např. dispute), až budou v systému.
 
 ### Inzeráty
 
@@ -222,6 +213,19 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
   * mix aktivních + expirovaných,
   * nebo jen expirované.
+* Aktuálně umíme na úrovni dat zpracovat:
+
+  * **Obsah inzerátu:** title, description, pros/cons.
+  * **Galerie:** uploady + jejich pořadí (galerie / fotky).
+  * **Cena:** price + priceType (pevná vs. otevřená), currency.
+  * **Parametry věci:** condition (škála), age (škála), delivery (osobně / post / package / other), warranty (warranty / no-warranty / custom).
+  * **Kategorizace:** categoryId + napojení na kategorii.
+  * **Lokalita:** locationId + lat/lon; umíme spočítat **vzdálenost (km)**, pokud je k dotazu dodaná poloha uživatele.
+  * **Čas:** createdAt / updatedAt / expiresAt (včetně filtrování podle expiresAtBefore/After).
+  * **Vazby na uživatele:** isFavourite, isIgnored, hasFlag, feedback (like/dislike), transactionId (existuje obchod pro daného uživatele).
+  * **Event log nad inzerátem:** impression, view, ignore/unignore, flag/unflag, transaction, favourite/unfavourite, like/dislike.
+  * **Filtrování (feed):** fulltext, title, priceMin/priceMax, conditionMin/Max/In, ageMin/Max/In, deliveryIn, warrantyIn, categoryId/categoryIdIn, currency/currencyIn, feedId/feedIdIn, my/withOwn, withIgnored, isFavourite, transaction, range (km).
+  * **Řazení:** price, condition, age, createdAt, updatedAt, expiresAt, geo (vzdálenost).
 
 ### Kontinuální nabídka
 
