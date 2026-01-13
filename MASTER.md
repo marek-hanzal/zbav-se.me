@@ -61,7 +61,6 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 * Platby nejsou past ani trik.
 * Předplatné lze kdykoliv zrušit.
 * Pokud má uživatel aktivní předplatné, ale dlouhodobě systém nepoužívá, **dáme mu to vědět a předplatné sami ukončíme**.
-
   * 1 měsíc bez aktivity (plovoucí) -> e-mail.
   * 2 měsíce bez aktivity -> ukončení subscription.
 * Raději přijdeme o platbu než o důvěru.
@@ -107,7 +106,6 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 * Anti-topper je **filtr v nastavení feedu**. Pokud má uživatel anti-topper aktivní (pass), je **defaultně zapnutý**; v nastavení je tedy přepínač, který anti-topper **vypne**.
 * `Top Maxxi` je **vždy viditelný** a **vizuálně jasně označený**; systém explicitně komunikuje, že **tohle potlačit nejde**.
 * Payback
-
   * Vyhodnocuje se **až po skončení platnosti inzerátu**.
   * Počítá se poměr **běžných vs. potlačených views** (na úrovni **unikátních uživatelů** dle event logu).
   * Pokud podíl **potlačených views > 20 %**, prodávající dostane zpět **20 % jednotkové ceny** použitého zvýraznění (`mark` / `top`).
@@ -147,22 +145,18 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 * Obchod vzniká, když kupující v detailu inzerátu klikne **„Mám zájem“** - tím vznikne nová transakce ve stavu **pending**.
 * Chat / zprávy se otevřou až ve chvíli, kdy prodávající obchod přijme (**open**) – tím systém potlačuje spam typu „Je to ještě dostupné?“.
 * Stavový flow:
-
   * **pending**: kupující otevřel obchod („Mám zájem“).
   * **open**: prodávající obchod přijme.
   * **rejected**: prodávající obchod odmítne.
   * Kupující může obchod kdykoliv zavřít akcí **close** (pokud to udělá hned / bez snahy, projeví se to negativně ve statistikách, které vidí prodávající).
 * Uzavření obchodu (kupující):
-
   * **success** = explicitní „jsem spokojený“.
   * **closed** = neutrální „okej“.
   * **closed není neúspěch** - v obou případech jde o uzavřený obchod a chceme, aby to kupující klikali (kvůli metrikám).
 * Uzavření z pohledu prodávajícího:
-
   * Prodávající po průběhu obchodu kliká **resolved** (z jeho pohledu vyřešeno, např. odesláno/předáno).
   * Finální slovo má kupující: po resolved dává **success/closed**.
 * Dispute:
-
   * Dispute může vzniknout **až po resolved**.
   * Otevřít dispute může kupující i prodávající.
   * Dispute vrací obchod do „běžného režimu“ (pokračuje se řešením / domluvou) a není nutně agresivní konflikt.
@@ -173,15 +167,12 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 * **Stáří účtu:** kdy je uživatel registrovaný (relativně).
 * **Počet inzerátů:** kolik vytvořil inzerátů (context k aktivitě prodávajícího).
 * **Reakce na nový obchod (pending -> open/rejected):**
-
   * reakční míra (kolik obchodů dostane reakci vs. kolik jich „dojede“ jinak),
   * rychlost reakce (median + p90).
 * **Odmítání bez interakce:**
-
   * podíl obchodů, které prodávající odmítne bez konverzace,
   * rychlost odmítnutí (median + p90).
 * **Resolved (vyřešeno):**
-
   * podíl obchodů, které prodávající označí jako resolved,
   * rychlost do resolved (median + p90).
 * **Expirace:** podíl obchodů, které expirují bez zpráv / interakce.
@@ -193,11 +184,9 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 * **Stáří účtu:** kdy je uživatel registrovaný (relativně).
 * **Reaction (reakce na otevřený obchod):**
-
   * reakční míra,
   * rychlost reakce (median + p90).
 * **Closer (instant close):**
-
   * podíl obchodů, které kupující rychle zavře (otevře a hned „killne“ bez interakce),
   * rychlost zavření (median + p90).
 * **Decision (success/closed):** podíl obchodů, kde kupující dává finální rozhodnutí (success/closed).
@@ -210,11 +199,9 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 * Inzerát po expiraci je **defaultně schovaný**.
 * Expirované inzeráty lze zobrazit filtrem ve feedu:
-
   * mix aktivních + expirovaných,
   * nebo jen expirované.
 * Aktuálně umíme na úrovni dat zpracovat:
-
   * **Obsah inzerátu:** title, description, pros/cons.
   * **Galerie:** uploady + jejich pořadí (galerie / fotky).
   * **Cena:** price + priceType (pevná vs. otevřená), currency.
@@ -229,10 +216,15 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 ### Kontinuální nabídka
 
-* Umožňuje u expirovaného inzerátu znovu otevřít obchody/transakce (typicky pro dotazy typu „kdy bude další várka/vrh?“).
-* Aktivuje se **explicitně** nad konkrétním (expirovaným) inzerátem.
-* Kontinuální nabídka existuje jako **token** i jako **pass** (subscription-exclusive).
-* TBD: probrat **trvání** (token vs pass) + jak přesně funguje **aktivace passu nad inzerátem**.
+* Kontinuální nabídka u expirovaného inzerátu zpřístupní **stejné flow jako u běžného inzerátu** (žádné speciální stavy ani výjimky).
+* Aktivuje se **explicitně** nad konkrétním expirovaným inzerátem.
+* Kontinuální nabídka je **pass nad inzerátem**. Pokud není uvedeno jinak, platí **1 měsíc** od aktivace.
+* Token Kontinuální nabídky je jen „klíč“: **vygeneruje pass**. Token sám o sobě nic nezapíná.
+  * Flow: prodávající zvolí „Kontinuální nabídka“ → spotřebuje token → vznikne pass na 1 měsíc.
+* Inzerát s aktivní Kontinuální nabídkou je pořád **expirovaný a schovaný**.
+  * Zobrazí se jen uživatelům, kteří si zapnou filtr **Kontinuální nabídky**.
+  * Má grafické označení **badgem**.
+* Monetizačně je to slabší mechanika (omezená distribuce) a je tu možnost, že ji později dropneme, pokud nedá smysl.
 
 ### Metriky inzerátu
 
@@ -264,20 +256,14 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 **Cenový model (měsíčně, CZK):**
 
 * **Buyer Package:** 119 Kč
-
 * **Seller Package:** 229 Kč
-
 * **Pro Package:** 499 Kč
-
 * **Buyer Package** - nástroje pro kupující:
-
   * **Přidělené goldíky:** 300 / měsíc.
   * **Early Access (token, 5×)**
   * **Limit uložených feedů (pass):** default 3 → Buyer 5.
   * **Anti-topper (token, 5×)**
-
 * **Seller Package** - nástroje pro prodávající:
-
   * **Přidělené goldíky:** 300 / měsíc.
   * **Early Delivery (token, 5×)**
   * **Photo Count (pass):** navýšení počtu fotek z default 3 → 5.
@@ -288,56 +274,35 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
   * **Kompenzace za anti-topper (pass)**
   * **Rozšířená data u inzerátu**
   * **Kontinuální nabídka (token, 3×)**
-
 * **Pro Package** - plná kontrola nad trhem (kupující + prodávající):
-
   * **Přidělené goldíky:** 600 / měsíc.
-
   * Obsahuje **Buyer Package + Seller Package**.
-
   * **Anti-topper (pass)**
-
   * **Early Access (pass)**
-
   * **Limit uložených feedů (pass):** 10.
-
   * **Photo count (pass):** 10.
-
   * **Multi-Category (pass)**
-
   * **Detail protistrany (pass)**
-
   * **Kompenzace za anti-topper (pass)**
-
   * **Rozšířená data u inzerátu**
-
-  * **Kontinuální nabídka (pass)**
+  * **Kontinuální nabídka (token, 5×)**
 
 ---
 
 ### Goldíky (interní měna)
 
 * Goldík je **trvalá interní měna** (interpretace kreditu / reálných peněz).
-
 * Nelze jít do mínusu.
-
 * Veškeré „peněžní“ operace jsou transakční: **nikdy se nesmí stát, že se hodnota odečte bez dodání protihodnoty**.
-
 * **Interní kurz:** **1 CZK ≈ 2 goldíky** (může se v čase měnit).
-
 * Goldíky lze získat:
-
   * skrze subscription (všechny balíčky je obsahují),
   * skrze používání aplikace (bonusy),
   * **nákupem balíčků goldíků**.
-
 * Goldíky jsou vidět na dvou místech:
-
   * **Inventář** (consumables + aktivní passy)
   * **Obchod / Bonusy** (nákup goldíků a tokenů)
-
 * Uživatel má k dispozici **historii transakcí** (přírůstky/úbytky).
-
 * Všechny pohyby nad inventářem probíhají **atomicky a transakčně** (fail = rollback).
 
 #### Nákupní balíčky goldíků
@@ -354,7 +319,6 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 * Bonusy nejsou „odměna za aktivitu“ ani za hygienu inzerátů. Hygiena je základní očekávané chování.
 * Bonusy se dávají **jen za odkliknuté transakce** (success / close / resolved)
-
   * Když kupující označí obchod jako **success/closed**, dostanou bonus **obě strany** (aktuálně: 5 goldíků).
   * Když prodávající odklikne **resolved**, dostane bonus **jen prodávající** (aktuálně: 5 goldíků).
 * Bonusy se dropují i ve feedu: **náhodně (RNG)** s relativně nízkým dropem „mezi inzeráty“ (má to být příjemné překvapení, ne ekonomický model).
@@ -366,30 +330,18 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 ### Tokeny & passy
 
 * **Token** = jednorázová akce (spotřebuje se). **Token nikdy neexpiruje** (můžeš ho držet neomezeně dlouho).
-
 * **Pass** = stav oprávnění (může mít konec platnosti, nebo být bez konce).
-
 * Když někde mluvíme o **platnosti**, myslíme tím vždycky **platnost passu**, ne tokenu.
-
 * Pokud je **pass uveden bez doby**, dědí dobu z běhu subscription (vznik/renew subu = nový pass na dobu trvání subu).
-
 * V UI se to nepředvádí jako „token/pass“: uživatel vidí akce typu **„Odemknout +2 fotky?“** apod.; detail (včetně pasů) je v **Inventáři**.
-
 * Tokeny jde **nakoupit dopředu** a aktivovat později; přímý pass je **okamžitá aktivace** (levnější, ale bez odkladu).
-
 * Při zámcích placených věcí používáme pattern: **Status** (proč to stojí) → **jedno CTA** (spotřebovat token / zaplatit goldíky).
-
 * Goldíky slouží k nákupu **tokenů** (spotřební oprávnění) a dalších věcí v systému.
-
 * Některé tokeny/passy:
-
   * jsou koupitelné v obchodě,
   * nebo jsou **subscription-exclusive**.
-
 * Tabulka níž popisuje položky (primárně) pro **Obchod**; pokud něco koupit nejde, má v ceně **exclusive**.
-
 * Subscription může dávat:
-
   * přímé passy,
   * usage tokeny,
   * pravidelný přísun goldíků.
@@ -413,8 +365,8 @@ Pozn.: **Jednotková cena** u balíčků (např. „5× za 20“) znamená cenu 
 | Detail protistrany  | Token              | 5× použití (každé vygeneruje pass)                               | 50        |
 | Detail protistrany  | Pass               | 7 dnů                                                            | 75        |
 | Photo Count         | Pass               | 1 měsíc (+2 fotky)                                               | 75        |
-| Kontinuální nabídka | Token              | 1× použití (otevře obchody u expirovaného inzerátu); trvání TBD  | TBD       |
-| Kontinuální nabídka | Pass               | aktivace bez limitu po dobu subscription; trvání na inzerátu TBD | exclusive |
+| Kontinuální nabídka | Token              | 1× použití (vygeneruje pass)                                     | TBD       |
+| Kontinuální nabídka | Pass               | 1 měsíc (nad inzerátem)                                          | exclusive |
 
 ---
 
@@ -436,12 +388,10 @@ Start projektu je **vědomě rozdělen do dvou paralelních, ale sekvenčních f
 * Jasně definovaná kategorie produktů.
 * Vysoká tematická shoda → **nižší tření při startu**.
 * Vyšší pravděpodobnost:
-
   * prvních inzerátů,
   * prvních transakcí,
   * prvních referencí.
 * Komunitní efekt:
-
   * lidé jsou **více tolerantní k nedokonalostem**,
   * vyšší ochota být „u zrodu“ a dávat feedback.
 
