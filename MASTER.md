@@ -138,14 +138,9 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 ### Detail protistrany
 
-* Rozšířený detail je sada **neutrálních signálů** chování uživatele (bez emocionality a bez „score“ manipulace):
-
-  * kolik obchodů uzavřel,
-  * kolik jich zavřel hned,
-  * reakční čas,
-  * jak často potvrzuje success/close,
-  * jak často otevírá dispute,
-  * celková aktivita a stáří účtu.
+* Rozšířený detail je sada **neutrálních signálů** chování uživatele (bez emocionality a bez „score“ manipulace).
+* Detail protistrany se skládá z metrik pro **Prodávajícího** (seller-info) a pro **Kupujícího** (buyer-info) - viz sekce níž.
+* Pokud nemáme dost dat, detail se může zobrazit jako **nedostupný** (status „není k dispozici / málo dat“).
 
 ### Obchod (transakce)
 
@@ -173,13 +168,52 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
   * Dispute vrací obchod do „běžného režimu“ (pokračuje se řešením / domluvou) a není nutně agresivní konflikt.
   * Odměny zůstávají navázané na finální **success/closed** (typicky scénář „chyběl šroubek -> doposláno -> hotovo“).
 
-### Metriky - Prodávající (TBD)
+### Metriky - Prodávající
 
-* TBD.
+* **Stáří účtu:** kdy je uživatel registrovaný (relativně).
+* **Počet inzerátů:** kolik vytvořil inzerátů (context k aktivitě prodávajícího).
+* **Reakce na nový obchod (pending -> open/rejected):**
 
-### Metriky - Kupující (TBD)
+  * reakční míra (kolik obchodů dostane reakci vs. kolik jich „dojede“ jinak),
+  * rychlost reakce (median + p90).
+* **Odmítání bez interakce:**
 
-* TBD.
+  * podíl obchodů, které prodávající odmítne bez konverzace,
+  * rychlost odmítnutí (median + p90).
+* **Resolved (vyřešeno):**
+
+  * podíl obchodů, které prodávající označí jako resolved,
+  * rychlost do resolved (median + p90).
+* **Expirace:** podíl obchodů, které expirují bez zpráv / interakce.
+* **Load (vytížení):** bucket low / medium / high (maskuje přesný počet obchodů; jen říká, jak je prodávající „busy“).
+* **Activity (aktivita):** bucket low / medium / high (hrubý signál aktivity v systému).
+* **Score (souhrnný rank):** agregovaný rank (A-F / 1-6), který shrnuje výše uvedené chování.
+
+### Metriky - Kupující
+
+* **Stáří účtu:** kdy je uživatel registrovaný (relativně).
+
+* **Reaction (reakce na otevřený obchod):**
+
+  * reakční míra,
+  * rychlost reakce (median + p90).
+
+* **Closer (instant close):**
+
+  * podíl obchodů, které kupující rychle zavře (otevře a hned „killne“ bez interakce),
+  * rychlost zavření (median + p90).
+
+* **Decision (success/closed):** podíl obchodů, kde kupující dává finální rozhodnutí (success/closed).
+
+* **Expired:** podíl obchodů, které expirují bez zpráv / interakce.
+
+* **Load (vytížení):** bucket low / medium / high.
+
+* **Activity (aktivita):** bucket low / medium / high.
+
+* **Score (souhrnný rank):** agregovaný rank (A-F / 1-6), který shrnuje výše uvedené chování.
+
+* TBD: doplnit později další signály (např. dispute), až budou v systému.
 
 ### Inzeráty
 
