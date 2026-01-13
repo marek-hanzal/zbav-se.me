@@ -147,6 +147,40 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
   * jak často otevírá dispute,
   * celková aktivita a stáří účtu.
 
+### Obchod (transakce)
+
+* Obchod vzniká, když kupující v detailu inzerátu klikne **„Mám zájem“** - tím vznikne nová transakce ve stavu **pending**.
+* Chat / zprávy se otevřou až ve chvíli, kdy prodávající obchod přijme (**open**) – tím systém potlačuje spam typu „Je to ještě dostupné?“.
+* Stavový flow:
+
+  * **pending**: kupující otevřel obchod („Mám zájem“).
+  * **open**: prodávající obchod přijme.
+  * **rejected**: prodávající obchod odmítne.
+  * Kupující může obchod kdykoliv zavřít akcí **close** (pokud to udělá hned / bez snahy, projeví se to negativně ve statistikách, které vidí prodávající).
+* Uzavření obchodu (kupující):
+
+  * **success** = explicitní „jsem spokojený“.
+  * **closed** = neutrální „okej“.
+  * **closed není neúspěch** - v obou případech jde o uzavřený obchod a chceme, aby to kupující klikali (kvůli metrikám).
+* Uzavření z pohledu prodávajícího:
+
+  * Prodávající po průběhu obchodu kliká **resolved** (z jeho pohledu vyřešeno, např. odesláno/předáno).
+  * Finální slovo má kupující: po resolved dává **success/closed**.
+* Dispute:
+
+  * Dispute může vzniknout **až po resolved**.
+  * Otevřít dispute může kupující i prodávající.
+  * Dispute vrací obchod do „běžného režimu“ (pokračuje se řešením / domluvou) a není nutně agresivní konflikt.
+  * Odměny zůstávají navázané na finální **success/closed** (typicky scénář „chyběl šroubek -> doposláno -> hotovo“).
+
+### Metriky - Prodávající (TBD)
+
+* TBD.
+
+### Metriky - Kupující (TBD)
+
+* TBD.
+
 ### Inzeráty
 
 * Inzerát po expiraci je **defaultně schovaný**.
