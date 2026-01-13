@@ -162,6 +162,35 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
   * Dispute vrací obchod do „běžného režimu“ (pokračuje se řešením / domluvou) a není nutně agresivní konflikt.
   * Odměny zůstávají navázané na finální **success/closed** (typicky scénář „chyběl šroubek -> doposláno -> hotovo“).
 
+### Zpětná vazba
+
+* V rámci transakce může kupující i prodávající dát **zpětnou vazbu protistraně** jako jednoduchý 3-stavový feedback:
+  * **like**
+  * **ok**
+  * **dislike**
+* Zpětná vazba je dostupná jako běžný čudlík v konverzaci **od okamžiku, kdy prodávající přijme obchod** (stav `open`).
+* Účel je jednoduchý: **karma mezi uživateli**.
+* Tento feedback je další metrika, která se promítá do **info o prodávajícím** i **info o kupujícím**.
+
+### Nahlášení (flagy)
+
+* Existuje mechanika nahlášení **inzerátu** (flag).
+* Flagy samy o sobě **nemají žádný systémový efekt** (žádné auto-skrytí, žádný auto-ban).
+* Slouží primárně jako signál pro **admina**, aby našel věci, které smrdí (zatím ručně přes dotazy nad daty).
+
+### Nahlášení protistrany (flag obchodníka)
+
+* Když dojde k problému „ojeb / bordel / spam“, řeší se to mezi stranami:
+  * uživatel dá protistraně **zpětnou vazbu**,
+  * a případně ji **nahlásí (flag uživatele)**.
+* Flag protistrany je dostupný jako akční čudlík v rámci konverzace / transakce (schovaný, ale dostupný).
+
+### Důsledky (filozofie)
+
+* Systém aktivně **neslouží jako soudce**. Policii dělají uživatelé svým chováním.
+* Negativní feedback / flagy se promítají do **hodnocení / skóre** uživatele.
+* Důsledek je tržní: uživatel se špatným skóre bude mít problém uzavírat obchody, protože ho protistrany nebudou chtít přijímat.
+
 ### Metriky - Prodávající
 
 * **Stáří účtu:** kdy je uživatel registrovaný (relativně).
@@ -176,6 +205,7 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
   * podíl obchodů, které prodávající označí jako resolved,
   * rychlost do resolved (median + p90).
 * **Expirace:** podíl obchodů, které expirují bez zpráv / interakce.
+* **Zpětná vazba z transakcí:** agregace **like / ok / dislike** od protistran (karma signál).
 * **Load (vytížení):** bucket low / medium / high (maskuje přesný počet obchodů; jen říká, jak je prodávající „busy“).
 * **Activity (aktivita):** bucket low / medium / high (hrubý signál aktivity v systému).
 * **Score (souhrnný rank):** agregovaný rank (A-F / 1-6), který shrnuje výše uvedené chování.
@@ -191,6 +221,7 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
   * rychlost zavření (median + p90).
 * **Decision (success/closed):** podíl obchodů, kde kupující dává finální rozhodnutí (success/closed).
 * **Expired:** podíl obchodů, které expirují bez zpráv / interakce.
+* **Zpětná vazba z transakcí:** agregace **like / ok / dislike** od protistran (karma signál).
 * **Load (vytížení):** bucket low / medium / high.
 * **Activity (aktivita):** bucket low / medium / high.
 * **Score (souhrnný rank):** agregovaný rank (A-F / 1-6), který shrnuje výše uvedené chování.
