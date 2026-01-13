@@ -265,9 +265,14 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 ### Bonusy za používání
 
-* Bonusy jsou odměny v goldících za používání produktu (bez dark patterns a bez nátlaku).
-* Cíl: podpořit návrat a „paměť trhu“ skrze užitek, ne notifikace.
-* Konkrétní pravidla (za co, kolik, limity) jsou **TBD**.
+* Bonusy nejsou „odměna za aktivitu“ ani za hygienu inzerátů. Hygiena je základní očekávané chování.
+* Bonusy se dávají **jen za odkliknuté transakce** (success / close / resolved).
+
+  * Když kupující označí obchod jako **success/closed**, dostanou bonus **obě strany** (aktuálně: 5 goldíků).
+  * Když prodávající odklikne **resolved**, dostane bonus **jen prodávající** (aktuálně: 5 goldíků).
+* Bonusy se dropují i ve feedu: **náhodně (RNG)** s relativně nízkým dropem „mezi inzeráty“ (má to být příjemné překvapení, ne ekonomický model).
+* V „Bonusy“ (obchod) je **denní drop** (aktuálně: 10 goldíků).
+* Anti-abuse pravidla pro bonusy jsou zatím **TBD**.
 
 ---
 
