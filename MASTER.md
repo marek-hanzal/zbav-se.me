@@ -234,6 +234,13 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 * Kontinuální nabídka existuje jako **token** i jako **pass** (subscription-exclusive).
 * TBD: probrat **trvání** (token vs pass) + jak přesně funguje **aktivace passu nad inzerátem**.
 
+### Metriky inzerátu
+
+* **View**: uživatel otevřel detail inzerátu a čumí do něj cca **2,5 s**.
+* **Impression**: uživatel se při scrollování feedem u inzerátu pozastavil cca **1,6 s**.
+* **Feedback**: sbíráme palec **nahoru / dolů**.
+* Tyhle metriky jsou základ pro „**Rozšířená data u inzerátu**“ a zobrazujeme je prodávajícímu jen jako placený benefit (token nebo subscription).
+
 ---
 
 ## Monetizace
