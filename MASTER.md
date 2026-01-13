@@ -239,7 +239,16 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 * **View**: uživatel otevřel detail inzerátu a čumí do něj cca **2,5 s**.
 * **Impression**: uživatel se při scrollování feedem u inzerátu pozastavil cca **1,6 s**.
 * **Feedback**: sbíráme palec **nahoru / dolů**.
-* Tyhle metriky jsou základ pro „**Rozšířená data u inzerátu**“ a zobrazujeme je prodávajícímu jen jako placený benefit (token nebo subscription).
+* **Ignorované**: počet ignorování inzerátu (uživatel si ho skryl).
+* **Transakce**: počet vzniklých transakcí z akce **„Mám zájem“** (kolik lidí otevřelo obchod).
+
+### Rozšířená data u inzerátu
+
+* Přístup je řízen **passsem**: dokud má prodávající aktivní pass, vidí rozšířená data u **svých** inzerátů.
+* Zobrazujeme jednoduchý dump čísel za dobu existence inzerátu (do expirace).
+* Obsah rozšířených dat: **impression**, **view**, **feedback**, **ignorované**, **transakce**.
+* **Potlačené views (anti-topper)** se ukazují jako poměr z celkového počtu: potlačené / (view + potlačené).
+* Data jsou **privátní**: vidí je jen vlastník inzerátu a jen jako placený benefit (Seller/Pro).
 
 ---
 
