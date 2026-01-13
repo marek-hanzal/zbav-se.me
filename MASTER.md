@@ -159,7 +159,8 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 * Umožňuje u expirovaného inzerátu znovu otevřít obchody/transakce (typicky pro dotazy typu „kdy bude další várka/vrh?“).
 * Aktivuje se **explicitně** nad konkrétním (expirovaným) inzerátem.
-* Kontinuální nabídka existuje jako **token** i jako **pass** (subscription-exclusive); konkrétní rozdělení je definované v sekci Subscriptions.
+* Kontinuální nabídka existuje jako **token** i jako **pass** (subscription-exclusive).
+* TBD: probrat **trvání** (token vs pass) + jak přesně funguje **aktivace passu nad inzerátem**.
 
 ---
 
@@ -224,8 +225,6 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
   * **Kontinuální nabídka (pass)**
 
-  > Účel: dát uživateli, který systém aktivně používá na obou stranách trhu, **plynulost bez mikromanagementu a větší kontrolu bez agresivní dominance**.
-
 ---
 
 ### Goldíky (interní měna)
@@ -278,9 +277,13 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 ### Tokeny & passy
 
-* **Token** = jednorázová akce (spotřebuje se).
+* **Token** = jednorázová akce (spotřebuje se). **Token nikdy neexpiruje** (můžeš ho držet neomezeně dlouho).
 
 * **Pass** = stav oprávnění (může mít konec platnosti, nebo být bez konce).
+
+* Když někde mluvíme o **platnosti**, myslíme tím vždycky **platnost passu**, ne tokenu.
+
+* Pokud je **pass uveden bez doby**, dědí dobu z běhu subscription (vznik/renew subu = nový pass na dobu trvání subu).
 
 * V UI se to nepředvádí jako „token/pass“: uživatel vidí akce typu **„Odemknout +2 fotky?“** apod.; detail (včetně pasů) je v **Inventáři**.
 
@@ -292,8 +295,10 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 * Některé tokeny/passy:
 
-  * nemusí být koupitelné,
-  * mohou být **subscription-exclusive**.
+  * jsou koupitelné v obchodě,
+  * nebo jsou **subscription-exclusive**.
+
+* Tabulka níž popisuje položky (primárně) pro **Obchod**; pokud něco koupit nejde, má v ceně **exclusive**.
 
 * Subscription může dávat:
 
@@ -301,24 +306,27 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
   * usage tokeny,
   * pravidelný přísun goldíků.
 
-Pozn.: **Token** = skladovatelný (koupíš teď, aktivuješ kdy chceš). **Pass** = okamžitý stav (zapne se hned).
+Pozn.: **Token** = skladovatelný (koupíš teď, aktivuješ kdy chceš) a **neexpiruje**. **Pass** = okamžitý stav (zapne se hned) a může mít platnost.
 
 Pozn.: **Jednotková cena** u balíčků (např. „5× za 20“) znamená cenu za jedno použití (20 / 5 = 4).
 
-| Co                 | Typ (token / pass) | Kolik / na jak dlouho                         | Cena |
-| ------------------ | ------------------ | --------------------------------------------- | ---- |
-| Early Access       | Token              | 1× použití (vygeneruje pass)                  | 80   |
-| Early Access       | Pass               | +8h náskok po dobu 7 dnů                      | 70   |
-| Early Delivery     | Token              | 1× použití (ruší release window pro inzerát)  | 40   |
-| Anti-topper        | Token              | 1× použití (vygeneruje pass)                  | 40   |
-| Anti-topper        | Pass               | 7 dnů                                         | 30   |
-| Mark               | Token              | 5× zvýraznění (platnost 7 dní)                | 20   |
-| Top                | Token              | 3× jednorázový bump v řazení (platnost 7 dní) | 50   |
-| Top Maxxi          | Token              | 1× aktivace (priorita v řazení po dobu 7 dnů) | 50   |
-| Multi-Category     | Token              | 1× použití (1 + 2 kategorie)                  | 75   |
-| Detail protistrany | Token              | 5× použití (platnost 7 dnů)                   | 50   |
-| Detail protistrany | Pass               | 7 dnů                                         | 75   |
-| Photo Count        | Pass               | 1 měsíc (+2 fotky)                            | 75   |
+| Co                  | Typ (token / pass) | Kolik / na jak dlouho                                            | Cena      |
+| ------------------- | ------------------ | ---------------------------------------------------------------- | --------- |
+| Early Access        | Token              | 1× použití (vygeneruje pass na 7 dnů)                            | 80        |
+| Early Access        | Pass               | +8h náskok po dobu 7 dnů                                         | 70        |
+| Early Delivery      | Token              | 1× použití (ruší release window pro inzerát)                     | 40        |
+| Anti-topper         | Token              | 1× použití (vygeneruje pass na 7 dnů)                            | 40        |
+| Anti-topper         | Pass               | 7 dnů                                                            | 30        |
+| Mark                | Token              | 5× použití (každé vytvoří pass na 7 dnů)                         | 20        |
+| Top                 | Token              | 3× použití (každé vytvoří pass na 7 dnů; bump při aktivaci)      | 50        |
+| Top Maxxi           | Token              | 1× použití (vygeneruje pass na 7 dnů)                            | 50        |
+| Multi-Category      | Token              | 1× použití (1 + 2 kategorie)                                     | 75        |
+| Multi-Category      | Pass               | po dobu subscription                                             | exclusive |
+| Detail protistrany  | Token              | 5× použití (každé vytvoří pass na 7 dnů)                         | 50        |
+| Detail protistrany  | Pass               | 7 dnů                                                            | 75        |
+| Photo Count         | Pass               | 1 měsíc (+2 fotky)                                               | 75        |
+| Kontinuální nabídka | Token              | 1× použití (otevře obchody u expirovaného inzerátu); trvání TBD  | TBD       |
+| Kontinuální nabídka | Pass               | aktivace bez limitu po dobu subscription; trvání na inzerátu TBD | exclusive |
 
 ---
 
