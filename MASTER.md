@@ -89,6 +89,17 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 ## Mechaniky
 
+### Ranking (škála hodnocení)
+
+- Veškeré ranky / hodnocení v systému používají škálu **A–F**, pokud není výslovně řečeno jinak.
+  - **A** = nejlepší
+  - **F** = nejhorší
+- Interně se může používat reverzní škála **1–6**:
+  - **1 = F**
+  - **6 = A**
+- Skóre se vizuálně zobrazuje jako **A–F** + krátký copy, který vysvětlí „co to znamená“ (a zbytek detailu je rozpad metrik v profilu).
+- Systém **nedává rozsudky**. Skóre je jen agregovaný signál z chování a zpětné vazby.
+
 ### Feed (filtry)
 
 * Feed je uživatelův uložený filtr (co se mu má zobrazovat).
@@ -193,38 +204,54 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 ### Metriky - Prodávající
 
-* **Stáří účtu:** kdy je uživatel registrovaný (relativně).
-* **Počet inzerátů:** kolik vytvořil inzerátů (context k aktivitě prodávajícího).
-* **Reakce na nový obchod (pending -> open/rejected):**
-  * reakční míra (kolik obchodů dostane reakci vs. kolik jich „dojede“ jinak),
-  * rychlost reakce (median + p90).
-* **Odmítání bez interakce:**
-  * podíl obchodů, které prodávající odmítne bez konverzace,
-  * rychlost odmítnutí (median + p90).
-* **Resolved (vyřešeno):**
-  * podíl obchodů, které prodávající označí jako resolved,
-  * rychlost do resolved (median + p90).
-* **Expirace:** podíl obchodů, které expirují bez zpráv / interakce.
-* **Zpětná vazba z transakcí:** agregace **like / ok / dislike** od protistran (karma signál).
-* **Load (vytížení):** bucket low / medium / high (maskuje přesný počet obchodů; jen říká, jak je prodávající „busy“).
-* **Activity (aktivita):** bucket low / medium / high (hrubý signál aktivity v systému).
-* **Score (souhrnný rank):** agregovaný rank (A-F / 1-6), který shrnuje výše uvedené chování.
+- Metriky se obecně počítají za posledních **90 dní** (klouzavé okno), pokud není uvedeno jinak.
+- Pokud není dost dat, metriky/skóre se **nezobrazí** a UI to přizná („Zatím nemáme dost dat, časem přibudou.“).
+- **Stáří účtu:** kdy je uživatel registrovaný (relativně).
+- **Počet inzerátů:** kolik vytvořil inzerátů (context k aktivitě prodávajícího).
+- **Reakce na nový obchod (pending -> open/rejected):**
+  - reakční míra (kolik obchodů dostane reakci vs. kolik jich „dojede“ jinak),
+  - rychlost reakce (median + p90).
+- **Odmítání bez interakce:**
+  - podíl obchodů, které prodávající odmítne bez konverzace,
+  - rychlost odmítnutí (median + p90).
+- **Resolved (vyřešeno):**
+  - podíl obchodů, které prodávající označí jako resolved,
+  - rychlost do resolved (median + p90).
+- **Expirace:** podíl obchodů, které expirují bez zpráv / interakce.
+- **Zpětná vazba z transakcí (like/ok/dislike):** agregovaný signál karmy od protistran.
+  - Má **malou váhu** do výsledného skóre.
+- **Flagy (nahlášení uživatele) a další malé signály:**
+  - Flagy se do skóre promítají, ale s **malou vahou** (primárně slouží adminovi, sekundárně jako slabý reputační signál).
+  - Ignorované inzeráty a like/dislike (na úrovni inzerátů) mají také **malou váhu** do skóre.
+- **Load (vytížení):** bucket low / medium / high (maskuje přesný počet obchodů; jen říká, jak je prodávající „busy“).
+- **Activity (aktivita):** bucket low / medium / high (hrubý signál aktivity v systému).
+- **Score (souhrnný rank):**
+  - Skóre se počítá jako interní hodnota **0–100** a mapuje se na **A–F**.
+  - Drobné signály (flagy, ignorované inzeráty, like/dislike, feedback) mají **nízkou váhu**.
 
 ### Metriky - Kupující
 
-* **Stáří účtu:** kdy je uživatel registrovaný (relativně).
-* **Reaction (reakce na otevřený obchod):**
-  * reakční míra,
-  * rychlost reakce (median + p90).
-* **Closer (instant close):**
-  * podíl obchodů, které kupující rychle zavře (otevře a hned „killne“ bez interakce),
-  * rychlost zavření (median + p90).
-* **Decision (success/closed):** podíl obchodů, kde kupující dává finální rozhodnutí (success/closed).
-* **Expired:** podíl obchodů, které expirují bez zpráv / interakce.
-* **Zpětná vazba z transakcí:** agregace **like / ok / dislike** od protistran (karma signál).
-* **Load (vytížení):** bucket low / medium / high.
-* **Activity (aktivita):** bucket low / medium / high.
-* **Score (souhrnný rank):** agregovaný rank (A-F / 1-6), který shrnuje výše uvedené chování.
+- Metriky se obecně počítají za posledních **90 dní** (klouzavé okno), pokud není uvedeno jinak.
+- Pokud není dost dat, metriky/skóre se **nezobrazí** a UI to přizná („Zatím nemáme dost dat, časem přibudou.“).
+- **Stáří účtu:** kdy je uživatel registrovaný (relativně).
+- **Reaction (reakce na otevřený obchod):**
+  - reakční míra,
+  - rychlost reakce (median + p90).
+- **Closer (instant close):**
+  - podíl obchodů, které kupující rychle zavře (otevře a hned „killne“ bez interakce),
+  - rychlost zavření (median + p90).
+- **Decision (success/closed):** podíl obchodů, kde kupující dává finální rozhodnutí (success/closed).
+- **Expired:** podíl obchodů, které expirují bez zpráv / interakce.
+- **Zpětná vazba z transakcí (like/ok/dislike):** agregovaný signál karmy od protistran.
+  - Má **malou váhu** do výsledného skóre.
+- **Flagy (nahlášení uživatele) a další malé signály:**
+  - Flagy se do skóre promítají, ale s **malou vahou**.
+  - Ignorované inzeráty a like/dislike (na úrovni inzerátů) mají také **malou váhu** do skóre.
+- **Load (vytížení):** bucket low / medium / high.
+- **Activity (aktivita):** bucket low / medium / high.
+- **Score (souhrnný rank):**
+  - Skóre se počítá jako interní hodnota **0–100** a mapuje se na **A–F**.
+  - Drobné signály (flagy, ignorované inzeráty, like/dislike, feedback) mají **nízkou váhu**.
 
 ### Inzeráty
 
