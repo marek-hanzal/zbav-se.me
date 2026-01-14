@@ -8,6 +8,23 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 - **Žádný kód, DB schémata ani implementační detaily**
 - Když něco doplňujeme, doplňujeme to jako **pravidlo** (co a proč), ne jako „jak to přesně nakódujeme“.
 
+## Obsah
+
+- [Směr produktu](#smer-produktu)
+- [Kodex](#kodex)
+- [Základní stavební kameny](#zakladni-kameny)
+- [Mechaniky](#mechaniky)
+- [Předplatné](#predplatne)
+- [Goldíky](#goldiky)
+- [Tokeny & passy](#tokeny-a-passy)
+- [Uvedení na trh](#uvedeni-na-trh)
+- [Retence a paměť trhu](#retence)
+- [Odhady monetizace a růstu](#odhady)
+
+---
+
+<a id="smer-produktu"></a>
+
 ## Směr produktu
 
 ### Identita
@@ -44,6 +61,10 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 - Na domovské stránce je odkaz na **transparentní bankovní účet**
 - Zároveň je na domovské stránce **kalendář aktivity** vývoje (Github-like)
 - Dále prezentujeme i jak se projektu daří pomocí **dynamické timeline** (první skokani, prvních xxx inzerátů, hlášky o tom, že dneska nic moc, že přibyly další inzeráty a pod)
+
+---
+
+<a id="kodex"></a>
 
 ## Kodex
 
@@ -82,7 +103,11 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - Pokud něco měníme, děláme to vědomě a transparentně.
 - Tento kodex je závazek vůči uživatelům i vůči sobě samým.
 
-## Základní stavení kameny
+---
+
+<a id="zakladni-kameny"></a>
+
+## Základní stavební kameny
 
 > Tuto sekci lze považovat za kombinaci entit a definic, na kterých se staví vše ostatní v tomto dokumentu.
 
@@ -112,10 +137,6 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - **Event log nad inzerátem:** impression, view, ignore/unignore, flag/unflag, transaction, favourite/unfavourite, like/dislike.
   - **Filtrování (feed):** fulltext, title, priceMin/priceMax, conditionMin/Max/In, ageMin/Max/In, deliveryIn, warrantyIn, categoryId/categoryIdIn, currency/currencyIn, feedId/feedIdIn, my/withOwn, withIgnored, isFavourite, transaction, range (km).
   - **Řazení:** price, condition, age, createdAt, updatedAt, expiresAt, geo (vzdálenost).
-- Inzeráty po expiraci lze stále zobrazit v rámci Feed (za použití explicitního nastavení)
-	- Pokud jiná mechanika neřekne jinak, expirované inzeráty již nedovolí interakci
-	- Cílem je umožnit uživatelům podívat se, co se na platformě historicky prodalo (např. můžou čekat, zda se daná zajímavá věc zase objeví)
-
 ### Draft
 
 > Další klíčová funkce, která umožňuje postupnou tvorbu inzerátu beze strachu, že se nějaké údaje ztratí, pokud v průběhu uživatel aplikaci opustí. Spolu s tím spravujeme seznam Draftů, tzn. uživatel může snadno vytvářet inzeráty z již existujících nastavení (včetně uložených obrázků).
@@ -129,36 +150,21 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 - Feed je uložené nastavení filtru nad inzeráty
 - Smyslem je místo běžného katalogového vyplivnutí inzerátů poskytnout nástroj, kde si uživatel sám přesně vybere, co chce vidět a jak to chce vidět
-- Jediné, co tato nastavení obchází - z hlediska řazení - jsou Top a Top Maxxi inzeráty (viz dále)
 - Feed si umí uložit lokalitu, tzn. různé feedy můžou mít různé řazení podle polohy (např. práce, chalupa, atd.)
 - Feed je základní vstup do seznamu inzerátů
 - Ve výchozím stavu se uživateli založí defaultní Feed se základním řazením bez dalších vlastností (tzn. vidí všechny inzeráty)
-- Pokud uživatel má uložených více feedů, než dovoluje jeho aktuální limit (typicky po doběhnutí subscription passu), feedy se nemažou, jen se část z nich v UI skryje/disable (upgrade nebo smazání uvolní slot).
-
-### Seznam inzerátů
-
-- Neexistuje jako standalone stránka, vždy se chodí přes Feed
-- Seznam je vždy výsledek Feed dotazu; na API úrovni platí stejné brány viditelnosti pro všechny vstupy (Feed i Vyhledávání)
-- Funguje podobně, jako Feed např. na Facebooku nebo Instagramu, tzn. pseudo-infinite scroll
-- Tvrdý limit je 200 inzerátů, předpoklad je, že uživatel toho nebude schopný tolik proscrollovat, tzn. ani technicky nemá smysl vytvářet reálný infinite scroll
 
 ### Vyhledávání
 
-> Vyhledávání není samostatná entita. Je to jen UI zkratka pro jeden speciální Feed ("hledací feed").
+> Vyhledávání není samostatná entita. Je to jen UI zkratka pro jeden speciální Feed (hledací feed).
 
-- Vyhledávání === Feed: systémově je to pořád jen Feed dotaz nad inzeráty
-- UI flow: **Hledat** → nastavení hledacího feedu (pokud neexistuje, automaticky se vytvoří) → seznam inzerátů
-- Hledací feed se zobrazuje v seznamu Feedů a počítá se do limitů feedů v balíčcích (předplatné)
-- Hledací feed se nikdy nepoužije jako „skulinka“ nad limit: **FE i BE zakáže překročení limitu feedů**.
-  - Pokud hledací feed už existuje, jen se upraví jeho nastavení.
-  - Pokud neexistuje a uživatel je na limitu, hledací feed limit překročí jako jediná výjimka
-- Vyhledávání respektuje stejné brány viditelnosti jako Feed (ignor, citlivost, expirace, release window, atd.)
-
+- Vyhledávání === Feed: systémově je to pořád jen Feed dotaz nad inzeráty.
+- Hledací feed se vytvoří automaticky (při prvním použití) a pak už je to jen uložený feed jako každý jiný.
 ### Transakce
 
 > Jelikož je systém tvrdě anonymní, toto slouží jako most mezi prodejcem a kupujícím - můžou navzájem získat systémové informace, co jsou zač, než se rozhodnou k interakci. Po otevření transakce (viz. Mechaniky) pak vše probíhá jako chytřejší standardní chat
 
-- Zastupuje interakci mezi uživateli, v systému se prezentuje jako "Zprávy"
+- Zastupuje interakci mezi uživateli, v systému se prezentuje jako „Zprávy“
 - Každá transakce zároveň vytváří i vlákno zpráv s účastníky (ve výchozím stavu prodejce a kupující), které tak udává, kdo smí do transakce zasahovat
 - Lifecycle (zavření, expirace, mazání) je definovaný v **Mechaniky → Obchod (transakce)**.
 
@@ -175,7 +181,6 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 	- Obrázky
 	- A text (běžné zprávy)
 - Strukturovaná data mají vlastní tabulku, aby šla **snadno a cíleně mazat**
-- Systém nekontroluje ani neřeší obsah textových zpráv - pokud si tam uživatelé předají osobní údaje, mají smůlu
 
 ### Lokace
 
@@ -193,17 +198,14 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Nahrané soubory, hlavně pak fotky
 - Veškeré obrázky (v inzerátu, hero feedu, ve zprávách) se ukládají zde
 - Pokud je někde více obrázků (inzerát), používat se **Gallery** (což je kolekce Uploadů)
-- Uploady nemají svůj TTL, jelikož nad různými objekty se může dynamicky měnit (např. prodloužení života inzerátu), tzn. každý rodičovský objekt si musí spravovat svoje Uploady sám
 
 ### Preference uživatele
 
 > Nic moc zvláštního - věci, které si o sobě uživatel chce nastavit sám.
 
 - Zde ukládáme implicitní nebo explicitní preference uživatele
-- Při přechodu mezi sekcemi prodejce/kupující toto zapíšeme do preferencí
-- Dobrovolné nastavení polohy (zároveň přepíše polohu u Feedů, které ji nemají nastavenou)
 
-### Ranking
+### Hodnocení (ranking)
 
 > Tohle neexistuje jako samostatná entita, ale jako atribut. Toto je pouze definice pro ujasnění, jak se má ranking používat.
 
@@ -214,7 +216,69 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - **1 = F**
   - **6 = A**
 
+---
+
+<a id="mechaniky"></a>
+
 ## Mechaniky
+
+### Feed, vyhledávání a seznam inzerátů
+
+- **Seznam inzerátů** neexistuje jako standalone stránka: vždy je to výsledek Feed dotazu.
+- Seznam funguje jako pseudo-infinite scroll (podobně jako sociální feedy).
+- Tvrdý limit je **200 inzerátů** na jeden dotaz (praktičnost + výkon).
+
+---
+
+### Inzerát - expirace a interakce
+
+- Expirované inzeráty lze stále zobrazit ve feedu, ale jen pokud si to uživatel **vědomě zapne** (explicitní nastavení).
+- Pokud jiná mechanika neřekne jinak, expirovaný inzerát už **nedovolí interakci**.
+- Smysl: historický kontext trhu (co se prodávalo, za kolik, jaké věci se objevují).
+
+---
+
+### Feed - výjimky řazení
+
+- Feed je filtr nad inzeráty.
+- Výjimky v řazení: **Top** a **Top Maxxi** přeskakují běžné inzeráty (řazení definované feedem).
+
+---
+
+### Vyhledávání
+
+- Vyhledávání === Feed: je to UI zkratka pro jeden speciální feed („hledací feed“).
+- UI flow: **Hledat** → nastavení hledacího feedu → seznam inzerátů.
+- Hledací feed se **vytvoří vždycky**, i když tím uživatel dočasně překročí limit uložených feedů.
+- Hledací feed se zobrazuje v seznamu feedů a **počítá se do limitů** feedů v balíčcích.
+- Brány viditelnosti jsou stejné jako u feedu (ignor, citlivost, expirace, release window, atd.).
+
+---
+
+### Limity feedů (po doběhnutí passu)
+
+- Pokud uživatel má uložených více feedů, než dovoluje jeho aktuální limit (typicky po doběhnutí předplatného), feedy se **nemažou**.
+- UI jen část z nich **skryje/disable** (upgrade nebo smazání uvolní slot).
+
+---
+
+### Zprávy - soukromí a strukturovaná data
+
+- Strukturovaná data (lokace, osobní údaje, tracking, atd.) mají vlastní tabulky, aby šla **cíleně mazat**.
+- Platforma **nečte ani nehodnotí** obsah textových zpráv. Pokud si tam lidi pošlou osobní údaje mimo strukturované zprávy, je to jejich rozhodnutí.
+
+---
+
+### Uploady - životnost
+
+- Uploady nemají vlastní TTL. Životnost řídí „rodič“ (inzerát, zpráva, atd.), který upload používá.
+
+---
+
+### Preference uživatele - automatické zápisy
+
+- Systém může do preferencí ukládat některé volby automaticky (např. přepnutí mezi sekcemi kupující/prodejce nebo implicitní poloha).
+- Jsou to pořád jen preference uživatele (ne system-wide data); uživatel je může kdykoliv přepsat.
 
 ### Thumbs
 
@@ -511,9 +575,13 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Metriky:
   - Inzerát se chová normálně, takže metriky (včetně **Transakce**) se počítají standardně.
 
-## Subscriptions
+---
 
-### Subscription bonusy (měsíční příděly)
+<a id="predplatne"></a>
+
+## Předplatné
+
+### Bonusy předplatného (měsíční příděly)
 
 - Každé předplatné při měsíčním renew přidělí své bonusy **vždy**, bez ohledu na to, kolik už jich uživatel má.
 - Cíl: uživatel si předplatné platí, takže systém se nesnaží “šetřit” tím, že by příděly zastavoval kvůli tomu, že má uživatel zásobu.
@@ -523,7 +591,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Pass je samostatný záznam v tabulce pass a běží čistě podle svého `expiresAt` (nic se „neruší“ předčasně).
 - Po vypršení passů se systém vrátí do defaultního režimu (např. anti-topper přestane platit, feed limit se sníží, atd.).
 
-### Buyer Package (119 Kč / měsíc)
+### Balíček Kupující (119 Kč / měsíc)
 
 > **Co kupuju:** Nástroje pro kupujícího. Typicky chci dřív vidět, rychleji kupovat a méně se brodit v odpadu.
 
@@ -532,7 +600,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Limit uložených feedů (pass):** default 3 → Buyer 5.
 - **Anti-topper (token, 5×)**
 
-### Seller Package (229 Kč / měsíc)
+### Balíček Prodejce (229 Kč / měsíc)
 
 > **Co kupuju:** Celkový toolset pro efektivní distribuci a zviditelnění inzerátu (bez pay-to-win), plus privátní metriky.
 
@@ -547,7 +615,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Rozšířená data u inzerátu (pass)**
 - **Kontinuální nabídka (token, 3×)**
 
-### Pro Package (499 Kč / měsíc)
+### Balíček Pro (499 Kč / měsíc)
 
 > **Co kupuju:** Všechno (Buyer + Seller) a navíc „plný klid“ a nejvyšší komfort. Jsem na obou stranách a chci dostat z aplikace maximum s minimem šumu.
 
@@ -562,6 +630,8 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Kompenzace za anti-topper**
 - **Rozšířená data u inzerátu (pass)**
 - **Kontinuální nabídka (token, 5×)**
+
+<a id="goldiky"></a>
 
 ## Goldíky
 
@@ -602,6 +672,8 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Bonusy se dropují i ve feedu: **náhodně (RNG)** s relativně nízkým dropem „mezi inzeráty“ (má to být příjemné překvapení, ne ekonomický model).
 - V „Bonusy“ (obchod) je **denní drop** (aktuálně: 10 goldíků).
 - Bonusy se nemusí vyplatit, pokud systém vyhodnotí zjevné zneužití nebo anomální chování.
+
+<a id="tokeny-a-passy"></a>
 
 ## Tokeny & passy
 
@@ -653,7 +725,9 @@ Pozn.: **Jednotková cena** u balíčků (např. „5× za 20“) znamená cenu 
 | Kontinuální nabídka | Token              | 1× použití (vygeneruje pass)                                     | exclusive |
 | Kontinuální nabídka | Pass               | 1 měsíc (inzerát funguje jako běžný aktivní)                      | exclusive |
 
-## Go-to-market
+<a id="uvedeni-na-trh"></a>
+
+## Uvedení na trh (Go-to-market)
 
 ### Fázování startu
 
@@ -695,6 +769,8 @@ Start projektu je **vědomě rozdělen do dvou paralelních, ale sekvenčních f
 - Billboardy: bílé pozadí, žádné obrázky, krátký tvrdý text + URL.
 - Word-of-mouth jako hlavní akcelerační kanál.
 
+<a id="retence"></a>
+
 ## Retence a paměť trhu
 
 Zbav-se.me **nepracuje s krátkodobou pozorností**, ale s pamětí trhu. Inzeráty po expiraci **nezmizí**, ale jsou **defaultně schované** a lze je zobrazit filtrem. Díky tomu tvoří historický kontext: ceny, neúspěšné nabídky, chování účastníků.
@@ -713,6 +789,8 @@ Důsledky tohoto přístupu:
 - Po saturaci regionu: **60-70 %** (platforma jako referenční bod)
 
 > Retence zde není tlačena notifikacemi ani návykovostí, ale **užitkem z kontextu**. To vytváří menší, ale stabilnější a důvěryhodnější MAU.
+
+<a id="odhady"></a>
 
 ## Odhady monetizace a růstu
 
