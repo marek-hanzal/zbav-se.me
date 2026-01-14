@@ -367,6 +367,7 @@
 		"Sansation",
 		"sasl",
 		"sbazar",
+		"scrapem",
 		"scrollování",
 		"scrollu",
 		"seedable",
@@ -503,5 +504,6 @@
 	"[mdx]": {
 		"editor.defaultFormatter": "unifiedjs.vscode-mdx"
 	},
-	"typescript.experimental.useTsgo": false
+	"typescript.experimental.useTsgo": false,
+	"chatgpt.commentCodeLensEnabled": false
 }

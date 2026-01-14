@@ -130,24 +130,26 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Feed je uložené nastavení filtru nad inzeráty
 - Smyslem je místo běžného katalogového vyplivnutí inzerátů poskytnout nástroj, kde si uživatel sám přesně vybere, co chce vidět a jak to chce vidět
 - Jediné, co tato nastavení obchází - z hlediska řazení - jsou Top a Top Maxxi inzeráty (viz dále)
-- Feed si umí uložit lokalitu, tzn. různé feedy můžou mít různé řazení podle polohy (např. práce, chalupa, ...)
+- Feed si umí uložit lokalitu, tzn. různé feedy můžou mít různé řazení podle polohy (např. práce, chalupa, atd.)
 - Feed je základní vstup do seznamu inzerátů
 - Ve výchozím stavu se uživateli založí defaultní Feed se základním řazením bez dalších vlastností (tzn. vidí všechny inzeráty)
 
 ### Seznam inzerátů
 
 - Neexistuje jako standalone stránka, vždy se chodí přes Feed
+- Seznam je vždy výsledek Feed dotazu; na API úrovni platí stejné brány viditelnosti pro všechny vstupy (Feed i Vyhledávání)
 - Funguje podobně, jako Feed např. na Facebooku nebo Instagramu, tzn. pseudo-infinite scroll
 - Tvrdý limit je 200 inzerátů, předpoklad je, že uživatel toho nebude schopný tolik proscrollovat, tzn. ani technicky nemá smysl vytvářet reálný infinite scroll
 
 ### Vyhledávání
 
-> Mírně duplicitní s Feedem, nicméně toto má krýt potřebu uživatelů pro běžné vyhledávání bez čarování kolem feedu
+> Vyhledávání není samostatná entita. Je to jen UI zkratka pro jeden speciální Feed ("hledací feed").
 
-- Jediná výjimka vedle Feedu, která umožňuje vstoupit na seznam inzerátů
-- Přijímá stejné atributy, jako Feed
-- Na pozadí se uloží jako Feed, pouze bude drobný rozdíl v UI (nastavení vyhledávání se zobrazí vždy, pamatuje se poslední nastavení)
-- Feed vyhledávání se zobrazí v seznamu Feedů, limity v balíčcích (předplatné) s tímto počítají
+- Vyhledávání === Feed: systémově je to pořád jen Feed dotaz nad inzeráty
+- UI flow: **Hledat** → nastavení hledacího feedu (pokud neexistuje, automaticky se vytvoří) → seznam inzerátů
+- Hledací feed se zobrazuje v seznamu Feedů a počítá se do limitů feedů v balíčcích (předplatné)
+- Vznik hledacího feedu není blokovaný limitem: může dočasně překročit limit (např. 3 feedy → po použití Hledat 4 feedy)
+- Vyhledávání respektuje stejné brány viditelnosti jako Feed (ignor, citlivost, expirace, release window, atd.)
 
 ### Transakce
 
@@ -155,7 +157,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 - Zastupuje interakci mezi uživateli, v systému se prezentuje jako "Zprávy"
 - Každá transakce zároveň vytváří i vlákno zpráv s účastníky (ve výchozím stavu prodejce a kupující), které tak udává, kdo smí do transakce zasahovat
-- Po zavření transakce (jakkoli, ať už vypršením nebo uživatelskou akcí) se odstraní veškerá strukturovaná data (polohy, osobní údaje, ...)
+- Po zavření transakce (jakkoli, ať už vypršením nebo uživatelskou akcí) se odstraní veškerá strukturovaná data (polohy, osobní údaje, atd.)
 
 ### Zprávy
 
@@ -291,6 +293,10 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Teprve po tom má uživatel k obsahu volný přístup (žádný blur):
   - citlivost se v listingu i detailu zobrazuje jako **badge**,
   - jinak se obsah chová standardně.
+- Pravidla citlivosti platí pro všechny formy získání inzerátu (Feed, Vyhledávání i přímý odkaz):
+  - **běžný (common)** se zobrazí vždy
+  - cokoliv nad běžný se zobrazí jen pokud to sedí na nastavení uživatele
+    - pokud nesedí, vrátí se placeholder typu **„Nevhodný obsah“** a server vrátí odpověď **bez dat inzerátu** (nelze to obejít scrapem)
 
 #### Příklady úrovní
 
@@ -311,9 +317,9 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - V detailu inzerátu je dostupná akce **„Ignorovat“** (toggle).
 - Cíl: uživatel si může explicitně odstranit inzerát z feedu (nechce, aby mu „lezl do feedu“).
 - Ignor je **vázaný na konkrétní inzerát**:
-  - Jakmile uživatel inzerát jednou ignoruje, **neuvidí ho už nikde** (feed, search, listingy, atd.), dokud ignor nezruší.
+  - Jakmile uživatel inzerát jednou ignoruje, **neuvidí ho v žádném seznamu** (Feed, Vyhledávání, listingy), dokud ignor nezruší.
   - Výjimka je vědomá volba uživatele: pokud si ve feedu zapne filtr `withIgnored`, ignorované inzeráty se můžou znovu zobrazit.
-  - Pokud se uživatel k ignorovanému inzerátu dostane přímým linkem, může ho vidět (edge-case, neřešíme).
+  - Pokud se uživatel k ignorovanému inzerátu dostane **přímým linkem**, zobrazí se normálně (uživatel jen ví, že ho ignoruje: „OK, nezajímá mě“).
 - Ignor je toggle:
   - **Ignorovat** i **zrušit ignor** generuje event do **user event logu** (append-only).
 - Metriky:
@@ -457,7 +463,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - `expireAt` posouvá **jakákoli akce** v transakci (včetně `dispute` a jakýchkoli zpráv / structured messages po otevření).
   - Po expiraci se transakce přepne do stavu **expired** automaticky (běží pravidelný systémový úklid).
   - Po zavření transakce (user `closed/success`, `rejected`, `sold`, `expired`) se odstraní veškerá **strukturovaná data** ze zpráv (polohy, osobní údaje, apod.).
-  - Po **3 měsících** se transakce smaže kompletně z databáze (hard delete).
+  - Po **3 měsících** se transakce smaže kompletně z databáze (hard delete)
 
 ### Dispute
 
@@ -504,7 +510,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 - Každé předplatné při měsíčním renew přidělí své bonusy **vždy**, bez ohledu na to, kolik už jich uživatel má.
 - Cíl: uživatel si předplatné platí, takže systém se nesnaží “šetřit” tím, že by příděly zastavoval kvůli tomu, že má uživatel zásobu.
-- Tokeny se ukládají do inventáře a **neexpirují** (expiruje pouze pass, pokud je časově omezený).
+- Tokeny se ukládají do inventáře a **neexpirují** (expiruje pouze pass, pokud je časově omezený)
 
 ### Buyer Package (119 Kč / měsíc)
 
@@ -560,7 +566,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - **Inventář** (consumables + aktivní passy)
   - **Obchod / Bonusy** (nákup goldíků a tokenů)
 - Uživatel má k dispozici **historii transakcí** (přírůstky/úbytky).
-- Všechny pohyby nad inventářem probíhají **atomicky a transakčně** (fail = rollback).
+- Všechny pohyby nad inventářem probíhají **atomicky a transakčně** (fail = rollback)
 
 ### Nákupní balíčky goldíků
 
