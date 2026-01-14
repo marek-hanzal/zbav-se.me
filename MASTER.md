@@ -71,24 +71,39 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 
 ## Konkurenceschopnost
 
-> Subjektivní „konkurenční výhody“ a produktové argumenty. Nejsou to sliby ani marketing. Je to checklist, proč má tenhle projekt existovat a čím se liší.
+> Subjektivní výhody a argumenty. Nejsou to sliby ani marketing. Je to checklist, proč má tenhle projekt existovat a čím se liší.
 
-### Co dáváme líp než klasický bazary
+Nesnažíme se o čelní souboj v „kdo má víc všeho pro všechny“. Stavíme alternativu pro lidi, co chtějí **prodat/koupit rychle, v klidu a bez šmírování**.
 
-- **Soukromí jako default**: držíme jen minimum dat (prakticky email). Žádný „profilový šmírování“ jako obchodní model.
-- **Anti-spam obchod**: dokud prodávající nepřijme transakci, kupující nemůže psát ani posílat strukturovaná data. Konec „je to aktuální?“ spamu.
-- **Rozhodování přes chování, ne přes kecy**: reputace stojí na metrikách (reakce, expirace, closer, resolved, flagy), ne na bio a pohádkách v profilu.
+### Co umíme líp
+
+- **Klid místo cirkusu**: minimum vizuálního šumu, žádné otravné „zapoj se“ UX. Aplikace má pomoct uzavřít obchod, ne spolknout ti večer.
+- **Soukromí jako default**: držíme jen minimum dat (prakticky email). Nejsi produkt.
+- **Anti-spam obchod**: dokud prodávající nepřijme transakci, kupující nemůže psát ani posílat strukturovaná data. Konec „je to aktuální?“ spamu a hromadných výkřiků do tmy.
+- **Důvěra z chování, ne z keců**: reputace stojí na metrikách (reakce, expirace, closer, resolved, flagy), ne na bio a „věř mi bro“ profilech.
 - **Feed jako hlavní produkt**: uživatel si nastaví zájem a systém mu ho servíruje. Vyhledávání je jen UI zkratka pro feed, ne separátní svět.
-- **Paměť trhu**: expirované inzeráty nezmizí. Tvoří historii a kontext (ceny, nabídka, „co tu běžně je“), což časem zvyšuje hodnotu platformy.
+- **Paměť trhu**: expirované inzeráty nezmizí. Vzniká historie a kontext (ceny, nabídka, „co tu běžně je“), což časem zvyšuje hodnotu platformy.
+- **Férová ekonomika pro uživatele**: nebereme procenta z prodeje. Platí se za nástroje (rozšíření) a předplatné.
 - **Bez pay-to-win dominance**: placené věci jsou viditelné a přiznané. Neplacený obsah se může mírně potlačit, ale nemizí v díře.
-- **Klid pro kupující + férovost pro prodávající**: anti-topper chrání kupující před šumem a payback řeší dopad na prodávající (tam, kde to dává smysl).
 - **Deterministické brány**: citlivost je přísně řízená nastavením uživatele (u detailu klidně 404). Ignor je dobrovolný (přímý odkaz funguje).
-- **Transparentnost projektu**: otevřené zdrojáky, transparentní účet, viditelná aktivita vývoje. To je důvěra v praxi, ne „trust me bro“.
+- **Transparentnost projektu**: otevřené zdrojáky, transparentní účet, viditelná aktivita vývoje. Důvěra v praxi, ne PR.
 
-### Co mají konkurenti a my ne
+### V čem je naše slabina (a proč s tím počítáme)
 
-- Agresivní reklamní rozmisťování, paid reach a „protočím ti to, protože zaplatíš“ je přesně ten typ šumu, proti kterému tohle stavíme. Naše cesta je klid, čitelnost trhu a reputace.
+- **Prázdno na startu**: bez obsahu je každý marketplace mrtvý. Tohle je gravitace, ne bug.
+- **„Levný drobnosti“ jsou těžší**: když někdo prodává věc za pár korun, často mu stačí nejjednodušší kanál bez přemýšlení. My míříme na situace, kde se vyplatí mít klid, filtr a kontext.
+- **Uživatel musí pochopit feedy**: je to výhoda, ale i nárok na UX. Proto má být default jednoduchý a „zbytek si zapneš, když chceš“.
 
+Jak to obcházíme:
+- startujeme v úzké komunitě (vyšší důvěra, vyšší hustota kvality),
+- teprve pak teprve jdeme do regionu,
+- nové uživatele necháme 1 měsíc v plné síle (trial Pro), ať to ochutnají a poznají rozdíl.
+
+### Co vědomě neděláme (a proč)
+
+- **„protočím ti to, protože zaplatíš“**: agresivní paid reach a tlačení věcí do obličeje vytváří šum, scam prostor a únavu. Naše cesta je čitelnost trhu, kontrola uživatele a reputace.
+
+---
 
 <a id="kodex"></a>
 
