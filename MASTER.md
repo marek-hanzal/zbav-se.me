@@ -133,6 +133,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Feed si umí uložit lokalitu, tzn. různé feedy můžou mít různé řazení podle polohy (např. práce, chalupa, atd.)
 - Feed je základní vstup do seznamu inzerátů
 - Ve výchozím stavu se uživateli založí defaultní Feed se základním řazením bez dalších vlastností (tzn. vidí všechny inzeráty)
+- Pokud uživatel má uložených více feedů, než dovoluje jeho aktuální limit (typicky po doběhnutí subscription passu), feedy se nemažou, jen se část z nich v UI skryje/disable (upgrade nebo smazání uvolní slot).
 
 ### Seznam inzerátů
 
@@ -148,7 +149,9 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Vyhledávání === Feed: systémově je to pořád jen Feed dotaz nad inzeráty
 - UI flow: **Hledat** → nastavení hledacího feedu (pokud neexistuje, automaticky se vytvoří) → seznam inzerátů
 - Hledací feed se zobrazuje v seznamu Feedů a počítá se do limitů feedů v balíčcích (předplatné)
-- Vznik hledacího feedu není blokovaný limitem: může dočasně překročit limit (např. 3 feedy → po použití Hledat 4 feedy)
+- Hledací feed se nikdy nepoužije jako „skulinka“ nad limit: **FE i BE zakáže překročení limitu feedů**.
+  - Pokud hledací feed už existuje, jen se upraví jeho nastavení.
+  - Pokud neexistuje a uživatel je na limitu, hledací feed limit překročí jako jediná výjimka
 - Vyhledávání respektuje stejné brány viditelnosti jako Feed (ignor, citlivost, expirace, release window, atd.)
 
 ### Transakce
@@ -515,6 +518,10 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Každé předplatné při měsíčním renew přidělí své bonusy **vždy**, bez ohledu na to, kolik už jich uživatel má.
 - Cíl: uživatel si předplatné platí, takže systém se nesnaží “šetřit” tím, že by příděly zastavoval kvůli tomu, že má uživatel zásobu.
 - Tokeny se ukládají do inventáře a **neexpirují** (expiruje pouze pass, pokud je časově omezený)
+- Neexistuje downgrade: jediná změna subscription je **cancel**.
+- Cancel znamená: subscription se jen **neobnoví**. Všechny passy, které vznikly, **doběhnou do konce zaplaceného období** a pak zaniknou.
+- Pass je samostatný záznam v tabulce pass a běží čistě podle svého `expiresAt` (nic se „neruší“ předčasně).
+- Po vypršení passů se systém vrátí do defaultního režimu (např. anti-topper přestane platit, feed limit se sníží, atd.).
 
 ### Buyer Package (119 Kč / měsíc)
 
@@ -523,6 +530,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Přidělené goldíky:** 300 / měsíc.
 - **Early Access (token, 5×)**
 - **Limit uložených feedů (pass):** default 3 → Buyer 5.
+- Po vypršení passu se limit vrátí na default a UI zobrazí jen první N feedů podle pořadí uživatele (zbytek zůstává uložený, ale je skrytý/disabled).
 - **Anti-topper (token, 5×)**
 
 ### Seller Package (229 Kč / měsíc)
@@ -549,6 +557,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Anti-topper (pass)**
 - **Early Access (pass)**
 - **Limit uložených feedů (pass):** 10.
+- Po vypršení passu se limit vrátí na default a UI zobrazí jen první N feedů podle pořadí uživatele (zbytek zůstává uložený, ale je skrytý/disabled).
 - **Photo count (pass):** 10.
 - **Multi-Category (pass)**
 - **Detail protistrany (pass)**
@@ -571,6 +580,8 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - **Obchod / Bonusy** (nákup goldíků a tokenů)
 - Uživatel má k dispozici **historii transakcí** (přírůstky/úbytky).
 - Všechny pohyby nad inventářem probíhají **atomicky a transakčně** (fail = rollback)
+- Aktivace tokenu i nákup/spotřeba je vždy jedna DB transakce: buď proběhne celý efekt (např. Top se opravdu nasadí), nebo se nestane nic (token/goldíky se nespálí).
+- Refundy za „málo shlédnutí“ zatím neděláme. Pokud se někdy přidá kompenzace za slabý výkon, bude to samostatná mechanika s jasně definovaným prahem (až bude potřeba).
 
 ### Nákupní balíčky goldíků
 
@@ -587,9 +598,9 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 > Dalším důvodem pak je trošku oživit a podpořit retenci uživatelů, přestože nic moc vysloveně nechtějí, dojdou si pro svůj goldík.
 
 - Bonusy nejsou „odměna za aktivitu“ ani za hygienu inzerátů. Hygiena je základní očekávané chování.
-- Bonusy se dávají **jen za odkliknuté transakce** (success / closed / resolved)
-  - Když kupující označí obchod jako **success/closed**, dostanou bonus **obě strany** (aktuálně: 5 goldíků).
-  - Když prodávající odklikne **resolved**, dostane bonus **jen prodávající** (aktuálně: 5 goldíků).
+- Bonusy se dávají **jen po odkliknutí `resolved` prodávajícím**.
+  - Dokud prodávající nedá `resolved`, žádný bonus za transakci nevzniká.
+  - Tím je minimalizovaný abuse (otevírání a zavírání obchodů bez reálného průběhu).
 - Bonusy se dropují i ve feedu: **náhodně (RNG)** s relativně nízkým dropem „mezi inzeráty“ (má to být příjemné překvapení, ne ekonomický model).
 - V „Bonusy“ (obchod) je **denní drop** (aktuálně: 10 goldíků).
 - Bonusy se nemusí vyplatit, pokud systém vyhodnotí zjevné zneužití nebo anomální chování.
@@ -602,6 +613,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Pass** = stav oprávnění (může mít konec platnosti, nebo být bez konce).
 - Když někde mluvíme o **platnosti**, myslíme tím vždycky **platnost passu**, ne tokenu.
 - Pokud je **pass uveden bez doby**, dědí dobu z běhu subscription (vznik/renew subu = nový pass na dobu trvání subu).
+- Jakmile subscription doběhne (cancel bez renew), všechny takto navázané passy prostě doběhnou do svého `expiresAt` a pak končí.
 - V UI se to nepředvádí jako „token/pass“: uživatel vidí akce typu **„Odemknout +2 fotky?“** apod.; detail (včetně pasů) je v **Inventáři**.
 - Tokeny jde **nakoupit dopředu** a aktivovat později; přímý pass je **okamžitá aktivace** (levnější, ale bez odkladu).
 - Při zámcích placených věcí používáme pattern: **Status** (proč to stojí) → **jedno CTA** (spotřebovat token / zaplatit goldíky).
@@ -611,12 +623,14 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - nebo jsou **subscription-exclusive**.
 - Tabulka níž popisuje položky (primárně) pro **Obchod**; pokud něco koupit nejde, má v ceně **exclusive**.
 - `exclusive` = dostupné jen přes subscription / benefit, nelze koupit v obchodě.
+- Cenotvorba (pravidlo): **pass je levnější než odpovídající token**, protože pass se zapíná okamžitě, kdežto token je skladovatelný „na někdy“.
+- `exclusive` je v MVP opravdu exclusive: **nejde dokoupit** ani za goldíky.
 - Subscription může dávat:
   - přímé passy,
   - usage tokeny,
   - pravidelný přísun goldíků.
 
-Pozn.: **Token** = skladovatelný (koupíš teď, aktivuješ kdy chceš) a **neexpiruje**. **Pass** = okamžitý stav (zapne se hned) a může mít platnost.
+Pozn.: **Token** = skladovatelný (jen jednorázové použití; koupíš teď, aktivuješ kdy chceš) a **neexpiruje**. **Pass** = okamžitý stav (zapne se hned) a může mít platnost.
 
 Pozn.: **Jednotková cena** u balíčků (např. „5× za 20“) znamená cenu za jedno použití (20 / 5 = 4).
 
