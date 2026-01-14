@@ -12,6 +12,8 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 
 - [Směr produktu](#smer-produktu)
 - [Kodex](#kodex)
+- [Terminologie](#terminologie)
+- [UI](#ui)
 - [Základní stavební kameny](#zakladni-kameny)
 - [Mechaniky](#mechaniky)
 - [Předplatné](#predplatne)
@@ -105,8 +107,7 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 ---
 
-<a id="zakladni-kameny"></a>
-
+<a id="terminologie"></a>
 
 ## Terminologie
 
@@ -121,6 +122,46 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - **Defaultně schovaný**: inzerát se nikdy nemaže; „schovaný“ znamená jen to, že spadá pod standardní pravidla viditelnosti. V seznamu inzerátů se typicky neobjeví, přímý odkaz funguje, a na něm se vyhodnocuje citlivost.
 - **Interakce s expirovaným inzerátem**: povolené je pouze **flagování** (aby nezbedníkům jejich sračky neprocházely).
 
+
+
+---
+
+<a id="ui"></a>
+
+## UI
+
+Sekce pro **hlavní části aplikace** a jejich smysl. Neřeší layout, komponenty ani UI detaily. Řeší, **proč ta část existuje** a jak se váže na mechaniky.
+
+### Primární sekce
+
+- **Feedy**: uložené zájmy (filtry) a vstupní brána do seznamu inzerátů.
+- **Hledat**: zkratka pro „hledací feed“ (viz Mechaniky → Vyhledávání).
+- **Drafty / Přidat inzerát**: bezpečná tvorba inzerátu bez rizika ztráty.
+- **Zprávy**: UI pro transakce (obchod) a komunikaci.
+- **Rozšíření**: správa a aktivace placených „feature“ (viz níže).
+- **Obchod / Bonusy**: nákup goldíků a tokenů + denní bonus / dropy.
+- **Profil / Nastavení**: preference uživatele (lokace, citlivost, nastavení feedů, atd.).
+
+### Rozšíření (Features)
+
+Rozšíření nejsou entity. Jsou to **zapínatelné schopnosti**, které staví nad stavebními kameny (Feed, inzerát, transakce, metriky).
+
+- Rozšíření jsou **primární místo**, kam uživatel jde, když chce „mít něco zapnuté“ nebo se podívat, co má aktivní.
+- Rozšíření zároveň fungují jako **inventář**:
+  - kolik mám tokenů,
+  - jaké mám aktivní passy a kdy končí,
+  - co je dostupné přes předplatné (a už běží automaticky).
+- Akce v Rozšířeních:
+  - **Zapnout**: spotřebuje token a vytvoří příslušný pass (okamžitě začne platit).
+  - **Prodloužit / znovu zapnout**: znovu spotřebuje token (pokud to mechanika dovoluje).
+  - **Koupit token**: deeplink do Obchodu, pokud tokeny nemám.
+- Rozšíření **nenahrazují kontextové akce**:
+  - některé věci se zapínají přímo tam, kde dávají smysl (např. „Detail protistrany“ z inzerátu / zpráv, Mark/Top z inzerátu),
+  - Rozšíření jsou jen „centrální panel“, ne povinná překážka.
+
+---
+
+<a id="zakladni-kameny"></a>
 
 ## Základní stavební kameny
 
@@ -714,8 +755,8 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - skrze předplatné (všechny balíčky je obsahují),
   - skrze používání aplikace (bonusy),
   - **nákupem balíčků goldíků**.
-- Goldíky jsou vidět na dvou místech:
-  - **Inventář** (consumables + aktivní passy)
+- Goldíky jsou vidět hlavně ve dvou místech:
+  - **Rozšíření** (rychlý přehled + aktivní passy / tokeny)
   - **Obchod / Bonusy** (nákup goldíků a tokenů)
 - Uživatel má k dispozici **historii transakcí** (přírůstky/úbytky).
 - Všechny pohyby nad inventářem probíhají **atomicky a transakčně** (fail = rollback)
@@ -754,16 +795,17 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Pass** = stav oprávnění (může mít konec platnosti, nebo být bez konce).
 - Když někde mluvíme o **platnosti**, myslíme tím vždycky **platnost passu**, ne tokenu.
 - Pokud je **pass uveden bez doby**, dědí dobu z běhu předplatného (vznik/renew subu = nový pass na dobu trvání subu).
-- V UI se to nepředvádí jako „token/pass“: uživatel vidí akce typu **„Odemknout +2 fotky?“** apod.; detail (včetně pasů) je v **Inventáři**.
-- Tokeny jde **nakoupit dopředu** a aktivovat později; přímý pass je **okamžitá aktivace** (levnější, ale bez odkladu).
+- V UI se to nepředvádí jako „token/pass“: uživatel vidí akce typu **„Odemknout +2 fotky?“** apod.; detail (včetně pasů) je v **Rozšířeních**.
+- V **Obchodě** jsou dostupné **jen tokeny** (skladovatelná použití). **Pass vzniká až aktivací tokenu** (typicky přímo v kontextu, kde to dává smysl, nebo v Rozšířeních).
 - Při zámcích placených věcí používáme pattern: **Status** (proč to stojí) → **jedno CTA** (spotřebovat token / zaplatit goldíky).
 - Goldíky slouží k nákupu **tokenů** (spotřební oprávnění) a dalších věcí v systému.
 - Některé tokeny/passy:
   - jsou koupitelné v obchodě,
   - nebo jsou **exclusive pro předplatné**.
 - Tabulka níž popisuje položky (primárně) pro **Obchod**; pokud něco koupit nejde, má v ceně **exclusive**.
+- Řádky typu **Pass** v tabulce jsou buď **exclusive** (jen benefit předplatného), nebo popisují **co token vytvoří** po aktivaci.
 - `exclusive` = dostupné jen přes předplatné / benefit, nelze koupit v obchodě.
-- Cenotvorba (pravidlo): **pass je levnější než odpovídající token**, protože pass se zapíná okamžitě, kdežto token je skladovatelný „na někdy“.
+- Cenotvorba (pravidlo): token je **skladovatelný** (koupím teď, použiju později), proto je to prémiová flexibilita. Naopak passy jsou typicky benefit předplatného nebo výsledek aktivace tokenu.
 - `exclusive` je v MVP opravdu exclusive: **nejde dokoupit** ani za goldíky.
 - Předplatné může dávat:
   - přímé passy,
@@ -776,26 +818,23 @@ Pozn.: **Jednotková cena** u balíčků (např. „5× za 20“) znamená cenu 
 
 | Co                  | Typ (token / pass) | Kolik / na jak dlouho                                            | Cena      |
 | ------------------- | ------------------ | ---------------------------------------------------------------- | --------- |
-| Early Access        | Token              | 1× použití (vygeneruje pass)                                     | 80        |
-| Early Access        | Pass               | +8h náskok po dobu 7 dnů                                         | 70        |
-| Early Delivery      | Token              | 1× použití (ruší release window pro inzerát)                     | 40        |
-| Anti-topper         | Token              | 1× použití (vygeneruje pass)                                     | 40        |
-| Anti-topper         | Pass               | 7 dnů                                                            | 30        |
-| Payback             | Pass               | po dobu předplatného                                             | exclusive |
-| Mark                | Token              | 5× použití (každé vygeneruje pass)                               | 20        |
-| Mark                | Pass               | 7 dnů (nad inzerátem)                                            | exclusive |
+| Early Access        | Token              | 1× použití (vygeneruje pass: +8h náskok na **7 dnů**)            | 80        |
+| Early Delivery      | Token              | 1× použití (ruší release window pro konkrétní inzerát)           | 40        |
+| Anti-topper         | Token              | 1× použití (vygeneruje pass na **7 dnů**)                        | 40        |
+| Mark                | Token              | 5× použití (každé vygeneruje pass na **7 dnů**)                  | 20        |
 | Top                 | Token              | 3× použití (každé vygeneruje pass; bump při aktivaci)            | 50        |
-| Top                 | Pass               | 7 dnů (nad inzerátem)                                            | exclusive |
-| Top Maxxi           | Token              | 1× použití (vygeneruje pass)                                     | 50        |
-| Top Maxxi           | Pass               | 7 dnů (nad inzerátem)                                            | exclusive |
+| Top Maxxi           | Token              | 1× použití (vygeneruje pass na **7 dnů**)                        | 50        |
 | Multi-Category      | Token              | 1× použití (1 + 2 kategorie)                                     | 75        |
+| Detail protistrany  | Token              | 5× použití (každé vygeneruje pass na **7 dnů**)                  | 50        |
+| Photo Count         | Token              | 1× použití (vygeneruje pass: **1 měsíc**, +2 fotky)              | 75        |
+| Payback             | Pass               | po dobu předplatného                                             | exclusive |
 | Multi-Category      | Pass               | po dobu předplatného                                             | exclusive |
-| Detail protistrany  | Token              | 5× použití (každé vygeneruje pass)                               | 50        |
-| Detail protistrany  | Pass               | 7 dnů                                                            | 75        |
-| Photo Count         | Pass               | 1 měsíc (+2 fotky)                                               | 75        |
-| Rozšířená data u inzerátu  | Pass               | po dobu předplatného                                             | exclusive |
+| Detail protistrany  | Pass               | po dobu předplatného (balíček Pro)                               | exclusive |
+| Rozšířená data u inzerátu | Pass         | po dobu předplatného                                             | exclusive |
 | Kontinuální nabídka | Token              | 1× použití (vygeneruje pass)                                     | exclusive |
-| Kontinuální nabídka | Pass               | 1 měsíc (inzerát funguje jako běžný aktivní)                      | exclusive |
+| Kontinuální nabídka | Pass               | 1 měsíc (inzerát funguje jako běžný aktivní)                     | exclusive |
+
+
 
 <a id="uvedeni-na-trh"></a>
 
