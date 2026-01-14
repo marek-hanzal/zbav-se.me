@@ -394,25 +394,49 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 ### Obchod (transakce)
 
-- Obchod vzniká, když kupující v detailu inzerátu klikne **„Mám zájem“** - tím vznikne nová transakce ve stavu **pending**.
-- Chat / zprávy se otevřou až ve chvíli, kdy prodávající obchod přijme (**open**) – tím systém potlačuje spam typu „Je to ještě dostupné?“.
+- Obchod vzniká, když kupující v detailu inzerátu klikne **„Mám zájem“** – tím vznikne nová transakce ve stavu **pending**.
+- Z pohledu uživatelů se transakce prezentuje jako **„Zprávy“**.
+- **Anti-spam core hodnota:** dokud prodávající transakci nepřijme, **neexistuje žádná uživatelská interakce** (žádné zprávy, žádná strukturovaná data, žádné „je to aktuální?“).
+  - Zprávy se otevřou až ve chvíli, kdy prodávající obchod přijme (**open**).
 - Stavový flow:
   - **pending**: kupující otevřel obchod („Mám zájem“).
   - **open**: prodávající obchod přijme.
   - **rejected**: prodávající obchod odmítne.
-  - Kupující může obchod kdykoliv zavřít akcí **close** (stav `closed`) (pokud to udělá hned / bez snahy, projeví se to negativně ve statistikách, které vidí prodávající).
-- Uzavření obchodu (kupující):
-  - **success** = explicitní „jsem spokojený“.
-  - **closed** = neutrální „okej“.
-  - **closed není neúspěch** - v obou případech jde o uzavřený obchod a chceme, aby to kupující klikali (kvůli metrikám).
-- Uzavření z pohledu prodávajícího:
-  - Prodávající po průběhu obchodu kliká **resolved** (z jeho pohledu vyřešeno, např. odesláno/předáno).
-  - Finální slovo má kupující: po resolved dává **success/closed**.
+  - **resolved**: prodávající označí obchod jako vyřešený (z jeho pohledu hotovo – např. předáno/odesláno).
+  - **sold**: systémový finální stav pro ostatní transakce na stejný inzerát (viz níže).
+  - **expired**: systémový stav po vypršení bez aktivity (viz níže).
+  - **closed / success**: finální stavy po akci kupujícího (viz níže).
+- Akce kupujícího (kdykoliv během aktivní transakce):
+  - **close** → stav **closed** (neutrální „zavřeno“).
+  - **success** → stav **success** (pozitivní „yupí“).
+  - `closed` **není neúspěch** – v obou případech chceme, aby to kupující odklikával (kvůli metrikám a uzavření běhu).
+  - Pokud kupující zavírá okamžitě bez interakce (typicky hned po `open`), promítá se to negativně do jeho metrik jako **Closer**.
+- Akce prodávajícího:
+  - Prodávající může transakci **přijmout (open)**, **odmítnout (rejected)** a po průběhu označit jako **resolved**.
+  - Prodávající transakci **nikdy neukončuje** do `closed/success` – finální slovo má vždy kupující.
+- Pozn.: `close/success` je dostupné kdykoliv během běhu transakce, dokud není transakce v **systémově finálním** stavu (`rejected/expired/sold`).
+- Sold (automatické ukončení ostatních zájemců):
+  - Jakmile prodávající u jedné transakce klikne **resolved**, systém na pozadí:
+    - ponechá tuto transakci běžet dál standardně (kupující následně dá **success/close**),
+    - **všechny ostatní transakce** na stejný inzerát přepne do stavu **sold** a vloží jim **systémovou zprávu**, že je prodáno.
+  - `sold` je **finální** stav (read-only). Nelze nad ním spouštět `dispute` ani dělat další uživatelské akce.
+- Expirace (časový úklid + dopad do metrik):
+  - Transakce expiruje po **3 dnech bez aktivity**.
+  - `expireAt` posouvá **jakákoli akce** v transakci (včetně `dispute` a jakýchkoli zpráv / structured messages po otevření).
+  - Po expiraci se transakce přepne do stavu **expired** automaticky (běží pravidelný systémový úklid).
+  - Po zavření transakce (user `closed/success`, `rejected`, `sold`, `expired`) se odstraní veškerá **strukturovaná data** ze zpráv (polohy, osobní údaje, apod.).
+  - Po **3 měsících** se transakce smaže kompletně z databáze (hard delete).
+
+### Dispute
+
+- Dispute je **hint**, že „něco nesedí a ještě nekončíme“. Není to eskalace ani arbitráž systému.
+- Dispute může vzniknout **až po `resolved`**.
+- Otevřít dispute může **kupující i prodávající**.
 - Dispute:
-  - Dispute může vzniknout **až po resolved**.
-  - Otevřít dispute může kupující i prodávající.
-  - Dispute vrací obchod do „běžného režimu“ (pokračuje se řešením / domluvou) a není nutně agresivní konflikt.
-  - Odměny zůstávají navázané na finální **success/closed** (typicky scénář „chyběl šroubek -> doposláno -> hotovo“).
+  - promítá se do metrik **obou stran** (protože ho může otevřít kdokoliv),
+  - **nemá vliv na karmu** (karma je čistě volba uživatele),
+  - je to běžná akce v rámci transakce, takže **posouvá `expireAt`** dle standardních pravidel.
+- Otevření dispute vrací transakci do „běžného režimu“: pokračuje se v konverzaci a řešení, dokud kupující neodklikne finální **success/close**.
 
 ### Systémová policie
 
