@@ -139,7 +139,7 @@ Sekce pro **hlavní části aplikace** a jejich smysl. Neřeší layout, kompone
 - **Drafty / Přidat inzerát**: bezpečná tvorba inzerátu bez rizika ztráty.
 - **Zprávy**: UI pro transakce (obchod) a komunikaci.
 - **Rozšíření**: správa a aktivace placených „feature“ (viz níže).
-- **Obchod / Bonusy**: nákup goldíků a tokenů + denní bonus / dropy.
+- **Obchod / Bonusy**: nákup balíčků goldíků, správa předplatného (aktivace/obnova/cancel) + denní bonus / dropy.
 - **Profil / Nastavení**: preference uživatele (lokace, citlivost, nastavení feedů, atd.).
 
 ### Rozšíření (Features)
@@ -148,16 +148,17 @@ Rozšíření nejsou entity. Jsou to **zapínatelné schopnosti**, které staví
 
 - Rozšíření jsou **primární místo**, kam uživatel jde, když chce „mít něco zapnuté“ nebo se podívat, co má aktivní.
 - Rozšíření zároveň fungují jako **inventář**:
-  - kolik mám tokenů,
+  - kolik mám goldíků,
   - jaké mám aktivní passy a kdy končí,
-  - co je dostupné přes předplatné (a už běží automaticky).
+  - co je dostupné přes předplatné (a už běží automaticky),
+  - kolik mám „použití“ (tokenů) z předplatného / bonusů, pokud je mechanika používá.
 - Akce v Rozšířeních:
-  - **Zapnout**: spotřebuje token a vytvoří příslušný pass (okamžitě začne platit).
-  - **Prodloužit / znovu zapnout**: znovu spotřebuje token (pokud to mechanika dovoluje).
-  - **Koupit token**: deeplink do Obchodu, pokud tokeny nemám.
+  - **Zapnout**: standardně **zaplatí goldíky** a vytvoří příslušný pass (okamžitě začne platit). Pokud má uživatel k dané věci dostupné použití (token) z předplatného, může ho místo goldíků spotřebovat.
+  - **Prodloužit / znovu zapnout**: opět zaplatí goldíky (nebo spotřebuje použití), pokud to mechanika dovoluje.
+  - **Dobít goldíky / Předplatné**: deeplink do Obchodu.
 - Rozšíření **nenahrazují kontextové akce**:
   - některé věci se zapínají přímo tam, kde dávají smysl (např. „Detail protistrany“ z inzerátu / zpráv, Mark/Top z inzerátu),
-  - Rozšíření jsou jen „centrální panel“, ne povinná překážka.
+  - Rozšíření jsou „centrální panel“, ne povinná překážka.
 
 ---
 
@@ -516,7 +517,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 ### Payback
 
 - Payback je kompenzace prodávajícímu za to, že jeho **Mark/Top** byl potlačen uživateli s anti-topperem.
-- Payback je samostatné oprávnění: **Payback = pass (exclusive)**, dostupný jen v balíčcích **Seller / Pro** (nelze koupit tokenem).
+- Payback je samostatné oprávnění: **Payback = pass (exclusive)**, dostupný jen v balíčcích **Seller / Pro** (nelze zapnout za goldíky).
 - Vyhodnocuje se **po expiraci inzerátu** (zvýraznění ani bonusy se po expiraci už neřeší).
 - Výpočet:
   - počítá se poměr **anti-topper** vs. (**visible + anti-topper**) na úrovni **unikátních uživatelů** dle event logu,
@@ -757,7 +758,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - **nákupem balíčků goldíků**.
 - Goldíky jsou vidět hlavně ve dvou místech:
   - **Rozšíření** (rychlý přehled + aktivní passy / tokeny)
-  - **Obchod / Bonusy** (nákup goldíků a tokenů)
+  - **Obchod / Bonusy** (nákup balíčků goldíků a správa předplatného)
 - Uživatel má k dispozici **historii transakcí** (přírůstky/úbytky).
 - Všechny pohyby nad inventářem probíhají **atomicky a transakčně** (fail = rollback)
 - Aktivace tokenu i nákup/spotřeba je vždy jedna DB transakce: buď proběhne celý efekt (např. Top se opravdu nasadí), nebo se nestane nic (token/goldíky se nespálí).
@@ -796,23 +797,25 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Když někde mluvíme o **platnosti**, myslíme tím vždycky **platnost passu**, ne tokenu.
 - Pokud je **pass uveden bez doby**, dědí dobu z běhu předplatného (vznik/renew subu = nový pass na dobu trvání subu).
 - V UI se to nepředvádí jako „token/pass“: uživatel vidí akce typu **„Odemknout +2 fotky?“** apod.; detail (včetně pasů) je v **Rozšířeních**.
-- V **Obchodě** jsou dostupné **jen tokeny** (skladovatelná použití). **Pass vzniká až aktivací tokenu** (typicky přímo v kontextu, kde to dává smysl, nebo v Rozšířeních).
-- Při zámcích placených věcí používáme pattern: **Status** (proč to stojí) → **jedno CTA** (spotřebovat token / zaplatit goldíky).
-- Goldíky slouží k nákupu **tokenů** (spotřební oprávnění) a dalších věcí v systému.
-- Některé tokeny/passy:
-  - jsou koupitelné v obchodě,
+- **Obchod** nabízí jen **balíčky goldíků** a **hlavní předplatné**.
+- Rozšíření se standardně **zapínají za goldíky** (vytvoří se pass). Pokud má uživatel dostupné použití (token) z předplatného / bonusů, může ho místo goldíků spotřebovat.
+- Při zámcích placených věcí používáme pattern: **Status** (proč to stojí) → **jedno CTA** (zapnout za goldíky / spotřebovat použití).
+- Goldíky slouží primárně k **zapínání Rozšíření** (aktivace / prodloužení) a dalším věcem v systému.
+- Některá rozšíření:
+  - jsou **zapnutelná za goldíky**,
   - nebo jsou **exclusive pro předplatné**.
-- Tabulka níž popisuje položky (primárně) pro **Obchod**; pokud něco koupit nejde, má v ceně **exclusive**.
+- Tabulka níž popisuje položky (primárně) pro **Rozšíření**; pokud něco zapnout nejde, má v ceně **exclusive**.
 - Řádky typu **Pass** v tabulce jsou buď **exclusive** (jen benefit předplatného), nebo popisují **co token vytvoří** po aktivaci.
-- `exclusive` = dostupné jen přes předplatné / benefit, nelze koupit v obchodě.
-- Cenotvorba (pravidlo): token je **skladovatelný** (koupím teď, použiju později), proto je to prémiová flexibilita. Naopak passy jsou typicky benefit předplatného nebo výsledek aktivace tokenu.
+- `exclusive` = dostupné jen přes předplatné / benefit, nelze zapnout za goldíky.
+- Cenotvorba (pravidlo): goldíky jsou „univerzální klíč“ pro zapnutí rozšíření. Tokeny jsou hlavně **použití z předplatného / bonusů** (výhoda pro platící).
+- Cena v tabulce je cena **zapnutí v Rozšířeních** (za goldíky), pokud uživatel nemá dostupné použití z předplatného.
 - `exclusive` je v MVP opravdu exclusive: **nejde dokoupit** ani za goldíky.
 - Předplatné může dávat:
   - přímé passy,
   - usage tokeny,
   - pravidelný přísun goldíků.
 
-Pozn.: **Token** = skladovatelný (jen jednorázové použití; koupíš teď, aktivuješ kdy chceš) a **neexpiruje**. **Pass** = okamžitý stav (zapne se hned) a může mít platnost.
+Pozn.: **Token** = jednorázové použití (typicky z předplatného / bonusů) a **neexpiruje**. **Pass** = okamžitý stav (zapne se hned) a může mít platnost.
 
 Pozn.: **Jednotková cena** u balíčků (např. „5× za 20“) znamená cenu za jedno použití (20 / 5 = 4).
 
