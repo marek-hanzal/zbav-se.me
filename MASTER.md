@@ -556,17 +556,17 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Vstupní místa v UI:
   - v detailu inzerátu je dostupné tlačítko „Detail prodejce“ (rozhodnutí ještě před založením transakce),
   - v transakci (Zprávy) jsou dostupná tlačítka „Detail prodejce“ a „Detail kupujícího“ (podle role uživatele v transakci).
-- Minimum zdarma je pouze Score (A - F). Vše ostatní je zamčené.
-  - bez aktivního passu se po kliknutí zobrazí status placeholder a jedno CTA na spotřebu tokenu (vytvoření passu),
-  - s aktivním passem se zobrazí kompletní metriky (viz níže).
+- Bez aktivního passu se **nezobrazují žádné metriky ani Score**.
+  - po kliknutí se zobrazí status placeholder a jedno CTA na odemčení (zaplatit goldíky / spotřebovat použití, čímž vznikne pass),
+  - s aktivním passem se zobrazí kompletní metriky včetně interního Score (A - F) (viz níže).
 - Pass odemyká metriky globálně po dobu platnosti: uživatel může zobrazit detail kohokoliv (kromě sebe) bez dalších limitů.
 - Token „Detail protistrany“ se spotřebuje a vytvoří stejnojmenný pass.
 
 ### Metriky - Prodávající
 
 - Dostupnost:
-  - v detailu inzerátu je zdarma vždy vidět pouze **Score (A - F)** prodávajícího,
-  - ostatní metriky jsou dostupné přes „Detail protistrany“ (zamčeno bez aktivního passu).
+  - metriky (včetně interního Score A - F) jsou dostupné pouze přes „Detail protistrany“,
+  - bez aktivního passu se zobrazí jen status placeholder (žádná čísla, žádné Score).
 
 - **Stáří účtu:** kdy je uživatel registrovaný (relativně).
 - **Počet inzerátů:** kolik vytvořil inzerátů (context k aktivitě prodávajícího).
@@ -595,8 +595,8 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 ### Metriky - Kupující
 
 - Dostupnost:
-  - zdarma je vidět pouze **Score (A - F)** kupujícího,
-  - ostatní metriky jsou dostupné přes „Detail protistrany“ (typicky z transakce; zamčeno bez aktivního passu).
+  - metriky (včetně interního Score A - F) jsou dostupné pouze přes „Detail protistrany“,
+  - bez aktivního passu se zobrazí jen status placeholder (žádná čísla, žádné Score).
 
 - **Stáří účtu:** kdy je uživatel registrovaný (relativně).
 - **Reaction (reakce na otevřený obchod):**
@@ -693,6 +693,15 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 <a id="predplatne"></a>
 
 ## Předplatné
+
+### Zkušební Pro zdarma pro nové uživatele
+
+- Každý nový uživatel dostane při registraci **Pro balíček zdarma na 1 měsíc** (plná funkcionalita).
+- Trial je **automaticky aktivní** (uživatel nic nezapíná) a po doběhnutí se **sám vypne**.
+- Trial je **jen jednou na účet** (neřešíme tu „jak“; je to pravidlo produktu).
+- Smysl: uživatel si vyzkouší aplikaci v plné síle. Po vypršení to bolí, takže má motivaci si věci koupit.
+
+---
 
 ### Bonusy předplatného (měsíční příděly)
 
