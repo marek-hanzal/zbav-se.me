@@ -43,7 +43,7 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 - Otevřená - **zdrojové kódy** jsou dostupné veřejně k auditu
 - Na domovské stránce je odkaz na **transparentní bankovní účet**
 - Zároveň je na domovské stránce **kalendář aktivity** vývoje (Github-like)
-- Dále prezentujeme i jak se projektu daří pomocí **dynamické timeline** (první skokani, prvních xxx interátů, hlášky o tom, že dneska nic moc, že přibyly další inzeráty a pod)
+- Dále prezentujeme i jak se projektu daří pomocí **dynamické timeline** (první skokani, prvních xxx inzerátů, hlášky o tom, že dneska nic moc, že přibyly další inzeráty a pod)
 
 ## Kodex
 
