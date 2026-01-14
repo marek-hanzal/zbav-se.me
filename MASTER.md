@@ -225,23 +225,38 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 - Systém má mechaniku nahlašování inzerátů (flagy).
 - Pokud už uživatel označí nějaký inzerát, je to považováno za silný signál nechuti (nebo trollení).
-- Flagy samy o sobě systémově nemají žádný efekt (nic se automaticky neskrývá, nemaže, nebanuje).
-- Slouží jako signál pro admina, aby našel věci, které smrdí, a řešil je (zatím i formou SQL dotazu / logiky mimo UI).
-- Flagy se promítají do metrik prodejce (flagované vs. publikované inzeráty)
+- Flagy **nemají systémový efekt**: aplikace na ně automaticky nereaguje (nic se automaticky neskrývá, nemaže, nebanuje).
+- Flagy jsou ale **kritický reputační signál pro uživatele**:
+  - promítají se do metrik prodávajícího,
+  - uživatel si z toho může vyvodit, že „něco smrdí“ (např. 80 % flagnutých inzerátů).
+- Flagy zároveň slouží jako signál pro admina, aby našel věci, které smrdí, a řešil je (zatím i formou SQL dotazu / logiky mimo UI).
+- Výpočet metrik:
+  - Flagy se počítají z **user event logu**.
+  - Okno pro výpočet je **posledních 90 dnů** (stejně jako ostatní metriky).
+  - Poměr se počítá jako: **flagované vs. publikované inzeráty** (v okně).
 
 ### Systém nahlašování - Uživatelé
 
-- V rámci transakce (v detailu inzerátu dostupného v rámci komunikace) je dostupné tlačítko nahlášení
-- Toto je tvrdá akce, kterou nelze vzít zpět
-- Stejně jako u inzerátů, k uživateli se zapíše flag a toto se promítá do jeho metrik
-- V rámci administrace systému toto bude také sledované
-- Neprobíhá žádné automatické vyhodnocení systémem
+- V rámci transakce (v detailu inzerátu dostupného v rámci komunikace) je dostupné tlačítko nahlášení.
+- Toto je tvrdá akce, kterou nelze vzít zpět.
+- Stejně jako u inzerátů, k uživateli se zapíše flag a toto se promítá do jeho metrik.
+- Flag uživatele je gated chováním systému:
+  - lze ho udělit **jen v kontextu transakce**,
+  - do transakce se obchodník dostane tím, že ji **přijme** (tj. obchodník si sám vybírá, do jakých interakcí vstoupí),
+  - tím se eliminuje „pomsta z ulice“ bez reálné interakce.
+- V rámci administrace systému toto bude také sledované.
+- Neprobíhá žádné automatické vyhodnocení systémem (žádné auto-ban / auto-hide).
+- Výpočet metrik:
+  - počítá se z **user event logu**,
+  - okno pro výpočet je **posledních 90 dnů**.
 
 ### Ban
 
-- Starý dobrý ban - jako timestamp s trváním (life-time bude jen daleká budoucnost)
-- Přiřazený ručně adminem aplikace, pokud dojde k tomu, že se někdo chová jako prase
-- V rámci rozjetého projektu je pak možné jej případně generovat i systémově, do MVP zatím nepatří
+- Starý dobrý ban - jako timestamp s trváním (life-time bude jen daleká budoucnost).
+- Přiřazený ručně adminem aplikace, pokud dojde k tomu, že se někdo chová jako prase.
+- Neexistují zatím pevná pravidla (policy); dokud nejsou zapsaná jako pravidla, nejsou implementovaná jako automatika.
+- Typický důvod (příklad, ne zákon): zjevně křížově špatně označený citlivý/omezený obsah (např. „bouchačka mezi kočárkama“) nebo opakované porušování pravidel.
+- V rámci rozjetého projektu je pak možné jej případně generovat i systémově, do MVP zatím nepatří.
 
 ### Metriky inzerátu
 
@@ -265,16 +280,30 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Systém implementuje možnost označit inzerát jako **"běžný"** (default)/ **"pro dospělé"** / **"citlivé"** / **"omezené"**
 - Označení je odstupňované podle závažnosti a navazuje na sebe
 - Pointa je mít možnost schovat obsah, který není vhodný pro všechny a nastavit nástroje, jak se k takovému obsahu dostat
+
+#### Přístup k citlivému obsahu (gating)
+
+- Defaultně uživatel vidí pouze obsah úrovně **běžný**.
+- Uživatel musí aktivně povolit, jakou úroveň citlivosti chce vidět:
+  - vleze do **uživatelského profilu**,
+  - potvrdí, že chce vidět (jakou) úroveň citlivosti (default je **běžný**).
+- Následně vleze do **nastavení feedu**, kde se mu podle zvolené úrovně zpřístupní filtr citlivosti.
+- Teprve po tom má uživatel k obsahu volný přístup (žádný blur):
+  - citlivost se v listingu i detailu zobrazuje jako **badge**,
+  - jinak se obsah chová standardně.
+
+#### Příklady úrovní
+
 - **Běžný:**
-	-  Standardní inzerát, není v něm nic, co by veřejnost mělo nějak pobouřit nebo rozladit (třeba kočárek pro děti)
+	- Standardní inzerát, není v něm nic, co by veřejnost mělo nějak pobouřit nebo rozladit (třeba kočárek pro děti)
 - **Pro dospělé:**
-	-  Běžný obsah vyžadující plnoletost, např. elektronické cigarety, opět nic, co by mělo někoho rozladit
+	- Běžný obsah vyžadující plnoletost, např. elektronické cigarety, opět nic, co by mělo někoho rozladit
 	- Obecně sem může přijít i legální erotický obsah a jiné takové věci
 - **Citlivé:**
-	- Tady přituhuje - věci, které můžou někoho znervóznit nebo je potřeba používat hlavu, ale zákon stále nevyžaduje zvlástní oprávnění danou věc získat/používat - např. airsoftové zbraně/repliky
+	- Tady přituhuje - věci, které můžou někoho znervóznit nebo je potřeba používat hlavu, ale zákon stále nevyžaduje zvláštní oprávnění danou věc získat/používat - např. airsoftové zbraně/repliky
 - **Omezené:**
 	- Tady platí už omezení z hlediska zákona - např. skutečné zbraně
-	- Systém explicitně nebude provádět kontrolu, nicméně pokud bude inzerát špatně označený, bude to instantní ban
+	- Systém explicitně nebude provádět kontrolu, nicméně pokud bude inzerát zjevně špatně označený, může následovat ruční ban
 	- Uživatelé, kteří budou chtít obsah inzerátu získat už musí disponovat patřičnými oprávněními (např. zbrojní průkaz)
 
 ### Ignorování inzerátu
@@ -371,8 +400,11 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - Score je agregovaný rank (A-F / 1-6), který shrnuje výše uvedené chování.
   - Metriky se počítají za posledních **90 dnů**.
   - Nováček nemusí mít score (UI to přizná: „zatím nemáme dost dat“).
-- **Flagy:**
-	- Poměr publikovaných a flagnutých inzerátů
+- **Flagy (inzeráty):**
+  - Poměr publikovaných a flagnutých inzerátů (okno: **90 dnů**, z **user event logu**).
+  - Zobrazení v detailu prodávajícího:
+    - pokud je poměr flagnutých inzerátů **< 10 %** → zobrazí se text **„V pořádku“**
+    - pokud je poměr flagnutých inzerátů **>= 10 %** → zobrazí se **procentuální hodnota**
 
 ### Metriky - Kupující
 
@@ -714,7 +746,6 @@ Tento scénář modeluje **jednorázové nákupy extras** skrze **balíčky gold
 | 9     | Discord + region | 9 500     | ~272 500 Kč  |
 | 10    | Discord + region | 10 500    | ~301 100 Kč  |
 | 11+   | Discord + region | 11-12k    | ~315-345k Kč |
-
 
 ### Odhad monetizace - online komunitní kanál (Discord)
 
