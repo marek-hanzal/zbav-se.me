@@ -1,36 +1,30 @@
-# Master - zbav-se.me
+# Master
 
-Single source of truth projektu. Co je tady, platí. Co je jinde a není tady, neexistuje.
+Single source of truth projektu. _**Co tu není, neexistuje**_.
 
----
-
-# Document Rules
+## Document Rules
 
 - Tenhle Master drží **koncepty, pravidla a produktová rozhodnutí**.
-- **Žádný kód, DB schémata ani implementační detaily**, dokud o ně explicitně nepožádáš.
+- **Žádný kód, DB schémata ani implementační detaily**
 - Když něco doplňujeme, doplňujeme to jako **pravidlo** (co a proč), ne jako „jak to přesně nakódujeme“.
-
----
-
-# Ústava
 
 ## Směr produktu
 
 ### Identita
 
 - **Core myšlenka:** „**Prodáváme, neojebáváme.**“
-- Nejsme další bazar. Jsme **systém důvěry a důsledků**.
-- Cíl: **klid, důvěra, kompetence uživatele**.
-- Monetizace stojí na **hodnotě**, ne na tlaku.
+- Nejsme další bazar. Jsme **systém důvěry a komunity**
+- Cíl: **klid, důvěra, kompetence uživatele**
+- Monetizace stojí na **hodnotě**, ne na tlaku
+- Předpoklad IQ uživatelů je alespoň 80 (nadnesené)
+- Stavíme na důvěře mezi **platformou** a **uživateli** pro nastavení *mentálního komfortu*
 
 ### Tone of Voice
 
-- Onboarding bez vodění: „**Klikej. Zkoumej. Není tu co posrat.**“
-- Neučíme, nekomentujeme, neotravujeme. UI má uklidňovat a pustit do akce.
+- Onboarding bez pozlátek: „**Klikej. Zkoumej. Není tu co posrat.**“
+- Neučíme, nekomentujeme, neotravujeme.
 
----
-
-## Produktové cíle
+### Produktové cíle
 
 - Pocit „teplého obýváku“ místo reklamního cirkusu.
 - Paměťová stopa: bylo to klidné, rychlé, fungovalo to.
@@ -44,11 +38,18 @@ Single source of truth projektu. Co je tady, platí. Co je jinde a není tady, n
 - Prázdno je záměr (nižší kognitivní zátěž).
 - Status může být emoční, CTA musí být mechanické.
 
----
+### Komunikace
+
+- Otevřená - **zdrojové kódy** jsou dostupné veřejně k auditu
+- Na domovské stránce je odkaz na **transparentní bankovní účet**
+- Zároveň je na domovské stránce **kalendář aktivity** vývoje (Github-like)
+- Dále prezentujeme i jak se projektu daří pomocí **dynamické timeline** (první skokani, prvních xxx interátů, hlášky o tom, že dneska nic moc, že přibyly další inzeráty a pod)
 
 ## Kodex
 
-Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a jejími uživateli. Nejde o právní podmínky ani marketing. Jde o způsob, jakým se systém chová a proč.
+Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a jejími uživateli. Nejde o právní podmínky ani marketing. Jde o způsob, jakým se autor, systém chová - a proč.
+
+> Tyto principy a závazky budou **veřejně dostupné** pro ty, kdo si je budou chtít přečíst - jsou součástí *celkové transparentnosti* projektu.
 
 ### Důvěra jako výchozí stav
 
@@ -61,8 +62,6 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - Platby nejsou past ani trik.
 - Předplatné lze kdykoliv zrušit.
 - Pokud má uživatel aktivní předplatné, ale dlouhodobě systém nepoužívá, **dáme mu to vědět a předplatné sami ukončíme**.
-  - 1 měsíc bez aktivity (plovoucí) -> e-mail.
-  - 2 měsíce bez aktivity -> ukončení subscription.
 - Raději přijdeme o platbu než o důvěru.
 
 ### Žádné pay-to-win
@@ -78,18 +77,128 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - Neprodáváme pozornost, ale hodnotu.
 - Nesbíráme data bez jasného a srozumitelného účelu.
 
-### Otevřenost a odpovědnost
+#### Otevřenost a odpovědnost
 
 - Pokud něco měníme, děláme to vědomě a transparentně.
 - Tento kodex je závazek vůči uživatelům i vůči sobě samým.
 
----
+## Základní stavení kameny
 
-# Systém
+> Tuto sekci lze považovat za kombinaci entit a definic, na kterých se staví vše ostatní v tomto dokumentu.
 
-## Mechaniky
+Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích počítá, na čem staví.
 
-### Ranking (škála hodnocení)
+### Uživatel
+
+> Core entita, na uživatele je vázané prakticky všechno - žádná zvláštní magie se tu nekoná.
+
+- Držíme absolutně minimální data - máme jen **email**, nic jiného neukládáme
+- Respektujeme absolutní anonymitu uživatelů, bezpečnost je řešena sledováním chování
+
+### Inzeráty
+
+> Odsud začíná veškerá interakce mezi uživateli. Veškeré informace žijí přímo na inzerátu, přestože inzerát samotný vzniká z Draftu.
+
+- Souhrn atributů a galerie fotek reprezentující věc, kterou uživatel nabízí
+- Atributy inzerátu:
+  - **Obsah inzerátu:** title, description, pros/cons.
+  - **Galerie:** uploady + jejich pořadí (galerie / fotky).
+  - **Cena:** price + priceType (pevná vs. otevřená), currency.
+  - **Parametry věci:** condition (škála), age (škála), delivery (osobně / post / package / other), warranty (warranty / no-warranty / custom).
+  - **Kategorizace:** categoryId + napojení na kategorii.
+  - **Lokalita:** locationId + lat/lon; umíme spočítat **vzdálenost (km)**, pokud je k dotazu dodaná poloha uživatele.
+  - **Čas:** createdAt / updatedAt / expiresAt (včetně filtrování podle expiresAtBefore/After).
+  - **Vazby na uživatele:** isFavourite, isIgnored, hasFlag, feedback (like/dislike), transactionId (existuje obchod pro daného uživatele).
+  - **Event log nad inzerátem:** impression, view, ignore/unignore, flag/unflag, transaction, favourite/unfavourite, like/dislike.
+  - **Filtrování (feed):** fulltext, title, priceMin/priceMax, conditionMin/Max/In, ageMin/Max/In, deliveryIn, warrantyIn, categoryId/categoryIdIn, currency/currencyIn, feedId/feedIdIn, my/withOwn, withIgnored, isFavourite, transaction, range (km).
+  - **Řazení:** price, condition, age, createdAt, updatedAt, expiresAt, geo (vzdálenost).
+- Inzeráty po expiraci lze stále zobrazit v rámci Feed (za použití explicitního nastavení)
+	- Pokud jiná mechanika neřekne jinak, expirované inzeráty již nedovolí interakci
+	- Cílem je umožnit uživatelům podívat se, co se na platformě historicky prodalo (např. můžou čekat, zda se daná zajímavá věc zase objeví)
+
+### Draft
+
+> Další klíčová funkce, která umožňuje postupnou tvorbu inzerátu beze strachu, že se nějaké údaje ztratí, pokud v průběhu uživatel aplikaci opustí. Spolou s tím spravujeme seznam Draftů, tzn. uživatel může snadno vytvářet inzeráty z již existujících nastavení (včetně uložených obrázků).
+
+- Kopíruje atributy inzerátu
+- Slouží jako vstupní bod pro tvorbu nového inzerátu - prvně vznikná Draft, z něj se pak publikuje inzerát
+
+### Feed
+
+> Klíčová vychytávka, kde si uživatel může nastavit různé oblasti zájmů, které mu pak aplikace sleduje a nabízí. To se hodí např. pokud chci mít nastavené hledání věcí domů (jedna adresa) a hledání třeba na chalupu (jiná adresa).
+
+- Feed je uložené nastavení filtru nad inzeráty
+- Smyslem je místo běžného katalogového vyplivnutí inzerátů poskytnout nástroj, kde si uživatel sám přesně vybere, co chce vidět a jak to chce vidět
+- Jediné, co tato nastavení obchází - z hlediska řazení - jsou Top a Top Maxxi inzeráty (viz dále)
+- Feed si umí uložit lokalitu, tzn. různé feedy můžou mít různé řazení podle polohy (např. práce, chalupa, ...)
+- Feed je základní vstup do seznamu inzerátů
+- Ve výchozím stavu se uživateli založí defaultní Feed se základním řazením bez dalších vlastností (tzn. vidí všechny inzeráty)
+
+### Seznam inzerátů
+
+- Neexistuje jako standalone stránka, vždy se chodí přes Feed
+- Funguje podobně, jako Feed např. na Facebooku nebo Instagramu, tzn. pseudo-infinite scroll
+- Tvrdý limit je 200 inzerátů, předpoklad je, že uživatel toho nebude schopný tolik proscrollovat, tzn. ani technicky nemá smysl vytvářet reálný infinite scroll
+
+### Vyhledávání
+
+> Mírně duplicitní s Feedem, nicméně toto má krýt potřebu uživatelů pro běžné vyhledávání bez čarování kolem feedu
+
+- Jediná výjimka vedle Feedu, která uzmožňuje vstoupit na seznam inzerátů
+- Přijímá stejné atributy, jako Feed
+- Na pozadí se uloží jako Feed, pouze bude drobný rozdíl v UI (nastavení vyhledávání se zobrazí vždy, pamatuje se poslední nastavení)
+- Feed vyhledávání se zobrazí v seznamu Feedů, limity v balíčcích (předplatné) s tímto počítají
+
+### Transakce
+
+> Jelikož je systém tvrdě anonymní, toto slouží jako most mezi prodejcem a kupujícím - můžou navzájem získat systémové informace, co jsou zač, než se rozhodnou k interakci. Po otevření transakce (viz. Mechaniky) pak vše probíhá jako chytřejší standardní chat
+
+- Zastupuje interakci mezi uživateli, v systému se prezentuje jako "Zprávy"
+- Každá transakce zároveň vytváří i vlákno zpráv s účastníky (ve výchozím stavu prodejce a kupující), které tak udává, kdo smí do transakce zasahovat
+- Po zavření transakce (jakkoli, ať už vypršením nebo uživatelskou akcí) se odstraní veškerá strukturovaná data (polohy, osobní údaje, ...)
+
+### Zprávy
+
+> Zprávy jsou implementované v rámci duchu aplikace a umožňují předávání jak textových zpráv, tak strukturovaných dat, které je pak snadné spravovat, například promazat, když už nejsou třeba. Základní předpoklad ovšem je, že uživatel strukturovaná data bude používat
+
+- Zprávy existují jako samostatná entita
+- Mají strukturovaná data pro sdílení
+	- Lokace (pomocí služby na vyhledávání adres)
+	- Osobních údajů (jméno, telefon, email) - toto je jediné PII, které máme
+	- Trasování balíčků
+	- Obrázky
+	- A text (běžné zprávy)
+- Systém nekontroluje ani neřeší obsah textových zpráv - pokud si tam uživatelé předají osobní údaje, mají smůlu
+
+### Lokace
+
+> Smyslem je mít autoritu na polohu místo ukládání buď pseudo adresy nebo stringu s random textem.
+
+- Všechno, co využivá polohu, se odkazuje na lokaci
+- Záznam v lokaci vzniká přes službu vyhledávání adres, která tak slouží jako autorita
+- Poloha používá locale, což aktuálně může být bota a zároveň předmět budoucí úpravy
+	- Teď podporujeme pouze češtinu, takže tento příběh bude na jindy
+
+### Upload
+
+> Jedno centrální místo na správu nahraných obrázků - jsou to metadata k souborům uložených na UGC v CDN.
+
+- Nahrané soubory, hlavně pak fotky
+- Veškeré obrázky (v inzerátu, hero feedu, ve zprávách) se ukládají zde
+- Pokud je někde více obrázků (inzerát), používat se **Gallery** (což je kolekce Uploadů)
+- Uploady nemají svůj TTL, jelikož nad různými objekty se může dynamicky měnit (např. prodloužení života inzerátu), tzn. každý rodičovský objekt si musí spravovat svoje Uploady sám
+
+### Preference uživatele
+
+> Nic moc zvláštního - věci, které si o sobě uživatel chce nastavit sám.
+
+- Zde ukládáme implicitní nebo explicitní preference uživatele
+- Při přechodu mezi sekcemi prodejce/kupující toto zapíšeme do preferencí
+- Dobrovolné nastavení polohy (zároveň přepíše polohu u Feedů, které ji nemají nastavenou)
+
+### Ranking
+
+> Tohle neexistuje jako samostatná entita, ale jako atribut. Toto je pouze definice pro ujasnění, jak se má ranking používat.
 
 - Veškeré ranky (hodnocení), dokud není řečeno jinak, podléhají škále **A-F**:
   - **A** = nejlepší
@@ -97,39 +206,133 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - Na pozadí se používá reverzní číselná škála:
   - **1 = F**
   - **6 = A**
-- V UI je skore:
-  - Primárně jako **A-F**,
-  - doplněné o krátký copy „co to znamená“,
-  - a rozpad dalších hodnot (dle role: buyer/seller).
 
-### Feed (filtry)
+## Mechaniky
 
-- Feed je uživatelův uložený filtr (co se mu má zobrazovat).
-- Uživatel může mít omezený počet uložených feedů; subscriptions mohou tenhle limit zvyšovat.
-- Cíl: uživatel může paralelně sledovat víc oblastí (např. dětské věci, auto, domácnost, počítač).
+### Thumbs
+
+- Palce se rozdávají na inzerátech a zobrazují se v metrikách inzerátu pro prodejce (jako poměr)
+- Toto máme aktuálně interně jako "feedback", tzn. v aplikaci bude potřeba toto přejmenovat
+
+### Karma
+
+- Po dokončení transakce uživatelé mohou jeden druhému (prodejce/kupující) dát zpětnou vazbu
+- Karma se propisuje do metrik obou rolí (prodávající/kupující)
+- Sbírá se **"like"** / **"ok"** / **"dislike"**
+- Karmu lze udělit kdykoli (právě jednou) v rámci transakce, zobrazí se jako běžné tlačítko v rámci konverzace
+
+### Systém nahlašování - Inzeráty
+
+- Systém má mechaniku nahlašování inzerátů (flagy).
+- Pokud už uživatel označí nějaký inzerát, je to považováno za silný signál nechuti (nebo trollení).
+- Flagy samy o sobě systémově nemají žádný efekt (nic se automaticky neskrývá, nemaže, nebanuje).
+- Slouží jako signál pro admina, aby našel věci, které smrdí, a řešil je (zatím i formou SQL dotazu / logiky mimo UI).
+- Flagy se promítají do metrik prodejce (flagované vs. publikované inzeráty)
+
+### Systém nahlašování - Uživatelé
+
+- V rámci transakce (v detailu inzerátu dostupného v rámci komunikace) je dostupné tlačítko nahlášení
+- Toto je tvrdá akce, kterou nelze vzít zpět
+- Stejně jako u inzerátů, k uživateli se zapíše flag a toto se promítá do jeho metrik
+- V rámci administrace systému toto bude také sledované
+- Neprobíhá žádné automatické vyhodnocení systémem
+
+### Ban
+
+- Starý dobrý ban - jako timestamp s trváním (life-time bude jen daleká budoucnost)
+- Přiřazený ručně adminem aplikace, pokud dojde k tomu, že se někdo chová jako prase
+- V rámci rozjetého projektu je pak možné jej případně generovat i systémově, do MVP zatím nepatří
+
+### Metriky inzerátu
+
+- **Visible**: odpálí se při scrollu po **0,5 s**.
+- **View**: uživatel otevřel detail inzerátu a čumí do něj cca **2,5 s**.
+- **Impression**: uživatel se při scrollování feedem u inzerátu pozastavil cca **1,6 s**.
+- **Feedback**: sbíráme palec **nahoru / dolů**.
+- **Ignorované**: počet ignorování inzerátu (uživatel si ho skryl).
+- **Transakce**: počet vzniklých transakcí z akce **„Mám zájem“** (kolik lidí otevřelo obchod).
+
+### Rozšířená data u inzerátu
+
+- Přístup je řízen **passsem**: dokud má prodávající aktivní pass, vidí rozšířená data u **svých** inzerátů.
+- Zobrazujeme jednoduchý dump čísel za dobu existence inzerátu (do expirace).
+- Obsah rozšířených dat: **impression**, **view**, **feedback**, **ignorované**, **transakce**.
+- **Potlačené views (anti-topper)** se ukazují jako poměr z celkového počtu: potlačené / (view + potlačené).
+- Data jsou **privátní**: vidí je jen vlastník inzerátu a jen jako placený benefit (Seller/Pro).
+
+### Citlivost inzerátu
+
+- Systém implementuje možnost označit inzerát jako **"běžný"** (default)/ **"pro dospělé"** / **"citlivé"** / **"omezené"**
+- Označení je odstupňované podle závažnosti a navazuje na sebe
+- Pointa je mít možnost schovat obsah, který není vhodný pro všechny a nastavit nástroje, jak se k takovému obsahu dostat
+- **Běžný:**
+	-  Standardní inzerát, není v něm nic, co by veřejnost mělo nějak pobouřit nebo rozladit (třeba kočárek pro děti)
+- **Pro dospělé:**
+	-  Běžný obsah vyžadující plnoletost, např. elektronické cigarety, opět nic, co by mělo někoho rozladit
+	- Obecně sem může přijít i legální erotický obsah a jiné takové věci
+- **Citlivé:**
+	- Tady přituhuje - věci, které můžou někoho znervóznit nebo je potřeba používat hlavu, ale zákon stále nevyžaduje zvlástní oprávnění danou věc získat/používat - např. airsoftové zbraně/repliky
+- **Omezené:**
+	- Tady platí už omezení z hlediska zákona - např. skutečné zbraně
+	- Systém explicitně nebude provádět kontrolu, nicméně pokud bude inzerát špatně označený, bude to instantní ban
+	- Uživatelé, kteří budou chtít obsah inzerátu získat už musí disponovat patřičnými oprávněními (např. zbrojní průkaz)
+
+### Ignorování inzerátu
+
+- V detailu inzerátu je dostupná akce **„Ignorovat“** (toggle).
+- Cíl: uživatel si může explicitně odstranit inzerát z feedu (nechce, aby mu „lezl do feedu“).
+- Ignor je **vázaný na konkrétní inzerát**:
+  - Jakmile uživatel inzerát jednou ignoruje, **neuvidí ho už nikde** (feed, search, listingy, atd.), dokud ignor nezruší.
+  - Výjimka je vědomá volba uživatele: pokud si ve feedu zapne filtr `withIgnored`, ignorované inzeráty se můžou znovu zobrazit.
+  - Pokud se uživatel k ignorovanému inzerátu dostane přímým linkem, může ho vidět (edge-case, neřešíme).
+- Ignor je toggle:
+  - **Ignorovat** i **zrušit ignor** generuje event do **user event logu** (append-only).
+- Metriky:
+  - Ignorované eventy se počítají z event logu.
+  - Prodávající to uvidí v placených metrikách inzerátu jako hodnota **„Ignorované“**.
+  - Počítá se z **user event logu**.
+- Vliv na skóre:
+  - Aktuálně se **ignorování nepromítá do Score**.
+- Do budoucna lze ignorování použít jako:
+  - signál pro znevýhodnění inzerátu (pokud ho masově ignorují),
+  - nebo signál na úrovni prodávajícího („asi prodává méně zajímavé věci“).
+
+### Zvýraznění - Mark
+
+> Pointa - **Mám něco, co bys měl vidět!**
+
+- Nejlevnější a nejjednodušší forma označení inzerátu
+- Pouze zobrazí v seznamu inzerátů badge
+- Anti-Topper potlačuje Mark
+
+### Zvýraznění - Top
+
+> Pointa - **Hej, tohle ti fakt chci ukázat dřív, než ostatní!**
+
+- Přeskakuje běžné inzeráty (řazení)
+- Obsahuje badge v seznamu inzerátů
+- Anti-Topper potlačuje Top
+- Střední cena
+
+### Zvýraznění - Top Maxxi
+
+> Pointa - **Tohle fakt chci prodat a nezajímá mě, co si myslíš!**
+
+- Přeskakuje běžné inzeráty (řazení)
+- Obsahuje badge v seznamu inzerátů
+- Je imunní vůči Anti-Topperu
+- Je nejdražší variantou zvýraznění 
 
 ### Anti-topper
 
-- Premium uživatel platí za **klid**, ne za dominanci.
-- Anti-topper má **relativně malý efekt** - u `mark` a `top` schová grafické zvýraznění; u `top` navíc ruší posun v řazení. **Top Maxxi** neovlivňuje.
-- Záměrně je **cenově níž** než nástroje zvyšující dosah, protože neslouží k růstu reach, ale k redukci šumu.
-- Distribuce pozornosti je řízená v čase.
-- Pro uživatele s aktivním anti-topperem se u `mark` / `top` inzerátů **skryje grafické zvýraznění** (vypadají jako běžné).
-- U `top` se pro něj v řazení **ignoruje posun**; `mark` je čistě vizuální. **Top Maxxi** zůstává viditelný.
-- Anti-topper je **filtr v nastavení feedu**. Pokud má uživatel anti-topper aktivní (pass), je **defaultně zapnutý**; v nastavení je tedy přepínač, který anti-topper **vypne**.
-- `Top Maxxi` je **vždy viditelný** a **vizuálně jasně označený**; systém explicitně komunikuje, že **tohle potlačit nejde**.
+- Premium uživatel platí za **klid** (redukci šumu v seznamu inzerátů), ne za dominanci.
+- Potlačuje efekt **Mark** a **Top**, ***Top Maxxi není ovlivněné***
 - Payback
   - Vyhodnocuje se **až po skončení platnosti inzerátu**.
-  - Počítá se poměr **běžných vs. potlačených views** (na úrovni **unikátních uživatelů** dle event logu).
-  - Pokud podíl **potlačených views > 20 %**, prodávající dostane zpět **20 % jednotkové ceny** použitého zvýraznění (`mark` / `top`).
+  - Počítá se poměr **běžných vs. potlačených visible** (na úrovni **unikátních uživatelů** dle event logu).
+  - Vyplácí se krokově 25/50/75% - např. 25% potlačených visible -> 25% jednotkové ceny použitého zvýraznení
   - Funguje **jen pro platící prodávající** - a jen pokud má prodávající v době vyhodnocení (konec platnosti inzerátu) stále aktivní subscription. Pokud mu mezitím vyprší, payback nevzniká.
 - Plátci (prodávající) vidí u inzerátu rozšířená data: např. **palce**, **běžné views**, **potlačené views** (anti-topper), atd.
-
-### Zvýraznění (Mark / Top / Top Maxxi)
-
-- **Mark**: jen grafické označení (např. malá badge).
-- **Top**: grafické označení + měkký posun před ostatní (lze potlačit anti-topperem). Posun je **jednorázový bump v řazení** (u stejně starých inzerátů bude výš).
-- **Top Maxxi**: jako Top, ale **nelze potlačit** (chová se jako „klasický TOP“ na jiných platformách). Po dobu platnosti Top Maxxi **přeskakuje běžné řazení**; po vypršení se **vrátí na své místo** (běžné řazení).
 
 ### Early Access
 
@@ -146,12 +349,48 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 - Multi-Category je **distribuce**: inzerát se zobrazí lidem, kteří sledují některou z vybraných kategorií.
 - Inzerát se uživateli zobrazuje **právě jednou**, i když spadá do více kategorií.
+- Vedle samotné kategorie přímo na inzerátu je možné uložit další dvě v rámci **Multi-Category**
 
-### Detail protistrany
+### Metriky - Prodávající
 
-- Rozšířený detail je sada **neutrálních signálů** chování uživatele (bez emocionality a bez „score“ manipulace).
-- Detail protistrany se skládá z metrik pro **Prodávajícího** (seller-info) a pro **Kupujícího** (buyer-info) - viz sekce níž.
-- Pokud nemáme dost dat, detail se může zobrazit jako **nedostupný** (status „není k dispozici / málo dat“).
+- **Stáří účtu:** kdy je uživatel registrovaný (relativně).
+- **Počet inzerátů:** kolik vytvořil inzerátů (context k aktivitě prodávajícího).
+- **Reakce na nový obchod (pending -> open/rejected):**
+  - reakční míra (kolik obchodů dostane reakci vs. kolik jich „dojede“ jinak),
+  - rychlost reakce (median + p90).
+- **Odmítání bez interakce:**
+  - podíl obchodů, které prodávající odmítne bez konverzace,
+  - rychlost odmítnutí (median + p90).
+- **Resolved (vyřešeno):**
+  - podíl obchodů, které prodávající označí jako resolved,
+  - rychlost do resolved (median + p90).
+- **Expirace:** podíl obchodů, které expirují bez zpráv / interakce.
+- **Load (vytížení):** bucket low / medium / high (maskuje přesný počet obchodů; jen říká, jak je prodávající „busy“).
+- **Activity (aktivita):** bucket low / medium / high (hrubý signál aktivity v systému).
+- **Score (souhrnný rank):**
+  - Score je agregovaný rank (A-F / 1-6), který shrnuje výše uvedené chování.
+  - Metriky se počítají za posledních **90 dnů**.
+  - Nováček nemusí mít score (UI to přizná: „zatím nemáme dost dat“).
+- **Flagy:**
+	- Poměr publikovaných a flagnutých inzerátů
+
+### Metriky - Kupující
+
+- **Stáří účtu:** kdy je uživatel registrovaný (relativně).
+- **Reaction (reakce na otevřený obchod):**
+  - reakční míra,
+  - rychlost reakce (median + p90).
+- **Closer (instant closed):**
+  - podíl obchodů, které kupující rychle zavře (otevře a hned „killne“ bez interakce),
+  - rychlost zavření (median + p90).
+- **Decision (success/closed):** podíl obchodů, kde kupující dává finální rozhodnutí (success/closed).
+- **Expired:** podíl obchodů, které expirují bez zpráv / interakce.
+- **Load (vytížení):** bucket low / medium / high.
+- **Activity (aktivita):** bucket low / medium / high.
+- **Score (souhrnný rank):**
+  - Score je agregovaný rank (A-F / 1-6), který shrnuje výše uvedené chování.
+  - Metriky se počítají za posledních **90 dnů**.
+  - Nováček nemusí mít score (UI to přizná: „zatím nemáme dost dat“)
 
 ### Obchod (transakce)
 
@@ -175,91 +414,11 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
   - Dispute vrací obchod do „běžného režimu“ (pokračuje se řešením / domluvou) a není nutně agresivní konflikt.
   - Odměny zůstávají navázané na finální **success/closed** (typicky scénář „chyběl šroubek -> doposláno -> hotovo“).
 
-### Zpětná vazba
+### Systémová policie
 
-- V rámci transakce je možné odeslat zpětnou vazbu oběma směry (prodávající/kupující) jako jednoduchý **3-stavový feedback**:
-  - **like**
-  - **ok**
-  - **dislike**
-- Feedback se zobrazuje jako běžný button v konverzaci a je dostupný od otevření (přijetí) transakce obchodníkem.
-- Smysl: určitá forma karmy mezi uživateli.
-
-### Nahlášení (flagy)
-
-- Systém má mechaniku nahlasování inzerátů (flagy).
-- Flagy samy o sobě systémově nemají žádný efekt (nic se automaticky neskrývá, nemaže, nebanuje).
-- Slouží jako signál pro admina, aby našel věci, které smrdí, a řešil je (zatím i formou SQL dotazu / logiky mimo UI).
-
-### Důsledky (enforcement)
-
-- Systemovou „policii“ dělají samotní uživatelé.
-- Když už někdo někoho nahlásí nebo mu dá špatný feedback, celé se to promítá do hodnocení a důsledkem pak je, že s takovým člověkem nikdo nebude chtít jednat.
-- Systém aktivně neslouží jako soudce.
-- Pokud někdo spamuje / prodává bordel / ojebe:
-  - Je to mezi nimi.
-  - Protistrana ho musí nareportovat (flag obchodníka, ne inzerátu) a dát mu zpětnou vazbu.
-  - Flag obchodníka je v rámci detailu inzerátu ve zprávě jako akční button (schovaný, ale dostupný).
-  - Spamu se předchází tím, že obchodník prostě nepřijme obchod někoho, kdo má špatné skóre (spammer rychle získá záporné skóre).
-
-### Metriky - Prodávající
-
-- **Stáří účtu:** kdy je uživatel registrovaný (relativně).
-- **Počet inzerátů:** kolik vytvořil inzerátů (context k aktivitě prodávajícího).
-- **Reakce na nový obchod (pending -> open/rejected):**
-  - reakční míra (kolik obchodů dostane reakci vs. kolik jich „dojede“ jinak),
-  - rychlost reakce (median + p90).
-- **Odmítání bez interakce:**
-  - podíl obchodů, které prodávající odmítne bez konverzace,
-  - rychlost odmítnutí (median + p90).
-- **Resolved (vyřešeno):**
-  - podíl obchodů, které prodávající označí jako resolved,
-  - rychlost do resolved (median + p90).
-- **Expirace:** podíl obchodů, které expirují bez zpráv / interakce.
-- **Load (vytížení):** bucket low / medium / high (maskuje přesný počet obchodů; jen říká, jak je prodávající „busy“).
-- **Activity (aktivita):** bucket low / medium / high (hrubý signál aktivity v systému).
-- **Score (souhrnný rank):**
-  - Score je agregovaný rank (A-F / 1-6), který shrnuje výše uvedené chování.
-  - Metriky se počítají za posledních **90 dnů**.
-  - Nováček nemusí mít score (UI to přizná: „zatím nemáme dost dat“).
-  - Drobné signály (flagy, like/dislike, feedback) mají **nízkou váhu**.
-
-### Metriky - Kupující
-
-- **Stáří účtu:** kdy je uživatel registrovaný (relativně).
-- **Reaction (reakce na otevřený obchod):**
-  - reakční míra,
-  - rychlost reakce (median + p90).
-- **Closer (instant closed):**
-  - podíl obchodů, které kupující rychle zavře (otevře a hned „killne“ bez interakce),
-  - rychlost zavření (median + p90).
-- **Decision (success/closed):** podíl obchodů, kde kupující dává finální rozhodnutí (success/closed).
-- **Expired:** podíl obchodů, které expirují bez zpráv / interakce.
-- **Load (vytížení):** bucket low / medium / high.
-- **Activity (aktivita):** bucket low / medium / high.
-- **Score (souhrnný rank):**
-  - Score je agregovaný rank (A-F / 1-6), který shrnuje výše uvedené chování.
-  - Metriky se počítají za posledních **90 dnů**.
-  - Nováček nemusí mít score (UI to přizná: „zatím nemáme dost dat“).
-  - Drobné signály (flagy, like/dislike, feedback) mají **nízkou váhu**.
-
-### Inzeráty
-
-- Inzerát po expiraci je **defaultně schovaný**.
-- Expirované inzeráty lze zobrazit filtrem ve feedu:
-  - mix aktivních + expirovaných,
-  - nebo jen expirované.
-- Aktuálně umíme na úrovni dat zpracovat:
-  - **Obsah inzerátu:** title, description, pros/cons.
-  - **Galerie:** uploady + jejich pořadí (galerie / fotky).
-  - **Cena:** price + priceType (pevná vs. otevřená), currency.
-  - **Parametry věci:** condition (škála), age (škála), delivery (osobně / post / package / other), warranty (warranty / no-warranty / custom).
-  - **Kategorizace:** categoryId + napojení na kategorii.
-  - **Lokalita:** locationId + lat/lon; umíme spočítat **vzdálenost (km)**, pokud je k dotazu dodaná poloha uživatele.
-  - **Čas:** createdAt / updatedAt / expiresAt (včetně filtrování podle expiresAtBefore/After).
-  - **Vazby na uživatele:** isFavourite, isIgnored, hasFlag, feedback (like/dislike), transactionId (existuje obchod pro daného uživatele).
-  - **Event log nad inzerátem:** impression, view, ignore/unignore, flag/unflag, transaction, favourite/unfavourite, like/dislike.
-  - **Filtrování (feed):** fulltext, title, priceMin/priceMax, conditionMin/Max/In, ageMin/Max/In, deliveryIn, warrantyIn, categoryId/categoryIdIn, currency/currencyIn, feedId/feedIdIn, my/withOwn, withIgnored, isFavourite, transaction, range (km).
-  - **Řazení:** price, condition, age, createdAt, updatedAt, expiresAt, geo (vzdálenost).
+- Aplikace dává nástroje uživatelům k rozhodování
+- Systém sám o sobě aktivně nic nehodnotí ani nespouští autonomní akce
+- Dostupná je pouze základní ochrana rate-limit a DDoS na úrovni hostingu
 
 ### Kontinuální nabídka
 
@@ -283,62 +442,15 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - Metriky:
   - Inzerát se chová normálně, takže metriky (včetně **Transakce**) se počítají standardně.
 
-### Metriky inzerátu
+## Subscriptions
 
-- **View**: uživatel otevřel detail inzerátu a čumí do něj cca **2,5 s**.
-- **Impression**: uživatel se při scrollování feedem u inzerátu pozastavil cca **1,6 s**.
-- **Feedback**: sbíráme palec **nahoru / dolů**.
-- **Ignorované**: počet ignorování inzerátu (uživatel si ho skryl).
-- **Transakce**: počet vzniklých transakcí z akce **„Mám zájem“** (kolik lidí otevřelo obchod).
-
-### Ignorování inzerátu
-
-- V detailu inzerátu je dostupná akce **„Ignorovat“** (toggle).
-- Cíl: uživatel si může explicitně odstranit inzerát z feedu (nechce, aby mu „lezl do feedu“).
-- Ignor je **vázaný na konkrétní inzerát**:
-  - Jakmile uživatel inzerát jednou ignoruje, **neuvidí ho už nikde** (feed, search, listingy, atd.), dokud ignor nezruší.
-  - Výjimka je vědomá volba uživatele: pokud si ve feedu zapne filtr `withIgnored`, ignorované inzeráty se můžou znovu zobrazit.
-  - Pokud se uživatel k ignorovanému inzerátu dostane přímým linkem, může ho vidět (edge-case, neřešíme).
-- Ignor je toggle:
-  - **Ignorovat** i **zrušit ignor** generuje event do **user event logu** (append-only).
-- Metriky:
-  - Ignorované eventy se počítají z event logu.
-  - Prodávající to uvidí v placených metrikách inzerátu jako hodnota **„Ignorované“**.
-  - Počítá se z **user event logu**.
-- Vliv na skóre:
-  - Aktuálně se **ignorování nepromítá do Score**.
-- Do budoucna lze ignorování použít jako:
-  - signál pro znevýhodnění inzerátu (pokud ho masově ignorují),
-  - nebo signál na úrovni prodávajícího („asi prodává méně zajímavé věci“).
-
-### Rozšířená data u inzerátu
-
-- Přístup je řízen **passsem**: dokud má prodávající aktivní pass, vidí rozšířená data u **svých** inzerátů.
-- Zobrazujeme jednoduchý dump čísel za dobu existence inzerátu (do expirace).
-- Obsah rozšířených dat: **impression**, **view**, **feedback**, **ignorované**, **transakce**.
-- **Potlačené views (anti-topper)** se ukazují jako poměr z celkového počtu: potlačené / (view + potlačené).
-- Data jsou **privátní**: vidí je jen vlastník inzerátu a jen jako placený benefit (Seller/Pro).
-
----
-
-## Monetizace
-
-### Základní model
-
-- Monetizace stojí na **subscriptions** a **interní měně (goldíky)**.
-- Cílem není maximalizace výběru, ale dlouhodobý klid a férové použití systému.
-
-### Subscriptions
-
-#### Subscription bonusy (měsíční příděly)
+### Subscription bonusy (měsíční příděly)
 
 - Každé předplatné při měsíčním renew přidělí své bonusy **vždy**, bez ohledu na to, kolik už jich uživatel má.
 - Cíl: uživatel si předplatné platí, takže systém se nesnaží “šetřit” tím, že by příděly zastavoval kvůli tomu, že má uživatel zásobu.
 - Tokeny se ukládají do inventáře a **neexpirují** (expiruje pouze pass, pokud je časově omezený).
 
-**Cenový model (měsíčně, CZK):**
-
-#### Buyer Package (119 Kč / měsíc)
+### Buyer Package (119 Kč / měsíc)
 
 > **Co kupuju:** Nástroje pro kupujícího. Typicky chci dřív vidět, rychleji kupovat a méně se brodit v odpadu.
 
@@ -347,7 +459,7 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - **Limit uložených feedů (pass):** default 3 → Buyer 5.
 - **Anti-topper (token, 5×)**
 
-#### Seller Package (229 Kč / měsíc)
+### Seller Package (229 Kč / měsíc)
 
 > **Co kupuju:** Celkový toolset pro efektivní distribuci a zviditelnění inzerátu (bez pay-to-win), plus privátní metriky.
 
@@ -362,7 +474,7 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - **Rozšířená data u inzerátu (pass)**
 - **Kontinuální nabídka (token, 3×)**
 
-#### Pro Package (499 Kč / měsíc)
+### Pro Package (499 Kč / měsíc)
 
 > **Co kupuju:** Všechno (Buyer + Seller) a navíc „plný klid“ a nejvyšší komfort. Jsem na obou stranách a chci dostat z aplikace maximum s minimem šumu.
 
@@ -378,9 +490,7 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - **Rozšířená data u inzerátu (pass)**
 - **Kontinuální nabídka (token, 5×)**
 
----
-
-### Goldíky (interní měna)
+## Goldíky
 
 - Goldík je **trvalá interní měna** (interpretace kreditu / reálných peněz).
 - Nelze jít do mínusu.
@@ -396,15 +506,13 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - Uživatel má k dispozici **historii transakcí** (přírůstky/úbytky).
 - Všechny pohyby nad inventářem probíhají **atomicky a transakčně** (fail = rollback).
 
-#### Nákupní balíčky goldíků
+### Nákupní balíčky goldíků
 
 | Balíček    | Množství goldíků | Cena (CZK) |
 | ---------- | ---------------- | ---------- |
 | Na zkoušku | 300              | 149        |
 | Balík      | 600              | 299        |
 | Do zásoby  | 1200             | 599        |
-
----
 
 ### Bonusy za používání
 
@@ -420,9 +528,7 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - V „Bonusy“ (obchod) je **denní drop** (aktuálně: 10 goldíků).
 - Bonusy se nemusí vyplatit, pokud systém vyhodnotí zjevné zneužití nebo anomální chování.
 
----
-
-### Tokeny & passy
+## Tokeny & passy
 
 > **K čemu je máme?** Centrální systém řízení oprávnění jak nad uživateli (např. aktivní pass), tak i jinými objekty systému (např. listing) a možnost přidělit dočasné vlastnosti (zpravidla passem, jelikož může mít časové omezení).
 
@@ -470,17 +576,11 @@ Pozn.: **Jednotková cena** u balíčků (např. „5× za 20“) znamená cenu 
 | Kontinuální nabídka | Token              | 1× použití (vygeneruje pass)                                     | exclusive |
 | Kontinuální nabídka | Pass               | 1 měsíc (inzerát funguje jako běžný aktivní)                      | exclusive |
 
----
-
-# Modely
-
 ## Go-to-market
 
 ### Fázování startu
 
 Start projektu je **vědomě rozdělen do dvou paralelních, ale sekvenčních fází**, s cílem snížit riziko prázdna a zvýšit šanci na první smysluplné transakce.
-
----
 
 ### Fáze 1: Online komunitní start (Discord)
 
@@ -505,8 +605,6 @@ Start projektu je **vědomě rozdělen do dvou paralelních, ale sekvenčních f
 - Otestovat monetizaci **bez regionálního šumu**.
 - Vytvořit první **reálnou paměť trhu**.
 
----
-
 ### Fáze 2: Regionální expanze (Karlovy Vary + Ostrov + Sokolov)
 
 > **Proč?** Tohle je náš cílový trh - jedná se o už docela tuhý start, kde nabereme hlavní část uživatelů a když bude vše v pořádku, bude to také finální (monetizační) fáze, jelikož zasponzoruje vývoj.
@@ -520,15 +618,6 @@ Start projektu je **vědomě rozdělen do dvou paralelních, ale sekvenčních f
 - Billboardy: bílé pozadí, žádné obrázky, krátký tvrdý text + URL.
 - Word-of-mouth jako hlavní akcelerační kanál.
 
----
-
-### Badge a narativ
-
-- **„První skokani“**: první \~100 aktivních uživatelů napříč kanály.
-- Komunikace přiznává prázdno, ale je **akční**, ne omluvná.
-
----
-
 ## Retence a paměť trhu
 
 Zbav-se.me **nepracuje s krátkodobou pozorností**, ale s pamětí trhu. Inzeráty po expiraci **nezmizí**, ale jsou **defaultně schované** a lze je zobrazit filtrem. Díky tomu tvoří historický kontext: ceny, neúspěšné nabídky, chování účastníků.
@@ -541,14 +630,12 @@ Důsledky tohoto přístupu:
 
 **Očekávaný vývoj poměru registrace → MAU:**
 
-- Měsíc 1-2: \~20-30 % (zvědavost, nízký kontext)
-- Měsíc 3-4: \~35-45 % (vznikající historie)
-- Měsíc 5-7: \~50-60 % (paměť trhu má hodnotu)
+- Měsíc 1-2: ~20-30 % (zvědavost, nízký kontext)
+- Měsíc 3-4: ~35-45 % (vznikající historie)
+- Měsíc 5-7: ~50-60 % (paměť trhu má hodnotu)
 - Po saturaci regionu: **60-70 %** (platforma jako referenční bod)
 
 > Retence zde není tlačena notifikacemi ani návykovostí, ale **užitkem z kontextu**. To vytváří menší, ale stabilnější a důvěryhodnější MAU.
-
----
 
 ## Odhady monetizace a růstu
 
@@ -563,8 +650,6 @@ Důsledky tohoto přístupu:
 | Seller Package | 2,0 %     | 229               | 4,58 Kč          |
 | Pro Package    | 0,5 %     | 499               | 2,50 Kč          |
 | **Celkem**     | **3,0 %** |                   | **7,68 Kč ARPU** |
-
----
 
 ### Odhad monetizace - extras baseline (cash-in model)
 
@@ -582,8 +667,6 @@ Tento scénář modeluje **jednorázové nákupy extras** skrze **balíčky gold
 | **Měsíční revenue** | **~210 000 Kč** |
 | **ARPU (cash-in)**  | **~21,0 Kč**    |
 
----
-
 ### Odhad monetizace - kombinovaný scénář (konzervativní)
 
 | Zdroj        | ARPU (Kč) | Měsíční revenue  |
@@ -591,8 +674,6 @@ Tento scénář modeluje **jednorázové nákupy extras** skrze **balíčky gold
 | Subscription | 7,68      | ~76 800 Kč      |
 | Extras       | 21,0      | ~210 000 Kč     |
 | **Celkem**   | **28,68** | **~286 800 Kč** |
-
----
 
 ### Odhad náběhu MAU a revenue (sekvenční start)
 
@@ -610,7 +691,6 @@ Tento scénář modeluje **jednorázové nákupy extras** skrze **balíčky gold
 | 10    | Discord + region | 10 500    | ~301 100 Kč  |
 | 11+   | Discord + region | 11-12k    | ~315-345k Kč |
 
----
 
 ### Odhad monetizace - online komunitní kanál (Discord)
 
