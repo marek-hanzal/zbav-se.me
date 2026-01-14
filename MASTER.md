@@ -118,10 +118,10 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 ### Draft
 
-> Další klíčová funkce, která umožňuje postupnou tvorbu inzerátu beze strachu, že se nějaké údaje ztratí, pokud v průběhu uživatel aplikaci opustí. Spolou s tím spravujeme seznam Draftů, tzn. uživatel může snadno vytvářet inzeráty z již existujících nastavení (včetně uložených obrázků).
+> Další klíčová funkce, která umožňuje postupnou tvorbu inzerátu beze strachu, že se nějaké údaje ztratí, pokud v průběhu uživatel aplikaci opustí. Spolu s tím spravujeme seznam Draftů, tzn. uživatel může snadno vytvářet inzeráty z již existujících nastavení (včetně uložených obrázků).
 
 - Kopíruje atributy inzerátu
-- Slouží jako vstupní bod pro tvorbu nového inzerátu - prvně vznikná Draft, z něj se pak publikuje inzerát
+- Slouží jako vstupní bod pro tvorbu nového inzerátu - prvně vzniká Draft, z něj se pak publikuje inzerát
 
 ### Feed
 
@@ -144,7 +144,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 > Mírně duplicitní s Feedem, nicméně toto má krýt potřebu uživatelů pro běžné vyhledávání bez čarování kolem feedu
 
-- Jediná výjimka vedle Feedu, která uzmožňuje vstoupit na seznam inzerátů
+- Jediná výjimka vedle Feedu, která umožňuje vstoupit na seznam inzerátů
 - Přijímá stejné atributy, jako Feed
 - Na pozadí se uloží jako Feed, pouze bude drobný rozdíl v UI (nastavení vyhledávání se zobrazí vždy, pamatuje se poslední nastavení)
 - Feed vyhledávání se zobrazí v seznamu Feedů, limity v balíčcích (předplatné) s tímto počítají
@@ -174,7 +174,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 > Smyslem je mít autoritu na polohu místo ukládání buď pseudo adresy nebo stringu s random textem.
 
-- Všechno, co využivá polohu, se odkazuje na lokaci
+- Všechno, co využívá polohu, se odkazuje na lokaci
 - Záznam v lokaci vzniká přes službu vyhledávání adres, která tak slouží jako autorita
 - Poloha používá locale, což aktuálně může být bota a zároveň předmět budoucí úpravy
 	- Teď podporujeme pouze češtinu, takže tento příběh bude na jindy
@@ -330,7 +330,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Payback
   - Vyhodnocuje se **až po skončení platnosti inzerátu**.
   - Počítá se poměr **běžných vs. potlačených visible** (na úrovni **unikátních uživatelů** dle event logu).
-  - Vyplácí se krokově 25/50/75% - např. 25% potlačených visible -> 25% jednotkové ceny použitého zvýraznení
+  - Vyplácí se krokově 25/50/75% - např. 25% potlačených visible -> 25% jednotkové ceny použitého zvýraznění
   - Funguje **jen pro platící prodávající** - a jen pokud má prodávající v době vyhodnocení (konec platnosti inzerátu) stále aktivní subscription. Pokud mu mezitím vyprší, payback nevzniká.
 - Plátci (prodávající) vidí u inzerátu rozšířená data: např. **palce**, **běžné views**, **potlačené views** (anti-topper), atd.
 
