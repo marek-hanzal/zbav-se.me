@@ -457,7 +457,29 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Inzerát se uživateli zobrazuje **právě jednou**, i když spadá do více kategorií.
 - Vedle samotné kategorie přímo na inzerátu je možné uložit další dvě v rámci **Multi-Category**
 
+---
+
+### Detail protistrany
+
+- Detail protistrany je placené oprávnění (pass) nad metrikami chování uživatelů.
+- Vždy se vztahuje na protistranu:
+  - kupující si může zobrazit detail prodávajícího,
+  - prodávající si může zobrazit detail kupujícího,
+  - uživatel se tímto nástrojem nikdy nedívá „sám na sebe“.
+- Vstupní místa v UI:
+  - v detailu inzerátu je dostupné tlačítko „Detail prodejce“ (rozhodnutí ještě před založením transakce),
+  - v transakci (Zprávy) jsou dostupná tlačítka „Detail prodejce“ a „Detail kupujícího“ (podle role uživatele v transakci).
+- Minimum zdarma je pouze Score (A - F). Vše ostatní je zamčené.
+  - bez aktivního passu se po kliknutí zobrazí status placeholder a jedno CTA na spotřebu tokenu (vytvoření passu),
+  - s aktivním passem se zobrazí kompletní metriky (viz níže).
+- Pass odemyká metriky globálně po dobu platnosti: uživatel může zobrazit detail kohokoliv (kromě sebe) bez dalších limitů.
+- Token „Detail protistrany“ se spotřebuje a vytvoří stejnojmenný pass.
+
 ### Metriky - Prodávající
+
+- Dostupnost:
+  - v detailu inzerátu je zdarma vždy vidět pouze **Score (A - F)** prodávajícího,
+  - ostatní metriky jsou dostupné přes „Detail protistrany“ (zamčeno bez aktivního passu).
 
 - **Stáří účtu:** kdy je uživatel registrovaný (relativně).
 - **Počet inzerátů:** kolik vytvořil inzerátů (context k aktivitě prodávajícího).
@@ -484,6 +506,10 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
     - pokud je poměr flagnutých inzerátů **>= 10 %** → zobrazí se **procentuální hodnota**
 
 ### Metriky - Kupující
+
+- Dostupnost:
+  - zdarma je vidět pouze **Score (A - F)** kupujícího,
+  - ostatní metriky jsou dostupné přes „Detail protistrany“ (typicky z transakce; zamčeno bez aktivního passu).
 
 - **Stáří účtu:** kdy je uživatel registrovaný (relativně).
 - **Reaction (reakce na otevřený obchod):**
