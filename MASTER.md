@@ -160,7 +160,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 - Zastupuje interakci mezi uživateli, v systému se prezentuje jako "Zprávy"
 - Každá transakce zároveň vytváří i vlákno zpráv s účastníky (ve výchozím stavu prodejce a kupující), které tak udává, kdo smí do transakce zasahovat
-- Po zavření transakce (jakkoli, ať už vypršením nebo uživatelskou akcí) se odstraní veškerá strukturovaná data (polohy, osobní údaje, atd.); **text a obrázky zůstávají**
+- Lifecycle (zavření, expirace, mazání) je definovaný v **Mechaniky → Obchod (transakce)**.
 
 ### Zprávy
 
@@ -517,7 +517,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 - Každé předplatné při měsíčním renew přidělí své bonusy **vždy**, bez ohledu na to, kolik už jich uživatel má.
 - Cíl: uživatel si předplatné platí, takže systém se nesnaží “šetřit” tím, že by příděly zastavoval kvůli tomu, že má uživatel zásobu.
-- Tokeny se ukládají do inventáře a **neexpirují** (expiruje pouze pass, pokud je časově omezený)
+- Tokeny jsou skladovatelné a neexpirují; expiruje jen pass (viz **Tokeny & passy**).
 - Neexistuje downgrade: jediná změna subscription je **cancel**.
 - Cancel znamená: subscription se jen **neobnoví**. Všechny passy, které vznikly, **doběhnou do konce zaplaceného období** a pak zaniknou.
 - Pass je samostatný záznam v tabulce pass a běží čistě podle svého `expiresAt` (nic se „neruší“ předčasně).
@@ -530,7 +530,6 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Přidělené goldíky:** 300 / měsíc.
 - **Early Access (token, 5×)**
 - **Limit uložených feedů (pass):** default 3 → Buyer 5.
-- Po vypršení passu se limit vrátí na default a UI zobrazí jen první N feedů podle pořadí uživatele (zbytek zůstává uložený, ale je skrytý/disabled).
 - **Anti-topper (token, 5×)**
 
 ### Seller Package (229 Kč / měsíc)
@@ -557,7 +556,6 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Anti-topper (pass)**
 - **Early Access (pass)**
 - **Limit uložených feedů (pass):** 10.
-- Po vypršení passu se limit vrátí na default a UI zobrazí jen první N feedů podle pořadí uživatele (zbytek zůstává uložený, ale je skrytý/disabled).
 - **Photo count (pass):** 10.
 - **Multi-Category (pass)**
 - **Detail protistrany (pass)**
@@ -613,7 +611,6 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Pass** = stav oprávnění (může mít konec platnosti, nebo být bez konce).
 - Když někde mluvíme o **platnosti**, myslíme tím vždycky **platnost passu**, ne tokenu.
 - Pokud je **pass uveden bez doby**, dědí dobu z běhu subscription (vznik/renew subu = nový pass na dobu trvání subu).
-- Jakmile subscription doběhne (cancel bez renew), všechny takto navázané passy prostě doběhnou do svého `expiresAt` a pak končí.
 - V UI se to nepředvádí jako „token/pass“: uživatel vidí akce typu **„Odemknout +2 fotky?“** apod.; detail (včetně pasů) je v **Inventáři**.
 - Tokeny jde **nakoupit dopředu** a aktivovat později; přímý pass je **okamžitá aktivace** (levnější, ale bez odkladu).
 - Při zámcích placených věcí používáme pattern: **Status** (proč to stojí) → **jedno CTA** (spotřebovat token / zaplatit goldíky).
