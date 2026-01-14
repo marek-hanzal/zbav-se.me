@@ -297,9 +297,8 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Pravidla citlivosti platí pro všechny formy získání inzerátu (Feed, Vyhledávání i přímý odkaz):
   - **běžný (common)** se zobrazí vždy
   - cokoliv nad běžný se zobrazí jen pokud to sedí na nastavení uživatele
-    - pokud nesedí, API vrací **404** a data inzerátu se nevrací
   - ve feedu se citlivě nekompatibilní obsah **vůbec neobjeví**
-  - při přímém linku se citlivost vyhodnotí a server vrací data **jen pokud sedí**, jinak **404**
+  - při přímém linku / detailu se citlivost vyhodnotí a server vrací data **jen pokud sedí**, jinak **404**
 
 #### Příklady úrovní
 
