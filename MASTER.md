@@ -255,6 +255,24 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 ---
 
+### Viditelnost inzerátu (seznam vs. přímý odkaz)
+
+- „Viditelnost“ inzerátu se řeší na dvou místech:
+  - **Seznam inzerátů (listing)**: inzerát buď projde filtrem a dostane se do seznamu nebo vypadne úplně ven.
+  - **Přímý odkaz (detail)**: uživatel může otevřít detail i mimo seznam; tvrdé pravidlo je pouze citlivost (viz níže).
+- **Release window (Early Access / Early Delivery)** je jen pravidlo pro seznam inzerátů:
+  - přímý odkaz na čerstvý inzerát je dostupný vždy (systém nikoho nešikanuje tím, že „to nejde otevřít“).
+- **Ignorování** je vlastní volba uživatele:
+  - ignorované inzeráty se standardně do seznamu nedostanou (pokud si uživatel vědomě nezapne zobrazování ignorovaných),
+  - přímý odkaz na ignorovaný inzerát detail normálně otevře („OK, nezajímá mě“).
+- **Citlivost** musí vždy respektovat nastavení uživatele:
+  - pokud uživatel nemá povolenou potřebnou úroveň citlivosti, server vrátí pro přímý odkaz **404** (aby to nešlo obcházet sdílením odkazů).
+- **Expirovaný inzerát** je přes přímý odkaz pořád dostupný (read-only):
+  - není důvod ho skrývat, jen nad ním už neběží běžné interakce / bonusy.
+- Pokud inzerát **už není k dispozici pro nový obchod** (např. je prodaný), detail se otevře, ale místo tlačítka „Mám zájem“ se zobrazí status typu **„Inzerát již není dostupný“**.
+
+---
+
 ### Limity feedů (po doběhnutí passu)
 
 - Pokud uživatel má uložených více feedů, než dovoluje jeho aktuální limit (typicky po doběhnutí předplatného), feedy se **nemažou**.
