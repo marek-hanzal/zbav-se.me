@@ -289,6 +289,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Uživatel musí aktivně povolit, jakou úroveň citlivosti chce vidět:
   - vleze do **uživatelského profilu**,
   - potvrdí, že chce vidět (jakou) úroveň citlivosti (default je **běžný**).
+  - volba se nastavuje **jednou** a drží se, dokud ji uživatel vědomě nezmění.
 - Následně vleze do **nastavení feedu**, kde se mu podle zvolené úrovně zpřístupní filtr citlivosti.
 - Teprve po tom má uživatel k obsahu volný přístup (žádný blur):
   - citlivost se v listingu i detailu zobrazuje jako **badge**,
@@ -296,7 +297,9 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Pravidla citlivosti platí pro všechny formy získání inzerátu (Feed, Vyhledávání i přímý odkaz):
   - **běžný (common)** se zobrazí vždy
   - cokoliv nad běžný se zobrazí jen pokud to sedí na nastavení uživatele
-    - pokud nesedí, vrátí se placeholder typu **„Nevhodný obsah“** a server vrátí odpověď **bez dat inzerátu** (nelze to obejít scrapem)
+    - pokud nesedí, API vrací **404** a data inzerátu se nevrací
+  - ve feedu se citlivě nekompatibilní obsah **vůbec neobjeví**
+  - při přímém linku se citlivost vyhodnotí a server vrací data **jen pokud sedí**, jinak **404**
 
 #### Příklady úrovní
 
