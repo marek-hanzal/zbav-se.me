@@ -58,9 +58,7 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 						dataFx: listingCountFx({
 							...c.req.valid("json"),
 							userId: user.id,
-							scope: {
-								userId: user.id,
-							},
+							scope: {},
 						}),
 					}),
 					200,

@@ -64,9 +64,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 						dataFx: listingCollectionFx({
 							...c.req.valid("json"),
 							userId: user.id,
-							scope: {
-								userId: user.id,
-							},
+							scope: {},
 						}),
 					}),
 					200,
