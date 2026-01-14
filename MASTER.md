@@ -332,6 +332,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 ### Metriky inzerátu
 
 - **Visible**: odpálí se při scrollu po **0,5 s**.
+- **Anti-topper**: u uživatelů s aktivním anti-topperem nahrazuje `visible` ve chvíli, kdy by se v listingu ukázal inzerát s **Mark/Top** (boost je potlačen).
 - **View**: uživatel otevřel detail inzerátu a čumí do něj cca **2,5 s**.
 - **Impression**: uživatel se při scrollování feedem u inzerátu pozastavil cca **1,6 s**.
 - **Feedback**: sbíráme palec **nahoru / dolů**.
@@ -343,7 +344,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Přístup je řízen **passsem**: dokud má prodávající aktivní pass, vidí rozšířená data u **svých** inzerátů.
 - Zobrazujeme jednoduchý dump čísel za dobu existence inzerátu (do expirace).
 - Obsah rozšířených dat: **impression**, **view**, **feedback**, **ignorované**, **transakce**.
-- **Potlačené views (anti-topper)** se ukazují jako poměr z celkového počtu: potlačené / (view + potlačené).
+- **Anti-topper** se ukazuje jako poměr z celkového počtu: anti-topper / (visible + anti-topper).
 - Data jsou **privátní**: vidí je jen vlastník inzerátu a jen jako placený benefit (Seller/Pro).
 
 ### Citlivost inzerátu
@@ -408,37 +409,48 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 > Pointa - **Mám něco, co bys měl vidět!**
 
 - Nejlevnější a nejjednodušší forma označení inzerátu
+- Zvýraznění platí jen do **expirace inzerátu** (po expiraci se vypne).
 - Pouze zobrazí v seznamu inzerátů badge
 - Anti-Topper potlačuje Mark
-
 ### Zvýraznění - Top
 
 > Pointa - **Hej, tohle ti fakt chci ukázat dřív, než ostatní!**
 
 - Přeskakuje běžné inzeráty (řazení)
+- Zvýraznění platí jen do **expirace inzerátu** (po expiraci se vypne).
 - Obsahuje badge v seznamu inzerátů
 - Anti-Topper potlačuje Top
 - Střední cena
-
 ### Zvýraznění - Top Maxxi
 
 > Pointa - **Tohle fakt chci prodat a nezajímá mě, co si myslíš!**
 
 - Přeskakuje běžné inzeráty (řazení)
+- Zvýraznění platí jen do **expirace inzerátu** (po expiraci se vypne).
 - Obsahuje badge v seznamu inzerátů
 - Je imunní vůči Anti-Topperu
 - Je nejdražší variantou zvýraznění 
-
 ### Anti-topper
 
 - Premium uživatel platí za **klid** (redukci šumu v seznamu inzerátů), ne za dominanci.
-- Potlačuje efekt **Mark** a **Top**, ***Top Maxxi není ovlivněné***
-- Payback
-  - Vyhodnocuje se **až po skončení platnosti inzerátu**.
-  - Počítá se poměr **běžných vs. potlačených visible** (na úrovni **unikátních uživatelů** dle event logu).
-  - Vyplácí se krokově 25/50/75% - např. 25% potlačených visible -> 25% jednotkové ceny použitého zvýraznění
-  - Funguje **jen pro platící prodávající** - a jen pokud má prodávající v době vyhodnocení (konec platnosti inzerátu) stále aktivní subscription. Pokud mu mezitím vyprší, payback nevzniká.
-- Plátci (prodávající) vidí u inzerátu rozšířená data: např. **palce**, **běžné views**, **potlačené views** (anti-topper), atd.
+- Platí pro **seznam inzerátů** (listing) bez ohledu na to, jak byl získán (Feed / Vyhledávání / uložený feed) – řeší prostě to, co se má v listingu ukázat.
+- Potlačuje efekt **Mark** a **Top**, **Top Maxxi není ovlivněné**.
+- Pokud má uživatel aktivní anti-topper a v listingu “jde kolem” inzerátu se zvýrazněním (Mark/Top), pošle se event **anti-topper** (nahrazuje `visible`), aby bylo vidět, kolikrát byl boost potlačen.
+- Anti-topper neblokuje přímý přístup k inzerátu (např. přes odkaz) – jen ho nenechá protlačit v listingu.
+- Plátci (prodávající) vidí u inzerátu rozšířená data: např. **palce**, **visible**, **anti-topper**, atd.
+
+### Payback
+
+- Payback je kompenzace prodávajícímu za to, že jeho **Mark/Top** byl potlačen uživateli s anti-topperem.
+- Payback je samostatné oprávnění: **Payback = pass (exclusive)**, dostupný jen v balíčcích **Seller / Pro** (nelze koupit tokenem).
+- Vyhodnocuje se **po expiraci inzerátu** (zvýraznění ani bonusy se po expiraci už neřeší).
+- Výpočet:
+  - počítá se poměr **anti-topper** vs. (**visible + anti-topper**) na úrovni **unikátních uživatelů** dle event logu,
+  - vyplácí se krokově **25/50/75 %**.
+- Refund se počítá z **aktuální jednotkové ceny v ceníku** v době vyhodnocení.
+- Platí pro **Mark** a **Top**. **Top Maxxi** je imunní vůči anti-topperu → payback pro něj nevzniká.
+- Payback vzniká jen pokud má prodávající v době vyhodnocení aktivní **Payback pass**.
+
 
 ### Early Access
 
@@ -612,8 +624,8 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Každé předplatné při měsíčním renew přidělí své bonusy **vždy**, bez ohledu na to, kolik už jich uživatel má.
 - Cíl: uživatel si předplatné platí, takže systém se nesnaží “šetřit” tím, že by příděly zastavoval kvůli tomu, že má uživatel zásobu.
 - Tokeny jsou skladovatelné a neexpirují; expiruje jen pass (viz **Tokeny & passy**).
-- Neexistuje downgrade: jediná změna subscription je **cancel**.
-- Cancel znamená: subscription se jen **neobnoví**. Všechny passy, které vznikly, **doběhnou do konce zaplaceného období** a pak zaniknou.
+- Neexistuje downgrade: jediná změna předplatného je **cancel**.
+- Cancel znamená: předplatné se jen **neobnoví**. Všechny passy, které vznikly, **doběhnou do konce zaplaceného období** a pak zaniknou.
 - Pass je samostatný záznam v tabulce pass a běží čistě podle svého `expiresAt` (nic se „neruší“ předčasně).
 - Po vypršení passů se systém vrátí do defaultního režimu (např. anti-topper přestane platit, feed limit se sníží, atd.).
 
@@ -637,7 +649,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Top (token, 3×)**
 - **Top Maxxi (token, 1×)**
 - **Multi-Category (token, 3×)**
-- **Kompenzace za anti-topper**
+- **Payback (pass)**
 - **Rozšířená data u inzerátu (pass)**
 - **Kontinuální nabídka (token, 3×)**
 
@@ -653,7 +665,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Photo count (pass):** 10.
 - **Multi-Category (pass)**
 - **Detail protistrany (pass)**
-- **Kompenzace za anti-topper**
+- **Payback (pass)**
 - **Rozšířená data u inzerátu (pass)**
 - **Kontinuální nabídka (token, 5×)**
 
@@ -666,7 +678,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Veškeré „peněžní“ operace jsou transakční: **nikdy se nesmí stát, že se hodnota odečte bez dodání protihodnoty**.
 - **Interní kurz:** **1 CZK ≈ 2 goldíky** (může se v čase měnit).
 - Goldíky lze získat:
-  - skrze subscription (všechny balíčky je obsahují),
+  - skrze předplatné (všechny balíčky je obsahují),
   - skrze používání aplikace (bonusy),
   - **nákupem balíčků goldíků**.
 - Goldíky jsou vidět na dvou místech:
@@ -708,19 +720,19 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Token** = jednorázová akce (spotřebuje se). **Token nikdy neexpiruje** (můžeš ho držet neomezeně dlouho).
 - **Pass** = stav oprávnění (může mít konec platnosti, nebo být bez konce).
 - Když někde mluvíme o **platnosti**, myslíme tím vždycky **platnost passu**, ne tokenu.
-- Pokud je **pass uveden bez doby**, dědí dobu z běhu subscription (vznik/renew subu = nový pass na dobu trvání subu).
+- Pokud je **pass uveden bez doby**, dědí dobu z běhu předplatného (vznik/renew subu = nový pass na dobu trvání subu).
 - V UI se to nepředvádí jako „token/pass“: uživatel vidí akce typu **„Odemknout +2 fotky?“** apod.; detail (včetně pasů) je v **Inventáři**.
 - Tokeny jde **nakoupit dopředu** a aktivovat později; přímý pass je **okamžitá aktivace** (levnější, ale bez odkladu).
 - Při zámcích placených věcí používáme pattern: **Status** (proč to stojí) → **jedno CTA** (spotřebovat token / zaplatit goldíky).
 - Goldíky slouží k nákupu **tokenů** (spotřební oprávnění) a dalších věcí v systému.
 - Některé tokeny/passy:
   - jsou koupitelné v obchodě,
-  - nebo jsou **subscription-exclusive**.
+  - nebo jsou **exclusive pro předplatné**.
 - Tabulka níž popisuje položky (primárně) pro **Obchod**; pokud něco koupit nejde, má v ceně **exclusive**.
-- `exclusive` = dostupné jen přes subscription / benefit, nelze koupit v obchodě.
+- `exclusive` = dostupné jen přes předplatné / benefit, nelze koupit v obchodě.
 - Cenotvorba (pravidlo): **pass je levnější než odpovídající token**, protože pass se zapíná okamžitě, kdežto token je skladovatelný „na někdy“.
 - `exclusive` je v MVP opravdu exclusive: **nejde dokoupit** ani za goldíky.
-- Subscription může dávat:
+- Předplatné může dávat:
   - přímé passy,
   - usage tokeny,
   - pravidelný přísun goldíků.
@@ -736,6 +748,7 @@ Pozn.: **Jednotková cena** u balíčků (např. „5× za 20“) znamená cenu 
 | Early Delivery      | Token              | 1× použití (ruší release window pro inzerát)                     | 40        |
 | Anti-topper         | Token              | 1× použití (vygeneruje pass)                                     | 40        |
 | Anti-topper         | Pass               | 7 dnů                                                            | 30        |
+| Payback             | Pass               | po dobu předplatného                                             | exclusive |
 | Mark                | Token              | 5× použití (každé vygeneruje pass)                               | 20        |
 | Mark                | Pass               | 7 dnů (nad inzerátem)                                            | exclusive |
 | Top                 | Token              | 3× použití (každé vygeneruje pass; bump při aktivaci)            | 50        |
@@ -743,11 +756,11 @@ Pozn.: **Jednotková cena** u balíčků (např. „5× za 20“) znamená cenu 
 | Top Maxxi           | Token              | 1× použití (vygeneruje pass)                                     | 50        |
 | Top Maxxi           | Pass               | 7 dnů (nad inzerátem)                                            | exclusive |
 | Multi-Category      | Token              | 1× použití (1 + 2 kategorie)                                     | 75        |
-| Multi-Category      | Pass               | po dobu subscription                                             | exclusive |
+| Multi-Category      | Pass               | po dobu předplatného                                             | exclusive |
 | Detail protistrany  | Token              | 5× použití (každé vygeneruje pass)                               | 50        |
 | Detail protistrany  | Pass               | 7 dnů                                                            | 75        |
 | Photo Count         | Pass               | 1 měsíc (+2 fotky)                                               | 75        |
-| Rozšířená data u inzerátu  | Pass               | po dobu subscription                                             | exclusive |
+| Rozšířená data u inzerátu  | Pass               | po dobu předplatného                                             | exclusive |
 | Kontinuální nabídka | Token              | 1× použití (vygeneruje pass)                                     | exclusive |
 | Kontinuální nabídka | Pass               | 1 měsíc (inzerát funguje jako běžný aktivní)                      | exclusive |
 
@@ -820,7 +833,7 @@ Důsledky tohoto přístupu:
 
 ## Odhady monetizace a růstu
 
-### Odhad monetizace - subscription baseline (konzervativní)
+### Odhad monetizace - baseline předplatného (konzervativní)
 
 **Předpoklad:** start z nuly, konzervativní očekávání trhu.
 **Celková konverze:** ~**3 % MAU**.
@@ -852,7 +865,7 @@ Tento scénář modeluje **jednorázové nákupy extras** skrze **balíčky gold
 
 | Zdroj        | ARPU (Kč) | Měsíční revenue  |
 | ------------ | --------- | ---------------- |
-| Subscription | 7,68      | ~76 800 Kč      |
+| Předplatné   | 7,68      | ~76 800 Kč      |
 | Extras       | 21,0      | ~210 000 Kč     |
 | **Celkem**   | **28,68** | **~286 800 Kč** |
 
