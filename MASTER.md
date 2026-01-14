@@ -107,6 +107,21 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 <a id="zakladni-kameny"></a>
 
+
+## Terminologie
+
+> Krátký slovníček pojmů, ať se u toho nehádáme jak idioti.
+
+### Životní cyklus inzerátu
+
+- **Aktivní inzerát**: inzerát, u kterého běží standardní životní cyklus. Všechny běžné interakce jsou povolené (např. otevření obchodu, zapnutí bonusů jako Mark/Top/Top Maxxi, apod.).
+- **Expirovaný inzerát**: praktický opak aktivního. Inzerát je možné si prohlédnout (včetně přímého odkazu), ale **žádná interakce není dovolená**, **kromě flagování**.
+- **`expiresAt` (inzerát)**: výchozí čas „úmrtí“ inzerátu (konec standardního životního cyklu).
+- **Kontinuální nabídka**: nemění `expiresAt` inzerátu. Umožní expirovanému inzerátu vrátit se mezi „živé“ (tj. *Expirovaný inzerát + Kontinuální nabídka → Aktivní inzerát*).
+- **Defaultně schovaný**: inzerát se nikdy nemaže; „schovaný“ znamená jen to, že spadá pod standardní pravidla viditelnosti. V seznamu inzerátů se typicky neobjeví, přímý odkaz funguje, a na něm se vyhodnocuje citlivost.
+- **Interakce s expirovaným inzerátem**: povolené je pouze **flagování** (aby nezbedníkům jejich sračky neprocházely).
+
+
 ## Základní stavební kameny
 
 > Tuto sekci lze považovat za kombinaci entit a definic, na kterých se staví vše ostatní v tomto dokumentu.
