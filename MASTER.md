@@ -157,19 +157,21 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 - Zastupuje interakci mezi uživateli, v systému se prezentuje jako "Zprávy"
 - Každá transakce zároveň vytváří i vlákno zpráv s účastníky (ve výchozím stavu prodejce a kupující), které tak udává, kdo smí do transakce zasahovat
-- Po zavření transakce (jakkoli, ať už vypršením nebo uživatelskou akcí) se odstraní veškerá strukturovaná data (polohy, osobní údaje, atd.)
+- Po zavření transakce (jakkoli, ať už vypršením nebo uživatelskou akcí) se odstraní veškerá strukturovaná data (polohy, osobní údaje, atd.); **text a obrázky zůstávají**
 
 ### Zprávy
 
 > Zprávy jsou implementované v rámci duchu aplikace a umožňují předávání jak textových zpráv, tak strukturovaných dat, které je pak snadné spravovat, například promazat, když už nejsou třeba. Základní předpoklad ovšem je, že uživatel strukturovaná data bude používat
 
 - Zprávy existují jako samostatná entita
+- Systémově držíme **pouze email**; ve zprávách se osobní údaje mohou objevit **dobrovolně a za přímým účelem**, nejsou to system-wide data
 - Mají strukturovaná data pro sdílení
 	- Lokace (pomocí služby na vyhledávání adres)
-	- Osobních údajů (jméno, telefon, email) - toto je jediné PII, které máme
+	- Osobních údajů (jméno, telefon, email) - ukládá se **jen ve zprávách** jako strukturovaná data
 	- Trasování balíčků
 	- Obrázky
 	- A text (běžné zprávy)
+- Strukturovaná data mají vlastní tabulku, aby šla **snadno a cíleně mazat**
 - Systém nekontroluje ani neřeší obsah textových zpráv - pokud si tam uživatelé předají osobní údaje, mají smůlu
 
 ### Lokace
@@ -464,7 +466,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - Transakce expiruje po **3 dnech bez aktivity**.
   - `expireAt` posouvá **jakákoli akce** v transakci (včetně `dispute` a jakýchkoli zpráv / structured messages po otevření).
   - Po expiraci se transakce přepne do stavu **expired** automaticky (běží pravidelný systémový úklid).
-  - Po zavření transakce (user `closed/success`, `rejected`, `sold`, `expired`) se odstraní veškerá **strukturovaná data** ze zpráv (polohy, osobní údaje, apod.).
+  - Po zavření transakce (user `closed/success`, `rejected`, `sold`, `expired`) se odstraní veškerá **strukturovaná data** ze zpráv (polohy, osobní údaje, apod.); **text a obrázky zůstávají**.
   - Po **3 měsících** se transakce smaže kompletně z databáze (hard delete)
 
 ### Dispute
