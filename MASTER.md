@@ -11,6 +11,7 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 ## Obsah
 
 - [Směr produktu](#smer-produktu)
+- [Konkurenceschopnost](#konkurenceschopnost)
 - [Kodex](#kodex)
 - [Terminologie](#terminologie)
 - [UI](#ui)
@@ -65,6 +66,29 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 - Dále prezentujeme i jak se projektu daří pomocí **dynamické timeline** (první skokani, prvních xxx inzerátů, hlášky o tom, že dneska nic moc, že přibyly další inzeráty a pod)
 
 ---
+
+<a id="konkurenceschopnost"></a>
+
+## Konkurenceschopnost
+
+> Subjektivní „konkurenční výhody“ a produktové argumenty. Nejsou to sliby ani marketing. Je to checklist, proč má tenhle projekt existovat a čím se liší.
+
+### Co dáváme líp než klasický bazary
+
+- **Soukromí jako default**: držíme jen minimum dat (prakticky email). Žádný „profilový šmírování“ jako obchodní model.
+- **Anti-spam obchod**: dokud prodávající nepřijme transakci, kupující nemůže psát ani posílat strukturovaná data. Konec „je to aktuální?“ spamu.
+- **Rozhodování přes chování, ne přes kecy**: reputace stojí na metrikách (reakce, expirace, closer, resolved, flagy), ne na bio a pohádkách v profilu.
+- **Feed jako hlavní produkt**: uživatel si nastaví zájem a systém mu ho servíruje. Vyhledávání je jen UI zkratka pro feed, ne separátní svět.
+- **Paměť trhu**: expirované inzeráty nezmizí. Tvoří historii a kontext (ceny, nabídka, „co tu běžně je“), což časem zvyšuje hodnotu platformy.
+- **Bez pay-to-win dominance**: placené věci jsou viditelné a přiznané. Neplacený obsah se může mírně potlačit, ale nemizí v díře.
+- **Klid pro kupující + férovost pro prodávající**: anti-topper chrání kupující před šumem a payback řeší dopad na prodávající (tam, kde to dává smysl).
+- **Deterministické brány**: citlivost je přísně řízená nastavením uživatele (u detailu klidně 404). Ignor je dobrovolný (přímý odkaz funguje).
+- **Transparentnost projektu**: otevřené zdrojáky, transparentní účet, viditelná aktivita vývoje. To je důvěra v praxi, ne „trust me bro“.
+
+### Co mají konkurenti a my ne
+
+- Agresivní reklamní rozmisťování, paid reach a „protočím ti to, protože zaplatíš“ je přesně ten typ šumu, proti kterému tohle stavíme. Naše cesta je klid, čitelnost trhu a reputace.
+
 
 <a id="kodex"></a>
 
@@ -584,6 +608,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Activity (aktivita):** bucket low / medium / high (hrubý signál aktivity v systému).
 - **Score (souhrnný rank):**
   - Score je agregovaný rank (A-F / 1-6), který shrnuje výše uvedené chování.
+  - Score **nezohledňuje aktivní předplatné ani žádné jiné placené věci** (placení nemá vliv na výsledek).
   - Metriky se počítají za posledních **90 dnů**.
   - Nováček nemusí mít score (UI to přizná: „zatím nemáme dost dat“).
 - **Flagy (inzeráty):**
@@ -611,8 +636,9 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Activity (aktivita):** bucket low / medium / high.
 - **Score (souhrnný rank):**
   - Score je agregovaný rank (A-F / 1-6), který shrnuje výše uvedené chování.
+  - Score **nezohledňuje aktivní předplatné ani žádné jiné placené věci** (placení nemá vliv na výsledek).
   - Metriky se počítají za posledních **90 dnů**.
-  - Nováček nemusí mít score (UI to přizná: „zatím nemáme dost dat“)
+  - Nováček nemusí mít score (UI to přizná: „zatím nemáme dost dat“).
 
 ### Obchod (transakce)
 
