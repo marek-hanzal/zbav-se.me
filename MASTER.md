@@ -184,6 +184,7 @@ Sekce pro **hlavní části aplikace** a jejich smysl. Neřeší layout, kompone
 
 - **Feedy**: uložené zájmy (filtry) a vstupní brána do seznamu inzerátů.
 - **Hledat**: zkratka pro „hledací feed“ (viz Mechaniky → Vyhledávání).
+- **Inbox (Notifikace)**: Centrální přehled „co se děje“. Žádná vyskakovací okna, ale seznam událostí, ke kterým se uživatel vrátí, až bude chtít.
 - **Drafty / Přidat inzerát**: bezpečná tvorba inzerátu bez rizika ztráty.
 - **Zprávy**: UI pro transakce (obchod) a komunikaci.
 - **Rozšíření**: správa a aktivace placených „feature“ (viz níže).
@@ -278,6 +279,14 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - **Filtrování (feed):** fulltext, title, priceMin/priceMax, conditionMin/Max/In, ageMin/Max/In, deliveryIn, warrantyIn, categoryId/categoryIdIn, currency/currencyIn, feedId/feedIdIn, my/withOwn, withIgnored, isFavourite, transaction, range (km).
   - **Řazení:** price, condition, age, createdAt, updatedAt, expiresAt, geo (vzdálenost).
 
+### Notifikace
+
+> Interní záznam o události. Jediný zdroj pravdy pro „co se stalo“.
+
+- Neexistují „push notifikace“ jako entita. Existuje záznam v **Inboxu**.
+- Atributy: typ události, payload (text, odkaz, ID entity), stav přečtení, createdAt.
+- Slouží jako zdroj pro externí kanály (email).
+
 ### Draft
 
 > Další klíčová funkce, která umožňuje postupnou tvorbu inzerátu beze strachu, že se nějaké údaje ztratí, pokud v průběhu uživatel aplikaci opustí. Spolu s tím spravujeme seznam Draftů, tzn. uživatel může snadno vytvářet inzeráty z již existujících nastavení (včetně uložených obrázků).
@@ -367,6 +376,20 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 <a id="mechaniky"></a>
 
 ## Mechaniky
+
+### Notifikační systém (Inbox vs. Email)
+
+- **Filosofie ticha:** Defaultní stav aplikace je **neotravovat**. Aplikace nepípá, neposílá pushky.
+- **Inbox First:** Všechny události (nová zpráva, změna stavu transakce, expirace, systémové info) padají do **in-app Inboxu** (v UI sekce "Inbox" nebo "Notifikace").
+- **Email jako zrcadlo:** Email není primární kanál. Je to volitelný „digest“ nebo „forwarder“ toho, co je v Inboxu.
+- **Vyzobávání z Inboxu:** Systém na pozadí bere obsah Inboxu a rozesílá ho emailem **přesně podle nastavení uživatele**.
+- **Nastavení:** Uživatel si řídí, co chce dostávat na email:
+  - Frekvence: okamžitě / denní souhrn / nikdy (default).
+  - Typ: transakční / systémové / marketing (default off).
+- **Typy notifikací:**
+  - **Transakční:** Nový zájemce, nová zpráva, změna stavu (Open/Sold/Rejected).
+  - **Systémové:** Expirace inzerátu, konec předplatného, změna pravidel.
+- **Kritické výjimky:** Reset hesla a bezpečnostní alerty chodí na email **vždy** (obchází nastavení).
 
 ### Feed, vyhledávání a seznam inzerátů
 
