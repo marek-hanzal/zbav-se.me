@@ -66,6 +66,10 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 - Na domovské stránce je odkaz na **transparentní bankovní účet**
 - Zároveň je na domovské stránce **kalendář aktivity** vývoje (Github-like)
 - Dále prezentujeme i jak se projektu daří pomocí **dynamické timeline** (první skokani, prvních xxx inzerátů, hlášky o tom, že dneska nic moc, že přibyly další inzeráty a pod)
+- **Bez trackování**: žádné UTM, žádné cookies, žádné „analytické“ skripty. Měříme pouze to, co sami uložíme (event logy).
+- **Podpora a Feedback**:
+  - Oficiální kanály pro podporu: Discord server a e-mail.
+  - V aplikaci je dostupná sekce **„Zpětná vazba“** jako přímý vnitřní mechanismus pro kontakt s týmem.
 
 ---
 
@@ -127,6 +131,8 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - Platby nejsou past ani trik.
 - Předplatné lze kdykoliv zrušit.
 - Pokud má uživatel aktivní předplatné, ale dlouhodobě systém nepoužívá, **dáme mu to vědět a předplatné sami ukončíme**.
+  - Po **prvním měsíci neaktivity** odešleme e-mail s připomínkou.
+  - Po **druhém měsíci neaktivity** předplatné ukončíme (bez dalšího e-mailu).
 - Raději přijdeme o platbu než o důvěru.
 
 ### Žádné pay-to-win
@@ -145,6 +151,8 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 #### Otevřenost a odpovědnost
 
 - Pokud něco měníme, děláme to vědomě a transparentně.
+- **Kurz CZK ↔ goldík** může být upraven **nejdříve po uplynutí kalendářního kvartálu**; o změně kurzu uživatelé vědí minimálně 14 dní předem.
+- **Payback** se počítá z **aktuálně platného ceníku** v době vyhodnocení (po expiraci inzerátu).
 - Tento kodex je závazek vůči uživatelům i vůči sobě samým.
 
 ---
@@ -161,8 +169,7 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - **Expirovaný inzerát**: praktický opak aktivního. Inzerát je možné si prohlédnout (včetně přímého odkazu), ale **žádná interakce není dovolená**, **kromě flagování**.
 - **`expiresAt` (inzerát)**: výchozí čas „úmrtí“ inzerátu (konec standardního životního cyklu).
 - **Kontinuální nabídka**: nemění `expiresAt` inzerátu. Umožní expirovanému inzerátu vrátit se mezi „živé“ (tj. *Expirovaný inzerát + Kontinuální nabídka → Aktivní inzerát*).
-- **Žádný „schovaný“ stav**: viditelnost ve feedu řeší jen dotaz/filtry (neexistuje hidden příznak).
-  - Přímý odkaz může fungovat, pokud to dovolí citlivost.
+- **Defaultně schovaný**: inzerát se nikdy nemaže; „schovaný“ znamená jen to, že spadá pod standardní pravidla viditelnosti. V seznamu inzerátů se typicky neobjeví, přímý odkaz funguje, a na něm se vyhodnocuje citlivost.
 - **Interakce s expirovaným inzerátem**: povolené je pouze **flagování** (aby nezbedníkům jejich sračky neprocházely).
 
 ---
@@ -191,7 +198,6 @@ Sekce pro **hlavní části aplikace** a jejich smysl. Neřeší layout, kompone
 - Desktop pořád mobile-first layout (žádný „desktop mód“ v MVP).
 - Součástí landingu je **živá timeline** dění v appce (automatické události), aby produkt měl „duši“ i v early fázi.
 
-
 ### Tvorba Draftu
 
 - Inzerát se **nevytváří kliknutím**. Vždycky nejdřív vznikne **Draft** a teprve z něj se publikuje inzerát.
@@ -217,8 +223,6 @@ Zprávy jsou UI pro transakce a komunikaci. Vedle textu podporují i strukturova
 - UI zvýrazní **doménu** (identita), celou URL menším „technickým“ stylem.
 - Když je tracking number: „**Zásilka:** Z66543“ (příklad). Když není: jen „odkaz na stránky dopravce“.
 - Žádná tvrdá validace, žádný auto-preview, žádné metadata fetch, žádný whitelist. Jen měkké heuristiky a vizuální signály.
-
-
 
 ### Rozšíření (Features)
 
@@ -278,7 +282,6 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 > Další klíčová funkce, která umožňuje postupnou tvorbu inzerátu beze strachu, že se nějaké údaje ztratí, pokud v průběhu uživatel aplikaci opustí. Spolu s tím spravujeme seznam Draftů, tzn. uživatel může snadno vytvářet inzeráty z již existujících nastavení (včetně uložených obrázků).
 
-
 - Kopíruje atributy inzerátu
 - Slouží jako vstupní bod pro tvorbu nového inzerátu - prvně vzniká Draft, z něj se pak publikuje inzerát
 
@@ -324,7 +327,6 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - lokace,
   - údaje o balíčku / kurýrovi (tracking),
   - osobní údaje (email, telefon, adresa).
-
 
 ### Lokace
 
@@ -936,6 +938,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - efektivně platí vždy **nejvyšší aktivní úroveň**, (vyšší úroveň nijak nemění dobu platnosti nižší)
   - aktivace vyšší úrovně **nepřepisuje ani neprodlužuje** nižší úroveň,
   - po expiraci vyšší úrovně se limit **automaticky sníží** na další aktivní nižší úroveň (pokud existuje).
+- **UI/BE validace:** Pokud má uživatel aktivní pass vyšší úrovně (např. 20 inzerátů), **systém nedovolí aktivovat token nižší úrovně** (např. 10 inzerátů), aby nedošlo k jeho promrhání.
 - Když někde mluvíme o **platnosti**, myslíme tím vždycky **platnost passu**, ne tokenu.
 - Pokud je **pass uveden bez doby**, dědí dobu z běhu předplatného (vznik/renew subu = nový pass na dobu trvání subu).
 - V UI se to neukazuje jako token/pass. Uživatel vidí akci + jedno CTA.
