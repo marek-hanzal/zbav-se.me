@@ -164,11 +164,10 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 - **Citlivé:** Vyžaduje opatrnost a rozum (airsoft, nože).
 - **Omezené:** Regulováno zákonem (skutečné zbraně).
 
-### Životní cyklus inzerátu
-- **Aktivní inzerát:** Publikovaný, neexpirovaný a neprodaný. Počítá se do limitů.
-- **Expirovaný inzerát:** Už ho nelze najít v běžném seznamu (kromě historie/přímého odkazu). Interakce jsou zakázané (kromě flagování).
-- **`expiresAt`:** Čas smrti inzerátu.
-- **Kontinuální nabídka:** Mechanika, která posouvá `expiresAt` a drží inzerát naživu.
+### Stavy inzerátu
+- **Live (Aktivní):** Inzerát je publikovaný, neexpirovaný a dostupný k prodeji. Počítá se do limitů.
+- **Expired (Expirovaný):** Inzerát vypršel (`expiresAt`). Už ho nelze najít v běžném seznamu, interakce jsou zakázané (kromě flagování).
+- **Sold (Prodaný):** Inzerát byl prodán a systémově uzavřen.
 
 ### Aktivita
 - **Aktivita uživatele:** Jakýkoli záznam v **User Event Logu** (kliknutí, zobrazení, scroll).
@@ -386,7 +385,7 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
   - 3 dny bez aktivity = `expired`. Jakákoliv akce posouvá timer.
 - **Dispute:**
   - Hint "něco nesedí".
-  - **Nema vliv na Karmu.**
+  - **Nemá vliv na Karmu.**
   - **Metrika:** Propisuji do metrik obou stran ("Dispute Rate").
 
 ### Čistky dat
@@ -416,17 +415,99 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
 <a id="predplatne"></a>
 ## Předplatné
 
+> Oprávnění se vážou na účet (neexistuje trvalá role "prodejce/kupující").
+
+### Zkušební Pro zdarma
+- Každému novému uživateli dávám **1 měsíc Pro balíčku zdarma**.
+- Trial aktivuji automaticky při registraci. Po vypršení se sám vypne.
+- Cíl: Ať si uživatel vyzkouší aplikaci v plné síle.
+
+### Balíčky předplatného
+- **Balíček Kupující (119 Kč/měs):**
+  - 300 Goldíků / měsíc.
+  - Limit feedů: 5.
+  - Limit aktivních inzerátů: 5.
+  - Bonusy: 5× Early Access token, 5× Anti-topper token.
+- **Balíček Prodejce (229 Kč/měs):**
+  - 300 Goldíků / měsíc.
+  - Limit aktivních inzerátů: 10.
+  - Passy: Payback, Photo Count, Rozšířená data inzerátu.
+  - Bonusy: 5× Early Delivery, 5× Mark, 3× Top, 1× Maxxi, 3× Multi-Category, 3× Kontinuální nabídka.
+- **Balíček Pro (499 Kč/měs):**
+  - Všechno z Kupující + Prodejce.
+  - 600 Goldíků / měsíc.
+  - Limit feedů: 10.
+  - Limit aktivních inzerátů: 20.
+  - Passy (Exclusive): Anti-topper, Early Access, Multi-Category, Detail protistrany.
+
 <a id="goldiky"></a>
 ## Goldíky
+
+- **Interní měna:** Definuji kurz **1 CZK ≈ 2 Goldíky**.
+- **Získání:**
+  - Součástí předplatného.
+  - **Denní dropy:** V sekci Bonusy (cca 10 G/den).
+  - **Nákup balíčků:**
+    - Na zkoušku (300 G / 149 Kč).
+    - Balík (600 G / 299 Kč).
+    - Do zásoby (1200 G / 599 Kč).
+- **Pravidlo:** Operace jsou atomické. Buď proběhne celá transakce (efekt + odečtení), nebo nic.
 
 <a id="tokeny-a-passy"></a>
 ## Tokeny & passy
 
+> Centrální ceník systému.
+
+- **Token:** Jednorázové použití (neexpiruje).
+- **Pass:** Stav oprávnění (běží po dobu platnosti). Token většinou slouží k aktivaci Passu.
+- **Exclusive:** Položky dostupné pouze v rámci předplatného (nelze koupit samostatně).
+- **Ceny:** Uvádím v Goldíkách.
+
+| Co                  | Typ                | Efekt / Trvání                                   | Cena (Gold) |
+| ------------------- | ------------------ | ------------------------------------------------ | ----------- |
+| Early Access        | Token → Pass       | 7 dnů                                            | 80          |
+| Early Delivery      | Token              | Zruší okno pro jeden inzerát                     | 40          |
+| Anti-topper         | Token → Pass       | 7 dnů                                            | 40          |
+| Mark                | Token → Pass       | 7 dnů                                            | 20          |
+| Top                 | Token → Pass       | 7 dnů                                            | 50          |
+| Top Maxxi           | Token → Pass       | 7 dnů                                            | 50          |
+| Multi-Category      | Token              | 1 použití (1+2 kategorie)                        | 75          |
+| Detail protistrany  | Token → Pass       | 7 dnů                                            | 50          |
+| Photo Count         | Token → Pass       | 1 měsíc (+2 fotky)                               | 75          |
+| Aktivní inzeráty 10 | Token → Pass       | 1 měsíc                                          | TBD         |
+| Payback             | Pass               | Benefit předplatného                             | Exclusive   |
+| Kontinuální nabídka | Token → Pass       | 1 měsíc (prodlouží život inzerátu)               | Exclusive   |
+
 <a id="uvedeni-na-trh"></a>
 ## Uvedení na trh
+
+Start dělím vědomě do dvou fází.
+
+1.  **Fáze 1: Online komunity (Discord):**
+    - Cílený start v uzavřených skupinách (např. vaping).
+    - Vysoká důvěra, testování v zátěži, sběr prvního obsahu.
+2.  **Fáze 2: Regionální expanze:**
+    - Karlovy Vary + Ostrov + Sokolov.
+    - Billboardy a marketing už nevedou do prázdna, ale do systému s historií.
+
+---
 
 <a id="retence"></a>
 ## Retence a paměť trhu
 
+- Nepracuji s krátkodobou pozorností.
+- **Paměť trhu:** Inzeráty po expiraci nemažu, tvoří historický kontext (ceny, trendy).
+- **Čistky (Data Retention):**
+  - **User Event Log:** Držím 1 rok (pro výpočet reputace).
+  - **Inzeráty/Obrázky:** Držím dlouhodobě (paměť).
+  - **Transakce:** Mažu po 3 měsících (GDPR/úklid).
+
+---
+
 <a id="odhady"></a>
 ## Odhady monetizace a růstu
+
+- **Konverzní cíl:** ~3 % MAU platí.
+- **Odhad ARPU (Subscription):** ~7,68 Kč.
+- **Odhad ARPU (Extras - Goldíky):** ~21,0 Kč (při 10% penetraci nákupů).
+- **Model:** Konzervativní náběh. Prvních 6 měsíců je o plnění trhu, monetizace nabíhá až se saturací obsahu.
