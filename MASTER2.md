@@ -158,6 +158,12 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 - `user` – **Uživatelský seznam**. Vědomá volba uživatele (uloženo v „Moje seznamy“). **Tento typ se počítá do limitu počtu feedů.**
 - `search` – **Hledací kontext**. Interní stav pro stránku Hledat (v seznamu „Moje seznamy“ ho nezobrazuji). **Tento typ se nepočítá do limitu počtu feedů.**
 
+### Typy obsahu (Citlivost)
+- **Běžný:** Standardní inzerát pro všechny (kočárek, telefon).
+- **Pro dospělé:** Legální, ale vyžaduje plnoletost (alkohol, vaping).
+- **Citlivé:** Vyžaduje opatrnost a rozum (airsoft, nože).
+- **Omezené:** Regulováno zákonem (skutečné zbraně).
+
 ### Životní cyklus inzerátu
 - **Aktivní inzerát:** Publikovaný, neexpirovaný a neprodaný. Počítá se do limitů.
 - **Expirovaný inzerát:** Už ho nelze najít v běžném seznamu (kromě historie/přímého odkazu). Interakce jsou zakázané (kromě flagování).
