@@ -162,6 +162,11 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 
 > Krátký slovníček pojmů, ať se u toho nehádáme jak idioti.
 
+### Feed (typ)
+Feed má typ:
+- `user` – uživatelský feed (vědomá volba uživatele, uložený zájem / “co chci vidět”, viditelný v UI, uživatel ho spravuje)
+- `search` – systémový “hledací kontext” (interní stav pro stránku Hledat, není to „feed“ v UX smyslu)
+
 ### Životní cyklus inzerátu
 
 - **Aktivní inzerát**: inzerát, u kterého běží standardní životní cyklus. Všechny běžné interakce jsou povolené (např. otevření obchodu, zapnutí bonusů jako Mark/Top/Top Maxxi, apod.).
@@ -237,6 +242,15 @@ Rozšíření nejsou entity. Jsou to **zapínatelné schopnosti**, které staví
 - Rozšíření **nenahrazují kontextové akce**:
   - některé věci se zapínají přímo tam, kde dávají smysl (např. „Detail protistrany“ z inzerátu / zpráv, Mark/Top z inzerátu),
   - Rozšíření jsou „centrální panel“, ne povinná překážka.
+
+### Feedy
+- Seznam feedů v UI zobrazuje pouze feedy typu `user`.
+- `search` se v seznamu feedů nezobrazuje a uživatele jím nezatěžujeme.
+
+### Hledat
+- Stránka Hledat pracuje se `search` feedem jako se systémovým kontextem (poslední hledání / filtry / radius apod.).
+- `search` je standalone kontext stránky Hledat, ne položka v seznamu feedů.
+- `search` má maximálně 1 instanci na účet (singleton kontext pro hledání).
 
 ---
 
@@ -408,6 +422,10 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 <a id="mechaniky"></a>
 
 ## Mechaniky
+
+### Limity feedů
+- Do limitu feedů se počítají pouze feedy typu `user`.
+- `search` je mimo limity (nezabírá slot, nelze ho “vyčerpat”, nelze ho disable/skryt z důvodu limitu).
 
 ### Notifikace (Inbox + volitelný email digest)
 
