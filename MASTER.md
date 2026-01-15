@@ -66,10 +66,10 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 - Na domovské stránce je odkaz na **transparentní bankovní účet**
 - Zároveň je na domovské stránce **kalendář aktivity** vývoje (Github-like)
 - Dále prezentujeme i jak se projektu daří pomocí **dynamické timeline** (první skokani, prvních xxx inzerátů, hlášky o tom, že dneska nic moc, že přibyly další inzeráty a pod)
-- **Bez trackování**: žádné UTM, žádné cookies, žádné „analytické“ skripty. Měříme pouze to, co sami uložíme (event logy).
-- **Podpora a Feedback**:
-  - Oficiální kanály pro podporu: Discord server a e-mail.
-  - V aplikaci je dostupná sekce **„Zpětná vazba“** jako přímý vnitřní mechanismus pro kontakt s týmem.
+- **Bez trackování:** žádné UTM, žádné cookies, žádné externí analytické skripty. Měříme pouze to, co je nutné pro funkci produktu (interní eventy a metriky uvnitř aplikace).
+- Podpora:
+  - Vznikne Discord server + e-mail, kam můžou lidi psát.
+  - V appce bude dostupná sekce **„Zpětná vazba“** jako vnitřní mechanismus, jak mě oslovit.
 
 ---
 
@@ -131,8 +131,8 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - Platby nejsou past ani trik.
 - Předplatné lze kdykoliv zrušit.
 - Pokud má uživatel aktivní předplatné, ale dlouhodobě systém nepoužívá, **dáme mu to vědět a předplatné sami ukončíme**.
-  - Po **prvním měsíci neaktivity** odešleme e-mail s připomínkou.
-  - Po **druhém měsíci neaktivity** předplatné ukončíme (bez dalšího e-mailu).
+  - Po **prvním měsíci neaktivity** pošleme e-mail s připomínkou.
+  - Po **druhém měsíci neaktivity** předplatné ukončíme, pokud nebude od uživatele **žádná aktivita**.
 - Raději přijdeme o platbu než o důvěru.
 
 ### Žádné pay-to-win
@@ -151,8 +151,7 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 #### Otevřenost a odpovědnost
 
 - Pokud něco měníme, děláme to vědomě a transparentně.
-- **Kurz CZK ↔ goldík** může být upraven **nejdříve po uplynutí kalendářního kvartálu**; o změně kurzu uživatelé vědí minimálně 14 dní předem.
-- **Payback** se počítá z **aktuálně platného ceníku** v době vyhodnocení (po expiraci inzerátu).
+- **Kurz CZK ↔ goldík** měníme nejdřív **kvartálně**.
 - Tento kodex je závazek vůči uživatelům i vůči sobě samým.
 
 ---
@@ -190,6 +189,7 @@ Sekce pro **hlavní části aplikace** a jejich smysl. Neřeší layout, kompone
 - **Rozšíření**: správa a aktivace placených „feature“ (viz níže).
 - **Obchod / Bonusy**: nákup balíčků goldíků, správa předplatného (aktivace/obnova/cancel) + denní bonus / dropy.
 - **Profil / Nastavení**: preference uživatele (lokace, citlivost, nastavení feedů, atd.).
+- **Zpětná vazba**: interní mechanismus kontaktu (nejde o veřejný chat).
 
 ### Landing
 
@@ -260,6 +260,30 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Držíme absolutně minimální data - máme jen **email**, nic jiného neukládáme
 - Respektujeme absolutní anonymitu uživatelů, bezpečnost je řešena sledováním chování
 
+### Kategorie
+
+> Kategorie je organizační vrstva trhu. Je to „kontext“, ve kterém dává smysl jiný jazyk a jiné filtry.
+
+- Kategorie slouží pro organizaci inzerátů a filtraci trhu.
+- Kategorie nese pouze:
+  - **název**,
+  - **slug**,
+  - **locale**.
+- Kategorie může **dobrovolně definovat parametry** (Category Spec):
+  - Kategorie tím říká, jaké doplňující údaje mají v této kategorii smysl (např. u aut „rok“, u bytů „plocha“, u vapingu „typ baterky“).
+  - Specifikace slouží jako autorita pro:
+    - **UI tvorby inzerátu** (jaká pole se mají zobrazit a v jaké podobě),
+    - **UI filtrování feedu** (jaké filtry dává smysl nabídnout).
+  - Parametr je definovaný:
+    - jménem (identifikátor),
+    - typem (např. text / enum / number / bool / date),
+    - režimem použití ve filtrech:
+      - **nefilterovatelný** (jen informativní),
+      - **equality** (shoda; typicky enum),
+      - **range** (od–do; min/max).
+  - **Range filtry jsou vždy explicitní:** parametr se nikdy nestane range filtrem „sám od sebe“; musí to být vědomé rozhodnutí autora.
+  - Pokud kategorie definuje parametr jako filterable (equality/range), systém musí zajistit, že filtrování zůstane výkonově rozumné (konkrétní technika není součástí tohoto dokumentu).
+
 ### Inzeráty
 
 > Odsud začíná veškerá interakce mezi uživateli. Veškeré informace žijí přímo na inzerátu, přestože inzerát samotný vzniká z Draftu.
@@ -270,23 +294,22 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - **Galerie:** uploady + jejich pořadí (galerie / fotky).
   - **Cena:** price + priceType (pevná vs. otevřená), currency.
   - **Parametry věci (Global):** condition (škála), age (škála), delivery (osobně / post / package / other), warranty (warranty / no-warranty / custom).
-  - **Parametry věci (Specifické):** `parameters` (JSONB) - dynamický objekt pro specifika kategorie (např. odpor cívky, typ baterie). Struktura je validována v kódu (Zod) podle kategorie. Umožňuje rychlé filtrování na shodu (enum/tagy), ale nikoliv na číselné rozsahy (range).
+  - **Parametry inzerátu (kategorie-specifické):**
+    - Nové a specifické atributy přichází defaultně jako **parametry inzerátu** (parametrový objekt / JSONB).
+    - Pro vybrané parametry může systém zavést **akceleraci dotazů** (např. indexaci), pokud je to potřeba pro výkon.
+    - Pokud se parametr ukáže jako dlouhodobě důležitý pro produkt (filtrace, UX), může být **vytknutý** jako samostatný atribut (standalone) s migrací.
+      - Co spustí „vytknutí“ není pevné pravidlo; je to **vědomé rozhodnutí autora**.
   - **Kategorizace:** categoryId + napojení na kategorii.
+    - Kategorie může definovat dobrovolné parametry; pokud jsou definované, inzerát je může nést jako kategorie-specifická data.
+    - Zobrazení a filtrování těchto parametrů se řídí specifikací kategorie (Category Spec).
     - **Sezónní kategorie** (Vánoce, Velikonoce, Valentýn, Halloween...) existují celoročně. Obsah se čistí přirozeně expirací, ne ručním úklidem „mrtvol“.
   - **Lokalita:** locationId + lat/lon; umíme spočítat **vzdálenost (km)**, pokud je k dotazu dodaná poloha uživatele.
   - **Čas:** createdAt / updatedAt / expiresAt (včetně filtrování podle expiresAtBefore/After).
   - **Vazby na uživatele:** isFavourite, isIgnored, hasFlag, feedback (like/dislike), transactionId (existuje obchod pro daného uživatele).
   - **Event log nad inzerátem:** impression, view, ignore/unignore, flag/unflag, transaction, favourite/unfavourite, like/dislike.
-  - **Filtrování (feed):** fulltext, title, priceMin/priceMax, conditionMin/Max/In, ageMin/Max/In, deliveryIn, warrantyIn, categoryId/categoryIdIn, currency/currencyIn, feedId/feedIdIn, my/withOwn, withIgnored, isFavourite, transaction, range (km), parameters (JSONB equality).
+  - **Filtrování (feed):** fulltext, title, priceMin/priceMax, conditionMin/Max/In, ageMin/Max/In, deliveryIn, warrantyIn, categoryId/categoryIdIn, currency/currencyIn, feedId/feedIdIn, my/withOwn, withIgnored, isFavourite, transaction, range (km), parameters.
+    - Kategorie-specifické filtry (parameters) jsou dostupné jen pokud je definuje Category Spec (equality/range).
   - **Řazení:** price, condition, age, createdAt, updatedAt, expiresAt, geo (vzdálenost).
-
-### Notifikace
-
-> Interní záznam o události. Jediný zdroj pravdy pro „co se stalo“.
-
-- Neexistují „push notifikace“ jako entita. Existuje záznam v **Inboxu**.
-- Atributy: typ události, payload (text, odkaz, ID entity), stav přečtení, createdAt.
-- Slouží jako zdroj pro externí kanály (email).
 
 ### Draft
 
@@ -338,6 +361,14 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - údaje o balíčku / kurýrovi (tracking),
   - osobní údaje (email, telefon, adresa).
 
+### Notifikace
+
+> Interní in-app notifikace. Jediný zdroj pravdy pro “co se stalo” pro uživatele.
+
+- Existuje **Inbox**, kam chodí veškeré události, které mohou uživatele zajímat.
+- Notifikace obsahuje chytrý odkaz do appky (např. do transakce).
+- Email je jen volitelná “distribuce” vybraných notifikací podle nastavení uživatele.
+
 ### Lokace
 
 > Smyslem je mít autoritu na polohu místo ukládání buď pseudo adresy nebo stringu s random textem.
@@ -378,7 +409,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 ## Mechaniky
 
-### Notifikační systém (Inbox vs. Email)
+### Notifikace (Inbox + volitelný email digest)
 
 - **Filosofie ticha:** Defaultní stav aplikace je **neotravovat**. Aplikace nepípá, neposílá pushky.
 - **Inbox First:** Všechny události (nová zpráva, změna stavu transakce, expirace, systémové info) padají do **in-app Inboxu** (v UI sekce "Inbox" nebo "Notifikace").
@@ -458,8 +489,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - nebo z filtru vypadne a v seznamu prostě není.
 - Default (Free): **5 aktivních inzerátů**.
 - Limit je vždycky **na účet** (žádné role-based limity).
-- Navýšení limitu je řešené přes **pass** (odemknutí přes token).
-  - Je to součást balíčků (viz **Předplatné** + **Tokeny & passy**).
+- Navýšení limitu je řešené přes **pass** (odemknutí přes **token**) a je součástí balíčků (viz **Předplatné** + **Tokeny & passy**).
 - Pokud je uživatel **nad limitem** (typicky po vypršení passu):
   - **nic nemažeme a nic nevypínáme**, existující aktivní inzeráty běží dál,
   - uživatel jen **nemůže vytvořit nový inzerát** (tj. založit nový draft → publikovat), dokud:
@@ -501,14 +531,14 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Systém má mechaniku nahlašování inzerátů (flagy).
 - Nahlásit inzerát jde **jen z detailu inzerátu** (ne z feedu, ne ze zpráv/transakce).
 - Flag inzerátu je **toggle** (lze ho zapnout i vypnout).
-- MVP: žádné důvody ani formuláře, jen přepínač (čudlík).
+- Žádné důvody ani formuláře, jen přepínač (čudlík).
 - Neřešíme rate-limit. Když někdo flaguje jak magor, jen se to propíše do **user event logu** a dá se to řešit ručně.
 - Pokud už uživatel označí nějaký inzerát, je to považováno za silný signál nechuti (nebo trollení).
 - Flagy **nemají systémový efekt**: aplikace na ně automaticky nereaguje (nic se automaticky neskrývá, nemaže, nebanuje).
 - Flagy jsou ale **kritický reputační signál pro uživatele**:
   - promítají se do metrik prodávajícího,
   - uživatel si z toho může vyvodit, že „něco smrdí“ (např. 80 % flagnutých inzerátů).
-- Flagy zároveň slouží jako signál pro admina (ruční kontrola / SQL) a pomáhají najít problematické inzeráty.
+- Flagy zároveň slouží jako signál pro admina, aby našel věci, které smrdí, a řešil je (zatím i formou SQL dotazu / logiky mimo UI).
 - Výpočet metrik:
   - Flagy se počítají z **user event logu**.
   - Okno pro výpočet je **posledních 90 dnů** (stejně jako ostatní metriky).
@@ -583,7 +613,8 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Běžný:**
   - Standardní inzerát, není v něm nic, co by veřejnost mělo nějak pobouřit nebo rozladit (třeba kočárek pro děti)
 - **Pro dospělé:**
-  - Běžný obsah vyžadující plnoletost, např. elektronické cigarety, opět nic, co by mělo někoho rozladit
+  - Běžný obsah vyžadující plnoletost, např. elektronické cigarety
+  - Alkohol a další věci, kde musí být uživatel plnoletý
   - Obecně sem může přijít i legální erotický obsah a jiné takové věci
 - **Citlivé:**
   - Tady přituhuje - věci, které můžou někoho znervóznit nebo je potřeba používat hlavu, ale zákon stále nevyžaduje zvláštní oprávnění danou věc získat/používat - např. airsoftové zbraně/repliky
@@ -841,7 +872,6 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 ## Předplatné
 
-
 > Pozn.: V systému **neexistuje trvalá role** „kupující/prodejce“. Jsou to jen **preference a kontext transakce**.  
 > Názvy balíčků níže jsou marketingové zkratky; oprávnění se vždy vážou na **účet** (passy).
 
@@ -938,7 +968,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 ### Bonusy za používání
 
 > **Proč máme bonusy?** Chceme uživatele odměnit za drobnou práci, kterou mají s dobrovolnou interakcí s aplikací, jelikož data, která uživatelé pak generují, se nabízejí dál a bez nich hodně systémových metrik nedává úplně smysl.
-> 
+>
 > Dalším důvodem pak je trošku oživit a podpořit retenci uživatelů, přestože nic moc vysloveně nechtějí, dojdou si pro svůj goldík.
 
 - Bonusy nejsou „odměna za aktivitu“ ani za hygienu inzerátů. Hygiena je základní očekávané chování.
@@ -962,11 +992,10 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - efektivně platí vždy **nejvyšší aktivní úroveň**, (vyšší úroveň nijak nemění dobu platnosti nižší)
   - aktivace vyšší úrovně **nepřepisuje ani neprodlužuje** nižší úroveň,
   - po expiraci vyšší úrovně se limit **automaticky sníží** na další aktivní nižší úroveň (pokud existuje).
-- **UI/BE validace:** Pokud má uživatel aktivní pass vyšší úrovně (např. 20 inzerátů), **systém nedovolí aktivovat token nižší úrovně** (např. 10 inzerátů), aby nedošlo k jeho promrhání.
+- **Ochrana proti promrhání tokenu:** pokud má uživatel aktivní vyšší tier, systém nedovolí aktivovat token nižší úrovně.
 - Když někde mluvíme o **platnosti**, myslíme tím vždycky **platnost passu**, ne tokenu.
 - Pokud je **pass uveden bez doby**, dědí dobu z běhu předplatného (vznik/renew subu = nový pass na dobu trvání subu).
-- V UI se to neukazuje jako token/pass. Uživatel vidí akci + jedno CTA.
-  - Detail (včetně passů) je v **Rozšířeních**.
+- V UI se to nepředvádí jako „token/pass“: uživatel vidí akce typu **„Odemknout +2 fotky?“** apod.; detail (včetně pasů) je v **Rozšířeních**.
 - **Obchod** nabízí jen **balíčky goldíků** a **hlavní předplatné**.
 - Rozšíření se standardně **zapínají za goldíky** (vytvoří se pass). Pokud má uživatel dostupné použití (token) z předplatného / bonusů, může ho místo goldíků spotřebovat.
 - Při zámcích placených věcí používáme pattern: **Status** (proč to stojí) → **jedno CTA** (zapnout za goldíky / spotřebovat použití).
@@ -1072,7 +1101,6 @@ Důsledky tohoto přístupu:
   - Týká se to hlavně user event logů, score logů a dalších logů pro metriky.
   - Čistka běží v cron jobu a maže záznamy starší než 1 rok (typicky denně).
 - Některé entity mají kratší vlastní retenci (např. transakce a jejich přílohy dle pravidel v Mechaniky → Obchod).
-
 
 **Očekávaný vývoj poměru registrace → MAU:**
 
