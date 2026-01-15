@@ -147,8 +147,79 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 <a id="terminologie"></a>
 ## Terminologie
 
+> Slovníček pojmů, ať se u toho nehádáme jak idioti.
+
+### Feed vs. Seznam
+- **Feed (technicky):** Uložené nastavení filtru nad inzeráty (kategorie, lokace, cena...).
+- **Seznam (UI):** Uživatelský název pro Feed. V aplikaci mluvím o „Mých seznamech“.
+- **Inzeráty (UI tlačítko):** Chytrý odkaz, který uživatele hodí do posledního navštíveného seznamu (nebo defaultního).
+
+### Typy Feedu
+- `user` – **Uživatelský seznam**. Vědomá volba uživatele (uloženo v „Moje seznamy“). **Tento typ se počítá do limitu počtu feedů.**
+- `search` – **Hledací kontext**. Interní stav pro stránku Hledat (v seznamu „Moje seznamy“ ho nezobrazuji). **Tento typ se nepočítá do limitu počtu feedů.**
+
+### Životní cyklus inzerátu
+- **Aktivní inzerát:** Publikovaný, neexpirovaný a neprodaný. Počítá se do limitů.
+- **Expirovaný inzerát:** Už ho nelze najít v běžném seznamu (kromě historie/přímého odkazu). Interakce jsou zakázané (kromě flagování).
+- **`expiresAt`:** Čas smrti inzerátu.
+- **Kontinuální nabídka:** Mechanika, která posouvá `expiresAt` a drží inzerát naživu.
+
+### Aktivita
+- **Aktivita uživatele:** Jakýkoli záznam v **User Event Logu** (kliknutí, zobrazení, scroll).
+
+---
+
 <a id="ui"></a>
 ## UI
+
+Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layout (od toho je Figma), ale logiku a pravidla chování.
+
+### Navigace a Dashboard
+- **Home Kupujícího (Chci nakupovat):**
+  - **Inzeráty:** Kliknutí vede okamžitě na **poslední použitý Seznam** (nebo default). Uživatel neřeší "feed", prostě jde "na trh".
+  - **Moje seznamy:** Tady spravuji své filtry (Feedy). Zde si definuji, co chci sledovat.
+  - **Zprávy:** Přehled transakcí.
+  - **Oblíbené:** Rychlý přístup k olajkovaným inzerátům.
+- **Home Prodejce (Chci prodávat):**
+  - Samostatný dashboard zaměřený na správu inzerátů a prodejů (metriky, stavy).
+- **Bottom Nav:**
+  - Domů | Moje seznamy | **Přidat (+)** | Bonusy/Obchod | Profil
+
+### Tvorba inzerátu (Draft Gate)
+- Vstup do editoru je **podmíněn limitem aktivních inzerátů**.
+- **Tvrdá závora:** Pokud uživatel dosáhl limitu, **nepustím ho do editoru**.
+  - Místo formuláře zobrazím **Status Screen**.
+  - Obsah statusu: "Máš plno. Chceš další? Použít token nebo si dokup místo." (konkrétní text řeší copy).
+  - **Žádné syslení draftů:** Pokud nemůžeš publikovat, nemůžeš ani psát.
+- **Editor:**
+  - Pokud je uživatel pod limitem, pustím ho do Draftu.
+  - Editor je jedna kontinuální činnost (scroll).
+  - Data se ukládají průběžně (autosave).
+
+### Moje seznamy (Feedy)
+- Seznam zobrazuje pouze feedy typu `user`.
+- `search` (poslední hledání) sem nepletu.
+- Uživatel zde může přepínat mezi svými kontexty (např. "Vaping" vs "Bazar aut").
+- "Nový seznam" zakládá nový sledovací filtr.
+
+### Rozšíření a Aktivace
+- UI Rozšíření slouží jako **ovládací pult pro rozšíření a vylepšení**.
+- **Sekce Aktivace Passů:**
+  - Zobrazuji seznam dostupných vylepšení (Passů).
+  - Tlačítko pro aktivaci je **chytré**:
+    - Pokud má uživatel **token** (použití): Tlačítko říká "Aktivovat (1x)" -> Aktivace spotřebuje token.
+    - Pokud uživatel **nemá token**: Tlačítko říká "Aktivovat (XX Gold)" -> Aktivace strhne goldíky.
+  - Aktivace je okamžitá konverze (Token/Gold → Pass).
+- **Sekce Ostatní tokeny:**
+  - Odděleně pod passy zobrazuji tokeny, které nejsou přímo vázané na aktivaci passu (pokud takové existují).
+
+### Zprávy (Transakce)
+- UI pro komunikaci a obchod.
+- Podpora **strukturovaných widgetů**: Kromě textu umím zobrazit balíčky (tracking), lokace a systémové stavy.
+
+### Profil / Nastavení
+- Preference uživatele (citlivost obsahu, notifikace).
+- Zde se řeší "kdo jsem" a "co snesu vidět".
 
 <a id="zakladni-kameny"></a>
 ## Základní stavební kameny
