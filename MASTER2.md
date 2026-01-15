@@ -300,6 +300,98 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
 <a id="mechaniky"></a>
 ## Mechaniky
 
+> Mozek celé aplikace. Pravidla hry.
+
+### Limity
+- **Limit feedů:**
+  - Počítám pouze feedy typu `user`.
+  - `search` (poslední hledání) je mimo limity (nezabírá slot).
+  - Při překročení limitu (např. po vypršení předplatného) feedy nemažu. Jen ty nadlimitní v UI skryji (disable).
+- **Limit aktivních inzerátů:**
+  - Limituji pouze **aktivní** inzeráty (publikované + neexpirované + neprodané).
+  - Pokud inzerát dostane stav `sold` (prodáno), přestává se počítat do limitu.
+  - Při překročení limitu (vypršení passu): Existující inzeráty nechám doběhnout. Aktivuje se **Draft Gate** (nepustím uživatele tvořit nové).
+
+### Notifikace a Inbox
+- **Filosofie ticha:** Defaultní stav je neotravovat.
+- **Inbox First:** Všechny události padají do in-app Inboxu.
+- **Email jako zrcadlo:** Email je pouze volitelný "digest". Uživatel si nastavuje, co chce přeposílat (frekvence/typ).
+- **Výjimka:** Reset hesla a bezpečnostní alerty chodí na email vždy.
+
+### Seznam inzerátů a Viditelnost
+- **Seznam:** Neexistuje statická stránka. Seznam je vždy výsledek Feed dotazu.
+- **Limit:** Tvrdý strop **200 inzerátů** na dotaz (výkon + použitelnost).
+- **Hierarchie řazení (Priority Sort):**
+  1.  **Top Maxxi** (imunní vůči všemu, vždy nahoře).
+  2.  **Top** (pod Maxxi).
+  3.  **Běžné inzeráty**.
+- Uvnitř skupin řadím dle preference uživatele (cena, vzdálenost...).
+- **Anti-topper (Mechanika):**
+  - Pokud má kupující aktivní Anti-topper, měním hierarchii listingu, který vidí:
+  - 1. **Top Maxxi**.
+  - 2. **Top + Běžné** (smíchám dohromady a seřadím čistě podle preferencí uživatele). Top ztrácí výhodu pozice, zůstává mu jen badge.
+- **Expirované inzeráty:** Ve feedu je defaultně neukazuji (nutný explicitní filtr). Přímý odkaz funguje (read-only).
+
+### Životní cyklus inzerátu
+- **Release Window (Early Access):**
+  - Nový inzerát má **+8h** zpoždění pro běžné uživatele.
+  - Kupující s **Early Access** vidí inzerát hned.
+  - Prodávající s **Early Delivery** ruší okno pro svůj inzerát (vidí ho všichni hned).
+- **Boosty (Zvýraznění):**
+  - **Mark:** Badge "Zvýrazněno".
+  - **Top:** Skok na začátek seznamu (pod Maxxi). Potlačitelné Anti-topperem.
+  - **Top Maxxi:** Absolutní přednost. Nepotlačitelné.
+  - Všechna zvýraznění platí do **expirace inzerátu**.
+- **Kontinuální nabídka:**
+  - Pass, který prodlužuje život inzerátu (posouvá `expiresAt`).
+  - Umožňuje inzerátu "přežít" expiraci a zůstat v aktivním cyklu.
+
+### Payback
+- Kompenzace pro prodávajícího (Seller), pokud byl jeho **Mark/Top** potlačen Anti-topperem.
+- Payback je **Pass (Exclusive)** = nárok na refund mají pouze předplatitelé.
+- Vyhodnocuji po expiraci inzerátu.
+- Sleduji poměr zobrazení (Visible vs. Anti-topper eventy). Pokud poměr překročí definované prahy, vracím poměrnou část ceny boostu v goldíkách.
+
+### Obchod (Transakce)
+- **Vznik:** Kupující klikne na „Mám zájem“ → vzniká transakce ve stavu `pending`.
+- **Anti-spam:**
+  - Ve stavu `pending` kupující **nemůže psát zprávy**.
+  - Prodávající může `pending` přijmout (`open`) nebo odmítnout (`rejected`) bez vysvětlování.
+- **Průběh (`open`):**
+  - Otevírá se chat a možnost posílat strukturovaná data.
+  - Prodávající označuje `resolved` (vyřešeno/odesláno).
+  - Kupující dává finální `success` (úspěch) nebo `closed` (zavřeno/neutrál).
+- **Sold (Prodáno):**
+  - Jakmile je jedna transakce `resolved`, systém přepne všechny ostatní transakce na daný inzerát do stavu `sold` (systémová zpráva "Prodáno").
+- **Expirace transakce:**
+  - 3 dny bez aktivity = `expired`. Jakákoliv akce posouvá timer.
+- **Dispute:**
+  - Hint "něco nesedí".
+  - Nemá vliv na karmu, jen dává signál systému a brzdí automatické uzavření.
+
+### Čistky dat
+- Po ukončení transakce (`closed`, `sold`, `expired`) běží dvoufázový úklid:
+  1.  **Ihned:** Mažu strukturovaná data (adresy, telefony). Text a obrázky zůstávají pro kontext.
+  2.  **Po 3 měsících:** Hard delete celé transakce.
+
+### Reputace a Metriky
+- **Flagy (Nahlášení):**
+  - **Inzerát:** Toggle v detailu inzerátu.
+  - **Uživatel:** Jednosměrná akce dostupná **pouze v rámci transakce** (po `open`).
+  - Flagy nemají automatický efekt (nebanují), ale propisují se do metrik.
+- **Palce (Inzerát):**
+  - Signál atraktivity nabídky (Like/Dislike).
+- **Karma (Uživatel):**
+  - Hodnocení po transakci: **Like** (Dobrý) / **Dislike** (Špatný).
+  - Pokud uživatel nehlasuje, bere se to jako neutrál.
+- **Detail protistrany (Metriky):**
+  - Placený nástroj (Pass). Umožňuje vidět tvrdá data o druhém uživateli.
+  - **Score (A-F):** Agregovaná známka chování (počítám z reakční doby, fail rate, flagů).
+  - Bez passu neukazuji nic (ani Score).
+- **Ban:**
+  - Ruční nástroj admina (já).
+  - Banuji za podvody, spam nebo křížově špatně označený citlivý obsah.
+
 <a id="predplatne"></a>
 ## Předplatné
 
