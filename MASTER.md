@@ -194,6 +194,10 @@ Sekce pro **hlavní části aplikace** a jejich smysl. Neřeší layout, kompone
 ### Tvorba Draftu
 
 - Inzerát se **nevytváří kliknutím**. Vždycky nejdřív vznikne **Draft** a teprve z něj se publikuje inzerát.
+- **Limit aktivních inzerátů se kontroluje dřív, než se otevře editor draftu.**
+  - Pokud je limit plný / uživatel je nad limitem, místo „nastavení draftu“ se rovnou ukáže **Status obrazovka**: „Máš plný limit aktivních inzerátů.“
+  - Status nabízí **jedno CTA**: odemknout vyšší limit (aktivace tokenu → vznik passu).
+  - Teprve po odemknutí limitu se uživatel dostane do tvorby draftu (žádné naklikávání dopředu, co pak nejde použít).
 - Editor je **jedna kontinuální činnost** (scroll nemění kontext). Sticky header netřeba.
 - Velký title („Nový inzerát“) je jen úvodní orientace. Pak může zmizet a nikoho to nezabije.
 - Horní zavírací křížek **neexistuje** (dělá nejistotu). Únik z flow je přes spodní navigaci.
@@ -420,12 +424,19 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 ### Limity aktivních inzerátů
 
 - Limitujeme jen **aktivní (publikované) inzeráty**. Expirované neřešíme.
+- **Aktivní inzerát** = publikovaný + neexpirovaný + **nemá žádnou transakci ve stavu `sold`**.
+  - Jakmile má inzerát transakci `sold`, **přestává být aktivní** (a tím pádem se nepočítá do limitu).
+- Neexistuje „schovaný inzerát“. Inzerát buď:
+  - projde filtrem feedu (dotazem) a zobrazí se,
+  - nebo z filtru vypadne a v seznamu prostě není.
 - Default (Free): **5 aktivních inzerátů**.
-- Navýšení limitu je řešené přes **pass** (odemknutí přes **token → pass**) a je součástí balíčků (viz **Předplatné** + **Tokeny & passy**).
-
-
-
----
+- Limit je vždycky **na účet** (žádné role-based limity).
+- Navýšení limitu je řešené přes **pass** (odemknutí přes **token**) a je součástí balíčků (viz **Předplatné** + **Tokeny & passy**).
+- Pokud je uživatel **nad limitem** (typicky po vypršení passu):
+  - **nic nemažeme a nic nevypínáme**, existující aktivní inzeráty běží dál,
+  - uživatel jen **nemůže vytvořit nový inzerát** (tj. založit nový draft → publikovat), dokud:
+    - se nedostane pod limit (např. prodejem / expirací), nebo
+    - si limit zvedne (aktivací passu).
 
 ### Zprávy - soukromí a strukturovaná data
 
@@ -797,6 +808,10 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 ## Předplatné
 
+
+> Pozn.: V systému **neexistuje trvalá role** „kupující/prodejce“. Jsou to jen **preference a kontext transakce**.  
+> Názvy balíčků níže jsou marketingové zkratky; oprávnění se vždy vážou na **účet** (passy).
+
 ### Zkušební Pro zdarma pro nové uživatele
 
 - Každý nový uživatel dostane při registraci **Pro balíček zdarma na 1 měsíc** (plná funkcionalita).
@@ -822,7 +837,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 - **Přidělené goldíky:** 300 / měsíc.
 - **Early Access (token, 5×)**
-- **Limit uložených feedů (pass):** default 3 → Buyer 5.
+- **Limit uložených feedů (pass):** default 3 → 5.
 - **Limit aktivních inzerátů:** 5.
 - **Anti-topper (token, 5×)**
 
@@ -844,9 +859,9 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 ### Balíček Pro (499 Kč / měsíc)
 
-> **Co kupuju:** Všechno (Buyer + Seller) a navíc „plný klid“ a nejvyšší komfort. Jsem na obou stranách a chci dostat z aplikace maximum s minimem šumu.
+> **Co kupuju:** Všechno (balíček Kupující + balíček Prodejce) a navíc „plný klid“ a nejvyšší komfort. Jsem na obou stranách a chci dostat z aplikace maximum s minimem šumu.
 
-- Obsahuje **Buyer Package + Seller Package**.
+- Obsahuje **balíček Kupující + balíček Prodejce**.
 - **Přidělené goldíky:** 600 / měsíc.
 - **Anti-topper (pass)**
 - **Early Access (pass)**
@@ -909,6 +924,11 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 - **Token** = jednorázová akce (spotřebuje se). **Token nikdy neexpiruje** (můžeš ho držet neomezeně dlouho).
 - **Pass** = stav oprávnění (může mít konec platnosti, nebo být bez konce).
+- Když uživatel získá / aktivuje **další pass stejného typu a stejné úrovně**, systém mu **prodlouží expiraci** stávajícího passu (čas se sčítá).
+- U **tierovaných limitů** (např. *Aktivní inzeráty 10/20*) může mít uživatel aktivních víc úrovní najednou:
+  - efektivně platí vždy **nejvyšší aktivní úroveň**, (vyšší úroveň nijak nemění dobu platnosti nižší)
+  - aktivace vyšší úrovně **nepřepisuje ani neprodlužuje** nižší úroveň,
+  - po expiraci vyšší úrovně se limit **automaticky sníží** na další aktivní nižší úroveň (pokud existuje).
 - Když někde mluvíme o **platnosti**, myslíme tím vždycky **platnost passu**, ne tokenu.
 - Pokud je **pass uveden bez doby**, dědí dobu z běhu předplatného (vznik/renew subu = nový pass na dobu trvání subu).
 - V UI se to nepředvádí jako „token/pass“: uživatel vidí akce typu **„Odemknout +2 fotky?“** apod.; detail (včetně pasů) je v **Rozšířeních**.
@@ -1030,8 +1050,8 @@ Důsledky tohoto přístupu:
 
 | Balíček        | Podíl MAU | Cena (Kč / měsíc) | ARPU příspěvek   |
 | -------------- | --------- | ----------------- | ---------------- |
-| Buyer Package  | 0,5 %     | 119               | 0,60 Kč          |
-| Seller Package | 2,0 %     | 229               | 4,58 Kč          |
+| Balíček Kupující  | 0,5 %     | 119               | 0,60 Kč          |
+| Balíček Prodejce | 2,0 %     | 229               | 4,58 Kč          |
 | Pro Package    | 0,5 %     | 499               | 2,50 Kč          |
 | **Celkem**     | **3,0 %** |                   | **7,68 Kč ARPU** |
 
