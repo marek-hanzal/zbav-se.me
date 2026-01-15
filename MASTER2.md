@@ -451,15 +451,20 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
 <a id="goldiky"></a>
 ## Goldíky
 
-- **Interní měna:** Definuji kurz **1 CZK ≈ 2 Goldíky**.
-- **Získání:**
-  - Součástí předplatného.
-  - **Denní dropy:** V sekci Bonusy (cca 10 G/den).
-  - **Nákup balíčků:**
-    - Na zkoušku (300 G / 149 Kč).
-    - Balík (600 G / 299 Kč).
-    - Do zásoby (1200 G / 599 Kč).
-- **Pravidlo:** Operace jsou atomické. Buď proběhne celá transakce (efekt + odečtení), nebo nic.
+> Palivo pro systém. Interní měna pro nákup jednorázových vylepšení.
+
+- **Interní kurz:** Baseline cca **1 CZK ≈ 2 Goldíky**.
+- **Atomicitita:** Všechny transakce jsou atomické. Buď proběhne celý nákup/efekt, nebo se nic nestrhne.
+
+| Balíček | Cena (CZK) | Získám Goldíků | Výhodnost |
+| :--- | :--- | :--- | :--- |
+| **Na zkoušku** | 149 Kč | **300 G** | Standard |
+| **Balík** | 299 Kč | **650 G** | +50 G zdarma |
+| **Do zásoby** | 599 Kč | **1400 G** | +200 G zdarma |
+
+### Získávání zdarma
+- **Dropy:** V sekci Bonusy lze denně vyzvednout drobný obnos (cca 10 G).
+- **Předplatné:** Každý balíček obsahuje měsíční příděl goldíků.
 
 <a id="tokeny-a-passy"></a>
 ## Tokeny & passy
