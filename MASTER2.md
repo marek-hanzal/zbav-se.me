@@ -422,23 +422,31 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
 - Trial aktivuji automaticky při registraci. Po vypršení se sám vypne.
 - Cíl: Ať si uživatel vyzkouší aplikaci v plné síle.
 
-### Balíčky předplatného
-- **Balíček Kupující (119 Kč/měs):**
-  - 300 Goldíků / měsíc.
-  - Limit feedů: 5.
-  - Limit aktivních inzerátů: 5.
-  - Bonusy: 5× Early Access token, 5× Anti-topper token.
-- **Balíček Prodejce (229 Kč/měs):**
-  - 300 Goldíků / měsíc.
-  - Limit aktivních inzerátů: 10.
-  - Passy: Payback, Photo Count, Rozšířená data inzerátu.
-  - Bonusy: 5× Early Delivery, 5× Mark, 3× Top, 1× Maxxi, 3× Multi-Category, 3× Kontinuální nabídka.
-- **Balíček Pro (499 Kč/měs):**
-  - Všechno z Kupující + Prodejce.
-  - 600 Goldíků / měsíc.
-  - Limit feedů: 10.
-  - Limit aktivních inzerátů: 20.
-  - Passy (Exclusive): Anti-topper, Early Access, Multi-Category, Detail protistrany.
+### Srovnání balíčků
+
+| Položka | Kupující<br>(119 Kč) | Prodejce<br>(229 Kč) | **Pro**<br>(499 Kč) |
+| :--- | :---: | :---: | :---: |
+| **Goldíky / měsíc** | 300 G | 300 G | **600 G** |
+| **Limity** | | | |
+| Uložené Feedy | 5 | - | **10** |
+| Aktivní inzeráty | 5 | 10 | **20** |
+| **Passy (Trvalé)** | | | |
+| Payback (Refund) | - | ✓ | **✓** |
+| Photo Count (+foto) | - | ✓ | **✓** |
+| Rozšířená data | - | ✓ | **✓** |
+| Detail protistrany | - | - | **✓** |
+| Anti-topper | - | - | **✓** |
+| Early Access | - | - | **✓** |
+| Multi-Category | - | - | **✓** |
+| **Tokeny (Měsíčně)** | | | |
+| Early Access | 5× | - | **(Pass)** |
+| Anti-topper | 5× | - | **(Pass)** |
+| Early Delivery | - | 3× | **3×** |
+| Mark | - | 3× | **3×** |
+| Top | - | 3× | **3×** |
+| Top Maxxi | - | 1× | **3×** |
+| Multi-Category | - | 3× | **(Pass)** |
+| Kontinuální nabídka | - | 3× | **5×** |
 
 <a id="goldiky"></a>
 ## Goldíky
