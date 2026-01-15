@@ -569,7 +569,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Přiřazený ručně adminem aplikace, pokud dojde k tomu, že se někdo chová jako prase.
 - Neexistují zatím pevná pravidla (policy); dokud nejsou zapsaná jako pravidla, nejsou implementovaná jako automatika.
 - Typický důvod (příklad, ne zákon): zjevně křížově špatně označený citlivý/omezený obsah (např. „bouchačka mezi kočárkama“) nebo opakované porušování pravidel.
-- V rámci rozjetého projektu je pak možné jej případně generovat i systémově, do MVP zatím nepatří.
+- Až se to rozjede, možná to bude dělat robot. Zatím ne.
 
 ### Rozšířená data u inzerátu
 
@@ -581,9 +581,9 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 ### Citlivost inzerátu
 
-- Systém implementuje možnost označit inzerát jako **"běžný"** (default)/ **"pro dospělé"** / **"citlivé"** / **"omezené"**
+- Systém umí označit inzerát jako **"běžný"** (default)/ **"pro dospělé"** / **"citlivé"** / **"omezené"**
 - Označení je odstupňované podle závažnosti a navazuje na sebe
-- Pointa je mít možnost schovat obsah, který není vhodný pro všechny a nastavit nástroje, jak se k takovému obsahu dostat
+- Pointa: schovat věci, co nejsou pro všechny, a dát nástroje těm, co je chtějí.
 
 #### Přístup k citlivému obsahu (gating)
 
@@ -833,9 +833,9 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 ### Systémová policie
 
-- Aplikace dává nástroje uživatelům k rozhodování
-- Systém sám o sobě aktivně nic nehodnotí ani nespouští autonomní akce
-- Dostupná je pouze základní ochrana rate-limit a DDoS na úrovni hostingu
+- Appka dává nástroje uživatelům k rozhodování.
+- Systém sám o sobě aktivně nic nehodnotí ani nespouští autonomní akce.
+- Dostupná je pouze základní ochrana rate-limit a DDoS na úrovni hostingu.
 
 ### Kontinuální nabídka
 
