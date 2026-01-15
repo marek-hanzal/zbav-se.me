@@ -442,7 +442,16 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 ### Feed - výjimky řazení
 
 - Feed je filtr nad inzeráty.
-- Výjimky v řazení: **Top** a **Top Maxxi** přeskakují běžné inzeráty (řazení definované feedem).
+- **Hierarchie řazení (Priority Sort):**
+  1. **Top Maxxi** (vždy nahoře).
+  2. **Top** (pod Maxxi).
+  3. **Běžné inzeráty**.
+- Uvnitř každé této skupiny (např. mezi všemi Top Maxxi) se inzeráty řadí **podle nastavení uživatele** (např. od nejlevnějšího, podle vzdálenosti).
+- Placený boost má přednost před uživatelským řazením (uživatel vidí nejdřív boostované, i když neodpovídají ideálně jeho řazení, ale respektují filtr).
+- **Výjimka Anti-topper:**
+  - Pokud má kupující aktivní Anti-topper, hierarchie se mění:
+  - 1. **Top Maxxi** (stále nahoře; je imunní).
+  - 2. **Top + Běžné inzeráty** se smíchají dohromady a řadí se čistě podle uživatele (Top ztrácí výhodu pozice, zůstává mu jen badge).
 
 ---
 
