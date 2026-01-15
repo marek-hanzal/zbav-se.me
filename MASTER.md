@@ -161,8 +161,6 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - **Defaultně schovaný**: inzerát se nikdy nemaže; „schovaný“ znamená jen to, že spadá pod standardní pravidla viditelnosti. V seznamu inzerátů se typicky neobjeví, přímý odkaz funguje, a na něm se vyhodnocuje citlivost.
 - **Interakce s expirovaným inzerátem**: povolené je pouze **flagování** (aby nezbedníkům jejich sračky neprocházely).
 
-
-
 ---
 
 <a id="ui"></a>
@@ -233,6 +231,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - **Event log nad inzerátem:** impression, view, ignore/unignore, flag/unflag, transaction, favourite/unfavourite, like/dislike.
   - **Filtrování (feed):** fulltext, title, priceMin/priceMax, conditionMin/Max/In, ageMin/Max/In, deliveryIn, warrantyIn, categoryId/categoryIdIn, currency/currencyIn, feedId/feedIdIn, my/withOwn, withIgnored, isFavourite, transaction, range (km).
   - **Řazení:** price, condition, age, createdAt, updatedAt, expiresAt, geo (vzdálenost).
+
 ### Draft
 
 > Další klíčová funkce, která umožňuje postupnou tvorbu inzerátu beze strachu, že se nějaké údaje ztratí, pokud v průběhu uživatel aplikaci opustí. Spolu s tím spravujeme seznam Draftů, tzn. uživatel může snadno vytvářet inzeráty z již existujících nastavení (včetně uložených obrázků).
@@ -256,27 +255,33 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 - Vyhledávání === Feed: systémově je to pořád jen Feed dotaz nad inzeráty.
 - Hledací feed se vytvoří automaticky (při prvním použití) a pak už je to jen uložený feed jako každý jiný.
+
 ### Transakce
 
-> Jelikož je systém tvrdě anonymní, toto slouží jako most mezi prodejcem a kupujícím - můžou navzájem získat systémové informace, co jsou zač, než se rozhodnou k interakci. Po otevření transakce (viz. Mechaniky) pak vše probíhá jako chytřejší standardní chat
+> Jelikož je systém tvrdě anonymní, toto slouží jako most mezi prodejcem a kupujícím - můžou navzájem získat systémové informace, co jsou zač, než se rozhodnou k interakci. Po otevření transakce (viz. Mechaniky) pak vše probíhá jako chytřejší standardní chat.
 
 - Zastupuje interakci mezi uživateli, v systému se prezentuje jako „Zprávy“
-- Každá transakce zároveň vytváří i vlákno zpráv s účastníky (ve výchozím stavu prodejce a kupující), které tak udává, kdo smí do transakce zasahovat
+- Každá transakce má svoje vlastní **vlákno zpráv** (message thread), které k transakci patří
+- Vlákno zpráv je samostatný objekt, který se „připojuje“ k transakcím; transakce tak vždy pracuje s vlastním vláknem (neexistuje sdílené vlákno mezi více transakcemi)
 - Lifecycle (zavření, expirace, mazání) je definovaný v **Mechaniky → Obchod (transakce)**.
 
 ### Zprávy
 
-> Zprávy jsou implementované v rámci duchu aplikace a umožňují předávání jak textových zpráv, tak strukturovaných dat, které je pak snadné spravovat, například promazat, když už nejsou třeba. Základní předpoklad ovšem je, že uživatel strukturovaná data bude používat
+> Zprávy umožňují předávání textových zpráv i strukturovaných dat. Platforma ukládá jen email; vše osobní, co si lidi předají, se děje pouze v rámci zpráv.
 
-- Zprávy existují jako samostatná entita
-- Systémově držíme **pouze email**; ve zprávách se osobní údaje mohou objevit **dobrovolně a za přímým účelem**, nejsou to system-wide data
-- Mají strukturovaná data pro sdílení
-	- Lokace (pomocí služby na vyhledávání adres)
-	- Osobních údajů (jméno, telefon, email) - ukládá se **jen ve zprávách** jako strukturovaná data
-	- Trasování balíčků
-	- Obrázky
-	- A text (běžné zprávy)
-- Strukturovaná data mají vlastní tabulku, aby šla **snadno a cíleně mazat**
+- Zprávy existují jako samostatná entita (v systému reálně máme `transaction` a `message_xxx`)
+- Obsah zpráv může být:
+  - text,
+  - obrázky,
+  - strukturovaná data.
+- **Systémové zprávy** existují jako samostatný typ v databázi:
+  - jsou to „textové zprávy“, jen bez `userId` (poslal je systém, ne uživatel),
+  - používají se např. pro oznámení typu „prodáno“ u stavu `sold`.
+- Strukturovaná data mají vlastní tabulky, aby šla **snadno a cíleně mazat**
+- Typické strukturované typy:
+  - lokace,
+  - údaje o balíčku / kurýrovi (tracking),
+  - osobní údaje (email, telefon, adresa).
 
 ### Lokace
 
@@ -285,7 +290,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Všechno, co využívá polohu, se odkazuje na lokaci
 - Záznam v lokaci vzniká přes službu vyhledávání adres, která tak slouží jako autorita
 - Poloha používá locale, což aktuálně může být bota a zároveň předmět budoucí úpravy
-	- Teď podporujeme pouze češtinu, takže tento příběh bude na jindy
+  - Teď podporujeme pouze češtinu, takže tento příběh bude na jindy
 
 ### Upload
 
@@ -380,6 +385,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 - Strukturovaná data (lokace, osobní údaje, tracking, atd.) mají vlastní tabulky, aby šla **cíleně mazat**.
 - Platforma **nečte ani nehodnotí** obsah textových zpráv. Pokud si tam lidi pošlou osobní údaje mimo strukturované zprávy, je to jejich rozhodnutí.
+- Systémové zprávy jsou zprávy poslané systémem (bez `userId`) a chovají se jako běžný text (jen mají jiný původ).
 
 ---
 
@@ -487,16 +493,16 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 #### Příklady úrovní
 
 - **Běžný:**
-	- Standardní inzerát, není v něm nic, co by veřejnost mělo nějak pobouřit nebo rozladit (třeba kočárek pro děti)
+  - Standardní inzerát, není v něm nic, co by veřejnost mělo nějak pobouřit nebo rozladit (třeba kočárek pro děti)
 - **Pro dospělé:**
-	- Běžný obsah vyžadující plnoletost, např. elektronické cigarety, opět nic, co by mělo někoho rozladit
-	- Obecně sem může přijít i legální erotický obsah a jiné takové věci
+  - Běžný obsah vyžadující plnoletost, např. elektronické cigarety, opět nic, co by mělo někoho rozladit
+  - Obecně sem může přijít i legální erotický obsah a jiné takové věci
 - **Citlivé:**
-	- Tady přituhuje - věci, které můžou někoho znervóznit nebo je potřeba používat hlavu, ale zákon stále nevyžaduje zvláštní oprávnění danou věc získat/používat - např. airsoftové zbraně/repliky
+  - Tady přituhuje - věci, které můžou někoho znervóznit nebo je potřeba používat hlavu, ale zákon stále nevyžaduje zvláštní oprávnění danou věc získat/používat - např. airsoftové zbraně/repliky
 - **Omezené:**
-	- Tady platí už omezení z hlediska zákona - např. skutečné zbraně
-	- Systém explicitně nebude provádět kontrolu, nicméně pokud bude inzerát zjevně špatně označený, může následovat ruční ban
-	- Uživatelé, kteří budou chtít obsah inzerátu získat už musí disponovat patřičnými oprávněními (např. zbrojní průkaz)
+  - Tady platí už omezení z hlediska zákona - např. skutečné zbraně
+  - Systém explicitně nebude provádět kontrolu, nicméně pokud bude inzerát zjevně špatně označený, může následovat ruční ban
+  - Uživatelé, kteří budou chtít obsah inzerátu získat už musí disponovat patřičnými oprávněními (např. zbrojní průkaz)
 
 ### Ignorování inzerátu
 
@@ -526,6 +532,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Zvýraznění platí jen do **expirace inzerátu** (po expiraci se vypne).
 - Pouze zobrazí v seznamu inzerátů badge
 - Anti-Topper potlačuje Mark
+
 ### Zvýraznění - Top
 
 > Pointa - **Hej, tohle ti fakt chci ukázat dřív, než ostatní!**
@@ -535,6 +542,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Obsahuje badge v seznamu inzerátů
 - Anti-Topper potlačuje Top
 - Střední cena
+
 ### Zvýraznění - Top Maxxi
 
 > Pointa - **Tohle fakt chci prodat a nezajímá mě, co si myslíš!**
@@ -543,14 +551,15 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Zvýraznění platí jen do **expirace inzerátu** (po expiraci se vypne).
 - Obsahuje badge v seznamu inzerátů
 - Je imunní vůči Anti-Topperu
-- Je nejdražší variantou zvýraznění 
+- Je nejdražší variantou zvýraznění
+
 ### Anti-topper
 
 - Premium uživatel platí za **klid** (redukci šumu v seznamu inzerátů), ne za dominanci.
-- Platí pro **seznam inzerátů** (listing) bez ohledu na to, jak byl získán (Feed / Vyhledávání / uložený feed) – řeší prostě to, co se má v listingu ukázat.
+- Platí pro **seznam inzerátů** (listing) bez ohledu na to, jak byl získán (Feed / Vyhledávání / uložený feed) - řeší prostě to, co se má v listingu ukázat.
 - Potlačuje efekt **Mark** a **Top**, **Top Maxxi není ovlivněné**.
 - Pokud má uživatel aktivní anti-topper a v listingu “jde kolem” inzerátu se zvýrazněním (Mark/Top), pošle se event **anti-topper** (nahrazuje `visible`), aby bylo vidět, kolikrát byl boost potlačen.
-- Anti-topper neblokuje přímý přístup k inzerátu (např. přes odkaz) – jen ho nenechá protlačit v listingu.
+- Anti-topper neblokuje přímý přístup k inzerátu (např. přes odkaz) - jen ho nenechá protlačit v listingu.
 - Plátci (prodávající) vidí u inzerátu rozšířená data: např. **palce**, **visible**, **anti-topper**, atd.
 
 ### Payback
@@ -562,9 +571,8 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - počítá se poměr **anti-topper** vs. (**visible + anti-topper**) na úrovni **unikátních uživatelů** dle event logu,
   - vyplácí se krokově **25/50/75 %**.
 - Refund se počítá z **aktuální jednotkové ceny v ceníku** v době vyhodnocení.
-- Platí pro **Mark** a **Top**. **Top Maxxi** je imunní vůči anti-topperu → payback pro něj nevzniká.
+- Platí pro **Mark** a **Top**. **Top Maxxi** je imunní vůči anti-topperu - payback pro něj nevzniká.
 - Payback vzniká jen pokud má prodávající v době vyhodnocení aktivní **Payback pass**.
-
 
 ### Early Access
 
@@ -657,26 +665,27 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 ### Obchod (transakce)
 
-- Obchod vzniká, když kupující v detailu inzerátu klikne **„Mám zájem“** – tím vznikne nová transakce ve stavu **pending**.
+- Obchod vzniká, když kupující v detailu inzerátu klikne **„Mám zájem“** - tím vznikne nová transakce ve stavu **pending**.
 - Z pohledu uživatelů se transakce prezentuje jako **„Zprávy“**.
-- **Anti-spam core hodnota:** dokud prodávající transakci nepřijme, **neexistuje žádná uživatelská interakce** (žádné zprávy, žádná strukturovaná data, žádné „je to aktuální?“).
+- Každá transakce pracuje se svým vlastním **vláknem zpráv** (message thread).
+- **Anti-spam core hodnota:** dokud prodávající transakci nepřijme, **neexistuje žádná uživatelská interakce** (žádné zprávy, žádná strukturovaná data, žádné „je to aktuální?“). Tečka.
   - Zprávy se otevřou až ve chvíli, kdy prodávající obchod přijme (**open**).
 - Stavový flow:
   - **pending**: kupující otevřel obchod („Mám zájem“).
   - **open**: prodávající obchod přijme.
   - **rejected**: prodávající obchod odmítne.
-  - **resolved**: prodávající označí obchod jako vyřešený (z jeho pohledu hotovo – např. předáno/odesláno).
+  - **resolved**: prodávající označí obchod jako vyřešený (z jeho pohledu hotovo - např. předáno/odesláno).
   - **sold**: systémový finální stav pro ostatní transakce na stejný inzerát (viz níže).
   - **expired**: systémový stav po vypršení bez aktivity (viz níže).
   - **closed / success**: finální stavy po akci kupujícího (viz níže).
 - Akce kupujícího (kdykoliv během aktivní transakce):
   - **close** → stav **closed** (neutrální „zavřeno“).
   - **success** → stav **success** (pozitivní „yupí“).
-  - `closed` **není neúspěch** – v obou případech chceme, aby to kupující odklikával (kvůli metrikám a uzavření běhu).
+  - `closed` **není neúspěch** - v obou případech chceme, aby to kupující odklikával (kvůli metrikám a uzavření běhu).
   - Pokud kupující zavírá okamžitě bez interakce (typicky hned po `open`), promítá se to negativně do jeho metrik jako **Closer**.
 - Akce prodávajícího:
   - Prodávající může transakci **přijmout (open)**, **odmítnout (rejected)** a po průběhu označit jako **resolved**.
-  - Prodávající transakci **nikdy neukončuje** do `closed/success` – finální slovo má vždy kupující.
+  - Prodávající transakci **nikdy neukončuje** do `closed/success` - finální slovo má vždy kupující.
 - Pozn.: `close/success` je dostupné kdykoliv během běhu transakce, dokud není transakce v **systémově finálním** stavu (`rejected/expired/sold`).
 - Sold (automatické ukončení ostatních zájemců):
   - Jakmile prodávající u jedné transakce klikne **resolved**, systém na pozadí:
@@ -687,8 +696,12 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - Transakce expiruje po **3 dnech bez aktivity**.
   - `expireAt` posouvá **jakákoli akce** v transakci (včetně `dispute` a jakýchkoli zpráv / structured messages po otevření).
   - Po expiraci se transakce přepne do stavu **expired** automaticky (běží pravidelný systémový úklid).
-  - Po zavření transakce (user `closed/success`, `rejected`, `sold`, `expired`) se odstraní veškerá **strukturovaná data** ze zpráv (polohy, osobní údaje, apod.); **text a obrázky zůstávají**.
-  - Po **3 měsících** se transakce smaže kompletně z databáze (hard delete)
+- Čistky (mazání dat ve dvou fázích):
+  - Po zavření transakce (`closed/success`, `rejected`, `sold`, `expired`) proběhne **první čistka**:
+    - odstraní se veškerá **strukturovaná data** ze zpráv (lokace, tracking/kurýr, osobní údaje jako email/telefon/adresa, apod.),
+    - **text a obrázky zůstávají**.
+  - Text a obrázky „zůstávají“ jen ve smyslu, že přežijí první čistku a žijí dál do druhé.
+  - Po **3 měsících** proběhne **druhá čistka**: smaže se celá transakce z databáze (hard delete), včetně textů a obrázků.
 
 ### Dispute
 
@@ -886,8 +899,6 @@ Pozn.: **Jednotková cena** u balíčků (např. „5× za 20“) znamená cenu 
 | Rozšířená data u inzerátu | Pass         | po dobu předplatného                                             | exclusive |
 | Kontinuální nabídka | Token              | 1× použití (vygeneruje pass)                                     | exclusive |
 | Kontinuální nabídka | Pass               | 1 měsíc (inzerát funguje jako běžný aktivní)                     | exclusive |
-
-
 
 <a id="uvedeni-na-trh"></a>
 
