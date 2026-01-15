@@ -161,7 +161,8 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - **Expirovaný inzerát**: praktický opak aktivního. Inzerát je možné si prohlédnout (včetně přímého odkazu), ale **žádná interakce není dovolená**, **kromě flagování**.
 - **`expiresAt` (inzerát)**: výchozí čas „úmrtí“ inzerátu (konec standardního životního cyklu).
 - **Kontinuální nabídka**: nemění `expiresAt` inzerátu. Umožní expirovanému inzerátu vrátit se mezi „živé“ (tj. *Expirovaný inzerát + Kontinuální nabídka → Aktivní inzerát*).
-- **Defaultně schovaný**: inzerát se nikdy nemaže; „schovaný“ znamená jen to, že spadá pod standardní pravidla viditelnosti. V seznamu inzerátů se typicky neobjeví, přímý odkaz funguje, a na něm se vyhodnocuje citlivost.
+- **Žádný „schovaný“ stav**: viditelnost ve feedu řeší jen dotaz/filtry (neexistuje hidden příznak).
+  - Přímý odkaz může fungovat, pokud to dovolí citlivost.
 - **Interakce s expirovaným inzerátem**: povolené je pouze **flagování** (aby nezbedníkům jejich sračky neprocházely).
 
 ---
@@ -195,7 +196,7 @@ Sekce pro **hlavní části aplikace** a jejich smysl. Neřeší layout, kompone
 
 - Inzerát se **nevytváří kliknutím**. Vždycky nejdřív vznikne **Draft** a teprve z něj se publikuje inzerát.
 - **Limit aktivních inzerátů se kontroluje dřív, než se otevře editor draftu.**
-  - Pokud je limit plný / uživatel je nad limitem, místo „nastavení draftu“ se rovnou ukáže **Status obrazovka**: „Máš plný limit aktivních inzerátů.“
+  - Pokud je limit plný / uživatel je nad limitem, ukáže se **Status obrazovka**: „Máš plný limit aktivních inzerátů.“
   - Status nabízí **jedno CTA**: odemknout vyšší limit (aktivace tokenu → vznik passu).
   - Teprve po odemknutí limitu se uživatel dostane do tvorby draftu (žádné naklikávání dopředu, co pak nejde použít).
 - Editor je **jedna kontinuální činnost** (scroll nemění kontext). Sticky header netřeba.
@@ -431,7 +432,8 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - nebo z filtru vypadne a v seznamu prostě není.
 - Default (Free): **5 aktivních inzerátů**.
 - Limit je vždycky **na účet** (žádné role-based limity).
-- Navýšení limitu je řešené přes **pass** (odemknutí přes **token**) a je součástí balíčků (viz **Předplatné** + **Tokeny & passy**).
+- Navýšení limitu je řešené přes **pass** (odemknutí přes token).
+  - Je to součást balíčků (viz **Předplatné** + **Tokeny & passy**).
 - Pokud je uživatel **nad limitem** (typicky po vypršení passu):
   - **nic nemažeme a nic nevypínáme**, existující aktivní inzeráty běží dál,
   - uživatel jen **nemůže vytvořit nový inzerát** (tj. založit nový draft → publikovat), dokud:
@@ -471,12 +473,16 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 ### Systém nahlašování - Inzeráty
 
 - Systém má mechaniku nahlašování inzerátů (flagy).
+- Nahlásit inzerát jde **jen z detailu inzerátu** (ne z feedu, ne ze zpráv/transakce).
+- Flag inzerátu je **toggle** (lze ho zapnout i vypnout).
+- MVP: žádné důvody ani formuláře, jen přepínač (čudlík).
+- Neřešíme rate-limit. Když někdo flaguje jak magor, jen se to propíše do **user event logu** a dá se to řešit ručně.
 - Pokud už uživatel označí nějaký inzerát, je to považováno za silný signál nechuti (nebo trollení).
 - Flagy **nemají systémový efekt**: aplikace na ně automaticky nereaguje (nic se automaticky neskrývá, nemaže, nebanuje).
 - Flagy jsou ale **kritický reputační signál pro uživatele**:
   - promítají se do metrik prodávajícího,
   - uživatel si z toho může vyvodit, že „něco smrdí“ (např. 80 % flagnutých inzerátů).
-- Flagy zároveň slouží jako signál pro admina, aby našel věci, které smrdí, a řešil je (zatím i formou SQL dotazu / logiky mimo UI).
+- Flagy zároveň slouží jako signál pro admina (ruční kontrola / SQL) a pomáhají najít problematické inzeráty.
 - Výpočet metrik:
   - Flagy se počítají z **user event logu**.
   - Okno pro výpočet je **posledních 90 dnů** (stejně jako ostatní metriky).
@@ -484,8 +490,8 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 ### Systém nahlašování - Uživatelé
 
-- V rámci transakce (v detailu inzerátu dostupného v rámci komunikace) je dostupné tlačítko nahlášení.
-- Toto je tvrdá akce, kterou nelze vzít zpět.
+- V rámci transakce (v detailu protistrany v rámci konverzace) je dostupné tlačítko **nahlášení uživatele** (ne inzerátu).
+- Nahlášení uživatele je **tvrdá a jednosměrná akce** (nelze vzít zpět).
 - Stejně jako u inzerátů, k uživateli se zapíše flag a toto se promítá do jeho metrik.
 - Flag uživatele je gated chováním systému:
   - lze ho udělit **jen v kontextu transakce**,
@@ -793,12 +799,13 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
     - Pokud je inzerát už expirovaný, prodloužení začne **okamžitě**.
 - Trvání:
   - Pass trvá **1 měsíc**.
-  - Prodloužení se **nestackuje** (nenasčítává se dopředu).
-  - Prodávající může prodlužovat opakovaně (vždy spotřebuje token a vytvoří nový pass na 1 měsíc).
+  - Prodloužení se **stackuje časem**: aktivace dalšího stejného passu prodlouží expiraci (čas se sčítá).
+  - Prodloužení opakuješ tokenem: když pass běží, prodlouží se o 1 měsíc; když neběží, vznikne nový.
 - Chování inzerátu během aktivního passu:
   - Inzerát funguje **jako běžný aktivní inzerát** (vrací se do standardního feedu, žádné speciální filtry nejsou potřeba).
   - Obchody/transakce fungují **stejně jako u běžného inzerátu**.
-  - Po vypršení passu se inzerát vrací zpět do režimu **expirovaný** (defaultně schovaný), pokud není znovu prodloužen.
+  - Po vypršení passu se inzerát vrací do režimu **expirovaný**.
+    - Není aktivní a ve feedech se běžně nezobrazuje (dokud ho znovu neprodloužíš).
 - Metriky:
   - Inzerát se chová normálně, takže metriky (včetně **Transakce**) se počítají standardně.
 
@@ -924,14 +931,15 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 - **Token** = jednorázová akce (spotřebuje se). **Token nikdy neexpiruje** (můžeš ho držet neomezeně dlouho).
 - **Pass** = stav oprávnění (může mít konec platnosti, nebo být bez konce).
-- Když uživatel získá / aktivuje **další pass stejného typu a stejné úrovně**, systém mu **prodlouží expiraci** stávajícího passu (čas se sčítá).
+- Další pass stejného typu prodlouží expiraci stávajícího passu (čas se sčítá).
 - U **tierovaných limitů** (např. *Aktivní inzeráty 10/20*) může mít uživatel aktivních víc úrovní najednou:
   - efektivně platí vždy **nejvyšší aktivní úroveň**, (vyšší úroveň nijak nemění dobu platnosti nižší)
   - aktivace vyšší úrovně **nepřepisuje ani neprodlužuje** nižší úroveň,
   - po expiraci vyšší úrovně se limit **automaticky sníží** na další aktivní nižší úroveň (pokud existuje).
 - Když někde mluvíme o **platnosti**, myslíme tím vždycky **platnost passu**, ne tokenu.
 - Pokud je **pass uveden bez doby**, dědí dobu z běhu předplatného (vznik/renew subu = nový pass na dobu trvání subu).
-- V UI se to nepředvádí jako „token/pass“: uživatel vidí akce typu **„Odemknout +2 fotky?“** apod.; detail (včetně pasů) je v **Rozšířeních**.
+- V UI se to neukazuje jako token/pass. Uživatel vidí akci + jedno CTA.
+  - Detail (včetně passů) je v **Rozšířeních**.
 - **Obchod** nabízí jen **balíčky goldíků** a **hlavní předplatné**.
 - Rozšíření se standardně **zapínají za goldíky** (vytvoří se pass). Pokud má uživatel dostupné použití (token) z předplatného / bonusů, může ho místo goldíků spotřebovat.
 - Při zámcích placených věcí používáme pattern: **Status** (proč to stojí) → **jedno CTA** (zapnout za goldíky / spotřebovat použití).
@@ -1029,6 +1037,15 @@ Důsledky tohoto přístupu:
 - Hodnota platformy **roste v čase**, i bez přísunu nového obsahu.
 - Uživatelé se vracejí nejen kvůli novým inzerátům, ale kvůli **orientaci v trhu**.
 - MAU může růst rychleji než nové registrace.
+
+### Retence trasovaných dat a čistky
+
+- **Inzeráty a jejich obrázky** (uploady navázané na inzerát) držíme prakticky **navždy** (paměť trhu).
+- **Kumulativní / trasovaná data** mají hard retenci **1 rok**.
+  - Týká se to hlavně user event logů, score logů a dalších logů pro metriky.
+  - Čistka běží v cron jobu a maže záznamy starší než 1 rok (typicky denně).
+- Některé entity mají kratší vlastní retenci (např. transakce a jejich přílohy dle pravidel v Mechaniky → Obchod).
+
 
 **Očekávaný vývoj poměru registrace → MAU:**
 
