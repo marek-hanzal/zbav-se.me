@@ -37,16 +37,6 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 - Monetizace stojí na **hodnotě** (nástroje), ne na tlaku (reklama).
 - Stavíme na důvěře mezi **platformou** a **uživateli** pro zajištění mentálního komfortu.
 
-### UX principy
-
-- **Nulová tolerance nápovědy:** „**Pokud to potřebuje hint, je to špatně.**“
-  - Žádné tooltipy, žádné `(?)` ikony, žádné vysvětlující bubliny.
-  - UI musí být krystalicky jasné samo o sobě. Pokud uživatel neví, co má dělat, je chyba v designu, ne v absenci nápovědy. Předěláme UI, nepřidáme vysvětlivku.
-- **Konzistence > chytrost.**
-- **Empty state** = status → vysvětlení → **jedno** CTA.
-- **Prázdno je záměr** (nižší kognitivní zátěž).
-- Status může být emoční, CTA musí být mechanické.
-
 ### Tone of Voice
 
 - Onboarding bez pozlátek: „**Klikej. Zkoumej. Není tu co posrat.**“
@@ -66,9 +56,12 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 
 ### UX principy
 
-- Konzistence > chytrost.
-- Empty state = status → vysvětlení → **jedno** CTA.
-- Prázdno je záměr (nižší kognitivní zátěž).
+- **Nulová tolerance nápovědy:** „**Pokud to potřebuje hint, je to špatně.**“
+  - Žádné tooltipy, žádné `(?)` ikony, žádné vysvětlující bubliny.
+  - UI musí být krystalicky jasné samo o sobě. Pokud uživatel neví, co má dělat, je chyba v designu, ne v absenci nápovědy.
+- **Konzistence > chytrost.**
+- **Empty state** = status → vysvětlení → **jedno** CTA.
+- **Prázdno je záměr** (nižší kognitivní zátěž).
 - Status může být emoční, CTA musí být mechanické a jasné.
 
 ### Komunikace a transparentnost
@@ -106,15 +99,16 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 
 - **Prázdno na startu:** Bez obsahu je marketplace mrtvý. Řešíme fázovaným startem (komunity → region).
 - **„Levný drobnosti“:** Prodej věcí za pár korun je u nás složitější než jinde (vyžadujeme Draft, interakci). Míříme na situace, kde se vyplatí mít klid a filtr.
-- **Pochopení feedů:** Feed je silný nástroj, ale vyžaduje změnu myšlení. Řešíme trialem Pro verze zdarma pro nové uživatele.
+- **Přirozené učení feedů:** Uživatelům necpeme slovo "Feed". V menu je "Seznam inzerátů" (default). Pokud uživateli obsah nesedí (má v tom bordel), hledá nastavení (ozubené kolo). Učí se používat filtry/feedy organicky z potřeby, ne z manuálu.
 
 ### Co vědomě neděláme
 
 - **Agresivní paid reach:** Netlačíme věci do obličeje jen proto, že někdo zaplatil. Priorita je čitelnost trhu.
 - **Videa u inzerátů:** Ne. Zbytečný šum, infra peklo a riziko zneužití.
 
-<a id="kodex"></a>
+---
 
+<a id="kodex"></a>
 ## Kodex
 
 > Vědomá rozhodnutí a kontrakt mezi platformou a uživateli. Tyto principy jsou veřejně dostupné.
