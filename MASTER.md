@@ -171,6 +171,11 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - **Defaultně schovaný**: inzerát se nikdy nemaže; „schovaný“ znamená jen to, že spadá pod standardní pravidla viditelnosti. V seznamu inzerátů se typicky neobjeví, přímý odkaz funguje, a na něm se vyhodnocuje citlivost.
 - **Interakce s expirovaným inzerátem**: povolené je pouze **flagování** (aby nezbedníkům jejich sračky neprocházely).
 
+
+### Aktivita uživatele
+
+- **Aktivita uživatele**: jakýkoli záznam v **User Event Logu** uživatele. Eventy se sbírají průběžně pohybem uživatele po appce.
+
 ---
 
 <a id="ui"></a>
@@ -996,7 +1001,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 - **Token** = jednorázová akce (spotřebuje se). **Token nikdy neexpiruje** (můžeš ho držet neomezeně dlouho).
 - **Pass** = stav oprávnění (může mít konec platnosti, nebo být bez konce).
-- Další pass stejného typu prodlouží expiraci stávajícího passu (čas se sčítá).
+- Když uživatel získá / aktivuje **další pass stejného typu a stejné úrovně**, systém mu **prodlouží expiraci** stávajícího passu (čas se sčítá).
 - U **tierovaných limitů** (např. *Aktivní inzeráty 10/20*) může mít uživatel aktivních víc úrovní najednou:
   - efektivně platí vždy **nejvyšší aktivní úroveň**, (vyšší úroveň nijak nemění dobu platnosti nižší)
   - aktivace vyšší úrovně **nepřepisuje ani neprodlužuje** nižší úroveň,
