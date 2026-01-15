@@ -191,6 +191,30 @@ Sekce pro **hlavní části aplikace** a jejich smysl. Neřeší layout, kompone
 - Součástí landingu je **živá timeline** dění v appce (automatické události), aby produkt měl „duši“ i v early fázi.
 
 
+### Tvorba Draftu
+
+- Inzerát se **nevytváří kliknutím**. Vždycky nejdřív vznikne **Draft** a teprve z něj se publikuje inzerát.
+- Editor je **jedna kontinuální činnost** (scroll nemění kontext). Sticky header netřeba.
+- Velký title („Nový inzerát“) je jen úvodní orientace. Pak může zmizet a nikoho to nezabije.
+- Horní zavírací křížek **neexistuje** (dělá nejistotu). Únik z flow je přes spodní navigaci.
+- **Bottom nav** je mentální kotva: „když ji vidím, není co posrat“.
+- Back akce je vždy bezpečná: **autosave** + drafty jako neprůstřelný kontrakt (uživatel nikdy neztratí data).
+- Draft je preferovaná návratová cesta do flow. Nezačínáme zbytečně „od nuly“.
+
+### Zprávy
+
+Zprávy jsou UI pro transakce a komunikaci. Vedle textu podporují i strukturovaná data (lokace, balíček, osobní údaje).
+
+#### Zpráva - Balíček
+
+- **URL je povinná** (vždy ukládáme odkaz).
+- **Tracking number je volitelný**, ale doporučený.
+- UI zvýrazní **doménu** (identita), celou URL menším „technickým“ stylem.
+- Když je tracking number: „**Zásilka:** Z66543“ (příklad). Když není: jen „odkaz na stránky dopravce“.
+- Žádná tvrdá validace, žádný auto-preview, žádné metadata fetch, žádný whitelist. Jen měkké heuristiky a vizuální signály.
+
+
+
 ### Rozšíření (Features)
 
 Rozšíření nejsou entity. Jsou to **zapínatelné schopnosti**, které staví nad stavebními kameny (Feed, inzerát, transakce, metriky).
@@ -249,14 +273,6 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 > Další klíčová funkce, která umožňuje postupnou tvorbu inzerátu beze strachu, že se nějaké údaje ztratí, pokud v průběhu uživatel aplikaci opustí. Spolu s tím spravujeme seznam Draftů, tzn. uživatel může snadno vytvářet inzeráty z již existujících nastavení (včetně uložených obrázků).
 
-#### Tvorba Draftu
-
-- Editor je **jedna kontinuální činnost** (scroll nemění kontext). Sticky header netřeba.
-- Velký title („Nový inzerát“) je jen úvodní orientace. Pak může zmizet a nikoho to nezabije.
-- Horní zavírací křížek **neexistuje** (dělá nejistotu). Únik z flow je přes spodní navigaci.
-- **Bottom nav** je mentální kotva: „když ji vidím, není co posrat“.
-- Back akce je vždy bezpečná: **autosave** + drafty jako neprůstřelný kontrakt (uživatel nikdy neztratí data).
-- Draft je preferovaná návratová cesta do flow. Nezačínáme zbytečně „od nuly“.
 
 - Kopíruje atributy inzerátu
 - Slouží jako vstupní bod pro tvorbu nového inzerátu - prvně vzniká Draft, z něj se pak publikuje inzerát
@@ -304,13 +320,6 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - údaje o balíčku / kurýrovi (tracking),
   - osobní údaje (email, telefon, adresa).
 
-#### Zpráva - Balíček
-
-- **URL je povinná** (vždy ukládáme odkaz).
-- **Tracking number je volitelný**, ale doporučený.
-- UI zvýrazní **doménu** (identita), celou URL menším „technickým“ stylem.
-- Když je tracking number: „**Zásilka:** Z66543“ (příklad). Když není: jen „odkaz na stránky dopravce“.
-- Žádná tvrdá validace, žádný auto-preview, žádné metadata fetch, žádný whitelist. Jen měkké heuristiky a vizuální signály.
 
 ### Lokace
 
@@ -412,11 +421,8 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 - Limitujeme jen **aktivní (publikované) inzeráty**. Expirované neřešíme.
 - Default (Free): **5 aktivních inzerátů**.
-- Balíčky:
-  - **Buyer:** max. **5** aktivních inzerátů.
-  - **Seller:** max. **10** aktivních inzerátů.
-  - **Pro:** max. **20** aktivních inzerátů.
-- Navýšení limitu je řešené přes **pass** (a pass jde odemknout přes **token → pass**).
+- Navýšení limitu je řešené přes **pass** (odemknutí přes **token → pass**) a je součástí balíčků (viz **Předplatné** + **Tokeny & passy**).
+
 
 
 ---
