@@ -4,9 +4,10 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 
 ## Document Rules
 
-- Tenhle Master drží **koncepty, pravidla a produktová rozhodnutí**.
+- Tenhle Master drží **mé koncepty, pravidla a produktová rozhodnutí**.
 - **Žádný kód, DB schémata ani implementační detaily.**
-- Když něco doplňujeme, doplňujeme to jako **pravidlo** (co a proč), ne jako „jak to přesně nakódujeme“.
+- Když něco doplňuji, doplňuji to jako **pravidlo** (co a proč), ne jako „jak to přesně nakóduji“.
+- **Ich-forma:** Dokument píšu v **první osobě jednotného čísla**. Jsem autor a držím za projekt tvrdou osobní odpovědnost. Co slíbím, to platí.
 
 ## Obsah
 
@@ -31,34 +32,34 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 
 ### Identita
 
-- **Core myšlenka:** „**Prodáváme, neojebáváme.**“
-- Nejsme další bazar. Jsme **systém důvěry a komunity**.
-- Cíl: **klid, důvěra, kompetence uživatele**.
-- Monetizace stojí na **hodnotě** (nástroje), ne na tlaku (reklama).
-- Stavíme na důvěře mezi **platformou** a **uživateli** pro zajištění mentálního komfortu.
+- **Core myšlenka:** „**Prodávám, neojebávám.**“
+- Nestavím další bazar. Tvořím **systém důvěry a komunity**.
+- Mým cílem je: **klid, důvěra, kompetence uživatele**.
+- Monetizaci stavím na **hodnotě** (nástroje), ne na tlaku (reklama).
+- Stavím na důvěře mezi **mnou (platformou)** a **uživateli** pro zajištění mentálního komfortu.
 
 ### Tone of Voice
 
 - Onboarding bez pozlátek: „**Klikej. Zkoumej. Není tu co posrat.**“
-- Neučíme, nekomentujeme, neotravujeme.
-- **Předpoklad IQ uživatelů je alespoň 80** (nadneseně – UI je tak jasné, že nepotřebuje vysvětlivky).
-- **Přímá komunikace:**
+- Neučím, nekomentuji, neotravuji.
+- **Předpokládám IQ uživatelů alespoň 80** (nadneseně – mé UI je tak jasné, že nepotřebuje vysvětlivky).
+- **Mluvím přímo:**
   - Aplikace uživateli tyká.
-  - Používáme **mužský rod** jako neutrální default (např. „Odmítl jsi“, „Máš novou zprávu“).
-  - Vyhýbáme se pasivu a úředničině ("bylo odmítnuto"). Mluvíme krátce a lidsky.
+  - Používám **mužský rod** jako neutrální default (např. „Odmítl jsi“, „Máš novou zprávu“).
+  - Vyhýbám se pasivu a úředničině ("bylo odmítnuto"). Mluvím krátce a lidsky.
 
 ### Produktové cíle
 
-- Pocit **„teplého obýváku“** místo reklamního cirkusu.
+- Chci vyvolat pocit **„teplého obýváku“** místo reklamního cirkusu.
 - **Paměťová stopa:** bylo to klidné, rychlé, fungovalo to.
-- Konzistence je víc než jedna killer funkce.
+- Konzistence je pro mě víc než jedna killer funkce.
 - **Kontrast s konkurencí** má být citelný (návrat ke konkurenci má „bolet“).
 
 ### UX principy
 
-- **Nulová tolerance nápovědy:** „**Pokud to potřebuje hint, je to špatně.**“
+- **Nulová tolerance nápovědy:** „**Pokud to potřebuje hint, udělal jsem to špatně.**“
   - Žádné tooltipy, žádné `(?)` ikony, žádné vysvětlující bubliny.
-  - UI musí být krystalicky jasné samo o sobě. Pokud uživatel neví, co má dělat, je chyba v designu, ne v absenci nápovědy.
+  - UI musí být krystalicky jasné samo o sobě. Pokud uživatel neví, co má dělat, je chyba v mém designu, ne v absenci nápovědy.
 - **Konzistence > chytrost.**
 - **Empty state** = status → vysvětlení → **jedno** CTA.
 - **Prázdno je záměr** (nižší kognitivní zátěž).
@@ -66,12 +67,12 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 
 ### Komunikace a transparentnost
 
-- **Source Available:** Zdrojové kódy jsou dostupné veřejně k auditu bezpečnosti a fair-play, ale chráněné licencí proti komerčnímu zneužití či klonování.
-- **Transparentní finance:** Na domovské stránce je odkaz na transparentní bankovní účet projektu.
-- **Vývoj:** Na domovské stránce je viditelný kalendář aktivity vývoje (Github-like) a dynamická timeline (první skokani, milníky, hlášky o stavu trhu).
+- **Source Available:** Zdrojové kódy zpřístupňuji veřejně k auditu bezpečnosti a fair-play, ale chráním je licencí proti komerčnímu zneužití či klonování.
+- **Transparentní finance:** Na domovské stránce uvádím odkaz na transparentní bankovní účet projektu.
+- **Vývoj:** Na domovské stránce ukazuji kalendář aktivity vývoje (Github-like) a dynamickou timeline (první skokani, milníky, hlášky o stavu trhu).
 - **Soukromí (Tracking):**
-  - **Žádné externí šmírování:** Žádné UTM, žádné cookies třetích stran, žádné Google Analytics / Facebook Pixel.
-  - **Interní telemetrie:** Měříme a ukládáme pouze to, co je nutné pro funkci produktu a výpočet reputačních metrik (User Event Log). Data neopouští naši infrastrukturu.
+  - **Žádné externí šmírování:** Nepoužívám UTM, cookies třetích stran, Google Analytics ani Facebook Pixel.
+  - **Interní telemetrie:** Měřím a ukládám pouze to, co je nutné pro funkci produktu a výpočet reputačních metrik (User Event Log). Data neopouští mou infrastrukturu.
 - **Podpora:**
   - Discord server (komunita) + e-mail.
   - Sekce **„Zpětná vazba“** přímo v aplikaci (interní mechanismus kontaktu).
@@ -81,68 +82,68 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 <a id="konkurenceschopnost"></a>
 ## Konkurenceschopnost
 
-> Subjektivní výhody a argumenty. Checklist existence projektu.
+> Mé subjektivní výhody a argumenty. Checklist, proč do toho jdu.
 
-### Co umíme líp
+### Co umím líp
 
 - **Klid místo cirkusu:** Minimum vizuálního šumu, žádné otravné UX. Aplikace pomáhá uzavřít obchod, ne krást čas.
-- **Soukromí jako default:** Držíme jen minimum dat (email). Nejsi produkt.
-- **Anti-spam obchod:** Dokud prodávající nepřijme transakci (stav `pending` → `open`), kupující nemůže psát zprávy ani posílat strukturovaná data.
-- **Důvěra z chování:** Reputace stojí na tvrdých metrikách (reakce, expirace, closer, resolved, flagy), ne na bio a „věř mi bro“ profilech.
-- **Feed jako hlavní produkt:** Vyhledávání je jen zkratka pro feed. Uživatel si definuje zájem a systém mu ho servíruje.
-- **Paměť trhu:** Expirované inzeráty nezmizí (jsou dohledatelné). Vzniká historie cen a kontextu.
-- **Férová ekonomika:** Nebereme procenta z prodeje. Platí se za nástroje (rozšíření) a předplatné.
-- **Bez pay-to-win:** Placené věci jsou viditelné a přiznané. Neplacený obsah se může mírně potlačit (řazení), ale nikdy se neskrývá.
-- **Deterministické brány:** Citlivost obsahu je přísně řízená nastavením uživatele.
+- **Soukromí jako default:** Držím jen minimum dat (email). Nejsi pro mě produkt.
+- **Anti-spam obchod:** Dokud prodávající nepřijme transakci (stav `pending` → `open`), nedovolím kupujícímu psát zprávy ani posílat data.
+- **Důvěra z chování:** Reputaci počítám z tvrdých metrik (reakce, expirace, closer, resolved, flagy), ne z bio a „věř mi bro“ profilů.
+- **Feed jako hlavní produkt:** Vyhledávání beru jen jako zkratku pro feed. Uživatel si definuje zájem a já mu ho servíruji.
+- **Paměť trhu:** Expirované inzeráty nemažu (jsou dohledatelné). Tvořím historii cen a kontextu.
+- **Férová ekonomika:** Neberu procenta z prodeje. Nechám si zaplatit za nástroje (rozšíření) a předplatné.
+- **Bez pay-to-win:** Placené věci přiznávám a jsou vidět. Neplacený obsah můžu mírně potlačit (řazení), ale nikdy ho neskrývám.
+- **Deterministické brány:** Citlivost obsahu přísně řídím nastavením uživatele.
 
-### V čem je naše slabina (a proč s tím počítáme)
+### V čem je má slabina (a proč s tím počítám)
 
-- **Prázdno na startu:** Bez obsahu je marketplace mrtvý. Řešíme fázovaným startem (komunity → region).
-- **„Levný drobnosti“:** Prodej věcí za pár korun je u nás složitější než jinde (vyžadujeme Draft, interakci). Míříme na situace, kde se vyplatí mít klid a filtr.
-- **Přirozené učení feedů:** Uživatelům necpeme slovo "Feed". V menu je "Seznam inzerátů" (default). Pokud uživateli obsah nesedí (má v tom bordel), hledá nastavení (ozubené kolo). Učí se používat filtry/feedy organicky z potřeby, ne z manuálu.
+- **Prázdno na startu:** Bez obsahu je marketplace mrtvý. Řeším to fázovaným startem (komunity → region).
+- **„Levný drobnosti“:** Prodej věcí za pár korun je u mě složitější (vyžaduji Draft, interakci). Mířím na situace, kde se vyplatí mít klid a filtr.
 
-### Co vědomě neděláme
+### Co vědomě nedělám
 
-- **Agresivní paid reach:** Netlačíme věci do obličeje jen proto, že někdo zaplatil. Priorita je čitelnost trhu.
-- **Videa u inzerátů:** Ne. Zbytečný šum, infra peklo a riziko zneužití.
+- **Agresivní paid reach:** Netlačím věci do obličeje jen proto, že někdo zaplatil. Priorita je pro mě čitelnost trhu.
+- **Videa u inzerátů:** Ne. Nechci tu zbytečný šum, infra peklo a riziko zneužití.
 
 ---
 
 <a id="kodex"></a>
 ## Kodex
 
-> Vědomá rozhodnutí a kontrakt mezi platformou a uživateli. Tyto principy jsou veřejně dostupné.
+> Má vědomá rozhodnutí a kontrakt mezi mnou a uživateli. Tyto principy držím veřejně dostupné.
 
 ### Důvěra jako výchozí stav
 
-- Vycházíme z předpokladu, že většina lidí chce hrát fér.
-- Ochranné mechanismy přidáváme až tehdy, když jsou nutné, ne preventivně.
+- Vycházím z předpokladu, že většina lidí chce hrát fér.
+- Ochranné mechanismy přidávám až tehdy, když jsou nutné, ne preventivně.
 
 ### Férová monetizace a neaktivita
 
-- Platby nejsou past. Předplatné lze kdykoliv zrušit.
+- Platby nejsou past. Předplatné umožňuji kdykoliv zrušit.
 - **Automatické ukončení při neaktivitě:**
-  - Pokud uživatel systém dlouhodobě nepoužívá, nechceme jeho peníze za nic.
+  - Pokud uživatel systém dlouhodobě nepoužívá, nechci jeho peníze za nic.
   - **Neaktivita** = žádný záznam v User Event Logu (uživatel aplikaci ani neotevřel).
-  - Po **1. měsíci** neaktivity: E-mail s připomínkou.
-  - Po **2. měsíci** neaktivity: Okamžité zrušení předplatného (zastavení plateb).
-- Raději přijdeme o platbu než o důvěru.
+  - Po **1. měsíci** neaktivity: Pošlu e-mail s připomínkou.
+  - Po **2. měsíci** neaktivity: Okamžitě ruším předplatné (zastavím platby).
+- Raději přijdu o platbu než o důvěru.
 
 ### Žádné pay-to-win
 
-- Peníze nekupují nadvládu. Placený obsah je viditelný.
-- Trh zůstává čitelný pro všechny (neplatiče nelze skrýt, jen přeskočit v řazení).
+- Peníze nekupují nadvládu. Placený obsah zobrazuji viditelně.
+- Trh nechávám čitelný pro všechny (neplatiče nelze skrýt, jen přeskočit v řazení).
 
 ### Respekt k uživateli
 
-- Nepoužíváme manipulativní notifikace ani dark patterns.
-- Nesbíráme data bez jasného účelu.
+- Nepoužívám manipulativní notifikace ani dark patterns.
+- Nesbírám data bez jasného účelu.
 
 ### Otevřenost a odpovědnost
 
-- Pokud něco měníme, děláme to transparentně.
-- **Kurz CZK ↔ Goldík** měníme nejdřív **kvartálně**.
-
+- Pokud něco měním, dávám to vědět **předem a konkrétně**:
+  - **Kanály:** E-mail, in-app notifikace, commit log ve veřejném repozitáři.
+  - **Kurz CZK ↔ Goldík** měním nejdřív **kvartálně**.
+  
 <a id="terminologie"></a>
 ## Terminologie
 
