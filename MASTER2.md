@@ -302,14 +302,26 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
 
 > Mozek celé aplikace. Pravidla hry.
 
+### Stavy Inzerátu (Lifecycle)
+Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro systém. O přechody se starají uživatelské akce nebo cron joby.
+- **Live (Aktivní):** Inzerát existuje, čas `expiresAt` je v budoucnosti a nebyl označen jako prodaný.
+  - Pouze `Live` inzeráty se počítají do limitu aktivních inzerátů a jsou viditelné v běžných feedech.
+- **Expired (Expirovaný):** Čas `expiresAt` vypršel.
+  - Přepnutí stavu zajišťuje cron.
+  - Inzerát zmizí z feedů (pokud si ho uživatel explicitně nezapne).
+  - Je read-only, nelze zahájit novou transakci.
+- **Sold (Prodaný):** Inzerát byl systémově označen jako prodaný (na základě úspěšné transakce).
+  - `Sold` je konečný stav. Inzerát je veřejně viditelný (pokud neexpiroval), ale nelze ho koupit.
+  - Nezapočítává se do limitu aktivních inzerátů.
+- **Poznámka:** Stav `deleted` neexistuje. Inzeráty nemažu, pouze expirují nebo se prodají (paměť trhu).
+
 ### Limity
 - **Limit feedů:**
   - Počítám pouze feedy typu `user`.
   - `search` (poslední hledání) je mimo limity (nezabírá slot).
-  - Při překročení limitu (např. po vypršení předplatného) feedy nemažu. Jen ty nadlimitní v UI skryji (disable).
+  - Při překročení limitu feedy nemažu. Jen ty nadlimitní v UI skryji (disable).
 - **Limit aktivních inzerátů:**
-  - Limituji pouze **aktivní** inzeráty (publikované + neexpirované + neprodané).
-  - Pokud inzerát dostane stav `sold` (prodáno), přestává se počítat do limitu.
+  - Limituji pouze inzeráty ve stavu **Live**.
   - Při překročení limitu (vypršení passu): Existující inzeráty nechám doběhnout. Aktivuje se **Draft Gate** (nepustím uživatele tvořit nové).
 
 ### Notifikace a Inbox
@@ -347,7 +359,8 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
   - Umožňuje inzerátu "přežít" expiraci a zůstat v aktivním cyklu.
 
 ### Payback
-- Kompenzace pro prodávajícího (Seller), pokud byl jeho **Mark/Top** potlačen Anti-topperem.
+- Kompenzace pro prodávajícího, pokud byl jeho **Top** potlačen Anti-topperem.
+- Týká se pouze **Top** (Mark nekompenzuji).
 - Payback je **Pass (Exclusive)** = nárok na refund mají pouze předplatitelé.
 - Vyhodnocuji po expiraci inzerátu.
 - Sleduji poměr zobrazení (Visible vs. Anti-topper eventy). Pokud poměr překročí definované prahy, vracím poměrnou část ceny boostu v goldíkách.
@@ -362,12 +375,13 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
   - Prodávající označuje `resolved` (vyřešeno/odesláno).
   - Kupující dává finální `success` (úspěch) nebo `closed` (zavřeno/neutrál).
 - **Sold (Prodáno):**
-  - Jakmile je jedna transakce `resolved`, systém přepne všechny ostatní transakce na daný inzerát do stavu `sold` (systémová zpráva "Prodáno").
+  - Jakmile je jedna transakce `resolved`, systém přepne inzerát do stavu `sold` a ostatní transakce ukončí (`sold`).
 - **Expirace transakce:**
   - 3 dny bez aktivity = `expired`. Jakákoliv akce posouvá timer.
 - **Dispute:**
   - Hint "něco nesedí".
-  - Nemá vliv na karmu, jen dává signál systému a brzdí automatické uzavření.
+  - **Nema vliv na Karmu.**
+  - **Metrika:** Propisuji do metrik obou stran ("Dispute Rate").
 
 ### Čistky dat
 - Po ukončení transakce (`closed`, `sold`, `expired`) běží dvoufázový úklid:
@@ -382,7 +396,8 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
 - **Palce (Inzerát):**
   - Signál atraktivity nabídky (Like/Dislike).
 - **Karma (Uživatel):**
-  - Hodnocení po transakci: **Like** (Dobrý) / **Dislike** (Špatný).
+  - Hodnocení **v rámci transakce**: **Like** (Dobrý) / **Dislike** (Špatný).
+  - Lze udělit kdykoliv po otevření obchodu (`open`).
   - Pokud uživatel nehlasuje, bere se to jako neutrál.
 - **Detail protistrany (Metriky):**
   - Placený nástroj (Pass). Umožňuje vidět tvrdá data o druhém uživateli.
