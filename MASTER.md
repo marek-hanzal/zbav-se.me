@@ -43,6 +43,8 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 
 - Onboarding bez pozlátek: „**Klikej. Zkoumej. Není tu co posrat.**“
 - Neučíme, nekomentujeme, neotravujeme.
+- V UI používáme **mužský rod** jako neutrální default (hlavně u stavů transakcí a systémových hlášek).
+- Vyhýbáme se pasivu a úředničině ("bylo odmítnuto"). Radši krátce a lidsky: „Odmítl jsi“, „Prodejce tě odmítl“.
 
 ### Produktové cíle
 
@@ -102,6 +104,7 @@ Jak to obcházíme:
 ### Co vědomě neděláme (a proč)
 
 - **„protočím ti to, protože zaplatíš“**: agresivní paid reach a tlačení věcí do obličeje vytváří šum, scam prostor a únavu. Naše cesta je čitelnost trhu, kontrola uživatele a reputace.
+- **Videa u inzerátů:** ne. Nikdy. Nechceme šum, zneužití ani infra peklo.
 
 ---
 
@@ -179,6 +182,15 @@ Sekce pro **hlavní části aplikace** a jejich smysl. Neřeší layout, kompone
 - **Obchod / Bonusy**: nákup balíčků goldíků, správa předplatného (aktivace/obnova/cancel) + denní bonus / dropy.
 - **Profil / Nastavení**: preference uživatele (lokace, citlivost, nastavení feedů, atd.).
 
+### Landing
+
+- Scroll-based landing bez nátlaku a bez „přednášky“. Když to nejde pochopit bez vysvětlování, je to špatně.
+- Autor je vidět: **tvář + jméno** jako kotva důvěry (ne anonymní „platforma“).
+- Tagline: **„Bez keců. Bez ojebů.“** (konstatování postoje, ne CTA).
+- Desktop pořád mobile-first layout (žádný „desktop mód“ v MVP).
+- Součástí landingu je **živá timeline** dění v appce (automatické události), aby produkt měl „duši“ i v early fázi.
+
+
 ### Rozšíření (Features)
 
 Rozšíření nejsou entity. Jsou to **zapínatelné schopnosti**, které staví nad stavebními kameny (Feed, inzerát, transakce, metriky).
@@ -225,6 +237,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - **Cena:** price + priceType (pevná vs. otevřená), currency.
   - **Parametry věci:** condition (škála), age (škála), delivery (osobně / post / package / other), warranty (warranty / no-warranty / custom).
   - **Kategorizace:** categoryId + napojení na kategorii.
+    - **Sezónní kategorie** (Vánoce, Velikonoce, Valentýn, Halloween...) existují celoročně. Obsah se čistí přirozeně expirací, ne ručním úklidem „mrtvol“.
   - **Lokalita:** locationId + lat/lon; umíme spočítat **vzdálenost (km)**, pokud je k dotazu dodaná poloha uživatele.
   - **Čas:** createdAt / updatedAt / expiresAt (včetně filtrování podle expiresAtBefore/After).
   - **Vazby na uživatele:** isFavourite, isIgnored, hasFlag, feedback (like/dislike), transactionId (existuje obchod pro daného uživatele).
@@ -235,6 +248,15 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 ### Draft
 
 > Další klíčová funkce, která umožňuje postupnou tvorbu inzerátu beze strachu, že se nějaké údaje ztratí, pokud v průběhu uživatel aplikaci opustí. Spolu s tím spravujeme seznam Draftů, tzn. uživatel může snadno vytvářet inzeráty z již existujících nastavení (včetně uložených obrázků).
+
+#### Tvorba Draftu
+
+- Editor je **jedna kontinuální činnost** (scroll nemění kontext). Sticky header netřeba.
+- Velký title („Nový inzerát“) je jen úvodní orientace. Pak může zmizet a nikoho to nezabije.
+- Horní zavírací křížek **neexistuje** (dělá nejistotu). Únik z flow je přes spodní navigaci.
+- **Bottom nav** je mentální kotva: „když ji vidím, není co posrat“.
+- Back akce je vždy bezpečná: **autosave** + drafty jako neprůstřelný kontrakt (uživatel nikdy neztratí data).
+- Draft je preferovaná návratová cesta do flow. Nezačínáme zbytečně „od nuly“.
 
 - Kopíruje atributy inzerátu
 - Slouží jako vstupní bod pro tvorbu nového inzerátu - prvně vzniká Draft, z něj se pak publikuje inzerát
@@ -281,6 +303,14 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - lokace,
   - údaje o balíčku / kurýrovi (tracking),
   - osobní údaje (email, telefon, adresa).
+
+#### Zpráva - Balíček
+
+- **URL je povinná** (vždy ukládáme odkaz).
+- **Tracking number je volitelný**, ale doporučený.
+- UI zvýrazní **doménu** (identita), celou URL menším „technickým“ stylem.
+- Když je tracking number: „**Zásilka:** Z66543“ (příklad). Když není: jen „odkaz na stránky dopravce“.
+- Žádná tvrdá validace, žádný auto-preview, žádné metadata fetch, žádný whitelist. Jen měkké heuristiky a vizuální signály.
 
 ### Lokace
 
@@ -377,6 +407,17 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 - Pokud uživatel má uložených více feedů, než dovoluje jeho aktuální limit (typicky po doběhnutí předplatného), feedy se **nemažou**.
 - UI jen část z nich **skryje/disable** (upgrade nebo smazání uvolní slot).
+
+### Limity aktivních inzerátů
+
+- Limitujeme jen **aktivní (publikované) inzeráty**. Expirované neřešíme.
+- Default (Free): **5 aktivních inzerátů**.
+- Balíčky:
+  - **Buyer:** max. **5** aktivních inzerátů.
+  - **Seller:** max. **10** aktivních inzerátů.
+  - **Pro:** max. **20** aktivních inzerátů.
+- Navýšení limitu je řešené přes **pass** (a pass jde odemknout přes **token → pass**).
+
 
 ---
 
@@ -668,6 +709,10 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Každá transakce pracuje se svým vlastním **vláknem zpráv** (message thread).
 - **Anti-spam core hodnota:** dokud prodávající transakci nepřijme, **neexistuje žádná uživatelská interakce** (žádné zprávy, žádná strukturovaná data, žádné „je to aktuální?“). Tečka.
   - Zprávy se otevřou až ve chvíli, kdy prodávající obchod přijme (**open**).
+- **Ochrana prodávajícího:** pending může klidně ignorovat bez postihu. Odmítnutí je bez vysvětlování. Tlak na reakci je rakovina.
+- **Odpovědnost začíná přijetím:** jakmile prodávající obchod přijme (**open**), bere na sebe závazek. Přijmout a pak ghostovat je jediný moment, kde dává smysl systémová paměť a postih.
+- **Zavřeno je zavřeno:** odmítnuté nebo ukončené transakce jsou definitivně uzavřené. Nelze je znovu otevřít ani „navázat“. Další kontakt jen přes **novou** transakci.
+
 - Stavový flow:
   - **pending**: kupující otevřel obchod („Mám zájem“).
   - **open**: prodávající obchod přijme.
@@ -772,6 +817,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Přidělené goldíky:** 300 / měsíc.
 - **Early Access (token, 5×)**
 - **Limit uložených feedů (pass):** default 3 → Buyer 5.
+- **Limit aktivních inzerátů:** 5.
 - **Anti-topper (token, 5×)**
 
 ### Balíček Prodejce (229 Kč / měsíc)
@@ -781,6 +827,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Přidělené goldíky:** 300 / měsíc.
 - **Early Delivery (token, 5×)**
 - **Photo Count (pass):** navýšení počtu fotek z default 3 → 5.
+- **Limit aktivních inzerátů (pass):** 10.
 - **Mark (token, 5×)**
 - **Top (token, 3×)**
 - **Top Maxxi (token, 1×)**
@@ -799,6 +846,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - **Early Access (pass)**
 - **Limit uložených feedů (pass):** 10.
 - **Photo count (pass):** 10.
+- **Limit aktivních inzerátů (pass):** 20.
 - **Multi-Category (pass)**
 - **Detail protistrany (pass)**
 - **Payback (pass)**
@@ -891,6 +939,8 @@ Pozn.: **Jednotková cena** u balíčků (např. „5× za 20“) znamená cenu 
 | Multi-Category      | Token              | 1× použití (1 + 2 kategorie)                                     | 75        |
 | Detail protistrany  | Token              | 5× použití (každé vygeneruje pass na **7 dnů**)                  | 50        |
 | Photo Count         | Token              | 1× použití (vygeneruje pass: **1 měsíc**, +2 fotky)              | 75        |
+| Aktivní inzeráty 10   | Token              | 1× použití (vygeneruje pass: **1 měsíc**, limit **10** aktivních inzerátů) | TBD      |
+| Aktivní inzeráty 20   | Token              | 1× použití (vygeneruje pass: **1 měsíc**, limit **20** aktivních inzerátů) | TBD      |
 | Payback             | Pass               | po dobu předplatného                                             | exclusive |
 | Multi-Category      | Pass               | po dobu předplatného                                             | exclusive |
 | Detail protistrany  | Pass               | po dobu předplatného (balíček Pro)                               | exclusive |
