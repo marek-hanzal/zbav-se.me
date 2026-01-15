@@ -224,6 +224,79 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
 <a id="zakladni-kameny"></a>
 ## Základní stavební kameny
 
+> Definice entit a dat, na kterých stavím vše ostatní.
+
+### Uživatel
+- Core entita.
+- Držím absolutně minimální data – mám jen **email**, nic jiného neukládám.
+- Respektuji anonymitu. Bezpečnost řeším sledováním chování (reputace), ne lustrováním občanky.
+
+### Kategorie
+- Organizační vrstva trhu. Kontext, ve kterém dává smysl jiný jazyk a filtry.
+- Kategorie nese: **název**, **slug**, **locale**.
+- **Category Spec (Parametry):**
+  - Kategorie může definovat doplňující údaje (např. u aut „rok“, u vapingu „typ baterky“).
+  - Tyto parametry řídí **UI tvorby inzerátu** (co vyplňuji) a **UI filtrování** (co hledám).
+  - Parametr má typ (text, number, enum, bool) a režim filtru (equality nebo range).
+  - **Range filtry jsou explicitní:** Parametr se nestane range filtrem sám od sebe, musí to být vědomé rozhodnutí v definici kategorie.
+
+### Inzerát
+- Souhrn atributů a fotek reprezentující nabízenou věc.
+- **Atributy:**
+  - **Obsah:** Title, description, pros/cons.
+  - **Galerie:** Kolekce uploadů.
+  - **Cena:** Částka + měna + typ (pevná/otevřená).
+  - **Globální parametry:** Condition (stav), age (stáří), delivery, warranty.
+  - **Specifické parametry:** Data dle definice kategorie (JSONB).
+  - **Lokalita:** Odkaz na entitu Lokace + souřadnice.
+- **Metriky a eventy:**
+  - Nad inzerátem měřím eventy pro vyhodnocení zájmu: **Impression** (scroll), **View** (detail), **Visible** (zobrazení).
+  - Dále sleduji: **Flag** (nahlášení), **Ignor** (skrytí), **Favourite**.
+
+### Draft
+- Kopie atributů inzerátu ve stavu zrodu.
+- Vstupní bod tvorby. Inzerát nenechám vzniknout kliknutím, vzniká z Draftu.
+- Umožňuje postupnou tvorbu (autosave) bez rizika ztráty dat.
+- Spravuji seznam Draftů (možnost šablon/kopírování).
+
+### Feed (Entita)
+- Uložené nastavení filtru nad inzeráty.
+- Není to jen seznam, je to **předpis**: "Co chci vidět" (kategorie, filtry, lokalita).
+- Feed si pamatuje svou vlastní lokalitu (např. "Feed pro chatu" vs. "Feed pro práci").
+- Defaultně zakládám uživateli obecný Feed bez filtrů.
+- **Vyhledávání === Feed:** Systémově beru hledání jen jako speciální instanci Feedu.
+
+### Transakce
+- Most mezi prodejcem a kupujícím.
+- Zastupuje interakci, v systému se prezentuje jako „Zprávy“.
+- Každá transakce má **vlastní vlákno zpráv** (izolovaný kontext).
+- Transakce nese stav (pending, open, sold...).
+
+### Zprávy
+- Obsah transakce.
+- **Typy obsahu:**
+  - Text.
+  - Obrázky.
+  - **Strukturovaná data:** Lokace, tracking balíčku, kontaktní údaje.
+  - **Systémové zprávy:** Oznámení generovaná systémem (např. "Prodáno").
+- Strukturovaná data ukládám odděleně, aby šla snadno a cíleně mazat (GDPR/Clean-up).
+
+### Notifikace (Inbox)
+- Jediný zdroj pravdy pro "co se stalo".
+- Všechny události padají do **Inboxu**. Email je jen volitelný "forwarder".
+
+### Lokace
+- Autorita na polohu.
+- Neukládám random stringy, odkazuji se na validní záznam ze služby vyhledávání adres.
+
+### Upload
+- Centrální správa souborů (fotek).
+- Metadata k souborům na CDN.
+
+### Hodnocení (Ranking)
+- Pokud není řečeno jinak, používám školní stupnici **A-F** (A = nejlepší).
+- Interně to mapuji na čísla 6 (A) až 1 (F).
+
 <a id="mechaniky"></a>
 ## Mechaniky
 
