@@ -269,14 +269,15 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - **Obsah inzerátu:** title, description, pros/cons.
   - **Galerie:** uploady + jejich pořadí (galerie / fotky).
   - **Cena:** price + priceType (pevná vs. otevřená), currency.
-  - **Parametry věci:** condition (škála), age (škála), delivery (osobně / post / package / other), warranty (warranty / no-warranty / custom).
+  - **Parametry věci (Global):** condition (škála), age (škála), delivery (osobně / post / package / other), warranty (warranty / no-warranty / custom).
+  - **Parametry věci (Specifické):** `parameters` (JSONB) - dynamický objekt pro specifika kategorie (např. odpor cívky, typ baterie). Struktura je validována v kódu (Zod) podle kategorie. Umožňuje rychlé filtrování na shodu (enum/tagy), ale nikoliv na číselné rozsahy (range).
   - **Kategorizace:** categoryId + napojení na kategorii.
     - **Sezónní kategorie** (Vánoce, Velikonoce, Valentýn, Halloween...) existují celoročně. Obsah se čistí přirozeně expirací, ne ručním úklidem „mrtvol“.
   - **Lokalita:** locationId + lat/lon; umíme spočítat **vzdálenost (km)**, pokud je k dotazu dodaná poloha uživatele.
   - **Čas:** createdAt / updatedAt / expiresAt (včetně filtrování podle expiresAtBefore/After).
   - **Vazby na uživatele:** isFavourite, isIgnored, hasFlag, feedback (like/dislike), transactionId (existuje obchod pro daného uživatele).
   - **Event log nad inzerátem:** impression, view, ignore/unignore, flag/unflag, transaction, favourite/unfavourite, like/dislike.
-  - **Filtrování (feed):** fulltext, title, priceMin/priceMax, conditionMin/Max/In, ageMin/Max/In, deliveryIn, warrantyIn, categoryId/categoryIdIn, currency/currencyIn, feedId/feedIdIn, my/withOwn, withIgnored, isFavourite, transaction, range (km).
+  - **Filtrování (feed):** fulltext, title, priceMin/priceMax, conditionMin/Max/In, ageMin/Max/In, deliveryIn, warrantyIn, categoryId/categoryIdIn, currency/currencyIn, feedId/feedIdIn, my/withOwn, withIgnored, isFavourite, transaction, range (km), parameters (JSONB equality).
   - **Řazení:** price, condition, age, createdAt, updatedAt, expiresAt, geo (vzdálenost).
 
 ### Notifikace
