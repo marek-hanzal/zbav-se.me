@@ -96,7 +96,7 @@ Nesnažíme se o čelní souboj v „kdo má víc všeho pro všechny“. Staví
 
 Jak to obcházíme:
 - startujeme v úzké komunitě (vyšší důvěra, vyšší hustota kvality),
-- teprve pak teprve jdeme do regionu,
+- teprve pak jdeme do regionu,
 - nové uživatele necháme 1 měsíc v plné síle (trial Pro), ať to ochutnají a poznají rozdíl.
 
 ### Co vědomě neděláme (a proč)
@@ -261,8 +261,7 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 > Jelikož je systém tvrdě anonymní, toto slouží jako most mezi prodejcem a kupujícím - můžou navzájem získat systémové informace, co jsou zač, než se rozhodnou k interakci. Po otevření transakce (viz. Mechaniky) pak vše probíhá jako chytřejší standardní chat.
 
 - Zastupuje interakci mezi uživateli, v systému se prezentuje jako „Zprávy“
-- Každá transakce má svoje vlastní **vlákno zpráv** (message thread), které k transakci patří
-- Vlákno zpráv je samostatný objekt, který se „připojuje“ k transakcím; transakce tak vždy pracuje s vlastním vláknem (neexistuje sdílené vlákno mezi více transakcemi)
+- Každá transakce má svoje vlastní vlákno zpráv (message thread). Vlákno zpráv je samostatná entita připojená k transakci a nikdy se nesdílí mezi více transakcemi.
 - Lifecycle (zavření, expirace, mazání) je definovaný v **Mechaniky → Obchod (transakce)**.
 
 ### Zprávy
@@ -385,7 +384,6 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 - Strukturovaná data (lokace, osobní údaje, tracking, atd.) mají vlastní tabulky, aby šla **cíleně mazat**.
 - Platforma **nečte ani nehodnotí** obsah textových zpráv. Pokud si tam lidi pošlou osobní údaje mimo strukturované zprávy, je to jejich rozhodnutí.
-- Systémové zprávy jsou zprávy poslané systémem (bez `userId`) a chovají se jako běžný text (jen mají jiný původ).
 
 ---
 
