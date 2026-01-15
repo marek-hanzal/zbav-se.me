@@ -36,13 +36,13 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 - Nejsme další bazar. Jsme **systém důvěry a komunity**
 - Cíl: **klid, důvěra, kompetence uživatele**
 - Monetizace stojí na **hodnotě**, ne na tlaku
-- Předpoklad IQ uživatelů je alespoň 80 (nadnesené)
 - Stavíme na důvěře mezi **platformou** a **uživateli** pro nastavení *mentálního komfortu*
 
 ### Tone of Voice
 
 - Onboarding bez pozlátek: „**Klikej. Zkoumej. Není tu co posrat.**“
 - Neučíme, nekomentujeme, neotravujeme.
+- **Předpoklad IQ uživatelů je alespoň 80** (nadnesené).
 - V UI používáme **mužský rod** jako neutrální default (hlavně u stavů transakcí a systémových hlášek).
 - Vyhýbáme se pasivu a úředničině ("bylo odmítnuto"). Radši krátce a lidsky: „Odmítl jsi“, „Prodejce tě odmítl“.
 
@@ -171,7 +171,6 @@ Tento kodex popisuje **vědomá rozhodnutí a kontrakt** mezi platformou a její
 - **Defaultně schovaný**: inzerát se nikdy nemaže; „schovaný“ znamená jen to, že spadá pod standardní pravidla viditelnosti. V seznamu inzerátů se typicky neobjeví, přímý odkaz funguje, a na něm se vyhodnocuje citlivost.
 - **Interakce s expirovaným inzerátem**: povolené je pouze **flagování** (aby nezbedníkům jejich sračky neprocházely).
 
-
 ### Aktivita uživatele
 
 - **Aktivita uživatele**: jakýkoli záznam v **User Event Logu** uživatele. Eventy se sbírají průběžně pohybem uživatele po appce.
@@ -207,10 +206,7 @@ Sekce pro **hlavní části aplikace** a jejich smysl. Neřeší layout, kompone
 ### Tvorba Draftu
 
 - Inzerát se **nevytváří kliknutím**. Vždycky nejdřív vznikne **Draft** a teprve z něj se publikuje inzerát.
-- **Limit aktivních inzerátů se kontroluje dřív, než se otevře editor draftu.**
-  - Pokud je limit plný / uživatel je nad limitem, ukáže se **Status obrazovka**: „Máš plný limit aktivních inzerátů.“
-  - Status nabízí **jedno CTA**: odemknout vyšší limit (aktivace tokenu → vznik passu).
-  - Teprve po odemknutí limitu se uživatel dostane do tvorby draftu (žádné naklikávání dopředu, co pak nejde použít).
+- **Vstup do editoru je podmíněn limitem aktivních inzerátů** (viz Mechaniky → Limity aktivních inzerátů).
 - Editor je **jedna kontinuální činnost** (scroll nemění kontext). Sticky header netřeba.
 - Velký title („Nový inzerát“) je jen úvodní orientace. Pak může zmizet a nikoho to nezabije.
 - Horní zavírací křížek **neexistuje** (dělá nejistotu). Únik z flow je přes spodní navigaci.
@@ -220,15 +216,9 @@ Sekce pro **hlavní části aplikace** a jejich smysl. Neřeší layout, kompone
 
 ### Zprávy
 
-Zprávy jsou UI pro transakce a komunikaci. Vedle textu podporují i strukturovaná data (lokace, balíček, osobní údaje).
+Zprávy jsou UI pro transakce a komunikaci.
 
-#### Zpráva - Balíček
-
-- **URL je povinná** (vždy ukládáme odkaz).
-- **Tracking number je volitelný**, ale doporučený.
-- UI zvýrazní **doménu** (identita), celou URL menším „technickým“ stylem.
-- Když je tracking number: „**Zásilka:** Z66543“ (příklad). Když není: jen „odkaz na stránky dopravce“.
-- Žádná tvrdá validace, žádný auto-preview, žádné metadata fetch, žádný whitelist. Jen měkké heuristiky a vizuální signály.
+- **Podpora strukturovaných widgetů**: nad rámec textu lze vkládat balíčky (tracking) a lokace.
 
 ### Rozšíření (Features)
 
@@ -312,6 +302,11 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
   - **Čas:** createdAt / updatedAt / expiresAt (včetně filtrování podle expiresAtBefore/After).
   - **Vazby na uživatele:** isFavourite, isIgnored, hasFlag, feedback (like/dislike), transactionId (existuje obchod pro daného uživatele).
   - **Event log nad inzerátem:** impression, view, ignore/unignore, flag/unflag, transaction, favourite/unfavourite, like/dislike.
+  - **Definice metrik a časovačů:**
+    - **Visible**: odpálí se při scrollu po **0,5 s**.
+    - **Anti-topper**: u uživatelů s aktivním anti-topperem nahrazuje `visible` ve chvíli, kdy by se v listingu ukázal inzerát s **Mark/Top**.
+    - **View**: uživatel otevřel detail inzerátu a čumí do něj cca **2,5 s**.
+    - **Impression**: uživatel se při scrollování feedem u inzerátu pozastavil cca **1,6 s**.
   - **Filtrování (feed):** fulltext, title, priceMin/priceMax, conditionMin/Max/In, ageMin/Max/In, deliveryIn, warrantyIn, categoryId/categoryIdIn, currency/currencyIn, feedId/feedIdIn, my/withOwn, withIgnored, isFavourite, transaction, range (km), parameters.
     - Kategorie-specifické filtry (parameters) jsou dostupné jen pokud je definuje Category Spec (equality/range).
   - **Řazení:** price, condition, age, createdAt, updatedAt, expiresAt, geo (vzdálenost).
@@ -436,11 +431,24 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 
 ---
 
-### Inzerát - expirace a interakce
+### Viditelnost a životní cyklus inzerátu
 
-- Expirované inzeráty lze stále zobrazit ve feedu, ale jen pokud si to uživatel **vědomě zapne** (explicitní nastavení).
-- Pokud jiná mechanika neřekne jinak, expirovaný inzerát už **nedovolí interakci**.
-- Smysl: historický kontext trhu (co se prodávalo, za kolik, jaké věci se objevují).
+- „Viditelnost“ inzerátu se řeší na dvou místech:
+  - **Seznam inzerátů (listing)**: inzerát buď projde filtrem a dostane se do seznamu nebo vypadne úplně ven.
+  - **Přímý odkaz (detail)**: uživatel může otevřít detail i mimo seznam; tvrdé pravidlo je pouze citlivost (viz níže).
+- **Expirované inzeráty:**
+  - Lze je stále zobrazit ve feedu, ale jen pokud si to uživatel **vědomě zapne** (explicitní filtr).
+  - Přes přímý odkaz jsou expirované inzeráty vždy dostupné (read-only).
+  - Smysl: historický kontext trhu.
+  - Pokud jiná mechanika neřekne jinak, expirovaný inzerát už **nedovolí interakci** (kromě flagování).
+- **Release window (Early Access / Early Delivery)** je jen pravidlo pro seznam inzerátů:
+  - přímý odkaz na čerstvý inzerát je dostupný vždy (systém nikoho nešikanuje tím, že „to nejde otevřít“).
+- **Ignorování** je vlastní volba uživatele:
+  - ignorované inzeráty se standardně do seznamu nedostanou (pokud si uživatel vědomě nezapne zobrazování ignorovaných),
+  - přímý odkaz na ignorovaný inzerát detail normálně otevře („OK, nezajímá mě“).
+- **Citlivost** musí vždy respektovat nastavení uživatele:
+  - pokud uživatel nemá povolenou potřebnou úroveň citlivosti, server vrátí pro přímý odkaz **404** (aby to nešlo obcházet sdílením odkazů).
+- Pokud inzerát **už není k dispozici pro nový obchod** (např. je prodaný), detail se otevře, ale místo tlačítka „Mám zájem“ se zobrazí status typu **„Inzerát již není dostupný“**.
 
 ---
 
@@ -467,24 +475,6 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Hledací feed se **vytvoří vždycky**, i když tím uživatel dočasně překročí limit uložených feedů.
 - Hledací feed se zobrazuje v seznamu feedů a **počítá se do limitů** feedů v balíčcích.
 - Brány viditelnosti jsou stejné jako u feedu (ignor, citlivost, expirace, release window, atd.).
-
----
-
-### Viditelnost inzerátu (seznam vs. přímý odkaz)
-
-- „Viditelnost“ inzerátu se řeší na dvou místech:
-  - **Seznam inzerátů (listing)**: inzerát buď projde filtrem a dostane se do seznamu nebo vypadne úplně ven.
-  - **Přímý odkaz (detail)**: uživatel může otevřít detail i mimo seznam; tvrdé pravidlo je pouze citlivost (viz níže).
-- **Release window (Early Access / Early Delivery)** je jen pravidlo pro seznam inzerátů:
-  - přímý odkaz na čerstvý inzerát je dostupný vždy (systém nikoho nešikanuje tím, že „to nejde otevřít“).
-- **Ignorování** je vlastní volba uživatele:
-  - ignorované inzeráty se standardně do seznamu nedostanou (pokud si uživatel vědomě nezapne zobrazování ignorovaných),
-  - přímý odkaz na ignorovaný inzerát detail normálně otevře („OK, nezajímá mě“).
-- **Citlivost** musí vždy respektovat nastavení uživatele:
-  - pokud uživatel nemá povolenou potřebnou úroveň citlivosti, server vrátí pro přímý odkaz **404** (aby to nešlo obcházet sdílením odkazů).
-- **Expirovaný inzerát** je přes přímý odkaz pořád dostupný (read-only):
-  - není důvod ho skrývat, jen nad ním už neběží běžné interakce / bonusy.
-- Pokud inzerát **už není k dispozici pro nový obchod** (např. je prodaný), detail se otevře, ale místo tlačítka „Mám zájem“ se zobrazí status typu **„Inzerát již není dostupný“**.
 
 ---
 
@@ -580,16 +570,6 @@ Tato část popisuje vše, co systém obsahuje a s čím v dalších sekcích po
 - Neexistují zatím pevná pravidla (policy); dokud nejsou zapsaná jako pravidla, nejsou implementovaná jako automatika.
 - Typický důvod (příklad, ne zákon): zjevně křížově špatně označený citlivý/omezený obsah (např. „bouchačka mezi kočárkama“) nebo opakované porušování pravidel.
 - V rámci rozjetého projektu je pak možné jej případně generovat i systémově, do MVP zatím nepatří.
-
-### Metriky inzerátu
-
-- **Visible**: odpálí se při scrollu po **0,5 s**.
-- **Anti-topper**: u uživatelů s aktivním anti-topperem nahrazuje `visible` ve chvíli, kdy by se v listingu ukázal inzerát s **Mark/Top** (boost je potlačen).
-- **View**: uživatel otevřel detail inzerátu a čumí do něj cca **2,5 s**.
-- **Impression**: uživatel se při scrollování feedem u inzerátu pozastavil cca **1,6 s**.
-- **Feedback**: sbíráme palec **nahoru / dolů**.
-- **Ignorované**: počet ignorování inzerátu (uživatel si ho skryl).
-- **Transakce**: počet vzniklých transakcí z akce **„Mám zájem“** (kolik lidí otevřelo obchod).
 
 ### Rozšířená data u inzerátu
 
@@ -1034,17 +1014,17 @@ Pozn.: **Jednotková cena** u balíčků (např. „5× za 20“) znamená cenu 
 
 | Co                  | Typ (token / pass) | Kolik / na jak dlouho                                            | Cena      |
 | ------------------- | ------------------ | ---------------------------------------------------------------- | --------- |
-| Early Access        | Token              | 1× použití (vygeneruje pass: +8h náskok na **7 dnů**)            | 80        |
+| Early Access        | Token              | 1× použití (vygeneruje pass na **7 dnů**)                        | 80        |
 | Early Delivery      | Token              | 1× použití (ruší release window pro konkrétní inzerát)           | 40        |
 | Anti-topper         | Token              | 1× použití (vygeneruje pass na **7 dnů**)                        | 40        |
 | Mark                | Token              | 5× použití (každé vygeneruje pass na **7 dnů**)                  | 20        |
-| Top                 | Token              | 3× použití (každé vygeneruje pass; bump při aktivaci)            | 50        |
+| Top                 | Token              | 3× použití (každé vygeneruje pass na **7 dnů**)                  | 50        |
 | Top Maxxi           | Token              | 1× použití (vygeneruje pass na **7 dnů**)                        | 50        |
 | Multi-Category      | Token              | 1× použití (1 + 2 kategorie)                                     | 75        |
 | Detail protistrany  | Token              | 5× použití (každé vygeneruje pass na **7 dnů**)                  | 50        |
 | Photo Count         | Token              | 1× použití (vygeneruje pass: **1 měsíc**, +2 fotky)              | 75        |
-| Aktivní inzeráty 10   | Token              | 1× použití (vygeneruje pass: **1 měsíc**, limit **10** aktivních inzerátů) | TBD      |
-| Aktivní inzeráty 20   | Token              | 1× použití (vygeneruje pass: **1 měsíc**, limit **20** aktivních inzerátů) | TBD      |
+| Aktivní inzeráty 10   | Token              | 1× použití (vygeneruje pass: **1 měsíc**, limit **10**)          | TBD      |
+| Aktivní inzeráty 20   | Token              | 1× použití (vygeneruje pass: **1 měsíc**, limit **20**)          | TBD      |
 | Payback             | Pass               | po dobu předplatného                                             | exclusive |
 | Multi-Category      | Pass               | po dobu předplatného                                             | exclusive |
 | Detail protistrany  | Pass               | po dobu předplatného (balíček Pro)                               | exclusive |
