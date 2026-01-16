@@ -468,23 +468,91 @@ Zjednodušeně:
 
 A v UI platí jedno pravidlo: uživatel musí vždycky jasně vidět, jestli něco **utrácí** (token), **spotřebovává** (kupón), nebo **aktivuje na čas** (pass).
 
-<a id="feed-seznam-term"></a>
+<a id="feed-vs-seznam"></a>
 ### Feed vs. Seznam
-- **Feed (technicky):** Uložené nastavení filtru nad inzeráty (kategorie, lokace, cena...).
-- **Seznam (UI):** Uživatelský název pro Feed. V aplikaci mluvím o „Mých seznamech“.
-- **Inzeráty (UI tlačítko):** Chytrý odkaz, který uživatele hodí do posledního navštíveného seznamu (nebo defaultního).
+
+Tady je to jednoduchý a držím to tak schválně, aby se mi nerozjel produkt do chaosu.
+
+- **Feed** = *konfigurační dotaz*  
+  Feed je uložený nastavení, **jaký inzeráty konkrétně chci vidět**. Zjednodušeně: uložený hledání / hlídací pes.  
+  Feed sám o sobě nic nezobrazuje, je to jen konfigurace: filtry, radius, lokace, citlivost, řazení, případně další parametry.
+
+- **Seznam (inzerátů)** = *výsledek feedu*  
+  Seznam inzerátů je vždycky **výstup**, který vznikne tím, že vezmu feed a “jebnu ho na vstup” engine, co vrací inzeráty.  
+  Je úplně jedno, odkud feed vznikl:
+  - vytvořil ho uživatel (uložený feed),
+  - vytvořil ho systém (nějaký default),
+  - vznikl z hledání (search feed).
+  Pořád platí: **feed = konfigurace**, **seznam = výsledky**.
+
+> Feed je otázka. Seznam je odpověď.
+
+A jedna důležitá věc: **každej feed i každej seznam vždycky respektuje systémový pravidla**.  
+To znamená, že i kdyby si někdo naklikal cokoliv, pořád platí:
+- **citlivost obsahu** (hard gate),
+- **ignorování** (defaultně skryté, pokud výslovně nezapnu `withIgnored`),
+- a další globální pravidla viditelnosti, která definuju jinde.
+
+Feed je jen konfigurace. Systémový pravidla jsou nad tím.
 
 <a id="typy-feedu"></a>
-### Typy Feedu
-- `user` – **Uživatelský seznam**. Vědomá volba uživatele (uloženo v „Moje seznamy“). **Tento typ se počítá do limitu počtu feedů.**
-- `search` – **Hledací kontext**. Interní stav pro stránku Hledat (v seznamu „Moje seznamy“ ho nezobrazuji). **Tento typ se nepočítá do limitu počtu feedů.**
+### Typy feedu
+
+Feed je uložený konfigurační dotaz a vždycky patří uživateli. Typ feedu jen určuje, jak se s ním pracuje v UI.
+
+Máme dva typy:
+
+- **`user`**  
+  Uživatel si ho nakliká jako “uložený hledání / hlídací pes”.  
+  - je vidět v seznamu feedů  
+  - počítá se do limitu feedů  
+  - uživatel ho spravuje (úpravy filtrů, řazení, přejmenování)
+
+- **`search`**  
+  To samý nastavení, jen v UI flow stránky **Hledat**.  
+  - `search` je **singleton** (max 1 na účet)  
+  - není v seznamu feedů a nepočítá se do limitu  
+  - pamatuje si poslední kontext hledání (dotaz + filtry)  
+  - když si ho uživatel uloží, vznikne nový feed typu `user`
+
+V obou případech seznam inzerátů vždycky respektuje systémový gating (citlivost, ignor, atd.).
 
 <a id="typy-obsahu"></a>
 ### Typy obsahu (Citlivost)
-- **Běžný:** Standardní inzerát pro všechny (kočárek, telefon).
-- **Pro dospělé:** Legální, ale vyžaduje plnoletost (alkohol, vaping).
-- **Citlivé:** Vyžaduje opatrnost a rozum (airsoft, nože).
-- **Omezené:** Regulováno zákonem (skutečné zbraně).
+
+Obsah není jen “co prodávám”. Obsah je i to, *jestli to můžeš vůbec vidět*. Citlivost je hard gate: chrání veřejnej prostor před **citlivým obsahem**, který určitá skupina lidí buď **nechce**, nebo ho **ani nesmí** vidět.
+
+Tohle je kritická část appky, protože tady se důvěra vědomě svěřuje uživateli. Zbavík není puritán ani cenzor. Platí jednoduchý rámec:
+
+> **Na Zbavíku se dá prodávat všechno, co dovoluje zákon.**  
+> A uživatel má povinnost ten zákon respektovat. Tečka.
+
+Úrovně citlivosti (stupňovaně):
+
+- **Běžný (`common`)** *(default)*  
+  Všechno normální, co nikoho rozumnýho nepřekvapí.  
+  Příklady: elektronika, nábytek, oblečení, knihy, dětský věci, sport, nářadí, domácnost.
+- **Pro dospělé (`adult`)**  
+  Věci, který typicky patří jen pro 18+ nebo mají adult kontext.  
+  Příklady: alkohol, vaping / e-cigarety a příslušenství, erotický věci v legálním rámci, “adult” doplňky, cokoliv, co nechceš míchat do veřejnýho feedu pro děti.
+- **Citlivé (`sensitive`)**  
+  Věci, který nejsou nutně nelegální, ale můžou být kontroverzní, nepříjemný nebo vyžadují víc rozumu.  
+  Příklady: airsoft výbava, repliky, taktický gear, některý sběratelský věci, obsah na hraně “nechci to potkat ve veřejným feedu”.
+- **Omezené (`restricted`)**  
+  Věci, kde už zákon vyžaduje **konkrétní oprávnění** (typicky třeba zbrojní průkaz nebo jiný režim). Tohle už není “meh, tak to nějak dopadne”.  
+  Appka to sice **neověřuje**, ale odpovědnost je čistě na prodejci. Jestli si někdo chce zahrávat s tím, že se potká s PČR, tak je to jeho volba, ne moje.
+
+Gating (dvoufázově, schválně):
+- Na profilu si nastavíš **maximum**, kam jsi ochotnej jít (např. „Všechno včetně omezeného“). To je jen “strop”, nic víc.
+- Aby se ti takovej obsah reálně zobrazoval, musíš si ho ještě **vědomě zapnout ve feedu** (filtr *Citlivost*).  
+  Jinak řečeno: profil = co **smíš**, feed = co **chceš**.
+
+Pravidla viditelnosti:
+- Defaultně každý vidí jen **Běžný**.
+- Feed/seznam vždycky respektuje maximum z profilu **a zároveň** konkrétní filtr citlivosti ve feedu.
+- **Detail přes přímý odkaz**: pokud citlivost přesahuje maximum uživatele, vracím **404** (žádný obcházení přes link, žádný “aspoň víš že to existuje”).
+
+Citlivost je zároveň odpovědnost prodejce. Systém nastaví brány, ale označení je primárně sebeoznačení. Kdo to opakovaně zneužívá (maskuje citlivý jako běžný), porušuje pravidla a je to důvod k zásahu.
 
 <a id="stavy-inzeratu"></a>
 ### Stavy inzerátu
