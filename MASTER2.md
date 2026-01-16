@@ -817,6 +817,24 @@ A ještě technická pravda, kterou držím schválně:
 
 Titulek je první filtr. Když je dobrej, šetří čas všem.
 
+<a id="kategorie"></a>
+### Kategorie
+
+Kategorie je struktura. Bez ní je to jen chaos s fotkama. Kategorie zároveň určuje, jaký další parametry má smysl po uživateli chtít a jak se inzerát bude dát filtrovat.
+
+Co platí:
+
+- **Kategorie je povinná.**  
+  Bez kategorie nejde inzerát publikovat.
+- **Kategorie řídí “podle kategorie” sekci v editoru.**  
+  Jakmile ji vybereš, editor může doplnit relevantní položky a parametry, který dávají smysl právě pro tenhle typ věci.
+- **Kategorie není hra na perfektní taxonomii.**  
+  Nechci stovky mikro-kategorií, kde se nikdo netrefí. Radši míň kategorií a snadný použití.
+- **Kategorie je filtr, ne stigma.**  
+  Kategorie slouží k tomu, aby lidi rychle našli to, co chtějí. Ne k tomu, aby se tu někdo cítil jako na úřadě.
+
+Když si nejseš jistej, vyber tu nejbližší. Zbytek doladí titulek a parametry.
+
 <a id="ux-stavy-vyplneni"></a>
 ### Stav vyplnění jako vizuální signál (a mentální střih)
 
