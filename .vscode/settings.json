@@ -285,6 +285,7 @@
 		"mailhog",
 		"manipulativní",
 		"markeťák",
+		"marketingovej",
 		"matchuje",
 		"mavic",
 		"maxage",
@@ -303,6 +304,7 @@
 		"mingcute",
 		"minhash",
 		"minhashing",
+		"minimalistickej",
 		"minkowski",
 		"mirrorless",
 		"missingok",
@@ -332,6 +334,7 @@
 		"nareportovat",
 		"narovinu",
 		"nasazuju",
+		"nataženej",
 		"navázanej",
 		"navrženej",
 		"neaktivita",
@@ -442,6 +445,7 @@
 		"pokaždý",
 		"poladil",
 		"poladit",
+		"popupů",
 		"pořešit",
 		"postgis",
 		"postrotate",
@@ -644,7 +648,8 @@
 		"zoomable",
 		"zvedlé",
 		"zvyšujou",
-		"Žádnej"
+		"Žádnej",
+		"Živej"
 	],
 	"todo-tree.tree.scanMode": "open files",
 	"editor.codeActionsOnSave": {

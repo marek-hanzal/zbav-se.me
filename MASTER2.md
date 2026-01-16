@@ -607,16 +607,43 @@ Co to není:
 <a id="ui"></a>
 ## UI
 
-Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layout (od toho je Figma), ale logiku a pravidla chování.
+Tady řeším *jak to působí a jak se to používá*. Ne “jak to nakóduju”. UI je u Zbavíku half produktu: když to vypadá nejistě, uživatel je nejistej. Když to působí klidně, uživatel je v klidu. A přesně o to mi jde.
+
+Základní pravidla UI (držím je i když mě to svádí “přidat ještě jednu věc”):
+
+- **Mobile-first vždycky.** Desktop je v principu “nataženej mobil”, žádnej dashboard cirkus.
+- **Nevysvětlovat.** Když to potřebuje nápovědu, je to špatně navržený.
+- **Minimum psaní.** Klikací kroky a jasný stavy. Text jen když má fakt hodnotu.
+- **Akce mají váhu.** Primární CTA je jasná, sekundární neruší, destruktivní je opatrná.
+- **Klid > efekt.** Animace jen kritický minimum, reakce systému má být okamžitá.
+- **Bottom nav je kotva.** Uživatel má mít pořád pocit, že “nemůže nic posrat”.
+
+V dalších podsekcích je UI rozsekaný podle hlavních oblastí (landing, navigace, tvorba inzerátu, feedy, transakce, profil…). Tady je jen rámec, aby se mi to nerozjelo do nekompatibilních obrazovek, který si každá hraje na svůj vlastní produkt.
 
 <a id="landing-ui"></a>
 ### Landing Page (Struktura)
-Landing page je vizitka mého postoje k projektu. Skládá se z 5 pevných bloků:
-1.  **Hero:** Claim „Nakupuješ nebo prodáváš?“ a dvě rovnocenná CTA: „Už se známe“ (Login) a „Přidej se!“ (Register).
-2.  **Autor:** Má fotka, mé jméno, odkaz na můj GitHub a motto „Bez keců. Bez ojebů“. Tvář dává důvěru.
-3.  **Aktivita vývoje:** Živý GitHub-like kalendář (heatmap), který ukazuje, jak na projektu makám.
-4.  **Live Pulse:** Seznam posledních událostí v appce (nové registrace, inzeráty, transakce), aby bylo vidět, že to žije.
-5.  **Transparentní účet:** Odkaz na bankovnictví. Finance netajím.
+
+Landing je vizitka mýho postoje k projektu. Není to manuál, není to marketingovej román. Je to pět pevných bloků a hotovo:
+
+1. **Hero**  
+   Claim: **„Nakupuješ nebo prodáváš?“**  
+   Dvě rovnocenná CTA: **„Už se známe“** (Login) a **„Přidej se!“** (Register).  
+   Žádný trick CTA, žádný “tady klikni protože já chci”. Dvě čistý volby.
+2. **Autor**  
+   Moje fotka, moje jméno, odkaz na můj GitHub a motto: **„Bez keců. Bez ojebů.“**  
+   Tvář dává důvěru. Je jasný, kdo za tím stojí a kdo nese odpovědnost.
+3. **Aktivita vývoje**  
+   Živej GitHub-like kalendář (heatmap), který ukazuje, že na projektu fakt makám.  
+   Ne sliby. Důkaz práce.
+4. **Live Pulse**  
+   Seznam posledních událostí v appce (registrace, nový inzeráty, transakce).  
+   Ať je vidět, že to žije. Žádná nafouknutá čísla, jen jednoduchá realita.
+5. **Transparentní účet**  
+   Odkaz na bankovnictví. Finance netajím.  
+   Když někdo hledá “shady shit”, tak přesně tady by to bylo vidět.
+
+Landing drží minimalistickej tón. Bez popupů, bez urgencí, bez vysvětlování. Kdo se chytí, jde dál. Kdo ne, tak cajk.
+
 
 <a id="navigace"></a>
 ### Navigace a Dashboard
