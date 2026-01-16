@@ -240,32 +240,83 @@ Zjednodušeně: nechci si hrát na hodnýho. Chci být **předvídatelnej**. A t
 <a id="konkurenceschopnost"></a>
 ## Konkurenceschopnost
 
-> Mé subjektivní výhody a argumenty. Checklist, proč do toho jdu.
+Konkurence (Sbazar, Bazoš, FB Marketplace a spol.) není “špatná”. Je to prostě *starej svět*: hodně šumu, hodně náhody, hodně domlouvání v mlze, málo jistoty. Lidi tam prodávají, protože tam “někdo je”, ne proto, že by to bylo příjemný.
+
+Moje výhoda není „killer feature“. Moje výhoda je **charakter trhu** a **klidnej systém**, kterej snižuje mentální dluh. Většina marketplace dělá opak: zvyšuje stres, zvyšuje nejistotu, a pak to maskuje notifikacema, badgeama a “algoritmem”.
+
+> Cíl není porazit všechny. Cíl je být tak příjemnej, že návrat do starýho chaosu bude bolet.
 
 <a id="co-umim-lip"></a>
 ### Co umím líp
 
-- **Klid místo cirkusu:** Minimum vizuálního šumu, žádné otravné UX. Aplikace pomáhá uzavřít obchod, ne krást čas.
-- **Soukromí jako default:** Držím jen minimum dat (email). Nejsi pro mě produkt.
-- **Anti-spam obchod:** Dokud prodávající nepřijme transakci (stav `pending` → `open`), nedovolím kupujícímu psát zprávy ani posílat data.
-- **Důvěra z chování:** Reputaci počítám z tvrdých metrik (reakce, expirace, closer, resolved, flagy), ne z bio a „věř mi bro“ profilů.
-- **Feed jako hlavní produkt:** Vyhledávání beru jen jako zkratku pro feed. Uživatel si definuje zájem a já mu ho servíruji.
-- **Paměť trhu:** Expirované inzeráty nemažu (jsou dohledatelné). Tvořím historii cen a kontextu.
-- **Férová ekonomika:** Neberu procenta z prodeje. Nechám si zaplatit za nástroje (rozšíření) a předplatné.
-- **Bez pay-to-win:** Placené věci přiznávám a jsou vidět. Neplacený obsah můžu mírně potlačit (řazení), ale nikdy ho neskrývám.
-- **Deterministické brány:** Citlivost obsahu přísně řídím nastavením uživatele.
+**1) Domluva: normální chat + strukturovaný fakta navíc**  
+- U mě můžeš psát úplně normálně, žádnej zákaz, žádnej “musíš klikat”.  
+- Rozdíl je v tom, že chat je **podpořenej strukturovanýma krokama a datama**: zájem, přijetí/odmítnutí, čas, místo, tracking link, potvrzení, ukončení.  
+- Výsledek: když si lidi chtějí psát, píšou. Když nechcou, projdou to klikáním. A hlavně: i když píšou, **systém pořád drží kontext a fakta**.
+**2) Klidný UX, co nevysvětluje a netlačí**  
+- Žádný onboarding jako školení. Žádný tooltipy, žádný “tady klikni”.  
+- UI má být tak čitelný, že nepotřebuje kecy.  
+- Ticho a jistota jsou designovej cíl, ne vedlejší efekt.
+**3) Lokace jako core, ne jako schovaná mapa pro trpělivý**  
+- Poloha je **součást inzerátu**, ne něco, co musíš lovit v mapě jak ocas.  
+- Vidíš vzdálenost a kontext rovnou v listu i detailu. Mapu řešíš jen když chceš, ne protože musíš.  
+- To je praktický v reálným světě: když jsi venku, nechceš přepínat do mapy a pátrat, kde to vlastně je.
+**4) “Zavřeno je zavřeno” + žádný obcházení**  
+- Transakce je stav. Má začátek, má konec.  
+- Když je to zavřený, je to zavřený. Žádný nekonečný doťukávání.  
+- Systém není emocionální, ale je předvídatelnej. A to snižuje toxický chování.
+**5) Ochrana prodejce je feature, ne vina**  
+- Prodejce může zájem ignorovat bez postihu.  
+- Odpovědnost začíná až přijetím.  
+- Tohle zabíjí mentální dluh a pocit, že “musím reagovat”. A tím paradoxně zvyšuje šanci, že lidi budou reagovat.
+**6) Transparentnost jako systémová vlastnost**  
+- Pravidla jsou jasný, viditelný a konzistentní.  
+- Když něco omezuju, zavírám nebo řadím, má to čitelný důvody, ne “black box”.  
+- Důvěra tu nevzniká z marketingu, ale z toho, že se systém chová předvídatelně a dá se mu věřit i ve chvíli, kdy se ti něco nelíbí.
+**7) Data dělám pro uživatele, ne pro inzerenty**  
+- Měřím hodně a vážu to na uživatele, protože chci dát lidem **signál trhu**: co se děje s poptávkou a nabídkou, co funguje, co ne.  
+- Ne proto, abych z toho vyráběl reklamní profil a prodával ho ven.  
+- Když něco měřím, má to mít smysl v produktu: metriky, přehled, férový mechaniky.
+**8) “Měkká frikce” místo manipulace**  
+- Záměrně dávám do systému jemný brzdy a strukturu, aby se lidi chovali líp bez moralizování.  
+- Nechci gamifikací zakrývat špatnej produkt. Chci, aby odměny jen jemně podporovaly zdravý chování.
+**9) Minimalismus i v médiích (žádný video spam)**  
+- Ne proto, že “to nejde”, ale protože video zvedá šum, náklady a bordel ve feedu.
+**10) Osobní data jen dočasně, pak trvale pryč**  
+- Osobní údaje (typicky věci, co si lidi napíšou v chatu: telefon, adresa, “jsem doma v 18:00”, cokoliv osobního) jsou v systému jen **dočasně v rámci kontextu transakce**.  
+- Jakmile transakce skončí (nebo vyprší její smysl), tyhle věci jsou **trvale smazaný**. Ne “možná”, ne “někdy”, ne “podle situace”.  
+- Držím **striktně minimum dat**, který je v daný okamžik nutný, a jakmile nutnost skončí, data jdou pryč.  
+- Důvod je jednoduchý: čím míň toho držím, tím míň toho může utéct, zneužít se, nebo se z toho časem stát “no jo, ale ono by se to hodilo…”.
 
 <a id="slabina"></a>
-### V čem je má slabina (a proč s tím počítám)
+### V čem je má slabina
 
-- **Prázdno na startu:** Bez obsahu je marketplace mrtvý. Řeším to fázovaným startem (komunity → region).
-- **„Levný drobnosti“:** Prodej věcí za pár korun je u mě složitější (vyžaduji Draft, interakci). Mířím na situace, kde se vyplatí mít klid a filtr.
+Nejsem naivní. Tohle jsou moje slabiny a vědomý trade-offy:
+- **Network efekt:** Na začátku tam nebude “všechno”. Bude tam jen to, co se podaří postavit lokálně.  
+  Řešení není “globální launch”, ale lokální start a budování komunity.
+- **Míň impulsního prodeje přes chaos:** V bordelu se prodá ledacos jen proto, že to někdo uvidí náhodou.  
+  Já radši míň šumu a víc relevantních interakcí. Krátkodobě to může vypadat pomaleji, dlouhodobě je to zdravější trh.
+- **Transparentnost je závazek:** Když slíbím férovost a průhlednost, nemůžu pak dělat kličky.  
+  To je dobře, ale je to práce. A občas to znamená říct “ne” i věcem, co by vydělaly.
+- **Nejsem pro každýho:** Tohle je filtr. Někdo chce agresivní topování, manipulaci a “rychle prodat za každou cenu”.  
+  Takový lidi chci spíš odradit, ne přitáhnout.
+- **Průhlednost přitahuje i hejtry:** Čím víc jsi transparentní, tím víc se v tom někdo bude hrabat.  
+  Já s tím počítám. Je to cena za důvěru.
 
 <a id="co-nedelam"></a>
 ### Co vědomě nedělám
 
-- **Agresivní paid reach:** Netlačím věci do obličeje jen proto, že někdo zaplatil. Priorita je pro mě čitelnost trhu.
-- **Videa u inzerátů:** Ne. Nechci tu zbytečný šum, infra peklo a riziko zneužití.
+Tady jsou věci, který mě lákaj “na peníze” nebo “na růst”, ale zabily by charakter:
+
+- **Žádný prodej dat.** Nikdy.  
+- **Žádný dark patterns.** Žádný “nejde odejít”, žádný schovaný volby, žádný vynucený souhlasy.  
+- **Žádný pay-to-win.** Platíš za nástroje a pohodlí, ne za to, že systém lže ostatním o kvalitě.  
+- **Žádný spam-notifikace a onboarding-maily.** Informace ano, nátlak ne.  
+- **Žádný “AI řeší všechno”.** Bezpečnost a důvěra stojí na prevenci, pravidlech a struktuře, ne na kouzelný krabičce.  
+- **Žádný video feed cirkus.** Nechci z tržiště dělat TikTok.  
+- **Žádný vysvětlování rozdílů proti konkurenci.** Když to potřebuje vysvětlit, je to špatně. Rozdíl se má projevit chováním UI.
+
+Konkurence prodává dosah. Já prodávám **klid, předvídatelnost a důvěru**.
 
 ---
 
