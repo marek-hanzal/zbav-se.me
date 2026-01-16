@@ -1,15 +1,27 @@
-# Master
+# MASTER
 
-> Tohle je jediný zdroj pravdy pro projekt. Co tu není, neexistuje. Když se realita produktu začne hádat s tímhle dokumentem, beru to jako bug v produktu nebo v mých rozhodnutích a opravím jedno z toho, ne že to budu okecávat bokem.
+> **Single source of truth.** Co tu není, neexistuje.  
+> Pokud se realita produktu začne hádat s tímhle dokumentem, beru to jako bug. Opravím buď produkt, nebo rozhodnutí. **Ne** že to budu obcházet „výjimkou“, „poznámkou bokem“ nebo jiným alibismem.
+
+Tenhle dokument je moje páteř. Ne moodboard, ne wish-list, ne backlog. Je to závazek, podle kterýho se ten produkt chová.
 
 ## Pravidla dokumentu
 
-Tohle je moje ústava. Držím tu koncepty, definice a produktová rozhodnutí, ne implementační bláto. Když něco doplním, musí to být pravidlo („co“ a „proč“), ne návod („jak to nakóduju“).
+Tohle je moje ústava. Ne backlog, ne deníček, ne hromada poznámek z hospody. Píšu sem **jen** věci, podle kterých se produkt reálně chová, nebo chovat má.
 
-- Řeším tu **produkt**, ne technický detaily.
-- **Žádný kód, žádný DB schémata, žádný implementační postupy.**
-- Každý nový kus textu má mít jasný **smysl a důvod existence**.
-- Píšu v **ich-formě**: jsem autor, beru odpovědnost, co slíbím, to platí.
+Co sem patří:
+- **Koncepty, definice, rozhodnutí** a jejich *důvod* (co platí a proč).
+- Věci, které když poruším, tak se rozpadne důvěra nebo charakter produktu.
+
+Co sem nepatří:
+- Žádný kód. Žádný DB schémata. Žádný “jak to udělám”.
+- Žádný technický výmluvy typu „tohle zatím nejde“.
+- Žádný duplicitní přežvykování toho samýho na pěti místech.
+
+Formát a tón:
+- Píšu v **ich-formě**. Jsem autor, beru odpovědnost.  
+- Když je něco vágní, je to k ničemu. Když je něco zbytečný, tak to smažu.  
+- Každý nový kus textu musí projít otázkou: **„Pomůže mi to udělat správný rozhodnutí, až budu unavenej?“**
 
 ## Obsah
 
@@ -81,27 +93,59 @@ Tohle je moje ústava. Držím tu koncepty, definice a produktová rozhodnutí, 
 <a id="smer-produktu"></a>
 ## Směr produktu
 
-> Tahle část je moje páteř: proč to dělám, jak to má působit, a jaký pravidla nesmím porušit ani ve chvíli, kdy budu unavenej a budu mít chuť „jen rychle přidat jednu featurku“. Cíl je jednoduchý: produkt má být klidnej, férovej a čitelnej bez vysvětlování.
+Tady je moje páteř. Ne “seznam featur”, ne backlog, ne výmluvy. Jsou tu pravidla, která drží tenhle projekt pohromadě, i když budu unavenej, ve stresu a budu mít chuť udělat z toho další obyč bazar.
+
+Platí pár jednoduchých věcí:
+
+- **Klid a jistota jsou cíl.** Úspěch není wow-efekt, ale moment, kdy uživatel nic neřeší.
+- **Když to nejde pochopit samo, je to špatně.** Ne „uživatel je blbej“, ale já jsem to dojebal.
+- **Minimum keců, maximum signálu.** UI se chová fyzikálně přirozeně, žádný kejkle.
+- **Důvěra není feature.** Je to výsledek: konzistence, transparentnost, férový pravidla.
+
+Tohle je část, ke který se vracím pokaždý, když mě napadne “jenom malá výjimka”. Malý výjimky jsou nejrychlejší cesta, jak zabít charakter produktu.
 
 <a id="identita"></a>
 ### Identita
 
-- **Core myšlenka:** „**Prodávám, neojebávám.**“
-- Nestavím další bazar. Tvořím **systém důvěry a komunity**.
-- Mým cílem je: **klid, důvěra, kompetence uživatele**.
-- Monetizaci stavím na **hodnotě** (nástroje), ne na tlaku (reklama).
-- Stavím na důvěře mezi **mnou (platformou)** a **uživateli** pro zajištění mentálního komfortu.
+Zbav-se.me není “platforma”. Je to moje práce a můj postoj. A ten postoj je napsanej natvrdo:
 
-<a id="tov"></a>
+> **Prodávám, neojebávám.**
+
+Co z toho plyne (a co si tady zakazuju porušit):
+
+- **Klid místo chaosu.** Žádný bazarový peklo, kde se člověk prokliká k migréně.
+- **Minimum psaní.** Domluva má být primárně klikací a strukturovaná. Chat je doplněk, ne střed vesmíru.
+- **Lokálnost a setkání.** Podporuju osobní předání a sousedský prodej. Ne “všude posílej balíky”.
+- **Transparentnost jako design.** Žádný skrytý penalizace, žádný “nevíš proč se ti to nezobrazuje”.
+- **Férová monetizace.** Platí se za hodnotu (nástroje, čas, pohodlí), ne za to, že někoho ukecám nebo zmanipuluju.
+- **Měřím hodně a vážu to na uživatele.** Ano, schválně.  
+  - Důvod je jediný: **dát lidem metriky pro nabídku/poptávku** (co funguje, co ne, proč se to hejbe, kde je zájem).  
+  - **Neprodávám** to třetím stranám. **Nekrmím** tím reklamy. **Nedělám** z uživatelů produkt pro inzerenty.  
+  - Když něco měřím, má to mít **viditelný smysl** v produktu (signál, přehled, férový mechaniky), ne „protože to jde“.
+
+Prakticky: uživatel má mít pocit, že systém je **předvídatelnej**. Když něčemu nerozumí, je to můj problém. Ne jeho.
+
+<a id="tone-of-voice"></a>
 ### Tone of Voice
 
-- Onboarding bez pozlátek: „**Klikej. Zkoumej. Není tu co posrat.**“
-- Neučím, nekomentuji, neotravuji.
-- **Předpokládám IQ uživatelů alespoň 80** (nadneseně – mé UI je tak jasné, že nepotřebuje vysvětlivky).
-- **Mluvím přímo:**
-  - Aplikace uživateli tyká.
-  - Používám **mužský rod** jako neutrální default (např. „Odmítl jsi“, „Máš novou zprávu“).
-  - Vyhýbám se pasivu a úředničině ("bylo odmítnuto"). Mluvím krátce a lidsky.
+> „**Klikej. Zkoumej. Není tu co posrat.**“  
+> Onboarding nastaví vztah. A pak už držím hubu a nechám UI dělat práci.
+
+Mluvím přímo, krátce a lidsky. Ne protože jsem drsňák, ale protože *kecy zvyšujou nejistotu*.
+
+- **Tykám.** Jsme lidi, ne úřad.
+- **Mužský rod beru jako neutrální default** (kvůli konzistenci a kratším větám).  
+  Příklad: „Odmítl jsi“, „Potvrdil jsi“, „Máš novou zprávu“.
+- **Žádnej pasiv a úředničina.**  
+  Ne „bylo odmítnuto“, ale „Odmítl jsi“ / „Prodejce tě odmítl“.
+- **Žádný školení v UI.** Žádný tooltipy, žádný „(?)“, žádný „tady klikni“.  
+  Když to potřebuje nápovědu, je to špatně navržený.
+- **Tone v běžným workflow je klidnej a tichej.**  
+  Ostrý, osobní tón si nechávám pro výjimečný místa (onboarding, landing, founder podpis, hranice bezpečnosti).
+- **Mikrocopy je spíš uklidnění než show.**  
+  Když něco načítám, klidně napíšu „…rozjímám…“, ale nebudu dělat cirkus.
+
+Jedna zásada navíc: texty jsou tam, aby *pojmenovaly realitu*, ne aby vychovávaly uživatele. Žádný moralizování, žádný manipulace. Jen čistý signál.
 
 <a id="produktove-cile"></a>
 ### Produktové cíle
