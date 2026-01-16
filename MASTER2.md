@@ -556,13 +556,51 @@ Citlivost je zároveň odpovědnost prodejce. Systém nastaví brány, ale ozna�
 
 <a id="stavy-inzeratu"></a>
 ### Stavy inzerátu
-- **Live (Aktivní):** Inzerát je publikovaný, neexpirovaný a dostupný k prodeji. Počítá se do limitů.
-- **Expired (Expirovaný):** Inzerát vypršel (`expiresAt`). Už ho nelze najít v běžném seznamu, interakce jsou zakázané (kromě flagování).
-- **Sold (Prodaný):** Inzerát byl prodán a systémově uzavřen.
+
+U nás je “stav” hlavně o tom, jestli je inzerát **živý**, **expirovaný**, a jestli je ještě **k dispozici pro nový obchod**. Žádnej cirkus.
+
+Enum stavů:
+- **`live`**  
+- **`expired`**  
+- **`sold`**
+
+Co znamenají v praxi:
+
+- **Draft** *(není stav inzerátu, je to separátní entita)*  
+  Nejdřív existuje Draft (autosave, bezpečný návrat). Teprve publikací vznikne inzerát se stavem `live`.
+- **`live`**  
+  Publikovaný inzerát, který je aktivní a může se zobrazovat ve feedech (samozřejmě přes všechny gating pravidla). `live` znamená “dá se koupit”.
+- **`expired`**  
+  Inzerát po expiraci.  
+  - Přes **přímý odkaz** je vždycky dostupný (read-only).  
+  - Ve feedu se objeví jen když si to uživatel **vědomě zapne** (explicitní filtr).  
+  - Interakce jsou defaultně zakázané, výjimka je **flagování**.
+- **`sold`**  
+  Inzerát už není k dispozici pro nový obchod.  
+  - Detail se otevře normálně, ale místo “Mám zájem” je tam jasný status typu **„Inzerát už není dostupný“**.  
+  - `sold` inzerát se nepočítá jako aktivní (neleze do limitu aktivních inzerátů).
+
+Poznámky:
+- **`deleted` neexistuje.** Inzeráty se nemažou, jen mění stav mezi `live` / `expired` / `sold`.
+- **Kontinuální nabídka** je mechanika, která umí `expired` vrátit zpět do `live` bez potřeby dalších stavů.
 
 <a id="aktivita"></a>
-### Aktivita
-- **Aktivita uživatele:** Jakýkoli záznam v **User Event Logu** (kliknutí, zobrazení, scroll).
+### Aktivita uživatele
+
+“Aktivita” u mě není vibe ani pocit. Je to **konkrétní záznam v User Event Logu**. Cokoliv, co v appce uděláš (nebo co se ti stane), *může být* event.
+
+Co to znamená:
+- **Event = jeden atom reality**: “otevřel detail”, “přidal zájem”, “poslal zprávu”, “zapnul filtr”, “dokončil obchod”.
+- Systém tyhle eventy **může sbírat** podle toho, co zrovna potřebuju pro produkt a metriky trhu. Ne všechno musí existovat hned a ne všechno má smysl logovat navždy.
+
+K čemu to slouží:
+- **Metriky trhu** (nabídka/poptávka, co funguje, co ne, proč se věci hejbou).
+- **Férový mechaniky** (odměny, návraty, jemná motivace, ale bez cirkusu).
+- **Debug reality** (když něco nefunguje, nechci hádat. Chci vidět fakt).
+
+Co to není:
+- Není to “sledování pro reklamu”. Neřeším ad profily, neprodávám to ven.
+- Není to omluva pro sběr všeho navždy. Eventy mají smysl jen pokud z nich má uživatel **viditelnou hodnotu** a systém z nich nedělá creepy šmírování.
 
 ---
 
