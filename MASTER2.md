@@ -173,26 +173,67 @@ Jestli nějaká feature rozbije klid, předvídatelnost nebo charakter trhu, tak
 <a id="ux-principy"></a>
 ### UX principy
 
-- **Nulová tolerance nápovědy:** „**Pokud to potřebuje hint, udělal jsem to špatně.**“
-  - Žádné tooltipy, žádné `(?)` ikony, žádné vysvětlující bubliny.
-  - UI musí být krystalicky jasné samo o sobě. Pokud uživatel neví, co má dělat, je chyba v mém designu, ne v absenci nápovědy.
-- **Konzistence > chytrost.**
-- **Empty state** = status → vysvětlení → **jedno** CTA.
-- **Prázdno je záměr** (nižší kognitivní zátěž).
-- Status může být emoční, CTA musí být mechanické a jasné.
+> **Když to potřebuje nápovědu, je to špatně navržený.**  
+> Tooltipy, otazníčky a “tady klikni” jsou jenom náplast na můj design fail.
 
-<a id="komunikace"></a>
+Moje pravidla UX (aka věci, co mi brání dělat píčoviny):
+
+- **Nulová tolerance k “hintům”.**  
+  Žádný tooltipy, žádný `(?)`, žádný bubliny. UI si musí poradit samo.  
+  Když uživatel tápe, je to moje vina. Ne jeho.
+- **Konzistence > chytrost.**  
+  Radši nudně správně než “wow” a pak milion výjimek. Výjimky zabíjí důvěru.
+- **Empty state není prázdno. Je to status.**  
+  Každý empty state má stejný pattern:  
+  **status → krátký proč → jedno jasný CTA**  
+  (ne pět možností, ne román, ne moralizování)
+- **Prázdno je záměr.**  
+  Méně šumu = méně nejistoty. Když feed nic nemá, je to signál, ne chyba.
+- **Emoce můžou být v textu. Akce musí být mechanická.**  
+  Status může být lidskej („škoda“, „meh“, „hotovo“), ale CTA musí být vždycky jasný a jednoznačný.
+- **UI se chová “fyzikálně”.**  
+  Žádný kejkle a “magie”, co se nedá předvídat. Když něco zmizí, má to důvod. Když něco zůstane, má to důvod.
+- **Animace: kritický minimum, rychlost maximum.**  
+  Animace nejsou feature, jsou luxus. Preferuju **okamžitou reakci** i za cenu drobnýho zmatení, protože je lepší, když se někdo na chvíli zamyslí, než aby mu UI dělalo kinetózu a blil na mobil.  
+  Prakticky to znamená:
+  - animuju jen tam, kde bez toho uživatel fakt ztratí kontext (typicky přechod stavu nebo otevření/zavření),
+  - žádný “pomalý krásno”, žádný cirkus, žádný bouncy overshoot,
+  - respektuju **`prefers-reduced-motion`** (kdo nechce pohyb, dostane minimum nebo nic),
+  - animace nikdy nesmí blokovat ovládání: UI je interaktivní hned, ne až „až to dojede“.
+
+Cíl není udělat dojem. Cíl je odstranit frustraci tak, aby si toho uživatel skoro nevšiml.
+
+<a id="komunikace-a-transparentnost"></a>
 ### Komunikace a transparentnost
 
-- **Source Available:** Zdrojové kódy zpřístupňuji veřejně k auditu bezpečnosti a fair-play, ale chráním je licencí proti komerčnímu zneužití či klonování.
-- **Transparentní finance:** Na domovské stránce uvádím odkaz na transparentní bankovní účet projektu.
-- **Vývoj:** Na domovské stránce ukazuji kalendář aktivity vývoje (Github-like) a dynamickou timeline (první skokani, milníky, hlášky o stavu trhu).
-- **Soukromí (Tracking):**
-  - **Žádné externí šmírování:** Nepoužívám UTM, cookies třetích stran, Google Analytics ani Facebook Pixel.
-  - **Interní telemetrie:** Měřím a ukládám pouze to, co je nutné pro funkci produktu a výpočet reputačních metrik (User Event Log). Data neopouští mou infrastrukturu.
-- **Podpora:**
-  - Discord server (komunita) + e-mail.
-  - Sekce **„Zpětná vazba“** přímo v aplikaci (interní mechanismus kontaktu).
+Nejrychlejší způsob, jak zabít důvěru, je dělat tajnosti a pak se tvářit, že “to je pro tvoje dobro”. Já na to seru. Chci, aby bylo jasný **kdo** za tím stojí, **proč** to tak je, a **co přesně** se děje s datama a penězma.
+
+Co je tady pro mě povinný standard:
+
+- **Jsem vidět.**  
+
+  Žádný anonymní “tým”. Jméno, ksicht, odpovědnost. Když je průser, je to můj průser.
+- **Monetizace je přiznaná, čitelná a férová.**  
+  Žádný “zdarma… a pak překvapení”. Ceny, limity i důvod existence rozšíření jsou jasně napsaný.  
+  Platíš za hodnotu, ne za to, že tě ošmelím o pozornost.
+- **Celý zdroják je veřejně na GitHubu (source-available, ne OSS).**  
+  Zbav-se.me je kompletně veřejně k nahlédnutí. Důvěra nemá stát na tom, že mi “prostě věříš”, ale na tom, že si to jde ověřit.  
+  Zároveň to není open-source ve smyslu „dělej si s tím co chceš“. **Kód je čitelnej, licence je moje a pravidla použití jsou jasný.**
+
+- **Transparentní účet (fakt transparentní, ne “někde dohledatelný”).**  
+  Mám **bankovní transparentní účet** založenej explicitně jako veřejnej. Všechny příjmy i výdaje jdou přes něj a je **viditelně vytaženej i na landingu**.  
+  Ne proto, že bych potřeboval, aby mi lidi posílali prachy (i když jo, taky), ale hlavně proto, že chci, aby šlo kdykoliv vidět, **co se děje uvnitř**. Žádný “shady shit”, žádný skrytý toky, žádný přetvářky. Důvěra není slogan, důvěra je průhlednost.
+- **Žádný prodej dat třetím stranám.**  
+  Ne reklamy, ne datový brokery, ne “partneři”. Tečka.
+- **Měřím hodně a vážu to na uživatele.**  
+  Ne proto, abych tě šmíroval, ale abych ti dal **reálný signál trhu**: co se děje s nabídkou a poptávkou, co funguje, co ne, a proč.  
+  Transparentnost znamená: když něco měřím, umím říct *co*, *proč* a *co z toho máš ty*.
+- **Pravidla jsou veřejný a konzistentní.**  
+  Když něco bloknu, omezím nebo zavřu, musí být jasný proč. Žádný skrytý penalizace, žádný “algoritmus rozhodl”.
+- **Změny nesmí být tichý ojeb.**  
+  Když něco zásadního změním, tak to přiznám. Nechci, aby uživatel musel hádat, jestli se produkt “nějak divně chová”.
+
+Zjednodušeně: nechci si hrát na hodnýho. Chci být **předvídatelnej**. A to se bez transparentnosti nedá.
 
 ---
 
