@@ -356,6 +356,65 @@ Landing page je vizitka mého postoje k projektu. Skládá se z 5 pevných blok�
   - Nad inzerátem měřím eventy pro vyhodnocení zájmu: **Impression** (scroll), **View** (detail), **Visible** (zobrazení).
   - Dále sleduji: **Flag** (nahlášení), **Ignor** (skrytí), **Favourite**.
 
+### Měření (eventy a metriky)
+
+Měření slouží k dvěma věcem:
+1) dát prodávajícímu férový signál „děje se to / neděje se to“,  
+2) umožnit pár mechanik (např. anti-topper/payback) bez toho, aby z aplikace byl šmírovací cirkus.
+
+Měření je objektově orientované: sledujeme **inzerát**, ne člověka.
+
+#### Principy
+
+- Eventy jsou **append-only** a slouží pro agregace.
+- Neukládáme IP adresy, device fingerprinty ani jiné “marketingové” identifikátory.
+- Deduplikace je záměrně “měkká” (typicky na klientovi v rámci jedné relace). Cíl není laboratorní přesnost, ale konzistentní signál.
+
+#### Základní eventy nad inzerátem
+
+Event log nad inzerátem používá tyto typy událostí:
+
+- `visible`
+- `impression`
+- `view`
+- `anti-topper`
+
+#### Definice metrik a časovačů
+
+Časovače jsou produktové rozhodnutí, ne implementační detail.
+
+- **Visible (`visible`)**
+  - Odpálí se, když je karta inzerátu v listingu ve viewportu alespoň **0,5 s**.
+  - Cíl: základní „uživatel to reálně viděl“, ne jen že to proletělo kolem v scrollu.
+
+- **Impression (`impression`)**
+  - Odpálí se, když uživatel u inzerátu v listingu „pozastaví“ a karta zůstane ve viewportu alespoň **1,6 s**.
+  - Cíl: signál, že inzerát zaujal natolik, že u něj člověk zpomalil.
+
+- **View (`view`)**
+  - Odpálí se, když uživatel otevře detail inzerátu a zůstane na něm alespoň **2,5 s**.
+  - Cíl: signál skutečného zájmu o obsah detailu, ne jen omylové otevření.
+
+- **Anti-topper (`anti-topper`)**
+  - Pokud má uživatel aktivní anti-topper a v listingu by se mu měl ukázat inzerát se zvýrazněním **Mark/Top**, systém místo `visible` vytvoří event `anti-topper`.
+  - Smysl: vědět, kolikrát bylo zvýraznění potlačeno (kvůli metrikám a případnému paybacku).
+  - Pro **Top Maxxi** se `anti-topper` negeneruje (je imunní vůči potlačení).
+
+#### Deduplikace a frekvence
+
+Aby se eventy nestaly spamem:
+
+- `visible` / `impression` se v rámci jednoho zobrazení listu pro daný inzerát posílají maximálně jednou.
+- `view` se posílá maximálně jednou na jedno otevření detailu.
+
+#### Použití v produktu
+
+- Prodávající může (typicky přes placené rozšíření) vidět agregace typu:
+  - `visible`, `impression`, `view`
+- Anti-topper poměr se počítá jako:
+  - `anti-topper / (visible + anti-topper)`
+  - (jde o agregaci z eventů; není to “unikátní uživatelé”, pokud to není výslovně definované jinde)
+
 <a id="draft"></a>
 ### Draft
 - Kopie atributů inzerátu ve stavu zrodu.
