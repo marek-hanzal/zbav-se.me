@@ -1,13 +1,15 @@
 # Master
 
-Tohle je jediný zdroj pravdy pro projekt. Co tu není, neexistuje. Když se realita produktu začne hádat s tímhle dokumentem, beru to jako bug v produktu nebo v mých rozhodnutích a opravím jedno z toho, ne že to budu okecávat bokem.
+> Tohle je jediný zdroj pravdy pro projekt. Co tu není, neexistuje. Když se realita produktu začne hádat s tímhle dokumentem, beru to jako bug v produktu nebo v mých rozhodnutích a opravím jedno z toho, ne že to budu okecávat bokem.
 
-## Document Rules
+## Pravidla dokumentu
 
-- Tenhle Master drží **mé koncepty, pravidla a produktová rozhodnutí**.
-- **Žádný kód, DB schémata ani implementační detaily.**
-- Když něco doplňuji, doplňuji to jako **pravidlo** (co a proč), ne jako „jak to přesně nakóduji“.
-- **Ich-forma:** Dokument píšu v **první osobě jednotného čísla**. Jsem autor a držím za projekt tvrdou osobní odpovědnost. Co slíbím, to platí.
+Tohle je moje ústava. Držím tu koncepty, definice a produktová rozhodnutí, ne implementační bláto. Když něco doplním, musí to být pravidlo („co“ a „proč“), ne návod („jak to nakóduju“).
+
+- Řeším tu **produkt**, ne technický detaily.
+- **Žádný kód, žádný DB schémata, žádný implementační postupy.**
+- Každý nový kus textu má mít jasný **smysl a důvod existence**.
+- Píšu v **ich-formě**: jsem autor, beru odpovědnost, co slíbím, to platí.
 
 ## Obsah
 
@@ -79,7 +81,7 @@ Tohle je jediný zdroj pravdy pro projekt. Co tu není, neexistuje. Když se rea
 <a id="smer-produktu"></a>
 ## Směr produktu
 
-Tahle část je moje páteř: proč to dělám, jak to má působit, a jaký pravidla nesmím porušit ani ve chvíli, kdy budu unavenej a budu mít chuť „jen rychle přidat jednu featurku“. Cíl je jednoduchý: produkt má být klidnej, férovej a čitelnej bez vysvětlování.
+> Tahle část je moje páteř: proč to dělám, jak to má působit, a jaký pravidla nesmím porušit ani ve chvíli, kdy budu unavenej a budu mít chuť „jen rychle přidat jednu featurku“. Cíl je jednoduchý: produkt má být klidnej, férovej a čitelnej bez vysvětlování.
 
 <a id="identita"></a>
 ### Identita
