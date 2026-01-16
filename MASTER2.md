@@ -19,8 +19,8 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 - [Základní stavební kameny](#zakladni-kameny)
 - [Mechaniky](#mechaniky)
 - [Předplatné](#predplatne)
-- [Goldíky](#goldiky)
-- [Tokeny & passy](#tokeny-a-passy)
+- [Tokeny (Měna)](#tokeny-mena)
+- [Kupóny & Passy](#kupony-passy)
 - [Uvedení na trh](#uvedeni-na-trh)
 - [Retence a paměť trhu](#retence)
 - [Odhady monetizace a růstu](#odhady)
@@ -142,12 +142,18 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 
 - Pokud něco měním, dávám to vědět **předem a konkrétně**:
   - **Kanály:** E-mail, in-app notifikace, commit log ve veřejném repozitáři.
-  - **Kurz CZK ↔ Goldík** měním nejdřív **kvartálně**.
-  
+  - **Kurz CZK ↔ Token** měním nejdřív **kvartálně**.
+
+---
+
 <a id="terminologie"></a>
 ## Terminologie
 
 > Slovníček pojmů, ať se u toho nehádáme jak idioti.
+
+### Kupón vs. Token
+- **Token (Měna):** Interní platidlo (žeton/kamínek). Kurz 1 CZK ≈ 2 Tokeny. Používá se k nákupu Passů, pokud nemám Kupón.
+- **Kupón (Ticket):** Jednorázová položka (lístek), kterou lze směnit za Pass. Získává se z balíčků nebo jako bonus.
 
 ### Feed vs. Seznam
 - **Feed (technicky):** Uložené nastavení filtru nad inzeráty (kategorie, lokace, cena...).
@@ -194,7 +200,7 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
 - Vstup do editoru je **podmíněn limitem aktivních inzerátů**.
 - **Tvrdá závora:** Pokud uživatel dosáhl limitu, **nepustím ho do editoru**.
   - Místo formuláře zobrazím **Status Screen**.
-  - Obsah statusu: "Máš plno. Chceš další? Použít token nebo si dokup místo." (konkrétní text řeší copy).
+  - Obsah statusu: "Máš plno. Chceš další? Použít kupón nebo si dokup místo." (konkrétní text řeší copy).
   - **Žádné syslení draftů:** Pokud nemůžeš publikovat, nemůžeš ani psát.
 - **Editor:**
   - Pokud je uživatel pod limitem, pustím ho do Draftu.
@@ -212,11 +218,11 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
 - **Sekce Aktivace Passů:**
   - Zobrazuji seznam dostupných vylepšení (Passů).
   - Tlačítko pro aktivaci je **chytré**:
-    - Pokud má uživatel **token** (použití): Tlačítko říká "Aktivovat (1x)" -> Aktivace spotřebuje token.
-    - Pokud uživatel **nemá token**: Tlačítko říká "Aktivovat (XX Gold)" -> Aktivace strhne goldíky.
-  - Aktivace je okamžitá konverze (Token/Gold → Pass).
-- **Sekce Ostatní tokeny:**
-  - Odděleně pod passy zobrazuji tokeny, které nejsou přímo vázané na aktivaci passu (pokud takové existují).
+    - Pokud má uživatel **Kupón**: Tlačítko říká "Aktivovat (1x Kupón)" -> Aktivace spotřebuje kupón.
+    - Pokud uživatel **nemá Kupón**: Tlačítko říká "Aktivovat (XX Tokenů)" -> Aktivace strhne tokeny.
+  - Aktivace je okamžitá konverze (Kupón/Token → Pass).
+- **Sekce Ostatní kupóny:**
+  - Odděleně pod passy zobrazuji kupóny, které nejsou přímo vázané na aktivaci passu (pokud takové existují).
 
 ### Zprávy (Transakce)
 - UI pro komunikaci a obchod.
@@ -225,6 +231,8 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
 ### Profil / Nastavení
 - Preference uživatele (citlivost obsahu, notifikace).
 - Zde se řeší "kdo jsem" a "co snesu vidět".
+
+---
 
 <a id="zakladni-kameny"></a>
 ## Základní stavební kameny
@@ -302,6 +310,8 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
 - Pokud není řečeno jinak, používám školní stupnici **A-F** (A = nejlepší).
 - Interně to mapuji na čísla 6 (A) až 1 (F).
 
+---
+
 <a id="mechaniky"></a>
 ## Mechaniky
 
@@ -368,7 +378,7 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
 - Týká se pouze **Top** (Mark nekompenzuji).
 - Payback je **Pass (Exclusive)** = nárok na refund mají pouze předplatitelé.
 - Vyhodnocuji po expiraci inzerátu.
-- Sleduji poměr zobrazení (Visible vs. Anti-topper eventy). Pokud poměr překročí definované prahy, vracím poměrnou část ceny boostu v goldíkách.
+- Sleduji poměr zobrazení (Visible vs. Anti-topper eventy). Pokud poměr překročí definované prahy, vracím poměrnou část ceny boostu v **tokenech**.
 
 ### Obchod (Transakce)
 - **Vznik:** Kupující klikne na „Mám zájem“ → vzniká transakce ve stavu `pending`.
@@ -412,6 +422,8 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
   - Ruční nástroj admina (já).
   - Banuji za podvody, spam nebo křížově špatně označený citlivý obsah.
 
+---
+
 <a id="predplatne"></a>
 ## Předplatné
 
@@ -426,7 +438,7 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
 
 | Položka | Kupující<br>(119 Kč) | Prodejce<br>(229 Kč) | **Pro**<br>(499 Kč) |
 | :--- | :---: | :---: | :---: |
-| **Goldíky / měsíc** | 300 G | 300 G | **600 G** |
+| **Tokeny / měsíc** | 300 T | 300 T | **600 T** |
 | **Limity** | | | |
 | Uložené Feedy | 5 | - | **10** |
 | Aktivní inzeráty | 5 | 10 | **20** |
@@ -438,7 +450,7 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
 | Anti-topper | - | - | **✓** |
 | Early Access | - | - | **✓** |
 | Multi-Category | - | - | **✓** |
-| **Tokeny (Měsíčně)** | | | |
+| **Kupóny (Měsíčně)** | | | |
 | Early Access | 5× | - | **(Pass)** |
 | Anti-topper | 5× | - | **(Pass)** |
 | Early Delivery | - | 3× | **3×** |
@@ -448,48 +460,48 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
 | Multi-Category | - | 3× | **(Pass)** |
 | Kontinuální nabídka | - | 3× | **5×** |
 
-<a id="goldiky"></a>
-## Goldíky
+<a id="tokeny-mena"></a>
+## Tokeny (Měna)
 
-> Palivo pro systém. Interní měna pro nákup jednorázových vylepšení.
+> Palivo pro systém. Interní měna pro nákup jednorázových vylepšení (kamínky).
 
-- **Interní kurz:** Baseline cca **1 CZK ≈ 2 Goldíky**.
+- **Interní kurz:** Baseline cca **1 CZK ≈ 2 Tokeny**.
 - **Atomicitita:** Všechny transakce jsou atomické. Buď proběhne celý nákup/efekt, nebo se nic nestrhne.
 
-| Balíček | Cena (CZK) | Získám Goldíků | Výhodnost |
+| Balíček | Cena (CZK) | Získám Tokenů | Výhodnost |
 | :--- | :--- | :--- | :--- |
-| **Na zkoušku** | 149 Kč | **300 G** | Standard |
-| **Balík** | 299 Kč | **650 G** | +50 G zdarma |
-| **Do zásoby** | 599 Kč | **1400 G** | +200 G zdarma |
+| **Na zkoušku** | 149 Kč | **300 T** | Standard |
+| **Balík** | 299 Kč | **650 T** | +50 T zdarma |
+| **Do zásoby** | 599 Kč | **1400 T** | +200 T zdarma |
 
 ### Získávání zdarma
-- **Dropy:** V sekci Bonusy lze denně vyzvednout drobný obnos (cca 10 G).
-- **Předplatné:** Každý balíček obsahuje měsíční příděl goldíků.
+- **Dropy:** V sekci Bonusy lze denně vyzvednout drobný obnos (cca 10 T).
+- **Předplatné:** Každý balíček obsahuje měsíční příděl tokenů.
 
-<a id="tokeny-a-passy"></a>
-## Tokeny & passy
+<a id="kupony-passy"></a>
+## Kupóny & Passy
 
 > Centrální ceník systému.
 
-- **Token:** Jednorázové použití (neexpiruje).
-- **Pass:** Stav oprávnění (běží po dobu platnosti). Token většinou slouží k aktivaci Passu.
+- **Kupón:** Jednorázová položka (ticket), která slouží k aktivaci Passu.
+- **Token:** Platidlo. Pokud nemám Kupón, platím Tokeny.
+- **Pass:** Stav oprávnění (běží po dobu platnosti).
 - **Exclusive:** Položky dostupné pouze v rámci předplatného (nelze koupit samostatně).
-- **Ceny:** Uvádím v Goldíkách.
 
-| Co                  | Typ                | Efekt / Trvání                                   | Cena (Gold) |
+| Co                  | Typ                | Efekt / Trvání                                   | Cena (Token) |
 | ------------------- | ------------------ | ------------------------------------------------ | ----------- |
-| Early Access        | Token → Pass       | 7 dnů                                            | 80          |
-| Early Delivery      | Token              | Zruší okno pro jeden inzerát                     | 40          |
-| Anti-topper         | Token → Pass       | 7 dnů                                            | 40          |
-| Mark                | Token → Pass       | 7 dnů                                            | 20          |
-| Top                 | Token → Pass       | 7 dnů                                            | 50          |
-| Top Maxxi           | Token → Pass       | 7 dnů                                            | 50          |
-| Multi-Category      | Token              | 1 použití (1+2 kategorie)                        | 75          |
-| Detail protistrany  | Token → Pass       | 7 dnů                                            | 50          |
-| Photo Count         | Token → Pass       | 1 měsíc (+2 fotky)                               | 75          |
-| Aktivní inzeráty 10 | Token → Pass       | 1 měsíc                                          | TBD         |
+| Early Access        | Kupón → Pass       | 7 dnů                                            | 80          |
+| Early Delivery      | Kupón              | Zruší okno pro jeden inzerát                     | 40          |
+| Anti-topper         | Kupón → Pass       | 7 dnů                                            | 40          |
+| Mark                | Kupón → Pass       | 7 dnů                                            | 20          |
+| Top                 | Kupón → Pass       | 7 dnů                                            | 50          |
+| Top Maxxi           | Kupón → Pass       | 7 dnů                                            | 50          |
+| Multi-Category      | Kupón              | 1 použití (1+2 kategorie)                        | 75          |
+| Detail protistrany  | Kupón → Pass       | 7 dnů                                            | 50          |
+| Photo Count         | Kupón → Pass       | 1 měsíc (+2 fotky)                               | 75          |
+| Aktivní inzeráty 10 | Kupón → Pass       | 1 měsíc                                          | TBD         |
 | Payback             | Pass               | Benefit předplatného                             | Exclusive   |
-| Kontinuální nabídka | Token → Pass       | 1 měsíc (prodlouží život inzerátu)               | Exclusive   |
+| Kontinuální nabídka | Kupón → Pass       | 1 měsíc (prodlouží život inzerátu)               | Exclusive   |
 
 <a id="uvedeni-na-trh"></a>
 ## Uvedení na trh
@@ -522,5 +534,5 @@ Start dělím vědomě do dvou fází.
 
 - **Konverzní cíl:** ~3 % MAU platí.
 - **Odhad ARPU (Subscription):** ~7,68 Kč.
-- **Odhad ARPU (Extras - Goldíky):** ~21,0 Kč (při 10% penetraci nákupů).
+- **Odhad ARPU (Extras - Tokeny):** ~21,0 Kč (při 10% penetraci nákupů).
 - **Model:** Konzervativní náběh. Prvních 6 měsíců je o plnění trhu, monetizace nabíhá až se saturací obsahu.
