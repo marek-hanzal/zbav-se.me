@@ -337,6 +337,10 @@ Landing page je vizitka mého postoje k projektu. Skládá se z 5 pevných blok�
   - Tyto parametry řídí **UI tvorby inzerátu** (co vyplňuji) a **UI filtrování** (co hledám).
   - Parametr má typ (text, number, enum, bool) a režim filtru (equality nebo range).
   - **Range filtry jsou explicitní:** Parametr se nestane range filtrem sám od sebe, musí to být vědomé rozhodnutí v definici kategorie.
+- **Sezónní kategorie:**
+  - Kategorie jako „Vánoce“, „Velikonoce“, „Valentýn“ existují celoročně.
+  - Obsah v nich se čistí přirozeně expirací, neřeším ruční úklid „mrtvol“.
+  - Umožňuji tak uživatelům chytat vlny zájmu bez mého zásahu.
 
 <a id="inzerat"></a>
 ### Inzerát
