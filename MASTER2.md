@@ -428,12 +428,45 @@ A jestli to někomu přijde moc osobní, tak jo. To je pointa. Důvěra je jedno
 <a id="terminologie"></a>
 ## Terminologie
 
-> Slovníček pojmů, ať se u toho nehádáme jak idioti.
+Tady si zametám před prahem, aby se mi později nerozpadla hlava na detailech typu „token vs kupón vs pass“ a aby UI nemluvilo pokaždý jinak. Terminologie není slovíčkaření, je to prevence bordelu: když něco pojmenuju blbě, začne se blbě chovat i produkt.
+
+> Jedno slovo = jeden význam.  
+> Když začnu používat stejný slovo pro dvě věci, tak jsem si právě zadělal na bug.
+
+V týhle sekci jsou jen definice. Implementace a chování patří do Mechanik.
 
 <a id="kupon-token-term"></a>
-### Kupón vs. Token
-- **Token (Měna):** Interní platidlo (žeton/kamínek). Kurz 1 CZK ≈ 2 Tokeny. Používá se k nákupu Passů, pokud nemám Kupón.
-- **Kupón (Ticket):** Jednorázová položka (lístek), kterou lze směnit za Pass. Získává se z balíčků nebo jako bonus.
+### Kupón vs. Token vs. Pass
+
+Tyhle tři věci vypadají podobně, ale jsou to tři různý nástroje. Když je smíchám, vznikne produktovej bordel a uživatel začne mít pocit ojebu. Takže: jedno slovo = jeden význam.
+
+- **Token** = *měna (palivo)*  
+  Tokeny jsou univerzální “peníze uvnitř systému”.  
+  - získám je (koupím / dostanu / vydělám)  
+  - pak je **utrácím** za věci a funkce  
+  - token je po utracení pryč  
+  Token je o **volnosti**: můžu se rozhodnout, za co ho použiju.
+
+- **Kupón** = *poukázka na konkrétní akci (bez expirace)*  
+  Kupón není měna. Kupón je “máš přesně tohle” a drží se jako **lístek/jízdenka bez data spotřeby**:  
+  - **1× Mark**  
+  - **1× Top**  
+  - **1× Multi-Category**  
+  - **1× Anti-topper**  
+  Kupón je o **konkrétnosti**: buď ho použiju na tu danou věc, nebo mi prostě zůstane v inventáři. Žádný „vypršelo ti to, smůla“.
+
+- **Pass** = *časově omezený stav / oprávnění*  
+  Pass není měna ani poukázka. Pass je “od teď do tehdy máš zapnutý oprávnění / režim”.  
+  - typicky navázanej na předplatný nebo balíček  
+  - funguje jako **stav**, ne jako spotřební item  
+  - během platnosti může dávat opakovanou výhodu (např. vyšší limity, aktivní režim, přístup k metrikám, imunita vůči anti-topperu apod.)
+
+Zjednodušeně:
+- **Tokeny** = *za co platím*  
+- **Kupóny** = *co přesně můžu jednou použít*  
+- **Passy** = *co mám aktivní v čase*
+
+A v UI platí jedno pravidlo: uživatel musí vždycky jasně vidět, jestli něco **utrácí** (token), **spotřebovává** (kupón), nebo **aktivuje na čas** (pass).
 
 <a id="feed-seznam-term"></a>
 ### Feed vs. Seznam
