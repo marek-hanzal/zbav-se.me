@@ -323,43 +323,105 @@ Konkurence prodává dosah. Já prodávám **klid, předvídatelnost a důvěru*
 <a id="kodex"></a>
 ## Kodex
 
-> Má vědomá rozhodnutí a kontrakt mezi mnou a uživateli. Tyto principy držím veřejně dostupné.
+Kodex je moje “no bullshit” vrstva. Není to právní text, ale sada pravidel, který držím i ve chvíli, kdy by bylo strašně lákavý je ohnout kvůli růstu nebo penězům.
+
+> Pokud nějaká feature nebo monetizační nápad poruší kodex, tak je to automaticky **špatně**.  
+> Ne “možná”, ne “nějak to vysvětlíme”. Prostě špatně.
+
+Co je tady svatý:
+
+- **Důvěra je výchozí stav**, ne odměna za poslušnost.
+- **Žádný skrytý motivy** (algoritmický kejkle, tajný penalizace, “doporučení” co je ve skutečnosti reklama).
+- **Monetizace je férová a přiznaná**: platí se za hodnotu, ne za manipulaci.
+- **Žádný pay-to-win**: peníze nesmí dělat z lidí “lepší občany”.
+- **Data držím jen tak dlouho, jak je to nutný**. Jakmile důvod skončí, data jsou pryč.
+
+Kodex není “image”. Kodex je brzda, co mi brání udělat z toho další tržnici, kde se všichni tvářej hodně cool, a pak tě potichu omrdaj.
 
 <a id="duvera-default"></a>
 ### Důvěra jako výchozí stav
 
-- Vycházím z předpokladu, že většina lidí chce hrát fér.
-- Ochranné mechanismy přidávám až tehdy, když jsou nutné, ne preventivně.
+Důvěra u mě není “odměna” ani razítko po ověření identity. Je to **vlastnost prostředí**, kterou dělám tím, jak se systém chová. Nechci “AI policajta”, chci předvídatelný pravidla.
+
+Co tím přesně myslím:
+
+- **Neověřuju důvěru přes identitu.** Nepotřebuješ občanku, aby ses mohl chovat normálně.
+- **Hranice jsou jasný a vymahatelný.** Co nejde, prostě nejde (a nedá se to obcházet).
+- **Odpovědnost je na straně uživatelů.**  
+  Systém nastaví rámec, ale nehraje si na chůvu. Typicky: **citlivý obsah** je primárně sebeoznačení prodejce. Když to někdo zneužívá (maskuje citlivý jako běžný), je to porušení pravidel a důvod k zásahu.
+- **Odpovědnost začíná přijetím.** Nezájem není zločin. Přijetí je vědomý závazek.
+- **Transakce má začátek a konec.** Zavřený věci zůstávají zavřený. Nový kontakt = nový začátek.
+- **Systém je klidnej, lidi můžou být emotivní.** UI nezvyšuje stres, jen drží strukturu.
+
+Detaily těchhle pravidel jsou rozepsaný v Mechanikách (citlivost obsahu, ochrana prodejce, “zavřeno je zavřeno”, struktura transakce).
 
 <a id="ferova-monetizace"></a>
 ### Férová monetizace a neaktivita
 
-- Platby nejsou past. Předplatné umožňuji kdykoliv zrušit.
-- **Automatické ukončení při neaktivitě:**
-  - Pokud uživatel systém dlouhodobě nepoužívá, nechci jeho peníze za nic.
-  - **Neaktivita** = žádný záznam v User Event Logu (uživatel aplikaci ani neotevřel).
-  - Po **1. měsíci** neaktivity: Pošlu e-mail s připomínkou.
-  - Po **2. měsíci** neaktivity: Okamžitě ruším předplatné (zastavím platby).
-- Raději přijdu o platbu než o důvěru.
+Monetizace je u mě přiznaná a čitelná. Nechci vydělávat tím, že někoho zmatu, tlačím do rozhodnutí, nebo mu nechám projít půl workflow a teprve na konci mu oznámím „tak zaplať, jinak nic“. Paywall není past. Je to cedule u dveří: vidíš ji dřív, než do nich vejdeš.
+
+Co platí:
+
+- **Platí se za hodnotu, ne za nátlak.**  
+  Rozšíření jsou nástroje a výhody, ne páky na manipulaci.
+- **Žádný “gotcha” momenty.**  
+  Když něco stojí peníze, je to vidět dřív, než do toho uživatel narve čas.
+- **Férovost i v neaktivitě.**  
+  Když uživatel dlouho nic nedělá, nechci mu potichu cucat peníze jen proto, že zapomněl.  
+  Neaktivita je signál “už to teď nepoužívám” a systém se k tomu má postavit fér.
+- **Jednoduchost před šikanou.**  
+  Žádný komplikovaný cancel flow, žádný “najdi to v sedmý obrazovce”. Zrušení musí být snadný a jasný.
+
+Konkrétní pravidla kolem předplatného, passů a balíčků jsou rozepsaný v sekcích Ekonomika / Předplatné.
 
 <a id="no-p2w"></a>
 ### Žádné pay-to-win
 
-- Peníze nekupují nadvládu. Placený obsah zobrazuji viditelně.
-- Trh nechávám čitelný pro všechny (neplatiče nelze skrýt, jen přeskočit v řazení).
+Peníze u mě nesmí dělat z lidí “lepší občany”. Nechci trh, kde vyhrává ten, kdo nejvíc zaplatí, a ostatní jen čumí na zadek.
+
+Co to znamená:
+
+- **Platíš za nástroje, ne za lež.**  
+  Rozšíření můžou dát pohodlí, rychlost, přehled, signalizaci. Nemůžou falšovat realitu.
+- **Žádný skrytý boosty mimo pravidla.**  
+  Když něco zvýrazním, je to vidět, je to pojmenovaný, a je jasný, co to dělá.
+- **Žádný penalizace pro “neplatící”.**  
+  Neexistuje tajný “handicap”, že neplatíš, tak se ti to bude potichu schovávat.
+- **Rovný základ trhu.**  
+  Každej má šanci uspět bez toho, aby musel platit jen za to, že existuje.
+
+Jestli nějaká monetizační věc začne vypadat jako “kup si vítězství”, tak je to automaticky špatně.
 
 <a id="respekt"></a>
 ### Respekt k uživateli
 
-- Nepoužívám manipulativní notifikace ani dark patterns.
-- Nesbírám data bez jasného účelu.
+Uživatel není cíl pro optimalizaci metrik. Je to člověk, co si chce v klidu prodat nebo koupit věc. Můj úkol je nepřekážet a nevytvářet mu mentální dluh.
+
+Respekt v praxi:
+
+- **Neotravovat.** Notifikace jsou informace, ne bič. Žádný spam, žádný urgence, žádný FOMO.
+- **Nemanipulovat.** Žádný dark patterns, žádný “confirm shaming”, žádný schovaný volby.
+- **Dávat kontrolu.** Uživatel ví, co se děje, a může to ovlivnit (filtry, ignor, citlivost, ukončení).
+- **Neznehodnocovat čas.** Minimum kroků, žádný zbytečný potvrzování, žádný “podívej se ještě sem”.
+- **Nebýt creepy.** Data sbírám s jasným účelem pro produkt a metriky trhu, ne pro reklamní profilování a prodej ven.
+
+Respekt je jednoduchý: neudělám nic, co bych nesnášel, kdyby to někdo dělal mně.
 
 <a id="otevrenost"></a>
 ### Otevřenost a odpovědnost
 
-- Pokud něco měním, dávám to vědět **předem a konkrétně**:
-  - **Kanály:** E-mail, in-app notifikace, commit log ve veřejném repozitáři.
-  - **Kurz CZK ↔ Token** měním nejdřív **kvartálně**.
+Nejsem anonymní “tým” a nechci se za nic schovávat. Když něco poseru, je to moje. Když něco funguje, je to taky moje. Tohle je one-man projekt a přesně tak se k tomu chovám.
+
+Zároveň to nestavím jako “ručně řízený cirkus”. Systém je navrženej tak, aby běžel **tak dlouho, jak o něj bude zájem**, i bez mýho denního zásahu. Je to co nejvíc **standalone ekosystém**, kterej řídí primárně uživatelé a jasný pravidla, ne skrytý admini uvnitř. Žádný “neviditelný ruce”, žádná zákulisní magie. Co jde vyřešit strukturou a mechanikama, má řešit struktura a mechaniky.
+
+Co z toho plyne:
+
+- **Jsem dohledatelnej a viditelnej.** Žádný bezejmenný logo, žádný “support@něco”.
+- **Pravidla nejsou magie.** Když systém něco dělá (řazení, gating, omezení), je jasný proč.
+- **Změny neprobíhají potichu.** Když změním něco zásadního, přiznám to.
+- **Odpovědnost nejde outsourcovat na algoritmus.** “Algoritmus rozhodl” je výmluva. Já rozhoduju.
+
+A jestli to někomu přijde moc osobní, tak jo. To je pointa. Důvěra je jednodušší, když víš, kdo za tím stojí.
 
 ---
 
