@@ -12,14 +12,62 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 ## Obsah
 
 - [Směr produktu](#smer-produktu)
+  - [Identita](#identita)
+  - [Tone of Voice](#tov)
+  - [Produktové cíle](#produktove-cile)
+  - [UX principy](#ux-principy)
+  - [Komunikace a transparentnost](#komunikace)
 - [Konkurenceschopnost](#konkurenceschopnost)
+  - [Co umím líp](#co-umim-lip)
+  - [V čem je má slabina](#slabina)
+  - [Co vědomě nedělám](#co-nedelam)
 - [Kodex](#kodex)
+  - [Důvěra jako výchozí stav](#duvera-default)
+  - [Férová monetizace a neaktivita](#ferova-monetizace)
+  - [Žádné pay-to-win](#no-p2w)
+  - [Respekt k uživateli](#respekt)
+  - [Otevřenost a odpovědnost](#otevrenost)
 - [Terminologie](#terminologie)
+  - [Kupón vs. Token](#kupon-token-term)
+  - [Feed vs. Seznam](#feed-seznam-term)
+  - [Typy Feedu](#typy-feedu)
+  - [Typy obsahu (Citlivost)](#typy-obsahu)
+  - [Stavy inzerátu](#stavy-inzeratu)
+  - [Aktivita](#aktivita)
 - [UI](#ui)
+  - [Navigace a Dashboard](#navigace)
+  - [Tvorba inzerátu (Draft Gate)](#tvorba-inzeratu)
+  - [Moje seznamy (Feedy)](#moje-seznamy)
+  - [Rozšíření a Aktivace](#rozsireni-ui)
+  - [Zprávy (Transakce)](#zpravy-ui)
+  - [Profil / Nastavení](#profil)
 - [Základní stavební kameny](#zakladni-kameny)
+  - [Uživatel](#uzivatel)
+  - [Kategorie](#kategorie)
+  - [Inzerát](#inzerat)
+  - [Draft](#draft)
+  - [Feed (Entita)](#feed-entita)
+  - [Transakce](#transakce)
+  - [Zprávy](#zpravy-entita)
+  - [Notifikace (Inbox)](#notifikace)
+  - [Lokace](#lokace)
+  - [Upload](#upload)
+  - [Hodnocení (Ranking)](#hodnoceni)
 - [Mechaniky](#mechaniky)
+  - [Stavy Inzerátu (Lifecycle)](#stavy-lifecycle)
+  - [Limity](#limity)
+  - [Notifikace a Inbox](#notifikace-mech)
+  - [Seznam inzerátů a Viditelnost](#seznam-viditelnost)
+  - [Životní cyklus inzerátu](#zivotni-cyklus)
+  - [Payback](#payback)
+  - [Obchod (Transakce)](#obchod)
+  - [Čistky dat](#cistky)
+  - [Reputace a Metriky](#reputace)
 - [Předplatné](#predplatne)
+  - [Zkušební Pro zdarma](#zkusebni-pro)
+  - [Srovnání balíčků](#srovnani-balicku)
 - [Tokeny (Měna)](#tokeny-mena)
+  - [Získávání zdarma](#ziskavani)
 - [Kupóny & Passy](#kupony-passy)
 - [Uvedení na trh](#uvedeni-na-trh)
 - [Retence a paměť trhu](#retence)
@@ -30,6 +78,7 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 <a id="smer-produktu"></a>
 ## Směr produktu
 
+<a id="identita"></a>
 ### Identita
 
 - **Core myšlenka:** „**Prodávám, neojebávám.**“
@@ -38,6 +87,7 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 - Monetizaci stavím na **hodnotě** (nástroje), ne na tlaku (reklama).
 - Stavím na důvěře mezi **mnou (platformou)** a **uživateli** pro zajištění mentálního komfortu.
 
+<a id="tov"></a>
 ### Tone of Voice
 
 - Onboarding bez pozlátek: „**Klikej. Zkoumej. Není tu co posrat.**“
@@ -48,6 +98,7 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
   - Používám **mužský rod** jako neutrální default (např. „Odmítl jsi“, „Máš novou zprávu“).
   - Vyhýbám se pasivu a úředničině ("bylo odmítnuto"). Mluvím krátce a lidsky.
 
+<a id="produktove-cile"></a>
 ### Produktové cíle
 
 - Chci vyvolat pocit **„teplého obýváku“** místo reklamního cirkusu.
@@ -55,6 +106,7 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 - Konzistence je pro mě víc než jedna killer funkce.
 - **Kontrast s konkurencí** má být citelný (návrat ke konkurenci má „bolet“).
 
+<a id="ux-principy"></a>
 ### UX principy
 
 - **Nulová tolerance nápovědy:** „**Pokud to potřebuje hint, udělal jsem to špatně.**“
@@ -65,6 +117,7 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 - **Prázdno je záměr** (nižší kognitivní zátěž).
 - Status může být emoční, CTA musí být mechanické a jasné.
 
+<a id="komunikace"></a>
 ### Komunikace a transparentnost
 
 - **Source Available:** Zdrojové kódy zpřístupňuji veřejně k auditu bezpečnosti a fair-play, ale chráním je licencí proti komerčnímu zneužití či klonování.
@@ -84,6 +137,7 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 
 > Mé subjektivní výhody a argumenty. Checklist, proč do toho jdu.
 
+<a id="co-umim-lip"></a>
 ### Co umím líp
 
 - **Klid místo cirkusu:** Minimum vizuálního šumu, žádné otravné UX. Aplikace pomáhá uzavřít obchod, ne krást čas.
@@ -96,11 +150,13 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 - **Bez pay-to-win:** Placené věci přiznávám a jsou vidět. Neplacený obsah můžu mírně potlačit (řazení), ale nikdy ho neskrývám.
 - **Deterministické brány:** Citlivost obsahu přísně řídím nastavením uživatele.
 
+<a id="slabina"></a>
 ### V čem je má slabina (a proč s tím počítám)
 
 - **Prázdno na startu:** Bez obsahu je marketplace mrtvý. Řeším to fázovaným startem (komunity → region).
 - **„Levný drobnosti“:** Prodej věcí za pár korun je u mě složitější (vyžaduji Draft, interakci). Mířím na situace, kde se vyplatí mít klid a filtr.
 
+<a id="co-nedelam"></a>
 ### Co vědomě nedělám
 
 - **Agresivní paid reach:** Netlačím věci do obličeje jen proto, že někdo zaplatil. Priorita je pro mě čitelnost trhu.
@@ -113,11 +169,13 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 
 > Má vědomá rozhodnutí a kontrakt mezi mnou a uživateli. Tyto principy držím veřejně dostupné.
 
+<a id="duvera-default"></a>
 ### Důvěra jako výchozí stav
 
 - Vycházím z předpokladu, že většina lidí chce hrát fér.
 - Ochranné mechanismy přidávám až tehdy, když jsou nutné, ne preventivně.
 
+<a id="ferova-monetizace"></a>
 ### Férová monetizace a neaktivita
 
 - Platby nejsou past. Předplatné umožňuji kdykoliv zrušit.
@@ -128,16 +186,19 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
   - Po **2. měsíci** neaktivity: Okamžitě ruším předplatné (zastavím platby).
 - Raději přijdu o platbu než o důvěru.
 
+<a id="no-p2w"></a>
 ### Žádné pay-to-win
 
 - Peníze nekupují nadvládu. Placený obsah zobrazuji viditelně.
 - Trh nechávám čitelný pro všechny (neplatiče nelze skrýt, jen přeskočit v řazení).
 
+<a id="respekt"></a>
 ### Respekt k uživateli
 
 - Nepoužívám manipulativní notifikace ani dark patterns.
 - Nesbírám data bez jasného účelu.
 
+<a id="otevrenost"></a>
 ### Otevřenost a odpovědnost
 
 - Pokud něco měním, dávám to vědět **předem a konkrétně**:
@@ -151,30 +212,36 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 
 > Slovníček pojmů, ať se u toho nehádáme jak idioti.
 
+<a id="kupon-token-term"></a>
 ### Kupón vs. Token
 - **Token (Měna):** Interní platidlo (žeton/kamínek). Kurz 1 CZK ≈ 2 Tokeny. Používá se k nákupu Passů, pokud nemám Kupón.
 - **Kupón (Ticket):** Jednorázová položka (lístek), kterou lze směnit za Pass. Získává se z balíčků nebo jako bonus.
 
+<a id="feed-seznam-term"></a>
 ### Feed vs. Seznam
 - **Feed (technicky):** Uložené nastavení filtru nad inzeráty (kategorie, lokace, cena...).
 - **Seznam (UI):** Uživatelský název pro Feed. V aplikaci mluvím o „Mých seznamech“.
 - **Inzeráty (UI tlačítko):** Chytrý odkaz, který uživatele hodí do posledního navštíveného seznamu (nebo defaultního).
 
+<a id="typy-feedu"></a>
 ### Typy Feedu
 - `user` – **Uživatelský seznam**. Vědomá volba uživatele (uloženo v „Moje seznamy“). **Tento typ se počítá do limitu počtu feedů.**
 - `search` – **Hledací kontext**. Interní stav pro stránku Hledat (v seznamu „Moje seznamy“ ho nezobrazuji). **Tento typ se nepočítá do limitu počtu feedů.**
 
+<a id="typy-obsahu"></a>
 ### Typy obsahu (Citlivost)
 - **Běžný:** Standardní inzerát pro všechny (kočárek, telefon).
 - **Pro dospělé:** Legální, ale vyžaduje plnoletost (alkohol, vaping).
 - **Citlivé:** Vyžaduje opatrnost a rozum (airsoft, nože).
 - **Omezené:** Regulováno zákonem (skutečné zbraně).
 
+<a id="stavy-inzeratu"></a>
 ### Stavy inzerátu
 - **Live (Aktivní):** Inzerát je publikovaný, neexpirovaný a dostupný k prodeji. Počítá se do limitů.
 - **Expired (Expirovaný):** Inzerát vypršel (`expiresAt`). Už ho nelze najít v běžném seznamu, interakce jsou zakázané (kromě flagování).
 - **Sold (Prodaný):** Inzerát byl prodán a systémově uzavřen.
 
+<a id="aktivita"></a>
 ### Aktivita
 - **Aktivita uživatele:** Jakýkoli záznam v **User Event Logu** (kliknutí, zobrazení, scroll).
 
@@ -185,6 +252,7 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 
 Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layout (od toho je Figma), ale logiku a pravidla chování.
 
+<a id="navigace"></a>
 ### Navigace a Dashboard
 - **Home Kupujícího (Chci nakupovat):**
   - **Inzeráty:** Kliknutí vede okamžitě na **poslední použitý Seznam** (nebo default). Uživatel neřeší "feed", prostě jde "na trh".
@@ -196,6 +264,7 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
 - **Bottom Nav:**
   - Domů | Moje seznamy | **Přidat (+)** | Bonusy/Obchod | Profil
 
+<a id="tvorba-inzeratu"></a>
 ### Tvorba inzerátu (Draft Gate)
 - Vstup do editoru je **podmíněn limitem aktivních inzerátů**.
 - **Tvrdá závora:** Pokud uživatel dosáhl limitu, **nepustím ho do editoru**.
@@ -207,27 +276,31 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
   - Editor je jedna kontinuální činnost (scroll).
   - Data se ukládají průběžně (autosave).
 
+<a id="moje-seznamy"></a>
 ### Moje seznamy (Feedy)
 - Seznam zobrazuje pouze feedy typu `user`.
 - `search` (poslední hledání) sem nepletu.
 - Uživatel zde může přepínat mezi svými kontexty (např. "Vaping" vs "Bazar aut").
 - "Nový seznam" zakládá nový sledovací filtr.
 
+<a id="rozsireni-ui"></a>
 ### Rozšíření a Aktivace
 - UI Rozšíření slouží jako **ovládací pult pro rozšíření a vylepšení**.
 - **Sekce Aktivace Passů:**
   - Zobrazuji seznam dostupných vylepšení (Passů).
   - Tlačítko pro aktivaci je **chytré**:
-    - Pokud má uživatel **Kupón**: Tlačítko říká "Aktivovat (1x Kupón)" -> Aktivace spotřebuje kupón.
-    - Pokud uživatel **nemá Kupón**: Tlačítko říká "Aktivovat (XX Tokenů)" -> Aktivace strhne tokeny.
+    - Pokud má uživatel **Kupón**: Tlačítko říká "Aktivovat (1x Kupón)" → Aktivace spotřebuje kupón.
+    - Pokud uživatel **nemá Kupón**: Tlačítko říká "Aktivovat (XX Tokenů)" → Aktivace strhne tokeny.
   - Aktivace je okamžitá konverze (Kupón/Token → Pass).
 - **Sekce Ostatní kupóny:**
   - Odděleně pod passy zobrazuji kupóny, které nejsou přímo vázané na aktivaci passu (pokud takové existují).
 
+<a id="zpravy-ui"></a>
 ### Zprávy (Transakce)
 - UI pro komunikaci a obchod.
 - Podpora **strukturovaných widgetů**: Kromě textu umím zobrazit balíčky (tracking), lokace a systémové stavy.
 
+<a id="profil"></a>
 ### Profil / Nastavení
 - Preference uživatele (citlivost obsahu, notifikace).
 - Zde se řeší "kdo jsem" a "co snesu vidět".
@@ -239,11 +312,13 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
 
 > Definice entit a dat, na kterých stavím vše ostatní.
 
+<a id="uzivatel"></a>
 ### Uživatel
 - Core entita.
 - Držím absolutně minimální data – mám jen **email**, nic jiného neukládám.
 - Respektuji anonymitu. Bezpečnost řeším sledováním chování (reputace), ne lustrováním občanky.
 
+<a id="kategorie"></a>
 ### Kategorie
 - Organizační vrstva trhu. Kontext, ve kterém dává smysl jiný jazyk a filtry.
 - Kategorie nese: **název**, **slug**, **locale**.
@@ -253,6 +328,7 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
   - Parametr má typ (text, number, enum, bool) a režim filtru (equality nebo range).
   - **Range filtry jsou explicitní:** Parametr se nestane range filtrem sám od sebe, musí to být vědomé rozhodnutí v definici kategorie.
 
+<a id="inzerat"></a>
 ### Inzerát
 - Souhrn atributů a fotek reprezentující nabízenou věc.
 - **Atributy:**
@@ -266,12 +342,14 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
   - Nad inzerátem měřím eventy pro vyhodnocení zájmu: **Impression** (scroll), **View** (detail), **Visible** (zobrazení).
   - Dále sleduji: **Flag** (nahlášení), **Ignor** (skrytí), **Favourite**.
 
+<a id="draft"></a>
 ### Draft
 - Kopie atributů inzerátu ve stavu zrodu.
 - Vstupní bod tvorby. Inzerát nenechám vzniknout kliknutím, vzniká z Draftu.
 - Umožňuje postupnou tvorbu (autosave) bez rizika ztráty dat.
 - Spravuji seznam Draftů (možnost šablon/kopírování).
 
+<a id="feed-entita"></a>
 ### Feed (Entita)
 - Uložené nastavení filtru nad inzeráty.
 - Není to jen seznam, je to **předpis**: "Co chci vidět" (kategorie, filtry, lokalita).
@@ -279,12 +357,14 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
 - Defaultně zakládám uživateli obecný Feed bez filtrů.
 - **Vyhledávání === Feed:** Systémově beru hledání jen jako speciální instanci Feedu.
 
+<a id="transakce"></a>
 ### Transakce
 - Most mezi prodejcem a kupujícím.
 - Zastupuje interakci, v systému se prezentuje jako „Zprávy“.
 - Každá transakce má **vlastní vlákno zpráv** (izolovaný kontext).
 - Transakce nese stav (pending, open, sold...).
 
+<a id="zpravy-entita"></a>
 ### Zprávy
 - Obsah transakce.
 - **Typy obsahu:**
@@ -294,18 +374,22 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
   - **Systémové zprávy:** Oznámení generovaná systémem (např. "Prodáno").
 - Strukturovaná data ukládám odděleně, aby šla snadno a cíleně mazat (GDPR/Clean-up).
 
+<a id="notifikace"></a>
 ### Notifikace (Inbox)
 - Jediný zdroj pravdy pro "co se stalo".
 - Všechny události padají do **Inboxu**. Email je jen volitelný "forwarder".
 
+<a id="lokace"></a>
 ### Lokace
 - Autorita na polohu.
 - Neukládám random stringy, odkazuji se na validní záznam ze služby vyhledávání adres.
 
+<a id="upload"></a>
 ### Upload
 - Centrální správa souborů (fotek).
 - Metadata k souborům na CDN.
 
+<a id="hodnoceni"></a>
 ### Hodnocení (Ranking)
 - Pokud není řečeno jinak, používám školní stupnici **A-F** (A = nejlepší).
 - Interně to mapuji na čísla 6 (A) až 1 (F).
@@ -317,6 +401,7 @@ Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layo
 
 > Mozek celé aplikace. Pravidla hry.
 
+<a id="stavy-lifecycle"></a>
 ### Stavy Inzerátu (Lifecycle)
 Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro systém. O přechody se starají uživatelské akce nebo cron joby.
 - **Live (Aktivní):** Inzerát existuje, čas `expiresAt` je v budoucnosti a nebyl označen jako prodaný.
@@ -330,6 +415,7 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
   - Nezapočítává se do limitu aktivních inzerátů.
 - **Poznámka:** Stav `deleted` neexistuje. Inzeráty nemažu, pouze expirují nebo se prodají (paměť trhu).
 
+<a id="limity"></a>
 ### Limity
 - **Limit feedů:**
   - Počítám pouze feedy typu `user`.
@@ -339,12 +425,14 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
   - Limituji pouze inzeráty ve stavu **Live**.
   - Při překročení limitu (vypršení passu): Existující inzeráty nechám doběhnout. Aktivuje se **Draft Gate** (nepustím uživatele tvořit nové).
 
+<a id="notifikace-mech"></a>
 ### Notifikace a Inbox
 - **Filosofie ticha:** Defaultní stav je neotravovat.
 - **Inbox First:** Všechny události padají do in-app Inboxu.
 - **Email jako zrcadlo:** Email je pouze volitelný "digest". Uživatel si nastavuje, co chce přeposílat (frekvence/typ).
 - **Výjimka:** Reset hesla a bezpečnostní alerty chodí na email vždy.
 
+<a id="seznam-viditelnost"></a>
 ### Seznam inzerátů a Viditelnost
 - **Seznam:** Neexistuje statická stránka. Seznam je vždy výsledek Feed dotazu.
 - **Limit:** Tvrdý strop **200 inzerátů** na dotaz (výkon + použitelnost).
@@ -359,6 +447,7 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
   - 2. **Top + Běžné** (smíchám dohromady a seřadím čistě podle preferencí uživatele). Top ztrácí výhodu pozice, zůstává mu jen badge.
 - **Expirované inzeráty:** Ve feedu je defaultně neukazuji (nutný explicitní filtr). Přímý odkaz funguje (read-only).
 
+<a id="zivotni-cyklus"></a>
 ### Životní cyklus inzerátu
 - **Release Window (Early Access):**
   - Nový inzerát má **+8h** zpoždění pro běžné uživatele.
@@ -373,6 +462,7 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
   - Pass, který prodlužuje život inzerátu (posouvá `expiresAt`).
   - Umožňuje inzerátu "přežít" expiraci a zůstat v aktivním cyklu.
 
+<a id="payback"></a>
 ### Payback
 - Kompenzace pro prodávajícího, pokud byl jeho **Top** potlačen Anti-topperem.
 - Týká se pouze **Top** (Mark nekompenzuji).
@@ -380,6 +470,7 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
 - Vyhodnocuji po expiraci inzerátu.
 - Sleduji poměr zobrazení (Visible vs. Anti-topper eventy). Pokud poměr překročí definované prahy, vracím poměrnou část ceny boostu v **tokenech**.
 
+<a id="obchod"></a>
 ### Obchod (Transakce)
 - **Vznik:** Kupující klikne na „Mám zájem“ → vzniká transakce ve stavu `pending`.
 - **Anti-spam:**
@@ -398,11 +489,13 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
   - **Nemá vliv na Karmu.**
   - **Metrika:** Propisuji do metrik obou stran ("Dispute Rate").
 
+<a id="cistky"></a>
 ### Čistky dat
 - Po ukončení transakce (`closed`, `sold`, `expired`) běží dvoufázový úklid:
   1.  **Ihned:** Mažu strukturovaná data (adresy, telefony). Text a obrázky zůstávají pro kontext.
   2.  **Po 3 měsících:** Hard delete celé transakce.
 
+<a id="reputace"></a>
 ### Reputace a Metriky
 - **Flagy (Nahlášení):**
   - **Inzerát:** Toggle v detailu inzerátu.
@@ -429,11 +522,13 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
 
 > Oprávnění se vážou na účet (neexistuje trvalá role "prodejce/kupující").
 
+<a id="zkusebni-pro"></a>
 ### Zkušební Pro zdarma
 - Každému novému uživateli dávám **1 měsíc Pro balíčku zdarma**.
 - Trial aktivuji automaticky při registraci. Po vypršení se sám vypne.
 - Cíl: Ať si uživatel vyzkouší aplikaci v plné síle.
 
+<a id="srovnani-balicku"></a>
 ### Srovnání balíčků
 
 | Položka | Kupující<br>(119 Kč) | Prodejce<br>(229 Kč) | **Pro**<br>(499 Kč) |
@@ -467,6 +562,9 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
 
 - **Interní kurz:** Baseline cca **1 CZK ≈ 2 Tokeny**.
 - **Atomicitita:** Všechny transakce jsou atomické. Buď proběhne celý nákup/efekt, nebo se nic nestrhne.
+
+<a id="ziskavani"></a>
+### Získávání Tokenů
 
 | Balíček | Cena (CZK) | Získám Tokenů | Výhodnost |
 | :--- | :--- | :--- | :--- |
