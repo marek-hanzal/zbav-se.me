@@ -557,11 +557,12 @@ Citlivost je zároveň odpovědnost prodejce. Systém nastaví brány, ale ozna�
 <a id="stavy-inzeratu"></a>
 ### Stavy inzerátu
 
-U nás je “stav” hlavně o tom, jestli je inzerát **živý**, **expirovaný**, a jestli je ještě **k dispozici pro nový obchod**. Žádnej cirkus.
+U nás je “stav” hlavně o tom, jestli je inzerát **živý**, nebo jestli už je **mimo hru** (expirovaný / zavřený / prodaný). Žádnej cirkus.
 
 Enum stavů:
-- **`live`**  
-- **`expired`**  
+- **`live`**
+- **`expired`**
+- **`closed`**
 - **`sold`**
 
 Co znamenají v praxi:
@@ -569,19 +570,25 @@ Co znamenají v praxi:
 - **Draft** *(není stav inzerátu, je to separátní entita)*  
   Nejdřív existuje Draft (autosave, bezpečný návrat). Teprve publikací vznikne inzerát se stavem `live`.
 - **`live`**  
-  Publikovaný inzerát, který je aktivní a může se zobrazovat ve feedech (samozřejmě přes všechny gating pravidla). `live` znamená “dá se koupit”.
+  Publikovaný inzerát, který je aktivní a může se zobrazovat ve feedech (samozřejmě přes všechny gating pravidla). `live` znamená: *dá se koupit*.
 - **`expired`**  
-  Inzerát po expiraci.  
+  Inzerát po expiraci (automatické ukončení).  
   - Přes **přímý odkaz** je vždycky dostupný (read-only).  
   - Ve feedu se objeví jen když si to uživatel **vědomě zapne** (explicitní filtr).  
-  - Interakce jsou defaultně zakázané, výjimka je **flagování**.
+  - Interakce jsou zakázané, výjimka je **flagování**.
+- **`closed`**  
+  Inzerát byl ukončen **ručně** prodejcem.  
+  Chová se stejně jako `expired`:  
+  - defaultně **neleze do feedu** (objeví se jen když si to uživatel **vědomě zapne** přes filtr),  
+  - přes **přímý odkaz** je dostupný (read-only),  
+  - interakce jsou zakázané, výjimka je **flagování**.
 - **`sold`**  
-  Inzerát už není k dispozici pro nový obchod.  
+  Inzerát už není k dispozici pro nový obchod (prodáno).  
   - Detail se otevře normálně, ale místo “Mám zájem” je tam jasný status typu **„Inzerát už není dostupný“**.  
   - `sold` inzerát se nepočítá jako aktivní (neleze do limitu aktivních inzerátů).
 
 Poznámky:
-- **`deleted` neexistuje.** Inzeráty se nemažou, jen mění stav mezi `live` / `expired` / `sold`.
+- **`deleted` neexistuje.** Inzeráty se nemažou, jen mění stav mezi `live` / `expired` / `closed` / `sold`.
 - **Kontinuální nabídka** je mechanika, která umí `expired` vrátit zpět do `live` bez potřeby dalších stavů.
 
 <a id="aktivita"></a>
@@ -986,186 +993,453 @@ Tohle je obecnej UX pattern napříč appkou, nejen u tvorby inzerátu:
 - UI se s postupem práce uklidňuje
 - uživatel má průběžně pocit kontroly a dokončování, ne tlak a formulářovej stres
 
+<a id="zpusob-predani"></a>
+### Způsob předání (Delivery)
+
+Způsob předání je dobrovolnej signál. Ne závazek a ne “logistika modul”. Smysl je jednoduchý: kupující hned ví, jak si to prodejce zhruba představuje, a podle toho se může rozhodnout bez zbytečnýho dopisování.
+
+Co platí:
+- Prodejce uvede preferovaný možnosti (např. **osobně**, **kurýr**, **poštou**).
+- Není to smlouva. Je to preference, kterou si lidi případně doladí v domluvě.
+- Ve feedu to **slouží jako filtr**. Přesně tahle položka umožňuje mít vedle sebe:
+  - “sousedský” prodej (dojedu si pro to / osobně),
+  - i klasickej balíčkovej prodej.
+
+Způsob předání je další kus kontextu, kterej šetří čas a snižuje počet debilních dotazů typu “a poslal bys to?”.
+
+<a id="zaruka"></a>
+### Záruka
+
+Záruka je dobrovolnej signál, kterej řeší jednu klasickou otázku: **„Je to v záruce?“**  
+Platforma do toho **nijak nevstupuje**. Neověřuju to, negarantuju to, nesoudím to. Je to čistě mezi lidma. Já jen dávám možnost to říct jednoduše a strukturovaně.
+
+Enum hodnot:
+- **`no-warranty`**  
+  Bez záruky.
+
+- **`custom`**  
+  Vlastní záruka mimo zákon. Prodejce něco slíbí nad rámec běžný reality a je to čistě jeho odpovědnost.
+
+- **`warranty`**  
+  Zákonná záruka / prokazatelnej nákup (typicky účtenka).
+
+Cíl je jednoduchý: méně dopisování, méně dohadů, rychlejší rozhodování.
+
+<a id="stav-a-stari"></a>
+### Stav a stáří (škály A–F)
+
+Konkrétní roky a detailní popisy jsou často k ničemu. Lidi stejně můžou kecat a ještě k tomu to vytváří zbytečnou mentální zátěž: vyhodnocovat “2024” u telefonu není pro mozek rychlej signál, je to mikrovýpočet. A tenhle mikrovýpočet děláš ve feedu pořád dokola.
+
+Proto používám škály A–F. Je to jednoduchý, rychlý, a hlavně konzistentní napříč kategoriema.
+
+- **Stav (A–F)**  
+  Jak na tom věc reálně je: od “skoro nový” po “na díly”.
+
+- **Stáří (A–F)**  
+  Jak dlouho to existuje / jak dlouho se to používá, bez potřeby řešit přesný datumy.
+
+Business důvody:
+- **Míň lhaní nečekám, ale míň stresu jo.** Škála je čitelnější než “rok výroby” nebo “koupeno 2024”.
+- **Filtrace je brutálně jednodušší.** Nemusím řešit range, hranice, “od–do” a interpretace. Prostě filtr na stupně.
+- **Přesný hledání patří jinam.** Když někdo chce ultra přesnost, dá se to řešit jinýma nástrojema a signálama (titulek, kategorie parametry, specifický filtry), ne jedním polem “rok”.
+
+Bonus: tyhle škály nejsou jen pro elektroniku. Počítají i s “živějšíma” kategoriema, kde roky nedávají moc smysl:
+
+- **Zvířata:** stáří `A` může být klidně *kotě / štěně / mladej papoušek*.
+- **Stav u zvířete:** `A` může znamenat *zcela zdravý*, zatímco `F` je prostě signál *„problém / je na veterinu“*.
+
+Škály jsou dobrovolný, ale když je vyplníš, zvedneš čitelnost trhu bez slohovek a bez matematickýho utrpení.
+
 <a id="moje-seznamy"></a>
 ### Moje seznamy (Feedy)
-- Seznam zobrazuje pouze feedy typu `user`.
-- `search` (poslední hledání) sem nepletu.
-- Uživatel zde může přepínat mezi svými kontexty (např. "Vaping" vs "Bazar aut").
-- "Nový seznam" zakládá nový sledovací filtr.
+
+**Moje seznamy** jsou místo, kde si uživatel spravuje svoje **uložený feedy**.  
+V praxi: *„co chci vidět“* a *„v jakým kontextu se zrovna pohybuju“* (např. **Vaping** vs. **Bazar aut**, **domov** vs. **chalupa**).
+
+> Feed je konfigurace. Seznam inzerátů je výsledek.  
+> (Viz. *Feed vs. Seznam*.)
+
+#### Co se tady zobrazuje
+- V seznamu ukazuju **jen feedy typu `user`** (vědomě uložený feedy).
+- **`search`** sem netahám: je to systémovej kontext stránky **Hledat**, ne „můj seznam“.
+- Každej účet má vždycky aspoň **1 výchozí feed** (bez filtrů), aby existovala bezpečná návratová volba typu *„ukaž mi prostě všechno“*.
+
+#### Proč to existuje
+Uživatel nemá jeden univerzální feed na celý život. Má víc realit.  
+Proto si může držet víc seznamů, a každej má vlastní nastavení:
+
+- filtry (kategorie, parametry, cenový rozsahy…)
+- radius + lokaci (a tím pádem i řazení podle vzdálenosti)
+- řazení (podle toho, co v tom kontextu dává smysl)
+
+#### Hlavní akce
+- **Nový seznam** = založí nový feed typu `user` (tj. nový „hlídací filtr“).
+- Každej seznam jde:
+  - **přejmenovat** (protože „Seznam 3“ je mentální špína)
+  - **upravit** (filtry / lokaci / radius / řazení)
+  - **smazat** (když už je mrtvej)
+
+#### Pravidla, co se nepřeskočí
+Ať je seznam jakkoliv chytrej, pořád platí systémový brány:
+
+- citlivost obsahu (hard gate),
+- ignor (defaultně skrytý, pokud výslovně nezapnu výjimku),
+- a další globální pravidla viditelnosti.
+
+Žádný zkratky okolo pravidel. Seznam jen říká *„co chci“*, systém pořád drží *„co smíš / nechceš vidět“*.
 
 <a id="rozsireni-ui"></a>
 ### Rozšíření a Aktivace
-- UI Rozšíření slouží jako **ovládací pult pro rozšíření a vylepšení**.
-- **Sekce Aktivace Passů:**
-  - Zobrazuji seznam dostupných vylepšení (Passů).
-  - Tlačítko pro aktivaci je **chytré**:
-    - Pokud má uživatel **Kupón**: Tlačítko říká "Aktivovat (1x Kupón)" → Aktivace spotřebuje kupón.
-    - Pokud uživatel **nemá Kupón**: Tlačítko říká "Aktivovat (XX Tokenů)" → Aktivace strhne tokeny.
-  - Aktivace je okamžitá konverze (Kupón/Token → Pass).
-- **Sekce Ostatní kupóny:**
-  - Odděleně pod passy zobrazuji kupóny, které nejsou přímo vázané na aktivaci passu (pokud takové existují).
+
+Rozšíření jsou **centrální ovládací pult** pro věci, co se dají *zapnout* (a pak nějakou dobu platí).  
+Ne „nastavení“. Ne „shop“. Spíš panel typu: *„co mám aktivní, co můžu zapnout, co mi končí, a čím to zaplatím“*.
+
+Tahle sekce existuje kvůli jedný věci:  
+uživatel má mít **jedno místo**, kde se vyzná v tom, co má odemčený, a **nemusí to lovit po celým UI**.
+
+#### Co tu uživatel vidí
+- Přehled dostupných rozšíření (typu „věc navíc“).
+- U každého rozšíření:
+  - jestli je **aktivní** (a dokdy),
+  - jestli je **neaktivní**,
+  - a co stojí jeho aktivace.
+
+Součástí je i “inventář” kontextu:
+- kolik mám **Tokenů**,
+- kolik mám **Kupónů** (pokud existují),
+- jaké mám **Passy** a kdy končí.
+
+#### Aktivace Passů
+Rozšíření se v praxi zapínají tak, že vznikne **Pass**.  
+Aktivace je vždycky okamžitá konverze:
+
+**Kupón / Tokeny → Pass (aktivní stav)**
+
+Bez čekání, bez „schvalování“, bez hovadin. Klikneš a hotovo.
+
+#### Chytré tlačítko pro aktivaci
+CTA se chová tak, aby uživatel nemusel přepočítávat život:
+
+- Pokud má uživatel použitelný **Kupón** pro daný rozšíření:  
+  `Aktivovat (1× Kupón)`  
+  a aktivace **spálí kupón**.
+
+- Pokud kupón nemá:  
+  `Aktivovat (XX Tokenů)`  
+  a aktivace **strhne tokeny**.
+
+Tohle pravidlo je jednoduchý a stabilní: **nejdřív spotřebuj free věci, až potom měnu**.
+
+#### Prodloužení
+Když má Pass expiraci, „prodloužení“ je prostě další aktivace:
+- buď kupón,
+- nebo tokeny,
+- a Pass se obnoví / prodlouží.
+
+Žádná zvláštní magie. Stejný kontrakt, stejný mentální model.
+
+#### Ostatní kupóny
+Pod rozšířeníma (passama) je samostatná sekce pro kupóny, který **nejsou přímo „zapni pass“**.  
+Tzn. pokud existují kupóny typu „něco jednorázově“ nebo „nějaký bonus“, ukazuju je zvlášť, ať se to nemíchá do aktivací.
+
+#### Důležitý pravidlo: rozšíření nic neobchází
+Rozšíření jsou jen *nadstavby*. Nezadní vrátka.
+
+Cokoliv systémově platí pro viditelnost / gating / bezpečnost, platí pořád:
+- citlivost obsahu,
+- ignor,
+- a další globální pravidla.
+
+Rozšíření může dát pohodlí nebo schopnost. **Nikdy nesmí obejít hranice systému.**
 
 <a id="zpravy-ui"></a>
 ### Zprávy (Transakce)
-- UI pro komunikaci a obchod.
-- Podpora **strukturovaných widgetů**: Kromě textu umím zobrazit balíčky (tracking), lokace a systémové stavy.
+
+Zprávy nejsou “chat”. Zprávy jsou **UI pro obchod**.  
+Každý vlákno = jedna konkrétní transakce, navázaná na jeden konkrétní inzerát. Žádný volný DM “jen tak”. Kontext je vždycky jasnej.
+
+Co je tady cílem:
+- **držet fakta pohromadě** (kdo má zájem, kdo přijal, co bylo domluveno),
+- **minimalizovat psaní** (klikací kroky mají přednost),
+- **zastavit spam a nekonečný doťukávání** (“zavřeno je zavřeno”).
+
+#### Jak to UI chápu
+V detailu transakce je to **časová osa událostí**:
+- systémové stavy (zájem, přijetí/odmítnutí, ukončení, prodáno),
+- textový zprávy (pokud si chtějí lidi psát),
+- a **strukturovaný widgety** (protože některý věci jsou zbytečný řešit textem).
+
+To znamená: i když si lidi píšou normálně, systém pořád drží “pravdu” vedle toho.
+
+#### Anti-spam (pending)
+Když kupující klikne „Mám zájem“, vzniká transakce a jde do stavu `pending`.
+
+- Kupující v `pending` **nemůže psát zprávy**.
+- Prodávající v `pending` vidí jednoduchou volbu:
+  - **Přijmout** → `open`
+  - **Odmítnout** → `rejected`  
+  Bez vysvětlování, bez povinnýho důvodu, bez mentálního dluhu.
+
+Tady se láme chleba: odpovědnost prodávajícího začíná až přijetím.
+
+#### Otevřená transakce (open)
+Ve stavu `open` se odemkne:
+- posílání zpráv,
+- a posílání strukturovaných věcí (widgety).
+
+Widgety jsou záměrně “faktický balíčky”, ne dekorace:
+- Lokace (místo předání),
+- informace k předání (čas / domluva),
+- tracking / balíček (pokud to vůbec dává smysl),
+- systémové kroky a potvrzení.
+
+#### Uzavření a finální stavy
+Transakce má konec. A ten konec je definitivní.
+
+- `closed`, `sold`, `expired` = **read-only**.
+- V uzavřený transakci už nejde pokračovat, nejde “re-open”, nejde “ještě jen poslední zpráva”.
+
+Když se lidi chtějí bavit znova, dělají to **novou transakcí**. Čistej start, čistej kontext.  
+Tohle je přesně ten bod “zavřeno je zavřeno”, kterej snižuje toxicitu a nekonečný otravování.
+
+---
 
 <a id="profil"></a>
 ### Profil / Nastavení
-- Preference uživatele (citlivost obsahu, notifikace).
-- Zde se řeší "kdo jsem" a "co snesu vidět".
+
+Profil není “sociální profil”. Je to **místo pro preference**: kdo jsem (minimálně) a co snesu / chci vidět.
+
+#### Co tu řeším
+- **Citlivost obsahu**  
+  Uživatel si nastaví, jakou maximální úroveň obsahu chce vidět. Default je “běžný”.  
+  Je to vědomý opt-in, žádný “blur a klikni sem”. Když si to nepovolí, citlivější věci se mu prostě neukážou.
+
+- **Notifikace**  
+  Defaultní stav aplikace je ticho. Všechno jde do Inboxu.  
+  Tady si uživatel nastaví, jestli chce (a jak často) emailový přeposílání / digest.
+
+- **Základní účetní věci**  
+  Jádro účtu je email + preference. Žádný zbytečný “profilový údaje”, který nikomu k ničemu nejsou.
+
+Profil má být klidnej a věcnej. Jedno místo, kde nastavím hranice a pak už mi to nepřekáží v používání appky.
 
 ---
 
 <a id="zakladni-kameny"></a>
 ## Základní stavební kameny
 
-> Definice entit a dat, na kterých stavím vše ostatní.
+> Definice entit a dat, na kterých stojí všechno ostatní. Žádná magie, jen jasný kontrakty.
+
+Tahle sekce popisuje, **co v systému existuje**, jak to spolu souvisí a jaký jsou základní pravidla.  
+Cíl není „databázová dokumentace“, ale produktová definice, která drží smysl i když se mění implementace.
+
+---
 
 <a id="uzivatel"></a>
 ### Uživatel
-- Core entita.
-- Držím absolutně minimální data – mám jen **email**, nic jiného neukládám.
-- Respektuji anonymitu. Bezpečnost řeším sledováním chování (reputace), ne lustrováním občanky.
+
+Core entita. Na uživatele je navázané prakticky všechno, ale **data o něm držím na minimu**.
+
+- Ukládám jen **email**.
+- Neřeším identity, občanky, jména ani “profilovky pro pocit”.
+- Bezpečnost a důvěru řeším **chováním v systému**, ne lustrováním.
+
+---
 
 <a id="kategorie"></a>
 ### Kategorie
-- Organizační vrstva trhu. Kontext, ve kterém dává smysl jiný jazyk a filtry.
-- Kategorie nese: **název**, **slug**, **locale**.
-- **Category Spec (Parametry):**
-  - Kategorie může definovat doplňující údaje (např. u aut „rok“, u vapingu „typ baterky“).
-  - Tyto parametry řídí **UI tvorby inzerátu** (co vyplňuji) a **UI filtrování** (co hledám).
-  - Parametr má typ (text, number, enum, bool) a režim filtru (equality nebo range).
-  - **Range filtry jsou explicitní:** Parametr se nestane range filtrem sám od sebe, musí to být vědomé rozhodnutí v definici kategorie.
-- **Sezónní kategorie:**
-  - Kategorie jako „Vánoce“, „Velikonoce“, „Valentýn“ existují celoročně.
-  - Obsah v nich se čistí přirozeně expirací, neřeším ruční úklid „mrtvol“.
-  - Umožňuji tak uživatelům chytat vlny zájmu bez mého zásahu.
+
+Kategorie je organizační vrstva trhu. „Kontext“, ve kterém dává smysl jiný jazyk a jiné filtry.
+
+Kategorie nese jen:
+- **název**
+- **slug**
+- **locale**
+
+#### Category Spec (parametry)
+Kategorie může dobrovolně definovat parametry, které dávají smysl právě v ní (auta: „rok“, byty: „plocha“, vaping: „typ baterky“…).
+
+Specifikace je autorita pro:
+- **UI tvorby inzerátu** (jaká pole zobrazím a jak),
+- **UI filtrování feedu** (jaký filtry jsou relevantní).
+
+Parametr má:
+- identifikátor,
+- typ (text / enum / number / bool / date …),
+- režim filtru:
+  - **nefilterovatelný** (jen informativní),
+  - **equality** (shoda),
+  - **range** (od–do).
+
+**Range filtry jsou vždy explicitní rozhodnutí.** Nikdy se nestanou „samy od sebe“.
+
+---
 
 <a id="inzerat"></a>
 ### Inzerát
-- Souhrn atributů a fotek reprezentující nabízenou věc.
-- **Atributy:**
-  - **Obsah:** Title, description, pros/cons.
-  - **Galerie:** Kolekce uploadů.
-  - **Cena:** Částka + měna + typ (pevná/otevřená).
-  - **Globální parametry:** Condition (stav), age (stáří), delivery, warranty.
-  - **Specifické parametry:** Data dle definice kategorie (JSONB).
-  - **Lokalita:** Odkaz na entitu Lokace + souřadnice.
-- **Metriky a eventy:**
-  - Nad inzerátem měřím eventy pro vyhodnocení zájmu: **Impression** (scroll), **View** (detail), **Visible** (zobrazení).
-  - Dále sleduji: **Flag** (nahlášení), **Ignor** (skrytí), **Favourite**.
+
+Inzerát je souhrn atributů a galerie fotek reprezentující nabízenou věc.  
+Veškerá interakce mezi lidmi se nakonec váže právě na něj, i když technicky vzniká přes Draft.
+
+#### Atributy
+- **Obsah:** title, description, pros/cons
+- **Galerie:** uploady + pořadí
+- **Cena:** částka + měna + typ (pevná / otevřená)
+- **Globální parametry:** condition (A–F), age (A–F), delivery, warranty
+- **Kategorie-specifické parametry:** data dle Category Spec (typicky JSON objekt / JSONB)
+- **Lokalita:** locationId + lat/lon (kvůli řazení podle vzdálenosti a radius filtrům)
+- **Čas:** createdAt / updatedAt / expiresAt
+
+#### Parametry: defaultně “JSON”, vytknutí je vědomý krok
+Nové a specifické atributy přichází defaultně jako **kategorie-specifický parametry** (JSON).  
+Pokud je něco dlouhodobě zásadní (výkon, filtr, UX), můžu to **vytknout** jako samostatný atribut (a udělat migraci).  
+Není to automatika. Je to vědomý rozhodnutí autora.
+
+---
 
 ### Měření (eventy a metriky)
 
 Měření slouží k dvěma věcem:
 1) dát prodávajícímu férový signál „děje se to / neděje se to“,  
-2) umožnit pár mechanik (např. anti-topper/payback) bez toho, aby z aplikace byl šmírovací cirkus.
+2) umožnit pár mechanik (např. anti-topper/payback) bez šmírovacího cirkusu.
 
-Měření je objektově orientované: sledujeme **inzerát**, ne člověka.
+Měření je **objektově orientované**: sleduju **inzerát**, ne člověka.
 
 #### Principy
+- Eventy jsou **append-only** a používají se pro agregace.
+- Neukládám IP, device fingerprinty ani marketingový identifikátory.
+- Deduplikace je záměrně „měkká“ (typicky na klientovi v rámci jedné relace). Nehoním laboratorní přesnost, chci konzistentní signál.
 
-- Eventy jsou **append-only** a slouží pro agregace.
-- Neukládáme IP adresy, device fingerprinty ani jiné “marketingové” identifikátory.
-- Deduplikace je záměrně “měkká” (typicky na klientovi v rámci jedné relace). Cíl není laboratorní přesnost, ale konzistentní signál.
-
-#### Základní eventy nad inzerátem
-
-Event log nad inzerátem používá tyto typy událostí:
-
+#### Základní eventy
 - `visible`
 - `impression`
 - `view`
 - `anti-topper`
 
-#### Definice metrik a časovačů
+Další eventy (dle potřeby produktu) typicky existují jako doménový události nad inzerátem:
+- favourite/unfavourite, ignore/unignore, flag/unflag, transaction, feedback …
+Ne všechno musí být veřejná metrika. Důležitý je, že je to **surový log**, ne “skóre”.
 
+#### Definice metrik a časovačů
 Časovače jsou produktové rozhodnutí, ne implementační detail.
 
 - **Visible (`visible`)**
-  - Odpálí se, když je karta inzerátu v listingu ve viewportu alespoň **0,5 s**.
-  - Cíl: základní „uživatel to reálně viděl“, ne jen že to proletělo kolem v scrollu.
+  - karta v listingu ve viewportu alespoň **0,5 s**
+  - cíl: „uživatel to reálně viděl“
 
 - **Impression (`impression`)**
-  - Odpálí se, když uživatel u inzerátu v listingu „pozastaví“ a karta zůstane ve viewportu alespoň **1,6 s**.
-  - Cíl: signál, že inzerát zaujal natolik, že u něj člověk zpomalil.
+  - karta ve viewportu alespoň **1,6 s**
+  - cíl: „zaujal, zpomalil“
 
 - **View (`view`)**
-  - Odpálí se, když uživatel otevře detail inzerátu a zůstane na něm alespoň **2,5 s**.
-  - Cíl: signál skutečného zájmu o obsah detailu, ne jen omylové otevření.
+  - detail otevřený alespoň **2,5 s**
+  - cíl: „reálný zájem o detail“
 
 - **Anti-topper (`anti-topper`)**
-  - Pokud má uživatel aktivní anti-topper a v listingu by se mu měl ukázat inzerát se zvýrazněním **Mark/Top**, systém místo `visible` vytvoří event `anti-topper`.
-  - Smysl: vědět, kolikrát bylo zvýraznění potlačeno (kvůli metrikám a případnému paybacku).
-  - Pro **Top Maxxi** se `anti-topper` negeneruje (je imunní vůči potlačení).
+  - pokud má uživatel aktivní anti-topper a v listingu by se měl ukázat inzerát se zvýrazněním Mark/Top, systém místo `visible` vytvoří `anti-topper`
+  - smysl: vědět, kolikrát bylo zvýraznění potlačeno (kvůli metrikám a případnému paybacku)
+  - pro **Top Maxxi** se `anti-topper` negeneruje (imunní vůči potlačení)
 
 #### Deduplikace a frekvence
+Aby se z eventů nestal spam:
+- `visible` / `impression` maximálně jednou na jedno zobrazení listu pro daný inzerát
+- `view` maximálně jednou na jedno otevření detailu
 
-Aby se eventy nestaly spamem:
-
-- `visible` / `impression` se v rámci jednoho zobrazení listu pro daný inzerát posílají maximálně jednou.
-- `view` se posílá maximálně jednou na jedno otevření detailu.
-
-#### Použití v produktu
-
-- Prodávající může (typicky přes placené rozšíření) vidět agregace typu:
-  - `visible`, `impression`, `view`
-- Anti-topper poměr se počítá jako:
-  - `anti-topper / (visible + anti-topper)`
-  - (jde o agregaci z eventů; není to “unikátní uživatelé”, pokud to není výslovně definované jinde)
+---
 
 <a id="draft"></a>
 ### Draft
-- Kopie atributů inzerátu ve stavu zrodu.
-- Vstupní bod tvorby. Inzerát nenechám vzniknout kliknutím, vzniká z Draftu.
-- Umožňuje postupnou tvorbu (autosave) bez rizika ztráty dat.
-- Spravuji seznam Draftů (možnost šablon/kopírování).
+
+Draft je vstupní bod tvorby. Inzerát nenechám vzniknout “kliknutím”, vzniká z Draftu.
+
+- Je to kopie atributů inzerátu ve stavu zrodu.
+- Podporuje postupnou tvorbu (autosave) bez rizika ztráty dat.
+- Spravuju seznam Draftů (umožňuje i budoucí šablony/kopírování).
+
+Draft není stav inzerátu. Je to separátní entita.
+
+---
 
 <a id="feed-entita"></a>
 ### Feed (Entita)
-- Uložené nastavení filtru nad inzeráty.
-- Není to jen seznam, je to **předpis**: "Co chci vidět" (kategorie, filtry, lokalita).
-- Feed si pamatuje svou vlastní lokalitu (např. "Feed pro chatu" vs. "Feed pro práci").
-- Defaultně zakládám uživateli obecný Feed bez filtrů.
-- **Vyhledávání === Feed:** Systémově beru hledání jen jako speciální instanci Feedu.
+
+Feed je uložené nastavení filtru nad inzeráty. Není to “seznam”, je to **předpis**: „co chci vidět a odkud“.
+
+- Filtry (kategorie, parametry, cena…)
+- Radius a lokalita (včetně řazení podle vzdálenosti)
+- Řazení (v rámci pravidel systému)
+
+Feed si pamatuje vlastní lokalitu (např. „práce“ vs „chalupa“).  
+Defaultně zakládám uživateli jeden obecný feed bez filtrů.
+
+Vyhledávání systémově beru jako speciální instanci Feedu (UI zkratka), ne jako jiný datový svět.
+
+---
 
 <a id="transakce"></a>
 ### Transakce
-- Most mezi prodejcem a kupujícím.
-- Zastupuje interakci, v systému se prezentuje jako „Zprávy“.
-- Každá transakce má **vlastní vlákno zpráv** (izolovaný kontext).
-- Transakce nese stav (pending, open, sold...).
+
+Transakce je most mezi prodávajícím a kupujícím.  
+V UI se prezentuje jako „Zprávy“, ale je to řízená interakce, ne volný DM.
+
+- Každá transakce má vlastní vlákno (izolovaný kontext).
+- Transakce nese stav (pending, open, sold…).
+- Lifecycle (konec, uzavření, expirace) je definovaný v sekci **Mechaniky**.
+
+---
 
 <a id="zpravy-entita"></a>
 ### Zprávy
-- Obsah transakce.
-- **Typy obsahu:**
-  - Text.
-  - Obrázky.
-  - **Strukturovaná data:** Lokace, tracking balíčku, kontaktní údaje.
-  - **Systémové zprávy:** Oznámení generovaná systémem (např. "Prodáno").
-- Strukturovaná data ukládám odděleně, aby šla snadno a cíleně mazat (GDPR/Clean-up).
+
+Zprávy jsou obsah transakce. Vedle textu podporuju i strukturovaný data, protože spoustu věcí je blbost řešit slohovkou.
+
+Typy obsahu:
+- text
+- obrázky
+- strukturovaná data (lokace, tracking, kontaktní údaje…)
+- systémové zprávy (události generované systémem, např. „Prodáno“)
+
+Strukturovaná data ukládám odděleně, aby šla snadno a cíleně mazat (GDPR / clean-up).
+
+---
 
 <a id="notifikace"></a>
 ### Notifikace (Inbox)
-- Jediný zdroj pravdy pro "co se stalo".
-- Všechny události padají do **Inboxu**. Email je jen volitelný "forwarder".
+
+Inbox je jediný zdroj pravdy pro “co se stalo”.
+
+- Všechny události padají do **Inboxu**.
+- Email je jen volitelný „forwarder“ / digest podle nastavení uživatele.
+- Defaultní filozofie: ticho a klid. Žádný bezdůvodný otravování.
+
+---
 
 <a id="lokace"></a>
 ### Lokace
-- Autorita na polohu.
-- Neukládám random stringy, odkazuji se na validní záznam ze služby vyhledávání adres.
+
+Lokace je autorita na polohu.
+
+- Neukládám random stringy.
+- Odkazuju se na validní záznam ze služby vyhledávání adres (jako autority).
+- Všechno, co využívá polohu (feed, inzerát, předání), se váže na lokaci.
+
+---
 
 <a id="upload"></a>
 ### Upload
-- Centrální správa souborů (fotek).
-- Metadata k souborům na CDN.
+
+Centrální správa souborů (hlavně fotek).
+
+- Metadata k souborům uloženým na CDN/UGC
+- Používá se v galerii inzerátu, ve zprávách, a případně i jinde (hero, cover, atd.)
+
+---
 
 <a id="hodnoceni"></a>
 ### Hodnocení (Ranking)
-- Pokud není řečeno jinak, používám školní stupnici **A-F** (A = nejlepší).
-- Interně to mapuji na čísla 6 (A) až 1 (F).
+
+Pokud není řečeno jinak, používám školní stupnici **A–F** (A = nejlepší).  
+Interně se mapuje na čísla **6 (A) až 1 (F)**.
 
 ---
 
