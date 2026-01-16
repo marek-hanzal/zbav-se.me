@@ -631,6 +631,45 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
   - Ruční nástroj admina (já).
   - Banuji za podvody, spam nebo křížově špatně označený citlivý obsah.
 
+### Hledat
+
+Hledat je samostatná primární sekce. UXově to není „feed“, ale **vyhledávací kontext**, který se chová jako feed v backendu (protože používá stejný engine, stejné filtrování a stejný list UI).
+
+#### `search` jako systémový kontext
+
+- V systému existuje feed typu **`search`**.
+- `search` je **singleton**: maximálně 1 instance na účet.
+- `search` se **nezobrazuje v seznamu feedů**. Uživatel ho nespravuje jako položku mezi feedy.
+- `search` je mimo limity: **nezabírá slot** a nejde ho „vyčerpat“. Limity feedů se týkají jen feedů typu `user`.
+
+`search` si pamatuje poslední stav stránky Hledat (dotaz, filtry, radius, lokaci apod.), aby se uživatel vracel do stejného kontextu a nemusel všechno nastavovat znovu.
+
+#### UI kontrakt
+
+- Stránka Hledat je rychlá zkratka: input + filtry + výsledky v listu.
+- Výsledky používají **stejný UI list** jako feedy (stejné karty, stejné interakce).
+- Hledat nepřidává žádnou „magii“: jen skládá filtry a ukazuje výsledky.
+
+#### Limity a uložení hledání
+
+- Používat Hledat může každý vždy.
+- Pokud chce uživatel uložit aktuální hledání jako feed, použije akci **„Uložit jako feed“**:
+  - tím vznikne nový feed typu `user`,
+  - ten už se zobrazuje v seznamu feedů a **počítá se do limitu**,
+  - pokud je uživatel na limitu feedů, ukládání je blokované (Hledat dál funguje normálně).
+
+#### Pravidla viditelnosti
+
+Výsledky Hledat respektují stejné brány jako ostatní seznamy:
+
+- **Ignorování**: ignorované se defaultně nezobrazují (lze zobrazit přes `withIgnored`).
+- **Citlivost obsahu**: výsledky nad maximem citlivosti uživatele se do seznamu nedostanou.
+- **Životní cyklus inzerátu**: expirované se do standardních výsledků nedostanou (pokud mechanika výslovně neříká jinak).
+
+#### Reset
+
+Hledat má vždy rychlou akci **„Reset“**, která vrátí vyhledávání do neutrálu (bez dotazu a bez filtrů). Bez modalů, bez keců.
+
 ---
 
 <a id="predplatne"></a>
