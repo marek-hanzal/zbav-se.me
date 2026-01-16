@@ -679,8 +679,7 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
 - **Interní kurz:** Baseline cca **1 CZK ≈ 2 Tokeny**.
 - **Atomicitita:** Všechny transakce jsou atomické. Buď proběhne celý nákup/efekt, nebo se nic nestrhne.
 
-<a id="ziskavani"></a>
-### Získávání Tokenů
+### Nákup Tokenů
 
 | Balíček | Cena (CZK) | Získám Tokenů | Výhodnost |
 | :--- | :--- | :--- | :--- |
@@ -688,9 +687,23 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
 | **Balík** | 299 Kč | **650 T** | +50 T zdarma |
 | **Do zásoby** | 599 Kč | **1400 T** | +200 T zdarma |
 
-### Získávání zdarma
-- **Dropy:** V sekci Bonusy lze denně vyzvednout drobný obnos (cca 10 T).
-- **Předplatné:** Každý balíček obsahuje měsíční příděl tokenů.
+### Bonusy za používání
+
+Chci uživatele odměnit za drobnou práci, kterou mají s interakcí. Data, která generují (např. že je zboží prodané), jsou pro mě cenná.
+
+- **Odměna za `resolved`:**
+  - Bonus připisuji **prodávajícímu** ve chvíli, kdy přepne transakci do stavu `resolved`.
+  - **Cíl:** Motivovat k úklidu inzerátů (aby nevisely jako "živé", když už jsou pryč).
+  - Dokud prodávající neklikne, bonus nevzniká.
+- **RNG Dropy ve feedu:**
+  - Náhodně (s nízkou pravděpodobností) generuji Tokeny „mezi inzeráty“ při scrollování.
+  - **Cíl:** Gamifikace a příjemné překvapení při prohlížení trhu.
+- **Denní drop:**
+  - V sekci Bonusy (Obchod) je k vyzvednutí malý denní příděl (cca 10 T).
+- **Předplatné:**
+  - Každý balíček obsahuje pravidelný měsíční příděl tokenů.
+- **Anti-abuse:**
+  - Bonusy se nemusí vyplatit, pokud systém vyhodnotí zjevné zneužití (např. cyklické zakládání a zavírání obchodů jen pro farmení).
 
 <a id="kupony-passy"></a>
 ## Kupóny & Passy
