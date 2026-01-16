@@ -415,6 +415,53 @@ Landing page je vizitka mého postoje k projektu. Skládá se z 5 pevných blok�
 
 > Mozek celé aplikace. Pravidla hry.
 
+### Citlivost obsahu
+
+Citlivost je moje vědomá brzda proti tomu, aby se z veřejného feedu stal bordel, a zároveň nástroj pro lidi, kteří *některý* typ obsahu chtějí vidět. Nehraju si na policajta, ale **dávám jasné brány a jasný signál**.
+
+#### Úrovně citlivosti
+
+Inzerát má vždy jednu úroveň citlivosti:
+
+- **Běžný (common)** (default)  
+  Normální věci, které nikoho rozumného nepřekvapí.
+- **Pro dospělé (adult)**  
+  Věci vyžadující plnoletost nebo typicky „adult“ kontext (např. alkohol, e-cigarety, erotika v legálním rámci).
+- **Citlivé (sensitive)**  
+  Věci, které můžou znervóznit nebo vyžadují víc rozumu (např. repliky/airsoft apod.).
+- **Omezené (restricted)**  
+  Obsah, kde už existují zákonná omezení (typicky zbraně apod.). Systém **neprovádí ověřování oprávnění**, ale **očekávám, že uživatel jedná podle zákona**.
+
+Pozn.: Úrovně jsou **stupňované** (common < adult < sensitive < restricted). Kdo si povolí vyšší, implicitně povoluje i nižší.
+
+#### Gating (opt-in)
+
+- Defaultně každý uživatel vidí jen **Běžný** obsah.
+- Uživatel si musí **vědomě** nastavit, jakou maximální úroveň chce vidět:
+  - primárně v **profilu** (jednorázové nastavení; drží se, dokud ho uživatel nezmění),
+  - teprve potom se mu v **nastavení feedu / hledání** zpřístupní filtr citlivosti (podle jeho maxima).
+- Po opt-inu už žádné divadlo: žádný blur, žádné „are you sure?“ pop-upy.  
+  Citlivost jen zůstává viditelná jako **badge** (v listingu i detailu).
+
+#### Pravidla viditelnosti
+
+Citlivost je **hard gate** napříč celou aplikací:
+
+- **Feed / Hledat / jakýkoliv listing**:  
+  Inzeráty nad maximem citlivosti uživatele se **vůbec nedostanou do seznamu**.
+- **Detail přes přímý odkaz**:  
+  Pokud citlivost nesedí na maximum uživatele, server vrací **404**.  
+  Důvod: nechci, aby šlo citlivost obcházet sdílením linků, ani aby šlo „čichat“ existenci inzerátu přes rozdíl 403/404.
+
+Důležité: Ostatní brány (ignor, expirace, release window) **nesmí blokovat otevření detailu**. Můžou ovlivnit seznam, ale detail je dostupný.  
+**Citlivost je jediná výjimka**, která může detail tvrdě schovat (404).
+
+#### Odpovědnost a enforcement
+
+- Citlivost je primárně **sebeoznačení** (odpovědnost prodávajícího).
+- Pokud je inzerát zjevně a opakovaně špatně označený (např. „omezené“ maskované jako „běžný“), je to důvod k **ručnímu banu**.
+- Cíl není hon na čarodějnice. Cíl je, aby veřejný prostor zůstal klidný a předvídatelný.
+
 <a id="stavy-lifecycle"></a>
 ### Stavy Inzerátu (Lifecycle)
 Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro systém. O přechody se starají uživatelské akce nebo cron joby.
