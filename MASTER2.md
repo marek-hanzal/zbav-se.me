@@ -1446,58 +1446,63 @@ Interně se mapuje na čísla **6 (A) až 1 (F)**.
 <a id="mechaniky"></a>
 ## Mechaniky
 
-> Mozek celé aplikace. Pravidla hry.
+> Mozek celé aplikace. Pravidla hry.  
+> Tohle je ta část, která drží systém klidnej a předvídatelnej, i když lidi občas jednají jak… no, lidi.
 
 ### Citlivost obsahu
 
-Citlivost je moje vědomá brzda proti tomu, aby se z veřejného feedu stal bordel, a zároveň nástroj pro lidi, kteří *některý* typ obsahu chtějí vidět. Nehraju si na policajta, ale **dávám jasné brány a jasný signál**.
+Citlivost je vědomá brzda proti tomu, aby se z feedu stal bordel, a zároveň nástroj pro lidi, kteří *některý* typ obsahu chtějí vidět. Nehraju si na policajta. Jen dělám **jasný brány a jasný signál**.
 
 #### Úrovně citlivosti
 
-Inzerát má vždy jednu úroveň citlivosti:
+Inzerát má vždy právě jednu úroveň:
 
-- **Běžný (common)** (default)  
+- **Běžný (`common`)** (default)  
   Normální věci, které nikoho rozumného nepřekvapí.
-- **Pro dospělé (adult)**  
-  Věci vyžadující plnoletost nebo typicky „adult“ kontext (např. alkohol, e-cigarety, erotika v legálním rámci).
-- **Citlivé (sensitive)**  
-  Věci, které můžou znervóznit nebo vyžadují víc rozumu (např. repliky/airsoft apod.).
-- **Omezené (restricted)**  
-  Obsah, kde už existují zákonná omezení (typicky zbraně apod.). Systém **neprovádí ověřování oprávnění**, ale **očekávám, že uživatel jedná podle zákona**.
+- **Pro dospělé (`adult`)**  
+  Kontext plnoletosti / adult (typicky alkohol, e-cigarety, legální erotika).
+- **Citlivé (`sensitive`)**  
+  Věci, co můžou někoho znervóznit nebo vyžadují víc rozumu (např. repliky/airsoft apod.).
+- **Omezené (`restricted`)**  
+  Obsah se zákonnými omezeními (typicky zbraně apod.). Systém **neověřuje oprávnění**, ale **očekávám jednání podle zákona**.
 
-Pozn.: Úrovně jsou **stupňované** (common < adult < sensitive < restricted). Kdo si povolí vyšší, implicitně povoluje i nižší.
+Pozn.: Úrovně jsou stupňované (common < adult < sensitive < restricted).  
+Kdo si povolí vyšší, implicitně povoluje i všechny nižší.
 
 #### Gating (opt-in)
 
 - Defaultně každý uživatel vidí jen **Běžný** obsah.
-- Uživatel si musí **vědomě** nastavit, jakou maximální úroveň chce vidět:
-  - primárně v **profilu** (jednorázové nastavení; drží se, dokud ho uživatel nezmění),
-  - teprve potom se mu v **nastavení feedu / hledání** zpřístupní filtr citlivosti (podle jeho maxima).
-- Po opt-inu už žádné divadlo: žádný blur, žádné „are you sure?“ pop-upy.  
-  Citlivost jen zůstává viditelná jako **badge** (v listingu i detailu).
+- Uživatel si musí **vědomě** nastavit maximální úroveň:
+  - primárně v **profilu** (jednorázová volba, drží se, dokud ji nezmění),
+  - teprve potom se v **nastavení feedu / hledání** zpřístupní filtr citlivosti (v rozsahu jeho maxima).
+- Po opt-inu už žádný divadlo: žádný blur, žádný “jsi si jistý?”.  
+  Citlivost se jen zobrazuje jako **badge** (v listingu i detailu).
 
-#### Pravidla viditelnosti
+#### Pravidla viditelnosti (hard gate)
 
-Citlivost je **hard gate** napříč celou aplikací:
+Citlivost je **tvrdá brána** napříč celou aplikací:
 
 - **Feed / Hledat / jakýkoliv listing**:  
   Inzeráty nad maximem citlivosti uživatele se **vůbec nedostanou do seznamu**.
 - **Detail přes přímý odkaz**:  
   Pokud citlivost nesedí na maximum uživatele, server vrací **404**.  
-  Důvod: nechci, aby šlo citlivost obcházet sdílením linků, ani aby šlo „čichat“ existenci inzerátu přes rozdíl 403/404.
+  Důvod: nechci, aby šlo citlivost obcházet sdílením linků, ani aby šlo “čichat” existenci inzerátu přes rozdíl 403/404.
 
-Důležité: Ostatní brány (ignor, expirace, release window) **nesmí blokovat otevření detailu**. Můžou ovlivnit seznam, ale detail je dostupný.  
+Důležité: Ostatní brány (ignor, expirace, release window…) **nesmí blokovat otevření detailu**.  
+Můžou ovlivnit seznam, ale detail musí zůstat dostupný.  
 **Citlivost je jediná výjimka**, která může detail tvrdě schovat (404).
 
 #### Odpovědnost a enforcement
 
 - Citlivost je primárně **sebeoznačení** (odpovědnost prodávajícího).
-- Pokud je inzerát zjevně a opakovaně špatně označený (např. „omezené“ maskované jako „běžný“), je to důvod k **ručnímu banu**.
+- Zjevně a opakovaně špatné označování (např. “omezené” maskované jako “běžný”) je důvod k **ručnímu banu**.
 - Cíl není hon na čarodějnice. Cíl je, aby veřejný prostor zůstal klidný a předvídatelný.
+
+---
 
 ### Ignorování
 
-Ignorování je osobní “úklid”. Není to report, není to trest, není to drama. Je to moje páka, jak si uživatel vyčistí feed a přestane ho otravovat věc, která ho nezajímá.
+Ignorování je osobní “úklid”. Není to report, není to trest, není to drama. Je to páka, jak si uživatel vyčistí feed a přestane ho otravovat věc, která ho nezajímá.
 
 #### Co ignor znamená
 
@@ -1505,9 +1510,9 @@ Ignorování je osobní “úklid”. Není to report, není to trest, není to 
   - feedy
   - hledání
 - Ignor **nemění nic globálně**: nepenalizuje prodejce, neovlivňuje ranking pro ostatní a nikomu se o tom nic nehlásí.
-- Ignor se propíše do **metrik inzerátu** pro prodejce, aby měl přehled, jak moc je jeho inzerát nezajímavý.
+- Ignor se propíše do metrik inzerátu pro prodejce jako signál „tohle lidi nechtějí vidět“.
 
-Ignor je čistě: “mě už tohle nezobrazuj”.
+Ignor je čistě: **“mě už tohle nezobrazuj.”**
 
 #### Detail přes přímý odkaz
 
@@ -1516,30 +1521,18 @@ Ignor je čistě: “mě už tohle nezobrazuj”.
 
 Výjimka je jen **Citlivost obsahu** (ta jako jediná může vracet 404).
 
-#### Ovládání a UX kontrakt
-
-- Akce **Ignorovat** je dostupná:
-  - v detailu inzerátu
-- Po ignoru se inzerát **ztratí ze seznamu** (bez potvrzovacího modalu).
-
-Ignor má být rychlej reflex, ne “formulář”.
-
-#### Zobrazení ignorovaných (withIgnored)
+#### Zobrazení ignorovaných (`withIgnored`)
 
 Defaultně jsou ignorované inzeráty skryté. Přesto musí existovat možnost je zobrazit:
 
-- Feed i hledání podporují přepínač/parametr **`withIgnored`**:
+- Feed i hledání podporují parametr **`withIgnored`**:
   - `false` (default) = ignorované se nezobrazují
   - `true` = ignorované se zobrazují (např. pro kontrolu)
-- Volitelně může existovat režim **“Jen ignorované”** (např. v profilu jako seznam pro správu), ale není to core.
 
 #### Scope a persistence
 
 - Ignor je **globální pro uživatele** (napříč zařízeními).
 - Ignor je **per-user stav** (doménová data uživatele), ne anonymní analytika.
-- Anonymně se může do `listing_event` logovat událost typu `ignored` / `unignored` kvůli agregacím (bez userId), ale:
-  - ignorování se nesmí stát “tajná penalizace” pro inzerát
-  - je to jen signál pro hrubé pochopení obsahu (např. kvalita / relevance)
 
 #### Ignor není flag
 
@@ -1548,51 +1541,170 @@ Defaultně jsou ignorované inzeráty skryté. Přesto musí existovat možnost 
 
 UI to nesmí míchat dohromady. Ignor je tichý. Flag je výrazný.
 
+---
+
 <a id="stavy-lifecycle"></a>
 ### Stavy Inzerátu (Lifecycle)
-Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro systém. O přechody se starají uživatelské akce nebo cron joby.
-- **Live (Aktivní):** Inzerát existuje, čas `expiresAt` je v budoucnosti a nebyl označen jako prodaný.
-  - Pouze `Live` inzeráty se počítají do limitu aktivních inzerátů a jsou viditelné v běžných feedech.
-- **Expired (Expirovaný):** Čas `expiresAt` vypršel.
-  - Přepnutí stavu zajišťuje cron.
-  - Inzerát zmizí z feedů (pokud si ho uživatel explicitně nezapne).
-  - Je read-only, nelze zahájit novou transakci.
-- **Sold (Prodaný):** Inzerát byl systémově označen jako prodaný (na základě úspěšné transakce).
-  - `Sold` je konečný stav. Inzerát je veřejně viditelný (pokud neexpiroval), ale nelze ho koupit.
-  - Nezapočítává se do limitu aktivních inzerátů.
-- **Poznámka:** Stav `deleted` neexistuje. Inzeráty nemažu, pouze expirují nebo se prodají (paměť trhu).
+
+Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro systém.  
+O přechody se starají uživatelské akce nebo cron joby.
+
+- **`live` (Aktivní)**  
+  Inzerát je živý, `expiresAt` je v budoucnosti a inzerát je k dispozici pro nový obchod.  
+  Pouze `live` se:
+  - zobrazuje ve standardních feedech,
+  - počítá do limitu aktivních inzerátů,
+  - umožňuje zahájit novou transakci.
+
+- **`expired` (Expirovaný)**  
+  `expiresAt` vypršel (přepnutí zajišťuje cron).  
+  Inzerát:
+  - je **read-only**,
+  - nelze zahájit novou transakci,
+  - standardně neleze do feedů (jen přes explicitní filtr / historický režim),
+  - přímý odkaz funguje.
+
+- **`closed` (Zavřený prodejcem)**  
+  Explicitní ruční volba prodejce: „tímhle končím“.  
+  Chová se **stejně jako `expired`**:
+  - je **read-only**,
+  - nelze zahájit novou transakci,
+  - standardně neleze do feedů,
+  - přímý odkaz funguje,
+  - (kromě flagu už tam není žádná interakce).
+
+- **`sold` (Prodaný)**  
+  Inzerát byl označen jako prodaný na základě úspěšné transakce.  
+  `sold` je konečný stav:
+  - je **read-only**,
+  - nelze ho “koupit” ani na něj navázat nový obchod,
+  - standardně neleze do feedů (není k dispozici),
+  - přímý odkaz funguje (paměť trhu).
+
+Poznámka: Stav `deleted` neexistuje. Inzeráty nemažu, pouze expirují, zavírají se nebo se prodají (paměť trhu).  
+Draft není stav inzerátu, je to separátní entita.
+
+---
 
 <a id="limity"></a>
 ### Limity
-- **Limit feedů:**
-  - Počítám pouze feedy typu `user`.
-  - `search` (poslední hledání) je mimo limity (nezabírá slot).
-  - Při překročení limitu feedy nemažu. Jen ty nadlimitní v UI skryji (disable).
-- **Limit aktivních inzerátů:**
-  - Limituji pouze inzeráty ve stavu **Live**.
-  - Při překročení limitu (vypršení passu): Existující inzeráty nechám doběhnout. Aktivuje se **Draft Gate** (nepustím uživatele tvořit nové).
+
+Limity nejsou trest. Jsou to mantinely, aby se systém nezměnil v hromadu mrtvol a nekonečných rozpracovaných pokusů.
+
+#### Limit feedů
+- Počítám pouze feedy typu `user`.
+- `search` (systémový kontext hledání) je mimo limity (nezabírá slot).
+- Při překročení limitu feedy nemažu. Jen ty nadlimitní v UI **skryju/disable** (existují, ale uživatel ví, že je má navíc).
+
+#### Limit aktivních inzerátů
+- Limituju pouze inzeráty ve stavu **`live`**.
+- Při překročení limitu (typicky vypršení passu):
+  - existující `live` nechám doběhnout,
+  - aktivuje se **Draft Gate** (uživatele nepustím tvořit nové).
 
 <a id="notifikace-mech"></a>
 ### Notifikace a Inbox
-- **Filosofie ticha:** Defaultní stav je neotravovat.
-- **Inbox First:** Všechny události padají do in-app Inboxu.
-- **Email jako zrcadlo:** Email je pouze volitelný "digest". Uživatel si nastavuje, co chce přeposílat (frekvence/typ).
-- **Výjimka:** Reset hesla a bezpečnostní alerty chodí na email vždy.
+
+Notifikace nejsou nástroj na otravování. Jsou to **zrcadlo reality**, aby člověk věděl, co se stalo, a nemusel paranoidně refreshovat appku.
+
+#### Filosofie ticha
+Defaultní stav je **ticho**.
+- žádný pushky (v MVP vůbec neřeším),
+- žádný “marketingový připomínky”,
+- žádný umělý FOMO.
+
+Když se něco stane, je to dostupný v Inboxu. Tečka.
+
+#### Inbox First
+Inbox je **single source of truth** pro události v systému:
+- nový zájemce / změna stavu transakce
+- nová zpráva
+- expirace inzerátu / konec passu
+- systémové změny, které se týkají uživatele (např. pravidla / podmínky / incidenty)
+
+Email je jen volitelný „přenos“ toho, co už je v Inboxu.
+
+#### Email jako zrcadlo (digest / forwarder)
+Email není primární kanál. Je to nastavitelný výstup:
+- **nikdy** (default)
+- **okamžitě** (forward)
+- **denní souhrn** (digest)
+
+Uživatel si může vybrat i **typy**, které chce posílat:
+- transakční (obchodní věci)
+- systémové (důležitý stavy a expirace)
+- marketing (default off, ať si každej šetří nervy)
+
+#### Kritické výjimky
+Některý věci se neptají:
+- reset hesla
+- bezpečnostní alerty (přihlášení, podezřelá aktivita)
+
+Ty jdou na email vždy, i kdyby uživatel “email nikdy” nastavil.
+
+---
 
 <a id="seznam-viditelnost"></a>
 ### Seznam inzerátů a Viditelnost
-- **Seznam:** Neexistuje statická stránka. Seznam je vždy výsledek Feed dotazu.
-- **Limit:** Tvrdý strop **200 inzerátů** na dotaz (výkon + použitelnost).
-- **Hierarchie řazení (Priority Sort):**
-  1.  **Top Maxxi** (imunní vůči všemu, vždy nahoře).
-  2.  **Top** (pod Maxxi).
-  3.  **Běžné inzeráty**.
-- Uvnitř skupin řadím dle preference uživatele (cena, vzdálenost...).
-- **Anti-topper (Mechanika):**
-  - Pokud má kupující aktivní Anti-topper, měním hierarchii listingu, který vidí:
-  - 1. **Top Maxxi**.
-  - 2. **Top + Běžné** (smíchám dohromady a seřadím čistě podle preferencí uživatele). Top ztrácí výhodu pozice, zůstává mu jen badge.
-- **Expirované inzeráty:** Ve feedu je defaultně neukazuji (nutný explicitní filtr). Přímý odkaz funguje (read-only).
+
+„Seznam“ není stránka. Seznam je **vždycky výsledek dotazu** (feed/hledání).  
+Tohle je důležitý, protože tím pádem jsou pravidla viditelnosti stabilní: jeden engine, jeden kontrakt.
+
+#### Seznam = feed dotaz
+- seznam je výslednice filtrů (kategorie, parametry, radius, citlivost…)
+- UI se chová jako **pseudo infinite scroll** (ne paginace jak z roku 2009)
+- existuje tvrdý strop **200 inzerátů na dotaz** (výkon + použitelnost)
+
+Když chce někdo víc, má zúžit filtr. Hotovo.
+
+#### Listing vs. detail
+Viditelnost řeším ve dvou rovinách:
+
+1) **Listing (seznam)**  
+Inzerát buď projde filtrem a je v seznamu, nebo vypadne.
+
+2) **Detail (přímý odkaz)**  
+Detail se má dát otevřít i mimo seznam, protože to je normální chování světa (sdílení linku, návrat z historie, uložený odkaz).
+
+Tvrdé pravidlo:
+- **jen citlivost** může blokovat detail a vracet **404** (aby nešlo citlivost obcházet).
+
+Všechny ostatní brány (ignor, expirace, release window, anti-topper…) jsou primárně **pravidla listingu**, ne “zákaz otevření”.
+
+#### Co se v listingu defaultně neukazuje
+- **`expired`** a **`closed`**: defaultně mimo seznamy (nutný explicitní filtr / historický režim).
+- **`sold`**: mimo standardní listing (protože už není k dispozici).  
+  Detail ale zůstává dostupný jako paměť trhu.
+
+Přímý odkaz funguje vždy (krom citlivosti) a detail je read-only, pokud inzerát není aktivní.
+
+#### Když inzerát není k dispozici pro nový obchod
+Pokud je inzerát `sold` / `expired` / `closed`, detail se otevře normálně, ale:
+- místo tlačítka „Mám zájem“ ukazuju jasný status typu **„Už není dostupný“**,
+- a nechávám tam jen bezpečný akce (typicky flag, případně zrušení ignoru).
+
+Žádný “tady klikni a ono se nic nestane”. UI musí být fér.
+
+---
+
+### Řazení a boosty (Priority Sort)
+
+Listing má priority, protože boosty nejsou kosmetika, ale produktová mechanika:
+
+1) **Top Maxxi** (vždy nahoře, imunní)
+2) **Top**
+3) **Běžné inzeráty**
+
+Uvnitř každé skupiny řadím podle preference uživatele (cena, vzdálenost…).
+
+#### Anti-topper
+Pokud má uživatel aktivní Anti-topper, mění se chování listingu:
+
+- **Top Maxxi** zůstává nahoře (imunní)
+- **Top + běžné** se smíchají do jedné hromady a řadí se čistě podle preference uživatele  
+  (Top ztratí výhodu pozice, zůstane mu jen badge)
+
+Anti-topper nikdy neblokuje přímý odkaz. Je to mechanika listingu, ne zákaz existence.
 
 <a id="zivotni-cyklus"></a>
 ### Životní cyklus inzerátu
