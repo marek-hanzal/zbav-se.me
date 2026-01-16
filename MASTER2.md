@@ -873,6 +873,60 @@ Položky:
 
 Důležitý: i u `open` je cena pořád povinná. Nechci “dohodou” jako únik z reality, chci číslo a k tomu jasnej postoj.
 
+<a id="automaticke-ukonceni"></a>
+### Automatické ukončení
+
+Automatické ukončení je povinná volba, protože drží pořádek v nabídce a brání tomu, aby se z feedu stal hřbitov mrtvol. Nechci ruční úklid a nechci, aby se obsah válel navěky jen proto, že někdo zapomněl.
+
+Jak to funguje:
+- Prodejce při tvorbě nastaví, **kdy se má inzerát automaticky ukončit**.
+- Čas se začne počítat **až po zveřejnění**, ne v draftu.
+- Po uplynutí doby se inzerát přepne do stavu **`expired`**.
+
+Předdefinované volby (rychlý a blbuvzdorný):
+- **Za týden**
+- **Za dva týdny**
+- **Za měsíc**
+
+UI u každé volby zároveň ukazuje i konkrétní datum, ať je to “za týden” pro lidi, ne pro matematiku.
+
+Důsledek:
+- `expired` inzerát zůstává dostupný přes přímý odkaz (read-only),
+- ve feedech se ukáže jen když si to uživatel vědomě zapne (explicitní filtr),
+- interakce jsou defaultně vypnuté, výjimka je **flagování**.
+
+Automatické ukončení se doplňuje s mechanikou **Kontinuální prodej**, která slouží jako nástroj pro řízené prodlužování života inzerátu (místo toho, aby tu věci hnily navěky).
+
+<a id="automaticke-ukonceni"></a>
+### Automatické ukončení
+
+Automatické ukončení je povinná volba, protože drží pořádek v nabídce a brání tomu, aby se z feedu stal hřbitov mrtvol. Nechci ruční úklid a nechci, aby se obsah válel navěky jen proto, že někdo zapomněl.
+
+Jak to funguje:
+- Prodejce při tvorbě nastaví, **kdy se má inzerát automaticky ukončit**.
+- Čas se začne počítat **až po zveřejnění**, ne v draftu.
+- Po uplynutí doby se inzerát přepne do stavu **`expired`**.
+
+Předdefinované volby (rychlý a blbuvzdorný):
+- **Za týden**  
+  Vím, že se to prodá snadno, nebo chci jen na chvíli něco vyplivnout ven a otestovat zájem.
+
+- **Za dva týdny**  
+  Chci tomu dát trochu času, protože tuším, že to nepůjde hned.
+
+- **Za měsíc** *(zpoplatněná volba)*  
+  Vím, že to bude trvat. Tahle volba je záměrně placená, protože jinak kanibalizuje **Kontinuální prodej**.  
+  Zpřístupní se přes Kupón (např. **„Prodloužený inzerát“**) nebo v rámci předplatného.
+
+UI u každé volby zároveň ukazuje i konkrétní datum, ať je to “za týden” pro lidi, ne pro matematiku.
+
+Důsledek:
+- `expired` inzerát zůstává dostupný přes přímý odkaz (read-only),
+- ve feedech se ukáže jen když si to uživatel vědomě zapne (explicitní filtr),
+- interakce jsou defaultně vypnuté, výjimka je **flagování**.
+
+Automatické ukončení se doplňuje s mechanikou **Kontinuální prodej**, která slouží jako nástroj pro řízené prodlužování života inzerátu (místo toho, aby tu věci hnily navěky).
+
 <a id="ux-stavy-vyplneni"></a>
 ### Stav vyplnění jako vizuální signál (a mentální střih)
 
