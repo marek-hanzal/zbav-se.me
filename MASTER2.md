@@ -647,27 +647,199 @@ Landing drží minimalistickej tón. Bez popupů, bez urgencí, bez vysvětlová
 
 <a id="navigace"></a>
 ### Navigace a Dashboard
-- **Home Kupujícího (Chci nakupovat):**
-  - **Inzeráty:** Kliknutí vede okamžitě na **poslední použitý Seznam** (nebo default). Uživatel neřeší "feed", prostě jde "na trh".
-  - **Moje seznamy:** Tady spravuji své filtry (Feedy). Zde si definuji, co chci sledovat.
-  - **Zprávy:** Přehled transakcí.
-  - **Oblíbené:** Rychlý přístup k olajkovaným inzerátům.
-- **Home Prodejce (Chci prodávat):**
-  - Samostatný dashboard zaměřený na správu inzerátů a prodejů (metriky, stavy).
-- **Bottom Nav:**
-  - Domů | Moje seznamy | **Přidat (+)** | Bonusy/Obchod | Profil
+
+Navigace je schválně “nudná” a stabilní. Uživatel se nemá proklikávat labyrintem, má mít jistotu, že **vždycky ví, kde je** a **vždycky má únik**.
+
+#### Bottom nav (5 ikon, pořád stejné)
+
+Bottom nav je hlavní kotva UI. Je to těch 5 věcí, co dávají smysl pořád a všude:
+
+1. **Home** → **Centrální Dashboard** (pro oba módy)
+2. **Chci prodávat** → seller home / prodejní sekce
+3. **Chci nakupovat** → buyer home / nákupní sekce
+4. **Bonusy** → obchod / ekonomika / “přikoupit věci navíc”
+5. **Můj účet** → profil, nastavení, bezpečnostní a systémový volby
+
+Role nejsou “role” ve smyslu přepínače identity. Je to jen rychlej vstup do dvou nejčastějších mindsetů: *teď prodávám* vs *teď nakupuju*.
+
+<a id="centralni-dashboard"></a>
+#### Centrální Dashboard (Home)
+
+Dashboard je společnej entrypoint pro oba mindsety. Není to feed. Je to **rychlá nástěnka**, co ti ukáže “co je novýho” a nabídne přímý skoky na základní akce.
+
+Co sem patří (v jednoduchý podobě, bez cirkusu):
+- **Novinky / pulz**: co přibylo (nový inzeráty v okolí / v mých feedech, změny stavu, zajímavý dění).
+- **Notifikace**: co čeká na reakci (unread “Zprávy”, změny v transakci, systémové události).
+- **Rychlý skoky**: nejčastější akce typu:
+  - *Inzeráty* (do seznamu inzerátů)
+  - *Nový inzerát* (rovnou do editoru / draftu)
+
+Dashboard má být krátkej, jasnej, bez potřeby scrollovat jak blázen. Je to launcher, ne další sekce, co soupeří se zbytkem.
+
+<a id="seller-home"></a>
+#### Chci prodávat (Seller home)
+
+Tohle je domov pro “prodávám”. Velký karty, jasný volby, žádný menu v menu.
+
+- **Nový inzerát / Pokračovat** *(dynamická primární karta)*  
+  Defaultně je to **„Nový inzerát“**.  
+  Jakmile ale existuje rozpracovaný draft (tj. v editoru jsem ještě neodpálil **„Publikovat inzerát“**), karta se přepne na **„Pokračovat“**.  
+  Draft je kontrakt: *můžeš kdykoliv odejít a nic neztratíš*.
+- **Zprávy**  
+  Lidský název pro transakce. V praxi: moje rozjednané prodeje, stavy, timeline, domluva.
+- **Šablony**  
+  Seznam draftů (rozpracovaných / připravených). Název je “Šablony”, protože pro uživatele je to mentálně “mám to připravený, jen to vytáhnu”.
+- **Moje inzeráty**  
+  Přehled publikovaných inzerátů (a jejich stavů `live` / `expired` / `sold`).
+
+<a id="buyer-home"></a>
+#### Chci nakupovat (Buyer home)
+
+Domov pro “nakupuju”. Zase velký karty, žádný menu v menu:
+
+- **Inzeráty**  
+  Vstup do seznamu inzerátů (výsledku feedu). Typicky návrat do toho, kde jsem naposledy byl.
+- **Zprávy**  
+  Transakce, ale přeložený do řeči lidí. (Nechci učit uživatele nový slovník, když to není nutný.)
+- **Moje seznamy**  
+  Moje uložený feedy (uložený hledání / hlídací psi). Tady spravuju “co chci vidět”.
+- **Oblíbené**  
+  Seznam inzerátů, který jsem si cestou sám naklikal.
+
+Poznámka: všechny vstupy do inzerátů (ať už přes dashboard, “Inzeráty”, nebo “Moje seznamy”) vždycky respektují systémový gating (citlivost, ignor, atd.). Žádný zkratky okolo pravidel.
 
 <a id="tvorba-inzeratu"></a>
-### Tvorba inzerátu (Draft Gate)
-- Vstup do editoru je **podmíněn limitem aktivních inzerátů**.
-- **Tvrdá závora:** Pokud uživatel dosáhl limitu, **nepustím ho do editoru**.
-  - Místo formuláře zobrazím **Status Screen**.
-  - Obsah statusu: "Máš plno. Chceš další? Použít kupón nebo si dokup místo." (konkrétní text řeší copy).
-  - **Žádné syslení draftů:** Pokud nemůžeš publikovat, nemůžeš ani psát.
-- **Editor:**
-  - Pokud je uživatel pod limitem, pustím ho do Draftu.
-  - Editor je jedna kontinuální činnost (scroll).
-  - Data se ukládají průběžně (autosave).
+### Tvorba inzerátu (Editor)
+
+Editor inzerátu je **jedna souvislá činnost**. Žádnej wizard, žádný kroky 3/9 a žádný ztrácení kontextu. Uživatel scrolluje jedním směrem a řeší jen to, co chce řešit. Všechno ostatní je šum.
+
+#### Jak editor funguje
+
+- **Sekce jsou klikací karty**  
+  Každá karta je stavovej řádek: *vyplněno / čeká / není nastaveno* + ikona editace. Kliknu a upravím jen konkrétní položku. Neprocházím formulář “od začátku do konce”.
+- **Vyplněná věc se vizuálně uklidní**  
+  Nevyplněné položky mají “attention” styl. Jakmile je vyplníš, odbarví se do neutrálu.  
+  Díky tomu jde okamžitě poznat, co chybí a co je hotový, bez cedulek typu “POVINNÉ!!!”.
+- **Položky jsou rozdělené do tří bloků**  
+  1) **Nutné pro zveřejnění**  
+  2) **Podle kategorie** (dynamické položky dle zvolený kategorie)  
+  3) **Další volby** (dobrovolné)  
+  Mezi bloky je mentální střih: *„OK, povinný mám hotový.“* a pak už jen zpřesňuju.
+
+#### 1) Nutné pro zveřejnění (Povinné)
+
+Tohle je pevně daný seznam. Bez toho nejde kliknout **„Zveřejnit inzerát“**:
+
+- **Galerie inzerátu**
+- **Titulek inzerátu**
+- **Kategorie**
+- **Umístění**
+- **Cena**
+- **Typ ceny**
+- **Automatické ukončení**  
+  (čas začne běžet až po zveřejnění; není to stres, je to kontrola)
+
+U “Umístění” je záměrně tvrdý upozornění. Poloha je veřejná informace a může vést k fyzický návštěvě. Varování patří přesně sem: v momentě, kdy to člověk zadává.
+
+#### 2) Podle kategorie (Parametry inzerátu)
+
+Po výběru kategorie se zobrazí další položky, který dávají smysl jen pro konkrétní typ věci. Nejsou to “popisky”, jsou to strukturovaný parametry, který se ukládají do parametrů inzerátu (např. JSONB).
+
+- V UI se chovají stejně jako ostatní karty (klik & edit).
+- Kategorie může mít vlastní sadu položek, které jsou pro daný typ relevantní.
+- Některé kategorie můžou mít i položky, které jsou “povinné v rámci kategorie” (ale pořád je to samostatnej blok, ať je jasný, proč se to najednou objevilo).
+
+#### 3) Další volby (Dobrovolné)
+
+Tady už uživatel inzerát nezachraňuje, tady ho vylepšuje. Nic z toho nesmí brzdit publikaci.
+
+Typicky sem patří:
+- **Popis** (Markdown, čistě informativní vrstva)
+- **Co chci vyzdvihnout** / **Chci být upřímný** (kulturní signál; limity 5/5)
+- **Možnosti předání** (preference, ne závazek)
+- **Záruka** (enum: bez / vlastní / zákonná)
+- **Stav** a **Stáří** (škály A–F jako abstraktní signál)
+
+#### Publikace a bezpečný únik
+
+Dole je blok **„Co dál?“**:
+
+- **Zveřejnit inzerát**  
+  Je disabled, dokud nejsou hotový povinný položky. Žádný překvapení na konci.
+- **Odložit na později**  
+  Normální volba. Draft je plnohodnotnej stav a návrat do něj je vždycky bezpečnej.
+- **Smazat**  
+  Destruktivní akce je opatrná (žádnej modalovej teatr, ale jasnej “jsem si jistej” moment).
+
+#### Limit aktivních inzerátů (a co se stane na stropu)
+
+Když narazíš na limit aktivních inzerátů, editor tě nenechá dělat zbytečnou práci:
+
+- Inzerát můžeš pořád **normálně připravit jako draft**.
+- Systém jasně řekne, že **další zveřejnění teď nejde**.
+- Nabídne možnost použít **Kupón**, aby sis zveřejnění odemknul a nemusel čekat.
+
+Pointa: žádná práce nazmar, žádný “zaplať až na konci”.
+
+<a id="galerie-inzeratu"></a>
+### Galerie inzerátu (Fotky)
+
+Fotky jsou primární obsah. Všechno ostatní je jen doprovodnej text. Galerie je proto povinná a v editoru je vždycky první, protože bez fotek je inzerát jen spekulace.
+
+Principy galerie:
+
+- **Kvalita přes kvantitu**  
+  Nechci z toho udělat instagram. Pár dobrých fotek je víc než dvacet rozmazanejch.
+- **Pořadí je význam**  
+  První fotka je “cover” a určuje, jak se inzerát chytí v seznamu. Uživatel musí mít jednoduchou kontrolu nad tím, co je první.
+- **Bez videa**  
+  Video do inzerátů cíleně nepouštím. Je to drahý, často zneužitelný, a většině lidí by to jen zhoršilo feed. Fotky stačí.
+- **Galerie je součást důvěry**  
+  Fotky nastavují očekávání. Čím líp a upřímněji věc ukážeš, tím míň je potom potřeba “domlouvat” a hádat se.
+
+Galerie není dekorace. Je to základní nosič pravdy o věci.
+
+<a id="titulek"></a>
+### Titulek inzerátu
+
+Titulek je krátkej a jasnej popis toho, co prodáváš. Ne popis příběhu, ne marketing, ne poezie. Cíl titulku je, aby člověk ve feedu okamžitě pochopil, jestli ho to zajímá.
+
+Pravidla:
+- **Jedna věc = jeden titulek.** Ne “balík všeho možnýho”, pokud to není záměr.
+- **Žádný keyword spam.** Nepotřebuju SEO cirkus, tohle není e-shop.
+- **Upřímnost > hype.** “iPhone 13, prasklý sklo” je lepší než “TOP STAV!!!”.
+- Když to jde, **dej do titulku nejdůležitější specifikum** (model, velikost, varianta), ne až do popisu.
+
+A ještě technická pravda, kterou držím schválně:
+- **Titulek je jediný text, podle kterého se dá hledat.**  
+  Používá se pro **vektorové vyhledávání** v rámci feedu.  
+  Markdown popis je čistě informativní vrstva pro detail a do vyhledávání záměrně nespadá.
+
+Titulek je první filtr. Když je dobrej, šetří čas všem.
+
+<a id="ux-stavy-vyplneni"></a>
+### Stav vyplnění jako vizuální signál (a mentální střih)
+
+V appce neukazuju “povinný” jako cedulku, kterou ti cpu do ksichtu pořád. Povinnost se pozná **chováním a stavem**.
+
+Princip:
+
+- **Nevyplněná povinná položka je zvýrazněná** (má “attention” styl).  
+  Ne proto, abych tě peskoval, ale aby na první pohled bylo jasný: *tady ještě něco chybí*.
+
+- Jakmile položku vyplníš, **odbarví se do neutrálu**.  
+  Tím pádem není potřeba donekonečna opakovat “povinné”. Vyplněné věci přestanou řvát a UI se uklidní.
+
+- Položky jsou rozdělené do dvou bloků:  
+  1) **Nutné pro X** (typicky zveřejnění)  
+  2) **Další volby** (dobrovolné)  
+  Mezi nimi je vědomý mentální střih: **„OK, povinný mám hotový.“**  
+  Zbytek už je vylepšování, ne překážková dráha.
+
+Tohle je obecnej UX pattern napříč appkou, nejen u tvorby inzerátu:
+- stav se pozná okamžitě “z dálky”
+- UI se s postupem práce uklidňuje
+- uživatel má průběžně pocit kontroly a dokončování, ne tlak a formulářovej stres
 
 <a id="moje-seznamy"></a>
 ### Moje seznamy (Feedy)
