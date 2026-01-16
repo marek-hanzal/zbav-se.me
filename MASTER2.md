@@ -35,6 +35,7 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
   - [Stavy inzerátu](#stavy-inzeratu)
   - [Aktivita](#aktivita)
 - [UI](#ui)
+  - [Landing Page (Struktura)](#landing-ui)
   - [Navigace a Dashboard](#navigace)
   - [Tvorba inzerátu (Draft Gate)](#tvorba-inzeratu)
   - [Moje seznamy (Feedy)](#moje-seznamy)
@@ -251,6 +252,15 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 ## UI
 
 Tato sekce popisuje **hlavní části aplikace** a jejich smysl. Neřeším layout (od toho je Figma), ale logiku a pravidla chování.
+
+<a id="landing-ui"></a>
+### Landing Page (Struktura)
+Landing page je vizitka mého postoje k projektu. Skládá se z 5 pevných bloků:
+1.  **Hero:** Claim „Nakupuješ nebo prodáváš?“ a dvě rovnocenná CTA: „Už se známe“ (Login) a „Přidej se!“ (Register).
+2.  **Autor:** Má fotka, mé jméno, odkaz na můj GitHub a motto „Bez keců. Bez ojebů“. Tvář dává důvěru.
+3.  **Aktivita vývoje:** Živý GitHub-like kalendář (heatmap), který ukazuje, jak na projektu makám.
+4.  **Live Pulse:** Seznam posledních událostí v appce (nové registrace, inzeráty, transakce), aby bylo vidět, že to žije.
+5.  **Transparentní účet:** Odkaz na bankovnictví. Finance netajím.
 
 <a id="navigace"></a>
 ### Navigace a Dashboard
@@ -509,7 +519,9 @@ Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro syst�
   - Pokud uživatel nehlasuje, bere se to jako neutrál.
 - **Detail protistrany (Metriky):**
   - Placený nástroj (Pass). Umožňuje vidět tvrdá data o druhém uživateli.
-  - **Score (A-F):** Agregovaná známka chování (počítám z reakční doby, fail rate, flagů).
+  - **Score (A-F):** Agregovaná známka.
+  - **Co měřím u Prodejce:** Reakční doba, Rate odmítnutí bez interakce, Resolved rate, Expirace, Vytížení, Aktivita, Flag rate.
+  - **Co měřím u Kupujícího:** Reakční doba, Closer rate (instantní uzavření), Decision rate, Expirace, Vytížení, Aktivita.
   - Bez passu neukazuji nic (ani Score).
 - **Ban:**
   - Ruční nástroj admina (já).
@@ -629,6 +641,22 @@ Start dělím vědomě do dvou fází.
 
 <a id="odhady"></a>
 ## Odhady monetizace a růstu
+
+**Křišťálová koule:** Odhad náběhu MAU a revenue (sekvenční start).
+
+| Měsíc | Zdroj MAU | Odhad MAU | Odhad Revenue |
+| :--- | :--- | :--- | :--- |
+| 1 | Discord | 60 | ~1 700 Kč |
+| 2 | Discord | 90 | ~2 600 Kč |
+| 3 | Discord | 120 | ~3 400 Kč |
+| 4 | Discord + region | 700 | ~20 100 Kč |
+| 5 | Discord + region | 1 600 | ~45 900 Kč |
+| 6 | Discord + region | 3 200 | ~91 800 Kč |
+| 7 | Discord + region | 5 000 | ~143 400 Kč |
+| 8 | Discord + region | 7 500 | ~215 100 Kč |
+| 9 | Discord + region | 9 500 | ~272 500 Kč |
+| 10 | Discord + region | 10 500 | ~301 100 Kč |
+| 11+ | Discord + region | 11-12k | ~315k+ Kč |
 
 - **Konverzní cíl:** ~3 % MAU platí.
 - **Odhad ARPU (Subscription):** ~7,68 Kč.
