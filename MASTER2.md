@@ -462,6 +462,59 @@ Důležité: Ostatní brány (ignor, expirace, release window) **nesmí blokovat
 - Pokud je inzerát zjevně a opakovaně špatně označený (např. „omezené“ maskované jako „běžný“), je to důvod k **ručnímu banu**.
 - Cíl není hon na čarodějnice. Cíl je, aby veřejný prostor zůstal klidný a předvídatelný.
 
+### Ignorování
+
+Ignorování je osobní “úklid”. Není to report, není to trest, není to drama. Je to moje páka, jak si uživatel vyčistí feed a přestane ho otravovat věc, která ho nezajímá.
+
+#### Co ignor znamená
+
+- Ignorovaný inzerát je pro uživatele **skrytý ze všech seznamů**:
+  - feedy
+  - hledání
+- Ignor **nemění nic globálně**: nepenalizuje prodejce, neovlivňuje ranking pro ostatní a nikomu se o tom nic nehlásí.
+- Ignor se propíše do **metrik inzerátu** pro prodejce, aby měl přehled, jak moc je jeho inzerát nezajímavý.
+
+Ignor je čistě: “mě už tohle nezobrazuj”.
+
+#### Detail přes přímý odkaz
+
+- Ignorování **nesmí blokovat otevření detailu** přes přímý odkaz.
+- V detailu je viditelný stav **„Ignoruješ“** + akce **„Zrušit ignor“**.
+
+Výjimka je jen **Citlivost obsahu** (ta jako jediná může vracet 404).
+
+#### Ovládání a UX kontrakt
+
+- Akce **Ignorovat** je dostupná:
+  - v detailu inzerátu
+- Po ignoru se inzerát **ztratí ze seznamu** (bez potvrzovacího modalu).
+
+Ignor má být rychlej reflex, ne “formulář”.
+
+#### Zobrazení ignorovaných (withIgnored)
+
+Defaultně jsou ignorované inzeráty skryté. Přesto musí existovat možnost je zobrazit:
+
+- Feed i hledání podporují přepínač/parametr **`withIgnored`**:
+  - `false` (default) = ignorované se nezobrazují
+  - `true` = ignorované se zobrazují (např. pro kontrolu)
+- Volitelně může existovat režim **“Jen ignorované”** (např. v profilu jako seznam pro správu), ale není to core.
+
+#### Scope a persistence
+
+- Ignor je **globální pro uživatele** (napříč zařízeními).
+- Ignor je **per-user stav** (doménová data uživatele), ne anonymní analytika.
+- Anonymně se může do `listing_event` logovat událost typu `ignored` / `unignored` kvůli agregacím (bez userId), ale:
+  - ignorování se nesmí stát “tajná penalizace” pro inzerát
+  - je to jen signál pro hrubé pochopení obsahu (např. kvalita / relevance)
+
+#### Ignor není flag
+
+- **Ignorovat** = “nezajímá mě to”
+- **Nahlásit (flag)** = “tohle porušuje pravidla / je to ojeb / je to nebezpečný”
+
+UI to nesmí míchat dohromady. Ignor je tichý. Flag je výrazný.
+
 <a id="stavy-lifecycle"></a>
 ### Stavy Inzerátu (Lifecycle)
 Inzerát má v databázi **tvrdý status** (enum), který je autoritou pro systém. O přechody se starají uživatelské akce nebo cron joby.
