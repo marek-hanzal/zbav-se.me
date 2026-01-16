@@ -835,6 +835,44 @@ Co platí:
 
 Když si nejseš jistej, vyber tu nejbližší. Zbytek doladí titulek a parametry.
 
+<a id="umisteni"></a>
+### Umístění
+
+Umístění je core. Ne “nice-to-have”. Každej inzerát má polohu, protože poloha dává kontext, umožní řazení podle vzdálenosti a hlavně šetří čas (víš hned, jestli to má smysl řešit).
+
+Co z toho plyne:
+
+- **Umístění je povinné.**  
+  Každej inzerát má polohu. Díky tomu jde řadit i filtrovat podle vzdálenosti.
+- **Poloha je veřejná informace.**  
+  V editoru je u umístění záměrně tvrdý upozornění, protože zadáním lokace dáváš ven informaci, která může vést k fyzický návštěvě.  
+  Varování patří přesně sem: v momentě zadávání, ne někde později v FAQ.
+- **Míň přesnosti může být víc bezpečnosti.**  
+  Když nechceš ukazovat přesnej bod, nedávej přesnej bod. Je to tvoje odpovědnost a tvoje hranice.
+- **Umístění neurčuje způsob předání.**  
+  Zbavík počítá jak s osobním předáním, tak s posláním. Umístění je kontext “kde to je”, ne logistickej závazek.
+
+Umístění není detail. Je to základní signál, který drží celý vyhledávání a rozhodování pohromadě.
+
+<a id="cena"></a>
+### Cena a typ ceny
+
+Cena je povinná, protože bez ceny je to jen “piš mi do zpráv” a to je přesně ten chaos, který nechci podporovat. Cena má být jasná ještě dřív, než si někdo otevře chat.
+
+Položky:
+
+- **Cena**  
+  Konkrétní částka.
+- **Typ ceny**  
+  Říká, jestli je cena “konečná”, nebo jestli je prostor pro domluvu.
+  - **`closed`**  
+    Pevná cena. Prodejce říká: *nesmlouvám*.
+  - **`open`**  
+    Cena je daná jako výchozí, ale **vyjednávání je možný**.  
+    *„Tohle je moje představa, ale můžeme se domluvit.“*
+
+Důležitý: i u `open` je cena pořád povinná. Nechci “dohodou” jako únik z reality, chci číslo a k tomu jasnej postoj.
+
 <a id="ux-stavy-vyplneni"></a>
 ### Stav vyplnění jako vizuální signál (a mentální střih)
 
