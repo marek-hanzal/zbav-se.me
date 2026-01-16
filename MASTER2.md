@@ -2241,35 +2241,102 @@ Kontrakt aktivace:
 | Kontinuální nabídka | Kupón → Pass | 1 měsíc (prodlouží život inzerátu) | Exclusive |
 
 <a id="uvedeni-na-trh"></a>
-## Uvedení na trh
+## Uvedení na trh (Go-to-market)
 
-Start dělím vědomě do dvou fází.
+Start dělím vědomě do dvou **sekvenčních** fází. Ne proto, že miluju komplikace, ale protože „prázdnej marketplace“ je nejrychlejší způsob, jak se sám zastřelit do nohy.
 
-1.  **Fáze 1: Online komunity (Discord):**
-    - Cílený start v uzavřených skupinách (např. vaping).
-    - Vysoká důvěra, testování v zátěži, sběr prvního obsahu.
-2.  **Fáze 2: Regionální expanze:**
-    - Karlovy Vary + Ostrov + Sokolov.
-    - Billboardy a marketing už nevedou do prázdna, ale do systému s historií.
+Cíl fázování:
+- minimalizovat riziko prázdna,
+- dostat první **reálný inzeráty + první transakce**,
+- vytvořit **paměť trhu** dřív, než tam pošlu širší region.
+
+### Fázování startu
+
+Fáze 1 mi postaví základ (obsah, chování, test monetizace).  
+Fáze 2 to teprve *roztočí* na region (billboardy, word-of-mouth), ale už do něčeho, co není mrtvý.
+
+### Fáze 1: Online komunitní start (Discord)
+
+> Proč? Protože je to kontrolovaný prostředí s vysokou důvěrou a tematickou shodou. Ideální na rozjezd.
+
+Primární starting-ground.
+
+- Start proběhne v uzavřených tematických komunitách (typicky **vapování**).
+- Jasně definovaná kategorie produktů a jazyk.
+- Vysoká tematická shoda → menší tření při startu.
+- Vyšší šance na:
+  - první inzeráty,
+  - první transakce,
+  - první reference.
+
+Komunitní efekt:
+- lidi jsou tolerantnější k nedokonalostem,
+- mají chuť být „u zrodu“ a dávat feedback.
+
+Účel fáze 1:
+- ověřit chování uživatelů v prostředí s vysokou důvěrou,
+- otestovat monetizaci bez regionálního šumu,
+- vytvořit první reálnou **paměť trhu**.
+
+### Fáze 2: Regionální expanze (Karlovy Vary + Ostrov + Sokolov)
+
+> Proč? To je cílový trh. Tady se rozhoduje, jestli to bude reálnej business, nebo jen hezkej experiment.
+
+- Navazuje na stabilní základ z fáze 1.
+- Billboardy už nevedou do prázdna, ale do systému s historií.
+- Komunikace může být přímější a sebevědomější.
+
+Distribuce:
+- Billboardy: bílé pozadí, žádné obrázky, krátký tvrdý text + URL.
+- Word-of-mouth jako hlavní akcelerační kanál.
 
 ---
 
 <a id="retence"></a>
 ## Retence a paměť trhu
 
-- Nepracuji s krátkodobou pozorností.
-- **Paměť trhu:** Inzeráty po expiraci nemažu, tvoří historický kontext (ceny, trendy).
-- **Čistky (Data Retention):**
-  - **User Event Log:** Držím 1 rok (pro výpočet reputace).
-  - **Inzeráty/Obrázky:** Držím dlouhodobě (paměť).
-  - **Transakce:** Mažu po 3 měsících (GDPR/úklid).
+Zbav-se.me nepracuje s krátkodobou pozorností. Pracuju s tím, že lidi se pravidelně vrací “jen se podívat, jestli se něco objevilo”.  
+A to funguje jen tehdy, když trh má paměť.
+
+**Paměť trhu:** inzeráty po expiraci nemažu. Jsou defaultně schované, ale existují jako historický kontext (ceny, trendy, co se prodává/nejde prodat).
+
+Důsledky:
+- hodnota platformy roste v čase i bez brutálního přísunu nového obsahu,
+- lidi se vrací nejen kvůli „novinkám“, ale kvůli orientaci v trhu,
+- MAU může růst rychleji než registrace (protože historie sama má hodnotu).
+
+### Retence trasovaných dat a čistky
+
+Retence není „náhodný rozhodnutí admina“. Je to produktová hranice.
+
+- **Inzeráty a jejich obrázky** držím dlouhodobě (paměť trhu).
+- **Kumulativní / trasovaná data** mají hard retenci **1 rok**:
+  - typicky user event logy a logy pro výpočet metrik,
+  - čistka běží v cron jobu a maže záznamy starší než 1 rok (typicky denně).
+- **Transakce** mají vlastní retenci (protože obsahují nejvíc rizik):
+  - strukturovaná PII data se mažou hned po ukončení transakce,
+  - hard delete celé transakce po **3 měsících** (viz Mechaniky → Čistky dat).
+
+> Retence tady není tlačená notifikacema ani návykovostí, ale užitkem z kontextu. Menší hype, stabilnější MAU.
+
+### Očekávaný vývoj poměru registrace → MAU
+
+- Měsíc 1–2: ~20–30 % (zvědavost, nízký kontext)
+- Měsíc 3–4: ~35–45 % (vznikající historie)
+- Měsíc 5–7: ~50–60 % (paměť trhu má hodnotu)
+- Po saturaci regionu: **60–70 %** (platforma jako referenční bod)
 
 ---
 
 <a id="odhady"></a>
 ## Odhady monetizace a růstu
 
-**Křišťálová koule:** Odhad náběhu MAU a revenue (sekvenční start).
+Křišťálová koule. Ale aspoň s jasnýma předpokladama, ne „věřím ve vesmír“.
+
+### Sekvenční náběh MAU a revenue
+
+Odhad při startu ve 2 fázích (Discord → region).  
+Revenue tady zhruba odpovídá kombinovanému ARPU (viz níž).
 
 | Měsíc | Zdroj MAU | Odhad MAU | Odhad Revenue |
 | :--- | :--- | :--- | :--- |
@@ -2283,9 +2350,45 @@ Start dělím vědomě do dvou fází.
 | 8 | Discord + region | 7 500 | ~215 100 Kč |
 | 9 | Discord + region | 9 500 | ~272 500 Kč |
 | 10 | Discord + region | 10 500 | ~301 100 Kč |
-| 11+ | Discord + region | 11-12k | ~315k+ Kč |
+| 11+ | Discord + region | 11–12k | ~315k+ Kč |
 
-- **Konverzní cíl:** ~3 % MAU platí.
-- **Odhad ARPU (Subscription):** ~7,68 Kč.
-- **Odhad ARPU (Extras - Tokeny):** ~21,0 Kč (při 10% penetraci nákupů).
-- **Model:** Konzervativní náběh. Prvních 6 měsíců je o plnění trhu, monetizace nabíhá až se saturací obsahu.
+### Odhad monetizace: baseline předplatného (konzervativní)
+
+Předpoklad:
+- konverzní cíl: ~**3 % MAU** platí předplatné,
+- rozložení balíčků je vědomě konzervativní.
+
+| Balíček | Podíl MAU | Cena (Kč / měsíc) | ARPU příspěvek |
+| --- | ---: | ---: | ---: |
+| Kupující | 0,5 % | 119 | 0,60 Kč |
+| Prodejce | 2,0 % | 229 | 4,58 Kč |
+| Pro | 0,5 % | 499 | 2,50 Kč |
+| **Celkem** | **3,0 %** |  | **7,68 Kč ARPU** |
+
+### Odhad monetizace: extras baseline (cash-in model)
+
+Scénář modeluje jednorázové nákupy Tokenů.
+
+Předpoklady:
+- MAU: **10 000**
+- podíl uživatelů, kteří si koupí tokeny: **10 % MAU**
+- průměrná útrata: ~210 Kč
+
+| Metrika | Hodnota |
+| --- | ---: |
+| Počet nakupujících | 1 000 |
+| Průměrná útrata | ~210 Kč |
+| **Měsíční revenue** | **~210 000 Kč** |
+| **ARPU (cash-in)** | **~21,0 Kč** |
+
+### Kombinovaný scénář (konzervativní)
+
+| Zdroj | ARPU (Kč) | Měsíční revenue při MAU 10k |
+| --- | ---: | ---: |
+| Předplatné | 7,68 | ~76 800 Kč |
+| Extras | 21,0 | ~210 000 Kč |
+| **Celkem** | **28,68** | **~286 800 Kč** |
+
+Poznámky:
+- Model je konzervativní. První měsíce jsou hlavně o naplnění trhu, monetizace nabíhá až se saturací obsahu.
+- Neřeším tady enterprise peníze, partnerství ani granty. Tohle je čistě “produkt stojí na vlastních nohách”.
