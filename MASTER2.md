@@ -1889,7 +1889,7 @@ Jakmile transakce spadne do finálního stavu (`closed`, `sold`, `expired`), spu
 <a id="reputace"></a>
 ### Reputace a Metriky
 
-Reputace není show pro veřejnost. Je to nástroj, který pomáhá lidem dělat rozhodnutí bez nekonečnýho čuchání a paranoie.
+Reputace není show pro veřejnost. Je to nástroj, který pomáhá lidem dělat rozhodnutí bez nekonečnýho čuchání a strachu.
 
 Dvě zásady:
 - nesnažím se “hodnotit lidi místo lidí”,
@@ -1909,7 +1909,7 @@ Flag je “tady je problém”, ne “nelíbí se mi to”.
 
 **B) Flag uživatele**
 - Jednosměrná akce dostupná **pouze v rámci transakce** a až po `open`.
-- Důvod je jednoduchý: nahlásit člověka bez kontextu je toxická zbraň. Kontekst obchodu je minimální důkaz, že k interakci fakt došlo.
+- Důvod je jednoduchý: nahlásit člověka bez kontextu je toxická zbraň. Kontext obchodu je minimální důkaz, že k interakci fakt došlo.
 - Flag uživatele se propisuje do metrik (flag rate), ale automaticky nikoho nebanuje.
 
 #### 2) Palce (Inzerát)
@@ -2096,13 +2096,33 @@ Multi-Category není hack na relevance. Je to legitimní nástroj, jak dostat in
 <a id="predplatne"></a>
 ## Předplatné
 
-> Oprávnění se vážou na účet (neexistuje trvalá role "prodejce/kupující").
+> Pozn.: V systému **neexistuje trvalá role** „kupující/prodejce“. Jsou to jen **kontexty chování**.  
+> Názvy balíčků níže jsou marketingové zkratky; oprávnění se vždy vážou na **účet** (passy/kupóny/limity).
+
+Předplatné je způsob, jak dát uživateli **komfort a nástroje navíc** bez toho, aby z toho byl pay-to-win cirkus.  
+Všechno je postavené na jasných věcech: **limit**, **pass**, **kupón**, **tokeny**.
+
+---
 
 <a id="zkusebni-pro"></a>
 ### Zkušební Pro zdarma
+
 - Každému novému uživateli dávám **1 měsíc Pro balíčku zdarma**.
-- Trial aktivuji automaticky při registraci. Po vypršení se sám vypne.
-- Cíl: Ať si uživatel vyzkouší aplikaci v plné síle.
+- Trial aktivuju automaticky při registraci. Po vypršení se **sám vypne**.
+- Trial je **jen jednou na účet** (produktové pravidlo).
+- Cíl: uživatel si osahá systém v plné síle a pak se rozhodne, co mu dává smysl platit.
+
+---
+
+### Jak funguje předplatné (kontrakt)
+
+- **Renew = příděly vždycky.** Při každém měsíčním renew se připíšou tokeny/kupóny z balíčku, bez ohledu na to, kolik jich uživatel má.
+- **Tokeny jsou skladovatelné** (měna). Neexpirují; expirovat může jen pass.
+- **Pass je stav s expirací** (`expiresAt`). Buď běží, nebo neběží. Žádný “napůl”.
+- **Cancel je jediná změna.** Neřeším downgrade; když uživatel zruší předplatné, jen se **neobnoví**. Všechno, co běží, **dodoběhne do konce zaplaceného období** a pak zanikne.
+- Položky označené jako **Exclusive** nejsou samostatně koupitelné. Jsou to benefity balíčku.
+
+---
 
 <a id="srovnani-balicku"></a>
 ### Srovnání balíčků
@@ -2134,61 +2154,91 @@ Multi-Category není hack na relevance. Je to legitimní nástroj, jak dostat in
 <a id="tokeny-mena"></a>
 ## Tokeny (Měna)
 
-> Palivo pro systém. Interní měna pro nákup jednorázových vylepšení (kamínky).
+Tokeny jsou palivo systému. Interní měna na jednorázový věci (kamínky), který nechci cpát do předplatnýho jako povinnost.
 
-- **Interní kurz:** Baseline cca **1 CZK ≈ 2 Tokeny**.
-- **Atomicitita:** Všechny transakce jsou atomické. Buď proběhne celý nákup/efekt, nebo se nic nestrhne.
+- **Interní kurz (baseline):** cca **1 CZK ≈ 2 Tokeny**.
+- **Tokeny jsou skladovatelné:** neexpirují. Uživatel si je může držet dlouho a použít až tehdy, kdy to dává smysl.
+- **Všechny pohyby jsou atomické:** nákup/aktivace buď proběhne celá, nebo nic. Fail = rollback. Žádný „strhlo se to, ale efekt nikde“.
+
+Tokeny získáš:
+- z předplatného (měsíční příděl),
+- z bonusů za používání (malý odměny),
+- nákupem balíčků.
 
 ### Nákup Tokenů
 
 | Balíček | Cena (CZK) | Získám Tokenů | Výhodnost |
-| :--- | :--- | :--- | :--- |
+| :--- | :---: | :---: | :--- |
 | **Na zkoušku** | 149 Kč | **300 T** | Standard |
 | **Balík** | 299 Kč | **650 T** | +50 T zdarma |
 | **Do zásoby** | 599 Kč | **1400 T** | +200 T zdarma |
 
+### Historie transakcí
+Uživatel má k dispozici historii pohybů:
+- připsání (předplatné, bonusy, nákupy),
+- úbytek (aktivace, nákupy rozšíření),
+- případné refundy (jen tam, kde existuje jasná mechanika typu Payback).
+
 ### Bonusy za používání
 
-Chci uživatele odměnit za drobnou práci, kterou mají s interakcí. Data, která generují (např. že je zboží prodané), jsou pro mě cenná.
+Bonusy nejsou „odměna za to, že dýcháš“. Jsou to malé pobídky za věci, které mají pro systém hodnotu a zlepšují hygienu trhu.
 
 - **Odměna za `resolved`:**
-  - Bonus připisuji **prodávajícímu** ve chvíli, kdy přepne transakci do stavu `resolved`.
-  - **Cíl:** Motivovat k úklidu inzerátů (aby nevisely jako "živé", když už jsou pryč).
-  - Dokud prodávající neklikne, bonus nevzniká.
-- **RNG Dropy ve feedu:**
-  - Náhodně (s nízkou pravděpodobností) generuji Tokeny „mezi inzeráty“ při scrollování.
-  - **Cíl:** Gamifikace a příjemné překvapení při prohlížení trhu.
+  - Bonus připisuju **prodávajícímu** ve chvíli, kdy přepne transakci do stavu `resolved`.
+  - Cíl: motivovat k úklidu a pravdivým koncům (aby inzeráty nežily jako zombie).
+  - Dokud prodávající nedá `resolved`, bonus nevzniká.
+
+- **RNG dropy ve feedu:**
+  - Náhodně (s nízkou pravděpodobností) dropnu pár tokenů „mezi inzeráty“ při scrollování.
+  - Cíl: drobný překvapení, ne ekonomickej model.
+
 - **Denní drop:**
-  - V sekci Bonusy (Obchod) je k vyzvednutí malý denní příděl (cca 10 T).
-- **Předplatné:**
-  - Každý balíček obsahuje pravidelný měsíční příděl tokenů.
+  - V sekci Bonusy (Obchod) je k vyzvednutí malý denní příděl (řádově ~10 T).
+
 - **Anti-abuse:**
-  - Bonusy se nemusí vyplatit, pokud systém vyhodnotí zjevné zneužití (např. cyklické zakládání a zavírání obchodů jen pro farmení).
+  - Bonusy se nemusí vyplatit, pokud systém vyhodnotí zjevné zneužití (farmení přes cyklický obchody, anomální chování).
+
+Pozn.: „Refund za slabý výkon“ nedělám. Pokud někdy kompenzace existuje, je to explicitní mechanika (typicky Payback), ne tichý a nepředvídatelný vracení tokenů.
+
+---
 
 <a id="kupony-passy"></a>
 ## Kupóny & Passy
 
-> Centrální ceník systému.
+Tohle je centrální systém oprávnění.
 
-- **Kupón:** Jednorázová položka (ticket), která slouží k aktivaci Passu.
-- **Token:** Platidlo. Pokud nemám Kupón, platím Tokeny.
-- **Pass:** Stav oprávnění (běží po dobu platnosti).
-- **Exclusive:** Položky dostupné pouze v rámci předplatného (nelze koupit samostatně).
+- **Kupón:** jednorázová položka (ticket) určená pro aktivaci konkrétní věci.
+- **Token:** měna. Když nemám kupón, platím tokeny.
+- **Pass:** stav oprávnění (běží po dobu platnosti).
+- **Exclusive:** dostupné jen v rámci předplatného (nejde koupit samostatně).
 
-| Co                  | Typ                | Efekt / Trvání                                   | Cena (Token) |
-| ------------------- | ------------------ | ------------------------------------------------ | ----------- |
-| Early Access        | Kupón → Pass       | 7 dnů                                            | 80          |
-| Early Delivery      | Kupón              | Zruší okno pro jeden inzerát                     | 40          |
-| Anti-topper         | Kupón → Pass       | 7 dnů                                            | 40          |
-| Mark                | Kupón → Pass       | 7 dnů                                            | 20          |
-| Top                 | Kupón → Pass       | 7 dnů                                            | 50          |
-| Top Maxxi           | Kupón → Pass       | 7 dnů                                            | 50          |
-| Multi-Category      | Kupón              | 1 použití (1+2 kategorie)                        | 75          |
-| Detail protistrany  | Kupón → Pass       | 7 dnů                                            | 50          |
-| Photo Count         | Kupón → Pass       | 1 měsíc (+2 fotky)                               | 75          |
-| Aktivní inzeráty 10 | Kupón → Pass       | 1 měsíc                                          | TBD         |
-| Payback             | Pass               | Benefit předplatného                             | Exclusive   |
-| Kontinuální nabídka | Kupón → Pass       | 1 měsíc (prodlouží život inzerátu)               | Exclusive   |
+Kontrakt aktivace:
+- pokud má uživatel použitelný kupón → použije se kupón,
+- jinak se strhnou tokeny,
+- aktivace vždy vytváří nebo prodlužuje příslušný **pass** (pokud je to typ „Kupón → Pass“).
+
+### Pravidla passů
+
+- Aktivace stejného passu stejné úrovně typicky **prodlouží expiraci** (čas se sčítá).
+- Pokud je položka tierovaná (např. limity), vždy platí **nejvyšší aktivní úroveň**.
+- Ochrana proti promrhání: pokud má uživatel aktivní vyšší tier, systém nedovolí aktivovat nižší tier.
+
+### Ceník rozšíření (kupóny / passy)
+
+| Co | Typ | Efekt / Trvání | Cena (Token) |
+| :--- | :--- | :--- | ---: |
+| Early Access | Kupón → Pass | 7 dnů | 80 |
+| Early Delivery | Kupón | Zruší release window pro jeden inzerát | 40 |
+| Anti-topper | Kupón → Pass | 7 dnů | 40 |
+| Mark | Kupón → Pass | 7 dnů | 20 |
+| Top | Kupón → Pass | 7 dnů | 50 |
+| Top Maxxi | Kupón → Pass | 7 dnů | 50 |
+| Multi-Category | Kupón | 1 použití (1 + 2 kategorie) | 75 |
+| Detail protistrany | Kupón → Pass | 7 dnů | 50 |
+| Photo Count | Kupón → Pass | 1 měsíc (+2 fotky) | 75 |
+| Aktivní inzeráty 10 | Kupón → Pass | 1 měsíc | TBD |
+| Payback | Pass | Benefit předplatného | Exclusive |
+| Kontinuální nabídka | Kupón → Pass | 1 měsíc (prodlouží život inzerátu) | Exclusive |
 
 <a id="uvedeni-na-trh"></a>
 ## Uvedení na trh
