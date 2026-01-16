@@ -150,10 +150,25 @@ Jedna zásada navíc: texty jsou tam, aby *pojmenovaly realitu*, ne aby vychová
 <a id="produktove-cile"></a>
 ### Produktové cíle
 
-- Chci vyvolat pocit **„teplého obýváku“** místo reklamního cirkusu.
-- **Paměťová stopa:** bylo to klidné, rychlé, fungovalo to.
-- Konzistence je pro mě víc než jedna killer funkce.
-- **Kontrast s konkurencí** má být citelný (návrat ke konkurenci má „bolet“).
+Nechci stavět „appku“. Chci postavit **trh**, kterej se chová slušně a předvídatelně. Když to shrnu do pár vět, tak:
+
+- **Ticho = úspěch.**  
+  Když uživatel nic neřeší, nikde se nezasekne a nemá potřebu přemýšlet „co tím autor myslel“, vyhrál jsem.
+- **Známý mentální model, ale bez bordelu.**  
+  List → detail → zájem → domluva. Jen bez toho nekonečnýho chatu, nátlaku a zmatených stavů.
+- **Minimum psaní, maximum faktů.**  
+  Domluva má být klikací timeline událostí (zájem, přijetí, čas, místo, hotovo). Chat existuje, ale je to doplněk, ne hlavní kanál.
+- **Lokální a sousedský default.**  
+  Poloha je povinná, řazení a filtry jedou přes vzdálenost. Směr je setkání, ne balíková logistika.
+- **Důvěra jako výsledek systému.**  
+  Ne “ověření identity”, ne “AI detekce”, ne “tajný skóre”.  
+  Místo toho: jasný pravidla, měkká frikce, uzavřený transakce (“zavřeno je zavřeno”), žádný obcházení.
+- **Férová monetizace bez ojebů.**  
+  Když něco stojí peníze, je to vidět, je to pochopitelný, a dává to smysl. Žádný skrytý paywall, žádný “nejdřív tě navnadím a pak ti to seberu”.
+- **Retence jako rituál, ne závislost.**  
+  Lidi se vrací “kouknout se”. Nechci z nich dělat trofeje v analytice, chci jim dát důvod přijít zpátky, protože se tu fakt něco děje.
+
+Jestli nějaká feature rozbije klid, předvídatelnost nebo charakter trhu, tak jde pryč. I kdyby byla “cool”.
 
 <a id="ux-principy"></a>
 ### UX principy
