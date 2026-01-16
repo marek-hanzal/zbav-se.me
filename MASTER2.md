@@ -729,6 +729,58 @@ Výsledky Hledat respektují stejné brány jako ostatní seznamy:
 
 Hledat má vždy rychlou akci **„Reset“**, která vrátí vyhledávání do neutrálu (bez dotazu a bez filtrů). Bez modalů, bez keců.
 
+### Multi-Category
+
+Multi-Category je **distribuce**, ne duplikace. Nevznikají žádné kopie inzerátu, jen se rozšíří množina kategorií, přes které se inzerát může zobrazit.
+
+#### Co to dělá
+
+- Každý inzerát má jednu **primární kategorii** (ta je „pravda“ pro popis, atributy a UI).
+- Multi-Category přidá k primární kategorii až **2 další kategorie** (sekundární).
+- Inzerát se pak může zobrazit uživatelům, kteří sledují **kteroukoliv** z těchto kategorií.
+
+Primární kategorie je pořád ta, podle které inzerát „vypadá“ a podle které se vyplňují atributy. Sekundární kategorie jsou čistě distribuční.
+
+#### Pravidla viditelnosti a deduplikace
+
+- V rámci jednoho seznamu se inzerát uživateli zobrazí **právě jednou**, i když matchuje víc kategorií zároveň.
+- Pokud uživatel přepne na jiný feed nebo jiný kontext, může inzerát vidět znovu (to je v pořádku). „Právě jednou“ platí **pro jeden renderovaný seznam**, ne pro život.
+
+#### Jak to funguje ve feedech a hledání
+
+- Feed/hledání, které filtruje konkrétní kategorii, považuje inzerát za match, když:
+  - filtr = primární kategorie **nebo**
+  - filtr = jedna ze sekundárních kategorií
+- Ostatní brány platí normálně:
+  - ignorování (defaultně skryté),
+  - citlivost obsahu (hard gate),
+  - expirace a životní cyklus.
+
+#### Výběr kategorií
+
+- Sekundární kategorie musí být různé (bez duplicit).
+- Primární kategorie se do sekundárních nepočítá (nedává smysl ukládat to samé dvakrát).
+- Změna primární kategorie:
+  - nemění automaticky sekundární (uživatel si to musí srovnat sám).
+
+#### Entitlement (token vs pass)
+
+Multi-Category je placené oprávnění. Uživatel ho získá buď:
+
+- **tokenem** (jednorázové použití na konkrétní inzerát), nebo
+- **passem** (globální oprávnění po dobu platnosti předplatného)
+
+Konkrétní ceny a balíčky jsou definované v sekcích **Ceník** a **Balíčky a limity**.
+
+#### UI signály
+
+- Na kartě inzerátu se primárně ukazuje primární kategorie.
+- Pokud má inzerát Multi-Category, UI může přidat malý, tichý signál typu:
+  - „+2 kategorie“ (bez vypisování, ať to nezahltí)
+- V editoru inzerátu je Multi-Category jasně pojmenované jako distribuce (ne „přidat další kategorii kvůli atributům“).
+
+Multi-Category není hack na relevance. Je to legitimní nástroj, jak dostat inzerát k lidem, kteří ho fakt hledají v jiném šuplíku.
+
 ---
 
 <a id="predplatne"></a>
