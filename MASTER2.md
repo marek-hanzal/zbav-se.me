@@ -927,6 +927,41 @@ Důsledek:
 
 Automatické ukončení se doplňuje s mechanikou **Kontinuální prodej**, která slouží jako nástroj pro řízené prodlužování života inzerátu (místo toho, aby tu věci hnily navěky).
 
+<a id="popis"></a>
+### Popis (Markdown)
+
+Popis je dobrovolnej. A je to záměr. Nechci, aby lidi psali slohovky jen proto, že “se to sluší”. Většinu práce má odvést galerie, titulek, cena a pár strukturovanejch signálů.
+
+Co je důležitý:
+
+- **Markdown je povolenej**, protože je to nejjednodušší způsob, jak napsat něco čitelně (odrážky, nadpisy, linky).
+- **Popis se nepoužívá pro vyhledávání.**  
+  Je to čistě informativní vrstva pro detail. Hledání stojí na titulku a strukturovanejch filtrech.
+- **Méně je často víc.**  
+  Krátký a konkrétní body jsou lepší než dlouhej příběh.
+
+Popis je prostor pro “co se nevešlo do struktury”. Ne povinnost.
+
+<a id="co-chci-vyzdvihnout"></a>
+### Co chci vyzdvihnout / Chci být upřímný
+
+Tohle není “feature pro coverage”. Tohle je kulturní signál.
+
+Na většině marketplace se lidi učí jedno: nalešti to, zamlč to, hlavně ať to projde. Já chci opak: aby bylo normální napsat i věc, která se ti úplně nehodí do krámu. Ne protože jsem nějakej svatej, ale protože to dlouhodobě zvedá důvěru celýho prostoru a snižuje množství toxických dohadů.
+
+Proto existují dvě jednoduchý sekce:
+- **Co chci vyzdvihnout** (pozitiva)
+- **Chci být upřímný** (negativa / limity / vady)
+
+Pravidla:
+- Obojí je **dobrovolný**. Neexistuje povinnost “se kát”.
+- Každá strana má limit **max 5 položek**.  
+  Je to mentální mantinel proti balastu a zároveň tlak na podstatný věci.
+- Texty jsou krátký, konkrétní, lidský. Žádný “pros/cons”, žádnej korporátní slovník.
+
+Důležitý je, *že ta možnost vůbec existuje*.  
+Platforma tím nastavuje normu: “upřímnost je v pořádku”. Nic se za to neměří, nikdo za to nedostává odměny ani tresty. Je to jen prostor, kde se dá jednou větou přiznat realita. A kdo toho není schopnej ani v nejmenším, ten si to o sobě řeší sám.
+
 <a id="ux-stavy-vyplneni"></a>
 ### Stav vyplnění jako vizuální signál (a mentální střih)
 
