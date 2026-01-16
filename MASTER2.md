@@ -1,6 +1,6 @@
 # Master
 
-Single source of truth projektu. _**Co tu není, neexistuje**_.
+Tohle je jediný zdroj pravdy pro projekt. Co tu není, neexistuje. Když se realita produktu začne hádat s tímhle dokumentem, beru to jako bug v produktu nebo v mých rozhodnutích a opravím jedno z toho, ne že to budu okecávat bokem.
 
 ## Document Rules
 
@@ -78,6 +78,8 @@ Single source of truth projektu. _**Co tu není, neexistuje**_.
 
 <a id="smer-produktu"></a>
 ## Směr produktu
+
+Tahle část je moje páteř: proč to dělám, jak to má působit, a jaký pravidla nesmím porušit ani ve chvíli, kdy budu unavenej a budu mít chuť „jen rychle přidat jednu featurku“. Cíl je jednoduchý: produkt má být klidnej, férovej a čitelnej bez vysvětlování.
 
 <a id="identita"></a>
 ### Identita
