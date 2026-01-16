@@ -1708,77 +1708,280 @@ Anti-topper nikdy neblokuje přímý odkaz. Je to mechanika listingu, ne zákaz 
 
 <a id="zivotni-cyklus"></a>
 ### Životní cyklus inzerátu
-- **Release Window (Early Access):**
-  - Nový inzerát má **+8h** zpoždění pro běžné uživatele.
-  - Kupující s **Early Access** vidí inzerát hned.
-  - Prodávající s **Early Delivery** ruší okno pro svůj inzerát (vidí ho všichni hned).
-- **Boosty (Zvýraznění):**
-  - **Mark:** Badge "Zvýrazněno".
-  - **Top:** Skok na začátek seznamu (pod Maxxi). Potlačitelné Anti-topperem.
-  - **Top Maxxi:** Absolutní přednost. Nepotlačitelné.
-  - Všechna zvýraznění platí do **expirace inzerátu**.
-- **Kontinuální nabídka:**
-  - Pass, který prodlužuje život inzerátu (posouvá `expiresAt`).
-  - Umožňuje inzerátu "přežít" expiraci a zůstat v aktivním cyklu.
+
+Životní cyklus inzerátu je kombinace tří věcí, který drží trh čistej a zároveň z toho dělají monetizovatelný nástroje (bez ojebů a bez skrytý magie):
+
+1) **Release window** (kdo to uvidí kdy)  
+2) **Boosty** (kdo to uvidí kde v listingu)  
+3) **Kontinuální nabídka** (jak dlouho to bude žít)
+
+A pořád platí: tohle jsou pravidla pro **listing (seznam)**. Přímý odkaz je normální chování světa a nechci uživatele šikanovat tím, že “to nejde otevřít”.  
+Výjimka zůstává jen **citlivost** (ta může vrátit 404).
+
+---
+
+#### Release Window (Early Access / Early Delivery)
+
+Nově publikovaný inzerát má release window: **běžným uživatelům se v listingu ukáže až za +8 hodin** od publikace.
+
+- **Bez Early Access:**  
+  inzerát se do listingu vůbec nedostane, dokud neuplyne +8h.
+- **S Early Access (kupující):**  
+  inzerát vidí **hned** (release window ignoruje pro něj).
+- **S Early Delivery (prodávající / per-inzerát):**  
+  release window se pro tenhle inzerát zruší úplně, takže ho **vidí hned i lidi bez Early Access**.
+
+Pravidlo “žádný stackování”:
+- maximum posunu je vždycky **8 hodin**.  
+  Early Access tě neposune víc než +8h dopředu, Early Delivery jen ruší okno, nevytváří “super-early”.
+
+Důležitý UX kontrakt:
+- Release window **neblokuje detail přes přímý odkaz**.  
+  Pokud se ke mně někdo dostane linkem (sdílení, historie, uložený odkaz), tak se to otevře.  
+  (Zase: krom citlivosti.)
+
+---
+
+#### Boosty (Zvýraznění)
+
+Boosty jsou čistě listing mechanika. Nejsou to “výhody v pravidlech”, jsou to **výhody v pozici / signálu**.
+
+Typy:
+
+- **Mark**  
+  Jen vizuální signál: badge **„Zvýrazněno“**.  
+  Nezaručuje top pozici. Je to “hej, tady je to důležitý / stojí to za pozornost”.
+
+- **Top**  
+  Inzerát skočí do prioritní vrstvy listingu (pod **Top Maxxi**).  
+  Pořád respektuje filtry, radius, citlivost, ignor, release window atd.  
+  Anti-topper mu může sebrat výhodu pozice (zůstane badge).
+
+- **Top Maxxi**  
+  Absolutní přednost v listingu.  
+  Imunní vůči Anti-topperu (a tudíž i vůči “potlačení pozice”).  
+  Pořád ale neobchází systémový brány: citlivost / ignor / release window atd.
+
+Trvání:
+- Všechna zvýraznění platí **do expirace inzerátu**.  
+  Po expiraci boost končí. Žádný “dál ti to běží někde v historii”.
+
+Interakce s Kontinuální nabídkou:
+- Pokud prodloužíš život inzerátu **dřív, než expiroval**, boost běží dál (protože expirace se posune).  
+- Pokud už inzerát **expiroval** a ty ho pak “oživíš” Kontinuální nabídkou, starý boost se **nevrací**.  
+  (Boost byl koupený pro předchozí cyklus. Reanimace není time-machine.)
+
+---
+
+#### Kontinuální nabídka
+
+Kontinuální nabídka (v textu občas nazývaná i „Kontinuální prodej“) je nástroj pro věci, který nejsou “jednorázovej kus”, ale opakovaná nabídka.
+
+Smysl:
+- automatická expirace drží pořádek a zabíjí hřbitovy,
+- Kontinuální nabídka dává legální způsob, jak **řízeně prodloužit život** bez toho, aby tu věci hnily navěky zadarmo.
+
+Jak to funguje:
+- Kontinuální nabídka je **Pass**, který prodlužuje aktivní cyklus inzerátu (prakticky posouvá jeho “efektivní expiraci”).
+- Aktivuje ji **vlastník inzerátu**.
+- Lze ji zapnout kdykoliv:
+  - když je inzerát ještě `live`, prodloužení se **naváže na jeho expiraci** (nekrade čas),
+  - když je už `expired`, začne to **okamžitě** a inzerát se vrátí mezi `live`.
+
+Chování během aktivního passu:
+- Inzerát se chová jako normální `live`:
+  - leze do feedů (přes filtry),
+  - jde na něj založit transakce,
+  - metriky se počítají normálně.
+- Po vypršení passu se vrací do režimu `expired` (read-only, mimo standardní feedy).
+
+---
+
+#### Co tyhle mechaniky nikdy neobchází
+
+Ať si člověk koupí cokoliv, pořád platí:
+- citlivost (hard gate),
+- ignor (defaultně skryté v listingu),
+- release window (pokud nemáš EA / ED),
+- a obecně všechny globální hranice systému.
+
+Placený věci dávají výhodu v pozici / čase / pohodlí. Ne zadní vrátka.
 
 <a id="payback"></a>
 ### Payback
-- Kompenzace pro prodávajícího, pokud byl jeho **Top** potlačen Anti-topperem.
-- Týká se pouze **Top** (Mark nekompenzuji).
-- Payback je **Pass (Exclusive)** = nárok na refund mají pouze předplatitelé.
-- Vyhodnocuji po expiraci inzerátu.
-- Sleduji poměr zobrazení (Visible vs. Anti-topper eventy). Pokud poměr překročí definované prahy, vracím poměrnou část ceny boostu v **tokenech**.
 
-<a id="obchod"></a>
-### Obchod (Transakce)
-- **Vznik:** Kupující klikne na „Mám zájem“ → vzniká transakce ve stavu `pending`.
-- **Anti-spam:**
-  - Ve stavu `pending` kupující **nemůže psát zprávy**.
-  - Prodávající může `pending` přijmout (`open`) nebo odmítnout (`rejected`) bez vysvětlování.
-- **Průběh (`open`):**
-  - Otevírá se chat a možnost posílat strukturovaná data.
-  - Prodávající označuje `resolved` (vyřešeno/odesláno).
-  - Kupující dává finální `success` (úspěch) nebo `closed` (zavřeno/neutrál).
-- **Sold (Prodáno):**
-  - Jakmile je jedna transakce `resolved`, systém přepne inzerát do stavu `sold` a ostatní transakce ukončí (`sold`).
-- **Expirace transakce:**
-  - 3 dny bez aktivity = `expired`. Jakákoliv akce posouvá timer.
-- **Dispute:**
-  - Hint "něco nesedí".
-  - **Nemá vliv na Karmu.**
-  - **Metrika:** Propisuji do metrik obou stran ("Dispute Rate").
+Payback je **kompenzace pro prodávajícího**, když si koupil zvýraznění a část publika mu ho “odfoukla” přes **Anti-topper**.
+
+Smysl je jednoduchý:  
+kupující si platí za **klid** (méně šumu v listingu), ale prodávající si platí za **viditelnost**.  
+Payback je férovka mezi těmahle dvěma světy.
+
+#### Co se kompenzuje
+- Payback řeší jen zvýraznění, který Anti-topper umí potlačit:
+  - **Mark**
+  - **Top**
+- **Top Maxxi** je imunní → **payback pro něj nikdy nevzniká**.
+
+#### Kdy se to vyhodnocuje
+- Vyhodnocuju to **až po expiraci inzerátu**.  
+  Po expiraci už se nic “nevrací do hry”, jen vyrovnám účty.
+
+#### Kdo na to má nárok
+Payback je samostatné oprávnění:
+
+- **Payback = pass (exclusive)**
+- dostupný jen v relevantních balíčcích (typicky **Seller / Pro**)
+- nejde to “naklikat jednorázově”, ať z toho není další mikrotransakční cirkus
+
+Payback vzniká **jen pokud má prodávající v době vyhodnocení aktivní Payback pass**.  
+Žádný “jo a ještě mi to dopočítej za minulý měsíc”.
+
+#### Jak to počítám
+Používám eventy z listingu:
+
+- `visible` = reálný zobrazení karty
+- `anti-topper` = nahrazuje `visible` ve chvíli, kdy by se ukázal Mark/Top uživateli s Anti-topperem
+
+Počítám poměr potlačení na úrovni **unikátních uživatelů** (ne “kolikrát někdo scrolloval sem a tam”):
 
 <a id="cistky"></a>
 ### Čistky dat
-- Po ukončení transakce (`closed`, `sold`, `expired`) běží dvoufázový úklid:
-  1.  **Ihned:** Mažu strukturovaná data (adresy, telefony). Text a obrázky zůstávají pro kontext.
-  2.  **Po 3 měsících:** Hard delete celé transakce.
+
+Transakce je dočasná věc. Slouží k domluvě a uzavření obchodu. Pak už nemá důvod existovat věčně, protože z toho leze jenom riziko a bordel.
+
+Cíl čistek:
+- snížit riziko úniku citlivých údajů,
+- nechat lidem krátkou dobu “paměť kontextu”, kdyby se něco řešilo,
+- pak to bez milosti smazat.
+
+#### Dvoufázový úklid po ukončení transakce
+
+Jakmile transakce spadne do finálního stavu (`closed`, `sold`, `expired`), spustí se úklid:
+
+1) **Ihned (okamžitě po uzavření):**  
+   Mažu **strukturovaná data**, protože to jsou typicky věci, které nechci držet ani omylem:
+   - adresy / přesná místa předání (strukturovaný lokace),
+   - telefonní čísla,
+   - kontaktní údaje,
+   - případné “poznámky k předání”, pokud jsou uložené jako struktura,
+   - cokoliv, co je v systému explicitně označené jako PII.
+
+   Textový zprávy a obrázky zatím nechávám, protože dávají kontext (a lidi se k tomu někdy potřebujou vrátit).
+
+2) **Po 3 měsících:**  
+   Dělám **hard delete celé transakce**.
+   - mizí všechny zprávy (text i obrázky),
+   - mizí systémové události v rámci vlákna,
+   - mizí vazby na uploady (transakční přílohy).
+
+   Zůstávají jen agregované metriky a anonymní eventy, který nejsou navázaný na obsah konverzace.
+
+#### Co úklid nepřepisuje
+- Čistky se týkají **transakcí**, ne inzerátů.  
+  Inzerát jako “paměť trhu” zůstává (read-only), ale chat jako dočasná domluva po čase mizí.
+
+#### Posun a blokace čistek
+- Pokud je transakce ve stavu `open` / `resolved` / aktivně se řeší (včetně dispute), čistky neběží.
+- Timer “3 měsíce” se počítá od okamžiku, kdy je transakce definitivně ukončená.
+
+---
 
 <a id="reputace"></a>
 ### Reputace a Metriky
-- **Flagy (Nahlášení):**
-  - **Inzerát:** Toggle v detailu inzerátu.
-  - **Uživatel:** Jednosměrná akce dostupná **pouze v rámci transakce** (po `open`).
-  - Flagy nemají automatický efekt (nebanují), ale propisují se do metrik.
-- **Palce (Inzerát):**
-  - Signál atraktivity nabídky (Like/Dislike).
-- **Karma (Uživatel):**
-  - Hodnocení **v rámci transakce**: **Like** (Dobrý) / **Dislike** (Špatný).
-  - Lze udělit kdykoliv po otevření obchodu (`open`).
-  - Pokud uživatel nehlasuje, bere se to jako neutrál.
-- **Detail protistrany (Metriky):**
-  - Placený nástroj (Pass). Umožňuje vidět tvrdá data o druhém uživateli.
-  - **Score (A-F):** Agregovaná známka.
-  - **Co měřím u Prodejce:** Reakční doba, Rate odmítnutí bez interakce, Resolved rate, Expirace, Vytížení, Aktivita, Flag rate.
-  - **Co měřím u Kupujícího:** Reakční doba, Closer rate (instantní uzavření), Decision rate, Expirace, Vytížení, Aktivita.
-  - Bez passu neukazuji nic (ani Score).
-- **Ban:**
-  - Ruční nástroj admina (já).
-  - Banuji za podvody, spam nebo křížově špatně označený citlivý obsah.
 
+Reputace není show pro veřejnost. Je to nástroj, který pomáhá lidem dělat rozhodnutí bez nekonečnýho čuchání a paranoie.
+
+Dvě zásady:
+- nesnažím se “hodnotit lidi místo lidí”,
+- a nebuduju tajný skóre, co někoho tiše pohřbí.
+
+Systém jen sbírá signály a dává je k dispozici férově a čitelně.
+
+#### 1) Flagy (Nahlášení)
+
+Flag je “tady je problém”, ne “nelíbí se mi to”.
+
+**A) Flag inzerátu**
+- Toggle akce dostupná v detailu inzerátu.
+- Má být jednoduchá: nahlásit / vzít zpět.
+- Flag inzerátu nemá automatický okamžitý efekt typu “smazáno” nebo “shadowban”.
+- Flag je signál pro metriky a ruční rozhodnutí.
+
+**B) Flag uživatele**
+- Jednosměrná akce dostupná **pouze v rámci transakce** a až po `open`.
+- Důvod je jednoduchý: nahlásit člověka bez kontextu je toxická zbraň. Kontekst obchodu je minimální důkaz, že k interakci fakt došlo.
+- Flag uživatele se propisuje do metrik (flag rate), ale automaticky nikoho nebanuje.
+
+#### 2) Palce (Inzerát)
+
+Palce jsou signál “tahle nabídka je/není atraktivní”. Nejde o morální soud nad prodejcem.
+
+- Palce jsou per-inzerát (Like/Dislike).
+- Používám je jako měkký signál relevance a kvality nabídky.
+- Nejsou to veřejný “lajky” pro ego. Je to data pro produkt a prodávajícího.
+
+#### 3) Karma (Uživatel)
+
+Karma je hodnocení člověka v kontextu konkrétní transakce. Žádný hvězdičky, žádnej román.
+
+- Hodnocení existuje **v rámci transakce** a až po `open`.
+- Dvě volby:
+  - **Like (Dobrý)**
+  - **Dislike (Špatný)**
+- Pokud uživatel nehlasuje, beru to jako neutrál (žádná penalizace za “nechci to řešit”).
+- Karma je odlišná od flagu:
+  - Karma = “jak se mi s tebou obchodovalo”
+  - Flag = “porušuješ pravidla / ojeb / nebezpečný”
+
+Karma sama o sobě nikdy nesmí být automatický ban spouštěč. Je to signál, ne soudní rozsudek.
+
+#### 4) Detail protistrany (Metriky)
+
+Detail protistrany je placený nástroj (Pass), který umožní vidět tvrdý data o chování druhý strany.
+Bez passu neukazuju nic. Ani “Score”. Buď máš nástroj, nebo nemáš.
+
+Co přesně ukazuju s passem:
+
+- **Score (A–F)**: agregovaná známka.
+- Vedle toho konkrétní metriky (ať to není magie a ať je jasný, z čeho to leze).
+
+**Co měřím u Prodejce:**
+- reakční doba,
+- rate odmítnutí bez interakce,
+- resolved rate,
+- expirace (kolik obchodů nechává chcípnout),
+- vytížení (kolik rozjetejch obchodů paralelně),
+- aktivita (jestli je to mrtvola nebo živý člověk),
+- flag rate.
+
+**Co měřím u Kupujícího:**
+- reakční doba,
+- closer rate (instantní uzavření bez interakce),
+- decision rate (jak často dotahuje do konce),
+- expirace (kolik obchodů nechává chcípnout),
+- vytížení,
+- aktivita.
+
+UX pravidlo:
+- metriky musí být čitelný a lidský. Žádný grafový porno.  
+  Každá metrika má krátký popisek “co to znamená”, aby člověk nemusel hádat.
+
+#### 5) Ban
+
+Ban je ruční nástroj admina (já). Ne automat.
+
+Banuju za:
+- podvody,
+- spam,
+- opakovaný ojeby,
+- a hlavně vědomě špatně označenej citlivej obsah (cross-level hiding).
+
+Automatický banování je lákavý, ale ve výsledku je to jenom stroj na křivdy a falešný pozitivy. Nechci.
+
+<a id="hledat"></a>
 ### Hledat
 
-Hledat je samostatná primární sekce. UXově to není „feed“, ale **vyhledávací kontext**, který se chová jako feed v backendu (protože používá stejný engine, stejné filtrování a stejný list UI).
+Hledat je samostatná primární sekce. UXově to není „feed“, ale **vyhledávací kontext**, který se v backendu chová jako feed, protože používá **stejnej engine, stejný filtry a stejnej list UI**. Žádná speciální magie.
 
 #### `search` jako systémový kontext
 
@@ -1787,60 +1990,81 @@ Hledat je samostatná primární sekce. UXově to není „feed“, ale **vyhled
 - `search` se **nezobrazuje v seznamu feedů**. Uživatel ho nespravuje jako položku mezi feedy.
 - `search` je mimo limity: **nezabírá slot** a nejde ho „vyčerpat“. Limity feedů se týkají jen feedů typu `user`.
 
-`search` si pamatuje poslední stav stránky Hledat (dotaz, filtry, radius, lokaci apod.), aby se uživatel vracel do stejného kontextu a nemusel všechno nastavovat znovu.
+`search` si pamatuje poslední stav stránky Hledat (dotaz, filtry, radius, lokaci, řazení…), aby se uživatel vracel do stejného kontextu a nemusel všechno nastavovat znovu.  
+Je to pohodlí, ne feature.
 
 #### UI kontrakt
 
 - Stránka Hledat je rychlá zkratka: input + filtry + výsledky v listu.
-- Výsledky používají **stejný UI list** jako feedy (stejné karty, stejné interakce).
-- Hledat nepřidává žádnou „magii“: jen skládá filtry a ukazuje výsledky.
+- Výsledky používají **stejný list** jako feedy (stejné karty, stejné interakce, stejné eventy).
+- Hledat nepřidává žádný “speciální pravidla”. Jen skládá filtry a ukazuje výsledky.
 
-#### Limity a uložení hledání
+#### Uložení hledání jako feed
 
-- Používat Hledat může každý vždy.
-- Pokud chce uživatel uložit aktuální hledání jako feed, použije akci **„Uložit jako feed“**:
-  - tím vznikne nový feed typu `user`,
-  - ten už se zobrazuje v seznamu feedů a **počítá se do limitu**,
-  - pokud je uživatel na limitu feedů, ukládání je blokované (Hledat dál funguje normálně).
+Hledat může používat každý vždy. Pokud si chce uživatel tenhle kontext uložit, udělá to vědomě:
+
+- Akce **„Uložit jako feed“**:
+  - vytvoří nový feed typu `user`,
+  - ten se už zobrazí v „Moje seznamy“,
+  - a **počítá se do limitu**.
+
+Pokud je uživatel na limitu feedů:
+- ukládání je blokované (jasný důvod a žádný kecy),
+- Hledat dál funguje normálně.
 
 #### Pravidla viditelnosti
 
 Výsledky Hledat respektují stejné brány jako ostatní seznamy:
 
 - **Ignorování**: ignorované se defaultně nezobrazují (lze zobrazit přes `withIgnored`).
-- **Citlivost obsahu**: výsledky nad maximem citlivosti uživatele se do seznamu nedostanou.
-- **Životní cyklus inzerátu**: expirované se do standardních výsledků nedostanou (pokud mechanika výslovně neříká jinak).
+- **Citlivost obsahu**: hard gate (nad maximum se to do seznamu nedostane, a detail vrací 404).
+- **Životní cyklus inzerátu**: expirované/closed/sold se do standardních výsledků nedostanou (pokud si to uživatel výslovně nezapne).
 
 #### Reset
 
-Hledat má vždy rychlou akci **„Reset“**, která vrátí vyhledávání do neutrálu (bez dotazu a bez filtrů). Bez modalů, bez keců.
+Hledat má vždy rychlou akci **„Reset“**, která vrátí vyhledávání do neutrálu (bez dotazu a bez filtrů).  
+Bez modalů, bez výčitek, bez “jsi si jistý?”. Prostě reset.
 
+---
+
+<a id="multi-category"></a>
 ### Multi-Category
 
 Multi-Category je **distribuce**, ne duplikace. Nevznikají žádné kopie inzerátu, jen se rozšíří množina kategorií, přes které se inzerát může zobrazit.
 
 #### Co to dělá
 
-- Každý inzerát má jednu **primární kategorii** (ta je „pravda“ pro popis, atributy a UI).
+- Každý inzerát má jednu **primární kategorii**.  
+  To je „pravda“ pro:
+  - vzhled a texty v UI,
+  - Category Spec (atributy a filtry),
+  - a celkovou identitu inzerátu.
+
 - Multi-Category přidá k primární kategorii až **2 další kategorie** (sekundární).
 - Inzerát se pak může zobrazit uživatelům, kteří sledují **kteroukoliv** z těchto kategorií.
 
-Primární kategorie je pořád ta, podle které inzerát „vypadá“ a podle které se vyplňují atributy. Sekundární kategorie jsou čistě distribuční.
+Primární kategorie je pořád autorita. Sekundární jsou čistě distribuční.  
+Neexistuje scénář „dám si to do jiný kategorie, protože tam jsou výhodnější atributy“. Ne. A hotovo.
 
 #### Pravidla viditelnosti a deduplikace
 
 - V rámci jednoho seznamu se inzerát uživateli zobrazí **právě jednou**, i když matchuje víc kategorií zároveň.
-- Pokud uživatel přepne na jiný feed nebo jiný kontext, může inzerát vidět znovu (to je v pořádku). „Právě jednou“ platí **pro jeden renderovaný seznam**, ne pro život.
+- Pokud uživatel přepne na jiný feed nebo jiný kontext, může inzerát vidět znovu. To je v pořádku.  
+  „Právě jednou“ platí **pro jeden renderovaný seznam**, ne pro život.
 
 #### Jak to funguje ve feedech a hledání
 
-- Feed/hledání, které filtruje konkrétní kategorii, považuje inzerát za match, když:
-  - filtr = primární kategorie **nebo**
-  - filtr = jedna ze sekundárních kategorií
-- Ostatní brány platí normálně:
-  - ignorování (defaultně skryté),
-  - citlivost obsahu (hard gate),
-  - expirace a životní cyklus.
+Feed/hledání, které filtruje konkrétní kategorii, považuje inzerát za match, když:
+- filtr = primární kategorie **nebo**
+- filtr = jedna ze sekundárních kategorií
+
+Ostatní brány platí pořád stejně:
+- ignorování (defaultně skryté),
+- citlivost obsahu (hard gate),
+- release window / životní cyklus,
+- a jakýkoliv další globální gating.
+
+Multi-Category nic neobchází. Jen rozšiřuje dosah.
 
 #### Výběr kategorií
 
@@ -1862,10 +2086,10 @@ Konkrétní ceny a balíčky jsou definované v sekcích **Ceník** a **Balíčk
 
 - Na kartě inzerátu se primárně ukazuje primární kategorie.
 - Pokud má inzerát Multi-Category, UI může přidat malý, tichý signál typu:
-  - „+2 kategorie“ (bez vypisování, ať to nezahltí)
+  - „+2 kategorie“ (bez vypisování konkrétních názvů, ať to nezahltí)
 - V editoru inzerátu je Multi-Category jasně pojmenované jako distribuce (ne „přidat další kategorii kvůli atributům“).
 
-Multi-Category není hack na relevance. Je to legitimní nástroj, jak dostat inzerát k lidem, kteří ho fakt hledají v jiném šuplíku.
+Multi-Category není hack na relevance. Je to legitimní nástroj, jak dostat inzerát k lidem, kteří ho fakt hledají v jiným šuplíku.
 
 ---
 
