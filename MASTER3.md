@@ -1395,3 +1395,399 @@ Ban je klasickej ban jako timestamp s trváním (life-time až někdy v budoucnu
 - přiděluje se ručně adminem (dokud nejsou pravidla napsaný jako pravidla, nejsou automatizovaný),
 - typický důvod: opakovaný porušování pravidel (např. zjevně špatně označený citlivý/omezený obsah),
 - žádný tajný auto-ban systém v pozadí.
+
+<a id="koncept-cena"></a>
+### Cena a typ ceny
+
+Cena je povinná, protože „napiš mi do zpráv“ je přesně ten chaos, kterej chci zabít ještě dřív, než vznikne.
+
+Má to dvě položky:
+
+- **Cena** = konkrétní částka.
+- **Typ ceny** = jestli je prostor pro domluvu.
+
+| Hodnota | Význam | Co to říká kupujícímu |
+| :--- | :--- | :--- |
+| `closed` | Pevná cena | „Nesmlouvám.“ |
+| `open` | Cena je výchozí, domluva je možná | „Tohle je moje představa, ale můžeme se domluvit.“ |
+
+Důležitý: i u `open` je cena pořád povinná. Žádný „dohodou“ jako únik z reality.
+
+---
+
+<a id="koncept-automaticke-ukonceni"></a>
+### Automatické ukončení
+
+Automatické ukončení je povinná volba, protože drží pořádek v nabídce a brání tomu, aby se z feedu stal hřbitov mrtvol. Nechci ruční úklid a nechci, aby se obsah válel navěky jen proto, že někdo zapomněl.
+
+Jak to funguje:
+- prodejce při tvorbě nastaví, **kdy se má inzerát automaticky ukončit**,
+- čas se začne počítat **až po zveřejnění**, ne v draftu,
+- po uplynutí doby se inzerát přepne do stavu **`expired`** (read-only),
+- UI u volby ukazuje i **konkrétní datum**, ať je to „za týden“ pro lidi, ne pro matematiku.
+
+Předdefinované volby:
+
+| Volba | Smysl | Poznámka |
+| :--- | :--- | :--- |
+| Za týden | „Chci to rychle pustit ven / otestovat zájem“ | default rychlovka |
+| Za dva týdny | „Dám tomu čas, ale nechci mrtvoly“ | rozumný střed |
+| Za měsíc | „Vím, že to bude trvat“ | **zpoplatněná volba** (jinak kanibalizuje Kontinuální nabídku) |
+
+„Za měsíc“ je placený schválně: pokud by to bylo zdarma, lidi si tím vyrobí nekonečný inzeráty bez odpovědnosti. Odemčení řeším přes Kupón / předplatné (podle finálního ceníku).
+
+---
+
+<a id="koncept-popis"></a>
+### Popis (Markdown)
+
+Popis je dobrovolnej. Záměrně. Nechci slohovky. Většinu práce má odvést galerie, titulek, cena a pár strukturovanejch signálů.
+
+Co platí:
+- **Markdown je povolenej** (odrážky, nadpisy, linky).
+- **Popis se nepoužívá pro vyhledávání**. Je to čistě informativní vrstva pro detail.
+- Krátký konkrétní body > dlouhej příběh.
+
+---
+
+<a id="koncept-pros-cons"></a>
+### Co chci vyzdvihnout / Chci být upřímný
+
+Tohle není „feature pro coverage“. Tohle je kulturní signál.
+
+Na většině marketplace se lidi učí jedno: nalešti to, zamlč to, hlavně ať to projde. Já chci opak: aby bylo normální napsat i věc, která se ti úplně nehodí do krámu. Ne protože jsem svatej, ale protože to dlouhodobě zvedá důvěru celýho prostoru a snižuje množství toxických dohadů.
+
+Proto existují dvě jednoduchý sekce:
+- **Co chci vyzdvihnout** (pozitiva)
+- **Chci být upřímný** (negativa / limity / vady)
+
+Pravidla:
+- obojí je **dobrovolný**,
+- každá strana má limit **max 5 položek** (mantinel proti balastu + tlak na podstatný věci),
+- krátký, konkrétní, lidský texty. Žádný „pros/cons“, žádnej korporát.
+
+Nic se za to neměří, nikdo za to nedostává odměny ani tresty. Je důležitý, že ta možnost vůbec existuje.
+
+---
+
+<a id="koncept-moje-seznamy"></a>
+### Moje seznamy (Feedy)
+
+**Moje seznamy** = správa uložených feedů. Prakticky: „co chci vidět“ a „v jakým kontextu zrovna žiju“ (domov vs. chalupa, Vaping vs. auta).
+
+Základní kontrakt:
+- v seznamu ukazuju **jen feedy typu `user`** (vědomě uložený),
+- `search` sem netahám (je to systémovej kontext stránky Hledat),
+- každej účet má vždycky aspoň **1 výchozí feed** (bez filtrů), aby existovala bezpečná návratová volba „ukaž mi prostě všechno“.
+
+Co si feed nese:
+- filtry (kategorie, parametry, cenový rozsahy…),
+- radius + lokaci (a tím pádem i řazení podle vzdálenosti),
+- řazení (co v tom kontextu dává smysl).
+
+Hlavní akce:
+- **Nový seznam** = založí nový feed typu `user`,
+- seznam jde **přejmenovat**, **upravit**, **smazat**.
+
+A hlavně: feed je jen konfigurace. Všechny systémový brány platí pořád (citlivost, ignor, a spol.). Žádný zkratky okolo pravidel.
+
+---
+
+<a id="koncept-rozsireni-ui"></a>
+### Rozšíření a Aktivace
+
+Rozšíření jsou centrální ovládací pult pro věci, co se dají *zapnout* (a pak nějakou dobu platí). Ne „nastavení“. Ne „shop“. Panel: *co mám aktivní, co můžu zapnout, co mi končí, a čím to zaplatím*.
+
+Uživatel tu vidí:
+- seznam rozšíření,
+- u každého: **aktivní/neaktivní**, **dokdy**, **cenu aktivace**,
+- inventář: **Tokeny**, **Kupóny**, **Passy** (a jejich expirace).
+
+Aktivace v praxi:
+- rozšíření se zapínají tak, že vznikne **Pass**,
+- kontrakt je vždycky okamžitej: **Kupón / Tokeny → Pass**.
+
+CTA je „chytrý“, aby člověk nemusel přemýšlet:
+- když mám použitelný kupón: `Aktivovat (1× Kupón)` (kupón se spálí),
+- když kupón nemám: `Aktivovat (XX Tokenů)` (tokeny se strhnou).
+
+Prodloužení = další aktivace. Stejný mentální model, žádná magie.
+
+Pod rozšířeníma může být zvlášť sekce pro kupóny, který nejsou „zapni pass“ (jednorázovky, bonusy), aby se to nemíchalo do aktivací.
+
+A platí tvrdě: rozšíření nic neobchází. Co platí pro gating/bezpečnost/viditelnost, platí pořád.
+
+<a id="koncept-ui-ram"></a>
+### UI rámec (co se nesmí rozbít)
+
+UI je u Zbavíku půl produktu. Když působí nejistě, uživatel je nejistej. Když je klidný a stabilní, uživatel nic neřeší.
+
+Držím pár pevných pravidel:
+
+- **Mobile-first vždycky.** Desktop je v principu „nataženej mobil“. Žádnej dashboard cirkus.
+- **Nevysvětlovat.** Když to potřebuje nápovědu, je to špatně navržený.
+- **Minimum psaní.** Klikací kroky a jasný stavy. Text jen když má hodnotu.
+- **Akce mají váhu.** Primární CTA je jasná, sekundární neruší, destruktivní je opatrná.
+- **Klid > efekt.** Animace jen kritický minimum. Reakce systému má být okamžitá.
+- **Bottom nav je kotva.** Uživatel má pořád pocit, že „nemůže nic posrat“.
+
+---
+
+<a id="koncept-landing"></a>
+### Landing Page (struktura)
+
+Landing je vizitka postoje. Není to manuál ani marketingovej román. Je to pět bloků a hotovo:
+
+| Blok | Co je uvnitř | Proč |
+|---|---|---|
+| Hero | claim **„Nakupuješ nebo prodáváš?“** + 2 rovnocenný CTA: **„Už se známe“** (Login), **„Přidej se!“** (Register) | žádný trick CTA, žádnej nátlak |
+| Autor | moje fotka, moje jméno, odkaz na GitHub, motto **„Bez keců. Bez ojebů.“** | důvěra přes tvář a odpovědnost |
+| Aktivita vývoje | GitHub-like heatmap | důkaz práce, ne sliby |
+| Live Pulse | poslední události (registrace, nový inzeráty, transakce) | ať je vidět, že to žije |
+| Transparentní účet | link na bankovnictví | finance netajím; kdo hledá shady shit, tady by to bylo |
+
+Tón: minimalistickej. Bez popupů, bez urgencí, bez vysvětlování.
+
+---
+
+<a id="koncept-navigace"></a>
+### Navigace a Dashboard
+
+Navigace je schválně nudná a stabilní. Uživatel se nemá proklikávat labyrintem, má mít jistotu, že **vždycky ví, kde je** a **vždycky má únik**.
+
+#### Bottom nav (5 ikon, pořád stejně)
+
+| Ikona | Sekce | Poznámka |
+|---|---|---|
+| Home | Centrální Dashboard | společnej entrypoint |
+| Chci prodávat | Seller home | mindset „prodávám“ |
+| Chci nakupovat | Buyer home | mindset „nakupuju“ |
+| Bonusy | ekonomika / aktivace | rozšíření, passy, tokeny |
+| Můj účet | profil / nastavení | preference, hranice, ticho |
+
+Role nejsou identita ani přepínač „jsem seller/buyer“. Je to jen rychlej vstup do dvou nejčastějších mindsetů.
+
+---
+
+<a id="koncept-dashboard"></a>
+### Centrální Dashboard (Home)
+
+Dashboard je launcher. Není to feed. Má být krátkej, jasnej, bez potřeby scrollovat jak blázen.
+
+Co sem patří:
+- **Novinky / pulz**: co přibylo (nový inzeráty v okolí / v mých feedech, změny stavu, zajímavý dění).
+- **Notifikace**: co čeká na reakci (unread Zprávy, změny v transakci, systémový události).
+- **Rychlý skoky**: typicky „Inzeráty“ a „Nový inzerát“ (tj. vstupy do existujících konceptů, ne vlastní svět).
+
+---
+
+<a id="koncept-seller-home"></a>
+### Chci prodávat (Seller home)
+
+Domov pro „prodávám“. Velký karty, jasný volby, žádný menu v menu.
+
+| Karta | Co dělá | Pravidlo |
+|---|---|---|
+| Nový inzerát / Pokračovat | primární vstup do tvorby | dynamicky: když existuje draft → **Pokračovat**, jinak **Nový inzerát**; při „Nový inzerát“ může nastat **draft gate** (limit) |
+| Zprávy | moje rozjednané prodeje | transakce přeložený do řeči lidí |
+| Šablony | seznam draftů | UI název „Šablony“, protože mentálně „mám to připravený“ |
+| Moje inzeráty | přehled publikovaných | stavy `live/expired/closed/sold` |
+
+---
+
+<a id="koncept-buyer-home"></a>
+### Chci nakupovat (Buyer home)
+
+Domov pro „nakupuju“. Zase velký karty, žádný menu v menu.
+
+| Karta | Co dělá | Poznámka |
+|---|---|---|
+| Inzeráty | vstup do listu | typicky návrat do posledního kontextu |
+| Zprávy | moje nákupy / domluvy | pořád transakce, jen lidský název |
+| Moje seznamy | uložený feedy | správa „co chci vidět“ |
+| Oblíbené | moje uložený inzeráty | rychlá paměť, žádný algoritmy |
+
+Všechny vstupy do listů a detailů vždycky respektují systémový gating (citlivost, ignor, atd.). Žádný zkratky okolo pravidel.
+
+---
+
+<a id="koncept-profil"></a>
+### Profil / Nastavení
+
+Profil není “sociální profil”. Je to místo pro preference: kdo jsem (minimálně) a co snesu / chci vidět.
+
+Co tu řeším:
+- **Citlivost obsahu**: maximum na profilu (strop) + reálný zapínání ve feedech (viz Citlivost).
+- **Notifikace**: default je ticho, všechno jde do Inboxu. Tady jen volitelný email forward/digest.
+- **Základ účtu**: email + preference. Žádný zbytečný profilový údaje „pro pocit“.
+
+Profil má být klidnej a věcnej. Jedno místo, kde nastavím hranice a pak už mi to nepřekáží v používání appky.
+
+<a id="ekonomika"></a>
+## Ekonomika
+
+Ekonomika je tady od toho, aby:
+1) udržela projekt naživu bez investorů a bez prodeje dat,
+2) byla fér a čitelná,
+3) nevyráběla pay-to-win cirkus.
+
+Zásady:
+- **Monetizace je přiznaná.** Nic není “tak nějak samo”.
+- **Žádný skrytý algoritmy a penalizace.** Když něco platí, je to vidět.
+- **Platíš za nástroje a klid**, ne za to, že se z tebe stane “lepší občan”.
+- **Neaktivita není past.** Žádný tichý obnovování, žádný schovaný rušení, žádný “zrušit jde, ale až po 17 kliknutích”.
+
+Ekonomika má tři základní stavební bloky:
+- **Tokeny** = měna
+- **Kupóny** = jednorázový spotřebáky
+- **Passy** = aktivní stavy na čas (vznikají aktivací)
+
+---
+
+<a id="koncept-tokeny"></a>
+### Tokeny (měna)
+
+Tokeny jsou interní měna. Slouží k aktivaci věcí, který mají hodnotu (čas, pozornost, nástroje, “klid”).
+
+Tokeny:
+- jsou **převodník** mezi penězma a aktivací (čistý mentální model),
+- můžou se získat:
+  - nákupem,
+  - občas jako odměna (gamifikace),
+  - promo / early access (kupóny).
+
+Tokeny nejsou “body na hraní”. Jsou to peníze v převleku, takže:
+- **nebuduju na tom závislostní mechaniky**,
+- **nedělám z toho casino**,
+- a hlavně: **tokeny nikdy neobcházej pravidla bezpečnosti a viditelnosti**.
+
+---
+
+<a id="koncept-kupony"></a>
+### Kupóny (jednorázovky)
+
+Kupón je jednorázová věc, která se dá spálit a něco tím získat. Neaktivuje “účet navždy”, jen udělá konkrétní akci.
+
+Typicky kupóny používám pro:
+- promo a onboarding (férově, bez nátlaku),
+- “ochutnávky” placených věcí (ať si člověk zkusí hodnotu),
+- jednorázový odemčení brány (např. limit, prodloužení).
+
+Kupón má:
+- typ,
+- podmínky použití,
+- případnou expiraci.
+
+Kupón se **vždycky spotřebuje před tokenama** (viz rozšíření CTA).
+
+---
+
+<a id="koncept-passy"></a>
+### Pass (aktivní stav)
+
+Pass je časově omezený “zapnuto”. Vzniká aktivací přes kupón nebo tokeny.
+
+Aktivace je vždycky okamžitá konverze:
+
+**Kupón / Tokeny → Pass (aktivní stav)**
+
+Passy jsou důležitý, protože drží konzistenci:
+- systém ví, co má být “teď aktivní”,
+- UI ví, co má ukázat / povolit,
+- uživatel ví, za co platí a dokdy.
+
+#### Obecná pravidla passů
+- passy jsou **časově omezený**,
+- passy se dají **prodloužit** další aktivací,
+- passy **nikdy neobcházej**:
+  - citlivost,
+  - ignor,
+  - zákonný omezení,
+  - hard gate typu “404 na detail”.
+
+---
+
+<a id="koncept-predplatne"></a>
+### Předplatné (subscription)
+
+Předplatné je komfortní způsob, jak mít některý passy pořád aktivní bez opakovaný aktivace.
+
+Zásady:
+- předplatný musí být **čitelnej kontrakt**:
+  - co zahrnuje,
+  - co aktivuje,
+  - kdy se obnovuje,
+  - jak to vypnu.
+- zrušení je jednoduchý a bez trestu.
+
+Předplatné v praxi typicky:
+- pravidelně doplňuje tokeny,
+- nebo drží sadu passů aktivní (např. prodejce tools).
+
+---
+
+<a id="koncept-pass-prehled"></a>
+### Přehled passů (kdo, co, proč)
+
+> Tohle je produktový přehled. Ne ceník. Ceník je separátní a musí být veřejně čitelnej.
+
+| Pass | Pro koho | Scope | Co dělá | Poznámka |
+|---|---|---|---|---|
+| Anti-topper | kupující | listing | potlačí pozici boostů (Top/Mark), nechá jen badge; Top Maxxi je imunní | měří se přes `anti-topper` event (viz Inzerát) |
+| Early Access | kupující | listing | obejde release window +8h pro nový inzeráty | detail linky tím neřeším, to řeší jen citlivost |
+| Brand | prodejce | profil + listing/detail | zobrazí brand handle u inzerátů + umožní vyhledávání podle brandu | po expiraci se nezobrazuje a nejde hledat; po 1 měsíci se uvolní |
+| Payback | prodejce | po expiraci inzerátu | kompenzuje potlačený boosty (Mark/Top) podle podílu `anti-topper` | vzniká jen, pokud je aktivní v době vyhodnocení |
+| Kontinuální nabídka | prodejce | inzerát | prodlužuje / reaktivuje inzerát bez toho, aby tu hnily mrtvoly navždy | respektuje gating a stavy (viz Inzerát) |
+| Rozšířená data | prodejce | moje inzeráty | ukáže privátní metriky inzerátu (impression/view/ignored/transactions…) | bez passu neukazuju nic |
+
+Pozn.: některý věci jsou “per listing” (např. Early Delivery) a můžou být řešený kupónem nebo mikro-aktivací, ale pořád to musí mít mentální model “zapnu → platí”.
+
+---
+
+<a id="koncept-boosty"></a>
+### Boosty (Mark / Top / Top Maxxi)
+
+Boosty jsou nástroje pro prodávajícího. Ne “přednostní právo na existenci”.
+
+Základní pravidla:
+- boost ovlivňuje **jen listing (pořadí / pozici / zvýraznění)**,
+- boost nikdy neobchází:
+  - citlivost,
+  - ignor,
+  - release window,
+  - zákonný omezení,
+- boosty mají jasnou prioritu (viz koncept Inzerát):
+  1) Top Maxxi
+  2) Top
+  3) běžné
+
+Anti-topper je legitimní proti-nástroj kupujícího (platí si klid).  
+Payback je férovka mezi “platím si viditelnost” a “platím si klid”.
+
+---
+
+<a id="koncept-early-delivery"></a>
+### Early Delivery (zrušení release window pro konkrétní inzerát)
+
+Release window je default +8h pro “běžný” uživatele.  
+Early Delivery je nástroj pro prodávajícího: u konkrétního inzerátu zruší okno úplně.
+
+Pravidla:
+- maximum posunu je vždycky **8 hodin**. Early Delivery okno ruší, nedělá “super-early”.
+- release window je listing pravidlo, ne existence pravidlo (detail linky tím nezabíjím).
+- citlivost pořád platí jako jediná hard 404 brána.
+
+---
+
+<a id="koncept-draft-gate"></a>
+### Draft Gate (odemčení možnosti tvořit)
+
+Limit aktivních inzerátů je tvrdá brána.  
+Když je uživatel na limitu, systém:
+- **nedovolí vytvořit Draft**,
+- ukáže status s jasným důvodem,
+- nabídne **aktivaci přes token** (odemknutí).
+
+Tohle je schválně gate “na začátku”, aby uživatel neudělal práci a pak nedostal facku až na konci.
+
+---
