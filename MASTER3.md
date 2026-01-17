@@ -1695,41 +1695,73 @@ Pozn.: žádný “refund za slabý výkon”. Pokud někdy kompenzace existuje,
 ---
 
 <a id="koncept-kupony"></a>
-### Kupóny (jednorázovky)
+### Kupóny (ticket)
 
-Kupón je jednorázová věc, která se dá spálit a získat tím konkrétní efekt. Není to “stav účtu”, je to spotřebák.
+Kupón není měna. Kupón je **konkrétní poukázka na konkrétní věc**. Držíš ho jako lístek. Buď ho použiješ na tu jednu definovanou akci, nebo ti zůstane v inventáři.
 
-Typické použití:
-- promo a onboarding (férově, bez nátlaku),
-- ochutnávky placených věcí,
-- jednorázový odemčení brány (např. limit, prodloužení).
+Zásady:
+- kupón = **konkrétnost** (1× přesně tohle)
+- kupón se **nesměňuje**, není “peněžní hodnota”
+- kupón se po použití **spotřebuje**
+- kupóny jsou defaultně **bez expirace**  
+  (pokud někdy existuje časově omezený promo kupón, musí to být explicitně označený jako výjimka, ne překvapení)
 
-Pravidlo v UI (konzistence):
-- když mám použitelný kupón, **spotřebuju ho před tokenama**.
+Kupón může mít dvě podoby efektu:
+- **Kupón (jednorázová akce)**: stane se jedna konkrétní věc (typicky per-inzerát/per-úkon).
+- **Kupón → Pass**: kupón aktivuje nebo prodlouží **pass** na čas (viz [Pass](#koncept-pass)).
 
-Kupón může mít expiraci a podmínky použití (podle typu).
+V UI platí ekonomický pravidlo: pokud existuje použitelný kupón, systém ho nabídne a preferuje před tokenama (detaily kontraktu viz [Aktivace](#koncept-aktivace)).
 
 ---
 
 <a id="koncept-pass"></a>
-### Pass (aktivní stav)
+### Pass (aktivní stav v čase)
 
-Pass je časově omezený “zapnuto”. Je to aktivní stav, kterej systém používá jako autoritu pro to, co má být teď povolený/zapnutý.
+Pass není měna ani poukázka. Pass je **časově omezený oprávnění / režim**: “od teď do tehdy máš něco aktivní”.
 
-Pass vzniká aktivací:
-- přes **kupón**, nebo
-- přes **tokeny**.
+Zásady:
+- pass je **stav**, ne spotřební item
+- pass má vždycky **expiraci**
+- pass se typicky **aktivuje** přes kupón nebo tokeny (viz [Aktivace](#koncept-aktivace))
+- pass nikdy neobchází systémový gating (citlivost, ignor a další globální hranice)
 
-Kontrakt aktivace:
-- aktivace je vždycky okamžitá konverze: **Kupón / Tokeny → Pass**
-- prodloužení = další aktivace (stejnej mentální model)
+Pass je pro věci, který dávají smysl jako “zapnuto po dobu”: režimy, limity, přístupy, dlouhodobější nástroje.
 
-Obecná pravidla:
-- passy jsou časově omezený,
-- passy se dají prodlužovat,
-- passy nikdy neobcházej globální hranice (citlivost, ignor, release window a další gating).
+---
 
-Pass je nástroj. Ne zadní vrátka.
+<a id="koncept-aktivace"></a>
+### Aktivace (Kupón / Tokeny → Pass)
+
+Aktivace je jednotný kontrakt pro “zapínání” věcí v systému. Uživatel musí vždycky chápat, co právě dělá: jestli něco **spotřebovává**, nebo **aktivuje na čas**.
+
+Kontrakt:
+- pokud mám použitelný **kupón** pro danou věc → **použije se kupón**
+- jinak → strhnou se **tokeny** (viz [Tokeny](#koncept-tokeny))
+- výsledek aktivace je buď:
+  - jednorázová akce (kupón se spálí a hotovo), nebo
+  - vznik/prodloužení **passu** (viz [Pass](#koncept-pass))
+
+UX pravidla:
+- CTA musí jasně říct, co se spotřebuje: `Aktivovat (1× Kupón)` vs. `Aktivovat (XX Tokenů)`
+- po aktivaci musí být vidět stav: aktivní/neaktivní a **dokdy** (u passů)
+- každá aktivace/spotřeba musí mít stopu v ledgeru tokenů (audit, žádný “zmizely mi tokeny”)
+
+---
+
+<a id="koncept-predplatne"></a>
+### Předplatné (balíček)
+
+Předplatné je pohodlná obálka nad zbytkem systému. Ne zavedení “role”, ale sjednocení věcí, který by si uživatel jinak furt dokola aktivoval.
+
+Co předplatné typicky dělá:
+- dává měsíční příděl tokenů (viz Ekonomika)
+- drží některý věci aktivní (tj. řeší za tebe opakovanou aktivaci passů)
+- nastavuje limity (např. počet aktivních inzerátů, počet feedů)
+
+Zásady:
+- obsah balíčků a ceny jsou v **Ekonomice** (model nabídky)
+- definice tokenů/kupónů/passů je v **Koncepty** (tady)
+- zrušení předplatného nesmí být past: žádný tichý obnovování, žádný schovaný rušení, žádný tresty
 
 <a id="koncept-boost-mark"></a>
 ### Boost: Mark
