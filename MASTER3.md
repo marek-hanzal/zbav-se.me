@@ -1623,6 +1623,62 @@ Co tu řeším:
 
 Profil má být klidnej a věcnej. Jedno místo, kde nastavím hranice a pak už mi to nepřekáží v používání appky.
 
+<a id="koncept-tokeny"></a>
+### Tokeny (měna)
+
+Tokeny jsou interní měna. Používám je jako čistý převodník mezi penězma a aktivací věcí, který mají hodnotu (čas, pozornost, nástroje, “klid”). Nejsou to “body na hraní”.
+
+Zásady:
+- tokeny jsou **mentální model aktivace** (ne “gambling”),
+- tokeny nejsou casino a nejsou závislostní mechanika,
+- tokeny nikdy neobcházej pravidla bezpečnosti a viditelnosti.
+
+Jak se tokeny získávají:
+- nákupem,
+- občas jako odměna (gamifikace),
+- promo / early access (typicky přes kupóny).
+
+Tokeny jsou měna. Chovám se k nim jako k penězům.
+
+---
+
+<a id="koncept-kupony"></a>
+### Kupóny (jednorázovky)
+
+Kupón je jednorázová věc, která se dá spálit a získat tím konkrétní efekt. Není to “stav účtu”, je to spotřebák.
+
+Typické použití:
+- promo a onboarding (férově, bez nátlaku),
+- ochutnávky placených věcí,
+- jednorázový odemčení brány (např. limit, prodloužení).
+
+Pravidlo v UI (konzistence):
+- když mám použitelný kupón, **spotřebuju ho před tokenama**.
+
+Kupón může mít expiraci a podmínky použití (podle typu).
+
+---
+
+<a id="koncept-pass"></a>
+### Pass (aktivní stav)
+
+Pass je časově omezený “zapnuto”. Je to aktivní stav, kterej systém používá jako autoritu pro to, co má být teď povolený/zapnutý.
+
+Pass vzniká aktivací:
+- přes **kupón**, nebo
+- přes **tokeny**.
+
+Kontrakt aktivace:
+- aktivace je vždycky okamžitá konverze: **Kupón / Tokeny → Pass**
+- prodloužení = další aktivace (stejnej mentální model)
+
+Obecná pravidla:
+- passy jsou časově omezený,
+- passy se dají prodlužovat,
+- passy nikdy neobcházej globální hranice (citlivost, ignor, release window a další gating).
+
+Pass je nástroj. Ne zadní vrátka.
+
 <a id="koncept-boost-mark"></a>
 ### Boost: Mark
 
@@ -1718,80 +1774,92 @@ Interakce s Kontinuální nabídkou:
 - prodloužení před expirací = Top Maxxi běží dál,
 - reanimace po expiraci = starý Top Maxxi se nevrací.
 
+<a id="ekonomika"></a>
 ## Ekonomika
 
-Ekonomika je tady od toho, aby:
-1) udržela projekt naživu bez investorů a bez prodeje dat,
-2) byla fér a čitelná,
-3) nevyráběla pay-to-win cirkus.
+Ekonomika je jen **model nabídky**:
+- [Tokeny](#koncept-tokeny)
+- [Kupóny](#koncept-kupony)
+- [Pass](#koncept-pass)
 
-Zásady:
-- monetizace je přiznaná (nic není “tak nějak samo”),
-- žádný skrytý algoritmy a penalizace,
-- platíš za nástroje a klid, ne za to, že se z tebe stane “lepší občan”,
-- žádný tichý obnovování, žádný schovaný rušení.
-
-Ekonomika drží jen primitiva:
-- **Tokeny** = měna
-- **Kupóny** = jednorázový spotřebáky
-- **Passy** = aktivní stavy na čas (vznikají aktivací)
+Kontrakt aktivace:
+- pokud má uživatel použitelný **kupón** → použije se kupón,
+- jinak se strhnou **tokeny**,
+- aktivace typicky vytváří / prodlužuje **pass** (pokud je to typ „Kupón → Pass“).
 
 ---
 
-### Tokeny (měna)
-Tokeny jsou interní měna. Slouží k aktivaci věcí, který mají hodnotu (čas, pozornost, nástroje, “klid”).
+<a id="predplatne"></a>
+### Předplatné (balíčky)
 
-- tokeny jsou převodník mezi penězma a aktivací (čistý mentální model),
-- tokeny nejsou casino, nejsou “body na hraní”,
-- tokeny nikdy neobcházej pravidla bezpečnosti a viditelnosti.
+Balíčky jsou měsíční “balík oprávnění + příděly”. Nejsou to role. Oprávnění jsou vždycky jen passy/limity na účtu.
 
----
+<a id="srovnani-balicku"></a>
+#### Srovnání balíčků
 
-### Kupóny (jednorázovky)
-Kupón je jednorázová věc, která se dá spálit a něco tím získat.
+| Položka | Kupující<br>(119 Kč) | Prodejce<br>(229 Kč) | **Pro**<br>(499 Kč) |
+| :--- | :---: | :---: | :---: |
+| **Tokeny / měsíc** | 300 T | 300 T | **600 T** |
+| **Limity** | | | |
+| Uložené Feedy | 5 | - | **10** |
+| Aktivní inzeráty | 5 | 10 | **20** |
+| **Passy (Trvalé)** | | | |
+| [Payback](#payback) | - | ✓ | **✓** |
+| [Photo Count](#photo-count) (+foto) | - | ✓ | **✓** |
+| [Rozšířená data](#koncept-rozsirena-data) | - | ✓ | **✓** |
+| [Detail protistrany](#detail-protistrany) | - | - | **✓** |
+| [Anti-topper](#anti-topper) | - | - | **✓** |
+| [Early Access](#release-window) | - | - | **✓** |
+| [Multi-Category](#multi-category) | - | - | **✓** |
+| **Kupóny (Měsíčně)** | | | |
+| [Early Access](#release-window) | 5× | - | **(Pass)** |
+| [Anti-topper](#anti-topper) | 5× | - | **(Pass)** |
+| [Early Delivery](#release-window) | - | 3× | **3×** |
+| [Mark](#koncept-boost-mark) | - | 3× | **3×** |
+| [Top](#koncept-boost-top) | - | 3× | **3×** |
+| [Top Maxxi](#koncept-boost-top-maxxi) | - | 1× | **3×** |
+| [Multi-Category](#multi-category) | - | 3× | **(Pass)** |
+| [Kontinuální nabídka](#kontinualni-nabidka) | - | 3× | **5×** |
 
-Použití typicky:
-- promo / onboarding (férově, bez nátlaku),
-- ochutnávky placených věcí,
-- jednorázový odemčení brány.
-
-Pravidlo UI: **když mám použitelný kupón, spotřebuju ho před tokenama**.
-
----
-
-### Pass (aktivní stav)
-Pass je časově omezený “zapnuto”. Vzniká aktivací přes kupón nebo tokeny:
-
-**Kupón / Tokeny → Pass (aktivní stav)**
-
-Obecná pravidla:
-- passy jsou časově omezený a prodlužují se další aktivací,
-- passy nikdy neobcházej: citlivost, ignor, release window a další globální hranice.
-
----
-
-### Předplatné (subscription)
-Předplatné je komfortní způsob, jak mít některý passy pořád aktivní bez opakovaný aktivace.
-
-Zásady:
-- čitelnej kontrakt (co zahrnuje, co aktivuje, kdy se obnovuje),
-- zrušení je jednoduchý a bez trestu.
+> Pozn.: řádky „(Pass)“ znamenají, že v tom balíčku to není jako měsíční kupón, ale jako aktivní pass/benefit.
 
 ---
 
-### Přehled ekonomických konceptů (odkazy)
+<a id="tokeny-mena"></a>
+### Tokeny (nabídka a ceny)
 
-> Ekonomika tady nic “nevysvětluje”. Jen odkazuje.  
-> Odpovědi typu „Jak funguje Top?“ patří do Konceptů.
+Tady je jen ekonomický model: **kurz + top-up balíčky**.
 
-| Co | Kde je definice | Poznámka |
-|---|---|---|
-| Mark | [Boost: Mark](#koncept-boost-mark) | zvýraznění (badge) |
-| Top | [Boost: Top](#koncept-boost-top) | prioritní vrstva listingu |
-| Top Maxxi | [Boost: Top Maxxi](#koncept-boost-top-maxxi) | absolutní přednost v listingu |
-| Anti-topper | [Anti-topper](#anti-topper) | mění řazení listingu |
-| Payback | [Payback](#payback) | kompenzace za potlačení přes Anti-topper |
-| Release window | [Release Window](#zivotni-cyklus) | Early Access / Early Delivery |
-| Kontinuální nabídka | [Kontinuální nabídka](#zivotni-cyklus) | prodloužení života inzerátu |
-| Brand | [Brand](#koncept-brand) | handle viditelnej jen s passem |
-| Rozšířená data | [Rozšířená data](#koncept-rozsirena-data) | privátní metriky pro vlastníka |
+- **Baseline kurz:** cca **1 CZK ≈ 2 Tokeny**
+
+#### Nákup Tokenů
+
+| Balíček | Cena (CZK) | Získám Tokenů | Výhodnost |
+| :--- | :---: | :---: | :--- |
+| **Na zkoušku** | 149 Kč | **300 T** | Standard |
+| **Balík** | 299 Kč | **650 T** | +50 T zdarma |
+| **Do zásoby** | 599 Kč | **1400 T** | +200 T zdarma |
+
+---
+
+<a id="kupony-passy"></a>
+### Ceník rozšíření (kupóny / passy)
+
+Pozn.:
+- **Kupón → Pass** znamená: jednorázově aktivuješ a vznikne/obnoví se pass na dobu trvání.
+- **Exclusive** = dostupné jen v rámci předplatného (nejde koupit samostatně).
+
+| Co | Typ | Efekt / Trvání | Cena (Token) |
+| :--- | :--- | :--- | ---: |
+| [Early Access](#release-window) | Kupón → Pass | 7 dnů | 80 |
+| [Early Delivery](#release-window) | Kupón | Zruší release window pro jeden inzerát | 40 |
+| [Anti-topper](#anti-topper) | Kupón → Pass | 7 dnů | 40 |
+| [Mark](#koncept-boost-mark) | Kupón → Pass | 7 dnů | 20 |
+| [Top](#koncept-boost-top) | Kupón → Pass | 7 dnů | 50 |
+| [Top Maxxi](#koncept-boost-top-maxxi) | Kupón → Pass | 7 dnů | 50 |
+| [Multi-Category](#multi-category) | Kupón | 1 použití (1 + 2 kategorie) | 75 |
+| [Detail protistrany](#detail-protistrany) | Kupón → Pass | 7 dnů | 50 |
+| [Photo Count](#photo-count) | Kupón → Pass | 1 měsíc (+2 fotky) | 75 |
+| Aktivní inzeráty 10 | Kupón → Pass | 1 měsíc | TBD |
+| [Payback](#payback) | Pass | Benefit předplatného | Exclusive |
+| [Kontinuální nabídka](#kontinualni-nabidka) | Kupón → Pass | 1 měsíc (prodlouží život inzerátu) | Exclusive |
