@@ -1623,7 +1623,101 @@ Co tu řeším:
 
 Profil má být klidnej a věcnej. Jedno místo, kde nastavím hranice a pak už mi to nepřekáží v používání appky.
 
-<a id="ekonomika"></a>
+<a id="koncept-boost-mark"></a>
+### Boost: Mark
+
+Mark je čistě listing mechanika. Není to “výhoda v pravidlech”, je to výhoda v signálu.
+
+Co Mark dělá:
+- jen vizuální signál: badge **„Zvýrazněno“**
+- **nezaručuje top pozici** (je to “hej, koukni sem”)
+
+Kde se projeví:
+- pouze v **listingu (seznamu)**
+
+Co Mark nikdy neobchází:
+- citlivost (hard gate),
+- ignor,
+- release window (pokud nemáš EA / ED),
+- filtry a radius.
+
+Trvání:
+- Mark platí **do expirace inzerátu** (boost končí expirací).
+
+Interakce:
+- Anti-topper: Mark spadá do zvýraznění, který Anti-topper umí potlačit (proto se v listingu pro uživatele s Anti-topperem loguje `anti-topper` místo `visible` ve chvíli, kdy by se ukázal Mark/Top).
+- Payback: Mark je jeden z boostů, který může generovat Payback (viz [Payback](#payback)).
+- Kontinuální nabídka:
+  - když prodloužíš život **dřív než expiroval**, Mark běží dál (expirace se posune),
+  - když inzerát už expiroval a ty ho “oživíš”, starý Mark se **nevrací**.
+
+---
+
+<a id="koncept-boost-top"></a>
+### Boost: Top
+
+Top je listing mechanika: inzerát skočí do prioritní vrstvy listingu (pod Top Maxxi).
+
+Co Top dělá:
+- posune inzerát do priority vrstvy listingu:
+  1) Top Maxxi
+  2) Top
+  3) běžné
+
+Kde se projeví:
+- pouze v **listingu (seznamu)**  
+  (detail je normální svět, ne marketingová klec)
+
+Co Top nikdy neobchází:
+- citlivost (hard gate),
+- ignor,
+- release window (pokud nemáš EA / ED),
+- filtry, radius a další globální hranice.
+
+Anti-topper:
+- pokud má uživatel Anti-topper:
+  - Top **ztratí výhodu pozice**,
+  - zůstane mu jen badge (tj. už není “prioritní vrstva”, ale “běžnej kus v řazení podle preference uživatele”).
+
+Trvání:
+- Top platí **do expirace inzerátu** (boost končí expirací).
+
+Interakce s Kontinuální nabídkou:
+- prodloužení před expirací = Top běží dál,
+- reanimace po expiraci = starý Top se nevrací (nový cyklus, nový boost).
+
+---
+
+<a id="koncept-boost-top-maxxi"></a>
+### Boost: Top Maxxi
+
+Top Maxxi je absolutní přednost v listingu. Je to nejvyšší vrstva priority a je imunní vůči Anti-topperu.
+
+Co Top Maxxi dělá:
+- inzerát je **vždy nahoře** (priorita #1)
+
+Kde se projeví:
+- pouze v **listingu (seznamu)**
+
+Co Top Maxxi nikdy neobchází:
+- citlivost (hard gate),
+- ignor,
+- release window (pokud nemáš EA / ED),
+- filtry, radius a další globální hranice.
+
+Anti-topper:
+- Top Maxxi je **imunní** (Anti-topper ho neovlivní).
+
+Payback:
+- Top Maxxi je imunní → **payback pro něj nikdy nevzniká**.
+
+Trvání:
+- Top Maxxi platí **do expirace inzerátu** (boost končí expirací).
+
+Interakce s Kontinuální nabídkou:
+- prodloužení před expirací = Top Maxxi běží dál,
+- reanimace po expiraci = starý Top Maxxi se nevrací.
+
 ## Ekonomika
 
 Ekonomika je tady od toho, aby:
@@ -1632,162 +1726,72 @@ Ekonomika je tady od toho, aby:
 3) nevyráběla pay-to-win cirkus.
 
 Zásady:
-- **Monetizace je přiznaná.** Nic není “tak nějak samo”.
-- **Žádný skrytý algoritmy a penalizace.** Když něco platí, je to vidět.
-- **Platíš za nástroje a klid**, ne za to, že se z tebe stane “lepší občan”.
-- **Neaktivita není past.** Žádný tichý obnovování, žádný schovaný rušení, žádný “zrušit jde, ale až po 17 kliknutích”.
+- monetizace je přiznaná (nic není “tak nějak samo”),
+- žádný skrytý algoritmy a penalizace,
+- platíš za nástroje a klid, ne za to, že se z tebe stane “lepší občan”,
+- žádný tichý obnovování, žádný schovaný rušení.
 
-Ekonomika má tři základní stavební bloky:
+Ekonomika drží jen primitiva:
 - **Tokeny** = měna
 - **Kupóny** = jednorázový spotřebáky
 - **Passy** = aktivní stavy na čas (vznikají aktivací)
 
 ---
 
-<a id="koncept-tokeny"></a>
 ### Tokeny (měna)
-
 Tokeny jsou interní měna. Slouží k aktivaci věcí, který mají hodnotu (čas, pozornost, nástroje, “klid”).
 
-Tokeny:
-- jsou **převodník** mezi penězma a aktivací (čistý mentální model),
-- můžou se získat:
-  - nákupem,
-  - občas jako odměna (gamifikace),
-  - promo / early access (kupóny).
-
-Tokeny nejsou “body na hraní”. Jsou to peníze v převleku, takže:
-- **nebuduju na tom závislostní mechaniky**,
-- **nedělám z toho casino**,
-- a hlavně: **tokeny nikdy neobcházej pravidla bezpečnosti a viditelnosti**.
+- tokeny jsou převodník mezi penězma a aktivací (čistý mentální model),
+- tokeny nejsou casino, nejsou “body na hraní”,
+- tokeny nikdy neobcházej pravidla bezpečnosti a viditelnosti.
 
 ---
 
-<a id="koncept-kupony"></a>
 ### Kupóny (jednorázovky)
+Kupón je jednorázová věc, která se dá spálit a něco tím získat.
 
-Kupón je jednorázová věc, která se dá spálit a něco tím získat. Neaktivuje “účet navždy”, jen udělá konkrétní akci.
+Použití typicky:
+- promo / onboarding (férově, bez nátlaku),
+- ochutnávky placených věcí,
+- jednorázový odemčení brány.
 
-Typicky kupóny používám pro:
-- promo a onboarding (férově, bez nátlaku),
-- “ochutnávky” placených věcí (ať si člověk zkusí hodnotu),
-- jednorázový odemčení brány (např. limit, prodloužení).
-
-Kupón má:
-- typ,
-- podmínky použití,
-- případnou expiraci.
-
-Kupón se **vždycky spotřebuje před tokenama** (viz rozšíření CTA).
+Pravidlo UI: **když mám použitelný kupón, spotřebuju ho před tokenama**.
 
 ---
 
-<a id="koncept-passy"></a>
 ### Pass (aktivní stav)
-
-Pass je časově omezený “zapnuto”. Vzniká aktivací přes kupón nebo tokeny.
-
-Aktivace je vždycky okamžitá konverze:
+Pass je časově omezený “zapnuto”. Vzniká aktivací přes kupón nebo tokeny:
 
 **Kupón / Tokeny → Pass (aktivní stav)**
 
-Passy jsou důležitý, protože drží konzistenci:
-- systém ví, co má být “teď aktivní”,
-- UI ví, co má ukázat / povolit,
-- uživatel ví, za co platí a dokdy.
-
-#### Obecná pravidla passů
-- passy jsou **časově omezený**,
-- passy se dají **prodloužit** další aktivací,
-- passy **nikdy neobcházej**:
-  - citlivost,
-  - ignor,
-  - zákonný omezení,
-  - hard gate typu “404 na detail”.
+Obecná pravidla:
+- passy jsou časově omezený a prodlužují se další aktivací,
+- passy nikdy neobcházej: citlivost, ignor, release window a další globální hranice.
 
 ---
 
-<a id="koncept-predplatne"></a>
 ### Předplatné (subscription)
-
 Předplatné je komfortní způsob, jak mít některý passy pořád aktivní bez opakovaný aktivace.
 
 Zásady:
-- předplatný musí být **čitelnej kontrakt**:
-  - co zahrnuje,
-  - co aktivuje,
-  - kdy se obnovuje,
-  - jak to vypnu.
+- čitelnej kontrakt (co zahrnuje, co aktivuje, kdy se obnovuje),
 - zrušení je jednoduchý a bez trestu.
 
-Předplatné v praxi typicky:
-- pravidelně doplňuje tokeny,
-- nebo drží sadu passů aktivní (např. prodejce tools).
-
 ---
 
-<a id="koncept-pass-prehled"></a>
-### Přehled passů (kdo, co, proč)
+### Přehled ekonomických konceptů (odkazy)
 
-> Tohle je produktový přehled. Ne ceník. Ceník je separátní a musí být veřejně čitelnej.
+> Ekonomika tady nic “nevysvětluje”. Jen odkazuje.  
+> Odpovědi typu „Jak funguje Top?“ patří do Konceptů.
 
-| Pass | Pro koho | Scope | Co dělá | Poznámka |
-|---|---|---|---|---|
-| Anti-topper | kupující | listing | potlačí pozici boostů (Top/Mark), nechá jen badge; Top Maxxi je imunní | měří se přes `anti-topper` event (viz Inzerát) |
-| Early Access | kupující | listing | obejde release window +8h pro nový inzeráty | detail linky tím neřeším, to řeší jen citlivost |
-| Brand | prodejce | profil + listing/detail | zobrazí brand handle u inzerátů + umožní vyhledávání podle brandu | po expiraci se nezobrazuje a nejde hledat; po 1 měsíci se uvolní |
-| Payback | prodejce | po expiraci inzerátu | kompenzuje potlačený boosty (Mark/Top) podle podílu `anti-topper` | vzniká jen, pokud je aktivní v době vyhodnocení |
-| Kontinuální nabídka | prodejce | inzerát | prodlužuje / reaktivuje inzerát bez toho, aby tu hnily mrtvoly navždy | respektuje gating a stavy (viz Inzerát) |
-| Rozšířená data | prodejce | moje inzeráty | ukáže privátní metriky inzerátu (impression/view/ignored/transactions…) | bez passu neukazuju nic |
-
-Pozn.: některý věci jsou “per listing” (např. Early Delivery) a můžou být řešený kupónem nebo mikro-aktivací, ale pořád to musí mít mentální model “zapnu → platí”.
-
----
-
-<a id="koncept-boosty"></a>
-### Boosty (Mark / Top / Top Maxxi)
-
-Boosty jsou nástroje pro prodávajícího. Ne “přednostní právo na existenci”.
-
-Základní pravidla:
-- boost ovlivňuje **jen listing (pořadí / pozici / zvýraznění)**,
-- boost nikdy neobchází:
-  - citlivost,
-  - ignor,
-  - release window,
-  - zákonný omezení,
-- boosty mají jasnou prioritu (viz koncept Inzerát):
-  1) Top Maxxi
-  2) Top
-  3) běžné
-
-Anti-topper je legitimní proti-nástroj kupujícího (platí si klid).  
-Payback je férovka mezi “platím si viditelnost” a “platím si klid”.
-
----
-
-<a id="koncept-early-delivery"></a>
-### Early Delivery (zrušení release window pro konkrétní inzerát)
-
-Release window je default +8h pro “běžný” uživatele.  
-Early Delivery je nástroj pro prodávajícího: u konkrétního inzerátu zruší okno úplně.
-
-Pravidla:
-- maximum posunu je vždycky **8 hodin**. Early Delivery okno ruší, nedělá “super-early”.
-- release window je listing pravidlo, ne existence pravidlo (detail linky tím nezabíjím).
-- citlivost pořád platí jako jediná hard 404 brána.
-
----
-
-<a id="koncept-draft-gate"></a>
-### Draft Gate (odemčení možnosti tvořit)
-
-Limit aktivních inzerátů je tvrdá brána.  
-Když je uživatel na limitu, systém:
-- **nedovolí vytvořit Draft**,
-- ukáže status s jasným důvodem,
-- nabídne **aktivaci přes token** (odemknutí).
-
-Tohle je schválně gate “na začátku”, aby uživatel neudělal práci a pak nedostal facku až na konci.
-
----
+| Co | Kde je definice | Poznámka |
+|---|---|---|
+| Mark | [Boost: Mark](#koncept-boost-mark) | zvýraznění (badge) |
+| Top | [Boost: Top](#koncept-boost-top) | prioritní vrstva listingu |
+| Top Maxxi | [Boost: Top Maxxi](#koncept-boost-top-maxxi) | absolutní přednost v listingu |
+| Anti-topper | [Anti-topper](#anti-topper) | mění řazení listingu |
+| Payback | [Payback](#payback) | kompenzace za potlačení přes Anti-topper |
+| Release window | [Release Window](#zivotni-cyklus) | Early Access / Early Delivery |
+| Kontinuální nabídka | [Kontinuální nabídka](#zivotni-cyklus) | prodloužení života inzerátu |
+| Brand | [Brand](#koncept-brand) | handle viditelnej jen s passem |
+| Rozšířená data | [Rozšířená data](#koncept-rozsirena-data) | privátní metriky pro vlastníka |
