@@ -1626,19 +1626,71 @@ Profil má být klidnej a věcnej. Jedno místo, kde nastavím hranice a pak už
 <a id="koncept-tokeny"></a>
 ### Tokeny (měna)
 
-Tokeny jsou interní měna. Používám je jako čistý převodník mezi penězma a aktivací věcí, který mají hodnotu (čas, pozornost, nástroje, “klid”). Nejsou to “body na hraní”.
+Tokeny jsou interní měna. Slouží jako jednotný “palivo” pro zbytek systému. Nejsou to body na hraní.
 
 Zásady:
-- tokeny jsou **mentální model aktivace** (ne “gambling”),
-- tokeny nejsou casino a nejsou závislostní mechanika,
-- tokeny nikdy neobcházej pravidla bezpečnosti a viditelnosti.
+- tokeny jsou **mentální model aktivace** (ne gambling),
+- tokeny nejsou casino,
+- tokeny nikdy neobcházej bezpečnost ani viditelnost (to řeší gating koncepty).
 
-Jak se tokeny získávají:
-- nákupem,
-- občas jako odměna (gamifikace),
-- promo / early access (typicky přes kupóny).
+#### Ledger (historie pohybů)
+Tokeny jsou měna, takže uživatel musí mít čitelnej ledger pohybů. Žádný “zmizely mi tokeny a nevím proč”.
 
-Tokeny jsou měna. Chovám se k nim jako k penězům.
+Ledger obsahuje:
+- připsání,
+- úbytek,
+- refund/kompenzace (jen když existuje explicitní mechanika, např. [Payback](#payback)).
+
+Ledger je auditní stopa. Ne sociální feed.
+
+<a id="koncept-tokeny-ziskavani"></a>
+### Tokeny – získávání (odměny, příděly, nákup)
+
+Tohle je standalone mechanika. Token jako pojem jen říká “co to je”.  
+Tady je “jak se k nim dostaneš”.
+
+Zdroje tokenů:
+- **Předplatné**: měsíční příděl v balíčku (viz Ekonomika).
+- **Nákup**: top-up balíčky (viz Ekonomika).
+- **Odměny / bonusy**: drobný tokeny za používání (viz níž).
+
+#### Bonusy za používání (tokeny zdarma)
+Bonusy jsou malé, predikovatelné příděly. Ne core ekonomika.
+
+| Mechanika | Kdy vzniká | Komu | Proč to existuje | Anti-abuse |
+|---|---|---|---|---|
+| Odměna za `resolved` | když prodávající přepne transakci do `resolved` | prodávajícímu | motivace k úklidu a pravdivým koncům (žádný zombie transakce) | bez `resolved` bonus nevzniká; systém může stopnout zjevný farmení |
+| RNG dropy ve feedu | při scrollování, náhodně s nízkou pravděpodobností | uživateli | drobný překvapení, ne jádro ekonomiky | nízká pravděpodobnost + ochrany proti anomáliím |
+| Denní drop | 1× denně vyzvednutí v sekci Bonusy | uživateli | jemná retence bez nátlaku (řádově ~10 T) | rate-limit + detekce zneužití |
+
+Pozn.: žádný “refund za slabý výkon”. Pokud existuje kompenzace, je to explicitní mechanika (typicky [Payback](#payback)), ne tichý a nepředvídatelný vracení tokenů.
+
+### Historie transakcí (Tokeny)
+
+Definice Tokenů je v Konceptech: [Tokeny](#koncept-tokeny).  
+Tady řeším jen UX pravidlo ekonomiky: uživatel musí mít **čitelnej ledger** pohybů, protože tokeny jsou měna.
+
+Uživatel má k dispozici historii pohybů:
+- připsání (předplatné, bonusy, nákupy),
+- úbytek (aktivace, nákupy rozšíření),
+- případné refundy (jen tam, kde existuje jasná mechanika typu [Payback](#payback)).
+
+Žádný “zmizely mi tokeny a nevím proč”. To je toxická špína.
+
+---
+
+### Bonusy za používání (Tokeny zdarma)
+
+Definici “tokeny jako měna” neřeším tady, viz [Tokeny](#koncept-tokeny).  
+Tady jsou konkrétní **mechaniky přídělů**, protože to je součást ekonomického modelu.
+
+| Mechanika | Kdy vzniká | Komu | Proč to existuje | Anti-abuse |
+|---|---|---|---|---|
+| Odměna za `resolved` | když prodávající přepne transakci do `resolved` | prodávajícímu | motivace k úklidu a pravdivým koncům (žádný zombie transakce) | bez `resolved` bonus nevzniká; systém může stopnout zjevný farmení |
+| RNG dropy ve feedu | při scrollování, náhodně s nízkou pravděpodobností | uživateli | drobný překvapení, ne ekonomickej model | nízká pravděpodobnost + ochrany proti anomáliím |
+| Denní drop | 1× denně vyzvednutí v sekci Bonusy (Obchod) | uživateli | jemná retence bez nátlaku (řádově ~10 T) | rate-limit + detekce zneužití |
+
+Pozn.: žádný “refund za slabý výkon”. Pokud někdy kompenzace existuje, je to explicitní mechanika (typicky [Payback](#payback)), ne tichý a nepředvídatelný vracení tokenů.
 
 ---
 
