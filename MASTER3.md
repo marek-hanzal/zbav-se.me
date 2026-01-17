@@ -990,17 +990,17 @@ Způsob předání je signál pro kupujícího a filtr ve feedu. Není to smlouv
 
 ---
 
-<a id="koncept-popis"></a>
+<a id="koncept-popis-inzeratu"></a>
 ### Popis inzerátu (Markdown)
 
-Popis je dobrovolnej a je to “měkká vrstva informací”. Nechci z toho dělat SEO pole ani databázi pravdy.
+Popis je dobrovolná “měkká vrstva informací”. Nechci z toho dělat SEO pole ani databázi pravdy.
 
 Pravidla:
 - popis je v **Markdownu** (volitelně)
-- **nepoužívám ho pro technické vyhledávání ani indexaci**
-- slouží jen pro lidi v detailu
+- **nepoužívá se pro technické vyhledávání ani indexaci**
+- slouží jen jako hrubá informativní vrstva pro lidi v detailu
 
-Důvod: nechci, aby se produkt stal “piš romány, aby tě někdo našel”. Signál má být ve strukturách, ne v balastu.
+Cíl: aby se produkt nezvrhl do “piš romány, aby tě někdo našel”. Signál má být ve strukturách, ne v balastu.
 
 ---
 
@@ -1284,36 +1284,6 @@ Důležitá technická pravda (držím schválně):
 
 ---
 
-<a id="koncept-rozsireni-aktivace"></a>
-### Rozšíření a Aktivace (Kupón/Tokeny → Pass)
-
-Rozšíření jsou centrální panel pro věci, co se dají *zapnout* (a pak nějakou dobu platí). Ne “shop”. Ne “nastavení”.
-
-#### Jak to funguje
-Rozšíření se aktivuje vznikem **Passu**. Aktivace je vždycky okamžitá konverze:
-
-**Kupón / Tokeny → Pass (aktivní stav)**
-
-Bez čekání, bez “schvalování”.
-
-#### Chytré CTA pravidlo (ať uživatel nepřepočítává život)
-| Stav | Tlačítko | Co se stane |
-|---|---|---|
-| mám použitelný kupón | `Aktivovat (1× Kupón)` | kupón se spálí, vznikne/prodlouží pass |
-| kupón nemám | `Aktivovat (XX Tokenů)` | tokeny se strhnou, vznikne/prodlouží pass |
-
-Pravidlo: **nejdřív spotřebuj free věci, až potom měnu**.
-
-#### Prodloužení
-Prodloužení = další aktivace. Stejnej kontrakt, stejnej mentální model.
-
-#### Důležitý pravidlo: rozšíření nic neobchází
-Passy jsou nadstavby. Ne zadní vrátka.
-- citlivost, ignor a ostatní globální brány platí pořád,
-- žádný “schování” nebo obcházení systému přes placený věci.
-
----
-
 <a id="koncept-rozsirena-data"></a>
 ### Rozšířená data u inzerátu (privátní analytika pro vlastníka)
 
@@ -1438,18 +1408,6 @@ Předdefinované volby:
 
 ---
 
-<a id="koncept-popis"></a>
-### Popis (Markdown)
-
-Popis je dobrovolnej. Záměrně. Nechci slohovky. Většinu práce má odvést galerie, titulek, cena a pár strukturovanejch signálů.
-
-Co platí:
-- **Markdown je povolenej** (odrážky, nadpisy, linky).
-- **Popis se nepoužívá pro vyhledávání**. Je to čistě informativní vrstva pro detail.
-- Krátký konkrétní body > dlouhej příběh.
-
----
-
 <a id="koncept-pros-cons"></a>
 ### Co chci vyzdvihnout / Chci být upřímný
 
@@ -1492,30 +1450,6 @@ Hlavní akce:
 A hlavně: feed je jen konfigurace. Všechny systémový brány platí pořád (citlivost, ignor, a spol.). Žádný zkratky okolo pravidel.
 
 ---
-
-<a id="koncept-rozsireni-ui"></a>
-### Rozšíření a Aktivace
-
-Rozšíření jsou centrální ovládací pult pro věci, co se dají *zapnout* (a pak nějakou dobu platí). Ne „nastavení“. Ne „shop“. Panel: *co mám aktivní, co můžu zapnout, co mi končí, a čím to zaplatím*.
-
-Uživatel tu vidí:
-- seznam rozšíření,
-- u každého: **aktivní/neaktivní**, **dokdy**, **cenu aktivace**,
-- inventář: **Tokeny**, **Kupóny**, **Passy** (a jejich expirace).
-
-Aktivace v praxi:
-- rozšíření se zapínají tak, že vznikne **Pass**,
-- kontrakt je vždycky okamžitej: **Kupón / Tokeny → Pass**.
-
-CTA je „chytrý“, aby člověk nemusel přemýšlet:
-- když mám použitelný kupón: `Aktivovat (1× Kupón)` (kupón se spálí),
-- když kupón nemám: `Aktivovat (XX Tokenů)` (tokeny se strhnou).
-
-Prodloužení = další aktivace. Stejný mentální model, žádná magie.
-
-Pod rozšířeníma může být zvlášť sekce pro kupóny, který nejsou „zapni pass“ (jednorázovky, bonusy), aby se to nemíchalo do aktivací.
-
-A platí tvrdě: rozšíření nic neobchází. Co platí pro gating/bezpečnost/viditelnost, platí pořád.
 
 <a id="koncept-ui-ram"></a>
 ### UI rámec (co se nesmí rozbít)
@@ -1745,6 +1679,49 @@ UX pravidla:
 - CTA musí jasně říct, co se spotřebuje: `Aktivovat (1× Kupón)` vs. `Aktivovat (XX Tokenů)`
 - po aktivaci musí být vidět stav: aktivní/neaktivní a **dokdy** (u passů)
 - každá aktivace/spotřeba musí mít stopu v ledgeru tokenů (audit, žádný “zmizely mi tokeny”)
+
+---
+
+<a id="koncept-rozsireni-aktivace"></a>
+### Rozšíření (panel aktivací)
+
+Rozšíření jsou centrální ovládací pult pro věci, co se dají *zapnout* a nějakou dobu platí.  
+Není to „nastavení“ a není to „shop“. Je to dashboard: *co mám aktivní, co mi končí, co můžu zapnout, a čím to zaplatím*.
+
+Co uživatel vidí u každého rozšíření:
+- stav **aktivní / neaktivní**
+- **dokdy** (pokud je aktivní)
+- cena aktivace (kupón / tokeny)
+
+A celkově tu vidí i inventář:
+- **Tokeny** (zůstatek)  
+- **Kupóny** (kolik kusů a na co jsou)
+- **Passy** (co běží a dokdy)
+
+#### Aktivace (kontrakt)
+Rozšíření používají jednotný kontrakt aktivace definovaný tady: [Aktivace](#koncept-aktivace).  
+V praxi to znamená:
+- pokud mám použitelný kupón → použije se kupón
+- jinak → strhnou se tokeny
+- výsledek je buď jednorázovka, nebo vznik/prodloužení passu (podle typu rozšíření)
+
+#### Chytré CTA pravidlo (ať uživatel nepřepočítává život)
+| Stav | Tlačítko | Co se stane |
+|---|---|---|
+| mám použitelný kupón | `Aktivovat (1× Kupón)` | kupón se spálí, vznikne/prodlouží pass (nebo proběhne jednorázovka) |
+| kupón nemám | `Aktivovat (XX Tokenů)` | tokeny se strhnou, vznikne/prodlouží pass (nebo proběhne jednorázovka) |
+
+Pravidlo: **nejdřív spotřebuj free věci, až potom měnu**.
+
+#### Jednorázovky vs. “zapínací” věci
+V UI je dobrý držet odděleně:
+- rozšíření typu **„zapni/prodlouž pass“**
+- kupóny typu **jednorázová akce** (aby se to nemíchalo do aktivací)
+
+#### Tvrdá hranice
+Rozšíření jsou nadstavby. Ne zadní vrátka.
+- nic neobchází citlivost, ignor a další globální brány
+- žádný „schování“ nebo obcházení systému přes placený věci
 
 ---
 
