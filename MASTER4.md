@@ -229,7 +229,7 @@ Jemný brzdy a struktura, aby se to nerozpadlo do bazarovýho pekla, ale bez mor
 Nechci z feedu dělat video cirkus. Fotky stačí.
 
 10) **Osobní data jen dočasně**  
-Co je osobní a patří jen do domluvy, nesmí v systému hnít věčně. (Viz [Čistky transakcí](#koncept-cistky).)
+Co je osobní a patří jen do domluvy, nesmí v systému hnít věčně. (Viz [Transakce](#koncept-transakce).)
 
 <a id="slabina"></a>
 ### V čem je má slabina (a proč s tím počítám)
@@ -342,7 +342,7 @@ Kontrakt životnosti (důležitý):
 - Upload nemá vlastní TTL.
 - Životnost vždycky řídí rodič:
   - inzerát → fotky žijí s inzerátem (paměť trhu),
-  - transakce → přílohy žijí s transakcí a mizí při jejím hard delete (viz [Čistky](#koncept-cistky)).
+  - transakce → přílohy žijí s transakcí a mizí při jejím hard delete (viz [Transakce](#koncept-transakce)).
 
 ---
 
@@ -595,7 +595,9 @@ Timeline místo chatu:
 - Systém drží pravdu vedle toho, i když si lidi píšou normálně.
 
 Retence a čistky:
-- Transakce je dočasná věc. Po finálním stavu se postupně čistí (viz [Čistky](#koncept-cistky)).
+- Transakce je dočasná věc. Po finálním stavu proběhne úklid ve dvou krocích:
+  - hned: mažu všechno strukturovaný (viz typy zpráv v [Zprávách](#koncept-zpravy) — všechno krom `message_text` a `message_gallery`),
+  - po **3 měsících**: hard delete celé transakce (včetně textů a fotek).
 
 ---
 
@@ -620,6 +622,6 @@ Retence po ukončení transakce:
 
 Kontrakt:
 - V `pending` se zprávy neposílají.
-- Strukturovaný data ukládám odděleně, aby šla cíleně mazat (viz [Čistky](#koncept-cistky)).
+- Strukturovaný data ukládám odděleně, aby šla cíleně mazat hned po ukončení transakce.
 
 ---
