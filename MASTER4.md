@@ -678,6 +678,13 @@ Hard limit listingu:
 <a id="koncept-hledat"></a>
 ### Hledat
 
+Related:
+- [Feed](#koncept-feed)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Limit počtu feedů](#koncept-limit-poctu-feedu)
+- [Citlivost](#koncept-citlivost)
+- [Ignor](#koncept-ignor)
+
 Hledat je samostatná primární sekce. UXově to není „feed“, ale **vyhledávací kontext** postavenej nad stejným enginem jako [Feed](#koncept-feed) (stejný filtry, stejnej list UI, žádná speciální magie).
 
 `search` jako systémový kontext:
