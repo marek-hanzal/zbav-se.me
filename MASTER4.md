@@ -1100,9 +1100,32 @@ Kontrakt:
 - Co Mark dělá: jen vizuální signál (badge „Zvýrazněno“). Nezaručuje top pozici.
 - Kde se projeví: pouze v listingu.
 - Co Mark nikdy neobchází: filtry, radius, release window, ignor, [Citlivost](#koncept-citlivost).
-- Trvání: Mark platí do expirace inzerátu (boost končí expirací).
+- Trvání: Mark běží tak dlouho, jak je aktivní jeho **pass na úrovni inzerátu**.
 - Kontinuální nabídka:
-  - když prodloužíš život dřív než expiroval, Mark běží dál (expirace se posune),
-  - když inzerát už expiroval a ty ho oživíš, starý Mark se nevrací.
+  - pokud se inzerát vrátí do `live` a Mark pass je pořád aktivní, Mark se projeví normálně,
+  - pokud Mark pass doběhl, Mark se neprojeví.
+
+---
+
+<a id="koncept-top"></a>
+### Top
+
+Related:
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Anti-topper](#koncept-anti-topper)
+- [Payback](#koncept-payback)
+- [Ekonomika](#ekonomika)
+
+Top je listing mechanika: inzerát skočí do prioritní vrstvy listingu (pod Top Maxxi).
+
+Kontrakt:
+- Co Top dělá: posune inzerát do priority vrstvy listingu.
+- Kde se projeví: pouze v listingu.
+- Co Top nikdy neobchází: filtry, radius, release window, ignor, [Citlivost](#koncept-citlivost).
+- Anti-topper: Top ztratí výhodu pozice, zůstane mu jen badge.
+- Trvání: Top běží tak dlouho, jak je aktivní jeho **pass na úrovni inzerátu**.
+- Kontinuální nabídka:
+  - pokud se inzerát vrátí do `live` a Top pass je pořád aktivní, Top se projeví normálně,
+  - pokud Top pass doběhl, Top se neprojeví.
 
 ---
