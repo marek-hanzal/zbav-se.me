@@ -1563,19 +1563,38 @@ Profil má být klidnej a věcnej. Jedno místo, kde nastavím hranice a pak už
 Tokeny jsou interní měna. Slouží jako jednotný “palivo” pro zbytek systému. Nejsou to body na hraní.
 
 Zásady:
-- tokeny jsou **mentální model aktivace** (ne gambling),
+- tokeny jsou mentální model aktivace (ne gambling),
 - tokeny nejsou casino,
 - tokeny nikdy neobcházej bezpečnost ani viditelnost (to řeší gating koncepty).
 
-#### Ledger (historie pohybů)
-Tokeny jsou měna, takže uživatel musí mít čitelnej ledger pohybů. Žádný “zmizely mi tokeny a nevím proč”.
-
-Ledger obsahuje:
+Ledger (historie pohybů):
 - připsání,
 - úbytek,
-- refund/kompenzace (jen když existuje explicitní mechanika, např. [Payback](#payback)).
+- refund/kompenzace (jen když existuje explicitní mechanika, např. Payback).
 
-Ledger je auditní stopa. Ne sociální feed.
+---
+
+<a id="koncept-tokeny-ziskavani"></a>
+### Tokeny – získávání (odměny, příděly, nákup)
+
+Token jako pojem jen říká “co to je”. Tady je “jak se k nim dostaneš”.
+
+Zdroje tokenů:
+- předplatné (měsíční příděl v balíčku),
+- nákup (top-up balíčky),
+- odměny / bonusy (viz níž).
+
+#### Bonusy za používání (tokeny zdarma)
+
+Bonusy jsou malé, predikovatelné příděly. Ne core ekonomika.
+
+| Mechanika | Kdy vzniká | Komu | Proč to existuje | Anti-abuse |
+|---|---|---|---|---|
+| Odměna za `resolved` | když prodávající přepne transakci do `resolved` | prodávajícímu | motivace k úklidu a pravdivým koncům (žádný zombie transakce) | bez `resolved` bonus nevzniká; systém může stopnout zjevný farmení |
+| RNG dropy ve feedu | při scrollování, náhodně s nízkou pravděpodobností | uživateli | drobný překvapení, ne jádro ekonomiky | nízká pravděpodobnost + ochrany proti anomáliím |
+| Denní drop | 1× denně vyzvednutí v sekci Bonusy | uživateli | jemná retence bez nátlaku (řádově ~10 T) | rate-limit + detekce zneužití |
+
+Pozn.: žádný “refund za slabý výkon”. Pokud existuje kompenzace, je to explicitní mechanika (typicky Payback), ne tichý a nepředvídatelný vracení tokenů.
 
 <a id="koncept-tokeny-ziskavani"></a>
 ### Tokeny – získávání (odměny, příděly, nákup)
@@ -1598,33 +1617,6 @@ Bonusy jsou malé, predikovatelné příděly. Ne core ekonomika.
 | Denní drop | 1× denně vyzvednutí v sekci Bonusy | uživateli | jemná retence bez nátlaku (řádově ~10 T) | rate-limit + detekce zneužití |
 
 Pozn.: žádný “refund za slabý výkon”. Pokud existuje kompenzace, je to explicitní mechanika (typicky [Payback](#payback)), ne tichý a nepředvídatelný vracení tokenů.
-
-### Historie transakcí (Tokeny)
-
-Definice Tokenů je v Konceptech: [Tokeny](#koncept-tokeny).  
-Tady řeším jen UX pravidlo ekonomiky: uživatel musí mít **čitelnej ledger** pohybů, protože tokeny jsou měna.
-
-Uživatel má k dispozici historii pohybů:
-- připsání (předplatné, bonusy, nákupy),
-- úbytek (aktivace, nákupy rozšíření),
-- případné refundy (jen tam, kde existuje jasná mechanika typu [Payback](#payback)).
-
-Žádný “zmizely mi tokeny a nevím proč”. To je toxická špína.
-
----
-
-### Bonusy za používání (Tokeny zdarma)
-
-Definici “tokeny jako měna” neřeším tady, viz [Tokeny](#koncept-tokeny).  
-Tady jsou konkrétní **mechaniky přídělů**, protože to je součást ekonomického modelu.
-
-| Mechanika | Kdy vzniká | Komu | Proč to existuje | Anti-abuse |
-|---|---|---|---|---|
-| Odměna za `resolved` | když prodávající přepne transakci do `resolved` | prodávajícímu | motivace k úklidu a pravdivým koncům (žádný zombie transakce) | bez `resolved` bonus nevzniká; systém může stopnout zjevný farmení |
-| RNG dropy ve feedu | při scrollování, náhodně s nízkou pravděpodobností | uživateli | drobný překvapení, ne ekonomickej model | nízká pravděpodobnost + ochrany proti anomáliím |
-| Denní drop | 1× denně vyzvednutí v sekci Bonusy (Obchod) | uživateli | jemná retence bez nátlaku (řádově ~10 T) | rate-limit + detekce zneužití |
-
-Pozn.: žádný “refund za slabý výkon”. Pokud někdy kompenzace existuje, je to explicitní mechanika (typicky [Payback](#payback)), ne tichý a nepředvídatelný vracení tokenů.
 
 ---
 
@@ -1673,34 +1665,6 @@ Kontrakt:
 - jinak → strhnou se **tokeny** (viz [Tokeny](#koncept-tokeny))
 - výsledek aktivace je buď:
   - jednorázová akce (kupón se spálí a hotovo), nebo
-  - vznik/prodloužení **passu** (viz [Pass](#koncept-pass))
-
-UX pravidla:
-- CTA musí jasně říct, co se spotřebuje: `Aktivovat (1× Kupón)` vs. `Aktivovat (XX Tokenů)`
-- po aktivaci musí být vidět stav: aktivní/neaktivní a **dokdy** (u passů)
-- každá aktivace/spotřeba musí mít stopu v ledgeru tokenů (audit, žádný “zmizely mi tokeny”)
-
----
-
-<a id="koncept-rozsireni-aktivace"></a>
-### Rozšíření (panel aktivací)
-
-Rozšíření jsou centrální ovládací pult pro věci, co se dají *zapnout* a nějakou dobu platí.  
-Není to „nastavení“ a není to „shop“. Je to dashboard: *co mám aktivní, co mi končí, co můžu zapnout, a čím to zaplatím*.
-
-Co uživatel vidí u každého rozšíření:
-- stav **aktivní / neaktivní**
-- **dokdy** (pokud je aktivní)
-- cena aktivace (kupón / tokeny)
-
-A celkově tu vidí i inventář:
-- **Tokeny** (zůstatek)  
-- **Kupóny** (kolik kusů a na co jsou)
-- **Passy** (co běží a dokdy)
-
-#### Aktivace (kontrakt)
-Rozšíření používají jednotný kontrakt aktivace definovaný tady: [Aktivace](#koncept-aktivace).  
-V praxi to znamená:
 - pokud mám použitelný kupón → použije se kupón
 - jinak → strhnou se tokeny
 - výsledek je buď jednorázovka, nebo vznik/prodloužení passu (podle typu rozšíření)
@@ -1715,7 +1679,7 @@ Pravidlo: **nejdřív spotřebuj free věci, až potom měnu**.
 
 #### Jednorázovky vs. “zapínací” věci
 V UI je dobrý držet odděleně:
-- rozšíření typu **„zapni/prodlouž pass“**
+- rozšíření typu **„zapni/prodluž pass“**
 - kupóny typu **jednorázová akce** (aby se to nemíchalo do aktivací)
 
 #### Tvrdá hranice
