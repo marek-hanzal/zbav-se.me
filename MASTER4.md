@@ -560,23 +560,30 @@ Kontrakt:
 <a id="koncept-transakce"></a>
 ### Transakce
 
-Transakce je most mezi prodávajícím a kupujícím. V UI je to „Zprávy“, ale je to **řízená interakce**, ne volný DM.
+Transakce je obálka obchodu: stav, pravidla a timeline. **Stojí na [Zprávách](#koncept-zpravy)** — zprávy jsou obsah, transakce je kontext.
 
 Základní kontrakty:
 - 1 vlákno = 1 transakce = 1 konkrétní inzerát (izolovaný kontext).
-- Transakce má stav a lifecycle.
-- „Zavřeno je zavřeno“: finální stavy jsou read-only, nejde re-open.
+- Stavový model je autorita tady v tomhle dokumentu.
+- „Zavřeno je zavřeno“: terminal stavy jsou read-only, nejde re-open.
+- „Zavřít bez emocí“ je `rejected`: moje volba odmítnout a dát protistraně hint „OK, tady cesta nevede“.
 
 Stavový model (prakticky):
 
 | Stav | Kdy | Co je povolený |
 | --- | --- | --- |
 | `pending` | kupující klikne „Mám zájem“ | kupující **nemůže psát**; prodejce jen **Přijmout** / **Odmítnout** |
-| `open` | prodejce přijme | odemknou se [Zprávy](#koncept-zpravy) + strukturovaný widgety |
-| `rejected` | prodejce odmítne | read-only |
-| `closed` | dohoda skončí | read-only |
-| `sold` | prodáno | read-only |
-| `expired` | transakce vyprší (nedotažená) | read-only |
+| `open` | prodejce přijme | odemknou se zprávy + strukturovaný widgety |
+| `resolved` | prodejce označí „vyřešeno“ | běží dál, dokud kupující nedá finále (`success`/`closed`) |
+| `dispute` | někdo přepne do sporu | běží dál (řeší se), dokud kupující nedá finále (`success`/`closed`) |
+| `rejected` | prodejce odmítne („bez emocí“) | read-only |
+| `expired` | transakce vyprší (nikdo nic nedotáhl) | read-only |
+| `success` | kupující potvrdí „dopadlo to“ | read-only |
+| `closed` | kupující zavře (ukončí pro sebe) | read-only |
+
+Poznámky ke koncům:
+- `rejected` = prodejce odmítl („zavřít bez emocí“).
+- `closed` = kupující to zavřel z vlastní vůle.
 
 Anti-spam a ochrana prodejce:
 - Prodejce může zájem **ignorovat bez postihu**. Odpovědnost začíná až přijetím.
@@ -589,5 +596,21 @@ Timeline místo chatu:
 
 Retence a čistky:
 - Transakce je dočasná věc. Po finálním stavu se postupně čistí (viz [Čistky](#koncept-cistky)).
+
+---
+
+<a id="koncept-zpravy"></a>
+### Zprávy
+
+Zprávy jsou obsah transakce. Text je volnost pro lidi, ale systém drží fakta vedle toho.
+
+Co se posílá:
+- text,
+- obrázky (typicky doplnění / důkaz),
+- strukturovaný widgety (lokace, tracking, kontaktní údaje…) — aby to nebyla slohovka a aby to šlo cíleně mazat.
+
+Kontrakt:
+- V `pending` se zprávy neposílají.
+- Strukturovaný data ukládám odděleně, aby šla cíleně mazat (viz [Čistky](#koncept-cistky)).
 
 ---
