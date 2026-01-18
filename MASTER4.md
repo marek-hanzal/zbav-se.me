@@ -1180,3 +1180,33 @@ Hranice:
 - Nic z toho neobchází systémový brány (hlavně [Citlivost](#koncept-citlivost), ignor, Early Access/Early Delivery).
 
 ---
+
+<a id="koncept-rozsirena-data-inzeratu"></a>
+### Rozšířená data u inzerátu
+
+Related:
+- [Inzerát](#koncept-inzerat)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Anti-topper](#koncept-anti-topper)
+- [Ekonomika](#ekonomika)
+- [Palce](#koncept-palce)
+- [Ignor](#koncept-ignor)
+- [Flag inzerátu](#koncept-flag-inzeratu)
+
+Rozšířená data jsou privátní čísla u **mých** inzerátů. Jsou řízený **passem**.
+
+Kontrakt:
+- Dokud mám aktivní pass, vidím rozšířená data.
+- Bez passu nevidím nic (žádný „free“ pseudo-score).
+
+Co ukazuju (dump čísel za život inzerátu):
+- `impression`
+- `view`
+- `thumbs`
+- `ignored`
+- `transactions`
+
+Anti-topper v číslech:
+- poměr `anti-topper / (visible + anti-topper)`
+
+---
