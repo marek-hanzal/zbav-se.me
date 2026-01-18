@@ -556,3 +556,38 @@ Kontrakt:
 - Odemknutí limitu je přes [Ekonomiku](#ekonomika): kupón/pas (typicky tier `Aktivní inzeráty 10/20`), nebo tokeny v hodnotě toho kupónu.
 
 ---
+
+<a id="koncept-transakce"></a>
+### Transakce
+
+Transakce je most mezi prodávajícím a kupujícím. V UI je to „Zprávy“, ale je to **řízená interakce**, ne volný DM.
+
+Základní kontrakty:
+- 1 vlákno = 1 transakce = 1 konkrétní inzerát (izolovaný kontext).
+- Transakce má stav a lifecycle.
+- „Zavřeno je zavřeno“: finální stavy jsou read-only, nejde re-open.
+
+Stavový model (prakticky):
+
+| Stav | Kdy | Co je povolený |
+| --- | --- | --- |
+| `pending` | kupující klikne „Mám zájem“ | kupující **nemůže psát**; prodejce jen **Přijmout** / **Odmítnout** |
+| `open` | prodejce přijme | odemknou se [Zprávy](#koncept-zpravy) + strukturovaný widgety |
+| `rejected` | prodejce odmítne | read-only |
+| `closed` | dohoda skončí | read-only |
+| `sold` | prodáno | read-only |
+| `expired` | transakce vyprší (nedotažená) | read-only |
+
+Anti-spam a ochrana prodejce:
+- Prodejce může zájem **ignorovat bez postihu**. Odpovědnost začíná až přijetím.
+- Kupující v `pending` **nemůže spamovat zprávama**.
+- Odmítnutí je legitimní volba bez vysvětlování. Žádnej mentální dluh.
+
+Timeline místo chatu:
+- Detail transakce je časová osa faktů: systémové stavy + text, když chtějí, + strukturovaný widgety, když je text zbytečnej.
+- Systém drží pravdu vedle toho, i když si lidi píšou normálně.
+
+Retence a čistky:
+- Transakce je dočasná věc. Po finálním stavu se postupně čistí (viz [Čistky](#koncept-cistky)).
+
+---
