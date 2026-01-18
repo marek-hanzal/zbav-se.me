@@ -1129,3 +1129,24 @@ Kontrakt:
   - pokud Top pass doběhl, Top se neprojeví.
 
 ---
+
+<a id="koncept-top-maxxi"></a>
+### Top Maxxi
+
+Related:
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Anti-topper](#koncept-anti-topper)
+- [Payback](#koncept-payback)
+- [Ekonomika](#ekonomika)
+
+Top Maxxi je absolutní přednost v listingu. Je to nejvyšší vrstva priority a je imunní vůči Anti-topperu.
+
+Kontrakt:
+- Co dělá: inzerát je v listingu vždy nahoře (priorita #1).
+- Kde se projeví: pouze v listingu.
+- Co nikdy neobchází: filtry, radius, release window, ignor, [Citlivost](#koncept-citlivost).
+- Anti-topper: Top Maxxi je imunní (neovlivní ho).
+- Payback: Top Maxxi je imunní → payback pro něj nikdy nevzniká.
+- Trvání: Top Maxxi běží tak dlouho, jak je aktivní jeho **pass na úrovni inzerátu**.
+
+---
