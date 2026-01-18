@@ -604,10 +604,19 @@ Retence a čistky:
 
 Zprávy jsou obsah transakce. Text je volnost pro lidi, ale systém drží fakta vedle toho.
 
-Co se posílá:
-- text,
-- obrázky (typicky doplnění / důkaz),
-- strukturovaný widgety (lokace, tracking, kontaktní údaje…) — aby to nebyla slohovka a aby to šlo cíleně mazat.
+Typy zpráv (co systém umí):
+
+| Typ | Co to je | Poznámka |
+| --- | --- | --- |
+| `message_text` | klasická textová zpráva | volnost pro lidi |
+| `message_gallery` | obrázek (jedna fotka) | důkaz / doplnění bez slohovky |
+| `message_location` | poloha | strukturovaná [Lokace](#koncept-lokace) |
+| `message_package` | info o balíku | tracking / dopravce jako fakt v timeline |
+| `message_personal` | osobní info | kontakty a další citlivý údaje |
+| `message_system` | systémová zpráva bez uživatele | fakt „co se stalo“ (např. změna stavu) |
+
+Retence po ukončení transakce:
+- Všechny typy **kromě** `message_text` a `message_gallery` se po ukončení transakce **mažou**.
 
 Kontrakt:
 - V `pending` se zprávy neposílají.
