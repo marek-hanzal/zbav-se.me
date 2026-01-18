@@ -804,7 +804,7 @@ Proč existují:
 
 Přístup (Detail protistrany):
 - Bez oprávnění neukazuju nic. Ani „Score“.
-- S oprávněním ukazuju **Score (A–F)** + konkrétní metriky.
+- S oprávněním ukazuju **[Metrika: Score (A–F)](#koncept-metrika-score)** + konkrétní metriky.
 - Oprávnění je pass/kupón v [Ekonomice](#ekonomika).
 
 Kontrakt:
@@ -812,6 +812,7 @@ Kontrakt:
 - Každá metrika má vlastní definici (viz kapitoly níž). Žádná tajná magie.
 
 Zobrazené metriky:
+- [Metrika: Score (A–F)](#koncept-metrika-score)
 - [Metrika: Reakční doba](#koncept-metrika-reakcni-doba)
 - [Metrika: Odmítnutí bez interakce](#koncept-metrika-odmitnuti-bez-interakce)
 - [Metrika: Resolved rate](#koncept-metrika-resolved-rate)
@@ -836,7 +837,7 @@ Proč existují:
 
 Přístup (Detail protistrany):
 - Bez oprávnění neukazuju nic. Ani „Score“.
-- S oprávněním ukazuju **Score (A–F)** + konkrétní metriky.
+- S oprávněním ukazuju **[Metrika: Score (A–F)](#koncept-metrika-score)** + konkrétní metriky.
 - Oprávnění je pass/kupón v [Ekonomice](#ekonomika).
 
 Kontrakt:
@@ -844,6 +845,7 @@ Kontrakt:
 - Každá metrika má vlastní definici (viz kapitoly níž).
 
 Zobrazené metriky:
+- [Metrika: Score (A–F)](#koncept-metrika-score)
 - [Metrika: Reakční doba](#koncept-metrika-reakcni-doba)
 - [Metrika: Closer rate](#koncept-metrika-closer-rate)
 - [Metrika: Decision rate](#koncept-metrika-decision-rate)
@@ -1235,5 +1237,21 @@ Kontrakt:
 
 Smysl:
 - Otevřením dispute se transakce vrací do „běžného režimu řešení“: pokračuje se v domluvě, dokud kupující nedá finále (`success` / `closed`).
+
+---
+
+<a id="koncept-metrika-score"></a>
+### Metrika: Score (A–F)
+
+Related:
+- [Metriky prodávajícího](#koncept-metriky-prodavaciho)
+- [Metriky kupujícího](#koncept-metriky-kupujiciho)
+
+Score je agregace metrik do jedný známky. Je to zkratka pro rozhodnutí, ne magie.
+
+Kontrakt:
+- Score je škála **A–F**.
+- Score se skládá z metrik v daným kontextu (prodávající vs kupující) a má být vysvětlitelný přes konkrétní čísla pod tím.
+- Score není veřejná show. Je to privátní signál v rámci „Detail protistrany“.
 
 ---
