@@ -1150,3 +1150,33 @@ Kontrakt:
 - Trvání: Top Maxxi běží tak dlouho, jak je aktivní jeho **pass na úrovni inzerátu**.
 
 ---
+
+<a id="koncept-kontinualni-nabidka"></a>
+### Kontinuální nabídka
+
+Related:
+- [Inzerát](#koncept-inzerat)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Ekonomika](#ekonomika)
+
+Kontinuální nabídka je legální způsob, jak řízeně prodloužit život **inzerátu**, když to není jednorázovej kus.
+
+Smysl:
+- automatická expirace drží pořádek a zabíjí hřbitovy,
+- Kontinuální nabídka je způsob, jak tenhle řád koupit bez ojebů.
+
+Jak to funguje:
+- Je to **Pass**, který prodlužuje aktivní cyklus inzerátu (prakticky posouvá „efektivní expiraci“).
+- Aktivuje ji **vlastník inzerátu**.
+- Lze ji zapnout kdykoliv:
+  - když je inzerát ještě `live`, prodloužení se **naváže na expiraci** (nekrade čas),
+  - když je už `expired`, začne to **okamžitě** a inzerát se vrátí mezi `live`.
+
+Chování během aktivního passu:
+- Inzerát se chová jako normální `live` (leze do feedů, jde na něj založit transakce, metriky se počítají normálně).
+- Po vypršení passu se vrací do režimu `expired` (read-only, mimo standardní feedy).
+
+Hranice:
+- Nic z toho neobchází systémový brány (hlavně [Citlivost](#koncept-citlivost), ignor, Early Access/Early Delivery).
+
+---
