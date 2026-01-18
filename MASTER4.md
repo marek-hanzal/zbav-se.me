@@ -739,42 +739,17 @@ Ekonomika:
 
 ---
 
-<a id="koncept-reputace"></a>
-### Reputace a metriky
-
-Related:
-- [Flag inzerátu](#koncept-flag-inzeratu)
-- [Flag uživatele](#koncept-flag-uzivatele)
-- [Transakce](#koncept-transakce)
-- [Zprávy](#koncept-zpravy)
-- [Ekonomika](#ekonomika)
-
-Reputace není show pro veřejnost. Je to nástroj, kterej lidem pomáhá rozhodnout se bez paranoie a bez tajný magie.
-
-Dvě zásady:
-- nesnažím se „hodnotit lidi místo lidí“,
-- a nebuduju tajný skóre, co někoho tiše pohřbí.
-
-Signály jsou rozbitý na dílčí koncepty:
-- **Flagy**: [Flag inzerátu](#koncept-flag-inzeratu), [Flag uživatele](#koncept-flag-uzivatele)
-- **Palce**: [Palce](#koncept-palce)
-- **Karma**: [Karma](#koncept-karma)
-- **Detail protistrany**: [Detail protistrany](#koncept-detail-protistrany)
-- **Ban**: [Ban](#koncept-ban)
-
----
-
 <a id="koncept-palce"></a>
 ### Palce (Like/Dislike)
 
 Related:
 - [Inzerát](#koncept-inzerat)
-- [Reputace a metriky](#koncept-reputace)
 
 Palce jsou signál „tahle nabídka je / není atraktivní“. Nejde o morální soud nad prodejcem.
 
 Kontrakt:
 - Palce jsou per-inzerát (Like/Dislike).
+- Je to toggle: kdykoliv to můžu změnit (like/dislike/žádný).
 - Nejsou veřejný ego-lajky. Je to data pro produkt a pro prodávajícího.
 
 ---
@@ -784,7 +759,8 @@ Kontrakt:
 
 Related:
 - [Transakce](#koncept-transakce)
-- [Reputace a metriky](#koncept-reputace)
+- [Metriky prodávajícího](#koncept-metriky-prodavaciho)
+- [Metrika: Karma](#koncept-metrika-karma)
 
 Karma je hodnocení člověka v kontextu konkrétní transakce. Žádný hvězdičky, žádnej román.
 
@@ -796,22 +772,232 @@ Kontrakt:
 
 ---
 
-<a id="koncept-detail-protistrany"></a>
-### Detail protistrany (metriky)
+<a id="koncept-metrika-karma"></a>
+### Metrika: Karma
 
 Related:
-- [Reputace a metriky](#koncept-reputace)
-- [Ekonomika](#ekonomika)
+- [Karma](#koncept-karma)
+- [Metriky prodávajícího](#koncept-metriky-prodavaciho)
+- [Transakce](#koncept-transakce)
 
-Detail protistrany je placený nástroj. Ukazuje tvrdý data o chování druhý strany.
+Proč existuje:
+- Chci dát prodejci signál „jak se lidem obchodovalo“. Ne román. Jedno kliknutí.
 
 Kontrakt:
-- Bez oprávnění neukazuju nic. Ani „Score“.
-- S oprávněním ukazuju **Score (A–F)** + konkrétní metriky (ať to není magie).
-- Konkrétní oprávnění/passy/kupóny jsou v [Ekonomice](#ekonomika).
+- Karma se uděluje v rámci transakce a až po `open`.
+- Je to agregovaná metrika, která se **zobrazuje u prodávajícího** (v rámci jeho metrik).
+- Kdo nehlasuje = neutrál.
+- Karma není [Flag uživatele](#koncept-flag-uzivatele). Karma je zkušenost. Flag je průser.
 
-UX pravidlo:
-- metriky musí být čitelný a lidský. Žádný grafový porno. Každá metrika má krátkej popisek „co to znamená“.
+---
+
+<a id="koncept-metriky-prodavaciho"></a>
+### Metriky prodávajícího
+
+Related:
+- [Ekonomika](#ekonomika)
+- [Transakce](#koncept-transakce)
+- [Ban](#koncept-ban)
+
+Proč existují:
+- Chci dát kupujícímu **tvrdý signál**, jestli protistrana reálně reaguje a dotahuje věci. Ne „věř mi bro“, ale realita chování.
+
+Přístup (Detail protistrany):
+- Bez oprávnění neukazuju nic. Ani „Score“.
+- S oprávněním ukazuju **Score (A–F)** + konkrétní metriky.
+- Oprávnění je pass/kupón v [Ekonomice](#ekonomika).
+
+Kontrakt:
+- Metriky jsou signál pro rozhodnutí. Ne automatickej trest.
+- Každá metrika má vlastní definici (viz kapitoly níž). Žádná tajná magie.
+
+Zobrazené metriky:
+- [Metrika: Reakční doba](#koncept-metrika-reakcni-doba)
+- [Metrika: Odmítnutí bez interakce](#koncept-metrika-odmitnuti-bez-interakce)
+- [Metrika: Resolved rate](#koncept-metrika-resolved-rate)
+- [Metrika: Expirace (transakcí)](#koncept-metrika-expirace)
+- [Metrika: Vytížení (paralelní obchody)](#koncept-metrika-vytizeni)
+- [Metrika: Aktivita](#koncept-metrika-aktivita)
+- [Metrika: Flag rate](#koncept-metrika-flag-rate)
+- [Metrika: Karma](#koncept-metrika-karma)
+
+---
+
+<a id="koncept-metriky-kupujiciho"></a>
+### Metriky kupujícího
+
+Related:
+- [Ekonomika](#ekonomika)
+- [Transakce](#koncept-transakce)
+- [Ban](#koncept-ban)
+
+Proč existují:
+- Chci dát prodávajícímu signál, jestli protistrana obchoduje, nebo jen kliká a nechává věci hnít.
+
+Přístup (Detail protistrany):
+- Bez oprávnění neukazuju nic. Ani „Score“.
+- S oprávněním ukazuju **Score (A–F)** + konkrétní metriky.
+- Oprávnění je pass/kupón v [Ekonomice](#ekonomika).
+
+Kontrakt:
+- Metriky jsou signál pro očekávání. Ne bič.
+- Každá metrika má vlastní definici (viz kapitoly níž).
+
+Zobrazené metriky:
+- [Metrika: Reakční doba](#koncept-metrika-reakcni-doba)
+- [Metrika: Closer rate](#koncept-metrika-closer-rate)
+- [Metrika: Decision rate](#koncept-metrika-decision-rate)
+- [Metrika: Expirace (transakcí)](#koncept-metrika-expirace)
+- [Metrika: Vytížení (paralelní obchody)](#koncept-metrika-vytizeni)
+- [Metrika: Aktivita](#koncept-metrika-aktivita)
+
+---
+
+<a id="koncept-metrika-reakcni-doba"></a>
+### Metrika: Reakční doba
+
+Related:
+- [Metriky prodávajícího](#koncept-metriky-prodavaciho)
+- [Metriky kupujícího](#koncept-metriky-kupujiciho)
+- [Transakce](#koncept-transakce)
+
+Proč existuje:
+- Chci vědět, jestli je protistrana **živá a reaguje**, nebo jestli budu čekat do zblbnutí.
+
+Kontrakt:
+- Metrika je o reakci na událost v transakci (zpráva / změna stavu), ne o „kdo je lepší člověk“.
+- Je to signál pro rozhodnutí, ne automatickej trest.
+
+---
+
+<a id="koncept-metrika-odmitnuti-bez-interakce"></a>
+### Metrika: Odmítnutí bez interakce
+
+Related:
+- [Metriky prodávajícího](#koncept-metriky-prodavaciho)
+- [Transakce](#koncept-transakce)
+
+Proč existuje:
+- Rozlišuju „člověk se podíval a odmítl“ vs. „člověk to jen mechanicky zavírá“. To je kvalita trhu.
+
+Kontrakt:
+- Počítám odmítnutí, který proběhly bez toho, aby došlo k reálný interakci v `open`.
+- Odmítnutí je legitimní volba (viz `rejected` v [Transakcích](#koncept-transakce)); metrika je jenom popis chování, ne moralizování.
+
+---
+
+<a id="koncept-metrika-resolved-rate"></a>
+### Metrika: Resolved rate
+
+Related:
+- [Metriky prodávajícího](#koncept-metriky-prodavaciho)
+- [Transakce](#koncept-transakce)
+
+Proč existuje:
+- Chci vidět, jak často protistrana dotahuje obchody do „vyřešenýho“ stavu, ne jak často nechává věci hnít.
+
+Kontrakt:
+- Metrika se vztahuje jen na transakce, který se reálně rozjely (`open` a dál).
+- Neexistuje tu žádnej „tajnej downgrade“ — definice musí být čitelná.
+
+---
+
+<a id="koncept-metrika-expirace"></a>
+### Metrika: Expirace (transakcí)
+
+Related:
+- [Metriky prodávajícího](#koncept-metriky-prodavaciho)
+- [Metriky kupujícího](#koncept-metriky-kupujiciho)
+- [Transakce](#koncept-transakce)
+
+Proč existuje:
+- Expirace je „nevíme co se stalo“. Pro mě je to signál chaosu a nízký spolehlivosti.
+
+Kontrakt:
+- Metrika popisuje, kolik transakcí končí jako `expired`.
+- Není to automatickej ban-spouštěč. Je to data.
+
+---
+
+<a id="koncept-metrika-vytizeni"></a>
+### Metrika: Vytížení (paralelní obchody)
+
+Related:
+- [Metriky prodávajícího](#koncept-metriky-prodavaciho)
+- [Metriky kupujícího](#koncept-metriky-kupujiciho)
+- [Transakce](#koncept-transakce)
+
+Proč existuje:
+- Když je někdo přetíženej, roste šance na ghosting a chaos. Chci to vědět dopředu.
+
+Kontrakt:
+- Metrika ukazuje, kolik má protistrana paralelně rozjetejch věcí.
+- Nemá to být „trest za úspěch“. Je to praktická informace pro očekávání.
+
+---
+
+<a id="koncept-metrika-aktivita"></a>
+### Metrika: Aktivita
+
+Related:
+- [Metriky prodávajícího](#koncept-metriky-prodavaciho)
+- [Metriky kupujícího](#koncept-metriky-kupujiciho)
+
+Proč existuje:
+- Potřebuju odlišit „mrtvolu“ od člověka, kterej je reálně přítomnej.
+
+Kontrakt:
+- Aktivita je signál přítomnosti, ne kvality charakteru.
+- Definice musí být viditelná a stabilní (žádný měnění pod stolem).
+
+---
+
+<a id="koncept-metrika-flag-rate"></a>
+### Metrika: Flag rate
+
+Related:
+- [Metriky prodávajícího](#koncept-metriky-prodavaciho)
+- [Flag inzerátu](#koncept-flag-inzeratu)
+- [Flag uživatele](#koncept-flag-uzivatele)
+
+Proč existuje:
+- Flag je signál „tady je problém“. Když se to opakuje, chci vědět, že to není náhoda.
+
+Kontrakt:
+- Flag rate je agregace nahlášení, ne automatickej rozsudek.
+- Žádnej auto-shadowban. Zásah je vědomý rozhodnutí (viz [Ban](#koncept-ban)).
+
+---
+
+<a id="koncept-metrika-closer-rate"></a>
+### Metrika: Closer rate
+
+Related:
+- [Metriky kupujícího](#koncept-metriky-kupujiciho)
+- [Transakce](#koncept-transakce)
+
+Proč existuje:
+- Vysoký „instantní zavírání bez interakce“ je signál, že protistrana spíš kliká než obchoduje.
+
+Kontrakt:
+- Metrika popisuje rychlý ukončování bez smysluplný interakce.
+- Neplete se to s `rejected` (legitimní odmítnutí prodejce). Je to chování v čase.
+
+---
+
+<a id="koncept-metrika-decision-rate"></a>
+### Metrika: Decision rate
+
+Related:
+- [Metriky kupujícího](#koncept-metriky-kupujiciho)
+- [Transakce](#koncept-transakce)
+
+Proč existuje:
+- Chci vědět, jestli protistrana umí rozhodnout a dotahovat, nebo jestli nechává věci vyhnít.
+
+Kontrakt:
+- Metrika je o tom, jak často dojde k rozhodnutí (uzavření / vyřešení) místo „nechat to umřít“.
+- Je to nástroj pro očekávání, ne bič.
 
 ---
 
@@ -819,8 +1005,6 @@ UX pravidlo:
 ### Ban
 
 Related:
-- [Reputace a metriky](#koncept-reputace)
-
 Ban je ruční nástroj admina (já). Ne automat.
 
 Kontrakt:
