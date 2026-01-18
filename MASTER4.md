@@ -1050,3 +1050,37 @@ Kontrakt:
 - Payback je **pass (exclusive)** (typicky Seller/Pro) a vzniká jen pokud má prodávající v době vyhodnocení aktivní Payback pass.
 
 ---
+
+<a id="koncept-early-access"></a>
+### Early Access
+
+Related:
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Ekonomika](#ekonomika)
+
+Early Access je výhoda kupujícího: v listingu vidíš nově publikovaný inzeráty dřív.
+
+Kontrakt:
+- V listingu ignoruju release window, takže inzerát vidíš **hned** (běžně je to až za **+8 hodin**).
+- Maximum posunu je vždycky **8 hodin** (žádný „super-early“).
+- Neobchází to systémový brány (hlavně [Citlivost](#koncept-citlivost)).
+- Release window nikdy neblokuje detail přes přímý odkaz (krom citlivosti).
+
+---
+
+<a id="koncept-early-delivery"></a>
+### Early Delivery
+
+Related:
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Ekonomika](#ekonomika)
+
+Early Delivery je výhoda prodávajícího pro konkrétní inzerát: zruší release window pro všechny.
+
+Kontrakt:
+- Pro tenhle inzerát ruším release window úplně, takže ho v listingu vidí **hned i lidi bez Early Access**.
+- Maximum posunu je vždycky **8 hodin** (žádný stackování do nekonečna).
+- Neobchází to systémový brány (hlavně [Citlivost](#koncept-citlivost)).
+- Release window nikdy neblokuje detail přes přímý odkaz (krom citlivosti).
+
+---
