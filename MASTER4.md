@@ -708,3 +708,123 @@ Reset:
 - Hledat má vždy rychlou akci „Reset“ (vrátí dotaz/filtry do neutrálu). Bez modalů, bez výčitek.
 
 ---
+
+<a id="koncept-multi-category"></a>
+### Multi-Category
+
+Related:
+- [Kategorie](#koncept-kategorie)
+- [Inzerát](#koncept-inzerat)
+- [Feed](#koncept-feed)
+- [Hledat](#koncept-hledat)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Ekonomika](#ekonomika)
+
+Multi-Category je **distribuce**, ne duplikace. Nevznikají žádné kopie inzerátu. Jen rozšířím množinu kategorií, přes který se může zobrazit.
+
+Kontrakt:
+- Inzerát má jednu **primární kategorii** (autorita pro UI, jazyk a Category Spec).
+- Multi-Category přidá k primární až **2 sekundární** kategorie (čistě distribuční).
+- Sekundární kategorie nejsou cesta, jak si vybrat „výhodnější“ atributy. Primární je pravda.
+
+Viditelnost a deduplikace:
+- V rámci jednoho renderovanýho seznamu se inzerát zobrazí **právě jednou**, i když matchuje víc kategorií.
+- Po přepnutí do jinýho kontextu (jiný feed/hledání) ho můžeš vidět znovu. To je v pořádku.
+
+Match pravidlo:
+- Feed/Hledat, který filtruje kategorii, bere inzerát jako match, když filtr = primární kategorie **nebo** jedna ze sekundárních.
+
+Ekonomika:
+- Multi-Category je placený oprávnění. Detaily patří do [Ekonomiky](#ekonomika).
+
+---
+
+<a id="koncept-reputace"></a>
+### Reputace a metriky
+
+Related:
+- [Flag inzerátu](#koncept-flag-inzeratu)
+- [Flag uživatele](#koncept-flag-uzivatele)
+- [Transakce](#koncept-transakce)
+- [Zprávy](#koncept-zpravy)
+- [Ekonomika](#ekonomika)
+
+Reputace není show pro veřejnost. Je to nástroj, kterej lidem pomáhá rozhodnout se bez paranoie a bez tajný magie.
+
+Dvě zásady:
+- nesnažím se „hodnotit lidi místo lidí“,
+- a nebuduju tajný skóre, co někoho tiše pohřbí.
+
+Signály jsou rozbitý na dílčí koncepty:
+- **Flagy**: [Flag inzerátu](#koncept-flag-inzeratu), [Flag uživatele](#koncept-flag-uzivatele)
+- **Palce**: [Palce](#koncept-palce)
+- **Karma**: [Karma](#koncept-karma)
+- **Detail protistrany**: [Detail protistrany](#koncept-detail-protistrany)
+- **Ban**: [Ban](#koncept-ban)
+
+---
+
+<a id="koncept-palce"></a>
+### Palce (Like/Dislike)
+
+Related:
+- [Inzerát](#koncept-inzerat)
+- [Reputace a metriky](#koncept-reputace)
+
+Palce jsou signál „tahle nabídka je / není atraktivní“. Nejde o morální soud nad prodejcem.
+
+Kontrakt:
+- Palce jsou per-inzerát (Like/Dislike).
+- Nejsou veřejný ego-lajky. Je to data pro produkt a pro prodávajícího.
+
+---
+
+<a id="koncept-karma"></a>
+### Karma (Like/Dislike)
+
+Related:
+- [Transakce](#koncept-transakce)
+- [Reputace a metriky](#koncept-reputace)
+
+Karma je hodnocení člověka v kontextu konkrétní transakce. Žádný hvězdičky, žádnej román.
+
+Kontrakt:
+- Karma existuje jen v rámci transakce a až po `open`.
+- Dvě volby: Like (Dobrý) / Dislike (Špatný).
+- Kdo nehlasuje = neutrál (žádná penalizace za „nechci to řešit“).
+- Karma != [Flag uživatele](#koncept-flag-uzivatele). Karma je zkušenost. Flag je průser.
+
+---
+
+<a id="koncept-detail-protistrany"></a>
+### Detail protistrany (metriky)
+
+Related:
+- [Reputace a metriky](#koncept-reputace)
+- [Ekonomika](#ekonomika)
+
+Detail protistrany je placený nástroj. Ukazuje tvrdý data o chování druhý strany.
+
+Kontrakt:
+- Bez oprávnění neukazuju nic. Ani „Score“.
+- S oprávněním ukazuju **Score (A–F)** + konkrétní metriky (ať to není magie).
+- Konkrétní oprávnění/passy/kupóny jsou v [Ekonomice](#ekonomika).
+
+UX pravidlo:
+- metriky musí být čitelný a lidský. Žádný grafový porno. Každá metrika má krátkej popisek „co to znamená“.
+
+---
+
+<a id="koncept-ban"></a>
+### Ban
+
+Related:
+- [Reputace a metriky](#koncept-reputace)
+
+Ban je ruční nástroj admina (já). Ne automat.
+
+Kontrakt:
+- Důvod musí být konkrétní (podvod/spam/ojeby a podobně).
+- Žádný tichý „shadow“ tresty. Když stopka, tak stopka.
+
+---
