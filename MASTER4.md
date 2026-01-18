@@ -366,14 +366,18 @@ Vztahy:
 Kontrakt:
 - Inzerát je veřejnej závazek. Když něco slíbím v inzerátu, beru to jako dluh vůči druhý straně.
 - Inzerát musí být čitelnej bez „doptávání ve zprávách“. Zprávy jsou na domluvu, ne na dohledávání základů. (Viz [Zprávy](#koncept-zpravy).)
-- Stav inzerátu je fyzika: aktivní / ukončenej / expirovanej. Nechci šedý zóny typu „ještě se uvidí“.
+- Stav inzerátu je tvrdý enum. To je autorita. Žádný vibe: `live` / `expired` / `closed` / `sold`.
 
-Tabulka stavů (a co z nich plyne):
+| Stav | Co to znamená | Feed (default) | Přímý odkaz / detail | Interakce |
+| --- | --- | --- | --- | --- |
+| `live` | aktivní, k dispozici pro nový obchod | ano | ano | vše relevantní (zájem, ignor, oblíbené, flag…) |
+| `expired` | vypršela expirace (`expiresAt`), automatický konec | ne (jen přes explicitní filtr / historický režim) | ano (read-only) | zakázáno, výjimka **flag** |
+| `closed` | prodejce to ručně zabil | ne (stejně jako `expired`) | ano (read-only) | zakázáno, výjimka **flag** |
+| `sold` | prodáno, není k dispozici pro nový obchod | ne (není k dispozici) | ano (read-only) | zájem ne; bezpečný věci typu flag / undo ignor ok |
 
-| Stav | Co to znamená | Viditelnost | Co smím dělat |
-| --- | --- | --- | --- |
-| **aktivní** | Je venku v trhu a dá se najít. | Ve [Feedu](#koncept-feed). | Může vzniknout [Transakce](#koncept-transakce). Editace přes [Draft](#koncept-draft). |
-| **ukončenej** | Nabídku jsem zavřel. Hotovo. | Mimo feed. | Nevznikají nové transakce. Historie zůstává jako stopa. |
-| **expirovanej** | Automaticky skončil (čas). | Mimo feed. | Stejný chování jako ukončenej, jen je jasný „proč“. |
+Poznámky:
+- [Draft](#koncept-draft) není stav inzerátu. Draft je separátní entita.
+- `deleted` neexistuje. Inzeráty nemažu. Jen mění stav. Paměť trhu je záměr.
+- `sold` se **nepočítá** jako aktivní (viz [Limity](#koncept-limity)).
 
 ---
