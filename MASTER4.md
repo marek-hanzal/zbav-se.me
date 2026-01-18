@@ -1084,3 +1084,25 @@ Kontrakt:
 - Release window nikdy neblokuje detail přes přímý odkaz (krom citlivosti).
 
 ---
+
+<a id="koncept-mark"></a>
+### Mark
+
+Related:
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Anti-topper](#koncept-anti-topper)
+- [Payback](#koncept-payback)
+- [Ekonomika](#ekonomika)
+
+Mark je čistě listing mechanika. Není to výhoda v pravidlech. Je to výhoda v signálu.
+
+Kontrakt:
+- Co Mark dělá: jen vizuální signál (badge „Zvýrazněno“). Nezaručuje top pozici.
+- Kde se projeví: pouze v listingu.
+- Co Mark nikdy neobchází: filtry, radius, release window, ignor, [Citlivost](#koncept-citlivost).
+- Trvání: Mark platí do expirace inzerátu (boost končí expirací).
+- Kontinuální nabídka:
+  - když prodloužíš život dřív než expiroval, Mark běží dál (expirace se posune),
+  - když inzerát už expiroval a ty ho oživíš, starý Mark se nevrací.
+
+---
