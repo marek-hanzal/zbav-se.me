@@ -1213,3 +1213,27 @@ Anti-topper v číslech:
 - poměr `anti-topper / (visible + anti-topper)`
 
 ---
+
+<a id="koncept-dispute"></a>
+### Dispute
+
+Related:
+- [Transakce](#koncept-transakce)
+- [Zprávy](#koncept-zpravy)
+- [Metriky prodávajícího](#koncept-metriky-prodavaciho)
+- [Metriky kupujícího](#koncept-metriky-kupujiciho)
+
+Dispute je hint „něco nesedí a ještě nekončíme“. Není to eskalace ani arbitráž systému.
+
+Kontrakt:
+- Dispute může vzniknout až po `resolved`.
+- Otevřít ho může kupující i prodávající.
+- Dispute:
+  - promítá se do metrik obou stran,
+  - nemá vliv na karmu,
+  - je to normální aktivita v transakci (posouvá časovače stejně jako ostatní akce).
+
+Smysl:
+- Otevřením dispute se transakce vrací do „běžného režimu řešení“: pokračuje se v domluvě, dokud kupující nedá finále (`success` / `closed`).
+
+---
