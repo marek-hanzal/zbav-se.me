@@ -1012,3 +1012,41 @@ Kontrakt:
 - Žádný tichý „shadow“ tresty. Když stopka, tak stopka.
 
 ---
+
+<a id="koncept-anti-topper"></a>
+### Anti-topper
+
+Related:
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Ekonomika](#ekonomika)
+- [Payback](#koncept-payback)
+
+Anti-topper je placenej klid kupujícího. Nechci, aby se listing změnil v katalog placenýho šumu.
+
+Kontrakt:
+- Anti-topper mění jen chování listingu:
+  - **Top Maxxi** zůstává nahoře (imunní),
+  - **Top + běžné** se smíchají a řadí se čistě podle preference uživatele (Top ztratí výhodu pozice, zůstane badge).
+- Anti-topper **nikdy neblokuje detail**. Je to mechanika listingu, ne zákaz existence.
+
+Měření:
+- Když by se v listingu ukázal inzerát se zvýrazněním (Mark/Top) uživateli s Anti-topperem, místo `visible` vznikne event `anti-topper`.
+
+---
+
+<a id="koncept-payback"></a>
+### Payback
+
+Related:
+- [Anti-topper](#koncept-anti-topper)
+- [Ekonomika](#ekonomika)
+
+Payback je kompenzace pro prodávajícího, když si koupil zvýraznění a část publika mu ho odfoukla přes Anti-topper.
+
+Kontrakt:
+- Kompenzuje jen boosty, který Anti-topper umí potlačit: **Mark** a **Top**.
+- **Top Maxxi** je imunní → payback pro něj nikdy nevzniká.
+- Vyhodnocuju až po expiraci inzerátu (po expiraci už se nic nevrací do hry, jen vyrovnám účty).
+- Payback je **pass (exclusive)** (typicky Seller/Pro) a vzniká jen pokud má prodávající v době vyhodnocení aktivní Payback pass.
+
+---
