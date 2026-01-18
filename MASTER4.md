@@ -425,3 +425,32 @@ Pravidla:
 - feed nikdy neobchází globální brány (viz [Citlivost](#koncept-citlivost), [Ignor](#koncept-ignor), stav [Inzerátu](#koncept-inzerat), release window…).
 
 ---
+
+<a id="koncept-citlivost"></a>
+### Citlivost
+
+Obsah není jen „co prodávám“. Obsah je i to, *jestli to můžeš vůbec vidět*. Citlivost je hard gate: chrání veřejnej prostor před obsahem, kterej určitá skupina lidí buď **nechce**, nebo ho **ani nesmí** vidět.
+
+Úrovně (stupňovaně): `common < adult < sensitive < restricted`.
+
+| Úroveň | Enum | Poznámka |
+| --- | --- | --- |
+| Běžný | `common` | default |
+| Pro dospělé | `adult` | 18+ kontext |
+| Citlivé | `sensitive` | věci „na hraně“, co nechci cpát všem |
+| Omezené | `restricted` | zákonný omezení / oprávnění (systém ho **neověřuje**) |
+
+Gating a viditelnost (dvoufázově, schválně):
+- **Profil** = nastavíš maximum (co *smíš / jsi ochotnej* vidět).
+- **Feed/Hledat** = v rámci maxima si **vědomě** zapneš, co *chceš* vidět. (Viz [Feed](#koncept-feed).)
+
+Hard gate pravidla:
+- V listingu (feed/search/seznam) se cokoliv nad maximum **vůbec nedostane do výsledků**.
+- Na detail přes přímý odkaz vracím při nesouladu maxima **404** (žádný obcházení přes link, žádný „aspoň víš že to existuje“).
+- Citlivost je **jediná** věc, která smí detail tvrdě schovat (404). Ostatní brány můžou ovlivnit seznam, ale nemaj dělat „ten inzerát pro tebe neexistuje“. (Viz [Inzerát](#koncept-inzerat).)
+
+Odpovědnost:
+- Citlivost je primárně sebeoznačení prodejce.
+- Opakovaný a zjevný zneužití (maskování citlivýho/omezenýho jako běžný) je porušení pravidel a důvod k zásahu.
+
+---
