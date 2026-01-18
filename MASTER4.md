@@ -397,7 +397,7 @@ Co Draft není:
 - není to skladiště nedodělků bez konce.
 
 UX kontrakt:
-- když narazíš na limit aktivních inzerátů, draft tě místo editoru pošle do Statusu: vysvětlení + jedno CTA „Odemknout další inzerát“ (za Kupón, nebo za Tokeny v hodnotě toho kupónu). (Viz [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu) a [Ekonomika](#ekonomika).)
+- když narazíš na **Draft Gate** (limit aktivních inzerátů), místo editoru dostaneš Status a dál už je to jen odemknutí přes [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu).
 - návrat/back je vždycky bezpečnej (autosave),
 - editor je otevřenej a ne-lineární: sekce jsou klikací karty (klik & edit),
 - bottom nav je mentální kotva, žádnej horní křížek a žádnej produktovej sticky teatr,
