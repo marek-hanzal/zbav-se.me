@@ -454,3 +454,32 @@ Odpovědnost:
 - Opakovaný a zjevný zneužití (maskování citlivýho/omezenýho jako běžný) je porušení pravidel a důvod k zásahu.
 
 ---
+
+<a id="koncept-ignor"></a>
+### Ignor
+
+Ignor je osobní úklid. Není to trest, není to report, není to drama.
+
+Co ignor znamená:
+- ignorovaný [Inzerát](#koncept-inzerat) je pro uživatele **skrytej ze všech seznamů** ([Feedy](#koncept-feed), hledání),
+- ignor **nic nemění globálně** (nepenalizuje prodejce, nikomu se o tom nic nehlásí),
+- ignor se propíše do metrik inzerátu jako signál „tohle lidi nechtějí vidět“.
+
+Přímý odkaz:
+- ignor nesmí blokovat otevření detailu,
+- v detailu je vidět stav „Ignoruješ“ + akce „Zrušit ignor“.
+
+Parametr listingu:
+- feed i hledání podporují `withIgnored`:
+  - `false` (default) = ignorované se nezobrazují,
+  - `true` = ignorované se zobrazují (např. kontrola).
+
+Scope:
+- ignor je globální per-user (napříč zařízeními),
+- je to per-user doménovej stav (ne anonymní analytika).
+
+Ignor není [Flag](#koncept-flag):
+- ignor = „nezajímá mě to“,
+- flag = „porušuje pravidla / ojeb / nebezpečný“.
+
+---
