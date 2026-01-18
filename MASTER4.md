@@ -133,7 +133,7 @@ Co z toho plyne:
 - **Klid místo chaosu.** Žádný bazarový peklo, kde se člověk prokliká k migréně.
 - **Minimum psaní.** Domluva má být primárně klikací a strukturovaná; text je doplněk, ne střed vesmíru (viz [Transakce](#koncept-transakce), [Zprávy](#koncept-zpravy)).
 - **Lokálnost jako default.** Poloha je core (viz [Lokace](#koncept-lokace)).
-- **Transparentnost jako design.** Žádný skrytý penalizace, žádný „nevíš proč se ti to nezobrazuje“ (viz [Viditelnost](#koncept-viditelnost)).
+- **Transparentnost jako design.** Žádný skrytý penalizace, žádný „nevíš proč se ti to nezobrazuje“ (viz [Seznam inzerátů](#koncept-seznam-inzeratu)).
 - **Férová monetizace.** Platí se za hodnotu (nástroje, čas, pohodlí), ne za manipulaci (viz [Ekonomika](#ekonomika)).
 - **Měření je pro lidi, ne pro inzerenty.** Když něco měřím, má to viditelný smysl v produktu; nic neprodávám třetím stranám.
 
@@ -217,7 +217,7 @@ Transakce má začátek a konec. Konec je definitivní. Další kontakt = nová 
 Odpovědnost začíná až přijetím. `pending` není kanál pro spam. (Viz [Transakce](#koncept-transakce).)
 
 6) **Transparentnost jako systémová vlastnost**  
-Pravidla jsou pojmenovaný. Když něco omezím, má to čitelnej důvod. (Viz [Viditelnost](#koncept-viditelnost), [Kodex](#kodex).)
+Pravidla jsou pojmenovaný. Když něco omezím, má to čitelnej důvod. (Viz [Seznam inzerátů](#koncept-seznam-inzeratu), [Kodex](#kodex).)
 
 7) **Data dělám pro uživatele, ne pro inzerenty**  
 Metriky jsou signál trhu a nástroje pro férový mechaniky. Ne reklamní profilování.
@@ -260,7 +260,7 @@ Tady je katalog reality. Každá otázka „jak funguje X?“ má odpověď v je
 
 Pravidlo proti duplicitám (znovu a naposled):
 - Když něco patří sem, nepíšu to nikam jinam.
-- Křížový věci mají vlastní autoritu (typicky [Citlivost](#koncept-citlivost), [Viditelnost](#koncept-viditelnost), [Limit počtu feedů](#koncept-limit-poctu-feedu), [Limit fotek](#koncept-limit-poctu-fotek), [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu), [Ekonomika](#ekonomika)).
+- Křížový věci mají vlastní autoritu (typicky [Citlivost](#koncept-citlivost), [Seznam inzerátů](#koncept-seznam-inzeratu), [Limit počtu feedů](#koncept-limit-poctu-feedu), [Limit fotek](#koncept-limit-poctu-fotek), [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu), [Ekonomika](#ekonomika)).
 
 ---
 
@@ -423,7 +423,7 @@ Pravidla:
 - limity feedů a chování „nad limitem“ řeším v [Limit počtu feedů](#koncept-limit-poctu-feedu),
 - defaultně zakládám uživateli jeden obecný feed bez filtrů (bezpečná návratová volba),
 - „Hledání“ je systémově special-case instance Feedu, ne jiný datový svět,
-- feed nikdy neobchází globální brány (viz [Citlivost](#koncept-citlivost), [Ignor](#koncept-ignor), stav [Inzerátu](#koncept-inzerat), release window…).
+- feed nikdy neobchází globální brány (viz [Citlivost](#koncept-citlivost), [Ignor](#koncept-ignor), stav [Inzerátu](#koncept-inzerat), release window… — pravidla listingu drží [Seznam inzerátů](#koncept-seznam-inzeratu)).
 
 ---
 
@@ -642,5 +642,35 @@ Email jako zrcadlo:
 
 Kritické výjimky:
 - Některý věci se neptají a na email jdou vždy (reset hesla, bezpečnostní alerty).
+
+---
+
+<a id="koncept-seznam-inzeratu"></a>
+### Seznam inzerátů
+
+„Seznam“ není stránka. Seznam je vždycky **výsledek dotazu** ([Feed](#koncept-feed) / hledání). Jeden engine, jeden kontrakt.
+
+Listing vs detail:
+- **Listing (seznam)**: inzerát buď projde filtrem, nebo vypadne.
+- **Detail (přímý odkaz)**: detail se má dát otevřít i mimo seznam (sdílení, historie, uložený link).
+
+Tvrdý pravidlo:
+- Jen [Citlivost](#koncept-citlivost) smí blokovat detail a vrátit **404**. Žádný „aspoň víš, že to existuje“.
+
+Ostatní brány jsou pravidla listingu (ne zákaz otevření):
+- ignor,
+- životní cyklus [Inzerátu](#koncept-inzerat) (`expired` / `closed` / `sold`),
+- release window,
+- anti-topper a podobný mechaniky pořadí.
+
+Co se v listingu defaultně neukazuje:
+- `expired` a `closed` (jen přes vědomej filtr / historickej režim),
+- `sold` (není k dispozici).
+
+Kontrakt detailu mimo `live`:
+- Detail se otevře (krom citlivosti), ale je read-only a místo „Mám zájem“ ukážu jasnej status („Už není dostupný“). UI má být fér.
+
+Hard limit listingu:
+- Max **200** inzerátů na dotaz. Když chceš víc, zúž filtr. Hotovo.
 
 ---
