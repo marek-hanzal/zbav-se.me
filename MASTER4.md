@@ -674,3 +674,30 @@ Hard limit listingu:
 - Max **200** inzerátů na dotaz. Když chceš víc, zúž filtr. Hotovo.
 
 ---
+
+<a id="koncept-hledat"></a>
+### Hledat
+
+Hledat je samostatná primární sekce. UXově to není „feed“, ale **vyhledávací kontext** postavenej nad stejným enginem jako [Feed](#koncept-feed) (stejný filtry, stejnej list UI, žádná speciální magie).
+
+`search` jako systémový kontext:
+- V systému existuje feed typu `search`.
+- `search` je singleton: max 1 instance na účet.
+- `search` se nezobrazuje v „Moje seznamy“ a uživatel ho nespravuje jako normální feed.
+- `search` je mimo limity: nezabírá slot (limity se týkají jen `user` feedů — viz [Limit počtu feedů](#koncept-limit-poctu-feedu)).
+
+Kontrakt:
+- `search` si pamatuje poslední stav Hledat (dotaz, filtry, radius, lokaci, řazení…), aby návrat nebyl opruz.
+- Výsledky jsou normální seznam: pravidla listingu drží [Seznam inzerátů](#koncept-seznam-inzeratu).
+- Brány se neobchází: [Citlivost](#koncept-citlivost) a [Ignor](#koncept-ignor) platí stejně.
+
+„Uložit jako feed“:
+- vytvoří nový feed typu `user`,
+- objeví se v „Moje seznamy“,
+- **počítá se do limitu**.
+- Když jsi na limitu, ukládání bloknu jasným důvodem, ale Hledat funguje dál.
+
+Reset:
+- Hledat má vždy rychlou akci „Reset“ (vrátí dotaz/filtry do neutrálu). Bez modalů, bez výčitek.
+
+---
