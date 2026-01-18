@@ -625,3 +625,22 @@ Kontrakt:
 - Strukturovaný data ukládám odděleně, aby šla cíleně mazat hned po ukončení transakce.
 
 ---
+
+<a id="koncept-notifikace"></a>
+### Notifikace (Inbox)
+
+Notifikace nejsou nástroj na otravování. Jsou to **zrcadlo reality**, aby člověk věděl, co se stalo, a nemusel paranoidně refreshovat appku.
+
+Filosofie ticha:
+- Defaultní stav je ticho. Žádný umělý FOMO.
+
+Inbox First:
+- Inbox je jediný zdroj pravdy pro „co se stalo“.
+
+Email jako zrcadlo:
+- Email není primární kanál. Je to volitelný forward/digest toho, co už je v Inboxu.
+
+Kritické výjimky:
+- Některý věci se neptají a na email jdou vždy (reset hesla, bezpečnostní alerty).
+
+---
