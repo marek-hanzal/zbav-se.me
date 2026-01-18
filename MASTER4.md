@@ -381,3 +381,26 @@ Poznámky:
 - `sold` se **nepočítá** jako aktivní (viz [Limity](#koncept-limity)).
 
 ---
+
+<a id="koncept-draft"></a>
+### Draft
+
+Draft je vstupní bod tvorby. Inzerát nenechám vzniknout „kliknutím“. Vzniká až publikací Draftu. (Viz [Inzerát](#koncept-inzerat).)
+
+Co je Draft:
+- kopie atributů budoucího inzerátu „ve stavu zrodu“,
+- postupná tvorba bez stresu (autosave),
+- seznam rozpracovaných věcí (a časem z toho přirozeně vzniknou šablony / kopírování).
+
+Co Draft není:
+- není to stav inzerátu,
+- není to skladiště nedodělků bez konce.
+
+UX kontrakt:
+- když narazíš na limit aktivních inzerátů, draft tě místo editoru pošle do Statusu: vysvětlení + jedno CTA „Odemknout další inzerát“ (za Kupón, nebo za Tokeny v hodnotě toho kupónu). (Viz [Limity](#koncept-limity) a [Ekonomika](#ekonomika).)
+- návrat/back je vždycky bezpečnej (autosave),
+- editor je otevřenej a ne-lineární: sekce jsou klikací karty (klik & edit),
+- bottom nav je mentální kotva, žádnej horní křížek a žádnej produktovej sticky teatr,
+- smazání draftu je dvoufázově inline, ne modalovej cirkus.
+
+---
