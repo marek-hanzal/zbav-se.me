@@ -1199,12 +1199,15 @@ Kontrakt:
 - Dokud mám aktivní pass, vidím rozšířená data.
 - Bez passu nevidím nic (žádný „free“ pseudo-score).
 
-Co ukazuju (dump čísel za život inzerátu):
-- `impression`
-- `view`
-- `thumbs`
-- `ignored`
-- `transactions`
+Co ukazuju:
+
+| Zdrojová metrika | Význam |
+|---|---|
+| `impression` | uživatel se u karty pozastavil („zaujalo“) |
+| `view` | uživatel otevřel detail („reálnej zájem“) |
+| `thumbs` | palce (like/dislike) jako signál atraktivity nabídky |
+| `ignored` | kolikrát lidi dali ignor (osobní úklid, „tohle nechci vídat“) |
+| `transactions` | kolik zájmů / otevřených obchodů inzerát vyvolal |
 
 Anti-topper v číslech:
 - poměr `anti-topper / (visible + anti-topper)`
