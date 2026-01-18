@@ -260,7 +260,7 @@ Tady je katalog reality. Každá otázka „jak funguje X?“ má odpověď v je
 
 Pravidlo proti duplicitám (znovu a naposled):
 - Když něco patří sem, nepíšu to nikam jinam.
-- Křížový věci mají vlastní autoritu (typicky [Citlivost](#koncept-citlivost), [Viditelnost](#koncept-viditelnost), [Limity](#koncept-limity), [Ekonomika](#ekonomika)).
+- Křížový věci mají vlastní autoritu (typicky [Citlivost](#koncept-citlivost), [Viditelnost](#koncept-viditelnost), [Limit počtu feedů](#koncept-limit-poctu-feedu), [Limit fotek](#koncept-limit-poctu-fotek), [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu), [Ekonomika](#ekonomika)).
 
 ---
 
@@ -276,7 +276,7 @@ Co uživatel reálně ovládá:
 - obchodní kontext přes [Transakce](#koncept-transakce) a [Zprávy](#koncept-zpravy),
 - „co se stalo“ přes [Inbox](#koncept-notifikace),
 - hranice obsahu přes [Citlivost](#koncept-citlivost) a osobní úklid přes [Ignor](#koncept-ignor),
-- aktivace a limity přes [Ekonomiku](#ekonomika) a [Limity](#koncept-limity).
+- aktivace a limity přes [Ekonomiku](#ekonomika) a [Limit počtu feedů](#koncept-limit-poctu-feedu), [Limit fotek](#koncept-limit-poctu-fotek), [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu).
 
 Kontrakt (co si hlídám):
 - Účet je nástroj, ne sociální profil.
@@ -378,7 +378,7 @@ Kontrakt:
 Poznámky:
 - [Draft](#koncept-draft) není stav inzerátu. Draft je separátní entita.
 - `deleted` neexistuje. Inzeráty nemažu. Jen mění stav. Paměť trhu je záměr.
-- `sold` se **nepočítá** jako aktivní (viz [Limity](#koncept-limity)).
+- `sold` se **nepočítá** jako aktivní (viz [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu)).
 
 ---
 
@@ -397,7 +397,7 @@ Co Draft není:
 - není to skladiště nedodělků bez konce.
 
 UX kontrakt:
-- když narazíš na limit aktivních inzerátů, draft tě místo editoru pošle do Statusu: vysvětlení + jedno CTA „Odemknout další inzerát“ (za Kupón, nebo za Tokeny v hodnotě toho kupónu). (Viz [Limity](#koncept-limity) a [Ekonomika](#ekonomika).)
+- když narazíš na limit aktivních inzerátů, draft tě místo editoru pošle do Statusu: vysvětlení + jedno CTA „Odemknout další inzerát“ (za Kupón, nebo za Tokeny v hodnotě toho kupónu). (Viz [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu) a [Ekonomika](#ekonomika).)
 - návrat/back je vždycky bezpečnej (autosave),
 - editor je otevřenej a ne-lineární: sekce jsou klikací karty (klik & edit),
 - bottom nav je mentální kotva, žádnej horní křížek a žádnej produktovej sticky teatr,
@@ -416,7 +416,7 @@ Co feed nese:
 - řazení (v rámci pravidel systému).
 
 Typy feedu:
-- `user` = vědomě uložený feed („můj seznam“) — **počítá se do limitu** počtu feedů,
+- `user` = vědomě uložený feed („můj seznam“) — **počítá se do limitu** (viz [Limit počtu feedů](#koncept-limit-poctu-feedu)),
 - `search` = systémový kontext hledání (UI zkratka), není to „můj seznam“ — **je mimo limity** (nezabírá slot).
 
 Pravidla:
@@ -514,5 +514,44 @@ Kontrakt:
 - Je to tvrdá akce dostupná **jen v rámci transakce** a až po `open`.
 - Není to toggle.
 - Stejně jako u inzerátu: žádný auto-efekt, jen signál a metrika.
+
+---
+
+<a id="koncept-limit-poctu-feedu"></a>
+### Limit počtu feedů
+
+Limit není trest. Je to mantinel, aby se z toho nestal inventář nekonečna.
+
+Kontrakt:
+- Do limitu se počítají jen feedy typu `user` (uložený „moje seznamy“).
+- `search` je mimo limity (nezabírá slot).
+- Když jsi nad limitem, feedy nemažu. Jen ty nadlimitní v UI skryju/disable (existují, ale uživatel ví, že je má navíc).
+
+---
+
+<a id="koncept-limit-poctu-fotek"></a>
+### Limit počtu fotek nad inzerátem
+
+Fotky jsou primární obsah inzerátu. Limit fotek je brzda proti šumu a zároveň jasný místo, kam se dá férově navázat „komfort navíc“.
+
+Kontrakt:
+- Defaultně držím krátkou galerii (baseline je **3 fotky**).
+- Navýšení je oprávnění přes [Ekonomiku](#ekonomika): typicky `Photo Count` (kupón → pass) = **+2 fotky na 1 měsíc**.
+- Po skončení passu se už nahraný fotky nemažou. Zůstávají beze změny — jen znovu platí aktuální limit pro další přidávání.
+- V balíčcích se to může projevit jako vyšší strop (např. **3 → 5**, u Pro i víc).
+
+---
+
+<a id="koncept-limit-aktivnich-inzeratu"></a>
+### Limit aktivních inzerátů
+
+Limit aktivních inzerátů drží hygienu trhu a chrání pozornost. Nechci, aby se z feedu stal hřbitov a z prodejce správce inventáře.
+
+Kontrakt:
+- Počítám jen inzeráty ve stavu `live`.
+- `sold` se nepočítá jako aktivní.
+- Když jsi nad limitem (typicky po vypršení passu), existující `live` nechám běžet.
+- Jen nepustím vytvořit/publikovat další `live` — aktivuje se **Draft Gate** (viz [Draft](#koncept-draft)).
+- Odemknutí limitu je přes [Ekonomiku](#ekonomika): kupón/pas (typicky tier `Aktivní inzeráty 10/20`), nebo tokeny v hodnotě toho kupónu.
 
 ---
