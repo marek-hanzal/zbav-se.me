@@ -404,3 +404,24 @@ UX kontrakt:
 - smazání draftu je dvoufázově inline, ne modalovej cirkus.
 
 ---
+
+<a id="koncept-feed"></a>
+### Feed
+
+Feed je uložené nastavení filtru nad inzeráty. Není to „seznam“, je to **předpis**: „co chci vidět a odkud“.
+
+Co feed nese:
+- filtry (kategorie, parametry, cena… — viz [Kategorie](#koncept-kategorie)),
+- radius + vlastní lokaci (např. „domov“ vs „chalupa“ — viz [Lokace](#koncept-lokace)),
+- řazení (v rámci pravidel systému).
+
+Typy feedu:
+- `user` = vědomě uložený feed („můj seznam“) — **počítá se do limitu** počtu feedů,
+- `search` = systémový kontext hledání (UI zkratka), není to „můj seznam“ — **je mimo limity** (nezabírá slot).
+
+Pravidla:
+- defaultně zakládám uživateli jeden obecný feed bez filtrů (bezpečná návratová volba),
+- „Hledání“ je systémově special-case instance Feedu, ne jiný datový svět,
+- feed nikdy neobchází globální brány (viz [Citlivost](#koncept-citlivost), [Ignor](#koncept-ignor), stav [Inzerátu](#koncept-inzerat), release window…).
+
+---
