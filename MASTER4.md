@@ -483,3 +483,28 @@ Ignor není [Flag](#koncept-flag):
 - flag = „porušuje pravidla / ojeb / nebezpečný“.
 
 ---
+
+<a id="koncept-flag"></a>
+### Flag (nahlášení)
+
+Flag je „tady je problém“, ne „nelíbí se mi to“. Je to bezpečnostní signál a reputační stopa. Nechci z toho dělat tribunál ani automatickýho soudce.
+
+Flag inzerátu:
+- jde **jen z detailu** [Inzerátu](#koncept-inzerat) (ne z feedu, ne ze zpráv),
+- je to **toggle**: nahlásit / vzít zpět,
+- žádný důvody ani formuláře — jen čudlík,
+- nemá automatický efekt typu „smazáno“ / „shadowban“ / „auto-ban“.
+
+Co s tím dělám:
+- promítá se do metrik (flag rate) a je to signál „něco smrdí“,
+- je to signál pro ruční rozhodnutí (ne pro autopilota).
+
+Flag uživatele:
+- je tvrdá akce dostupná **jen v rámci transakce** a až po `open` (kontext je minimální důkaz, že k interakci fakt došlo),
+- stejně jako u inzerátu: žádný auto-efekt, jen signál a metrika.
+
+Flag není [Ignor](#koncept-ignor):
+- ignor = „nezajímá mě to“,
+- flag = „porušuje pravidla / ojeb / nebezpečný“.
+
+---
