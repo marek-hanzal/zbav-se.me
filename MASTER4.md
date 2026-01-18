@@ -416,10 +416,11 @@ Co feed nese:
 - řazení (v rámci pravidel systému).
 
 Typy feedu:
-- `user` = vědomě uložený feed („můj seznam“) — **počítá se do limitu** (viz [Limit počtu feedů](#koncept-limit-poctu-feedu)),
-- `search` = systémový kontext hledání (UI zkratka), není to „můj seznam“ — **je mimo limity** (nezabírá slot).
+- `user` = vědomě uložený feed („můj seznam“),
+- `search` = systémový kontext hledání (UI zkratka), není to „můj seznam“.
 
 Pravidla:
+- limity feedů a chování „nad limitem“ řeším v [Limit počtu feedů](#koncept-limit-poctu-feedu),
 - defaultně zakládám uživateli jeden obecný feed bez filtrů (bezpečná návratová volba),
 - „Hledání“ je systémově special-case instance Feedu, ne jiný datový svět,
 - feed nikdy neobchází globální brány (viz [Citlivost](#koncept-citlivost), [Ignor](#koncept-ignor), stav [Inzerátu](#koncept-inzerat), release window…).
