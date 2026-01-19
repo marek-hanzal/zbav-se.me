@@ -6,7 +6,7 @@ Co tu najdeš:
 - **Směr produktu**: postoj a zásady, který mi nedovolí udělat z toho další bazar.
 - **Kodex**: tvrdý hranice férovosti (monetizace, pay-to-win, data, manipulace).
 - **Koncepty**: „jak funguje X?“ na jednom místě (inzerát, draft, feed, transakce, citlivost, limity…).
-- **Ekonomika**: model nabídky ([tokeny](#koncept-tokeny)/[kupóny](#koncept-kupon)/[passy](#koncept-pass)/předplatné) a pravidla aktivace.
+- **Ekonomika**: model nabídky ([tokeny](#koncept-tokeny)/[kupóny](#koncept-kupon)/[passy](#koncept-pass)/[předplatné](#koncept-predplatne)) a pravidla aktivace.
 
 Jak to číst:
 - Kontrakt „co tu není, neexistuje“ držím natvrdo v kapitole [Pravidla dokumentu](#pravidla-dokumentu) a nikde jinde ho už nerozmělňuju.
@@ -40,7 +40,7 @@ Struktura dokumentu (základ):
 - **Konkurenceschopnost** je argumentace proč to existuje (bez marketingových keců): [`#konkurenceschopnost`](#konkurenceschopnost)
 - **Kodex** je „no bullshit“ vrstva hranic: [`#kodex`](#kodex)
 - **Koncepty** jsou hlavní katalog reality: každá otázka „jak funguje X?“ má odpověď v jednom konceptu: [`#koncepty`](#koncepty)
-- **Ekonomika** je model nabídky ([tokeny](#koncept-tokeny)/[kupóny](#koncept-kupon)/[passy](#koncept-pass)/předplatné/[ceník](#koncept-cenik)): [`#ekonomika`](#ekonomika)
+- **Ekonomika** je model nabídky ([tokeny](#koncept-tokeny)/[kupóny](#koncept-kupon)/[passy](#koncept-pass)/[předplatné](#koncept-predplatne)/[ceník](#koncept-cenik)): [`#ekonomika`](#ekonomika)
 - **Uvedení na trh**, **Retence**, **Odhady** jsou strategická vrstva (bez implementačních detailů):  
   - [`#uvedeni-na-trh`](#uvedeni-na-trh)  
   - [`#retence`](#retence)  
@@ -220,7 +220,7 @@ Odpovědnost začíná až přijetím. `pending` není kanál pro spam. (Viz [Tr
 Pravidla jsou pojmenovaný. Když něco omezím, má to čitelnej důvod. (Viz [Seznam inzerátů](#koncept-seznam-inzeratu), [Kodex](#kodex).)
 
 7) **Data dělám pro uživatele, ne pro inzerenty**  
-Metriky jsou signál trhu a nástroje pro férový mechaniky. Ne reklamní profilování.
+Metriky jsou signál trhu a nástroje pro férový mechaniky. Ne reklamní profilování. Žádný tajný skóre ani blackbox penalizace nad inzerátem.
 
 8) **Měkká frikce místo manipulace**  
 Jemný brzdy a struktura, aby se to nerozpadlo do bazarovýho pekla, ale bez moralizování a bez nátlaku.
@@ -1520,7 +1520,7 @@ Related:
 - [Tokeny](#koncept-tokeny)
 - [Kupón](#koncept-kupon)
 
-Exclusive je zamčený oprávnění. Není to věc, kterou si „dokoupím tokenama“. Je to benefit balíčku / předplatnýho.
+Exclusive je zamčený oprávnění. Není to věc, kterou si „dokoupím tokenama“. Je to benefit balíčku / [Předplatného](#koncept-predplatne).
 
 Kontrakt:
 - Autorita toho, co je „koupitelný“, je [Ceník](#koncept-cenik) (a pravidla použití drží [Aktivace](#koncept-aktivace)).
@@ -1543,7 +1543,7 @@ Ceník je seznam věcí, který si umím koupit (typicky za [Tokeny](#koncept-to
 
 Kontrakt:
 - Pokud něco **je v ceníku**, jde to aktivovat i přes tokeny (pokud nemám kupón).
-- Pokud něco **není v ceníku**, je to zamčený → [Exclusive](#koncept-exclusive) (benefit balíčku/předplatnýho).
+- Pokud něco **není v ceníku**, je to zamčený → [Exclusive](#koncept-exclusive) (benefit balíčku/[Předplatného](#koncept-predplatne)).
 - Konkrétní částky a tabulky držím v [Ekonomice](#ekonomika).
 
 ---
@@ -1689,5 +1689,68 @@ Pravidla:
 
 Technická pravda:
 - **Titulek je jediný text, podle kterého se dá hledat.** Textový hledání stojí na titulku.
+
+---
+
+<a id="koncept-predplatne"></a>
+### Předplatné
+
+Related:
+- [Ekonomika](#ekonomika)
+- [Tokeny](#koncept-tokeny)
+- [Kupón](#koncept-kupon)
+- [Pass](#koncept-pass)
+- [Exclusive](#koncept-exclusive)
+- [Ceník](#koncept-cenik)
+
+Předplatné je komfort a nástroje navíc, bez pay-to-win cirkusu. Stojí na jasných věcech: limit, pass, kupón, tokeny.
+
+Kontrakt:
+- Renew = příděly vždycky: při každým renew se připíšou tokeny/kupóny z balíčku.
+- Cancel je jediná změna: když zruším předplatné, jen se neobnoví. Co běží, doběhne do konce zaplacenýho období.
+
+---
+
+<a id="koncept-tokeny-ziskavani"></a>
+### Tokeny: Získávání
+
+Related:
+- [Tokeny](#koncept-tokeny)
+- [Předplatné](#koncept-predplatne)
+- [Aktivace](#koncept-aktivace)
+- [Transakce](#koncept-transakce)
+
+Tokeny získáš:
+- z předplatného (měsíční příděl)
+- z bonusů za používání
+- nákupem balíčků
+
+Bonusy za používání (kontrakt):
+| Mechanika | Kdy vzniká | Smysl | Poznámka |
+|---|---|---|---|
+| Odměna za `resolved` | prodávající přepne transakci do `resolved` | motivace k úklidu a pravdivým koncům | bez `resolved` bonus nevzniká |
+| Denní drop | 1× denně k vyzvednutí (řádově ~10 T) | drobná pobídka k návratu | ne ekonomickej model |
+| RNG dropy ve feedu | občas při scrollu (nízká pravděpodobnost) | malý překvapení | ne ekonomickej model |
+| Anti-abuse | při zjevným zneužití | ochrana proti farmení | bonus se nemusí vyplatit |
+
+---
+
+<a id="koncept-inzerat-video"></a>
+### Inzerát: Video (ne)
+
+Related:
+- [Inzerát](#koncept-inzerat)
+- [Uploady](#koncept-uploady)
+- [Galerie](#koncept-galerie)
+
+Video je v 95 % případů šum, ne hodnota. A technicky je to černá díra na náklady.
+
+Rozhodnutí:
+- Upload videí k inzerátům **nepodporuju**.
+
+Důvody:
+- většina lidí to použije nekvalitně a rozbije feed
+- infra náklady (upload, storage, CDN, transkódování, preview, mazání) jsou velký
+- přínos je úzkej a kontextovej
 
 ---
