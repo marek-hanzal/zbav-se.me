@@ -1639,7 +1639,7 @@ Popis je dobrovolnej. A je to záměr. Nechci, aby lidi psali slohovky jen proto
 
 Pravidla:
 - Popis je v **Markdownu** (volitelně).
-- Popis se **nepoužívá pro vyhledávání / indexaci**. Hledání stojí na titulku a strukturovanejch filtrech.
+- Popis se **nepoužívá pro vyhledávání / indexaci**. Hledání stojí na [Titulku](#koncept-inzerat-titulek) a strukturovanejch filtrech.
 - Méně je často víc: krátký konkrétní body > dlouhej příběh.
 
 Kontrakt:
@@ -1668,5 +1668,26 @@ Kontrakt:
 - Každá strana má limit **max 5 položek** (mantinel proti balastu, tlak na podstatný věci).
 - Krátký, konkrétní, lidský texty. Žádný „pros/cons“, žádnej korporát.
 - Nic se za to neměří. Žádný odměny ani tresty.
+
+---
+
+<a id="koncept-inzerat-titulek"></a>
+### Inzerát: Titulek
+
+Related:
+- [Inzerát](#koncept-inzerat)
+- [Inzerát: Popis](#koncept-inzerat-popis)
+- [Feed](#koncept-feed)
+- [Hledat](#koncept-hledat)
+
+Titulek je krátkej a jasnej popis toho, co prodáváš. Má člověku ve feedu okamžitě říct, jestli ho to zajímá.
+
+Pravidla:
+- Jedna věc = jeden titulek.
+- Žádný keyword spam.
+- Upřímnost > hype.
+
+Technická pravda:
+- **Titulek je jediný text, podle kterého se dá hledat.** Textový hledání stojí na titulku.
 
 ---
