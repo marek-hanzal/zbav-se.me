@@ -1032,7 +1032,7 @@ Kontrakt:
 - Anti-topper **nikdy neblokuje detail**. Je to mechanika listingu, ne zákaz existence.
 
 Měření:
-- Když by se v listingu ukázal inzerát se zvýrazněním (Mark/Top) uživateli s Anti-topperem, místo `visible` vznikne event `anti-topper`.
+- Když by se v listingu ukázal inzerát se zvýrazněním (Mark/Top) uživateli s Anti-topperem, místo [`visible`](#koncept-metrika-inzeratu-visible) vznikne event `anti-topper`.
 
 ---
 
@@ -1212,7 +1212,7 @@ Co ukazuju:
 | `transactions` | kolik zájmů / otevřených obchodů inzerát vyvolal |
 
 Anti-topper v číslech:
-- poměr `anti-topper / (visible + anti-topper)`
+- poměr `anti-topper / (visible + anti-topper)` (kde [`visible`](#koncept-metrika-inzeratu-visible) je „reálný zobrazení karty“)
 
 ---
 
@@ -1306,6 +1306,25 @@ Zdroj:
 
 Význam:
 - Karta v listingu ve viewportu alespoň **1,6 s** = „zaujal, zpomalil“.
+
+Deduplikace:
+- Max 1× na jedno zobrazení listu pro danej inzerát.
+
+---
+
+<a id="koncept-metrika-inzeratu-visible"></a>
+### Metrika: Visible
+
+Related:
+- [Rozšířená data u inzerátu](#koncept-rozsirena-data-inzeratu)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Inzerát](#koncept-inzerat)
+
+Zdroj:
+- `visible`
+
+Význam:
+- Karta v listingu ve viewportu alespoň **0,5 s** = „uživatel to reálně viděl“.
 
 Deduplikace:
 - Max 1× na jedno zobrazení listu pro danej inzerát.
