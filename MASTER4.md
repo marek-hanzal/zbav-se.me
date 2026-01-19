@@ -1819,12 +1819,14 @@ Related:
 - [Exclusive](#koncept-exclusive)
 - [Předplatné](#koncept-predplatne)
 
-Rozšíření je UI vstup do monetizovaných prvků. Nechci, aby uživatel lovil „kde se to zapíná“. Tady je to vždycky na jednom místě.
+Rozšíření jsou centrální ovládací pult pro věci, co se dají zapnout. Uživateli to dává jedno místo, kde vidí „co mám aktivní, co mi končí, co můžu zapnout, a čím to zaplatím“.
 
 Kontrakt:
 - Rozšíření je katalog toho, co jde aktivovat (viz [Ceník](#koncept-cenik)) a co je zamčený ([Exclusive](#koncept-exclusive)).
 - Každá položka má jednu jasnou akci: `Aktivovat` → pravidla drží [Aktivace](#koncept-aktivace).
 - UI vždycky ukáže, jestli spotřebovávám [Kupón](#koncept-kupon), nebo platím [Tokeny](#koncept-tokeny), nebo jen využívám nárok z [Předplatného](#koncept-predplatne).
+- Součástí je „inventář“ kontextu: kolik mám [Tokenů](#koncept-tokeny), kolik mám [Kupónů](#koncept-kupon), jaké mám aktivní [Passy](#koncept-pass) a kdy končí.
+- Pod rozšířeníma je místo pro kupóny, který nejsou „zapni pass“ (jednorázovky).
 
 ---
 
@@ -1834,14 +1836,16 @@ Kontrakt:
 Related:
 - [Tokeny: Získávání](#koncept-tokeny-ziskavani)
 - [Tokeny](#koncept-tokeny)
+- [Předplatné](#koncept-predplatne)
 - [Transakce](#koncept-transakce)
 - [Rozšíření](#koncept-ui-rozsireni)
 
-Bonusy je UI kapsa na „tokeny zdarma“ a jejich hygienu. Ne gamifikace cirkus. Malý pobídky, co drží trh čistější.
+Bonusy je UI kapsa na ekonomiku v malým: vyzvednout bonusy, vidět historii, mít po ruce aktivace, a zároveň si pořídit věci navíc (suby + balíčky tokenů).
 
 Kontrakt:
-- Bonusy ukazují jen to, co si můžu vyzvednout / co mi vzniklo (detaily pravidel drží [Tokeny: Získávání](#koncept-tokeny-ziskavani)).
-- Žádný tichý dropy bez kontroly: když něco vznikne, umím to dohledat a pochopit.
-- Bonusy jsou vstupní bod pro návrat do [Rozšíření](#koncept-ui-rozsireni) (když už mám tokeny, ať je hned vidět, co s nima jde dělat).
+- Bonusy jsou místo, kde si **vědomě vyzvednu** věci typu denní drop. Nic se „nevyzvedává samo“.
+- Bonusy jsou místo, kde si můžu pořídit **[Předplatné](#koncept-predplatne)** a **balíčky [Tokenů](#koncept-tokeny)**. Neříkám tomu „obchod“, ale je to tenhle účel.
+- Pravidla bonusů a anti-abuse drží [Tokeny: Získávání](#koncept-tokeny-ziskavani). Tady je jen UI přístup.
+- Bonusy jsou vstupní bod zpátky do [Rozšíření](#koncept-ui-rozsireni): když už mám tokeny, chci hned vidět, co s nima jde dělat.
 
 ---
