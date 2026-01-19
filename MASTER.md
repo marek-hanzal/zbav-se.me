@@ -38,6 +38,7 @@ Pozn.: **Obsah je autorita pořadí.** Pořadí kapitol a konceptů v dokumentu 
 - [Koncepty](#koncepty)
   - [Uživatel](#koncept-uzivatel)
   - [Kategorie](#koncept-kategorie)
+  - [Seasons](#koncept-seasons)
   - [Lokace](#koncept-lokace)
   - [Uploady](#koncept-uploady)
   - [Galerie](#koncept-galerie)
@@ -74,6 +75,7 @@ Pozn.: **Obsah je autorita pořadí.** Pořadí kapitol a konceptů v dokumentu 
   - [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu)
   - [Palce (Like/Dislike)](#koncept-palce)
   - [Karma (Like/Dislike)](#koncept-karma)
+  - [XP](#koncept-xp)
   - [Metrika: Karma](#koncept-metrika-karma)
   - [User Eventy](#koncept-user-eventy)
   - [Metriky prodávajícího](#koncept-metriky-prodavaciho)
@@ -129,6 +131,7 @@ Pozn.: **Obsah je autorita pořadí.** Pořadí kapitol a konceptů v dokumentu 
   - [Tokeny (nabídka a ceny)](#ekonomika-tokeny-ceny)
   - [Ceník rozšíření (kupóny / passy)](#ekonomika-cenik-rozsireni)
 - [Uvedení na trh](#uvedeni-na-trh)
+- [Veřejné vystupování](#verejne-vystupovani)
 - [Retence](#retence)
 - [Odhady](#odhady)
 
@@ -441,7 +444,7 @@ Related:
 
 <a id="koncept-kategorie"></a>
 ### Kategorie
-← [předchozí](#koncept-uzivatel) | [další](#koncept-lokace) →
+← [předchozí](#koncept-uzivatel) | [další](#koncept-seasons) →
 
 Kategorie je organizační vrstva trhu. Je to kontext, ve kterým dává smysl jinej jazyk a jiný filtry. Držím ji jednoduchou, protože složitá taxonomie je jen bordel pro lidi.
 
@@ -470,9 +473,32 @@ Related:
 
 ---
 
+<a id="koncept-seasons"></a>
+### Seasons
+← [předchozí](#koncept-kategorie) | [další](#koncept-lokace) →
+
+Seasons jsou sezónní „kategorie“ — interní marketingovej tah, kterej má přimět lidi chodit prodávat a nakupovat ve správnej čas.
+
+Kontrakt:
+- Seasons nejsou novej systém. Je to jen **předdefinovaná sada** v rámci stávajících [Kategorií](#koncept-kategorie).
+- Pro uživatele se to chová jako normální kategorie: vybere ji při tvorbě inzerátu nebo si podle ní postaví feed.
+- V sezóně je budu zvýrazňovat v UI, mimo sezónu můžou zůstat jen jako běžný kategorie.
+
+Příklady (orientačně):
+- Vánoce, Valentýn, Velikonoce, Halloween
+- Zima, Jaro, Léto, Podzim
+- Začátek školy, Maturita
+
+Related:
+- [Kategorie](#koncept-kategorie)
+- [Feed](#koncept-feed)
+- [Inzerát](#koncept-inzerat)
+
+---
+
 <a id="koncept-lokace"></a>
 ### Lokace
-← [předchozí](#koncept-kategorie) | [další](#koncept-uploady) →
+← [předchozí](#koncept-seasons) | [další](#koncept-uploady) →
 
 Lokace je autorita na polohu. Neukládám random texty typu „u Pepy na rohu“. Když se bavíme o poloze, bavíme se o jednom konkrétním záznamu, na kterej se dá odkázat.
 
@@ -1426,7 +1452,7 @@ Related:
 
 <a id="koncept-karma"></a>
 ### Karma (Like/Dislike)
-← [předchozí](#koncept-palce) | [další](#koncept-metrika-karma) →
+← [předchozí](#koncept-palce) | [další](#koncept-xp) →
 
 Karma je hodnocení člověka v kontextu konkrétní transakce. Žádný hvězdičky, žádnej román.
 
@@ -1443,9 +1469,33 @@ Related:
 
 ---
 
+<a id="koncept-xp"></a>
+### XP
+← [předchozí](#koncept-karma) | [další](#koncept-metrika-karma) →
+
+XP je interní gamifikační bodování, který mi pomáhá popsat „jak moc a jak často“ uživatel appku používá.
+
+Kontrakt:
+- XP je **per uživatel** a **přičítá se** za vybrané akce.
+- Level je **odvozený** z XP (hranice levelů není).
+- Některý akce půjdou farmit. Zatím to vědomě toleruju (anti-farm pravidla: `user events`).
+
+„Tabulka“ přídělu XP (pracovní verze):
+
+| Akce               | XP  | Poznámka              |
+| ------------------ | --- | --------------------- |
+| Vytvoření feedu    | TBD | farmitelné (zatím OK) |
+| Publikace inzerátu | TBD | farmení složité       |
+
+Related:
+- [Feed](#koncept-feed)
+- [Inzerát](#koncept-inzerat)
+
+---
+
 <a id="koncept-metrika-karma"></a>
 ### Metrika: Karma
-← [předchozí](#koncept-karma) | [další](#koncept-user-eventy) →
+← [předchozí](#koncept-xp) | [další](#koncept-user-eventy) →
 
 Proč existuje:
 - Chci dát prodejci signál „jak se lidem obchodovalo“. Ne román. Jedno kliknutí.
@@ -2655,7 +2705,7 @@ Related:
 
 <a id="uvedeni-na-trh"></a>
 ## Uvedení na trh
-← [předchozí](#ekonomika) | [další](#retence) →
+← [předchozí](#ekonomika) | [další](#verejne-vystupovani) →
 
 Největší nepřítel marketplace není konkurence. Je to prázdno. Takže launch není “globální release”, launch je **sekvenční roztočení trhu**.
 
@@ -2681,9 +2731,21 @@ Related:
 
 ---
 
+<a id="verejne-vystupovani"></a>
+## Veřejné vystupování
+← [předchozí](#uvedeni-na-trh) | [další](#retence) →
+
+TBD.
+
+- Billboardy: TBD
+- Media:
+  - YT Shorts: TBD
+
+---
+
 <a id="retence"></a>
 ## Retence
-← [předchozí](#uvedeni-na-trh) | [další](#odhady) →
+← [předchozí](#verejne-vystupovani) | [další](#odhady) →
 
 Retence u mě není “návykovost”. Retence je **paměť trhu**.
 
@@ -2771,6 +2833,7 @@ Related:
 - [Koncepty](#koncepty)
   - [Uživatel](#koncept-uzivatel)
   - [Kategorie](#koncept-kategorie)
+  - [Seasons](#koncept-seasons)
   - [Lokace](#koncept-lokace)
   - [Uploady](#koncept-uploady)
   - [Galerie](#koncept-galerie)
@@ -2807,6 +2870,7 @@ Related:
   - [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu)
   - [Palce (Like/Dislike)](#koncept-palce)
   - [Karma (Like/Dislike)](#koncept-karma)
+  - [XP](#koncept-xp)
   - [Metrika: Karma](#koncept-metrika-karma)
   - [User Eventy](#koncept-user-eventy)
   - [Metriky prodávajícího](#koncept-metriky-prodavaciho)
@@ -2862,5 +2926,6 @@ Related:
   - [Tokeny (nabídka a ceny)](#ekonomika-tokeny-ceny)
   - [Ceník rozšíření (kupóny / passy)](#ekonomika-cenik-rozsireni)
 - [Uvedení na trh](#uvedeni-na-trh)
+- [Veřejné vystupování](#verejne-vystupovani)
 - [Retence](#retence)
 - [Odhady](#odhady)
