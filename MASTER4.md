@@ -1572,3 +1572,56 @@ Tvrdý pravidlo:
 - I u `open` je cena pořád povinná. Žádný „dohodou“ jako únik z reality.
 
 ---
+
+<a id="koncept-inzerat-delivery"></a>
+### Inzerát: Předání
+
+Related:
+- [Inzerát](#koncept-inzerat)
+- [Lokace](#koncept-lokace)
+- [Feed](#koncept-feed)
+- [Hledat](#koncept-hledat)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Transakce](#koncept-transakce)
+
+Způsob předání je dobrovolnej signál. Ne závazek a ne „logistika modul“. Kupující hned ví, jak si to zhruba představuju, a nemusí se ptát na základní věci.
+
+Enum hodnot:
+| Hodnota | Enum | Poznámka |
+|---|---|---|
+| Osobně | `personal` | defaultní „sousedský“ režim |
+| Pošta | `post` | dopis/pošta obecně |
+| Balík | `package` | balík / kurýr / zásilkovna (typ, ne integrace) |
+| Jinak | `other` | cokoliv mimo standard |
+
+Kontrakt:
+- Předání je preference, ne smlouva.
+- Ve feedu/hledání to slouží jako filtr.
+- Platforma nevynucuje logistiku ani nedělá „garanci doručení“.
+- Lokace neurčuje způsob předání: lokace je kontext „kde to je“, ne logistickej závazek.
+
+---
+
+<a id="koncept-inzerat-warranty"></a>
+### Inzerát: Záruka
+
+Related:
+- [Inzerát](#koncept-inzerat)
+- [Feed](#koncept-feed)
+- [Hledat](#koncept-hledat)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+
+Záruka je dobrovolnej signál. Řeší jednu otázku: „Je to v záruce?“ Platforma do toho nijak nevstupuje. Neověřuju to, negarantuju to, nesoudím to. Je to mezi lidma.
+
+Enum hodnot:
+| Hodnota | Enum | Význam | Příklad |
+|---|---|---|---|
+| Bez záruky | `no-warranty` | nic nenabízím | „kupuješ jak stojí a leží“ |
+| Vlastní záruka | `custom` | něco mimo zákon | „7 dní na vyzkoušení“ |
+| Zákonná záruka | `warranty` | typicky účtenka / doložitelný nákup | „mám účtenku“ |
+
+Použití:
+- Je to filtr ve feedu/hledání.
+- Není to „garance“ od platformy.
+
+---
