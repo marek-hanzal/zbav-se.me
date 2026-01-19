@@ -483,6 +483,7 @@ Related:
 ← [předchozí](#koncept-kategorie) | [další](#koncept-lokace) →
 
 Seasons jsou sezónní „kategorie“ — interní marketingovej tah, kterej má přimět lidi chodit prodávat a nakupovat ve správnej čas.
+Není to reklama ani tracking. Je to interní sezónní režim UI a distribuce uvnitř produktu.
 
 Kontrakt:
 - Seasons nejsou novej systém. Je to jen **předdefinovaná sada** v rámci stávajících [Kategorií](#koncept-kategorie).
@@ -1486,6 +1487,7 @@ Related:
 ← [předchozí](#koncept-karma) | [další](#koncept-metrika-karma) →
 
 XP je interní gamifikační bodování, který mi pomáhá popsat „jak moc a jak často“ uživatel appku používá.
+XP nesmí být nátlak, FOMO ani nákupní páka: neovlivňuje [Score](#koncept-metrika-score) ani důvěru lidí, je to jen interní signál pro UX.
 
 Kontrakt:
 - XP je **per uživatel** a **přičítá se** za vybrané akce.
@@ -1494,10 +1496,10 @@ Kontrakt:
 
 Příděl XP:
 
-| Akce               | XP  | Poznámka              |
+| Akce               | XP | Poznámka              |
 | ------------------ | --- | --------------------- |
-| Vytvoření feedu    | 5   | farmitelné (zatím OK) |
-| Publikace inzerátu | 25  | farmení složité       |
+| Vytvoření feedu    | 5  | farmitelné (zatím OK) |
+| Publikace inzerátu | 25 | farmení složité       |
 
 Related:
 - [Feed](#koncept-feed)
@@ -2014,7 +2016,7 @@ Co ukazuju:
 | [`transactions`](#koncept-metrika-inzeratu-transactions) | kolik zájmů / otevřených obchodů inzerát vyvolal              |
 
 [Anti-topper](#koncept-anti-topper) v číslech:
-- poměr `anti-topper / (visible + anti-topper)` (kde [`visible`](#koncept-metrika-inzeratu-visible) je „reálný zobrazení karty“ a [`anti-topper`](#koncept-metrika-inzeratu-anti-topper) je potlačení zvýraznění)
+- poměr `anti-topper / visible` (kde [`visible`](#koncept-metrika-inzeratu-visible) je „reálný zobrazení karty“ a [`anti-topper`](#koncept-metrika-inzeratu-anti-topper) je potlačení zvýraznění)
 
 Related:
 - [Inzerát](#koncept-inzerat)
@@ -2191,7 +2193,7 @@ Tohle je férovka vůči lidem, co platí a pak na to zapomenou. Radši přijdu 
 
 Kontrakt:
 - Po **1 měsíci neaktivity** pošlu email připomínku.
-- Po **2 měsících neaktivity** automaticky **odeberu benefity / entitlement** (přestanu poskytovat nárok), pokud mezitím nepřijde žádná aktivita. Billing záleží na kanálu.
+- Po **2 měsících neaktivity** předplatné **ukončím**: doběhne aktuální období a na konci už se **neobnoví**.
 - Aktivita = existuje aspoň jeden `user_event` se `scope=user` (moje vlastní akce) v daným čase.
 - Neaktivita je chování (signál používání), ne “nemám chuť kliknout na cancel”.
 
