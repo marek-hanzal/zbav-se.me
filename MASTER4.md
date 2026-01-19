@@ -1208,7 +1208,7 @@ Co ukazuju:
 | [`impression`](#koncept-metrika-inzeratu-impression) | „zaujalo“ (viz definice Impression) |
 | [`view`](#koncept-metrika-inzeratu-view) | reálnej zájem o detail (viz definice View) |
 | [`thumbs`](#koncept-metrika-inzeratu-thumbs) | palce (like/dislike) jako signál atraktivity nabídky |
-| `ignored` | kolikrát lidi dali ignor (osobní úklid, „tohle nechci vídat“) |
+| [`ignored`](#koncept-metrika-inzeratu-ignored) | kolikrát lidi dali ignor (osobní úklid, „tohle nechci vídat“) |
 | `transactions` | kolik zájmů / otevřených obchodů inzerát vyvolal |
 
 Anti-topper v číslech:
@@ -1376,5 +1376,25 @@ Význam:
 Kontrakt:
 - `thumbs` jsou reálný entity palců nad inzerátem (viz [Palce](#koncept-palce)).
 - Nejsou to veřejný ego-lajky. Je to data pro produkt a pro mě.
+
+---
+
+<a id="koncept-metrika-inzeratu-ignored"></a>
+### Metrika: Ignored
+
+Related:
+- [Ignor](#koncept-ignorace-inzeratu)
+- [Rozšířená data u inzerátu](#koncept-rozsirena-data-inzeratu)
+- [Inzerát](#koncept-inzerat)
+
+Zdroj:
+- `ignored`
+
+Význam:
+- Kolikrát lidi dali [Ignor](#koncept-ignorace-inzeratu) nad inzerátem.
+
+Kontrakt:
+- Je to signál „tohle lidi nechtějí vídat“.
+- Neříká to nic o pravdě nebo morálce. Je to osobní úklid.
 
 ---
