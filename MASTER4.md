@@ -637,19 +637,32 @@ Kontrakt:
 <a id="koncept-notifikace"></a>
 ### Notifikace (Inbox)
 
+Related:
+- [Zprávy](#koncept-zpravy)
+- [Transakce](#koncept-transakce)
+- [Inzerát](#koncept-inzerat)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+
 Notifikace nejsou nástroj na otravování. Jsou to **zrcadlo reality**, aby člověk věděl, co se stalo, a nemusel paranoidně refreshovat appku.
 
 Filosofie ticha:
 - Defaultní stav je ticho. Žádný umělý FOMO.
+- Notifikace vzniká jen z reálný události (typicky změna stavu [Transakce](#koncept-transakce) nebo příchozí [Zpráva](#koncept-zpravy)).
 
 Inbox First:
 - Inbox je jediný zdroj pravdy pro „co se stalo“.
+- Všechno ostatní (push/email) je jen mirror toho, co už existuje v Inboxu.
 
 Email jako zrcadlo:
 - Email není primární kanál. Je to volitelný forward/digest toho, co už je v Inboxu.
+- Když email nedojde, nic se „neztratilo“. Autorita je Inbox.
+
+Kontrakt:
+- Notifikace se nesmí stát další paralelní svět. Když něco umím zjistit v Inboxu, nesmím k tomu psát nový pravidla do emailu/pushe.
+- Deduplikace je normální (nebudu spamovat ten samej fakt víckrát, jen protože to jde).
 
 Kritické výjimky:
-- Některý věci se neptají a na email jdou vždy (reset hesla, bezpečnostní alerty).
+- Některý věci se neptají a jdou vždy (reset hesla, bezpečnostní alerty).
 
 ---
 
