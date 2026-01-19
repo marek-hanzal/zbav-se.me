@@ -589,7 +589,7 @@ Vztahy:
 Kontrakt:
 - Inzerát je veřejnej závazek. Když něco slíbím v inzerátu, beru to jako dluh vůči druhý straně.
 - Inzerát musí být čitelnej bez „doptávání ve zprávách“. Zprávy jsou na domluvu, ne na dohledávání základů. (Viz [Zprávy](#koncept-zpravy).)
-- Stav inzerátu je tvrdý enum. To je autorita. Žádný vibe: `live` / `expired` / `closed` / `sold`.
+- Stav inzerátu je tvrdý enum. To je autorita. Žádný vibe: `live` / `expired` / `closed` / `sold` / `banned`.
 
 | Stav      | Co to znamená                                      | Feed (default)                                    | Přímý odkaz / detail | Interakce                                         |
 | --------- | -------------------------------------------------- | ------------------------------------------------- | -------------------- | ------------------------------------------------- |
@@ -597,6 +597,7 @@ Kontrakt:
 | `expired` | vypršela expirace (`expiresAt`), automatický konec | ne (jen přes explicitní filtr / historický režim) | ano (read-only)      | zakázáno, výjimka **flag**                        |
 | `closed`  | prodejce to ručně zabil                            | ne (stejně jako `expired`)                        | ano (read-only)      | zakázáno, výjimka **flag**                        |
 | `sold`    | prodáno, není k dispozici pro nový obchod          | ne (není k dispozici)                             | ano (read-only)      | zájem ne; bezpečný věci typu flag / undo ignor ok |
+| `banned` | admin hard removal (nelegální/škodlivý obsah)     | ne                                                | **404** (hard block) | zakázáno                                           |
 
 Poznámky:
 - [Draft](#koncept-draft) není stav inzerátu. Draft je separátní entita.
@@ -981,7 +982,7 @@ Listing vs detail:
 - **Detail (přímý odkaz)**: detail se má dát otevřít i mimo seznam (sdílení, historie, uložený link).
 
 Tvrdý pravidlo:
-- Jen [Citlivost](#koncept-citlivost-inzeratu) smí blokovat detail a vrátit **404**. Žádný „aspoň víš, že to existuje“.
+- Jen [Citlivost](#koncept-citlivost-inzeratu) (uživatelská) a **admin hard removal** (výjimečná stopka, stav `banned` — viz [Ban](#koncept-ban)) smí blokovat detail a vrátit **404**. Žádný „aspoň víš, že to existuje“.
 
 Ostatní brány jsou pravidla listingu (ne zákaz otevření):
 - ignor,
@@ -1103,7 +1104,7 @@ Gating a viditelnost (dvoufázově, schválně):
 Hard gate pravidla:
 - V listingu (feed/search/seznam) se cokoliv nad maximum **vůbec nedostane do výsledků**.
 - Na detail přes přímý odkaz vracím při nesouladu maxima **404** (žádný obcházení přes link, žádný „aspoň víš že to existuje“).
-- [Citlivost](#koncept-citlivost-inzeratu) je **jediná** věc, která smí detail tvrdě schovat (404). Ostatní brány můžou ovlivnit seznam, ale nemaj dělat „ten inzerát pro tebe neexistuje“. (Viz [Inzerát](#koncept-inzerat).)
+- [Citlivost](#koncept-citlivost-inzeratu) je **jediná uživatelská** věc, která smí detail tvrdě schovat (404). Kromě citlivosti existuje ještě **admin hard removal** (výjimečná stopka pro nelegální/škodlivý obsah), která je **404** a nastavuje stav `banned` (viz [Ban](#koncept-ban) a [Inzerát](#koncept-inzerat)). Ostatní brány můžou ovlivnit seznam, ale nemaj dělat „ten inzerát pro tebe neexistuje“.
 
 Odpovědnost:
 - [Citlivost](#koncept-citlivost-inzeratu) je primárně sebeoznačení prodejce.
@@ -1455,7 +1456,7 @@ Limit aktivních inzerátů drží hygienu trhu a chrání pozornost. Nechci, ab
 
 Kontrakt:
 - Počítám jen inzeráty ve stavu `live`.
-- `sold` se nepočítá jako aktivní.
+- `sold` a `banned` se nepočítají jako aktivní.
 - Když jsi nad limitem (typicky po vypršení [Passu](#koncept-pass)), existující `live` nechám běžet.
 - Jen nepustím vytvořit/publikovat další `live` — aktivuje se **Draft Gate** (viz [Draft](#koncept-draft)).
 - Odemknutí limitu je přes [Ekonomiku](#ekonomika): [Kupón](#koncept-kupon)/pas (typicky tier `Aktivní inzeráty 10/20`), nebo [Tokeny](#koncept-tokeny) v hodnotě toho kupónu.
@@ -2552,7 +2553,7 @@ Karty:
 | Nový inzerát / Pokračovat | primární vstup do tvorby | když existuje draft → „Pokračovat“, jinak „Nový inzerát“; při „Nový inzerát“ může nastat Draft Gate |
 | Zprávy                    | moje rozjednané prodeje  | transakce přeložený do řeči lidí                                                                    |
 | Šablony                   | seznam draftů            | název „Šablony“, protože mentálně „mám to připravený“                                               |
-| Moje inzeráty             | přehled publikovaných    | stavy `live/expired/closed/sold`                                                                    |
+| Moje inzeráty             | přehled publikovaných    | stavy `live/expired/closed/sold/banned`                                                             |
 
 Related:
 - [Draft](#koncept-draft)
@@ -2637,11 +2638,15 @@ Ban je ruční nástroj admina (já). Ne automat.
 Kontrakt:
 - Důvod musí být konkrétní (podvod/spam/ojeby a podobně).
 - Žádný tichý „shadow“ tresty. Když stopka, tak stopka.
+- **Dopad na účet**: účet je zablokovaný (nemůže vytvářet nové inzeráty, transakce, zprávy).
+- **Dopad na inzeráty**: všechny inzeráty uživatele se přepnou do stavu `banned` (viz [Inzerát](#koncept-inzerat)). `banned` je další legální způsob, jak poslat zpět **404** a zabránit zobrazení v UI (vedle [Citlivosti](#koncept-citlivost-inzeratu)).
+- **Admin hard removal**: kromě citlivosti existuje ještě admin hard removal (výjimečná stopka), která je **404**. To je jediná výjimka z pravidla „jen citlivost smí blokovat detail" (viz [Citlivost](#koncept-citlivost-inzeratu) a [Seznam inzerátů](#koncept-seznam-inzeratu)).
 
 Related:
 - [Flag inzerátu](#koncept-flag-inzeratu)
 - [Flag uživatele](#koncept-flag-uzivatele)
 - [Citlivost](#koncept-citlivost-inzeratu)
+- [Inzerát](#koncept-inzerat)
 
 ---
 
