@@ -1916,3 +1916,82 @@ Expirace:
 - Když Brand dlouhodobě neobnovím, po **1 měsíci** se uvolní pro někoho dalšího.
 
 ---
+
+<a id="koncept-ui-ramec"></a>
+### UI: Rámec
+
+Related:
+- [Navigace](#koncept-navigace)
+- [Draft](#koncept-draft)
+- [Landing](#koncept-landing)
+- [UI: Rozšíření](#koncept-ui-rozsireni)
+- [UI: Bonusy](#koncept-ui-bonusy)
+
+UI je půl produktu. Když působí nejistě, uživatel je nejistej. Když je klidný a stabilní, nic neřeší.
+
+Pravidla:
+- Mobile-first vždycky.
+- Nevysvětlovat. Když to potřebuje nápovědu, je to špatně.
+- Minimum psaní. Klikací kroky a jasný stavy.
+- Akce mají váhu. Primární CTA je jasná, destruktivní je opatrná.
+- Klid > efekt. Reakce systému má být okamžitá.
+
+---
+
+<a id="koncept-ui-dashboard"></a>
+### UI: Dashboard
+
+Related:
+- [Notifikace (Inbox)](#koncept-notifikace)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Draft](#koncept-draft)
+
+Dashboard je launcher. Není to feed. Má být krátkej, jasnej, bez potřeby scrollovat jak blázen.
+
+Co tu je:
+- Novinky / pulz: co přibylo.
+- Notifikace: co čeká na reakci.
+- Rychlý skoky: typicky „Inzeráty“ a „Nový inzerát“ (vstupy do existujících konceptů, ne vlastní svět).
+
+---
+
+<a id="koncept-ui-seller"></a>
+### UI: Chci prodávat
+
+Related:
+- [Draft](#koncept-draft)
+- [Inzerát](#koncept-inzerat)
+- [Transakce](#koncept-transakce)
+
+Domov pro „prodávám“. Velký karty, jasný volby, žádný menu v menu.
+
+Karty:
+| Karta | Co dělá | Pravidlo |
+|---|---|---|
+| Nový inzerát / Pokračovat | primární vstup do tvorby | když existuje draft → „Pokračovat“, jinak „Nový inzerát“; při „Nový inzerát“ může nastat Draft Gate |
+| Zprávy | moje rozjednané prodeje | transakce přeložený do řeči lidí |
+| Šablony | seznam draftů | název „Šablony“, protože mentálně „mám to připravený“ |
+| Moje inzeráty | přehled publikovaných | stavy `live/expired/closed/sold` |
+
+---
+
+<a id="koncept-ui-buyer"></a>
+### UI: Chci nakupovat
+
+Related:
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Transakce](#koncept-transakce)
+- [Feed](#koncept-feed)
+- [Oblíbené](#koncept-oblibene)
+
+Domov pro „nakupuju“. Velký karty, jasný volby, žádný menu v menu.
+
+Karty:
+| Karta | Co dělá | Poznámka |
+|---|---|---|
+| Inzeráty | vstup do listu | typicky návrat do posledního kontextu |
+| Zprávy | moje nákupy / domluvy | pořád transakce, jen lidský název |
+| Moje seznamy | uložený feedy | správa „co chci vidět“ |
+| Oblíbené | moje uložený inzeráty | rychlá paměť, žádný algoritmy |
+
+---
