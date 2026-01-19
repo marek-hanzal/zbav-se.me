@@ -1209,7 +1209,7 @@ Co ukazuju:
 | [`view`](#koncept-metrika-inzeratu-view) | reálnej zájem o detail (viz definice View) |
 | [`thumbs`](#koncept-metrika-inzeratu-thumbs) | palce (like/dislike) jako signál atraktivity nabídky |
 | [`ignored`](#koncept-metrika-inzeratu-ignored) | kolikrát lidi dali ignor (osobní úklid, „tohle nechci vídat“) |
-| `transactions` | kolik zájmů / otevřených obchodů inzerát vyvolal |
+| [`transactions`](#koncept-metrika-inzeratu-transactions) | kolik zájmů / otevřených obchodů inzerát vyvolal |
 
 Anti-topper v číslech:
 - poměr `anti-topper / (visible + anti-topper)` (kde [`visible`](#koncept-metrika-inzeratu-visible) je „reálný zobrazení karty“ a [`anti-topper`](#koncept-metrika-inzeratu-anti-topper) je potlačení zvýraznění)
@@ -1396,5 +1396,25 @@ Význam:
 Kontrakt:
 - Je to signál „tohle lidi nechtějí vídat“.
 - Neříká to nic o pravdě nebo morálce. Je to osobní úklid.
+
+---
+
+<a id="koncept-metrika-inzeratu-transactions"></a>
+### Metrika: Transactions
+
+Related:
+- [Transakce](#koncept-transakce)
+- [Zprávy](#koncept-zpravy)
+- [Rozšířená data u inzerátu](#koncept-rozsirena-data-inzeratu)
+- [Inzerát](#koncept-inzerat)
+
+Zdroj:
+- `transactions`
+
+Význam:
+- Kolik transakcí tenhle inzerát vyvolal (kolik „vláken obchodu“ na něj vzniklo).
+
+Kontrakt:
+- Je to metrika zájmu, ne kvality. Více transakcí neznamená úspěch.
 
 ---
