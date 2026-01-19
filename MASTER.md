@@ -1918,6 +1918,7 @@ Kontrakt:
 
 Zdrojová data (mapa, aby to neujelo ve slovníku):
 - Jediný zdroj je `listing_event`. Je to append-only log událostí nad inzerátem. Každý řádek v tabulce níž je **event v `listing_event`**.
+- Když vznikne transakce, zapíšu to **dvakrát**: do `listing_event` jako `transaction.created` (kvůli metrikám inzerátu) a do `user_event` (kvůli metrikám lidí). Spamujeme schválně: každý svět slouží svýmu účelu.
 
 | Event (`listing_event`) | Vznik                                                                    | Na co to používám                                                                                                        |
 | ----------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
@@ -1926,7 +1927,7 @@ Zdrojová data (mapa, aby to neujelo ve slovníku):
 | `view`                  | detail otevřený alespoň **2,5 s**                                        | metrika „reálnej zájem o detail“ (autorita: [Metrika: View](#koncept-metrika-inzeratu-view))                             |
 | `thumbs`                | uživatel dá like/dislike nad inzerátem                                   | signál atraktivity (autorita: [Metrika: Thumbs](#koncept-metrika-inzeratu-thumbs))                                       |
 | `ignored`               | uživatel dá ignor nad inzerátem                                          | osobní úklid + signál pro prodávajícího (autorita: [Metrika: Ignored](#koncept-metrika-inzeratu-ignored))                |
-| `transactions`          | vznikne transakce nad inzerátem                                          | metrika zájmu (autorita: [Metrika: Transactions](#koncept-metrika-inzeratu-transactions))                                |
+| `transaction.created`   | vznikne transakce nad inzerátem                                          | metrika zájmu (autorita: [Metrika: Transactions](#koncept-metrika-inzeratu-transactions))                                |
 | `anti-topper`           | potlačení zvýraznění pro uživatele s [Anti-topper](#koncept-anti-topper) | měření potlačení + [Payback](#koncept-payback) (autorita: [Metrika: Anti-topper](#koncept-metrika-inzeratu-anti-topper)) |
 
 Co ukazuju:
