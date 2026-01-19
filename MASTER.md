@@ -1490,14 +1490,14 @@ XP je interní gamifikační bodování, který mi pomáhá popsat „jak moc a 
 Kontrakt:
 - XP je **per uživatel** a **přičítá se** za vybrané akce.
 - Level je **odvozený** z XP (hranice levelů není).
-- Některý akce půjdou farmit. Zatím to vědomě toleruju (anti-farm pravidla: `user events`).
+- Některý akce půjdou farmit. Zatím to vědomě toleruju (anti-farm pravidla drží [User Eventy](#koncept-user-eventy)).
 
-„Tabulka“ přídělu XP (pracovní verze):
+Příděl XP:
 
 | Akce               | XP  | Poznámka              |
 | ------------------ | --- | --------------------- |
-| Vytvoření feedu    | TBD | farmitelné (zatím OK) |
-| Publikace inzerátu | TBD | farmení složité       |
+| Vytvoření feedu    | 5   | farmitelné (zatím OK) |
+| Publikace inzerátu | 25  | farmení složité       |
 
 Related:
 - [Feed](#koncept-feed)
@@ -2703,7 +2703,7 @@ Pozn.:
 | [Multi-Category](#koncept-multi-category)           | Kupón        | 1 použití (1 + 2 kategorie)            | 75           |
 | [Detail protistrany](#koncept-detail-protistrany)   | Kupón → Pass | 7 dnů                                  | 50           |
 | [Photo Count](#koncept-limit-poctu-fotek)           | Kupón → Pass | 1 měsíc (+2 fotky)                     | 75           |
-| Aktivní inzeráty 10                                 | Kupón → Pass | 1 měsíc                                | TBD          |
+| Aktivní inzeráty 20                                 | Kupón → Pass | 1 měsíc                                | 80           |
 | [Payback](#koncept-payback)                         | Pass         | Benefit předplatného                   | Exclusive    |
 | [Kontinuální nabídka](#koncept-kontinualni-nabidka) | Kupón → Pass | 1 měsíc (prodlouží život inzerátu)     | Exclusive    |
 
