@@ -1032,7 +1032,7 @@ Kontrakt:
 - Anti-topper **nikdy neblokuje detail**. Je to mechanika listingu, ne zákaz existence.
 
 Měření:
-- Když by se v listingu ukázal inzerát se zvýrazněním (Mark/Top) uživateli s Anti-topperem, místo [`visible`](#koncept-metrika-inzeratu-visible) vznikne event `anti-topper`.
+- Když by se v listingu ukázal inzerát se zvýrazněním (Mark/Top) uživateli s Anti-topperem, místo [`visible`](#koncept-metrika-inzeratu-visible) vznikne event [`anti-topper`](#koncept-metrika-inzeratu-anti-topper).
 
 ---
 
@@ -1212,7 +1212,7 @@ Co ukazuju:
 | `transactions` | kolik zájmů / otevřených obchodů inzerát vyvolal |
 
 Anti-topper v číslech:
-- poměr `anti-topper / (visible + anti-topper)` (kde [`visible`](#koncept-metrika-inzeratu-visible) je „reálný zobrazení karty“)
+- poměr `anti-topper / (visible + anti-topper)` (kde [`visible`](#koncept-metrika-inzeratu-visible) je „reálný zobrazení karty“ a [`anti-topper`](#koncept-metrika-inzeratu-anti-topper) je potlačení zvýraznění)
 
 ---
 
@@ -1328,5 +1328,33 @@ Význam:
 
 Deduplikace:
 - Max 1× na jedno zobrazení listu pro danej inzerát.
+
+---
+
+<a id="koncept-metrika-inzeratu-anti-topper"></a>
+### Metrika: Anti-topper
+
+Related:
+- [Anti-topper](#koncept-anti-topper)
+- [Payback](#koncept-payback)
+- [Rozšířená data u inzerátu](#koncept-rozsirena-data-inzeratu)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Inzerát](#koncept-inzerat)
+- [Metrika: Visible](#koncept-metrika-inzeratu-visible)
+
+Zdroj:
+- `anti-topper`
+
+Význam:
+- Když má uživatel aktivní [Anti-topper](#koncept-anti-topper) a v listingu by se měl ukázat inzerát se zvýrazněním **Mark/Top**, systém místo [`visible`](#koncept-metrika-inzeratu-visible) zapíše `anti-topper`.
+
+Smysl:
+- Měřím „kolikrát bylo zvýraznění potlačeno“ (metriky + případnej [Payback](#koncept-payback)).
+
+Výjimka:
+- Pro **Top Maxxi** se `anti-topper` negeneruje (je imunní).
+
+Deduplikace:
+- Typicky stejný limity jako [`visible`](#koncept-metrika-inzeratu-visible) (ať z toho není spam).
 
 ---
