@@ -1758,3 +1758,24 @@ Důvody:
 - přínos je úzkej a kontextovej
 
 ---
+
+<a id="koncept-landing"></a>
+### Landing
+
+Related:
+- [Uživatel](#koncept-uzivatel)
+- [Kodex](#kodex)
+
+Landing je vizitka postoje. Držím to krátký: pět bloků a hotovo.
+
+| Blok | Co je uvnitř | Proč |
+|---|---|---|
+| Hero | claim **„Nakupuješ nebo prodáváš?“** + 2 rovnocenný CTA: **„Už se známe“** (Login), **„Přidej se!“** (Register) | žádný trick CTA, žádnej nátlak |
+| Autor | moje fotka, moje jméno, odkaz na GitHub, motto **„Bez keců. Bez ojebů.“** | důvěra přes tvář a odpovědnost |
+| Aktivita vývoje | GitHub-like heatmap | důkaz práce, ne sliby |
+| Live Pulse | poslední události (registrace, nový inzeráty, transakce) | ať je vidět, že to žije |
+| Transparentní účet | link na bankovnictví | finance netajím; kdo hledá shady shit, tady by to bylo |
+
+Tón: minimalistickej. Bez popupů, bez urgencí, bez vysvětlování.
+
+---
