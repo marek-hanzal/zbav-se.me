@@ -58,6 +58,13 @@ Jestli nějaká feature nebo monetizační nápad poruší kodex, je to automati
 <a id="duvera-default"></a>
 ### Důvěra jako výchozí stav
 
+Related:
+- [Transakce](#koncept-transakce)
+- [Zprávy](#koncept-zpravy)
+- [Notifikace](#koncept-notifikace)
+- [Retence](#retence)
+- [Ekonomika](#ekonomika)
+
 Důvěra u mě není odměna ani razítko po „ověření identity“. Je to vlastnost prostředí.
 
 Co z toho plyne:
@@ -68,6 +75,14 @@ Co z toho plyne:
 
 <a id="ferova-monetizace"></a>
 ### Férová monetizace a neaktivita
+
+Related:
+- [Ekonomika](#ekonomika)
+- [Předplatné](#koncept-predplatne)
+- [Tokeny](#koncept-tokeny)
+- [Aktivace](#koncept-aktivace)
+- [Ceník](#koncept-cenik)
+- [Exclusive](#koncept-exclusive)
 
 Paywall není past. Je to cedule u dveří: vidíš ji dřív, než do nich vejdeš.
 
@@ -80,6 +95,15 @@ Co držím:
 <a id="no-p2w"></a>
 ### Žádné pay-to-win
 
+Related:
+- [Ekonomika](#ekonomika)
+- [Mark](#koncept-mark)
+- [Top](#koncept-top)
+- [Top Maxxi](#koncept-top-maxxi)
+- [Anti-topper](#koncept-anti-topper)
+- [Ceník](#koncept-cenik)
+
+
 Peníze u mě nesmí dělat z lidí „lepší občany“. Nechci trh, kde vyhrává ten, kdo nejvíc zaplatí, a ostatní jen čumí na zadek.
 
 To znamená:
@@ -89,6 +113,15 @@ To znamená:
 
 <a id="respekt"></a>
 ### Respekt k uživateli
+
+Related:
+- [Notifikace](#koncept-notifikace)
+- [Citlivost](#koncept-citlivost-inzeratu)
+- [Ignor](#koncept-ignorace-inzeratu)
+- [Retence](#retence)
+- [UI: Rámec](#koncept-ui-ramec)
+- [Transakce](#koncept-transakce)
+
 
 Uživatel není cíl pro optimalizaci metrik. Je to člověk, co si chce v klidu prodat nebo koupit věc.
 
@@ -101,6 +134,11 @@ Respekt v praxi:
 
 <a id="otevrenost"></a>
 ### Otevřenost a odpovědnost
+
+Related:
+- [Komunikace a transparentnost](#komunikace)
+- [Kodex](#kodex)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
 
 Nejsem anonymní „tým“ a nechci se za nic schovávat. Když něco poseru, je to moje. Když něco funguje, je to taky moje.
 
@@ -153,6 +191,13 @@ Jak mluvím:
 <a id="produktove-cile"></a>
 ### Produktové cíle
 
+Related:
+- [Transakce](#koncept-transakce)
+- [Citlivost](#koncept-citlivost-inzeratu)
+- [Kodex](#kodex)
+- [Ekonomika](#ekonomika)
+
+
 Nechci stavět „appku“. Chci postavit **trh**, kterej je čitelnej a předvídatelnej:
 
 - **Ticho = úspěch.** Když uživatel nic neřeší, vyhrál jsem.
@@ -165,6 +210,11 @@ Nechci stavět „appku“. Chci postavit **trh**, kterej je čitelnej a předv�
 <a id="ux-principy"></a>
 ### UX principy
 
+Related:
+- [Kodex](#kodex)
+- [Ekonomika](#ekonomika)
+
+
 > **Když to potřebuje nápovědu, je to špatně navržený.**
 
 Moje pravidla UX:
@@ -176,6 +226,11 @@ Moje pravidla UX:
 
 <a id="komunikace"></a>
 ### Komunikace a transparentnost
+
+Related:
+- [Kodex](#kodex)
+- [Ekonomika](#ekonomika)
+
 
 Nejrychlejší způsob, jak zabít důvěru, je dělat tajnosti a pak se tvářit, že „to je pro tvoje dobro“. Já na to seru.
 
@@ -200,6 +255,15 @@ Moje výhoda není jedna „killer feature“. Moje výhoda je **charakter trhu*
 
 <a id="co-umim-lip"></a>
 ### Co umím líp
+
+Related:
+- [Transakce](#koncept-transakce)
+- [Zprávy](#koncept-zpravy)
+- [Lokace](#koncept-lokace)
+- [Feed](#koncept-feed)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Kodex](#kodex)
+
 
 1) **Domluva: normální chat + strukturovaný fakta navíc**  
 Lidi si můžou psát normálně. Rozdíl je v tom, že systém drží fakta vedle toho: zájem, přijetí/odmítnutí, čas, místo, ukončení. (Viz [Transakce](#koncept-transakce), [Zprávy](#koncept-zpravy).)
@@ -234,6 +298,11 @@ Co je osobní a patří jen do domluvy, nesmí v systému hnít věčně. (Viz [
 <a id="slabina"></a>
 ### V čem je má slabina (a proč s tím počítám)
 
+Related:
+- [Uvedení na trh](#uvedeni-na-trh)
+- [Notifikace](#koncept-notifikace)
+
+
 - **Network efekt:** Na startu tam nebude „všechno“. To je gravitace, ne bug. Řeším to sekvenčním startem (viz [Uvedení na trh](#uvedeni-na-trh)).
 - **Míň impulsního prodeje přes chaos:** Míň šumu může krátkodobě vypadat pomaleji. Dlouhodobě je to zdravější trh.
 - **Transparentnost je závazek:** Znamená míň kliček a víc práce. Správně.
@@ -242,6 +311,10 @@ Co je osobní a patří jen do domluvy, nesmí v systému hnít věčně. (Viz [
 
 <a id="co-nedelam"></a>
 ### Co vědomě nedělám
+
+Related:
+- [Notifikace](#koncept-notifikace)
+
 
 - **Žádný prodej dat.** Nikdy.
 - **Žádný dark patterns.** Žádný „nejde odejít“, schovaný volby, vynucený souhlasy.
@@ -267,6 +340,15 @@ Pravidlo proti duplicitám (znovu a naposled):
 <a id="koncept-uzivatel"></a>
 ### Uživatel
 
+Related:
+- [Feedy](#koncept-feed)
+- [Drafty](#koncept-draft)
+- [Inzeráty](#koncept-inzerat)
+- [Transakce](#koncept-transakce)
+- [Zprávy](#koncept-zpravy)
+- [Inbox](#koncept-notifikace)
+
+
 Uživatel je core entita. Je na něj navázaný skoro všechno (inzeráty, drafty, feedy, transakce, inbox), ale osobní data držím na minimu. Je to vědomá brzda: všechno navíc je jen riziko a dluh.
 
 Co uživatel reálně ovládá:
@@ -287,6 +369,11 @@ Kontrakt (co si hlídám):
 
 <a id="koncept-kategorie"></a>
 ### Kategorie
+
+Related:
+- [Draft](#koncept-draft)
+- [Feed](#koncept-feed)
+
 
 Kategorie je organizační vrstva trhu. Je to kontext, ve kterým dává smysl jinej jazyk a jiný filtry. Držím ji jednoduchou, protože složitá taxonomie je jen bordel pro lidi.
 
@@ -314,6 +401,12 @@ Range filtry jsou vědomý rozhodnutí. Když je zavedu, beru na sebe odpovědno
 <a id="koncept-lokace"></a>
 ### Lokace
 
+Related:
+- [Feed](#koncept-feed)
+- [Inzerát](#koncept-inzerat)
+- [Transakce](#koncept-transakce)
+
+
 Lokace je autorita na polohu. Neukládám random texty typu „u Pepy na rohu“. Když se bavíme o poloze, bavíme se o jednom konkrétním záznamu, na kterej se dá odkázat.
 
 K čemu lokace slouží:
@@ -330,6 +423,12 @@ Kontrakt:
 
 <a id="koncept-uploady"></a>
 ### Uploady
+
+Related:
+- [Inzerátu](#koncept-inzerat)
+- [Zprávách](#koncept-zpravy)
+- [Transakce](#koncept-transakce)
+
 
 Upload je centrální záznam pro soubor (hlavně fotky). Je to autorita na „tenhle soubor existuje a má tyhle metadata“. Nechci, aby se soubory válely po systému jako náhodný URLčka bez kontextu.
 
@@ -348,6 +447,15 @@ Kontrakt životnosti (důležitý):
 
 <a id="koncept-inzerat"></a>
 ### Inzerát
+
+Related:
+- [Uživatel](#koncept-uzivatel)
+- [Kategorie](#koncept-kategorie)
+- [Lokace](#koncept-lokace)
+- [Uploady](#koncept-uploady)
+- [Ekonomika](#ekonomika)
+- [Draftu](#koncept-draft)
+
 
 Inzerát je veřejná nabídka v trhu. Je to „to, co ukazuju světu“ — a proto to beru vážně. Všechno, co je v inzerátu, je signál: kvalita, důvěra, bezpečí, očekávání.
 
@@ -385,6 +493,11 @@ Poznámky:
 <a id="koncept-draft"></a>
 ### Draft
 
+Related:
+- [Inzerát](#koncept-inzerat)
+- [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu)
+
+
 Draft je vstupní bod tvorby. Inzerát nenechám vzniknout „kliknutím“. Vzniká až publikací Draftu. (Viz [Inzerát](#koncept-inzerat).)
 
 Co je Draft:
@@ -411,6 +524,15 @@ UX kontrakt:
 <a id="koncept-feed"></a>
 ### Feed
 
+Related:
+- [Kategorie](#koncept-kategorie)
+- [Lokace](#koncept-lokace)
+- [Limit počtu feedů](#koncept-limit-poctu-feedu)
+- [Citlivost](#koncept-citlivost-inzeratu)
+- [Ignor](#koncept-ignorace-inzeratu)
+- [Inzerátu](#koncept-inzerat)
+
+
 Feed je uložené nastavení filtru nad inzeráty. Není to „seznam“, je to **předpis**: „co chci vidět a odkud“.
 
 Co feed nese:
@@ -432,6 +554,11 @@ Pravidla:
 
 <a id="koncept-citlivost-inzeratu"></a>
 ### Citlivost
+
+Related:
+- [Feed](#koncept-feed)
+- [Inzerát](#koncept-inzerat)
+
 
 Obsah není jen „co prodávám“. Obsah je i to, *jestli to můžeš vůbec vidět*. Citlivost je hard gate: chrání veřejnej prostor před obsahem, kterej určitá skupina lidí buď **nechce**, nebo ho **ani nesmí** vidět.
 
@@ -462,6 +589,12 @@ Odpovědnost:
 <a id="koncept-ignorace-inzeratu"></a>
 ### Ignor
 
+Related:
+- [Inzerát](#koncept-inzerat)
+- [Feedy](#koncept-feed)
+- [Flag inzerátu](#koncept-flag-inzeratu)
+
+
 Ignor je osobní úklid. Není to trest, není to report, není to drama.
 
 Co ignor znamená:
@@ -491,6 +624,11 @@ Ignor není [Flag inzerátu](#koncept-flag-inzeratu):
 <a id="koncept-flag-inzeratu"></a>
 ### Flag inzerátu
 
+Related:
+- [Inzerátu](#koncept-inzerat)
+- [Ignor](#koncept-ignorace-inzeratu)
+
+
 Flag je „tady je problém“, ne „nelíbí se mi to“. Je to bezpečnostní signál a reputační stopa. Nechci z toho dělat tribunál ani automatickýho soudce.
 
 Kontrakt:
@@ -512,6 +650,11 @@ Flag není [Ignor](#koncept-ignorace-inzeratu):
 <a id="koncept-flag-uzivatele"></a>
 ### Flag uživatele
 
+Related:
+- [Transakce](#koncept-transakce)
+- [Zprávy](#koncept-zpravy)
+- [Ban](#koncept-ban)
+
 Nahlásit člověka bez kontextu je toxická zbraň. Proto to gateuju chováním systému.
 
 Kontrakt:
@@ -524,6 +667,11 @@ Kontrakt:
 <a id="koncept-limit-poctu-feedu"></a>
 ### Limit počtu feedů
 
+Related:
+- [Ceník](#koncept-cenik)
+- [Aktivace](#koncept-aktivace)
+
+
 Limit není trest. Je to mantinel, aby se z toho nestal inventář nekonečna.
 
 Kontrakt:
@@ -535,6 +683,12 @@ Kontrakt:
 
 <a id="koncept-limit-poctu-fotek"></a>
 ### Limit počtu fotek nad inzerátem
+
+Related:
+- [Ekonomiku](#ekonomika)
+- [Kupón](#koncept-kupon)
+- [Pass](#koncept-pass)
+
 
 Fotky jsou primární obsah inzerátu. Limit fotek je brzda proti šumu a zároveň jasný místo, kam se dá férově navázat „komfort navíc“.
 
@@ -549,6 +703,14 @@ Kontrakt:
 <a id="koncept-limit-aktivnich-inzeratu"></a>
 ### Limit aktivních inzerátů
 
+Related:
+- [Passu](#koncept-pass)
+- [Draft](#koncept-draft)
+- [Ekonomiku](#ekonomika)
+- [Kupón](#koncept-kupon)
+- [Tokeny](#koncept-tokeny)
+
+
 Limit aktivních inzerátů drží hygienu trhu a chrání pozornost. Nechci, aby se z feedu stal hřbitov a z prodejce správce inventáře.
 
 Kontrakt:
@@ -562,6 +724,10 @@ Kontrakt:
 
 <a id="koncept-transakce"></a>
 ### Transakce
+
+Related:
+- [Zprávách](#koncept-zpravy)
+
 
 Transakce je obálka obchodu: stav, pravidla a timeline. **Stojí na [Zprávách](#koncept-zpravy)** — zprávy jsou obsah, transakce je kontext.
 
@@ -606,6 +772,10 @@ Retence a čistky:
 
 <a id="koncept-zpravy"></a>
 ### Zprávy
+
+Related:
+- [Lokace](#koncept-lokace)
+
 
 Zprávy jsou obsah transakce. Text je volnost pro lidi, ale systém drží fakta vedle toho.
 
@@ -668,6 +838,12 @@ Kritické výjimky:
 
 <a id="koncept-seznam-inzeratu"></a>
 ### Seznam inzerátů
+
+Related:
+- [Feed](#koncept-feed)
+- [Citlivost](#koncept-citlivost-inzeratu)
+- [Inzerátu](#koncept-inzerat)
+
 
 „Seznam“ není stránka. Seznam je vždycky **výsledek dotazu** ([Feed](#koncept-feed) / hledání). Jeden engine, jeden kontrakt.
 
