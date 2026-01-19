@@ -1207,7 +1207,7 @@ Co ukazuju:
 |---|---|
 | [`impression`](#koncept-metrika-inzeratu-impression) | „zaujalo“ (viz definice Impression) |
 | [`view`](#koncept-metrika-inzeratu-view) | reálnej zájem o detail (viz definice View) |
-| `thumbs` | palce (like/dislike) jako signál atraktivity nabídky |
+| [`thumbs`](#koncept-metrika-inzeratu-thumbs) | palce (like/dislike) jako signál atraktivity nabídky |
 | `ignored` | kolikrát lidi dali ignor (osobní úklid, „tohle nechci vídat“) |
 | `transactions` | kolik zájmů / otevřených obchodů inzerát vyvolal |
 
@@ -1356,5 +1356,25 @@ Výjimka:
 
 Deduplikace:
 - Typicky stejný limity jako [`visible`](#koncept-metrika-inzeratu-visible) (ať z toho není spam).
+
+---
+
+<a id="koncept-metrika-inzeratu-thumbs"></a>
+### Metrika: Thumbs
+
+Related:
+- [Palce](#koncept-palce)
+- [Rozšířená data u inzerátu](#koncept-rozsirena-data-inzeratu)
+- [Inzerát](#koncept-inzerat)
+
+Zdroj:
+- `thumbs`
+
+Význam:
+- Palce (like/dislike) jako signál atraktivity nabídky.
+
+Kontrakt:
+- `thumbs` jsou reálný entity palců nad inzerátem (viz [Palce](#koncept-palce)).
+- Nejsou to veřejný ego-lajky. Je to data pro produkt a pro mě.
 
 ---
