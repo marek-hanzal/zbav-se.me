@@ -69,6 +69,7 @@ Pozn.: **Obsah je autorita pořadí.** Pořadí kapitol a konceptů v dokumentu 
   - [Notifikace (Inbox)](#koncept-notifikace)
   - [Dispute](#koncept-dispute)
   - [Automatické ukončení: Inzerát](#koncept-automaticke-ukonceni-inzeratu)
+  - [Pass: Delší expirace inzerátu (Za měsíc)](#koncept-pass-delsi-expirace-inzeratu)
   - [Automatické ukončení: Transakce](#koncept-automaticke-ukonceni-transakce)
   - [Limit počtu feedů](#koncept-limit-poctu-feedu)
   - [Limit počtu fotek nad inzerátem](#koncept-limit-poctu-fotek)
@@ -1201,24 +1202,24 @@ Základní kontrakty:
 - 1 vlákno = 1 transakce = 1 konkrétní inzerát (izolovaný kontext).
 - Stavový model je autorita tady v tomhle dokumentu.
 - „Zavřeno je zavřeno“: terminal stavy jsou read-only, nejde re-open.
-- „Zavřít bez emocí“ je `rejected`: moje volba odmítnout a dát protistraně hint „OK, tady cesta nevede“.
+- „Zavřít bez emocí“ je `rejected`: explicitní stopka a hint „OK, tady cesta nevede“. Na začátku transakce to může poslat **prodejce i kupující**.
 
 Stavový model (prakticky):
 
 | Stav       | Kdy                                                                                          | Co je povolený                                                                                                                                                   |
 | ---------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pending`  | kupující klikne „Mám zájem“                                                                  | kupující **nemůže psát**, ale může **couvnout** (zrušit zájem → `closed`); prodejce jen **Přijmout** / **Odmítnout**                                             |
+| `pending`  | kupující klikne „Mám zájem“                                                                  | kupující **nemůže psát**, ale může **couvnout** (zrušit zájem → `rejected`); prodejce jen **Přijmout** / **Odmítnout**                                           |
 | `open`     | prodejce přijme                                                                              | odemknou se zprávy + strukturovaný widgety                                                                                                                       |
 | `resolved` | prodejce označí „vyřešeno“                                                                   | **inzerát přepnu do `sold`**; ostatní transakce nad tímhle inzerátem přepnu do `sold`; tahle transakce běží dál, dokud kupující nedá finále (`success`/`closed`) |
 | `dispute`  | někdo přepne do sporu                                                                        | běží dál (řeší se), dokud kupující nedá finále (`success`/`closed`)                                                                                              |
-| `rejected` | prodejce odmítne („bez emocí“)                                                               | read-only                                                                                                                                                        |
+| `rejected` | kupující nebo prodejce odmítne („bez emocí“)                                                 | read-only                                                                                                                                                        |
 | `sold`     | systém označí „už prodáno“ (inzerát se prodal v jiným vlákně / ručně)                        | read-only                                                                                                                                                        |
 | `expired`  | transakce vyprší po **3 dnech bez aktivity** (aktivita = cokoliv, co se stane nad transakcí) | read-only                                                                                                                                                        |
 | `success`  | kupující potvrdí „dopadlo to“                                                                | read-only                                                                                                                                                        |
 | `closed`   | kupující zavře (ukončí pro sebe)                                                             | read-only                                                                                                                                                        |
 
 Poznámky ke koncům:
-- `rejected` = prodejce odmítl („zavřít bez emocí“).
+- `rejected` = někdo odmítl („zavřít bez emocí“) — na začátku to může být i „couvnutí“ kupujícího.
 - `closed` = kupující to zavřel z vlastní vůle.
 - `sold` = systémová stopka „už prodáno“ (bez emocí, bez dohadů).
 
@@ -1337,7 +1338,7 @@ Related:
 
 <a id="koncept-automaticke-ukonceni-inzeratu"></a>
 ### Automatické ukončení: Inzerát
-← [předchozí](#koncept-dispute) | [další](#koncept-automaticke-ukonceni-transakce) →
+← [předchozí](#koncept-dispute) | [další](#koncept-pass-delsi-expirace-inzeratu) →
 
 Automatické ukončení je povinná volba. Drží pořádek v nabídce a brání tomu, aby se z feedu stal hřbitov.
 
@@ -1354,7 +1355,7 @@ Předdefinované volby:
 | Za dva týdny | „Dám tomu čas, ale nechci mrtvoly“            | rozumný střed                                                                                  |
 | Za měsíc     | „Vím, že to bude trvat“                       | **zpoplatněná volba** (jinak kanibalizuje [Kontinuální nabídku](#koncept-kontinualni-nabidka)) |
 
-„Za měsíc“ je placený nastavení delšího `expiresAt` (odemykám přes [Ekonomiku](#ekonomika): kupón / předplatné). Je to schválně: kdyby to bylo zdarma, lidi si vyrobí nekonečný inzeráty bez odpovědnosti. A [Kontinuální nabídka](#koncept-kontinualni-nabidka) je separátní pass na prodloužení života.
+„Za měsíc“ je placená volba: odemykám ji přes [Pass: Delší expirace inzerátu](#koncept-pass-delsi-expirace-inzeratu) (aktivace kupónem / benefitem balíčku, autorita je [Ekonomika](#ekonomika)). Je to schválně: kdyby to bylo zdarma, lidi si vyrobí nekonečný inzeráty bez odpovědnosti. [Kontinuální nabídka](#koncept-kontinualni-nabidka) je separátní pass na prodloužení života.
 
 Tyhle dvě věci jdou složit:
 - krátký inzerát (týden/dva týdny) + Kontinuální nabídka = delší život,
@@ -1363,14 +1364,36 @@ Tyhle dvě věci jdou složit:
 Related:
 - [Inzerát](#koncept-inzerat)
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Pass: Delší expirace inzerátu](#koncept-pass-delsi-expirace-inzeratu)
 - [Kontinuální nabídka](#koncept-kontinualni-nabidka)
+- [Ekonomika](#ekonomika)
+
+---
+
+<a id="koncept-pass-delsi-expirace-inzeratu"></a>
+### Pass: Delší expirace inzerátu (Za měsíc)
+← [předchozí](#koncept-automaticke-ukonceni-inzeratu) | [další](#koncept-automaticke-ukonceni-transakce) →
+
+Tenhle [Pass](#koncept-pass) odemyká v expiraci inzerátu placenou volbu „Za měsíc“. Není to bump, není to republish. Je to jen delší `expiresAt`.
+
+Kontrakt:
+- Bez aktivního passu se „Za měsíc“ v UI nenabízí.
+- Pass je časově omezený a vzniká přes [Aktivaci](#koncept-aktivace) (typicky [Kupón](#koncept-kupon) → pass).
+- Pass nemění `createdAt`, nemění [Release window](#koncept-release-window) a nemění řazení. Je to jen delší život inzerátu.
+- Používá se v expiraci inzerátu (autorita je [Automatické ukončení: Inzerát](#koncept-automaticke-ukonceni-inzeratu)).
+
+Related:
+- [Automatické ukončení: Inzerát](#koncept-automaticke-ukonceni-inzeratu)
+- [Pass](#koncept-pass)
+- [Kupón](#koncept-kupon)
+- [Aktivace](#koncept-aktivace)
 - [Ekonomika](#ekonomika)
 
 ---
 
 <a id="koncept-automaticke-ukonceni-transakce"></a>
 ### Automatické ukončení: Transakce
-← [předchozí](#koncept-automaticke-ukonceni-inzeratu) | [další](#koncept-limit-poctu-feedu) →
+← [předchozí](#koncept-pass-delsi-expirace-inzeratu) | [další](#koncept-limit-poctu-feedu) →
 
 Nechci nedotažený transakce žít navěky. Když se obchod nerozjede nebo se nedotáhne a nikdo ho explicitně neuzavře, transakce vyprší.
 
@@ -1552,6 +1575,7 @@ Eventy, se kterýma počítám (dnes):
 | `source`      | `event`                                                                                                                                                                                                 |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `listing`     | `listing.create`, `listing.sold`                                                                                                                                                                        |
+| `user`        | `user.active` (heartbeat: 1× za hodinu při pobytu v appce, počítáno od prvního otevření)                                                                                                                |
 | `transaction` | `transaction.create`, `transaction.open`, `transaction.message`, `transaction.resolved`, `transaction.sold`, `transaction.success`, `transaction.rejected`, `transaction.closed`, `transaction.expired` |
 
 Na co to používám:
@@ -1749,6 +1773,7 @@ Proč existuje:
 Kontrakt:
 - Aktivita je signál přítomnosti, ne kvality charakteru.
 - Definice musí být viditelná a stabilní (žádný měnění pod stolem).
+- Autorita signálu: `user.active` (1× za hodinu při pobytu v appce, počítáno od prvního otevření). Listing eventy (scroll/view) do toho **nepočítám**.
 
 Related:
 - [Metriky prodávajícího](#koncept-metriky-prodavaciho)
@@ -1783,8 +1808,8 @@ Proč existuje:
 
 Kontrakt:
 - Metrika popisuje rychlý ukončování bez smysluplný interakce.
-- Neplete se to s `rejected` (legitimní odmítnutí prodejce). Je to chování v čase.
-- Couvnutí kupujícího v `pending` se počítá do closer (otevření obchodu není random klik, je to vědomý rozhodnutí).
+- Neplete se to s `rejected` jako legitimní stopkou (hlavně když odmítá prodejce). Je to chování v čase.
+- Výjimka: couvnutí kupujícího v `pending` (`rejected`) se do closer počítá (otevření obchodu není random klik, je to vědomý rozhodnutí).
 
 Related:
 - [Metriky kupujícího](#koncept-metriky-kupujiciho)
@@ -2193,8 +2218,8 @@ Tohle je férovka vůči lidem, co platí a pak na to zapomenou. Radši přijdu 
 Kontrakt:
 - Po **1 měsíci neaktivity** pošlu email připomínku.
 - Po **2 měsících neaktivity** předplatné **ukončím**: doběhne aktuální období a na konci už se **neobnoví**.
-- Aktivita = existuje aspoň jeden `user_event` se `scope=user` (moje vlastní akce) v daným čase.
-- Neaktivita je chování (signál používání), ne “nemám chuť kliknout na cancel”.
+- Aktivita = existuje aspoň jeden `user.active` (`user_event`, `scope=user`) v daným čase. Je to nudnej heartbeat „hej bro, jsem tu“ (1× za hodinu při pobytu v appce).
+- Neaktivita je chování (signál používání), ne "nemám chuť kliknout na cancel".
 
 Related:
 - [Předplatné](#koncept-predplatne)
@@ -2359,7 +2384,8 @@ Related:
 Kontrakt:
 - Kompenzuje jen boosty, který [Anti-topper](#koncept-anti-topper) umí potlačit: **Mark** a **Top**.
 - **Top Maxxi** je imunní → payback pro něj nikdy nevzniká.
-- Vyhodnocuju ve chvíli, kdy inzerát dostane svůj terminal stav: `expired` nebo `sold` (už se nic nevrací do hry, jen vyrovnám účty).
+- Vyhodnocuju ve chvíli, kdy inzerát dostane svůj terminal stav: `expired` / `sold` / `closed` (už se nic nevrací do hry, jen vyrovnám účty).
+- Když prodejce inzerát ručně zavře (`closed`), vyúčtování proběhne taky. Payback může vyjít klidně **0** — ale nesmí to „nechat viset“.
 - [Payback](#koncept-payback) je **[Pass](#koncept-pass) ([Exclusive](#koncept-exclusive))** (typicky Seller/Pro) a vzniká jen pokud má prodávající v době vyhodnocení aktivní [Payback](#koncept-payback) pass.
 
 Related:
@@ -2644,30 +2670,31 @@ Refundy a férovky:
 
 Balíčky jsou měsíční balík oprávnění + příděly. Nejsou to role. Oprávnění jsou vždycky jen [Passy](#koncept-pass) a limity na účtu.
 
-| Položka                                             | Kupující<br>(119 Kč) | Prodejce<br>(229 Kč) | **Pro**<br>(499 Kč) |
-| :-------------------------------------------------- | :------------------: | :------------------: | :-----------------: |
-| **Tokeny / měsíc**                                  | 300 T                | 300 T                | **600 T**           |
-| **Limity**                                          |                      |                      |                     |
-| Uložené Feedy                                       | 5                    | -                    | **10**              |
-| Aktivní inzeráty                                    | 5                    | 10                   | **20**              |
-| **Passy (Trvalé)**                                  |                      |                      |                     |
-| [Payback](#koncept-payback)                         | -                    | ✓                    | **✓**               |
-| [Photo Count](#koncept-limit-poctu-fotek) (+foto)   | -                    | ✓                    | **✓**               |
-| [Rozšířená data](#koncept-rozsirena-data-inzeratu)  | -                    | ✓                    | **✓**               |
-| [Inzerát: Brand](#koncept-inzerat-brand)            | -                    | ✓                    | **✓**               |
-| [Detail protistrany](#koncept-detail-protistrany)   | -                    | -                    | **✓**               |
-| [Anti-topper](#koncept-anti-topper)                 | -                    | -                    | **✓**               |
-| [Early Access](#koncept-early-access)               | -                    | -                    | **✓**               |
-| [Multi-Category](#koncept-multi-category)           | -                    | -                    | **✓**               |
-| **Kupóny (Měsíčně)**                                |                      |                      |                     |
-| [Early Access](#koncept-early-access)               | 5×                   | -                    | **(Pass)**          |
-| [Anti-topper](#koncept-anti-topper)                 | 5×                   | -                    | **(Pass)**          |
-| [Early Delivery](#koncept-early-delivery)           | -                    | 3×                   | **3×**              |
-| [Mark](#koncept-mark)                               | -                    | 3×                   | **3×**              |
-| [Top](#koncept-top)                                 | -                    | 3×                   | **3×**              |
-| [Top Maxxi](#koncept-top-maxxi)                     | -                    | 1×                   | **3×**              |
-| [Multi-Category](#koncept-multi-category)           | -                    | 3×                   | **(Pass)**          |
-| [Kontinuální nabídka](#koncept-kontinualni-nabidka) | -                    | 3×                   | **5×**              |
+| Položka                                                          | Kupující<br>(119 Kč) | Prodejce<br>(229 Kč) | **Pro**<br>(499 Kč) |
+| :--------------------------------------------------------------- | :------------------: | :------------------: | :-----------------: |
+| **Tokeny / měsíc**                                               | 300 T                | 300 T                | **600 T**           |
+| **Limity**                                                       |                      |                      |                     |
+| Uložené Feedy                                                    | 5                    | -                    | **10**              |
+| Aktivní inzeráty                                                 | 5                    | 10                   | **20**              |
+| **Passy (Trvalé)**                                               |                      |                      |                     |
+| [Payback](#koncept-payback)                                      | -                    | ✓                    | **✓**               |
+| [Photo Count](#koncept-limit-poctu-fotek) (+foto)                | -                    | ✓                    | **✓**               |
+| [Delší expirace inzerátu](#koncept-pass-delsi-expirace-inzeratu) | -                    | ✓                    | **✓**               |
+| [Rozšířená data](#koncept-rozsirena-data-inzeratu)               | -                    | ✓                    | **✓**               |
+| [Inzerát: Brand](#koncept-inzerat-brand)                         | -                    | ✓                    | **✓**               |
+| [Detail protistrany](#koncept-detail-protistrany)                | -                    | -                    | **✓**               |
+| [Anti-topper](#koncept-anti-topper)                              | -                    | -                    | **✓**               |
+| [Early Access](#koncept-early-access)                            | -                    | -                    | **✓**               |
+| [Multi-Category](#koncept-multi-category)                        | -                    | -                    | **✓**               |
+| **Kupóny (Měsíčně)**                                             |                      |                      |                     |
+| [Early Access](#koncept-early-access)                            | 5×                   | -                    | **(Pass)**          |
+| [Anti-topper](#koncept-anti-topper)                              | 5×                   | -                    | **(Pass)**          |
+| [Early Delivery](#koncept-early-delivery)                        | -                    | 3×                   | **3×**              |
+| [Mark](#koncept-mark)                                            | -                    | 3×                   | **3×**              |
+| [Top](#koncept-top)                                              | -                    | 3×                   | **3×**              |
+| [Top Maxxi](#koncept-top-maxxi)                                  | -                    | 1×                   | **3×**              |
+| [Multi-Category](#koncept-multi-category)                        | -                    | 3×                   | **(Pass)**          |
+| [Kontinuální nabídka](#koncept-kontinualni-nabidka)              | -                    | 3×                   | **5×**              |
 
 > Pozn.: řádky „(Pass)“ znamenají, že v tom balíčku to není jako měsíční kupón, ale jako aktivní pass/benefit.
 
@@ -2693,20 +2720,21 @@ Pozn.:
 - **Kupón → Pass** znamená: jednorázově aktivuješ a vznikne/obnoví se [Pass](#koncept-pass) na dobu trvání.
 - **Exclusive** = dostupné jen v rámci [Předplatného](#koncept-predplatne) (nejde koupit samostatně).
 
-| Co                                                  | Typ          | Efekt / Trvání                         | Cena (Token) |
-| :-------------------------------------------------- | :----------- | :------------------------------------- | -----------: |
-| [Early Access](#koncept-early-access)               | Kupón → Pass | 7 dnů                                  | 80           |
-| [Early Delivery](#koncept-early-delivery)           | Kupón        | Zruší release window pro jeden inzerát | 40           |
-| [Anti-topper](#koncept-anti-topper)                 | Kupón → Pass | 7 dnů                                  | 40           |
-| [Mark](#koncept-mark)                               | Kupón → Pass | 7 dnů                                  | 20           |
-| [Top](#koncept-top)                                 | Kupón → Pass | 7 dnů                                  | 50           |
-| [Top Maxxi](#koncept-top-maxxi)                     | Kupón → Pass | 7 dnů                                  | 50           |
-| [Multi-Category](#koncept-multi-category)           | Kupón        | 1 použití (1 + 2 kategorie)            | 75           |
-| [Detail protistrany](#koncept-detail-protistrany)   | Kupón → Pass | 7 dnů                                  | 50           |
-| [Photo Count](#koncept-limit-poctu-fotek)           | Kupón → Pass | 1 měsíc (+2 fotky)                     | 75           |
-| Aktivní inzeráty 20                                 | Kupón → Pass | 1 měsíc                                | 80           |
-| [Payback](#koncept-payback)                         | Pass         | Benefit předplatného                   | Exclusive    |
-| [Kontinuální nabídka](#koncept-kontinualni-nabidka) | Kupón → Pass | 1 měsíc (prodlouží život inzerátu)     | Exclusive    |
+| Co                                                               | Typ          | Efekt / Trvání                          | Cena (Token) |
+| :--------------------------------------------------------------- | :----------- | :-------------------------------------- | -----------: |
+| [Early Access](#koncept-early-access)                            | Kupón → Pass | 7 dnů                                   | 80           |
+| [Early Delivery](#koncept-early-delivery)                        | Kupón        | Zruší release window pro jeden inzerát  | 40           |
+| [Anti-topper](#koncept-anti-topper)                              | Kupón → Pass | 7 dnů                                   | 40           |
+| [Mark](#koncept-mark)                                            | Kupón → Pass | 7 dnů                                   | 20           |
+| [Top](#koncept-top)                                              | Kupón → Pass | 7 dnů                                   | 50           |
+| [Top Maxxi](#koncept-top-maxxi)                                  | Kupón → Pass | 7 dnů                                   | 50           |
+| [Multi-Category](#koncept-multi-category)                        | Kupón        | 1 použití (1 + 2 kategorie)             | 75           |
+| [Detail protistrany](#koncept-detail-protistrany)                | Kupón → Pass | 7 dnů                                   | 50           |
+| [Photo Count](#koncept-limit-poctu-fotek)                        | Kupón → Pass | 1 měsíc (+2 fotky)                      | 75           |
+| Aktivní inzeráty 20                                              | Kupón → Pass | 1 měsíc                                 | 80           |
+| [Delší expirace inzerátu](#koncept-pass-delsi-expirace-inzeratu) | Kupón → Pass | 1 měsíc (odemkne „Za měsíc“ v expiraci) | 60           |
+| [Payback](#koncept-payback)                                      | Pass         | Benefit předplatného                    | Exclusive    |
+| [Kontinuální nabídka](#koncept-kontinualni-nabidka)              | Kupón → Pass | 1 měsíc (prodlouží život inzerátu)      | Exclusive    |
 
 Related:
 - [Ceník](#koncept-cenik)
@@ -2921,6 +2949,7 @@ Related:
   - [Notifikace (Inbox)](#koncept-notifikace)
   - [Dispute](#koncept-dispute)
   - [Automatické ukončení: Inzerát](#koncept-automaticke-ukonceni-inzeratu)
+  - [Pass: Delší expirace inzerátu (Za měsíc)](#koncept-pass-delsi-expirace-inzeratu)
   - [Automatické ukončení: Transakce](#koncept-automaticke-ukonceni-transakce)
   - [Limit počtu feedů](#koncept-limit-poctu-feedu)
   - [Limit počtu fotek nad inzerátem](#koncept-limit-poctu-fotek)
