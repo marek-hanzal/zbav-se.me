@@ -535,7 +535,7 @@ Kontrakt:
 
 <a id="koncept-inzerat-warranty"></a>
 ### Inzerát: Záruka
-← [předchozí](#koncept-inzerat-delivery) | [další](#koncept-inzerat-popis) →
+← [předchozí](#koncept-inzerat-delivery) | [další](#koncept-inzerat-stav) →
 
 Related:
 - [Inzerát](#koncept-inzerat)
@@ -558,9 +558,65 @@ Použití:
 
 ---
 
+<a id="koncept-inzerat-stav"></a>
+### Inzerát: Stav (A–F)
+← [předchozí](#koncept-inzerat-warranty) | [další](#koncept-inzerat-stari) →
+
+Related:
+- [Inzerát](#koncept-inzerat)
+- [Feed](#koncept-feed)
+- [Hledat](#koncept-hledat)
+
+Stav je rychlej signál „v jaký kondici to je“. Nechci romány v popisu jen proto, aby někdo zjistil, jestli je to omlácený.
+
+Kontrakt:
+- Je to self-report prodejce. Platforma to neověřuje.
+- Používá se jako filtr ve feedu/hledání.
+- Není to morální soud. Je to popis reality.
+
+Škála:
+| Hodnota | Význam |
+|---|---|
+| A | top stav |
+| B | velmi dobrý |
+| C | ok / průměr |
+| D | slabší |
+| E | špatný |
+| F | nejhorší |
+
+---
+
+<a id="koncept-inzerat-stari"></a>
+### Inzerát: Stáří (A–F)
+← [předchozí](#koncept-inzerat-stav) | [další](#koncept-inzerat-popis) →
+
+Related:
+- [Inzerát](#koncept-inzerat)
+- [Feed](#koncept-feed)
+- [Hledat](#koncept-hledat)
+
+Stáří je rychlej signál „jak starý to je“. Zase: nechci slohovky a dohady, chci jeden krátkej fakt.
+
+Kontrakt:
+- Je to self-report prodejce. Platforma to neověřuje.
+- Používá se jako filtr ve feedu/hledání.
+- Je to stáří věci, ne stáří účtu.
+
+Škála:
+| Hodnota | Význam |
+|---|---|
+| A | nový / skoro nový |
+| B | málo používaný |
+| C | běžně používaný |
+| D | starší |
+| E | hodně starý |
+| F | neznámý / špatně určitelný |
+
+---
+
 <a id="koncept-inzerat-popis"></a>
 ### Inzerát: Popis
-← [předchozí](#koncept-inzerat-warranty) | [další](#koncept-inzerat-pros-cons) →
+← [předchozí](#koncept-inzerat-stari) | [další](#koncept-inzerat-pros-cons) →
 
 Related:
 - [Inzerát](#koncept-inzerat)
@@ -926,9 +982,7 @@ Co s tím dělám:
 - promítá se do metrik (flag rate) a je to signál „něco smrdí“,
 - je to signál pro ruční rozhodnutí (ne pro autopilota).
 
-Flag není [Ignor](#koncept-ignorace-inzeratu):
-- ignor = „nezajímá mě to“,
-- flag = „porušuje pravidla / ojeb / nebezpečný“.
+Flag není osobní [Ignor](#koncept-ignorace-inzeratu) (viz definice tam).
 
 ---
 
@@ -1108,6 +1162,15 @@ Kontrakt:
 - Po uplynutí `expiresAt` se inzerát bez aktivní [Kontinuální nabídky](#koncept-kontinualni-nabidka) přepne do `expired`.
 - UI u volby ukazuje i konkrétní datum.
 
+Předdefinované volby:
+| Volba | Smysl | Poznámka |
+| :--- | :--- | :--- |
+| Za týden | „Chci to rychle pustit ven / otestovat zájem“ | default rychlovka |
+| Za dva týdny | „Dám tomu čas, ale nechci mrtvoly“ | rozumný střed |
+| Za měsíc | „Vím, že to bude trvat“ | **zpoplatněná volba** (jinak kanibalizuje [Kontinuální nabídku](#koncept-kontinualni-nabidka)) |
+
+„Za měsíc“ odemykám přes [Ekonomiku](#ekonomika) (typicky kupón / předplatné). Je to schválně: kdyby to bylo zdarma, lidi si vyrobí nekonečný inzeráty bez odpovědnosti.
+
 ---
 
 <a id="koncept-automaticke-ukonceni-transakce"></a>
@@ -1222,7 +1285,7 @@ Kontrakt:
 
 <a id="koncept-metrika-karma"></a>
 ### Metrika: Karma
-← [předchozí](#koncept-karma) | [další](#koncept-metriky-prodavaciho) →
+← [předchozí](#koncept-karma) | [další](#koncept-user-eventy) →
 
 Related:
 - [Karma](#koncept-karma)
@@ -1240,22 +1303,62 @@ Kontrakt:
 
 ---
 
+<a id="koncept-user-eventy"></a>
+### User Eventy
+← [předchozí](#koncept-metrika-karma) | [další](#koncept-metriky-prodavaciho) →
+
+Related:
+- [Transakce](#koncept-transakce)
+- [Inzerát](#koncept-inzerat)
+- [Metriky prodávajícího](#koncept-metriky-prodavaciho)
+- [Metriky kupujícího](#koncept-metriky-kupujiciho)
+- [Metrika: Score (A–F)](#koncept-metrika-score)
+- [Komunikace a transparentnost](#komunikace)
+
+User eventy jsou append-only stopa chování, ze který počítám metriky a score. Nejsou to „cookies analytiky“. Je to doménovej signál „co se stalo“.
+
+Zdrojová data (`user_event`):
+| Pole | Význam |
+|---|---|
+| `userId` | komu se event počítá (na koho se váže metrika) |
+| `scope` | `user` = moje akce, `foreign` = akce protistrany, která dopadá na mě |
+| `source` | kontext: `listing` / `transaction` |
+| `group` | skupina/sekvence (typicky `listingId` nebo `transactionId`) |
+| `event` | typ události (viz níž) |
+| `isTerminal` | jestli tímhle eventem sekvence končí (finále skupiny) |
+| `createdAt` | kdy se to stalo |
+
+Scope (důležitý kontrakt):
+- Když se děje interakce mezi dvěma lidma, zapíšu to **oběma**:
+  - pro autora akce jako `scope=user`,
+  - pro protistranu jako `scope=foreign`.
+
+Eventy, se kterýma počítám (dnes):
+| `source` | `event` |
+|---|---|
+| `listing` | `listing.create` |
+| `transaction` | `transaction.create`, `transaction.open`, `transaction.message`, `transaction.resolved`, `transaction.success`, `transaction.rejected`, `transaction.closed`, `transaction.expired` |
+
+Na co to používám:
+- výpočet [Metrik prodávajícího](#koncept-metriky-prodavaciho) a [Metrik kupujícího](#koncept-metriky-kupujiciho),
+- výpočet [Score (A–F)](#koncept-metrika-score) jako zkratky, která je vždycky dohledatelná přes konkrétní metriky (žádná tajná magie).
+
+---
+
 <a id="koncept-metriky-prodavaciho"></a>
 ### Metriky prodávajícího
-← [předchozí](#koncept-metrika-karma) | [další](#koncept-detail-protistrany) →
+← [předchozí](#koncept-user-eventy) | [další](#koncept-detail-protistrany) →
 
 Related:
 - [Ekonomika](#ekonomika)
 - [Transakce](#koncept-transakce)
 - [Ban](#koncept-ban)
+- [User Eventy](#koncept-user-eventy)
 
 Proč existují:
 - Chci dát kupujícímu **tvrdý signál**, jestli protistrana reálně reaguje a dotahuje věci. Ne „věř mi bro“, ale realita chování.
 
-Přístup (viz [Detail protistrany](#koncept-detail-protistrany)):
-- Bez oprávnění neukazuju nic. Ani „Score“.
-- S oprávněním ukazuju **[Metrika: Score (A–F)](#koncept-metrika-score)** + metriky chování prodávajícího.
-- Oprávnění je [Pass](#koncept-pass)/[Kupón](#koncept-kupon) v [Ekonomice](#ekonomika).
+Přístup: viz [Detail protistrany](#koncept-detail-protistrany).
 
 Kontrakt:
 - Metriky jsou signál pro rozhodnutí. Ne automatickej trest.
@@ -1288,6 +1391,7 @@ Detail protistrany není další entita. Je to jen pojmenování situace: dívá
 Kontrakt:
 - Bez oprávnění neukazuju nic. Ani „Score“.
 - Oprávnění je [Pass](#koncept-pass)/[Kupón](#koncept-kupon) definovaný v [Ekonomice](#ekonomika).
+- S oprávněním ukazuju **[Metrika: Score (A–F)](#koncept-metrika-score)** + sadu metrik podle role (viz [Metriky prodávajícího](#koncept-metriky-prodavaciho) / [Metriky kupujícího](#koncept-metriky-kupujiciho)).
 - Co uvidíš záleží na roli:
   - jako kupující vidíš [Metriky prodávajícího](#koncept-metriky-prodavaciho),
   - jako prodávající vidíš [Metriky kupujícího](#koncept-metriky-kupujiciho).
@@ -1302,14 +1406,12 @@ Related:
 - [Ekonomika](#ekonomika)
 - [Transakce](#koncept-transakce)
 - [Ban](#koncept-ban)
+- [User Eventy](#koncept-user-eventy)
 
 Proč existují:
 - Chci dát prodávajícímu signál, jestli protistrana obchoduje, nebo jen kliká a nechává věci hnít.
 
-Přístup (viz [Detail protistrany](#koncept-detail-protistrany)):
-- Bez oprávnění neukazuju nic. Ani „Score“.
-- S oprávněním ukazuju **[Metrika: Score (A–F)](#koncept-metrika-score)** + metriky chování kupujícího.
-- Oprávnění funguje stejně jako u prodávajícího: [Pass](#koncept-pass)/[Kupón](#koncept-kupon) v [Ekonomice](#ekonomika).
+Přístup: viz [Detail protistrany](#koncept-detail-protistrany).
 
 Kontrakt:
 - Metriky jsou signál pro očekávání. Ne bič.
@@ -1932,7 +2034,6 @@ Mark je čistě listing mechanika. Není to výhoda v pravidlech. Je to výhoda 
 
 Kontrakt:
 - Co Mark dělá: jen vizuální signál (badge „Zvýrazněno“). Nezaručuje top pozici.
-- Kde se projeví: pouze v listingu.
 - Co Mark nikdy neobchází: filtry, radius, release window, ignor, [Citlivost](#koncept-citlivost-inzeratu).
 - Trvání: Mark běží tak dlouho, jak je aktivní jeho **[Pass](#koncept-pass) na úrovni inzerátu**.
 - [Kontinuální nabídka](#koncept-kontinualni-nabidka):
@@ -1955,7 +2056,6 @@ Top je listing mechanika: inzerát skočí do prioritní vrstvy listingu (pod To
 
 Kontrakt:
 - Co Top dělá: posune inzerát do priority vrstvy listingu.
-- Kde se projeví: pouze v listingu.
 - Co Top nikdy neobchází: filtry, radius, release window, ignor, [Citlivost](#koncept-citlivost-inzeratu).
 - [Anti-topper](#koncept-anti-topper): Top ztratí výhodu pozice, zůstane mu jen badge.
 - Trvání: Top běží tak dlouho, jak je aktivní jeho **[Pass](#koncept-pass) na úrovni inzerátu**.
@@ -1979,7 +2079,6 @@ Top Maxxi je absolutní přednost v listingu. Je to nejvyšší vrstva priority 
 
 Kontrakt:
 - Co dělá: inzerát je v listingu vždy nahoře (priorita #1).
-- Kde se projeví: pouze v listingu.
 - Co nikdy neobchází: filtry, radius, release window, ignor, [Citlivost](#koncept-citlivost-inzeratu).
 - [Anti-topper](#koncept-anti-topper): Top Maxxi je imunní (neovlivní ho).
 - [Payback](#koncept-payback): Top Maxxi je imunní → payback pro něj nikdy nevzniká.
@@ -2082,7 +2181,7 @@ Tón: minimalistickej. Bez popupů, bez urgencí, bez vysvětlování.
 
 <a id="koncept-navigace"></a>
 ### Navigace
-← [předchozí](#koncept-landing) | [další](#koncept-ui-ramec) →
+← [předchozí](#koncept-landing) | [další](#koncept-muj-ucet) →
 
 Related:
 - [Landing](#koncept-landing)
@@ -2090,7 +2189,7 @@ Related:
 - [Feed](#koncept-feed)
 - [Hledat](#koncept-hledat)
 - [Notifikace (Inbox)](#koncept-notifikace)
-- [Můj účet](#koncept-uzivatel)
+- [Můj účet](#koncept-muj-ucet)
 - [Ekonomika](#ekonomika)
 
 Navigace je schválně nudná a stabilní. Uživatel se nemá proklikávat labyrintem. Má mít jistotu, že vždycky ví, kde je, a vždycky má únik.
@@ -2109,9 +2208,31 @@ Kontrakt:
 
 ---
 
+<a id="koncept-muj-ucet"></a>
+### Můj účet
+← [předchozí](#koncept-navigace) | [další](#koncept-ui-ramec) →
+
+Related:
+- [Uživatel](#koncept-uzivatel)
+- [Citlivost](#koncept-citlivost-inzeratu)
+- [Notifikace (Inbox)](#koncept-notifikace)
+- [Ekonomika](#ekonomika)
+
+Můj účet není sociální profil. Je to místo pro preference a hranice: kdo jsem (minimálně) a co chci/nesnesu vidět.
+
+Co tu řeším:
+- maximum [Citlivosti](#koncept-citlivost-inzeratu),
+- nastavení ticha a přeposílání/digestu pro [Inbox](#koncept-notifikace),
+- základní účetní věci typu email (minimum identit, žádný „profilovky pro pocit“).
+
+Kontrakt:
+- Když se něco týká hranic obsahu nebo ticha, autorita je tady + příslušný koncept (Citlivost/Notifikace). Jinde je jen odkaz.
+
+---
+
 <a id="koncept-ui-ramec"></a>
 ### UI: Rámec
-← [předchozí](#koncept-navigace) | [další](#koncept-ui-dashboard) →
+← [předchozí](#koncept-muj-ucet) | [další](#koncept-ui-dashboard) →
 
 Related:
 - [Navigace](#koncept-navigace)
@@ -2479,6 +2600,8 @@ Kombinovaný scénář (konzervativní, MAU 10k):
   - [Inzerát: Cena](#koncept-inzerat-cena)
   - [Inzerát: Předání](#koncept-inzerat-delivery)
   - [Inzerát: Záruka](#koncept-inzerat-warranty)
+  - [Inzerát: Stav (A–F)](#koncept-inzerat-stav)
+  - [Inzerát: Stáří (A–F)](#koncept-inzerat-stari)
   - [Inzerát: Popis](#koncept-inzerat-popis)
   - [Inzerát: Co chci vyzdvihnout / Chci být upřímný](#koncept-inzerat-pros-cons)
   - [Inzerát: Video (ne)](#koncept-inzerat-video)
@@ -2505,6 +2628,7 @@ Kombinovaný scénář (konzervativní, MAU 10k):
   - [Palce (Like/Dislike)](#koncept-palce)
   - [Karma (Like/Dislike)](#koncept-karma)
   - [Metrika: Karma](#koncept-metrika-karma)
+  - [User Eventy](#koncept-user-eventy)
   - [Metriky prodávajícího](#koncept-metriky-prodavaciho)
   - [Detail protistrany](#koncept-detail-protistrany)
   - [Metriky kupujícího](#koncept-metriky-kupujiciho)
@@ -2545,6 +2669,7 @@ Kombinovaný scénář (konzervativní, MAU 10k):
   - [Kontinuální nabídka](#koncept-kontinualni-nabidka)
   - [Landing](#koncept-landing)
   - [Navigace](#koncept-navigace)
+  - [Můj účet](#koncept-muj-ucet)
   - [UI: Rámec](#koncept-ui-ramec)
   - [UI: Dashboard](#koncept-ui-dashboard)
   - [UI: Chci prodávat](#koncept-ui-seller)
