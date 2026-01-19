@@ -16,6 +16,8 @@ Jak to číst:
 <a id="obsah-nahore"></a>
 ## Obsah
 
+Pozn.: **Obsah je autorita pořadí.** Pořadí kapitol a konceptů v dokumentu musí odpovídat tomu, co je vypsané tady (a dole v Obsahu).
+
 - [Pravidla dokumentu](#pravidla-dokumentu)
 - [Kodex](#kodex)
   - [Důvěra jako výchozí stav](#duvera-default)
