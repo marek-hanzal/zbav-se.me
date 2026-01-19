@@ -1017,7 +1017,6 @@ Kontrakt:
 - Release window se spustí při vzniku inzerátu a je **neměnný** (krom pravidel Early Access/Early Delivery).
 - Release window je jen viditelnost v listingu. **Neresetuje ani neodkládá** `expiresAt`.
 - Neexistuje publish/republish.
-- (Kdyby existovala editace inzerátu) release window by se **neresetovalo**.
 - Kdo má [Early Access](#koncept-early-access), release window ignoruje a vidí inzerát v listingu hned.
 - Když prodejce použije [Early Delivery](#koncept-early-delivery), release window se pro ten inzerát ruší pro všechny (listing je hned).
 - Release window je pravidlo listingu. Ostatní brány (hlavně [Citlivost](#koncept-citlivost-inzeratu)) platí pořád.
