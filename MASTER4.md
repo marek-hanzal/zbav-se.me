@@ -404,7 +404,6 @@ UX kontrakt:
 - položky jsou ve třech blocích: nutné pro zveřejnění / podle kategorie / další volby.
 - autosave je povinnost. Návrat/back je vždycky bezpečnej.
 - editor je otevřenej a ne-lineární. Žádná „povinná cesta“.
-- bottom nav je mentální kotva. Žádnej horní křížek a žádnej sticky teatr.
 - smazání draftu je dvoufázově inline (ne modalovej cirkus).
 
 ---
@@ -1805,5 +1804,44 @@ Bottom nav (5 ikon, pořád stejně):
 
 Kontrakt:
 - Role nejsou identita ani přepínač „jsem seller/buyer“. Je to rychlej vstup do dvou nejčastějších mindsetů.
+
+---
+
+<a id="koncept-ui-rozsireni"></a>
+### UI: Rozšíření
+
+Related:
+- [Aktivace](#koncept-aktivace)
+- [Ceník](#koncept-cenik)
+- [Kupón](#koncept-kupon)
+- [Tokeny](#koncept-tokeny)
+- [Pass](#koncept-pass)
+- [Exclusive](#koncept-exclusive)
+- [Předplatné](#koncept-predplatne)
+
+Rozšíření je UI vstup do monetizovaných prvků. Nechci, aby uživatel lovil „kde se to zapíná“. Tady je to vždycky na jednom místě.
+
+Kontrakt:
+- Rozšíření je katalog toho, co jde aktivovat (viz [Ceník](#koncept-cenik)) a co je zamčený ([Exclusive](#koncept-exclusive)).
+- Každá položka má jednu jasnou akci: `Aktivovat` → pravidla drží [Aktivace](#koncept-aktivace).
+- UI vždycky ukáže, jestli spotřebovávám [Kupón](#koncept-kupon), nebo platím [Tokeny](#koncept-tokeny), nebo jen využívám nárok z [Předplatného](#koncept-predplatne).
+
+---
+
+<a id="koncept-ui-bonusy"></a>
+### UI: Bonusy
+
+Related:
+- [Tokeny: Získávání](#koncept-tokeny-ziskavani)
+- [Tokeny](#koncept-tokeny)
+- [Transakce](#koncept-transakce)
+- [Rozšíření](#koncept-ui-rozsireni)
+
+Bonusy je UI kapsa na „tokeny zdarma“ a jejich hygienu. Ne gamifikace cirkus. Malý pobídky, co drží trh čistější.
+
+Kontrakt:
+- Bonusy ukazují jen to, co si můžu vyzvednout / co mi vzniklo (detaily pravidel drží [Tokeny: Získávání](#koncept-tokeny-ziskavani)).
+- Žádný tichý dropy bez kontroly: když něco vznikne, umím to dohledat a pochopit.
+- Bonusy jsou vstupní bod pro návrat do [Rozšíření](#koncept-ui-rozsireni) (když už mám tokeny, ať je hned vidět, co s nima jde dělat).
 
 ---
