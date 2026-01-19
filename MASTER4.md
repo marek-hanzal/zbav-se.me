@@ -398,10 +398,14 @@ Co Draft není:
 
 UX kontrakt:
 - když narazíš na **Draft Gate** (limit aktivních inzerátů), místo editoru dostaneš Status a dál už je to jen odemknutí přes [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu).
-- návrat/back je vždycky bezpečnej (autosave),
-- editor je otevřenej a ne-lineární: sekce jsou klikací karty (klik & edit),
-- bottom nav je mentální kotva, žádnej horní křížek a žádnej produktovej sticky teatr,
-- smazání draftu je dvoufázově inline, ne modalovej cirkus.
+- editor je jedna souvislá činnost. Žádnej wizard, žádný „krok 3/9“, žádný ztrácení kontextu.
+- sekce jsou klikací karty: stavovej řádek (vyplněno/čeká/nastavit) + edit.
+- vyplněná věc se vizuálně uklidní: nevyplněné má attention, hotový spadne do neutrálu.
+- položky jsou ve třech blocích: nutné pro zveřejnění / podle kategorie / další volby.
+- autosave je povinnost. Návrat/back je vždycky bezpečnej.
+- editor je otevřenej a ne-lineární. Žádná „povinná cesta“.
+- bottom nav je mentální kotva. Žádnej horní křížek a žádnej sticky teatr.
+- smazání draftu je dvoufázově inline (ne modalovej cirkus).
 
 ---
 
