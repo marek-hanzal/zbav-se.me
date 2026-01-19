@@ -1625,3 +1625,24 @@ Použití:
 - Není to „garance“ od platformy.
 
 ---
+
+<a id="koncept-inzerat-popis"></a>
+### Inzerát: Popis
+
+Related:
+- [Inzerát](#koncept-inzerat)
+- [Kategorie](#koncept-kategorie)
+- [Feed](#koncept-feed)
+- [Hledat](#koncept-hledat)
+
+Popis je dobrovolnej. A je to záměr. Nechci, aby lidi psali slohovky jen proto, že „se to sluší“.
+
+Pravidla:
+- Popis je v **Markdownu** (volitelně).
+- Popis se **nepoužívá pro vyhledávání / indexaci**. Hledání stojí na titulku a strukturovanejch filtrech.
+- Méně je často víc: krátký konkrétní body > dlouhej příběh.
+
+Kontrakt:
+- Popis je informativní vrstva pro detail: „co se nevešlo do struktury“.
+
+---
