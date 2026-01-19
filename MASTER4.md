@@ -15,7 +15,6 @@ Jak to číst:
 ## Pravidla dokumentu
 [další](#kodex) →
 
-
 > **Single source of truth.** Co tu není, neexistuje.
 > Pokud se realita produktu začne hádat s tímhle dokumentem, beru to jako bug. Opravím buď produkt, nebo rozhodnutí. **Ne** že to budu obcházet „výjimkou“, „poznámkou bokem“ nebo jiným alibismem.
 
@@ -54,7 +53,6 @@ Struktura dokumentu (základ):
 ## Kodex
 ← [předchozí](#pravidla-dokumentu) | [další](#smer-produktu) →
 
-
 Kodex je moje „no bullshit“ vrstva. Není to právní text. Je to sada pravidel, který držím i ve chvíli, kdy by bylo strašně lákavý je ohnout kvůli růstu nebo penězům.
 
 Jestli nějaká feature nebo monetizační nápad poruší kodex, je to automaticky špatně. Ne „možná“. Ne „nějak to vysvětlíme“. Prostě špatně.
@@ -82,6 +80,7 @@ Co držím:
 - Žádný gotcha momenty typu „nechám tě to skoro dodělat a pak ti to seberu“.
 - Zrušení předplatnýho nesmí být labyrint ani psychologická válka. (Detaily patří do [Ekonomiky](#ekonomika).)
 - Neaktivita je signál „už to teď nepoužívám“. Nechci někoho potichu cucat jen proto, že zapomněl.
+- Když někdo platí, ale dlouhodobě nic nedělá, **předplatný ukončím**. Autorita je [Automatické ukončení předplatného](#koncept-automaticke-ukonceni-predplatneho).
 
 <a id="no-p2w"></a>
 ### Žádné pay-to-win
@@ -124,7 +123,6 @@ Co z toho dělám standard:
 ## Směr produktu
 ← [předchozí](#kodex) | [další](#konkurenceschopnost) →
 
-
 Tady jsou pravidla, který mi nedovolí udělat z toho další obyč bazar. Držím se jich i ve chvíli, kdy budu unavenej, ve stresu a budu chtít „jen udělat malou výjimku“.
 
 Platí pár jednoduchých věcí:
@@ -136,7 +134,6 @@ Platí pár jednoduchých věcí:
 <a id="identita"></a>
 ### Identita
 ← [předchozí](#otevrenost) | [další](#tov) →
-
 
 Zbav-se.me není „platforma“. Je to moje práce a můj postoj. A ten postoj je napsanej natvrdo:
 
@@ -153,7 +150,6 @@ Co z toho plyne:
 <a id="tov"></a>
 ### Tone of Voice
 ← [předchozí](#identita) | [další](#produktove-cile) →
-
 
 > „**Klikej. Zkoumej. Není tu co posrat.**“
 > Onboarding nastaví vztah. A pak držím hubu a nechám UI dělat práci.
@@ -203,6 +199,7 @@ Co je u mě povinný standard:
 - **Zdroják je veřejně k nahlédnutí (source-available, ne OSS).**
 - **Transparentní účet** je viditelně vytaženej i na landingu.
 - **Žádný prodej dat třetím stranám.** Tečka.
+- **Bez trackování.** Žádný UTM, žádný cookies, žádný externí analytický skripty. Měřím jen interní eventy, který mají smysl v produktu.
 - **Změny nejsou tichý ojeb.** Když změním něco zásadního, přiznám to.
 
 ---
@@ -210,7 +207,6 @@ Co je u mě povinný standard:
 <a id="konkurenceschopnost"></a>
 ## Konkurenceschopnost
 ← [předchozí](#smer-produktu) | [další](#koncepty) →
-
 
 Konkurence (Sbazar, Bazoš, FB Marketplace a spol.) není „špatná“. Je to prostě starej svět: hodně šumu, hodně náhody, hodně domlouvání v mlze, málo jistoty. Lidi tam prodávají, protože tam „někdo je“, ne proto, že by to bylo příjemný.
 
@@ -275,10 +271,10 @@ Co je osobní a patří jen do domluvy, nesmí v systému hnít věčně. (Viz [
 - **Žádný vysvětlování rozdílů proti konkurenci.** Rozdíl se má projevit chováním UI.
 
 ---
+
 <a id="koncepty"></a>
 ## Koncepty
 ← [předchozí](#konkurenceschopnost) | [další](#ekonomika) →
-
 
 Tady je katalog reality. Každá otázka „jak funguje X?“ má odpověď v jednom konceptu. Jinde je maximálně odkaz.
 
@@ -292,7 +288,6 @@ Pravidlo proti duplicitám (znovu a naposled):
 ### Uživatel
 ← [předchozí](#co-nedelam) | [další](#koncept-kategorie) →
 
-
 Related:
 - [Feedy](#koncept-feed)
 - [Drafty](#koncept-draft)
@@ -300,7 +295,6 @@ Related:
 - [Transakce](#koncept-transakce)
 - [Zprávy](#koncept-zpravy)
 - [Inbox](#koncept-notifikace)
-
 
 Uživatel je core entita. Je na něj navázaný skoro všechno (inzeráty, drafty, feedy, transakce, inbox), ale osobní data držím na minimu. Je to vědomá brzda: všechno navíc je jen riziko a dluh.
 
@@ -324,11 +318,9 @@ Kontrakt (co si hlídám):
 ### Kategorie
 ← [předchozí](#koncept-uzivatel) | [další](#koncept-lokace) →
 
-
 Related:
 - [Draft](#koncept-draft)
 - [Feed](#koncept-feed)
-
 
 Kategorie je organizační vrstva trhu. Je to kontext, ve kterým dává smysl jinej jazyk a jiný filtry. Držím ji jednoduchou, protože složitá taxonomie je jen bordel pro lidi.
 
@@ -357,12 +349,10 @@ Range filtry jsou vědomý rozhodnutí. Když je zavedu, beru na sebe odpovědno
 ### Lokace
 ← [předchozí](#koncept-kategorie) | [další](#koncept-uploady) →
 
-
 Related:
 - [Feed](#koncept-feed)
 - [Inzerát](#koncept-inzerat)
 - [Transakce](#koncept-transakce)
-
 
 Lokace je autorita na polohu. Neukládám random texty typu „u Pepy na rohu“. Když se bavíme o poloze, bavíme se o jednom konkrétním záznamu, na kterej se dá odkázat.
 
@@ -382,12 +372,10 @@ Kontrakt:
 ### Uploady
 ← [předchozí](#koncept-lokace) | [další](#koncept-galerie) →
 
-
 Related:
 - [Inzerátu](#koncept-inzerat)
 - [Zprávách](#koncept-zpravy)
 - [Transakce](#koncept-transakce)
-
 
 Upload je centrální záznam pro soubor (hlavně fotky). Je to autorita na „tenhle soubor existuje a má tyhle metadata“. Nechci, aby se soubory válely po systému jako náhodný URLčka bez kontextu.
 
@@ -408,7 +396,6 @@ Kontrakt životnosti (důležitý):
 ### Galerie
 ← [předchozí](#koncept-uploady) | [další](#koncept-inzerat) →
 
-
 Related:
 - [Uploady](#koncept-uploady)
 - [Inzerát](#koncept-inzerat)
@@ -427,7 +414,6 @@ Kontrakt:
 ### Inzerát
 ← [předchozí](#koncept-galerie) | [další](#koncept-inzerat-titulek) →
 
-
 Related:
 - [Uživatel](#koncept-uzivatel)
 - [Kategorie](#koncept-kategorie)
@@ -435,7 +421,6 @@ Related:
 - [Uploady](#koncept-uploady)
 - [Ekonomika](#ekonomika)
 - [Draftu](#koncept-draft)
-
 
 Inzerát je veřejná nabídka v trhu. Je to „to, co ukazuju světu“ — a proto to beru vážně. Všechno, co je v inzerátu, je signál: kvalita, důvěra, bezpečí, očekávání.
 
@@ -474,7 +459,6 @@ Poznámky:
 ### Inzerát: Titulek
 ← [předchozí](#koncept-inzerat) | [další](#koncept-inzerat-cena) →
 
-
 Related:
 - [Inzerát](#koncept-inzerat)
 - [Inzerát: Popis](#koncept-inzerat-popis)
@@ -496,7 +480,6 @@ Technická pravda:
 <a id="koncept-inzerat-cena"></a>
 ### Inzerát: Cena
 ← [předchozí](#koncept-inzerat-titulek) | [další](#koncept-inzerat-delivery) →
-
 
 Related:
 - [Inzerát](#koncept-inzerat)
@@ -523,7 +506,6 @@ Tvrdý pravidlo:
 <a id="koncept-inzerat-delivery"></a>
 ### Inzerát: Předání
 ← [předchozí](#koncept-inzerat-cena) | [další](#koncept-inzerat-warranty) →
-
 
 Related:
 - [Inzerát](#koncept-inzerat)
@@ -555,7 +537,6 @@ Kontrakt:
 ### Inzerát: Záruka
 ← [předchozí](#koncept-inzerat-delivery) | [další](#koncept-inzerat-popis) →
 
-
 Related:
 - [Inzerát](#koncept-inzerat)
 - [Feed](#koncept-feed)
@@ -581,7 +562,6 @@ Použití:
 ### Inzerát: Popis
 ← [předchozí](#koncept-inzerat-warranty) | [další](#koncept-inzerat-pros-cons) →
 
-
 Related:
 - [Inzerát](#koncept-inzerat)
 - [Kategorie](#koncept-kategorie)
@@ -603,7 +583,6 @@ Kontrakt:
 <a id="koncept-inzerat-pros-cons"></a>
 ### Inzerát: Co chci vyzdvihnout / Chci být upřímný
 ← [předchozí](#koncept-inzerat-popis) | [další](#koncept-inzerat-video) →
-
 
 Related:
 - [Inzerát](#koncept-inzerat)
@@ -630,7 +609,6 @@ Kontrakt:
 ### Inzerát: Video (ne)
 ← [předchozí](#koncept-inzerat-pros-cons) | [další](#koncept-inzerat-brand) →
 
-
 Related:
 - [Inzerát](#koncept-inzerat)
 - [Uploady](#koncept-uploady)
@@ -651,7 +629,6 @@ Důvody:
 <a id="koncept-inzerat-brand"></a>
 ### Inzerát: Brand
 ← [předchozí](#koncept-inzerat-video) | [další](#koncept-draft) →
-
 
 Related:
 - [Inzerát](#koncept-inzerat)
@@ -681,11 +658,9 @@ Expirace:
 ### Draft
 ← [předchozí](#koncept-inzerat-brand) | [další](#koncept-feed) →
 
-
 Related:
 - [Inzerát](#koncept-inzerat)
 - [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu)
-
 
 Draft je vstupní bod tvorby. Inzerát nenechám vzniknout „kliknutím“. Vzniká až publikací Draftu. (Viz [Inzerát](#koncept-inzerat).)
 
@@ -714,7 +689,6 @@ UX kontrakt:
 ### Feed
 ← [předchozí](#koncept-draft) | [další](#koncept-hledat) →
 
-
 Related:
 - [Kategorie](#koncept-kategorie)
 - [Lokace](#koncept-lokace)
@@ -722,7 +696,6 @@ Related:
 - [Citlivost](#koncept-citlivost-inzeratu)
 - [Ignor](#koncept-ignorace-inzeratu)
 - [Inzerátu](#koncept-inzerat)
-
 
 Feed je uložené nastavení filtru nad inzeráty. Není to „seznam“, je to **předpis**: „co chci vidět a odkud“.
 
@@ -746,7 +719,6 @@ Pravidla:
 <a id="koncept-hledat"></a>
 ### Hledat
 ← [předchozí](#koncept-feed) | [další](#koncept-seznam-inzeratu) →
-
 
 Related:
 - [Feed](#koncept-feed)
@@ -783,12 +755,10 @@ Reset:
 ### Seznam inzerátů
 ← [předchozí](#koncept-hledat) | [další](#koncept-multi-category) →
 
-
 Related:
 - [Feed](#koncept-feed)
 - [Citlivost](#koncept-citlivost-inzeratu)
 - [Inzerátu](#koncept-inzerat)
-
 
 „Seznam“ není stránka. Seznam je vždycky **výsledek dotazu** ([Feed](#koncept-feed) / hledání). Jeden engine, jeden kontrakt.
 
@@ -821,7 +791,6 @@ Hard limit listingu:
 ### Multi-Category
 ← [předchozí](#koncept-seznam-inzeratu) | [další](#koncept-oblibene) →
 
-
 Related:
 - [Kategorie](#koncept-kategorie)
 - [Inzerát](#koncept-inzerat)
@@ -853,7 +822,6 @@ Ekonomika:
 ### Oblíbené
 ← [předchozí](#koncept-multi-category) | [další](#koncept-citlivost-inzeratu) →
 
-
 Related:
 - [Inzerát](#koncept-inzerat)
 - [Feed](#koncept-feed)
@@ -870,14 +838,12 @@ Kontrakt:
 ---
 
 <a id="koncept-citlivost-inzeratu"></a>
-### [Citlivost](#koncept-citlivost-inzeratu)
+### Citlivost
 ← [předchozí](#koncept-oblibene) | [další](#koncept-ignorace-inzeratu) →
-
 
 Related:
 - [Feed](#koncept-feed)
 - [Inzerát](#koncept-inzerat)
-
 
 Obsah není jen „co prodávám“. Obsah je i to, *jestli to můžeš vůbec vidět*. [Citlivost](#koncept-citlivost-inzeratu) je hard gate: chrání veřejnej prostor před obsahem, kterej určitá skupina lidí buď **nechce**, nebo ho **ani nesmí** vidět.
 
@@ -909,12 +875,10 @@ Odpovědnost:
 ### Ignor
 ← [předchozí](#koncept-citlivost-inzeratu) | [další](#koncept-flag-inzeratu) →
 
-
 Related:
 - [Inzerát](#koncept-inzerat)
 - [Feedy](#koncept-feed)
 - [Flag inzerátu](#koncept-flag-inzeratu)
-
 
 Ignor je osobní úklid. Není to trest, není to report, není to drama.
 
@@ -946,11 +910,9 @@ Ignor není [Flag inzerátu](#koncept-flag-inzeratu):
 ### Flag inzerátu
 ← [předchozí](#koncept-ignorace-inzeratu) | [další](#koncept-flag-uzivatele) →
 
-
 Related:
 - [Inzerátu](#koncept-inzerat)
 - [Ignor](#koncept-ignorace-inzeratu)
-
 
 Flag je „tady je problém“, ne „nelíbí se mi to“. Je to bezpečnostní signál a reputační stopa. Nechci z toho dělat tribunál ani automatickýho soudce.
 
@@ -974,7 +936,6 @@ Flag není [Ignor](#koncept-ignorace-inzeratu):
 ### Flag uživatele
 ← [předchozí](#koncept-flag-inzeratu) | [další](#koncept-transakce) →
 
-
 Related:
 - [Transakce](#koncept-transakce)
 - [Zprávy](#koncept-zpravy)
@@ -993,10 +954,8 @@ Kontrakt:
 ### Transakce
 ← [předchozí](#koncept-flag-uzivatele) | [další](#koncept-zpravy) →
 
-
 Related:
 - [Zprávách](#koncept-zpravy)
-
 
 Transakce je obálka obchodu: stav, pravidla a timeline. **Stojí na [Zprávách](#koncept-zpravy)** — zprávy jsou obsah, transakce je kontext.
 
@@ -1043,10 +1002,8 @@ Retence a čistky:
 ### Zprávy
 ← [předchozí](#koncept-transakce) | [další](#koncept-notifikace) →
 
-
 Related:
 - [Lokace](#koncept-lokace)
-
 
 Zprávy jsou obsah transakce. Text je volnost pro lidi, ale systém drží fakta vedle toho.
 
@@ -1078,7 +1035,6 @@ Kontrakt:
 <a id="koncept-notifikace"></a>
 ### Notifikace (Inbox)
 ← [předchozí](#koncept-zpravy) | [další](#koncept-dispute) →
-
 
 Related:
 - [Zprávy](#koncept-zpravy)
@@ -1113,7 +1069,6 @@ Kritické výjimky:
 ### Dispute
 ← [předchozí](#koncept-notifikace) | [další](#koncept-automaticke-ukonceni-inzeratu) →
 
-
 Related:
 - [Transakce](#koncept-transakce)
 - [Zprávy](#koncept-zpravy)
@@ -1139,7 +1094,6 @@ Smysl:
 ### Automatické ukončení: Inzerát
 ← [předchozí](#koncept-dispute) | [další](#koncept-automaticke-ukonceni-transakce) →
 
-
 Related:
 - [Inzerát](#koncept-inzerat)
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
@@ -1160,7 +1114,6 @@ Kontrakt:
 ### Automatické ukončení: Transakce
 ← [předchozí](#koncept-automaticke-ukonceni-inzeratu) | [další](#koncept-limit-poctu-feedu) →
 
-
 Related:
 - [Transakce](#koncept-transakce)
 - [Zprávy](#koncept-zpravy)
@@ -1178,11 +1131,9 @@ Kontrakt:
 ### Limit počtu feedů
 ← [předchozí](#koncept-automaticke-ukonceni-transakce) | [další](#koncept-limit-poctu-fotek) →
 
-
 Related:
 - [Ceník](#koncept-cenik)
 - [Aktivace](#koncept-aktivace)
-
 
 Limit není trest. Je to mantinel, aby se z toho nestal inventář nekonečna.
 
@@ -1197,12 +1148,10 @@ Kontrakt:
 ### Limit počtu fotek nad inzerátem
 ← [předchozí](#koncept-limit-poctu-feedu) | [další](#koncept-limit-aktivnich-inzeratu) →
 
-
 Related:
 - [Ekonomiku](#ekonomika)
 - [Kupón](#koncept-kupon)
 - [Pass](#koncept-pass)
-
 
 Fotky jsou primární obsah inzerátu. Limit fotek je brzda proti šumu a zároveň jasný místo, kam se dá férově navázat „komfort navíc“.
 
@@ -1218,14 +1167,12 @@ Kontrakt:
 ### Limit aktivních inzerátů
 ← [předchozí](#koncept-limit-poctu-fotek) | [další](#koncept-palce) →
 
-
 Related:
 - [Passu](#koncept-pass)
 - [Draft](#koncept-draft)
 - [Ekonomiku](#ekonomika)
 - [Kupón](#koncept-kupon)
 - [Tokeny](#koncept-tokeny)
-
 
 Limit aktivních inzerátů drží hygienu trhu a chrání pozornost. Nechci, aby se z feedu stal hřbitov a z prodejce správce inventáře.
 
@@ -1242,7 +1189,6 @@ Kontrakt:
 ### Palce (Like/Dislike)
 ← [předchozí](#koncept-limit-aktivnich-inzeratu) | [další](#koncept-karma) →
 
-
 Related:
 - [Inzerát](#koncept-inzerat)
 
@@ -1258,7 +1204,6 @@ Kontrakt:
 <a id="koncept-karma"></a>
 ### Karma (Like/Dislike)
 ← [předchozí](#koncept-palce) | [další](#koncept-metrika-karma) →
-
 
 Related:
 - [Transakce](#koncept-transakce)
@@ -1279,7 +1224,6 @@ Kontrakt:
 ### Metrika: Karma
 ← [předchozí](#koncept-karma) | [další](#koncept-metriky-prodavaciho) →
 
-
 Related:
 - [Karma](#koncept-karma)
 - [Metriky prodávajícího](#koncept-metriky-prodavaciho)
@@ -1298,8 +1242,7 @@ Kontrakt:
 
 <a id="koncept-metriky-prodavaciho"></a>
 ### Metriky prodávajícího
-← [předchozí](#koncept-metrika-karma) | [další](#koncept-metriky-kupujiciho) →
-
+← [předchozí](#koncept-metrika-karma) | [další](#koncept-detail-protistrany) →
 
 Related:
 - [Ekonomika](#ekonomika)
@@ -1309,7 +1252,7 @@ Related:
 Proč existují:
 - Chci dát kupujícímu **tvrdý signál**, jestli protistrana reálně reaguje a dotahuje věci. Ne „věř mi bro“, ale realita chování.
 
-Přístup (Detail protistrany):
+Přístup (viz [Detail protistrany](#koncept-detail-protistrany)):
 - Bez oprávnění neukazuju nic. Ani „Score“.
 - S oprávněním ukazuju **[Metrika: Score (A–F)](#koncept-metrika-score)** + metriky chování prodávajícího.
 - Oprávnění je [Pass](#koncept-pass)/[Kupón](#koncept-kupon) v [Ekonomice](#ekonomika).
@@ -1331,10 +1274,29 @@ Zobrazené metriky:
 
 ---
 
+<a id="koncept-detail-protistrany"></a>
+### Detail protistrany
+← [předchozí](#koncept-metriky-prodavaciho) | [další](#koncept-metriky-kupujiciho) →
+
+Related:
+- [Metriky prodávajícího](#koncept-metriky-prodavaciho)
+- [Metriky kupujícího](#koncept-metriky-kupujiciho)
+- [Ekonomika](#ekonomika)
+
+Detail protistrany není další entita. Je to jen pojmenování situace: dívám se na metriky **druhý strany** z pozice, ve který zrovna jsem.
+
+Kontrakt:
+- Bez oprávnění neukazuju nic. Ani „Score“.
+- Oprávnění je [Pass](#koncept-pass)/[Kupón](#koncept-kupon) definovaný v [Ekonomice](#ekonomika).
+- Co uvidíš záleží na roli:
+  - jako kupující vidíš [Metriky prodávajícího](#koncept-metriky-prodavaciho),
+  - jako prodávající vidíš [Metriky kupujícího](#koncept-metriky-kupujiciho).
+
+---
+
 <a id="koncept-metriky-kupujiciho"></a>
 ### Metriky kupujícího
-← [předchozí](#koncept-metriky-prodavaciho) | [další](#koncept-metrika-reakcni-doba) →
-
+← [předchozí](#koncept-detail-protistrany) | [další](#koncept-metrika-reakcni-doba) →
 
 Related:
 - [Ekonomika](#ekonomika)
@@ -1344,7 +1306,7 @@ Related:
 Proč existují:
 - Chci dát prodávajícímu signál, jestli protistrana obchoduje, nebo jen kliká a nechává věci hnít.
 
-Přístup (Detail protistrany):
+Přístup (viz [Detail protistrany](#koncept-detail-protistrany)):
 - Bez oprávnění neukazuju nic. Ani „Score“.
 - S oprávněním ukazuju **[Metrika: Score (A–F)](#koncept-metrika-score)** + metriky chování kupujícího.
 - Oprávnění funguje stejně jako u prodávajícího: [Pass](#koncept-pass)/[Kupón](#koncept-kupon) v [Ekonomice](#ekonomika).
@@ -1368,7 +1330,6 @@ Zobrazené metriky:
 ### Metrika: Reakční doba
 ← [předchozí](#koncept-metriky-kupujiciho) | [další](#koncept-metrika-odmitnuti-bez-interakce) →
 
-
 Related:
 - [Metriky prodávajícího](#koncept-metriky-prodavaciho)
 - [Metriky kupujícího](#koncept-metriky-kupujiciho)
@@ -1387,7 +1348,6 @@ Kontrakt:
 ### Metrika: Odmítnutí bez interakce
 ← [předchozí](#koncept-metrika-reakcni-doba) | [další](#koncept-metrika-resolved-rate) →
 
-
 Related:
 - [Metriky prodávajícího](#koncept-metriky-prodavaciho)
 - [Transakce](#koncept-transakce)
@@ -1405,7 +1365,6 @@ Kontrakt:
 ### Metrika: Resolved rate
 ← [předchozí](#koncept-metrika-odmitnuti-bez-interakce) | [další](#koncept-metrika-expirace) →
 
-
 Related:
 - [Metriky prodávajícího](#koncept-metriky-prodavaciho)
 - [Transakce](#koncept-transakce)
@@ -1422,7 +1381,6 @@ Kontrakt:
 <a id="koncept-metrika-expirace"></a>
 ### Metrika: Expirace (transakcí)
 ← [předchozí](#koncept-metrika-resolved-rate) | [další](#koncept-metrika-vytizeni) →
-
 
 Related:
 - [Metriky prodávajícího](#koncept-metriky-prodavaciho)
@@ -1442,7 +1400,6 @@ Kontrakt:
 ### Metrika: Vytížení (paralelní obchody)
 ← [předchozí](#koncept-metrika-expirace) | [další](#koncept-metrika-aktivita) →
 
-
 Related:
 - [Metriky prodávajícího](#koncept-metriky-prodavaciho)
 - [Metriky kupujícího](#koncept-metriky-kupujiciho)
@@ -1461,7 +1418,6 @@ Kontrakt:
 ### Metrika: Aktivita
 ← [předchozí](#koncept-metrika-vytizeni) | [další](#koncept-metrika-flag-rate) →
 
-
 Related:
 - [Metriky prodávajícího](#koncept-metriky-prodavaciho)
 - [Metriky kupujícího](#koncept-metriky-kupujiciho)
@@ -1478,7 +1434,6 @@ Kontrakt:
 <a id="koncept-metrika-flag-rate"></a>
 ### Metrika: Flag rate
 ← [předchozí](#koncept-metrika-aktivita) | [další](#koncept-metrika-closer-rate) →
-
 
 Related:
 - [Metriky prodávajícího](#koncept-metriky-prodavaciho)
@@ -1498,7 +1453,6 @@ Kontrakt:
 ### Metrika: Closer rate
 ← [předchozí](#koncept-metrika-flag-rate) | [další](#koncept-metrika-decision-rate) →
 
-
 Related:
 - [Metriky kupujícího](#koncept-metriky-kupujiciho)
 - [Transakce](#koncept-transakce)
@@ -1515,7 +1469,6 @@ Kontrakt:
 <a id="koncept-metrika-decision-rate"></a>
 ### Metrika: Decision rate
 ← [předchozí](#koncept-metrika-closer-rate) | [další](#koncept-metrika-score) →
-
 
 Related:
 - [Metriky kupujícího](#koncept-metriky-kupujiciho)
@@ -1534,7 +1487,6 @@ Kontrakt:
 ### Metrika: Score (A–F)
 ← [předchozí](#koncept-metrika-decision-rate) | [další](#koncept-metrika-inzeratu-visible) →
 
-
 Related:
 - [Metriky prodávajícího](#koncept-metriky-prodavaciho)
 - [Metriky kupujícího](#koncept-metriky-kupujiciho)
@@ -1551,7 +1503,6 @@ Kontrakt:
 <a id="koncept-metrika-inzeratu-visible"></a>
 ### Metrika: Visible
 ← [předchozí](#koncept-metrika-score) | [další](#koncept-metrika-inzeratu-impression) →
-
 
 Related:
 - [Rozšířená data u inzerátu](#koncept-rozsirena-data-inzeratu)
@@ -1573,7 +1524,6 @@ Deduplikace:
 ### Metrika: Impression
 ← [předchozí](#koncept-metrika-inzeratu-visible) | [další](#koncept-metrika-inzeratu-view) →
 
-
 Related:
 - [Rozšířená data u inzerátu](#koncept-rozsirena-data-inzeratu)
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
@@ -1594,7 +1544,6 @@ Deduplikace:
 ### Metrika: View
 ← [předchozí](#koncept-metrika-inzeratu-impression) | [další](#koncept-metrika-inzeratu-anti-topper) →
 
-
 Related:
 - [Rozšířená data u inzerátu](#koncept-rozsirena-data-inzeratu)
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
@@ -1612,9 +1561,8 @@ Deduplikace:
 ---
 
 <a id="koncept-metrika-inzeratu-anti-topper"></a>
-### Metrika: [Anti-topper](#koncept-anti-topper)
+### Metrika: Anti-topper
 ← [předchozí](#koncept-metrika-inzeratu-view) | [další](#koncept-metrika-inzeratu-thumbs) →
-
 
 Related:
 - [Anti-topper](#koncept-anti-topper)
@@ -1645,7 +1593,6 @@ Deduplikace:
 ### Metrika: Thumbs
 ← [předchozí](#koncept-metrika-inzeratu-anti-topper) | [další](#koncept-metrika-inzeratu-ignored) →
 
-
 Related:
 - [Palce](#koncept-palce)
 - [Rozšířená data u inzerátu](#koncept-rozsirena-data-inzeratu)
@@ -1666,7 +1613,6 @@ Kontrakt:
 <a id="koncept-metrika-inzeratu-ignored"></a>
 ### Metrika: Ignored
 ← [předchozí](#koncept-metrika-inzeratu-thumbs) | [další](#koncept-metrika-inzeratu-transactions) →
-
 
 Related:
 - [Ignor](#koncept-ignorace-inzeratu)
@@ -1689,7 +1635,6 @@ Kontrakt:
 ### Metrika: Transactions
 ← [předchozí](#koncept-metrika-inzeratu-ignored) | [další](#koncept-rozsirena-data-inzeratu) →
 
-
 Related:
 - [Transakce](#koncept-transakce)
 - [Zprávy](#koncept-zpravy)
@@ -1710,7 +1655,6 @@ Kontrakt:
 <a id="koncept-rozsirena-data-inzeratu"></a>
 ### Rozšířená data u inzerátu
 ← [předchozí](#koncept-metrika-inzeratu-transactions) | [další](#koncept-pass) →
-
 
 Related:
 - [Inzerát](#koncept-inzerat)
@@ -1743,9 +1687,8 @@ Co ukazuju:
 ---
 
 <a id="koncept-pass"></a>
-### [Pass](#koncept-pass)
+### Pass
 ← [předchozí](#koncept-rozsirena-data-inzeratu) | [další](#koncept-kupon) →
-
 
 Related:
 - [Ekonomika](#ekonomika)
@@ -1774,9 +1717,8 @@ Scope:
 ---
 
 <a id="koncept-kupon"></a>
-### [Kupón](#koncept-kupon)
+### Kupón
 ← [předchozí](#koncept-pass) | [další](#koncept-tokeny) →
-
 
 Related:
 - [Tokeny](#koncept-tokeny)
@@ -1793,9 +1735,8 @@ Kontrakt:
 ---
 
 <a id="koncept-tokeny"></a>
-### [Tokeny](#koncept-tokeny)
+### Tokeny
 ← [předchozí](#koncept-kupon) | [další](#koncept-aktivace) →
-
 
 Related:
 - [Kupón](#koncept-kupon)
@@ -1811,9 +1752,8 @@ Kontrakt:
 ---
 
 <a id="koncept-aktivace"></a>
-### [Aktivace](#koncept-aktivace)
+### Aktivace
 ← [předchozí](#koncept-tokeny) | [další](#koncept-cenik) →
-
 
 Related:
 - [Tokeny](#koncept-tokeny)
@@ -1841,9 +1781,8 @@ Tvrdá hranice:
 ---
 
 <a id="koncept-cenik"></a>
-### [Ceník](#koncept-cenik)
+### Ceník
 ← [předchozí](#koncept-aktivace) | [další](#koncept-exclusive) →
-
 
 Related:
 - [Ekonomika](#ekonomika)
@@ -1863,9 +1802,8 @@ Kontrakt:
 ---
 
 <a id="koncept-exclusive"></a>
-### [Exclusive](#koncept-exclusive)
+### Exclusive
 ← [předchozí](#koncept-cenik) | [další](#koncept-predplatne) →
-
 
 Related:
 - [Ekonomika](#ekonomika)
@@ -1885,8 +1823,7 @@ Kontrakt:
 
 <a id="koncept-predplatne"></a>
 ### Předplatné
-← [předchozí](#koncept-exclusive) | [další](#koncept-tokeny-ziskavani) →
-
+← [předchozí](#koncept-exclusive) | [další](#koncept-automaticke-ukonceni-predplatneho) →
 
 Related:
 - [Ekonomika](#ekonomika)
@@ -1904,10 +1841,27 @@ Kontrakt:
 
 ---
 
-<a id="koncept-tokeny-ziskavani"></a>
-### [Tokeny](#koncept-tokeny): Získávání
-← [předchozí](#koncept-predplatne) | [další](#koncept-early-access) →
+<a id="koncept-automaticke-ukonceni-predplatneho"></a>
+### Automatické ukončení: Předplatné (neaktivita)
+← [předchozí](#koncept-predplatne) | [další](#koncept-tokeny-ziskavani) →
 
+Related:
+- [Předplatné](#koncept-predplatne)
+- [Notifikace (Inbox)](#koncept-notifikace)
+- [Ekonomika](#ekonomika)
+
+Tohle je férovka vůči lidem, co platí a pak na to zapomenou. Radši přijdu o platbu než o důvěru.
+
+Kontrakt:
+- Po **1 měsíci neaktivity** pošlu email připomínku.
+- Po **2 měsících neaktivity** předplatný automaticky ukončím, pokud mezitím nepřijde žádná aktivita.
+- Neaktivita je chování (signál používání), ne “nemám chuť kliknout na cancel”.
+
+---
+
+<a id="koncept-tokeny-ziskavani"></a>
+### Tokeny: Získávání
+← [předchozí](#koncept-automaticke-ukonceni-predplatneho) | [další](#koncept-early-access) →
 
 Related:
 - [Tokeny](#koncept-tokeny)
@@ -1934,7 +1888,6 @@ Bonusy za používání (kontrakt):
 ### Early Access
 ← [předchozí](#koncept-tokeny-ziskavani) | [další](#koncept-early-delivery) →
 
-
 Related:
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
 - [Ekonomika](#ekonomika)
@@ -1952,7 +1905,6 @@ Kontrakt:
 ### Early Delivery
 ← [předchozí](#koncept-early-access) | [další](#koncept-mark) →
 
-
 Related:
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
 - [Ekonomika](#ekonomika)
@@ -1969,7 +1921,6 @@ Kontrakt:
 <a id="koncept-mark"></a>
 ### Mark
 ← [předchozí](#koncept-early-delivery) | [další](#koncept-top) →
-
 
 Related:
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
@@ -1993,7 +1944,6 @@ Kontrakt:
 <a id="koncept-top"></a>
 ### Top
 ← [předchozí](#koncept-mark) | [další](#koncept-top-maxxi) →
-
 
 Related:
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
@@ -2019,7 +1969,6 @@ Kontrakt:
 ### Top Maxxi
 ← [předchozí](#koncept-top) | [další](#koncept-anti-topper) →
 
-
 Related:
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
 - [Anti-topper](#koncept-anti-topper)
@@ -2039,9 +1988,8 @@ Kontrakt:
 ---
 
 <a id="koncept-anti-topper"></a>
-### [Anti-topper](#koncept-anti-topper)
+### Anti-topper
 ← [předchozí](#koncept-top-maxxi) | [další](#koncept-payback) →
-
 
 Related:
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
@@ -2062,9 +2010,8 @@ Měření:
 ---
 
 <a id="koncept-payback"></a>
-### [Payback](#koncept-payback)
+### Payback
 ← [předchozí](#koncept-anti-topper) | [další](#koncept-kontinualni-nabidka) →
-
 
 Related:
 - [Anti-topper](#koncept-anti-topper)
@@ -2081,9 +2028,8 @@ Kontrakt:
 ---
 
 <a id="koncept-kontinualni-nabidka"></a>
-### [Kontinuální nabídka](#koncept-kontinualni-nabidka)
+### Kontinuální nabídka
 ← [předchozí](#koncept-payback) | [další](#koncept-landing) →
-
 
 Related:
 - [Inzerát](#koncept-inzerat)
@@ -2116,7 +2062,6 @@ Hranice:
 ### Landing
 ← [předchozí](#koncept-kontinualni-nabidka) | [další](#koncept-navigace) →
 
-
 Related:
 - [Uživatel](#koncept-uzivatel)
 - [Kodex](#kodex)
@@ -2138,7 +2083,6 @@ Tón: minimalistickej. Bez popupů, bez urgencí, bez vysvětlování.
 <a id="koncept-navigace"></a>
 ### Navigace
 ← [předchozí](#koncept-landing) | [další](#koncept-ui-ramec) →
-
 
 Related:
 - [Landing](#koncept-landing)
@@ -2169,7 +2113,6 @@ Kontrakt:
 ### UI: Rámec
 ← [předchozí](#koncept-navigace) | [další](#koncept-ui-dashboard) →
 
-
 Related:
 - [Navigace](#koncept-navigace)
 - [Draft](#koncept-draft)
@@ -2192,7 +2135,6 @@ Pravidla:
 ### UI: Dashboard
 ← [předchozí](#koncept-ui-ramec) | [další](#koncept-ui-seller) →
 
-
 Related:
 - [Notifikace (Inbox)](#koncept-notifikace)
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
@@ -2210,7 +2152,6 @@ Co tu je:
 <a id="koncept-ui-seller"></a>
 ### UI: Chci prodávat
 ← [předchozí](#koncept-ui-dashboard) | [další](#koncept-ui-buyer) →
-
 
 Related:
 - [Draft](#koncept-draft)
@@ -2233,7 +2174,6 @@ Karty:
 ### UI: Chci nakupovat
 ← [předchozí](#koncept-ui-seller) | [další](#koncept-ui-rozsireni) →
 
-
 Related:
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
 - [Transakce](#koncept-transakce)
@@ -2251,10 +2191,10 @@ Karty:
 | Oblíbené | moje uložený inzeráty | rychlá paměť, žádný algoritmy |
 
 ---
+
 <a id="koncept-ui-rozsireni"></a>
 ### UI: Rozšíření
 ← [předchozí](#koncept-ui-buyer) | [další](#koncept-ui-bonusy) →
-
 
 Related:
 - [Aktivace](#koncept-aktivace)
@@ -2280,7 +2220,6 @@ Kontrakt:
 ### UI: Bonusy
 ← [předchozí](#koncept-ui-rozsireni) | [další](#koncept-ban) →
 
-
 Related:
 - [Tokeny: Získávání](#koncept-tokeny-ziskavani)
 - [Tokeny](#koncept-tokeny)
@@ -2300,8 +2239,7 @@ Kontrakt:
 
 <a id="koncept-ban"></a>
 ### Ban
-← [předchozí](#koncept-ui-bonusy)
-
+← [předchozí](#koncept-ui-bonusy) | [další](#ekonomika-balicky) →
 
 Related:
 - [Flag inzerátu](#koncept-flag-inzeratu)
@@ -2316,11 +2254,9 @@ Kontrakt:
 
 ---
 
-
 <a id="ekonomika"></a>
 ## Ekonomika
 ← [předchozí](#koncepty) | [další](#uvedeni-na-trh) →
-
 
 Related:
 - [Ceník](#koncept-cenik)
@@ -2346,12 +2282,80 @@ Co prodávám (mentálně):
 Refundy a férovky:
 - Když vznikne kompenzace, je to explicitní mechanika (typicky [Payback](#koncept-payback)). Žádný tichý “vrátili jsme ti něco, ale neřekneme proč”.
 
+<a id="ekonomika-balicky"></a>
+### Předplatné (balíčky)
+← [předchozí](#koncept-ban) | [další](#ekonomika-tokeny-ceny) →
+
+Balíčky jsou měsíční balík oprávnění + příděly. Nejsou to role. Oprávnění jsou vždycky jen [Passy](#koncept-pass) a limity na účtu.
+
+| Položka | Kupující<br>(119 Kč) | Prodejce<br>(229 Kč) | **Pro**<br>(499 Kč) |
+| :--- | :---: | :---: | :---: |
+| **Tokeny / měsíc** | 300 T | 300 T | **600 T** |
+| **Limity** | | | |
+| Uložené Feedy | 5 | - | **10** |
+| Aktivní inzeráty | 5 | 10 | **20** |
+| **Passy (Trvalé)** | | | |
+| [Payback](#koncept-payback) | - | ✓ | **✓** |
+| [Photo Count](#koncept-limit-poctu-fotek) (+foto) | - | ✓ | **✓** |
+| [Rozšířená data](#koncept-rozsirena-data-inzeratu) | - | ✓ | **✓** |
+| [Detail protistrany](#koncept-detail-protistrany) | - | - | **✓** |
+| [Anti-topper](#koncept-anti-topper) | - | - | **✓** |
+| [Early Access](#koncept-early-access) | - | - | **✓** |
+| [Multi-Category](#koncept-multi-category) | - | - | **✓** |
+| **Kupóny (Měsíčně)** | | | |
+| [Early Access](#koncept-early-access) | 5× | - | **(Pass)** |
+| [Anti-topper](#koncept-anti-topper) | 5× | - | **(Pass)** |
+| [Early Delivery](#koncept-early-delivery) | - | 3× | **3×** |
+| [Mark](#koncept-mark) | - | 3× | **3×** |
+| [Top](#koncept-top) | - | 3× | **3×** |
+| [Top Maxxi](#koncept-top-maxxi) | - | 1× | **3×** |
+| [Multi-Category](#koncept-multi-category) | - | 3× | **(Pass)** |
+| [Kontinuální nabídka](#koncept-kontinualni-nabidka) | - | 3× | **5×** |
+
+> Pozn.: řádky „(Pass)“ znamenají, že v tom balíčku to není jako měsíční kupón, ale jako aktivní pass/benefit.
+
+<a id="ekonomika-tokeny-ceny"></a>
+### Tokeny (nabídka a ceny)
+← [předchozí](#ekonomika-balicky) | [další](#ekonomika-cenik-rozsireni) →
+
+Tady je jen ekonomický model: kurz + top-up balíčky.
+
+- **Baseline kurz:** cca **1 CZK ≈ 2 Tokeny**
+
+| Balíček | Cena (CZK) | Získám Tokenů | Výhodnost |
+| :--- | :---: | :---: | :--- |
+| **Na zkoušku** | 149 Kč | **300 T** | Standard |
+| **Balík** | 299 Kč | **650 T** | +50 T zdarma |
+| **Do zásoby** | 599 Kč | **1400 T** | +200 T zdarma |
+
+<a id="ekonomika-cenik-rozsireni"></a>
+### Ceník rozšíření (kupóny / passy)
+← [předchozí](#ekonomika-tokeny-ceny)
+
+Pozn.:
+- **Kupón → Pass** znamená: jednorázově aktivuješ a vznikne/obnoví se [Pass](#koncept-pass) na dobu trvání.
+- **Exclusive** = dostupné jen v rámci [Předplatného](#koncept-predplatne) (nejde koupit samostatně).
+
+| Co | Typ | Efekt / Trvání | Cena (Token) |
+| :--- | :--- | :--- | ---: |
+| [Early Access](#koncept-early-access) | Kupón → Pass | 7 dnů | 80 |
+| [Early Delivery](#koncept-early-delivery) | Kupón | Zruší release window pro jeden inzerát | 40 |
+| [Anti-topper](#koncept-anti-topper) | Kupón → Pass | 7 dnů | 40 |
+| [Mark](#koncept-mark) | Kupón → Pass | 7 dnů | 20 |
+| [Top](#koncept-top) | Kupón → Pass | 7 dnů | 50 |
+| [Top Maxxi](#koncept-top-maxxi) | Kupón → Pass | 7 dnů | 50 |
+| [Multi-Category](#koncept-multi-category) | Kupón | 1 použití (1 + 2 kategorie) | 75 |
+| [Detail protistrany](#koncept-detail-protistrany) | Kupón → Pass | 7 dnů | 50 |
+| [Photo Count](#koncept-limit-poctu-fotek) | Kupón → Pass | 1 měsíc (+2 fotky) | 75 |
+| Aktivní inzeráty 10 | Kupón → Pass | 1 měsíc | TBD |
+| [Payback](#koncept-payback) | Pass | Benefit předplatného | Exclusive |
+| [Kontinuální nabídka](#koncept-kontinualni-nabidka) | Kupón → Pass | 1 měsíc (prodlouží život inzerátu) | Exclusive |
+
 ---
 
 <a id="uvedeni-na-trh"></a>
 ## Uvedení na trh
 ← [předchozí](#ekonomika) | [další](#retence) →
-
 
 Related:
 - [Landing](#koncept-landing)
@@ -2381,7 +2385,6 @@ Kontrakt komunikace:
 ## Retence
 ← [předchozí](#uvedeni-na-trh) | [další](#odhady) →
 
-
 Related:
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
 - [Inzerát](#koncept-inzerat)
@@ -2403,8 +2406,7 @@ Smysl:
 
 <a id="odhady"></a>
 ## Odhady
-← [předchozí](#retence)
-
+← [předchozí](#retence) | [další](#obsah) →
 
 Related:
 - [Ekonomika](#ekonomika)
@@ -2444,3 +2446,116 @@ Kombinovaný scénář (konzervativní, MAU 10k):
 | **Celkem** | **28,68** | **~286 800** |
 
 ---
+
+<a id="obsah"></a>
+## Obsah
+← [předchozí](#odhady)
+
+- [Pravidla dokumentu](#pravidla-dokumentu)
+- [Kodex](#kodex)
+  - [Důvěra jako výchozí stav](#duvera-default)
+  - [Férová monetizace a neaktivita](#ferova-monetizace)
+  - [Žádné pay-to-win](#no-p2w)
+  - [Respekt k uživateli](#respekt)
+  - [Otevřenost a odpovědnost](#otevrenost)
+- [Směr produktu](#smer-produktu)
+  - [Identita](#identita)
+  - [Tone of Voice](#tov)
+  - [Produktové cíle](#produktove-cile)
+  - [UX principy](#ux-principy)
+  - [Komunikace a transparentnost](#komunikace)
+- [Konkurenceschopnost](#konkurenceschopnost)
+  - [Co umím líp](#co-umim-lip)
+  - [V čem je má slabina (a proč s tím počítám)](#slabina)
+  - [Co vědomě nedělám](#co-nedelam)
+- [Koncepty](#koncepty)
+  - [Uživatel](#koncept-uzivatel)
+  - [Kategorie](#koncept-kategorie)
+  - [Lokace](#koncept-lokace)
+  - [Uploady](#koncept-uploady)
+  - [Galerie](#koncept-galerie)
+  - [Inzerát](#koncept-inzerat)
+  - [Inzerát: Titulek](#koncept-inzerat-titulek)
+  - [Inzerát: Cena](#koncept-inzerat-cena)
+  - [Inzerát: Předání](#koncept-inzerat-delivery)
+  - [Inzerát: Záruka](#koncept-inzerat-warranty)
+  - [Inzerát: Popis](#koncept-inzerat-popis)
+  - [Inzerát: Co chci vyzdvihnout / Chci být upřímný](#koncept-inzerat-pros-cons)
+  - [Inzerát: Video (ne)](#koncept-inzerat-video)
+  - [Inzerát: Brand](#koncept-inzerat-brand)
+  - [Draft](#koncept-draft)
+  - [Feed](#koncept-feed)
+  - [Hledat](#koncept-hledat)
+  - [Seznam inzerátů](#koncept-seznam-inzeratu)
+  - [Multi-Category](#koncept-multi-category)
+  - [Oblíbené](#koncept-oblibene)
+  - [Citlivost](#koncept-citlivost-inzeratu)
+  - [Ignor](#koncept-ignorace-inzeratu)
+  - [Flag inzerátu](#koncept-flag-inzeratu)
+  - [Flag uživatele](#koncept-flag-uzivatele)
+  - [Transakce](#koncept-transakce)
+  - [Zprávy](#koncept-zpravy)
+  - [Notifikace (Inbox)](#koncept-notifikace)
+  - [Dispute](#koncept-dispute)
+  - [Automatické ukončení: Inzerát](#koncept-automaticke-ukonceni-inzeratu)
+  - [Automatické ukončení: Transakce](#koncept-automaticke-ukonceni-transakce)
+  - [Limit počtu feedů](#koncept-limit-poctu-feedu)
+  - [Limit počtu fotek nad inzerátem](#koncept-limit-poctu-fotek)
+  - [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu)
+  - [Palce (Like/Dislike)](#koncept-palce)
+  - [Karma (Like/Dislike)](#koncept-karma)
+  - [Metrika: Karma](#koncept-metrika-karma)
+  - [Metriky prodávajícího](#koncept-metriky-prodavaciho)
+  - [Detail protistrany](#koncept-detail-protistrany)
+  - [Metriky kupujícího](#koncept-metriky-kupujiciho)
+  - [Metrika: Reakční doba](#koncept-metrika-reakcni-doba)
+  - [Metrika: Odmítnutí bez interakce](#koncept-metrika-odmitnuti-bez-interakce)
+  - [Metrika: Resolved rate](#koncept-metrika-resolved-rate)
+  - [Metrika: Expirace (transakcí)](#koncept-metrika-expirace)
+  - [Metrika: Vytížení (paralelní obchody)](#koncept-metrika-vytizeni)
+  - [Metrika: Aktivita](#koncept-metrika-aktivita)
+  - [Metrika: Flag rate](#koncept-metrika-flag-rate)
+  - [Metrika: Closer rate](#koncept-metrika-closer-rate)
+  - [Metrika: Decision rate](#koncept-metrika-decision-rate)
+  - [Metrika: Score (A–F)](#koncept-metrika-score)
+  - [Metrika: Visible](#koncept-metrika-inzeratu-visible)
+  - [Metrika: Impression](#koncept-metrika-inzeratu-impression)
+  - [Metrika: View](#koncept-metrika-inzeratu-view)
+  - [Metrika: Anti-topper](#koncept-metrika-inzeratu-anti-topper)
+  - [Metrika: Thumbs](#koncept-metrika-inzeratu-thumbs)
+  - [Metrika: Ignored](#koncept-metrika-inzeratu-ignored)
+  - [Metrika: Transactions](#koncept-metrika-inzeratu-transactions)
+  - [Rozšířená data u inzerátu](#koncept-rozsirena-data-inzeratu)
+  - [Pass](#koncept-pass)
+  - [Kupón](#koncept-kupon)
+  - [Tokeny](#koncept-tokeny)
+  - [Aktivace](#koncept-aktivace)
+  - [Ceník](#koncept-cenik)
+  - [Exclusive](#koncept-exclusive)
+  - [Předplatné](#koncept-predplatne)
+  - [Automatické ukončení: Předplatné (neaktivita)](#koncept-automaticke-ukonceni-predplatneho)
+  - [Tokeny: Získávání](#koncept-tokeny-ziskavani)
+  - [Early Access](#koncept-early-access)
+  - [Early Delivery](#koncept-early-delivery)
+  - [Mark](#koncept-mark)
+  - [Top](#koncept-top)
+  - [Top Maxxi](#koncept-top-maxxi)
+  - [Anti-topper](#koncept-anti-topper)
+  - [Payback](#koncept-payback)
+  - [Kontinuální nabídka](#koncept-kontinualni-nabidka)
+  - [Landing](#koncept-landing)
+  - [Navigace](#koncept-navigace)
+  - [UI: Rámec](#koncept-ui-ramec)
+  - [UI: Dashboard](#koncept-ui-dashboard)
+  - [UI: Chci prodávat](#koncept-ui-seller)
+  - [UI: Chci nakupovat](#koncept-ui-buyer)
+  - [UI: Rozšíření](#koncept-ui-rozsireni)
+  - [UI: Bonusy](#koncept-ui-bonusy)
+  - [Ban](#koncept-ban)
+- [Ekonomika](#ekonomika)
+  - [Předplatné (balíčky)](#ekonomika-balicky)
+  - [Tokeny (nabídka a ceny)](#ekonomika-tokeny-ceny)
+  - [Ceník rozšíření (kupóny / passy)](#ekonomika-cenik-rozsireni)
+- [Uvedení na trh](#uvedeni-na-trh)
+- [Retence](#retence)
+- [Odhady](#odhady)
