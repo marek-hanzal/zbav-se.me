@@ -1255,3 +1255,21 @@ Kontrakt:
 - Score není veřejná show. Je to privátní signál v rámci „Detail protistrany“.
 
 ---
+
+<a id="koncept-oblibene"></a>
+### Oblíbené
+
+Related:
+- [Inzerát](#koncept-inzerat)
+- [Feed](#koncept-feed)
+- [Ignor](#koncept-ignor)
+
+Oblíbené je moje rychlá paměť. Žádný algoritmy. Jen „tohle si chci držet bokem“.
+
+Kontrakt:
+- Je to per-user seznam inzerátů (uloženo/odloženo).
+- Je to nezávislý na Feedu: feed je dotaz, oblíbené je konkrétní výběr.
+- Není to Ignor: ignor je „nechci to vídat“, oblíbené je „chci se k tomu vrátit“.
+- Oblíbené nic neobchází: když si zpřísním [Citlivost](#koncept-citlivost), inzeráty mimo nový maximum z Oblíbených zmizí.
+
+---
