@@ -40,7 +40,7 @@ Struktura dokumentu (základ):
 - **Konkurenceschopnost** je argumentace proč to existuje (bez marketingových keců): [`#konkurenceschopnost`](#konkurenceschopnost)
 - **Kodex** je „no bullshit“ vrstva hranic: [`#kodex`](#kodex)
 - **Koncepty** jsou hlavní katalog reality: každá otázka „jak funguje X?“ má odpověď v jednom konceptu: [`#koncepty`](#koncepty)
-- **Ekonomika** je model nabídky ([tokeny](#koncept-tokeny)/[kupóny](#koncept-kupon)/[passy](#koncept-pass)/předplatné/ceník): [`#ekonomika`](#ekonomika)
+- **Ekonomika** je model nabídky ([tokeny](#koncept-tokeny)/[kupóny](#koncept-kupon)/[passy](#koncept-pass)/předplatné/[ceník](#koncept-cenik)): [`#ekonomika`](#ekonomika)
 - **Uvedení na trh**, **Retence**, **Odhady** jsou strategická vrstva (bez implementačních detailů):  
   - [`#uvedeni-na-trh`](#uvedeni-na-trh)  
   - [`#retence`](#retence)  
@@ -1515,6 +1515,7 @@ Tvrdá hranice:
 Related:
 - [Ekonomika](#ekonomika)
 - [Aktivace](#koncept-aktivace)
+- [Ceník](#koncept-cenik)
 - [Pass](#koncept-pass)
 - [Tokeny](#koncept-tokeny)
 - [Kupón](#koncept-kupon)
@@ -1522,7 +1523,27 @@ Related:
 Exclusive je zamčený oprávnění. Není to věc, kterou si „dokoupím tokenama“. Je to benefit balíčku / předplatnýho.
 
 Kontrakt:
-- Když něco není v ceníku, přes [Tokeny](#koncept-tokeny) to nekoupím.
-- Pokud to jde aktivovat, tak jen přes nárok z balíčku/předplatnýho (typicky jako [Pass](#koncept-pass)).
+- Autorita toho, co je „koupitelný“, je [Ceník](#koncept-cenik) (a pravidla použití drží [Aktivace](#koncept-aktivace)).
+- Exclusive věci nejsou koupitelný přes [Tokeny](#koncept-tokeny). Pokud existují, běží jen jako nárok (typicky [Pass](#koncept-pass)).
+
+---
+
+<a id="koncept-cenik"></a>
+### Ceník
+
+Related:
+- [Ekonomika](#ekonomika)
+- [Aktivace](#koncept-aktivace)
+- [Tokeny](#koncept-tokeny)
+- [Kupón](#koncept-kupon)
+- [Pass](#koncept-pass)
+- [Exclusive](#koncept-exclusive)
+
+Ceník je seznam věcí, který si umím koupit (typicky za [Tokeny](#koncept-tokeny) nebo přes [Kupón](#koncept-kupon)). Je to produktová autorita pro „tohle jde dokoupit“.
+
+Kontrakt:
+- Pokud něco **je v ceníku**, jde to aktivovat i přes tokeny (pokud nemám kupón).
+- Pokud něco **není v ceníku**, je to zamčený → [Exclusive](#koncept-exclusive) (benefit balíčku/předplatnýho).
+- Konkrétní částky a tabulky držím v [Ekonomice](#ekonomika).
 
 ---
