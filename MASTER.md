@@ -572,6 +572,7 @@ Poznámky:
 - `sold` je explicitní přepnutí stavu. Vzniká buď:
   - v rámci transakce klikem na `resolved`,
   - nebo ručně na detailu inzerátu tlačítkem `sold` (externí prodej).
+- Když se inzerát přepne do `sold`, systém všechny ostatní rozjetý transakce nad tímhle inzerátem automaticky přepne do stavu `sold` (jasný „už prodáno“).
 
 Related:
 - [Uživatel](#koncept-uzivatel)
@@ -980,6 +981,10 @@ Release window je systémový zpoždění publikování inzerátu v listingu. In
 
 Kontrakt:
 - Defaultně platí release window = **+8 hodin** od publikace.
+- „Publikace“ = `createdAt` (inzerát vzniká z draftu, takže je to stabilní a bezpečná autorita).
+- Release window se spustí při vzniku inzerátu a je **neměnný** (krom pravidel Early Access/Early Delivery).
+- Neexistuje publish/republish.
+- (Kdyby existovala editace inzerátu) release window by se **neresetovalo**.
 - Kdo má [Early Access](#koncept-early-access), release window ignoruje a vidí inzerát v listingu hned.
 - Když prodejce použije [Early Delivery](#koncept-early-delivery), release window se pro ten inzerát ruší pro všechny (listing je hned).
 - Release window je pravidlo listingu. Ostatní brány (hlavně [Citlivost](#koncept-citlivost-inzeratu)) platí pořád.
@@ -1167,20 +1172,22 @@ Základní kontrakty:
 
 Stavový model (prakticky):
 
-| Stav       | Kdy                                                                                   | Co je povolený                                                                                    |
-| ---------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `pending`  | kupující klikne „Mám zájem“                                                           | kupující **nemůže psát**; prodejce jen **Přijmout** / **Odmítnout**                               |
-| `open`     | prodejce přijme                                                                       | odemknou se zprávy + strukturovaný widgety                                                        |
-| `resolved` | prodejce označí „vyřešeno“                                                            | **inzerát přepnu do `sold`**; transakce běží dál, dokud kupující nedá finále (`success`/`closed`) |
-| `dispute`  | někdo přepne do sporu                                                                 | běží dál (řeší se), dokud kupující nedá finále (`success`/`closed`)                               |
-| `rejected` | prodejce odmítne („bez emocí“)                                                        | read-only                                                                                         |
-| `expired`  | transakce vyprší po **3 dnech bez aktivity** (aktivita = jakákoli zpráva v transakci) | read-only                                                                                         |
-| `success`  | kupující potvrdí „dopadlo to“                                                         | read-only                                                                                         |
-| `closed`   | kupující zavře (ukončí pro sebe)                                                      | read-only                                                                                         |
+| Stav       | Kdy                                                                                          | Co je povolený                                                                                                                                                   |
+| ---------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pending`  | kupující klikne „Mám zájem“                                                                  | kupující **nemůže psát**; prodejce jen **Přijmout** / **Odmítnout**                                                                                              |
+| `open`     | prodejce přijme                                                                              | odemknou se zprávy + strukturovaný widgety                                                                                                                       |
+| `resolved` | prodejce označí „vyřešeno“                                                                   | **inzerát přepnu do `sold`**; ostatní transakce nad tímhle inzerátem přepnu do `sold`; tahle transakce běží dál, dokud kupující nedá finále (`success`/`closed`) |
+| `dispute`  | někdo přepne do sporu                                                                        | běží dál (řeší se), dokud kupující nedá finále (`success`/`closed`)                                                                                              |
+| `rejected` | prodejce odmítne („bez emocí“)                                                               | read-only                                                                                                                                                        |
+| `sold`     | systém označí „už prodáno“ (inzerát se prodal v jiným vlákně / ručně)                        | read-only                                                                                                                                                        |
+| `expired`  | transakce vyprší po **3 dnech bez aktivity** (aktivita = cokoliv, co se stane nad transakcí) | read-only                                                                                                                                                        |
+| `success`  | kupující potvrdí „dopadlo to“                                                                | read-only                                                                                                                                                        |
+| `closed`   | kupující zavře (ukončí pro sebe)                                                             | read-only                                                                                                                                                        |
 
 Poznámky ke koncům:
 - `rejected` = prodejce odmítl („zavřít bez emocí“).
 - `closed` = kupující to zavřel z vlastní vůle.
+- `sold` = systémová stopka „už prodáno“ (bez emocí, bez dohadů).
 
 Anti-spam a ochrana prodejce:
 - Prodejce může zájem **ignorovat bez postihu**. Odpovědnost začíná až přijetím.
@@ -1225,6 +1232,7 @@ Tracking (zásilka):
 
 Retence po ukončení transakce:
 - Všechny typy **kromě** `message_text` a `message_gallery` se po ukončení transakce **mažou**.
+- „Ukončení transakce“ = dosažení terminal stavu (`rejected` / `sold` / `expired` / `success` / `closed`).
 
 Kontrakt:
 - V `pending` se zprávy neposílají.
@@ -1330,7 +1338,7 @@ Nechci nedotažený transakce žít navěky. Když se obchod nerozjede nebo se n
 
 Kontrakt:
 - Transakce vyprší defaultně za **3 dny bez aktivity**.
-- Aktivita = **jakákoli zpráva** v transakci (včetně strukturovaných typů).
+- Aktivita = **jakákoli aktivita nad transakcí** (zprávy i systémové události / změny stavu).
 - Vypršení přepne transakci do `expired` (read-only).
 - `expired` je finální stav: žádný re-open.
 - Vypršení je systémová akce → v [User Eventech](#koncept-user-eventy) vzniká `transaction.expired`.
@@ -1478,10 +1486,10 @@ Scope (důležitý kontrakt):
   - pro protistranu jako `scope=foreign`.
 
 Eventy, se kterýma počítám (dnes):
-| `source`      | `event`                                                                                                                                                                             |
-| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `listing`     | `listing.create`                                                                                                                                                                    |
-| `transaction` | `transaction.create`, `transaction.open`, `transaction.message`, `transaction.resolved`, `transaction.success`, `transaction.rejected`, `transaction.closed`, `transaction.expired` |
+| `source`      | `event`                                                                                                                                                                                                 |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `listing`     | `listing.create`, `listing.sold`                                                                                                                                                                        |
+| `transaction` | `transaction.create`, `transaction.open`, `transaction.message`, `transaction.resolved`, `transaction.sold`, `transaction.success`, `transaction.rejected`, `transaction.closed`, `transaction.expired` |
 
 Na co to používám:
 - výpočet [Metrik prodávajícího](#koncept-metriky-prodavaciho) a [Metrik kupujícího](#koncept-metriky-kupujiciho),
@@ -1890,7 +1898,7 @@ Related:
 ← [předchozí](#koncept-metrika-inzeratu-ignored) | [další](#koncept-rozsirena-data-inzeratu) →
 
 Zdroj:
-- `transactions`
+- `transaction.created`
 
 Význam:
 - Kolik transakcí tenhle inzerát vyvolal (kolik „vláken obchodu“ na něj vzniklo).
@@ -1919,6 +1927,7 @@ Kontrakt:
 Zdrojová data (mapa, aby to neujelo ve slovníku):
 - Jediný zdroj je `listing_event`. Je to append-only log událostí nad inzerátem. Každý řádek v tabulce níž je **event v `listing_event`**.
 - Když vznikne transakce, zapíšu to **dvakrát**: do `listing_event` jako `transaction.created` (kvůli metrikám inzerátu) a do `user_event` (kvůli metrikám lidí). Spamujeme schválně: každý svět slouží svýmu účelu.
+- Když se prodá, zapíšu to taky **dvakrát**: do `listing_event` jako `listing.sold` (kvůli rozšířeným datům pro prodejce) a do `user_event` jako `transaction.sold` u dotčených transakcí (kvůli metrikám lidí).
 
 | Event (`listing_event`) | Vznik                                                                    | Na co to používám                                                                                                        |
 | ----------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
@@ -1928,6 +1937,7 @@ Zdrojová data (mapa, aby to neujelo ve slovníku):
 | `thumbs`                | uživatel dá like/dislike nad inzerátem                                   | signál atraktivity (autorita: [Metrika: Thumbs](#koncept-metrika-inzeratu-thumbs))                                       |
 | `ignored`               | uživatel dá ignor nad inzerátem                                          | osobní úklid + signál pro prodávajícího (autorita: [Metrika: Ignored](#koncept-metrika-inzeratu-ignored))                |
 | `transaction.created`   | vznikne transakce nad inzerátem                                          | metrika zájmu (autorita: [Metrika: Transactions](#koncept-metrika-inzeratu-transactions))                                |
+| `listing.sold`          | inzerát se přepne do `sold` (ručně nebo přes `resolved`)                 | signál „prodáno“ v rozšířených datech                                                                                    |
 | `anti-topper`           | potlačení zvýraznění pro uživatele s [Anti-topper](#koncept-anti-topper) | měření potlačení + [Payback](#koncept-payback) (autorita: [Metrika: Anti-topper](#koncept-metrika-inzeratu-anti-topper)) |
 
 Co ukazuju:
@@ -2118,6 +2128,7 @@ Tohle je férovka vůči lidem, co platí a pak na to zapomenou. Radši přijdu 
 Kontrakt:
 - Po **1 měsíci neaktivity** pošlu email připomínku.
 - Po **2 měsících neaktivity** automaticky **odeberu benefity / entitlement** (přestanu poskytovat nárok), pokud mezitím nepřijde žádná aktivita. Billing záleží na kanálu.
+- Aktivita = existuje aspoň jeden `user_event` se `scope=user` (moje vlastní akce) v daným čase.
 - Neaktivita je chování (signál používání), ne “nemám chuť kliknout na cancel”.
 
 Related:
@@ -2283,7 +2294,7 @@ Related:
 Kontrakt:
 - Kompenzuje jen boosty, který [Anti-topper](#koncept-anti-topper) umí potlačit: **Mark** a **Top**.
 - **Top Maxxi** je imunní → payback pro něj nikdy nevzniká.
-- Vyhodnocuju až po expiraci inzerátu (po expiraci už se nic nevrací do hry, jen vyrovnám účty).
+- Vyhodnocuju ve chvíli, kdy inzerát dostane svůj terminal stav: `expired` nebo `sold` (už se nic nevrací do hry, jen vyrovnám účty).
 - [Payback](#koncept-payback) je **[Pass](#koncept-pass) ([Exclusive](#koncept-exclusive))** (typicky Seller/Pro) a vzniká jen pokud má prodávající v době vyhodnocení aktivní [Payback](#koncept-payback) pass.
 
 Related:
@@ -2315,6 +2326,7 @@ Chování během aktivního passu:
 
 Hranice:
 - Nic z toho neobchází systémový brány (hlavně [Citlivost](#koncept-citlivost-inzeratu), ignor, Early Access/Early Delivery).
+- Nad `sold` inzerátem nejde [Kontinuální nabídku](#koncept-kontinualni-nabidka) zapnout. `sold` je konec.
 
 Related:
 - [Inzerát](#koncept-inzerat)
