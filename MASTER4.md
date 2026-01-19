@@ -1779,3 +1779,31 @@ Landing je vizitka postoje. Držím to krátký: pět bloků a hotovo.
 Tón: minimalistickej. Bez popupů, bez urgencí, bez vysvětlování.
 
 ---
+
+<a id="koncept-navigace"></a>
+### Navigace
+
+Related:
+- [Landing](#koncept-landing)
+- [Draft](#koncept-draft)
+- [Feed](#koncept-feed)
+- [Hledat](#koncept-hledat)
+- [Notifikace (Inbox)](#koncept-notifikace)
+- [Můj účet](#koncept-uzivatel)
+- [Ekonomika](#ekonomika)
+
+Navigace je schválně nudná a stabilní. Uživatel se nemá proklikávat labyrintem. Má mít jistotu, že vždycky ví, kde je, a vždycky má únik.
+
+Bottom nav (5 ikon, pořád stejně):
+| Ikona | Sekce | Poznámka |
+|---|---|---|
+| Home | Centrální Dashboard | společnej entrypoint |
+| Chci prodávat | Seller home | mindset „prodávám“ |
+| Chci nakupovat | Buyer home | mindset „nakupuju“ |
+| Bonusy | ekonomika / aktivace | rozšíření, passy, tokeny |
+| Můj účet | profil / nastavení | preference, hranice, ticho |
+
+Kontrakt:
+- Role nejsou identita ani přepínač „jsem seller/buyer“. Je to rychlej vstup do dvou nejčastějších mindsetů.
+
+---
