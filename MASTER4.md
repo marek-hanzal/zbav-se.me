@@ -6,7 +6,7 @@ Co tu najdeš:
 - **Směr produktu**: postoj a zásady, který mi nedovolí udělat z toho další bazar.
 - **Kodex**: tvrdý hranice férovosti (monetizace, pay-to-win, data, manipulace).
 - **Koncepty**: „jak funguje X?“ na jednom místě (inzerát, draft, feed, transakce, citlivost, limity…).
-- **Ekonomika**: model nabídky (tokeny/kupóny/[passy](#koncept-pass)/předplatné) a pravidla aktivace.
+- **Ekonomika**: model nabídky ([tokeny](#koncept-tokeny)/[kupóny](#koncept-kupon)/[passy](#koncept-pass)/předplatné) a pravidla aktivace.
 
 Jak to číst:
 - Kontrakt „co tu není, neexistuje“ držím natvrdo v kapitole [Pravidla dokumentu](#pravidla-dokumentu) a nikde jinde ho už nerozmělňuju.
@@ -40,7 +40,7 @@ Struktura dokumentu (základ):
 - **Konkurenceschopnost** je argumentace proč to existuje (bez marketingových keců): [`#konkurenceschopnost`](#konkurenceschopnost)
 - **Kodex** je „no bullshit“ vrstva hranic: [`#kodex`](#kodex)
 - **Koncepty** jsou hlavní katalog reality: každá otázka „jak funguje X?“ má odpověď v jednom konceptu: [`#koncepty`](#koncepty)
-- **Ekonomika** je model nabídky (tokeny/kupóny/[passy](#koncept-pass)/předplatné/ceník): [`#ekonomika`](#ekonomika)
+- **Ekonomika** je model nabídky ([tokeny](#koncept-tokeny)/[kupóny](#koncept-kupon)/[passy](#koncept-pass)/předplatné/ceník): [`#ekonomika`](#ekonomika)
 - **Uvedení na trh**, **Retence**, **Odhady** jsou strategická vrstva (bez implementačních detailů):  
   - [`#uvedeni-na-trh`](#uvedeni-na-trh)  
   - [`#retence`](#retence)  
@@ -537,7 +537,7 @@ Fotky jsou primární obsah inzerátu. Limit fotek je brzda proti šumu a zárov
 
 Kontrakt:
 - Defaultně držím krátkou galerii (baseline je **3 fotky**).
-- Navýšení je oprávnění přes [Ekonomiku](#ekonomika): typicky `Photo Count` (kupón → [Pass](#koncept-pass)) = **+2 fotky na 1 měsíc**.
+- Navýšení je oprávnění přes [Ekonomiku](#ekonomika): typicky `Photo Count` ([Kupón](#koncept-kupon) → [Pass](#koncept-pass)) = **+2 fotky na 1 měsíc**.
 - Po skončení [Passu](#koncept-pass) se už nahraný fotky nemažou. Zůstávají beze změny — jen znovu platí aktuální limit pro další přidávání.
 - V balíčcích se to může projevit jako vyšší strop (např. **3 → 5**, u Pro i víc).
 
@@ -553,7 +553,7 @@ Kontrakt:
 - `sold` se nepočítá jako aktivní.
 - Když jsi nad limitem (typicky po vypršení [Passu](#koncept-pass)), existující `live` nechám běžet.
 - Jen nepustím vytvořit/publikovat další `live` — aktivuje se **Draft Gate** (viz [Draft](#koncept-draft)).
-- Odemknutí limitu je přes [Ekonomiku](#ekonomika): kupón/pas (typicky tier `Aktivní inzeráty 10/20`), nebo tokeny v hodnotě toho kupónu.
+- Odemknutí limitu je přes [Ekonomiku](#ekonomika): [Kupón](#koncept-kupon)/pas (typicky tier `Aktivní inzeráty 10/20`), nebo [Tokeny](#koncept-tokeny) v hodnotě toho kupónu.
 
 ---
 
@@ -805,7 +805,7 @@ Proč existují:
 Přístup (Detail protistrany):
 - Bez oprávnění neukazuju nic. Ani „Score“.
 - S oprávněním ukazuju **[Metrika: Score (A–F)](#koncept-metrika-score)** + konkrétní metriky.
-- Oprávnění je [Pass](#koncept-pass)/kupón v [Ekonomice](#ekonomika).
+- Oprávnění je [Pass](#koncept-pass)/[Kupón](#koncept-kupon) v [Ekonomice](#ekonomika).
 
 Kontrakt:
 - Metriky jsou signál pro rozhodnutí. Ne automatickej trest.
@@ -838,7 +838,7 @@ Proč existují:
 Přístup (Detail protistrany):
 - Bez oprávnění neukazuju nic. Ani „Score“.
 - S oprávněním ukazuju **[Metrika: Score (A–F)](#koncept-metrika-score)** + konkrétní metriky.
-- Oprávnění je [Pass](#koncept-pass)/kupón v [Ekonomice](#ekonomika).
+- Oprávnění je [Pass](#koncept-pass)/[Kupón](#koncept-kupon) v [Ekonomice](#ekonomika).
 
 Kontrakt:
 - Metriky jsou signál pro očekávání. Ne bič.
@@ -1445,5 +1445,38 @@ Kontrakt:
 Scope:
 - Některý passy jsou **na úrovni účtu** (např. Anti-topper).
 - Některý passy jsou **na úrovni inzerátu** (např. Mark/Top/Top Maxxi) — běží jen pro konkrétní inzerát.
+
+---
+
+<a id="koncept-kupon"></a>
+### Kupón
+
+Related:
+- [Tokeny](#koncept-tokeny)
+- [Pass](#koncept-pass)
+- [Ekonomika](#ekonomika)
+
+Kupón je poukázka na konkrétní akci. Není to měna. Je to „máš přesně tohle“.
+
+Kontrakt:
+- Kupón je konkrétní: buď ho použiju na danou věc, nebo mi zůstane.
+- Kupón je 1× použití (spotřebuje se).
+- Kupón neexpiruje (žádný „vypršelo ti to, smůla“).
+
+---
+
+<a id="koncept-tokeny"></a>
+### Tokeny
+
+Related:
+- [Kupón](#koncept-kupon)
+- [Pass](#koncept-pass)
+- [Ekonomika](#ekonomika)
+
+Tokeny jsou interní měna. Palivo na jednorázový věci, který nechci cpát do předplatnýho jako povinnost.
+
+Kontrakt:
+- Tokeny získám (příděl/bonus/nákup) a pak je utrácím.
+- Tokeny jsou skladovatelné: neexpirují. Expirovat může jen [Pass](#koncept-pass).
 
 ---
