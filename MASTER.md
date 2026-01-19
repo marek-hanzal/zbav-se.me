@@ -206,7 +206,7 @@ Co držím:
 - Žádný gotcha momenty typu „nechám tě to skoro dodělat a pak ti to seberu“.
 - Zrušení předplatnýho nesmí být labyrint ani psychologická válka. (Detaily patří do [Ekonomiky](#ekonomika).)
 - Neaktivita je signál „už to teď nepoužívám“. Nechci někoho potichu cucat jen proto, že zapomněl.
-- Když někdo platí, ale dlouhodobě nic nedělá, **předplatný ukončím**. Autorita je [Automatické ukončení předplatného](#koncept-automaticke-ukonceni-predplatneho).
+- Neaktivitu řeším férově a explicitně (viz [Automatické ukončení: Předplatné (neaktivita)](#koncept-automaticke-ukonceni-predplatneho)).
 
 <a id="no-p2w"></a>
 ### Žádné pay-to-win
@@ -218,6 +218,11 @@ To znamená:
 - Platíš za nástroje, pohodlí a signál. Ne za lež.
 - Placený věci jsou pojmenovaný a viditelný. Žádný skrytý boosty.
 - Neplatící nejsou potichu penalizovaný. Žádnej tajnej handicap.
+
+Výjimky (tvrdá distribuce, explicitně):
+- Jsou věci, kde platíš za **pozici v listingu** (tvrdá distribuce) — jinak se marketplace nerozjede.
+- Tyhle nástroje jsou **kriticky vybraný, pojmenovaný a zdokumentovaný** (např. [Top Maxxi](#koncept-top-maxxi)).
+- A hlavně: platí to jen pro **inzerát/distribuci**. **Nikdy** pro důvěru lidí. Na [Score](#koncept-metrika-score) a reputační metriky to nemá žádnej vliv.
 
 <a id="respekt"></a>
 ### Respekt k uživateli
@@ -390,7 +395,7 @@ Co je osobní a patří jen do domluvy, nesmí v systému hnít věčně. (Viz [
 
 - **Žádný prodej dat.** Nikdy.
 - **Žádný dark patterns.** Žádný „nejde odejít“, schovaný volby, vynucený souhlasy.
-- **Žádný pay-to-win.** Platíš za nástroje, ne za „vítězství“.
+- **Žádný skrytý pay-to-win.** Výjimky pro distribuci jsou explicitní a nikdy nelezou do důvěry lidí (žádný dopad na [Score](#koncept-metrika-score)).
 - **Žádný spam-notifikace a onboarding maily.** Informace ano, nátlak ne (viz [Notifikace](#koncept-notifikace)).
 - **Žádný „AI řeší všechno“.** Důvěra stojí na prevenci, pravidlech a struktuře.
 - **Žádný video feed.** Nechci dělat TikTok.
@@ -753,14 +758,14 @@ Kontrakt:
 - Je to stáří věci, ne stáří účtu.
 
 Škála:
-| Hodnota | Význam                     |
-| ------- | -------------------------- |
-| A       | nový / skoro nový          |
-| B       | málo používaný             |
-| C       | běžně používaný            |
-| D       | starší                     |
-| E       | hodně starý                |
-| F       | neznámý / špatně určitelný |
+| Hodnota | Význam                       |
+| ------- | ---------------------------- |
+| A       | nový / skoro nový            |
+| B       | málo používaný               |
+| C       | běžně používaný              |
+| D       | starší                       |
+| E       | hodně starý                  |
+| F       | konec životnosti (na dožití) |
 
 Related:
 - [Inzerát](#koncept-inzerat)
@@ -1009,6 +1014,7 @@ Kontrakt:
 - Defaultně platí release window = **+8 hodin** od publikace.
 - „Publikace“ = `createdAt` (inzerát vzniká z draftu, takže je to stabilní a bezpečná autorita).
 - Release window se spustí při vzniku inzerátu a je **neměnný** (krom pravidel Early Access/Early Delivery).
+- Release window je jen viditelnost v listingu. **Neresetuje ani neodkládá** `expiresAt`.
 - Neexistuje publish/republish.
 - (Kdyby existovala editace inzerátu) release window by se **neresetovalo**.
 - Kdo má [Early Access](#koncept-early-access), release window ignoruje a vidí inzerát v listingu hned.
@@ -1033,6 +1039,7 @@ Kontrakt:
 - Inzerát má jednu **primární kategorii** (autorita pro UI, jazyk a Category Spec).
 - Multi-Category přidá k primární až **2 sekundární** kategorie (čistě distribuční).
 - Sekundární kategorie nejsou cesta, jak si vybrat „výhodnější“ atributy. Primární je pravda.
+- Po skončení oprávnění/passu se nic nemaže a nic se „nezlomí“. Sekundární kategorie zůstávají, jen už nejdou přidávat/změnit nové, dokud nemám aktivní Multi-Category (stejnej pattern jako u [Photo Count](#koncept-limit-poctu-fotek)).
 
 Viditelnost a deduplikace:
 - V rámci jednoho renderovanýho seznamu se inzerát zobrazí **právě jednou**, i když matchuje víc kategorií.
@@ -1200,7 +1207,7 @@ Stavový model (prakticky):
 
 | Stav       | Kdy                                                                                          | Co je povolený                                                                                                                                                   |
 | ---------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pending`  | kupující klikne „Mám zájem“                                                                  | kupující **nemůže psát**; prodejce jen **Přijmout** / **Odmítnout**                                                                                              |
+| `pending`  | kupující klikne „Mám zájem“                                                                  | kupující **nemůže psát**, ale může **couvnout** (zrušit zájem → `closed`); prodejce jen **Přijmout** / **Odmítnout**                                             |
 | `open`     | prodejce přijme                                                                              | odemknou se zprávy + strukturovaný widgety                                                                                                                       |
 | `resolved` | prodejce označí „vyřešeno“                                                                   | **inzerát přepnu do `sold`**; ostatní transakce nad tímhle inzerátem přepnu do `sold`; tahle transakce běží dál, dokud kupující nedá finále (`success`/`closed`) |
 | `dispute`  | někdo přepne do sporu                                                                        | běží dál (řeší se), dokud kupující nedá finále (`success`/`closed`)                                                                                              |
@@ -1218,6 +1225,7 @@ Poznámky ke koncům:
 Anti-spam a ochrana prodejce:
 - Prodejce může zájem **ignorovat bez postihu**. Odpovědnost začíná až přijetím.
 - Kupující v `pending` **nemůže spamovat zprávama**.
+- Kupující může v `pending` couvnout — a je to signál do metrik (viz [Metrika: Closer rate](#koncept-metrika-closer-rate)).
 - Odmítnutí je legitimní volba bez vysvětlování. Žádnej mentální dluh.
 
 Timeline místo chatu:
@@ -1335,7 +1343,7 @@ Automatické ukončení je povinná volba. Drží pořádek v nabídce a brání
 
 Kontrakt:
 - Při tvorbě nastavím `expiresAt`.
-- Čas se počítá až po zveřejnění, ne v draftu.
+- Čas se počítá od `createdAt` (vznik inzerátu), ne v draftu.
 - Po uplynutí `expiresAt` se inzerát bez aktivní [Kontinuální nabídky](#koncept-kontinualni-nabidka) přepne do `expired`.
 - UI u volby ukazuje i konkrétní datum.
 
@@ -1346,7 +1354,11 @@ Předdefinované volby:
 | Za dva týdny | „Dám tomu čas, ale nechci mrtvoly“            | rozumný střed                                                                                  |
 | Za měsíc     | „Vím, že to bude trvat“                       | **zpoplatněná volba** (jinak kanibalizuje [Kontinuální nabídku](#koncept-kontinualni-nabidka)) |
 
-„Za měsíc“ odemykám přes [Ekonomiku](#ekonomika) (typicky kupón / předplatné). Je to schválně: kdyby to bylo zdarma, lidi si vyrobí nekonečný inzeráty bez odpovědnosti.
+„Za měsíc“ je placený nastavení delšího `expiresAt` (odemykám přes [Ekonomiku](#ekonomika): kupón / předplatné). Je to schválně: kdyby to bylo zdarma, lidi si vyrobí nekonečný inzeráty bez odpovědnosti. A [Kontinuální nabídka](#koncept-kontinualni-nabidka) je separátní pass na prodloužení života.
+
+Tyhle dvě věci jdou složit:
+- krátký inzerát (týden/dva týdny) + Kontinuální nabídka = delší život,
+- „Za měsíc“ + Kontinuální nabídka = **2 měsíce v kuse** (žádnej bump, jen koupená životnost).
 
 Related:
 - [Inzerát](#koncept-inzerat)
@@ -1771,6 +1783,7 @@ Proč existuje:
 Kontrakt:
 - Metrika popisuje rychlý ukončování bez smysluplný interakce.
 - Neplete se to s `rejected` (legitimní odmítnutí prodejce). Je to chování v čase.
+- Couvnutí kupujícího v `pending` se počítá do closer (otevření obchodu není random klik, je to vědomý rozhodnutí).
 
 Related:
 - [Metriky kupujícího](#koncept-metriky-kupujiciho)
@@ -1880,7 +1893,7 @@ Zdroj:
 - `anti-topper`
 
 Význam:
-- Když má uživatel aktivní [Anti-topper](#koncept-anti-topper) a v listingu by se měl ukázat inzerát se zvýrazněním **Mark/Top**, systém místo [`visible`](#koncept-metrika-inzeratu-visible) zapíše `anti-topper`.
+- Když má uživatel aktivní [Anti-topper](#koncept-anti-topper) a v listingu by se měl ukázat inzerát se zvýrazněním **Mark/Top**, systém zapíše `anti-topper` **a zároveň** zapíše i [`visible`](#koncept-metrika-inzeratu-visible) (stejný čas).
 
 Smysl:
 - Měřím „kolikrát bylo zvýraznění potlačeno“ (metriky + případnej [Payback](#koncept-payback)).
@@ -2157,7 +2170,8 @@ Předplatné je komfort a nástroje navíc, bez pay-to-win cirkusu. Stojí na ja
 
 Kontrakt:
 - Renew = příděly vždycky: při každým renew se připíšou tokeny/kupóny z balíčku.
-- Cancel je jediná změna: když zruším předplatné, jen se neobnoví. Co běží, doběhne do konce zaplacenýho období.
+- Cancel je jediná **uživatelská** změna: když zruším předplatné, jen se neobnoví. Co běží, doběhne do konce zaplacenýho období.
+- Systémová varianta je [Automatické ukončení: Předplatné (neaktivita)](#koncept-automaticke-ukonceni-predplatneho).
 
 Related:
 - [Ekonomika](#ekonomika)
@@ -2326,7 +2340,7 @@ Kontrakt:
 - [Anti-topper](#koncept-anti-topper) **nikdy neblokuje detail**. Je to mechanika listingu, ne zákaz existence.
 
 Měření:
-- Když by se v listingu ukázal inzerát se zvýrazněním (Mark/Top) uživateli s [Anti-topper](#koncept-anti-topper)em, místo [`visible`](#koncept-metrika-inzeratu-visible) vznikne event [`anti-topper`](#koncept-metrika-inzeratu-anti-topper).
+- Když by se v listingu ukázal inzerát se zvýrazněním (Mark/Top) uživateli s [Anti-topper](#koncept-anti-topper)em, vznikne event [`anti-topper`](#koncept-metrika-inzeratu-anti-topper) **a zároveň** vznikne i [`visible`](#koncept-metrika-inzeratu-visible) (stejný čas).
 
 Related:
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
@@ -2366,6 +2380,7 @@ Smysl:
 Jak to funguje:
 - Je to **[Pass](#koncept-pass)**, který prodlužuje aktivní cyklus inzerátu (prakticky posouvá „efektivní expiraci“).
   - Aktivuje ji **vlastník inzerátu**.
+- Kontinuální nabídka **neresetuje** `createdAt` ani [Release window](#koncept-release-window). Žádný bump exploit.
 - Lze ji zapnout kdykoliv:
   - když je inzerát ještě `live`, prodloužení se **naváže na expiraci** (nekrade čas),
   - když je už `expired`, začne to **okamžitě** a inzerát se vrátí mezi `live`.
