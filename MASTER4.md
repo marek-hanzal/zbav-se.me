@@ -95,7 +95,7 @@ Uživatel není cíl pro optimalizaci metrik. Je to člověk, co si chce v klidu
 Respekt v praxi:
 - Neotravovat. Notifikace jsou informace, ne bič. (Viz [Notifikace](#koncept-notifikace).)
 - Nemanipulovat. Žádný confirm-shaming, žádný dark patterns.
-- Dát kontrolu. Filtry, ignor, citlivost, ukončení. (Viz [Citlivost](#koncept-citlivost), [Ignor](#koncept-ignor).)
+- Dát kontrolu. Filtry, ignor, citlivost, ukončení. (Viz [Citlivost](#koncept-citlivost-inzeratu), [Ignor](#koncept-ignorace-inzeratu).)
 - Neznehodnocovat čas. Minimum kroků, žádný zbytečný potvrzování.
 - Nebýt creepy. Data sbírám s jasným účelem pro produkt. Ne pro reklamní profilování. (Viz [Retence](#retence).)
 
@@ -160,7 +160,7 @@ Nechci stavět „appku“. Chci postavit **trh**, kterej je čitelnej a předv�
 - **Minimum psaní, maximum faktů.** Timeline událostí místo románů.
 - **Lokální základ.** Poloha, vzdálenost, radius.
 - **Definitivní konce.** „Zavřeno je zavřeno“ (viz [Transakce](#koncept-transakce)).
-- **Žádný obcházení.** Brány jsou brány (viz [Citlivost](#koncept-citlivost)).
+- **Žádný obcházení.** Brány jsou brány (viz [Citlivost](#koncept-citlivost-inzeratu)).
 
 <a id="ux-principy"></a>
 ### UX principy
@@ -260,7 +260,7 @@ Tady je katalog reality. Každá otázka „jak funguje X?“ má odpověď v je
 
 Pravidlo proti duplicitám (znovu a naposled):
 - Když něco patří sem, nepíšu to nikam jinam.
-- Křížový věci mají vlastní autoritu (typicky [Citlivost](#koncept-citlivost), [Seznam inzerátů](#koncept-seznam-inzeratu), [Limit počtu feedů](#koncept-limit-poctu-feedu), [Limit fotek](#koncept-limit-poctu-fotek), [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu), [Ekonomika](#ekonomika)).
+- Křížový věci mají vlastní autoritu (typicky [Citlivost](#koncept-citlivost-inzeratu), [Seznam inzerátů](#koncept-seznam-inzeratu), [Limit počtu feedů](#koncept-limit-poctu-feedu), [Limit fotek](#koncept-limit-poctu-fotek), [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu), [Ekonomika](#ekonomika)).
 
 ---
 
@@ -275,7 +275,7 @@ Co uživatel reálně ovládá:
 - publikovaný věci přes [Inzeráty](#koncept-inzerat),
 - obchodní kontext přes [Transakce](#koncept-transakce) a [Zprávy](#koncept-zpravy),
 - „co se stalo“ přes [Inbox](#koncept-notifikace),
-- hranice obsahu přes [Citlivost](#koncept-citlivost) a osobní úklid přes [Ignor](#koncept-ignor),
+- hranice obsahu přes [Citlivost](#koncept-citlivost-inzeratu) a osobní úklid přes [Ignor](#koncept-ignorace-inzeratu),
 - aktivace a limity přes [Ekonomiku](#ekonomika) a [Limit počtu feedů](#koncept-limit-poctu-feedu), [Limit fotek](#koncept-limit-poctu-fotek), [Limit aktivních inzerátů](#koncept-limit-aktivnich-inzeratu).
 
 Kontrakt (co si hlídám):
@@ -423,11 +423,11 @@ Pravidla:
 - limity feedů a chování „nad limitem“ řeším v [Limit počtu feedů](#koncept-limit-poctu-feedu),
 - defaultně zakládám uživateli jeden obecný feed bez filtrů (bezpečná návratová volba),
 - „Hledání“ je systémově special-case instance Feedu, ne jiný datový svět,
-- feed nikdy neobchází globální brány (viz [Citlivost](#koncept-citlivost), [Ignor](#koncept-ignor), stav [Inzerátu](#koncept-inzerat), release window… — pravidla listingu drží [Seznam inzerátů](#koncept-seznam-inzeratu)).
+- feed nikdy neobchází globální brány (viz [Citlivost](#koncept-citlivost-inzeratu), [Ignor](#koncept-ignorace-inzeratu), stav [Inzerátu](#koncept-inzerat), release window… — pravidla listingu drží [Seznam inzerátů](#koncept-seznam-inzeratu)).
 
 ---
 
-<a id="koncept-citlivost"></a>
+<a id="koncept-citlivost-inzeratu"></a>
 ### Citlivost
 
 Obsah není jen „co prodávám“. Obsah je i to, *jestli to můžeš vůbec vidět*. Citlivost je hard gate: chrání veřejnej prostor před obsahem, kterej určitá skupina lidí buď **nechce**, nebo ho **ani nesmí** vidět.
@@ -456,7 +456,7 @@ Odpovědnost:
 
 ---
 
-<a id="koncept-ignor"></a>
+<a id="koncept-ignorace-inzeratu"></a>
 ### Ignor
 
 Ignor je osobní úklid. Není to trest, není to report, není to drama.
@@ -500,7 +500,7 @@ Co s tím dělám:
 - promítá se do metrik (flag rate) a je to signál „něco smrdí“,
 - je to signál pro ruční rozhodnutí (ne pro autopilota).
 
-Flag není [Ignor](#koncept-ignor):
+Flag není [Ignor](#koncept-ignorace-inzeratu):
 - ignor = „nezajímá mě to“,
 - flag = „porušuje pravidla / ojeb / nebezpečný“.
 
@@ -655,7 +655,7 @@ Listing vs detail:
 - **Detail (přímý odkaz)**: detail se má dát otevřít i mimo seznam (sdílení, historie, uložený link).
 
 Tvrdý pravidlo:
-- Jen [Citlivost](#koncept-citlivost) smí blokovat detail a vrátit **404**. Žádný „aspoň víš, že to existuje“.
+- Jen [Citlivost](#koncept-citlivost-inzeratu) smí blokovat detail a vrátit **404**. Žádný „aspoň víš, že to existuje“.
 
 Ostatní brány jsou pravidla listingu (ne zákaz otevření):
 - ignor,
@@ -682,8 +682,8 @@ Related:
 - [Feed](#koncept-feed)
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
 - [Limit počtu feedů](#koncept-limit-poctu-feedu)
-- [Citlivost](#koncept-citlivost)
-- [Ignor](#koncept-ignor)
+- [Citlivost](#koncept-citlivost-inzeratu)
+- [Ignor](#koncept-ignorace-inzeratu)
 
 Hledat je samostatná primární sekce. UXově to není „feed“, ale **vyhledávací kontext** postavenej nad stejným enginem jako [Feed](#koncept-feed) (stejný filtry, stejnej list UI, žádná speciální magie).
 
@@ -696,7 +696,7 @@ Hledat je samostatná primární sekce. UXově to není „feed“, ale **vyhled
 Kontrakt:
 - `search` si pamatuje poslední stav Hledat (dotaz, filtry, radius, lokaci, řazení…), aby návrat nebyl opruz.
 - Výsledky jsou normální seznam: pravidla listingu drží [Seznam inzerátů](#koncept-seznam-inzeratu).
-- Brány se neobchází: [Citlivost](#koncept-citlivost) a [Ignor](#koncept-ignor) platí stejně.
+- Brány se neobchází: [Citlivost](#koncept-citlivost-inzeratu) a [Ignor](#koncept-ignorace-inzeratu) platí stejně.
 
 „Uložit jako feed“:
 - vytvoří nový feed typu `user`,
@@ -1065,7 +1065,7 @@ Early Access je výhoda kupujícího: v listingu vidíš nově publikovaný inze
 Kontrakt:
 - V listingu ignoruju release window, takže inzerát vidíš **hned** (běžně je to až za **+8 hodin**).
 - Maximum posunu je vždycky **8 hodin** (žádný „super-early“).
-- Neobchází to systémový brány (hlavně [Citlivost](#koncept-citlivost)).
+- Neobchází to systémový brány (hlavně [Citlivost](#koncept-citlivost-inzeratu)).
 - Release window nikdy neblokuje detail přes přímý odkaz (krom citlivosti).
 
 ---
@@ -1082,7 +1082,7 @@ Early Delivery je výhoda prodávajícího pro konkrétní inzerát: zruší rel
 Kontrakt:
 - Pro tenhle inzerát ruším release window úplně, takže ho v listingu vidí **hned i lidi bez Early Access**.
 - Maximum posunu je vždycky **8 hodin** (žádný stackování do nekonečna).
-- Neobchází to systémový brány (hlavně [Citlivost](#koncept-citlivost)).
+- Neobchází to systémový brány (hlavně [Citlivost](#koncept-citlivost-inzeratu)).
 - Release window nikdy neblokuje detail přes přímý odkaz (krom citlivosti).
 
 ---
@@ -1101,7 +1101,7 @@ Mark je čistě listing mechanika. Není to výhoda v pravidlech. Je to výhoda 
 Kontrakt:
 - Co Mark dělá: jen vizuální signál (badge „Zvýrazněno“). Nezaručuje top pozici.
 - Kde se projeví: pouze v listingu.
-- Co Mark nikdy neobchází: filtry, radius, release window, ignor, [Citlivost](#koncept-citlivost).
+- Co Mark nikdy neobchází: filtry, radius, release window, ignor, [Citlivost](#koncept-citlivost-inzeratu).
 - Trvání: Mark běží tak dlouho, jak je aktivní jeho **pass na úrovni inzerátu**.
 - Kontinuální nabídka:
   - pokud se inzerát vrátí do `live` a Mark pass je pořád aktivní, Mark se projeví normálně,
@@ -1123,7 +1123,7 @@ Top je listing mechanika: inzerát skočí do prioritní vrstvy listingu (pod To
 Kontrakt:
 - Co Top dělá: posune inzerát do priority vrstvy listingu.
 - Kde se projeví: pouze v listingu.
-- Co Top nikdy neobchází: filtry, radius, release window, ignor, [Citlivost](#koncept-citlivost).
+- Co Top nikdy neobchází: filtry, radius, release window, ignor, [Citlivost](#koncept-citlivost-inzeratu).
 - Anti-topper: Top ztratí výhodu pozice, zůstane mu jen badge.
 - Trvání: Top běží tak dlouho, jak je aktivní jeho **pass na úrovni inzerátu**.
 - Kontinuální nabídka:
@@ -1146,7 +1146,7 @@ Top Maxxi je absolutní přednost v listingu. Je to nejvyšší vrstva priority 
 Kontrakt:
 - Co dělá: inzerát je v listingu vždy nahoře (priorita #1).
 - Kde se projeví: pouze v listingu.
-- Co nikdy neobchází: filtry, radius, release window, ignor, [Citlivost](#koncept-citlivost).
+- Co nikdy neobchází: filtry, radius, release window, ignor, [Citlivost](#koncept-citlivost-inzeratu).
 - Anti-topper: Top Maxxi je imunní (neovlivní ho).
 - Payback: Top Maxxi je imunní → payback pro něj nikdy nevzniká.
 - Trvání: Top Maxxi běží tak dlouho, jak je aktivní jeho **pass na úrovni inzerátu**.
@@ -1179,7 +1179,7 @@ Chování během aktivního passu:
 - Po vypršení passu se vrací do režimu `expired` (read-only, mimo standardní feedy).
 
 Hranice:
-- Nic z toho neobchází systémový brány (hlavně [Citlivost](#koncept-citlivost), ignor, Early Access/Early Delivery).
+- Nic z toho neobchází systémový brány (hlavně [Citlivost](#koncept-citlivost-inzeratu), ignor, Early Access/Early Delivery).
 
 ---
 
@@ -1192,7 +1192,7 @@ Related:
 - [Anti-topper](#koncept-anti-topper)
 - [Ekonomika](#ekonomika)
 - [Palce](#koncept-palce)
-- [Ignor](#koncept-ignor)
+- [Ignor](#koncept-ignorace-inzeratu)
 - [Flag inzerátu](#koncept-flag-inzeratu)
 
 Rozšířená data jsou privátní čísla u **mých** inzerátů. Jsou řízený **passem**.
@@ -1205,8 +1205,8 @@ Co ukazuju:
 
 | Zdrojová metrika | Význam |
 |---|---|
-| `impression` | uživatel se u karty pozastavil („zaujalo“) |
-| [`view`](#koncept-metrika-view) | reálnej zájem o detail (viz definice View) |
+| [`impression`](#koncept-metrika-inzeratu-impression) | „zaujalo“ (viz definice Impression) |
+| [`view`](#koncept-metrika-inzeratu-view) | reálnej zájem o detail (viz definice View) |
 | `thumbs` | palce (like/dislike) jako signál atraktivity nabídky |
 | `ignored` | kolikrát lidi dali ignor (osobní úklid, „tohle nechci vídat“) |
 | `transactions` | kolik zájmů / otevřených obchodů inzerát vyvolal |
@@ -1262,7 +1262,7 @@ Kontrakt:
 Related:
 - [Inzerát](#koncept-inzerat)
 - [Feed](#koncept-feed)
-- [Ignor](#koncept-ignor)
+- [Ignor](#koncept-ignorace-inzeratu)
 
 Oblíbené je moje rychlá paměť. Žádný algoritmy. Jen „tohle si chci držet bokem“.
 
@@ -1270,11 +1270,11 @@ Kontrakt:
 - Je to per-user seznam inzerátů (uloženo/odloženo).
 - Je to nezávislý na Feedu: feed je dotaz, oblíbené je konkrétní výběr.
 - Není to Ignor: ignor je „nechci to vídat“, oblíbené je „chci se k tomu vrátit“.
-- Oblíbené nic neobchází: když si zpřísním [Citlivost](#koncept-citlivost), inzeráty mimo nový maximum z Oblíbených zmizí.
+- Oblíbené nic neobchází: když si zpřísním [Citlivost](#koncept-citlivost-inzeratu), inzeráty mimo nový maximum z Oblíbených zmizí.
 
 ---
 
-<a id="koncept-metrika-view"></a>
+<a id="koncept-metrika-inzeratu-view"></a>
 ### Metrika: View
 
 Related:
@@ -1290,5 +1290,24 @@ Význam:
 
 Deduplikace:
 - Max 1× na jedno otevření detailu.
+
+---
+
+<a id="koncept-metrika-inzeratu-impression"></a>
+### Metrika: Impression
+
+Related:
+- [Rozšířená data u inzerátu](#koncept-rozsirena-data-inzeratu)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Inzerát](#koncept-inzerat)
+
+Zdroj:
+- `impression`
+
+Význam:
+- Karta v listingu ve viewportu alespoň **1,6 s** = „zaujal, zpomalil“.
+
+Deduplikace:
+- Max 1× na jedno zobrazení listu pro danej inzerát.
 
 ---
