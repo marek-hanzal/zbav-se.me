@@ -1547,3 +1547,28 @@ Kontrakt:
 - Konkrétní částky a tabulky držím v [Ekonomice](#ekonomika).
 
 ---
+
+<a id="koncept-inzerat-cena"></a>
+### Inzerát: Cena
+
+Related:
+- [Inzerát](#koncept-inzerat)
+- [Kategorie](#koncept-kategorie)
+- [Feed](#koncept-feed)
+- [Hledat](#koncept-hledat)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+
+Cena je povinná. Bez ceny je to jen „piš mi do zpráv“ a to je přesně ten chaos, kterej chci zabít ještě dřív, než vznikne.
+
+Položky:
+- **Cena**: konkrétní částka.
+- **Typ ceny**: postoj pro domluvu.
+
+Typ ceny:
+- `closed` = pevná cena („nesmlouvám“)
+- `open` = výchozí cena („můžeme se domluvit“)
+
+Tvrdý pravidlo:
+- I u `open` je cena pořád povinná. Žádný „dohodou“ jako únik z reality.
+
+---
