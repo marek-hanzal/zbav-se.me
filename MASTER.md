@@ -2365,7 +2365,7 @@ Smysl:
 
 Jak to funguje:
 - Je to **[Pass](#koncept-pass)**, který prodlužuje aktivní cyklus inzerátu (prakticky posouvá „efektivní expiraci“).
-- Aktivuje ji **vlastník inzerátu**.
+  - Aktivuje ji **vlastník inzerátu**.
 - Lze ji zapnout kdykoliv:
   - když je inzerát ještě `live`, prodloužení se **naváže na expiraci** (nekrade čas),
   - když je už `expired`, začne to **okamžitě** a inzerát se vrátí mezi `live`.
@@ -2735,11 +2735,52 @@ Related:
 ## Veřejné vystupování
 ← [předchozí](#uvedeni-na-trh) | [další](#retence) →
 
-TBD.
+Veřejný vystupování není „marketing“. Je to forma transparentnosti: ukazuju, že to existuje, a že to žije. Kdo chce, najde si cestu. Kdo nechce, odpadne. To je v pořádku.
 
-- Billboardy: TBD
-- Media:
-  - YT Shorts: TBD
+### Billboardy (Karlovy Vary)
+
+Účel:
+- povědomí + šok (filtr publika je záměr),
+- něco, co si lidi pošlou mezi sebou, protože je to nezvyklý.
+
+Formát (tvrdý kontrakt):
+- jen 2 řádky:
+  - tagline (striktně **1 řádek**),
+  - `https://zbav-se.me` (povinně).
+- bílé pozadí, minimum barev, žádný QR, žádný další text, žádný ikonky.
+- čitelné z auta (cca 40–50 km/h).
+
+Sazba (hierarchie):
+- tagline = největší váha (primární fokus).
+- druhý řádek:
+  - `https://` je vizuálně slabší (menší váha / menší kontrast),
+  - `zbav-se.me` je dominantní barvou a větší.
+
+Tagline shortlist (varianta A, bez duplicit):
+- „Prodávám. Neojebávám.“
+- „Prodej bez sraní.“
+- „Bez keců. Bez ojebů.“
+- „Bazary? Ne.“
+- „Beze sraní. Tečka.“
+- „Prodávej. Neojebávej.“
+- „Kupuj. Bez ojebů.“
+- „Prodej. Neojebávej.“
+- „Bez keců. Bez sraní.“
+
+### YouTube Shorts
+
+Kontrakt:
+- mluvím **já** (ich‑forma, stejnej duch jako tenhle dokument),
+- žádnej marketing ani nábor: žádný „přidej se“, žádný „stáhni teď“, žádný CTA nátlak,
+- jen:
+  - ukázky „co appka umí“,
+  - update „co přibylo“ (a proč).
+- tón: „tohle tu je, cuc na to“ (postoj), bez vysvětlování konkurence.
+
+Formáty (aby to drželo tvar):
+- 10–30 s „feature drop“ (1 věc, 1 kontrakt),
+- 30–60 s „change log“ (co přibylo + proč),
+- 30–60 s „princip“ (jedna zásada z Kodexu/UX a jak se projeví).
 
 ---
 
