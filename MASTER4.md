@@ -1049,7 +1049,7 @@ Kontrakt:
 - Kompenzuje jen boosty, který Anti-topper umí potlačit: **Mark** a **Top**.
 - **Top Maxxi** je imunní → payback pro něj nikdy nevzniká.
 - Vyhodnocuju až po expiraci inzerátu (po expiraci už se nic nevrací do hry, jen vyrovnám účty).
-- Payback je **[Pass](#koncept-pass) (exclusive)** (typicky Seller/Pro) a vzniká jen pokud má prodávající v době vyhodnocení aktivní Payback pass.
+- Payback je **[Pass](#koncept-pass) ([Exclusive](#koncept-exclusive))** (typicky Seller/Pro) a vzniká jen pokud má prodávající v době vyhodnocení aktivní Payback pass.
 
 ---
 
@@ -1478,5 +1478,51 @@ Tokeny jsou interní měna. Palivo na jednorázový věci, který nechci cpát d
 Kontrakt:
 - Tokeny získám (příděl/bonus/nákup) a pak je utrácím.
 - Tokeny jsou skladovatelné: neexpirují. Expirovat může jen [Pass](#koncept-pass).
+
+---
+
+<a id="koncept-aktivace"></a>
+### Aktivace
+
+Related:
+- [Tokeny](#koncept-tokeny)
+- [Kupón](#koncept-kupon)
+- [Pass](#koncept-pass)
+- [Ekonomika](#ekonomika)
+
+Aktivace je jednotný kontrakt pro „zapínání“ věcí. Uživatel musí vždycky vědět, jestli něco **spotřebovává**, nebo **aktivuje na čas**.
+
+Kontrakt:
+- Pokud mám použitelný [Kupón](#koncept-kupon) pro danou věc → použije se kupón.
+- Jinak → strhnou se [Tokeny](#koncept-tokeny), **ale jen pokud je tenhle [Pass](#koncept-pass) koupitelnej v ceníku** (viz [Ekonomika](#ekonomika)). Když v ceníku není, je to zamčený / [Exclusive](#koncept-exclusive).
+- Výsledek je buď:
+  - jednorázová akce (kupón se spálí a hotovo), nebo
+  - vznik / prodloužení [Passu](#koncept-pass) (podle typu věci).
+
+CTA pravidlo:
+- `Aktivovat (1× Kupón)` vs `Aktivovat (XX Tokenů)`.
+- Pravidlo: **nejdřív spotřebuj free věci, až potom měnu**.
+
+Tvrdá hranice:
+- Rozšíření jsou nadstavby. Ne zadní vrátka.
+- Aktivace nikdy neobchází brány (hlavně [Citlivost](#koncept-citlivost-inzeratu) a [Ignor](#koncept-ignorace-inzeratu)).
+
+---
+
+<a id="koncept-exclusive"></a>
+### Exclusive
+
+Related:
+- [Ekonomika](#ekonomika)
+- [Aktivace](#koncept-aktivace)
+- [Pass](#koncept-pass)
+- [Tokeny](#koncept-tokeny)
+- [Kupón](#koncept-kupon)
+
+Exclusive je zamčený oprávnění. Není to věc, kterou si „dokoupím tokenama“. Je to benefit balíčku / předplatnýho.
+
+Kontrakt:
+- Když něco není v ceníku, přes [Tokeny](#koncept-tokeny) to nekoupím.
+- Pokud to jde aktivovat, tak jen přes nárok z balíčku/předplatnýho (typicky jako [Pass](#koncept-pass)).
 
 ---
