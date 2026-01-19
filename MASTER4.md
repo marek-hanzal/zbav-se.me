@@ -1889,3 +1889,30 @@ Kontrakt:
 - Čistky a retence se řídí pravidly v [Transakci](#koncept-transakce) a [Zprávách](#koncept-zpravy).
 
 ---
+
+<a id="koncept-inzerat-brand"></a>
+### Inzerát: Brand
+
+Related:
+- [Inzerát](#koncept-inzerat)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Feed](#koncept-feed)
+- [Hledat](#koncept-hledat)
+- [Pass](#koncept-pass)
+- [Ekonomika](#ekonomika)
+
+Brand je volitelná identita prodejce. Je to handle/slug, kterej jde sdílet jako link nebo zadat do vyhledávání.
+
+Kontrakt:
+- Brand nastavím na profilu jako unikátní slug.
+- Brand se u inzerátu/detailu zobrazuje jen když mám aktivní **Brand pass**.
+- Brand jde použít jako filtr (vyhledání/otevření feedu už s filtrem na Brand).
+
+Brány:
+- Brand nikdy neobchází [Citlivost](#koncept-citlivost-inzeratu), [Ignor](#koncept-ignorace-inzeratu) ani pravidla listingu.
+
+Expirace:
+- Po vypršení Brand passu se Brand přestane zobrazovat a nejde ho najít přímým vyhledáváním.
+- Když Brand dlouhodobě neobnovím, po **1 měsíci** se uvolní pro někoho dalšího.
+
+---
