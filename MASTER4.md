@@ -6,7 +6,7 @@ Co tu najdeš:
 - **Směr produktu**: postoj a zásady, který mi nedovolí udělat z toho další bazar.
 - **Kodex**: tvrdý hranice férovosti (monetizace, pay-to-win, data, manipulace).
 - **Koncepty**: „jak funguje X?“ na jednom místě (inzerát, draft, feed, transakce, citlivost, limity…).
-- **Ekonomika**: model nabídky (tokeny/kupóny/passy/předplatné) a pravidla aktivace.
+- **Ekonomika**: model nabídky (tokeny/kupóny/[passy](#koncept-pass)/předplatné) a pravidla aktivace.
 
 Jak to číst:
 - Kontrakt „co tu není, neexistuje“ držím natvrdo v kapitole [Pravidla dokumentu](#pravidla-dokumentu) a nikde jinde ho už nerozmělňuju.
@@ -40,7 +40,7 @@ Struktura dokumentu (základ):
 - **Konkurenceschopnost** je argumentace proč to existuje (bez marketingových keců): [`#konkurenceschopnost`](#konkurenceschopnost)
 - **Kodex** je „no bullshit“ vrstva hranic: [`#kodex`](#kodex)
 - **Koncepty** jsou hlavní katalog reality: každá otázka „jak funguje X?“ má odpověď v jednom konceptu: [`#koncepty`](#koncepty)
-- **Ekonomika** je model nabídky (tokeny/kupóny/passy/předplatné/ceník): [`#ekonomika`](#ekonomika)
+- **Ekonomika** je model nabídky (tokeny/kupóny/[passy](#koncept-pass)/předplatné/ceník): [`#ekonomika`](#ekonomika)
 - **Uvedení na trh**, **Retence**, **Odhady** jsou strategická vrstva (bez implementačních detailů):  
   - [`#uvedeni-na-trh`](#uvedeni-na-trh)  
   - [`#retence`](#retence)  
@@ -537,8 +537,8 @@ Fotky jsou primární obsah inzerátu. Limit fotek je brzda proti šumu a zárov
 
 Kontrakt:
 - Defaultně držím krátkou galerii (baseline je **3 fotky**).
-- Navýšení je oprávnění přes [Ekonomiku](#ekonomika): typicky `Photo Count` (kupón → pass) = **+2 fotky na 1 měsíc**.
-- Po skončení passu se už nahraný fotky nemažou. Zůstávají beze změny — jen znovu platí aktuální limit pro další přidávání.
+- Navýšení je oprávnění přes [Ekonomiku](#ekonomika): typicky `Photo Count` (kupón → [Pass](#koncept-pass)) = **+2 fotky na 1 měsíc**.
+- Po skončení [Passu](#koncept-pass) se už nahraný fotky nemažou. Zůstávají beze změny — jen znovu platí aktuální limit pro další přidávání.
 - V balíčcích se to může projevit jako vyšší strop (např. **3 → 5**, u Pro i víc).
 
 ---
@@ -551,7 +551,7 @@ Limit aktivních inzerátů drží hygienu trhu a chrání pozornost. Nechci, ab
 Kontrakt:
 - Počítám jen inzeráty ve stavu `live`.
 - `sold` se nepočítá jako aktivní.
-- Když jsi nad limitem (typicky po vypršení passu), existující `live` nechám běžet.
+- Když jsi nad limitem (typicky po vypršení [Passu](#koncept-pass)), existující `live` nechám běžet.
 - Jen nepustím vytvořit/publikovat další `live` — aktivuje se **Draft Gate** (viz [Draft](#koncept-draft)).
 - Odemknutí limitu je přes [Ekonomiku](#ekonomika): kupón/pas (typicky tier `Aktivní inzeráty 10/20`), nebo tokeny v hodnotě toho kupónu.
 
@@ -805,7 +805,7 @@ Proč existují:
 Přístup (Detail protistrany):
 - Bez oprávnění neukazuju nic. Ani „Score“.
 - S oprávněním ukazuju **[Metrika: Score (A–F)](#koncept-metrika-score)** + konkrétní metriky.
-- Oprávnění je pass/kupón v [Ekonomice](#ekonomika).
+- Oprávnění je [Pass](#koncept-pass)/kupón v [Ekonomice](#ekonomika).
 
 Kontrakt:
 - Metriky jsou signál pro rozhodnutí. Ne automatickej trest.
@@ -838,7 +838,7 @@ Proč existují:
 Přístup (Detail protistrany):
 - Bez oprávnění neukazuju nic. Ani „Score“.
 - S oprávněním ukazuju **[Metrika: Score (A–F)](#koncept-metrika-score)** + konkrétní metriky.
-- Oprávnění je pass/kupón v [Ekonomice](#ekonomika).
+- Oprávnění je [Pass](#koncept-pass)/kupón v [Ekonomice](#ekonomika).
 
 Kontrakt:
 - Metriky jsou signál pro očekávání. Ne bič.
@@ -1049,7 +1049,7 @@ Kontrakt:
 - Kompenzuje jen boosty, který Anti-topper umí potlačit: **Mark** a **Top**.
 - **Top Maxxi** je imunní → payback pro něj nikdy nevzniká.
 - Vyhodnocuju až po expiraci inzerátu (po expiraci už se nic nevrací do hry, jen vyrovnám účty).
-- Payback je **pass (exclusive)** (typicky Seller/Pro) a vzniká jen pokud má prodávající v době vyhodnocení aktivní Payback pass.
+- Payback je **[Pass](#koncept-pass) (exclusive)** (typicky Seller/Pro) a vzniká jen pokud má prodávající v době vyhodnocení aktivní Payback pass.
 
 ---
 
@@ -1102,7 +1102,7 @@ Kontrakt:
 - Co Mark dělá: jen vizuální signál (badge „Zvýrazněno“). Nezaručuje top pozici.
 - Kde se projeví: pouze v listingu.
 - Co Mark nikdy neobchází: filtry, radius, release window, ignor, [Citlivost](#koncept-citlivost-inzeratu).
-- Trvání: Mark běží tak dlouho, jak je aktivní jeho **pass na úrovni inzerátu**.
+- Trvání: Mark běží tak dlouho, jak je aktivní jeho **[Pass](#koncept-pass) na úrovni inzerátu**.
 - Kontinuální nabídka:
   - pokud se inzerát vrátí do `live` a Mark pass je pořád aktivní, Mark se projeví normálně,
   - pokud Mark pass doběhl, Mark se neprojeví.
@@ -1125,7 +1125,7 @@ Kontrakt:
 - Kde se projeví: pouze v listingu.
 - Co Top nikdy neobchází: filtry, radius, release window, ignor, [Citlivost](#koncept-citlivost-inzeratu).
 - Anti-topper: Top ztratí výhodu pozice, zůstane mu jen badge.
-- Trvání: Top běží tak dlouho, jak je aktivní jeho **pass na úrovni inzerátu**.
+- Trvání: Top běží tak dlouho, jak je aktivní jeho **[Pass](#koncept-pass) na úrovni inzerátu**.
 - Kontinuální nabídka:
   - pokud se inzerát vrátí do `live` a Top pass je pořád aktivní, Top se projeví normálně,
   - pokud Top pass doběhl, Top se neprojeví.
@@ -1149,7 +1149,7 @@ Kontrakt:
 - Co nikdy neobchází: filtry, radius, release window, ignor, [Citlivost](#koncept-citlivost-inzeratu).
 - Anti-topper: Top Maxxi je imunní (neovlivní ho).
 - Payback: Top Maxxi je imunní → payback pro něj nikdy nevzniká.
-- Trvání: Top Maxxi běží tak dlouho, jak je aktivní jeho **pass na úrovni inzerátu**.
+- Trvání: Top Maxxi běží tak dlouho, jak je aktivní jeho **[Pass](#koncept-pass) na úrovni inzerátu**.
 
 ---
 
@@ -1168,7 +1168,7 @@ Smysl:
 - Kontinuální nabídka je způsob, jak tenhle řád koupit bez ojebů.
 
 Jak to funguje:
-- Je to **Pass**, který prodlužuje aktivní cyklus inzerátu (prakticky posouvá „efektivní expiraci“).
+- Je to **[Pass](#koncept-pass)**, který prodlužuje aktivní cyklus inzerátu (prakticky posouvá „efektivní expiraci“).
 - Aktivuje ji **vlastník inzerátu**.
 - Lze ji zapnout kdykoliv:
   - když je inzerát ještě `live`, prodloužení se **naváže na expiraci** (nekrade čas),
@@ -1176,7 +1176,7 @@ Jak to funguje:
 
 Chování během aktivního passu:
 - Inzerát se chová jako normální `live` (leze do feedů, jde na něj založit transakce, metriky se počítají normálně).
-- Po vypršení passu se vrací do režimu `expired` (read-only, mimo standardní feedy).
+- Po vypršení [Passu](#koncept-pass) se vrací do režimu `expired` (read-only, mimo standardní feedy).
 
 Hranice:
 - Nic z toho neobchází systémový brány (hlavně [Citlivost](#koncept-citlivost-inzeratu), ignor, Early Access/Early Delivery).
@@ -1195,11 +1195,11 @@ Related:
 - [Ignor](#koncept-ignorace-inzeratu)
 - [Flag inzerátu](#koncept-flag-inzeratu)
 
-Rozšířená data jsou privátní čísla u **mých** inzerátů. Jsou řízený **passem**.
+Rozšířená data jsou privátní čísla u **mých** inzerátů. Jsou řízený **[Passem](#koncept-pass)**.
 
 Kontrakt:
-- Dokud mám aktivní pass, vidím rozšířená data.
-- Bez passu nevidím nic (žádný „free“ pseudo-score).
+- Dokud mám aktivní [Pass](#koncept-pass), vidím rozšířená data.
+- Bez [Passu](#koncept-pass) nevidím nic (žádný „free“ pseudo-score).
 
 Co ukazuju:
 
@@ -1416,5 +1416,34 @@ Význam:
 
 Kontrakt:
 - Je to metrika zájmu, ne kvality. Více transakcí neznamená úspěch.
+
+---
+
+<a id="koncept-pass"></a>
+### Pass
+
+Related:
+- [Ekonomika](#ekonomika)
+- [Early Access](#koncept-early-access)
+- [Early Delivery](#koncept-early-delivery)
+- [Anti-topper](#koncept-anti-topper)
+- [Mark](#koncept-mark)
+- [Top](#koncept-top)
+- [Top Maxxi](#koncept-top-maxxi)
+- [Kontinuální nabídka](#koncept-kontinualni-nabidka)
+- [Rozšířená data u inzerátu](#koncept-rozsirena-data-inzeratu)
+- [Payback](#koncept-payback)
+
+Pass je časově omezený oprávnění / režim. Není to měna ani poukázka. Je to stav: „od teď do tehdy tohle platí“.
+
+Kontrakt:
+- Pass je **stav**, ne spotřební item.
+- Pass má vždycky expiraci. Buď běží, nebo neběží. Žádný „napůl“.
+- Aktivace typicky znamená: vznikne nebo se prodlouží pass (detaily držím v [Ekonomice](#ekonomika)).
+- Pass nikdy neobchází systémový brány (hlavně [Citlivost](#koncept-citlivost-inzeratu) a [Ignor](#koncept-ignorace-inzeratu)).
+
+Scope:
+- Některý passy jsou **na úrovni účtu** (např. Anti-topper).
+- Některý passy jsou **na úrovni inzerátu** (např. Mark/Top/Top Maxxi) — běží jen pro konkrétní inzerát.
 
 ---
