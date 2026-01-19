@@ -620,6 +620,11 @@ Typy zpráv (co systém umí):
 | `message_personal` | osobní info | kontakty a další citlivý údaje |
 | `message_system` | systémová zpráva bez uživatele | fakt „co se stalo“ (např. změna stavu) |
 
+Tracking (zásilka):
+- Tracking není bezpečnostní feature. Je to jen fakt v timeline.
+- Tracking number je volitelný.
+- Když tracking number není, nic navíc nepíšu.
+
 Retence po ukončení transakce:
 - Všechny typy **kromě** `message_text` a `message_gallery` se po ukončení transakce **mažou**.
 
@@ -1772,7 +1777,7 @@ Landing je vizitka postoje. Držím to krátký: pět bloků a hotovo.
 | Hero | claim **„Nakupuješ nebo prodáváš?“** + 2 rovnocenný CTA: **„Už se známe“** (Login), **„Přidej se!“** (Register) | žádný trick CTA, žádnej nátlak |
 | Autor | moje fotka, moje jméno, odkaz na GitHub, motto **„Bez keců. Bez ojebů.“** | důvěra přes tvář a odpovědnost |
 | Aktivita vývoje | GitHub-like heatmap | důkaz práce, ne sliby |
-| Live Pulse | poslední události (registrace, nový inzeráty, transakce) | ať je vidět, že to žije |
+| Live Pulse | poslední události (registrace, nový inzeráty, transakce) – timeline živosti trhu | ať je vidět, že to žije |
 | Transparentní účet | link na bankovnictví | finance netajím; kdo hledá shady shit, tady by to bylo |
 
 Tón: minimalistickej. Bez popupů, bez urgencí, bez vysvětlování.
@@ -1847,5 +1852,40 @@ Kontrakt:
 - Bonusy jsou místo, kde si můžu pořídit **[Předplatné](#koncept-predplatne)** a **balíčky [Tokenů](#koncept-tokeny)**. Neříkám tomu „obchod“, ale je to tenhle účel.
 - Pravidla bonusů a anti-abuse drží [Tokeny: Získávání](#koncept-tokeny-ziskavani). Tady je jen UI přístup.
 - Bonusy jsou vstupní bod zpátky do [Rozšíření](#koncept-ui-rozsireni): když už mám tokeny, chci hned vidět, co s nima jde dělat.
+
+---
+
+<a id="koncept-automaticke-ukonceni-inzeratu"></a>
+### Automatické ukončení: Inzerát
+
+Related:
+- [Inzerát](#koncept-inzerat)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Kontinuální nabídka](#koncept-kontinualni-nabidka)
+- [Ekonomika](#ekonomika)
+
+Automatické ukončení je povinná volba. Drží pořádek v nabídce a brání tomu, aby se z feedu stal hřbitov.
+
+Kontrakt:
+- Při tvorbě nastavím `expiresAt`.
+- Čas se počítá až po zveřejnění, ne v draftu.
+- Po uplynutí `expiresAt` se inzerát bez aktivní [Kontinuální nabídky](#koncept-kontinualni-nabidka) přepne do `expired`.
+- UI u volby ukazuje i konkrétní datum.
+
+---
+
+<a id="koncept-automaticke-ukonceni-transakce"></a>
+### Automatické ukončení: Transakce
+
+Related:
+- [Transakce](#koncept-transakce)
+- [Zprávy](#koncept-zpravy)
+
+Nechci nedotažený transakce žít navěky. Když se obchod nerozjede nebo se nedotáhne a nikdo ho explicitně neuzavře, transakce vyprší.
+
+Kontrakt:
+- Vypršení přepne transakci do `expired` (read-only).
+- `expired` je finální stav: žádný re-open.
+- Čistky a retence se řídí pravidly v [Transakci](#koncept-transakce) a [Zprávách](#koncept-zpravy).
 
 ---
