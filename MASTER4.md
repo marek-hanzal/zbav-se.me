@@ -1206,7 +1206,7 @@ Co ukazuju:
 | Zdrojová metrika | Význam |
 |---|---|
 | `impression` | uživatel se u karty pozastavil („zaujalo“) |
-| `view` | uživatel otevřel detail („reálnej zájem“) |
+| [`view`](#koncept-metrika-view) | reálnej zájem o detail (viz definice View) |
 | `thumbs` | palce (like/dislike) jako signál atraktivity nabídky |
 | `ignored` | kolikrát lidi dali ignor (osobní úklid, „tohle nechci vídat“) |
 | `transactions` | kolik zájmů / otevřených obchodů inzerát vyvolal |
@@ -1271,5 +1271,24 @@ Kontrakt:
 - Je to nezávislý na Feedu: feed je dotaz, oblíbené je konkrétní výběr.
 - Není to Ignor: ignor je „nechci to vídat“, oblíbené je „chci se k tomu vrátit“.
 - Oblíbené nic neobchází: když si zpřísním [Citlivost](#koncept-citlivost), inzeráty mimo nový maximum z Oblíbených zmizí.
+
+---
+
+<a id="koncept-metrika-view"></a>
+### Metrika: View
+
+Related:
+- [Rozšířená data u inzerátu](#koncept-rozsirena-data-inzeratu)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Inzerát](#koncept-inzerat)
+
+Zdroj:
+- `view`
+
+Význam:
+- Detail otevřený alespoň **2,5 s** = „reálnej zájem o detail“.
+
+Deduplikace:
+- Max 1× na jedno otevření detailu.
 
 ---
