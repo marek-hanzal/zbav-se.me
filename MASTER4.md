@@ -1646,3 +1646,27 @@ Kontrakt:
 - Popis je informativní vrstva pro detail: „co se nevešlo do struktury“.
 
 ---
+
+<a id="koncept-inzerat-pros-cons"></a>
+### Inzerát: Co chci vyzdvihnout / Chci být upřímný
+
+Related:
+- [Inzerát](#koncept-inzerat)
+- [Inzerát: Popis](#koncept-inzerat-popis)
+- [Palce](#koncept-palce)
+
+Tohle není feature pro coverage. Tohle je kulturní signál.
+
+Na většině marketplace se lidi učí jedno: nalešti to, zamlč to, hlavně ať to projde. Já chci opak: aby bylo normální napsat i věc, která se ti úplně nehodí do krámu. Nehraju si na svatýho — je to pragmatika: dlouhodobě to zvedá důvěru a snižuje toxický dohady.
+
+Sekce:
+- **Co chci vyzdvihnout** (pozitiva)
+- **Chci být upřímný** (negativa / limity / vady)
+
+Kontrakt:
+- Obojí je dobrovolný.
+- Každá strana má limit **max 5 položek** (mantinel proti balastu, tlak na podstatný věci).
+- Krátký, konkrétní, lidský texty. Žádný „pros/cons“, žádnej korporát.
+- Nic se za to neměří. Žádný odměny ani tresty.
+
+---
