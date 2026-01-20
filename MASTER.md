@@ -1131,7 +1131,7 @@ Obsah není jen „co prodávám“. Obsah je i to, *jestli to můžeš vůbec v
 | Běžný       | `common`     | default                                               |
 | Pro dospělé | `adult`      | 18+ kontext                                           |
 | Citlivé     | `sensitive`  | věci „na hraně“, co nechci cpát všem                  |
-| Omezené     | `restricted` | zákonný omezení / oprávnění (systém ho **neověřuje**) |
+| Omezené     | `restricted` | zákonný omezení / oprávnění (systém ho **neověřuje**); nutná součást ochrany je také běžící cooldown 24h — tzn. člověk musí vědět, co dělá; tento cooldown se zapne pokaždé, když si člověk v profilu zapne "restricted" úroveň |
 
 Gating a viditelnost (dvoufázově, schválně):
 - **Profil** = nastavíš maximum (co *smíš / jsi ochotnej* vidět).
