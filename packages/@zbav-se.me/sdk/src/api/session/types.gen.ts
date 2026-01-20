@@ -644,6 +644,7 @@ export type tUserEventSeller = {
 export type tCategoryCountQuery = {
     filter?: tCategoryFilter;
     where?: tCategoryWhere;
+    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**

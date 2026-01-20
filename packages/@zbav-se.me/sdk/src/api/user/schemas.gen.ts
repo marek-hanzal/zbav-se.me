@@ -1548,6 +1548,17 @@ export const sListingCountQuery = {
         },
         meta: {
             $ref: '#/components/schemas/ListingMeta'
+        },
+        count: {
+            type: 'array',
+            items: {
+                type: 'string',
+                enum: [
+                    'total',
+                    'filter',
+                    'where'
+                ]
+            }
         }
     }
 } as const;
@@ -2107,6 +2118,17 @@ export const sIgnoreCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/IgnoreWhere'
+        },
+        count: {
+            type: 'array',
+            items: {
+                type: 'string',
+                enum: [
+                    'total',
+                    'filter',
+                    'where'
+                ]
+            }
         }
     }
 } as const;
@@ -2246,6 +2268,17 @@ export const sGalleryCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/GalleryWhere'
+        },
+        count: {
+            type: 'array',
+            items: {
+                type: 'string',
+                enum: [
+                    'total',
+                    'filter',
+                    'where'
+                ]
+            }
         }
     }
 } as const;
@@ -2384,6 +2417,17 @@ export const sFlagCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/FlagCountWhere'
+        },
+        count: {
+            type: 'array',
+            items: {
+                type: 'string',
+                enum: [
+                    'total',
+                    'filter',
+                    'where'
+                ]
+            }
         }
     }
 } as const;
@@ -2753,6 +2797,17 @@ export const sFeedCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/FeedWhere'
+        },
+        count: {
+            type: 'array',
+            items: {
+                type: 'string',
+                enum: [
+                    'total',
+                    'filter',
+                    'where'
+                ]
+            }
         }
     }
 } as const;
@@ -3308,6 +3363,17 @@ export const sFavouriteCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/FavouriteWhere'
+        },
+        count: {
+            type: 'array',
+            items: {
+                type: 'string',
+                enum: [
+                    'total',
+                    'filter',
+                    'where'
+                ]
+            }
         }
     }
 } as const;
@@ -4161,6 +4227,17 @@ export const sDraftCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/DraftWhere'
+        },
+        count: {
+            type: 'array',
+            items: {
+                type: 'string',
+                enum: [
+                    'total',
+                    'filter',
+                    'where'
+                ]
+            }
         }
     }
 } as const;

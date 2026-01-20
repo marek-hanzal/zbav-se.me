@@ -1523,7 +1523,12 @@ export type zListingFilter = z.infer<typeof zListingFilter>;
 export const zListingCountQuery = z.object({
     filter: z.optional(zListingFilter),
     where: z.optional(zListingWhere),
-    meta: z.optional(zListingMeta)
+    meta: z.optional(zListingMeta),
+    count: z.optional(z.array(z.enum([
+        'total',
+        'filter',
+        'where'
+    ])))
 }).register(z.globalRegistry, {
     description: 'Query object for listing count'
 });
@@ -1697,7 +1702,12 @@ export type zIgnoreFilter = z.infer<typeof zIgnoreFilter>;
  */
 export const zIgnoreCountQuery = z.object({
     filter: z.optional(zIgnoreFilter),
-    where: z.optional(zIgnoreWhere)
+    where: z.optional(zIgnoreWhere),
+    count: z.optional(z.array(z.enum([
+        'total',
+        'filter',
+        'where'
+    ])))
 }).register(z.globalRegistry, {
     description: 'Query object for ignore count'
 });
@@ -1818,7 +1828,12 @@ export type zGalleryFilter = z.infer<typeof zGalleryFilter>;
  */
 export const zGalleryCountQuery = z.object({
     filter: z.optional(zGalleryFilter),
-    where: z.optional(zGalleryWhere)
+    where: z.optional(zGalleryWhere),
+    count: z.optional(z.array(z.enum([
+        'total',
+        'filter',
+        'where'
+    ])))
 }).register(z.globalRegistry, {
     description: 'Query object for gallery count'
 });
@@ -1947,7 +1962,12 @@ export type zFlagFilter = z.infer<typeof zFlagFilter>;
  */
 export const zFlagCountQuery = z.object({
     filter: z.optional(zFlagFilter),
-    where: z.optional(zFlagCountWhere)
+    where: z.optional(zFlagCountWhere),
+    count: z.optional(z.array(z.enum([
+        'total',
+        'filter',
+        'where'
+    ])))
 }).register(z.globalRegistry, {
     description: 'Query object for flag count'
 });
@@ -2232,7 +2252,12 @@ export type zFeedFilter = z.infer<typeof zFeedFilter>;
  */
 export const zFeedCountQuery = z.object({
     filter: z.optional(zFeedFilter),
-    where: z.optional(zFeedWhere)
+    where: z.optional(zFeedWhere),
+    count: z.optional(z.array(z.enum([
+        'total',
+        'filter',
+        'where'
+    ])))
 }).register(z.globalRegistry, {
     description: 'Query object for feed count'
 });
@@ -2566,7 +2591,12 @@ export type zFavouriteFilter = z.infer<typeof zFavouriteFilter>;
  */
 export const zFavouriteCountQuery = z.object({
     filter: z.optional(zFavouriteFilter),
-    where: z.optional(zFavouriteWhere)
+    where: z.optional(zFavouriteWhere),
+    count: z.optional(z.array(z.enum([
+        'total',
+        'filter',
+        'where'
+    ])))
 }).register(z.globalRegistry, {
     description: 'Query object for favourite count'
 });
@@ -2996,7 +3026,12 @@ export type zDraft = z.infer<typeof zDraft>;
  */
 export const zDraftCountQuery = z.object({
     filter: z.optional(zDraftFilter),
-    where: z.optional(zDraftWhere)
+    where: z.optional(zDraftWhere),
+    count: z.optional(z.array(z.enum([
+        'total',
+        'filter',
+        'where'
+    ])))
 }).register(z.globalRegistry, {
     description: 'Query object for draft count'
 });

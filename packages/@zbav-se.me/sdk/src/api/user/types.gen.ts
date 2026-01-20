@@ -1137,6 +1137,7 @@ export type tListingCountQuery = {
     filter?: tListingFilter;
     where?: tListingWhere;
     meta?: tListingMeta;
+    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -1531,6 +1532,7 @@ export type tIgnoreToggle = {
 export type tIgnoreCountQuery = {
     filter?: tIgnoreFilter;
     where?: tIgnoreWhere;
+    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -1644,6 +1646,7 @@ export type tIgnore = {
 export type tGalleryCountQuery = {
     filter?: tGalleryFilter;
     where?: tGalleryWhere;
+    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -1749,6 +1752,7 @@ export type tFlagToggle = {
 export type tFlagCountQuery = {
     filter?: tFlagFilter;
     where?: tFlagCountWhere;
+    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -2015,6 +2019,7 @@ export type tFeedGalleryCreate = {
 export type tFeedCountQuery = {
     filter?: tFeedFilter;
     where?: tFeedWhere;
+    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -2330,6 +2335,7 @@ export type tCategory = {
 export type tFavouriteCountQuery = {
     filter?: tFavouriteFilter;
     where?: tFavouriteWhere;
+    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -2778,6 +2784,7 @@ export type tDraft = {
 export type tDraftCountQuery = {
     filter?: tDraftFilter;
     where?: tDraftWhere;
+    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
