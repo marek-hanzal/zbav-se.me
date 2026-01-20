@@ -2123,11 +2123,11 @@ Related:
 ### Aktivace
 ← [předchozí](#koncept-tokeny) | [další](#koncept-cenik) →
 
-[Aktivace](#koncept-aktivace) je jednotný kontrakt pro „zapínání“ věcí. Uživatel musí vždycky vědět, jestli něco **spotřebovává**, nebo **aktivuje na čas**.
+**Aktivace** je jednotný kontrakt pro „zapínání“ věcí. Uživatel musí vždycky vědět, jestli něco **spotřebovává**, nebo **aktivuje na čas**.
 
 Kontrakt:
 - Pokud mám použitelný [Kupón](#koncept-kupon) pro danou věc → použije se kupón.
-- Jinak → strhnou se [Tokeny](#koncept-tokeny), **ale jen pokud je tenhle [Pass](#koncept-pass) koupitelnej v ceníku** (viz [Ekonomika](#ekonomika)). Když v ceníku není, je to zamčený / [Exclusive](#koncept-exclusive).
+- Jinak → strhnou se [Tokeny](#koncept-tokeny) podle [Ceníku](#koncept-cenik) (viz [Ekonomika](#ekonomika)). Co je v ceníku označené jako [Exclusive](#koncept-exclusive), se přes tokeny neaktivuje (jen jako benefit [Předplatného](#koncept-predplatne)).
 - Výsledek je buď:
   - jednorázová akce (kupón se spálí a hotovo), nebo
   - vznik / prodloužení [Passu](#koncept-pass) (podle typu věci).
@@ -2144,6 +2144,7 @@ Related:
 - [Tokeny](#koncept-tokeny)
 - [Kupón](#koncept-kupon)
 - [Pass](#koncept-pass)
+- [Ceník](#koncept-cenik)
 - [Ekonomika](#ekonomika)
 
 ---
@@ -2152,11 +2153,11 @@ Related:
 ### Ceník
 ← [předchozí](#koncept-aktivace) | [další](#koncept-exclusive) →
 
-[Ceník](#koncept-cenik) je seznam věcí, který si umím koupit (typicky za [Tokeny](#koncept-tokeny) nebo přes [Kupón](#koncept-kupon)). Je to produktová autorita pro „tohle jde dokoupit“.
+[Ceník](#koncept-cenik) je seznam **všech věcí**, které jde aktivovat. Je to produktová autorita pro „tohle existuje a jak se to aktivuje".
 
 Kontrakt:
-- Pokud něco **je v ceníku**, jde to aktivovat i přes tokeny (pokud nemám kupón).
-- Pokud něco **není v ceníku**, je to zamčený → [Exclusive](#koncept-exclusive) (benefit balíčku/[Předplatného](#koncept-predplatne)).
+- Ceník obsahuje **všechno** (všechny věci, které jde aktivovat).
+- Věci, které jsou pouze z balíčku, jsou v ceníku označené jako **[Exclusive](#koncept-exclusive)** – detailní pravidla (koupitelnost, nárok z balíčku) drží [Exclusive](#koncept-exclusive) a [Aktivace](#koncept-aktivace).
 - Konkrétní částky a tabulky držím v [Ekonomice](#ekonomika).
 
 Related:
@@ -2173,11 +2174,12 @@ Related:
 ### Exclusive
 ← [předchozí](#koncept-cenik) | [další](#koncept-predplatne) →
 
-[Exclusive](#koncept-exclusive) je zamčený oprávnění. Není to věc, kterou si „dokoupím tokenama“. Je to benefit balíčku / [Předplatného](#koncept-predplatne).
+[Exclusive](#koncept-exclusive) je označení v [Ceníku](#koncept-cenik) pro věci, které jsou **pouze z balíčku** / [Předplatného](#koncept-predplatne). Nejsou koupitelné samostatně přes [Tokeny](#koncept-tokeny).
 
 Kontrakt:
-- Autorita toho, co je „koupitelný“, je [Ceník](#koncept-cenik) (a pravidla použití drží [Aktivace](#koncept-aktivace)).
-- [Exclusive](#koncept-exclusive) věci nejsou koupitelný přes [Tokeny](#koncept-tokeny). Pokud existují, běží jen jako nárok (typicky [Pass](#koncept-pass)).
+- [Exclusive](#koncept-exclusive) věci jsou **v ceníku**, ale označené jako "Exclusive" (viz [Ekonomika](#ekonomika)).
+- Nejsou koupitelný přes [Tokeny](#koncept-tokeny). Pokud existují, běží jen jako nárok (typicky [Pass](#koncept-pass)) z [Předplatného](#koncept-predplatne).
+- Autorita toho, co je „koupitelný", je [Ceník](#koncept-cenik) (a pravidla použití drží [Aktivace](#koncept-aktivace)).
 
 Related:
 - [Ekonomika](#ekonomika)
@@ -2658,7 +2660,7 @@ Ekonomika je autorita na to, **za co se platí** a **proč**. Neřeším tady UI
 
 Zásady:
 - Platí se za **nástroje, čas a pohodlí**. Ne za “vítězství”. (Viz Kodex: „žádné pay-to-win“.)
-- Co jde koupit, musí být vidět v [Ceníku](#koncept-cenik). Když to v ceníku není, je to [Exclusive](#koncept-exclusive) a hotovo.
+- Všechno, co jde aktivovat, musí být v [Ceníku](#koncept-cenik). Věci, které jsou pouze z balíčku, jsou v ceníku označené jako [Exclusive](#koncept-exclusive).
 - Aktivace je vždycky mechanická: nejdřív spotřebuju [Kupón](#koncept-kupon), pak teprve platím [Tokeny](#koncept-tokeny). Autorita je [Aktivace](#koncept-aktivace).
 - Všechny “věci co běží v čase” jsou [Pass](#koncept-pass). Nic jiného.
 
