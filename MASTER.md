@@ -246,7 +246,7 @@ Nejsem anonymní „tým“ a nechci se za nic schovávat. Když něco poseru, j
 
 Co z toho dělám standard:
 - Pravidla nejsou magie. Když systém něco dělá (gating, řazení, omezení), umím říct proč.
-- Změny nejsou tichý ojeb. Když změním něco zásadního, přiznám to.
+- Když něco zásadního změním, řeknu to nahlas (ne potichu v changelogu).
 - Co jde vyřešit strukturou a mechanikama, řeším strukturou a mechanikama. Ne ručním admin cirkusem.
 
 ---
@@ -379,6 +379,18 @@ Nechci z feedu dělat video cirkus. Fotky stačí.
 
 10) **Osobní data jen dočasně**
 Co je osobní a patří jen do domluvy, nesmí v systému hnít věčně. (Viz [Transakce](#koncept-transakce).)
+
+11) **Férová publikace bez instantního vysávání**
+Nové inzeráty mají [Release window](#koncept-release-window) (baseline férovost). Kdo chce vidět dřív, koupí si [Early Access](#koncept-early-access). Kdo chce publikovat okamžitě, koupí si [Early Delivery](#koncept-early-delivery). Všechno je explicitní a čitelné. (Viz [Release window](#koncept-release-window), [Early Access](#koncept-early-access), [Early Delivery](#koncept-early-delivery).)
+
+12) **Boosty bez pay-to-win: Anti-topper + Payback**
+Kupující si můžou vypnout zvýraznění ([Anti-topper](#koncept-anti-topper)) bez toho, aby tím „okrádali“ prodejce. Systém to vidí a prodejce dostane [Payback](#koncept-payback). Boosty existují, ale důvěra v systém zůstává. (Viz [Anti-topper](#koncept-anti-topper), [Payback](#koncept-payback).)
+
+13) **Automatické ukončování všeho, co by jinde hnilo**
+Inzeráty, transakce i předplatné mají tvrdý kontrakt konce. Žádný zombie inzeráty, žádný nekonečný „pending“, žádný suby běžící na mrtvolky. (Viz [Automatické ukončení: Inzerát](#koncept-automaticke-ukonceni-inzeratu), [Automatické ukončení: Transakce](#koncept-automaticke-ukonceni-transakce), [Automatické ukončení: Předplatné (neaktivita)](#koncept-automaticke-ukonceni-predplatneho).)
+
+14) **Ekonomika čitelná z jednoho místa**
+Jednotný model [Tokeny](#koncept-tokeny) / [Kupón](#koncept-kupon) / [Pass](#koncept-pass). [Ceník](#koncept-cenik) obsahuje všechno. [Exclusive](#koncept-exclusive) je jen viditelné označení, ne tajná výjimka. Když něco existuje, je v ceníku. Když je zamčené, je u toho nápis. (Viz [Ceník](#koncept-cenik), [Exclusive](#koncept-exclusive), [Aktivace](#koncept-aktivace), [Ekonomika](#ekonomika).)
 
 <a id="slabina"></a>
 ### V čem je má slabina (a proč s tím počítám)
@@ -597,7 +609,7 @@ Kontrakt:
 | `expired` | vypršela expirace (`expiresAt`), automatický konec | ne (jen přes explicitní filtr / historický režim) | ano (read-only)      | zakázáno, výjimka **flag**                        |
 | `closed`  | prodejce to ručně zabil                            | ne (stejně jako `expired`)                        | ano (read-only)      | zakázáno, výjimka **flag**                        |
 | `sold`    | prodáno, není k dispozici pro nový obchod          | ne (není k dispozici)                             | ano (read-only)      | zájem ne; bezpečný věci typu flag / undo ignor ok |
-| `banned` | admin hard removal (nelegální/škodlivý obsah)     | ne                                                | **404** (hard block) | zakázáno                                           |
+| `banned`  | admin hard removal (nelegální/škodlivý obsah)      | ne                                                | **404** (hard block) | zakázáno                                          |
 
 Poznámky:
 - [Draft](#koncept-draft) není stav inzerátu. Draft je separátní entita.
@@ -932,6 +944,8 @@ Related:
 - [Citlivost](#koncept-citlivost-inzeratu)
 - [Ignor](#koncept-ignorace-inzeratu)
 - [Inzerátu](#koncept-inzerat)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Řazení inzerátů](#koncept-razeni-inzeratu)
 
 ---
 
@@ -1004,6 +1018,27 @@ Related:
 - [Feed](#koncept-feed)
 - [Citlivost](#koncept-citlivost-inzeratu)
 - [Inzerátu](#koncept-inzerat)
+- [Řazení inzerátů](#koncept-razeni-inzeratu)
+
+---
+
+<a id="koncept-razeni-inzeratu"></a>
+### Řazení inzerátů
+← [předchozí](#koncept-seznam-inzeratu) | [další](#koncept-release-window) →
+
+Řazení je věc uživatele. Ve [Feedu](#koncept-feed) si nakliká, co pro něj dává smysl (typicky „nejnovější“, „nejblíž“), a engine to respektuje v rámci pravidel systému.
+
+Výjimky z řazení (vědomě):
+- [Top](#koncept-top) – inzeráty s aktivním Top passem mají přednost v rámci dotazu; když má víc inzerátů Top, rozhoduje novější aktivace passu.
+- [Top Maxxi](#koncept-top-maxxi) – ještě silnější zvýraznění; při kolizi více inzerátů s Top Maxxi zase vyhrává novější aktivace passu.
+
+Všechno ostatní (Citlivost, životní cyklus inzerátu, Release window, Anti-topper…) jen omezuje **kandidáty** pro seznam nebo mění jejich viditelnost, ale nemá si „tajně ohýbat“ uživatelské řazení.
+
+Related:
+- [Feed](#koncept-feed)
+- [Seznam inzerátů](#koncept-seznam-inzeratu)
+- [Top](#koncept-top)
+- [Top Maxxi](#koncept-top-maxxi)
 
 ---
 
@@ -1607,6 +1642,8 @@ Kontrakt:
 - Každá metrika má vlastní definici (viz kapitoly níž). Žádná tajná magie.
 
 Zobrazené metriky:
+- Datum registrace (zdarma)
+- Počet všech inzerátů (zdarma)
 - [Metrika: Score (A–F)](#koncept-metrika-score)
 - [Metrika: Reakční doba](#koncept-metrika-reakcni-doba)
 - [Metrika: Odmítnutí bez interakce](#koncept-metrika-odmitnuti-bez-interakce)
@@ -1629,11 +1666,11 @@ Related:
 ### Detail protistrany
 ← [předchozí](#koncept-metriky-prodavaciho) | [další](#koncept-metriky-kupujiciho) →
 
-Detail protistrany není další entita. Je to jen pojmenování situace: dívám se na metriky **druhý strany** z pozice, ve který zrovna jsem.
+Detail protistrany není další entita. Je to jen pojmenování situace: dívám se na **druhýho člověka** (jeho základní údaje a metriky) z pozice, ve který zrovna jsem.
 
 Kontrakt:
-- Bez oprávnění neukazuju nic. Ani „Score“.
-- Oprávnění je [Pass](#koncept-pass)/[Kupón](#koncept-kupon) definovaný v [Ekonomice](#ekonomika).
+- Základní údaje a základní metriky (to, co je vypsané u [Metrik prodávajícího](#koncept-metriky-prodavaciho) / [Metrik kupujícího](#koncept-metriky-kupujiciho)) jsou vidět zdarma.
+- Rozšířený pohled (rozšířené metriky / detailnější rozpad) odemyká [Pass](#koncept-pass)/[Kupón](#koncept-kupon) definovaný v [Ekonomice](#ekonomika) – v UI jako „Rozšíření: Detail protistrany“.
 - S oprávněním ukazuju **[Metrika: Score (A–F)](#koncept-metrika-score)** + sadu metrik podle role (viz [Metriky prodávajícího](#koncept-metriky-prodavaciho) / [Metriky kupujícího](#koncept-metriky-kupujiciho)).
 - Co uvidíš záleží na roli:
   - jako kupující vidíš [Metriky prodávajícího](#koncept-metriky-prodavaciho),
@@ -1660,6 +1697,7 @@ Kontrakt:
 - Každá metrika má vlastní definici (viz kapitoly níž).
 
 Zobrazené metriky:
+- Datum registrace (zdarma)
 - [Metrika: Score (A–F)](#koncept-metrika-score)
 - [Metrika: Reakční doba](#koncept-metrika-reakcni-doba)
 - [Metrika: Closer rate](#koncept-metrika-closer-rate)
@@ -2677,31 +2715,32 @@ Refundy a férovky:
 
 Balíčky jsou měsíční balík oprávnění + příděly. Nejsou to role. Oprávnění jsou vždycky jen [Passy](#koncept-pass) a limity na účtu.
 
-| Položka                                                          | Kupující<br>(119 Kč) | Prodejce<br>(229 Kč) | **Pro**<br>(499 Kč) |
-| :--------------------------------------------------------------- | :------------------: | :------------------: | :-----------------: |
-| **Tokeny / měsíc**                                               | 300 T                | 300 T                | **600 T**           |
-| **Limity**                                                       |                      |                      |                     |
-| Uložené Feedy                                                    | 5                    | -                    | **10**              |
-| Aktivní inzeráty                                                 | 5                    | 10                   | **20**              |
-| **Passy (Trvalé)**                                               |                      |                      |                     |
-| [Payback](#koncept-payback)                                      | -                    | ✓                    | **✓**               |
-| [Photo Count](#koncept-limit-poctu-fotek) (+foto)                | -                    | ✓                    | **✓**               |
-| [Delší expirace inzerátu](#koncept-pass-delsi-expirace-inzeratu) | -                    | ✓                    | **✓**               |
-| [Rozšířená data](#koncept-rozsirena-data-inzeratu)               | -                    | ✓                    | **✓**               |
-| [Inzerát: Brand](#koncept-inzerat-brand)                         | -                    | ✓                    | **✓**               |
-| [Detail protistrany](#koncept-detail-protistrany)                | -                    | -                    | **✓**               |
-| [Anti-topper](#koncept-anti-topper)                              | -                    | -                    | **✓**               |
-| [Early Access](#koncept-early-access)                            | -                    | -                    | **✓**               |
-| [Multi-Category](#koncept-multi-category)                        | -                    | -                    | **✓**               |
-| **Kupóny (Měsíčně)**                                             |                      |                      |                     |
-| [Early Access](#koncept-early-access)                            | 5×                   | -                    | **(Pass)**          |
-| [Anti-topper](#koncept-anti-topper)                              | 5×                   | -                    | **(Pass)**          |
-| [Early Delivery](#koncept-early-delivery)                        | -                    | 3×                   | **3×**              |
-| [Mark](#koncept-mark)                                            | -                    | 3×                   | **3×**              |
-| [Top](#koncept-top)                                              | -                    | 3×                   | **3×**              |
-| [Top Maxxi](#koncept-top-maxxi)                                  | -                    | 1×                   | **3×**              |
-| [Multi-Category](#koncept-multi-category)                        | -                    | 3×                   | **(Pass)**          |
-| [Kontinuální nabídka](#koncept-kontinualni-nabidka)              | -                    | 3×                   | **5×**              |
+| Položka                                                          | Free | Founders | Kupující<br>(119 Kč) | Prodejce<br>(229 Kč) | **Pro**<br>(499 Kč) |
+| :--------------------------------------------------------------- | :--: | :------: | :------------------: | :------------------: | :-----------------: |
+| **Tokeny / měsíc**                                               | -    | 100 T    | 300 T                | 300 T                | **600 T**           |
+| **Limity**                                                       |      |          |                      |                      |                     |
+| Uložené Feedy                                                    | 3    | 10       | 5                    | -                    | **10**              |
+| Aktivní inzeráty                                                 | 3    | 20       | 5                    | 10                   | **20**              |
+| [Photo Count](#koncept-limit-poctu-fotek) (+foto)                | 3    | 10       | 3                    | 5                    | **10**              |
+| **Passy (Trvalé)**                                               |      |          |                      |                      |                     |
+| [Payback](#koncept-payback)                                      | -    | ✓        | -                    | ✓                    | **✓**               |
+| [Photo Count](#koncept-limit-poctu-fotek) (+foto)                | -    | -        | -                    | ✓                    | **✓**               |
+| [Delší expirace inzerátu](#koncept-pass-delsi-expirace-inzeratu) | -    | ✓        | -                    | ✓                    | **✓**               |
+| [Rozšířená data](#koncept-rozsirena-data-inzeratu)               | -    | ✓        | -                    | ✓                    | **✓**               |
+| [Inzerát: Brand](#koncept-inzerat-brand)                         | -    | ✓        | -                    | ✓                    | **✓**               |
+| [Detail protistrany](#koncept-detail-protistrany)                | -    | ✓        | -                    | -                    | **✓**               |
+| [Anti-topper](#koncept-anti-topper)                              | -    | ✓        | -                    | -                    | **✓**               |
+| [Early Access](#koncept-early-access)                            | -    | ✓        | -                    | -                    | **✓**               |
+| [Multi-Category](#koncept-multi-category)                        | -    | ✓        | -                    | -                    | **✓**               |
+| **Kupóny (Měsíčně)**                                             |      |          |                      |                      |                     |
+| [Early Access](#koncept-early-access)                            | -    | -        | 5×                   | -                    | **(Pass)**          |
+| [Anti-topper](#koncept-anti-topper)                              | -    | -        | 5×                   | -                    | **(Pass)**          |
+| [Early Delivery](#koncept-early-delivery)                        | -    | -        | -                    | 3×                   | **3×**              |
+| [Mark](#koncept-mark)                                            | -    | 10x      | -                    | 3×                   | **3×**              |
+| [Top](#koncept-top)                                              | -    | 5x       | -                    | 3×                   | **3×**              |
+| [Top Maxxi](#koncept-top-maxxi)                                  | -    | 3x       | -                    | 3×                   | **3×**              |
+| [Multi-Category](#koncept-multi-category)                        | -    | -        | -                    | 3×                   | **(Pass)**          |
+| [Kontinuální nabídka](#koncept-kontinualni-nabidka)              | -    | 5x       | -                    | 3×                   | **5×**              |
 
 > Pozn.: řádky „(Pass)“ znamenají, že v tom balíčku to není jako měsíční kupón, ale jako aktivní pass/benefit.
 
@@ -2769,6 +2808,11 @@ Fázování:
 - **Fáze 2: Regionální expanze (Karlovy Vary + Ostrov + Sokolov)**
   - Jdu ven až ve chvíli, kdy to není mrtvá stránka.
   - Billboard / word-of-mouth má vést do reality, ne do prázdna.
+
+**Founders (early adopters):**
+- Prvních **300 registrovaných uživatelů** dostane systémový [Founders](#ekonomika-balicky) subscription na **6 měsíců od registrace**.
+- Founders je normální předplatné z pohledu benefitů (viz tabulka [Předplatné (balíčky)](#ekonomika-balicky)), ale **nejde koupit** – uděluju ho jen jednou na start jako poděkování za spolupráci.
+- V ceníku má vlastní sloupec „Founders“, aby bylo vidět, co navíc ti lidi dostali, ale v žádným obchodě se neobjevuje jako volba k nákupu.
 
 Kontrakt komunikace:
 - Neučím. Nevysvětluju. Rozdíl se má projevit chováním UI (viz [Landing](#koncept-landing), [Navigace](#koncept-navigace)).
