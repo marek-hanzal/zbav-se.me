@@ -1,14 +1,15 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
+import { createDateContext, DateContextLayer } from "@use-pico/common/date";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { feedbackCreateFx } from "~/@user/feedback/fx/feedbackCreateFx";
 import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { feedbackCreateFx } from "~/app/feedback/fx/feedbackCreateFx";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { FeedbackCreateSchema } from "./schema/FeedbackCreateSchema";
-
-export const withCreateApi: Routes.Fn = ({ userHono }) => {
+export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -66,10 +67,21 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json(yield* feedbackCreateFx(c.req.valid("json")), 201);
+				const user = c.get("user");
+
+				return c.json<ListingSchema.Type, 201>(
+					yield* zodFx({
+						schema: ListingSchema,
+						dataFx: feedbackCreateFx({
+							...c.req.valid("json"),
+							userId: user.id,
+						}),
+					}),
+					201,
+				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
-				UserContextProvider(c.get("user")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				Effect.provide(DateContextLayer(createDateContext())),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
@@ -90,7 +102,7 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 							),
 							Match.when(
 								{
-									_tag: "NotFoundError",
+									_tag: "NotFoundErrorFx",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 404>(
@@ -104,13 +116,13 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 							),
 							Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "ZodErrorFx",
 								},
-								() => {
+								({ zod }) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: z.prettifyError(zod),
 										},
 										500,
 									);
@@ -124,4 +136,4 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 			);
 		},
 	);
-};
+});

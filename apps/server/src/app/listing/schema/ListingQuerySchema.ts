@@ -1,12 +1,12 @@
 import { z } from "@hono/zod-openapi";
-import { ListingMetaSchema } from "~/@user/listing/schema/ListingMetaSchema";
-import { ListingWhereSchema } from "~/@user/listing/schema/ListingWhereSchema";
+import { ListingMetaSchema } from "~/app/listing/schema/ListingMetaSchema";
+import { ListingWhereSchema } from "~/app/listing/schema/ListingWhereSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
 import { ListingFilterSchema } from "./ListingFilterSchema";
 import { ListingSortSchema } from "./ListingSortSchema";
 
 export const ListingQuerySchema = z
-	.object({
+	.looseObject({
 		cursor: CursorSchema.default({
 			page: 0,
 			size: 256,
@@ -18,6 +18,7 @@ export const ListingQuerySchema = z
 		sort: ListingSortSchema.array().optional(),
 		meta: ListingMetaSchema.optional(),
 	})
+	.strip()
 	.openapi("ListingQuery", {
 		description: "Query object for listing collection",
 	});

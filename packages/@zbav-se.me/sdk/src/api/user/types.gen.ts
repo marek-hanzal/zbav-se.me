@@ -46,127 +46,6 @@ export type tUserEx = {
 };
 
 /**
- * Query object for upload count
- */
-export type tUploadCountQuery = {
-    filter?: tUploadFilter;
-    where?: tUploadWhere;
-};
-
-/**
- * App-based filters
- */
-export type tUploadWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-};
-
-/**
- * Data for uploading a file
- */
-export type tUploadFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-};
-
-/**
- * Collection of upload items
- */
-export type tUploadCollection = {
-    data: Array<tUpload>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Upload file metadata
- */
-export type tUpload = {
-    /**
-     * ID of the upload
-     */
-    id: string;
-    /**
-     * Public URL to the uploaded file
-     */
-    url: string;
-};
-
-/**
- * Data for uploading a file
- */
-export type tUploadQuery = {
-    cursor?: tCursor;
-    filter?: tUploadFilter;
-    where?: tUploadWhere;
-    sort?: Array<tUploadSort>;
-};
-
-/**
- * Order
- */
-export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
-
-/**
- * Order
- */
-export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
-
-/**
- * Field for uploading a file
- */
-export const tUploadSortField = { createdAt: 'createdAt' } as const;
-
-/**
- * Field for uploading a file
- */
-export type tUploadSortField = typeof tUploadSortField[keyof typeof tUploadSortField];
-
-/**
- * Data for uploading a file
- */
-export type tUploadSort = {
-    field: tUploadSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * Cursor for pagination
- */
-export type tCursor = {
-    /**
-     * Page number (0-indexed)
-     */
-    page: number;
-    /**
-     * Page size
-     */
-    size: number;
-};
-
-/**
  * Data for creating a new upload
  */
 export type tUploadCreate = {
@@ -389,7 +268,10 @@ export type tTransactionBuyerInfo = {
      * Registration date
      */
     registered: string;
-    events: tUserEventBuyer;
+    /**
+     * Buyer info may not be available if we don't have enough data
+     */
+    events: null | tUserEventBuyer;
 };
 
 /**
@@ -684,6 +566,20 @@ export const tListingPriceEnum = { closed: 'closed', open: 'open' } as const;
 export type tListingPriceEnum = typeof tListingPriceEnum[keyof typeof tListingPriceEnum];
 
 /**
+ * Upload file metadata
+ */
+export type tUpload = {
+    /**
+     * ID of the upload
+     */
+    id: string;
+    /**
+     * Public URL to the uploaded file
+     */
+    url: string;
+};
+
+/**
  * Gallery item data
  */
 export type tGalleryItem = {
@@ -737,6 +633,16 @@ export type tTransactionQuery = {
 export type tTransactionMeta = {
     side?: tUserSideEnum;
 };
+
+/**
+ * Order
+ */
+export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
+
+/**
+ * Order
+ */
+export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
 
 /**
  * Field of the transaction sort
@@ -821,6 +727,20 @@ export type tTransactionFilter = {
      * This filter matches any of the provided statuses for the current status of the transaction
      */
     statusIn?: Array<tTransactionStatusEnum & unknown>;
+};
+
+/**
+ * Cursor for pagination
+ */
+export type tCursor = {
+    /**
+     * Page number (0-indexed)
+     */
+    page: number;
+    /**
+     * Page size
+     */
+    size: number;
 };
 
 /**
@@ -1122,7 +1042,7 @@ export type tMessageGallery = {
 };
 
 /**
- * Message entry
+ * Message text entry
  */
 export type tMessageText = {
     /**
@@ -1159,27 +1079,6 @@ export type tMessage = {
 };
 
 /**
- * Data for creating a new feedback
- */
-export type tFeedbackCreate = {
-    /**
-     * ID of the listing
-     */
-    listingId: string;
-    type: tFeedbackEnum;
-};
-
-/**
- * Type of feedback
- */
-export const tFeedbackEnum = { like: 'like', dislike: 'dislike' } as const;
-
-/**
- * Type of feedback
- */
-export type tFeedbackEnum = typeof tFeedbackEnum[keyof typeof tFeedbackEnum];
-
-/**
  * Data for creating a new listing event
  */
 export type tListingEventCreate = {
@@ -1213,21 +1112,22 @@ export const tListingEventEnum = {
 export type tListingEventEnum = typeof tListingEventEnum[keyof typeof tListingEventEnum];
 
 /**
- * Seller info for the listing
+ * Listing event data
  */
-export type tSellerInfo = {
+export type tListingEvent = {
     /**
-     * Registration date
+     * ID of the event
      */
-    registered: string;
+    id: string;
     /**
-     * Number of listings
+     * ID of the listing
      */
-    listings: number;
+    listingId: string;
+    event: tListingEventEnum;
     /**
-     * Seller score; 1-6
+     * Creation timestamp
      */
-    score: number;
+    createdAt: string;
 };
 
 /**
@@ -1908,7 +1808,24 @@ export type tFlagFilter = {
  */
 export type tFlagQuery = {
     cursor?: tCursor;
-    filter?: tFlagFilter;
+    filter?: {
+        /**
+         * This filter matches the exact id
+         */
+        id?: string;
+        /**
+         * This filter matches the ids
+         */
+        idIn?: Array<string>;
+        /**
+         * Runs fulltext on the collection/query.
+         */
+        fulltext?: string;
+        /**
+         * This filter matches the exact listingId
+         */
+        listingId?: string;
+    };
     where?: tFlagWhere;
     sort?: Array<tFlagSort>;
 };
@@ -1947,10 +1864,6 @@ export type tFlagWhere = {
      * Runs fulltext on the collection/query.
      */
     fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
     /**
      * This filter matches the exact listingId
      */
@@ -2060,6 +1973,27 @@ export type tFeedFavourite = {
      */
     count: number;
 };
+
+/**
+ * Data for creating a new feedback
+ */
+export type tFeedbackCreate = {
+    /**
+     * ID of the listing
+     */
+    listingId: string;
+    type: tFeedbackEnum;
+};
+
+/**
+ * Type of feedback
+ */
+export const tFeedbackEnum = { like: 'like', dislike: 'dislike' } as const;
+
+/**
+ * Type of feedback
+ */
+export type tFeedbackEnum = typeof tFeedbackEnum[keyof typeof tFeedbackEnum];
 
 /**
  * Request to create or update a feed gallery
@@ -3429,6 +3363,42 @@ export type tApiFeedGalleryCreateResponse = {
 
 export type apiFeedGalleryCreateResponse = tApiFeedGalleryCreateResponse[keyof tApiFeedGalleryCreateResponse];
 
+export type tApiFeedbackCreateRequest = {
+    /**
+     * Data for creating a new feedback
+     */
+    body?: tFeedbackCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/feedback/create';
+};
+
+export type apiFeedbackCreateErrors = {
+    /**
+     * Invalid request - duplicate feedback or invalid data
+     */
+    400: tNotice;
+    /**
+     * Listing not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiFeedbackCreateError = apiFeedbackCreateErrors[keyof apiFeedbackCreateErrors];
+
+export type tApiFeedbackCreateResponse = {
+    /**
+     * The feedback was created and the updated listing is returned
+     */
+    201: tListing;
+};
+
+export type apiFeedbackCreateResponse = tApiFeedbackCreateResponse[keyof tApiFeedbackCreateResponse];
+
 export type tApiFeedFavouriteCollectionRequest = {
     body?: tFeedQuery;
     path?: never;
@@ -3820,40 +3790,6 @@ export type tApiListingCountResponse = {
 
 export type apiListingCountResponse = tApiListingCountResponse[keyof tApiListingCountResponse];
 
-export type tApiListingSellerInfoRequest = {
-    body?: never;
-    path: {
-        /**
-         * ID of the listing
-         */
-        listingId: string;
-    };
-    query?: never;
-    url: '/api/user/listing/{listingId}/seller-info';
-};
-
-export type apiListingSellerInfoErrors = {
-    /**
-     * Listing not found or seller info not available
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiListingSellerInfoError = apiListingSellerInfoErrors[keyof apiListingSellerInfoErrors];
-
-export type tApiListingSellerInfoResponse = {
-    /**
-     * Seller info
-     */
-    200: tSellerInfo;
-};
-
-export type apiListingSellerInfoResponse = tApiListingSellerInfoResponse[keyof tApiListingSellerInfoResponse];
-
 export type tApiListingEventCreateRequest = {
     /**
      * Data for creating a new listing event
@@ -3889,44 +3825,10 @@ export type tApiListingEventCreateResponse = {
     /**
      * The listing event was created
      */
-    201: unknown;
+    201: tListingEvent;
 };
 
-export type tApiFeedbackCreateRequest = {
-    /**
-     * Data for creating a new feedback
-     */
-    body?: tFeedbackCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/feedback/create';
-};
-
-export type apiFeedbackCreateErrors = {
-    /**
-     * Invalid request - duplicate feedback or invalid data
-     */
-    400: tNotice;
-    /**
-     * Listing not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFeedbackCreateError = apiFeedbackCreateErrors[keyof apiFeedbackCreateErrors];
-
-export type tApiFeedbackCreateResponse = {
-    /**
-     * The feedback was created and the updated listing is returned
-     */
-    201: tListing;
-};
-
-export type apiFeedbackCreateResponse = tApiFeedbackCreateResponse[keyof tApiFeedbackCreateResponse];
+export type apiListingEventCreateResponse = tApiListingEventCreateResponse[keyof tApiListingEventCreateResponse];
 
 export type tApiMessageThreadMessageCollectionRequest = {
     body?: tMessageQuery;
@@ -4036,10 +3938,6 @@ export type tApiTransactionCreateRequest = {
 };
 
 export type apiTransactionCreateErrors = {
-    /**
-     * Access denied
-     */
-    403: tNotice;
     /**
      * Listing not found
      */
@@ -4588,118 +4486,6 @@ export type tApiUploadCreateResponse = {
 };
 
 export type apiUploadCreateResponse = tApiUploadCreateResponse[keyof tApiUploadCreateResponse];
-
-export type tApiUploadFetchRequest = {
-    /**
-     * Query object for upload fetch
-     */
-    body?: tUploadQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/upload/fetch';
-};
-
-export type apiUploadFetchErrors = {
-    /**
-     * Upload not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiUploadFetchError = apiUploadFetchErrors[keyof apiUploadFetchErrors];
-
-export type tApiUploadFetchResponse = {
-    /**
-     * Return an upload item based on the provided query
-     */
-    200: tUpload;
-};
-
-export type apiUploadFetchResponse = tApiUploadFetchResponse[keyof tApiUploadFetchResponse];
-
-export type tApiUploadCollectionRequest = {
-    body?: tUploadQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/upload/collection';
-};
-
-export type apiUploadCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiUploadCollectionError = apiUploadCollectionErrors[keyof apiUploadCollectionErrors];
-
-export type tApiUploadCollectionResponse = {
-    /**
-     * Access collection of upload items based on provided query
-     */
-    200: tUploadCollection;
-};
-
-export type apiUploadCollectionResponse = tApiUploadCollectionResponse[keyof tApiUploadCollectionResponse];
-
-export type tApiUploadCountRequest = {
-    body?: tUploadCountQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/upload/count';
-};
-
-export type apiUploadCountErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiUploadCountError = apiUploadCountErrors[keyof apiUploadCountErrors];
-
-export type tApiUploadCountResponse = {
-    /**
-     * Return counts based on provided query
-     */
-    200: tCount;
-};
-
-export type apiUploadCountResponse = tApiUploadCountResponse[keyof tApiUploadCountResponse];
-
-export type tApiUserEventBuyerRequest = {
-    body?: never;
-    path: {
-        /**
-         * ID of the user
-         */
-        userId: string;
-    };
-    query?: never;
-    url: '/api/user/user-event/{userId}/buyer';
-};
-
-export type apiUserEventBuyerErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiUserEventBuyerError = apiUserEventBuyerErrors[keyof apiUserEventBuyerErrors];
-
-export type tApiUserEventBuyerResponse = {
-    /**
-     * Buyer info
-     */
-    200: tUserEventBuyer;
-};
-
-export type apiUserEventBuyerResponse = tApiUserEventBuyerResponse[keyof tApiUserEventBuyerResponse];
 
 export type tApiUserExPatchRequest = {
     /**

@@ -1,15 +1,22 @@
-import { createRoute } from "@hono/zod-openapi";
-import { EntitySchema } from "@use-pico/common/schema";
+import { createRoute, z } from "@hono/zod-openapi";
+import { EntitySchema, zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { draftCollectionFx } from "~/app/draft/fx/draftCollectionFx";
 import { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
-import { draftCollectionFx } from "./fx/draftCollectionFx";
 
-export const withCollectionApi: Routes.Fn = ({ userHono }) => {
+const CollectionSchema = withCollectionSchema({
+	schema: EntitySchema,
+	type: "DraftCollection",
+	description: "Collection of drafts",
+});
+
+export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
+
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -29,11 +36,7 @@ export const withCollectionApi: Routes.Fn = ({ userHono }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: withCollectionSchema({
-								schema: EntitySchema,
-								type: "DraftCollection",
-								description: "Collection of drafts",
-							}),
+							schema: CollectionSchema,
 						},
 					},
 					description: "Access collection of drafts based on provided query",
@@ -54,26 +57,35 @@ export const withCollectionApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = c.get("user");
+
 				return c.json<withCollectionSchema.Type<EntitySchema>, 200>(
-					yield* draftCollectionFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: CollectionSchema,
+						dataFx: draftCollectionFx({
+							...c.req.valid("json"),
+							scope: {
+								userId: user.id,
+							},
+						}),
+					}),
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
-				UserContextProvider(c.get("user")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "ZodErrorFx",
 								},
-								() => {
+								({ zod }) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: z.prettifyError(zod),
 										},
 										500,
 									);
@@ -87,4 +99,4 @@ export const withCollectionApi: Routes.Fn = ({ userHono }) => {
 			);
 		},
 	);
-};
+});

@@ -1,15 +1,17 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
+import { createDateContext, DateContextLayer } from "@use-pico/common/date";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { TransactionSchema } from "~/@user/transaction/schema/TransactionSchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
+import { transactionCreateFx } from "~/app/transaction/fx/transactionCreateFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { TransactionContextProvider } from "./fx/TransactionContextFx";
-import { transactionCreateFx } from "./fx/transactionCreateFx";
 import { TransactionCreateSchema } from "./schema/TransactionCreateSchema";
 
-export const withCreateApi: Routes.Fn = ({ userHono }) => {
+export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -35,14 +37,6 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 					},
 					description: "The transaction was created",
 				},
-				403: {
-					content: {
-						"application/json": {
-							schema: NoticeSchema,
-						},
-					},
-					description: "Access denied",
-				},
 				404: {
 					content: {
 						"application/json": {
@@ -67,21 +61,29 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = c.get("user");
+
 				return c.json<TransactionSchema.Type, 201>(
-					yield* transactionCreateFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: TransactionSchema,
+						dataFx: transactionCreateFx({
+							...c.req.valid("json"),
+							userId: user.id,
+						}),
+					}),
 					201,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				Effect.provide(DateContextLayer(createDateContext())),
 				TransactionContextProvider(),
-				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
 								{
-									_tag: "NotFoundError",
+									_tag: "NotFoundErrorFx",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 404>(
@@ -95,13 +97,13 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 							),
 							Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "ZodErrorFx",
 								},
-								() => {
+								({ zod }) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: z.prettifyError(zod),
 										},
 										500,
 									);
@@ -115,4 +117,4 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 			);
 		},
 	);
-};
+});

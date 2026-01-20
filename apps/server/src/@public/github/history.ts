@@ -1,8 +1,9 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { genId } from "@use-pico/common/gen-id";
+import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { AppEnv } from "~/AppEnv";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { ServerGithubSchema } from "~/schema/env/ServerGithubSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { GitHubHistorySchema } from "./schema/GitHubHistorySchema";
 
@@ -27,7 +28,9 @@ const parseRepo = (repo: string) => {
 	};
 };
 
-export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
+export const withHistoryApiFx = Effect.fn("withHistoryApiFx")(function* () {
+	const { publicHono } = yield* RoutesContextFx;
+
 	publicHono.openapi(
 		createRoute({
 			method: "get",
@@ -56,6 +59,7 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 					description: "Failed to sync/fetch history from GitHub",
 				},
 			},
+			security: [],
 			tags: [
 				"github",
 				"public",
@@ -64,7 +68,7 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 		async (c) => {
 			try {
 				// Adjust this line to your actual DB injection.
-				const db = c.var.database;
+				const db = c.var.kysely.kysely;
 
 				const { weeks } = c.req.valid("query");
 				const historyDays = weeks * 7;
@@ -101,12 +105,14 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 
 				let after: string | null = null;
 
+				const githubConfig = ServerGithubSchema.parse(process.env);
+
 				for (;;) {
 					const res = await fetch("https://api.github.com/graphql", {
 						method: "POST",
 						headers: {
 							Accept: "application/vnd.github+json",
-							Authorization: `Bearer ${AppEnv.SERVER_GITHUB}`,
+							Authorization: `Bearer ${githubConfig.SERVER_GITHUB}`,
 							"X-GitHub-Api-Version": "2022-11-28",
 							"User-Agent": "zbav-se.me",
 							"Content-Type": "application/json",
@@ -300,4 +306,4 @@ export const withHistoryApi: Routes.Fn = ({ publicHono }) => {
 			}
 		},
 	);
-};
+});

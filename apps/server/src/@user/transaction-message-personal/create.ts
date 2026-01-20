@@ -1,15 +1,18 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
+import { createDateContext, DateContextLayer } from "@use-pico/common/date";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { MessagePersonalSchema } from "~/@user/message-personal/schema/MessagePersonalSchema";
-import { TransactionContextProvider } from "~/@user/transaction/fx/TransactionContextFx";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { MessagePersonalSchema } from "~/app/message-personal/schema/MessagePersonalSchema";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
+import { transactionMessagePersonalCreateFx } from "~/app/transaction-message-personal/fx/transactionMessagePersonalCreateFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { transactionMessagePersonalCreateFx } from "./fx/transactionMessagePersonalCreateFx";
 import { TransactionMessagePersonalCreateSchema } from "./schema/TransactionMessagePersonalCreateSchema";
 
-export const withCreateApi: Routes.Fn = ({ userHono }) => {
+export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
+
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -76,21 +79,29 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = c.get("user");
+
 				return c.json<MessagePersonalSchema.Type, 200>(
-					yield* transactionMessagePersonalCreateFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: MessagePersonalSchema,
+						dataFx: transactionMessagePersonalCreateFx({
+							...c.req.valid("json"),
+							userId: user.id,
+						}),
+					}),
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				Effect.provide(DateContextLayer(createDateContext())),
 				TransactionContextProvider(),
-				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
 								{
-									_tag: "NotFoundError",
+									_tag: "NotFoundErrorFx",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 404>(
@@ -146,13 +157,13 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 							),
 							Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "ZodErrorFx",
 								},
-								() => {
+								({ zod }) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: z.prettifyError(zod),
 										},
 										500,
 									);
@@ -166,4 +177,4 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 			);
 		},
 	);
-};
+});

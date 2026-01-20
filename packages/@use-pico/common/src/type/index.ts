@@ -1,3 +1,4 @@
+export type { AssertNever } from "./AssertNever";
 export type { CommonProps } from "./CommonProps";
 export type { DateInput } from "./DateInput";
 export type { DeepKeys } from "./DeepKeys";

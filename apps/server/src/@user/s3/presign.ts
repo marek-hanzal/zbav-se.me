@@ -1,13 +1,18 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { S3ContextLayer } from "~/app/s3/context/S3ContextLayer";
+import { s3PreSignFx } from "~/app/s3/fx/s3PreSignFx";
+import { UploadContextLayer } from "~/app/upload/context/UploadContextLayer";
+import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
+import { ServerS3Schema } from "~/schema/env/ServerS3Schema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { s3PreSignFx } from "./fx/s3PreSignFx";
 import { S3PreSignRequestSchema } from "./schema/S3PreSignRequestSchema";
 import { S3PreSignResponseSchema } from "./schema/S3PreSignResponseSchema";
 
-export const withPresignApi: Routes.Fn = ({ userHono }) => {
+export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -49,31 +54,51 @@ export const withPresignApi: Routes.Fn = ({ userHono }) => {
 			],
 		}),
 		async (c) => {
-			const { path, extension } = c.req.valid("json");
+			const s3Config = ServerS3Schema.parse(process.env);
+			const cdnConfig = ServerCdnSchema.parse(process.env);
 
 			return Effect.gen(function* () {
+				const user = c.get("user");
+				const { path, extension } = c.req.valid("json");
+
 				return c.json<S3PreSignResponseSchema.Type, 200>(
-					yield* s3PreSignFx({
-						path,
-						extension,
+					yield* zodFx({
+						schema: S3PreSignResponseSchema,
+						dataFx: s3PreSignFx({
+							userId: user.id,
+							path,
+							extension,
+						}),
 					}),
 					200,
 				);
 			}).pipe(
-				UserContextProvider(c.get("user")),
+				Effect.provide(
+					S3ContextLayer({
+						api: s3Config.SERVER_S3_API,
+						key: s3Config.SERVER_S3_KEY,
+						secret: s3Config.SERVER_S3_SECRET,
+						bucket: s3Config.SERVER_S3_BUCKET,
+					}),
+				),
+				Effect.provide(
+					UploadContextLayer({
+						cdn: cdnConfig.SERVER_CONTENT_CDN,
+					}),
+				),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "ZodErrorFx",
 								},
-								() => {
+								({ zod }) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: z.prettifyError(zod),
 										},
 										500,
 									);
@@ -87,4 +112,4 @@ export const withPresignApi: Routes.Fn = ({ userHono }) => {
 			);
 		},
 	);
-};
+});

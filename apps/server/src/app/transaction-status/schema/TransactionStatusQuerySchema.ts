@@ -4,7 +4,7 @@ import { TransactionStatusFilterSchema } from "./TransactionStatusFilterSchema";
 import { TransactionStatusSortSchema } from "./TransactionStatusSortSchema";
 
 export const TransactionStatusQuerySchema = z
-	.object({
+	.looseObject({
 		cursor: CursorSchema.optional(),
 		filter: TransactionStatusFilterSchema.optional(),
 		where: TransactionStatusFilterSchema.openapi("TransactionStatusWhere", {
@@ -12,6 +12,7 @@ export const TransactionStatusQuerySchema = z
 		}).optional(),
 		sort: TransactionStatusSortSchema.array().optional(),
 	})
+	.strip()
 	.openapi("TransactionStatusQuery", {
 		description: "Query object for listing transaction status",
 	});

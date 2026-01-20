@@ -1,14 +1,16 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
+import { createDateContext, DateContextLayer } from "@use-pico/common/date";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { feedGalleryCreateFx } from "~/@user/feed/fx/feedGalleryCreateFx";
-import { FeedGalleryCreateSchema } from "~/@user/feed/schema/FeedGalleryCreateSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { feedGalleryCreateFx } from "~/app/feed/fx/feedGalleryCreateFx";
+import { FeedGalleryCreateSchema } from "~/app/feed/schema/FeedGalleryCreateSchema";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
-export const withGalleryCreateApi: Routes.Fn = ({ userHono }) => {
+export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -75,13 +77,21 @@ export const withGalleryCreateApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = c.get("user");
+
 				return c.json<GallerySchema.Type, 200>(
-					yield* feedGalleryCreateFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: GallerySchema,
+						dataFx: feedGalleryCreateFx({
+							...c.req.valid("json"),
+							userId: user.id,
+						}),
+					}),
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
-				UserContextProvider(c.get("user")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				Effect.provide(DateContextLayer(createDateContext())),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
@@ -102,7 +112,7 @@ export const withGalleryCreateApi: Routes.Fn = ({ userHono }) => {
 							),
 							Match.when(
 								{
-									_tag: "NotFoundError",
+									_tag: "NotFoundErrorFx",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 404>(
@@ -130,13 +140,13 @@ export const withGalleryCreateApi: Routes.Fn = ({ userHono }) => {
 							),
 							Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "ZodErrorFx",
 								},
-								() => {
+								({ zod }) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: z.prettifyError(zod),
 										},
 										500,
 									);
@@ -150,4 +160,4 @@ export const withGalleryCreateApi: Routes.Fn = ({ userHono }) => {
 			);
 		},
 	);
-};
+});

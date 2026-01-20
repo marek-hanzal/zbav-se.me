@@ -1,19 +1,23 @@
-import { auth } from "../auth/auth";
-import type { WithDatabase } from "../database/WithDatabase";
-import type { Routes } from "../hono/Routes";
-import { withAuthApi } from "./auth/withAuthApi";
-import { withCorsApi } from "./cors/withCorsApi";
-import { withOpenApiApi } from "./open-api/withOpenApiApi";
-import { withOriginApi } from "./origin/withOriginApi";
+import { Effect } from "effect";
+import { withAuthApiFx } from "~/@root/auth/withAuthApiFx";
+import { withCorsApiFx } from "~/@root/cors/withCorsApiFx";
+import { withOpenApiApiFx } from "~/@root/open-api/withOpenApiApiFx";
+import { withOriginApiFx } from "~/@root/origin/withOriginApiFx";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { auth } from "~/auth/auth";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
-export const withRootApi: Routes.FnWithDeps<{
-	database: WithDatabase;
-}> = (routes, deps) => {
-	routes.root.use(async (c, next) => {
-		c.set("database", deps.database);
+export const withRootApi = Effect.fn("withRootApi")(function* () {
+	const { root } = yield* RoutesContextFx;
+	const kysely = yield* KyselyContextFx;
+
+	root.use(async (c, next) => {
+		c.set("kysely", kysely);
+
+		const { api } = auth(() => kysely.dialect);
 
 		try {
-			const session = await auth.api.getSession({
+			const session = await api.getSession({
 				headers: c.req.raw.headers,
 			});
 			if (!session) {
@@ -31,8 +35,10 @@ export const withRootApi: Routes.FnWithDeps<{
 		}
 	});
 
-	withAuthApi(routes);
-	withCorsApi(routes);
-	withOpenApiApi(routes);
-	withOriginApi(routes);
-};
+	yield* Effect.all([
+		withAuthApiFx(),
+		withCorsApiFx(),
+		withOpenApiApiFx(),
+		withOriginApiFx(),
+	]);
+});

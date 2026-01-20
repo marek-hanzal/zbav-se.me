@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiCategoryCollectionErrors, apiCategoryCountErrors, apiCategoryFetchErrors, apiLocationAutocompleteErrors, apiLocationFetchErrors, tApiCategoryCollectionRequest, tApiCategoryCollectionResponse, tApiCategoryCountRequest, tApiCategoryCountResponse, tApiCategoryFetchRequest, tApiCategoryFetchResponse, tApiLocationAutocompleteRequest, tApiLocationAutocompleteResponse, tApiLocationFetchRequest, tApiLocationFetchResponse } from './types.gen';
-import { zApiCategoryCollectionData, zApiCategoryCollectionResponse, zApiCategoryCountData, zApiCategoryCountResponse, zApiCategoryFetchData, zApiCategoryFetchResponse, zApiLocationAutocompleteData, zApiLocationAutocompleteResponse, zApiLocationFetchData, zApiLocationFetchResponse } from './zod.gen';
+import type { apiCategoryCollectionErrors, apiCategoryCountErrors, apiCategoryFetchErrors, apiListingSellerInfoErrors, apiLocationAutocompleteErrors, apiLocationFetchErrors, apiUploadFetchErrors, apiUserEventBuyerErrors, apiUserEventSellerErrors, tApiCategoryCollectionRequest, tApiCategoryCollectionResponse, tApiCategoryCountRequest, tApiCategoryCountResponse, tApiCategoryFetchRequest, tApiCategoryFetchResponse, tApiListingSellerInfoRequest, tApiListingSellerInfoResponse, tApiLocationAutocompleteRequest, tApiLocationAutocompleteResponse, tApiLocationFetchRequest, tApiLocationFetchResponse, tApiUploadFetchRequest, tApiUploadFetchResponse, tApiUserEventBuyerRequest, tApiUserEventBuyerResponse, tApiUserEventSellerRequest, tApiUserEventSellerResponse } from './types.gen';
+import { zApiCategoryCollectionData, zApiCategoryCollectionResponse, zApiCategoryCountData, zApiCategoryCountResponse, zApiCategoryFetchData, zApiCategoryFetchResponse, zApiListingSellerInfoData, zApiListingSellerInfoResponse, zApiLocationAutocompleteData, zApiLocationAutocompleteResponse, zApiLocationFetchData, zApiLocationFetchResponse, zApiUploadFetchData, zApiUploadFetchResponse, zApiUserEventBuyerData, zApiUserEventBuyerResponse, zApiUserEventSellerData, zApiUserEventSellerResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -65,6 +65,17 @@ export const apiCategoryCount = <ThrowOnError extends boolean = false>(options?:
 });
 
 /**
+ * Return seller info for a listing.
+ */
+export const apiListingSellerInfo = <ThrowOnError extends boolean = false>(options: Options<tApiListingSellerInfoRequest, ThrowOnError>) => (options.client ?? client).post<tApiListingSellerInfoResponse, apiListingSellerInfoErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingSellerInfoData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingSellerInfoResponse.parseAsync(data),
+    url: '/api/session/listing/{listingId}/seller-info',
+    ...options
+});
+
+/**
  * Return a location autocomplete
  */
 export const apiLocationAutocomplete = <ThrowOnError extends boolean = false>(options?: Options<tApiLocationAutocompleteRequest, ThrowOnError>) => (options?.client ?? client).post<tApiLocationAutocompleteResponse, apiLocationAutocompleteErrors, ThrowOnError>({
@@ -92,4 +103,41 @@ export const apiLocationFetch = <ThrowOnError extends boolean = false>(options?:
         'Content-Type': 'application/json',
         ...options?.headers
     }
+});
+
+/**
+ * Return an upload item based on the provided query
+ */
+export const apiUploadFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiUploadFetchResponse, apiUploadFetchErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiUploadFetchData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiUploadFetchResponse.parseAsync(data),
+    url: '/api/session/upload/fetch',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
+ * Return buyer info for a user event.
+ */
+export const apiUserEventBuyer = <ThrowOnError extends boolean = false>(options: Options<tApiUserEventBuyerRequest, ThrowOnError>) => (options.client ?? client).post<tApiUserEventBuyerResponse, apiUserEventBuyerErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiUserEventBuyerData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiUserEventBuyerResponse.parseAsync(data),
+    url: '/api/session/user-event/{userId}/buyer',
+    ...options
+});
+
+/**
+ * Return seller info for a user event.
+ */
+export const apiUserEventSeller = <ThrowOnError extends boolean = false>(options: Options<tApiUserEventSellerRequest, ThrowOnError>) => (options.client ?? client).post<tApiUserEventSellerResponse, apiUserEventSellerErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiUserEventSellerData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiUserEventSellerResponse.parseAsync(data),
+    url: '/api/session/user-event/{userId}/seller',
+    ...options
 });

@@ -1,13 +1,13 @@
+import { DateContextLayer } from "@use-pico/common/date";
+import { NotFoundErrorFx } from "@use-pico/common/error";
 import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { match } from "ts-pattern";
-import { transactionCollectionFx } from "~/@user/transaction/fx/transactionCollectionFx";
-import { transactionStatusFetchFx } from "~/@user/transaction-status/fx/transactionStatusFetchFx";
-import { transactionStatusResolveFx } from "~/@user/transaction-status/fx/transactionStatusResolveFx";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { NotFoundError } from "~/error/NotFoundError";
+import { transactionCollectionFx } from "~/app/transaction/fx/transactionCollectionFx";
+import { transactionStatusFetchFx } from "~/app/transaction-status/fx/transactionStatusFetchFx";
+import { transactionStatusResolveFx } from "~/app/transaction-status/fx/transactionStatusResolveFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace t01_resolve {
 	export interface Props {
@@ -16,71 +16,80 @@ export namespace t01_resolve {
 	}
 }
 
-export const t01_resolve = ({ fromMinutes, toMinutes }: t01_resolve.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
+export const t01_resolve = Effect.fn("t01_resolve")(function* ({
+	fromMinutes,
+	toMinutes,
+}: t01_resolve.Props) {
+	const { kysely } = yield* KyselyContextFx;
 
-		const transactions = yield* transactionCollectionFx({
-			cursor: {
-				page: 0,
-				size: 1000,
-			},
-			where: {
-				status: "open",
-			},
+	const transactions = yield* transactionCollectionFx({
+		cursor: {
+			page: 0,
+			size: 1000,
+		},
+		where: {
+			status: "open",
+		},
+		scope: {},
+	});
+
+	for (const transactionId of transactions.data) {
+		const current = yield* Effect.promise(async () => {
+			return kysely
+				.selectFrom("user as user")
+				.innerJoin("listing as l", "l.userId", "user.id")
+				.innerJoin("transaction as t", "t.listingId", "l.id")
+				.where("t.id", "=", transactionId.id)
+				.selectAll("user")
+				.executeTakeFirst();
 		});
 
-		for (const transactionId of transactions.data) {
-			const current = yield* Effect.tryPromise(async () => {
-				return database
-					.selectFrom("user as user")
-					.innerJoin("listing as l", "l.userId", "user.id")
-					.innerJoin("transaction as t", "t.listingId", "l.id")
-					.where("t.id", "=", transactionId.id)
-					.selectAll("user")
-					.executeTakeFirst();
+		if (!current) {
+			return yield* new NotFoundErrorFx({
+				resource: "user",
+				resourceId: transactionId.id,
+				message: "User not found",
 			});
-
-			if (!current) {
-				return yield* new NotFoundError({
-					resource: "user",
-					resourceId: transactionId.id,
-					message: "User not found",
-				});
-			}
-
-			const transactionStatus = yield* transactionStatusFetchFx({
-				where: {
-					transactionId: transactionId.id,
-				},
-				sort: [
-					{
-						field: "createdAt",
-						direction: "desc",
-					},
-				],
-			});
-
-			yield* match(
-				list([
-					"resolve",
-					"noop",
-				] as const),
-			)
-				.with("resolve", () => {
-					return Effect.gen(function* () {
-						yield* transactionStatusResolveFx({
-							transactionId: transactionId.id,
-							createdAt: DateTime.fromJSDate(transactionStatus.createdAt).plus({
-								minute: rangedom(fromMinutes, toMinutes),
-							}),
-						}).pipe(UserContextProvider(current));
-					});
-				})
-				.with("noop", () => {
-					return Effect.void;
-				})
-				.exhaustive();
 		}
-	});
-};
+
+		const transactionStatus = yield* transactionStatusFetchFx({
+			where: {
+				transactionId: transactionId.id,
+			},
+			sort: [
+				{
+					field: "createdAt",
+					direction: "desc",
+				},
+			],
+			scope: {},
+		});
+
+		yield* match(
+			list([
+				"resolve",
+				"noop",
+			] as const),
+		)
+			.with("resolve", () => {
+				return transactionStatusResolveFx({
+					userId: current.id,
+					transactionId: transactionId.id,
+				}).pipe(
+					Effect.provide(
+						DateContextLayer({
+							now() {
+								return DateTime.fromJSDate(transactionStatus.createdAt).plus({
+									minute: rangedom(fromMinutes, toMinutes),
+								});
+							},
+						}),
+					),
+				);
+			})
+			.with("noop", () => {
+				return Effect.void;
+			})
+			.exhaustive();
+	}
+});

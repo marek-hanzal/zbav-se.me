@@ -1,13 +1,16 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
+import { createDateContext, DateContextLayer } from "@use-pico/common/date";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { listingEventCreateFx } from "./fx/listingEventCreateFx";
 import { ListingEventCreateSchema } from "./schema/ListingEventCreateSchema";
+import { ListingEventSchema } from "./schema/ListingEventSchema";
 
-export const withCreateApi: Routes.Fn = ({ userHono }) => {
+export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -26,6 +29,11 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 			},
 			responses: {
 				201: {
+					content: {
+						"application/json": {
+							schema: ListingEventSchema,
+						},
+					},
 					description: "The listing event was created",
 				},
 				400: {
@@ -68,12 +76,21 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				yield* listingEventCreateFx(c.req.valid("json"));
+				const user = c.get("user");
 
-				return c.body(null, 201);
+				return c.json<ListingEventSchema.Type, 201>(
+					yield* zodFx({
+						schema: ListingEventSchema,
+						dataFx: listingEventCreateFx({
+							...c.req.valid("json"),
+							userId: user.id,
+						}),
+					}),
+					201,
+				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
-				UserContextProvider(c.get("user")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				Effect.provide(DateContextLayer(createDateContext())),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
@@ -94,7 +111,7 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 							),
 							Match.when(
 								{
-									_tag: "NotFoundError",
+									_tag: "NotFoundErrorFx",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 404>(
@@ -122,13 +139,13 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 							),
 							Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "ZodErrorFx",
 								},
-								() => {
+								({ zod }) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: z.prettifyError(zod),
 										},
 										500,
 									);
@@ -142,4 +159,4 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 			);
 		},
 	);
-};
+});

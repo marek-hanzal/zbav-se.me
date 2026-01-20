@@ -1,11 +1,14 @@
 import { Scalar } from "@scalar/hono-api-reference";
-import { AppEnv } from "~/AppEnv";
-import type { Routes } from "~/hono/Routes";
+import { Effect } from "effect";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { ServerViteSchema } from "~/schema/env/ServerViteSchema";
 
 const docsUrl = "/v3/api-docs";
 
-export const withOpenApiEndpoint: Routes.Fn = (routes) => {
-	routes.root.get(
+export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function* () {
+	const { root } = yield* RoutesContextFx;
+
+	root.get(
 		"/",
 		Scalar({
 			title: "zbav.se.me API",
@@ -23,7 +26,9 @@ export const withOpenApiEndpoint: Routes.Fn = (routes) => {
 		}),
 	);
 
-	routes.root.doc31(docsUrl, {
+	const viteConfig = ServerViteSchema.parse(process.env);
+
+	root.doc31(docsUrl, {
 		openapi: "3.1.0",
 		info: {
 			version: "0.5.0",
@@ -31,8 +36,24 @@ export const withOpenApiEndpoint: Routes.Fn = (routes) => {
 		},
 		servers: [
 			{
-				url: AppEnv.VITE_SERVER_API,
+				url: viteConfig.VITE_SERVER_API,
+			},
+		],
+		// @ts-expect-error - components is valid in OpenAPI 3.1 but types may not include it
+		components: {
+			securitySchemes: {
+				cookieAuth: {
+					type: "apiKey",
+					in: "cookie",
+					name: "better-auth.session_token",
+					description: "Cookie-based authentication using better-auth session token",
+				},
+			},
+		},
+		security: [
+			{
+				cookieAuth: [],
 			},
 		],
 	});
-};
+});

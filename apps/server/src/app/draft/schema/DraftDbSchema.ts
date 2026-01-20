@@ -1,13 +1,13 @@
 import { z } from "@hono/zod-openapi";
-import { ListingExpireEnumSchema } from "~/@user/listing/schema/ListingExpireEnumSchema";
 import { ListingDeliveryEnumSchema } from "~/app/listing/schema/ListingDeliveryEnumSchema";
+import { ListingExpireEnumSchema } from "~/app/listing/schema/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/app/listing/schema/ListingPriceEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/app/listing/schema/ListingWarrantyEnumSchema";
 import { ProsConsSchema } from "~/app/listing/schema/ProsConsSchema";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 
 export const DraftDbSchema = z
-	.object({
+	.looseObject({
 		id: z.string().openapi({
 			description: "ID of the draft",
 		}),

@@ -87,161 +87,6 @@ export const sUserEx = {
     ]
 } as const;
 
-export const sUploadCountQuery = {
-    type: 'object',
-    properties: {
-        filter: {
-            $ref: '#/components/schemas/UploadFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/UploadWhere'
-        }
-    }
-} as const;
-
-export const sUploadWhere = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sUploadFilter = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sUploadCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/Upload'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
-export const sUpload = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        url: {
-            type: 'string',
-            format: 'uri'
-        }
-    },
-    required: [
-        'id',
-        'url'
-    ]
-} as const;
-
-export const sUploadQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
-        },
-        filter: {
-            $ref: '#/components/schemas/UploadFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/UploadWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/UploadSort'
-            }
-        }
-    }
-} as const;
-
-export const sOrderEnum = {
-    type: 'string',
-    enum: [
-        'asc',
-        'desc'
-    ]
-} as const;
-
-export const sUploadSortField = {
-    type: 'string',
-    enum: [
-        'createdAt'
-    ]
-} as const;
-
-export const sUploadSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/UploadSortField'
-        },
-        direction: {
-            $ref: '#/components/schemas/OrderEnum'
-        }
-    },
-    required: [
-        'field',
-        'direction'
-    ]
-} as const;
-
-export const sCursor = {
-    type: 'object',
-    properties: {
-        page: {
-            type: 'number',
-            minimum: 0
-        },
-        size: {
-            type: 'number',
-            minimum: 1,
-            maximum: 1000
-        }
-    },
-    required: [
-        'page',
-        'size'
-    ]
-} as const;
-
 export const sUploadCreate = {
     type: 'object',
     properties: {
@@ -501,7 +346,17 @@ export const sTransactionBuyerInfo = {
             type: 'string'
         },
         events: {
-            $ref: '#/components/schemas/UserEventBuyer'
+            anyOf: [
+                {
+                    type: 'null'
+                },
+                {
+                    $ref: '#/components/schemas/UserEventBuyer'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         }
     },
     required: [
@@ -957,6 +812,23 @@ export const sListingPriceEnum = {
     ]
 } as const;
 
+export const sUpload = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        url: {
+            type: 'string',
+            format: 'uri'
+        }
+    },
+    required: [
+        'id',
+        'url'
+    ]
+} as const;
+
 export const sGalleryItem = {
     type: 'object',
     properties: {
@@ -1035,6 +907,14 @@ export const sTransactionMeta = {
             $ref: '#/components/schemas/UserSideEnum'
         }
     }
+} as const;
+
+export const sOrderEnum = {
+    type: 'string',
+    enum: [
+        'asc',
+        'desc'
+    ]
 } as const;
 
 export const sTransactionSortField = {
@@ -1137,6 +1017,25 @@ export const sTransactionFilter = {
             }
         }
     }
+} as const;
+
+export const sCursor = {
+    type: 'object',
+    properties: {
+        page: {
+            type: 'number',
+            minimum: 0
+        },
+        size: {
+            type: 'number',
+            minimum: 1,
+            maximum: 1000
+        }
+    },
+    required: [
+        'page',
+        'size'
+    ]
 } as const;
 
 export const sTransactionCollection = {
@@ -1581,30 +1480,6 @@ export const sMessage = {
     ]
 } as const;
 
-export const sFeedbackCreate = {
-    type: 'object',
-    properties: {
-        listingId: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/FeedbackEnum'
-        }
-    },
-    required: [
-        'listingId',
-        'type'
-    ]
-} as const;
-
-export const sFeedbackEnum = {
-    type: 'string',
-    enum: [
-        'like',
-        'dislike'
-    ]
-} as const;
-
 export const sListingEventCreate = {
     type: 'object',
     properties: {
@@ -1638,25 +1513,27 @@ export const sListingEventEnum = {
     ]
 } as const;
 
-export const sSellerInfo = {
+export const sListingEvent = {
     type: 'object',
     properties: {
-        registered: {
+        id: {
             type: 'string'
         },
-        listings: {
-            type: 'number',
-            example: 1
+        listingId: {
+            type: 'string'
         },
-        score: {
-            type: 'number',
-            example: 1
+        event: {
+            $ref: '#/components/schemas/ListingEventEnum'
+        },
+        createdAt: {
+            type: 'string'
         }
     },
     required: [
-        'registered',
-        'listings',
-        'score'
+        'id',
+        'listingId',
+        'event',
+        'createdAt'
     ]
 } as const;
 
@@ -2566,7 +2443,24 @@ export const sFlagQuery = {
             $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            $ref: '#/components/schemas/FlagFilter'
+            type: 'object',
+            properties: {
+                id: {
+                    type: 'string'
+                },
+                idIn: {
+                    type: 'array',
+                    items: {
+                        type: 'string'
+                    }
+                },
+                fulltext: {
+                    type: 'string'
+                },
+                listingId: {
+                    type: 'string'
+                }
+            }
         },
         where: {
             $ref: '#/components/schemas/FlagWhere'
@@ -2616,9 +2510,6 @@ export const sFlagWhere = {
             }
         },
         fulltext: {
-            type: 'string'
-        },
-        userId: {
             type: 'string'
         },
         listingId: {
@@ -2807,6 +2698,30 @@ export const sFeedFavourite = {
         'query',
         'upload',
         'count'
+    ]
+} as const;
+
+export const sFeedbackCreate = {
+    type: 'object',
+    properties: {
+        listingId: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/FeedbackEnum'
+        }
+    },
+    required: [
+        'listingId',
+        'type'
+    ]
+} as const;
+
+export const sFeedbackEnum = {
+    type: 'string',
+    enum: [
+        'like',
+        'dislike'
     ]
 } as const;
 

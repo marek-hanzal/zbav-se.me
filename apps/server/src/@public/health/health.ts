@@ -1,8 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
-import type { Routes } from "~/hono/Routes";
+import { Effect } from "effect";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { HealthSchema } from "./schema/HealthSchema";
 
-export const withHealthEndpoint: Routes.Fn = ({ publicHono }) => {
+export const withHealthEndpointFx = Effect.fn("withHealthEndpointFx")(function* () {
+	const { publicHono } = yield* RoutesContextFx;
+
 	publicHono.openapi(
 		createRoute({
 			method: "get",
@@ -20,6 +23,7 @@ export const withHealthEndpoint: Routes.Fn = ({ publicHono }) => {
 					description: "Just health check",
 				},
 			},
+			security: [],
 			tags: [
 				"misc",
 				"public",
@@ -31,4 +35,4 @@ export const withHealthEndpoint: Routes.Fn = ({ publicHono }) => {
 			});
 		},
 	);
-};
+});

@@ -1,15 +1,17 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { transactionFetchFx } from "~/app/transaction/fx/transactionFetchFx";
+import { transactionGetBuyerInfoFx } from "~/app/transaction/fx/transactionGetBuyerInfoFx";
 import { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { transactionFetchFx } from "./fx/transactionFetchFx";
-import { transactionGetBuyerInfoFx } from "./fx/transactionGetBuyerInfoFx";
 import { TransactionBuyerInfoSchema } from "./schema/TransactionBuyerInfoSchema";
 
-export const withBuyerInfoApi: Routes.Fn = ({ userHono }) => {
+export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
+
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -59,24 +61,34 @@ export const withBuyerInfoApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const transaction = yield* transactionFetchFx(c.req.valid("json"));
+				const user = c.get("user");
+
+				const transaction = yield* transactionFetchFx({
+					...c.req.valid("json"),
+					scope: {
+						userId: user.id,
+					},
+				});
 
 				return c.json<TransactionBuyerInfoSchema.Type, 200>(
-					yield* transactionGetBuyerInfoFx({
-						transactionId: transaction.id,
+					yield* zodFx({
+						schema: TransactionBuyerInfoSchema,
+						dataFx: transactionGetBuyerInfoFx({
+							userId: user.id,
+							transactionId: transaction.id,
+						}),
 					}),
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
-				UserContextProvider(c.get("user")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
 								{
-									_tag: "NotFoundError",
+									_tag: "NotFoundErrorFx",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 404>(
@@ -90,13 +102,13 @@ export const withBuyerInfoApi: Routes.Fn = ({ userHono }) => {
 							),
 							Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "ZodErrorFx",
 								},
-								() => {
+								({ zod }) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: z.prettifyError(zod),
 										},
 										500,
 									);
@@ -110,4 +122,4 @@ export const withBuyerInfoApi: Routes.Fn = ({ userHono }) => {
 			);
 		},
 	);
-};
+});

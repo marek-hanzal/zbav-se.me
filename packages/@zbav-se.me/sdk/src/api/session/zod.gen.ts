@@ -3,29 +3,165 @@
 import { z } from 'zod';
 
 /**
- * Order
+ * This metric describes the score of the user
  */
-export const zOrderEnum = z.enum(['asc', 'desc']).register(z.globalRegistry, {
-    description: 'Order'
-});
-
-export type zOrderEnum = z.infer<typeof zOrderEnum>;
-
-/**
- * Cursor for pagination
- */
-export const zCursor = z.object({
-    page: z.number().gte(0).register(z.globalRegistry, {
-        description: 'Page number (0-indexed)'
+export const zUserEventBuyerScore = z.object({
+    score: z.number().register(z.globalRegistry, {
+        description: 'Low-level score value, usually not presented in UI'
     }),
-    size: z.number().gte(1).lte(1000).register(z.globalRegistry, {
-        description: 'Page size'
+    rank: z.number().register(z.globalRegistry, {
+        description: 'Rank computed from the score (A-F, 1-6)'
     })
 }).register(z.globalRegistry, {
-    description: 'Cursor for pagination'
+    description: 'This metric describes the score of the user'
 });
 
-export type zCursor = z.infer<typeof zCursor>;
+export type zUserEventBuyerScore = z.infer<typeof zUserEventBuyerScore>;
+
+/**
+ * This metric describes the approx activity of the user
+ */
+export const zUserEventBuyerActivity = z.object({
+    bucket: z.enum([
+        'low',
+        'medium',
+        'high'
+    ]).register(z.globalRegistry, {
+        description: 'Activity type of the buyer'
+    })
+}).register(z.globalRegistry, {
+    description: 'This metric describes the approx activity of the user'
+});
+
+export type zUserEventBuyerActivity = z.infer<typeof zUserEventBuyerActivity>;
+
+/**
+ * Masks number of transactions of the buyer, basically it tells, how busy buyer is.
+ */
+export const zUserEventBuyerLoad = z.object({
+    bucket: z.enum([
+        'low',
+        'medium',
+        'high'
+    ]).register(z.globalRegistry, {
+        description: 'Load type of the buyer'
+    })
+}).register(z.globalRegistry, {
+    description: 'Masks number of transactions of the buyer, basically it tells, how busy buyer is.'
+});
+
+export type zUserEventBuyerLoad = z.infer<typeof zUserEventBuyerLoad>;
+
+/**
+ * This metric describes if the user is used to expire transactions (no user's messages)
+ */
+export const zUserEventBuyerExpired = z.object({
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total number of samples (transactions)'
+    }),
+    expired: z.number().register(z.globalRegistry, {
+        description: 'Total number of expired transactions'
+    }),
+    percent: z.number().register(z.globalRegistry, {
+        description: 'Percentage of expired transactions (expired / total)'
+    })
+}).register(z.globalRegistry, {
+    description: 'This metric describes if the user is used to expire transactions (no user\'s messages)'
+});
+
+export type zUserEventBuyerExpired = z.infer<typeof zUserEventBuyerExpired>;
+
+/**
+ * This metric describes if the user is used to close/success transactions
+ */
+export const zUserEventBuyerDecision = z.object({
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total number of samples (transactions)'
+    }),
+    decisions: z.number().register(z.globalRegistry, {
+        description: 'Total number of decisions (success, closed)'
+    }),
+    terminal: z.number().register(z.globalRegistry, {
+        description: 'Total number of terminal decisions (usually from the other side)'
+    }),
+    percent: z.number().register(z.globalRegistry, {
+        description: 'Percentage of closed transactions (closed / total)'
+    })
+}).register(z.globalRegistry, {
+    description: 'This metric describes if the user is used to close/success transactions'
+});
+
+export type zUserEventBuyerDecision = z.infer<typeof zUserEventBuyerDecision>;
+
+/**
+ * This metric describes if the user instantly closes transactions (means - no interaction, just open and kill)
+ */
+export const zUserEventBuyerCloser = z.object({
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total number of samples (transactions)'
+    }),
+    closed: z.number().register(z.globalRegistry, {
+        description: 'Total number of closed transactions'
+    }),
+    percent: z.number().register(z.globalRegistry, {
+        description: 'Percentage of closed transactions (closed / total)'
+    }),
+    medianMs: z.number().register(z.globalRegistry, {
+        description: 'Median milliseconds between transaction creation and closing'
+    }),
+    p90Ms: z.number().register(z.globalRegistry, {
+        description: '90th percentile milliseconds between transaction creation and closing'
+    })
+}).register(z.globalRegistry, {
+    description: 'This metric describes if the user instantly closes transactions (means - no interaction, just open and kill)'
+});
+
+export type zUserEventBuyerCloser = z.infer<typeof zUserEventBuyerCloser>;
+
+/**
+ * Initial reaction on opened transaction by seller.
+ */
+export const zUserEventBuyerReaction = z.object({
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total number of samples (transactions)'
+    }),
+    reactions: z.number().register(z.globalRegistry, {
+        description: 'Total number of reactions'
+    }),
+    terminal: z.number().register(z.globalRegistry, {
+        description: 'Total number of terminal reactions (usually from the other side)'
+    }),
+    percent: z.number().register(z.globalRegistry, {
+        description: 'Percentage of reactions (reactions + terminal) / total'
+    }),
+    medianMs: z.number().register(z.globalRegistry, {
+        description: 'Median milliseconds between transaction opening and reaction'
+    }),
+    p90Ms: z.number().register(z.globalRegistry, {
+        description: '90th percentile milliseconds between transaction opening and reaction'
+    })
+}).register(z.globalRegistry, {
+    description: 'Initial reaction on opened transaction by seller.'
+});
+
+export type zUserEventBuyerReaction = z.infer<typeof zUserEventBuyerReaction>;
+
+/**
+ * Buyer info for the user event
+ */
+export const zUserEventBuyer = z.object({
+    reaction: zUserEventBuyerReaction,
+    closer: zUserEventBuyerCloser,
+    decision: zUserEventBuyerDecision,
+    expired: zUserEventBuyerExpired,
+    load: zUserEventBuyerLoad,
+    activity: zUserEventBuyerActivity,
+    score: zUserEventBuyerScore
+}).register(z.globalRegistry, {
+    description: 'Buyer info for the user event'
+});
+
+export type zUserEventBuyer = z.infer<typeof zUserEventBuyer>;
 
 /**
  * Location data
@@ -90,6 +226,47 @@ export const zLocation = z.object({
 export type zLocation = z.infer<typeof zLocation>;
 
 /**
+ * Upload file metadata
+ */
+export const zUpload = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the upload'
+    }),
+    url: z.url().register(z.globalRegistry, {
+        description: 'Public URL to the uploaded file'
+    })
+}).register(z.globalRegistry, {
+    description: 'Upload file metadata'
+});
+
+export type zUpload = z.infer<typeof zUpload>;
+
+/**
+ * Order
+ */
+export const zOrderEnum = z.enum(['asc', 'desc']).register(z.globalRegistry, {
+    description: 'Order'
+});
+
+export type zOrderEnum = z.infer<typeof zOrderEnum>;
+
+/**
+ * Cursor for pagination
+ */
+export const zCursor = z.object({
+    page: z.number().gte(0).register(z.globalRegistry, {
+        description: 'Page number (0-indexed)'
+    }),
+    size: z.number().gte(1).lte(1000).register(z.globalRegistry, {
+        description: 'Page size'
+    })
+}).register(z.globalRegistry, {
+    description: 'Cursor for pagination'
+});
+
+export type zCursor = z.infer<typeof zCursor>;
+
+/**
  * Category data
  */
 export const zCategory = z.object({
@@ -116,6 +293,79 @@ export const zCategory = z.object({
 });
 
 export type zCategory = z.infer<typeof zCategory>;
+
+/**
+ * Field for uploading a file
+ */
+export const zUploadSortField = z.enum(['createdAt']).register(z.globalRegistry, {
+    description: 'Field for uploading a file'
+});
+
+export type zUploadSortField = z.infer<typeof zUploadSortField>;
+
+/**
+ * Data for uploading a file
+ */
+export const zUploadSort = z.object({
+    field: zUploadSortField,
+    direction: zOrderEnum
+}).register(z.globalRegistry, {
+    description: 'Data for uploading a file'
+});
+
+export type zUploadSort = z.infer<typeof zUploadSort>;
+
+/**
+ * App-based filters
+ */
+export const zUploadWhere = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    }))
+}).register(z.globalRegistry, {
+    description: 'App-based filters'
+});
+
+export type zUploadWhere = z.infer<typeof zUploadWhere>;
+
+/**
+ * Data for uploading a file
+ */
+export const zUploadFilter = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    }))
+}).register(z.globalRegistry, {
+    description: 'Data for uploading a file'
+});
+
+export type zUploadFilter = z.infer<typeof zUploadFilter>;
+
+/**
+ * Data for uploading a file
+ */
+export const zUploadQuery = z.object({
+    cursor: z.optional(zCursor),
+    filter: z.optional(zUploadFilter),
+    where: z.optional(zUploadWhere),
+    sort: z.optional(z.array(zUploadSort))
+}).register(z.globalRegistry, {
+    description: 'Data for uploading a file'
+});
+
+export type zUploadQuery = z.infer<typeof zUploadQuery>;
 
 /**
  * Field for location sort
@@ -242,6 +492,193 @@ export const zLocationAutocomplete = z.object({
 export type zLocationAutocomplete = z.infer<typeof zLocationAutocomplete>;
 
 /**
+ * This metric describes the score of the user
+ */
+export const zUserEventSellerScore = z.object({
+    score: z.number().register(z.globalRegistry, {
+        description: 'Low-level score value, usually not presented in UI'
+    }),
+    rank: z.number().register(z.globalRegistry, {
+        description: 'Rank computed from the score (A-F, 1-6)'
+    })
+}).register(z.globalRegistry, {
+    description: 'This metric describes the score of the user'
+});
+
+export type zUserEventSellerScore = z.infer<typeof zUserEventSellerScore>;
+
+/**
+ * This metric describes the approx activity of the user
+ */
+export const zUserEventSellerActivity = z.object({
+    bucket: z.enum([
+        'low',
+        'medium',
+        'high'
+    ]).register(z.globalRegistry, {
+        description: 'Activity type of the seller'
+    })
+}).register(z.globalRegistry, {
+    description: 'This metric describes the approx activity of the user'
+});
+
+export type zUserEventSellerActivity = z.infer<typeof zUserEventSellerActivity>;
+
+/**
+ * Masks number of transactions of the seller, basically it tells, how busy seller is.
+ */
+export const zUserEventSellerLoad = z.object({
+    bucket: z.enum([
+        'low',
+        'medium',
+        'high'
+    ]).register(z.globalRegistry, {
+        description: 'Load type of the seller'
+    })
+}).register(z.globalRegistry, {
+    description: 'Masks number of transactions of the seller, basically it tells, how busy seller is.'
+});
+
+export type zUserEventSellerLoad = z.infer<typeof zUserEventSellerLoad>;
+
+/**
+ * This metric describes if the user is used to expire transactions (no user's messages)
+ */
+export const zUserEventSellerExpired = z.object({
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total number of samples (transactions)'
+    }),
+    expired: z.number().register(z.globalRegistry, {
+        description: 'Total number of expired transactions'
+    }),
+    percent: z.number().register(z.globalRegistry, {
+        description: 'Percentage of expired transactions (expired / total)'
+    })
+}).register(z.globalRegistry, {
+    description: 'This metric describes if the user is used to expire transactions (no user\'s messages)'
+});
+
+export type zUserEventSellerExpired = z.infer<typeof zUserEventSellerExpired>;
+
+/**
+ * This metric describes if the user resolves transactions (success/closed)
+ */
+export const zUserEventSellerResolved = z.object({
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total number of samples (transactions)'
+    }),
+    resolved: z.number().register(z.globalRegistry, {
+        description: 'Total number of resolved transactions (success, closed)'
+    }),
+    terminal: z.number().register(z.globalRegistry, {
+        description: 'Total number of terminal transactions (usually from the other side)'
+    }),
+    percent: z.number().register(z.globalRegistry, {
+        description: 'Percentage of resolved transactions (resolved / total)'
+    }),
+    medianMs: z.number().register(z.globalRegistry, {
+        description: 'Median milliseconds until the transaction gets resolved'
+    }),
+    p90Ms: z.number().register(z.globalRegistry, {
+        description: '90th percentile milliseconds until the transaction gets resolved'
+    })
+}).register(z.globalRegistry, {
+    description: 'This metric describes if the user resolves transactions (success/closed)'
+});
+
+export type zUserEventSellerResolved = z.infer<typeof zUserEventSellerResolved>;
+
+/**
+ * This metric describes if the user rejects transactions without any interaction (no messages between create and reject)
+ */
+export const zUserEventSellerRejected = z.object({
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total number of samples (transactions)'
+    }),
+    rejected: z.number().register(z.globalRegistry, {
+        description: 'Total number of rejected transactions'
+    }),
+    percent: z.number().register(z.globalRegistry, {
+        description: 'Percentage of rejected transactions (rejected / total)'
+    }),
+    medianMs: z.number().register(z.globalRegistry, {
+        description: 'Median milliseconds between transaction creation and rejection'
+    }),
+    p90Ms: z.number().register(z.globalRegistry, {
+        description: '90th percentile milliseconds between transaction creation and rejection'
+    })
+}).register(z.globalRegistry, {
+    description: 'This metric describes if the user rejects transactions without any interaction (no messages between create and reject)'
+});
+
+export type zUserEventSellerRejected = z.infer<typeof zUserEventSellerRejected>;
+
+/**
+ * Initial reaction by seller on transaction created by buyer.
+ */
+export const zUserEventSellerReaction = z.object({
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total number of samples (transactions)'
+    }),
+    reactions: z.number().register(z.globalRegistry, {
+        description: 'Total number of reactions'
+    }),
+    terminal: z.number().register(z.globalRegistry, {
+        description: 'Total number of terminal reactions (usually from the other side)'
+    }),
+    percent: z.number().register(z.globalRegistry, {
+        description: 'Percentage of reactions (reactions + terminal) / total'
+    }),
+    medianMs: z.number().register(z.globalRegistry, {
+        description: 'Median milliseconds between transaction creation and reaction'
+    }),
+    p90Ms: z.number().register(z.globalRegistry, {
+        description: '90th percentile milliseconds between transaction creation and reaction'
+    })
+}).register(z.globalRegistry, {
+    description: 'Initial reaction by seller on transaction created by buyer.'
+});
+
+export type zUserEventSellerReaction = z.infer<typeof zUserEventSellerReaction>;
+
+/**
+ * Seller info for the user event
+ */
+export const zUserEventSeller = z.object({
+    reaction: zUserEventSellerReaction,
+    rejected: zUserEventSellerRejected,
+    resolved: zUserEventSellerResolved,
+    expired: zUserEventSellerExpired,
+    load: zUserEventSellerLoad,
+    activity: zUserEventSellerActivity,
+    score: zUserEventSellerScore
+}).register(z.globalRegistry, {
+    description: 'Seller info for the user event'
+});
+
+export type zUserEventSeller = z.infer<typeof zUserEventSeller>;
+
+/**
+ * Seller info for the listing
+ */
+export const zSellerInfo = z.object({
+    registered: z.string().register(z.globalRegistry, {
+        description: 'Registration date'
+    }),
+    listings: z.number().register(z.globalRegistry, {
+        description: 'Number of listings'
+    }),
+    events: z.union([
+        z.null(),
+        zUserEventSeller
+    ])
+}).register(z.globalRegistry, {
+    description: 'Seller info for the listing'
+});
+
+export type zSellerInfo = z.infer<typeof zSellerInfo>;
+
+/**
  * App-based filters
  */
 export const zCategoryWhere = z.object({
@@ -265,6 +702,9 @@ export const zCategoryWhere = z.object({
     })),
     localeIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches categories with locales in the provided array'
+    })),
+    slug: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact slug of the category'
     }))
 }).register(z.globalRegistry, {
     description: 'App-based filters'
@@ -296,6 +736,9 @@ export const zCategoryFilter = z.object({
     })),
     localeIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches categories with locales in the provided array'
+    })),
+    slug: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact slug of the category'
     }))
 }).register(z.globalRegistry, {
     description: 'Filter object for category collection'
@@ -459,6 +902,25 @@ export const zApiCategoryCountResponse = zCount;
 
 export type zapiCategoryCountResponse = z.infer<typeof zApiCategoryCountResponse>;
 
+export const zApiListingSellerInfoData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        listingId: z.string().register(z.globalRegistry, {
+            description: 'ID of the listing'
+        })
+    }),
+    query: z.optional(z.never())
+});
+
+export type zapiListingSellerInfoRequest = z.infer<typeof zApiListingSellerInfoData>;
+
+/**
+ * Seller info
+ */
+export const zApiListingSellerInfoResponse = zSellerInfo;
+
+export type zapiListingSellerInfoResponse = z.infer<typeof zApiListingSellerInfoResponse>;
+
 export const zApiLocationAutocompleteData = z.object({
     body: z.optional(zLocationAutocomplete),
     path: z.optional(z.never()),
@@ -467,14 +929,12 @@ export const zApiLocationAutocompleteData = z.object({
 
 export type zapiLocationAutocompleteRequest = z.infer<typeof zApiLocationAutocompleteData>;
 
-export const zApiLocationAutocompleteResponse = z.union([
-    z.array(zLocation).register(z.globalRegistry, {
-        description: 'Location(s) found (cache hit)'
-    }),
-    z.array(zLocation).register(z.globalRegistry, {
-        description: 'Location(s) created (cache miss)'
-    })
-]);
+/**
+ * Locations, include empty array if no locations found
+ */
+export const zApiLocationAutocompleteResponse = z.array(zLocation).register(z.globalRegistry, {
+    description: 'Locations, include empty array if no locations found'
+});
 
 export type zapiLocationAutocompleteResponse = z.infer<typeof zApiLocationAutocompleteResponse>;
 
@@ -492,3 +952,62 @@ export type zapiLocationFetchRequest = z.infer<typeof zApiLocationFetchData>;
 export const zApiLocationFetchResponse = zLocation;
 
 export type zapiLocationFetchResponse = z.infer<typeof zApiLocationFetchResponse>;
+
+export const zApiUploadFetchData = z.object({
+    body: z.optional(zUploadQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiUploadFetchRequest = z.infer<typeof zApiUploadFetchData>;
+
+/**
+ * Return an upload item based on the provided query
+ */
+export const zApiUploadFetchResponse = zUpload;
+
+export type zapiUploadFetchResponse = z.infer<typeof zApiUploadFetchResponse>;
+
+export const zApiUserEventBuyerData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        userId: z.string().register(z.globalRegistry, {
+            description: 'ID of the user'
+        })
+    }),
+    query: z.optional(z.never())
+});
+
+export type zapiUserEventBuyerRequest = z.infer<typeof zApiUserEventBuyerData>;
+
+/**
+ * Buyer info may not be available if we don't have enough data
+ */
+export const zApiUserEventBuyerResponse = z.union([
+    z.null(),
+    zUserEventBuyer
+]);
+
+export type zapiUserEventBuyerResponse = z.infer<typeof zApiUserEventBuyerResponse>;
+
+export const zApiUserEventSellerData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        userId: z.string().register(z.globalRegistry, {
+            description: 'ID of the user'
+        })
+    }),
+    query: z.optional(z.never())
+});
+
+export type zapiUserEventSellerRequest = z.infer<typeof zApiUserEventSellerData>;
+
+/**
+ * Seller info may not be available if we don't have enough data
+ */
+export const zApiUserEventSellerResponse = z.union([
+    z.null(),
+    zUserEventSeller
+]);
+
+export type zapiUserEventSellerResponse = z.infer<typeof zApiUserEventSellerResponse>;

@@ -3,7 +3,7 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Progress } from "@use-pico/client/ui/progress";
 import { Status } from "@use-pico/client/ui/status";
 import { withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withUploadFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { withUploadFetchQuery } from "@zbav-se.me/sdk/query/session";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import {

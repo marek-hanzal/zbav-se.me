@@ -1,14 +1,16 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { userExPatchFx } from "~/app/user-ex/fx/userExPatchFx";
+import { UserExPatchSchema } from "~/app/user-ex/schema/UserExPatchSchema";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { userExPatchFx } from "./fx/userExPatchFx";
-import { UserExPatchSchema } from "./schema/UserExPatchSchema";
 import { UserExSchema } from "./schema/UserExSchema";
 
-export const withPatchApi: Routes.Fn = ({ userHono }) => {
+export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
+
 	userHono.openapi(
 		createRoute({
 			method: "patch",
@@ -48,39 +50,44 @@ export const withPatchApi: Routes.Fn = ({ userHono }) => {
 				"user",
 			],
 		}),
-		async (c) => {
-			return Effect.gen(function* () {
+		async (c) =>
+			Effect.gen(function* () {
+				const user = c.get("user");
+
 				return c.json<UserExSchema.Type, 200>(
-					yield* userExPatchFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: UserExSchema,
+						dataFx: userExPatchFx({
+							...c.req.valid("json"),
+							userId: user.id,
+						}),
+					}),
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
-				UserContextProvider(c.get("user")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
-				Effect.catchAll((e) => {
-					return Effect.succeed(
+				Effect.catchAll((e) =>
+					Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "ZodErrorFx",
 								},
-								() => {
-									return c.json<NoticeSchema.Type, 500>(
+								({ zod }) =>
+									c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: z.prettifyError(zod),
 										},
 										500,
-									);
-								},
+									),
 							),
 							Match.exhaustive,
 						),
-					);
-				}),
+					),
+				),
 				Effect.runPromise,
-			);
-		},
+			),
 	);
-};
+});

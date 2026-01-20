@@ -1,12 +1,16 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
+import { createDateContext, DateContextLayer } from "@use-pico/common/date";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { SeedRequestSchema, seedFx } from "~/@public/seed/fx/seedFx";
-import { TransactionContextProvider } from "~/@user/transaction/fx/TransactionContextFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
-export const withSeedApi: Routes.Fn = ({ publicHono }) => {
+export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
+	const { publicHono } = yield* RoutesContextFx;
+
 	publicHono.openapi(
 		createRoute({
 			method: "post",
@@ -60,6 +64,7 @@ export const withSeedApi: Routes.Fn = ({ publicHono }) => {
 					description: "Internal server error",
 				},
 			},
+			security: [],
 			tags: [
 				"misc",
 				"public",
@@ -67,9 +72,18 @@ export const withSeedApi: Routes.Fn = ({ publicHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json(yield* seedFx(c.req.valid("json")), 201);
+				return c.json(
+					yield* zodFx({
+						schema: SeedRequestSchema,
+						dataFx: seedFx({
+							...c.req.valid("json"),
+						}),
+					}),
+					201,
+				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				Effect.provide(DateContextLayer(createDateContext())),
 				TransactionContextProvider({
 					expires: 7,
 					extend: 3,
@@ -80,27 +94,13 @@ export const withSeedApi: Routes.Fn = ({ publicHono }) => {
 						Match.value(e).pipe(
 							Match.when(
 								{
-									_tag: "NotFoundError",
-								},
-								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
-								},
-							),
-							Match.when(
-								{
 									_tag: "InvalidRequestError",
 								},
-								() => {
+								(err) => {
 									return c.json<NoticeSchema.Type, 400>(
 										{
 											type: "error",
-											message: e.message,
+											message: err.message,
 										},
 										400,
 									);
@@ -108,13 +108,41 @@ export const withSeedApi: Routes.Fn = ({ publicHono }) => {
 							),
 							Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "AccessDeniedError",
 								},
-								() => {
+								(err) => {
+									return c.json<NoticeSchema.Type, 403>(
+										{
+											type: "error",
+											message: err.message,
+										},
+										403,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "NotFoundErrorFx",
+								},
+								(err) => {
+									return c.json<NoticeSchema.Type, 404>(
+										{
+											type: "error",
+											message: err.message,
+										},
+										404,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "ZodErrorFx",
+								},
+								({ zod }) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: z.prettifyError(zod),
 										},
 										500,
 									);
@@ -124,27 +152,13 @@ export const withSeedApi: Routes.Fn = ({ publicHono }) => {
 								{
 									_tag: "RuntimeError",
 								},
-								() => {
+								(err) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: err.message,
 										},
 										500,
-									);
-								},
-							),
-							Match.when(
-								{
-									_tag: "AccessDeniedError",
-								},
-								() => {
-									return c.json<NoticeSchema.Type, 403>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										403,
 									);
 								},
 							),
@@ -156,4 +170,4 @@ export const withSeedApi: Routes.Fn = ({ publicHono }) => {
 			);
 		},
 	);
-};
+});

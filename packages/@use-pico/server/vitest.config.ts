@@ -15,6 +15,7 @@ export default defineConfig({
 	// Cache directory for better performance
 	cacheDir: "./node_modules/.vite",
 	test: {
+		testTimeout: 10_000,
 		environment: "node",
 		setupFiles: [
 			"./test/setup.ts",

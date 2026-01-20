@@ -5,7 +5,8 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
-import { withListingFetchQuery, withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/user";
+import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/session/listing";
+import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
@@ -228,7 +229,14 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 						return (
 							<LabelValue
 								textLabel={"Listing seller hint (label)"}
-								textValue={<SellerScoreIcon score={sellerInfo.score} />}
+								textValue={
+									sellerInfo.events ? (
+										<SellerScoreIcon score={sellerInfo.events.score.rank} />
+									) : null
+								}
+								textEmpty={translator.text(
+									"Listing seller info not available (empty)",
+								)}
 								action={<Icon icon={ShowIcon} />}
 								onClick={hooks.onSellerInfo}
 							/>

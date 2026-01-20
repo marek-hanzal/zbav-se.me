@@ -1,14 +1,16 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { draftDeleteFx } from "~/app/draft/fx/draftDeleteFx";
 import { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { draftDeleteFx } from "./fx/draftDeleteFx";
 import { DraftSchema } from "./schema/DraftSchema";
 
-export const withDeleteApi: Routes.Fn = ({ userHono }) => {
+export const withDeleteApiFx = Effect.fn("withDeleteApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
+
 	userHono.openapi(
 		createRoute({
 			method: "delete",
@@ -58,20 +60,29 @@ export const withDeleteApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
+				const user = c.get("user");
+
 				return c.json<DraftSchema.Type, 200>(
-					yield* draftDeleteFx(c.req.valid("json")),
+					yield* zodFx({
+						schema: DraftSchema,
+						dataFx: draftDeleteFx({
+							...c.req.valid("json"),
+							scope: {
+								userId: user.id,
+							},
+						}),
+					}),
 					200,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
-				UserContextProvider(c.get("user")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
 								{
-									_tag: "NotFoundError",
+									_tag: "NotFoundErrorFx",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 404>(
@@ -85,13 +96,13 @@ export const withDeleteApi: Routes.Fn = ({ userHono }) => {
 							),
 							Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "ZodErrorFx",
 								},
-								() => {
+								({ zod }) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: z.prettifyError(zod),
 										},
 										500,
 									);
@@ -105,4 +116,4 @@ export const withDeleteApi: Routes.Fn = ({ userHono }) => {
 			);
 		},
 	);
-};
+});

@@ -1,1 +1,1 @@
-export { withCount } from "./withCount";
+export { withCountFx } from "./withCountFx";

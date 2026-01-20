@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
 export const LocationAutocompleteSchema = z
-	.object({
+	.looseObject({
 		text: z.string().openapi({
 			description: "The search text for location autocomplete",
 		}),
@@ -9,6 +9,7 @@ export const LocationAutocompleteSchema = z
 			description: "The language code for the location search",
 		}),
 	})
+	.strip()
 	.openapi("LocationAutocomplete", {
 		description: "Data for location autocomplete",
 	});

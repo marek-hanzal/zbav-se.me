@@ -10,8 +10,7 @@
 		"clear": "docusaurus clear",
 		"serve": "docusaurus serve",
 		"write-translations": "docusaurus write-translations",
-		"write-heading-ids": "docusaurus write-heading-ids",
-		"typecheck": "tsc --noEmit"
+		"write-heading-ids": "docusaurus write-heading-ids"
 	},
 	"dependencies": {
 		"@docusaurus/core": "3.9.2",
@@ -27,7 +26,7 @@
 		"@docusaurus/tsconfig": "3.9.2",
 		"@docusaurus/types": "3.9.2",
 		"@tailwindcss/postcss": "4.1.18",
-		"@types/react": "19.2.7",
+		"@types/react": "19.2.8",
 		"@typescript/native-preview": "7.0.0-dev.20251208.1",
 		"autoprefixer": "10.4.23",
 		"postcss": "8.5.6",

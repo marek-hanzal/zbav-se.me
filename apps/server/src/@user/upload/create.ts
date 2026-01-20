@@ -1,14 +1,19 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
+import { createDateContext, DateContextLayer } from "@use-pico/common/date";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { UploadContextLayer } from "~/app/upload/context/UploadContextLayer";
+import { uploadCreateFx } from "~/app/upload/fx/uploadCreateFx";
+import { UploadCreateSchema } from "~/app/upload/schema/UploadCreateSchema";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { uploadCreateFx } from "./fx/uploadCreateFx";
-import { UploadCreateSchema } from "./schema/UploadCreateSchema";
 import { UploadSchema } from "./schema/UploadSchema";
 
-export const withCreateApi: Routes.Fn = ({ userHono }) => {
+export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
+
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -65,16 +70,29 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 			],
 		}),
 		async (c) => {
+			const cdnConfig = ServerCdnSchema.parse(process.env);
+
 			return Effect.gen(function* () {
+				const user = c.get("user");
+
 				return c.json<UploadSchema.Type, 201>(
-					yield* uploadCreateFx({
-						data: c.req.valid("json"),
+					yield* zodFx({
+						schema: UploadSchema,
+						dataFx: uploadCreateFx({
+							...c.req.valid("json"),
+							userId: user.id,
+						}),
 					}),
 					201,
 				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
-				UserContextProvider(c.get("user")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				Effect.provide(DateContextLayer(createDateContext())),
+				Effect.provide(
+					UploadContextLayer({
+						cdn: cdnConfig.SERVER_CONTENT_CDN,
+					}),
+				),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
@@ -95,7 +113,7 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 							),
 							Match.when(
 								{
-									_tag: "NotFoundError",
+									_tag: "NotFoundErrorFx",
 								},
 								() => {
 									return c.json<NoticeSchema.Type, 404>(
@@ -109,13 +127,13 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 							),
 							Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "ZodErrorFx",
 								},
-								() => {
+								({ zod }) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: z.prettifyError(zod),
 										},
 										500,
 									);
@@ -129,4 +147,4 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 			);
 		},
 	);
-};
+});

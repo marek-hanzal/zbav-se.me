@@ -7,7 +7,7 @@ export const authClient = createAuthClient({
 	plugins: [
 		passkeyClient(),
 		anonymousClient(),
-		customSessionClient<auth>(),
+		customSessionClient<auth.Api>(),
 	],
 	baseURL: import.meta.env.VITE_SERVER_API,
 });

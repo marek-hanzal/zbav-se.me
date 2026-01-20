@@ -1,8 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
-import type { Routes } from "~/hono/Routes";
+import { Effect } from "effect";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { CronSchema } from "./schema/CronSchema";
 
-export const withMonthlyEndpoint: Routes.Fn = ({ publicHono }) => {
+export const withMonthlyEndpointFx = Effect.fn("withMonthlyEndpointFx")(function* () {
+	const { publicHono } = yield* RoutesContextFx;
+
 	publicHono.openapi(
 		createRoute({
 			method: "get",
@@ -19,6 +22,7 @@ export const withMonthlyEndpoint: Routes.Fn = ({ publicHono }) => {
 					description: "Monthly cron job executed",
 				},
 			},
+			security: [],
 			tags: [
 				"cron",
 				"public",
@@ -34,4 +38,4 @@ export const withMonthlyEndpoint: Routes.Fn = ({ publicHono }) => {
 			});
 		},
 	);
-};
+});

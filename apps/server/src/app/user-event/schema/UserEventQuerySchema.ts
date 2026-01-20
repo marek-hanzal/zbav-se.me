@@ -6,10 +6,16 @@ import { UserEventSortSchema } from "./UserEventSortSchema";
 export const UserEventQuerySchema = z
 	.object({
 		cursor: CursorSchema.optional(),
-		filter: UserEventFilterSchema.optional(),
+		filter: UserEventFilterSchema.omit({
+			userId: true,
+		}).optional(),
 		where: UserEventFilterSchema.openapi("UserEventWhere", {
 			description: "App-based filters",
-		}).optional(),
+		})
+			.omit({
+				userId: true,
+			})
+			.optional(),
 		sort: UserEventSortSchema.array().optional(),
 	})
 	.openapi("UserEventQuery", {

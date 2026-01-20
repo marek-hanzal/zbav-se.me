@@ -1,10 +1,9 @@
 import { z } from "@hono/zod-openapi";
+import { DateContextFx, DateContextLayer } from "@use-pico/common/date";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
 import { listingOfFx } from "~/@public/seed/fx/listingOfFx";
-import { transactionCreateFx } from "~/@user/transaction/fx/transactionCreateFx";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { transactionCreateFx } from "~/app/transaction/fx/transactionCreateFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export const SeedTransactionsRequestSchema = z.object({
 	count: z.number().openapi({
@@ -18,46 +17,59 @@ export const SeedTransactionsRequestSchema = z.object({
 });
 
 export namespace seedTransactionsFx {
-	export type Props = z.infer<typeof SeedTransactionsRequestSchema>;
+	export interface Props extends z.infer<typeof SeedTransactionsRequestSchema> {
+		userId: string;
+	}
 }
 
-export const seedTransactionsFx = ({ count, months }: seedTransactionsFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+export const seedTransactionsFx = Effect.fn("seedTransactionsFx")(function* ({
+	userId,
+	count,
+	months,
+}: seedTransactionsFx.Props) {
+	const { kysely } = yield* KyselyContextFx;
+	const dateContext = yield* DateContextFx;
 
-		yield* Effect.tryPromise(async () => {
-			return database.deleteFrom("transaction").where("userId", "=", user.id).execute();
-		});
+	yield* Effect.promise(async () => {
+		return kysely.deleteFrom("transaction").where("userId", "=", userId).execute();
+	});
 
-		const { data: listings } = yield* listingOfFx({
-			count,
-		});
+	const { data: listings } = yield* listingOfFx({
+		userId,
+		count,
+	});
 
-		const now = DateTime.now();
-		const startTime = now.minus({
-			months,
-		});
-		const timeSpanMs = now.diff(startTime, "milliseconds").milliseconds;
+	const now = dateContext.now();
+	const startTime = now.minus({
+		months,
+	});
+	const timeSpanMs = now.diff(startTime, "milliseconds").milliseconds;
 
-		for (let i = 0; i < listings.length; i++) {
-			const listing = listings[i];
-			if (!listing) {
-				continue;
-			}
-
-			// Distribute evenly across the time period
-			const progress = listings.length > 1 ? i / (listings.length - 1) : 0;
-			const createdAt = startTime.plus({
-				milliseconds: Math.round(timeSpanMs * progress),
-			});
-
-			yield* transactionCreateFx({
-				listingId: listing.id,
-				createdAt,
-			});
+	for (let i = 0; i < listings.length; i++) {
+		const listing = listings[i];
+		if (!listing) {
+			continue;
 		}
 
-		return yield* Effect.void;
-	});
-};
+		// Distribute evenly across the time period
+		const progress = listings.length > 1 ? i / (listings.length - 1) : 0;
+		const createdAt = startTime.plus({
+			milliseconds: Math.round(timeSpanMs * progress),
+		});
+
+		yield* transactionCreateFx({
+			userId,
+			listingId: listing.id,
+		}).pipe(
+			Effect.provide(
+				DateContextLayer({
+					now() {
+						return createdAt;
+					},
+				}),
+			),
+		);
+	}
+
+	return yield* Effect.void;
+});

@@ -33,6 +33,9 @@ export const TransactionList: FC<TransactionList.Props> = ({ query, ui, ...props
 			<withTransactionCollectionQuery.Suspense
 				data={query}
 				fallback={<SpinnerContainer />}
+				options={{
+					refetchInterval: 5_000,
+				}}
 			>
 				{({ data: { data } }) => {
 					if (side === "seller" && data.length === 0) {

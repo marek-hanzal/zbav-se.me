@@ -1,8 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
-import type { Routes } from "~/hono/Routes";
+import { Effect } from "effect";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { CronSchema } from "./schema/CronSchema";
 
-export const withDay4Endpoint: Routes.Fn = ({ publicHono }) => {
+export const withDay4EndpointFx = Effect.fn("withDay4EndpointFx")(function* () {
+	const { publicHono } = yield* RoutesContextFx;
+
 	publicHono.openapi(
 		createRoute({
 			method: "get",
@@ -19,6 +22,7 @@ export const withDay4Endpoint: Routes.Fn = ({ publicHono }) => {
 					description: "Daily cron job executed (hour 4)",
 				},
 			},
+			security: [],
 			tags: [
 				"cron",
 				"public",
@@ -34,4 +38,4 @@ export const withDay4Endpoint: Routes.Fn = ({ publicHono }) => {
 			});
 		},
 	);
-};
+});

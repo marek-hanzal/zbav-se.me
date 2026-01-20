@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiDraftCollectionErrors, apiDraftCountErrors, apiDraftCreateErrors, apiDraftDeleteErrors, apiDraftFetchErrors, apiDraftGalleryCreateErrors, apiDraftPatchErrors, apiFavouriteCollectionErrors, apiFavouriteCountErrors, apiFavouriteToggleErrors, apiFeedbackCreateErrors, apiFeedCollectionErrors, apiFeedCountErrors, apiFeedCreateErrors, apiFeedDeleteErrors, apiFeedFavouriteCollectionErrors, apiFeedFetchErrors, apiFeedGalleryCreateErrors, apiFeedPatchErrors, apiFlagCollectionErrors, apiFlagCountErrors, apiFlagToggleErrors, apiGalleryCollectionErrors, apiGalleryCountErrors, apiGalleryFetchErrors, apiIgnoreCollectionErrors, apiIgnoreCountErrors, apiIgnoreToggleErrors, apiListingCollectionErrors, apiListingCountErrors, apiListingCreateErrors, apiListingEventCreateErrors, apiListingFetchErrors, apiListingSellerInfoErrors, apiMessageThreadMessageCollectionErrors, apiS3PresignErrors, apiTransactionBuyerInfoErrors, apiTransactionCollectionErrors, apiTransactionCreateErrors, apiTransactionFetchErrors, apiTransactionMessageGalleryCreateErrors, apiTransactionMessageLocationCreateErrors, apiTransactionMessagePackageCreateErrors, apiTransactionMessagePersonalCreateErrors, apiTransactionMessageTextCreateErrors, apiTransactionStatusAcceptErrors, apiTransactionStatusCloseErrors, apiTransactionStatusDisputeErrors, apiTransactionStatusRejectErrors, apiTransactionStatusResolveErrors, apiTransactionStatusSuccessErrors, apiUploadCollectionErrors, apiUploadCountErrors, apiUploadCreateErrors, apiUploadFetchErrors, apiUserEventBuyerErrors, apiUserExPatchErrors, tApiDraftCollectionRequest, tApiDraftCollectionResponse, tApiDraftCountRequest, tApiDraftCountResponse, tApiDraftCreateRequest, tApiDraftCreateResponse, tApiDraftDeleteRequest, tApiDraftDeleteResponse, tApiDraftFetchRequest, tApiDraftFetchResponse, tApiDraftGalleryCreateRequest, tApiDraftGalleryCreateResponse, tApiDraftPatchRequest, tApiDraftPatchResponse, tApiFavouriteCollectionRequest, tApiFavouriteCollectionResponse, tApiFavouriteCountRequest, tApiFavouriteCountResponse, tApiFavouriteToggleRequest, tApiFavouriteToggleResponse, tApiFeedbackCreateRequest, tApiFeedbackCreateResponse, tApiFeedCollectionRequest, tApiFeedCollectionResponse, tApiFeedCountRequest, tApiFeedCountResponse, tApiFeedCreateRequest, tApiFeedCreateResponse, tApiFeedDeleteRequest, tApiFeedDeleteResponse, tApiFeedFavouriteCollectionRequest, tApiFeedFavouriteCollectionResponse, tApiFeedFetchRequest, tApiFeedFetchResponse, tApiFeedGalleryCreateRequest, tApiFeedGalleryCreateResponse, tApiFeedPatchRequest, tApiFeedPatchResponse, tApiFlagCollectionRequest, tApiFlagCollectionResponse, tApiFlagCountRequest, tApiFlagCountResponse, tApiFlagToggleRequest, tApiFlagToggleResponse, tApiGalleryCollectionRequest, tApiGalleryCollectionResponse, tApiGalleryCountRequest, tApiGalleryCountResponse, tApiGalleryFetchRequest, tApiGalleryFetchResponse, tApiIgnoreCollectionRequest, tApiIgnoreCollectionResponse, tApiIgnoreCountRequest, tApiIgnoreCountResponse, tApiIgnoreToggleRequest, tApiIgnoreToggleResponse, tApiListingCollectionRequest, tApiListingCollectionResponse, tApiListingCountRequest, tApiListingCountResponse, tApiListingCreateRequest, tApiListingCreateResponse, tApiListingEventCreateRequest, tApiListingEventCreateResponse, tApiListingFetchRequest, tApiListingFetchResponse, tApiListingSellerInfoRequest, tApiListingSellerInfoResponse, tApiMessageThreadMessageCollectionRequest, tApiMessageThreadMessageCollectionResponse, tApiS3PresignRequest, tApiS3PresignResponse, tApiTransactionBuyerInfoRequest, tApiTransactionBuyerInfoResponse, tApiTransactionCollectionRequest, tApiTransactionCollectionResponse, tApiTransactionCreateRequest, tApiTransactionCreateResponse, tApiTransactionFetchRequest, tApiTransactionFetchResponse, tApiTransactionMessageGalleryCreateRequest, tApiTransactionMessageGalleryCreateResponse, tApiTransactionMessageLocationCreateRequest, tApiTransactionMessageLocationCreateResponse, tApiTransactionMessagePackageCreateRequest, tApiTransactionMessagePackageCreateResponse, tApiTransactionMessagePersonalCreateRequest, tApiTransactionMessagePersonalCreateResponse, tApiTransactionMessageTextCreateRequest, tApiTransactionMessageTextCreateResponse, tApiTransactionStatusAcceptRequest, tApiTransactionStatusAcceptResponse, tApiTransactionStatusCloseRequest, tApiTransactionStatusCloseResponse, tApiTransactionStatusDisputeRequest, tApiTransactionStatusDisputeResponse, tApiTransactionStatusRejectRequest, tApiTransactionStatusRejectResponse, tApiTransactionStatusResolveRequest, tApiTransactionStatusResolveResponse, tApiTransactionStatusSuccessRequest, tApiTransactionStatusSuccessResponse, tApiUploadCollectionRequest, tApiUploadCollectionResponse, tApiUploadCountRequest, tApiUploadCountResponse, tApiUploadCreateRequest, tApiUploadCreateResponse, tApiUploadFetchRequest, tApiUploadFetchResponse, tApiUserEventBuyerRequest, tApiUserEventBuyerResponse, tApiUserExPatchRequest, tApiUserExPatchResponse } from './types.gen';
-import { zApiDraftCollectionData, zApiDraftCollectionResponse, zApiDraftCountData, zApiDraftCountResponse, zApiDraftCreateData, zApiDraftCreateResponse, zApiDraftDeleteData, zApiDraftDeleteResponse, zApiDraftFetchData, zApiDraftFetchResponse, zApiDraftGalleryCreateData, zApiDraftGalleryCreateResponse, zApiDraftPatchData, zApiDraftPatchResponse, zApiFavouriteCollectionData, zApiFavouriteCollectionResponse, zApiFavouriteCountData, zApiFavouriteCountResponse, zApiFavouriteToggleData, zApiFavouriteToggleResponse, zApiFeedbackCreateData, zApiFeedbackCreateResponse, zApiFeedCollectionData, zApiFeedCollectionResponse, zApiFeedCountData, zApiFeedCountResponse, zApiFeedCreateData, zApiFeedCreateResponse, zApiFeedDeleteData, zApiFeedDeleteResponse, zApiFeedFavouriteCollectionData, zApiFeedFavouriteCollectionResponse, zApiFeedFetchData, zApiFeedFetchResponse, zApiFeedGalleryCreateData, zApiFeedGalleryCreateResponse, zApiFeedPatchData, zApiFeedPatchResponse, zApiFlagCollectionData, zApiFlagCollectionResponse, zApiFlagCountData, zApiFlagCountResponse, zApiFlagToggleData, zApiFlagToggleResponse, zApiGalleryCollectionData, zApiGalleryCollectionResponse, zApiGalleryCountData, zApiGalleryCountResponse, zApiGalleryFetchData, zApiGalleryFetchResponse, zApiIgnoreCollectionData, zApiIgnoreCollectionResponse, zApiIgnoreCountData, zApiIgnoreCountResponse, zApiIgnoreToggleData, zApiIgnoreToggleResponse, zApiListingCollectionData, zApiListingCollectionResponse, zApiListingCountData, zApiListingCountResponse, zApiListingCreateData, zApiListingCreateResponse, zApiListingEventCreateData, zApiListingFetchData, zApiListingFetchResponse, zApiListingSellerInfoData, zApiListingSellerInfoResponse, zApiMessageThreadMessageCollectionData, zApiMessageThreadMessageCollectionResponse, zApiS3PresignData, zApiS3PresignResponse, zApiTransactionBuyerInfoData, zApiTransactionBuyerInfoResponse, zApiTransactionCollectionData, zApiTransactionCollectionResponse, zApiTransactionCreateData, zApiTransactionCreateResponse, zApiTransactionFetchData, zApiTransactionFetchResponse, zApiTransactionMessageGalleryCreateData, zApiTransactionMessageGalleryCreateResponse, zApiTransactionMessageLocationCreateData, zApiTransactionMessageLocationCreateResponse, zApiTransactionMessagePackageCreateData, zApiTransactionMessagePackageCreateResponse, zApiTransactionMessagePersonalCreateData, zApiTransactionMessagePersonalCreateResponse, zApiTransactionMessageTextCreateData, zApiTransactionMessageTextCreateResponse, zApiTransactionStatusAcceptData, zApiTransactionStatusAcceptResponse, zApiTransactionStatusCloseData, zApiTransactionStatusCloseResponse, zApiTransactionStatusDisputeData, zApiTransactionStatusDisputeResponse, zApiTransactionStatusRejectData, zApiTransactionStatusRejectResponse, zApiTransactionStatusResolveData, zApiTransactionStatusResolveResponse, zApiTransactionStatusSuccessData, zApiTransactionStatusSuccessResponse, zApiUploadCollectionData, zApiUploadCollectionResponse, zApiUploadCountData, zApiUploadCountResponse, zApiUploadCreateData, zApiUploadCreateResponse, zApiUploadFetchData, zApiUploadFetchResponse, zApiUserEventBuyerData, zApiUserEventBuyerResponse, zApiUserExPatchData, zApiUserExPatchResponse } from './zod.gen';
+import type { apiDraftCollectionErrors, apiDraftCountErrors, apiDraftCreateErrors, apiDraftDeleteErrors, apiDraftFetchErrors, apiDraftGalleryCreateErrors, apiDraftPatchErrors, apiFavouriteCollectionErrors, apiFavouriteCountErrors, apiFavouriteToggleErrors, apiFeedbackCreateErrors, apiFeedCollectionErrors, apiFeedCountErrors, apiFeedCreateErrors, apiFeedDeleteErrors, apiFeedFavouriteCollectionErrors, apiFeedFetchErrors, apiFeedGalleryCreateErrors, apiFeedPatchErrors, apiFlagCollectionErrors, apiFlagCountErrors, apiFlagToggleErrors, apiGalleryCollectionErrors, apiGalleryCountErrors, apiGalleryFetchErrors, apiIgnoreCollectionErrors, apiIgnoreCountErrors, apiIgnoreToggleErrors, apiListingCollectionErrors, apiListingCountErrors, apiListingCreateErrors, apiListingEventCreateErrors, apiListingFetchErrors, apiMessageThreadMessageCollectionErrors, apiS3PresignErrors, apiTransactionBuyerInfoErrors, apiTransactionCollectionErrors, apiTransactionCreateErrors, apiTransactionFetchErrors, apiTransactionMessageGalleryCreateErrors, apiTransactionMessageLocationCreateErrors, apiTransactionMessagePackageCreateErrors, apiTransactionMessagePersonalCreateErrors, apiTransactionMessageTextCreateErrors, apiTransactionStatusAcceptErrors, apiTransactionStatusCloseErrors, apiTransactionStatusDisputeErrors, apiTransactionStatusRejectErrors, apiTransactionStatusResolveErrors, apiTransactionStatusSuccessErrors, apiUploadCreateErrors, apiUserExPatchErrors, tApiDraftCollectionRequest, tApiDraftCollectionResponse, tApiDraftCountRequest, tApiDraftCountResponse, tApiDraftCreateRequest, tApiDraftCreateResponse, tApiDraftDeleteRequest, tApiDraftDeleteResponse, tApiDraftFetchRequest, tApiDraftFetchResponse, tApiDraftGalleryCreateRequest, tApiDraftGalleryCreateResponse, tApiDraftPatchRequest, tApiDraftPatchResponse, tApiFavouriteCollectionRequest, tApiFavouriteCollectionResponse, tApiFavouriteCountRequest, tApiFavouriteCountResponse, tApiFavouriteToggleRequest, tApiFavouriteToggleResponse, tApiFeedbackCreateRequest, tApiFeedbackCreateResponse, tApiFeedCollectionRequest, tApiFeedCollectionResponse, tApiFeedCountRequest, tApiFeedCountResponse, tApiFeedCreateRequest, tApiFeedCreateResponse, tApiFeedDeleteRequest, tApiFeedDeleteResponse, tApiFeedFavouriteCollectionRequest, tApiFeedFavouriteCollectionResponse, tApiFeedFetchRequest, tApiFeedFetchResponse, tApiFeedGalleryCreateRequest, tApiFeedGalleryCreateResponse, tApiFeedPatchRequest, tApiFeedPatchResponse, tApiFlagCollectionRequest, tApiFlagCollectionResponse, tApiFlagCountRequest, tApiFlagCountResponse, tApiFlagToggleRequest, tApiFlagToggleResponse, tApiGalleryCollectionRequest, tApiGalleryCollectionResponse, tApiGalleryCountRequest, tApiGalleryCountResponse, tApiGalleryFetchRequest, tApiGalleryFetchResponse, tApiIgnoreCollectionRequest, tApiIgnoreCollectionResponse, tApiIgnoreCountRequest, tApiIgnoreCountResponse, tApiIgnoreToggleRequest, tApiIgnoreToggleResponse, tApiListingCollectionRequest, tApiListingCollectionResponse, tApiListingCountRequest, tApiListingCountResponse, tApiListingCreateRequest, tApiListingCreateResponse, tApiListingEventCreateRequest, tApiListingEventCreateResponse, tApiListingFetchRequest, tApiListingFetchResponse, tApiMessageThreadMessageCollectionRequest, tApiMessageThreadMessageCollectionResponse, tApiS3PresignRequest, tApiS3PresignResponse, tApiTransactionBuyerInfoRequest, tApiTransactionBuyerInfoResponse, tApiTransactionCollectionRequest, tApiTransactionCollectionResponse, tApiTransactionCreateRequest, tApiTransactionCreateResponse, tApiTransactionFetchRequest, tApiTransactionFetchResponse, tApiTransactionMessageGalleryCreateRequest, tApiTransactionMessageGalleryCreateResponse, tApiTransactionMessageLocationCreateRequest, tApiTransactionMessageLocationCreateResponse, tApiTransactionMessagePackageCreateRequest, tApiTransactionMessagePackageCreateResponse, tApiTransactionMessagePersonalCreateRequest, tApiTransactionMessagePersonalCreateResponse, tApiTransactionMessageTextCreateRequest, tApiTransactionMessageTextCreateResponse, tApiTransactionStatusAcceptRequest, tApiTransactionStatusAcceptResponse, tApiTransactionStatusCloseRequest, tApiTransactionStatusCloseResponse, tApiTransactionStatusDisputeRequest, tApiTransactionStatusDisputeResponse, tApiTransactionStatusRejectRequest, tApiTransactionStatusRejectResponse, tApiTransactionStatusResolveRequest, tApiTransactionStatusResolveResponse, tApiTransactionStatusSuccessRequest, tApiTransactionStatusSuccessResponse, tApiUploadCreateRequest, tApiUploadCreateResponse, tApiUserExPatchRequest, tApiUserExPatchResponse } from './types.gen';
+import { zApiDraftCollectionData, zApiDraftCollectionResponse, zApiDraftCountData, zApiDraftCountResponse, zApiDraftCreateData, zApiDraftCreateResponse, zApiDraftDeleteData, zApiDraftDeleteResponse, zApiDraftFetchData, zApiDraftFetchResponse, zApiDraftGalleryCreateData, zApiDraftGalleryCreateResponse, zApiDraftPatchData, zApiDraftPatchResponse, zApiFavouriteCollectionData, zApiFavouriteCollectionResponse, zApiFavouriteCountData, zApiFavouriteCountResponse, zApiFavouriteToggleData, zApiFavouriteToggleResponse, zApiFeedbackCreateData, zApiFeedbackCreateResponse, zApiFeedCollectionData, zApiFeedCollectionResponse, zApiFeedCountData, zApiFeedCountResponse, zApiFeedCreateData, zApiFeedCreateResponse, zApiFeedDeleteData, zApiFeedDeleteResponse, zApiFeedFavouriteCollectionData, zApiFeedFavouriteCollectionResponse, zApiFeedFetchData, zApiFeedFetchResponse, zApiFeedGalleryCreateData, zApiFeedGalleryCreateResponse, zApiFeedPatchData, zApiFeedPatchResponse, zApiFlagCollectionData, zApiFlagCollectionResponse, zApiFlagCountData, zApiFlagCountResponse, zApiFlagToggleData, zApiFlagToggleResponse, zApiGalleryCollectionData, zApiGalleryCollectionResponse, zApiGalleryCountData, zApiGalleryCountResponse, zApiGalleryFetchData, zApiGalleryFetchResponse, zApiIgnoreCollectionData, zApiIgnoreCollectionResponse, zApiIgnoreCountData, zApiIgnoreCountResponse, zApiIgnoreToggleData, zApiIgnoreToggleResponse, zApiListingCollectionData, zApiListingCollectionResponse, zApiListingCountData, zApiListingCountResponse, zApiListingCreateData, zApiListingCreateResponse, zApiListingEventCreateData, zApiListingEventCreateResponse, zApiListingFetchData, zApiListingFetchResponse, zApiMessageThreadMessageCollectionData, zApiMessageThreadMessageCollectionResponse, zApiS3PresignData, zApiS3PresignResponse, zApiTransactionBuyerInfoData, zApiTransactionBuyerInfoResponse, zApiTransactionCollectionData, zApiTransactionCollectionResponse, zApiTransactionCreateData, zApiTransactionCreateResponse, zApiTransactionFetchData, zApiTransactionFetchResponse, zApiTransactionMessageGalleryCreateData, zApiTransactionMessageGalleryCreateResponse, zApiTransactionMessageLocationCreateData, zApiTransactionMessageLocationCreateResponse, zApiTransactionMessagePackageCreateData, zApiTransactionMessagePackageCreateResponse, zApiTransactionMessagePersonalCreateData, zApiTransactionMessagePersonalCreateResponse, zApiTransactionMessageTextCreateData, zApiTransactionMessageTextCreateResponse, zApiTransactionStatusAcceptData, zApiTransactionStatusAcceptResponse, zApiTransactionStatusCloseData, zApiTransactionStatusCloseResponse, zApiTransactionStatusDisputeData, zApiTransactionStatusDisputeResponse, zApiTransactionStatusRejectData, zApiTransactionStatusRejectResponse, zApiTransactionStatusResolveData, zApiTransactionStatusResolveResponse, zApiTransactionStatusSuccessData, zApiTransactionStatusSuccessResponse, zApiUploadCreateData, zApiUploadCreateResponse, zApiUserExPatchData, zApiUserExPatchResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -275,6 +275,21 @@ export const apiFeedGalleryCreate = <ThrowOnError extends boolean = false>(optio
 });
 
 /**
+ * Create a new feedback
+ */
+export const apiFeedbackCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedbackCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFeedbackCreateResponse, apiFeedbackCreateErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiFeedbackCreateData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiFeedbackCreateResponse.parseAsync(data),
+    url: '/api/user/feedback/create',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
  * Returns feed items from favourites based on provided parameters
  */
 export const apiFeedFavouriteCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedFavouriteCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFeedFavouriteCollectionResponse, apiFeedFavouriteCollectionErrors, ThrowOnError>({
@@ -485,37 +500,13 @@ export const apiListingCount = <ThrowOnError extends boolean = false>(options?: 
 });
 
 /**
- * Return seller info for a listing.
- */
-export const apiListingSellerInfo = <ThrowOnError extends boolean = false>(options: Options<tApiListingSellerInfoRequest, ThrowOnError>) => (options.client ?? client).post<tApiListingSellerInfoResponse, apiListingSellerInfoErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiListingSellerInfoData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiListingSellerInfoResponse.parseAsync(data),
-    url: '/api/user/listing/{listingId}/seller-info',
-    ...options
-});
-
-/**
  * Create a new listing event
  */
 export const apiListingEventCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiListingEventCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingEventCreateResponse, apiListingEventCreateErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiListingEventCreateData.parseAsync(data),
-    url: '/api/user/listing-event/create',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Create a new feedback
- */
-export const apiFeedbackCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedbackCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFeedbackCreateResponse, apiFeedbackCreateErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiFeedbackCreateData.parseAsync(data),
     responseType: 'json',
-    responseValidator: async (data) => await zApiFeedbackCreateResponse.parseAsync(data),
-    url: '/api/user/feedback/create',
+    responseValidator: async (data) => await zApiListingEventCreateResponse.parseAsync(data),
+    url: '/api/user/listing-event/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -791,62 +782,6 @@ export const apiUploadCreate = <ThrowOnError extends boolean = false>(options?: 
         'Content-Type': 'application/json',
         ...options?.headers
     }
-});
-
-/**
- * Return an upload item based on the provided query
- */
-export const apiUploadFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiUploadFetchResponse, apiUploadFetchErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiUploadFetchData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiUploadFetchResponse.parseAsync(data),
-    url: '/api/user/upload/fetch',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Returns upload items based on provided parameters
- */
-export const apiUploadCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiUploadCollectionResponse, apiUploadCollectionErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiUploadCollectionData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiUploadCollectionResponse.parseAsync(data),
-    url: '/api/user/upload/collection',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Returns count of upload items based on provided query
- */
-export const apiUploadCount = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiUploadCountResponse, apiUploadCountErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiUploadCountData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiUploadCountResponse.parseAsync(data),
-    url: '/api/user/upload/count',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Return buyer info for a user event.
- */
-export const apiUserEventBuyer = <ThrowOnError extends boolean = false>(options: Options<tApiUserEventBuyerRequest, ThrowOnError>) => (options.client ?? client).post<tApiUserEventBuyerResponse, apiUserEventBuyerErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiUserEventBuyerData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiUserEventBuyerResponse.parseAsync(data),
-    url: '/api/user/user-event/{userId}/buyer',
-    ...options
 });
 
 /**

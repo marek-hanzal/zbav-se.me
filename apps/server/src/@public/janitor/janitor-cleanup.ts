@@ -1,10 +1,18 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import type { Routes } from "~/hono/Routes";
+import { createDateContext, DateContextLayer } from "@use-pico/common/date";
+import { zodFx } from "@use-pico/common/schema";
+import { Effect } from "effect";
+import { cleanupFx } from "~/@public/janitor/cleanup/cleanupFx";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { S3ContextLayer } from "~/app/s3/context/S3ContextLayer";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { ServerS3Schema } from "~/schema/env/ServerS3Schema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { cleanup } from "./cleanup/cleanup";
 import { CleanupSchema } from "./schema/CleanupSchema";
 
-export const withJanitorCleanupApi: Routes.Fn = ({ publicHono }) => {
+export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(function* () {
+	const { publicHono } = yield* RoutesContextFx;
+
 	publicHono.openapi(
 		createRoute({
 			method: "get",
@@ -29,15 +37,35 @@ export const withJanitorCleanupApi: Routes.Fn = ({ publicHono }) => {
 					description: "Error during cleanup",
 				},
 			},
+			security: [],
 			tags: [
 				"janitor",
 			],
 		}),
 		async (c) => {
 			try {
-				return c.json(
-					(await Promise.all(cleanup.map((fn) => fn()))) satisfies CleanupSchema.Type[],
-					200,
+				const s3Config = ServerS3Schema.parse(process.env);
+
+				return await Effect.gen(function* () {
+					return c.json(
+						yield* zodFx({
+							schema: z.array(CleanupSchema),
+							dataFx: cleanupFx(),
+						}),
+						200,
+					);
+				}).pipe(
+					Effect.provide(KyselyContextLayer(c.get("kysely"))),
+					Effect.provide(DateContextLayer(createDateContext())),
+					Effect.provide(
+						S3ContextLayer({
+							api: s3Config.SERVER_S3_API,
+							key: s3Config.SERVER_S3_KEY,
+							secret: s3Config.SERVER_S3_SECRET,
+							bucket: s3Config.SERVER_S3_BUCKET,
+						}),
+					),
+					Effect.runPromise,
 				);
 			} catch (e) {
 				console.error(e);
@@ -51,4 +79,4 @@ export const withJanitorCleanupApi: Routes.Fn = ({ publicHono }) => {
 			}
 		},
 	);
-};
+});

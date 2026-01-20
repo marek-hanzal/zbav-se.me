@@ -1,11 +1,11 @@
 import { z } from "@hono/zod-openapi";
-import { TransactionMetaSchema } from "~/@user/transaction/schema/TransactionMetaSchema";
+import { TransactionMetaSchema } from "~/app/transaction/schema/TransactionMetaSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
 import { TransactionFilterSchema } from "./TransactionFilterSchema";
 import { TransactionSortSchema } from "./TransactionSortSchema";
 
 export const TransactionQuerySchema = z
-	.object({
+	.looseObject({
 		cursor: CursorSchema.optional(),
 		filter: TransactionFilterSchema.optional(),
 		where: TransactionFilterSchema.openapi("TransactionWhere", {
@@ -14,6 +14,7 @@ export const TransactionQuerySchema = z
 		sort: TransactionSortSchema.array().optional(),
 		meta: TransactionMetaSchema.optional(),
 	})
+	.strip()
 	.openapi("TransactionQuery", {
 		description: "Query object for transaction collection",
 	});

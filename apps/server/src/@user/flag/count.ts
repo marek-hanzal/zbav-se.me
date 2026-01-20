@@ -1,14 +1,15 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { flagCountFx } from "~/app/flag/fx/flagCountFx";
 import { FlagCountQuerySchema } from "~/app/flag/schema/FlagCountQuerySchema";
-import { UserContextProvider } from "~/auth/fx/UserContextFx";
-import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
-import type { Routes } from "~/hono/Routes";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { flagCountFx } from "./fx/flagCountFx";
 
-export const withCountApi: Routes.Fn = ({ userHono }) => {
+export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -49,23 +50,35 @@ export const withCountApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json<CountSchema.Type, 200>(yield* flagCountFx(c.req.valid("json")), 200);
+				const user = c.get("user");
+
+				return c.json<CountSchema.Type, 200>(
+					yield* zodFx({
+						schema: CountSchema,
+						dataFx: flagCountFx({
+							...c.req.valid("json"),
+							scope: {
+								userId: user.id,
+							},
+						}),
+					}),
+					200,
+				);
 			}).pipe(
-				DatabaseContextProvider(c.get("database")),
-				UserContextProvider(c.get("user")),
+				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
 								{
-									_tag: "UnknownException",
+									_tag: "ZodErrorFx",
 								},
-								() => {
+								({ zod }) => {
 									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: e.message,
+											message: z.prettifyError(zod),
 										},
 										500,
 									);
@@ -79,4 +92,4 @@ export const withCountApi: Routes.Fn = ({ userHono }) => {
 			);
 		},
 	);
-};
+});

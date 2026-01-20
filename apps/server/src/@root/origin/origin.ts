@@ -1,13 +1,18 @@
-import { AppEnv } from "~/AppEnv";
-import type { Routes } from "~/hono/Routes";
+import { Effect } from "effect";
+import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { ServerViteSchema } from "~/schema/env/ServerViteSchema";
 
-export const withOriginEndpoint: Routes.Fn = ({ root }) => {
-	root.get("/origin", (c) =>
-		c.json({
+export const withOriginEndpointFx = Effect.fn("withOriginEndpointFx")(function* () {
+	const { root } = yield* RoutesContextFx;
+
+	root.get("/origin", (c) => {
+		const viteConfig = ServerViteSchema.parse(process.env);
+
+		return c.json({
 			origin: [
-				AppEnv.VITE_WEB_ORIGIN,
-				AppEnv.VITE_APP_ORIGIN,
+				viteConfig.VITE_WEB_ORIGIN,
+				viteConfig.VITE_APP_ORIGIN,
 			],
-		}),
-	);
-};
+		});
+	});
+});

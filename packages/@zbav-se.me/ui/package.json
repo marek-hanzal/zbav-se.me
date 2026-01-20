@@ -16,8 +16,8 @@
 		"ts-pattern": "5.9.0"
 	},
 	"devDependencies": {
-		"@types/node": "25.0.3",
-		"@types/react": "19.2.7",
+		"@types/node": "25.0.6",
+		"@types/react": "19.2.8",
 		"@types/react-dom": "19.2.3",
 		"@typescript/native-preview": "7.0.0-dev.20251208.1",
 		"@use-pico/tsconfig": "5.0.0",
