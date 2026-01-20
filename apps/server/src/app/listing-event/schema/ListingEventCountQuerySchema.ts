@@ -1,12 +1,19 @@
-import type { z } from "@hono/zod-openapi";
+import { z } from "@hono/zod-openapi";
+import { CountEnumSchema } from "@use-pico/common/schema";
 import { ListingEventQuerySchema } from "./ListingEventQuerySchema";
 
-export const ListingEventCountQuerySchema = ListingEventQuerySchema.pick({
-	filter: true,
-	where: true,
-}).openapi("ListingEventCountQuery", {
-	description: "Query object for listing event count",
-});
+export const ListingEventCountQuerySchema = z
+	.looseObject({
+		...ListingEventQuerySchema.pick({
+			filter: true,
+			where: true,
+		}).shape,
+		count: CountEnumSchema.array().optional(),
+	})
+	.strip()
+	.openapi("ListingEventCountQuery", {
+		description: "Query object for listing event count",
+	});
 
 export type ListingEventCountQuerySchema = typeof ListingEventCountQuerySchema;
 

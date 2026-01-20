@@ -1,12 +1,19 @@
-import type { z } from "@hono/zod-openapi";
+import { z } from "@hono/zod-openapi";
+import { CountEnumSchema } from "@use-pico/common/schema";
 import { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
 
-export const DraftCountQuerySchema = DraftQuerySchema.pick({
-	filter: true,
-	where: true,
-}).openapi("DraftCountQuery", {
-	description: "Query object for draft count",
-});
+export const DraftCountQuerySchema = z
+	.looseObject({
+		...DraftQuerySchema.pick({
+			filter: true,
+			where: true,
+		}).shape,
+		count: CountEnumSchema.array().optional(),
+	})
+	.strip()
+	.openapi("DraftCountQuery", {
+		description: "Query object for draft count",
+	});
 
 export type DraftCountQuerySchema = typeof DraftCountQuerySchema;
 

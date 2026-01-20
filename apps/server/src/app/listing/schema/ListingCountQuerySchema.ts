@@ -1,13 +1,20 @@
-import type { z } from "@hono/zod-openapi";
+import { z } from "@hono/zod-openapi";
+import { CountEnumSchema } from "@use-pico/common/schema";
 import { ListingQuerySchema } from "./ListingQuerySchema";
 
-export const ListingCountQuerySchema = ListingQuerySchema.pick({
-	filter: true,
-	where: true,
-	meta: true,
-}).openapi("ListingCountQuery", {
-	description: "Query object for listing count",
-});
+export const ListingCountQuerySchema = z
+	.looseObject({
+		...ListingQuerySchema.pick({
+			filter: true,
+			where: true,
+			meta: true,
+		}).shape,
+		count: CountEnumSchema.array().optional(),
+	})
+	.strip()
+	.openapi("ListingCountQuery", {
+		description: "Query object for listing count",
+	});
 
 export type ListingCountQuerySchema = typeof ListingCountQuerySchema;
 
