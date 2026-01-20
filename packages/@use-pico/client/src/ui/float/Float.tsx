@@ -14,10 +14,9 @@ import {
 	useInteractions,
 	useTransitionStyles,
 } from "@floating-ui/react";
-import { useCls } from "@use-pico/cls";
-import { type FC, type PropsWithChildren, type ReactNode, useState } from "react";
-import { FloatCls } from "./FloatCls";
+import { type ComponentProps, type FC, type ReactNode, useState } from "react";
 import { FloatContext } from "./FloatContext";
+import { uiFloat } from "./uiFloat";
 
 export namespace Float {
 	export namespace Target {
@@ -28,7 +27,7 @@ export namespace Float {
 		export type TargetFn = (props: Props) => ReactNode;
 	}
 
-	export interface Props extends FloatCls.Props<PropsWithChildren> {
+	export interface Props extends uiFloat.Component<ComponentProps<"div">> {
 		target: Target.TargetFn;
 		action?: "hover" | "click";
 		disabled?: boolean;
@@ -56,9 +55,10 @@ export const Float: FC<Float.Props> = ({
 	delay = 100,
 	float,
 	withOverlay = false,
-	cls = FloatCls,
-	tweak,
+	ui,
+	className,
 	children,
+	...props
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const { refs, floatingStyles, context } = useFloating({
@@ -87,11 +87,6 @@ export const Float: FC<Float.Props> = ({
 		useDismiss(context),
 	]);
 	const { isMounted, styles } = useTransitionStyles(context);
-	const { slots } = useCls(cls, tweak, {
-		variant: {
-			mounted: isMounted,
-		},
-	});
 
 	return (
 		<>
@@ -109,8 +104,6 @@ export const Float: FC<Float.Props> = ({
 						<div
 							ref={refs.setFloating}
 							style={floatingStyles}
-							data-ui="Float-portal"
-							className={slots.portal()}
 							{...getFloatingProps()}
 							onClick={
 								closeOnClick
@@ -119,6 +112,14 @@ export const Float: FC<Float.Props> = ({
 										}
 									: undefined
 							}
+							{...uiFloat({
+								ui,
+								className: [
+									"Float-portal",
+									!isMounted && "hidden",
+								],
+							})}
+							{...props}
 						>
 							<FloatContext
 								value={{
@@ -138,8 +139,6 @@ export const Float: FC<Float.Props> = ({
 							...floatingStyles,
 							...styles,
 						}}
-						data-ui="Float-portal"
-						className={slots.portal()}
 						{...getFloatingProps()}
 						onClick={
 							closeOnClick
@@ -148,6 +147,14 @@ export const Float: FC<Float.Props> = ({
 									}
 								: undefined
 						}
+						{...uiFloat({
+							ui,
+							className: [
+								"Float-portal",
+								!isMounted && "hidden",
+							],
+						})}
+						{...props}
 					>
 						<FloatContext
 							value={{
