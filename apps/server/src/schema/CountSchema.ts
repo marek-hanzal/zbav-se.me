@@ -22,5 +22,5 @@ export const CountSchema = z
 export type CountSchema = typeof CountSchema;
 
 export namespace CountSchema {
-	export type Type = z.infer<typeof CountSchema>;
+	export type Type = z.infer<CountSchema>;
 }

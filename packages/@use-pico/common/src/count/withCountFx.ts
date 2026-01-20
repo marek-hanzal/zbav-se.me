@@ -1,10 +1,9 @@
 import { Effect } from "effect";
 import type { SelectQueryBuilder } from "kysely";
 import type { FilterSchema } from "../schema/FilterSchema";
+import type { CountEnumSchema } from "../schema/CountEnumSchema";
 
 export namespace withCountFx {
-	export type Count = "total" | "filter" | "where";
-
 	export namespace Query {
 		export interface Props<
 			TSelect extends SelectQueryBuilder<any, any, any>,
@@ -32,7 +31,7 @@ export namespace withCountFx {
 		where?: TFilter;
 		scope?: TFilter;
 		//
-		count?: Count[];
+		count?: CountEnumSchema.Type[];
 	}
 }
 
