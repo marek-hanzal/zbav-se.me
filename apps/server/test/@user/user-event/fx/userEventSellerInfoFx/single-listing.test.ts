@@ -1,7 +1,6 @@
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { AppEnv } from "~/AppEnv";
 import { categoryFetchFx } from "~/app/category/fx/categoryFetchFx";
 import { listingCreateFx } from "~/app/listing/fx/listingCreateFx";
 import { LocationContextLayer } from "~/app/location/context/LocationContextLayer";
@@ -11,6 +10,7 @@ import { uploadCreateFx } from "~/app/upload/fx/uploadCreateFx";
 import { userEventSellerInfoFx } from "~/app/user-event/fx/userEventSellerInfoFx";
 import { auth } from "~/auth/auth";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
 import { testabase } from "../../../../testabase";
 
 describe("userEventSellerInfoFx", () => {
@@ -28,6 +28,8 @@ describe("userEventSellerInfoFx", () => {
 				password: "12345678",
 			},
 		});
+
+		const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
 
 		const result = await Effect.gen(function* () {
 			const category = yield* categoryFetchFx({
@@ -76,7 +78,7 @@ describe("userEventSellerInfoFx", () => {
 				LocationContextLayer({
 					api: "https://api.geoapify.com",
 					autocomplete: "/v1/geocode/autocomplete",
-					geoapifyToken: AppEnv.SERVER_GEOAPIFY_TOKEN,
+					geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,
 				}),
 			),
 			Effect.provide(

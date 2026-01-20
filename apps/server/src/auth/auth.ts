@@ -4,8 +4,9 @@ import { betterAuth } from "better-auth";
 import { anonymous, customSession, openAPI } from "better-auth/plugins";
 import { type Dialect, Kysely } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
-import { AppEnv } from "~/AppEnv";
 import type { Database } from "~/database/Database";
+import { ServerBetterAuthSchema } from "~/schema/env/ServerBetterAuthSchema";
+import { ServerViteSchema } from "~/schema/env/ServerViteSchema";
 
 export namespace auth {
 	export type Api = Awaited<ReturnType<typeof auth>>;
@@ -16,6 +17,9 @@ export namespace auth {
 
 export const auth = (dialect: () => Dialect) => {
 	const connection = dialect();
+
+	const betterAuthConfig = ServerBetterAuthSchema.parse(process.env);
+	const viteConfig = ServerViteSchema.parse(process.env);
 
 	/**
 	 * Necessary - resolves circular dependency
@@ -29,14 +33,14 @@ export const auth = (dialect: () => Dialect) => {
 
 	return betterAuth({
 		database: connection,
-		secret: AppEnv.SERVER_BETTER_AUTH_SECRET,
+		secret: betterAuthConfig.SERVER_BETTER_AUTH_SECRET,
 		plugins: [
 			passkey({
-				rpID: AppEnv.VITE_DOMAIN,
-				rpName: AppEnv.VITE_DOMAIN,
+				rpID: viteConfig.VITE_DOMAIN,
+				rpName: viteConfig.VITE_DOMAIN,
 			}),
 			anonymous({
-				emailDomainName: AppEnv.VITE_DOMAIN,
+				emailDomainName: viteConfig.VITE_DOMAIN,
 				generateName: () => genId(),
 				async onLinkAccount() {
 					//
@@ -71,8 +75,8 @@ export const auth = (dialect: () => Dialect) => {
 			}),
 		],
 		trustedOrigins: [
-			AppEnv.VITE_WEB_ORIGIN,
-			AppEnv.VITE_APP_ORIGIN,
+			viteConfig.VITE_WEB_ORIGIN,
+			viteConfig.VITE_APP_ORIGIN,
 		],
 		rateLimit: {
 			window: 10,
@@ -84,7 +88,7 @@ export const auth = (dialect: () => Dialect) => {
 		advanced: {
 			crossSubDomainCookies: {
 				enabled: true,
-				domain: AppEnv.VITE_DOMAIN,
+				domain: viteConfig.VITE_DOMAIN,
 			},
 			database: {
 				generateId: () => genId(),

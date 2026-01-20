@@ -2,10 +2,10 @@ import { DialectContextLayer } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
-import { AppEnv } from "~/AppEnv";
 import { RoutesContextLayer } from "~/app/routes/RoutesContextLayer";
 import { KyselyContextLayerFx } from "~/database/context/KyselyContextLayerFx";
 import { initMiddlewareFx } from "~/init/initMiddlewareFx";
+import { ServerDatabaseSchema } from "~/schema/env/ServerDatabaseSchema";
 import { withPublicApiFx } from "./@public/withPublicApiFx";
 import { withRootApi } from "./@root/withRootApi";
 import { withSessionApiFx } from "./@session/withSessionApiFx";
@@ -35,6 +35,8 @@ const app = await Effect.gen(function* () {
 
 	yield* initMiddlewareFx();
 
+	const databaseConfig = ServerDatabaseSchema.parse(process.env);
+
 	yield* Effect.all([
 		withRootApi(),
 		withPublicApiFx(),
@@ -48,7 +50,7 @@ const app = await Effect.gen(function* () {
 						DialectContextLayer(
 							new PostgresDialect({
 								pool: new Pool({
-									connectionString: AppEnv.SERVER_DATABASE_URL,
+									connectionString: databaseConfig.SERVER_DATABASE_URL,
 									max: 3,
 								}),
 							}),

@@ -1,11 +1,11 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { AppEnv } from "~/AppEnv";
 import { LocationContextLayer } from "~/app/location/context/LocationContextLayer";
 import { locationAutocompleteFx } from "~/app/location/fx/locationAutocompleteFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { LocationAutocompleteSchema } from "./schema/LocationAutocompleteSchema";
 import { LocationSchema } from "./schema/LocationSchema";
@@ -54,6 +54,8 @@ export const withLocationAutocompleteApiFx = Effect.fn("withLocationAutocomplete
 				],
 			}),
 			async (c) => {
+				const geoapifyConfig = ServerGeoapifySchema.parse(process.env);
+
 				return Effect.gen(function* () {
 					return c.json<LocationSchema.Type[], 200>(
 						yield* zodFx({
@@ -68,7 +70,7 @@ export const withLocationAutocompleteApiFx = Effect.fn("withLocationAutocomplete
 					Effect.provide(KyselyContextLayer(c.get("kysely"))),
 					Effect.provide(
 						LocationContextLayer({
-							geoapifyToken: AppEnv.SERVER_GEOAPIFY_TOKEN,
+							geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,
 							api: "https://api.geoapify.com",
 							autocomplete: "/v1/geocode/autocomplete",
 						}),

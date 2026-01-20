@@ -3,10 +3,10 @@ import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { cleanupFx } from "~/@public/janitor/cleanup/cleanupFx";
-import { AppEnv } from "~/AppEnv";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { S3ContextLayer } from "~/app/s3/context/S3ContextLayer";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { ServerS3Schema } from "~/schema/env/ServerS3Schema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { CleanupSchema } from "./schema/CleanupSchema";
 
@@ -44,6 +44,8 @@ export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(func
 		}),
 		async (c) => {
 			try {
+				const s3Config = ServerS3Schema.parse(process.env);
+
 				return await Effect.gen(function* () {
 					return c.json(
 						yield* zodFx({
@@ -57,10 +59,10 @@ export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(func
 					Effect.provide(DateContextLayer(createDateContext())),
 					Effect.provide(
 						S3ContextLayer({
-							api: AppEnv.SERVER_S3_API,
-							key: AppEnv.SERVER_S3_KEY,
-							secret: AppEnv.SERVER_S3_SECRET,
-							bucket: AppEnv.SERVER_S3_BUCKET,
+							api: s3Config.SERVER_S3_API,
+							key: s3Config.SERVER_S3_KEY,
+							secret: s3Config.SERVER_S3_SECRET,
+							bucket: s3Config.SERVER_S3_BUCKET,
 						}),
 					),
 					Effect.runPromise,

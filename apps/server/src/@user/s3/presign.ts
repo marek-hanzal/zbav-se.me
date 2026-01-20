@@ -1,11 +1,12 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { AppEnv } from "~/AppEnv";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { S3ContextLayer } from "~/app/s3/context/S3ContextLayer";
 import { s3PreSignFx } from "~/app/s3/fx/s3PreSignFx";
 import { UploadContextLayer } from "~/app/upload/context/UploadContextLayer";
+import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
+import { ServerS3Schema } from "~/schema/env/ServerS3Schema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { S3PreSignRequestSchema } from "./schema/S3PreSignRequestSchema";
 import { S3PreSignResponseSchema } from "./schema/S3PreSignResponseSchema";
@@ -53,6 +54,9 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 			],
 		}),
 		async (c) => {
+			const s3Config = ServerS3Schema.parse(process.env);
+			const cdnConfig = ServerCdnSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 				const { path, extension } = c.req.valid("json");
@@ -71,15 +75,15 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 			}).pipe(
 				Effect.provide(
 					S3ContextLayer({
-						api: AppEnv.SERVER_S3_API,
-						key: AppEnv.SERVER_S3_KEY,
-						secret: AppEnv.SERVER_S3_SECRET,
-						bucket: AppEnv.SERVER_S3_BUCKET,
+						api: s3Config.SERVER_S3_API,
+						key: s3Config.SERVER_S3_KEY,
+						secret: s3Config.SERVER_S3_SECRET,
+						bucket: s3Config.SERVER_S3_BUCKET,
 					}),
 				),
 				Effect.provide(
 					UploadContextLayer({
-						cdn: AppEnv.SERVER_CONTENT_CDN,
+						cdn: cdnConfig.SERVER_CONTENT_CDN,
 					}),
 				),
 				//
