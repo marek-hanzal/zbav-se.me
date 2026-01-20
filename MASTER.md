@@ -1122,7 +1122,7 @@ Related:
 ### Citlivost
 ← [předchozí](#koncept-oblibene) | [další](#koncept-ignorace-inzeratu) →
 
-Obsah není jen „co prodávám“. Obsah je i to, *jestli to můžeš vůbec vidět*. [Citlivost](#koncept-citlivost-inzeratu) je hard gate: chrání veřejnej prostor před obsahem, kterej určitá skupina lidí buď **nechce**, nebo ho **ani nesmí** vidět.
+Obsah není jen „co prodávám“. Obsah je i to, *jestli to můžeš vůbec vidět*. **Citlivost** je hard gate: chrání veřejnej prostor před obsahem, kterej určitá skupina lidí buď **nechce**, nebo ho **ani nesmí** vidět.
 
 Úrovně (stupňovaně): `common < adult < sensitive < restricted`.
 
@@ -1140,10 +1140,10 @@ Gating a viditelnost (dvoufázově, schválně):
 Hard gate pravidla:
 - V listingu (feed/search/seznam) se cokoliv nad maximum **vůbec nedostane do výsledků**.
 - Na detail přes přímý odkaz vracím při nesouladu maxima **404** (žádný obcházení přes link, žádný „aspoň víš že to existuje“).
-- [Citlivost](#koncept-citlivost-inzeratu) je **jediná uživatelská** věc, která smí detail tvrdě schovat (404). Kromě citlivosti existuje ještě **admin hard removal** (výjimečná stopka pro nelegální/škodlivý obsah), která je **404** a nastavuje stav `banned` (viz [Ban](#koncept-ban) a [Inzerát](#koncept-inzerat)). Ostatní brány můžou ovlivnit seznam, ale nemaj dělat „ten inzerát pro tebe neexistuje“.
+- **Citlivost** je **jediná uživatelská** věc, která smí detail tvrdě schovat (404). Kromě citlivosti existuje ještě **admin hard removal** (výjimečná stopka pro nelegální/škodlivý obsah), která je **404** a nastavuje stav `banned` (viz [Ban](#koncept-ban) a [Inzerát](#koncept-inzerat)). Ostatní brány můžou ovlivnit seznam, ale nemaj dělat „ten inzerát pro tebe neexistuje“.
 
 Odpovědnost:
-- [Citlivost](#koncept-citlivost-inzeratu) je primárně sebeoznačení prodejce.
+- **Citlivost** je primárně sebeoznačení prodejce.
 - Opakovaný a zjevný zneužití (maskování citlivýho/omezenýho jako běžný) je porušení pravidel a důvod k zásahu.
 
 Related:
@@ -2121,13 +2121,13 @@ Related:
 ### Pass
 ← [předchozí](#koncept-rozsirena-data-inzeratu) | [další](#koncept-kupon) →
 
-[Pass](#koncept-pass) je časově omezený oprávnění / režim. Není to měna ani poukázka. Je to stav: „od teď do tehdy tohle platí“.
+**Pass** je časově omezený oprávnění / režim. Není to měna ani poukázka. Je to stav: „od teď do tehdy tohle platí“.
 
 Kontrakt:
-- [Pass](#koncept-pass) je **stav**, ne spotřební item.
-- [Pass](#koncept-pass) má vždycky expiraci. Buď běží, nebo neběží. Žádný „napůl“.
+- **Pass** je **stav**, ne spotřební item.
+- **Pass** má vždycky expiraci. Buď běží, nebo neběží. Žádný „napůl“.
 - [Aktivace](#koncept-aktivace) typicky znamená: vznikne nebo se prodlouží pass (detaily držím v [Ekonomice](#ekonomika)).
-- [Pass](#koncept-pass) nikdy neobchází systémový brány (hlavně [Citlivost](#koncept-citlivost-inzeratu) a [Ignor](#koncept-ignorace-inzeratu)).
+- **Pass** nikdy neobchází systémový brány (hlavně [Citlivost](#koncept-citlivost-inzeratu) a [Ignor](#koncept-ignorace-inzeratu)).
 
 Scope:
 - Některý passy jsou **na úrovni účtu** (např. [Anti-topper](#koncept-anti-topper)).
@@ -2151,12 +2151,12 @@ Related:
 ### Kupón
 ← [předchozí](#koncept-pass) | [další](#koncept-tokeny) →
 
-[Kupón](#koncept-kupon) je poukázka na konkrétní akci. Není to měna. Je to „máš přesně tohle“.
+**Kupón** je poukázka na konkrétní akci. Není to měna. Je to „máš přesně tohle“.
 
 Kontrakt:
-- [Kupón](#koncept-kupon) je konkrétní: buď ho použiju na danou věc, nebo ho nechám ležet do expirace.
-- [Kupón](#koncept-kupon) je 1× použití (spotřebuje se).
-- [Kupón](#koncept-kupon) má trvanlivost **max. 3 měsíce** od získání. Po vypršení se zneplatní a nelze ho použít.
+- **Kupón** je konkrétní: buď ho použiju na danou věc, nebo ho nechám ležet do expirace.
+- **Kupón** je 1× použití (spotřebuje se).
+- **Kupón** má trvanlivost **max. 3 měsíce** od získání. Po vypršení se zneplatní a nelze ho použít.
 - Trvanlivost umožňuje nafarmit kupóny z předplatného (např. měsíční kupóny), ale časem vyprší — žádné nekonečné hromadění.
 
 Related:
@@ -2170,11 +2170,11 @@ Related:
 ### Tokeny
 ← [předchozí](#koncept-kupon) | [další](#koncept-aktivace) →
 
-[Tokeny](#koncept-tokeny) jsou interní měna. Palivo na jednorázový věci, který nechci cpát do předplatnýho jako povinnost.
+**Tokeny** jsou interní měna. Palivo na jednorázový věci, který nechci cpát do předplatnýho jako povinnost.
 
 Kontrakt:
-- [Tokeny](#koncept-tokeny) získám (příděl/bonus/nákup) a pak je utrácím.
-- [Tokeny](#koncept-tokeny) jsou skladovatelné: neexpirují. Expirovat může jen [Pass](#koncept-pass).
+- **Tokeny** získám (příděl/bonus/nákup) a pak je utrácím.
+- **Tokeny** jsou skladovatelné: neexpirují. Expirovat může jen [Pass](#koncept-pass).
 
 Related:
 - [Kupón](#koncept-kupon)
@@ -2202,7 +2202,7 @@ CTA pravidlo:
 
 Tvrdá hranice:
 - Rozšíření jsou nadstavby. Ne zadní vrátka.
-- [Aktivace](#koncept-aktivace) nikdy neobchází brány (hlavně [Citlivost](#koncept-citlivost-inzeratu) a [Ignor](#koncept-ignorace-inzeratu)).
+- **Aktivace** nikdy neobchází brány (hlavně [Citlivost](#koncept-citlivost-inzeratu) a [Ignor](#koncept-ignorace-inzeratu)).
 
 Related:
 - [Tokeny](#koncept-tokeny)
@@ -2217,7 +2217,7 @@ Related:
 ### Ceník
 ← [předchozí](#koncept-aktivace) | [další](#koncept-exclusive) →
 
-[Ceník](#koncept-cenik) je seznam **všech věcí**, které jde aktivovat. Je to produktová autorita pro „tohle existuje a jak se to aktivuje".
+**Ceník** je seznam **všech věcí**, které jde aktivovat. Je to produktová autorita pro „tohle existuje a jak se to aktivuje".
 
 Kontrakt:
 - Ceník obsahuje **všechno** (všechny věci, které jde aktivovat).
@@ -2238,10 +2238,10 @@ Related:
 ### Exclusive
 ← [předchozí](#koncept-cenik) | [další](#koncept-predplatne) →
 
-[Exclusive](#koncept-exclusive) je označení v [Ceníku](#koncept-cenik) pro věci, které jsou **pouze z balíčku** / [Předplatného](#koncept-predplatne). Nejsou koupitelné samostatně přes [Tokeny](#koncept-tokeny).
+**Exclusive** je označení v [Ceníku](#koncept-cenik) pro věci, které jsou **pouze z balíčku** / [Předplatného](#koncept-predplatne). Nejsou koupitelné samostatně přes [Tokeny](#koncept-tokeny).
 
 Kontrakt:
-- [Exclusive](#koncept-exclusive) věci jsou **v ceníku**, ale označené jako "Exclusive" (viz [Ekonomika](#ekonomika)).
+- **Exclusive** věci jsou **v ceníku**, ale označené jako "Exclusive" (viz [Ekonomika](#ekonomika)).
 - Nejsou koupitelný přes [Tokeny](#koncept-tokeny). Pokud existují, běží jen jako nárok (typicky [Pass](#koncept-pass)) z [Předplatného](#koncept-predplatne).
 - Autorita toho, co je „koupitelný", je [Ceník](#koncept-cenik) (a pravidla použití drží [Aktivace](#koncept-aktivace)).
 
@@ -2426,16 +2426,16 @@ Related:
 ### Anti-topper
 ← [předchozí](#koncept-top-maxxi) | [další](#koncept-payback) →
 
-[Anti-topper](#koncept-anti-topper) je placenej klid kupujícího. Nechci, aby se listing změnil v katalog placenýho šumu.
+**Anti-topper** je placenej klid kupujícího. Nechci, aby se listing změnil v katalog placenýho šumu.
 
 Kontrakt:
-- [Anti-topper](#koncept-anti-topper) mění jen chování listingu:
+- **Anti-topper** mění jen chování listingu:
   - **Top Maxxi** zůstává nahoře (imunní),
   - **Top + běžné** se smíchají a řadí se čistě podle preference uživatele (Top ztratí výhodu pozice, zůstane badge).
-- [Anti-topper](#koncept-anti-topper) **nikdy neblokuje detail**. Je to mechanika listingu, ne zákaz existence.
+- **Anti-topper** **nikdy neblokuje detail**. Je to mechanika listingu, ne zákaz existence.
 
 Měření:
-- Když by se v listingu ukázal inzerát se zvýrazněním (Mark/Top) uživateli s [Anti-topper](#koncept-anti-topper)em, vznikne event [`anti-topper`](#koncept-metrika-inzeratu-anti-topper) **a zároveň** vznikne i [`visible`](#koncept-metrika-inzeratu-visible) (stejný čas).
+- Když by se v listingu ukázal inzerát se zvýrazněním (Mark/Top) uživateli s **Anti-topper**em, vznikne event [`anti-topper`](#koncept-metrika-inzeratu-anti-topper) **a zároveň** vznikne i [`visible`](#koncept-metrika-inzeratu-visible) (stejný čas).
 
 Related:
 - [Seznam inzerátů](#koncept-seznam-inzeratu)
@@ -2448,14 +2448,14 @@ Related:
 ### Payback
 ← [předchozí](#koncept-anti-topper) | [další](#koncept-kontinualni-nabidka) →
 
-[Payback](#koncept-payback) je kompenzace pro prodávajícího, když si koupil zvýraznění a část publika mu ho odfoukla přes [Anti-topper](#koncept-anti-topper).
+**Payback** je kompenzace pro prodávajícího, když si koupil zvýraznění a část publika mu ho odfoukla přes [Anti-topper](#koncept-anti-topper).
 
 Kontrakt:
 - Kompenzuje jen boosty, který [Anti-topper](#koncept-anti-topper) umí potlačit: **Mark** a **Top**.
 - **Top Maxxi** je imunní → payback pro něj nikdy nevzniká.
 - Vyhodnocuju ve chvíli, kdy inzerát dostane svůj terminal stav: `expired` / `sold` / `closed` (už se nic nevrací do hry, jen vyrovnám účty).
 - Když prodejce inzerát ručně zavře (`closed`), vyúčtování proběhne taky. Payback může vyjít klidně **0** — ale nesmí to „nechat viset“.
-- [Payback](#koncept-payback) je **[Pass](#koncept-pass) ([Exclusive](#koncept-exclusive))** (typicky Seller/Pro) a vzniká jen pokud má prodávající v době vyhodnocení aktivní [Payback](#koncept-payback) pass.
+- **Payback** je **[Pass](#koncept-pass) ([Exclusive](#koncept-exclusive))** (typicky Seller/Pro) a vzniká jen pokud má prodávající v době vyhodnocení aktivní **Payback** pass.
 - Základ je `anti-topper` metrika (viz [Metrika: Anti-topper](#koncept-metrika-inzeratu-anti-topper)). Výše vrácení z ceny zvýraznění:
 
 | Poměr **anti-topper**         | Vrácená část ceny zvýraznění |
@@ -2477,11 +2477,11 @@ Related:
 ### Kontinuální nabídka
 ← [předchozí](#koncept-payback) | [další](#koncept-landing) →
 
-[Kontinuální nabídka](#koncept-kontinualni-nabidka) je legální způsob, jak řízeně prodloužit život **inzerátu**, když to není jednorázovej kus.
+**Kontinuální nabídka** je legální způsob, jak řízeně prodloužit život **inzerátu**, když to není jednorázovej kus.
 
 Smysl:
 - automatická expirace drží pořádek a zabíjí hřbitovy,
-- [Kontinuální nabídka](#koncept-kontinualni-nabidka) je způsob, jak tenhle řád koupit bez ojebů.
+- **Kontinuální nabídka** je způsob, jak tenhle řád koupit bez ojebů.
 
 Jak to funguje:
 - Je to **[Pass](#koncept-pass)**, který prodlužuje aktivní cyklus inzerátu (prakticky posouvá „efektivní expiraci“).
@@ -2497,7 +2497,7 @@ Chování během aktivního passu:
 
 Hranice:
 - Nic z toho neobchází systémový brány (hlavně [Citlivost](#koncept-citlivost-inzeratu), ignor, Early Access/Early Delivery).
-- Nad `sold` inzerátem nejde [Kontinuální nabídku](#koncept-kontinualni-nabidka) zapnout. `sold` je konec.
+- Nad `sold` inzerátem nejde **Kontinuální nabídku** zapnout. `sold` je konec.
 
 Related:
 - [Inzerát](#koncept-inzerat)
