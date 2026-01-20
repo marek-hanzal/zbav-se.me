@@ -6,7 +6,6 @@ import { withDraftApiFx } from "./draft/withDraftApiFx";
 import { withFavouriteApiFx } from "./favourite/withFavouriteApiFx";
 import { withFeedApiFx } from "./feed/withFeedApiFx";
 import { withFeedFavouriteApiFx } from "./feed-favourite/withFeedFavouriteApiFx";
-import { withFeedbackApiFx } from "./feedback/withFeedbackApiFx";
 import { withFlagApiFx } from "./flag/withFlagApiFx";
 import { withGalleryApiFx } from "./gallery/withGalleryApiFx";
 import { withIgnoreApiFx } from "./ignore/withIgnoreApiFx";
@@ -14,6 +13,7 @@ import { withListingApiFx } from "./listing/withListingApiFx";
 import { withListingEventApiFx } from "./listing-event/withListingEventApiFx";
 import { withMessageThreadApiFx } from "./message-thread/withMessageThreadApiFx";
 import { withS3ApiFx } from "./s3/withS3ApiFx";
+import { withThumbApiFx } from "./thumb/withThumbApiFx";
 import { withTransactionApiFx } from "./transaction/withTransactionApiFx";
 import { withTransactionMessageGalleryApiFx } from "./transaction-message-gallery/withTransactionMessageGalleryApiFx";
 import { withTransactionMessageLocationApiFx } from "./transaction-message-location/withTransactionMessageLocationApiFx";
@@ -52,7 +52,7 @@ export const withUserApiFx = Effect.fn("withUserApiFx")(function* () {
 		withDraftApiFx(),
 		withFavouriteApiFx(),
 		withFeedApiFx(),
-		withFeedbackApiFx(),
+		withThumbApiFx(),
 		withFeedFavouriteApiFx(),
 		withFlagApiFx(),
 		withGalleryApiFx(),

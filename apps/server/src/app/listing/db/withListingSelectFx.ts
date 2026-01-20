@@ -2,11 +2,11 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import type { CategoryDbSchema } from "~/app/category/schema/CategoryDbSchema";
-import type { FeedbackEnumSchema } from "~/app/feedback/schema/FeedbackEnumSchema";
 import { withGallerySelectFx } from "~/app/gallery/db/withGallerySelectFx";
 import { withListingCollectionSelectFx } from "~/app/listing/db/withListingCollectionSelectFx";
 import type { ListingDeliveryEnumSchema } from "~/app/listing/schema/ListingDeliveryEnumSchema";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
+import type { ThumbEnumSchema } from "~/app/thumb/schema/ThumbEnumSchema";
 
 export namespace withListingSelectFx {
 	export interface Props extends withListingCollectionSelectFx.Props {
@@ -128,12 +128,12 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			.as("transactionId"),
 
 		eb
-			.selectFrom("feedback as fb")
+			.selectFrom("thumb as fb")
 			.select("fb.type")
 			.whereRef("fb.listingId", "=", "l.id")
 			.where("fb.userId", "=", userId)
 			.limit(1)
-			.$castTo<FeedbackEnumSchema.Type | null>()
-			.as("feedback"),
+			.$castTo<ThumbEnumSchema.Type | null>()
+			.as("thumb"),
 	]);
 });

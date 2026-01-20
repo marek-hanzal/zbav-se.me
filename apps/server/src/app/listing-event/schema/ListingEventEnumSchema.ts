@@ -27,11 +27,11 @@ export const ListingEventEnumSchema = z
 		"favourite",
 		"unfavourite",
 		/**
-		 * Positive feedback on the listing
+		 * Positive thumb on the listing
 		 */
 		"like",
 		/**
-		 * Negative feedback on the listing
+		 * Negative thumb on the listing
 		 */
 		"dislike",
 	])

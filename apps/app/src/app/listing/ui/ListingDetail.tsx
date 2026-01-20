@@ -14,16 +14,16 @@ import { ConditionIcon } from "~/app/condition/ui/ConditionIcon";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
 import { useListingEvent } from "~/app/listing/hook/useListingEvent";
 import { FavouriteToggleButton } from "~/app/listing/ui/button/FavouriteToggleButton";
-import { FeedbackDislikeButton } from "~/app/listing/ui/button/FeedbackDislikeButton";
-import { FeedbackLikeButton } from "~/app/listing/ui/button/FeedbackLikeButton";
 import { FlagButton } from "~/app/listing/ui/button/FlagButton";
 import { IgnoreButton } from "~/app/listing/ui/button/IgnoreButton";
+import { ThumbDislikeButton } from "~/app/listing/ui/button/ThumbDislikeButton";
+import { ThumbLikeButton } from "~/app/listing/ui/button/ThumbLikeButton";
 import { TransactionButton } from "~/app/listing/ui/button/TransactionButton";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 import { SellerScoreIcon } from "~/app/listing/ui/SellerScoreIcon";
 
 export namespace ListingDetail {
-	export type Tools = "destructive" | "hero" | "feedback";
+	export type Tools = "destructive" | "hero" | "thumb";
 
 	export interface Hooks {
 		onGallery(): void;
@@ -245,7 +245,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 				</withListingSellerInfoQuery.Suspense>
 			</Container>
 
-			{tools.includes("feedback") ? (
+			{tools.includes("thumb") ? (
 				<Container
 					ui={{
 						layout: "horizontal-flex",
@@ -254,9 +254,9 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 						justify: "space-evenly",
 					}}
 				>
-					<FeedbackLikeButton listing={listing} />
+					<ThumbLikeButton listing={listing} />
 
-					<FeedbackDislikeButton listing={listing} />
+					<ThumbDislikeButton listing={listing} />
 				</Container>
 			) : null}
 

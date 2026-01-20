@@ -1,0 +1,1 @@
+export { withThumbCreateMutation } from "./withThumbCreateMutation";

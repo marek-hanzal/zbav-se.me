@@ -1,25 +1,25 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import type { FeedbackCreateSchema } from "~/app/feedback/schema/FeedbackCreateSchema";
 import { listingCheckIfOwnFx } from "~/app/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/app/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
+import type { ThumbCreateSchema } from "~/app/thumb/schema/ThumbCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
-export namespace feedbackCreateFx {
-	export interface Props extends FeedbackCreateSchema.Type {
+export namespace thumbCreateFx {
+	export interface Props extends ThumbCreateSchema.Type {
 		userId: string;
 	}
 }
 
-export const feedbackCreateFx = Effect.fn("feedbackCreateFx")(function* ({
+export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 	userId,
 	listingId,
 	type,
 	...data
-}: feedbackCreateFx.Props) {
+}: thumbCreateFx.Props) {
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
@@ -30,7 +30,7 @@ export const feedbackCreateFx = Effect.fn("feedbackCreateFx")(function* ({
 			yield* listingCheckIfOwnFx({
 				userId,
 				listingId,
-				message: "You cannot provide feedback on your own listing.",
+				message: "You cannot provide thumb on your own listing.",
 			});
 
 			yield* listingEventCreateFx({
@@ -41,7 +41,7 @@ export const feedbackCreateFx = Effect.fn("feedbackCreateFx")(function* ({
 
 			yield* Effect.promise(async () => {
 				return kysely
-					.insertInto("feedback")
+					.insertInto("thumb")
 					.values({
 						...data,
 						id,
@@ -68,4 +68,4 @@ export const feedbackCreateFx = Effect.fn("feedbackCreateFx")(function* ({
 	);
 });
 
-export type feedbackCreateFx = ReturnType<typeof feedbackCreateFx>;
+export type thumbCreateFx = ReturnType<typeof thumbCreateFx>;

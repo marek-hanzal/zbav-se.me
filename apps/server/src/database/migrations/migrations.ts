@@ -26,7 +26,7 @@ import { MessagePackageMigration } from "./0024-message-package";
 import { TransactionMigration } from "./0025-transaction";
 import { TransactionStatusMigration } from "./0026-transaction-status";
 import { GitHubMigration } from "./0027-github";
-import { FeedbackMigration } from "./0028-feedback";
+import { ThumbMigration } from "./0028-thumb";
 import { UserEventMigration } from "./0029-user-event";
 
 export const migrations = {
@@ -58,6 +58,6 @@ export const migrations = {
 	"0025-transaction": TransactionMigration,
 	"0026-transaction-status": TransactionStatusMigration,
 	"0027-github": GitHubMigration,
-	"0028-feedback": FeedbackMigration,
+	"0028-thumb": ThumbMigration,
 	"0029-user-event": UserEventMigration,
 } as const;

@@ -1,9 +1,9 @@
 import { type Migration, sql } from "kysely";
 
-export const FeedbackMigration: Migration = {
+export const ThumbMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createType("feedback_enum")
+			.createType("thumb_enum")
 			.asEnum([
 				"like",
 				"dislike",
@@ -11,14 +11,14 @@ export const FeedbackMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createTable("feedback")
+			.createTable("thumb")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
-			.addColumn("type", sql`feedback_enum`, (col) => col.notNull())
+			.addColumn("type", sql`thumb_enum`, (col) => col.notNull())
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
-				"feedback_[userId]_fk",
+				"thumb_[userId]_fk",
 				[
 					"userId",
 				],
@@ -29,7 +29,7 @@ export const FeedbackMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"feedback_[listingId]_fk",
+				"thumb_[listingId]_fk",
 				[
 					"listingId",
 				],
@@ -39,15 +39,15 @@ export const FeedbackMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint("feedback_[userId-listingId]_unique_idx", [
+			.addUniqueConstraint("thumb_[userId-listingId]_unique_idx", [
 				"userId",
 				"listingId",
 			])
 			.execute();
 
 		await db.schema
-			.createIndex("feedback_[listingId-type]_idx")
-			.on("feedback")
+			.createIndex("thumb_[listingId-type]_idx")
+			.on("thumb")
 			.columns([
 				"listingId",
 				"type",
@@ -55,8 +55,8 @@ export const FeedbackMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("feedback_[userId-createdAt]_idx")
-			.on("feedback")
+			.createIndex("thumb_[userId-createdAt]_idx")
+			.on("thumb")
 			.columns([
 				"userId",
 				"createdAt",
