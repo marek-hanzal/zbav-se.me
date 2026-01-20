@@ -1,18 +1,17 @@
-import { useCls } from "@use-pico/cls";
 import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
-import { type FC, type Ref, useRef, useState } from "react";
+import { type ComponentProps, type FC, type Ref, useRef, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { useMergeRefs } from "../../hook/useMergeRefs";
 import { Icon } from "../../icon/Icon";
-import { FulltextCls } from "./FulltextCls";
+import { uiFulltext } from "./uiFulltext";
 
 export namespace Fulltext {
 	export type Value = string | undefined;
 	export type State = StateType.State<Value>;
 	export type OnFulltext = (text: Value) => void;
 
-	export interface Props extends FulltextCls.Props {
+	export interface Props extends uiFulltext.Component<ComponentProps<"input">> {
 		ref?: Ref<HTMLInputElement>;
 		state: State;
 		textPlaceholder?: string;
@@ -33,15 +32,15 @@ export const Fulltext: FC<Fulltext.Props> = ({
 	textPlaceholder = "Fulltext (placeholder)",
 	withSubmit = false,
 	limit = 3,
-	cls = FulltextCls,
-	tweak,
+	ui,
+	className,
+	...props
 }) => {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const mergeRef = useMergeRefs([
 		ref,
 		inputRef,
 	]);
-	const { slots } = useCls(cls, tweak);
 	const [search, setSearch] = useState(value || "");
 	const debounced = useDebouncedCallback((value) => {
 		set(value);
@@ -59,12 +58,14 @@ export const Fulltext: FC<Fulltext.Props> = ({
 
 	return (
 		<div
-			data-ui="Fulltext-root"
-			className={slots.root()}
+			{...uiFulltext({
+				ui,
+				className,
+			})}
 		>
 			<div
 				data-ui="Fulltext-search"
-				className={slots.search()}
+				className="Fulltext-search absolute inset-y-0 left-2 flex items-center pointer-events-none"
 			>
 				<Icon
 					icon={"icon-[material-symbols-light--search]"}
@@ -78,7 +79,7 @@ export const Fulltext: FC<Fulltext.Props> = ({
 				data-ui="Fulltext-input"
 				ref={mergeRef}
 				value={search}
-				className={slots.input()}
+				className="Fulltext-input px-10 w-full"
 				type={"text"}
 				placeholder={translator.text(textPlaceholder)}
 				onChange={(event) => {
@@ -95,11 +96,12 @@ export const Fulltext: FC<Fulltext.Props> = ({
 						handleSubmit();
 					}
 				}}
+				{...props}
 			/>
 			{withSubmit ? (
 				<div
 					data-ui="Fulltext-submit"
-					className={slots.submit()}
+					className="Fulltext-submit absolute inset-y-0 right-2 flex items-center cursor-pointer"
 				>
 					<Icon
 						icon={"icon-[lucide--send]"}
@@ -126,7 +128,7 @@ export const Fulltext: FC<Fulltext.Props> = ({
 				value && (
 					<div
 						data-ui="Fulltext-clear"
-						className={slots.clear()}
+						className="Fulltext-clear absolute inset-y-0 right-2 flex items-center cursor-pointer"
 					>
 						<Icon
 							icon={"icon-[gridicons--cross]"}

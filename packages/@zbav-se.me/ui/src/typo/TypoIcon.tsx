@@ -1,14 +1,15 @@
 import { Icon } from "@use-pico/client/icon";
-import { type Cls, useCls } from "@use-pico/cls";
-import type { FC, HTMLAttributes } from "react";
-import { TypoIconCls } from "./TypoIconCls";
+import { tvc } from "@use-pico/cls";
+import type { ComponentProps, FC, ReactNode } from "react";
+import { uiTypoIcon } from "./uiTypoIcon";
 
 export namespace TypoIcon {
-	export interface Props extends TypoIconCls.Props<HTMLAttributes<HTMLDivElement>> {
+	export interface Props extends uiTypoIcon.Component<ComponentProps<"div">> {
 		icon: Icon.Type;
 		iconProps?: Icon.PropsEx;
-		justify?: Cls.VariantOf<TypoIconCls, "justify">;
-		items?: Cls.VariantOf<TypoIconCls, "items">;
+		justify?: uiTypoIcon.Justify;
+		items?: uiTypoIcon.Items;
+		children?: ReactNode;
 	}
 }
 
@@ -18,20 +19,26 @@ export const TypoIcon: FC<TypoIcon.Props> = ({
 	justify,
 	items,
 	children,
-	cls = TypoIconCls,
-	tweak,
+	ui,
+	className,
 	...props
 }) => {
-	const { slots } = useCls(cls, tweak, {
-		variant: {
-			justify,
-			items,
-		},
-	});
-
 	return (
 		<div
-			className={slots.root()}
+			{...uiTypoIcon({
+				ui: {
+					...ui,
+					justify,
+					items,
+				},
+				className: tvc([
+					"TypoIcon-root",
+					"flex",
+					"flex-row",
+					"gap-2",
+					className,
+				]),
+			})}
 			{...props}
 		>
 			<Icon
@@ -39,7 +46,17 @@ export const TypoIcon: FC<TypoIcon.Props> = ({
 				{...iconProps}
 			/>
 
-			<div className={slots.content()}>{children}</div>
+			<div
+				className={tvc([
+					"flex",
+					"flex-col",
+					"items-start",
+					items === "start" && "items-start",
+					items === "center" && "items-center",
+				])}
+			>
+				{children}
+			</div>
 		</div>
 	);
 };

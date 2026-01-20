@@ -43,18 +43,6 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 					set: setSearch,
 				}}
 				textPlaceholder={"Location search (placeholder)"}
-				tweak={{
-					slot: {
-						input: {
-							class: [
-								"px-8",
-							],
-							token: [
-								"size.lg",
-							],
-						},
-					},
-				}}
 			/>
 
 			<ListContainer

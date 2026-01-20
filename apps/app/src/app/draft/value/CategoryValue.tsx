@@ -34,8 +34,10 @@ export const CategoryValue: FC<CategoryValue.Props> = ({ draft, ...props }) => {
 				draft.category ? (
 					<CategoryInline
 						category={draft.category}
-						tone="secondary"
-						theme="light"
+						ui={{
+							tone: "secondary",
+							theme: "light",
+						}}
 					/>
 				) : null
 			}

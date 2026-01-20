@@ -139,8 +139,10 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					textValue={
 						<CategoryInline
 							category={listing.category}
-							tone="secondary"
-							theme="light"
+							ui={{
+								tone: "secondary",
+								theme: "light",
+							}}
 						/>
 					}
 				/>

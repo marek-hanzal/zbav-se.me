@@ -6,10 +6,7 @@ import {
 	Scripts,
 	useParams,
 } from "@tanstack/react-router";
-import { PicoCls } from "@use-pico/client/cls";
 import { uiContainer } from "@use-pico/client/ui/container";
-import { TokenProvider } from "@use-pico/cls";
-import { ThemeCls } from "@zbav-se.me/ui/cls";
 import styles from "~/assets/style.css?url";
 
 export const Route = createRootRouteWithContext<{
@@ -65,9 +62,7 @@ export const Route = createRootRouteWithContext<{
 						],
 					})}
 				>
-					<TokenProvider cls={PicoCls.use(ThemeCls)}>
-						<Outlet />
-					</TokenProvider>
+					<Outlet />
 
 					<Scripts />
 				</body>

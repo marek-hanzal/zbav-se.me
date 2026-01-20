@@ -1,4 +1,4 @@
-import { tvc } from "../utils/tvc";
+import { tvc } from "../tvc/tvc";
 
 /**
  * @internal
