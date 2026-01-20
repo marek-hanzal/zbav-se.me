@@ -329,9 +329,8 @@ Co je u mě povinný standard:
 - **Jsem vidět.** Žádný anonymní „tým“.
 - **Monetizace je přiznaná, čitelná a férová.** Žádný gotcha momenty (viz [Kodex](#kodex), [Ekonomika](#ekonomika)).
 - **Zdroják je veřejně k nahlédnutí (source-available, ne OSS).**
-- **Transparentní účet** je viditelně vytaženej i na landingu.
 - **Žádný prodej dat třetím stranám.** Tečka.
-- **Bez trackování.** Žádný UTM, žádný cookies, žádný externí analytický skripty. Měřím jen interní eventy, který mají smysl v produktu.
+- **Bez trackování.** Cookies používám jen pro autentizaci (přihlášení), ne pro marketing ani tracking. Žádný UTM, žádný externí analytický skripty. Měřím jen interní eventy, který mají smysl v produktu.
 - **Změny nejsou tichý ojeb.** Když změním něco zásadního, přiznám to.
 
 ---
@@ -2428,6 +2427,16 @@ Kontrakt:
 - Vyhodnocuju ve chvíli, kdy inzerát dostane svůj terminal stav: `expired` / `sold` / `closed` (už se nic nevrací do hry, jen vyrovnám účty).
 - Když prodejce inzerát ručně zavře (`closed`), vyúčtování proběhne taky. Payback může vyjít klidně **0** — ale nesmí to „nechat viset“.
 - [Payback](#koncept-payback) je **[Pass](#koncept-pass) ([Exclusive](#koncept-exclusive))** (typicky Seller/Pro) a vzniká jen pokud má prodávající v době vyhodnocení aktivní [Payback](#koncept-payback) pass.
+- Základ je `anti-topper` metrika (viz [Metrika: Anti-topper](#koncept-metrika-inzeratu-anti-topper)). Výše vrácení z ceny zvýraznění:
+
+| Poměr **anti-topper**         | Vrácená část ceny zvýraznění |
+| ----------------------------- | ---------------------------- |
+| < 25 %                        | 0 %                          |
+| 25–49 %                       | 25 %                         |
+| 50–74 %                       | 50 %                         |
+| ≥ 75 %                        | 75 %                         |
+
+Nikdy nevracím víc než tři čtvrtiny zaplacený částky.
 
 Related:
 - [Anti-topper](#koncept-anti-topper)
@@ -2474,13 +2483,12 @@ Related:
 
 Landing je vizitka postoje. Držím to krátký: pět bloků a hotovo.
 
-| Blok               | Co je uvnitř                                                                                                    | Proč                                                   |
-| ------------------ | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| Hero               | claim **„Nakupuješ nebo prodáváš?“** + 2 rovnocenný CTA: **„Už se známe“** (Login), **„Přidej se!“** (Register) | žádný trick CTA, žádnej nátlak                         |
-| Autor              | moje fotka, moje jméno, odkaz na GitHub, motto **„Bez keců. Bez ojebů.“**                                       | důvěra přes tvář a odpovědnost                         |
-| Aktivita vývoje    | GitHub-like heatmap                                                                                             | důkaz práce, ne sliby                                  |
-| Live Pulse         | poslední události (registrace, nový inzeráty, transakce) – timeline živosti trhu                                | ať je vidět, že to žije                                |
-| Transparentní účet | link na bankovnictví                                                                                            | finance netajím; kdo hledá shady shit, tady by to bylo |
+| Blok            | Co je uvnitř                                                                                                    | Proč                           |
+| --------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| Hero            | claim **„Nakupuješ nebo prodáváš?“** + 2 rovnocenný CTA: **„Už se známe“** (Login), **„Přidej se!“** (Register) | žádný trick CTA, žádnej nátlak |
+| Autor           | moje fotka, moje jméno, odkaz na GitHub, motto **„Bez keců. Bez ojebů.“**                                       | důvěra přes tvář a odpovědnost |
+| Aktivita vývoje | GitHub-like heatmap                                                                                             | důkaz práce, ne sliby          |
+| Live Pulse      | poslední události (registrace, nový inzeráty, transakce) – timeline živosti trhu                                | ať je vidět, že to žije        |
 
 Tón: minimalistickej. Bez popupů, bez urgencí, bez vysvětlování.
 
