@@ -2145,27 +2145,27 @@ export const zFeedFavouriteCollection = z.object({
 export type zFeedFavouriteCollection = z.infer<typeof zFeedFavouriteCollection>;
 
 /**
- * Type of feedback
+ * Type of thumb
  */
-export const zFeedbackEnum = z.enum(['like', 'dislike']).register(z.globalRegistry, {
-    description: 'Type of feedback'
+export const zThumbEnum = z.enum(['like', 'dislike']).register(z.globalRegistry, {
+    description: 'Type of thumb'
 });
 
-export type zFeedbackEnum = z.infer<typeof zFeedbackEnum>;
+export type zThumbEnum = z.infer<typeof zThumbEnum>;
 
 /**
- * Data for creating a new feedback
+ * Data for creating a new thumb
  */
-export const zFeedbackCreate = z.object({
+export const zThumbCreate = z.object({
     listingId: z.string().register(z.globalRegistry, {
         description: 'ID of the listing'
     }),
-    type: zFeedbackEnum
+    type: zThumbEnum
 }).register(z.globalRegistry, {
-    description: 'Data for creating a new feedback'
+    description: 'Data for creating a new thumb'
 });
 
-export type zFeedbackCreate = z.infer<typeof zFeedbackCreate>;
+export type zThumbCreate = z.infer<typeof zThumbCreate>;
 
 /**
  * Request to create or update a feed gallery
@@ -2501,8 +2501,8 @@ export const zListing = z.object({
         z.string(),
         z.null()
     ]),
-    feedback: z.union([
-        zFeedbackEnum,
+    thumb: z.union([
+        zThumbEnum,
         z.null()
     ])
 }).register(z.globalRegistry, {
@@ -3324,20 +3324,20 @@ export const zApiFeedGalleryCreateResponse = zGallery.and(z.unknown().register(z
 
 export type zapiFeedGalleryCreateResponse = z.infer<typeof zApiFeedGalleryCreateResponse>;
 
-export const zApiFeedbackCreateData = z.object({
-    body: z.optional(zFeedbackCreate),
+export const zApiThumbCreateData = z.object({
+    body: z.optional(zThumbCreate),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });
 
-export type zapiFeedbackCreateRequest = z.infer<typeof zApiFeedbackCreateData>;
+export type zapiThumbCreateRequest = z.infer<typeof zApiThumbCreateData>;
 
 /**
- * The feedback was created and the updated listing is returned
+ * The thumb was created and the updated listing is returned
  */
-export const zApiFeedbackCreateResponse = zListing;
+export const zApiThumbCreateResponse = zListing;
 
-export type zapiFeedbackCreateResponse = z.infer<typeof zApiFeedbackCreateResponse>;
+export type zapiThumbCreateResponse = z.infer<typeof zApiThumbCreateResponse>;
 
 export const zApiFeedFavouriteCollectionData = z.object({
     body: z.optional(zFeedQuery),

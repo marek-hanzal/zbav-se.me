@@ -2,23 +2,19 @@ import { useQueryClient } from "@tanstack/react-query";
 import { DislikeIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
-import { withFeedbackCreateMutation } from "@zbav-se.me/sdk/mutation/user/feedback";
+import { withThumbCreateMutation } from "@zbav-se.me/sdk/mutation/user/thumb";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
 
-export namespace FeedbackDislikeButton {
+export namespace ThumbDislikeButton {
 	export interface Props extends Button.Props {
 		listing: tListing;
 	}
 }
 
-export const FeedbackDislikeButton: FC<FeedbackDislikeButton.Props> = ({
-	listing,
-	ui,
-	...props
-}) => {
+export const ThumbDislikeButton: FC<ThumbDislikeButton.Props> = ({ listing, ui, ...props }) => {
 	const queryClient = useQueryClient();
-	const feedbackCreateMutation = withFeedbackCreateMutation.useMutation({
+	const thumbCreateMutation = withThumbCreateMutation.useMutation({
 		onSuccess(listing) {
 			withListingFetchQuery.invalidate(queryClient, {
 				where: {
@@ -30,12 +26,12 @@ export const FeedbackDislikeButton: FC<FeedbackDislikeButton.Props> = ({
 			mutationId: listing.id,
 		},
 	});
-	const isMutating = withFeedbackCreateMutation.useIsMutating({
+	const isMutating = withThumbCreateMutation.useIsMutating({
 		mutationId: listing.id,
 	});
 
-	const hasFeedback = listing.feedback !== null;
-	const isDisliked = listing.feedback === "dislike";
+	const hasThumb = listing.thumb !== null;
+	const isDisliked = listing.thumb === "dislike";
 
 	return (
 		<Button
@@ -45,10 +41,10 @@ export const FeedbackDislikeButton: FC<FeedbackDislikeButton.Props> = ({
 					text: "xl",
 				},
 			}}
-			disabled={hasFeedback || isMutating}
-			loading={feedbackCreateMutation.isPending}
+			disabled={hasThumb || isMutating}
+			loading={thumbCreateMutation.isPending}
 			onClick={() => {
-				feedbackCreateMutation.mutate({
+				thumbCreateMutation.mutate({
 					listingId: listing.id,
 					type: "dislike",
 				});

@@ -3,27 +3,28 @@ import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
-import { feedbackCreateFx } from "~/app/feedback/fx/feedbackCreateFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { thumbCreateFx } from "~/app/thumb/fx/thumbCreateFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { FeedbackCreateSchema } from "./schema/FeedbackCreateSchema";
+import { ThumbCreateSchema } from "./schema/ThumbCreateSchema";
+
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;
 	userHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/feedback/create",
-			description: "Create a new feedback",
-			operationId: "apiFeedbackCreate",
+			path: "/thumb/create",
+			description: "Create a new thumb",
+			operationId: "apiThumbCreate",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: FeedbackCreateSchema,
+							schema: ThumbCreateSchema,
 						},
 					},
-					description: "Data for creating a new feedback",
+					description: "Data for creating a new thumb",
 				},
 			},
 			responses: {
@@ -33,7 +34,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 							schema: ListingSchema,
 						},
 					},
-					description: "The feedback was created and the updated listing is returned",
+					description: "The thumb was created and the updated listing is returned",
 				},
 				400: {
 					content: {
@@ -41,7 +42,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 							schema: NoticeSchema,
 						},
 					},
-					description: "Invalid request - duplicate feedback or invalid data",
+					description: "Invalid request - duplicate thumb or invalid data",
 				},
 				404: {
 					content: {
@@ -61,7 +62,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				},
 			},
 			tags: [
-				"feedback",
+				"thumb",
 				"user",
 			],
 		}),
@@ -72,7 +73,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				return c.json<ListingSchema.Type, 201>(
 					yield* zodFx({
 						schema: ListingSchema,
-						dataFx: feedbackCreateFx({
+						dataFx: thumbCreateFx({
 							...c.req.valid("json"),
 							userId: user.id,
 						}),

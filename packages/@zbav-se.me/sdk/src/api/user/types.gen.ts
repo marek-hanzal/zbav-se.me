@@ -1975,25 +1975,25 @@ export type tFeedFavourite = {
 };
 
 /**
- * Data for creating a new feedback
+ * Data for creating a new thumb
  */
-export type tFeedbackCreate = {
+export type tThumbCreate = {
     /**
      * ID of the listing
      */
     listingId: string;
-    type: tFeedbackEnum;
+    type: tThumbEnum;
 };
 
 /**
- * Type of feedback
+ * Type of thumb
  */
-export const tFeedbackEnum = { like: 'like', dislike: 'dislike' } as const;
+export const tThumbEnum = { like: 'like', dislike: 'dislike' } as const;
 
 /**
- * Type of feedback
+ * Type of thumb
  */
-export type tFeedbackEnum = typeof tFeedbackEnum[keyof typeof tFeedbackEnum];
+export type tThumbEnum = typeof tThumbEnum[keyof typeof tThumbEnum];
 
 /**
  * Request to create or update a feed gallery
@@ -2289,9 +2289,9 @@ export type tListing = {
      */
     transactionId: string | null;
     /**
-     * Feedback type provided by the user (like/dislike) or null if not present
+     * Thumb type provided by the user (like/dislike) or null if not present
      */
-    feedback: tFeedbackEnum | null;
+    thumb: tThumbEnum | null;
 };
 
 /**
@@ -3363,19 +3363,19 @@ export type tApiFeedGalleryCreateResponse = {
 
 export type apiFeedGalleryCreateResponse = tApiFeedGalleryCreateResponse[keyof tApiFeedGalleryCreateResponse];
 
-export type tApiFeedbackCreateRequest = {
+export type tApiThumbCreateRequest = {
     /**
-     * Data for creating a new feedback
+     * Data for creating a new thumb
      */
-    body?: tFeedbackCreate;
+    body?: tThumbCreate;
     path?: never;
     query?: never;
-    url: '/api/user/feedback/create';
+    url: '/api/user/thumb/create';
 };
 
-export type apiFeedbackCreateErrors = {
+export type apiThumbCreateErrors = {
     /**
-     * Invalid request - duplicate feedback or invalid data
+     * Invalid request - duplicate thumb or invalid data
      */
     400: tNotice;
     /**
@@ -3388,16 +3388,16 @@ export type apiFeedbackCreateErrors = {
     500: tNotice;
 };
 
-export type apiFeedbackCreateError = apiFeedbackCreateErrors[keyof apiFeedbackCreateErrors];
+export type apiThumbCreateError = apiThumbCreateErrors[keyof apiThumbCreateErrors];
 
-export type tApiFeedbackCreateResponse = {
+export type tApiThumbCreateResponse = {
     /**
-     * The feedback was created and the updated listing is returned
+     * The thumb was created and the updated listing is returned
      */
     201: tListing;
 };
 
-export type apiFeedbackCreateResponse = tApiFeedbackCreateResponse[keyof tApiFeedbackCreateResponse];
+export type apiThumbCreateResponse = tApiThumbCreateResponse[keyof tApiThumbCreateResponse];
 
 export type tApiFeedFavouriteCollectionRequest = {
     body?: tFeedQuery;

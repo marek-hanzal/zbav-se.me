@@ -1,27 +1,27 @@
 import { withMutation } from "@use-pico/client/mutation";
 import { withApi } from "@use-pico/common/api";
-import { apiFeedbackCreate } from "../../../api/user/sdk.gen";
+import { apiThumbCreate } from "../../../api/user/sdk.gen";
 import type {
-	apiFeedbackCreateError,
-	tApiFeedbackCreateResponse,
-	tFeedbackCreate,
+	apiThumbCreateError,
+	tApiThumbCreateResponse,
+	tThumbCreate,
 } from "../../../api/user/types.gen";
 
-export const withFeedbackCreateMutation = withMutation<
-	tFeedbackCreate,
-	tApiFeedbackCreateResponse[201],
-	apiFeedbackCreateError
+export const withThumbCreateMutation = withMutation<
+	tThumbCreate,
+	tApiThumbCreateResponse[201],
+	apiThumbCreateError
 >({
 	keys(variables) {
 		return [
-			"feedback",
+			"thumb",
 			"create",
 			variables,
 		];
 	},
 	async mutationFn(body) {
 		return withApi(
-			apiFeedbackCreate({
+			apiThumbCreate({
 				body,
 			}),
 		);

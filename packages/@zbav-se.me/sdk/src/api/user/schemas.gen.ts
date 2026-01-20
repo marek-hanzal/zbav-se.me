@@ -2701,14 +2701,14 @@ export const sFeedFavourite = {
     ]
 } as const;
 
-export const sFeedbackCreate = {
+export const sThumbCreate = {
     type: 'object',
     properties: {
         listingId: {
             type: 'string'
         },
         type: {
-            $ref: '#/components/schemas/FeedbackEnum'
+            $ref: '#/components/schemas/ThumbEnum'
         }
     },
     required: [
@@ -2717,7 +2717,7 @@ export const sFeedbackCreate = {
     ]
 } as const;
 
-export const sFeedbackEnum = {
+export const sThumbEnum = {
     type: 'string',
     enum: [
         'like',
@@ -3222,10 +3222,10 @@ export const sListing = {
                 }
             ]
         },
-        feedback: {
+        thumb: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/FeedbackEnum'
+                    $ref: '#/components/schemas/ThumbEnum'
                 },
                 {
                     type: 'null'
@@ -3264,7 +3264,7 @@ export const sListing = {
         'isIgnored',
         'hasFlag',
         'transactionId',
-        'feedback'
+        'thumb'
     ]
 } as const;
 

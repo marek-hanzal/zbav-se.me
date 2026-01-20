@@ -4,7 +4,6 @@ import type { CategoryMissDbSchema } from "~/app/category-miss/schema/CategoryMi
 import type { DraftDbSchema } from "~/app/draft/schema/DraftDbSchema";
 import type { FavouriteDbSchema } from "~/app/favourite/schema/FavouriteDbSchema";
 import type { FeedDbSchema } from "~/app/feed/schema/FeedDbSchema";
-import type { FeedbackDbSchema } from "~/app/feedback/schema/FeedbackDbSchema";
 import type { FlagDbSchema } from "~/app/flag/schema/FlagDbSchema";
 import type { GalleryDbSchema } from "~/app/gallery/schema/GalleryDbSchema";
 import type { GalleryItemDbSchema } from "~/app/gallery-item/schema/GalleryItemDbSchema";
@@ -21,6 +20,7 @@ import type { MessageSystemDbSchema } from "~/app/message-system/schema/MessageS
 import type { MessageTextDbSchema } from "~/app/message-text/schema/MessageTextDbSchema";
 import type { MessageThreadDbSchema } from "~/app/message-thread/schema/MessageThreadDbSchema";
 import type { MessageThreadUserDbSchema } from "~/app/message-thread-user/schema/MessageThreadUserDbSchema";
+import type { ThumbDbSchema } from "~/app/thumb/schema/ThumbDbSchema";
 import type { TransactionDbSchema } from "~/app/transaction/schema/TransactionDbSchema";
 import type { TransactionStatusDbSchema } from "~/app/transaction-status/schema/ListingTransactionStatusDbSchema";
 import type { UploadDbSchema } from "~/app/upload/schema/UploadDbSchema";
@@ -35,7 +35,7 @@ export interface Database {
 	draft: DraftDbSchema.Type;
 	favourite: FavouriteDbSchema.Type;
 	feed: FeedDbSchema.Type;
-	feedback: FeedbackDbSchema.Type;
+	thumb: ThumbDbSchema.Type;
 	flag: FlagDbSchema.Type;
 	gallery_item: GalleryItemDbSchema.Type;
 	gallery: GalleryDbSchema.Type;

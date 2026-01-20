@@ -2,8 +2,8 @@ import { z } from "@hono/zod-openapi";
 import { CategorySchema } from "~/@session/category/schema/CategorySchema";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
-import { FeedbackEnumSchema } from "~/app/feedback/schema/FeedbackEnumSchema";
 import { ListingDbSchema } from "~/app/listing/schema/ListingDbSchema";
+import { ThumbEnumSchema } from "~/app/thumb/schema/ThumbEnumSchema";
 
 export const ListingSchema = z
 	.looseObject({
@@ -34,14 +34,14 @@ export const ListingSchema = z
 			.openapi({
 				description: "Whether the user has a transaction with this listing",
 			}),
-		feedback: z
+		thumb: z
 			.union([
-				FeedbackEnumSchema,
+				ThumbEnumSchema,
 				z.null(),
 			])
 			.openapi({
 				description:
-					"Feedback type provided by the user (like/dislike) or null if not present",
+					"Thumb type provided by the user (like/dislike) or null if not present",
 			}),
 	})
 	.omit({

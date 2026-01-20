@@ -168,8 +168,8 @@ export interface FileRoutesByFullPath {
   '/$locale/ui/shop': typeof LocaleUiShopRoute
   '/$locale/ui/user': typeof LocaleUiUserRoute
   '/$locale/buyer/feed/default': typeof LocaleBuyerFeedDefaultRoute
-  '/$locale/ui/buyer': typeof LocaleUiBuyerIndexRoute
-  '/$locale/ui/seller': typeof LocaleUiSellerIndexRoute
+  '/$locale/ui/buyer/': typeof LocaleUiBuyerIndexRoute
+  '/$locale/ui/seller/': typeof LocaleUiSellerIndexRoute
   '/$locale/seller/listing/$id/view': typeof LocaleSellerListingIdViewRoute
   '/$locale/ui/buyer/favourite/list': typeof LocaleUiBuyerFavouriteListRoute
   '/$locale/ui/buyer/feed/select': typeof LocaleUiBuyerFeedSelectRoute
@@ -245,8 +245,8 @@ export interface FileRouteTypes {
     | '/$locale/ui/shop'
     | '/$locale/ui/user'
     | '/$locale/buyer/feed/default'
-    | '/$locale/ui/buyer'
-    | '/$locale/ui/seller'
+    | '/$locale/ui/buyer/'
+    | '/$locale/ui/seller/'
     | '/$locale/seller/listing/$id/view'
     | '/$locale/ui/buyer/favourite/list'
     | '/$locale/ui/buyer/feed/select'
@@ -382,14 +382,14 @@ declare module '@tanstack/react-router' {
     '/$locale/ui/seller/': {
       id: '/$locale/ui/seller/'
       path: '/seller'
-      fullPath: '/$locale/ui/seller'
+      fullPath: '/$locale/ui/seller/'
       preLoaderRoute: typeof LocaleUiSellerIndexRouteImport
       parentRoute: typeof LocaleUiRoute
     }
     '/$locale/ui/buyer/': {
       id: '/$locale/ui/buyer/'
       path: '/buyer'
-      fullPath: '/$locale/ui/buyer'
+      fullPath: '/$locale/ui/buyer/'
       preLoaderRoute: typeof LocaleUiBuyerIndexRouteImport
       parentRoute: typeof LocaleUiRoute
     }
