@@ -1,12 +1,19 @@
-import type { z } from "@hono/zod-openapi";
+import { z } from "@hono/zod-openapi";
+import { CountEnumSchema } from "@use-pico/common/schema";
 import { GalleryItemQuerySchema } from "./GalleryItemQuerySchema";
 
-export const GalleryItemCountQuerySchema = GalleryItemQuerySchema.pick({
-	filter: true,
-	where: true,
-}).openapi("GalleryItemCountQuery", {
-	description: "Query object for gallery item count",
-});
+export const GalleryItemCountQuerySchema = z
+	.looseObject({
+		...GalleryItemQuerySchema.pick({
+			filter: true,
+			where: true,
+		}).shape,
+		count: CountEnumSchema.array().optional(),
+	})
+	.strip()
+	.openapi("GalleryItemCountQuery", {
+		description: "Query object for gallery item count",
+	});
 
 export type GalleryItemCountQuerySchema = typeof GalleryItemCountQuerySchema;
 

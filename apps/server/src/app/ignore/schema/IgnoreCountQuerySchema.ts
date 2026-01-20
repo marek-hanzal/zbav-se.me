@@ -1,12 +1,19 @@
-import type { z } from "@hono/zod-openapi";
+import { z } from "@hono/zod-openapi";
+import { CountEnumSchema } from "@use-pico/common/schema";
 import { IgnoreQuerySchema } from "./IgnoreQuerySchema";
 
-export const IgnoreCountQuerySchema = IgnoreQuerySchema.pick({
-	filter: true,
-	where: true,
-}).openapi("IgnoreCountQuery", {
-	description: "Query object for ignore count",
-});
+export const IgnoreCountQuerySchema = z
+	.looseObject({
+		...IgnoreQuerySchema.pick({
+			filter: true,
+			where: true,
+		}).shape,
+		count: CountEnumSchema.array().optional(),
+	})
+	.strip()
+	.openapi("IgnoreCountQuery", {
+		description: "Query object for ignore count",
+	});
 
 export type IgnoreCountQuerySchema = typeof IgnoreCountQuerySchema;
 

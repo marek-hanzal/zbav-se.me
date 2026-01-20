@@ -1,12 +1,19 @@
-import type { z } from "@hono/zod-openapi";
+import { z } from "@hono/zod-openapi";
+import { CountEnumSchema } from "@use-pico/common/schema";
 import { FavouriteQuerySchema } from "./FavouriteQuerySchema";
 
-export const FavouriteCountQuerySchema = FavouriteQuerySchema.pick({
-	filter: true,
-	where: true,
-}).openapi("FavouriteCountQuery", {
-	description: "Query object for favourite count",
-});
+export const FavouriteCountQuerySchema = z
+	.looseObject({
+		...FavouriteQuerySchema.pick({
+			filter: true,
+			where: true,
+		}).shape,
+		count: CountEnumSchema.array().optional(),
+	})
+	.strip()
+	.openapi("FavouriteCountQuery", {
+		description: "Query object for favourite count",
+	});
 
 export type FavouriteCountQuerySchema = typeof FavouriteCountQuerySchema;
 
