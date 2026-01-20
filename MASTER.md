@@ -2158,6 +2158,8 @@ Kontrakt:
 - **Kupón** je 1× použití (spotřebuje se).
 - **Kupón** má trvanlivost **max. 3 měsíce** od získání. Po vypršení se zneplatní a nelze ho použít.
 - Trvanlivost umožňuje nafarmit kupóny z předplatného (např. měsíční kupóny), ale časem vyprší — žádné nekonečné hromadění.
+- **Kupón zůstává i po ukončení předplatného** — platnost ukončí pouze a jenom expirace samotného kupónu.
+- Pokud k dané věci běží aktivní [Pass](#koncept-pass), **kupón nelze uplatnit**. Tím se zakazuje stackování — nemůžeš mít aktivní pass a zároveň použít kupón na stejnou věc.
 
 Related:
 - [Tokeny](#koncept-tokeny)
