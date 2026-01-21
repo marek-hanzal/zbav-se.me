@@ -1221,3 +1221,9 @@ seller - Transaction successful (message):
 
         Dál už tu nic není.
     static: true
+Seller score 2:
+    static: true
+    value: Vyšší riziko
+Seller score 1:
+    static: true
+    value: Vysoké riziko

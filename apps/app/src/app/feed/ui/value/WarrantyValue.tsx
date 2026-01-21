@@ -19,14 +19,14 @@ export namespace WarrantyValue {
 }
 
 export const WarrantyValue: FC<WarrantyValue.Props> = ({ feed, ...props }) => {
-	const warrantyIn = feed.query?.filter?.warrantyIn;
+	const warrantyIn = feed.query?.filter?.warrantyIn ?? [];
 
 	return (
 		<ValueList
 			data-ui={"WarrantyValue[ValueList]"}
 			textLabel={translator.text("Listing warranty (label)")}
 			textEmpty={translator.text("Warranty not selected")}
-			items={(warrantyIn ?? []).map((item) => ({
+			items={warrantyIn.map((item) => ({
 				id: item,
 				warranty: item,
 			}))}
@@ -39,6 +39,15 @@ export const WarrantyValue: FC<WarrantyValue.Props> = ({ feed, ...props }) => {
 					}}
 				/>
 			}
+			wrapperProps={{
+				ui:
+					warrantyIn.length > 0
+						? {
+								tone: "neutral",
+								theme: "light",
+							}
+						: undefined,
+			}}
 			{...props}
 		/>
 	);

@@ -112,6 +112,14 @@ export const Feed: FC<Feed.Props> = ({
 				categoryIdIn={feed.query?.filter?.categoryIdIn}
 				textLabel={translator.text("Feed category (label)")}
 				textEmpty={translator.text("Feed category not selected")}
+				action={
+					<Icon
+						icon={EditIcon}
+						ui={{
+							text: "xl",
+						}}
+					/>
+				}
 				{...values?.category}
 			/>
 

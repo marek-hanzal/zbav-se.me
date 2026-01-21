@@ -23,6 +23,14 @@ export const NameValue: FC<NameValue.Props> = ({ feed, ...props }) => {
 					}}
 				/>
 			}
+			wrapperProps={{
+				ui: feed.name
+					? {
+							tone: "neutral",
+							theme: "light",
+						}
+					: undefined,
+			}}
 			{...props}
 		/>
 	);

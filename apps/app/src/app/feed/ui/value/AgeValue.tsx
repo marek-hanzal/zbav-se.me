@@ -19,7 +19,7 @@ export namespace AgeValue {
 }
 
 export const AgeValue: FC<AgeValue.Props> = ({ feed, ...props }) => {
-	const ageIn = feed.query?.filter?.ageIn;
+	const ageIn = feed.query?.filter?.ageIn ?? [];
 
 	return (
 		<ValueList
@@ -27,7 +27,7 @@ export const AgeValue: FC<AgeValue.Props> = ({ feed, ...props }) => {
 			textLabel={translator.text("Feed age (label)")}
 			textEmpty={translator.text("Feed age not selected")}
 			textHint={translator.text("Feed age (hint)")}
-			items={(ageIn ?? []).map((item) => ({
+			items={ageIn.map((item) => ({
 				id: String(item),
 				age: String(item),
 			}))}
@@ -40,6 +40,15 @@ export const AgeValue: FC<AgeValue.Props> = ({ feed, ...props }) => {
 					}}
 				/>
 			}
+			wrapperProps={{
+				ui:
+					ageIn.length > 0
+						? {
+								tone: "neutral",
+								theme: "light",
+							}
+						: undefined,
+			}}
 			{...props}
 		/>
 	);

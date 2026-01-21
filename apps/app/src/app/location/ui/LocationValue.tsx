@@ -43,6 +43,12 @@ export const LocationValue: FC<LocationValue.Props> = ({ locationId, ...props })
 					<LabelValue
 						{...props}
 						textValue={data.address}
+						wrapperProps={{
+							ui: {
+								tone: "neutral",
+								theme: "light",
+							},
+						}}
 					/>
 				);
 			}}

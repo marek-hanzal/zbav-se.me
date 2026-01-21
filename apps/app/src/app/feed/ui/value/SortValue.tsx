@@ -48,6 +48,15 @@ export const SortValue: FC<SortValue.Props> = ({ feed, ...props }) => {
 					}}
 				/>
 			}
+			wrapperProps={{
+				ui:
+					sort.length > 0
+						? {
+								tone: "neutral",
+								theme: "light",
+							}
+						: undefined,
+			}}
 			{...props}
 		/>
 	);

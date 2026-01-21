@@ -41,6 +41,14 @@ export const RangeValue: FC<RangeValue.Props> = ({ feed, ...props }) => {
 			ui={{
 				disabled: !feed.query?.meta?.latLon,
 			}}
+			wrapperProps={{
+				ui: feed.query?.filter?.range
+					? {
+							tone: "neutral",
+							theme: "light",
+						}
+					: undefined,
+			}}
 			{...props}
 		/>
 	);

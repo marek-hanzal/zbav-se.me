@@ -19,14 +19,14 @@ export namespace DeliveryValue {
 }
 
 export const DeliveryValue: FC<DeliveryValue.Props> = ({ feed, ...props }) => {
-	const deliveryIn = feed.query?.filter?.deliveryIn;
+	const deliveryIn = feed.query?.filter?.deliveryIn ?? [];
 
 	return (
 		<ValueList
 			data-ui={"DeliveryValue[ValueList]"}
 			textLabel={translator.text("Feed delivery (label)")}
 			textEmpty={translator.text("Feed delivery not selected")}
-			items={(deliveryIn ?? []).map((item) => ({
+			items={deliveryIn.map((item) => ({
 				id: item,
 				delivery: item,
 			}))}
@@ -39,6 +39,15 @@ export const DeliveryValue: FC<DeliveryValue.Props> = ({ feed, ...props }) => {
 					}}
 				/>
 			}
+			wrapperProps={{
+				ui:
+					deliveryIn.length > 0
+						? {
+								tone: "neutral",
+								theme: "light",
+							}
+						: undefined,
+			}}
 			{...props}
 		/>
 	);

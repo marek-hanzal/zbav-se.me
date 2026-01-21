@@ -42,6 +42,12 @@ export const CategoryValue: FC<CategoryValue.Props> = ({ categoryIdIn, ...props 
 					<ValueList
 						renderFn={(category) => <CategoryInline category={category} />}
 						items={data.data}
+						wrapperProps={{
+							ui: {
+								tone: "neutral",
+								theme: "light",
+							},
+						}}
 						{...props}
 					/>
 				);

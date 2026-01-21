@@ -26,6 +26,14 @@ export const TitleValue: FC<TitleValue.Props> = ({ feed, ...props }) => {
 					}}
 				/>
 			}
+			wrapperProps={{
+				ui: feed.query?.filter?.title
+					? {
+							tone: "neutral",
+							theme: "light",
+						}
+					: undefined,
+			}}
 			{...props}
 		/>
 	);

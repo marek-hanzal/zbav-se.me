@@ -19,14 +19,14 @@ export namespace ConditionValue {
 }
 
 export const ConditionValue: FC<ConditionValue.Props> = ({ feed, ...props }) => {
-	const conditionIn = feed.query?.filter?.conditionIn;
+	const conditionIn = feed.query?.filter?.conditionIn ?? [];
 
 	return (
 		<ValueList
 			data-ui={"ConditionValue[ValueList]"}
 			textLabel={translator.text("Feed condition (label)")}
 			textEmpty={translator.text("Feed condition not selected")}
-			items={(conditionIn ?? []).map((item) => ({
+			items={conditionIn.map((item) => ({
 				id: String(item),
 				condition: String(item),
 			}))}
@@ -39,6 +39,15 @@ export const ConditionValue: FC<ConditionValue.Props> = ({ feed, ...props }) => 
 					}}
 				/>
 			}
+			wrapperProps={{
+				ui:
+					conditionIn.length > 0
+						? {
+								tone: "neutral",
+								theme: "light",
+							}
+						: undefined,
+			}}
 			{...props}
 		/>
 	);
