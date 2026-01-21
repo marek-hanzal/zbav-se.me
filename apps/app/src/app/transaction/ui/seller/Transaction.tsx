@@ -1,8 +1,7 @@
 import { Container } from "@use-pico/client/ui/container";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import type { FC } from "react";
-import { useRef, useState } from "react";
-import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
+import { useRef } from "react";
 import { MessageList } from "~/app/message/MessageList";
 import { TransactionChat } from "~/app/transaction/ui/TransactionChat";
 import { TransactionMessage } from "~/app/transaction/ui/TransactionMessage";
@@ -37,11 +36,6 @@ export const Transaction: FC<Transaction.Props> = ({ transactionId, refresh, ...
 				fallback={null}
 			>
 				{({ data: transaction }) => {
-					// biome-ignore lint/correctness/useHookAtTopLevel: Ssst
-					const [detail, setDetail] = useState(false);
-					// biome-ignore lint/correctness/useHookAtTopLevel: Ssst 2.0
-					const hero = useHeroUpload(transaction.gallery.items);
-
 					return (
 						<Container
 							data-ui={"TransactionSheet-[Container]"}
