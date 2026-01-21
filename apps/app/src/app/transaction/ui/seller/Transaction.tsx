@@ -1,14 +1,8 @@
-import { VisibilityContext } from "@use-pico/client/context";
-import { createNoopVisibilityStore } from "@use-pico/client/store";
 import { Container } from "@use-pico/client/ui/container";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user/listing";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
-import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { useRef, useState } from "react";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
-import { ListingSheet } from "~/app/listing/ui/ListingSheet";
-import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 import { MessageList } from "~/app/message/MessageList";
 import { TransactionChat } from "~/app/transaction/ui/TransactionChat";
 import { TransactionMessage } from "~/app/transaction/ui/TransactionMessage";
@@ -62,33 +56,11 @@ export const Transaction: FC<Transaction.Props> = ({ transactionId, refresh, ...
 								data-ui="Transaction-[MessageListContainer]"
 								ref={containerRef}
 								ui={{
-									layout: "vertical-header-content",
+									layout: "vertical",
 									height: "full",
 									scroll: "vertical",
 								}}
 							>
-								<Container
-									data-ui="Transaction-[HeroContainer]"
-									ui={{
-										position: "relative",
-										height: "content",
-									}}
-									onClick={() => setDetail((prev) => !prev)}
-								>
-									<HeroImage
-										src={hero.url}
-										alt={`Hero image for transaction ${transaction.id}`}
-										className={"h-42"}
-									/>
-
-									<ListingOverlay
-										listing={{
-											...transaction,
-											distance: null,
-										}}
-									/>
-								</Container>
-
 								<MessageList
 									containerRef={containerRef}
 									messageThreadId={transaction.messageThreadId}
@@ -98,32 +70,6 @@ export const Transaction: FC<Transaction.Props> = ({ transactionId, refresh, ...
 
 									<TransactionToolbar transaction={transaction} />
 								</MessageList>
-
-								<withListingFetchQuery.Suspense
-									data={{
-										where: {
-											id: transaction.listingId,
-										},
-									}}
-									fallback={null}
-								>
-									{({ data: listing }) => {
-										return (
-											<VisibilityContext value={createNoopVisibilityStore()}>
-												<ListingSheet
-													listing={listing}
-													state={{
-														value: detail,
-														set: setDetail,
-													}}
-													withScore={false}
-													feedId={undefined}
-													tools={[]}
-												/>
-											</VisibilityContext>
-										);
-									}}
-								</withListingFetchQuery.Suspense>
 							</Container>
 
 							<TransactionChat transaction={transaction} />
