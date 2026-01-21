@@ -1,5 +1,6 @@
 import { Effect } from "effect";
-import { withMessageSourceSelectFx } from "~/app/message/db/withMessageSourceSelectFx";
+import { withMessageSelectFx } from "~/app/message/db/withMessageSelectFx";
+import type { withMessageSourceSelectFx } from "~/app/message/db/withMessageSourceSelectFx";
 
 export namespace withMessageCollectionSelectFx {
 	export interface Props extends withMessageSourceSelectFx.Props {}
@@ -11,10 +12,10 @@ export const withMessageCollectionSelectFx = Effect.fn("withMessageCollectionSel
 	userId,
 	sort,
 }: withMessageCollectionSelectFx.Props) {
-	const sourceSelect = yield* withMessageSourceSelectFx({
+	const sourceSelect = yield* withMessageSelectFx({
 		userId,
 		sort,
 	});
 
-	return sourceSelect.select("msg.id");
+	return sourceSelect.selectAll("msg");
 });

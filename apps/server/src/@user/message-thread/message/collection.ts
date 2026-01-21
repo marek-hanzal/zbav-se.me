@@ -89,7 +89,7 @@ export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx"
 					],
 				});
 
-				return c.json<withCollectionSchema.Type<MessageItemSchema>, 200>(
+				return c.json<z.infer<typeof CollectionSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: messageCollectionFx({
@@ -98,7 +98,11 @@ export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx"
 							scope: {
 								messageThreadId,
 							},
-						}),
+						}) satisfies Effect.Effect<
+							withCollectionSchema.Type<MessageItemSchema>,
+							any,
+							any
+						>,
 					}),
 					200,
 				);
