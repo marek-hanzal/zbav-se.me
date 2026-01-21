@@ -11,7 +11,7 @@ import { useState } from "react";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
 import { ListingSheet } from "~/app/listing/ui/ListingSheet";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
-import { TransactionList } from "~/app/transaction/ui/TransactionList";
+import { TransactionList } from "~/app/transaction/ui/seller/TransactionList";
 
 export const Route = createFileRoute("/$locale/ui/seller/message/$listingId/list")({
 	pendingComponent() {
@@ -94,9 +94,6 @@ export const Route = createFileRoute("/$locale/ui/seller/message/$listingId/list
 									direction: "desc",
 								},
 							],
-							meta: {
-								side: "seller",
-							},
 						}}
 						ui={{
 							inner: "default",

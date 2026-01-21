@@ -8,8 +8,7 @@ import type { tTransactionQuery } from "@zbav-se.me/sdk/api/user";
 import { withTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import { MessageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { TransactionItem } from "~/app/transaction/ui/TransactionItem";
-import { useSide } from "~/app/user/useSide";
+import { TransactionItem } from "~/app/transaction/ui/seller/TransactionItem";
 
 export namespace TransactionList {
 	export interface Props extends Container.Props {
@@ -18,7 +17,6 @@ export namespace TransactionList {
 }
 
 export const TransactionList: FC<TransactionList.Props> = ({ query, ui, ...props }) => {
-	const side = useSide();
 	const locale = useLocale();
 
 	return (
@@ -38,7 +36,7 @@ export const TransactionList: FC<TransactionList.Props> = ({ query, ui, ...props
 				}}
 			>
 				{({ data: { data } }) => {
-					if (side === "seller" && data.length === 0) {
+					if (data.length === 0) {
 						return (
 							<Container
 								ui={{
@@ -67,48 +65,6 @@ export const TransactionList: FC<TransactionList.Props> = ({ query, ui, ...props
 											}}
 										>
 											<Tx label={"Go to my listings (button)"} />
-										</LinkTo>
-									}
-									ui={{
-										tone: "brand",
-										theme: "light",
-										inner: "4xl",
-									}}
-									className="text-center"
-								/>
-							</Container>
-						);
-					}
-
-					if (side === "buyer" && data.length === 0) {
-						return (
-							<Container
-								ui={{
-									layout: "vertical-centered",
-									height: "full",
-								}}
-							>
-								<Status
-									icon={MessageIcon}
-									textTitle={"No transactions as buyer (title)"}
-									textMessage={"No transactions as buyer (message)"}
-									action={
-										<LinkTo
-											icon={ArrowRightIcon}
-											iconPosition={"right"}
-											to={"/$locale/buyer/feed/default"}
-											params={{
-												locale,
-											}}
-											ui={{
-												background: "default",
-												border: true,
-												shadow: true,
-												round: "default",
-												size: "default",
-											}}
-										>
-											<Tx label={"Go to my feed (button)"} />
 										</LinkTo>
 									}
 									ui={{
