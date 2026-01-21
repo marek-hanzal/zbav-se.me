@@ -58,10 +58,29 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 				info: {
 					version: "0.5.0",
 					title: "Public zbav-se.me API",
+					description: "Public API for the zbav-se.me app",
 				},
 				servers: [
 					{
 						url: viteConfig.VITE_SERVER_API,
+					},
+				],
+				tags: [
+					{
+						name: "Misc",
+						description: "Miscellaneous endpoints for system operations",
+					},
+					{
+						name: "GitHub",
+						description: "GitHub commit history synchronization",
+					},
+					{
+						name: "Janitor",
+						description: "System cleanup and maintenance operations",
+					},
+					{
+						name: "Cron",
+						description: "Scheduled cron job endpoints",
 					},
 				],
 			}),
@@ -70,10 +89,29 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 				info: {
 					version: "0.5.0",
 					title: "Protected zbav-se.me API",
+					description: "Auth-required API, but open to any user without restriction",
 				},
 				servers: [
 					{
 						url: viteConfig.VITE_SERVER_API,
+					},
+				],
+				tags: [
+					{
+						name: "Category",
+						description: "Category queries",
+					},
+					{
+						name: "Location",
+						description: "Location queries and autocomplete",
+					},
+					{
+						name: "Upload",
+						description: "Upload file queries",
+					},
+					{
+						name: "Listing",
+						description: "Listing information and seller details",
 					},
 				],
 			}),
@@ -82,6 +120,7 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 				info: {
 					version: "0.5.0",
 					title: "User zbav-se.me API",
+					description: "API related to the user, needs user's context (private data).",
 				},
 				servers: [
 					{
@@ -114,6 +153,71 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 						name: "Flag",
 						description: "Listing flagging management",
 					},
+					{
+						name: "Transaction",
+						description: "Transaction management between buyer and seller",
+					},
+					{
+						name: "Transaction Listing",
+						description: "Listings that have transactions",
+					},
+					{
+						name: "Transaction Status",
+						description:
+							"Transaction status management (accept, reject, resolve, etc.)",
+					},
+					{
+						name: "Transaction Message Text",
+						description: "Text messages within transactions",
+					},
+					{
+						name: "Transaction Message Personal",
+						description: "Personal contact information messages within transactions",
+					},
+					{
+						name: "Transaction Message Package",
+						description: "Package delivery information messages within transactions",
+					},
+					{
+						name: "Transaction Message Location",
+						description: "Location messages within transactions",
+					},
+					{
+						name: "Transaction Message Gallery",
+						description: "Gallery/image messages within transactions",
+					},
+					{
+						name: "Gallery",
+						description: "Gallery management for images",
+					},
+					{
+						name: "Ignore",
+						description: "Listing ignore management",
+					},
+					{
+						name: "Message Thread",
+						description: "Message thread management",
+					},
+					{
+						name: "Upload",
+						description: "Upload file management",
+					},
+					{
+						name: "S3",
+						description: "S3 pre-signed URL generation for direct uploads",
+					},
+					{
+						name: "User Ex",
+						description: "Extended user information management",
+					},
+					{
+						name: "Thumb",
+						description: "Thumb (like) management for listings",
+					},
+					{
+						name: "Listing Event",
+						description: "Listing event tracking and analytics",
+					},
 				],
 			}),
 			seller: sellerHono.getOpenAPI31Document({
@@ -121,6 +225,7 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 				info: {
 					version: "0.5.0",
 					title: "Seller zbav-se.me API",
+					description: "Seller related API, needs session",
 				},
 				servers: [
 					{
@@ -133,6 +238,7 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 				info: {
 					version: "0.5.0",
 					title: "Buyer zbav-se.me API",
+					description: "Buyer related API, needs session",
 				},
 				servers: [
 					{
