@@ -1,11 +1,12 @@
 import { z } from "@hono/zod-openapi";
 
 export const IgnoreItemSchema = z
-	.object({
+	.looseObject({
 		id: z.string().openapi({
 			description: "ID of the ignore",
 		}),
 	})
+	.strip()
 	.openapi("IgnoreItemSchema", {
 		description: "Ignore collection item",
 	});

@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
 export const TransactionListingItemSchema = z
-	.object({
+	.looseObject({
 		listingId: z.string().openapi({
 			description: "ID of the listing",
 		}),
@@ -13,6 +13,7 @@ export const TransactionListingItemSchema = z
 			type: "string",
 		}),
 	})
+	.strip()
 	.openapi("TransactionListingItemSchema", {
 		description: "Transaction listing collection item",
 	});

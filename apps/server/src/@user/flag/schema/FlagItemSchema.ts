@@ -1,11 +1,12 @@
 import { z } from "@hono/zod-openapi";
 
 export const FlagItemSchema = z
-	.object({
+	.looseObject({
 		id: z.string().openapi({
 			description: "ID of the flag",
 		}),
 	})
+	.strip()
 	.openapi("FlagItemSchema", {
 		description: "Flag collection item",
 	});
