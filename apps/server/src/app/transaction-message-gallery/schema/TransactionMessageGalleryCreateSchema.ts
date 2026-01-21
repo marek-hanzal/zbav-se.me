@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
 export const TransactionMessageGalleryCreateSchema = z
-	.object({
+	.looseObject({
 		transactionId: z.string().openapi({
 			description: "The ID of the transaction to add a gallery to",
 		}),
@@ -9,6 +9,7 @@ export const TransactionMessageGalleryCreateSchema = z
 			description: "IDs of the uploads; order of uploads defines order in the gallery",
 		}),
 	})
+	.strip()
 	.openapi("TransactionMessageGalleryCreate", {
 		description: "Request to create a transaction message gallery",
 	});

@@ -6,7 +6,7 @@ import { ProsConsSchema } from "~/app/listing/schema/ProsConsSchema";
 import { ListingExpireEnumSchema } from "./ListingExpireEnumSchema";
 
 export const ListingCreateSchema = z
-	.object({
+	.looseObject({
 		price: z.coerce.number().openapi({
 			description: "Price of the listing",
 			type: "number",
@@ -92,6 +92,7 @@ export const ListingCreateSchema = z
 			description: "IDs of the uploads; order of uploads defines order in the gallery",
 		}),
 	})
+	.strip()
 	.openapi("ListingCreate", {
 		description: "Data for creating a new listing",
 	});

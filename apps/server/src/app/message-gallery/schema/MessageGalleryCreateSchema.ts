@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
 export const MessageGalleryCreateSchema = z
-	.object({
+	.looseObject({
 		messageThreadId: z.string().openapi({
 			description: "The ID of the message thread to add a gallery to",
 		}),
@@ -9,6 +9,7 @@ export const MessageGalleryCreateSchema = z
 			description: "The ID of the gallery",
 		}),
 	})
+	.strip()
 	.openapi("MessageGalleryCreate", {
 		description: "Request to create a message gallery",
 	});

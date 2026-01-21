@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { UserEventSellerSchema } from "~/app/user-event/schema/UserEventSellerSchema";
 
 export const SellerInfoSchema = z
-	.object({
+	.looseObject({
 		registered: z.coerce.date().openapi({
 			description: "Registration date",
 			type: "string",
@@ -20,6 +20,7 @@ export const SellerInfoSchema = z
 				description: "Seller info may not be available if we don't have enough data",
 			}),
 	})
+	.strip()
 	.openapi("SellerInfo", {
 		description: "Seller info for the listing",
 	});

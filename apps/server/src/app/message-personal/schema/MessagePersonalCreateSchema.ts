@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
 export const MessagePersonalCreateSchema = z
-	.object({
+	.looseObject({
 		messageThreadId: z.string().openapi({
 			description: "The ID of the message thread to add a personal message to",
 		}),
@@ -18,6 +18,7 @@ export const MessagePersonalCreateSchema = z
 			description: "ID of the location",
 		}),
 	})
+	.strip()
 	.openapi("MessagePersonalCreate", {
 		description: "Request to create a personal message",
 	});

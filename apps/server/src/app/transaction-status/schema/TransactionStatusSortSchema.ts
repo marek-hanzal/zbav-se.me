@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { OrderEnumSchema } from "~/schema/OrderEnumSchema";
 
 export const TransactionStatusSortSchema = z
-	.object({
+	.looseObject({
 		field: z
 			.enum([
 				"createdAt",
@@ -12,6 +12,7 @@ export const TransactionStatusSortSchema = z
 			}),
 		direction: OrderEnumSchema,
 	})
+	.strip()
 	.openapi("TransactionStatusSort", {
 		description: "Sort parameters for listing transaction status collection",
 	});

@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
 export const MessageLocationCreateSchema = z
-	.object({
+	.looseObject({
 		messageThreadId: z.string().openapi({
 			description: "The ID of the message thread to add a location to",
 		}),
@@ -9,6 +9,7 @@ export const MessageLocationCreateSchema = z
 			description: "The ID of the location",
 		}),
 	})
+	.strip()
 	.openapi("MessageLocationCreate", {
 		description: "Request to create a message location",
 	});

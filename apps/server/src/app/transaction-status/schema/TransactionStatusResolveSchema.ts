@@ -1,11 +1,12 @@
 import { z } from "@hono/zod-openapi";
 
 export const TransactionStatusResolveSchema = z
-	.object({
+	.looseObject({
 		transactionId: z.string().openapi({
 			description: "The ID of the listing transaction to resolve",
 		}),
 	})
+	.strip()
 	.openapi("TransactionStatusResolve", {
 		description: "Request to resolve a listing transaction",
 	});

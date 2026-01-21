@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
 export const TransactionMessageLocationCreateSchema = z
-	.object({
+	.looseObject({
 		transactionId: z.string().openapi({
 			description: "The ID of the transaction to add a location to",
 		}),
@@ -9,6 +9,7 @@ export const TransactionMessageLocationCreateSchema = z
 			description: "The ID of the location",
 		}),
 	})
+	.strip()
 	.openapi("TransactionMessageLocationCreate", {
 		description: "Request to create a transaction message location",
 	});

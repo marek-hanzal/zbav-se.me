@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
 export const MessagePackageCreateSchema = z
-	.object({
+	.looseObject({
 		messageThreadId: z.string().openapi({
 			description: "The ID of the message thread to add a package message to",
 		}),
@@ -12,6 +12,7 @@ export const MessagePackageCreateSchema = z
 			description: "Tracking number",
 		}),
 	})
+	.strip()
 	.openapi("MessagePackageCreate", {
 		description: "Request to create a package message",
 	});
