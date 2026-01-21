@@ -49,9 +49,9 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 				},
 			},
 			tags: [
-				"s3",
-				"user",
+				"S3",
 			],
+			summary: "Generate a pre-signed URL for direct S3-compatible PUT upload",
 		}),
 		async (c) => {
 			const s3Config = ServerS3Schema.parse(process.env);

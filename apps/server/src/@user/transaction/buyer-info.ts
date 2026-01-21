@@ -55,9 +55,9 @@ export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
 				},
 			},
 			tags: [
-				"transaction",
-				"user",
+				"Transaction",
 			],
+			summary: "Get buyer info for a transaction",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

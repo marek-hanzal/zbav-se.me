@@ -65,9 +65,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				},
 			},
 			tags: [
-				"upload",
-				"user",
+				"Upload",
 			],
+			summary: "Create a new upload",
 		}),
 		async (c) => {
 			const cdnConfig = ServerCdnSchema.parse(process.env);

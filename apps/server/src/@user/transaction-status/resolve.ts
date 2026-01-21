@@ -71,9 +71,9 @@ export const withResolveApiFx = Effect.fn("withResolveApiFx")(function* () {
 				},
 			},
 			tags: [
-				"transaction-status",
-				"user",
+				"Transaction Status",
 			],
+			summary: "Resolve a listing transaction",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

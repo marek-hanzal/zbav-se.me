@@ -63,9 +63,9 @@ export const withAcceptApiFx = Effect.fn("withAcceptApiFx")(function* () {
 				},
 			},
 			tags: [
-				"transaction-status",
-				"user",
+				"Transaction Status",
 			],
+			summary: "Accept a listing transaction",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

@@ -55,9 +55,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				},
 			},
 			tags: [
-				"transaction",
-				"user",
+				"Transaction",
 			],
+			summary: "Create a new transaction",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

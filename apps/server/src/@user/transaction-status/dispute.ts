@@ -63,9 +63,9 @@ export const withDisputeApiFx = Effect.fn("withDisputeApiFx")(function* () {
 				},
 			},
 			tags: [
-				"transaction-status",
-				"user",
+				"Transaction Status",
 			],
+			summary: "Dispute a listing transaction",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

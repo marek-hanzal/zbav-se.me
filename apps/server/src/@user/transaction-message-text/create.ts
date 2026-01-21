@@ -72,9 +72,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				},
 			},
 			tags: [
-				"transaction-message-text",
-				"user",
+				"Transaction Message Text",
 			],
+			summary: "Create a text message for a transaction",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

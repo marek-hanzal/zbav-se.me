@@ -72,10 +72,10 @@ export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx"
 				},
 			},
 			tags: [
-				"message-thread",
-				"message",
-				"user",
+				"Message Thread",
 			],
+			summary:
+				"Fetch a collection of messages for a message thread based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

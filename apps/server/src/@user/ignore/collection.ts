@@ -51,9 +51,9 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 				},
 			},
 			tags: [
-				"ignore",
-				"user",
+				"Ignore",
 			],
+			summary: "Fetch a collection of ignore items based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

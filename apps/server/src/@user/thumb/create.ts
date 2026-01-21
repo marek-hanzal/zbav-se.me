@@ -62,9 +62,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				},
 			},
 			tags: [
-				"thumb",
-				"user",
+				"Thumb",
 			],
+			summary: "Create a new thumb for a listing",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

@@ -46,9 +46,9 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 				},
 			},
 			tags: [
-				"user-ex",
-				"user",
+				"User Ex",
 			],
+			summary: "Update user extended information",
 		}),
 		async (c) =>
 			Effect.gen(function* () {

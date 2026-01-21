@@ -61,9 +61,9 @@ export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
 				},
 			},
 			tags: [
-				"flag",
-				"user",
+				"Flag",
 			],
+			summary: "Toggle flag state on listing (add or remove)",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

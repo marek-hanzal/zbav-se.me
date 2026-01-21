@@ -51,9 +51,9 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 				},
 			},
 			tags: [
-				"gallery",
-				"user",
+				"Gallery",
 			],
+			summary: "Fetch a collection of galleries based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

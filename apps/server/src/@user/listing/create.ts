@@ -62,9 +62,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				},
 			},
 			tags: [
-				"listing",
-				"user",
+				"Listing",
 			],
+			summary: "Create a new listing",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

@@ -72,9 +72,9 @@ export const withSuccessApiFx = Effect.fn("withSuccessApiFx")(function* () {
 				},
 			},
 			tags: [
-				"transaction-status",
-				"user",
+				"Transaction Status",
 			],
+			summary: "Mark a listing transaction as successful",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

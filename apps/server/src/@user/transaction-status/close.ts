@@ -71,9 +71,9 @@ export const withCloseApiFx = Effect.fn("withCloseApiFx")(function* () {
 				},
 			},
 			tags: [
-				"transaction-status",
-				"user",
+				"Transaction Status",
 			],
+			summary: "Close a listing transaction",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

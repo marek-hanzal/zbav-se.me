@@ -53,9 +53,9 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 				},
 			},
 			tags: [
-				"transaction",
-				"user",
+				"Transaction",
 			],
+			summary: "Fetch a transaction based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

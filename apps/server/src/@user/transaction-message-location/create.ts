@@ -73,9 +73,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				},
 			},
 			tags: [
-				"transaction-message-location",
-				"user",
+				"Transaction Message Location",
 			],
+			summary: "Create a location message for a transaction",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

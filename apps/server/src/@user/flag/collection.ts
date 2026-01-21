@@ -51,9 +51,9 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 				},
 			},
 			tags: [
-				"flag",
-				"user",
+				"Flag",
 			],
+			summary: "Fetch a collection of flag items based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

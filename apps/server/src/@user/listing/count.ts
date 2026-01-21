@@ -44,9 +44,9 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 				},
 			},
 			tags: [
-				"listing",
-				"user",
+				"Listing",
 			],
+			summary: "Count listings based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

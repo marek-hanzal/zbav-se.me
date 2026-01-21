@@ -44,9 +44,9 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 				},
 			},
 			tags: [
-				"flag",
-				"user",
+				"Flag",
 			],
+			summary: "Count flag items based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

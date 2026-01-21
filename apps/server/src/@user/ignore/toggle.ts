@@ -61,9 +61,9 @@ export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
 				},
 			},
 			tags: [
-				"ignore",
-				"user",
+				"Ignore",
 			],
+			summary: "Toggle ignore state on listing (add or remove)",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

@@ -63,9 +63,9 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 				},
 			},
 			tags: [
-				"transaction",
-				"user",
+				"Transaction Status",
 			],
+			summary: "Reject a listing transaction",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

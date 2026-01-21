@@ -73,9 +73,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				},
 			},
 			tags: [
-				"transaction-message-gallery",
-				"user",
+				"Transaction Message Gallery",
 			],
+			summary: "Create a gallery message for a transaction",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

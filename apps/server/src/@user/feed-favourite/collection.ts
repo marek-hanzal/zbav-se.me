@@ -53,9 +53,10 @@ export const withFeedFavouriteCollectionApiFx = Effect.fn("withFeedFavouriteColl
 					},
 				},
 				tags: [
-					"feed-favourite",
-					"user",
+					"Feed Favourite",
 				],
+				summary:
+					"Fetch a collection of feed items from favourites based on the provided query",
 			}),
 			async (c) => {
 				return Effect.gen(function* () {
