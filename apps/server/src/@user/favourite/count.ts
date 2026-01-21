@@ -44,9 +44,9 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 				},
 			},
 			tags: [
-				"favourite",
-				"user",
+				"Favourite",
 			],
+			summary: "Count favourite items based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

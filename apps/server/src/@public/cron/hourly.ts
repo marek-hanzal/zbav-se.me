@@ -24,8 +24,7 @@ export const withHourlyEndpointFx = Effect.fn("withHourlyEndpointFx")(function* 
 			},
 			security: [],
 			tags: [
-				"cron",
-				"public",
+				"Cron",
 			],
 		}),
 		(c) => {

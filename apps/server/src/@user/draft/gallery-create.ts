@@ -71,9 +71,9 @@ export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(functi
 				},
 			},
 			tags: [
-				"draft-gallery",
-				"user",
+				"Draft",
 			],
+			summary: "Create a gallery for a draft",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

@@ -45,9 +45,9 @@ export const withCategoryCountApiFx = Effect.fn("withCategoryCountApiFx")(functi
 				},
 			},
 			tags: [
-				"category",
-				"session",
+				"Category",
 			],
+			summary: "Count categories based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

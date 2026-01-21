@@ -25,8 +25,7 @@ export const withHealthEndpointFx = Effect.fn("withHealthEndpointFx")(function* 
 			},
 			security: [],
 			tags: [
-				"misc",
-				"public",
+				"Misc",
 			],
 		}),
 		(c) => {

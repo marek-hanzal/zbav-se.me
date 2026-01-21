@@ -61,9 +61,9 @@ export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
 				},
 			},
 			tags: [
-				"favourite",
-				"user",
+				"Favourite",
 			],
+			summary: "Toggle a listing in favourites (add or remove)",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

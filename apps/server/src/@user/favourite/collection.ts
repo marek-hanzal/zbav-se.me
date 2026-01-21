@@ -52,9 +52,9 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 				},
 			},
 			tags: [
-				"favourite",
-				"user",
+				"Favourite",
 			],
+			summary: "Fetch a collection of favourite items based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

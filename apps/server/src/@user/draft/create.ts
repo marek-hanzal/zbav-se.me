@@ -63,9 +63,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				},
 			},
 			tags: [
-				"draft",
-				"user",
+				"Draft",
 			],
+			summary: "Create a new draft",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

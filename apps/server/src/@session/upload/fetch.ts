@@ -54,9 +54,9 @@ export const withUploadFetchApiFx = Effect.fn("withUploadFetchApiFx")(function* 
 				},
 			},
 			tags: [
-				"upload",
-				"session",
+				"Upload",
 			],
+			summary: "Fetch an upload item based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

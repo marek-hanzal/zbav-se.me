@@ -56,9 +56,9 @@ export const withSellerInfoApiFx = Effect.fn("withSellerInfoApiFx")(function* ()
 				},
 			},
 			tags: [
-				"listing",
-				"session",
+				"Listing",
 			],
+			summary: "Return seller info for a listing.",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

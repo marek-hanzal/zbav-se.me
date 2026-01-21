@@ -16,15 +16,15 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 			sources: [
 				{
 					url: `${docsUrl}/public`,
-					title: "Public API",
+					title: "Public",
 				},
 				{
 					url: `${docsUrl}/session`,
-					title: "Session API",
+					title: "Session",
 				},
 				{
 					url: `${docsUrl}/user`,
-					title: "User API",
+					title: "User",
 				},
 				{
 					url: "/api/auth/open-api/generate-schema",

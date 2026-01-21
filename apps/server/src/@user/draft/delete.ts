@@ -54,9 +54,9 @@ export const withDeleteApiFx = Effect.fn("withDeleteApiFx")(function* () {
 				},
 			},
 			tags: [
-				"draft",
-				"user",
+				"Draft",
 			],
+			summary: "Delete a draft based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

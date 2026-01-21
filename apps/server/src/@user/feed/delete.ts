@@ -53,9 +53,9 @@ export const withDeleteApiFx = Effect.fn("withDeleteApiFx")(function* () {
 				},
 			},
 			tags: [
-				"feed",
-				"user",
+				"Feed",
 			],
+			summary: "Delete a feed item based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

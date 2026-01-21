@@ -54,9 +54,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				},
 			},
 			tags: [
-				"feed",
-				"user",
+				"Feed",
 			],
+			summary: "Create a new feed item",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

@@ -24,8 +24,7 @@ export const withDay16EndpointFx = Effect.fn("withDay16EndpointFx")(function* ()
 			},
 			security: [],
 			tags: [
-				"cron",
-				"public",
+				"Cron",
 			],
 		}),
 		(c) => {

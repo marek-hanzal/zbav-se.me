@@ -52,9 +52,9 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 				},
 			},
 			tags: [
-				"draft",
-				"user",
+				"Draft",
 			],
+			summary: "Fetch a collection of drafts based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

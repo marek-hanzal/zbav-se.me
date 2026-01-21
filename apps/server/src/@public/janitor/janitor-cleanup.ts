@@ -39,7 +39,7 @@ export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(func
 			},
 			security: [],
 			tags: [
-				"janitor",
+				"Janitor",
 			],
 		}),
 		async (c) => {

@@ -71,9 +71,9 @@ export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(functi
 				},
 			},
 			tags: [
-				"feed-gallery",
-				"user",
+				"Feed",
 			],
+			summary: "Create or update a gallery for a feed.",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

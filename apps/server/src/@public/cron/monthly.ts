@@ -24,8 +24,7 @@ export const withMonthlyEndpointFx = Effect.fn("withMonthlyEndpointFx")(function
 			},
 			security: [],
 			tags: [
-				"cron",
-				"public",
+				"Cron",
 			],
 		}),
 		(c) => {

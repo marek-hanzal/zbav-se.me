@@ -54,9 +54,9 @@ export const withLocationFetchApiFx = Effect.fn("withLocationFetchApiFx")(functi
 				},
 			},
 			tags: [
-				"location",
-				"session",
+				"Location",
 			],
+			summary: "Fetch a location based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

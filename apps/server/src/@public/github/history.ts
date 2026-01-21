@@ -61,8 +61,7 @@ export const withHistoryApiFx = Effect.fn("withHistoryApiFx")(function* () {
 			},
 			security: [],
 			tags: [
-				"github",
-				"public",
+				"GitHub",
 			],
 		}),
 		async (c) => {

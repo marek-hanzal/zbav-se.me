@@ -53,9 +53,9 @@ export const withCategoryCollectionApiFx = Effect.fn("withCategoryCollectionApiF
 				},
 			},
 			tags: [
-				"category",
-				"session",
+				"Category",
 			],
+			summary: "Fetch a collection of categories based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

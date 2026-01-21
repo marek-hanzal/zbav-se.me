@@ -51,9 +51,9 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 				},
 			},
 			tags: [
-				"feed",
-				"user",
+				"Feed",
 			],
+			summary: "Fetch a collection of feed items based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

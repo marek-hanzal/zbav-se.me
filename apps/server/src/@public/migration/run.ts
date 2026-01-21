@@ -24,7 +24,7 @@ export const withMigrationRunApiFx = Effect.fn("withMigrationRunApiFx")(function
 			},
 			security: [],
 			tags: [
-				"misc",
+				"Misc",
 			],
 		}),
 		async (c) => {

@@ -66,8 +66,7 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 			},
 			security: [],
 			tags: [
-				"misc",
-				"public",
+				"Misc",
 			],
 		}),
 		async (c) => {

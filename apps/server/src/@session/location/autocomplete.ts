@@ -49,9 +49,9 @@ export const withLocationAutocompleteApiFx = Effect.fn("withLocationAutocomplete
 					},
 				},
 				tags: [
-					"location",
-					"session",
+					"Location",
 				],
+				summary: "Return a location autocomplete",
 			}),
 			async (c) => {
 				const geoapifyConfig = ServerGeoapifySchema.parse(process.env);

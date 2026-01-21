@@ -54,9 +54,9 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 				},
 			},
 			tags: [
-				"feed",
-				"user",
+				"Feed",
 			],
+			summary: "Update an existing feed item",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

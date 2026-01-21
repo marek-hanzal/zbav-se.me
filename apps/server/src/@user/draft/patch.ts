@@ -63,9 +63,9 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 				},
 			},
 			tags: [
-				"draft",
-				"user",
+				"Draft",
 			],
+			summary: "Partial update of a draft",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

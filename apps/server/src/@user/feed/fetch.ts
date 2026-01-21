@@ -53,9 +53,9 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 				},
 			},
 			tags: [
-				"feed",
-				"user",
+				"Feed",
 			],
+			summary: "Fetch a feed item based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {

@@ -54,9 +54,9 @@ export const withCategoryFetchApiFx = Effect.fn("withCategoryFetchApiFx")(functi
 				},
 			},
 			tags: [
-				"category",
-				"session",
+				"Category",
 			],
+			summary: "Fetch a category based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
