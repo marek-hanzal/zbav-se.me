@@ -7,7 +7,6 @@ import { KyselyContextLayerFx } from "~/database/context/KyselyContextLayerFx";
 import { initMiddlewareFx } from "~/init/initMiddlewareFx";
 import { ServerDatabaseSchema } from "~/schema/env/ServerDatabaseSchema";
 import { withPublicApiFx } from "./@public/withPublicApiFx";
-import { withRootApi } from "./@root/withRootApi";
 import { withSessionApiFx } from "./@session/withSessionApiFx";
 import { withUserApiFx } from "./@user/withUserApiFx";
 import { RoutesContextFx } from "./app/routes/RoutesContextFx";
@@ -38,7 +37,6 @@ const app = await Effect.gen(function* () {
 	const databaseConfig = ServerDatabaseSchema.parse(process.env);
 
 	yield* Effect.all([
-		withRootApi(),
 		withPublicApiFx(),
 		withSessionApiFx(),
 		withUserApiFx(),
