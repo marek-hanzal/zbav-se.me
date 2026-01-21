@@ -5,6 +5,30 @@ export type clientOptions = {
 };
 
 /**
+ * Order
+ */
+export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
+
+/**
+ * Order
+ */
+export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
+
+/**
+ * Cursor for pagination
+ */
+export type tCursor = {
+    /**
+     * Page number (0-indexed)
+     */
+    page: number;
+    /**
+     * Page size
+     */
+    size: number;
+};
+
+/**
  * Location data
  */
 export type tLocation = {
@@ -83,30 +107,6 @@ export type tUpload = {
      * Public URL to the uploaded file
      */
     url: string;
-};
-
-/**
- * Order
- */
-export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
-
-/**
- * Order
- */
-export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
-
-/**
- * Cursor for pagination
- */
-export type tCursor = {
-    /**
-     * Page number (0-indexed)
-     */
-    page: number;
-    /**
-     * Page size
-     */
-    size: number;
 };
 
 /**

@@ -1,10 +1,9 @@
 import { z } from "@hono/zod-openapi";
+import { MessageSchema } from "~/app/message/schema/MessageSchema";
 
 export const MessageItemSchema = z
 	.looseObject({
-		id: z.string().openapi({
-			description: "ID of the message",
-		}),
+		...MessageSchema.shape,
 	})
 	.strip()
 	.openapi("MessageItem", {

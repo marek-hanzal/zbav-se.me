@@ -189,58 +189,6 @@ export type tTransactionMessageTextCreate = {
 };
 
 /**
- * Message text entry
- */
-export type tMessageText = {
-    /**
-     * ID of the message entry
-     */
-    id: string;
-    /**
-     * Message content (database column name)
-     */
-    text: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-};
-
-/**
- * Direction of the message
- */
-export const tMessageDirectionEnum = {
-    in: 'in',
-    out: 'out',
-    system: 'system'
-} as const;
-
-/**
- * Direction of the message
- */
-export type tMessageDirectionEnum = typeof tMessageDirectionEnum[keyof typeof tMessageDirectionEnum];
-
-/**
- * Type of message
- */
-export const tMessageTypeEnum = {
-    text: 'text',
-    gallery: 'gallery',
-    location: 'location',
-    personal: 'personal',
-    package: 'package',
-    date: 'date',
-    system: 'system'
-} as const;
-
-/**
- * Type of message
- */
-export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
-
-/**
  * Request to create a transaction personal message
  */
 export type tTransactionMessagePersonalCreate = {
@@ -267,106 +215,6 @@ export type tTransactionMessagePersonalCreate = {
 };
 
 /**
- * Message personal entry
- */
-export type tMessagePersonal = {
-    /**
-     * ID of the message personal entry
-     */
-    id: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Phone number
-     */
-    phone: string;
-    /**
-     * Email address
-     */
-    email: string;
-    /**
-     * ID of the location
-     */
-    locationId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-    location: tLocation;
-};
-
-/**
- * Location data
- */
-export type tLocation = {
-    id: string;
-    /**
-     * The query that was used to get the location
-     */
-    query: string;
-    /**
-     * The language that was used to get the location
-     */
-    lang: string;
-    /**
-     * The country that the location is in
-     */
-    country: string;
-    /**
-     * Country code
-     */
-    code: string;
-    /**
-     * The county that the location is in
-     */
-    county: string | null;
-    /**
-     * The municipality that the location is in
-     */
-    municipality: string | null;
-    /**
-     * The state that the location is in
-     */
-    state: string | null;
-    /**
-     * Full address preview of a location
-     */
-    address: string;
-    /**
-     * The city that the location is in
-     */
-    city: string | null;
-    /**
-     * The street that the location is on
-     */
-    street: string | null;
-    /**
-     * The postal/zip code of the location
-     */
-    zip: string | null;
-    /**
-     * Confidence score of the location (based on query)
-     */
-    confidence: number;
-    /**
-     * Used to uniquely identify this location entry
-     */
-    hash: string;
-    /**
-     * Latitude of the location
-     */
-    lat: number;
-    /**
-     * Longitude of the location
-     */
-    lon: number;
-};
-
-/**
  * Request to create a transaction message package
  */
 export type tTransactionMessagePackageCreate = {
@@ -385,30 +233,6 @@ export type tTransactionMessagePackageCreate = {
 };
 
 /**
- * Message package entry
- */
-export type tMessagePackage = {
-    /**
-     * ID of the message package entry
-     */
-    id: string;
-    /**
-     * Package link
-     */
-    link: string;
-    /**
-     * Tracking number
-     */
-    number: string | null;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-};
-
-/**
  * Request to create a transaction message location
  */
 export type tTransactionMessageLocationCreate = {
@@ -423,27 +247,6 @@ export type tTransactionMessageLocationCreate = {
 };
 
 /**
- * Message location entry
- */
-export type tMessageLocation = {
-    /**
-     * ID of the message location entry
-     */
-    id: string;
-    /**
-     * ID of the location
-     */
-    locationId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-    location: tLocation;
-};
-
-/**
  * Request to create a transaction message gallery
  */
 export type tTransactionMessageGalleryCreate = {
@@ -455,78 +258,6 @@ export type tTransactionMessageGalleryCreate = {
      * IDs of the uploads; order of uploads defines order in the gallery
      */
     uploadIds: Array<string>;
-};
-
-/**
- * Message gallery entry
- */
-export type tMessageGallery = {
-    /**
-     * ID of the message gallery entry
-     */
-    id: string;
-    /**
-     * ID of the gallery
-     */
-    galleryId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-    gallery: tGallery & unknown;
-};
-
-/**
- * Upload file metadata
- */
-export type tUpload = {
-    /**
-     * ID of the upload
-     */
-    id: string;
-    /**
-     * Public URL to the uploaded file
-     */
-    url: string;
-};
-
-/**
- * Gallery item data
- */
-export type tGalleryItem = {
-    /**
-     * ID of the gallery item
-     */
-    id: string;
-    /**
-     * ID of the gallery this item belongs to
-     */
-    galleryId: string;
-    /**
-     * ID of the upload this image belongs to
-     */
-    uploadId: string;
-    /**
-     * Sort order of the image in the gallery
-     */
-    sort: number;
-    upload: tUpload;
-};
-
-/**
- * Draft gallery images
- */
-export type tGallery = {
-    /**
-     * ID of the gallery
-     */
-    id: string;
-    /**
-     * Gallery items sorted by sort order
-     */
-    items: Array<tGalleryItem>;
 };
 
 /**
@@ -865,6 +596,73 @@ export type tTransaction = {
 };
 
 /**
+ * Location data
+ */
+export type tLocation = {
+    id: string;
+    /**
+     * The query that was used to get the location
+     */
+    query: string;
+    /**
+     * The language that was used to get the location
+     */
+    lang: string;
+    /**
+     * The country that the location is in
+     */
+    country: string;
+    /**
+     * Country code
+     */
+    code: string;
+    /**
+     * The county that the location is in
+     */
+    county: string | null;
+    /**
+     * The municipality that the location is in
+     */
+    municipality: string | null;
+    /**
+     * The state that the location is in
+     */
+    state: string | null;
+    /**
+     * Full address preview of a location
+     */
+    address: string;
+    /**
+     * The city that the location is in
+     */
+    city: string | null;
+    /**
+     * The street that the location is on
+     */
+    street: string | null;
+    /**
+     * The postal/zip code of the location
+     */
+    zip: string | null;
+    /**
+     * Confidence score of the location (based on query)
+     */
+    confidence: number;
+    /**
+     * Used to uniquely identify this location entry
+     */
+    hash: string;
+    /**
+     * Latitude of the location
+     */
+    lat: number;
+    /**
+     * Longitude of the location
+     */
+    lon: number;
+};
+
+/**
  * List of available currencies
  */
 export const tCurrencyListEnum = {
@@ -891,6 +689,57 @@ export const tListingPriceEnum = { closed: 'closed', open: 'open' } as const;
  * Price type of the listing
  */
 export type tListingPriceEnum = typeof tListingPriceEnum[keyof typeof tListingPriceEnum];
+
+/**
+ * Upload file metadata
+ */
+export type tUpload = {
+    /**
+     * ID of the upload
+     */
+    id: string;
+    /**
+     * Public URL to the uploaded file
+     */
+    url: string;
+};
+
+/**
+ * Gallery item data
+ */
+export type tGalleryItem = {
+    /**
+     * ID of the gallery item
+     */
+    id: string;
+    /**
+     * ID of the gallery this item belongs to
+     */
+    galleryId: string;
+    /**
+     * ID of the upload this image belongs to
+     */
+    uploadId: string;
+    /**
+     * Sort order of the image in the gallery
+     */
+    sort: number;
+    upload: tUpload;
+};
+
+/**
+ * Draft gallery images
+ */
+export type tGallery = {
+    /**
+     * ID of the gallery
+     */
+    id: string;
+    /**
+     * Gallery items sorted by sort order
+     */
+    items: Array<tGalleryItem>;
+};
 
 /**
  * Query object for transaction collection
@@ -1176,13 +1025,191 @@ export type tMessageItemSchema = {
 };
 
 /**
+ * Message system entry
+ */
+export type tMessageSystem = {
+    /**
+     * ID of the message entry
+     */
+    id: string;
+    /**
+     * Message content
+     */
+    text: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+};
+
+/**
+ * Direction of the message
+ */
+export const tMessageDirectionEnum = {
+    in: 'in',
+    out: 'out',
+    system: 'system'
+} as const;
+
+/**
+ * Direction of the message
+ */
+export type tMessageDirectionEnum = typeof tMessageDirectionEnum[keyof typeof tMessageDirectionEnum];
+
+/**
+ * Type of message
+ */
+export const tMessageTypeEnum = {
+    text: 'text',
+    gallery: 'gallery',
+    location: 'location',
+    personal: 'personal',
+    package: 'package',
+    date: 'date',
+    system: 'system'
+} as const;
+
+/**
+ * Type of message
+ */
+export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
+
+/**
+ * Message package entry
+ */
+export type tMessagePackage = {
+    /**
+     * ID of the message package entry
+     */
+    id: string;
+    /**
+     * Package link
+     */
+    link: string;
+    /**
+     * Tracking number
+     */
+    number: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+};
+
+/**
+ * Message personal entry
+ */
+export type tMessagePersonal = {
+    /**
+     * ID of the message personal entry
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Phone number
+     */
+    phone: string;
+    /**
+     * Email address
+     */
+    email: string;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+    location: tLocation;
+};
+
+/**
+ * Message location entry
+ */
+export type tMessageLocation = {
+    /**
+     * ID of the message location entry
+     */
+    id: string;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+    location: tLocation;
+};
+
+/**
+ * Message gallery entry
+ */
+export type tMessageGallery = {
+    /**
+     * ID of the message gallery entry
+     */
+    id: string;
+    /**
+     * ID of the gallery
+     */
+    galleryId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+    gallery: tGallery & unknown;
+};
+
+/**
+ * Message text entry
+ */
+export type tMessageText = {
+    /**
+     * ID of the message entry
+     */
+    id: string;
+    /**
+     * Message content (database column name)
+     */
+    text: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+};
+
+/**
+ * Message payload (unified view across all message types)
+ */
+export type tMessagePayload = tMessageText | tMessageGallery | tMessageLocation | tMessagePersonal | tMessagePackage | tMessageSystem;
+
+/**
  * Message collection item
  */
 export type tMessageItem = {
     /**
-     * ID of the message
+     * ID of the message entry
      */
     id: string;
+    type: tMessageTypeEnum;
+    payload: tMessagePayload;
 };
 
 /**

@@ -221,57 +221,6 @@ export const zTransactionMessageTextCreate = z.object({
 export type zTransactionMessageTextCreate = z.infer<typeof zTransactionMessageTextCreate>;
 
 /**
- * Direction of the message
- */
-export const zMessageDirectionEnum = z.enum([
-    'in',
-    'out',
-    'system'
-]).register(z.globalRegistry, {
-    description: 'Direction of the message'
-});
-
-export type zMessageDirectionEnum = z.infer<typeof zMessageDirectionEnum>;
-
-/**
- * Type of message
- */
-export const zMessageTypeEnum = z.enum([
-    'text',
-    'gallery',
-    'location',
-    'personal',
-    'package',
-    'date',
-    'system'
-]).register(z.globalRegistry, {
-    description: 'Type of message'
-});
-
-export type zMessageTypeEnum = z.infer<typeof zMessageTypeEnum>;
-
-/**
- * Message text entry
- */
-export const zMessageText = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the message entry'
-    }),
-    text: z.string().register(z.globalRegistry, {
-        description: 'Message content (database column name)'
-    }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    type: zMessageTypeEnum,
-    direction: zMessageDirectionEnum
-}).register(z.globalRegistry, {
-    description: 'Message text entry'
-});
-
-export type zMessageText = z.infer<typeof zMessageText>;
-
-/**
  * Request to create a transaction personal message
  */
 export const zTransactionMessagePersonalCreate = z.object({
@@ -297,99 +246,6 @@ export const zTransactionMessagePersonalCreate = z.object({
 export type zTransactionMessagePersonalCreate = z.infer<typeof zTransactionMessagePersonalCreate>;
 
 /**
- * Location data
- */
-export const zLocation = z.object({
-    id: z.string(),
-    query: z.string().register(z.globalRegistry, {
-        description: 'The query that was used to get the location'
-    }),
-    lang: z.string().register(z.globalRegistry, {
-        description: 'The language that was used to get the location'
-    }),
-    country: z.string().register(z.globalRegistry, {
-        description: 'The country that the location is in'
-    }),
-    code: z.string().register(z.globalRegistry, {
-        description: 'Country code'
-    }),
-    county: z.union([
-        z.string(),
-        z.null()
-    ]),
-    municipality: z.union([
-        z.string(),
-        z.null()
-    ]),
-    state: z.union([
-        z.string(),
-        z.null()
-    ]),
-    address: z.string().register(z.globalRegistry, {
-        description: 'Full address preview of a location'
-    }),
-    city: z.union([
-        z.string(),
-        z.null()
-    ]),
-    street: z.union([
-        z.string(),
-        z.null()
-    ]),
-    zip: z.union([
-        z.string(),
-        z.null()
-    ]),
-    confidence: z.number().register(z.globalRegistry, {
-        description: 'Confidence score of the location (based on query)'
-    }),
-    hash: z.string().register(z.globalRegistry, {
-        description: 'Used to uniquely identify this location entry'
-    }),
-    lat: z.number().register(z.globalRegistry, {
-        description: 'Latitude of the location'
-    }),
-    lon: z.number().register(z.globalRegistry, {
-        description: 'Longitude of the location'
-    })
-}).register(z.globalRegistry, {
-    description: 'Location data'
-});
-
-export type zLocation = z.infer<typeof zLocation>;
-
-/**
- * Message personal entry
- */
-export const zMessagePersonal = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the message personal entry'
-    }),
-    name: z.string().register(z.globalRegistry, {
-        description: 'Name'
-    }),
-    phone: z.string().register(z.globalRegistry, {
-        description: 'Phone number'
-    }),
-    email: z.email().register(z.globalRegistry, {
-        description: 'Email address'
-    }),
-    locationId: z.string().register(z.globalRegistry, {
-        description: 'ID of the location'
-    }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    type: zMessageTypeEnum,
-    direction: zMessageDirectionEnum,
-    location: zLocation
-}).register(z.globalRegistry, {
-    description: 'Message personal entry'
-});
-
-export type zMessagePersonal = z.infer<typeof zMessagePersonal>;
-
-/**
  * Request to create a transaction message package
  */
 export const zTransactionMessagePackageCreate = z.object({
@@ -410,31 +266,6 @@ export const zTransactionMessagePackageCreate = z.object({
 export type zTransactionMessagePackageCreate = z.infer<typeof zTransactionMessagePackageCreate>;
 
 /**
- * Message package entry
- */
-export const zMessagePackage = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the message package entry'
-    }),
-    link: z.url().register(z.globalRegistry, {
-        description: 'Package link'
-    }),
-    number: z.union([
-        z.string(),
-        z.null()
-    ]),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    type: zMessageTypeEnum,
-    direction: zMessageDirectionEnum
-}).register(z.globalRegistry, {
-    description: 'Message package entry'
-});
-
-export type zMessagePackage = z.infer<typeof zMessagePackage>;
-
-/**
  * Request to create a transaction message location
  */
 export const zTransactionMessageLocationCreate = z.object({
@@ -451,28 +282,6 @@ export const zTransactionMessageLocationCreate = z.object({
 export type zTransactionMessageLocationCreate = z.infer<typeof zTransactionMessageLocationCreate>;
 
 /**
- * Message location entry
- */
-export const zMessageLocation = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the message location entry'
-    }),
-    locationId: z.string().register(z.globalRegistry, {
-        description: 'ID of the location'
-    }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    type: zMessageTypeEnum,
-    direction: zMessageDirectionEnum,
-    location: zLocation
-}).register(z.globalRegistry, {
-    description: 'Message location entry'
-});
-
-export type zMessageLocation = z.infer<typeof zMessageLocation>;
-
-/**
  * Request to create a transaction message gallery
  */
 export const zTransactionMessageGalleryCreate = z.object({
@@ -487,85 +296,6 @@ export const zTransactionMessageGalleryCreate = z.object({
 });
 
 export type zTransactionMessageGalleryCreate = z.infer<typeof zTransactionMessageGalleryCreate>;
-
-/**
- * Upload file metadata
- */
-export const zUpload = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the upload'
-    }),
-    url: z.url().register(z.globalRegistry, {
-        description: 'Public URL to the uploaded file'
-    })
-}).register(z.globalRegistry, {
-    description: 'Upload file metadata'
-});
-
-export type zUpload = z.infer<typeof zUpload>;
-
-/**
- * Gallery item data
- */
-export const zGalleryItem = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery item'
-    }),
-    galleryId: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery this item belongs to'
-    }),
-    uploadId: z.string().register(z.globalRegistry, {
-        description: 'ID of the upload this image belongs to'
-    }),
-    sort: z.number().register(z.globalRegistry, {
-        description: 'Sort order of the image in the gallery'
-    }),
-    upload: zUpload
-}).register(z.globalRegistry, {
-    description: 'Gallery item data'
-});
-
-export type zGalleryItem = z.infer<typeof zGalleryItem>;
-
-/**
- * Draft gallery images
- */
-export const zGallery = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery'
-    }),
-    items: z.array(zGalleryItem).register(z.globalRegistry, {
-        description: 'Gallery items sorted by sort order'
-    })
-}).register(z.globalRegistry, {
-    description: 'Draft gallery images'
-});
-
-export type zGallery = z.infer<typeof zGallery>;
-
-/**
- * Message gallery entry
- */
-export const zMessageGallery = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the message gallery entry'
-    }),
-    galleryId: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery'
-    }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    type: zMessageTypeEnum,
-    direction: zMessageDirectionEnum,
-    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
-        description: 'Gallery data with items'
-    }))
-}).register(z.globalRegistry, {
-    description: 'Message gallery entry'
-});
-
-export type zMessageGallery = z.infer<typeof zMessageGallery>;
 
 /**
  * Order
@@ -896,6 +626,68 @@ export const zTransactionCreate = z.object({
 export type zTransactionCreate = z.infer<typeof zTransactionCreate>;
 
 /**
+ * Location data
+ */
+export const zLocation = z.object({
+    id: z.string(),
+    query: z.string().register(z.globalRegistry, {
+        description: 'The query that was used to get the location'
+    }),
+    lang: z.string().register(z.globalRegistry, {
+        description: 'The language that was used to get the location'
+    }),
+    country: z.string().register(z.globalRegistry, {
+        description: 'The country that the location is in'
+    }),
+    code: z.string().register(z.globalRegistry, {
+        description: 'Country code'
+    }),
+    county: z.union([
+        z.string(),
+        z.null()
+    ]),
+    municipality: z.union([
+        z.string(),
+        z.null()
+    ]),
+    state: z.union([
+        z.string(),
+        z.null()
+    ]),
+    address: z.string().register(z.globalRegistry, {
+        description: 'Full address preview of a location'
+    }),
+    city: z.union([
+        z.string(),
+        z.null()
+    ]),
+    street: z.union([
+        z.string(),
+        z.null()
+    ]),
+    zip: z.union([
+        z.string(),
+        z.null()
+    ]),
+    confidence: z.number().register(z.globalRegistry, {
+        description: 'Confidence score of the location (based on query)'
+    }),
+    hash: z.string().register(z.globalRegistry, {
+        description: 'Used to uniquely identify this location entry'
+    }),
+    lat: z.number().register(z.globalRegistry, {
+        description: 'Latitude of the location'
+    }),
+    lon: z.number().register(z.globalRegistry, {
+        description: 'Longitude of the location'
+    })
+}).register(z.globalRegistry, {
+    description: 'Location data'
+});
+
+export type zLocation = z.infer<typeof zLocation>;
+
+/**
  * List of available currencies
  */
 export const zCurrencyListEnum = z.enum([
@@ -920,6 +712,61 @@ export const zListingPriceEnum = z.enum(['closed', 'open']).register(z.globalReg
 });
 
 export type zListingPriceEnum = z.infer<typeof zListingPriceEnum>;
+
+/**
+ * Upload file metadata
+ */
+export const zUpload = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the upload'
+    }),
+    url: z.url().register(z.globalRegistry, {
+        description: 'Public URL to the uploaded file'
+    })
+}).register(z.globalRegistry, {
+    description: 'Upload file metadata'
+});
+
+export type zUpload = z.infer<typeof zUpload>;
+
+/**
+ * Gallery item data
+ */
+export const zGalleryItem = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery item'
+    }),
+    galleryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery this item belongs to'
+    }),
+    uploadId: z.string().register(z.globalRegistry, {
+        description: 'ID of the upload this image belongs to'
+    }),
+    sort: z.number().register(z.globalRegistry, {
+        description: 'Sort order of the image in the gallery'
+    }),
+    upload: zUpload
+}).register(z.globalRegistry, {
+    description: 'Gallery item data'
+});
+
+export type zGalleryItem = z.infer<typeof zGalleryItem>;
+
+/**
+ * Draft gallery images
+ */
+export const zGallery = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery'
+    }),
+    items: z.array(zGalleryItem).register(z.globalRegistry, {
+        description: 'Gallery items sorted by sort order'
+    })
+}).register(z.globalRegistry, {
+    description: 'Draft gallery images'
+});
+
+export type zGallery = z.infer<typeof zGallery>;
 
 /**
  * Transaction data
@@ -1256,12 +1103,202 @@ export const zMessageQuery = z.object({
 export type zMessageQuery = z.infer<typeof zMessageQuery>;
 
 /**
+ * Direction of the message
+ */
+export const zMessageDirectionEnum = z.enum([
+    'in',
+    'out',
+    'system'
+]).register(z.globalRegistry, {
+    description: 'Direction of the message'
+});
+
+export type zMessageDirectionEnum = z.infer<typeof zMessageDirectionEnum>;
+
+/**
+ * Type of message
+ */
+export const zMessageTypeEnum = z.enum([
+    'text',
+    'gallery',
+    'location',
+    'personal',
+    'package',
+    'date',
+    'system'
+]).register(z.globalRegistry, {
+    description: 'Type of message'
+});
+
+export type zMessageTypeEnum = z.infer<typeof zMessageTypeEnum>;
+
+/**
+ * Message system entry
+ */
+export const zMessageSystem = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message entry'
+    }),
+    text: z.string().register(z.globalRegistry, {
+        description: 'Message content'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Message system entry'
+});
+
+export type zMessageSystem = z.infer<typeof zMessageSystem>;
+
+/**
+ * Message package entry
+ */
+export const zMessagePackage = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message package entry'
+    }),
+    link: z.url().register(z.globalRegistry, {
+        description: 'Package link'
+    }),
+    number: z.union([
+        z.string(),
+        z.null()
+    ]),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Message package entry'
+});
+
+export type zMessagePackage = z.infer<typeof zMessagePackage>;
+
+/**
+ * Message personal entry
+ */
+export const zMessagePersonal = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message personal entry'
+    }),
+    name: z.string().register(z.globalRegistry, {
+        description: 'Name'
+    }),
+    phone: z.string().register(z.globalRegistry, {
+        description: 'Phone number'
+    }),
+    email: z.email().register(z.globalRegistry, {
+        description: 'Email address'
+    }),
+    locationId: z.string().register(z.globalRegistry, {
+        description: 'ID of the location'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum,
+    location: zLocation
+}).register(z.globalRegistry, {
+    description: 'Message personal entry'
+});
+
+export type zMessagePersonal = z.infer<typeof zMessagePersonal>;
+
+/**
+ * Message location entry
+ */
+export const zMessageLocation = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message location entry'
+    }),
+    locationId: z.string().register(z.globalRegistry, {
+        description: 'ID of the location'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum,
+    location: zLocation
+}).register(z.globalRegistry, {
+    description: 'Message location entry'
+});
+
+export type zMessageLocation = z.infer<typeof zMessageLocation>;
+
+/**
+ * Message gallery entry
+ */
+export const zMessageGallery = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message gallery entry'
+    }),
+    galleryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum,
+    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
+        description: 'Gallery data with items'
+    }))
+}).register(z.globalRegistry, {
+    description: 'Message gallery entry'
+});
+
+export type zMessageGallery = z.infer<typeof zMessageGallery>;
+
+/**
+ * Message text entry
+ */
+export const zMessageText = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message entry'
+    }),
+    text: z.string().register(z.globalRegistry, {
+        description: 'Message content (database column name)'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Message text entry'
+});
+
+export type zMessageText = z.infer<typeof zMessageText>;
+
+/**
+ * Message payload (unified view across all message types)
+ */
+export const zMessagePayload = z.union([
+    zMessageText,
+    zMessageGallery,
+    zMessageLocation,
+    zMessagePersonal,
+    zMessagePackage,
+    zMessageSystem
+]);
+
+export type zMessagePayload = z.infer<typeof zMessagePayload>;
+
+/**
  * Message collection item
  */
 export const zMessageItem = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: 'ID of the message'
-    })
+        description: 'ID of the message entry'
+    }),
+    type: zMessageTypeEnum,
+    payload: zMessagePayload
 }).register(z.globalRegistry, {
     description: 'Message collection item'
 });
