@@ -6,7 +6,8 @@
 		"dev": "PORT=3032 nitro dev --host",
 		"build": "nitro build && bun ./cli/size.ts",
 		"typecheck": "tsc --noEmit",
-		"test": "bunx --bun vitest --run"
+		"test": "bunx --bun vitest --run",
+		"knip": "knip"
 	},
 	"dependencies": {
 		"@better-auth/passkey": "1.4.17",
@@ -37,6 +38,7 @@
 		"@types/pg": "8.16.0",
 		"@typescript/native-preview": "7.0.0-dev.20260120.1",
 		"@use-pico/tsconfig": "5.0.0",
+		"knip": "5.82.1",
 		"nitro": "3.0.1-alpha.1",
 		"rolldown": "^1.0.0-beta.58",
 		"typescript": "5.9.3",

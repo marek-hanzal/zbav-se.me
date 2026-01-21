@@ -531,7 +531,7 @@ const computeActivity = (source: UserEventDbSchema.Type[], days: number) => {
 	} satisfies UserEventSellerSchema.Type["activity"];
 };
 
-export const computeScore = (input: {
+const computeScore = (input: {
 	reaction: UserEventSellerSchema.Type["reaction"];
 	resolved: UserEventSellerSchema.Type["resolved"];
 	rejected: UserEventSellerSchema.Type["rejected"];
