@@ -11,7 +11,7 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@better-auth/passkey": "1.4.16",
+		"@better-auth/passkey": "1.4.17",
 		"@escapace/accept-language-parser": "2.1.1",
 		"@tanstack/react-form": "1.27.7",
 		"@tanstack/react-query": "5.90.19",
@@ -25,7 +25,7 @@
 		"@zbav-se.me/sdk": "workspace:*",
 		"@zbav-se.me/ui": "workspace:*",
 		"axios": "1.13.2",
-		"better-auth": "1.4.16",
+		"better-auth": "1.4.17",
 		"motion": "12.27.5",
 		"react": "19.2.3",
 		"react-dom": "19.2.3",
@@ -43,7 +43,7 @@
 		"@types/luxon": "3.7.1",
 		"@types/react": "19.2.9",
 		"@types/react-dom": "19.2.3",
-		"@typescript/native-preview": "7.0.0-dev.20251208.1",
+		"@typescript/native-preview": "7.0.0-dev.20260120.1",
 		"@use-pico/vite-asset-size": "1.0.4",
 		"@vitejs/plugin-react": "5.1.2",
 		"nitro": "3.0.1-alpha.1",

@@ -15,9 +15,9 @@
 		"zod": "4.3.5"
 	},
 	"devDependencies": {
-		"@hey-api/openapi-ts": "0.90.4",
+		"@hey-api/openapi-ts": "0.90.6",
 		"@types/node": "25.0.9",
-		"@typescript/native-preview": "7.0.0-dev.20251208.1",
+		"@typescript/native-preview": "7.0.0-dev.20260120.1",
 		"@use-pico/tsconfig": "5.0.0",
 		"typescript": "5.9.3",
 		"vite": "8.0.0-beta.0"
