@@ -1,9 +1,10 @@
 import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
-import { type ComponentProps, type FC, type Ref, useRef, useState } from "react";
+import { type ComponentProps, type FC, useRef, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { useMergeRefs } from "../../hook/useMergeRefs";
 import { Icon } from "../../icon/Icon";
+import { uiInput } from "../form/uiInput";
 import { uiFulltext } from "./uiFulltext";
 
 export namespace Fulltext {
@@ -12,7 +13,6 @@ export namespace Fulltext {
 	export type OnFulltext = (text: Value) => void;
 
 	export interface Props extends uiFulltext.Component<ComponentProps<"input">> {
-		ref?: Ref<HTMLInputElement>;
 		state: State;
 		textPlaceholder?: string;
 		/**
@@ -63,23 +63,23 @@ export const Fulltext: FC<Fulltext.Props> = ({
 				className,
 			})}
 		>
-			<div
-				data-ui="Fulltext-search"
-				className="Fulltext-search absolute inset-y-0 left-2 flex items-center pointer-events-none"
-			>
-				<Icon
-					icon={"icon-[material-symbols-light--search]"}
-					ui={{
-						text: "sm",
-					}}
-				/>
-			</div>
+			<Icon
+				icon={"icon-[material-symbols-light--search]"}
+				ui={{
+					text: "xl",
+				}}
+				className={[
+					"absolute",
+					"left-2",
+					"top-1/2",
+					"-translate-y-1/2",
+					"pointer-events-none",
+				]}
+			/>
 
 			<input
-				data-ui="Fulltext-input"
 				ref={mergeRef}
 				value={search}
-				className="Fulltext-input px-10 w-full"
 				type={"text"}
 				placeholder={translator.text(textPlaceholder)}
 				onChange={(event) => {
@@ -96,6 +96,14 @@ export const Fulltext: FC<Fulltext.Props> = ({
 						handleSubmit();
 					}
 				}}
+				{...uiInput({
+					ui,
+					className: [
+						"px-8",
+						className,
+					],
+				})}
+				data-ui="Fulltext-input"
 				{...props}
 			/>
 			{withSubmit ? (
@@ -135,6 +143,7 @@ export const Fulltext: FC<Fulltext.Props> = ({
 							onClick={() => {
 								setSearch("");
 								set(undefined);
+								inputRef.current?.focus();
 							}}
 							ui={{
 								tone: "secondary",
