@@ -6,7 +6,6 @@ import { withCategoryApiFx } from "./category/withCategoryApiFx";
 import { withListingApiFx } from "./listing/withListingApiFx";
 import { withLocationApiFx } from "./location/withLocationApiFx";
 import { withUploadApiFx } from "./upload/withUploadApiFx";
-import { withUserEventApiFx } from "./user-event/withUserEventApiFx";
 
 export const withSessionApiFx = Effect.fn("withSessionApiFx")(function* () {
 	const { root, sessionHono } = yield* RoutesContextFx;
@@ -38,7 +37,6 @@ export const withSessionApiFx = Effect.fn("withSessionApiFx")(function* () {
 		withListingApiFx(),
 		withLocationApiFx(),
 		withUploadApiFx(),
-		withUserEventApiFx(),
 	]);
 
 	root.route("/api/session", sessionHono);
