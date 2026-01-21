@@ -339,6 +339,147 @@ export const sTransactionMessageGalleryCreate = {
     ]
 } as const;
 
+export const sTransactionListingQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/TransactionListingFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/TransactionListingWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/TransactionListingSort'
+            }
+        }
+    }
+} as const;
+
+export const sOrderEnum = {
+    type: 'string',
+    enum: [
+        'asc',
+        'desc'
+    ]
+} as const;
+
+export const sTransactionListingSortField = {
+    type: 'string',
+    enum: [
+        'createdAt'
+    ]
+} as const;
+
+export const sTransactionListingSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/TransactionListingSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sTransactionListingWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sTransactionListingFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sCursor = {
+    type: 'object',
+    properties: {
+        page: {
+            type: 'number',
+            minimum: 0
+        },
+        size: {
+            type: 'number',
+            minimum: 1,
+            maximum: 1000
+        }
+    },
+    required: [
+        'page',
+        'size'
+    ]
+} as const;
+
+export const sTransactionListingCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'string',
+                        minLength: 1
+                    }
+                },
+                required: [
+                    'id'
+                ]
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
 export const sTransactionBuyerInfo = {
     type: 'object',
     properties: {
@@ -909,14 +1050,6 @@ export const sTransactionMeta = {
     }
 } as const;
 
-export const sOrderEnum = {
-    type: 'string',
-    enum: [
-        'asc',
-        'desc'
-    ]
-} as const;
-
 export const sTransactionSortField = {
     type: 'string',
     enum: [
@@ -1019,25 +1152,6 @@ export const sTransactionFilter = {
     }
 } as const;
 
-export const sCursor = {
-    type: 'object',
-    properties: {
-        page: {
-            type: 'number',
-            minimum: 0
-        },
-        size: {
-            type: 'number',
-            minimum: 1,
-            maximum: 1000
-        }
-    },
-    required: [
-        'page',
-        'size'
-    ]
-} as const;
-
 export const sTransactionCollection = {
     type: 'object',
     properties: {
@@ -1063,6 +1177,30 @@ export const sTransactionCollection = {
     required: [
         'data',
         'more'
+    ]
+} as const;
+
+export const sThumbCreate = {
+    type: 'object',
+    properties: {
+        listingId: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/ThumbEnum'
+        }
+    },
+    required: [
+        'listingId',
+        'type'
+    ]
+} as const;
+
+export const sThumbEnum = {
+    type: 'string',
+    enum: [
+        'like',
+        'dislike'
     ]
 } as const;
 
@@ -2742,30 +2880,6 @@ export const sFeedFavourite = {
         'query',
         'upload',
         'count'
-    ]
-} as const;
-
-export const sThumbCreate = {
-    type: 'object',
-    properties: {
-        listingId: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/ThumbEnum'
-        }
-    },
-    required: [
-        'listingId',
-        'type'
-    ]
-} as const;
-
-export const sThumbEnum = {
-    type: 'string',
-    enum: [
-        'like',
-        'dislike'
     ]
 } as const;
 

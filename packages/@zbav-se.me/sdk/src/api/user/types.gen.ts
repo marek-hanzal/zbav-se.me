@@ -261,6 +261,115 @@ export type tTransactionMessageGalleryCreate = {
 };
 
 /**
+ * Query object for transaction-listing collection
+ */
+export type tTransactionListingQuery = {
+    cursor?: tCursor;
+    filter?: tTransactionListingFilter;
+    where?: tTransactionListingWhere;
+    sort?: Array<tTransactionListingSort>;
+};
+
+/**
+ * Order
+ */
+export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
+
+/**
+ * Order
+ */
+export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
+
+/**
+ * Field of the transaction-listing sort
+ */
+export const tTransactionListingSortField = { createdAt: 'createdAt' } as const;
+
+/**
+ * Field of the transaction-listing sort
+ */
+export type tTransactionListingSortField = typeof tTransactionListingSortField[keyof typeof tTransactionListingSortField];
+
+/**
+ * Sort object for transaction-listing collection
+ */
+export type tTransactionListingSort = {
+    field: tTransactionListingSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * App-based filters for transaction-listing
+ */
+export type tTransactionListingWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches listings of a specific seller (by userId)
+     */
+    userId?: string;
+};
+
+/**
+ * Filter object for transaction-listing collection
+ */
+export type tTransactionListingFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches listings of a specific seller (by userId)
+     */
+    userId?: string;
+};
+
+/**
+ * Cursor for pagination
+ */
+export type tCursor = {
+    /**
+     * Page number (0-indexed)
+     */
+    page: number;
+    /**
+     * Page size
+     */
+    size: number;
+};
+
+/**
+ * Collection of listings that have transactions
+ */
+export type tTransactionListingCollection = {
+    data: Array<{
+        id: string;
+    }>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
  * Buyer info for the transaction
  */
 export type tTransactionBuyerInfo = {
@@ -635,16 +744,6 @@ export type tTransactionMeta = {
 };
 
 /**
- * Order
- */
-export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
-
-/**
- * Order
- */
-export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
-
-/**
  * Field of the transaction sort
  */
 export const tTransactionSortField = {
@@ -730,20 +829,6 @@ export type tTransactionFilter = {
 };
 
 /**
- * Cursor for pagination
- */
-export type tCursor = {
-    /**
-     * Page number (0-indexed)
-     */
-    page: number;
-    /**
-     * Page size
-     */
-    size: number;
-};
-
-/**
  * Collection of transactions
  */
 export type tTransactionCollection = {
@@ -755,6 +840,27 @@ export type tTransactionCollection = {
      */
     more: boolean;
 };
+
+/**
+ * Data for creating a new thumb
+ */
+export type tThumbCreate = {
+    /**
+     * ID of the listing
+     */
+    listingId: string;
+    type: tThumbEnum;
+};
+
+/**
+ * Type of thumb
+ */
+export const tThumbEnum = { like: 'like', dislike: 'dislike' } as const;
+
+/**
+ * Type of thumb
+ */
+export type tThumbEnum = typeof tThumbEnum[keyof typeof tThumbEnum];
 
 /**
  * Allowed content types
@@ -1977,27 +2083,6 @@ export type tFeedFavourite = {
      */
     count: number;
 };
-
-/**
- * Data for creating a new thumb
- */
-export type tThumbCreate = {
-    /**
-     * ID of the listing
-     */
-    listingId: string;
-    type: tThumbEnum;
-};
-
-/**
- * Type of thumb
- */
-export const tThumbEnum = { like: 'like', dislike: 'dislike' } as const;
-
-/**
- * Type of thumb
- */
-export type tThumbEnum = typeof tThumbEnum[keyof typeof tThumbEnum];
 
 /**
  * Request to create or update a feed gallery
@@ -3370,42 +3455,6 @@ export type tApiFeedGalleryCreateResponse = {
 
 export type apiFeedGalleryCreateResponse = tApiFeedGalleryCreateResponse[keyof tApiFeedGalleryCreateResponse];
 
-export type tApiThumbCreateRequest = {
-    /**
-     * Data for creating a new thumb
-     */
-    body?: tThumbCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/thumb/create';
-};
-
-export type apiThumbCreateErrors = {
-    /**
-     * Invalid request - duplicate thumb or invalid data
-     */
-    400: tNotice;
-    /**
-     * Listing not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiThumbCreateError = apiThumbCreateErrors[keyof apiThumbCreateErrors];
-
-export type tApiThumbCreateResponse = {
-    /**
-     * The thumb was created and the updated listing is returned
-     */
-    201: tListing;
-};
-
-export type apiThumbCreateResponse = tApiThumbCreateResponse[keyof tApiThumbCreateResponse];
-
 export type tApiFeedFavouriteCollectionRequest = {
     body?: tFeedQuery;
     path?: never;
@@ -3909,6 +3958,42 @@ export type tApiS3PresignResponse = {
 
 export type apiS3PresignResponse = tApiS3PresignResponse[keyof tApiS3PresignResponse];
 
+export type tApiThumbCreateRequest = {
+    /**
+     * Data for creating a new thumb
+     */
+    body?: tThumbCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/thumb/create';
+};
+
+export type apiThumbCreateErrors = {
+    /**
+     * Invalid request - duplicate thumb or invalid data
+     */
+    400: tNotice;
+    /**
+     * Listing not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiThumbCreateError = apiThumbCreateErrors[keyof apiThumbCreateErrors];
+
+export type tApiThumbCreateResponse = {
+    /**
+     * The thumb was created and the updated listing is returned
+     */
+    201: tListing;
+};
+
+export type apiThumbCreateResponse = tApiThumbCreateResponse[keyof tApiThumbCreateResponse];
+
 export type tApiTransactionCollectionRequest = {
     body?: tTransactionQuery;
     path?: never;
@@ -4029,6 +4114,31 @@ export type tApiTransactionBuyerInfoResponse = {
 };
 
 export type apiTransactionBuyerInfoResponse = tApiTransactionBuyerInfoResponse[keyof tApiTransactionBuyerInfoResponse];
+
+export type tApiTransactionListingCollectionRequest = {
+    body?: tTransactionListingQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction-listing/collection';
+};
+
+export type apiTransactionListingCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionListingCollectionError = apiTransactionListingCollectionErrors[keyof apiTransactionListingCollectionErrors];
+
+export type tApiTransactionListingCollectionResponse = {
+    /**
+     * Access collection of listings that have transactions based on provided query
+     */
+    200: tTransactionListingCollection;
+};
+
+export type apiTransactionListingCollectionResponse = tApiTransactionListingCollectionResponse[keyof tApiTransactionListingCollectionResponse];
 
 export type tApiTransactionMessageGalleryCreateRequest = {
     /**

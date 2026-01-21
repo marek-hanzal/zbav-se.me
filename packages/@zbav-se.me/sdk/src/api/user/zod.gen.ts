@@ -298,6 +298,126 @@ export const zTransactionMessageGalleryCreate = z.object({
 export type zTransactionMessageGalleryCreate = z.infer<typeof zTransactionMessageGalleryCreate>;
 
 /**
+ * Order
+ */
+export const zOrderEnum = z.enum(['asc', 'desc']).register(z.globalRegistry, {
+    description: 'Order'
+});
+
+export type zOrderEnum = z.infer<typeof zOrderEnum>;
+
+/**
+ * Field of the transaction-listing sort
+ */
+export const zTransactionListingSortField = z.enum(['createdAt']).register(z.globalRegistry, {
+    description: 'Field of the transaction-listing sort'
+});
+
+export type zTransactionListingSortField = z.infer<typeof zTransactionListingSortField>;
+
+/**
+ * Sort object for transaction-listing collection
+ */
+export const zTransactionListingSort = z.object({
+    field: zTransactionListingSortField,
+    direction: zOrderEnum
+}).register(z.globalRegistry, {
+    description: 'Sort object for transaction-listing collection'
+});
+
+export type zTransactionListingSort = z.infer<typeof zTransactionListingSort>;
+
+/**
+ * App-based filters for transaction-listing
+ */
+export const zTransactionListingWhere = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches listings of a specific seller (by userId)'
+    }))
+}).register(z.globalRegistry, {
+    description: 'App-based filters for transaction-listing'
+});
+
+export type zTransactionListingWhere = z.infer<typeof zTransactionListingWhere>;
+
+/**
+ * Filter object for transaction-listing collection
+ */
+export const zTransactionListingFilter = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches listings of a specific seller (by userId)'
+    }))
+}).register(z.globalRegistry, {
+    description: 'Filter object for transaction-listing collection'
+});
+
+export type zTransactionListingFilter = z.infer<typeof zTransactionListingFilter>;
+
+/**
+ * Cursor for pagination
+ */
+export const zCursor = z.object({
+    page: z.number().gte(0).register(z.globalRegistry, {
+        description: 'Page number (0-indexed)'
+    }),
+    size: z.number().gte(1).lte(1000).register(z.globalRegistry, {
+        description: 'Page size'
+    })
+}).register(z.globalRegistry, {
+    description: 'Cursor for pagination'
+});
+
+export type zCursor = z.infer<typeof zCursor>;
+
+/**
+ * Query object for transaction-listing collection
+ */
+export const zTransactionListingQuery = z.object({
+    cursor: z.optional(zCursor),
+    filter: z.optional(zTransactionListingFilter),
+    where: z.optional(zTransactionListingWhere),
+    sort: z.optional(z.array(zTransactionListingSort))
+}).register(z.globalRegistry, {
+    description: 'Query object for transaction-listing collection'
+});
+
+export type zTransactionListingQuery = z.infer<typeof zTransactionListingQuery>;
+
+/**
+ * Collection of listings that have transactions
+ */
+export const zTransactionListingCollection = z.object({
+    data: z.array(z.object({
+        id: z.string().min(1)
+    })),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of listings that have transactions'
+});
+
+export type zTransactionListingCollection = z.infer<typeof zTransactionListingCollection>;
+
+/**
  * This metric describes the score of the user
  */
 export const zUserEventBuyerScore = z.object({
@@ -686,15 +806,6 @@ export const zTransactionMeta = z.object({
 export type zTransactionMeta = z.infer<typeof zTransactionMeta>;
 
 /**
- * Order
- */
-export const zOrderEnum = z.enum(['asc', 'desc']).register(z.globalRegistry, {
-    description: 'Order'
-});
-
-export type zOrderEnum = z.infer<typeof zOrderEnum>;
-
-/**
  * Field of the transaction sort
  */
 export const zTransactionSortField = z.enum([
@@ -783,22 +894,6 @@ export const zTransactionFilter = z.object({
 export type zTransactionFilter = z.infer<typeof zTransactionFilter>;
 
 /**
- * Cursor for pagination
- */
-export const zCursor = z.object({
-    page: z.number().gte(0).register(z.globalRegistry, {
-        description: 'Page number (0-indexed)'
-    }),
-    size: z.number().gte(1).lte(1000).register(z.globalRegistry, {
-        description: 'Page size'
-    })
-}).register(z.globalRegistry, {
-    description: 'Cursor for pagination'
-});
-
-export type zCursor = z.infer<typeof zCursor>;
-
-/**
  * Query object for transaction collection
  */
 export const zTransactionQuery = z.object({
@@ -828,6 +923,29 @@ export const zTransactionCollection = z.object({
 });
 
 export type zTransactionCollection = z.infer<typeof zTransactionCollection>;
+
+/**
+ * Type of thumb
+ */
+export const zThumbEnum = z.enum(['like', 'dislike']).register(z.globalRegistry, {
+    description: 'Type of thumb'
+});
+
+export type zThumbEnum = z.infer<typeof zThumbEnum>;
+
+/**
+ * Data for creating a new thumb
+ */
+export const zThumbCreate = z.object({
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing'
+    }),
+    type: zThumbEnum
+}).register(z.globalRegistry, {
+    description: 'Data for creating a new thumb'
+});
+
+export type zThumbCreate = z.infer<typeof zThumbCreate>;
 
 /**
  * Allowed content types
@@ -2165,29 +2283,6 @@ export const zFeedFavouriteCollection = z.object({
 export type zFeedFavouriteCollection = z.infer<typeof zFeedFavouriteCollection>;
 
 /**
- * Type of thumb
- */
-export const zThumbEnum = z.enum(['like', 'dislike']).register(z.globalRegistry, {
-    description: 'Type of thumb'
-});
-
-export type zThumbEnum = z.infer<typeof zThumbEnum>;
-
-/**
- * Data for creating a new thumb
- */
-export const zThumbCreate = z.object({
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing'
-    }),
-    type: zThumbEnum
-}).register(z.globalRegistry, {
-    description: 'Data for creating a new thumb'
-});
-
-export type zThumbCreate = z.infer<typeof zThumbCreate>;
-
-/**
  * Request to create or update a feed gallery
  */
 export const zFeedGalleryCreate = z.object({
@@ -3359,21 +3454,6 @@ export const zApiFeedGalleryCreateResponse = zGallery.and(z.unknown().register(z
 
 export type zapiFeedGalleryCreateResponse = z.infer<typeof zApiFeedGalleryCreateResponse>;
 
-export const zApiThumbCreateData = z.object({
-    body: z.optional(zThumbCreate),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export type zapiThumbCreateRequest = z.infer<typeof zApiThumbCreateData>;
-
-/**
- * The thumb was created and the updated listing is returned
- */
-export const zApiThumbCreateResponse = zListing;
-
-export type zapiThumbCreateResponse = z.infer<typeof zApiThumbCreateResponse>;
-
 export const zApiFeedFavouriteCollectionData = z.object({
     body: z.optional(zFeedQuery),
     path: z.optional(z.never()),
@@ -3648,6 +3728,21 @@ export const zApiS3PresignResponse = z.object({
 
 export type zapiS3PresignResponse = z.infer<typeof zApiS3PresignResponse>;
 
+export const zApiThumbCreateData = z.object({
+    body: z.optional(zThumbCreate),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiThumbCreateRequest = z.infer<typeof zApiThumbCreateData>;
+
+/**
+ * The thumb was created and the updated listing is returned
+ */
+export const zApiThumbCreateResponse = zListing;
+
+export type zapiThumbCreateResponse = z.infer<typeof zApiThumbCreateResponse>;
+
 export const zApiTransactionCollectionData = z.object({
     body: z.optional(zTransactionQuery),
     path: z.optional(z.never()),
@@ -3707,6 +3802,21 @@ export type zapiTransactionBuyerInfoRequest = z.infer<typeof zApiTransactionBuye
 export const zApiTransactionBuyerInfoResponse = zTransactionBuyerInfo;
 
 export type zapiTransactionBuyerInfoResponse = z.infer<typeof zApiTransactionBuyerInfoResponse>;
+
+export const zApiTransactionListingCollectionData = z.object({
+    body: z.optional(zTransactionListingQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionListingCollectionRequest = z.infer<typeof zApiTransactionListingCollectionData>;
+
+/**
+ * Access collection of listings that have transactions based on provided query
+ */
+export const zApiTransactionListingCollectionResponse = zTransactionListingCollection;
+
+export type zapiTransactionListingCollectionResponse = z.infer<typeof zApiTransactionListingCollectionResponse>;
 
 export const zApiTransactionMessageGalleryCreateData = z.object({
     body: z.optional(zTransactionMessageGalleryCreate),
