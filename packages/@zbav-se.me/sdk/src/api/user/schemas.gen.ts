@@ -250,6 +250,56 @@ export const sTransactionMessageTextCreate = {
     ]
 } as const;
 
+export const sMessageText = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        text: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/MessageTypeEnum'
+        },
+        direction: {
+            $ref: '#/components/schemas/MessageDirectionEnum'
+        }
+    },
+    required: [
+        'id',
+        'text',
+        'createdAt',
+        'type',
+        'direction'
+    ]
+} as const;
+
+export const sMessageDirectionEnum = {
+    type: 'string',
+    enum: [
+        'in',
+        'out',
+        'system'
+    ]
+} as const;
+
+export const sMessageTypeEnum = {
+    type: 'string',
+    enum: [
+        'text',
+        'gallery',
+        'location',
+        'personal',
+        'package',
+        'date',
+        'system'
+    ]
+} as const;
+
 export const sTransactionMessagePersonalCreate = {
     type: 'object',
     properties: {
@@ -279,6 +329,183 @@ export const sTransactionMessagePersonalCreate = {
     ]
 } as const;
 
+export const sMessagePersonal = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        name: {
+            type: 'string'
+        },
+        phone: {
+            type: 'string'
+        },
+        email: {
+            type: 'string',
+            format: 'email'
+        },
+        locationId: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/MessageTypeEnum'
+        },
+        direction: {
+            $ref: '#/components/schemas/MessageDirectionEnum'
+        },
+        location: {
+            $ref: '#/components/schemas/Location'
+        }
+    },
+    required: [
+        'id',
+        'name',
+        'phone',
+        'email',
+        'locationId',
+        'createdAt',
+        'type',
+        'direction',
+        'location'
+    ]
+} as const;
+
+export const sLocation = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        query: {
+            type: 'string'
+        },
+        lang: {
+            type: 'string'
+        },
+        country: {
+            type: 'string'
+        },
+        code: {
+            type: 'string'
+        },
+        county: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        municipality: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        state: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        address: {
+            type: 'string'
+        },
+        city: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        street: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        zip: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        confidence: {
+            type: 'number'
+        },
+        hash: {
+            type: 'string'
+        },
+        lat: {
+            type: 'number'
+        },
+        lon: {
+            type: 'number'
+        }
+    },
+    required: [
+        'id',
+        'query',
+        'lang',
+        'country',
+        'code',
+        'county',
+        'municipality',
+        'state',
+        'address',
+        'city',
+        'street',
+        'zip',
+        'confidence',
+        'hash',
+        'lat',
+        'lon'
+    ]
+} as const;
+
 export const sTransactionMessagePackageCreate = {
     type: 'object',
     properties: {
@@ -303,6 +530,42 @@ export const sTransactionMessagePackageCreate = {
     ]
 } as const;
 
+export const sMessagePackage = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        link: {
+            type: 'string',
+            format: 'uri'
+        },
+        number: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/MessageTypeEnum'
+        },
+        direction: {
+            $ref: '#/components/schemas/MessageDirectionEnum'
+        }
+    },
+    required: [
+        'id',
+        'link',
+        'number',
+        'createdAt',
+        'type',
+        'direction'
+    ]
+} as const;
+
 export const sTransactionMessageLocationCreate = {
     type: 'object',
     properties: {
@@ -316,6 +579,38 @@ export const sTransactionMessageLocationCreate = {
     required: [
         'transactionId',
         'locationId'
+    ]
+} as const;
+
+export const sMessageLocation = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        locationId: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/MessageTypeEnum'
+        },
+        direction: {
+            $ref: '#/components/schemas/MessageDirectionEnum'
+        },
+        location: {
+            $ref: '#/components/schemas/Location'
+        }
+    },
+    required: [
+        'id',
+        'locationId',
+        'createdAt',
+        'type',
+        'direction',
+        'location'
     ]
 } as const;
 
@@ -336,6 +631,107 @@ export const sTransactionMessageGalleryCreate = {
     required: [
         'transactionId',
         'uploadIds'
+    ]
+} as const;
+
+export const sMessageGallery = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        galleryId: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/MessageTypeEnum'
+        },
+        direction: {
+            $ref: '#/components/schemas/MessageDirectionEnum'
+        },
+        gallery: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/Gallery'
+                },
+                {}
+            ]
+        }
+    },
+    required: [
+        'id',
+        'galleryId',
+        'createdAt',
+        'type',
+        'direction',
+        'gallery'
+    ]
+} as const;
+
+export const sUpload = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        url: {
+            type: 'string',
+            format: 'uri'
+        }
+    },
+    required: [
+        'id',
+        'url'
+    ]
+} as const;
+
+export const sGalleryItem = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        galleryId: {
+            type: 'string'
+        },
+        uploadId: {
+            type: 'string'
+        },
+        sort: {
+            type: 'number'
+        },
+        upload: {
+            $ref: '#/components/schemas/Upload'
+        }
+    },
+    required: [
+        'id',
+        'galleryId',
+        'uploadId',
+        'sort',
+        'upload'
+    ]
+} as const;
+
+export const sGallery = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        items: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/GalleryItem'
+            }
+        }
+    },
+    required: [
+        'id',
+        'items'
     ]
 } as const;
 
@@ -452,37 +848,14 @@ export const sCursor = {
     ]
 } as const;
 
-export const sTransactionListingCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/TransactionListing'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
-export const sTransactionListing = {
+export const sTransactionListingItemSchema = {
     type: 'object',
     properties: {
         listingId: {
             type: 'string'
         },
         count: {
-            type: [
-                'integer',
-                'null'
-            ],
-            minimum: 0
+            type: 'number'
         },
         lastAt: {
             type: 'string'
@@ -815,138 +1188,6 @@ export const sTransaction = {
     ]
 } as const;
 
-export const sLocation = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        query: {
-            type: 'string'
-        },
-        lang: {
-            type: 'string'
-        },
-        country: {
-            type: 'string'
-        },
-        code: {
-            type: 'string'
-        },
-        county: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        municipality: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        state: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        address: {
-            type: 'string'
-        },
-        city: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        street: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        zip: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        confidence: {
-            type: 'number'
-        },
-        hash: {
-            type: 'string'
-        },
-        lat: {
-            type: 'number'
-        },
-        lon: {
-            type: 'number'
-        }
-    },
-    required: [
-        'id',
-        'query',
-        'lang',
-        'country',
-        'code',
-        'county',
-        'municipality',
-        'state',
-        'address',
-        'city',
-        'street',
-        'zip',
-        'confidence',
-        'hash',
-        'lat',
-        'lon'
-    ]
-} as const;
-
 export const sCurrencyListEnum = {
     type: 'string',
     enum: [
@@ -965,70 +1206,6 @@ export const sListingPriceEnum = {
     enum: [
         'closed',
         'open'
-    ]
-} as const;
-
-export const sUpload = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        url: {
-            type: 'string',
-            format: 'uri'
-        }
-    },
-    required: [
-        'id',
-        'url'
-    ]
-} as const;
-
-export const sGalleryItem = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        galleryId: {
-            type: 'string'
-        },
-        uploadId: {
-            type: 'string'
-        },
-        sort: {
-            type: 'number'
-        },
-        upload: {
-            $ref: '#/components/schemas/Upload'
-        }
-    },
-    required: [
-        'id',
-        'galleryId',
-        'uploadId',
-        'sort',
-        'upload'
-    ]
-} as const;
-
-export const sGallery = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        items: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/GalleryItem'
-            }
-        }
-    },
-    required: [
-        'id',
-        'items'
     ]
 } as const;
 
@@ -1167,26 +1344,7 @@ export const sTransactionFilter = {
     }
 } as const;
 
-export const sTransactionCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/TransactionCollectionItem'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
-export const sTransactionCollectionItem = {
+export const sTransactionItemSchema = {
     type: 'object',
     properties: {
         id: {
@@ -1350,293 +1508,15 @@ export const sMessageFilter = {
     }
 } as const;
 
-export const sMessageCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/Message'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
-export const sMessageSystem = {
+export const sMessageItemSchema = {
     type: 'object',
     properties: {
         id: {
             type: 'string'
-        },
-        text: {
-            type: 'string'
-        },
-        createdAt: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/MessageTypeEnum'
-        },
-        direction: {
-            $ref: '#/components/schemas/MessageDirectionEnum'
         }
     },
     required: [
-        'id',
-        'text',
-        'createdAt',
-        'type',
-        'direction'
-    ]
-} as const;
-
-export const sMessageDirectionEnum = {
-    type: 'string',
-    enum: [
-        'in',
-        'out',
-        'system'
-    ]
-} as const;
-
-export const sMessageTypeEnum = {
-    type: 'string',
-    enum: [
-        'text',
-        'gallery',
-        'location',
-        'personal',
-        'package',
-        'date',
-        'system'
-    ]
-} as const;
-
-export const sMessagePackage = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        link: {
-            type: 'string',
-            format: 'uri'
-        },
-        number: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        createdAt: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/MessageTypeEnum'
-        },
-        direction: {
-            $ref: '#/components/schemas/MessageDirectionEnum'
-        }
-    },
-    required: [
-        'id',
-        'link',
-        'number',
-        'createdAt',
-        'type',
-        'direction'
-    ]
-} as const;
-
-export const sMessagePersonal = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        name: {
-            type: 'string'
-        },
-        phone: {
-            type: 'string'
-        },
-        email: {
-            type: 'string',
-            format: 'email'
-        },
-        locationId: {
-            type: 'string'
-        },
-        createdAt: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/MessageTypeEnum'
-        },
-        direction: {
-            $ref: '#/components/schemas/MessageDirectionEnum'
-        },
-        location: {
-            $ref: '#/components/schemas/Location'
-        }
-    },
-    required: [
-        'id',
-        'name',
-        'phone',
-        'email',
-        'locationId',
-        'createdAt',
-        'type',
-        'direction',
-        'location'
-    ]
-} as const;
-
-export const sMessageLocation = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        locationId: {
-            type: 'string'
-        },
-        createdAt: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/MessageTypeEnum'
-        },
-        direction: {
-            $ref: '#/components/schemas/MessageDirectionEnum'
-        },
-        location: {
-            $ref: '#/components/schemas/Location'
-        }
-    },
-    required: [
-        'id',
-        'locationId',
-        'createdAt',
-        'type',
-        'direction',
-        'location'
-    ]
-} as const;
-
-export const sMessageGallery = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        galleryId: {
-            type: 'string'
-        },
-        createdAt: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/MessageTypeEnum'
-        },
-        direction: {
-            $ref: '#/components/schemas/MessageDirectionEnum'
-        },
-        gallery: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/Gallery'
-                },
-                {}
-            ]
-        }
-    },
-    required: [
-        'id',
-        'galleryId',
-        'createdAt',
-        'type',
-        'direction',
-        'gallery'
-    ]
-} as const;
-
-export const sMessageText = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        text: {
-            type: 'string'
-        },
-        createdAt: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/MessageTypeEnum'
-        },
-        direction: {
-            $ref: '#/components/schemas/MessageDirectionEnum'
-        }
-    },
-    required: [
-        'id',
-        'text',
-        'createdAt',
-        'type',
-        'direction'
-    ]
-} as const;
-
-export const sMessagePayload = {
-    anyOf: [
-        {
-            $ref: '#/components/schemas/MessageText'
-        },
-        {
-            $ref: '#/components/schemas/MessageGallery'
-        },
-        {
-            $ref: '#/components/schemas/MessageLocation'
-        },
-        {
-            $ref: '#/components/schemas/MessagePersonal'
-        },
-        {
-            $ref: '#/components/schemas/MessagePackage'
-        },
-        {
-            $ref: '#/components/schemas/MessageSystem'
-        }
-    ]
-} as const;
-
-export const sMessage = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/MessageTypeEnum'
-        },
-        payload: {
-            $ref: '#/components/schemas/MessagePayload'
-        }
-    },
-    required: [
-        'id',
-        'type',
-        'payload'
+        'id'
     ]
 } as const;
 
@@ -2066,31 +1946,15 @@ export const sListingFilter = {
     }
 } as const;
 
-export const sListingCollection = {
+export const sListingItemSchema = {
     type: 'object',
     properties: {
-        data: {
-            type: 'array',
-            items: {
-                type: 'object',
-                properties: {
-                    id: {
-                        type: 'string',
-                        minLength: 1
-                    }
-                },
-                required: [
-                    'id'
-                ]
-            }
-        },
-        more: {
-            type: 'boolean'
+        id: {
+            type: 'string'
         }
     },
     required: [
-        'data',
-        'more'
+        'id'
     ]
 } as const;
 
@@ -2385,38 +2249,15 @@ export const sIgnoreSort = {
     ]
 } as const;
 
-export const sIgnoreCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/Ignore'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
-export const sIgnore = {
+export const sIgnoreItemSchema = {
     type: 'object',
     properties: {
         id: {
             type: 'string'
-        },
-        listingId: {
-            type: 'string'
         }
     },
     required: [
-        'id',
-        'listingId'
+        'id'
     ]
 } as const;
 
@@ -2485,27 +2326,15 @@ export const sGalleryFilter = {
     }
 } as const;
 
-export const sGalleryCollection = {
+export const sGalleryItemSchema = {
     type: 'object',
     properties: {
-        data: {
-            type: 'array',
-            items: {
-                allOf: [
-                    {
-                        $ref: '#/components/schemas/Gallery'
-                    },
-                    {}
-                ]
-            }
-        },
-        more: {
-            type: 'boolean'
+        id: {
+            type: 'string'
         }
     },
     required: [
-        'data',
-        'more'
+        'id'
     ]
 } as const;
 
@@ -2722,186 +2551,27 @@ export const sFlagWhere = {
     }
 } as const;
 
-export const sFlagCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/Flag'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
-export const sFlag = {
+export const sFlagItemSchema = {
     type: 'object',
     properties: {
         id: {
             type: 'string'
-        },
-        listingId: {
-            type: 'string'
         }
     },
     required: [
-        'id',
-        'listingId'
+        'id'
     ]
 } as const;
 
-export const sFeedFavouriteCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/FeedFavourite'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
-export const sListingSortField = {
-    type: 'string',
-    enum: [
-        'price',
-        'condition',
-        'age',
-        'createdAt',
-        'updatedAt',
-        'expiresAt',
-        'geo'
-    ]
-} as const;
-
-export const sListingSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/ListingSortField'
-        },
-        direction: {
-            $ref: '#/components/schemas/OrderEnum'
-        }
-    },
-    required: [
-        'field',
-        'direction'
-    ]
-} as const;
-
-export const sListingQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/Cursor'
-                },
-                {
-                    default: {
-                        page: 0,
-                        size: 256
-                    }
-                }
-            ]
-        },
-        filter: {
-            $ref: '#/components/schemas/ListingFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingSort'
-            }
-        },
-        meta: {
-            $ref: '#/components/schemas/ListingMeta'
-        }
-    }
-} as const;
-
-export const sFeedFavourite = {
+export const sFeedFavouriteItemSchema = {
     type: 'object',
     properties: {
         id: {
             type: 'string'
-        },
-        locationId: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        uploadId: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        name: {
-            type: 'string'
-        },
-        query: {
-            $ref: '#/components/schemas/ListingQuery'
-        },
-        upload: {
-            anyOf: [
-                {
-                    $ref: '#/components/schemas/Upload'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        count: {
-            type: 'number'
         }
     },
     required: [
-        'id',
-        'locationId',
-        'uploadId',
-        'name',
-        'query',
-        'upload',
-        'count'
+        'id'
     ]
 } as const;
 
@@ -2990,31 +2660,15 @@ export const sFeedFilter = {
     }
 } as const;
 
-export const sFeedCollection = {
+export const sFeedItemSchema = {
     type: 'object',
     properties: {
-        data: {
-            type: 'array',
-            items: {
-                type: 'object',
-                properties: {
-                    id: {
-                        type: 'string',
-                        minLength: 1
-                    }
-                },
-                required: [
-                    'id'
-                ]
-            }
-        },
-        more: {
-            type: 'boolean'
+        id: {
+            type: 'string'
         }
     },
     required: [
-        'data',
-        'more'
+        'id'
     ]
 } as const;
 
@@ -3112,6 +2766,69 @@ export const sFeedQuery = {
             items: {
                 $ref: '#/components/schemas/FeedSort'
             }
+        }
+    }
+} as const;
+
+export const sListingSortField = {
+    type: 'string',
+    enum: [
+        'price',
+        'condition',
+        'age',
+        'createdAt',
+        'updatedAt',
+        'expiresAt',
+        'geo'
+    ]
+} as const;
+
+export const sListingSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/ListingSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sListingQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/Cursor'
+                },
+                {
+                    default: {
+                        page: 0,
+                        size: 256
+                    }
+                }
+            ]
+        },
+        filter: {
+            $ref: '#/components/schemas/ListingFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/ListingWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/ListingSort'
+            }
+        },
+        meta: {
+            $ref: '#/components/schemas/ListingMeta'
         }
     }
 } as const;
@@ -3606,46 +3323,15 @@ export const sFavouriteSort = {
     ]
 } as const;
 
-export const sFavouriteCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/Favourite'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
-export const sFavourite = {
+export const sFavouriteItemSchema = {
     type: 'object',
     properties: {
         id: {
             type: 'string'
-        },
-        feedId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        },
-        createdAt: {
-            type: 'string'
         }
     },
     required: [
-        'id',
-        'feedId',
-        'listingId',
-        'createdAt'
+        'id'
     ]
 } as const;
 
@@ -4378,31 +4064,15 @@ export const sDraftCountQuery = {
     }
 } as const;
 
-export const sDraftCollection = {
+export const sDraftItemSchema = {
     type: 'object',
     properties: {
-        data: {
-            type: 'array',
-            items: {
-                type: 'object',
-                properties: {
-                    id: {
-                        type: 'string',
-                        minLength: 1
-                    }
-                },
-                required: [
-                    'id'
-                ]
-            }
-        },
-        more: {
-            type: 'boolean'
+        id: {
+            type: 'string'
         }
     },
     required: [
-        'data',
-        'more'
+        'id'
     ]
 } as const;
 

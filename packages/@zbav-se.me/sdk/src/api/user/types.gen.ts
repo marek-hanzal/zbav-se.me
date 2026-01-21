@@ -189,6 +189,58 @@ export type tTransactionMessageTextCreate = {
 };
 
 /**
+ * Message text entry
+ */
+export type tMessageText = {
+    /**
+     * ID of the message entry
+     */
+    id: string;
+    /**
+     * Message content (database column name)
+     */
+    text: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+};
+
+/**
+ * Direction of the message
+ */
+export const tMessageDirectionEnum = {
+    in: 'in',
+    out: 'out',
+    system: 'system'
+} as const;
+
+/**
+ * Direction of the message
+ */
+export type tMessageDirectionEnum = typeof tMessageDirectionEnum[keyof typeof tMessageDirectionEnum];
+
+/**
+ * Type of message
+ */
+export const tMessageTypeEnum = {
+    text: 'text',
+    gallery: 'gallery',
+    location: 'location',
+    personal: 'personal',
+    package: 'package',
+    date: 'date',
+    system: 'system'
+} as const;
+
+/**
+ * Type of message
+ */
+export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
+
+/**
  * Request to create a transaction personal message
  */
 export type tTransactionMessagePersonalCreate = {
@@ -215,6 +267,106 @@ export type tTransactionMessagePersonalCreate = {
 };
 
 /**
+ * Message personal entry
+ */
+export type tMessagePersonal = {
+    /**
+     * ID of the message personal entry
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Phone number
+     */
+    phone: string;
+    /**
+     * Email address
+     */
+    email: string;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+    location: tLocation;
+};
+
+/**
+ * Location data
+ */
+export type tLocation = {
+    id: string;
+    /**
+     * The query that was used to get the location
+     */
+    query: string;
+    /**
+     * The language that was used to get the location
+     */
+    lang: string;
+    /**
+     * The country that the location is in
+     */
+    country: string;
+    /**
+     * Country code
+     */
+    code: string;
+    /**
+     * The county that the location is in
+     */
+    county: string | null;
+    /**
+     * The municipality that the location is in
+     */
+    municipality: string | null;
+    /**
+     * The state that the location is in
+     */
+    state: string | null;
+    /**
+     * Full address preview of a location
+     */
+    address: string;
+    /**
+     * The city that the location is in
+     */
+    city: string | null;
+    /**
+     * The street that the location is on
+     */
+    street: string | null;
+    /**
+     * The postal/zip code of the location
+     */
+    zip: string | null;
+    /**
+     * Confidence score of the location (based on query)
+     */
+    confidence: number;
+    /**
+     * Used to uniquely identify this location entry
+     */
+    hash: string;
+    /**
+     * Latitude of the location
+     */
+    lat: number;
+    /**
+     * Longitude of the location
+     */
+    lon: number;
+};
+
+/**
  * Request to create a transaction message package
  */
 export type tTransactionMessagePackageCreate = {
@@ -233,6 +385,30 @@ export type tTransactionMessagePackageCreate = {
 };
 
 /**
+ * Message package entry
+ */
+export type tMessagePackage = {
+    /**
+     * ID of the message package entry
+     */
+    id: string;
+    /**
+     * Package link
+     */
+    link: string;
+    /**
+     * Tracking number
+     */
+    number: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+};
+
+/**
  * Request to create a transaction message location
  */
 export type tTransactionMessageLocationCreate = {
@@ -247,6 +423,27 @@ export type tTransactionMessageLocationCreate = {
 };
 
 /**
+ * Message location entry
+ */
+export type tMessageLocation = {
+    /**
+     * ID of the message location entry
+     */
+    id: string;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+    location: tLocation;
+};
+
+/**
  * Request to create a transaction message gallery
  */
 export type tTransactionMessageGalleryCreate = {
@@ -258,6 +455,78 @@ export type tTransactionMessageGalleryCreate = {
      * IDs of the uploads; order of uploads defines order in the gallery
      */
     uploadIds: Array<string>;
+};
+
+/**
+ * Message gallery entry
+ */
+export type tMessageGallery = {
+    /**
+     * ID of the message gallery entry
+     */
+    id: string;
+    /**
+     * ID of the gallery
+     */
+    galleryId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+    gallery: tGallery & unknown;
+};
+
+/**
+ * Upload file metadata
+ */
+export type tUpload = {
+    /**
+     * ID of the upload
+     */
+    id: string;
+    /**
+     * Public URL to the uploaded file
+     */
+    url: string;
+};
+
+/**
+ * Gallery item data
+ */
+export type tGalleryItem = {
+    /**
+     * ID of the gallery item
+     */
+    id: string;
+    /**
+     * ID of the gallery this item belongs to
+     */
+    galleryId: string;
+    /**
+     * ID of the upload this image belongs to
+     */
+    uploadId: string;
+    /**
+     * Sort order of the image in the gallery
+     */
+    sort: number;
+    upload: tUpload;
+};
+
+/**
+ * Draft gallery images
+ */
+export type tGallery = {
+    /**
+     * ID of the gallery
+     */
+    id: string;
+    /**
+     * Gallery items sorted by sort order
+     */
+    items: Array<tGalleryItem>;
 };
 
 /**
@@ -357,30 +626,19 @@ export type tCursor = {
 };
 
 /**
- * Collection of listings that have transactions
+ * Transaction listing collection item
  */
-export type tTransactionListingCollection = {
-    data: Array<tTransactionListing>;
+export type tTransactionListingItemSchema = {
     /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Aggregated transaction information per listing
- */
-export type tTransactionListing = {
-    /**
-     * ID of the listing that has at least one transaction
+     * ID of the listing
      */
     listingId: string;
     /**
-     * Total number of transactions for this listing (within the current scope)
+     * Number of transactions for this listing
      */
-    count: number | null;
+    count: number;
     /**
-     * Timestamp of the most recent activity in any transaction under this listing
+     * Timestamp of the last transaction update
      */
     lastAt: string;
 };
@@ -596,73 +854,6 @@ export type tTransaction = {
 };
 
 /**
- * Location data
- */
-export type tLocation = {
-    id: string;
-    /**
-     * The query that was used to get the location
-     */
-    query: string;
-    /**
-     * The language that was used to get the location
-     */
-    lang: string;
-    /**
-     * The country that the location is in
-     */
-    country: string;
-    /**
-     * Country code
-     */
-    code: string;
-    /**
-     * The county that the location is in
-     */
-    county: string | null;
-    /**
-     * The municipality that the location is in
-     */
-    municipality: string | null;
-    /**
-     * The state that the location is in
-     */
-    state: string | null;
-    /**
-     * Full address preview of a location
-     */
-    address: string;
-    /**
-     * The city that the location is in
-     */
-    city: string | null;
-    /**
-     * The street that the location is on
-     */
-    street: string | null;
-    /**
-     * The postal/zip code of the location
-     */
-    zip: string | null;
-    /**
-     * Confidence score of the location (based on query)
-     */
-    confidence: number;
-    /**
-     * Used to uniquely identify this location entry
-     */
-    hash: string;
-    /**
-     * Latitude of the location
-     */
-    lat: number;
-    /**
-     * Longitude of the location
-     */
-    lon: number;
-};
-
-/**
  * List of available currencies
  */
 export const tCurrencyListEnum = {
@@ -689,57 +880,6 @@ export const tListingPriceEnum = { closed: 'closed', open: 'open' } as const;
  * Price type of the listing
  */
 export type tListingPriceEnum = typeof tListingPriceEnum[keyof typeof tListingPriceEnum];
-
-/**
- * Upload file metadata
- */
-export type tUpload = {
-    /**
-     * ID of the upload
-     */
-    id: string;
-    /**
-     * Public URL to the uploaded file
-     */
-    url: string;
-};
-
-/**
- * Gallery item data
- */
-export type tGalleryItem = {
-    /**
-     * ID of the gallery item
-     */
-    id: string;
-    /**
-     * ID of the gallery this item belongs to
-     */
-    galleryId: string;
-    /**
-     * ID of the upload this image belongs to
-     */
-    uploadId: string;
-    /**
-     * Sort order of the image in the gallery
-     */
-    sort: number;
-    upload: tUpload;
-};
-
-/**
- * Draft gallery images
- */
-export type tGallery = {
-    /**
-     * ID of the gallery
-     */
-    id: string;
-    /**
-     * Gallery items sorted by sort order
-     */
-    items: Array<tGalleryItem>;
-};
 
 /**
  * Query object for transaction collection
@@ -845,20 +985,9 @@ export type tTransactionFilter = {
 };
 
 /**
- * Collection of transactions
- */
-export type tTransactionCollection = {
-    data: Array<tTransactionCollectionItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
  * Transaction collection item with last message timestamp
  */
-export type tTransactionCollectionItem = {
+export type tTransactionItemSchema = {
     /**
      * ID of the transaction
      */
@@ -1014,202 +1143,13 @@ export type tMessageFilter = {
 };
 
 /**
- * Collection of messages
+ * Message collection item
  */
-export type tMessageCollection = {
-    data: Array<tMessage>;
+export type tMessageItemSchema = {
     /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Message system entry
- */
-export type tMessageSystem = {
-    /**
-     * ID of the message entry
+     * ID of the message
      */
     id: string;
-    /**
-     * Message content
-     */
-    text: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-};
-
-/**
- * Direction of the message
- */
-export const tMessageDirectionEnum = {
-    in: 'in',
-    out: 'out',
-    system: 'system'
-} as const;
-
-/**
- * Direction of the message
- */
-export type tMessageDirectionEnum = typeof tMessageDirectionEnum[keyof typeof tMessageDirectionEnum];
-
-/**
- * Type of message
- */
-export const tMessageTypeEnum = {
-    text: 'text',
-    gallery: 'gallery',
-    location: 'location',
-    personal: 'personal',
-    package: 'package',
-    date: 'date',
-    system: 'system'
-} as const;
-
-/**
- * Type of message
- */
-export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
-
-/**
- * Message package entry
- */
-export type tMessagePackage = {
-    /**
-     * ID of the message package entry
-     */
-    id: string;
-    /**
-     * Package link
-     */
-    link: string;
-    /**
-     * Tracking number
-     */
-    number: string | null;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-};
-
-/**
- * Message personal entry
- */
-export type tMessagePersonal = {
-    /**
-     * ID of the message personal entry
-     */
-    id: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Phone number
-     */
-    phone: string;
-    /**
-     * Email address
-     */
-    email: string;
-    /**
-     * ID of the location
-     */
-    locationId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-    location: tLocation;
-};
-
-/**
- * Message location entry
- */
-export type tMessageLocation = {
-    /**
-     * ID of the message location entry
-     */
-    id: string;
-    /**
-     * ID of the location
-     */
-    locationId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-    location: tLocation;
-};
-
-/**
- * Message gallery entry
- */
-export type tMessageGallery = {
-    /**
-     * ID of the message gallery entry
-     */
-    id: string;
-    /**
-     * ID of the gallery
-     */
-    galleryId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-    gallery: tGallery & unknown;
-};
-
-/**
- * Message text entry
- */
-export type tMessageText = {
-    /**
-     * ID of the message entry
-     */
-    id: string;
-    /**
-     * Message content (database column name)
-     */
-    text: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-};
-
-/**
- * Message payload (unified view across all message types)
- */
-export type tMessagePayload = tMessageText | tMessageGallery | tMessageLocation | tMessagePersonal | tMessagePackage | tMessageSystem;
-
-/**
- * Message entry (unified view across all message types)
- */
-export type tMessage = {
-    /**
-     * ID of the message entry
-     */
-    id: string;
-    type: tMessageTypeEnum;
-    payload: tMessagePayload;
 };
 
 /**
@@ -1555,16 +1495,13 @@ export type tListingFilter = {
 };
 
 /**
- * Collection of listings
+ * Listing collection item
  */
-export type tListingCollection = {
-    data: Array<{
-        id: string;
-    }>;
+export type tListingItemSchema = {
     /**
-     * Whether there are more items to fetch
+     * ID of the listing
      */
-    more: boolean;
+    id: string;
 };
 
 /**
@@ -1750,28 +1687,13 @@ export type tIgnoreSort = {
 };
 
 /**
- * Collection of ignore items
+ * Ignore collection item
  */
-export type tIgnoreCollection = {
-    data: Array<tIgnore>;
+export type tIgnoreItemSchema = {
     /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Ignore data
- */
-export type tIgnore = {
-    /**
-     * ID of the ignore entry
+     * ID of the ignore
      */
     id: string;
-    /**
-     * ID of the listing that was ignored
-     */
-    listingId: string;
 };
 
 /**
@@ -1828,14 +1750,13 @@ export type tGalleryFilter = {
 };
 
 /**
- * Collection of galleries
+ * Gallery collection item
  */
-export type tGalleryCollection = {
-    data: Array<tGallery & unknown>;
+export type tGalleryItemSchema = {
     /**
-     * Whether there are more items to fetch
+     * ID of the gallery
      */
-    more: boolean;
+    id: string;
 };
 
 /**
@@ -2009,107 +1930,23 @@ export type tFlagWhere = {
 };
 
 /**
- * Collection of flag items
+ * Flag collection item
  */
-export type tFlagCollection = {
-    data: Array<tFlag>;
+export type tFlagItemSchema = {
     /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Flag data
- */
-export type tFlag = {
-    /**
-     * ID of the flag entry
+     * ID of the flag
      */
     id: string;
+};
+
+/**
+ * Feed favourite collection item
+ */
+export type tFeedFavouriteItemSchema = {
     /**
-     * ID of the listing
-     */
-    listingId: string;
-};
-
-/**
- * Collection of feed items from favourites
- */
-export type tFeedFavouriteCollection = {
-    data: Array<tFeedFavourite>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Field of the listing sort
- */
-export const tListingSortField = {
-    price: 'price',
-    condition: 'condition',
-    age: 'age',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    expiresAt: 'expiresAt',
-    geo: 'geo'
-} as const;
-
-/**
- * Field of the listing sort
- */
-export type tListingSortField = typeof tListingSortField[keyof typeof tListingSortField];
-
-/**
- * Sort object for listing collection
- */
-export type tListingSort = {
-    field: tListingSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * Query object for listing collection
- */
-export type tListingQuery = {
-    cursor?: tCursor & unknown;
-    filter?: tListingFilter;
-    where?: tListingWhere;
-    sort?: Array<tListingSort>;
-    meta?: tListingMeta;
-};
-
-/**
- * Feed data from favourites
- */
-export type tFeedFavourite = {
-    /**
-     * ID of the feed
+     * ID of the feed favourite
      */
     id: string;
-    /**
-     * ID of the location associated with the feed
-     */
-    locationId: string | null;
-    /**
-     * Hero image for this feed (usually selected from the listings in the feed)
-     */
-    uploadId: string | null;
-    /**
-     * Name of the feed
-     */
-    name: string;
-    query: tListingQuery;
-    /**
-     * Hero banner for this feed
-     */
-    upload: tUpload | null;
-    /**
-     * Number of items in favourites for this feed
-     */
-    count: number;
 };
 
 /**
@@ -2180,16 +2017,13 @@ export type tFeedFilter = {
 };
 
 /**
- * Collection of feed items
+ * Feed collection item
  */
-export type tFeedCollection = {
-    data: Array<{
-        id: string;
-    }>;
+export type tFeedItemSchema = {
     /**
-     * Whether there are more items to fetch
+     * ID of the feed
      */
-    more: boolean;
+    id: string;
 };
 
 /**
@@ -2247,6 +2081,43 @@ export type tFeedQuery = {
     filter?: tFeedFilter;
     where?: tFeedWhere;
     sort?: Array<tFeedSort>;
+};
+
+/**
+ * Field of the listing sort
+ */
+export const tListingSortField = {
+    price: 'price',
+    condition: 'condition',
+    age: 'age',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    expiresAt: 'expiresAt',
+    geo: 'geo'
+} as const;
+
+/**
+ * Field of the listing sort
+ */
+export type tListingSortField = typeof tListingSortField[keyof typeof tListingSortField];
+
+/**
+ * Sort object for listing collection
+ */
+export type tListingSort = {
+    field: tListingSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * Query object for listing collection
+ */
+export type tListingQuery = {
+    cursor?: tCursor & unknown;
+    filter?: tListingFilter;
+    where?: tListingWhere;
+    sort?: Array<tListingSort>;
+    meta?: tListingMeta;
 };
 
 /**
@@ -2532,36 +2403,13 @@ export type tFavouriteSort = {
 };
 
 /**
- * Collection of favourite items
+ * Favourite collection item
  */
-export type tFavouriteCollection = {
-    data: Array<tFavourite>;
+export type tFavouriteItemSchema = {
     /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Favourite data
- */
-export type tFavourite = {
-    /**
-     * ID of the favourite item
+     * ID of the favourite
      */
     id: string;
-    /**
-     * Feed this listing belongs to
-     */
-    feedId: string;
-    /**
-     * ID of the listing
-     */
-    listingId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
 };
 
 /**
@@ -2901,16 +2749,13 @@ export type tDraftCountQuery = {
 };
 
 /**
- * Collection of drafts
+ * Draft collection item
  */
-export type tDraftCollection = {
-    data: Array<{
-        id: string;
-    }>;
+export type tDraftItemSchema = {
     /**
-     * Whether there are more items to fetch
+     * ID of the draft
      */
-    more: boolean;
+    id: string;
 };
 
 /**
@@ -2974,9 +2819,15 @@ export type apiDraftCollectionError = apiDraftCollectionErrors[keyof apiDraftCol
 
 export type tApiDraftCollectionResponse = {
     /**
-     * Access collection of drafts based on provided query
+     * Collection of drafts
      */
-    200: tDraftCollection;
+    200: {
+        data: Array<tDraftItemSchema>;
+        /**
+         * Whether there are more items to fetch
+         */
+        more: boolean;
+    };
 };
 
 export type apiDraftCollectionResponse = tApiDraftCollectionResponse[keyof tApiDraftCollectionResponse];
@@ -3200,9 +3051,15 @@ export type apiFavouriteCollectionError = apiFavouriteCollectionErrors[keyof api
 
 export type tApiFavouriteCollectionResponse = {
     /**
-     * Access collection of favourite items based on provided query
+     * Collection of favourite items
      */
-    200: tFavouriteCollection;
+    200: {
+        data: Array<tFavouriteItemSchema>;
+        /**
+         * Whether there are more items to fetch
+         */
+        more: boolean;
+    };
 };
 
 export type apiFavouriteCollectionResponse = tApiFavouriteCollectionResponse[keyof tApiFavouriteCollectionResponse];
@@ -3379,9 +3236,15 @@ export type apiFeedCollectionError = apiFeedCollectionErrors[keyof apiFeedCollec
 
 export type tApiFeedCollectionResponse = {
     /**
-     * Access collection of feed items based on provided query
+     * Collection of feed items
      */
-    200: tFeedCollection;
+    200: {
+        data: Array<tFeedItemSchema>;
+        /**
+         * Whether there are more items to fetch
+         */
+        more: boolean;
+    };
 };
 
 export type apiFeedCollectionResponse = tApiFeedCollectionResponse[keyof tApiFeedCollectionResponse];
@@ -3501,9 +3364,15 @@ export type apiFeedFavouriteCollectionError = apiFeedFavouriteCollectionErrors[k
 
 export type tApiFeedFavouriteCollectionResponse = {
     /**
-     * Access collection of feed items from favourites based on provided query
+     * Collection of feed items from favourites
      */
-    200: tFeedFavouriteCollection;
+    200: {
+        data: Array<tFeedFavouriteItemSchema>;
+        /**
+         * Whether there are more items to fetch
+         */
+        more: boolean;
+    };
 };
 
 export type apiFeedFavouriteCollectionResponse = tApiFeedFavouriteCollectionResponse[keyof tApiFeedFavouriteCollectionResponse];
@@ -3526,9 +3395,15 @@ export type apiFlagCollectionError = apiFlagCollectionErrors[keyof apiFlagCollec
 
 export type tApiFlagCollectionResponse = {
     /**
-     * Access collection of flag items based on provided query
+     * Collection of flag items
      */
-    200: tFlagCollection;
+    200: {
+        data: Array<tFlagItemSchema>;
+        /**
+         * Whether there are more items to fetch
+         */
+        more: boolean;
+    };
 };
 
 export type apiFlagCollectionResponse = tApiFlagCollectionResponse[keyof tApiFlagCollectionResponse];
@@ -3641,9 +3516,15 @@ export type apiGalleryCollectionError = apiGalleryCollectionErrors[keyof apiGall
 
 export type tApiGalleryCollectionResponse = {
     /**
-     * Access collection of galleries based on provided query
+     * Collection of gallery items
      */
-    200: tGalleryCollection;
+    200: {
+        data: Array<tGalleryItemSchema>;
+        /**
+         * Whether there are more items to fetch
+         */
+        more: boolean;
+    };
 };
 
 export type apiGalleryCollectionResponse = tApiGalleryCollectionResponse[keyof tApiGalleryCollectionResponse];
@@ -3691,9 +3572,15 @@ export type apiIgnoreCollectionError = apiIgnoreCollectionErrors[keyof apiIgnore
 
 export type tApiIgnoreCollectionResponse = {
     /**
-     * Access collection of ignore items based on provided query
+     * Collection of ignore items
      */
-    200: tIgnoreCollection;
+    200: {
+        data: Array<tIgnoreItemSchema>;
+        /**
+         * Whether there are more items to fetch
+         */
+        more: boolean;
+    };
 };
 
 export type apiIgnoreCollectionResponse = tApiIgnoreCollectionResponse[keyof tApiIgnoreCollectionResponse];
@@ -3842,9 +3729,15 @@ export type apiListingCollectionError = apiListingCollectionErrors[keyof apiList
 
 export type tApiListingCollectionResponse = {
     /**
-     * Access collection of listings based on provided query
+     * Collection of listings
      */
-    200: tListingCollection;
+    200: {
+        data: Array<tListingItemSchema>;
+        /**
+         * Whether there are more items to fetch
+         */
+        more: boolean;
+    };
 };
 
 export type apiListingCollectionResponse = tApiListingCollectionResponse[keyof tApiListingCollectionResponse];
@@ -3941,9 +3834,15 @@ export type apiMessageThreadMessageCollectionError = apiMessageThreadMessageColl
 
 export type tApiMessageThreadMessageCollectionResponse = {
     /**
-     * Access collection of messages based on provided query
+     * Collection of messages
      */
-    200: tMessageCollection;
+    200: {
+        data: Array<tMessageItemSchema>;
+        /**
+         * Whether there are more items to fetch
+         */
+        more: boolean;
+    };
 };
 
 export type apiMessageThreadMessageCollectionResponse = tApiMessageThreadMessageCollectionResponse[keyof tApiMessageThreadMessageCollectionResponse];
@@ -4040,9 +3939,15 @@ export type apiTransactionCollectionError = apiTransactionCollectionErrors[keyof
 
 export type tApiTransactionCollectionResponse = {
     /**
-     * Access collection of transactions based on provided query
+     * Collection of transactions
      */
-    200: tTransactionCollection;
+    200: {
+        data: Array<tTransactionItemSchema>;
+        /**
+         * Whether there are more items to fetch
+         */
+        more: boolean;
+    };
 };
 
 export type apiTransactionCollectionResponse = tApiTransactionCollectionResponse[keyof tApiTransactionCollectionResponse];
@@ -4161,9 +4066,15 @@ export type apiTransactionListingCollectionError = apiTransactionListingCollecti
 
 export type tApiTransactionListingCollectionResponse = {
     /**
-     * Access collection of listings that have transactions based on provided query
+     * Collection of listings that have transactions
      */
-    200: tTransactionListingCollection;
+    200: {
+        data: Array<tTransactionListingItemSchema>;
+        /**
+         * Whether there are more items to fetch
+         */
+        more: boolean;
+    };
 };
 
 export type apiTransactionListingCollectionResponse = tApiTransactionListingCollectionResponse[keyof tApiTransactionListingCollectionResponse];

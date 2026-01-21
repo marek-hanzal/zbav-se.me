@@ -221,6 +221,57 @@ export const zTransactionMessageTextCreate = z.object({
 export type zTransactionMessageTextCreate = z.infer<typeof zTransactionMessageTextCreate>;
 
 /**
+ * Direction of the message
+ */
+export const zMessageDirectionEnum = z.enum([
+    'in',
+    'out',
+    'system'
+]).register(z.globalRegistry, {
+    description: 'Direction of the message'
+});
+
+export type zMessageDirectionEnum = z.infer<typeof zMessageDirectionEnum>;
+
+/**
+ * Type of message
+ */
+export const zMessageTypeEnum = z.enum([
+    'text',
+    'gallery',
+    'location',
+    'personal',
+    'package',
+    'date',
+    'system'
+]).register(z.globalRegistry, {
+    description: 'Type of message'
+});
+
+export type zMessageTypeEnum = z.infer<typeof zMessageTypeEnum>;
+
+/**
+ * Message text entry
+ */
+export const zMessageText = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message entry'
+    }),
+    text: z.string().register(z.globalRegistry, {
+        description: 'Message content (database column name)'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Message text entry'
+});
+
+export type zMessageText = z.infer<typeof zMessageText>;
+
+/**
  * Request to create a transaction personal message
  */
 export const zTransactionMessagePersonalCreate = z.object({
@@ -246,6 +297,99 @@ export const zTransactionMessagePersonalCreate = z.object({
 export type zTransactionMessagePersonalCreate = z.infer<typeof zTransactionMessagePersonalCreate>;
 
 /**
+ * Location data
+ */
+export const zLocation = z.object({
+    id: z.string(),
+    query: z.string().register(z.globalRegistry, {
+        description: 'The query that was used to get the location'
+    }),
+    lang: z.string().register(z.globalRegistry, {
+        description: 'The language that was used to get the location'
+    }),
+    country: z.string().register(z.globalRegistry, {
+        description: 'The country that the location is in'
+    }),
+    code: z.string().register(z.globalRegistry, {
+        description: 'Country code'
+    }),
+    county: z.union([
+        z.string(),
+        z.null()
+    ]),
+    municipality: z.union([
+        z.string(),
+        z.null()
+    ]),
+    state: z.union([
+        z.string(),
+        z.null()
+    ]),
+    address: z.string().register(z.globalRegistry, {
+        description: 'Full address preview of a location'
+    }),
+    city: z.union([
+        z.string(),
+        z.null()
+    ]),
+    street: z.union([
+        z.string(),
+        z.null()
+    ]),
+    zip: z.union([
+        z.string(),
+        z.null()
+    ]),
+    confidence: z.number().register(z.globalRegistry, {
+        description: 'Confidence score of the location (based on query)'
+    }),
+    hash: z.string().register(z.globalRegistry, {
+        description: 'Used to uniquely identify this location entry'
+    }),
+    lat: z.number().register(z.globalRegistry, {
+        description: 'Latitude of the location'
+    }),
+    lon: z.number().register(z.globalRegistry, {
+        description: 'Longitude of the location'
+    })
+}).register(z.globalRegistry, {
+    description: 'Location data'
+});
+
+export type zLocation = z.infer<typeof zLocation>;
+
+/**
+ * Message personal entry
+ */
+export const zMessagePersonal = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message personal entry'
+    }),
+    name: z.string().register(z.globalRegistry, {
+        description: 'Name'
+    }),
+    phone: z.string().register(z.globalRegistry, {
+        description: 'Phone number'
+    }),
+    email: z.email().register(z.globalRegistry, {
+        description: 'Email address'
+    }),
+    locationId: z.string().register(z.globalRegistry, {
+        description: 'ID of the location'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum,
+    location: zLocation
+}).register(z.globalRegistry, {
+    description: 'Message personal entry'
+});
+
+export type zMessagePersonal = z.infer<typeof zMessagePersonal>;
+
+/**
  * Request to create a transaction message package
  */
 export const zTransactionMessagePackageCreate = z.object({
@@ -266,6 +410,31 @@ export const zTransactionMessagePackageCreate = z.object({
 export type zTransactionMessagePackageCreate = z.infer<typeof zTransactionMessagePackageCreate>;
 
 /**
+ * Message package entry
+ */
+export const zMessagePackage = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message package entry'
+    }),
+    link: z.url().register(z.globalRegistry, {
+        description: 'Package link'
+    }),
+    number: z.union([
+        z.string(),
+        z.null()
+    ]),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Message package entry'
+});
+
+export type zMessagePackage = z.infer<typeof zMessagePackage>;
+
+/**
  * Request to create a transaction message location
  */
 export const zTransactionMessageLocationCreate = z.object({
@@ -282,6 +451,28 @@ export const zTransactionMessageLocationCreate = z.object({
 export type zTransactionMessageLocationCreate = z.infer<typeof zTransactionMessageLocationCreate>;
 
 /**
+ * Message location entry
+ */
+export const zMessageLocation = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message location entry'
+    }),
+    locationId: z.string().register(z.globalRegistry, {
+        description: 'ID of the location'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum,
+    location: zLocation
+}).register(z.globalRegistry, {
+    description: 'Message location entry'
+});
+
+export type zMessageLocation = z.infer<typeof zMessageLocation>;
+
+/**
  * Request to create a transaction message gallery
  */
 export const zTransactionMessageGalleryCreate = z.object({
@@ -296,6 +487,85 @@ export const zTransactionMessageGalleryCreate = z.object({
 });
 
 export type zTransactionMessageGalleryCreate = z.infer<typeof zTransactionMessageGalleryCreate>;
+
+/**
+ * Upload file metadata
+ */
+export const zUpload = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the upload'
+    }),
+    url: z.url().register(z.globalRegistry, {
+        description: 'Public URL to the uploaded file'
+    })
+}).register(z.globalRegistry, {
+    description: 'Upload file metadata'
+});
+
+export type zUpload = z.infer<typeof zUpload>;
+
+/**
+ * Gallery item data
+ */
+export const zGalleryItem = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery item'
+    }),
+    galleryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery this item belongs to'
+    }),
+    uploadId: z.string().register(z.globalRegistry, {
+        description: 'ID of the upload this image belongs to'
+    }),
+    sort: z.number().register(z.globalRegistry, {
+        description: 'Sort order of the image in the gallery'
+    }),
+    upload: zUpload
+}).register(z.globalRegistry, {
+    description: 'Gallery item data'
+});
+
+export type zGalleryItem = z.infer<typeof zGalleryItem>;
+
+/**
+ * Draft gallery images
+ */
+export const zGallery = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery'
+    }),
+    items: z.array(zGalleryItem).register(z.globalRegistry, {
+        description: 'Gallery items sorted by sort order'
+    })
+}).register(z.globalRegistry, {
+    description: 'Draft gallery images'
+});
+
+export type zGallery = z.infer<typeof zGallery>;
+
+/**
+ * Message gallery entry
+ */
+export const zMessageGallery = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message gallery entry'
+    }),
+    galleryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    type: zMessageTypeEnum,
+    direction: zMessageDirectionEnum,
+    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
+        description: 'Gallery data with items'
+    }))
+}).register(z.globalRegistry, {
+    description: 'Message gallery entry'
+});
+
+export type zMessageGallery = z.infer<typeof zMessageGallery>;
 
 /**
  * Order
@@ -402,38 +672,23 @@ export const zTransactionListingQuery = z.object({
 export type zTransactionListingQuery = z.infer<typeof zTransactionListingQuery>;
 
 /**
- * Aggregated transaction information per listing
+ * Transaction listing collection item
  */
-export const zTransactionListing = z.object({
+export const zTransactionListingItemSchema = z.object({
     listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing that has at least one transaction'
+        description: 'ID of the listing'
     }),
-    count: z.union([
-        z.int().gte(0),
-        z.null()
-    ]),
+    count: z.number().register(z.globalRegistry, {
+        description: 'Number of transactions for this listing'
+    }),
     lastAt: z.string().register(z.globalRegistry, {
-        description: 'Timestamp of the most recent activity in any transaction under this listing'
+        description: 'Timestamp of the last transaction update'
     })
 }).register(z.globalRegistry, {
-    description: 'Aggregated transaction information per listing'
+    description: 'Transaction listing collection item'
 });
 
-export type zTransactionListing = z.infer<typeof zTransactionListing>;
-
-/**
- * Collection of listings that have transactions
- */
-export const zTransactionListingCollection = z.object({
-    data: z.array(zTransactionListing),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of listings that have transactions'
-});
-
-export type zTransactionListingCollection = z.infer<typeof zTransactionListingCollection>;
+export type zTransactionListingItemSchema = z.infer<typeof zTransactionListingItemSchema>;
 
 /**
  * This metric describes the score of the user
@@ -627,68 +882,6 @@ export const zTransactionCreate = z.object({
 export type zTransactionCreate = z.infer<typeof zTransactionCreate>;
 
 /**
- * Location data
- */
-export const zLocation = z.object({
-    id: z.string(),
-    query: z.string().register(z.globalRegistry, {
-        description: 'The query that was used to get the location'
-    }),
-    lang: z.string().register(z.globalRegistry, {
-        description: 'The language that was used to get the location'
-    }),
-    country: z.string().register(z.globalRegistry, {
-        description: 'The country that the location is in'
-    }),
-    code: z.string().register(z.globalRegistry, {
-        description: 'Country code'
-    }),
-    county: z.union([
-        z.string(),
-        z.null()
-    ]),
-    municipality: z.union([
-        z.string(),
-        z.null()
-    ]),
-    state: z.union([
-        z.string(),
-        z.null()
-    ]),
-    address: z.string().register(z.globalRegistry, {
-        description: 'Full address preview of a location'
-    }),
-    city: z.union([
-        z.string(),
-        z.null()
-    ]),
-    street: z.union([
-        z.string(),
-        z.null()
-    ]),
-    zip: z.union([
-        z.string(),
-        z.null()
-    ]),
-    confidence: z.number().register(z.globalRegistry, {
-        description: 'Confidence score of the location (based on query)'
-    }),
-    hash: z.string().register(z.globalRegistry, {
-        description: 'Used to uniquely identify this location entry'
-    }),
-    lat: z.number().register(z.globalRegistry, {
-        description: 'Latitude of the location'
-    }),
-    lon: z.number().register(z.globalRegistry, {
-        description: 'Longitude of the location'
-    })
-}).register(z.globalRegistry, {
-    description: 'Location data'
-});
-
-export type zLocation = z.infer<typeof zLocation>;
-
-/**
  * List of available currencies
  */
 export const zCurrencyListEnum = z.enum([
@@ -713,61 +906,6 @@ export const zListingPriceEnum = z.enum(['closed', 'open']).register(z.globalReg
 });
 
 export type zListingPriceEnum = z.infer<typeof zListingPriceEnum>;
-
-/**
- * Upload file metadata
- */
-export const zUpload = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the upload'
-    }),
-    url: z.url().register(z.globalRegistry, {
-        description: 'Public URL to the uploaded file'
-    })
-}).register(z.globalRegistry, {
-    description: 'Upload file metadata'
-});
-
-export type zUpload = z.infer<typeof zUpload>;
-
-/**
- * Gallery item data
- */
-export const zGalleryItem = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery item'
-    }),
-    galleryId: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery this item belongs to'
-    }),
-    uploadId: z.string().register(z.globalRegistry, {
-        description: 'ID of the upload this image belongs to'
-    }),
-    sort: z.number().register(z.globalRegistry, {
-        description: 'Sort order of the image in the gallery'
-    }),
-    upload: zUpload
-}).register(z.globalRegistry, {
-    description: 'Gallery item data'
-});
-
-export type zGalleryItem = z.infer<typeof zGalleryItem>;
-
-/**
- * Draft gallery images
- */
-export const zGallery = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery'
-    }),
-    items: z.array(zGalleryItem).register(z.globalRegistry, {
-        description: 'Gallery items sorted by sort order'
-    })
-}).register(z.globalRegistry, {
-    description: 'Draft gallery images'
-});
-
-export type zGallery = z.infer<typeof zGallery>;
 
 /**
  * Transaction data
@@ -929,7 +1067,7 @@ export type zTransactionQuery = z.infer<typeof zTransactionQuery>;
 /**
  * Transaction collection item with last message timestamp
  */
-export const zTransactionCollectionItem = z.object({
+export const zTransactionItemSchema = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the transaction'
     }),
@@ -940,21 +1078,7 @@ export const zTransactionCollectionItem = z.object({
     description: 'Transaction collection item with last message timestamp'
 });
 
-export type zTransactionCollectionItem = z.infer<typeof zTransactionCollectionItem>;
-
-/**
- * Collection of transactions
- */
-export const zTransactionCollection = z.object({
-    data: z.array(zTransactionCollectionItem),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of transactions'
-});
-
-export type zTransactionCollection = z.infer<typeof zTransactionCollection>;
+export type zTransactionItemSchema = z.infer<typeof zTransactionItemSchema>;
 
 /**
  * Type of thumb
@@ -1104,221 +1228,17 @@ export const zMessageQuery = z.object({
 export type zMessageQuery = z.infer<typeof zMessageQuery>;
 
 /**
- * Direction of the message
+ * Message collection item
  */
-export const zMessageDirectionEnum = z.enum([
-    'in',
-    'out',
-    'system'
-]).register(z.globalRegistry, {
-    description: 'Direction of the message'
-});
-
-export type zMessageDirectionEnum = z.infer<typeof zMessageDirectionEnum>;
-
-/**
- * Type of message
- */
-export const zMessageTypeEnum = z.enum([
-    'text',
-    'gallery',
-    'location',
-    'personal',
-    'package',
-    'date',
-    'system'
-]).register(z.globalRegistry, {
-    description: 'Type of message'
-});
-
-export type zMessageTypeEnum = z.infer<typeof zMessageTypeEnum>;
-
-/**
- * Message system entry
- */
-export const zMessageSystem = z.object({
+export const zMessageItemSchema = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: 'ID of the message entry'
-    }),
-    text: z.string().register(z.globalRegistry, {
-        description: 'Message content'
-    }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    type: zMessageTypeEnum,
-    direction: zMessageDirectionEnum
-}).register(z.globalRegistry, {
-    description: 'Message system entry'
-});
-
-export type zMessageSystem = z.infer<typeof zMessageSystem>;
-
-/**
- * Message package entry
- */
-export const zMessagePackage = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the message package entry'
-    }),
-    link: z.url().register(z.globalRegistry, {
-        description: 'Package link'
-    }),
-    number: z.union([
-        z.string(),
-        z.null()
-    ]),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    type: zMessageTypeEnum,
-    direction: zMessageDirectionEnum
-}).register(z.globalRegistry, {
-    description: 'Message package entry'
-});
-
-export type zMessagePackage = z.infer<typeof zMessagePackage>;
-
-/**
- * Message personal entry
- */
-export const zMessagePersonal = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the message personal entry'
-    }),
-    name: z.string().register(z.globalRegistry, {
-        description: 'Name'
-    }),
-    phone: z.string().register(z.globalRegistry, {
-        description: 'Phone number'
-    }),
-    email: z.email().register(z.globalRegistry, {
-        description: 'Email address'
-    }),
-    locationId: z.string().register(z.globalRegistry, {
-        description: 'ID of the location'
-    }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    type: zMessageTypeEnum,
-    direction: zMessageDirectionEnum,
-    location: zLocation
-}).register(z.globalRegistry, {
-    description: 'Message personal entry'
-});
-
-export type zMessagePersonal = z.infer<typeof zMessagePersonal>;
-
-/**
- * Message location entry
- */
-export const zMessageLocation = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the message location entry'
-    }),
-    locationId: z.string().register(z.globalRegistry, {
-        description: 'ID of the location'
-    }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    type: zMessageTypeEnum,
-    direction: zMessageDirectionEnum,
-    location: zLocation
-}).register(z.globalRegistry, {
-    description: 'Message location entry'
-});
-
-export type zMessageLocation = z.infer<typeof zMessageLocation>;
-
-/**
- * Message gallery entry
- */
-export const zMessageGallery = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the message gallery entry'
-    }),
-    galleryId: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery'
-    }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    type: zMessageTypeEnum,
-    direction: zMessageDirectionEnum,
-    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
-        description: 'Gallery data with items'
-    }))
-}).register(z.globalRegistry, {
-    description: 'Message gallery entry'
-});
-
-export type zMessageGallery = z.infer<typeof zMessageGallery>;
-
-/**
- * Message text entry
- */
-export const zMessageText = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the message entry'
-    }),
-    text: z.string().register(z.globalRegistry, {
-        description: 'Message content (database column name)'
-    }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    type: zMessageTypeEnum,
-    direction: zMessageDirectionEnum
-}).register(z.globalRegistry, {
-    description: 'Message text entry'
-});
-
-export type zMessageText = z.infer<typeof zMessageText>;
-
-/**
- * Message payload (unified view across all message types)
- */
-export const zMessagePayload = z.union([
-    zMessageText,
-    zMessageGallery,
-    zMessageLocation,
-    zMessagePersonal,
-    zMessagePackage,
-    zMessageSystem
-]);
-
-export type zMessagePayload = z.infer<typeof zMessagePayload>;
-
-/**
- * Message entry (unified view across all message types)
- */
-export const zMessage = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the message entry'
-    }),
-    type: zMessageTypeEnum,
-    payload: zMessagePayload
-}).register(z.globalRegistry, {
-    description: 'Message entry (unified view across all message types)'
-});
-
-export type zMessage = z.infer<typeof zMessage>;
-
-/**
- * Collection of messages
- */
-export const zMessageCollection = z.object({
-    data: z.array(zMessage),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
+        description: 'ID of the message'
     })
 }).register(z.globalRegistry, {
-    description: 'Collection of messages'
+    description: 'Message collection item'
 });
 
-export type zMessageCollection = z.infer<typeof zMessageCollection>;
+export type zMessageItemSchema = z.infer<typeof zMessageItemSchema>;
 
 /**
  * Type of listing event
@@ -1686,20 +1606,17 @@ export const zListingCountQuery = z.object({
 export type zListingCountQuery = z.infer<typeof zListingCountQuery>;
 
 /**
- * Collection of listings
+ * Listing collection item
  */
-export const zListingCollection = z.object({
-    data: z.array(z.object({
-        id: z.string().min(1)
-    })),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
+export const zListingItemSchema = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing'
     })
 }).register(z.globalRegistry, {
-    description: 'Collection of listings'
+    description: 'Listing collection item'
 });
 
-export type zListingCollection = z.infer<typeof zListingCollection>;
+export type zListingItemSchema = z.infer<typeof zListingItemSchema>;
 
 /**
  * Array of pros or cons, max 5 items, each string max 72 characters
@@ -1900,34 +1817,17 @@ export const zIgnoreQuery = z.object({
 export type zIgnoreQuery = z.infer<typeof zIgnoreQuery>;
 
 /**
- * Ignore data
+ * Ignore collection item
  */
-export const zIgnore = z.object({
+export const zIgnoreItemSchema = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: 'ID of the ignore entry'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing that was ignored'
+        description: 'ID of the ignore'
     })
 }).register(z.globalRegistry, {
-    description: 'Ignore data'
+    description: 'Ignore collection item'
 });
 
-export type zIgnore = z.infer<typeof zIgnore>;
-
-/**
- * Collection of ignore items
- */
-export const zIgnoreCollection = z.object({
-    data: z.array(zIgnore),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of ignore items'
-});
-
-export type zIgnoreCollection = z.infer<typeof zIgnoreCollection>;
+export type zIgnoreItemSchema = z.infer<typeof zIgnoreItemSchema>;
 
 /**
  * App-based filters
@@ -1991,20 +1891,17 @@ export const zGalleryCountQuery = z.object({
 export type zGalleryCountQuery = z.infer<typeof zGalleryCountQuery>;
 
 /**
- * Collection of galleries
+ * Gallery collection item
  */
-export const zGalleryCollection = z.object({
-    data: z.array(zGallery.and(z.unknown().register(z.globalRegistry, {
-        description: 'Gallery data with items'
-    }))),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
+export const zGalleryItemSchema = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery'
     })
 }).register(z.globalRegistry, {
-    description: 'Collection of galleries'
+    description: 'Gallery collection item'
 });
 
-export type zGalleryCollection = z.infer<typeof zGalleryCollection>;
+export type zGalleryItemSchema = z.infer<typeof zGalleryItemSchema>;
 
 /**
  * Field of the gallery sort
@@ -2195,124 +2092,30 @@ export const zFlagQuery = z.object({
 export type zFlagQuery = z.infer<typeof zFlagQuery>;
 
 /**
- * Flag data
+ * Flag collection item
  */
-export const zFlag = z.object({
+export const zFlagItemSchema = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: 'ID of the flag entry'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing'
+        description: 'ID of the flag'
     })
 }).register(z.globalRegistry, {
-    description: 'Flag data'
+    description: 'Flag collection item'
 });
 
-export type zFlag = z.infer<typeof zFlag>;
+export type zFlagItemSchema = z.infer<typeof zFlagItemSchema>;
 
 /**
- * Collection of flag items
+ * Feed favourite collection item
  */
-export const zFlagCollection = z.object({
-    data: z.array(zFlag),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of flag items'
-});
-
-export type zFlagCollection = z.infer<typeof zFlagCollection>;
-
-/**
- * Field of the listing sort
- */
-export const zListingSortField = z.enum([
-    'price',
-    'condition',
-    'age',
-    'createdAt',
-    'updatedAt',
-    'expiresAt',
-    'geo'
-]).register(z.globalRegistry, {
-    description: 'Field of the listing sort'
-});
-
-export type zListingSortField = z.infer<typeof zListingSortField>;
-
-/**
- * Sort object for listing collection
- */
-export const zListingSort = z.object({
-    field: zListingSortField,
-    direction: zOrderEnum
-}).register(z.globalRegistry, {
-    description: 'Sort object for listing collection'
-});
-
-export type zListingSort = z.infer<typeof zListingSort>;
-
-/**
- * Query object for listing collection
- */
-export const zListingQuery = z.object({
-    cursor: z.optional(zCursor.and(z.unknown().default({ page: 0, size: 256 }))),
-    filter: z.optional(zListingFilter),
-    where: z.optional(zListingWhere),
-    sort: z.optional(z.array(zListingSort)),
-    meta: z.optional(zListingMeta)
-}).register(z.globalRegistry, {
-    description: 'Query object for listing collection'
-});
-
-export type zListingQuery = z.infer<typeof zListingQuery>;
-
-/**
- * Feed data from favourites
- */
-export const zFeedFavourite = z.object({
+export const zFeedFavouriteItemSchema = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: 'ID of the feed'
-    }),
-    locationId: z.union([
-        z.string(),
-        z.null()
-    ]),
-    uploadId: z.union([
-        z.string(),
-        z.null()
-    ]),
-    name: z.string().register(z.globalRegistry, {
-        description: 'Name of the feed'
-    }),
-    query: zListingQuery,
-    upload: z.union([
-        zUpload,
-        z.null()
-    ]),
-    count: z.number().register(z.globalRegistry, {
-        description: 'Number of items in favourites for this feed'
+        description: 'ID of the feed favourite'
     })
 }).register(z.globalRegistry, {
-    description: 'Feed data from favourites'
+    description: 'Feed favourite collection item'
 });
 
-export type zFeedFavourite = z.infer<typeof zFeedFavourite>;
-
-/**
- * Collection of feed items from favourites
- */
-export const zFeedFavouriteCollection = z.object({
-    data: z.array(zFeedFavourite),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of feed items from favourites'
-});
-
-export type zFeedFavouriteCollection = z.infer<typeof zFeedFavouriteCollection>;
+export type zFeedFavouriteItemSchema = z.infer<typeof zFeedFavouriteItemSchema>;
 
 /**
  * Request to create or update a feed gallery
@@ -2392,20 +2195,17 @@ export const zFeedCountQuery = z.object({
 export type zFeedCountQuery = z.infer<typeof zFeedCountQuery>;
 
 /**
- * Collection of feed items
+ * Feed collection item
  */
-export const zFeedCollection = z.object({
-    data: z.array(z.object({
-        id: z.string().min(1)
-    })),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
+export const zFeedItemSchema = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the feed'
     })
 }).register(z.globalRegistry, {
-    description: 'Collection of feed items'
+    description: 'Feed collection item'
 });
 
-export type zFeedCollection = z.infer<typeof zFeedCollection>;
+export type zFeedItemSchema = z.infer<typeof zFeedItemSchema>;
 
 /**
  * Field of the feed sort
@@ -2441,6 +2241,50 @@ export const zFeedQuery = z.object({
 });
 
 export type zFeedQuery = z.infer<typeof zFeedQuery>;
+
+/**
+ * Field of the listing sort
+ */
+export const zListingSortField = z.enum([
+    'price',
+    'condition',
+    'age',
+    'createdAt',
+    'updatedAt',
+    'expiresAt',
+    'geo'
+]).register(z.globalRegistry, {
+    description: 'Field of the listing sort'
+});
+
+export type zListingSortField = z.infer<typeof zListingSortField>;
+
+/**
+ * Sort object for listing collection
+ */
+export const zListingSort = z.object({
+    field: zListingSortField,
+    direction: zOrderEnum
+}).register(z.globalRegistry, {
+    description: 'Sort object for listing collection'
+});
+
+export type zListingSort = z.infer<typeof zListingSort>;
+
+/**
+ * Query object for listing collection
+ */
+export const zListingQuery = z.object({
+    cursor: z.optional(zCursor.and(z.unknown().default({ page: 0, size: 256 }))),
+    filter: z.optional(zListingFilter),
+    where: z.optional(zListingWhere),
+    sort: z.optional(z.array(zListingSort)),
+    meta: z.optional(zListingMeta)
+}).register(z.globalRegistry, {
+    description: 'Query object for listing collection'
+});
+
+export type zListingQuery = z.infer<typeof zListingQuery>;
 
 /**
  * Data for updating an existing feed
@@ -2766,40 +2610,17 @@ export const zFavouriteQuery = z.object({
 export type zFavouriteQuery = z.infer<typeof zFavouriteQuery>;
 
 /**
- * Favourite data
+ * Favourite collection item
  */
-export const zFavourite = z.object({
+export const zFavouriteItemSchema = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: 'ID of the favourite item'
-    }),
-    feedId: z.string().register(z.globalRegistry, {
-        description: 'Feed this listing belongs to'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing'
-    }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
+        description: 'ID of the favourite'
     })
 }).register(z.globalRegistry, {
-    description: 'Favourite data'
+    description: 'Favourite collection item'
 });
 
-export type zFavourite = z.infer<typeof zFavourite>;
-
-/**
- * Collection of favourite items
- */
-export const zFavouriteCollection = z.object({
-    data: z.array(zFavourite),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of favourite items'
-});
-
-export type zFavouriteCollection = z.infer<typeof zFavouriteCollection>;
+export type zFavouriteItemSchema = z.infer<typeof zFavouriteItemSchema>;
 
 /**
  * Field of the draft sort
@@ -3166,20 +2987,17 @@ export const zDraftCountQuery = z.object({
 export type zDraftCountQuery = z.infer<typeof zDraftCountQuery>;
 
 /**
- * Collection of drafts
+ * Draft collection item
  */
-export const zDraftCollection = z.object({
-    data: z.array(z.object({
-        id: z.string().min(1)
-    })),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
+export const zDraftItemSchema = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the draft'
     })
 }).register(z.globalRegistry, {
-    description: 'Collection of drafts'
+    description: 'Draft collection item'
 });
 
-export type zDraftCollection = z.infer<typeof zDraftCollection>;
+export type zDraftItemSchema = z.infer<typeof zDraftItemSchema>;
 
 /**
  * Count data
@@ -3236,9 +3054,16 @@ export const zApiDraftCollectionData = z.object({
 export type zapiDraftCollectionRequest = z.infer<typeof zApiDraftCollectionData>;
 
 /**
- * Access collection of drafts based on provided query
+ * Collection of drafts
  */
-export const zApiDraftCollectionResponse = zDraftCollection;
+export const zApiDraftCollectionResponse = z.object({
+    data: z.array(zDraftItemSchema),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of drafts'
+});
 
 export type zapiDraftCollectionResponse = z.infer<typeof zApiDraftCollectionResponse>;
 
@@ -3343,9 +3168,16 @@ export const zApiFavouriteCollectionData = z.object({
 export type zapiFavouriteCollectionRequest = z.infer<typeof zApiFavouriteCollectionData>;
 
 /**
- * Access collection of favourite items based on provided query
+ * Collection of favourite items
  */
-export const zApiFavouriteCollectionResponse = zFavouriteCollection;
+export const zApiFavouriteCollectionResponse = z.object({
+    data: z.array(zFavouriteItemSchema),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of favourite items'
+});
 
 export type zapiFavouriteCollectionResponse = z.infer<typeof zApiFavouriteCollectionResponse>;
 
@@ -3433,9 +3265,16 @@ export const zApiFeedCollectionData = z.object({
 export type zapiFeedCollectionRequest = z.infer<typeof zApiFeedCollectionData>;
 
 /**
- * Access collection of feed items based on provided query
+ * Collection of feed items
  */
-export const zApiFeedCollectionResponse = zFeedCollection;
+export const zApiFeedCollectionResponse = z.object({
+    data: z.array(zFeedItemSchema),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of feed items'
+});
 
 export type zapiFeedCollectionResponse = z.infer<typeof zApiFeedCollectionResponse>;
 
@@ -3495,9 +3334,16 @@ export const zApiFeedFavouriteCollectionData = z.object({
 export type zapiFeedFavouriteCollectionRequest = z.infer<typeof zApiFeedFavouriteCollectionData>;
 
 /**
- * Access collection of feed items from favourites based on provided query
+ * Collection of feed items from favourites
  */
-export const zApiFeedFavouriteCollectionResponse = zFeedFavouriteCollection;
+export const zApiFeedFavouriteCollectionResponse = z.object({
+    data: z.array(zFeedFavouriteItemSchema),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of feed items from favourites'
+});
 
 export type zapiFeedFavouriteCollectionResponse = z.infer<typeof zApiFeedFavouriteCollectionResponse>;
 
@@ -3510,9 +3356,16 @@ export const zApiFlagCollectionData = z.object({
 export type zapiFlagCollectionRequest = z.infer<typeof zApiFlagCollectionData>;
 
 /**
- * Access collection of flag items based on provided query
+ * Collection of flag items
  */
-export const zApiFlagCollectionResponse = zFlagCollection;
+export const zApiFlagCollectionResponse = z.object({
+    data: z.array(zFlagItemSchema),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of flag items'
+});
 
 export type zapiFlagCollectionResponse = z.infer<typeof zApiFlagCollectionResponse>;
 
@@ -3572,9 +3425,16 @@ export const zApiGalleryCollectionData = z.object({
 export type zapiGalleryCollectionRequest = z.infer<typeof zApiGalleryCollectionData>;
 
 /**
- * Access collection of galleries based on provided query
+ * Collection of gallery items
  */
-export const zApiGalleryCollectionResponse = zGalleryCollection;
+export const zApiGalleryCollectionResponse = z.object({
+    data: z.array(zGalleryItemSchema),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of gallery items'
+});
 
 export type zapiGalleryCollectionResponse = z.infer<typeof zApiGalleryCollectionResponse>;
 
@@ -3602,9 +3462,16 @@ export const zApiIgnoreCollectionData = z.object({
 export type zapiIgnoreCollectionRequest = z.infer<typeof zApiIgnoreCollectionData>;
 
 /**
- * Access collection of ignore items based on provided query
+ * Collection of ignore items
  */
-export const zApiIgnoreCollectionResponse = zIgnoreCollection;
+export const zApiIgnoreCollectionResponse = z.object({
+    data: z.array(zIgnoreItemSchema),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of ignore items'
+});
 
 export type zapiIgnoreCollectionResponse = z.infer<typeof zApiIgnoreCollectionResponse>;
 
@@ -3677,9 +3544,16 @@ export const zApiListingCollectionData = z.object({
 export type zapiListingCollectionRequest = z.infer<typeof zApiListingCollectionData>;
 
 /**
- * Access collection of listings based on provided query
+ * Collection of listings
  */
-export const zApiListingCollectionResponse = zListingCollection;
+export const zApiListingCollectionResponse = z.object({
+    data: z.array(zListingItemSchema),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of listings'
+});
 
 export type zapiListingCollectionResponse = z.infer<typeof zApiListingCollectionResponse>;
 
@@ -3726,9 +3600,16 @@ export const zApiMessageThreadMessageCollectionData = z.object({
 export type zapiMessageThreadMessageCollectionRequest = z.infer<typeof zApiMessageThreadMessageCollectionData>;
 
 /**
- * Access collection of messages based on provided query
+ * Collection of messages
  */
-export const zApiMessageThreadMessageCollectionResponse = zMessageCollection;
+export const zApiMessageThreadMessageCollectionResponse = z.object({
+    data: z.array(zMessageItemSchema),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of messages'
+});
 
 export type zapiMessageThreadMessageCollectionResponse = z.infer<typeof zApiMessageThreadMessageCollectionResponse>;
 
@@ -3784,9 +3665,16 @@ export const zApiTransactionCollectionData = z.object({
 export type zapiTransactionCollectionRequest = z.infer<typeof zApiTransactionCollectionData>;
 
 /**
- * Access collection of transactions based on provided query
+ * Collection of transactions
  */
-export const zApiTransactionCollectionResponse = zTransactionCollection;
+export const zApiTransactionCollectionResponse = z.object({
+    data: z.array(zTransactionItemSchema),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of transactions'
+});
 
 export type zapiTransactionCollectionResponse = z.infer<typeof zApiTransactionCollectionResponse>;
 
@@ -3844,9 +3732,16 @@ export const zApiTransactionListingCollectionData = z.object({
 export type zapiTransactionListingCollectionRequest = z.infer<typeof zApiTransactionListingCollectionData>;
 
 /**
- * Access collection of listings that have transactions based on provided query
+ * Collection of listings that have transactions
  */
-export const zApiTransactionListingCollectionResponse = zTransactionListingCollection;
+export const zApiTransactionListingCollectionResponse = z.object({
+    data: z.array(zTransactionListingItemSchema),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of listings that have transactions'
+});
 
 export type zapiTransactionListingCollectionResponse = z.infer<typeof zApiTransactionListingCollectionResponse>;
 
