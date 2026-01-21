@@ -1,10 +1,16 @@
 import { useLocale } from "@use-pico/client/hook";
+import { Icon } from "@use-pico/client/icon";
+import { Badge } from "@use-pico/client/ui/badge";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
+import { Typo } from "@use-pico/client/ui/typo";
 import { tvc } from "@use-pico/cls";
-import type { tTransactionListing, zTransactionListing } from "@zbav-se.me/sdk/api/user";
+import { toTimeDiff } from "@use-pico/common/time";
+import { toLocaleNumber } from "@use-pico/common/to-locale-number";
+import type { tTransactionListing } from "@zbav-se.me/sdk/api/user";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
@@ -16,7 +22,7 @@ export namespace TransactionListingItem {
 }
 
 export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
-	listingId,
+	transactionListing,
 	ui,
 	className,
 	...props
@@ -26,9 +32,9 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 	return (
 		<Container
 			data-ui={"TransactionListingItem[Container]"}
-			data-id={listingId}
+			data-id={transactionListing.listingId}
 			className={tvc([
-				"h-48 md:h-92",
+				"h-42 md:h-92",
 				className,
 			])}
 			ui={{
@@ -45,7 +51,7 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 				to={"/$locale/ui/seller/message/$listingId/list"}
 				params={{
 					locale,
-					listingId,
+					listingId: transactionListing.listingId,
 				}}
 				ui={{
 					height: "full",
@@ -55,7 +61,7 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 				<withListingFetchQuery.Suspense
 					data={{
 						where: {
-							id: listingId,
+							id: transactionListing.listingId,
 						},
 					}}
 					fallback={
@@ -72,7 +78,7 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 								round: "lg",
 							}}
 							className={[
-								"h-48 md:h-92",
+								"h-42 md:h-92",
 							]}
 						/>
 					}
@@ -110,6 +116,57 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 									}}
 								/>
 
+								<Badge
+									ui={{
+										tone: "neutral",
+										theme: "light",
+										flow: "horizontal",
+										gap: "default",
+										items: "center",
+										justify: "center",
+										inner: "default",
+										snapTo: "top-left",
+										size: undefined,
+									}}
+								>
+									<Typo
+										label={`x${toLocaleNumber({
+											locale,
+											number: transactionListing.count,
+										})}`}
+										ui={{
+											font: "bold",
+										}}
+									/>
+
+									<Icon
+										icon={TransactionIcon}
+										ui={{
+											text: "lg",
+										}}
+									/>
+								</Badge>
+
+								<Badge
+									ui={{
+										tone: "neutral",
+										theme: "light",
+										inner: "default",
+										snapTo: "top-right",
+										size: undefined,
+									}}
+								>
+									<Typo
+										label={toTimeDiff({
+											locale,
+											time: transactionListing.lastAt,
+										})}
+										ui={{
+											font: "bold",
+										}}
+									/>
+								</Badge>
+
 								<Container
 									ui={{
 										tone: "neutral",
@@ -133,13 +190,6 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 											color: "lead",
 											font: "bold",
 											truncate: true,
-										}}
-									/>
-
-									<Tx
-										label={listing.location.address}
-										ui={{
-											text: "sm",
 										}}
 									/>
 								</Container>

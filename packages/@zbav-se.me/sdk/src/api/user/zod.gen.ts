@@ -408,9 +408,10 @@ export const zTransactionListing = z.object({
     listingId: z.string().register(z.globalRegistry, {
         description: 'ID of the listing that has at least one transaction'
     }),
-    count: z.int().gte(0).register(z.globalRegistry, {
-        description: 'Total number of transactions for this listing (within the current scope)'
-    }),
+    count: z.union([
+        z.int().gte(0),
+        z.null()
+    ]),
     lastAt: z.string().register(z.globalRegistry, {
         description: 'Timestamp of the most recent activity in any transaction under this listing'
     })

@@ -478,7 +478,10 @@ export const sTransactionListing = {
             type: 'string'
         },
         count: {
-            type: 'integer',
+            type: [
+                'integer',
+                'null'
+            ],
             minimum: 0
         },
         lastAt: {

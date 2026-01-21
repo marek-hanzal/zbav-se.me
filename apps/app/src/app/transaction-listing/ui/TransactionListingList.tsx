@@ -89,11 +89,11 @@ export const TransactionListingList: FC<TransactionListingList.Props> = ({
 								gap: "default",
 							}}
 						>
-							{data.map(({ id }) => (
+							{data.map((item) => (
 								<TransactionListingItem
-									key={id}
-									data-id={id}
-									listingId={id}
+									key={item.listingId}
+									data-id={item.listingId}
+									transactionListing={item}
 								/>
 							))}
 						</Container>

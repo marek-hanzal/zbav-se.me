@@ -378,7 +378,7 @@ export type tTransactionListing = {
     /**
      * Total number of transactions for this listing (within the current scope)
      */
-    count: number;
+    count: number | null;
     /**
      * Timestamp of the most recent activity in any transaction under this listing
      */

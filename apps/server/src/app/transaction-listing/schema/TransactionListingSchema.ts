@@ -5,7 +5,7 @@ export const TransactionListingSchema = z
 		listingId: z.string().openapi({
 			description: "ID of the listing that has at least one transaction",
 		}),
-		count: z.number().int().nonnegative().openapi({
+		count: z.coerce.number().int().nonnegative().openapi({
 			description: "Total number of transactions for this listing (within the current scope)",
 		}),
 		lastAt: z.coerce.date().openapi({
