@@ -1,10 +1,8 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
-import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { match } from "ts-pattern";
-import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
 import { TransactionSheet } from "~/app/transaction/ui/TransactionSheet";
 
 export namespace TransactionItem {
@@ -48,12 +46,14 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 				}
 			>
 				{({ data: transaction }) => {
-					// biome-ignore lint/correctness/useHookAtTopLevel: Ssst
-					const hero = useHeroUpload(transaction.gallery.items);
-
 					return (
 						<Container
 							ui={{
+								tone: "neutral",
+								theme: "light",
+								background: "default",
+								border: true,
+								shadow: true,
 								position: "relative",
 								round: "default",
 								...ui,
@@ -88,14 +88,6 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 								})
 								.exhaustive()}
 
-							<HeroImage
-								src={hero.url}
-								alt={`Hero image for transaction ${transaction.id}`}
-								ui={{
-									round: "default",
-								}}
-							/>
-
 							<Container
 								ui={{
 									tone: "secondary",
@@ -115,13 +107,6 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 									label={transaction.title}
 									ui={{
 										font: "bold",
-									}}
-								/>
-
-								<Tx
-									label={transaction.location.address}
-									ui={{
-										text: "sm",
 									}}
 								/>
 							</Container>
