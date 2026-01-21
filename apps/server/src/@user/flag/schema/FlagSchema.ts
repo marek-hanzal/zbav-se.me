@@ -2,13 +2,14 @@ import { z } from "@hono/zod-openapi";
 import { FlagDbSchema } from "~/app/flag/schema/FlagDbSchema";
 
 export const FlagSchema = z
-	.object({
+	.looseObject({
 		...FlagDbSchema.shape,
 	})
 	.omit({
 		userId: true,
 		createdAt: true,
 	})
+	.strip()
 	.openapi("Flag", {
 		description: "Flag data",
 	});

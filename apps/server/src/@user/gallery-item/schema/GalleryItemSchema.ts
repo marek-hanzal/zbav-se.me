@@ -3,13 +3,14 @@ import { UploadSchema } from "~/@user/upload/schema/UploadSchema";
 import { GalleryItemDbSchema } from "~/app/gallery-item/schema/GalleryItemDbSchema";
 
 export const GalleryItemSchema = z
-	.object({
+	.looseObject({
 		...GalleryItemDbSchema.shape,
 		upload: UploadSchema,
 	})
 	.omit({
 		createdAt: true,
 	})
+	.strip()
 	.openapi("GalleryItem", {
 		description: "Gallery item data",
 	});

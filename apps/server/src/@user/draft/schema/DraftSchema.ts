@@ -5,7 +5,7 @@ import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { DraftDbSchema } from "~/app/draft/schema/DraftDbSchema";
 
 export const DraftSchema = z
-	.object({
+	.looseObject({
 		...DraftDbSchema.shape,
 		location: z
 			.union([

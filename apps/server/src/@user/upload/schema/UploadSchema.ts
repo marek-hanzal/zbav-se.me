@@ -2,13 +2,14 @@ import { z } from "@hono/zod-openapi";
 import { UploadDbSchema } from "~/app/upload/schema/UploadDbSchema";
 
 export const UploadSchema = z
-	.object({
+	.looseObject({
 		...UploadDbSchema.shape,
 	})
 	.omit({
 		userId: true,
 		createdAt: true,
 	})
+	.strip()
 	.openapi("Upload", {
 		description: "Upload file metadata",
 	});

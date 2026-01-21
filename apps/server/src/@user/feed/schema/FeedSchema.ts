@@ -4,7 +4,7 @@ import { FeedDbSchema } from "~/app/feed/schema/FeedDbSchema";
 import { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 
 export const FeedSchema = z
-	.object({
+	.looseObject({
 		...FeedDbSchema.shape,
 		query: ListingQuerySchema,
 		upload: z
@@ -21,6 +21,7 @@ export const FeedSchema = z
 		createdAt: true,
 		updatedAt: true,
 	})
+	.strip()
 	.openapi("Feed", {
 		description: "Feed data",
 	});

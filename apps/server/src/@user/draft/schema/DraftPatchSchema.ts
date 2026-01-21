@@ -3,9 +3,9 @@ import { DraftDbSchema } from "~/app/draft/schema/DraftDbSchema";
 import { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
 
 export const DraftPatchSchema = z
-	.object({
+	.looseObject({
 		patch: z
-			.object({
+			.looseObject({
 				...DraftDbSchema.shape,
 			})
 			.omit({
@@ -16,11 +16,13 @@ export const DraftPatchSchema = z
 				updatedAt: true,
 			})
 			.partial()
+			.strip()
 			.openapi("DraftPatchData", {
 				description: "Fields to update (all optional)",
 			}),
 		query: DraftQuerySchema,
 	})
+	.strip()
 	.openapi("DraftPatch", {
 		description: "Data for updating an existing draft",
 	});

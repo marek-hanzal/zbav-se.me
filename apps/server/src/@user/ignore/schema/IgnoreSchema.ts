@@ -2,13 +2,14 @@ import { z } from "@hono/zod-openapi";
 import { IgnoreDbSchema } from "~/app/ignore/schema/IgnoreDbSchema";
 
 export const IgnoreSchema = z
-	.object({
+	.looseObject({
 		...IgnoreDbSchema.shape,
 	})
 	.omit({
 		userId: true,
 		createdAt: true,
 	})
+	.strip()
 	.openapi("Ignore", {
 		description: "Ignore data",
 	});

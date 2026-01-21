@@ -3,9 +3,9 @@ import { TransactionDbSchema } from "~/app/transaction/schema/TransactionDbSchem
 import { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
 
 export const TransactionPatchSchema = z
-	.object({
+	.looseObject({
 		patch: z
-			.object({
+			.looseObject({
 				...TransactionDbSchema.shape,
 			})
 			.omit({
@@ -17,11 +17,13 @@ export const TransactionPatchSchema = z
 				expiresAt: true,
 			})
 			.partial()
+			.strip()
 			.openapi({
 				description: "Fields to update (all optional)",
 			}),
 		query: TransactionQuerySchema,
 	})
+	.strip()
 	.openapi("TransactionPatch", {
 		description: "Payload for patching a transaction",
 	});

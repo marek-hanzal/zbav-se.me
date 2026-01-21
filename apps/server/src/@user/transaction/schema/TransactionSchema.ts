@@ -7,7 +7,7 @@ import { TransactionStatusEnumSchema } from "~/app/transaction/schema/Transactio
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 
 export const TransactionSchema = z
-	.object({
+	.looseObject({
 		...TransactionDbSchema.shape,
 		title: z.string().openapi({
 			description: "Transaction title",
@@ -28,6 +28,7 @@ export const TransactionSchema = z
 	.omit({
 		userId: true,
 	})
+	.strip()
 	.openapi("Transaction", {
 		description: "Transaction data",
 	});

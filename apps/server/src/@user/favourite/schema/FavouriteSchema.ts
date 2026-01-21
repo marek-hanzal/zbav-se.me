@@ -2,12 +2,13 @@ import { z } from "@hono/zod-openapi";
 import { FavouriteDbSchema } from "~/app/favourite/schema/FavouriteDbSchema";
 
 export const FavouriteSchema = z
-	.object({
+	.looseObject({
 		...FavouriteDbSchema.shape,
 	})
 	.omit({
 		userId: true,
 	})
+	.strip()
 	.openapi("Favourite", {
 		description: "Favourite data",
 	});

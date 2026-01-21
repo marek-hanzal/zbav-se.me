@@ -2,12 +2,13 @@ import { z } from "@hono/zod-openapi";
 import { TransactionStatusDbSchema } from "~/app/transaction-status/schema/ListingTransactionStatusDbSchema";
 
 export const TransactionStatusSchema = z
-	.object({
+	.looseObject({
 		...TransactionStatusDbSchema.shape,
 	})
 	.omit({
 		userId: true,
 	})
+	.strip()
 	.openapi("TransactionStatus", {
 		description: "Listing transaction status entry",
 	});

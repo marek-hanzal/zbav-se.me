@@ -4,9 +4,9 @@ import { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
 import { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 
 export const FeedPatchSchema = z
-	.object({
+	.looseObject({
 		patch: z
-			.object({
+			.looseObject({
 				...FeedDbSchema.shape,
 				query: ListingQuerySchema,
 			})
@@ -16,11 +16,13 @@ export const FeedPatchSchema = z
 				updatedAt: true,
 			})
 			.partial()
+			.strip()
 			.openapi({
 				description: "Fields to update (all optional)",
 			}),
 		query: FeedQuerySchema,
 	})
+	.strip()
 	.openapi("FeedPatch", {
 		description: "Data for updating an existing feed",
 	});

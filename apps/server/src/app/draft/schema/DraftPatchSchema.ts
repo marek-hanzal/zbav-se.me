@@ -15,8 +15,8 @@ export const DraftPatchSchema = z
 				createdAt: true,
 				updatedAt: true,
 			})
-			.strip()
 			.partial()
+			.strip()
 			.openapi("DraftPatchData", {
 				description: "Fields to update (all optional)",
 			}),
