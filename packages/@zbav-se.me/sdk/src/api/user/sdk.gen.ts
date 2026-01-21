@@ -20,13 +20,15 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 };
 
 /**
+ * Fetch a collection of drafts based on the provided query
+ *
  * Returns drafts based on provided parameters
  */
 export const apiDraftCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiDraftCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiDraftCollectionResponse, apiDraftCollectionErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiDraftCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiDraftCollectionResponse.parseAsync(data),
-    url: '/api/user/draft/collection',
+    url: '/draft/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -35,13 +37,15 @@ export const apiDraftCollection = <ThrowOnError extends boolean = false>(options
 });
 
 /**
+ * Count drafts based on the provided query
+ *
  * Returns count of drafts based on provided query
  */
 export const apiDraftCount = <ThrowOnError extends boolean = false>(options?: Options<tApiDraftCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiDraftCountResponse, apiDraftCountErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiDraftCountData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiDraftCountResponse.parseAsync(data),
-    url: '/api/user/draft/count',
+    url: '/draft/count',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -51,12 +55,14 @@ export const apiDraftCount = <ThrowOnError extends boolean = false>(options?: Op
 
 /**
  * Create a new draft
+ *
+ * Create a new draft
  */
 export const apiDraftCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiDraftCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiDraftCreateResponse, apiDraftCreateErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiDraftCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiDraftCreateResponse.parseAsync(data),
-    url: '/api/user/draft/create',
+    url: '/draft/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -65,13 +71,15 @@ export const apiDraftCreate = <ThrowOnError extends boolean = false>(options?: O
 });
 
 /**
+ * Delete a draft based on the provided query
+ *
  * Delete a draft based on the provided query (user-specific)
  */
 export const apiDraftDelete = <ThrowOnError extends boolean = false>(options?: Options<tApiDraftDeleteRequest, ThrowOnError>) => (options?.client ?? client).delete<tApiDraftDeleteResponse, apiDraftDeleteErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiDraftDeleteData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiDraftDeleteResponse.parseAsync(data),
-    url: '/api/user/draft/delete',
+    url: '/draft/delete',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -80,13 +88,15 @@ export const apiDraftDelete = <ThrowOnError extends boolean = false>(options?: O
 });
 
 /**
+ * Fetch a draft based on the provided query
+ *
  * Return a draft based on the provided query
  */
 export const apiDraftFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiDraftFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiDraftFetchResponse, apiDraftFetchErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiDraftFetchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiDraftFetchResponse.parseAsync(data),
-    url: '/api/user/draft/fetch',
+    url: '/draft/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -95,13 +105,15 @@ export const apiDraftFetch = <ThrowOnError extends boolean = false>(options?: Op
 });
 
 /**
+ * Create a gallery for a draft
+ *
  * Update a draft gallery. Gallery is always created with the draft.
  */
 export const apiDraftGalleryCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiDraftGalleryCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiDraftGalleryCreateResponse, apiDraftGalleryCreateErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiDraftGalleryCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiDraftGalleryCreateResponse.parseAsync(data),
-    url: '/api/user/draft/gallery/create',
+    url: '/draft/gallery/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -110,13 +122,15 @@ export const apiDraftGalleryCreate = <ThrowOnError extends boolean = false>(opti
 });
 
 /**
+ * Partial update of a draft
+ *
  * Update an existing draft
  */
 export const apiDraftPatch = <ThrowOnError extends boolean = false>(options?: Options<tApiDraftPatchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiDraftPatchResponse, apiDraftPatchErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiDraftPatchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiDraftPatchResponse.parseAsync(data),
-    url: '/api/user/draft/patch',
+    url: '/draft/patch',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -125,13 +139,15 @@ export const apiDraftPatch = <ThrowOnError extends boolean = false>(options?: Op
 });
 
 /**
+ * Fetch a collection of favourite items based on the provided query
+ *
  * Returns favourite items based on provided parameters
  */
 export const apiFavouriteCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiFavouriteCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFavouriteCollectionResponse, apiFavouriteCollectionErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiFavouriteCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFavouriteCollectionResponse.parseAsync(data),
-    url: '/api/user/favourite/collection',
+    url: '/favourite/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -140,13 +156,15 @@ export const apiFavouriteCollection = <ThrowOnError extends boolean = false>(opt
 });
 
 /**
+ * Count favourite items based on the provided query
+ *
  * Returns count of favourite items based on provided query
  */
 export const apiFavouriteCount = <ThrowOnError extends boolean = false>(options?: Options<tApiFavouriteCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFavouriteCountResponse, apiFavouriteCountErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiFavouriteCountData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFavouriteCountResponse.parseAsync(data),
-    url: '/api/user/favourite/count',
+    url: '/favourite/count',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -155,13 +173,15 @@ export const apiFavouriteCount = <ThrowOnError extends boolean = false>(options?
 });
 
 /**
+ * Toggle a listing in favourites (add or remove)
+ *
  * Toggle listing in favourites (add or remove)
  */
 export const apiFavouriteToggle = <ThrowOnError extends boolean = false>(options?: Options<tApiFavouriteToggleRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFavouriteToggleResponse, apiFavouriteToggleErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiFavouriteToggleData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFavouriteToggleResponse.parseAsync(data),
-    url: '/api/user/favourite/toggle',
+    url: '/favourite/toggle',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -171,12 +191,14 @@ export const apiFavouriteToggle = <ThrowOnError extends boolean = false>(options
 
 /**
  * Create a new feed item
+ *
+ * Create a new feed item
  */
 export const apiFeedCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFeedCreateResponse, apiFeedCreateErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiFeedCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFeedCreateResponse.parseAsync(data),
-    url: '/api/user/feed/create',
+    url: '/feed/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -186,12 +208,14 @@ export const apiFeedCreate = <ThrowOnError extends boolean = false>(options?: Op
 
 /**
  * Update an existing feed item
+ *
+ * Update an existing feed item
  */
 export const apiFeedPatch = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedPatchRequest, ThrowOnError>) => (options?.client ?? client).patch<tApiFeedPatchResponse, apiFeedPatchErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiFeedPatchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFeedPatchResponse.parseAsync(data),
-    url: '/api/user/feed/patch',
+    url: '/feed/patch',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -200,13 +224,15 @@ export const apiFeedPatch = <ThrowOnError extends boolean = false>(options?: Opt
 });
 
 /**
+ * Fetch a feed item based on the provided query
+ *
  * Return a feed item based on the provided query
  */
 export const apiFeedFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFeedFetchResponse, apiFeedFetchErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiFeedFetchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFeedFetchResponse.parseAsync(data),
-    url: '/api/user/feed/fetch',
+    url: '/feed/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -215,13 +241,15 @@ export const apiFeedFetch = <ThrowOnError extends boolean = false>(options?: Opt
 });
 
 /**
+ * Fetch a collection of feed items based on the provided query
+ *
  * Returns feed items based on provided parameters
  */
 export const apiFeedCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFeedCollectionResponse, apiFeedCollectionErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiFeedCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFeedCollectionResponse.parseAsync(data),
-    url: '/api/user/feed/collection',
+    url: '/feed/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -230,13 +258,15 @@ export const apiFeedCollection = <ThrowOnError extends boolean = false>(options?
 });
 
 /**
+ * Count feed items based on the provided query
+ *
  * Returns count of feed items based on provided query (user-specific)
  */
 export const apiFeedCount = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFeedCountResponse, apiFeedCountErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiFeedCountData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFeedCountResponse.parseAsync(data),
-    url: '/api/user/feed/count',
+    url: '/feed/count',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -245,13 +275,15 @@ export const apiFeedCount = <ThrowOnError extends boolean = false>(options?: Opt
 });
 
 /**
+ * Delete a feed item based on the provided query
+ *
  * Delete a feed item based on the provided query (user-specific)
  */
 export const apiFeedDelete = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedDeleteRequest, ThrowOnError>) => (options?.client ?? client).delete<tApiFeedDeleteResponse, apiFeedDeleteErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiFeedDeleteData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFeedDeleteResponse.parseAsync(data),
-    url: '/api/user/feed/delete',
+    url: '/feed/delete',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -260,13 +292,15 @@ export const apiFeedDelete = <ThrowOnError extends boolean = false>(options?: Op
 });
 
 /**
+ * Create or update a gallery for a feed.
+ *
  * Create or update a gallery for a feed. Uses feed.id as gallery.id. If gallery doesn't exist, creates it and attaches uploads.
  */
 export const apiFeedGalleryCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedGalleryCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFeedGalleryCreateResponse, apiFeedGalleryCreateErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiFeedGalleryCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFeedGalleryCreateResponse.parseAsync(data),
-    url: '/api/user/feed/gallery/create',
+    url: '/feed/gallery/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -275,13 +309,15 @@ export const apiFeedGalleryCreate = <ThrowOnError extends boolean = false>(optio
 });
 
 /**
+ * Fetch a collection of feed items from favourites based on the provided query
+ *
  * Returns feed items from favourites based on provided parameters
  */
 export const apiFeedFavouriteCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedFavouriteCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFeedFavouriteCollectionResponse, apiFeedFavouriteCollectionErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiFeedFavouriteCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFeedFavouriteCollectionResponse.parseAsync(data),
-    url: '/api/user/feed-favourite/collection',
+    url: '/feed-favourite/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -290,13 +326,15 @@ export const apiFeedFavouriteCollection = <ThrowOnError extends boolean = false>
 });
 
 /**
+ * Fetch a collection of flag items based on the provided query
+ *
  * Returns flag items based on provided parameters
  */
 export const apiFlagCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiFlagCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFlagCollectionResponse, apiFlagCollectionErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiFlagCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFlagCollectionResponse.parseAsync(data),
-    url: '/api/user/flag/collection',
+    url: '/flag/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -305,13 +343,15 @@ export const apiFlagCollection = <ThrowOnError extends boolean = false>(options?
 });
 
 /**
+ * Count flag items based on the provided query
+ *
  * Returns count of flag items based on provided query
  */
 export const apiFlagCount = <ThrowOnError extends boolean = false>(options?: Options<tApiFlagCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFlagCountResponse, apiFlagCountErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiFlagCountData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFlagCountResponse.parseAsync(data),
-    url: '/api/user/flag/count',
+    url: '/flag/count',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -321,12 +361,14 @@ export const apiFlagCount = <ThrowOnError extends boolean = false>(options?: Opt
 
 /**
  * Toggle flag state on listing (add or remove)
+ *
+ * Toggle flag state on listing (add or remove)
  */
 export const apiFlagToggle = <ThrowOnError extends boolean = false>(options?: Options<tApiFlagToggleRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFlagToggleResponse, apiFlagToggleErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiFlagToggleData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFlagToggleResponse.parseAsync(data),
-    url: '/api/user/flag/toggle',
+    url: '/flag/toggle',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -335,13 +377,15 @@ export const apiFlagToggle = <ThrowOnError extends boolean = false>(options?: Op
 });
 
 /**
+ * Fetch a gallery based on the provided query
+ *
  * Return a gallery based on the provided query
  */
 export const apiGalleryFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiGalleryFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiGalleryFetchResponse, apiGalleryFetchErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiGalleryFetchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiGalleryFetchResponse.parseAsync(data),
-    url: '/api/user/gallery/fetch',
+    url: '/gallery/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -350,13 +394,15 @@ export const apiGalleryFetch = <ThrowOnError extends boolean = false>(options?: 
 });
 
 /**
+ * Fetch a collection of galleries based on the provided query
+ *
  * Returns galleries based on provided parameters
  */
 export const apiGalleryCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiGalleryCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiGalleryCollectionResponse, apiGalleryCollectionErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiGalleryCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiGalleryCollectionResponse.parseAsync(data),
-    url: '/api/user/gallery/collection',
+    url: '/gallery/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -365,13 +411,15 @@ export const apiGalleryCollection = <ThrowOnError extends boolean = false>(optio
 });
 
 /**
+ * Count galleries based on the provided query
+ *
  * Returns count of galleries based on provided query
  */
 export const apiGalleryCount = <ThrowOnError extends boolean = false>(options?: Options<tApiGalleryCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiGalleryCountResponse, apiGalleryCountErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiGalleryCountData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiGalleryCountResponse.parseAsync(data),
-    url: '/api/user/gallery/count',
+    url: '/gallery/count',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -380,13 +428,15 @@ export const apiGalleryCount = <ThrowOnError extends boolean = false>(options?: 
 });
 
 /**
+ * Fetch a collection of ignore items based on the provided query
+ *
  * Returns ignore items based on provided parameters
  */
 export const apiIgnoreCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiIgnoreCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiIgnoreCollectionResponse, apiIgnoreCollectionErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiIgnoreCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiIgnoreCollectionResponse.parseAsync(data),
-    url: '/api/user/ignore/collection',
+    url: '/ignore/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -395,13 +445,15 @@ export const apiIgnoreCollection = <ThrowOnError extends boolean = false>(option
 });
 
 /**
+ * Count ignore items based on the provided query
+ *
  * Returns count of ignore items based on provided query
  */
 export const apiIgnoreCount = <ThrowOnError extends boolean = false>(options?: Options<tApiIgnoreCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiIgnoreCountResponse, apiIgnoreCountErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiIgnoreCountData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiIgnoreCountResponse.parseAsync(data),
-    url: '/api/user/ignore/count',
+    url: '/ignore/count',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -410,13 +462,15 @@ export const apiIgnoreCount = <ThrowOnError extends boolean = false>(options?: O
 });
 
 /**
+ * Toggle ignore state on listing (add or remove)
+ *
  * Toggle ignore state (add or remove)
  */
 export const apiIgnoreToggle = <ThrowOnError extends boolean = false>(options?: Options<tApiIgnoreToggleRequest, ThrowOnError>) => (options?.client ?? client).post<tApiIgnoreToggleResponse, apiIgnoreToggleErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiIgnoreToggleData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiIgnoreToggleResponse.parseAsync(data),
-    url: '/api/user/ignore/toggle',
+    url: '/ignore/toggle',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -426,12 +480,14 @@ export const apiIgnoreToggle = <ThrowOnError extends boolean = false>(options?: 
 
 /**
  * Create a new listing
+ *
+ * Create a new listing
  */
 export const apiListingCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingCreateResponse, apiListingCreateErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiListingCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiListingCreateResponse.parseAsync(data),
-    url: '/api/user/listing/create',
+    url: '/listing/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -440,13 +496,15 @@ export const apiListingCreate = <ThrowOnError extends boolean = false>(options?:
 });
 
 /**
+ * Fetch a listing based on the provided query
+ *
  * Return a listing based on the provided query
  */
 export const apiListingFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingFetchResponse, apiListingFetchErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiListingFetchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiListingFetchResponse.parseAsync(data),
-    url: '/api/user/listing/fetch',
+    url: '/listing/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -455,13 +513,15 @@ export const apiListingFetch = <ThrowOnError extends boolean = false>(options?: 
 });
 
 /**
+ * Fetch a collection of listings based on the provided query
+ *
  * Returns listings based on provided parameters
  */
 export const apiListingCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingCollectionResponse, apiListingCollectionErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiListingCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiListingCollectionResponse.parseAsync(data),
-    url: '/api/user/listing/collection',
+    url: '/listing/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -470,13 +530,15 @@ export const apiListingCollection = <ThrowOnError extends boolean = false>(optio
 });
 
 /**
+ * Count listings based on the provided query
+ *
  * Returns count of listings based on provided query
  */
 export const apiListingCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingCountResponse, apiListingCountErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiListingCountData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiListingCountResponse.parseAsync(data),
-    url: '/api/user/listing/count',
+    url: '/listing/count',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -486,12 +548,14 @@ export const apiListingCount = <ThrowOnError extends boolean = false>(options?: 
 
 /**
  * Create a new listing event
+ *
+ * Create a new listing event
  */
 export const apiListingEventCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiListingEventCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingEventCreateResponse, apiListingEventCreateErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiListingEventCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiListingEventCreateResponse.parseAsync(data),
-    url: '/api/user/listing-event/create',
+    url: '/listing-event/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -500,13 +564,15 @@ export const apiListingEventCreate = <ThrowOnError extends boolean = false>(opti
 });
 
 /**
+ * Fetch a collection of messages for a message thread based on the provided query
+ *
  * Returns messages for a specific message thread based on provided parameters
  */
 export const apiMessageThreadMessageCollection = <ThrowOnError extends boolean = false>(options: Options<tApiMessageThreadMessageCollectionRequest, ThrowOnError>) => (options.client ?? client).post<tApiMessageThreadMessageCollectionResponse, apiMessageThreadMessageCollectionErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiMessageThreadMessageCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiMessageThreadMessageCollectionResponse.parseAsync(data),
-    url: '/api/user/message-thread/{messageThreadId}/message/collection',
+    url: '/message-thread/{messageThreadId}/message/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -515,13 +581,15 @@ export const apiMessageThreadMessageCollection = <ThrowOnError extends boolean =
 });
 
 /**
+ * Generate a pre-signed URL for direct S3-compatible PUT upload
+ *
  * Generate a pre-signed URL for direct S3-compatible PUT upload (private bucket). Expiration is server-controlled. A random suffix is always added.
  */
 export const apiS3Presign = <ThrowOnError extends boolean = false>(options: Options<tApiS3PresignRequest, ThrowOnError>) => (options.client ?? client).post<tApiS3PresignResponse, apiS3PresignErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiS3PresignData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiS3PresignResponse.parseAsync(data),
-    url: '/api/user/s3/pre-sign',
+    url: '/s3/pre-sign',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -530,13 +598,15 @@ export const apiS3Presign = <ThrowOnError extends boolean = false>(options: Opti
 });
 
 /**
+ * Create a new thumb for a listing
+ *
  * Create a new thumb
  */
 export const apiThumbCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiThumbCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiThumbCreateResponse, apiThumbCreateErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiThumbCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiThumbCreateResponse.parseAsync(data),
-    url: '/api/user/thumb/create',
+    url: '/thumb/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -545,13 +615,15 @@ export const apiThumbCreate = <ThrowOnError extends boolean = false>(options?: O
 });
 
 /**
+ * Fetch a collection of transactions based on the provided query
+ *
  * Returns transactions based on provided parameters
  */
 export const apiTransactionCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionCollectionResponse, apiTransactionCollectionErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiTransactionCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionCollectionResponse.parseAsync(data),
-    url: '/api/user/transaction/collection',
+    url: '/transaction/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -561,12 +633,14 @@ export const apiTransactionCollection = <ThrowOnError extends boolean = false>(o
 
 /**
  * Create a new transaction
+ *
+ * Create a new transaction
  */
 export const apiTransactionCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionCreateResponse, apiTransactionCreateErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiTransactionCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionCreateResponse.parseAsync(data),
-    url: '/api/user/transaction/create',
+    url: '/transaction/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -575,13 +649,15 @@ export const apiTransactionCreate = <ThrowOnError extends boolean = false>(optio
 });
 
 /**
+ * Fetch a transaction based on the provided query
+ *
  * Return a transaction based on the provided query
  */
 export const apiTransactionFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionFetchResponse, apiTransactionFetchErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiTransactionFetchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionFetchResponse.parseAsync(data),
-    url: '/api/user/transaction/fetch',
+    url: '/transaction/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -590,13 +666,15 @@ export const apiTransactionFetch = <ThrowOnError extends boolean = false>(option
 });
 
 /**
+ * Get buyer info for a transaction
+ *
  * Return buyer info for a transaction. Requires access to the transaction.
  */
 export const apiTransactionBuyerInfo = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionBuyerInfoRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionBuyerInfoResponse, apiTransactionBuyerInfoErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiTransactionBuyerInfoData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionBuyerInfoResponse.parseAsync(data),
-    url: '/api/user/transaction/buyer-info',
+    url: '/transaction/buyer-info',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -605,13 +683,15 @@ export const apiTransactionBuyerInfo = <ThrowOnError extends boolean = false>(op
 });
 
 /**
+ * Fetch a collection of listings that have transactions based on the provided query
+ *
  * Returns listings that have at least one transaction
  */
 export const apiTransactionListingCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionListingCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionListingCollectionResponse, apiTransactionListingCollectionErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiTransactionListingCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionListingCollectionResponse.parseAsync(data),
-    url: '/api/user/transaction-listing/collection',
+    url: '/transaction-listing/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -620,13 +700,15 @@ export const apiTransactionListingCollection = <ThrowOnError extends boolean = f
 });
 
 /**
+ * Create a gallery message for a transaction
+ *
  * Create a message gallery for a transaction. Requires access to the transaction.
  */
 export const apiTransactionMessageGalleryCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionMessageGalleryCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionMessageGalleryCreateResponse, apiTransactionMessageGalleryCreateErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiTransactionMessageGalleryCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionMessageGalleryCreateResponse.parseAsync(data),
-    url: '/api/user/transaction-message-gallery/create',
+    url: '/transaction-message-gallery/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -635,13 +717,15 @@ export const apiTransactionMessageGalleryCreate = <ThrowOnError extends boolean 
 });
 
 /**
+ * Create a location message for a transaction
+ *
  * Create a message location for a transaction. Requires access to the transaction.
  */
 export const apiTransactionMessageLocationCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionMessageLocationCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionMessageLocationCreateResponse, apiTransactionMessageLocationCreateErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiTransactionMessageLocationCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionMessageLocationCreateResponse.parseAsync(data),
-    url: '/api/user/transaction-message-location/create',
+    url: '/transaction-message-location/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -650,13 +734,15 @@ export const apiTransactionMessageLocationCreate = <ThrowOnError extends boolean
 });
 
 /**
+ * Create a package message for a transaction
+ *
  * Create a message package for a transaction. Requires access to the transaction.
  */
 export const apiTransactionMessagePackageCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionMessagePackageCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionMessagePackageCreateResponse, apiTransactionMessagePackageCreateErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiTransactionMessagePackageCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionMessagePackageCreateResponse.parseAsync(data),
-    url: '/api/user/transaction-message-package/create',
+    url: '/transaction-message-package/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -665,13 +751,15 @@ export const apiTransactionMessagePackageCreate = <ThrowOnError extends boolean 
 });
 
 /**
+ * Create a personal message for a transaction
+ *
  * Create a personal message for a transaction. Requires access to the transaction.
  */
 export const apiTransactionMessagePersonalCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionMessagePersonalCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionMessagePersonalCreateResponse, apiTransactionMessagePersonalCreateErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiTransactionMessagePersonalCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionMessagePersonalCreateResponse.parseAsync(data),
-    url: '/api/user/transaction-message-personal/create',
+    url: '/transaction-message-personal/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -680,13 +768,15 @@ export const apiTransactionMessagePersonalCreate = <ThrowOnError extends boolean
 });
 
 /**
+ * Create a text message for a transaction
+ *
  * Create a message text for a transaction. Requires access to the transaction.
  */
 export const apiTransactionMessageTextCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionMessageTextCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionMessageTextCreateResponse, apiTransactionMessageTextCreateErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiTransactionMessageTextCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionMessageTextCreateResponse.parseAsync(data),
-    url: '/api/user/transaction-message-text/create',
+    url: '/transaction-message-text/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -695,13 +785,15 @@ export const apiTransactionMessageTextCreate = <ThrowOnError extends boolean = f
 });
 
 /**
+ * Accept a listing transaction
+ *
  * Accept a listing transaction. Requires access to the transaction.
  */
 export const apiTransactionStatusAccept = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionStatusAcceptRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionStatusAcceptResponse, apiTransactionStatusAcceptErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiTransactionStatusAcceptData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionStatusAcceptResponse.parseAsync(data),
-    url: '/api/user/transaction/status/accept',
+    url: '/transaction/status/accept',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -710,13 +802,15 @@ export const apiTransactionStatusAccept = <ThrowOnError extends boolean = false>
 });
 
 /**
+ * Reject a listing transaction
+ *
  * Reject a listing transaction. Requires access to the transaction.
  */
 export const apiTransactionStatusReject = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionStatusRejectRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionStatusRejectResponse, apiTransactionStatusRejectErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiTransactionStatusRejectData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionStatusRejectResponse.parseAsync(data),
-    url: '/api/user/transaction/status/reject',
+    url: '/transaction/status/reject',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -725,13 +819,15 @@ export const apiTransactionStatusReject = <ThrowOnError extends boolean = false>
 });
 
 /**
+ * Resolve a listing transaction
+ *
  * Resolve a listing transaction. Requires access to the transaction.
  */
 export const apiTransactionStatusResolve = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionStatusResolveRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionStatusResolveResponse, apiTransactionStatusResolveErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiTransactionStatusResolveData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionStatusResolveResponse.parseAsync(data),
-    url: '/api/user/transaction/status/resolve',
+    url: '/transaction/status/resolve',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -740,13 +836,15 @@ export const apiTransactionStatusResolve = <ThrowOnError extends boolean = false
 });
 
 /**
+ * Mark a listing transaction as successful
+ *
  * Mark a listing transaction as successful. Requires access to the transaction.
  */
 export const apiTransactionStatusSuccess = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionStatusSuccessRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionStatusSuccessResponse, apiTransactionStatusSuccessErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiTransactionStatusSuccessData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionStatusSuccessResponse.parseAsync(data),
-    url: '/api/user/transaction/status/success',
+    url: '/transaction/status/success',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -755,13 +853,15 @@ export const apiTransactionStatusSuccess = <ThrowOnError extends boolean = false
 });
 
 /**
+ * Dispute a listing transaction
+ *
  * Dispute a listing transaction. Requires access to the transaction.
  */
 export const apiTransactionStatusDispute = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionStatusDisputeRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionStatusDisputeResponse, apiTransactionStatusDisputeErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiTransactionStatusDisputeData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionStatusDisputeResponse.parseAsync(data),
-    url: '/api/user/transaction/status/dispute',
+    url: '/transaction/status/dispute',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -770,13 +870,15 @@ export const apiTransactionStatusDispute = <ThrowOnError extends boolean = false
 });
 
 /**
+ * Close a listing transaction
+ *
  * Close a listing transaction. Requires access to the transaction.
  */
 export const apiTransactionStatusClose = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionStatusCloseRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionStatusCloseResponse, apiTransactionStatusCloseErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiTransactionStatusCloseData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionStatusCloseResponse.parseAsync(data),
-    url: '/api/user/transaction/status/close',
+    url: '/transaction/status/close',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -786,12 +888,14 @@ export const apiTransactionStatusClose = <ThrowOnError extends boolean = false>(
 
 /**
  * Create a new upload
+ *
+ * Create a new upload
  */
 export const apiUploadCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiUploadCreateResponse, apiUploadCreateErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiUploadCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiUploadCreateResponse.parseAsync(data),
-    url: '/api/user/upload/create',
+    url: '/upload/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -801,12 +905,14 @@ export const apiUploadCreate = <ThrowOnError extends boolean = false>(options?: 
 
 /**
  * Update user extended information
+ *
+ * Update user extended information
  */
 export const apiUserExPatch = <ThrowOnError extends boolean = false>(options?: Options<tApiUserExPatchRequest, ThrowOnError>) => (options?.client ?? client).patch<tApiUserExPatchResponse, apiUserExPatchErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiUserExPatchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiUserExPatchResponse.parseAsync(data),
-    url: '/api/user/user-ex',
+    url: '/user-ex',
     ...options,
     headers: {
         'Content-Type': 'application/json',

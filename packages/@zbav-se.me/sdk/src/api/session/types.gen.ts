@@ -5,14 +5,59 @@ export type clientOptions = {
 };
 
 /**
- * Order
+ * Category data
  */
-export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
+export type tCategory = {
+    /**
+     * ID of the category
+     */
+    id: string;
+    /**
+     * Group/name of the category
+     */
+    group: string;
+    /**
+     * Category name within the group
+     */
+    category: string;
+    /**
+     * Slug of the category
+     */
+    slug: string;
+    /**
+     * Sort order (position) of the category
+     */
+    sort: number;
+    /**
+     * Locale/language of the category
+     */
+    locale: string;
+};
 
 /**
- * Order
+ * Type of notice
  */
-export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
+export const tNoticeTypeEnum = {
+    info: 'info',
+    warning: 'warning',
+    error: 'error'
+} as const;
+
+/**
+ * Type of notice
+ */
+export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
+
+/**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export type tNotice = {
+    /**
+     * Message
+     */
+    message: string;
+    type: tNoticeTypeEnum;
+};
 
 /**
  * Cursor for pagination
@@ -26,6 +71,331 @@ export type tCursor = {
      * Page size
      */
     size: number;
+};
+
+/**
+ * Filter object for category collection
+ */
+export type tCategoryFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact group of the category
+     */
+    group?: string;
+    /**
+     * This filter matches the exact category name
+     */
+    category?: string;
+    /**
+     * This filter matches the exact locale of the category
+     */
+    locale?: string;
+    /**
+     * This filter matches categories with locales in the provided array
+     */
+    localeIn?: Array<string>;
+    /**
+     * This filter matches the exact slug of the category
+     */
+    slug?: string;
+};
+
+/**
+ * App-based filters
+ */
+export type tCategoryWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact group of the category
+     */
+    group?: string;
+    /**
+     * This filter matches the exact category name
+     */
+    category?: string;
+    /**
+     * This filter matches the exact locale of the category
+     */
+    locale?: string;
+    /**
+     * This filter matches categories with locales in the provided array
+     */
+    localeIn?: Array<string>;
+    /**
+     * This filter matches the exact slug of the category
+     */
+    slug?: string;
+};
+
+/**
+ * Field of the category sort
+ */
+export const tCategorySortField = {
+    group: 'group',
+    category: 'category',
+    sort: 'sort'
+} as const;
+
+/**
+ * Field of the category sort
+ */
+export type tCategorySortField = typeof tCategorySortField[keyof typeof tCategorySortField];
+
+/**
+ * Order
+ */
+export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
+
+/**
+ * Order
+ */
+export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
+
+/**
+ * Sort object for category collection
+ */
+export type tCategorySort = {
+    field: tCategorySortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * Category query parameters
+ */
+export type tCategoryQuery = {
+    cursor?: tCursor;
+    filter?: tCategoryFilter;
+    where?: tCategoryWhere;
+    sort?: Array<tCategorySort>;
+};
+
+/**
+ * Collection of categories
+ */
+export type tCategoryCollection = {
+    data: Array<tCategory>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Count data
+ */
+export type tCount = {
+    /**
+     * Count of items based on provided where query.
+     */
+    where: number;
+    /**
+     * Count of items based on provided filter query.
+     */
+    filter: number;
+    /**
+     * Total count of items (no filters applied).
+     */
+    total: number;
+};
+
+/**
+ * Query object for category count
+ */
+export type tCategoryCountQuery = {
+    filter?: tCategoryFilter;
+    where?: tCategoryWhere;
+    count?: Array<'total' | 'filter' | 'where'>;
+};
+
+/**
+ * Initial reaction by seller on transaction created by buyer.
+ */
+export type tUserEventSellerReaction = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of reactions
+     */
+    reactions: number;
+    /**
+     * Total number of terminal reactions (usually from the other side)
+     */
+    terminal: number;
+    /**
+     * Percentage of reactions (reactions + terminal) / total
+     */
+    percent: number;
+    /**
+     * Median milliseconds between transaction creation and reaction
+     */
+    medianMs: number;
+    /**
+     * 90th percentile milliseconds between transaction creation and reaction
+     */
+    p90Ms: number;
+};
+
+/**
+ * This metric describes if the user rejects transactions without any interaction (no messages between create and reject)
+ */
+export type tUserEventSellerRejected = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of rejected transactions
+     */
+    rejected: number;
+    /**
+     * Percentage of rejected transactions (rejected / total)
+     */
+    percent: number;
+    /**
+     * Median milliseconds between transaction creation and rejection
+     */
+    medianMs: number;
+    /**
+     * 90th percentile milliseconds between transaction creation and rejection
+     */
+    p90Ms: number;
+};
+
+/**
+ * This metric describes if the user resolves transactions (success/closed)
+ */
+export type tUserEventSellerResolved = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of resolved transactions (success, closed)
+     */
+    resolved: number;
+    /**
+     * Total number of terminal transactions (usually from the other side)
+     */
+    terminal: number;
+    /**
+     * Percentage of resolved transactions (resolved / total)
+     */
+    percent: number;
+    /**
+     * Median milliseconds until the transaction gets resolved
+     */
+    medianMs: number;
+    /**
+     * 90th percentile milliseconds until the transaction gets resolved
+     */
+    p90Ms: number;
+};
+
+/**
+ * This metric describes if the user is used to expire transactions (no user's messages)
+ */
+export type tUserEventSellerExpired = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of expired transactions
+     */
+    expired: number;
+    /**
+     * Percentage of expired transactions (expired / total)
+     */
+    percent: number;
+};
+
+/**
+ * Masks number of transactions of the seller, basically it tells, how busy seller is.
+ */
+export type tUserEventSellerLoad = {
+    /**
+     * Load type of the seller
+     */
+    bucket: 'low' | 'medium' | 'high';
+};
+
+/**
+ * This metric describes the approx activity of the user
+ */
+export type tUserEventSellerActivity = {
+    /**
+     * Activity type of the seller
+     */
+    bucket: 'low' | 'medium' | 'high';
+};
+
+/**
+ * This metric describes the score of the user
+ */
+export type tUserEventSellerScore = {
+    /**
+     * Low-level score value, usually not presented in UI
+     */
+    score: number;
+    /**
+     * Rank computed from the score (A-F, 1-6)
+     */
+    rank: number;
+};
+
+/**
+ * Seller info for the user event
+ */
+export type tUserEventSeller = {
+    reaction: tUserEventSellerReaction;
+    rejected: tUserEventSellerRejected;
+    resolved: tUserEventSellerResolved;
+    expired: tUserEventSellerExpired;
+    load: tUserEventSellerLoad;
+    activity: tUserEventSellerActivity;
+    score: tUserEventSellerScore;
+};
+
+/**
+ * Seller info for the listing
+ */
+export type tSellerInfo = {
+    /**
+     * Registration date
+     */
+    registered: string;
+    /**
+     * Number of listings
+     */
+    listings: number;
+    /**
+     * Seller info may not be available if we don't have enough data
+     */
+    events: null | tUserEventSeller;
 };
 
 /**
@@ -96,182 +466,17 @@ export type tLocation = {
 };
 
 /**
- * Upload file metadata
+ * Data for location autocomplete
  */
-export type tUpload = {
+export type tLocationAutocomplete = {
     /**
-     * ID of the upload
+     * The search text for location autocomplete
      */
-    id: string;
+    text: string;
     /**
-     * Public URL to the uploaded file
+     * The language code for the location search
      */
-    url: string;
-};
-
-/**
- * Category data
- */
-export type tCategory = {
-    /**
-     * ID of the category
-     */
-    id: string;
-    /**
-     * Group/name of the category
-     */
-    group: string;
-    /**
-     * Category name within the group
-     */
-    category: string;
-    /**
-     * Slug of the category
-     */
-    slug: string;
-    /**
-     * Sort order (position) of the category
-     */
-    sort: number;
-    /**
-     * Locale/language of the category
-     */
-    locale: string;
-};
-
-/**
- * Data for uploading a file
- */
-export type tUploadQuery = {
-    cursor?: tCursor;
-    filter?: tUploadFilter;
-    where?: tUploadWhere;
-    sort?: Array<tUploadSort>;
-};
-
-/**
- * Field for uploading a file
- */
-export const tUploadSortField = { createdAt: 'createdAt' } as const;
-
-/**
- * Field for uploading a file
- */
-export type tUploadSortField = typeof tUploadSortField[keyof typeof tUploadSortField];
-
-/**
- * Data for uploading a file
- */
-export type tUploadSort = {
-    field: tUploadSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * App-based filters
- */
-export type tUploadWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-};
-
-/**
- * Data for uploading a file
- */
-export type tUploadFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-};
-
-/**
- * Data for location query
- */
-export type tLocationQuery = {
-    cursor?: tCursor;
-    filter?: tLocationFilter;
-    where?: tLocationWhere;
-    sort?: Array<tLocationSort>;
-};
-
-/**
- * Field for location sort
- */
-export const tLocationSortField = {
-    confidence: 'confidence',
-    query: 'query',
-    country: 'country',
-    address: 'address'
-} as const;
-
-/**
- * Field for location sort
- */
-export type tLocationSortField = typeof tLocationSortField[keyof typeof tLocationSortField];
-
-/**
- * Data for location sort
- */
-export type tLocationSort = {
-    field: tLocationSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * App-based filters
- */
-export type tLocationWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches locations where id equals the value OR query ilike the value (useful for autocomplete)
-     */
-    query?: string;
-    /**
-     * This filter matches the exact language that was used to get the location
-     */
-    lang?: string;
-    /**
-     * This filter matches the exact country of the location
-     */
-    country?: string;
-    /**
-     * This filter matches the exact country code of the location
-     */
-    code?: string;
-    /**
-     * This filter matches locations with confidence greater than or equal to the provided value
-     */
-    confidenceMin?: number;
+    lang: string;
 };
 
 /**
@@ -313,201 +518,112 @@ export type tLocationFilter = {
 };
 
 /**
- * Data for location autocomplete
+ * App-based filters
  */
-export type tLocationAutocomplete = {
+export type tLocationWhere = {
     /**
-     * The search text for location autocomplete
+     * This filter matches the exact id
      */
-    text: string;
+    id?: string;
     /**
-     * The language code for the location search
+     * This filter matches the ids
      */
-    lang: string;
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches locations where id equals the value OR query ilike the value (useful for autocomplete)
+     */
+    query?: string;
+    /**
+     * This filter matches the exact language that was used to get the location
+     */
+    lang?: string;
+    /**
+     * This filter matches the exact country of the location
+     */
+    country?: string;
+    /**
+     * This filter matches the exact country code of the location
+     */
+    code?: string;
+    /**
+     * This filter matches locations with confidence greater than or equal to the provided value
+     */
+    confidenceMin?: number;
 };
 
 /**
- * Seller info for the listing
+ * Field for location sort
  */
-export type tSellerInfo = {
-    /**
-     * Registration date
-     */
-    registered: string;
-    /**
-     * Number of listings
-     */
-    listings: number;
-    /**
-     * Seller info may not be available if we don't have enough data
-     */
-    events: null | tUserEventSeller;
+export const tLocationSortField = {
+    confidence: 'confidence',
+    query: 'query',
+    country: 'country',
+    address: 'address'
+} as const;
+
+/**
+ * Field for location sort
+ */
+export type tLocationSortField = typeof tLocationSortField[keyof typeof tLocationSortField];
+
+/**
+ * Data for location sort
+ */
+export type tLocationSort = {
+    field: tLocationSortField;
+    direction: tOrderEnum;
 };
 
 /**
- * This metric describes the score of the user
+ * Data for location query
  */
-export type tUserEventSellerScore = {
-    /**
-     * Low-level score value, usually not presented in UI
-     */
-    score: number;
-    /**
-     * Rank computed from the score (A-F, 1-6)
-     */
-    rank: number;
+export type tLocationQuery = {
+    cursor?: tCursor;
+    filter?: tLocationFilter;
+    where?: tLocationWhere;
+    sort?: Array<tLocationSort>;
 };
 
 /**
- * This metric describes the approx activity of the user
+ * Upload file metadata
  */
-export type tUserEventSellerActivity = {
+export type tUpload = {
     /**
-     * Activity type of the seller
+     * ID of the upload
      */
-    bucket: 'low' | 'medium' | 'high';
+    id: string;
+    /**
+     * Public URL to the uploaded file
+     */
+    url: string;
 };
 
 /**
- * Masks number of transactions of the seller, basically it tells, how busy seller is.
+ * Data for uploading a file
  */
-export type tUserEventSellerLoad = {
+export type tUploadFilter = {
     /**
-     * Load type of the seller
+     * This filter matches the exact id
      */
-    bucket: 'low' | 'medium' | 'high';
-};
-
-/**
- * This metric describes if the user is used to expire transactions (no user's messages)
- */
-export type tUserEventSellerExpired = {
+    id?: string;
     /**
-     * Total number of samples (transactions)
+     * This filter matches the ids
      */
-    total: number;
+    idIn?: Array<string>;
     /**
-     * Total number of expired transactions
+     * Runs fulltext on the collection/query.
      */
-    expired: number;
-    /**
-     * Percentage of expired transactions (expired / total)
-     */
-    percent: number;
-};
-
-/**
- * This metric describes if the user resolves transactions (success/closed)
- */
-export type tUserEventSellerResolved = {
-    /**
-     * Total number of samples (transactions)
-     */
-    total: number;
-    /**
-     * Total number of resolved transactions (success, closed)
-     */
-    resolved: number;
-    /**
-     * Total number of terminal transactions (usually from the other side)
-     */
-    terminal: number;
-    /**
-     * Percentage of resolved transactions (resolved / total)
-     */
-    percent: number;
-    /**
-     * Median milliseconds until the transaction gets resolved
-     */
-    medianMs: number;
-    /**
-     * 90th percentile milliseconds until the transaction gets resolved
-     */
-    p90Ms: number;
-};
-
-/**
- * This metric describes if the user rejects transactions without any interaction (no messages between create and reject)
- */
-export type tUserEventSellerRejected = {
-    /**
-     * Total number of samples (transactions)
-     */
-    total: number;
-    /**
-     * Total number of rejected transactions
-     */
-    rejected: number;
-    /**
-     * Percentage of rejected transactions (rejected / total)
-     */
-    percent: number;
-    /**
-     * Median milliseconds between transaction creation and rejection
-     */
-    medianMs: number;
-    /**
-     * 90th percentile milliseconds between transaction creation and rejection
-     */
-    p90Ms: number;
-};
-
-/**
- * Initial reaction by seller on transaction created by buyer.
- */
-export type tUserEventSellerReaction = {
-    /**
-     * Total number of samples (transactions)
-     */
-    total: number;
-    /**
-     * Total number of reactions
-     */
-    reactions: number;
-    /**
-     * Total number of terminal reactions (usually from the other side)
-     */
-    terminal: number;
-    /**
-     * Percentage of reactions (reactions + terminal) / total
-     */
-    percent: number;
-    /**
-     * Median milliseconds between transaction creation and reaction
-     */
-    medianMs: number;
-    /**
-     * 90th percentile milliseconds between transaction creation and reaction
-     */
-    p90Ms: number;
-};
-
-/**
- * Seller info for the user event
- */
-export type tUserEventSeller = {
-    reaction: tUserEventSellerReaction;
-    rejected: tUserEventSellerRejected;
-    resolved: tUserEventSellerResolved;
-    expired: tUserEventSellerExpired;
-    load: tUserEventSellerLoad;
-    activity: tUserEventSellerActivity;
-    score: tUserEventSellerScore;
-};
-
-/**
- * Query object for category count
- */
-export type tCategoryCountQuery = {
-    filter?: tCategoryFilter;
-    where?: tCategoryWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
+    fulltext?: string;
 };
 
 /**
  * App-based filters
  */
-export type tCategoryWhere = {
+export type tUploadWhere = {
     /**
      * This filter matches the exact id
      */
@@ -520,151 +636,35 @@ export type tCategoryWhere = {
      * Runs fulltext on the collection/query.
      */
     fulltext?: string;
-    /**
-     * This filter matches the exact group of the category
-     */
-    group?: string;
-    /**
-     * This filter matches the exact category name
-     */
-    category?: string;
-    /**
-     * This filter matches the exact locale of the category
-     */
-    locale?: string;
-    /**
-     * This filter matches categories with locales in the provided array
-     */
-    localeIn?: Array<string>;
-    /**
-     * This filter matches the exact slug of the category
-     */
-    slug?: string;
 };
 
 /**
- * Filter object for category collection
+ * Field for uploading a file
  */
-export type tCategoryFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact group of the category
-     */
-    group?: string;
-    /**
-     * This filter matches the exact category name
-     */
-    category?: string;
-    /**
-     * This filter matches the exact locale of the category
-     */
-    locale?: string;
-    /**
-     * This filter matches categories with locales in the provided array
-     */
-    localeIn?: Array<string>;
-    /**
-     * This filter matches the exact slug of the category
-     */
-    slug?: string;
-};
+export const tUploadSortField = { createdAt: 'createdAt' } as const;
 
 /**
- * Count data
+ * Field for uploading a file
  */
-export type tCount = {
-    /**
-     * Count of items based on provided where query.
-     */
-    where: number;
-    /**
-     * Count of items based on provided filter query.
-     */
-    filter: number;
-    /**
-     * Total count of items (no filters applied).
-     */
-    total: number;
-};
+export type tUploadSortField = typeof tUploadSortField[keyof typeof tUploadSortField];
 
 /**
- * Collection of categories
+ * Data for uploading a file
  */
-export type tCategoryCollection = {
-    data: Array<tCategory>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Category query parameters
- */
-export type tCategoryQuery = {
-    cursor?: tCursor;
-    filter?: tCategoryFilter;
-    where?: tCategoryWhere;
-    sort?: Array<tCategorySort>;
-};
-
-/**
- * Field of the category sort
- */
-export const tCategorySortField = {
-    group: 'group',
-    category: 'category',
-    sort: 'sort'
-} as const;
-
-/**
- * Field of the category sort
- */
-export type tCategorySortField = typeof tCategorySortField[keyof typeof tCategorySortField];
-
-/**
- * Sort object for category collection
- */
-export type tCategorySort = {
-    field: tCategorySortField;
+export type tUploadSort = {
+    field: tUploadSortField;
     direction: tOrderEnum;
 };
 
 /**
- * Just a note sent from various reasons, usually when something is fucked up.
+ * Data for uploading a file
  */
-export type tNotice = {
-    /**
-     * Message
-     */
-    message: string;
-    type: tNoticeTypeEnum;
+export type tUploadQuery = {
+    cursor?: tCursor;
+    filter?: tUploadFilter;
+    where?: tUploadWhere;
+    sort?: Array<tUploadSort>;
 };
-
-/**
- * Type of notice
- */
-export const tNoticeTypeEnum = {
-    info: 'info',
-    warning: 'warning',
-    error: 'error'
-} as const;
-
-/**
- * Type of notice
- */
-export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
 
 export type tApiCategoryFetchRequest = {
     /**
@@ -673,7 +673,7 @@ export type tApiCategoryFetchRequest = {
     body?: tCategoryQuery;
     path?: never;
     query?: never;
-    url: '/api/session/category/fetch';
+    url: '/category/fetch';
 };
 
 export type apiCategoryFetchErrors = {
@@ -702,7 +702,7 @@ export type tApiCategoryCollectionRequest = {
     body?: tCategoryQuery;
     path?: never;
     query?: never;
-    url: '/api/session/category/collection';
+    url: '/category/collection';
 };
 
 export type apiCategoryCollectionErrors = {
@@ -727,7 +727,7 @@ export type tApiCategoryCountRequest = {
     body?: tCategoryCountQuery;
     path?: never;
     query?: never;
-    url: '/api/session/category/count';
+    url: '/category/count';
 };
 
 export type apiCategoryCountErrors = {
@@ -757,7 +757,7 @@ export type tApiListingSellerInfoRequest = {
         listingId: string;
     };
     query?: never;
-    url: '/api/session/listing/{listingId}/seller-info';
+    url: '/listing/{listingId}/seller-info';
 };
 
 export type apiListingSellerInfoErrors = {
@@ -789,7 +789,7 @@ export type tApiLocationAutocompleteRequest = {
     body?: tLocationAutocomplete;
     path?: never;
     query?: never;
-    url: '/api/session/location/autocomplete';
+    url: '/location/autocomplete';
 };
 
 export type apiLocationAutocompleteErrors = {
@@ -817,7 +817,7 @@ export type tApiLocationFetchRequest = {
     body?: tLocationQuery;
     path?: never;
     query?: never;
-    url: '/api/session/location/fetch';
+    url: '/location/fetch';
 };
 
 export type apiLocationFetchErrors = {
@@ -849,7 +849,7 @@ export type tApiUploadFetchRequest = {
     body?: tUploadQuery;
     path?: never;
     query?: never;
-    url: '/api/session/upload/fetch';
+    url: '/upload/fetch';
 };
 
 export type apiUploadFetchErrors = {

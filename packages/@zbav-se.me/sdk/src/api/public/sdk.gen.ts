@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiGithubHistoryErrors, apiSeedErrors, tApiCronDay0Request, tApiCronDay0Response, tApiCronDay12Request, tApiCronDay12Response, tApiCronDay16Request, tApiCronDay16Response, tApiCronDay20Request, tApiCronDay20Response, tApiCronDay4Request, tApiCronDay4Response, tApiCronDay8Request, tApiCronDay8Response, tApiCronHourlyRequest, tApiCronHourlyResponse, tApiCronMonthlyRequest, tApiCronMonthlyResponse, tApiGithubHistoryRequest, tApiGithubHistoryResponse, tApiHealthRequest, tApiHealthResponse, tApiSeedRequest, tApiSeedResponse } from './types.gen';
-import { zApiCronDay0Data, zApiCronDay0Response, zApiCronDay12Data, zApiCronDay12Response, zApiCronDay16Data, zApiCronDay16Response, zApiCronDay20Data, zApiCronDay20Response, zApiCronDay4Data, zApiCronDay4Response, zApiCronDay8Data, zApiCronDay8Response, zApiCronHourlyData, zApiCronHourlyResponse, zApiCronMonthlyData, zApiCronMonthlyResponse, zApiGithubHistoryData, zApiGithubHistoryResponse, zApiHealthData, zApiHealthResponse, zApiSeedData } from './zod.gen';
+import type { apiGithubHistoryErrors, apiJanitorCleanupErrors, apiSeedErrors, tApiCronDay0Request, tApiCronDay0Response, tApiCronDay12Request, tApiCronDay12Response, tApiCronDay16Request, tApiCronDay16Response, tApiCronDay20Request, tApiCronDay20Response, tApiCronDay4Request, tApiCronDay4Response, tApiCronDay8Request, tApiCronDay8Response, tApiCronHourlyRequest, tApiCronHourlyResponse, tApiCronMonthlyRequest, tApiCronMonthlyResponse, tApiGithubHistoryRequest, tApiGithubHistoryResponse, tApiHealthRequest, tApiHealthResponse, tApiJanitorCleanupRequest, tApiJanitorCleanupResponse, tApiMigrationRunRequest, tApiMigrationRunResponse, tApiSeedRequest, tApiSeedResponse } from './types.gen';
+import { zApiCronDay0Data, zApiCronDay0Response, zApiCronDay12Data, zApiCronDay12Response, zApiCronDay16Data, zApiCronDay16Response, zApiCronDay20Data, zApiCronDay20Response, zApiCronDay4Data, zApiCronDay4Response, zApiCronDay8Data, zApiCronDay8Response, zApiCronHourlyData, zApiCronHourlyResponse, zApiCronMonthlyData, zApiCronMonthlyResponse, zApiGithubHistoryData, zApiGithubHistoryResponse, zApiHealthData, zApiHealthResponse, zApiJanitorCleanupData, zApiJanitorCleanupResponse, zApiMigrationRunData, zApiMigrationRunResponse, zApiSeedData } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -26,7 +26,7 @@ export const apiCronHourly = <ThrowOnError extends boolean = false>(options?: Op
     requestValidator: async (data) => await zApiCronHourlyData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCronHourlyResponse.parseAsync(data),
-    url: '/api/public/cron/hourly',
+    url: '/cron/hourly',
     ...options
 });
 
@@ -37,7 +37,7 @@ export const apiCronMonthly = <ThrowOnError extends boolean = false>(options?: O
     requestValidator: async (data) => await zApiCronMonthlyData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCronMonthlyResponse.parseAsync(data),
-    url: '/api/public/cron/monthly',
+    url: '/cron/monthly',
     ...options
 });
 
@@ -48,7 +48,7 @@ export const apiCronDay0 = <ThrowOnError extends boolean = false>(options?: Opti
     requestValidator: async (data) => await zApiCronDay0Data.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCronDay0Response.parseAsync(data),
-    url: '/api/public/cron/day-0',
+    url: '/cron/day-0',
     ...options
 });
 
@@ -59,7 +59,7 @@ export const apiCronDay4 = <ThrowOnError extends boolean = false>(options?: Opti
     requestValidator: async (data) => await zApiCronDay4Data.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCronDay4Response.parseAsync(data),
-    url: '/api/public/cron/day-4',
+    url: '/cron/day-4',
     ...options
 });
 
@@ -70,7 +70,7 @@ export const apiCronDay8 = <ThrowOnError extends boolean = false>(options?: Opti
     requestValidator: async (data) => await zApiCronDay8Data.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCronDay8Response.parseAsync(data),
-    url: '/api/public/cron/day-8',
+    url: '/cron/day-8',
     ...options
 });
 
@@ -81,7 +81,7 @@ export const apiCronDay12 = <ThrowOnError extends boolean = false>(options?: Opt
     requestValidator: async (data) => await zApiCronDay12Data.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCronDay12Response.parseAsync(data),
-    url: '/api/public/cron/day-12',
+    url: '/cron/day-12',
     ...options
 });
 
@@ -92,7 +92,7 @@ export const apiCronDay16 = <ThrowOnError extends boolean = false>(options?: Opt
     requestValidator: async (data) => await zApiCronDay16Data.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCronDay16Response.parseAsync(data),
-    url: '/api/public/cron/day-16',
+    url: '/cron/day-16',
     ...options
 });
 
@@ -103,7 +103,7 @@ export const apiCronDay20 = <ThrowOnError extends boolean = false>(options?: Opt
     requestValidator: async (data) => await zApiCronDay20Data.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCronDay20Response.parseAsync(data),
-    url: '/api/public/cron/day-20',
+    url: '/cron/day-20',
     ...options
 });
 
@@ -114,7 +114,7 @@ export const apiGithubHistory = <ThrowOnError extends boolean = false>(options: 
     requestValidator: async (data) => await zApiGithubHistoryData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiGithubHistoryResponse.parseAsync(data),
-    url: '/api/public/github/history',
+    url: '/github/history',
     ...options
 });
 
@@ -125,7 +125,29 @@ export const apiHealth = <ThrowOnError extends boolean = false>(options?: Option
     requestValidator: async (data) => await zApiHealthData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiHealthResponse.parseAsync(data),
-    url: '/api/public/health',
+    url: '/health',
+    ...options
+});
+
+/**
+ * General cleanup operation
+ */
+export const apiJanitorCleanup = <ThrowOnError extends boolean = false>(options?: Options<tApiJanitorCleanupRequest, ThrowOnError>) => (options?.client ?? client).get<tApiJanitorCleanupResponse, apiJanitorCleanupErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiJanitorCleanupData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiJanitorCleanupResponse.parseAsync(data),
+    url: '/janitor/cleanup',
+    ...options
+});
+
+/**
+ * This route directly executes the migrations
+ */
+export const apiMigrationRun = <ThrowOnError extends boolean = false>(options?: Options<tApiMigrationRunRequest, ThrowOnError>) => (options?.client ?? client).post<tApiMigrationRunResponse, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiMigrationRunData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiMigrationRunResponse.parseAsync(data),
+    url: '/migration/run',
     ...options
 });
 
@@ -134,7 +156,7 @@ export const apiHealth = <ThrowOnError extends boolean = false>(options?: Option
  */
 export const apiSeed = <ThrowOnError extends boolean = false>(options?: Options<tApiSeedRequest, ThrowOnError>) => (options?.client ?? client).post<tApiSeedResponse, apiSeedErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiSeedData.parseAsync(data),
-    url: '/api/public/seed',
+    url: '/seed',
     ...options,
     headers: {
         'Content-Type': 'application/json',

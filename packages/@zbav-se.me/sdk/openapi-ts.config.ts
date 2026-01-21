@@ -2,20 +2,11 @@ import { defineConfig } from "@hey-api/openapi-ts";
 
 export default defineConfig([
 	{
-		input: `${process.env.VITE_SERVER_API}/v3/api-docs`,
+		input: `${process.env.VITE_SERVER_API}/v3/api-docs/session`,
 		output: {
 			path: "src/api/session",
 			format: "biome",
 			lint: "biome",
-		},
-		parser: {
-			filters: {
-				tags: {
-					include: [
-						"session",
-					],
-				},
-			},
 		},
 		plugins: [
 			{
@@ -94,20 +85,11 @@ export default defineConfig([
 		],
 	},
 	{
-		input: `${process.env.VITE_SERVER_API}/v3/api-docs`,
+		input: `${process.env.VITE_SERVER_API}/v3/api-docs/user`,
 		output: {
 			path: "src/api/user",
 			format: "biome",
 			lint: "biome",
-		},
-		parser: {
-			filters: {
-				tags: {
-					include: [
-						"user",
-					],
-				},
-			},
 		},
 		plugins: [
 			{
@@ -186,20 +168,11 @@ export default defineConfig([
 		],
 	},
 	{
-		input: `${process.env.VITE_SERVER_API}/v3/api-docs`,
+		input: `${process.env.VITE_SERVER_API}/v3/api-docs/public`,
 		output: {
 			path: "src/api/public",
 			format: "biome",
 			lint: "biome",
-		},
-		parser: {
-			filters: {
-				tags: {
-					include: [
-						"public",
-					],
-				},
-			},
 		},
 		plugins: [
 			{

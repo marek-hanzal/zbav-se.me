@@ -5,31 +5,6 @@ export type clientOptions = {
 };
 
 /**
- * GitHub commit history count
- */
-export type tGitHubHistory = {
-    /**
-     * UTC day (YYYY-MM-DD)
-     */
-    date: string;
-    /**
-     * Number of commits on this day
-     */
-    count: number;
-};
-
-/**
- * Just a note sent from various reasons, usually when something is fucked up.
- */
-export type tNotice = {
-    /**
-     * Message
-     */
-    message: string;
-    type: tNoticeTypeEnum;
-};
-
-/**
  * Type of notice
  */
 export const tNoticeTypeEnum = {
@@ -43,11 +18,36 @@ export const tNoticeTypeEnum = {
  */
 export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
 
+/**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export type tNotice = {
+    /**
+     * Message
+     */
+    message: string;
+    type: tNoticeTypeEnum;
+};
+
+/**
+ * GitHub commit history count
+ */
+export type tGitHubHistory = {
+    /**
+     * UTC day (YYYY-MM-DD)
+     */
+    date: string;
+    /**
+     * Number of commits on this day
+     */
+    count: number;
+};
+
 export type tApiCronHourlyRequest = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/public/cron/hourly';
+    url: '/cron/hourly';
 };
 
 export type tApiCronHourlyResponse = {
@@ -69,7 +69,7 @@ export type tApiCronMonthlyRequest = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/public/cron/monthly';
+    url: '/cron/monthly';
 };
 
 export type tApiCronMonthlyResponse = {
@@ -91,7 +91,7 @@ export type tApiCronDay0Request = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/public/cron/day-0';
+    url: '/cron/day-0';
 };
 
 export type tApiCronDay0Response = {
@@ -113,7 +113,7 @@ export type tApiCronDay4Request = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/public/cron/day-4';
+    url: '/cron/day-4';
 };
 
 export type tApiCronDay4Response = {
@@ -135,7 +135,7 @@ export type tApiCronDay8Request = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/public/cron/day-8';
+    url: '/cron/day-8';
 };
 
 export type tApiCronDay8Response = {
@@ -157,7 +157,7 @@ export type tApiCronDay12Request = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/public/cron/day-12';
+    url: '/cron/day-12';
 };
 
 export type tApiCronDay12Response = {
@@ -179,7 +179,7 @@ export type tApiCronDay16Request = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/public/cron/day-16';
+    url: '/cron/day-16';
 };
 
 export type tApiCronDay16Response = {
@@ -201,7 +201,7 @@ export type tApiCronDay20Request = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/public/cron/day-20';
+    url: '/cron/day-20';
 };
 
 export type tApiCronDay20Response = {
@@ -228,7 +228,7 @@ export type tApiGithubHistoryRequest = {
          */
         weeks: number;
     };
-    url: '/api/public/github/history';
+    url: '/github/history';
 };
 
 export type apiGithubHistoryErrors = {
@@ -253,7 +253,7 @@ export type tApiHealthRequest = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/public/health';
+    url: '/health';
 };
 
 export type tApiHealthResponse = {
@@ -269,6 +269,73 @@ export type tApiHealthResponse = {
 };
 
 export type apiHealthResponse = tApiHealthResponse[keyof tApiHealthResponse];
+
+export type tApiJanitorCleanupRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/janitor/cleanup';
+};
+
+export type apiJanitorCleanupErrors = {
+    /**
+     * Error during cleanup
+     */
+    500: tNotice;
+};
+
+export type apiJanitorCleanupError = apiJanitorCleanupErrors[keyof apiJanitorCleanupErrors];
+
+export type tApiJanitorCleanupResponse = {
+    /**
+     * When cleanup is done
+     */
+    200: Array<{
+        /**
+         * Type of cleanup operation
+         */
+        type: string;
+        /**
+         * Total items scanned
+         */
+        total: number;
+        /**
+         * Number of items deleted
+         */
+        deleted: number;
+    }>;
+};
+
+export type apiJanitorCleanupResponse = tApiJanitorCleanupResponse[keyof tApiJanitorCleanupResponse];
+
+export type tApiMigrationRunRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/migration/run';
+};
+
+export type tApiMigrationRunResponse = {
+    /**
+     * Executes app migrations
+     */
+    200: Array<{
+        /**
+         * Migration name run
+         */
+        migrationName: string;
+        /**
+         * Migration direction
+         */
+        direction: 'Up' | 'Down';
+        /**
+         * Migration status
+         */
+        status: 'Success' | 'Error' | 'NotExecuted';
+    }>;
+};
+
+export type apiMigrationRunResponse = tApiMigrationRunResponse[keyof tApiMigrationRunResponse];
 
 export type tApiSeedRequest = {
     /**
@@ -292,7 +359,7 @@ export type tApiSeedRequest = {
     };
     path?: never;
     query?: never;
-    url: '/api/public/seed';
+    url: '/seed';
 };
 
 export type apiSeedErrors = {
