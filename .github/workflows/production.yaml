@@ -521,7 +521,7 @@ jobs:
             - name: Trigger migrations endpoint
               run: |
                   set -euo pipefail
-                  code=$(curl -sS -o /dev/null -w "%{http_code}" "$MIGRATION_URL")
+                  code=$(curl -sS -o /dev/null -w "%{http_code}" -X POST "$MIGRATION_URL")
                   echo "HTTP $code from $MIGRATION_URL"
                   if [ "$code" != "200" ] && [ "$code" != "204" ]; then
                     echo "Migration trigger failed (expected 200/204)."
