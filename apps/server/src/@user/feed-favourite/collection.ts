@@ -70,7 +70,11 @@ export const withFeedFavouriteCollectionApiFx = Effect.fn("withFeedFavouriteColl
 								scope: {
 									userId: user.id,
 								},
-							}),
+							}) satisfies Effect.Effect<
+								withCollectionSchema.Type<FeedFavouriteItemSchema>,
+								any,
+								any
+							>,
 						}),
 						200,
 					);

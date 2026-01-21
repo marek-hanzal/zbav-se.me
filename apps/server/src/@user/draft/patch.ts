@@ -79,7 +79,7 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 							scope: {
 								userId: user.id,
 							},
-						}),
+						}) satisfies Effect.Effect<DraftSchema.Type, any, any>,
 					}),
 					200,
 				);

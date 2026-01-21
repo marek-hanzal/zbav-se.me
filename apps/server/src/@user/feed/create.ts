@@ -68,7 +68,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 						dataFx: feedCreateFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<FeedSchema.Type, any, any>,
 					}),
 					201,
 				);

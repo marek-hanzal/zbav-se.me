@@ -61,7 +61,7 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 							scope: {
 								userId: user.id,
 							},
-						}),
+						}) satisfies Effect.Effect<CountSchema.Type, any, any>,
 					}),
 					200,
 				);

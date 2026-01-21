@@ -69,7 +69,11 @@ export const withCollectionApiFx = Effect.fn("withTransactionListingCollectionAp
 							scope: {
 								userId: user.id,
 							},
-						}),
+						}) satisfies Effect.Effect<
+							withCollectionSchema.Type<TransactionListingItemSchema>,
+							any,
+							any
+						>,
 					}),
 					200,
 				);

@@ -69,7 +69,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 						dataFx: transactionCreateFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<TransactionSchema.Type, any, any>,
 					}),
 					201,
 				);

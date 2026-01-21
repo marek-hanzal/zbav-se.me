@@ -75,7 +75,7 @@ export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
 						dataFx: ignoreToggleFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<ListingSchema.Type, any, any>,
 					}),
 					200,
 				);

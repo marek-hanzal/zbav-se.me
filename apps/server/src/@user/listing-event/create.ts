@@ -84,7 +84,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 						dataFx: listingEventCreateFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<ListingEventSchema.Type, any, any>,
 					}),
 					201,
 				);

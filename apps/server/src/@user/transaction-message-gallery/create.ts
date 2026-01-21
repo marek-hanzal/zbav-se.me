@@ -87,7 +87,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 						dataFx: transactionMessageGalleryCreateFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<MessageGallerySchema.Type, any, any>,
 					}),
 					200,
 				);

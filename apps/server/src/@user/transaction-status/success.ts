@@ -86,7 +86,7 @@ export const withSuccessApiFx = Effect.fn("withSuccessApiFx")(function* () {
 						dataFx: transactionStatusSuccessFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<TransactionStatusSchema.Type, any, any>,
 					}),
 					200,
 				);

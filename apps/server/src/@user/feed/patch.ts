@@ -70,7 +70,7 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 							scope: {
 								userId: user.id,
 							},
-						}),
+						}) satisfies Effect.Effect<FeedSchema.Type, any, any>,
 					}),
 					200,
 				);

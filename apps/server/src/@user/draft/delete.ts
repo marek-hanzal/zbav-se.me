@@ -70,7 +70,7 @@ export const withDeleteApiFx = Effect.fn("withDeleteApiFx")(function* () {
 							scope: {
 								userId: user.id,
 							},
-						}),
+						}) satisfies Effect.Effect<DraftSchema.Type, any, any>,
 					}),
 					200,
 				);

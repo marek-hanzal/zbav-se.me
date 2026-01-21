@@ -81,7 +81,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 						dataFx: uploadCreateFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<UploadSchema.Type, any, any>,
 					}),
 					201,
 				);

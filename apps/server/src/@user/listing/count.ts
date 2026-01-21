@@ -59,7 +59,7 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 							...c.req.valid("json"),
 							userId: user.id,
 							scope: {},
-						}),
+						}) satisfies Effect.Effect<CountSchema.Type, any, any>,
 					}),
 					200,
 				);

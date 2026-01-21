@@ -85,7 +85,7 @@ export const withCloseApiFx = Effect.fn("withCloseApiFx")(function* () {
 						dataFx: transactionStatusCloseFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<TransactionStatusSchema.Type, any, any>,
 					}),
 					200,
 				);

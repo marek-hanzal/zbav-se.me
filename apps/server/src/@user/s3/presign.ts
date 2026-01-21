@@ -68,7 +68,7 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 							userId: user.id,
 							path,
 							extension,
-						}),
+						}) satisfies Effect.Effect<S3PreSignResponseSchema.Type, any, any>,
 					}),
 					200,
 				);

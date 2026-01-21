@@ -77,7 +77,7 @@ export const withAcceptApiFx = Effect.fn("withAcceptApiFx")(function* () {
 						dataFx: transactionStatusAcceptFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<TransactionStatusSchema.Type, any, any>,
 					}),
 					200,
 				);

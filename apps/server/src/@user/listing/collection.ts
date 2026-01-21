@@ -66,7 +66,11 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 							...c.req.valid("json"),
 							userId: user.id,
 							scope: {},
-						}),
+						}) satisfies Effect.Effect<
+							withCollectionSchema.Type<ListingItemSchema>,
+							any,
+							any
+						>,
 					}),
 					200,
 				);

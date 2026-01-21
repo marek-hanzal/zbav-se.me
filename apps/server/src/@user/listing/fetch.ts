@@ -68,7 +68,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 							...c.req.valid("json"),
 							userId: user.id,
 							scope: {},
-						}),
+						}) satisfies Effect.Effect<ListingSchema.Type, any, any>,
 					}),
 					200,
 				);

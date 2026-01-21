@@ -77,7 +77,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 						dataFx: draftCreateFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<DraftSchema.Type, any, any>,
 					}),
 					201,
 				);

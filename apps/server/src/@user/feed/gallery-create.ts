@@ -85,7 +85,7 @@ export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(functi
 						dataFx: feedGalleryCreateFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<GallerySchema.Type, any, any>,
 					}),
 					200,
 				);

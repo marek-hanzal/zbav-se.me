@@ -69,7 +69,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 							scope: {
 								userId: user.id,
 							},
-						}),
+						}) satisfies Effect.Effect<GallerySchema.Type, any, any>,
 					}),
 					200,
 				);

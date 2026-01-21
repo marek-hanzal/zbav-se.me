@@ -68,7 +68,11 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 							scope: {
 								userId: user.id,
 							},
-						}),
+						}) satisfies Effect.Effect<
+							withCollectionSchema.Type<TransactionItemSchema>,
+							any,
+							any
+						>,
 					}),
 					200,
 				);

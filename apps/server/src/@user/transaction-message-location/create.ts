@@ -87,7 +87,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 						dataFx: transactionMessageLocationCreateFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<MessageLocationSchema.Type, any, any>,
 					}),
 					200,
 				);

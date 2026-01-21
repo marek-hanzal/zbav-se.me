@@ -60,7 +60,7 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 						dataFx: userExPatchFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<UserExSchema.Type, any, any>,
 					}),
 					200,
 				);

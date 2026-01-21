@@ -76,7 +76,7 @@ export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
 						dataFx: transactionGetBuyerInfoFx({
 							userId: user.id,
 							transactionId: transaction.id,
-						}),
+						}) satisfies Effect.Effect<TransactionBuyerInfoSchema.Type, any, any>,
 					}),
 					200,
 				);

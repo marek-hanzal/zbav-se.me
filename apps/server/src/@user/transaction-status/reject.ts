@@ -77,7 +77,7 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 						dataFx: transactionStatusRejectFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<TransactionStatusSchema.Type, any, any>,
 					}),
 					200,
 				);
