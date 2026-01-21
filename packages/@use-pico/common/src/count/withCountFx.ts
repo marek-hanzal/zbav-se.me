@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import type { SelectQueryBuilder } from "kysely";
-import type { FilterSchema } from "../schema/FilterSchema";
 import type { CountEnumSchema } from "../schema/CountEnumSchema";
+import type { FilterSchema } from "../schema/FilterSchema";
 
 export namespace withCountFx {
 	export namespace Query {
