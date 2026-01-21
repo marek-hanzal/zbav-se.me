@@ -6,7 +6,8 @@ import { ServerViteSchema } from "~/schema/env/ServerViteSchema";
 const docsUrl = "/v3/api-docs";
 
 export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function* () {
-	const { root, publicHono, sessionHono, userHono } = yield* RoutesContextFx;
+	const { root, publicHono, sessionHono, userHono, sellerHono, buyerHono } =
+		yield* RoutesContextFx;
 
 	root.get(
 		"/",
@@ -25,6 +26,14 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 				{
 					url: `${docsUrl}/user`,
 					title: "User",
+				},
+				{
+					url: `${docsUrl}/seller`,
+					title: "Seller",
+				},
+				{
+					url: `${docsUrl}/buyer`,
+					title: "Buyer",
 				},
 				{
 					url: "/api/auth/open-api/generate-schema",
@@ -48,7 +57,7 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 				openapi: "3.1.0",
 				info: {
 					version: "0.5.0",
-					title: "zbav.se.me API",
+					title: "Public zbav-se.me API",
 				},
 				servers: [
 					{
@@ -60,7 +69,7 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 				openapi: "3.1.0",
 				info: {
 					version: "0.5.0",
-					title: "zbav.se.me API",
+					title: "Protected zbav-se.me API",
 				},
 				servers: [
 					{
@@ -72,7 +81,58 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 				openapi: "3.1.0",
 				info: {
 					version: "0.5.0",
-					title: "zbav.se.me API",
+					title: "User zbav-se.me API",
+				},
+				servers: [
+					{
+						url: viteConfig.VITE_SERVER_API,
+					},
+				],
+				tags: [
+					{
+						name: "Draft",
+						description: "Draft is the base (kinda template) for all listings",
+					},
+					{
+						name: "Listing",
+						description: "Listing is the base entity to work with in the app",
+					},
+					{
+						name: "Favourite",
+						description: "Favourite listing management",
+					},
+					{
+						name: "Feed",
+						description: "Feed is user setup (query) for listings",
+					},
+					{
+						name: "Feed Favourite",
+						description:
+							"Feed Favourite is the collection of listings that are favourite",
+					},
+					{
+						name: "Flag",
+						description: "Listing flagging management",
+					},
+				],
+			}),
+			seller: sellerHono.getOpenAPI31Document({
+				openapi: "3.1.0",
+				info: {
+					version: "0.5.0",
+					title: "Seller zbav-se.me API",
+				},
+				servers: [
+					{
+						url: viteConfig.VITE_SERVER_API,
+					},
+				],
+			}),
+			buyer: buyerHono.getOpenAPI31Document({
+				openapi: "3.1.0",
+				info: {
+					version: "0.5.0",
+					title: "Buyer zbav-se.me API",
 				},
 				servers: [
 					{
@@ -86,6 +146,8 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 	root.get(`${docsUrl}/public`, (c) => c.json(docs().public));
 	root.get(`${docsUrl}/session`, (c) => c.json(docs().session));
 	root.get(`${docsUrl}/user`, (c) => c.json(docs().user));
+	root.get(`${docsUrl}/seller`, (c) => c.json(docs().seller));
+	root.get(`${docsUrl}/buyer`, (c) => c.json(docs().buyer));
 
 	root.doc31(docsUrl, {
 		openapi: "3.1.0",

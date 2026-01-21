@@ -1,5 +1,7 @@
 import { Context } from "effect";
+import type { withBuyerHono } from "~/@buyer/withBuyerHono";
 import type { withPublicHono } from "~/@public/withPublicHono";
+import type { withSellerHono } from "~/@seller/withSellerHono";
 import type { withSessionHono } from "~/@session/withSessionHono";
 import type { withUserHono } from "~/@user/withUserHono";
 import type { withHono } from "~/hono/withHono";
@@ -25,6 +27,18 @@ export interface RoutesContext {
 	 * Private-only data access.
 	 */
 	userHono: withUserHono;
+	/**
+	 * Seller app hono (/seller route)
+	 *
+	 * Seller-specific transaction and listing operations.
+	 */
+	sellerHono: withSellerHono;
+	/**
+	 * Buyer app hono (/buyer route)
+	 *
+	 * Buyer-specific transaction operations.
+	 */
+	buyerHono: withBuyerHono;
 }
 
 export class RoutesContextFx extends Context.Tag("RoutesContextFx")<
