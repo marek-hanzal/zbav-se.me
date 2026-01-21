@@ -1,18 +1,17 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import type { withUserEventCollectionSelectFx } from "~/app/user-event/db/withUserEventCollectionSelectFx";
+import type { withUserEventSourceSelectFx } from "~/app/user-event/db/withUserEventSourceSelectFx";
 import type { UserEventFilterSchema } from "~/app/user-event/schema/UserEventFilterSchema";
 
 export namespace withUserEventQueryBuilderFx {
 	export interface Props<
-		TSelect extends
-			withUserEventCollectionSelectFx.Select = withUserEventCollectionSelectFx.Select,
+		TSelect extends withUserEventSourceSelectFx.Select = withUserEventSourceSelectFx.Select,
 	> {
 		select: TSelect;
 		where?: UserEventFilterSchema.Type;
 	}
 
-	export type Callback = <TSelect extends withUserEventCollectionSelectFx.Select>(
+	export type Callback = <TSelect extends withUserEventSourceSelectFx.Select>(
 		props: Props<TSelect>,
 	) => TSelect;
 }
@@ -22,7 +21,7 @@ export namespace withUserEventQueryBuilderFx {
  * Generic to support extended select types (e.g. collection selects returning full rows).
  */
 export const withUserEventQueryBuilderFx = Effect.fn("withUserEventQueryBuilderFx")(function* <
-	TSelect extends withUserEventCollectionSelectFx.Select,
+	TSelect extends withUserEventSourceSelectFx.Select,
 >({ select, where }: withUserEventQueryBuilderFx.Props<TSelect>) {
 	let query = select;
 

@@ -1,16 +1,16 @@
 import { Effect } from "effect";
-import type { withDraftCollectionSelectFx } from "~/app/draft/db/withDraftCollectionSelectFx";
+import type { withDraftSourceSelectFx } from "~/app/draft/db/withDraftSourceSelectFx";
 import type { DraftFilterSchema } from "~/app/draft/schema/DraftFilterSchema";
 
 export namespace withDraftQueryBuilderFx {
 	export interface Props<
-		TSelect extends withDraftCollectionSelectFx.Select = withDraftCollectionSelectFx.Select,
+		TSelect extends withDraftSourceSelectFx.Select = withDraftSourceSelectFx.Select,
 	> {
 		select: TSelect;
 		where?: DraftFilterSchema.Type;
 	}
 
-	export type Callback = <TSelect extends withDraftCollectionSelectFx.Select>(
+	export type Callback = <TSelect extends withDraftSourceSelectFx.Select>(
 		props: Props<TSelect>,
 	) => TSelect;
 }
@@ -18,10 +18,10 @@ export namespace withDraftQueryBuilderFx {
 /**
  * Standalone query builder that applies all filters from DraftQuerySchema
  * Can be used by both list and count queries to ensure consistency
- * Generic to support extended select types that extend from withDraftCollectionSelectFx.Select
+ * Generic to support extended select types that extend from withDraftSourceSelectFx.Select
  */
 export const withDraftQueryBuilderFx = Effect.fn("withDraftQueryBuilderFx")(function* <
-	TSelect extends withDraftCollectionSelectFx.Select,
+	TSelect extends withDraftSourceSelectFx.Select,
 >({ select, where }: withDraftQueryBuilderFx.Props<TSelect>) {
 	let query = select;
 

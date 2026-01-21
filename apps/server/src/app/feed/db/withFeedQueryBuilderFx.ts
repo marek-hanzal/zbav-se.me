@@ -1,16 +1,16 @@
 import { Effect } from "effect";
-import type { withFeedCollectionSelectFx } from "~/app/feed/db/withFeedCollectionSelectFx";
+import type { withFeedSourceSelectFx } from "~/app/feed/db/withFeedSourceSelectFx";
 import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
 
 export namespace withFeedQueryBuilderFx {
 	export interface Props<
-		TSelect extends withFeedCollectionSelectFx.Select = withFeedCollectionSelectFx.Select,
+		TSelect extends withFeedSourceSelectFx.Select = withFeedSourceSelectFx.Select,
 	> {
 		select: TSelect;
 		where?: FeedFilterSchema.Type;
 	}
 
-	export type Callback = <TSelect extends withFeedCollectionSelectFx.Select>(
+	export type Callback = <TSelect extends withFeedSourceSelectFx.Select>(
 		props: Props<TSelect>,
 	) => TSelect;
 }
@@ -18,10 +18,10 @@ export namespace withFeedQueryBuilderFx {
 /**
  * Standalone query builder that applies all filters from FeedQuerySchema
  * Can be used by both list and count queries to ensure consistency
- * Generic to support extended select types that extend from withFeedSelectFx.Select
+ * Generic to support extended select types that extend from withFeedSourceSelectFx.Select
  */
 export const withFeedQueryBuilderFx = Effect.fn("withFeedQueryBuilderFx")(function* <
-	TSelect extends withFeedCollectionSelectFx.Select,
+	TSelect extends withFeedSourceSelectFx.Select,
 >({ select, where }: withFeedQueryBuilderFx.Props<TSelect>) {
 	let query = select;
 

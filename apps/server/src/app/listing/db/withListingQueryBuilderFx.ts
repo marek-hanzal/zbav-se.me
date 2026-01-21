@@ -1,19 +1,19 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import type { withListingCollectionSelectFx } from "~/app/listing/db/withListingCollectionSelectFx";
+import type { withListingSourceSelectFx } from "~/app/listing/db/withListingSourceSelectFx";
 import type { ListingFilterSchema } from "~/app/listing/schema/ListingFilterSchema";
 import type { ListingMetaSchema } from "~/app/listing/schema/ListingMetaSchema";
 import { withLikeEx } from "~/database/expression/withLikeEx";
 
 export namespace withListingQueryBuilderFx {
-	export interface Props<TSelect extends withListingCollectionSelectFx.Select> {
+	export interface Props<TSelect extends withListingSourceSelectFx.Select> {
 		userId: string;
 		select: TSelect;
 		where?: ListingFilterSchema.Type;
 		meta?: ListingMetaSchema.Type;
 	}
 
-	export type Callback<TSelect extends withListingCollectionSelectFx.Select> = (
+	export type Callback<TSelect extends withListingSourceSelectFx.Select> = (
 		props: Props<TSelect>,
 	) => TSelect;
 }
@@ -23,7 +23,7 @@ export namespace withListingQueryBuilderFx {
  * Can be used by both list and count queries to ensure consistency
  */
 export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(function* <
-	TSelect extends withListingCollectionSelectFx.Select,
+	TSelect extends withListingSourceSelectFx.Select,
 >({ userId, select, where, meta }: withListingQueryBuilderFx.Props<TSelect>) {
 	let query = select;
 

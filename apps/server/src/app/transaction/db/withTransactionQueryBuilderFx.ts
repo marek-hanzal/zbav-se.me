@@ -1,20 +1,19 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import type { withTransactionCollectionSelectFx } from "~/app/transaction/db/withTransactionCollectionSelectFx";
+import type { withTransactionSourceSelectFx } from "~/app/transaction/db/withTransactionSourceSelectFx";
 import type { TransactionFilterSchema } from "~/app/transaction/schema/TransactionFilterSchema";
 import type { TransactionMetaSchema } from "~/app/transaction/schema/TransactionMetaSchema";
 
 export namespace withTransactionQueryBuilderFx {
 	export interface Props<
-		TSelect extends
-			withTransactionCollectionSelectFx.Select = withTransactionCollectionSelectFx.Select,
+		TSelect extends withTransactionSourceSelectFx.Select = withTransactionSourceSelectFx.Select,
 	> {
 		select: TSelect;
 		where?: TransactionFilterSchema.Type;
 		meta?: TransactionMetaSchema.Type;
 	}
 
-	export type Callback = <TSelect extends withTransactionCollectionSelectFx.Select>(
+	export type Callback = <TSelect extends withTransactionSourceSelectFx.Select>(
 		props: Props<TSelect>,
 	) => TSelect;
 }
@@ -24,7 +23,7 @@ export namespace withTransactionQueryBuilderFx {
  * Generic to support extended select types (e.g. collection selects returning IDs only).
  */
 export const withTransactionQueryBuilderFx = Effect.fn("withTransactionQueryBuilderFx")(function* <
-	TSelect extends withTransactionCollectionSelectFx.Select,
+	TSelect extends withTransactionSourceSelectFx.Select,
 >({ select, where, meta }: withTransactionQueryBuilderFx.Props<TSelect>) {
 	let query = select;
 

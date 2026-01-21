@@ -3,13 +3,13 @@ import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import type { CategoryDbSchema } from "~/app/category/schema/CategoryDbSchema";
 import { withGallerySelectFx } from "~/app/gallery/db/withGallerySelectFx";
-import { withListingCollectionSelectFx } from "~/app/listing/db/withListingCollectionSelectFx";
+import { withListingSourceSelectFx } from "~/app/listing/db/withListingSourceSelectFx";
 import type { ListingDeliveryEnumSchema } from "~/app/listing/schema/ListingDeliveryEnumSchema";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import type { ThumbEnumSchema } from "~/app/thumb/schema/ThumbEnumSchema";
 
 export namespace withListingSelectFx {
-	export interface Props extends withListingCollectionSelectFx.Props {
+	export interface Props extends withListingSourceSelectFx.Props {
 		userId: string;
 	}
 
@@ -21,14 +21,14 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 	sort,
 	meta,
 }: withListingSelectFx.Props) {
-	const listingCollectionSelect = yield* withListingCollectionSelectFx({
+	const listingSourceSelect = yield* withListingSourceSelectFx({
 		sort,
 		meta,
 	});
 
 	const gallerySelect = yield* withGallerySelectFx({});
 
-	return listingCollectionSelect.selectAll("l").select((eb) => [
+	return listingSourceSelect.selectAll("l").select((eb) => [
 		sql<LocationDbSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
 		sql<CategoryDbSchema.Type>`to_jsonb(${eb.table("cat")}.*)`.as("category"),
 		sql<ListingDeliveryEnumSchema.Type[] | null>`to_jsonb(${eb.ref("l.delivery")})`.as(

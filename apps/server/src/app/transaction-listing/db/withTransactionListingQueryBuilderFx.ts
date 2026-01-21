@@ -1,24 +1,24 @@
 import { Effect } from "effect";
 import type { TransactionListingFilterSchema } from "../schema/TransactionListingFilterSchema";
-import type { withTransactionListingCollectionSelectFx } from "./withTransactionListingCollectionSelectFx";
+import type { withTransactionListingSourceSelectFx } from "./withTransactionListingSourceSelectFx";
 
 export namespace withTransactionListingQueryBuilderFx {
 	export interface Props<
 		TSelect extends
-			withTransactionListingCollectionSelectFx.Select = withTransactionListingCollectionSelectFx.Select,
+			withTransactionListingSourceSelectFx.Select = withTransactionListingSourceSelectFx.Select,
 	> {
 		select: TSelect;
 		where?: TransactionListingFilterSchema.Type;
 	}
 
-	export type Callback = <TSelect extends withTransactionListingCollectionSelectFx.Select>(
+	export type Callback = <TSelect extends withTransactionListingSourceSelectFx.Select>(
 		props: Props<TSelect>,
 	) => TSelect;
 }
 
 export const withTransactionListingQueryBuilderFx = Effect.fn(
 	"withTransactionListingQueryBuilderFx",
-)(function* <TSelect extends withTransactionListingCollectionSelectFx.Select>({
+)(function* <TSelect extends withTransactionListingSourceSelectFx.Select>({
 	select,
 	where,
 }: withTransactionListingQueryBuilderFx.Props<TSelect>) {

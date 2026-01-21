@@ -1,7 +1,7 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withFlagCollectionSelectFx } from "~/app/flag/db/withFlagCollectionSelectFx";
 import { withFlagQueryBuilderFx } from "~/app/flag/db/withFlagQueryBuilderFx";
-import { withFlagSelectFx } from "~/app/flag/db/withFlagSelectFx";
 import type { FlagFilterSchema } from "~/app/flag/schema/FlagFilterSchema";
 import type { FlagQuerySchema } from "~/app/flag/schema/FlagQuerySchema";
 
@@ -19,7 +19,7 @@ export const flagCollectionFx = Effect.fn("flagCollectionFx")(function* ({
 	sort,
 }: flagCollectionFx.Props) {
 	return yield* withCollectionFx({
-		selectFx: withFlagSelectFx({
+		selectFx: withFlagCollectionSelectFx({
 			sort,
 		}),
 		cursor: cursor ?? {

@@ -1,12 +1,8 @@
 import { Effect } from "effect";
-import { match } from "ts-pattern";
-import type { FeedSortSchema } from "~/app/feed/schema/FeedSortSchema";
-import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withFeedSourceSelectFx } from "~/app/feed/db/withFeedSourceSelectFx";
 
 export namespace withFeedCollectionSelectFx {
-	export interface Props {
-		sort?: FeedSortSchema.Type[];
-	}
+	export interface Props extends withFeedSourceSelectFx.Props {}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withFeedCollectionSelectFx>>;
 }
@@ -14,16 +10,9 @@ export namespace withFeedCollectionSelectFx {
 export const withFeedCollectionSelectFx = Effect.fn("withFeedCollectionSelectFx")(function* ({
 	sort,
 }: withFeedCollectionSelectFx.Props) {
-	const { kysely } = yield* KyselyContextFx;
+	const sourceSelect = yield* withFeedSourceSelectFx({
+		sort,
+	});
 
-	let query = kysely.selectFrom("feed as f").select("f.id");
-
-	for (const item of sort ?? []) {
-		query = match(item.field)
-			.with("createdAt", () => query.orderBy("f.createdAt", item.direction))
-			.with("updatedAt", () => query.orderBy("f.updatedAt", item.direction))
-			.exhaustive();
-	}
-
-	return query;
+	return sourceSelect.select("f.id");
 });

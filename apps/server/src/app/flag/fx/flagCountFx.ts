@@ -1,7 +1,7 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
+import { withFlagCollectionSelectFx } from "~/app/flag/db/withFlagCollectionSelectFx";
 import { withFlagQueryBuilderFx } from "~/app/flag/db/withFlagQueryBuilderFx";
-import { withFlagSelectFx } from "~/app/flag/db/withFlagSelectFx";
 import type { FlagCountQuerySchema } from "~/app/flag/schema/FlagCountQuerySchema";
 import type { FlagFilterSchema } from "~/app/flag/schema/FlagFilterSchema";
 
@@ -17,7 +17,7 @@ export const flagCountFx = Effect.fn("flagCountFx")(function* ({
 	scope,
 }: flagCountFx.Props) {
 	return yield* withCountFx({
-		selectFx: withFlagSelectFx({}),
+		selectFx: withFlagCollectionSelectFx({}),
 		filter,
 		where,
 		scope,

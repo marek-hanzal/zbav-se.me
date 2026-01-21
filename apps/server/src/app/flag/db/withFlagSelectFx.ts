@@ -1,12 +1,8 @@
 import { Effect } from "effect";
-import { match } from "ts-pattern";
-import type { FlagSortSchema } from "~/app/flag/schema/FlagSortSchema";
-import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withFlagSourceSelectFx } from "~/app/flag/db/withFlagSourceSelectFx";
 
 export namespace withFlagSelectFx {
-	export interface Props {
-		sort?: FlagSortSchema.Type[];
-	}
+	export interface Props extends withFlagSourceSelectFx.Props {}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withFlagSelectFx>>;
 }
@@ -14,18 +10,12 @@ export namespace withFlagSelectFx {
 export const withFlagSelectFx = Effect.fn("withFlagSelectFx")(function* ({
 	sort,
 }: withFlagSelectFx.Props) {
-	const { kysely } = yield* KyselyContextFx;
+	const sourceSelect = yield* withFlagSourceSelectFx({
+		sort,
+	});
 
-	let query = kysely.selectFrom("flag as f").select([
+	return sourceSelect.select([
 		"f.id",
 		"f.listingId",
 	]);
-
-	for (const item of sort ?? []) {
-		query = match(item.field)
-			.with("createdAt", () => query.orderBy("f.createdAt", item.direction))
-			.exhaustive();
-	}
-
-	return query;
 });
