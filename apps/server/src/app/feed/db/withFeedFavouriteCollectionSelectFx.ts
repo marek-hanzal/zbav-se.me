@@ -1,5 +1,6 @@
 import { Effect } from "effect";
-import { withFeedFavouriteSourceSelectFx } from "~/app/feed/db/withFeedFavouriteSourceSelectFx";
+import { withFeedFavouriteSelectFx } from "~/app/feed/db/withFeedFavouriteSelectFx";
+import type { withFeedFavouriteSourceSelectFx } from "~/app/feed/db/withFeedFavouriteSourceSelectFx";
 
 export namespace withFeedFavouriteCollectionSelectFx {
 	export interface Props extends withFeedFavouriteSourceSelectFx.Props {}
@@ -11,7 +12,7 @@ export namespace withFeedFavouriteCollectionSelectFx {
 
 export const withFeedFavouriteCollectionSelectFx = Effect.fn("withFeedFavouriteCollectionSelectFx")(
 	function* ({ userId, sort }: withFeedFavouriteCollectionSelectFx.Props) {
-		const sourceSelect = yield* withFeedFavouriteSourceSelectFx({
+		const sourceSelect = yield* withFeedFavouriteSelectFx({
 			userId,
 			sort,
 		});
