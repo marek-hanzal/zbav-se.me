@@ -7,7 +7,7 @@ export const FavouriteItemSchema = z
 		}),
 	})
 	.strip()
-	.openapi("FavouriteItemSchema", {
+	.openapi("FavouriteItem", {
 		description: "Favourite collection item",
 	});
 

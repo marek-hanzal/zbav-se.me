@@ -7,7 +7,7 @@ export const MessageItemSchema = z
 		}),
 	})
 	.strip()
-	.openapi("MessageItemSchema", {
+	.openapi("MessageItem", {
 		description: "Message collection item",
 	});
 

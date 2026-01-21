@@ -7,7 +7,7 @@ export const DraftItemSchema = z
 		}),
 	})
 	.strip()
-	.openapi("DraftItemSchema", {
+	.openapi("DraftItem", {
 		description: "Draft collection item",
 	});
 

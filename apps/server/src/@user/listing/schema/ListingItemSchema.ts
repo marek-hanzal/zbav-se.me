@@ -7,7 +7,7 @@ export const ListingItemSchema = z
 		}),
 	})
 	.strip()
-	.openapi("ListingItemSchema", {
+	.openapi("ListingItem", {
 		description: "Listing collection item",
 	});
 

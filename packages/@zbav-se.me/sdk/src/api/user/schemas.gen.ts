@@ -851,6 +851,25 @@ export const sCursor = {
 export const sTransactionListingItemSchema = {
     type: 'object',
     properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/TransactionListingItem'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sTransactionListingItem = {
+    type: 'object',
+    properties: {
         listingId: {
             type: 'string'
         },
@@ -1347,6 +1366,25 @@ export const sTransactionFilter = {
 export const sTransactionItemSchema = {
     type: 'object',
     properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/TransactionItem'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sTransactionItem = {
+    type: 'object',
+    properties: {
         id: {
             type: 'string'
         },
@@ -1509,6 +1547,25 @@ export const sMessageFilter = {
 } as const;
 
 export const sMessageItemSchema = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/MessageItem'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sMessageItem = {
     type: 'object',
     properties: {
         id: {
@@ -1949,6 +2006,25 @@ export const sListingFilter = {
 export const sListingItemSchema = {
     type: 'object',
     properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/ListingItem'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sListingItem = {
+    type: 'object',
+    properties: {
         id: {
             type: 'string'
         }
@@ -2252,6 +2328,25 @@ export const sIgnoreSort = {
 export const sIgnoreItemSchema = {
     type: 'object',
     properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/IgnoreItem'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sIgnoreItem = {
+    type: 'object',
+    properties: {
         id: {
             type: 'string'
         }
@@ -2329,12 +2424,33 @@ export const sGalleryFilter = {
 export const sGalleryItemSchema = {
     type: 'object',
     properties: {
-        id: {
-            type: 'string'
+        data: {
+            type: 'array',
+            items: {
+                allOf: [
+                    {
+                        $ref: '#/components/schemas/GalleryItem'
+                    },
+                    {
+                        properties: {
+                            id: {
+                                type: 'string'
+                            }
+                        },
+                        required: [
+                            'id'
+                        ]
+                    }
+                ]
+            }
+        },
+        more: {
+            type: 'boolean'
         }
     },
     required: [
-        'id'
+        'data',
+        'more'
     ]
 } as const;
 
@@ -2554,6 +2670,25 @@ export const sFlagWhere = {
 export const sFlagItemSchema = {
     type: 'object',
     properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/FlagItem'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sFlagItem = {
+    type: 'object',
+    properties: {
         id: {
             type: 'string'
         }
@@ -2566,66 +2701,19 @@ export const sFlagItemSchema = {
 export const sFeedFavouriteItemSchema = {
     type: 'object',
     properties: {
-        id: {
-            type: 'string'
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/FeedFavouriteItem'
+            }
         },
-        locationId: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        uploadId: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        name: {
-            type: 'string'
-        },
-        query: {
-            $ref: '#/components/schemas/ListingQuery'
-        },
-        upload: {
-            anyOf: [
-                {
-                    $ref: '#/components/schemas/Upload'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        count: {
-            type: 'number'
+        more: {
+            type: 'boolean'
         }
     },
     required: [
-        'id',
-        'locationId',
-        'uploadId',
-        'name',
-        'query',
-        'upload',
-        'count'
+        'data',
+        'more'
     ]
 } as const;
 
@@ -2690,6 +2778,72 @@ export const sListingQuery = {
             $ref: '#/components/schemas/ListingMeta'
         }
     }
+} as const;
+
+export const sFeedFavouriteItem = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        locationId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        uploadId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        name: {
+            type: 'string'
+        },
+        query: {
+            $ref: '#/components/schemas/ListingQuery'
+        },
+        upload: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/Upload'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        count: {
+            type: 'number'
+        }
+    },
+    required: [
+        'id',
+        'locationId',
+        'uploadId',
+        'name',
+        'query',
+        'upload',
+        'count'
+    ]
 } as const;
 
 export const sFeedGalleryCreate = {
@@ -2778,6 +2932,25 @@ export const sFeedFilter = {
 } as const;
 
 export const sFeedItemSchema = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/FeedItem'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sFeedItem = {
     type: 'object',
     properties: {
         id: {
@@ -3378,6 +3551,25 @@ export const sFavouriteSort = {
 } as const;
 
 export const sFavouriteItemSchema = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/FavouriteItem'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sFavouriteItem = {
     type: 'object',
     properties: {
         id: {
@@ -4119,6 +4311,25 @@ export const sDraftCountQuery = {
 } as const;
 
 export const sDraftItemSchema = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/DraftItem'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sDraftItem = {
     type: 'object',
     properties: {
         id: {

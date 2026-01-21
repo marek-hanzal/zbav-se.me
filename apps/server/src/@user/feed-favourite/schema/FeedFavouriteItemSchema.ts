@@ -6,7 +6,7 @@ export const FeedFavouriteItemSchema = z
 		...FeedFavouriteSchema.shape,
 	})
 	.strip()
-	.openapi("FeedFavouriteItemSchema", {
+	.openapi("FeedFavouriteItem", {
 		description: "Feed favourite collection item",
 	});
 

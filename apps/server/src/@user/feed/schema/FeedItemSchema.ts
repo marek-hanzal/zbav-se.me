@@ -7,7 +7,7 @@ export const FeedItemSchema = z
 		}),
 	})
 	.strip()
-	.openapi("FeedItemSchema", {
+	.openapi("FeedItem", {
 		description: "Feed collection item",
 	});
 

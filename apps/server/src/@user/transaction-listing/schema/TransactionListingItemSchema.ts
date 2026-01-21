@@ -14,7 +14,7 @@ export const TransactionListingItemSchema = z
 		}),
 	})
 	.strip()
-	.openapi("TransactionListingItemSchema", {
+	.openapi("TransactionListingItem", {
 		description: "Transaction listing collection item",
 	});
 

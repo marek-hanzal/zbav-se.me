@@ -7,7 +7,7 @@ export const IgnoreItemSchema = z
 		}),
 	})
 	.strip()
-	.openapi("IgnoreItemSchema", {
+	.openapi("IgnoreItem", {
 		description: "Ignore collection item",
 	});
 

@@ -7,7 +7,7 @@ export const FlagItemSchema = z
 		}),
 	})
 	.strip()
-	.openapi("FlagItemSchema", {
+	.openapi("FlagItem", {
 		description: "Flag collection item",
 	});
 

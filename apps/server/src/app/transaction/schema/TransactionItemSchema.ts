@@ -11,7 +11,7 @@ export const TransactionItemSchema = z
 		}),
 	})
 	.strip()
-	.openapi("TransactionItemSchema", {
+	.openapi("TransactionItem", {
 		description: "Transaction collection item with last message timestamp",
 	});
 

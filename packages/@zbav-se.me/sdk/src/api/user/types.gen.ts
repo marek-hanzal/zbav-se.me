@@ -626,9 +626,20 @@ export type tCursor = {
 };
 
 /**
- * Transaction listing collection item
+ * Collection of listings that have transactions
  */
 export type tTransactionListingItemSchema = {
+    data: Array<tTransactionListingItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Transaction listing collection item
+ */
+export type tTransactionListingItem = {
     /**
      * ID of the listing
      */
@@ -985,9 +996,20 @@ export type tTransactionFilter = {
 };
 
 /**
- * Transaction collection item with last message timestamp
+ * Collection of transactions
  */
 export type tTransactionItemSchema = {
+    data: Array<tTransactionItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Transaction collection item with last message timestamp
+ */
+export type tTransactionItem = {
     /**
      * ID of the transaction
      */
@@ -1143,9 +1165,20 @@ export type tMessageFilter = {
 };
 
 /**
- * Message collection item
+ * Collection of messages
  */
 export type tMessageItemSchema = {
+    data: Array<tMessageItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Message collection item
+ */
+export type tMessageItem = {
     /**
      * ID of the message
      */
@@ -1495,9 +1528,20 @@ export type tListingFilter = {
 };
 
 /**
- * Listing collection item
+ * Collection of listings
  */
 export type tListingItemSchema = {
+    data: Array<tListingItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Listing collection item
+ */
+export type tListingItem = {
     /**
      * ID of the listing
      */
@@ -1687,9 +1731,20 @@ export type tIgnoreSort = {
 };
 
 /**
- * Ignore collection item
+ * Collection of ignore items
  */
 export type tIgnoreItemSchema = {
+    data: Array<tIgnoreItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Ignore collection item
+ */
+export type tIgnoreItem = {
     /**
      * ID of the ignore
      */
@@ -1750,13 +1805,19 @@ export type tGalleryFilter = {
 };
 
 /**
- * Gallery collection item
+ * Collection of gallery items
  */
 export type tGalleryItemSchema = {
+    data: Array<tGalleryItem & {
+        /**
+         * ID of the gallery
+         */
+        id: string;
+    }>;
     /**
-     * ID of the gallery
+     * Whether there are more items to fetch
      */
-    id: string;
+    more: boolean;
 };
 
 /**
@@ -1930,9 +1991,20 @@ export type tFlagWhere = {
 };
 
 /**
- * Flag collection item
+ * Collection of flag items
  */
 export type tFlagItemSchema = {
+    data: Array<tFlagItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Flag collection item
+ */
+export type tFlagItem = {
     /**
      * ID of the flag
      */
@@ -1940,34 +2012,14 @@ export type tFlagItemSchema = {
 };
 
 /**
- * Feed favourite collection item
+ * Collection of feed items from favourites
  */
 export type tFeedFavouriteItemSchema = {
+    data: Array<tFeedFavouriteItem>;
     /**
-     * ID of the feed
+     * Whether there are more items to fetch
      */
-    id: string;
-    /**
-     * ID of the location associated with the feed
-     */
-    locationId: string | null;
-    /**
-     * Hero image for this feed (usually selected from the listings in the feed)
-     */
-    uploadId: string | null;
-    /**
-     * Name of the feed
-     */
-    name: string;
-    query: tListingQuery;
-    /**
-     * Hero banner for this feed
-     */
-    upload: tUpload | null;
-    /**
-     * Number of items in favourites for this feed
-     */
-    count: number;
+    more: boolean;
 };
 
 /**
@@ -2005,6 +2057,37 @@ export type tListingQuery = {
     where?: tListingWhere;
     sort?: Array<tListingSort>;
     meta?: tListingMeta;
+};
+
+/**
+ * Feed favourite collection item
+ */
+export type tFeedFavouriteItem = {
+    /**
+     * ID of the feed
+     */
+    id: string;
+    /**
+     * ID of the location associated with the feed
+     */
+    locationId: string | null;
+    /**
+     * Hero image for this feed (usually selected from the listings in the feed)
+     */
+    uploadId: string | null;
+    /**
+     * Name of the feed
+     */
+    name: string;
+    query: tListingQuery;
+    /**
+     * Hero banner for this feed
+     */
+    upload: tUpload | null;
+    /**
+     * Number of items in favourites for this feed
+     */
+    count: number;
 };
 
 /**
@@ -2075,9 +2158,20 @@ export type tFeedFilter = {
 };
 
 /**
- * Feed collection item
+ * Collection of feed items
  */
 export type tFeedItemSchema = {
+    data: Array<tFeedItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Feed collection item
+ */
+export type tFeedItem = {
     /**
      * ID of the feed
      */
@@ -2424,9 +2518,20 @@ export type tFavouriteSort = {
 };
 
 /**
- * Favourite collection item
+ * Collection of favourite items
  */
 export type tFavouriteItemSchema = {
+    data: Array<tFavouriteItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Favourite collection item
+ */
+export type tFavouriteItem = {
     /**
      * ID of the favourite
      */
@@ -2770,9 +2875,20 @@ export type tDraftCountQuery = {
 };
 
 /**
- * Draft collection item
+ * Collection of drafts
  */
 export type tDraftItemSchema = {
+    data: Array<tDraftItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Draft collection item
+ */
+export type tDraftItem = {
     /**
      * ID of the draft
      */
@@ -2840,15 +2956,9 @@ export type apiDraftCollectionError = apiDraftCollectionErrors[keyof apiDraftCol
 
 export type tApiDraftCollectionResponse = {
     /**
-     * Collection of drafts
+     * Access collection of drafts based on provided query
      */
-    200: {
-        data: Array<tDraftItemSchema>;
-        /**
-         * Whether there are more items to fetch
-         */
-        more: boolean;
-    };
+    200: tDraftItemSchema;
 };
 
 export type apiDraftCollectionResponse = tApiDraftCollectionResponse[keyof tApiDraftCollectionResponse];
@@ -3072,15 +3182,9 @@ export type apiFavouriteCollectionError = apiFavouriteCollectionErrors[keyof api
 
 export type tApiFavouriteCollectionResponse = {
     /**
-     * Collection of favourite items
+     * Access collection of favourite items based on provided query
      */
-    200: {
-        data: Array<tFavouriteItemSchema>;
-        /**
-         * Whether there are more items to fetch
-         */
-        more: boolean;
-    };
+    200: tFavouriteItemSchema;
 };
 
 export type apiFavouriteCollectionResponse = tApiFavouriteCollectionResponse[keyof tApiFavouriteCollectionResponse];
@@ -3257,15 +3361,9 @@ export type apiFeedCollectionError = apiFeedCollectionErrors[keyof apiFeedCollec
 
 export type tApiFeedCollectionResponse = {
     /**
-     * Collection of feed items
+     * Access collection of feed items based on provided query
      */
-    200: {
-        data: Array<tFeedItemSchema>;
-        /**
-         * Whether there are more items to fetch
-         */
-        more: boolean;
-    };
+    200: tFeedItemSchema;
 };
 
 export type apiFeedCollectionResponse = tApiFeedCollectionResponse[keyof tApiFeedCollectionResponse];
@@ -3385,15 +3483,9 @@ export type apiFeedFavouriteCollectionError = apiFeedFavouriteCollectionErrors[k
 
 export type tApiFeedFavouriteCollectionResponse = {
     /**
-     * Collection of feed items from favourites
+     * Access collection of feed items from favourites based on provided query
      */
-    200: {
-        data: Array<tFeedFavouriteItemSchema>;
-        /**
-         * Whether there are more items to fetch
-         */
-        more: boolean;
-    };
+    200: tFeedFavouriteItemSchema;
 };
 
 export type apiFeedFavouriteCollectionResponse = tApiFeedFavouriteCollectionResponse[keyof tApiFeedFavouriteCollectionResponse];
@@ -3416,15 +3508,9 @@ export type apiFlagCollectionError = apiFlagCollectionErrors[keyof apiFlagCollec
 
 export type tApiFlagCollectionResponse = {
     /**
-     * Collection of flag items
+     * Access collection of flag items based on provided query
      */
-    200: {
-        data: Array<tFlagItemSchema>;
-        /**
-         * Whether there are more items to fetch
-         */
-        more: boolean;
-    };
+    200: tFlagItemSchema;
 };
 
 export type apiFlagCollectionResponse = tApiFlagCollectionResponse[keyof tApiFlagCollectionResponse];
@@ -3537,15 +3623,9 @@ export type apiGalleryCollectionError = apiGalleryCollectionErrors[keyof apiGall
 
 export type tApiGalleryCollectionResponse = {
     /**
-     * Collection of gallery items
+     * Access collection of galleries based on provided query
      */
-    200: {
-        data: Array<tGalleryItemSchema>;
-        /**
-         * Whether there are more items to fetch
-         */
-        more: boolean;
-    };
+    200: tGalleryItemSchema;
 };
 
 export type apiGalleryCollectionResponse = tApiGalleryCollectionResponse[keyof tApiGalleryCollectionResponse];
@@ -3593,15 +3673,9 @@ export type apiIgnoreCollectionError = apiIgnoreCollectionErrors[keyof apiIgnore
 
 export type tApiIgnoreCollectionResponse = {
     /**
-     * Collection of ignore items
+     * Access collection of ignore items based on provided query
      */
-    200: {
-        data: Array<tIgnoreItemSchema>;
-        /**
-         * Whether there are more items to fetch
-         */
-        more: boolean;
-    };
+    200: tIgnoreItemSchema;
 };
 
 export type apiIgnoreCollectionResponse = tApiIgnoreCollectionResponse[keyof tApiIgnoreCollectionResponse];
@@ -3750,15 +3824,9 @@ export type apiListingCollectionError = apiListingCollectionErrors[keyof apiList
 
 export type tApiListingCollectionResponse = {
     /**
-     * Collection of listings
+     * Access collection of listings based on provided query
      */
-    200: {
-        data: Array<tListingItemSchema>;
-        /**
-         * Whether there are more items to fetch
-         */
-        more: boolean;
-    };
+    200: tListingItemSchema;
 };
 
 export type apiListingCollectionResponse = tApiListingCollectionResponse[keyof tApiListingCollectionResponse];
@@ -3855,15 +3923,9 @@ export type apiMessageThreadMessageCollectionError = apiMessageThreadMessageColl
 
 export type tApiMessageThreadMessageCollectionResponse = {
     /**
-     * Collection of messages
+     * Access collection of messages based on provided query
      */
-    200: {
-        data: Array<tMessageItemSchema>;
-        /**
-         * Whether there are more items to fetch
-         */
-        more: boolean;
-    };
+    200: tMessageItemSchema;
 };
 
 export type apiMessageThreadMessageCollectionResponse = tApiMessageThreadMessageCollectionResponse[keyof tApiMessageThreadMessageCollectionResponse];
@@ -3960,15 +4022,9 @@ export type apiTransactionCollectionError = apiTransactionCollectionErrors[keyof
 
 export type tApiTransactionCollectionResponse = {
     /**
-     * Collection of transactions
+     * Access collection of transactions based on provided query
      */
-    200: {
-        data: Array<tTransactionItemSchema>;
-        /**
-         * Whether there are more items to fetch
-         */
-        more: boolean;
-    };
+    200: tTransactionItemSchema;
 };
 
 export type apiTransactionCollectionResponse = tApiTransactionCollectionResponse[keyof tApiTransactionCollectionResponse];
@@ -4087,15 +4143,9 @@ export type apiTransactionListingCollectionError = apiTransactionListingCollecti
 
 export type tApiTransactionListingCollectionResponse = {
     /**
-     * Collection of listings that have transactions
+     * Access collection of listings that have transactions based on provided query
      */
-    200: {
-        data: Array<tTransactionListingItemSchema>;
-        /**
-         * Whether there are more items to fetch
-         */
-        more: boolean;
-    };
+    200: tTransactionListingItemSchema;
 };
 
 export type apiTransactionListingCollectionResponse = tApiTransactionListingCollectionResponse[keyof tApiTransactionListingCollectionResponse];

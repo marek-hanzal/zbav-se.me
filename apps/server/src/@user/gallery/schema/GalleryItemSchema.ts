@@ -7,7 +7,7 @@ export const GalleryItemSchema = z
 		}),
 	})
 	.strip()
-	.openapi("GalleryItemSchema", {
+	.openapi("GalleryItem", {
 		description: "Gallery collection item",
 	});
 
