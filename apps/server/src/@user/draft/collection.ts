@@ -1,5 +1,5 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { EntitySchema, zodFx } from "@use-pico/common/schema";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { draftCollectionFx } from "~/app/draft/fx/draftCollectionFx";
 import { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
@@ -7,10 +7,11 @@ import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
+import { DraftItemSchema } from "./schema/DraftItemSchema";
 
 const CollectionSchema = withCollectionSchema({
-	schema: EntitySchema,
-	type: "DraftCollection",
+	schema: DraftItemSchema,
+	type: "DraftItemSchema",
 	description: "Collection of drafts",
 });
 
@@ -59,7 +60,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<withCollectionSchema.Type<EntitySchema>, 200>(
+				return c.json<withCollectionSchema.Type<DraftItemSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: draftCollectionFx({

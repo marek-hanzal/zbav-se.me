@@ -7,12 +7,12 @@ import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
-import { GallerySchema } from "./schema/GallerySchema";
+import { GalleryItemSchema } from "./schema/GalleryItemSchema";
 
 const CollectionSchema = withCollectionSchema({
-	schema: GallerySchema,
-	type: "GalleryCollection",
-	description: "Collection of galleries",
+	schema: GalleryItemSchema,
+	type: "GalleryItemSchema",
+	description: "Collection of gallery items",
 });
 
 export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* () {
@@ -59,7 +59,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<withCollectionSchema.Type<GallerySchema>, 200>(
+				return c.json<withCollectionSchema.Type<GalleryItemSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: galleryCollectionFx({

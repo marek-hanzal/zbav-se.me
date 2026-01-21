@@ -3,15 +3,15 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { transactionCollectionFx } from "~/app/transaction/fx/transactionCollectionFx";
-import { TransactionCollectionItemSchema } from "~/app/transaction/schema/TransactionCollectionItemSchema";
+import { TransactionItemSchema } from "~/app/transaction/schema/TransactionItemSchema";
 import { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
 const CollectionSchema = withCollectionSchema({
-	schema: TransactionCollectionItemSchema,
-	type: "TransactionCollection",
+	schema: TransactionItemSchema,
+	type: "TransactionItemSchema",
 	description: "Collection of transactions",
 });
 
@@ -60,7 +60,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<withCollectionSchema.Type<TransactionCollectionItemSchema>, 200>(
+				return c.json<withCollectionSchema.Type<TransactionItemSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: transactionCollectionFx({

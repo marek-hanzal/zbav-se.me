@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 
-export const TransactionCollectionItemSchema = z
+export const TransactionItemSchema = z
 	.looseObject({
 		id: z.string().openapi({
 			description: "ID of the transaction",
@@ -11,12 +11,12 @@ export const TransactionCollectionItemSchema = z
 		}),
 	})
 	.strip()
-	.openapi("TransactionCollectionItem", {
+	.openapi("TransactionItemSchema", {
 		description: "Transaction collection item with last message timestamp",
 	});
 
-export type TransactionCollectionItemSchema = typeof TransactionCollectionItemSchema;
+export type TransactionItemSchema = typeof TransactionItemSchema;
 
-export namespace TransactionCollectionItemSchema {
-	export type Type = z.infer<TransactionCollectionItemSchema>;
+export namespace TransactionItemSchema {
+	export type Type = z.infer<TransactionItemSchema>;
 }

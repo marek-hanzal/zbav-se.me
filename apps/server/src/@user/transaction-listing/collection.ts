@@ -4,14 +4,14 @@ import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { transactionListingCollectionFx } from "~/app/transaction-listing/fx/transactionListingCollectionFx";
 import { TransactionListingQuerySchema } from "~/app/transaction-listing/schema/TransactionListingQuerySchema";
-import { TransactionListingSchema } from "~/app/transaction-listing/schema/TransactionListingSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
+import { TransactionListingItemSchema } from "./schema/TransactionListingItemSchema";
 
 const CollectionSchema = withCollectionSchema({
-	schema: TransactionListingSchema,
-	type: "TransactionListingCollection",
+	schema: TransactionListingItemSchema,
+	type: "TransactionListingItemSchema",
 	description: "Collection of listings that have transactions",
 });
 
@@ -61,7 +61,7 @@ export const withCollectionApiFx = Effect.fn("withTransactionListingCollectionAp
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<withCollectionSchema.Type<TransactionListingSchema>, 200>(
+				return c.json<withCollectionSchema.Type<TransactionListingItemSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: transactionListingCollectionFx({

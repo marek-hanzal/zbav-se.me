@@ -1,17 +1,17 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { FeedFavouriteSchema } from "~/@user/feed-favourite/schema/FeedFavouriteSchema";
 import { feedFavouriteCollectionFx } from "~/app/feed/fx/feedFavouriteCollectionFx";
 import { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
+import { FeedFavouriteItemSchema } from "./schema/FeedFavouriteItemSchema";
 
 const CollectionSchema = withCollectionSchema({
-	schema: FeedFavouriteSchema,
-	type: "FeedFavouriteCollection",
+	schema: FeedFavouriteItemSchema,
+	type: "FeedFavouriteItemSchema",
 	description: "Collection of feed items from favourites",
 });
 
@@ -61,7 +61,7 @@ export const withFeedFavouriteCollectionApiFx = Effect.fn("withFeedFavouriteColl
 				return Effect.gen(function* () {
 					const user = c.get("user");
 
-					return c.json<withCollectionSchema.Type<FeedFavouriteSchema>, 200>(
+					return c.json<withCollectionSchema.Type<FeedFavouriteItemSchema>, 200>(
 						yield* zodFx({
 							schema: CollectionSchema,
 							dataFx: feedFavouriteCollectionFx({

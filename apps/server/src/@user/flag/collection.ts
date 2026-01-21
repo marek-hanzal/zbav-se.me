@@ -7,11 +7,11 @@ import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
-import { FlagSchema } from "./schema/FlagSchema";
+import { FlagItemSchema } from "./schema/FlagItemSchema";
 
 const CollectionSchema = withCollectionSchema({
-	schema: FlagSchema,
-	type: "FlagCollection",
+	schema: FlagItemSchema,
+	type: "FlagItemSchema",
 	description: "Collection of flag items",
 });
 
@@ -59,7 +59,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<withCollectionSchema.Type<FlagSchema>, 200>(
+				return c.json<withCollectionSchema.Type<FlagItemSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: flagCollectionFx({

@@ -1,5 +1,5 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { EntitySchema, zodFx } from "@use-pico/common/schema";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { feedCollectionFx } from "~/app/feed/fx/feedCollectionFx";
 import { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
@@ -7,10 +7,11 @@ import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
+import { FeedItemSchema } from "./schema/FeedItemSchema";
 
 const CollectionSchema = withCollectionSchema({
-	schema: EntitySchema,
-	type: "FeedCollection",
+	schema: FeedItemSchema,
+	type: "FeedItemSchema",
 	description: "Collection of feed items",
 });
 
@@ -58,7 +59,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<withCollectionSchema.Type<EntitySchema>, 200>(
+				return c.json<withCollectionSchema.Type<FeedItemSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: feedCollectionFx({

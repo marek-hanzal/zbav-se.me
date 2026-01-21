@@ -3,12 +3,12 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { messageCollectionFx } from "~/app/message/fx/messageCollectionFx";
 import { MessageQuerySchema } from "~/app/message/schema/MessageQuerySchema";
-import { MessageSchema } from "~/app/message/schema/MessageSchema";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
+import { MessageItemSchema } from "./schema/MessageItemSchema";
 
 const ParamsSchema = z
 	.object({
@@ -21,8 +21,8 @@ const ParamsSchema = z
 	});
 
 const CollectionSchema = withCollectionSchema({
-	schema: MessageSchema,
-	type: "MessageCollection",
+	schema: MessageItemSchema,
+	type: "MessageItemSchema",
 	description: "Collection of messages",
 });
 
@@ -89,7 +89,7 @@ export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx"
 					],
 				});
 
-				return c.json<withCollectionSchema.Type<MessageSchema>, 200>(
+				return c.json<withCollectionSchema.Type<MessageItemSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: messageCollectionFx({

@@ -7,11 +7,11 @@ import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
-import { FavouriteSchema } from "./schema/FavouriteSchema";
+import { FavouriteItemSchema } from "./schema/FavouriteItemSchema";
 
 const CollectionSchema = withCollectionSchema({
-	schema: FavouriteSchema,
-	type: "FavouriteCollection",
+	schema: FavouriteItemSchema,
+	type: "FavouriteItemSchema",
 	description: "Collection of favourite items",
 });
 
@@ -60,7 +60,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<withCollectionSchema.Type<FavouriteSchema>, 200>(
+				return c.json<withCollectionSchema.Type<FavouriteItemSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: favouriteCollectionFx({
