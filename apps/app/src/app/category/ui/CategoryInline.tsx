@@ -15,14 +15,17 @@ export const CategoryInline: FC<CategoryInline.Props> = ({
 	category,
 	textGroupProps,
 	textCategoryProps,
+	ui,
 	...props
 }) => {
 	return (
 		<Container
+			data-ui="CategoryInline[Container]"
 			ui={{
 				flow: "vertical",
 				gap: "xs",
 				items: "start",
+				...ui,
 			}}
 			{...props}
 		>
