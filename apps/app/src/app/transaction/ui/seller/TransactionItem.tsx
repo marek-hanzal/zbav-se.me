@@ -3,7 +3,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
 import { type FC, useState } from "react";
 import { match } from "ts-pattern";
-import { TransactionSheet } from "~/app/transaction/ui/TransactionSheet";
+import { TransactionSheet } from "~/app/transaction/ui/seller/TransactionSheet";
 
 export namespace TransactionItem {
 	export interface Props extends Container.Props {

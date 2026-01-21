@@ -8,7 +8,7 @@ import { type FC, useState } from "react";
 import { ListingDetail } from "~/app/listing/ui/ListingDetail";
 import { SellerInfo } from "~/app/listing/ui/SellerInfo";
 import { GalleryContent } from "~/app/photo/ui/GalleryContent";
-import { Transaction } from "~/app/transaction/ui/Transaction";
+import { Transaction } from "~/app/transaction/ui/buyer/Transaction";
 
 export namespace ListingSheet {
 	export type View = "detail" | "messages" | "gallery" | "seller-info";

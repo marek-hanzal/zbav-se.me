@@ -5,7 +5,7 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { match } from "ts-pattern";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
-import { TransactionSheet } from "~/app/transaction/ui/TransactionSheet";
+import { TransactionSheet } from "~/app/transaction/ui/buyer/TransactionSheet";
 
 export namespace TransactionItem {
 	export interface Props extends Container.Props {
