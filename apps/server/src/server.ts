@@ -2,18 +2,19 @@ import { DialectContextLayer } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
+import { withPublicHono } from "~/@public/withPublicHono";
 import { RoutesContextLayer } from "~/app/routes/RoutesContextLayer";
 import { KyselyContextLayerFx } from "~/database/context/KyselyContextLayerFx";
 import { initMiddlewareFx } from "~/init/initMiddlewareFx";
 import { ServerDatabaseSchema } from "~/schema/env/ServerDatabaseSchema";
 import { withPublicApiFx } from "./@public/withPublicApiFx";
 import { withSessionApiFx } from "./@session/withSessionApiFx";
+import { withSessionHono } from "./@session/withSessionHono";
 import { withUserApiFx } from "./@user/withUserApiFx";
+import { withUserHono } from "./@user/withUserHono";
 import { RoutesContextFx } from "./app/routes/RoutesContextFx";
 import { database } from "./database/kysely";
 import { withHono } from "./hono/withHono";
-import { withSessionHono } from "./hono/withSessionHono";
-import { withUserHono } from "./hono/withUserHono";
 import type { NoticeSchema } from "./schema/NoticeSchema";
 
 const app = await Effect.gen(function* () {
@@ -64,7 +65,7 @@ const app = await Effect.gen(function* () {
 	Effect.provide(
 		RoutesContextLayer({
 			root: withHono(),
-			publicHono: withHono(),
+			publicHono: withPublicHono(),
 			sessionHono: withSessionHono(),
 			userHono: withUserHono(),
 		}),

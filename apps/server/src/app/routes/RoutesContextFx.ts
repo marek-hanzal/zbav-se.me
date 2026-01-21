@@ -1,7 +1,8 @@
 import { Context } from "effect";
+import type { withPublicHono } from "~/@public/withPublicHono";
+import type { withSessionHono } from "~/@session/withSessionHono";
+import type { withUserHono } from "~/@user/withUserHono";
 import type { withHono } from "~/hono/withHono";
-import type { withSessionHono } from "~/hono/withSessionHono";
-import type { withUserHono } from "~/hono/withUserHono";
 
 export interface RoutesContext {
 	/**
@@ -11,7 +12,7 @@ export interface RoutesContext {
 	/**
 	 * Public app hono (/public route)
 	 */
-	publicHono: withHono;
+	publicHono: withPublicHono;
 	/**
 	 * Session app hono (/session route)
 	 *
