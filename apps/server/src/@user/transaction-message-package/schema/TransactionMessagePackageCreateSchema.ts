@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
 export const TransactionMessagePackageCreateSchema = z
-	.object({
+	.looseObject({
 		transactionId: z.string().openapi({
 			description: "The ID of the transaction to add a package message to",
 		}),
@@ -12,6 +12,7 @@ export const TransactionMessagePackageCreateSchema = z
 			description: "Tracking number",
 		}),
 	})
+	.strip()
 	.openapi("TransactionMessagePackageCreate", {
 		description: "Request to create a transaction message package",
 	});

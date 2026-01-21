@@ -1,11 +1,12 @@
 import { z } from "@hono/zod-openapi";
 
 export const TransactionStatusSuccessSchema = z
-	.object({
+	.looseObject({
 		transactionId: z.string().openapi({
 			description: "The ID of the listing transaction to mark as successful",
 		}),
 	})
+	.strip()
 	.openapi("TransactionStatusSuccess", {
 		description: "Request to mark a listing transaction as successful",
 	});

@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
 export const DraftGalleryCreateSchema = z
-	.object({
+	.looseObject({
 		draftId: z.string().openapi({
 			description: "The ID of the draft to add a gallery to",
 		}),
@@ -9,6 +9,7 @@ export const DraftGalleryCreateSchema = z
 			description: "IDs of the uploads; order of uploads defines order in the gallery",
 		}),
 	})
+	.strip()
 	.openapi("DraftGalleryCreate", {
 		description: "Request to create or update a draft gallery",
 	});

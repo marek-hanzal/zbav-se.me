@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
 export const FlagToggleSchema = z
-	.object({
+	.looseObject({
 		toggle: z.boolean().openapi({
 			description: "Whether to add (true) or remove (false) the flag on the listing",
 		}),
@@ -9,6 +9,7 @@ export const FlagToggleSchema = z
 			description: "ID of the listing to toggle",
 		}),
 	})
+	.strip()
 	.openapi("FlagToggle", {
 		description: "Data for toggling a flag on a listing",
 	});

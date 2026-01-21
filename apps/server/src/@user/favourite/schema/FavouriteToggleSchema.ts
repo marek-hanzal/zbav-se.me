@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
 export const FavouriteToggleSchema = z
-	.object({
+	.looseObject({
 		toggle: z.boolean().openapi({
 			description: "Whether to add (true) or remove (false) the listing from favourites",
 		}),
@@ -12,6 +12,7 @@ export const FavouriteToggleSchema = z
 			description: "ID of the listing to toggle",
 		}),
 	})
+	.strip()
 	.openapi("FavouriteToggle", {
 		description: "Data for toggling a listing in favourites",
 	});

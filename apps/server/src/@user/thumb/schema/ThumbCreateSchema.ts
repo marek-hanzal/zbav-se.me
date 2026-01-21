@@ -2,12 +2,13 @@ import { z } from "@hono/zod-openapi";
 import { ThumbEnumSchema } from "~/app/thumb/schema/ThumbEnumSchema";
 
 export const ThumbCreateSchema = z
-	.object({
+	.looseObject({
 		listingId: z.string().openapi({
 			description: "ID of the listing",
 		}),
 		type: ThumbEnumSchema,
 	})
+	.strip()
 	.openapi("ThumbCreate", {
 		description: "Data for creating a new thumb",
 	});

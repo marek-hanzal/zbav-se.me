@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 
 export const FeedCreateSchema = z
-	.object({
+	.looseObject({
 		name: z.string().min(1).openapi({
 			description: "Name of the feed",
 		}),
@@ -17,6 +17,7 @@ export const FeedCreateSchema = z
 			}),
 		query: ListingQuerySchema,
 	})
+	.strip()
 	.openapi("FeedCreate", {
 		description: "Data for creating a new feed",
 	});

@@ -5,7 +5,7 @@ import { ListingWarrantyEnumSchema } from "~/app/listing/schema/ListingWarrantyE
 import { ProsConsSchema } from "~/app/listing/schema/ProsConsSchema";
 
 export const DraftCreateSchema = z
-	.object({
+	.looseObject({
 		price: z.coerce.number().optional().openapi({
 			description: "Price of the draft",
 			type: "number",
@@ -63,6 +63,7 @@ export const DraftCreateSchema = z
 			description: "IDs of the uploads; order of uploads defines order in the gallery",
 		}),
 	})
+	.strip()
 	.openapi("DraftCreate", {
 		description: "Data for creating a new draft",
 	});

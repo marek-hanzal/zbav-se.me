@@ -2,9 +2,10 @@ import { z } from "@hono/zod-openapi";
 import { UserSideEnumSchema } from "~/app/user-ex/schema/UserSideEnumSchema";
 
 export const TransactionMetaSchema = z
-	.object({
+	.looseObject({
 		side: UserSideEnumSchema.optional(),
 	})
+	.strip()
 	.openapi("TransactionMeta", {
 		description: "Meta data for transaction collection",
 	});
