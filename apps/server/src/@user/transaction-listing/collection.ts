@@ -1,15 +1,16 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { EntitySchema, zodFx } from "@use-pico/common/schema";
+import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { transactionListingCollectionFx } from "~/app/transaction-listing/fx/transactionListingCollectionFx";
 import { TransactionListingQuerySchema } from "~/app/transaction-listing/schema/TransactionListingQuerySchema";
+import { TransactionListingSchema } from "~/app/transaction-listing/schema/TransactionListingSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
 const CollectionSchema = withCollectionSchema({
-	schema: EntitySchema,
+	schema: TransactionListingSchema,
 	type: "TransactionListingCollection",
 	description: "Collection of listings that have transactions",
 });
@@ -60,7 +61,7 @@ export const withCollectionApiFx = Effect.fn("withTransactionListingCollectionAp
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<withCollectionSchema.Type<EntitySchema>, 200>(
+				return c.json<withCollectionSchema.Type<TransactionListingSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: transactionListingCollectionFx({

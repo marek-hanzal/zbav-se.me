@@ -360,13 +360,29 @@ export type tCursor = {
  * Collection of listings that have transactions
  */
 export type tTransactionListingCollection = {
-    data: Array<{
-        id: string;
-    }>;
+    data: Array<tTransactionListing>;
     /**
      * Whether there are more items to fetch
      */
     more: boolean;
+};
+
+/**
+ * Aggregated transaction information per listing
+ */
+export type tTransactionListing = {
+    /**
+     * ID of the listing that has at least one transaction
+     */
+    listingId: string;
+    /**
+     * Total number of transactions for this listing (within the current scope)
+     */
+    count: number;
+    /**
+     * Timestamp of the most recent activity in any transaction under this listing
+     */
+    lastAt: string;
 };
 
 /**

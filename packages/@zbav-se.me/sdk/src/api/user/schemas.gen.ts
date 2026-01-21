@@ -458,16 +458,7 @@ export const sTransactionListingCollection = {
         data: {
             type: 'array',
             items: {
-                type: 'object',
-                properties: {
-                    id: {
-                        type: 'string',
-                        minLength: 1
-                    }
-                },
-                required: [
-                    'id'
-                ]
+                $ref: '#/components/schemas/TransactionListing'
             }
         },
         more: {
@@ -477,6 +468,27 @@ export const sTransactionListingCollection = {
     required: [
         'data',
         'more'
+    ]
+} as const;
+
+export const sTransactionListing = {
+    type: 'object',
+    properties: {
+        listingId: {
+            type: 'string'
+        },
+        count: {
+            type: 'integer',
+            minimum: 0
+        },
+        lastAt: {
+            type: 'string'
+        }
+    },
+    required: [
+        'listingId',
+        'count',
+        'lastAt'
     ]
 } as const;
 

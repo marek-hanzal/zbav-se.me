@@ -402,12 +402,29 @@ export const zTransactionListingQuery = z.object({
 export type zTransactionListingQuery = z.infer<typeof zTransactionListingQuery>;
 
 /**
+ * Aggregated transaction information per listing
+ */
+export const zTransactionListing = z.object({
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing that has at least one transaction'
+    }),
+    count: z.int().gte(0).register(z.globalRegistry, {
+        description: 'Total number of transactions for this listing (within the current scope)'
+    }),
+    lastAt: z.string().register(z.globalRegistry, {
+        description: 'Timestamp of the most recent activity in any transaction under this listing'
+    })
+}).register(z.globalRegistry, {
+    description: 'Aggregated transaction information per listing'
+});
+
+export type zTransactionListing = z.infer<typeof zTransactionListing>;
+
+/**
  * Collection of listings that have transactions
  */
 export const zTransactionListingCollection = z.object({
-    data: z.array(z.object({
-        id: z.string().min(1)
-    })),
+    data: z.array(zTransactionListing),
     more: z.boolean().register(z.globalRegistry, {
         description: 'Whether there are more items to fetch'
     })
