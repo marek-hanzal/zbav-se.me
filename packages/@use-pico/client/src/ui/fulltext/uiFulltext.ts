@@ -6,6 +6,7 @@ export namespace uiFulltext {
 		theme?: CoolUi.Theme;
 		tone?: CoolUi.Tone;
 		//
+		position?: CoolUi.Position;
 		width?: CoolUi.Width;
 		height?: CoolUi.Height;
 	}
@@ -24,6 +25,7 @@ export const uiFulltext = ({ ui, className }: uiFulltext.Props) => {
 			tone: "primary",
 			theme: "light",
 			width: "full",
+			position: "relative",
 			...ui,
 		},
 		className,
