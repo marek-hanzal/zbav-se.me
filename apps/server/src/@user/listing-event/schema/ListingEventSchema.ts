@@ -2,9 +2,10 @@ import { z } from "@hono/zod-openapi";
 import { ListingEventDbSchema } from "~/app/listing-event/schema/ListingEventDbSchema";
 
 export const ListingEventSchema = z
-	.object({
+	.looseObject({
 		...ListingEventDbSchema.shape,
 	})
+	.strip()
 	.openapi("ListingEvent", {
 		description: "Listing event data",
 	});
