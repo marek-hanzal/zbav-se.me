@@ -673,7 +673,7 @@ export type tApiCategoryFetchRequest = {
     body?: tCategoryQuery;
     path?: never;
     query?: never;
-    url: '/category/fetch';
+    url: '/api/session/category/fetch';
 };
 
 export type apiCategoryFetchErrors = {
@@ -702,7 +702,7 @@ export type tApiCategoryCollectionRequest = {
     body?: tCategoryQuery;
     path?: never;
     query?: never;
-    url: '/category/collection';
+    url: '/api/session/category/collection';
 };
 
 export type apiCategoryCollectionErrors = {
@@ -727,7 +727,7 @@ export type tApiCategoryCountRequest = {
     body?: tCategoryCountQuery;
     path?: never;
     query?: never;
-    url: '/category/count';
+    url: '/api/session/category/count';
 };
 
 export type apiCategoryCountErrors = {
@@ -757,7 +757,7 @@ export type tApiListingSellerInfoRequest = {
         listingId: string;
     };
     query?: never;
-    url: '/listing/{listingId}/seller-info';
+    url: '/api/session/listing/{listingId}/seller-info';
 };
 
 export type apiListingSellerInfoErrors = {
@@ -789,7 +789,7 @@ export type tApiLocationAutocompleteRequest = {
     body?: tLocationAutocomplete;
     path?: never;
     query?: never;
-    url: '/location/autocomplete';
+    url: '/api/session/location/autocomplete';
 };
 
 export type apiLocationAutocompleteErrors = {
@@ -817,7 +817,7 @@ export type tApiLocationFetchRequest = {
     body?: tLocationQuery;
     path?: never;
     query?: never;
-    url: '/location/fetch';
+    url: '/api/session/location/fetch';
 };
 
 export type apiLocationFetchErrors = {
@@ -849,7 +849,7 @@ export type tApiUploadFetchRequest = {
     body?: tUploadQuery;
     path?: never;
     query?: never;
-    url: '/upload/fetch';
+    url: '/api/session/upload/fetch';
 };
 
 export type apiUploadFetchErrors = {

@@ -1,3 +1,4 @@
+import { OpenAPIHono } from "@hono/zod-openapi";
 import { Scalar } from "@scalar/hono-api-reference";
 import { Effect } from "effect";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
@@ -8,6 +9,9 @@ const docsUrl = "/v3/api-docs";
 export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function* () {
 	const { root, publicHono, sessionHono, userHono, sellerHono, buyerHono } =
 		yield* RoutesContextFx;
+
+	const viteConfig = ServerViteSchema.parse(process.env);
+	const apiBase = viteConfig.VITE_SERVER_API.replace(/\/$/, "");
 
 	root.get(
 		"/",
@@ -43,28 +47,63 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 		}),
 	);
 
-	const viteConfig = ServerViteSchema.parse(process.env);
+	const cookieAuth = {
+		components: {
+			securitySchemes: {
+				cookieAuth: {
+					type: "apiKey",
+					in: "cookie",
+					name: "better-auth.session_token",
+					description: "Cookie-based authentication using better-auth session token",
+				},
+			},
+		},
+		security: [
+			{
+				cookieAuth: [],
+			},
+		],
+	};
+
+	const docWithMount = (
+		mount: string,
+		app: OpenAPIHono<any>,
+		opts: Parameters<OpenAPIHono["getOpenAPI31Document"]>[0],
+	) => {
+		const tmp = new OpenAPIHono();
+		tmp.route(mount, app);
+		return tmp.getOpenAPI31Document({
+			...opts,
+			servers: [
+				{
+					url: apiBase,
+				},
+			],
+		});
+	};
+
+	let cache: null | {
+		public: unknown;
+		session: unknown;
+		user: unknown;
+		seller: unknown;
+		buyer: unknown;
+	} = null;
 
 	const docs = () => {
-		let cache = null;
-
 		if (cache) {
 			return cache;
 		}
 
-		return (cache = {
-			public: publicHono.getOpenAPI31Document({
+		cache = {
+			public: docWithMount("/api/public", publicHono, {
 				openapi: "3.1.0",
 				info: {
 					version: "0.5.0",
 					title: "Public zbav-se.me API",
 					description: "Public API for the zbav-se.me app",
 				},
-				servers: [
-					{
-						url: viteConfig.VITE_SERVER_API,
-					},
-				],
+				security: [],
 				tags: [
 					{
 						name: "Misc",
@@ -84,18 +123,15 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 					},
 				],
 			}),
-			session: sessionHono.getOpenAPI31Document({
+
+			session: docWithMount("/api/session", sessionHono, {
 				openapi: "3.1.0",
 				info: {
 					version: "0.5.0",
 					title: "Protected zbav-se.me API",
 					description: "Auth-required API, but open to any user without restriction",
 				},
-				servers: [
-					{
-						url: viteConfig.VITE_SERVER_API,
-					},
-				],
+				...cookieAuth,
 				tags: [
 					{
 						name: "Category",
@@ -115,18 +151,15 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 					},
 				],
 			}),
-			user: userHono.getOpenAPI31Document({
+
+			user: docWithMount("/api/user", userHono, {
 				openapi: "3.1.0",
 				info: {
 					version: "0.5.0",
 					title: "User zbav-se.me API",
 					description: "API related to the user, needs user's context (private data).",
 				},
-				servers: [
-					{
-						url: viteConfig.VITE_SERVER_API,
-					},
-				],
+				...cookieAuth,
 				tags: [
 					{
 						name: "Draft",
@@ -220,7 +253,8 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 					},
 				],
 			}),
-			seller: sellerHono.getOpenAPI31Document({
+
+			seller: docWithMount("/api/seller", sellerHono, {
 				openapi: "3.1.0",
 				info: {
 					version: "0.5.0",
@@ -233,7 +267,8 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 					},
 				],
 			}),
-			buyer: buyerHono.getOpenAPI31Document({
+
+			buyer: docWithMount("/api/buyer", buyerHono, {
 				openapi: "3.1.0",
 				info: {
 					version: "0.5.0",
@@ -246,7 +281,9 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 					},
 				],
 			}),
-		});
+		};
+
+		return cache;
 	};
 
 	root.get(`${docsUrl}/public`, (c) => c.json(docs().public));
@@ -263,24 +300,9 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 		},
 		servers: [
 			{
-				url: viteConfig.VITE_SERVER_API,
+				url: apiBase,
 			},
 		],
-		// @ts-expect-error - components is valid in OpenAPI 3.1 but types may not include it
-		components: {
-			securitySchemes: {
-				cookieAuth: {
-					type: "apiKey",
-					in: "cookie",
-					name: "better-auth.session_token",
-					description: "Cookie-based authentication using better-auth session token",
-				},
-			},
-		},
-		security: [
-			{
-				cookieAuth: [],
-			},
-		],
+		...cookieAuth,
 	});
 });

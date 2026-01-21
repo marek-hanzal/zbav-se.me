@@ -28,7 +28,7 @@ export const apiCategoryFetch = <ThrowOnError extends boolean = false>(options?:
     requestValidator: async (data) => await zApiCategoryFetchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCategoryFetchResponse.parseAsync(data),
-    url: '/category/fetch',
+    url: '/api/session/category/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export const apiCategoryCollection = <ThrowOnError extends boolean = false>(opti
     requestValidator: async (data) => await zApiCategoryCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCategoryCollectionResponse.parseAsync(data),
-    url: '/category/collection',
+    url: '/api/session/category/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export const apiCategoryCount = <ThrowOnError extends boolean = false>(options?:
     requestValidator: async (data) => await zApiCategoryCountData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCategoryCountResponse.parseAsync(data),
-    url: '/category/count',
+    url: '/api/session/category/count',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ export const apiListingSellerInfo = <ThrowOnError extends boolean = false>(optio
     requestValidator: async (data) => await zApiListingSellerInfoData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiListingSellerInfoResponse.parseAsync(data),
-    url: '/listing/{listingId}/seller-info',
+    url: '/api/session/listing/{listingId}/seller-info',
     ...options
 });
 
@@ -92,7 +92,7 @@ export const apiLocationAutocomplete = <ThrowOnError extends boolean = false>(op
     requestValidator: async (data) => await zApiLocationAutocompleteData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiLocationAutocompleteResponse.parseAsync(data),
-    url: '/location/autocomplete',
+    url: '/api/session/location/autocomplete',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ export const apiLocationFetch = <ThrowOnError extends boolean = false>(options?:
     requestValidator: async (data) => await zApiLocationFetchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiLocationFetchResponse.parseAsync(data),
-    url: '/location/fetch',
+    url: '/api/session/location/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ export const apiUploadFetch = <ThrowOnError extends boolean = false>(options?: O
     requestValidator: async (data) => await zApiUploadFetchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiUploadFetchResponse.parseAsync(data),
-    url: '/upload/fetch',
+    url: '/api/session/upload/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',

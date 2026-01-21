@@ -28,7 +28,7 @@ export const apiDraftCollection = <ThrowOnError extends boolean = false>(options
     requestValidator: async (data) => await zApiDraftCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiDraftCollectionResponse.parseAsync(data),
-    url: '/draft/collection',
+    url: '/api/user/draft/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export const apiDraftCount = <ThrowOnError extends boolean = false>(options?: Op
     requestValidator: async (data) => await zApiDraftCountData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiDraftCountResponse.parseAsync(data),
-    url: '/draft/count',
+    url: '/api/user/draft/count',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export const apiDraftCreate = <ThrowOnError extends boolean = false>(options?: O
     requestValidator: async (data) => await zApiDraftCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiDraftCreateResponse.parseAsync(data),
-    url: '/draft/create',
+    url: '/api/user/draft/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ export const apiDraftDelete = <ThrowOnError extends boolean = false>(options?: O
     requestValidator: async (data) => await zApiDraftDeleteData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiDraftDeleteResponse.parseAsync(data),
-    url: '/draft/delete',
+    url: '/api/user/draft/delete',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ export const apiDraftFetch = <ThrowOnError extends boolean = false>(options?: Op
     requestValidator: async (data) => await zApiDraftFetchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiDraftFetchResponse.parseAsync(data),
-    url: '/draft/fetch',
+    url: '/api/user/draft/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -113,7 +113,7 @@ export const apiDraftGalleryCreate = <ThrowOnError extends boolean = false>(opti
     requestValidator: async (data) => await zApiDraftGalleryCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiDraftGalleryCreateResponse.parseAsync(data),
-    url: '/draft/gallery/create',
+    url: '/api/user/draft/gallery/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ export const apiDraftPatch = <ThrowOnError extends boolean = false>(options?: Op
     requestValidator: async (data) => await zApiDraftPatchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiDraftPatchResponse.parseAsync(data),
-    url: '/draft/patch',
+    url: '/api/user/draft/patch',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -147,7 +147,7 @@ export const apiFavouriteCollection = <ThrowOnError extends boolean = false>(opt
     requestValidator: async (data) => await zApiFavouriteCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFavouriteCollectionResponse.parseAsync(data),
-    url: '/favourite/collection',
+    url: '/api/user/favourite/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -164,7 +164,7 @@ export const apiFavouriteCount = <ThrowOnError extends boolean = false>(options?
     requestValidator: async (data) => await zApiFavouriteCountData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFavouriteCountResponse.parseAsync(data),
-    url: '/favourite/count',
+    url: '/api/user/favourite/count',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -181,7 +181,7 @@ export const apiFavouriteToggle = <ThrowOnError extends boolean = false>(options
     requestValidator: async (data) => await zApiFavouriteToggleData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFavouriteToggleResponse.parseAsync(data),
-    url: '/favourite/toggle',
+    url: '/api/user/favourite/toggle',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -198,7 +198,7 @@ export const apiFeedCreate = <ThrowOnError extends boolean = false>(options?: Op
     requestValidator: async (data) => await zApiFeedCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFeedCreateResponse.parseAsync(data),
-    url: '/feed/create',
+    url: '/api/user/feed/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -215,7 +215,7 @@ export const apiFeedPatch = <ThrowOnError extends boolean = false>(options?: Opt
     requestValidator: async (data) => await zApiFeedPatchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFeedPatchResponse.parseAsync(data),
-    url: '/feed/patch',
+    url: '/api/user/feed/patch',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -232,7 +232,7 @@ export const apiFeedFetch = <ThrowOnError extends boolean = false>(options?: Opt
     requestValidator: async (data) => await zApiFeedFetchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFeedFetchResponse.parseAsync(data),
-    url: '/feed/fetch',
+    url: '/api/user/feed/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -249,7 +249,7 @@ export const apiFeedCollection = <ThrowOnError extends boolean = false>(options?
     requestValidator: async (data) => await zApiFeedCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFeedCollectionResponse.parseAsync(data),
-    url: '/feed/collection',
+    url: '/api/user/feed/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -266,7 +266,7 @@ export const apiFeedCount = <ThrowOnError extends boolean = false>(options?: Opt
     requestValidator: async (data) => await zApiFeedCountData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFeedCountResponse.parseAsync(data),
-    url: '/feed/count',
+    url: '/api/user/feed/count',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -283,7 +283,7 @@ export const apiFeedDelete = <ThrowOnError extends boolean = false>(options?: Op
     requestValidator: async (data) => await zApiFeedDeleteData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFeedDeleteResponse.parseAsync(data),
-    url: '/feed/delete',
+    url: '/api/user/feed/delete',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -300,7 +300,7 @@ export const apiFeedGalleryCreate = <ThrowOnError extends boolean = false>(optio
     requestValidator: async (data) => await zApiFeedGalleryCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFeedGalleryCreateResponse.parseAsync(data),
-    url: '/feed/gallery/create',
+    url: '/api/user/feed/gallery/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -317,7 +317,7 @@ export const apiFeedFavouriteCollection = <ThrowOnError extends boolean = false>
     requestValidator: async (data) => await zApiFeedFavouriteCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFeedFavouriteCollectionResponse.parseAsync(data),
-    url: '/feed-favourite/collection',
+    url: '/api/user/feed-favourite/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -334,7 +334,7 @@ export const apiFlagCollection = <ThrowOnError extends boolean = false>(options?
     requestValidator: async (data) => await zApiFlagCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFlagCollectionResponse.parseAsync(data),
-    url: '/flag/collection',
+    url: '/api/user/flag/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -351,7 +351,7 @@ export const apiFlagCount = <ThrowOnError extends boolean = false>(options?: Opt
     requestValidator: async (data) => await zApiFlagCountData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFlagCountResponse.parseAsync(data),
-    url: '/flag/count',
+    url: '/api/user/flag/count',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -368,7 +368,7 @@ export const apiFlagToggle = <ThrowOnError extends boolean = false>(options?: Op
     requestValidator: async (data) => await zApiFlagToggleData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiFlagToggleResponse.parseAsync(data),
-    url: '/flag/toggle',
+    url: '/api/user/flag/toggle',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -385,7 +385,7 @@ export const apiGalleryFetch = <ThrowOnError extends boolean = false>(options?: 
     requestValidator: async (data) => await zApiGalleryFetchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiGalleryFetchResponse.parseAsync(data),
-    url: '/gallery/fetch',
+    url: '/api/user/gallery/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -402,7 +402,7 @@ export const apiGalleryCollection = <ThrowOnError extends boolean = false>(optio
     requestValidator: async (data) => await zApiGalleryCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiGalleryCollectionResponse.parseAsync(data),
-    url: '/gallery/collection',
+    url: '/api/user/gallery/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -419,7 +419,7 @@ export const apiGalleryCount = <ThrowOnError extends boolean = false>(options?: 
     requestValidator: async (data) => await zApiGalleryCountData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiGalleryCountResponse.parseAsync(data),
-    url: '/gallery/count',
+    url: '/api/user/gallery/count',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -436,7 +436,7 @@ export const apiIgnoreCollection = <ThrowOnError extends boolean = false>(option
     requestValidator: async (data) => await zApiIgnoreCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiIgnoreCollectionResponse.parseAsync(data),
-    url: '/ignore/collection',
+    url: '/api/user/ignore/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -453,7 +453,7 @@ export const apiIgnoreCount = <ThrowOnError extends boolean = false>(options?: O
     requestValidator: async (data) => await zApiIgnoreCountData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiIgnoreCountResponse.parseAsync(data),
-    url: '/ignore/count',
+    url: '/api/user/ignore/count',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -470,7 +470,7 @@ export const apiIgnoreToggle = <ThrowOnError extends boolean = false>(options?: 
     requestValidator: async (data) => await zApiIgnoreToggleData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiIgnoreToggleResponse.parseAsync(data),
-    url: '/ignore/toggle',
+    url: '/api/user/ignore/toggle',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -487,7 +487,7 @@ export const apiListingCreate = <ThrowOnError extends boolean = false>(options?:
     requestValidator: async (data) => await zApiListingCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiListingCreateResponse.parseAsync(data),
-    url: '/listing/create',
+    url: '/api/user/listing/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -504,7 +504,7 @@ export const apiListingFetch = <ThrowOnError extends boolean = false>(options?: 
     requestValidator: async (data) => await zApiListingFetchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiListingFetchResponse.parseAsync(data),
-    url: '/listing/fetch',
+    url: '/api/user/listing/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -521,7 +521,7 @@ export const apiListingCollection = <ThrowOnError extends boolean = false>(optio
     requestValidator: async (data) => await zApiListingCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiListingCollectionResponse.parseAsync(data),
-    url: '/listing/collection',
+    url: '/api/user/listing/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -538,7 +538,7 @@ export const apiListingCount = <ThrowOnError extends boolean = false>(options?: 
     requestValidator: async (data) => await zApiListingCountData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiListingCountResponse.parseAsync(data),
-    url: '/listing/count',
+    url: '/api/user/listing/count',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -555,7 +555,7 @@ export const apiListingEventCreate = <ThrowOnError extends boolean = false>(opti
     requestValidator: async (data) => await zApiListingEventCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiListingEventCreateResponse.parseAsync(data),
-    url: '/listing-event/create',
+    url: '/api/user/listing-event/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -572,7 +572,7 @@ export const apiMessageThreadMessageCollection = <ThrowOnError extends boolean =
     requestValidator: async (data) => await zApiMessageThreadMessageCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiMessageThreadMessageCollectionResponse.parseAsync(data),
-    url: '/message-thread/{messageThreadId}/message/collection',
+    url: '/api/user/message-thread/{messageThreadId}/message/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -589,7 +589,7 @@ export const apiS3Presign = <ThrowOnError extends boolean = false>(options: Opti
     requestValidator: async (data) => await zApiS3PresignData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiS3PresignResponse.parseAsync(data),
-    url: '/s3/pre-sign',
+    url: '/api/user/s3/pre-sign',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -606,7 +606,7 @@ export const apiThumbCreate = <ThrowOnError extends boolean = false>(options?: O
     requestValidator: async (data) => await zApiThumbCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiThumbCreateResponse.parseAsync(data),
-    url: '/thumb/create',
+    url: '/api/user/thumb/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -623,7 +623,7 @@ export const apiTransactionCollection = <ThrowOnError extends boolean = false>(o
     requestValidator: async (data) => await zApiTransactionCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionCollectionResponse.parseAsync(data),
-    url: '/transaction/collection',
+    url: '/api/user/transaction/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -640,7 +640,7 @@ export const apiTransactionCreate = <ThrowOnError extends boolean = false>(optio
     requestValidator: async (data) => await zApiTransactionCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionCreateResponse.parseAsync(data),
-    url: '/transaction/create',
+    url: '/api/user/transaction/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -657,7 +657,7 @@ export const apiTransactionFetch = <ThrowOnError extends boolean = false>(option
     requestValidator: async (data) => await zApiTransactionFetchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionFetchResponse.parseAsync(data),
-    url: '/transaction/fetch',
+    url: '/api/user/transaction/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -674,7 +674,7 @@ export const apiTransactionBuyerInfo = <ThrowOnError extends boolean = false>(op
     requestValidator: async (data) => await zApiTransactionBuyerInfoData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionBuyerInfoResponse.parseAsync(data),
-    url: '/transaction/buyer-info',
+    url: '/api/user/transaction/buyer-info',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -691,7 +691,7 @@ export const apiTransactionListingCollection = <ThrowOnError extends boolean = f
     requestValidator: async (data) => await zApiTransactionListingCollectionData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionListingCollectionResponse.parseAsync(data),
-    url: '/transaction-listing/collection',
+    url: '/api/user/transaction-listing/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -708,7 +708,7 @@ export const apiTransactionMessageGalleryCreate = <ThrowOnError extends boolean 
     requestValidator: async (data) => await zApiTransactionMessageGalleryCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionMessageGalleryCreateResponse.parseAsync(data),
-    url: '/transaction-message-gallery/create',
+    url: '/api/user/transaction-message-gallery/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -725,7 +725,7 @@ export const apiTransactionMessageLocationCreate = <ThrowOnError extends boolean
     requestValidator: async (data) => await zApiTransactionMessageLocationCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionMessageLocationCreateResponse.parseAsync(data),
-    url: '/transaction-message-location/create',
+    url: '/api/user/transaction-message-location/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -742,7 +742,7 @@ export const apiTransactionMessagePackageCreate = <ThrowOnError extends boolean 
     requestValidator: async (data) => await zApiTransactionMessagePackageCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionMessagePackageCreateResponse.parseAsync(data),
-    url: '/transaction-message-package/create',
+    url: '/api/user/transaction-message-package/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -759,7 +759,7 @@ export const apiTransactionMessagePersonalCreate = <ThrowOnError extends boolean
     requestValidator: async (data) => await zApiTransactionMessagePersonalCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionMessagePersonalCreateResponse.parseAsync(data),
-    url: '/transaction-message-personal/create',
+    url: '/api/user/transaction-message-personal/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -776,7 +776,7 @@ export const apiTransactionMessageTextCreate = <ThrowOnError extends boolean = f
     requestValidator: async (data) => await zApiTransactionMessageTextCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionMessageTextCreateResponse.parseAsync(data),
-    url: '/transaction-message-text/create',
+    url: '/api/user/transaction-message-text/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -793,7 +793,7 @@ export const apiTransactionStatusAccept = <ThrowOnError extends boolean = false>
     requestValidator: async (data) => await zApiTransactionStatusAcceptData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionStatusAcceptResponse.parseAsync(data),
-    url: '/transaction/status/accept',
+    url: '/api/user/transaction/status/accept',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -810,7 +810,7 @@ export const apiTransactionStatusReject = <ThrowOnError extends boolean = false>
     requestValidator: async (data) => await zApiTransactionStatusRejectData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionStatusRejectResponse.parseAsync(data),
-    url: '/transaction/status/reject',
+    url: '/api/user/transaction/status/reject',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -827,7 +827,7 @@ export const apiTransactionStatusResolve = <ThrowOnError extends boolean = false
     requestValidator: async (data) => await zApiTransactionStatusResolveData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionStatusResolveResponse.parseAsync(data),
-    url: '/transaction/status/resolve',
+    url: '/api/user/transaction/status/resolve',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -844,7 +844,7 @@ export const apiTransactionStatusSuccess = <ThrowOnError extends boolean = false
     requestValidator: async (data) => await zApiTransactionStatusSuccessData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionStatusSuccessResponse.parseAsync(data),
-    url: '/transaction/status/success',
+    url: '/api/user/transaction/status/success',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -861,7 +861,7 @@ export const apiTransactionStatusDispute = <ThrowOnError extends boolean = false
     requestValidator: async (data) => await zApiTransactionStatusDisputeData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionStatusDisputeResponse.parseAsync(data),
-    url: '/transaction/status/dispute',
+    url: '/api/user/transaction/status/dispute',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -878,7 +878,7 @@ export const apiTransactionStatusClose = <ThrowOnError extends boolean = false>(
     requestValidator: async (data) => await zApiTransactionStatusCloseData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionStatusCloseResponse.parseAsync(data),
-    url: '/transaction/status/close',
+    url: '/api/user/transaction/status/close',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -895,7 +895,7 @@ export const apiUploadCreate = <ThrowOnError extends boolean = false>(options?: 
     requestValidator: async (data) => await zApiUploadCreateData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiUploadCreateResponse.parseAsync(data),
-    url: '/upload/create',
+    url: '/api/user/upload/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -912,7 +912,7 @@ export const apiUserExPatch = <ThrowOnError extends boolean = false>(options?: O
     requestValidator: async (data) => await zApiUserExPatchData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiUserExPatchResponse.parseAsync(data),
-    url: '/user-ex',
+    url: '/api/user/user-ex',
     ...options,
     headers: {
         'Content-Type': 'application/json',

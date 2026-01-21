@@ -2969,7 +2969,7 @@ export type tApiDraftCollectionRequest = {
     body?: tDraftQuery;
     path?: never;
     query?: never;
-    url: '/draft/collection';
+    url: '/api/user/draft/collection';
 };
 
 export type apiDraftCollectionErrors = {
@@ -2994,7 +2994,7 @@ export type tApiDraftCountRequest = {
     body?: tDraftCountQuery;
     path?: never;
     query?: never;
-    url: '/draft/count';
+    url: '/api/user/draft/count';
 };
 
 export type apiDraftCountErrors = {
@@ -3022,7 +3022,7 @@ export type tApiDraftCreateRequest = {
     body?: tDraftCreate;
     path?: never;
     query?: never;
-    url: '/draft/create';
+    url: '/api/user/draft/create';
 };
 
 export type apiDraftCreateErrors = {
@@ -3058,7 +3058,7 @@ export type tApiDraftDeleteRequest = {
     body?: tDraftQuery;
     path?: never;
     query?: never;
-    url: '/draft/delete';
+    url: '/api/user/draft/delete';
 };
 
 export type apiDraftDeleteErrors = {
@@ -3090,7 +3090,7 @@ export type tApiDraftFetchRequest = {
     body?: tDraftQuery;
     path?: never;
     query?: never;
-    url: '/draft/fetch';
+    url: '/api/user/draft/fetch';
 };
 
 export type apiDraftFetchErrors = {
@@ -3122,7 +3122,7 @@ export type tApiDraftGalleryCreateRequest = {
     body?: tDraftGalleryCreate;
     path?: never;
     query?: never;
-    url: '/draft/gallery/create';
+    url: '/api/user/draft/gallery/create';
 };
 
 export type apiDraftGalleryCreateErrors = {
@@ -3162,7 +3162,7 @@ export type tApiDraftPatchRequest = {
     body?: tDraftPatch;
     path?: never;
     query?: never;
-    url: '/draft/patch';
+    url: '/api/user/draft/patch';
 };
 
 export type apiDraftPatchErrors = {
@@ -3195,7 +3195,7 @@ export type tApiFavouriteCollectionRequest = {
     body?: tFavouriteQuery;
     path?: never;
     query?: never;
-    url: '/favourite/collection';
+    url: '/api/user/favourite/collection';
 };
 
 export type apiFavouriteCollectionErrors = {
@@ -3220,7 +3220,7 @@ export type tApiFavouriteCountRequest = {
     body?: tFavouriteCountQuery;
     path?: never;
     query?: never;
-    url: '/favourite/count';
+    url: '/api/user/favourite/count';
 };
 
 export type apiFavouriteCountErrors = {
@@ -3245,7 +3245,7 @@ export type tApiFavouriteToggleRequest = {
     body?: tFavouriteToggle;
     path?: never;
     query?: never;
-    url: '/favourite/toggle';
+    url: '/api/user/favourite/toggle';
 };
 
 export type apiFavouriteToggleErrors = {
@@ -3281,7 +3281,7 @@ export type tApiFeedCreateRequest = {
     body?: tFeedCreate;
     path?: never;
     query?: never;
-    url: '/feed/create';
+    url: '/api/user/feed/create';
 };
 
 export type apiFeedCreateErrors = {
@@ -3313,7 +3313,7 @@ export type tApiFeedPatchRequest = {
     body?: tFeedPatch;
     path?: never;
     query?: never;
-    url: '/feed/patch';
+    url: '/api/user/feed/patch';
 };
 
 export type apiFeedPatchErrors = {
@@ -3345,7 +3345,7 @@ export type tApiFeedFetchRequest = {
     body?: tFeedQuery;
     path?: never;
     query?: never;
-    url: '/feed/fetch';
+    url: '/api/user/feed/fetch';
 };
 
 export type apiFeedFetchErrors = {
@@ -3374,7 +3374,7 @@ export type tApiFeedCollectionRequest = {
     body?: tFeedQuery;
     path?: never;
     query?: never;
-    url: '/feed/collection';
+    url: '/api/user/feed/collection';
 };
 
 export type apiFeedCollectionErrors = {
@@ -3399,7 +3399,7 @@ export type tApiFeedCountRequest = {
     body?: tFeedCountQuery;
     path?: never;
     query?: never;
-    url: '/feed/count';
+    url: '/api/user/feed/count';
 };
 
 export type apiFeedCountErrors = {
@@ -3427,7 +3427,7 @@ export type tApiFeedDeleteRequest = {
     body?: tFeedQuery;
     path?: never;
     query?: never;
-    url: '/feed/delete';
+    url: '/api/user/feed/delete';
 };
 
 export type apiFeedDeleteErrors = {
@@ -3459,7 +3459,7 @@ export type tApiFeedGalleryCreateRequest = {
     body?: tFeedGalleryCreate;
     path?: never;
     query?: never;
-    url: '/feed/gallery/create';
+    url: '/api/user/feed/gallery/create';
 };
 
 export type apiFeedGalleryCreateErrors = {
@@ -3496,7 +3496,7 @@ export type tApiFeedFavouriteCollectionRequest = {
     body?: tFeedQuery;
     path?: never;
     query?: never;
-    url: '/feed-favourite/collection';
+    url: '/api/user/feed-favourite/collection';
 };
 
 export type apiFeedFavouriteCollectionErrors = {
@@ -3521,7 +3521,7 @@ export type tApiFlagCollectionRequest = {
     body?: tFlagQuery;
     path?: never;
     query?: never;
-    url: '/flag/collection';
+    url: '/api/user/flag/collection';
 };
 
 export type apiFlagCollectionErrors = {
@@ -3546,7 +3546,7 @@ export type tApiFlagCountRequest = {
     body?: tFlagCountQuery;
     path?: never;
     query?: never;
-    url: '/flag/count';
+    url: '/api/user/flag/count';
 };
 
 export type apiFlagCountErrors = {
@@ -3571,7 +3571,7 @@ export type tApiFlagToggleRequest = {
     body?: tFlagToggle;
     path?: never;
     query?: never;
-    url: '/flag/toggle';
+    url: '/api/user/flag/toggle';
 };
 
 export type apiFlagToggleErrors = {
@@ -3607,7 +3607,7 @@ export type tApiGalleryFetchRequest = {
     body?: tGalleryQuery;
     path?: never;
     query?: never;
-    url: '/gallery/fetch';
+    url: '/api/user/gallery/fetch';
 };
 
 export type apiGalleryFetchErrors = {
@@ -3636,7 +3636,7 @@ export type tApiGalleryCollectionRequest = {
     body?: tGalleryQuery;
     path?: never;
     query?: never;
-    url: '/gallery/collection';
+    url: '/api/user/gallery/collection';
 };
 
 export type apiGalleryCollectionErrors = {
@@ -3661,7 +3661,7 @@ export type tApiGalleryCountRequest = {
     body?: tGalleryCountQuery;
     path?: never;
     query?: never;
-    url: '/gallery/count';
+    url: '/api/user/gallery/count';
 };
 
 export type apiGalleryCountErrors = {
@@ -3686,7 +3686,7 @@ export type tApiIgnoreCollectionRequest = {
     body?: tIgnoreQuery;
     path?: never;
     query?: never;
-    url: '/ignore/collection';
+    url: '/api/user/ignore/collection';
 };
 
 export type apiIgnoreCollectionErrors = {
@@ -3711,7 +3711,7 @@ export type tApiIgnoreCountRequest = {
     body?: tIgnoreCountQuery;
     path?: never;
     query?: never;
-    url: '/ignore/count';
+    url: '/api/user/ignore/count';
 };
 
 export type apiIgnoreCountErrors = {
@@ -3736,7 +3736,7 @@ export type tApiIgnoreToggleRequest = {
     body?: tIgnoreToggle;
     path?: never;
     query?: never;
-    url: '/ignore/toggle';
+    url: '/api/user/ignore/toggle';
 };
 
 export type apiIgnoreToggleErrors = {
@@ -3772,7 +3772,7 @@ export type tApiListingCreateRequest = {
     body?: tListingCreate;
     path?: never;
     query?: never;
-    url: '/listing/create';
+    url: '/api/user/listing/create';
 };
 
 export type apiListingCreateErrors = {
@@ -3808,7 +3808,7 @@ export type tApiListingFetchRequest = {
     body?: tListingQuery;
     path?: never;
     query?: never;
-    url: '/listing/fetch';
+    url: '/api/user/listing/fetch';
 };
 
 export type apiListingFetchErrors = {
@@ -3837,7 +3837,7 @@ export type tApiListingCollectionRequest = {
     body?: tListingQuery;
     path?: never;
     query?: never;
-    url: '/listing/collection';
+    url: '/api/user/listing/collection';
 };
 
 export type apiListingCollectionErrors = {
@@ -3862,7 +3862,7 @@ export type tApiListingCountRequest = {
     body?: tListingCountQuery;
     path?: never;
     query?: never;
-    url: '/listing/count';
+    url: '/api/user/listing/count';
 };
 
 export type apiListingCountErrors = {
@@ -3890,7 +3890,7 @@ export type tApiListingEventCreateRequest = {
     body?: tListingEventCreate;
     path?: never;
     query?: never;
-    url: '/listing-event/create';
+    url: '/api/user/listing-event/create';
 };
 
 export type apiListingEventCreateErrors = {
@@ -3932,7 +3932,7 @@ export type tApiMessageThreadMessageCollectionRequest = {
         messageThreadId: string;
     };
     query?: never;
-    url: '/message-thread/{messageThreadId}/message/collection';
+    url: '/api/user/message-thread/{messageThreadId}/message/collection';
 };
 
 export type apiMessageThreadMessageCollectionErrors = {
@@ -3968,7 +3968,7 @@ export type tApiS3PresignRequest = {
     };
     path?: never;
     query?: never;
-    url: '/s3/pre-sign';
+    url: '/api/user/s3/pre-sign';
 };
 
 export type apiS3PresignErrors = {
@@ -4002,7 +4002,7 @@ export type tApiThumbCreateRequest = {
     body?: tThumbCreate;
     path?: never;
     query?: never;
-    url: '/thumb/create';
+    url: '/api/user/thumb/create';
 };
 
 export type apiThumbCreateErrors = {
@@ -4035,7 +4035,7 @@ export type tApiTransactionCollectionRequest = {
     body?: tTransactionQuery;
     path?: never;
     query?: never;
-    url: '/transaction/collection';
+    url: '/api/user/transaction/collection';
 };
 
 export type apiTransactionCollectionErrors = {
@@ -4063,7 +4063,7 @@ export type tApiTransactionCreateRequest = {
     body?: tTransactionCreate;
     path?: never;
     query?: never;
-    url: '/transaction/create';
+    url: '/api/user/transaction/create';
 };
 
 export type apiTransactionCreateErrors = {
@@ -4095,7 +4095,7 @@ export type tApiTransactionFetchRequest = {
     body?: tTransactionQuery;
     path?: never;
     query?: never;
-    url: '/transaction/fetch';
+    url: '/api/user/transaction/fetch';
 };
 
 export type apiTransactionFetchErrors = {
@@ -4127,7 +4127,7 @@ export type tApiTransactionBuyerInfoRequest = {
     body?: tTransactionQuery;
     path?: never;
     query?: never;
-    url: '/transaction/buyer-info';
+    url: '/api/user/transaction/buyer-info';
 };
 
 export type apiTransactionBuyerInfoErrors = {
@@ -4156,7 +4156,7 @@ export type tApiTransactionListingCollectionRequest = {
     body?: tTransactionListingQuery;
     path?: never;
     query?: never;
-    url: '/transaction-listing/collection';
+    url: '/api/user/transaction-listing/collection';
 };
 
 export type apiTransactionListingCollectionErrors = {
@@ -4184,7 +4184,7 @@ export type tApiTransactionMessageGalleryCreateRequest = {
     body?: tTransactionMessageGalleryCreate;
     path?: never;
     query?: never;
-    url: '/transaction-message-gallery/create';
+    url: '/api/user/transaction-message-gallery/create';
 };
 
 export type apiTransactionMessageGalleryCreateErrors = {
@@ -4224,7 +4224,7 @@ export type tApiTransactionMessageLocationCreateRequest = {
     body?: tTransactionMessageLocationCreate;
     path?: never;
     query?: never;
-    url: '/transaction-message-location/create';
+    url: '/api/user/transaction-message-location/create';
 };
 
 export type apiTransactionMessageLocationCreateErrors = {
@@ -4264,7 +4264,7 @@ export type tApiTransactionMessagePackageCreateRequest = {
     body?: tTransactionMessagePackageCreate;
     path?: never;
     query?: never;
-    url: '/transaction-message-package/create';
+    url: '/api/user/transaction-message-package/create';
 };
 
 export type apiTransactionMessagePackageCreateErrors = {
@@ -4304,7 +4304,7 @@ export type tApiTransactionMessagePersonalCreateRequest = {
     body?: tTransactionMessagePersonalCreate;
     path?: never;
     query?: never;
-    url: '/transaction-message-personal/create';
+    url: '/api/user/transaction-message-personal/create';
 };
 
 export type apiTransactionMessagePersonalCreateErrors = {
@@ -4344,7 +4344,7 @@ export type tApiTransactionMessageTextCreateRequest = {
     body?: tTransactionMessageTextCreate;
     path?: never;
     query?: never;
-    url: '/transaction-message-text/create';
+    url: '/api/user/transaction-message-text/create';
 };
 
 export type apiTransactionMessageTextCreateErrors = {
@@ -4384,7 +4384,7 @@ export type tApiTransactionStatusAcceptRequest = {
     body?: tTransactionStatusAccept;
     path?: never;
     query?: never;
-    url: '/transaction/status/accept';
+    url: '/api/user/transaction/status/accept';
 };
 
 export type apiTransactionStatusAcceptErrors = {
@@ -4420,7 +4420,7 @@ export type tApiTransactionStatusRejectRequest = {
     body?: tTransactionStatusReject;
     path?: never;
     query?: never;
-    url: '/transaction/status/reject';
+    url: '/api/user/transaction/status/reject';
 };
 
 export type apiTransactionStatusRejectErrors = {
@@ -4456,7 +4456,7 @@ export type tApiTransactionStatusResolveRequest = {
     body?: tTransactionStatusResolve;
     path?: never;
     query?: never;
-    url: '/transaction/status/resolve';
+    url: '/api/user/transaction/status/resolve';
 };
 
 export type apiTransactionStatusResolveErrors = {
@@ -4496,7 +4496,7 @@ export type tApiTransactionStatusSuccessRequest = {
     body?: tTransactionStatusSuccess;
     path?: never;
     query?: never;
-    url: '/transaction/status/success';
+    url: '/api/user/transaction/status/success';
 };
 
 export type apiTransactionStatusSuccessErrors = {
@@ -4536,7 +4536,7 @@ export type tApiTransactionStatusDisputeRequest = {
     body?: tTransactionStatusDispute;
     path?: never;
     query?: never;
-    url: '/transaction/status/dispute';
+    url: '/api/user/transaction/status/dispute';
 };
 
 export type apiTransactionStatusDisputeErrors = {
@@ -4572,7 +4572,7 @@ export type tApiTransactionStatusCloseRequest = {
     body?: tTransactionStatusClose;
     path?: never;
     query?: never;
-    url: '/transaction/status/close';
+    url: '/api/user/transaction/status/close';
 };
 
 export type apiTransactionStatusCloseErrors = {
@@ -4612,7 +4612,7 @@ export type tApiUploadCreateRequest = {
     body?: tUploadCreate;
     path?: never;
     query?: never;
-    url: '/upload/create';
+    url: '/api/user/upload/create';
 };
 
 export type apiUploadCreateErrors = {
@@ -4648,7 +4648,7 @@ export type tApiUserExPatchRequest = {
     body?: tUserExPatch;
     path?: never;
     query?: never;
-    url: '/user-ex';
+    url: '/api/user/user-ex';
 };
 
 export type apiUserExPatchErrors = {

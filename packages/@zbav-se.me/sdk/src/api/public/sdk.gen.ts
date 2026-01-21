@@ -26,7 +26,7 @@ export const apiCronHourly = <ThrowOnError extends boolean = false>(options?: Op
     requestValidator: async (data) => await zApiCronHourlyData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCronHourlyResponse.parseAsync(data),
-    url: '/cron/hourly',
+    url: '/api/public/cron/hourly',
     ...options
 });
 
@@ -37,7 +37,7 @@ export const apiCronMonthly = <ThrowOnError extends boolean = false>(options?: O
     requestValidator: async (data) => await zApiCronMonthlyData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCronMonthlyResponse.parseAsync(data),
-    url: '/cron/monthly',
+    url: '/api/public/cron/monthly',
     ...options
 });
 
@@ -48,7 +48,7 @@ export const apiCronDay0 = <ThrowOnError extends boolean = false>(options?: Opti
     requestValidator: async (data) => await zApiCronDay0Data.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCronDay0Response.parseAsync(data),
-    url: '/cron/day-0',
+    url: '/api/public/cron/day-0',
     ...options
 });
 
@@ -59,7 +59,7 @@ export const apiCronDay4 = <ThrowOnError extends boolean = false>(options?: Opti
     requestValidator: async (data) => await zApiCronDay4Data.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCronDay4Response.parseAsync(data),
-    url: '/cron/day-4',
+    url: '/api/public/cron/day-4',
     ...options
 });
 
@@ -70,7 +70,7 @@ export const apiCronDay8 = <ThrowOnError extends boolean = false>(options?: Opti
     requestValidator: async (data) => await zApiCronDay8Data.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCronDay8Response.parseAsync(data),
-    url: '/cron/day-8',
+    url: '/api/public/cron/day-8',
     ...options
 });
 
@@ -81,7 +81,7 @@ export const apiCronDay12 = <ThrowOnError extends boolean = false>(options?: Opt
     requestValidator: async (data) => await zApiCronDay12Data.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCronDay12Response.parseAsync(data),
-    url: '/cron/day-12',
+    url: '/api/public/cron/day-12',
     ...options
 });
 
@@ -92,7 +92,7 @@ export const apiCronDay16 = <ThrowOnError extends boolean = false>(options?: Opt
     requestValidator: async (data) => await zApiCronDay16Data.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCronDay16Response.parseAsync(data),
-    url: '/cron/day-16',
+    url: '/api/public/cron/day-16',
     ...options
 });
 
@@ -103,7 +103,7 @@ export const apiCronDay20 = <ThrowOnError extends boolean = false>(options?: Opt
     requestValidator: async (data) => await zApiCronDay20Data.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiCronDay20Response.parseAsync(data),
-    url: '/cron/day-20',
+    url: '/api/public/cron/day-20',
     ...options
 });
 
@@ -114,7 +114,7 @@ export const apiGithubHistory = <ThrowOnError extends boolean = false>(options: 
     requestValidator: async (data) => await zApiGithubHistoryData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiGithubHistoryResponse.parseAsync(data),
-    url: '/github/history',
+    url: '/api/public/github/history',
     ...options
 });
 
@@ -125,7 +125,7 @@ export const apiHealth = <ThrowOnError extends boolean = false>(options?: Option
     requestValidator: async (data) => await zApiHealthData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiHealthResponse.parseAsync(data),
-    url: '/health',
+    url: '/api/public/health',
     ...options
 });
 
@@ -136,7 +136,7 @@ export const apiJanitorCleanup = <ThrowOnError extends boolean = false>(options?
     requestValidator: async (data) => await zApiJanitorCleanupData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiJanitorCleanupResponse.parseAsync(data),
-    url: '/janitor/cleanup',
+    url: '/api/public/janitor/cleanup',
     ...options
 });
 
@@ -147,7 +147,7 @@ export const apiMigrationRun = <ThrowOnError extends boolean = false>(options?: 
     requestValidator: async (data) => await zApiMigrationRunData.parseAsync(data),
     responseType: 'json',
     responseValidator: async (data) => await zApiMigrationRunResponse.parseAsync(data),
-    url: '/migration/run',
+    url: '/api/public/migration/run',
     ...options
 });
 
@@ -156,7 +156,7 @@ export const apiMigrationRun = <ThrowOnError extends boolean = false>(options?: 
  */
 export const apiSeed = <ThrowOnError extends boolean = false>(options?: Options<tApiSeedRequest, ThrowOnError>) => (options?.client ?? client).post<tApiSeedResponse, apiSeedErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiSeedData.parseAsync(data),
-    url: '/seed',
+    url: '/api/public/seed',
     ...options,
     headers: {
         'Content-Type': 'application/json',

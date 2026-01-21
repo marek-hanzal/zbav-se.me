@@ -47,7 +47,7 @@ export type tApiCronHourlyRequest = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/cron/hourly';
+    url: '/api/public/cron/hourly';
 };
 
 export type tApiCronHourlyResponse = {
@@ -69,7 +69,7 @@ export type tApiCronMonthlyRequest = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/cron/monthly';
+    url: '/api/public/cron/monthly';
 };
 
 export type tApiCronMonthlyResponse = {
@@ -91,7 +91,7 @@ export type tApiCronDay0Request = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/cron/day-0';
+    url: '/api/public/cron/day-0';
 };
 
 export type tApiCronDay0Response = {
@@ -113,7 +113,7 @@ export type tApiCronDay4Request = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/cron/day-4';
+    url: '/api/public/cron/day-4';
 };
 
 export type tApiCronDay4Response = {
@@ -135,7 +135,7 @@ export type tApiCronDay8Request = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/cron/day-8';
+    url: '/api/public/cron/day-8';
 };
 
 export type tApiCronDay8Response = {
@@ -157,7 +157,7 @@ export type tApiCronDay12Request = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/cron/day-12';
+    url: '/api/public/cron/day-12';
 };
 
 export type tApiCronDay12Response = {
@@ -179,7 +179,7 @@ export type tApiCronDay16Request = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/cron/day-16';
+    url: '/api/public/cron/day-16';
 };
 
 export type tApiCronDay16Response = {
@@ -201,7 +201,7 @@ export type tApiCronDay20Request = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/cron/day-20';
+    url: '/api/public/cron/day-20';
 };
 
 export type tApiCronDay20Response = {
@@ -228,7 +228,7 @@ export type tApiGithubHistoryRequest = {
          */
         weeks: number;
     };
-    url: '/github/history';
+    url: '/api/public/github/history';
 };
 
 export type apiGithubHistoryErrors = {
@@ -253,7 +253,7 @@ export type tApiHealthRequest = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/health';
+    url: '/api/public/health';
 };
 
 export type tApiHealthResponse = {
@@ -274,7 +274,7 @@ export type tApiJanitorCleanupRequest = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/janitor/cleanup';
+    url: '/api/public/janitor/cleanup';
 };
 
 export type apiJanitorCleanupErrors = {
@@ -312,7 +312,7 @@ export type tApiMigrationRunRequest = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/migration/run';
+    url: '/api/public/migration/run';
 };
 
 export type tApiMigrationRunResponse = {
@@ -359,7 +359,7 @@ export type tApiSeedRequest = {
     };
     path?: never;
     query?: never;
-    url: '/seed';
+    url: '/api/public/seed';
 };
 
 export type apiSeedErrors = {
