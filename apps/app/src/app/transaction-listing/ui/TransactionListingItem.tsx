@@ -1,10 +1,12 @@
+import { useLocale } from "@use-pico/client/hook";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
+import { tvc } from "@use-pico/cls";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, useState } from "react";
+import type { FC } from "react";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
-import { ListingSheet } from "~/app/listing/ui/ListingSheet";
 
 export namespace TransactionListingItem {
 	export interface Props extends Container.Props {
@@ -18,107 +20,133 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 	className,
 	...props
 }) => {
-	const [isOpen, setIsOpen] = useState(false);
+	const locale = useLocale();
 
 	return (
-		<withListingFetchQuery.Suspense
-			data={{
-				where: {
-					id: listingId,
-				},
+		<Container
+			data-ui={"TransactionListingItem[Container]"}
+			data-id={listingId}
+			className={tvc([
+				"h-48 md:h-92",
+				className,
+			])}
+			ui={{
+				tone: "secondary",
+				position: "relative",
+				round: "lg",
+				width: "full",
+				shadow: true,
+				...ui,
 			}}
-			fallback={
-				<SpinnerContainer
-					type={"icon"}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						background: "default",
-						border: true,
-						shadow: true,
-						round: "default",
-					}}
-					className={[
-						"h-48 md:h-92",
-					]}
-					onClick={() => setIsOpen((prev) => !prev)}
-				/>
-			}
+			{...props}
 		>
-			{({ data: listing }) => {
-				// biome-ignore lint/correctness/useHookAtTopLevel: Ssst
-				const hero = useHeroUpload(listing.gallery.items);
-
-				return (
-					<>
-						<Container
+			<LinkTo
+				to={"/$locale/ui/seller/message/$listingId/list"}
+				params={{
+					locale,
+					listingId,
+				}}
+				ui={{
+					height: "full",
+					width: "full",
+				}}
+			>
+				<withListingFetchQuery.Suspense
+					data={{
+						where: {
+							id: listingId,
+						},
+					}}
+					fallback={
+						<SpinnerContainer
+							type={"icon"}
 							ui={{
-								position: "relative",
-								round: "default",
-								...ui,
+								tone: "neutral",
+								theme: "light",
+								background: "default",
+								border: true,
+								width: "full",
+								height: "full",
+								shadow: true,
+								round: "lg",
 							}}
 							className={[
 								"h-48 md:h-92",
-								className,
-							]}
-							onClick={() => setIsOpen((prev) => !prev)}
-							{...props}
-						>
-							<HeroImage
-								src={hero.url}
-								alt={`Hero image for listing ${listing.id}`}
-								ui={{
-									round: "default",
-								}}
-							/>
-
-							<Container
-								ui={{
-									tone: "secondary",
-									theme: "light",
-									color: "lead",
-									flow: "vertical",
-									background: "default",
-									border: true,
-									shadow: true,
-									inner: "default",
-									round: "default",
-									snapTo: "bottom",
-								}}
-								className={"text-center"}
-							>
-								<Tx
-									label={listing.title}
-									ui={{
-										font: "bold",
-									}}
-								/>
-
-								<Tx
-									label={listing.location.address}
-									ui={{
-										text: "sm",
-									}}
-								/>
-							</Container>
-						</Container>
-
-						<ListingSheet
-							listing={listing}
-							data-id={listingId}
-							state={{
-								value: isOpen,
-								set: setIsOpen,
-							}}
-							withScore={false}
-							feedId={undefined}
-							tools={[
-								"hero",
 							]}
 						/>
-					</>
-				);
-			}}
-		</withListingFetchQuery.Suspense>
+					}
+				>
+					{({ data: listing }) => {
+						// biome-ignore lint/correctness/useHookAtTopLevel: Ssst
+						const hero = useHeroUpload(listing.gallery.items);
+
+						return (
+							<>
+								<HeroImage
+									data-uri="TransactionListingItem-[HeroImage]"
+									src={hero.url}
+									alt={`Hero image for listing ${listing.id}`}
+									visible
+									invisible={
+										<SpinnerContainer
+											data-ui="TransactionListingItem-[SpinnerImage]"
+											type={"icon"}
+											ui={{
+												tone: "neutral",
+												theme: "light",
+												background: "default",
+												round: "lg",
+											}}
+											className={[
+												"w-full",
+												"h-full",
+											]}
+										/>
+									}
+									ui={{
+										round: "lg",
+										width: "full",
+									}}
+								/>
+
+								<Container
+									ui={{
+										tone: "neutral",
+										theme: "light",
+										color: "lead",
+										flow: "vertical",
+										background: "default",
+										border: true,
+										shadow: true,
+										inner: "default",
+										round: "md",
+										snapTo: "bottom",
+									}}
+									className={"text-center"}
+								>
+									<Tx
+										label={listing.title}
+										ui={{
+											tone: "brand",
+											theme: "light",
+											color: "lead",
+											font: "bold",
+											truncate: true,
+										}}
+									/>
+
+									<Tx
+										label={listing.location.address}
+										ui={{
+											text: "sm",
+										}}
+									/>
+								</Container>
+							</>
+						);
+					}}
+				</withListingFetchQuery.Suspense>
+			</LinkTo>
+		</Container>
 	);
 };
