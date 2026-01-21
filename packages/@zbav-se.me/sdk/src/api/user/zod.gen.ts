@@ -2105,11 +2105,74 @@ export const zFlagItemSchema = z.object({
 export type zFlagItemSchema = z.infer<typeof zFlagItemSchema>;
 
 /**
+ * Field of the listing sort
+ */
+export const zListingSortField = z.enum([
+    'price',
+    'condition',
+    'age',
+    'createdAt',
+    'updatedAt',
+    'expiresAt',
+    'geo'
+]).register(z.globalRegistry, {
+    description: 'Field of the listing sort'
+});
+
+export type zListingSortField = z.infer<typeof zListingSortField>;
+
+/**
+ * Sort object for listing collection
+ */
+export const zListingSort = z.object({
+    field: zListingSortField,
+    direction: zOrderEnum
+}).register(z.globalRegistry, {
+    description: 'Sort object for listing collection'
+});
+
+export type zListingSort = z.infer<typeof zListingSort>;
+
+/**
+ * Query object for listing collection
+ */
+export const zListingQuery = z.object({
+    cursor: z.optional(zCursor.and(z.unknown().default({ page: 0, size: 256 }))),
+    filter: z.optional(zListingFilter),
+    where: z.optional(zListingWhere),
+    sort: z.optional(z.array(zListingSort)),
+    meta: z.optional(zListingMeta)
+}).register(z.globalRegistry, {
+    description: 'Query object for listing collection'
+});
+
+export type zListingQuery = z.infer<typeof zListingQuery>;
+
+/**
  * Feed favourite collection item
  */
 export const zFeedFavouriteItemSchema = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: 'ID of the feed favourite'
+        description: 'ID of the feed'
+    }),
+    locationId: z.union([
+        z.string(),
+        z.null()
+    ]),
+    uploadId: z.union([
+        z.string(),
+        z.null()
+    ]),
+    name: z.string().register(z.globalRegistry, {
+        description: 'Name of the feed'
+    }),
+    query: zListingQuery,
+    upload: z.union([
+        zUpload,
+        z.null()
+    ]),
+    count: z.number().register(z.globalRegistry, {
+        description: 'Number of items in favourites for this feed'
     })
 }).register(z.globalRegistry, {
     description: 'Feed favourite collection item'
@@ -2241,50 +2304,6 @@ export const zFeedQuery = z.object({
 });
 
 export type zFeedQuery = z.infer<typeof zFeedQuery>;
-
-/**
- * Field of the listing sort
- */
-export const zListingSortField = z.enum([
-    'price',
-    'condition',
-    'age',
-    'createdAt',
-    'updatedAt',
-    'expiresAt',
-    'geo'
-]).register(z.globalRegistry, {
-    description: 'Field of the listing sort'
-});
-
-export type zListingSortField = z.infer<typeof zListingSortField>;
-
-/**
- * Sort object for listing collection
- */
-export const zListingSort = z.object({
-    field: zListingSortField,
-    direction: zOrderEnum
-}).register(z.globalRegistry, {
-    description: 'Sort object for listing collection'
-});
-
-export type zListingSort = z.infer<typeof zListingSort>;
-
-/**
- * Query object for listing collection
- */
-export const zListingQuery = z.object({
-    cursor: z.optional(zCursor.and(z.unknown().default({ page: 0, size: 256 }))),
-    filter: z.optional(zListingFilter),
-    where: z.optional(zListingWhere),
-    sort: z.optional(z.array(zListingSort)),
-    meta: z.optional(zListingMeta)
-}).register(z.globalRegistry, {
-    description: 'Query object for listing collection'
-});
-
-export type zListingQuery = z.infer<typeof zListingQuery>;
 
 /**
  * Data for updating an existing feed

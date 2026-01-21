@@ -1,10 +1,9 @@
 import { z } from "@hono/zod-openapi";
+import { FeedFavouriteSchema } from "~/@user/feed-favourite/schema/FeedFavouriteSchema";
 
 export const FeedFavouriteItemSchema = z
 	.looseObject({
-		id: z.string().openapi({
-			description: "ID of the feed favourite",
-		}),
+		...FeedFavouriteSchema.shape,
 	})
 	.strip()
 	.openapi("FeedFavouriteItemSchema", {

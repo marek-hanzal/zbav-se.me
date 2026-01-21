@@ -93,7 +93,7 @@ export const TransactionListingList: FC<TransactionListingList.Props> = ({
 								<TransactionListingItem
 									key={item.listingId}
 									data-id={item.listingId}
-									transactionListing={item}
+									transactionListingItem={item}
 								/>
 							))}
 						</Container>

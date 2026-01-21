@@ -8,7 +8,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { tvc } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import type { tTransactionListing } from "@zbav-se.me/sdk/api/user";
+import type { tTransactionListingItem } from "@zbav-se.me/sdk/api/user";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
@@ -17,12 +17,12 @@ import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
 
 export namespace TransactionListingItem {
 	export interface Props extends Container.Props {
-		transactionListing: tTransactionListing;
+		transactionListingItem: tTransactionListingItem;
 	}
 }
 
 export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
-	transactionListing,
+	transactionListingItem,
 	ui,
 	className,
 	...props
@@ -32,7 +32,7 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 	return (
 		<Container
 			data-ui={"TransactionListingItem[Container]"}
-			data-id={transactionListing.listingId}
+			data-id={transactionListingItem.listingId}
 			className={tvc([
 				"h-42 md:h-92",
 				className,
@@ -51,7 +51,7 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 				to={"/$locale/ui/seller/message/$listingId/list"}
 				params={{
 					locale,
-					listingId: transactionListing.listingId,
+					listingId: transactionListingItem.listingId,
 				}}
 				ui={{
 					height: "full",
@@ -61,7 +61,7 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 				<withListingFetchQuery.Suspense
 					data={{
 						where: {
-							id: transactionListing.listingId,
+							id: transactionListingItem.listingId,
 						},
 					}}
 					fallback={
@@ -132,7 +132,7 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 									<Typo
 										label={`x${toLocaleNumber({
 											locale,
-											number: transactionListing.count,
+											number: transactionListingItem.count,
 										})}`}
 										ui={{
 											font: "bold",
@@ -159,7 +159,7 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 									<Typo
 										label={toTimeDiff({
 											locale,
-											time: transactionListing.lastAt,
+											time: transactionListingItem.lastAt,
 										})}
 										ui={{
 											font: "bold",

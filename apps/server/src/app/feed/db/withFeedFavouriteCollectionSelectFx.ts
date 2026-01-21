@@ -16,6 +16,6 @@ export const withFeedFavouriteCollectionSelectFx = Effect.fn("withFeedFavouriteC
 			sort,
 		});
 
-		return sourceSelect.select("f.id");
+		return sourceSelect.selectAll("f");
 	},
 );

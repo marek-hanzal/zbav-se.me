@@ -2568,11 +2568,128 @@ export const sFeedFavouriteItemSchema = {
     properties: {
         id: {
             type: 'string'
+        },
+        locationId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        uploadId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        name: {
+            type: 'string'
+        },
+        query: {
+            $ref: '#/components/schemas/ListingQuery'
+        },
+        upload: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/Upload'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        count: {
+            type: 'number'
         }
     },
     required: [
-        'id'
+        'id',
+        'locationId',
+        'uploadId',
+        'name',
+        'query',
+        'upload',
+        'count'
     ]
+} as const;
+
+export const sListingSortField = {
+    type: 'string',
+    enum: [
+        'price',
+        'condition',
+        'age',
+        'createdAt',
+        'updatedAt',
+        'expiresAt',
+        'geo'
+    ]
+} as const;
+
+export const sListingSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/ListingSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sListingQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/Cursor'
+                },
+                {
+                    default: {
+                        page: 0,
+                        size: 256
+                    }
+                }
+            ]
+        },
+        filter: {
+            $ref: '#/components/schemas/ListingFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/ListingWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/ListingSort'
+            }
+        },
+        meta: {
+            $ref: '#/components/schemas/ListingMeta'
+        }
+    }
 } as const;
 
 export const sFeedGalleryCreate = {
@@ -2766,69 +2883,6 @@ export const sFeedQuery = {
             items: {
                 $ref: '#/components/schemas/FeedSort'
             }
-        }
-    }
-} as const;
-
-export const sListingSortField = {
-    type: 'string',
-    enum: [
-        'price',
-        'condition',
-        'age',
-        'createdAt',
-        'updatedAt',
-        'expiresAt',
-        'geo'
-    ]
-} as const;
-
-export const sListingSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/ListingSortField'
-        },
-        direction: {
-            $ref: '#/components/schemas/OrderEnum'
-        }
-    },
-    required: [
-        'field',
-        'direction'
-    ]
-} as const;
-
-export const sListingQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/Cursor'
-                },
-                {
-                    default: {
-                        page: 0,
-                        size: 256
-                    }
-                }
-            ]
-        },
-        filter: {
-            $ref: '#/components/schemas/ListingFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingSort'
-            }
-        },
-        meta: {
-            $ref: '#/components/schemas/ListingMeta'
         }
     }
 } as const;

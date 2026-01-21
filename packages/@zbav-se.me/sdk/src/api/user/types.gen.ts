@@ -1944,9 +1944,67 @@ export type tFlagItemSchema = {
  */
 export type tFeedFavouriteItemSchema = {
     /**
-     * ID of the feed favourite
+     * ID of the feed
      */
     id: string;
+    /**
+     * ID of the location associated with the feed
+     */
+    locationId: string | null;
+    /**
+     * Hero image for this feed (usually selected from the listings in the feed)
+     */
+    uploadId: string | null;
+    /**
+     * Name of the feed
+     */
+    name: string;
+    query: tListingQuery;
+    /**
+     * Hero banner for this feed
+     */
+    upload: tUpload | null;
+    /**
+     * Number of items in favourites for this feed
+     */
+    count: number;
+};
+
+/**
+ * Field of the listing sort
+ */
+export const tListingSortField = {
+    price: 'price',
+    condition: 'condition',
+    age: 'age',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    expiresAt: 'expiresAt',
+    geo: 'geo'
+} as const;
+
+/**
+ * Field of the listing sort
+ */
+export type tListingSortField = typeof tListingSortField[keyof typeof tListingSortField];
+
+/**
+ * Sort object for listing collection
+ */
+export type tListingSort = {
+    field: tListingSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * Query object for listing collection
+ */
+export type tListingQuery = {
+    cursor?: tCursor & unknown;
+    filter?: tListingFilter;
+    where?: tListingWhere;
+    sort?: Array<tListingSort>;
+    meta?: tListingMeta;
 };
 
 /**
@@ -2081,43 +2139,6 @@ export type tFeedQuery = {
     filter?: tFeedFilter;
     where?: tFeedWhere;
     sort?: Array<tFeedSort>;
-};
-
-/**
- * Field of the listing sort
- */
-export const tListingSortField = {
-    price: 'price',
-    condition: 'condition',
-    age: 'age',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    expiresAt: 'expiresAt',
-    geo: 'geo'
-} as const;
-
-/**
- * Field of the listing sort
- */
-export type tListingSortField = typeof tListingSortField[keyof typeof tListingSortField];
-
-/**
- * Sort object for listing collection
- */
-export type tListingSort = {
-    field: tListingSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * Query object for listing collection
- */
-export type tListingQuery = {
-    cursor?: tCursor & unknown;
-    filter?: tListingFilter;
-    where?: tListingWhere;
-    sort?: Array<tListingSort>;
-    meta?: tListingMeta;
 };
 
 /**
