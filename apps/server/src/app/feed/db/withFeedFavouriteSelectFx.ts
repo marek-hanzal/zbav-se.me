@@ -1,12 +1,9 @@
 import { Effect } from "effect";
-import { withFeedSelectFx } from "~/app/feed/db/withFeedSelectFx";
-import type { FeedSortSchema } from "~/app/feed/schema/FeedSortSchema";
+import { jsonObjectFrom } from "kysely/helpers/postgres";
+import { withFeedFavouriteSourceSelectFx } from "~/app/feed/db/withFeedFavouriteSourceSelectFx";
 
 export namespace withFeedFavouriteSelectFx {
-	export interface Props {
-		userId: string;
-		sort?: FeedSortSchema.Type[];
-	}
+	export interface Props extends withFeedFavouriteSourceSelectFx.Props {}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withFeedFavouriteSelectFx>>;
 }
@@ -15,11 +12,22 @@ export const withFeedFavouriteSelectFx = Effect.fn("withFeedFavouriteSelectFx")(
 	userId,
 	sort,
 }: withFeedFavouriteSelectFx.Props) {
-	const feedSelect = yield* withFeedSelectFx({
+	const sourceSelect = yield* withFeedFavouriteSourceSelectFx({
+		userId,
 		sort,
 	});
 
-	return feedSelect
+	return sourceSelect
+		.selectAll()
+		.select((eb) =>
+			jsonObjectFrom(
+				eb
+					.selectFrom("upload as u")
+					.selectAll()
+					.whereRef("u.id", "=", "f.uploadId")
+					.limit(1),
+			).as("upload"),
+		)
 		.select((eb) =>
 			eb
 				.selectFrom("favourite")
@@ -29,8 +37,5 @@ export const withFeedFavouriteSelectFx = Effect.fn("withFeedFavouriteSelectFx")(
 				.$asScalar()
 				.$notNull()
 				.as("count"),
-		)
-		.where("f.id", "in", (eb) =>
-			eb.selectFrom("favourite").select("feedId").where("userId", "=", userId),
 		);
 });

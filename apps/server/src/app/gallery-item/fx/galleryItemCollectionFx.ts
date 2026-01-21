@@ -1,7 +1,7 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withGalleryItemCollectionSelectFx } from "~/app/gallery-item/db/withGalleryItemCollectionSelectFx";
 import { withGalleryItemQueryBuilderFx } from "~/app/gallery-item/db/withGalleryItemQueryBuilderFx";
-import { withGalleryItemSelectFx } from "~/app/gallery-item/db/withGalleryItemSelectFx";
 import type { GalleryItemFilterSchema } from "~/app/gallery-item/schema/GalleryItemFilterSchema";
 import type { GalleryItemQuerySchema } from "~/app/gallery-item/schema/GalleryItemQuerySchema";
 
@@ -19,7 +19,7 @@ export const galleryItemCollectionFx = Effect.fn("galleryItemCollectionFx")(func
 	sort,
 }: galleryItemCollectionFx.Props) {
 	return yield* withCollectionFx({
-		selectFx: withGalleryItemSelectFx({
+		selectFx: withGalleryItemCollectionSelectFx({
 			sort,
 		}),
 		cursor: cursor ?? {

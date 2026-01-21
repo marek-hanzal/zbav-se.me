@@ -1,25 +1,24 @@
 import { Effect } from "effect";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
-import { match } from "ts-pattern";
-import type { GalleryItemSortSchema } from "~/app/gallery-item/schema/GalleryItemSortSchema";
+import { withGalleryItemSourceSelectFx } from "~/app/gallery-item/db/withGalleryItemSourceSelectFx";
 import { withUploadSelectFx } from "~/app/upload/db/withUploadSelectFx";
-import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withGalleryItemSelectFx {
-	export interface Props {
-		sort?: GalleryItemSortSchema.Type[];
-	}
+	export interface Props extends withGalleryItemSourceSelectFx.Props {}
+
 	export type Select = Effect.Effect.Success<ReturnType<typeof withGalleryItemSelectFx>>;
 }
 
 export const withGalleryItemSelectFx = Effect.fn("withGalleryItemSelectFx")(function* ({
 	sort,
 }: withGalleryItemSelectFx.Props) {
-	const { kysely } = yield* KyselyContextFx;
+	const sourceSelect = yield* withGalleryItemSourceSelectFx({
+		sort,
+	});
 
 	const uploadSelect = yield* withUploadSelectFx({});
 
-	let query = kysely.selectFrom("gallery_item as gal_item").select([
+	return sourceSelect.select([
 		"gal_item.id",
 		"gal_item.galleryId",
 		"gal_item.uploadId",
@@ -29,13 +28,4 @@ export const withGalleryItemSelectFx = Effect.fn("withGalleryItemSelectFx")(func
 				.$notNull()
 				.as("upload"),
 	]);
-
-	for (const item of sort ?? []) {
-		query = match(item.field)
-			.with("sort", () => query.orderBy("gal_item.sort", item.direction))
-			.with("createdAt", () => query.orderBy("gal_item.createdAt", item.direction))
-			.exhaustive();
-	}
-
-	return query;
 });

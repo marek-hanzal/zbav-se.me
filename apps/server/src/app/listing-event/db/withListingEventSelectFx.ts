@@ -1,12 +1,8 @@
 import { Effect } from "effect";
-import { match } from "ts-pattern";
-import type { ListingEventSortSchema } from "~/app/listing-event/schema/ListingEventSortSchema";
-import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withListingEventSourceSelectFx } from "~/app/listing-event/db/withListingEventSourceSelectFx";
 
 export namespace withListingEventSelectFx {
-	export interface Props {
-		sort?: ListingEventSortSchema.Type[];
-	}
+	export interface Props extends withListingEventSourceSelectFx.Props {}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withListingEventSelectFx>>;
 }
@@ -14,15 +10,9 @@ export namespace withListingEventSelectFx {
 export const withListingEventSelectFx = Effect.fn("withListingEventSelectFx")(function* ({
 	sort,
 }: withListingEventSelectFx.Props) {
-	const { kysely } = yield* KyselyContextFx;
+	const sourceSelect = yield* withListingEventSourceSelectFx({
+		sort,
+	});
 
-	let query = kysely.selectFrom("listing_event as le").selectAll("le");
-
-	for (const item of sort ?? []) {
-		query = match(item.field)
-			.with("createdAt", () => query.orderBy("le.createdAt", item.direction))
-			.exhaustive();
-	}
-
-	return query;
+	return sourceSelect.selectAll("le");
 });

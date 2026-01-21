@@ -1,7 +1,7 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
+import { withGalleryItemCollectionSelectFx } from "~/app/gallery-item/db/withGalleryItemCollectionSelectFx";
 import { withGalleryItemQueryBuilderFx } from "~/app/gallery-item/db/withGalleryItemQueryBuilderFx";
-import { withGalleryItemSelectFx } from "~/app/gallery-item/db/withGalleryItemSelectFx";
 import type { GalleryItemCountQuerySchema } from "~/app/gallery-item/schema/GalleryItemCountQuerySchema";
 import type { GalleryItemFilterSchema } from "~/app/gallery-item/schema/GalleryItemFilterSchema";
 
@@ -17,7 +17,7 @@ export const galleryItemCountFx = Effect.fn("galleryItemCountFx")(function* ({
 	scope,
 }: galleryItemCountFx.Props) {
 	return yield* withCountFx({
-		selectFx: withGalleryItemSelectFx({}),
+		selectFx: withGalleryItemCollectionSelectFx({}),
 		filter,
 		where,
 		scope,

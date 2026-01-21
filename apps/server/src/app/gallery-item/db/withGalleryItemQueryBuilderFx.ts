@@ -1,20 +1,23 @@
 import { Effect } from "effect";
 import type { GalleryItemFilterSchema } from "~/app/gallery-item/schema/GalleryItemFilterSchema";
-import type { withGalleryItemSelectFx } from "./withGalleryItemSelectFx";
+import type { withGalleryItemSourceSelectFx } from "./withGalleryItemSourceSelectFx";
 
 export namespace withGalleryItemQueryBuilderFx {
-	export interface Props {
-		select: withGalleryItemSelectFx.Select;
+	export interface Props<
+		TSelect extends withGalleryItemSourceSelectFx.Select = withGalleryItemSourceSelectFx.Select,
+	> {
+		select: TSelect;
 		where?: GalleryItemFilterSchema.Type;
 	}
 
-	export type Callback = (props: Props) => withGalleryItemSelectFx.Select;
+	export type Callback = <TSelect extends withGalleryItemSourceSelectFx.Select>(
+		props: Props<TSelect>,
+	) => TSelect;
 }
 
-export const withGalleryItemQueryBuilderFx = Effect.fn("withGalleryItemQueryBuilderFx")(function* ({
-	select,
-	where,
-}: withGalleryItemQueryBuilderFx.Props) {
+export const withGalleryItemQueryBuilderFx = Effect.fn("withGalleryItemQueryBuilderFx")(function* <
+	TSelect extends withGalleryItemSourceSelectFx.Select,
+>({ select, where }: withGalleryItemQueryBuilderFx.Props<TSelect>) {
 	let query = select;
 
 	if (!where) {
@@ -22,11 +25,11 @@ export const withGalleryItemQueryBuilderFx = Effect.fn("withGalleryItemQueryBuil
 	}
 
 	if (where.id) {
-		query = query.where("gal_item.id", "=", where.id);
+		query = query.where("gal_item.id", "=", where.id) as TSelect;
 	}
 
 	if (where.idIn && where.idIn.length > 0) {
-		query = query.where("gal_item.id", "in", where.idIn);
+		query = query.where("gal_item.id", "in", where.idIn) as TSelect;
 	}
 
 	if (where.userId) {
@@ -39,11 +42,11 @@ export const withGalleryItemQueryBuilderFx = Effect.fn("withGalleryItemQueryBuil
 					.whereRef("gal.id", "=", "gal_item.galleryId")
 					.where("gal.userId", "=", userId),
 			),
-		);
+		) as TSelect;
 	}
 
 	if (where.galleryId) {
-		query = query.where("gal_item.galleryId", "=", where.galleryId);
+		query = query.where("gal_item.galleryId", "=", where.galleryId) as TSelect;
 	}
 
 	return yield* Effect.succeed(query);

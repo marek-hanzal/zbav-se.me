@@ -1,7 +1,7 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withListingEventCollectionSelectFx } from "~/app/listing-event/db/withListingEventCollectionSelectFx";
 import { withListingEventQueryBuilderFx } from "~/app/listing-event/db/withListingEventQueryBuilderFx";
-import { withListingEventSelectFx } from "~/app/listing-event/db/withListingEventSelectFx";
 import type { ListingEventFilterSchema } from "~/app/listing-event/schema/ListingEventFilterSchema";
 import type { ListingEventQuerySchema } from "~/app/listing-event/schema/ListingEventQuerySchema";
 
@@ -19,7 +19,7 @@ export const listingEventCollectionFx = Effect.fn("listingEventCollectionFx")(fu
 	scope,
 }: listingEventCollectionFx.Props) {
 	return yield* withCollectionFx({
-		selectFx: withListingEventSelectFx({
+		selectFx: withListingEventCollectionSelectFx({
 			sort,
 		}),
 		cursor: cursor ?? {

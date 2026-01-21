@@ -1,7 +1,7 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
+import { withFeedCollectionSelectFx } from "~/app/feed/db/withFeedCollectionSelectFx";
 import { withFeedQueryBuilderFx } from "~/app/feed/db/withFeedQueryBuilderFx";
-import { withFeedSelectFx } from "~/app/feed/db/withFeedSelectFx";
 import type { FeedCountQuerySchema } from "~/app/feed/schema/FeedCountQuerySchema";
 import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
 
@@ -17,7 +17,7 @@ export const feedCountFx = Effect.fn("feedCountFx")(function* ({
 	scope,
 }: feedCountFx.Props) {
 	return yield* withCountFx({
-		selectFx: withFeedSelectFx({}),
+		selectFx: withFeedCollectionSelectFx({}),
 		filter,
 		where,
 		scope,

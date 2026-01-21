@@ -1,8 +1,8 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
 import type { CategoryFilterSchema } from "~/app/category/schema/CategoryFilterSchema";
+import { withCategoryCollectionSelectFx } from "../db/withCategoryCollectionSelectFx";
 import { withCategoryQueryBuilderFx } from "../db/withCategoryQueryBuilderFx";
-import { withCategorySelectFx } from "../db/withCategorySelectFx";
 import type { CategoryCountQuerySchema } from "../schema/CategoryCountQuerySchema";
 
 export namespace categoryCountFx {
@@ -17,7 +17,7 @@ export const categoryCountFx = Effect.fn("categoryCountFx")(function* ({
 	scope,
 }: categoryCountFx.Props) {
 	return yield* withCountFx({
-		selectFx: withCategorySelectFx({}),
+		selectFx: withCategoryCollectionSelectFx({}),
 		filter,
 		where,
 		scope,

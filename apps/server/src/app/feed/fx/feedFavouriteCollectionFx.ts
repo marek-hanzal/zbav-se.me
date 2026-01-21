@@ -1,6 +1,6 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { withFeedFavouriteSelectFx } from "~/app/feed/db/withFeedFavouriteSelectFx";
+import { withFeedFavouriteCollectionSelectFx } from "~/app/feed/db/withFeedFavouriteCollectionSelectFx";
 import { withFeedQueryBuilderFx } from "~/app/feed/db/withFeedQueryBuilderFx";
 import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
 import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
@@ -21,7 +21,7 @@ export const feedFavouriteCollectionFx = Effect.fn("feedFavouriteCollectionFx")(
 	sort,
 }: feedFavouriteCollectionFx.Props) {
 	return yield* withCollectionFx({
-		selectFx: withFeedFavouriteSelectFx({
+		selectFx: withFeedFavouriteCollectionSelectFx({
 			userId,
 			sort,
 		}),

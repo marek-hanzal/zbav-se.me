@@ -1,7 +1,7 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
+import { withIgnoreCollectionSelectFx } from "~/app/ignore/db/withIgnoreCollectionSelectFx";
 import { withIgnoreQueryBuilderFx } from "~/app/ignore/db/withIgnoreQueryBuilderFx";
-import { withIgnoreSelectFx } from "~/app/ignore/db/withIgnoreSelectFx";
 import type { IgnoreCountQuerySchema } from "~/app/ignore/schema/IgnoreCountQuerySchema";
 import type { IgnoreFilterSchema } from "~/app/ignore/schema/IgnoreFilterSchema";
 
@@ -17,7 +17,7 @@ export const ignoreCountFx = Effect.fn("ignoreCountFx")(function* ({
 	scope,
 }: ignoreCountFx.Props) {
 	return yield* withCountFx({
-		selectFx: withIgnoreSelectFx({}),
+		selectFx: withIgnoreCollectionSelectFx({}),
 		filter,
 		where,
 		scope,

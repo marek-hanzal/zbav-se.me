@@ -1,14 +1,19 @@
 import { Effect } from "effect";
 import type { ListingEventFilterSchema } from "~/app/listing-event/schema/ListingEventFilterSchema";
-import type { withListingEventSelectFx } from "./withListingEventSelectFx";
+import type { withListingEventSourceSelectFx } from "./withListingEventSourceSelectFx";
 
 export namespace withListingEventQueryBuilderFx {
-	export interface Props {
-		select: withListingEventSelectFx.Select;
+	export interface Props<
+		TSelect extends
+			withListingEventSourceSelectFx.Select = withListingEventSourceSelectFx.Select,
+	> {
+		select: TSelect;
 		where?: ListingEventFilterSchema.Type;
 	}
 
-	export type Callback = (props: Props) => withListingEventSelectFx.Select;
+	export type Callback = <TSelect extends withListingEventSourceSelectFx.Select>(
+		props: Props<TSelect>,
+	) => TSelect;
 }
 
 /**
@@ -16,7 +21,10 @@ export namespace withListingEventQueryBuilderFx {
  * Can be used by both list and count queries to ensure consistency
  */
 export const withListingEventQueryBuilderFx = Effect.fn("withListingEventQueryBuilderFx")(
-	function* ({ select, where }: withListingEventQueryBuilderFx.Props) {
+	function* <TSelect extends withListingEventSourceSelectFx.Select>({
+		select,
+		where,
+	}: withListingEventQueryBuilderFx.Props<TSelect>) {
 		let query = select;
 
 		if (!where) {
@@ -24,15 +32,15 @@ export const withListingEventQueryBuilderFx = Effect.fn("withListingEventQueryBu
 		}
 
 		if (where.id) {
-			query = query.where("le.id", "=", where.id);
+			query = query.where("le.id", "=", where.id) as TSelect;
 		}
 
 		if (where.idIn && where.idIn.length > 0) {
-			query = query.where("le.id", "in", where.idIn);
+			query = query.where("le.id", "in", where.idIn) as TSelect;
 		}
 
 		if (where.listingId) {
-			query = query.where("le.listingId", "=", where.listingId);
+			query = query.where("le.listingId", "=", where.listingId) as TSelect;
 		}
 
 		return yield* Effect.succeed(query);
