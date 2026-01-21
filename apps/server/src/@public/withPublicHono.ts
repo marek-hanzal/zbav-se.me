@@ -5,8 +5,7 @@ import type { auth } from "../auth/auth";
 export const withPublicHono = () => {
 	return new OpenAPIHono<{
 		Variables: {
-			user: auth.User;
-			session: auth.Session;
+			user: auth.User | null;
 			kysely: KyselyContext;
 		};
 	}>();
