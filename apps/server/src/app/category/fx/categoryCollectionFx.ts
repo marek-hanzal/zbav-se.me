@@ -2,8 +2,8 @@ import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
 import type { CategoryFilterSchema } from "~/app/category/schema/CategoryFilterSchema";
 import { categoryMissCreateFx } from "~/app/category-miss/fx/categoryMissCreateFx";
+import { withCategoryCollectionSelectFx } from "../db/withCategoryCollectionSelectFx";
 import { withCategoryQueryBuilderFx } from "../db/withCategoryQueryBuilderFx";
-import { withCategorySelectFx } from "../db/withCategorySelectFx";
 import type { CategoryQuerySchema } from "../schema/CategoryQuerySchema";
 
 export namespace categoryCollectionFx {
@@ -20,7 +20,7 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 	sort,
 }: categoryCollectionFx.Props) {
 	const data = yield* withCollectionFx({
-		selectFx: withCategorySelectFx({
+		selectFx: withCategoryCollectionSelectFx({
 			sort,
 		}),
 		cursor: cursor ?? {

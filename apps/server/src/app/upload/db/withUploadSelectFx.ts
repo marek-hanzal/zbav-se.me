@@ -1,30 +1,21 @@
 import { Effect } from "effect";
-import { match } from "ts-pattern";
-import type { UploadSortSchema } from "~/app/upload/schema/UploadSortSchema";
-import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withUploadSourceSelectFx } from "~/app/upload/db/withUploadSourceSelectFx";
 
 export namespace withUploadSelectFx {
-	export interface Props {
-		sort?: UploadSortSchema.Type[];
-	}
+	export interface Props extends withUploadSourceSelectFx.Props {}
+
 	export type Select = Effect.Effect.Success<ReturnType<typeof withUploadSelectFx>>;
 }
 
 export const withUploadSelectFx = Effect.fn("withUploadSelectFx")(function* ({
 	sort,
 }: withUploadSelectFx.Props) {
-	const { kysely } = yield* KyselyContextFx;
+	const sourceSelect = yield* withUploadSourceSelectFx({
+		sort,
+	});
 
-	let query = kysely.selectFrom("upload as u").select([
+	return sourceSelect.select([
 		"u.id",
 		"u.url",
 	]);
-
-	for (const item of sort ?? []) {
-		query = match(item.field)
-			.with("createdAt", () => query.orderBy("u.createdAt", item.direction))
-			.exhaustive();
-	}
-
-	return query;
 });

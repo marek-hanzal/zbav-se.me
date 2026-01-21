@@ -1,7 +1,7 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withIgnoreCollectionSelectFx } from "~/app/ignore/db/withIgnoreCollectionSelectFx";
 import { withIgnoreQueryBuilderFx } from "~/app/ignore/db/withIgnoreQueryBuilderFx";
-import { withIgnoreSelectFx } from "~/app/ignore/db/withIgnoreSelectFx";
 import type { IgnoreFilterSchema } from "~/app/ignore/schema/IgnoreFilterSchema";
 import type { IgnoreQuerySchema } from "~/app/ignore/schema/IgnoreQuerySchema";
 
@@ -19,7 +19,7 @@ export const ignoreCollectionFx = Effect.fn("ignoreCollectionFx")(function* ({
 	cursor,
 }: ignoreCollectionFx.Props) {
 	return yield* withCollectionFx({
-		selectFx: withIgnoreSelectFx({
+		selectFx: withIgnoreCollectionSelectFx({
 			sort,
 		}),
 		cursor: cursor ?? {

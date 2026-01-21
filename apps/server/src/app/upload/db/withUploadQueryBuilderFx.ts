@@ -1,20 +1,23 @@
 import { Effect } from "effect";
 import type { UploadFilterSchema } from "~/app/upload/schema/UploadFilterSchema";
-import type { withUploadSelectFx } from "./withUploadSelectFx";
+import type { withUploadSourceSelectFx } from "./withUploadSourceSelectFx";
 
 export namespace withUploadQueryBuilderFx {
-	export interface Props {
-		select: withUploadSelectFx.Select;
+	export interface Props<
+		TSelect extends withUploadSourceSelectFx.Select = withUploadSourceSelectFx.Select,
+	> {
+		select: TSelect;
 		where?: UploadFilterSchema.Type;
 	}
 
-	export type Callback = (props: Props) => withUploadSelectFx.Select;
+	export type Callback = <TSelect extends withUploadSourceSelectFx.Select>(
+		props: Props<TSelect>,
+	) => TSelect;
 }
 
-export const withUploadQueryBuilderFx = Effect.fn("withUploadQueryBuilderFx")(function* ({
-	select,
-	where,
-}: withUploadQueryBuilderFx.Props) {
+export const withUploadQueryBuilderFx = Effect.fn("withUploadQueryBuilderFx")(function* <
+	TSelect extends withUploadSourceSelectFx.Select,
+>({ select, where }: withUploadQueryBuilderFx.Props<TSelect>) {
 	let query = select;
 
 	if (!where) {
@@ -22,11 +25,11 @@ export const withUploadQueryBuilderFx = Effect.fn("withUploadQueryBuilderFx")(fu
 	}
 
 	if (where.id) {
-		query = query.where("u.id", "=", where.id);
+		query = query.where("u.id", "=", where.id) as TSelect;
 	}
 
 	if (where.idIn && where.idIn.length > 0) {
-		query = query.where("u.id", "in", where.idIn);
+		query = query.where("u.id", "in", where.idIn) as TSelect;
 	}
 
 	return yield* Effect.succeed(query);

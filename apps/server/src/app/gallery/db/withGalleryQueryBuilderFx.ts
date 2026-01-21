@@ -1,20 +1,23 @@
 import { Effect } from "effect";
 import type { GalleryFilterSchema } from "~/app/gallery/schema/GalleryFilterSchema";
-import type { withGallerySelectFx } from "./withGallerySelectFx";
+import type { withGallerySourceSelectFx } from "./withGallerySourceSelectFx";
 
 export namespace withGalleryQueryBuilderFx {
-	export interface Props {
-		select: withGallerySelectFx.Select;
+	export interface Props<
+		TSelect extends withGallerySourceSelectFx.Select = withGallerySourceSelectFx.Select,
+	> {
+		select: TSelect;
 		where?: GalleryFilterSchema.Type;
 	}
 
-	export type Callback = (props: Props) => withGallerySelectFx.Select;
+	export type Callback = <TSelect extends withGallerySourceSelectFx.Select>(
+		props: Props<TSelect>,
+	) => TSelect;
 }
 
-export const withGalleryQueryBuilderFx = Effect.fn("withGalleryQueryBuilderFx")(function* ({
-	select,
-	where,
-}: withGalleryQueryBuilderFx.Props) {
+export const withGalleryQueryBuilderFx = Effect.fn("withGalleryQueryBuilderFx")(function* <
+	TSelect extends withGallerySourceSelectFx.Select,
+>({ select, where }: withGalleryQueryBuilderFx.Props<TSelect>) {
 	let query = select;
 
 	if (!where) {
@@ -22,15 +25,15 @@ export const withGalleryQueryBuilderFx = Effect.fn("withGalleryQueryBuilderFx")(
 	}
 
 	if (where.id) {
-		query = query.where("gal.id", "=", where.id);
+		query = query.where("gal.id", "=", where.id) as TSelect;
 	}
 
 	if (where.idIn && where.idIn.length > 0) {
-		query = query.where("gal.id", "in", where.idIn);
+		query = query.where("gal.id", "in", where.idIn) as TSelect;
 	}
 
 	if (where.userId) {
-		query = query.where("gal.userId", "=", where.userId);
+		query = query.where("gal.userId", "=", where.userId) as TSelect;
 	}
 
 	return yield* Effect.succeed(query);

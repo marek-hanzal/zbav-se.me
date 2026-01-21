@@ -1,15 +1,15 @@
 import { Effect } from "effect";
-import type { withMessageSelectFx } from "~/app/message/db/withMessageSelectFx";
+import type { withMessageSourceSelectFx } from "~/app/message/db/withMessageSourceSelectFx";
 import type { MessageFilterSchema } from "~/app/message/schema/MessageFilterSchema";
 
 export namespace withMessageQueryBuilderFx {
-	export interface Props<TSelect extends withMessageSelectFx.Select> {
+	export interface Props<TSelect extends withMessageSourceSelectFx.Select> {
 		userId: string;
 		select: TSelect;
 		where?: MessageFilterSchema.Type;
 	}
 
-	export type Callback<TSelect extends withMessageSelectFx.Select> = (
+	export type Callback<TSelect extends withMessageSourceSelectFx.Select> = (
 		props: Props<TSelect>,
 	) => TSelect;
 }
@@ -19,7 +19,7 @@ export namespace withMessageQueryBuilderFx {
  * Always enforces access control (user must be a member of the message thread).
  */
 export const withMessageQueryBuilderFx = Effect.fn("withMessageQueryBuilderFx")(function* <
-	TSelect extends withMessageSelectFx.Select,
+	TSelect extends withMessageSourceSelectFx.Select,
 >({ userId, select, where }: withMessageQueryBuilderFx.Props<TSelect>) {
 	let query = select;
 

@@ -1,7 +1,7 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withFavouriteCollectionSelectFx } from "~/app/favourite/db/withFavouriteCollectionSelectFx";
 import { withFavouriteQueryBuilderFx } from "~/app/favourite/db/withFavouriteQueryBuilderFx";
-import { withFavouriteSelectFx } from "~/app/favourite/db/withFavouriteSelectFx";
 import type { FavouriteFilterSchema } from "~/app/favourite/schema/FavouriteFilterSchema";
 import type { FavouriteQuerySchema } from "~/app/favourite/schema/FavouriteQuerySchema";
 
@@ -19,7 +19,7 @@ export const favouriteCollectionFx = Effect.fn("favouriteCollectionFx")(function
 	sort,
 }: favouriteCollectionFx.Props) {
 	return yield* withCollectionFx({
-		selectFx: withFavouriteSelectFx({
+		selectFx: withFavouriteCollectionSelectFx({
 			sort,
 		}),
 		cursor: cursor ?? {

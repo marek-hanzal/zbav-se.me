@@ -1,7 +1,7 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withMessageCollectionSelectFx } from "~/app/message/db/withMessageCollectionSelectFx";
 import { withMessageQueryBuilderFx } from "~/app/message/db/withMessageQueryBuilderFx";
-import { withMessageSelectFx } from "~/app/message/db/withMessageSelectFx";
 import type { MessageFilterSchema } from "~/app/message/schema/MessageFilterSchema";
 import type { MessageQuerySchema } from "~/app/message/schema/MessageQuerySchema";
 
@@ -21,7 +21,7 @@ export const messageCollectionFx = Effect.fn("messageCollectionFx")(function* ({
 	sort,
 }: messageCollectionFx.Props) {
 	return yield* withCollectionFx({
-		selectFx: withMessageSelectFx({
+		selectFx: withMessageCollectionSelectFx({
 			userId,
 			sort,
 		}),

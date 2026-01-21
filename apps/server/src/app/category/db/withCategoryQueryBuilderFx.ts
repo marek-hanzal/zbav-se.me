@@ -1,15 +1,15 @@
 import { Effect } from "effect";
 import { withLikeEx } from "~/database/expression/withLikeEx";
 import type { CategoryFilterSchema } from "../schema/CategoryFilterSchema";
-import type { withCategorySelectFx } from "./withCategorySelectFx";
+import type { withCategorySourceSelectFx } from "./withCategorySourceSelectFx";
 
 export namespace withCategoryQueryBuilderFx {
-	export interface Props<TSelect extends withCategorySelectFx.Select> {
+	export interface Props<TSelect extends withCategorySourceSelectFx.Select> {
 		select: TSelect;
 		where?: CategoryFilterSchema.Type;
 	}
 
-	export type Callback<TSelect extends withCategorySelectFx.Select> = (
+	export type Callback<TSelect extends withCategorySourceSelectFx.Select> = (
 		props: Props<TSelect>,
 	) => TSelect;
 }
@@ -19,7 +19,7 @@ export namespace withCategoryQueryBuilderFx {
  * Can be used by both list and count queries to ensure consistency
  */
 export const withCategoryQueryBuilderFx = Effect.fn("withCategoryQueryBuilderFx")(function* <
-	TSelect extends withCategorySelectFx.Select,
+	TSelect extends withCategorySourceSelectFx.Select,
 >({ select, where }: withCategoryQueryBuilderFx.Props<TSelect>) {
 	let query: typeof select = select;
 

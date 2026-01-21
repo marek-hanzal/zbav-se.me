@@ -1,7 +1,7 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withUploadCollectionSelectFx } from "~/app/upload/db/withUploadCollectionSelectFx";
 import { withUploadQueryBuilderFx } from "~/app/upload/db/withUploadQueryBuilderFx";
-import { withUploadSelectFx } from "~/app/upload/db/withUploadSelectFx";
 import type { UploadFilterSchema } from "~/app/upload/schema/UploadFilterSchema";
 import type { UploadQuerySchema } from "~/app/upload/schema/UploadQuerySchema";
 
@@ -19,7 +19,7 @@ export const uploadCollectionFx = Effect.fn("uploadCollectionFx")(function* ({
 	sort,
 }: uploadCollectionFx.Props) {
 	return yield* withCollectionFx({
-		selectFx: withUploadSelectFx({
+		selectFx: withUploadCollectionSelectFx({
 			sort,
 		}),
 		cursor: cursor ?? {
