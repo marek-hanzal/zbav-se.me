@@ -47,9 +47,7 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 							where: {
 								id: listingId,
 							},
-							scope: {
-								userId,
-							},
+							scope: {},
 						});
 					});
 				},
@@ -71,9 +69,7 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 							where: {
 								id: listingId,
 							},
-							scope: {
-								userId,
-							},
+							scope: {},
 						});
 					});
 				},

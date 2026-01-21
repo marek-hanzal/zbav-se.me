@@ -45,9 +45,7 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 							where: {
 								id: listingId,
 							},
-							scope: {
-								userId,
-							},
+							scope: {},
 						});
 					});
 				},
@@ -69,9 +67,7 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 							where: {
 								id: listingId,
 							},
-							scope: {
-								userId,
-							},
+							scope: {},
 						});
 					});
 				},
