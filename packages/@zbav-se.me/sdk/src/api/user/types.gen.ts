@@ -848,13 +848,25 @@ export type tTransactionFilter = {
  * Collection of transactions
  */
 export type tTransactionCollection = {
-    data: Array<{
-        id: string;
-    }>;
+    data: Array<tTransactionCollectionItem>;
     /**
      * Whether there are more items to fetch
      */
     more: boolean;
+};
+
+/**
+ * Transaction collection item with last message timestamp
+ */
+export type tTransactionCollectionItem = {
+    /**
+     * ID of the transaction
+     */
+    id: string;
+    /**
+     * Timestamp of the last message in the transaction
+     */
+    lastAt: string;
 };
 
 /**

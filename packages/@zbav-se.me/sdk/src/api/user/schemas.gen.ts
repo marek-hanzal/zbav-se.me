@@ -1173,16 +1173,7 @@ export const sTransactionCollection = {
         data: {
             type: 'array',
             items: {
-                type: 'object',
-                properties: {
-                    id: {
-                        type: 'string',
-                        minLength: 1
-                    }
-                },
-                required: [
-                    'id'
-                ]
+                $ref: '#/components/schemas/TransactionCollectionItem'
             }
         },
         more: {
@@ -1192,6 +1183,22 @@ export const sTransactionCollection = {
     required: [
         'data',
         'more'
+    ]
+} as const;
+
+export const sTransactionCollectionItem = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        lastAt: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'lastAt'
     ]
 } as const;
 

@@ -30,6 +30,7 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 			"l.price",
 			"l.priceType",
 			"l.currency",
+			"lt.updatedAt as lastAt",
 			(eb) => sql<LocationDbSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
 			(eb) =>
 				jsonObjectFrom(gallerySelect.where("gal.id", "=", eb.ref("l.galleryId")).limit(1))

@@ -927,12 +927,26 @@ export const zTransactionQuery = z.object({
 export type zTransactionQuery = z.infer<typeof zTransactionQuery>;
 
 /**
+ * Transaction collection item with last message timestamp
+ */
+export const zTransactionCollectionItem = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction'
+    }),
+    lastAt: z.string().register(z.globalRegistry, {
+        description: 'Timestamp of the last message in the transaction'
+    })
+}).register(z.globalRegistry, {
+    description: 'Transaction collection item with last message timestamp'
+});
+
+export type zTransactionCollectionItem = z.infer<typeof zTransactionCollectionItem>;
+
+/**
  * Collection of transactions
  */
 export const zTransactionCollection = z.object({
-    data: z.array(z.object({
-        id: z.string().min(1)
-    })),
+    data: z.array(zTransactionCollectionItem),
     more: z.boolean().register(z.globalRegistry, {
         description: 'Whether there are more items to fetch'
     })

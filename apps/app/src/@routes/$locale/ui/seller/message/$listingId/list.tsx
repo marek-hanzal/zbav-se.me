@@ -1,9 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { VisibilityProvider } from "@use-pico/client/context";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
+import { createNoopVisibilityStore } from "@use-pico/client/store";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user/listing";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { HeroImage } from "@zbav-se.me/ui/img";
+import { useState } from "react";
+import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
+import { ListingSheet } from "~/app/listing/ui/ListingSheet";
+import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 import { TransactionList } from "~/app/transaction/ui/TransactionList";
 
 export const Route = createFileRoute("/$locale/ui/seller/message/$listingId/list")({
@@ -37,6 +44,9 @@ export const Route = createFileRoute("/$locale/ui/seller/message/$listingId/list
 			},
 		});
 
+		const [detail, setDetail] = useState(false);
+		const hero = useHeroUpload(listing.gallery.items);
+
 		return (
 			<TitleContainer
 				data-ui="/seller/message/list[TitleContainer]"
@@ -52,29 +62,60 @@ export const Route = createFileRoute("/$locale/ui/seller/message/$listingId/list
 					/>
 				}
 			>
-				<TransactionList
-					query={{
-						where: {
-							listingId,
-						},
-						sort: [
-							{
-								field: "status",
-								direction: "asc",
+				<Container>
+					<Container
+						data-ui="MessageList-[HeroContainer]"
+						ui={{
+							position: "relative",
+							height: "content",
+						}}
+						onClick={() => setDetail((prev) => !prev)}
+					>
+						<HeroImage
+							src={hero.url}
+							alt={`Hero image for listing ${listing.id}`}
+							className={"h-42"}
+						/>
+						<ListingOverlay listing={listing} />
+					</Container>
+
+					<TransactionList
+						query={{
+							where: {
+								listingId,
 							},
-							{
-								field: "createdAt",
-								direction: "desc",
+							sort: [
+								{
+									field: "status",
+									direction: "asc",
+								},
+								{
+									field: "createdAt",
+									direction: "desc",
+								},
+							],
+							meta: {
+								side: "seller",
 							},
-						],
-						meta: {
-							side: "seller",
-						},
-					}}
-					ui={{
-						inner: "default",
-					}}
-				/>
+						}}
+						ui={{
+							inner: "default",
+						}}
+					/>
+				</Container>
+
+				<VisibilityProvider store={createNoopVisibilityStore()}>
+					<ListingSheet
+						listing={listing}
+						state={{
+							value: detail,
+							set: setDetail,
+						}}
+						withScore={false}
+						feedId={undefined}
+						tools={[]}
+					/>
+				</VisibilityProvider>
 			</TitleContainer>
 		);
 	},

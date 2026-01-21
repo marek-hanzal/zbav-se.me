@@ -35,7 +35,10 @@ export const withTransactionCollectionSelectFx = Effect.fn("withTransactionColle
 						.as("status"),
 				(join) => join.onTrue(),
 			)
-			.select("lt.id");
+			.select([
+				"lt.id",
+				"lt.updatedAt as lastAt",
+			]);
 
 		for (const item of sort ?? []) {
 			query = match(item.field)
