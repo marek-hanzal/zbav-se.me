@@ -3,7 +3,7 @@ import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import type { CategoryDbSchema } from "~/@session/category/schema/CategoryDbSchema";
 import type { ListingDeliveryEnumSchema } from "~/@session/listing/schema/ListingDeliveryEnumSchema";
-import { withDraftSourceSelectFx } from "~/app/draft/db/withDraftSourceSelectFx";
+import { withDraftSourceSelectFx } from "~/@user/draft/db/withDraftSourceSelectFx";
 import { withGallerySelectFx } from "~/app/gallery/db/withGallerySelectFx";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 

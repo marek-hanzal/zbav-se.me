@@ -2,40 +2,40 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
-import { draftGalleryCreateFx } from "~/app/draft/fx/draftGalleryCreateFx";
-import { DraftGalleryCreateSchema } from "~/app/draft/schema/DraftGalleryCreateSchema";
+import { DraftSchema } from "~/@user/draft/schema/DraftSchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
+import { draftCreateFx } from "./fx/draftCreateFx";
+import { DraftCreateSchema } from "./schema/DraftCreateSchema";
 
-export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(function* () {
-	const { userHono } = yield* RoutesContextFx;
+export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
+	const { sessionHono } = yield* RoutesContextFx;
 
-	userHono.openapi(
+	sessionHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/draft/gallery/create",
-			description: "Update a draft gallery. Gallery is always created with the draft.",
-			operationId: "apiDraftGalleryCreate",
+			path: "/draft/create",
+			description: "Create a new draft",
+			operationId: "apiDraftCreate",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: DraftGalleryCreateSchema,
+							schema: DraftCreateSchema,
 						},
 					},
-					description: "Query object for draft gallery creation",
+					description: "Data for creating a new draft",
 				},
 			},
 			responses: {
-				200: {
+				201: {
 					content: {
 						"application/json": {
-							schema: GallerySchema,
+							schema: DraftSchema,
 						},
 					},
-					description: "Gallery created or updated",
+					description: "The created draft",
 				},
 				400: {
 					content: {
@@ -45,21 +45,13 @@ export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(functi
 					},
 					description: "Invalid request",
 				},
-				403: {
-					content: {
-						"application/json": {
-							schema: NoticeSchema,
-						},
-					},
-					description: "Access denied",
-				},
 				404: {
 					content: {
 						"application/json": {
 							schema: NoticeSchema,
 						},
 					},
-					description: "Draft not found or not accessible",
+					description: "Draft not found after creation",
 				},
 				500: {
 					content: {
@@ -73,21 +65,21 @@ export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(functi
 			tags: [
 				"Draft",
 			],
-			summary: "Create a gallery for a draft",
+			summary: "Create a new draft",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<GallerySchema.Type, 200>(
+				return c.json<DraftSchema.Type, 201>(
 					yield* zodFx({
-						schema: GallerySchema,
-						dataFx: draftGalleryCreateFx({
+						schema: DraftSchema,
+						dataFx: draftCreateFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}) satisfies Effect.Effect<GallerySchema.Type, any, any>,
+						}) satisfies Effect.Effect<DraftSchema.Type, any, any>,
 					}),
-					200,
+					201,
 				);
 			}).pipe(
 				Effect.provide(KyselyContextLayer(c.get("kysely"))),
@@ -96,20 +88,6 @@ export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(functi
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
-							Match.when(
-								{
-									_tag: "InvalidRequestError",
-								},
-								() => {
-									return c.json<NoticeSchema.Type, 400>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										400,
-									);
-								},
-							),
 							Match.when(
 								{
 									_tag: "NotFoundErrorFx",
@@ -121,20 +99,6 @@ export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(functi
 											message: e.message,
 										},
 										404,
-									);
-								},
-							),
-							Match.when(
-								{
-									_tag: "AccessDeniedError",
-								},
-								() => {
-									return c.json<NoticeSchema.Type, 403>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										403,
 									);
 								},
 							),

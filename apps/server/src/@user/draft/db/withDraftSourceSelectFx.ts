@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import type { DraftSortSchema } from "~/app/draft/schema/DraftSortSchema";
+import type { DraftSortSchema } from "~/@user/draft/schema/DraftSortSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withDraftSourceSelectFx {

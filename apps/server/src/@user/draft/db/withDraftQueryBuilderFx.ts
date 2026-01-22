@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import type { withDraftSourceSelectFx } from "~/app/draft/db/withDraftSourceSelectFx";
-import type { DraftFilterSchema } from "~/app/draft/schema/DraftFilterSchema";
+import type { withDraftSourceSelectFx } from "~/@user/draft/db/withDraftSourceSelectFx";
+import type { DraftFilterSchema } from "~/@user/draft/schema/DraftFilterSchema";
 
 export namespace withDraftQueryBuilderFx {
 	export interface Props<

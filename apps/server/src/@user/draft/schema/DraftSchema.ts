@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { CategorySchema } from "~/@session/category/schema/CategorySchema";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
-import { DraftDbSchema } from "~/app/draft/schema/DraftDbSchema";
+import { DraftDbSchema } from "./DraftDbSchema";
 
 export const DraftSchema = z
 	.looseObject({

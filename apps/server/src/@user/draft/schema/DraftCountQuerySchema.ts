@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { CountEnumSchema } from "@use-pico/common/schema";
-import { DraftQuerySchema } from "~/app/draft/schema/DraftQuerySchema";
+import { DraftQuerySchema } from "./DraftQuerySchema";
 
 export const DraftCountQuerySchema = z
 	.looseObject({

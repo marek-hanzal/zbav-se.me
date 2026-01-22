@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { withDraftSourceSelectFx } from "~/app/draft/db/withDraftSourceSelectFx";
+import { withDraftSourceSelectFx } from "~/@user/draft/db/withDraftSourceSelectFx";
 
 export namespace withDraftCollectionSelectFx {
 	export interface Props extends withDraftSourceSelectFx.Props {}

@@ -1,11 +1,11 @@
 import { Effect } from "effect";
-import { draftResolveFx } from "~/app/draft/fx/draftResolveFx";
-import type { DraftGalleryCreateSchema } from "~/app/draft/schema/DraftGalleryCreateSchema";
+import type { DraftGalleryCreateSchema } from "~/@session/draft/schema/DraftGalleryCreateSchema";
 import { galleryFetchFx } from "~/app/gallery/fx/galleryFetchFx";
 import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { draftResolveFx } from "./draftResolveFx";
 
 export namespace draftGalleryCreateFx {
 	export interface Props extends DraftGalleryCreateSchema.Type {

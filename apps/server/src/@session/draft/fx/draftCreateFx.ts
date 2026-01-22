@@ -1,8 +1,8 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { draftFetchFx } from "~/app/draft/fx/draftFetchFx";
-import type { DraftCreateSchema } from "~/app/draft/schema/DraftCreateSchema";
+import type { DraftCreateSchema } from "~/@session/draft/schema/DraftCreateSchema";
+import { draftFetchFx } from "~/@user/draft/fx/draftFetchFx";
 import { galleryCreateFx as coolGalleryCreateFx } from "~/app/gallery/fx/galleryCreateFx";
 import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
