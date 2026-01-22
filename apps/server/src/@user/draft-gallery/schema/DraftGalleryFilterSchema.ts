@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 
 export const DraftGalleryFilterSchema = z
-	.object({
+	.looseObject({
 		...DefaultFilterSchema.shape,
 		draftId: z.string().optional().openapi({
 			description: "This filter matches the exact draftId",
@@ -11,6 +11,7 @@ export const DraftGalleryFilterSchema = z
 			description: "This filter matches the exact galleryId",
 		}),
 	})
+	.strip()
 	.openapi("DraftGalleryFilter", {
 		description: "Filter object for draft gallery",
 	});

@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { OrderEnumSchema } from "~/schema/OrderEnumSchema";
 
 export const DraftGallerySortSchema = z
-	.object({
+	.looseObject({
 		field: z
 			.enum([
 				"createdAt",
@@ -12,6 +12,7 @@ export const DraftGallerySortSchema = z
 			}),
 		direction: OrderEnumSchema,
 	})
+	.strip()
 	.openapi("DraftGallerySort", {
 		description: "Sort object for draft gallery collection",
 	});

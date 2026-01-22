@@ -4,7 +4,7 @@ import { DraftGalleryFilterSchema } from "./DraftGalleryFilterSchema";
 import { DraftGallerySortSchema } from "./DraftGallerySortSchema";
 
 export const DraftGalleryQuerySchema = z
-	.object({
+	.looseObject({
 		cursor: CursorSchema.optional(),
 		filter: DraftGalleryFilterSchema.optional(),
 		where: DraftGalleryFilterSchema.openapi("DraftGalleryWhere", {
@@ -12,6 +12,7 @@ export const DraftGalleryQuerySchema = z
 		}).optional(),
 		sort: DraftGallerySortSchema.array().optional(),
 	})
+	.strip()
 	.openapi("DraftGalleryQuery", {
 		description: "Query object for draft gallery collection",
 	});
