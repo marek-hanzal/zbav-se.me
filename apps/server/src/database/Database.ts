@@ -3,6 +3,7 @@ import type { CategoryDbSchema } from "~/@session/category/schema/CategoryDbSche
 import type { CategorySpotlightDbSchema } from "~/@session/category/schema/CategorySpotlightDbSchema";
 import type { GalleryItemDbSchema } from "~/@session/gallery-item/schema/GalleryItemDbSchema";
 import type { ListingDbSchema } from "~/@session/listing/schema/ListingDbSchema";
+import type { ListingEventDbSchema } from "~/@session/listing-event/schema/ListingEventDbSchema";
 import type { DraftDbSchema } from "~/@user/draft/schema/DraftDbSchema";
 import type { FavouriteDbSchema } from "~/@user/favourite/schema/FavouriteDbSchema";
 import type { FeedDbSchema } from "~/@user/feed/schema/FeedDbSchema";
@@ -10,7 +11,6 @@ import type { FlagDbSchema } from "~/@user/flag/schema/FlagDbSchema";
 import type { GalleryDbSchema } from "~/@user/gallery/schema/GalleryDbSchema";
 import type { IgnoreDbSchema } from "~/@user/ignore/schema/IgnoreDbSchema";
 import type { CategoryMissDbSchema } from "~/app/category-miss/schema/CategoryMissDbSchema";
-import type { ListingEventDbSchema } from "~/app/listing-event/schema/ListingEventDbSchema";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import type { MessageGalleryDbSchema } from "~/app/message-gallery/schema/MessageGalleryDbSchema";
 import type { MessageLocationDbSchema } from "~/app/message-location/schema/MessageLocationDbSchema";

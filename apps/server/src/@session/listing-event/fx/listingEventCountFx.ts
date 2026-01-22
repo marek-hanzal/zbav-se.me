@@ -1,9 +1,9 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
-import { withListingEventCollectionSelectFx } from "~/app/listing-event/db/withListingEventCollectionSelectFx";
-import { withListingEventQueryBuilderFx } from "~/app/listing-event/db/withListingEventQueryBuilderFx";
-import type { ListingEventCountQuerySchema } from "~/app/listing-event/schema/ListingEventCountQuerySchema";
-import type { ListingEventFilterSchema } from "~/app/listing-event/schema/ListingEventFilterSchema";
+import { withListingEventCollectionSelectFx } from "~/@session/listing-event/db/withListingEventCollectionSelectFx";
+import { withListingEventQueryBuilderFx } from "~/@session/listing-event/db/withListingEventQueryBuilderFx";
+import type { ListingEventCountQuerySchema } from "~/@session/listing-event/schema/ListingEventCountQuerySchema";
+import type { ListingEventFilterSchema } from "~/@session/listing-event/schema/ListingEventFilterSchema";
 
 export namespace listingEventCountFx {
 	export interface Props extends ListingEventCountQuerySchema.Type {
@@ -15,12 +15,14 @@ export const listingEventCountFx = Effect.fn("listingEventCountFx")(function* ({
 	filter,
 	where,
 	scope,
+	count,
 }: listingEventCountFx.Props) {
 	return yield* withCountFx({
 		selectFx: withListingEventCollectionSelectFx({}),
 		filter,
 		where,
 		scope,
+		count,
 		queryFx: withListingEventQueryBuilderFx,
 	});
 });

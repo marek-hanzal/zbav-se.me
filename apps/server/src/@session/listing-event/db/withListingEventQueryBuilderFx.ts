@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import type { ListingEventFilterSchema } from "~/app/listing-event/schema/ListingEventFilterSchema";
-import type { withListingEventSourceSelectFx } from "./withListingEventSourceSelectFx";
+import type { withListingEventSourceSelectFx } from "~/@session/listing-event/db/withListingEventSourceSelectFx";
+import type { ListingEventFilterSchema } from "~/@session/listing-event/schema/ListingEventFilterSchema";
 
 export namespace withListingEventQueryBuilderFx {
 	export interface Props<

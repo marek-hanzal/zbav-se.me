@@ -9,7 +9,6 @@ import { withFeedFavouriteApiFx } from "./feed-favourite/withFeedFavouriteApiFx"
 import { withFlagApiFx } from "./flag/withFlagApiFx";
 import { withGalleryApiFx } from "./gallery/withGalleryApiFx";
 import { withIgnoreApiFx } from "./ignore/withIgnoreApiFx";
-import { withListingEventApiFx } from "./listing-event/withListingEventApiFx";
 import { withMessageThreadApiFx } from "./message-thread/withMessageThreadApiFx";
 import { withS3ApiFx } from "./s3/withS3ApiFx";
 import { withThumbApiFx } from "./thumb/withThumbApiFx";
@@ -56,7 +55,6 @@ export const withUserApiFx = Effect.fn("withUserApiFx")(function* () {
 		withFlagApiFx(),
 		withGalleryApiFx(),
 		withIgnoreApiFx(),
-		withListingEventApiFx(),
 		withMessageThreadApiFx(),
 		withS3ApiFx(),
 		withThumbApiFx(),

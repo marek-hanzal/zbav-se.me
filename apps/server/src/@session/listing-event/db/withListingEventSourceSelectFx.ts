@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import type { ListingEventSortSchema } from "~/app/listing-event/schema/ListingEventSortSchema";
+import type { ListingEventSortSchema } from "~/@session/listing-event/schema/ListingEventSortSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withListingEventSourceSelectFx {
