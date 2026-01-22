@@ -37,9 +37,23 @@ const app = await Effect.gen(function* () {
 		);
 	});
 
-	yield* initMiddlewareFx();
-
 	const databaseConfig = ServerDatabaseSchema.parse(process.env);
+	const kyselyContext = KyselyContextLayerFx(
+		database.pipe(
+			Effect.provide(
+				DialectContextLayer(
+					new PostgresDialect({
+						pool: new Pool({
+							connectionString: databaseConfig.SERVER_DATABASE_URL,
+							max: 3,
+						}),
+					}),
+				),
+			),
+		),
+	);
+
+	yield* initMiddlewareFx().pipe(Effect.provide(kyselyContext));
 
 	yield* Effect.all([
 		withPublicApiFx(),
@@ -47,24 +61,7 @@ const app = await Effect.gen(function* () {
 		withUserApiFx(),
 		withSellerApiFx(),
 		withBuyerApiFx(),
-	]).pipe(
-		Effect.provide(
-			KyselyContextLayerFx(
-				database.pipe(
-					Effect.provide(
-						DialectContextLayer(
-							new PostgresDialect({
-								pool: new Pool({
-									connectionString: databaseConfig.SERVER_DATABASE_URL,
-									max: 3,
-								}),
-							}),
-						),
-					),
-				),
-			),
-		),
-	);
+	]).pipe(Effect.provide(kyselyContext));
 
 	return root;
 }).pipe(
