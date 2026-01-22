@@ -6,6 +6,7 @@ import { withCategoryApiFx } from "./category/withCategoryApiFx";
 import { withDraftApiFx } from "./draft/withDraftApiFx";
 import { withDraftGalleryApiFx } from "./draft-gallery/withDraftGalleryApiFx";
 import { withFeedApiFx } from "./feed/withFeedApiFx";
+import { withFeedGalleryApiFx } from "./feed-gallery/withFeedGalleryApiFx";
 import { withListingApiFx } from "./listing/withListingApiFx";
 import { withLocationApiFx } from "./location/withLocationApiFx";
 import { withUploadApiFx } from "./upload/withUploadApiFx";
@@ -39,6 +40,7 @@ export const withSessionApiFx = Effect.fn("withSessionApiFx")(function* () {
 		withDraftApiFx(),
 		withDraftGalleryApiFx(),
 		withFeedApiFx(),
+		withFeedGalleryApiFx(),
 		withListingApiFx(),
 		withLocationApiFx(),
 		withUploadApiFx(),

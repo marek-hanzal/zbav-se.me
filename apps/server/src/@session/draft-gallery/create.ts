@@ -70,7 +70,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				},
 			},
 			tags: [
-				"Draft",
+				"Draft Gallery",
 			],
 			summary: "Create a gallery for a draft",
 		}),

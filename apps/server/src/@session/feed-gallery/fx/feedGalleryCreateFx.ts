@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import type { FeedGalleryCreateSchema } from "~/@session/feed/schema/FeedGalleryCreateSchema";
+import type { FeedGalleryCreateSchema } from "~/@session/feed-gallery/schema/FeedGalleryCreateSchema";
 import { feedPatchFx } from "~/app/feed/fx/feedPatchFx";
 import { feedResolveFx } from "~/app/feed/fx/feedResolveFx";
 import { galleryCreateFx } from "~/app/gallery/fx/galleryCreateFx";
