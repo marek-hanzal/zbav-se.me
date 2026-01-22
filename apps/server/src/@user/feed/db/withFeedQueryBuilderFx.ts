@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import type { withFeedSourceSelectFx } from "~/app/feed/db/withFeedSourceSelectFx";
-import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
+import type { withFeedSourceSelectFx } from "~/@user/feed/db/withFeedSourceSelectFx";
+import type { FeedFilterSchema } from "~/@user/feed/schema/FeedFilterSchema";
 
 export namespace withFeedQueryBuilderFx {
 	export interface Props<

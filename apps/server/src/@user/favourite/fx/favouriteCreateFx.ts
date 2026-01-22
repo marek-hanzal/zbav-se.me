@@ -2,7 +2,7 @@ import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import type { FavouriteCreateSchema } from "~/@user/favourite/schema/FavouriteCreateSchema";
-import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
+import { feedFetchFx } from "~/@user/feed/fx/feedFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { favouriteFetchFx } from "./favouriteFetchFx";
 

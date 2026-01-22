@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withFeedSourceSelectFx } from "~/app/feed/db/withFeedSourceSelectFx";
-import type { FeedSortSchema } from "~/app/feed/schema/FeedSortSchema";
+import { withFeedSourceSelectFx } from "~/@user/feed/db/withFeedSourceSelectFx";
+import type { FeedSortSchema } from "~/@user/feed/schema/FeedSortSchema";
 
 export namespace withFeedFavouriteSourceSelectFx {
 	export interface Props {

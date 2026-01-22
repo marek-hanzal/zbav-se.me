@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
+import { feedFetchFx } from "~/@user/feed/fx/feedFetchFx";
 import { AccessDeniedError } from "~/error/AccessDeniedError";
 
 export namespace feedResolveFx {

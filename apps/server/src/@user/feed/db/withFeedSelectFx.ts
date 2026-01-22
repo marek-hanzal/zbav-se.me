@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
-import { withFeedSourceSelectFx } from "~/app/feed/db/withFeedSourceSelectFx";
+import { withFeedSourceSelectFx } from "~/@user/feed/db/withFeedSourceSelectFx";
 
 export namespace withFeedSelectFx {
 	export interface Props extends withFeedSourceSelectFx.Props {}

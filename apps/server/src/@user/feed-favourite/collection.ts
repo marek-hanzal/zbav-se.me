@@ -1,7 +1,7 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
+import { FeedQuerySchema } from "~/@user/feed/schema/FeedQuerySchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";

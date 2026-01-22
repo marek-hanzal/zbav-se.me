@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { withFeedSourceSelectFx } from "~/app/feed/db/withFeedSourceSelectFx";
+import { withFeedSourceSelectFx } from "~/@user/feed/db/withFeedSourceSelectFx";
 
 export namespace withFeedCollectionSelectFx {
 	export interface Props extends withFeedSourceSelectFx.Props {}

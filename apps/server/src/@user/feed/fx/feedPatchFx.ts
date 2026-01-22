@@ -1,10 +1,10 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
-import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
-import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
-import type { FeedPatchSchema } from "~/app/feed/schema/FeedPatchSchema";
+import type { FeedFilterSchema } from "~/@user/feed/schema/FeedFilterSchema";
+import type { FeedPatchSchema } from "~/@user/feed/schema/FeedPatchSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { feedFetchFx } from "./feedFetchFx";
 
 export namespace feedPatchFx {
 	export interface Props extends FeedPatchSchema.Type {

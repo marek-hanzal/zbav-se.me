@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import type { FeedSortSchema } from "~/app/feed/schema/FeedSortSchema";
+import type { FeedSortSchema } from "~/@user/feed/schema/FeedSortSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withFeedSourceSelectFx {
