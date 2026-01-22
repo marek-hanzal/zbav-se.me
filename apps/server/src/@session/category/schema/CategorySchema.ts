@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { CategoryDbSchema } from "~/app/category/schema/CategoryDbSchema";
+import { CategoryDbSchema } from "./CategoryDbSchema";
 
 export const CategorySchema = z
 	.object({

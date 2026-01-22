@@ -1,9 +1,9 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import type { CategoryFilterSchema } from "~/app/category/schema/CategoryFilterSchema";
 import { categoryMissCreateFx } from "~/app/category-miss/fx/categoryMissCreateFx";
 import { withCategoryCollectionSelectFx } from "../db/withCategoryCollectionSelectFx";
 import { withCategoryQueryBuilderFx } from "../db/withCategoryQueryBuilderFx";
+import type { CategoryFilterSchema } from "../schema/CategoryFilterSchema";
 import type { CategoryQuerySchema } from "../schema/CategoryQuerySchema";
 
 export namespace categoryCollectionFx {

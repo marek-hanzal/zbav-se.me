@@ -1,8 +1,8 @@
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { categoryFetchFx } from "~/@session/category/fx/categoryFetchFx";
 import { listingCreateFx } from "~/@session/listing/fx/listingCreateFx";
-import { categoryFetchFx } from "~/app/category/fx/categoryFetchFx";
 import { LocationContextLayer } from "~/app/location/context/LocationContextLayer";
 import { locationAutocompleteFx } from "~/app/location/fx/locationAutocompleteFx";
 import { UploadContextLayer } from "~/app/upload/context/UploadContextLayer";

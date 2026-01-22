@@ -1,6 +1,6 @@
+import type { CategoryDbSchema } from "~/@session/category/schema/CategoryDbSchema";
+import type { CategorySpotlightDbSchema } from "~/@session/category/schema/CategorySpotlightDbSchema";
 import type { ListingDbSchema } from "~/@session/listing/schema/ListingDbSchema";
-import type { CategoryDbSchema } from "~/app/category/schema/CategoryDbSchema";
-import type { CategorySpotlightDbSchema } from "~/app/category/schema/CategorySpotlightDbSchema";
 import type { CategoryMissDbSchema } from "~/app/category-miss/schema/CategoryMissDbSchema";
 import type { DraftDbSchema } from "~/app/draft/schema/DraftDbSchema";
 import type { FavouriteDbSchema } from "~/app/favourite/schema/FavouriteDbSchema";
