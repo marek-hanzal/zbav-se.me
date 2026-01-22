@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withFeedFavouriteSelectFx } from "~/app/feed/db/withFeedFavouriteSelectFx";
-import type { withFeedFavouriteSourceSelectFx } from "~/app/feed/db/withFeedFavouriteSourceSelectFx";
+import { withFeedFavouriteSelectFx } from "~/@user/feed-favourite/db/withFeedFavouriteSelectFx";
+import type { withFeedFavouriteSourceSelectFx } from "~/@user/feed-favourite/db/withFeedFavouriteSourceSelectFx";
 
 export namespace withFeedFavouriteCollectionSelectFx {
 	export interface Props extends withFeedFavouriteSourceSelectFx.Props {}
