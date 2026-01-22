@@ -2,7 +2,7 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
+import { ListingSchema } from "~/@session/listing/schema/ListingSchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { thumbCreateFx } from "~/app/thumb/fx/thumbCreateFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
