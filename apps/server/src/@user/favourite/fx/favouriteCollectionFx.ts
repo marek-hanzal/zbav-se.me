@@ -1,9 +1,9 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { withFavouriteCollectionSelectFx } from "~/app/favourite/db/withFavouriteCollectionSelectFx";
-import { withFavouriteQueryBuilderFx } from "~/app/favourite/db/withFavouriteQueryBuilderFx";
-import type { FavouriteFilterSchema } from "~/app/favourite/schema/FavouriteFilterSchema";
-import type { FavouriteQuerySchema } from "~/app/favourite/schema/FavouriteQuerySchema";
+import { withFavouriteCollectionSelectFx } from "~/@user/favourite/db/withFavouriteCollectionSelectFx";
+import { withFavouriteQueryBuilderFx } from "~/@user/favourite/db/withFavouriteQueryBuilderFx";
+import type { FavouriteFilterSchema } from "~/@user/favourite/schema/FavouriteFilterSchema";
+import type { FavouriteQuerySchema } from "~/@user/favourite/schema/FavouriteQuerySchema";
 
 export namespace favouriteCollectionFx {
 	export interface Props extends FavouriteQuerySchema.Type {

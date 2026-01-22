@@ -1,11 +1,11 @@
 import { Effect } from "effect";
 import { listingCheckIfOwnFx } from "~/@session/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/@session/listing/fx/listingFetchFx";
-import { favouriteCreateFx } from "~/app/favourite/fx/favouriteCreateFx";
-import { favouriteDeleteFx } from "~/app/favourite/fx/favouriteDeleteFx";
-import type { FavouriteToggleSchema } from "~/app/favourite/schema/FavouriteToggleSchema";
+import type { FavouriteToggleSchema } from "~/@user/favourite/schema/FavouriteToggleSchema";
 import { listingEventCreateFx } from "~/app/listing-event/fx/listingEventCreateFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { favouriteCreateFx } from "./favouriteCreateFx";
+import { favouriteDeleteFx } from "./favouriteDeleteFx";
 
 export namespace favouriteToggleFx {
 	export interface Props extends FavouriteToggleSchema.Type {

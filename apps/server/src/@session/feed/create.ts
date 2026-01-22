@@ -2,56 +2,39 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
-import { feedGalleryCreateFx } from "~/app/feed/fx/feedGalleryCreateFx";
-import { FeedGalleryCreateSchema } from "~/app/feed/schema/FeedGalleryCreateSchema";
+import { FeedCreateSchema } from "~/@user/feed/schema/FeedCreateSchema";
+import { FeedSchema } from "~/@user/feed/schema/FeedSchema";
+import { feedCreateFx } from "~/app/feed/fx/feedCreateFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
-export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(function* () {
-	const { userHono } = yield* RoutesContextFx;
-	userHono.openapi(
+export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
+	const { sessionHono } = yield* RoutesContextFx;
+	sessionHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/feed/gallery/create",
-			description:
-				"Create or update a gallery for a feed. Uses feed.id as gallery.id. If gallery doesn't exist, creates it and attaches uploads.",
-			operationId: "apiFeedGalleryCreate",
+			path: "/feed/create",
+			description: "Create a new feed item",
+			operationId: "apiFeedCreate",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: FeedGalleryCreateSchema,
+							schema: FeedCreateSchema,
 						},
 					},
-					description: "Query object for feed gallery creation",
+					description: "Data for creating a new feed item",
 				},
 			},
 			responses: {
-				200: {
+				201: {
 					content: {
 						"application/json": {
-							schema: GallerySchema,
+							schema: FeedSchema,
 						},
 					},
-					description: "Gallery created or updated",
-				},
-				400: {
-					content: {
-						"application/json": {
-							schema: NoticeSchema,
-						},
-					},
-					description: "Invalid request",
-				},
-				403: {
-					content: {
-						"application/json": {
-							schema: NoticeSchema,
-						},
-					},
-					description: "Access denied",
+					description: "The created feed item",
 				},
 				404: {
 					content: {
@@ -59,7 +42,7 @@ export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(functi
 							schema: NoticeSchema,
 						},
 					},
-					description: "Feed not found or not accessible",
+					description: "Feed not found after creation",
 				},
 				500: {
 					content: {
@@ -73,21 +56,21 @@ export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(functi
 			tags: [
 				"Feed",
 			],
-			summary: "Create or update a gallery for a feed.",
+			summary: "Create a new feed item",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<GallerySchema.Type, 200>(
+				return c.json<FeedSchema.Type, 201>(
 					yield* zodFx({
-						schema: GallerySchema,
-						dataFx: feedGalleryCreateFx({
+						schema: FeedSchema,
+						dataFx: feedCreateFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}) satisfies Effect.Effect<GallerySchema.Type, any, any>,
+						}) satisfies Effect.Effect<FeedSchema.Type, any, any>,
 					}),
-					200,
+					201,
 				);
 			}).pipe(
 				Effect.provide(KyselyContextLayer(c.get("kysely"))),
@@ -96,20 +79,6 @@ export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(functi
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
-							Match.when(
-								{
-									_tag: "InvalidRequestError",
-								},
-								() => {
-									return c.json<NoticeSchema.Type, 400>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										400,
-									);
-								},
-							),
 							Match.when(
 								{
 									_tag: "NotFoundErrorFx",
@@ -121,20 +90,6 @@ export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(functi
 											message: e.message,
 										},
 										404,
-									);
-								},
-							),
-							Match.when(
-								{
-									_tag: "AccessDeniedError",
-								},
-								() => {
-									return c.json<NoticeSchema.Type, 403>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										403,
 									);
 								},
 							),

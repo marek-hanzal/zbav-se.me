@@ -1,10 +1,10 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { favouriteFetchFx } from "~/app/favourite/fx/favouriteFetchFx";
-import type { FavouriteCreateSchema } from "~/app/favourite/schema/FavouriteCreateSchema";
+import type { FavouriteCreateSchema } from "~/@user/favourite/schema/FavouriteCreateSchema";
 import { feedFetchFx } from "~/app/feed/fx/feedFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { favouriteFetchFx } from "./favouriteFetchFx";
 
 export namespace favouriteCreateFx {
 	export interface Props extends FavouriteCreateSchema.Type {

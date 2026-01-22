@@ -2,8 +2,8 @@ import type { CategoryDbSchema } from "~/@session/category/schema/CategoryDbSche
 import type { CategorySpotlightDbSchema } from "~/@session/category/schema/CategorySpotlightDbSchema";
 import type { ListingDbSchema } from "~/@session/listing/schema/ListingDbSchema";
 import type { DraftDbSchema } from "~/@user/draft/schema/DraftDbSchema";
+import type { FavouriteDbSchema } from "~/@user/favourite/schema/FavouriteDbSchema";
 import type { CategoryMissDbSchema } from "~/app/category-miss/schema/CategoryMissDbSchema";
-import type { FavouriteDbSchema } from "~/app/favourite/schema/FavouriteDbSchema";
 import type { FeedDbSchema } from "~/app/feed/schema/FeedDbSchema";
 import type { FlagDbSchema } from "~/app/flag/schema/FlagDbSchema";
 import type { GalleryDbSchema } from "~/app/gallery/schema/GalleryDbSchema";

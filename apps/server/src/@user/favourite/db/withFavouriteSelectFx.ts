@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { withFavouriteSourceSelectFx } from "~/app/favourite/db/withFavouriteSourceSelectFx";
+import { withFavouriteSourceSelectFx } from "~/@user/favourite/db/withFavouriteSourceSelectFx";
 
 export namespace withFavouriteSelectFx {
 	export interface Props extends withFavouriteSourceSelectFx.Props {}

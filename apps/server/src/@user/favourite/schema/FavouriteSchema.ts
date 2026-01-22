@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { FavouriteDbSchema } from "~/app/favourite/schema/FavouriteDbSchema";
+import { FavouriteDbSchema } from "./FavouriteDbSchema";
 
 export const FavouriteSchema = z
 	.looseObject({

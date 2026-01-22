@@ -1,22 +1,22 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import type { FavouriteSortSchema } from "~/app/favourite/schema/FavouriteSortSchema";
+import type { FavouriteSortSchema } from "~/@user/favourite/schema/FavouriteSortSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
-export namespace withFavouriteSelectFx {
+export namespace withFavouriteSourceSelectFx {
 	export interface Props {
 		sort?: FavouriteSortSchema.Type[];
 	}
 
-	export type Select = Effect.Effect.Success<ReturnType<typeof withFavouriteSelectFx>>;
+	export type Select = Effect.Effect.Success<ReturnType<typeof withFavouriteSourceSelectFx>>;
 }
 
-export const withFavouriteSelectFx = Effect.fn("withFavouriteSelectFx")(function* ({
+export const withFavouriteSourceSelectFx = Effect.fn("withFavouriteSourceSelectFx")(function* ({
 	sort,
-}: withFavouriteSelectFx.Props) {
+}: withFavouriteSourceSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
-	let query = kysely.selectFrom("favourite as f").selectAll("f");
+	let query = kysely.selectFrom("favourite as f");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

@@ -2,16 +2,15 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { draftGalleryCreateFx } from "~/@session/draft-gallery/fx/draftGalleryCreateFx";
+import { DraftGalleryCreateSchema } from "~/@session/draft-gallery/schema/DraftGalleryCreateSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { draftGalleryCreateFx } from "./fx/draftGalleryCreateFx";
-import { DraftGalleryCreateSchema } from "./schema/DraftGalleryCreateSchema";
 
-export const withGalleryCreateApiFx = Effect.fn("withGalleryCreateApiFx")(function* () {
+export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 	const { sessionHono } = yield* RoutesContextFx;
-
 	sessionHono.openapi(
 		createRoute({
 			method: "post",

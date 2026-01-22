@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import type { FavouriteFilterSchema } from "~/app/favourite/schema/FavouriteFilterSchema";
+import type { FavouriteFilterSchema } from "~/@user/favourite/schema/FavouriteFilterSchema";
 import type { withFavouriteSourceSelectFx } from "./withFavouriteSourceSelectFx";
 
 export namespace withFavouriteQueryBuilderFx {
