@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
-import { withGallerySelectFx } from "~/app/gallery/db/withGallerySelectFx";
+import { withGallerySelectFx } from "~/@user/gallery/db/withGallerySelectFx";
 import type { MessageDirectionEnumSchema } from "~/app/message/schema/MessageDirectionEnumSchema";
 import type { MessageGallerySortSchema } from "~/app/message-gallery/schema/MessageGallerySortSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";

@@ -1,12 +1,12 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { galleryCountFx } from "~/app/gallery/fx/galleryCountFx";
-import { GalleryCountQuerySchema } from "~/app/gallery/schema/GalleryCountQuerySchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
+import { galleryCountFx } from "./fx/galleryCountFx";
+import { GalleryCountQuerySchema } from "./schema/GalleryCountQuerySchema";
 
 export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;

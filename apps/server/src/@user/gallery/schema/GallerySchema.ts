@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
-import { GalleryItemSchema } from "~/@user/gallery-item/schema/GalleryItemSchema";
-import { GalleryDbSchema } from "~/app/gallery/schema/GalleryDbSchema";
+import { GalleryItemSchema } from "~/@session/gallery-item/schema/GalleryItemSchema";
+import { GalleryDbSchema } from "./GalleryDbSchema";
 
 export const GallerySchema = z
 	.looseObject({

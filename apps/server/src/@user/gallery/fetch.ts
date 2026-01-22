@@ -1,11 +1,11 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { galleryFetchFx } from "~/app/gallery/fx/galleryFetchFx";
-import { GalleryQuerySchema } from "~/app/gallery/schema/GalleryQuerySchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
+import { galleryFetchFx } from "./fx/galleryFetchFx";
+import { GalleryQuerySchema } from "./schema/GalleryQuerySchema";
 import { GallerySchema } from "./schema/GallerySchema";
 
 export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {

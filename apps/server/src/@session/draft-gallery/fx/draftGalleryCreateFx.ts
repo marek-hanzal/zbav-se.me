@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { draftResolveFx } from "~/@session/draft/fx/draftResolveFx";
 import type { DraftGalleryCreateSchema } from "~/@session/draft-gallery/schema/DraftGalleryCreateSchema";
-import { galleryFetchFx } from "~/app/gallery/fx/galleryFetchFx";
-import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
+import { galleryItemCreateFx } from "~/@session/gallery-item/fx/galleryItemCreateFx";
+import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";

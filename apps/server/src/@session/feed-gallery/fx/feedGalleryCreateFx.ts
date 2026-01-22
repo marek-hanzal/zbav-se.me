@@ -1,10 +1,10 @@
 import { Effect } from "effect";
 import { feedResolveFx } from "~/@session/feed/fx/feedResolveFx";
 import type { FeedGalleryCreateSchema } from "~/@session/feed-gallery/schema/FeedGalleryCreateSchema";
+import { galleryCreateFx } from "~/@session/gallery/fx/galleryCreateFx";
+import { galleryItemCreateFx } from "~/@session/gallery-item/fx/galleryItemCreateFx";
 import { feedPatchFx } from "~/@user/feed/fx/feedPatchFx";
-import { galleryCreateFx } from "~/app/gallery/fx/galleryCreateFx";
-import { galleryFetchFx } from "~/app/gallery/fx/galleryFetchFx";
-import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
+import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";

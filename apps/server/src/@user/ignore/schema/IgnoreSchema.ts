@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { IgnoreDbSchema } from "~/app/ignore/schema/IgnoreDbSchema";
+import { IgnoreDbSchema } from "./IgnoreDbSchema";
 
 export const IgnoreSchema = z
 	.looseObject({

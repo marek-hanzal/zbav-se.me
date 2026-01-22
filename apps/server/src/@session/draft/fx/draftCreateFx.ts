@@ -2,9 +2,9 @@ import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import type { DraftCreateSchema } from "~/@session/draft/schema/DraftCreateSchema";
+import { galleryCreateFx as coolGalleryCreateFx } from "~/@session/gallery/fx/galleryCreateFx";
+import { galleryItemCreateFx } from "~/@session/gallery-item/fx/galleryItemCreateFx";
 import { draftFetchFx } from "~/@user/draft/fx/draftFetchFx";
-import { galleryCreateFx as coolGalleryCreateFx } from "~/app/gallery/fx/galleryCreateFx";
-import { galleryItemCreateFx } from "~/app/gallery-item/fx/galleryItemCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 

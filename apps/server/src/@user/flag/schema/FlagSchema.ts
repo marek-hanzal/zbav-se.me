@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { FlagDbSchema } from "~/app/flag/schema/FlagDbSchema";
+import { FlagDbSchema } from "./FlagDbSchema";
 
 export const FlagSchema = z
 	.looseObject({

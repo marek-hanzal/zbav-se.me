@@ -22,7 +22,7 @@ export const withSellerInfoApiFx = Effect.fn("withSellerInfoApiFx")(function* ()
 
 	sessionHono.openapi(
 		createRoute({
-			method: "post",
+			method: "get",
 			path: "/listing/{listingId}/seller-info",
 			description: "Return seller info for a listing.",
 			operationId: "apiListingSellerInfo",
