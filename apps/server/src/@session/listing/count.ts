@@ -9,8 +9,8 @@ import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
-	const { userHono } = yield* RoutesContextFx;
-	userHono.openapi(
+	const { sessionHono } = yield* RoutesContextFx;
+	sessionHono.openapi(
 		createRoute({
 			method: "post",
 			path: "/listing/count",

@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { ListingMetaSchema } from "~/@session/listing/schema/ListingMetaSchema";
-import { ListingWhereSchema } from "~/@session/listing/schema/ListingWhereSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
 import { ListingFilterSchema } from "./ListingFilterSchema";
+import { ListingMetaSchema } from "./ListingMetaSchema";
 import { ListingSortSchema } from "./ListingSortSchema";
+import { ListingWhereSchema } from "./ListingWhereSchema";
 
 export const ListingQuerySchema = z
 	.looseObject({

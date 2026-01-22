@@ -1,11 +1,11 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { SellerInfoSchema } from "~/@user/listing/schema/SellerInfoSchema";
-import { listingGetSellerInfoFx } from "~/app/listing/fx/listingGetSellerInfoFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
+import { listingGetSellerInfoFx } from "./fx/listingGetSellerInfoFx";
+import { SellerInfoSchema } from "./schema/SellerInfoSchema";
 
 const ListingSellerInfoParamsSchema = z
 	.object({

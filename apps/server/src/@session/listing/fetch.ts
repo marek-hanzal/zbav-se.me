@@ -3,14 +3,14 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
 import { listingFetchFx } from "~/app/listing/fx/listingFetchFx";
-import { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
+import { ListingQuerySchema } from "./schema/ListingQuerySchema";
 
 export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
-	const { userHono } = yield* RoutesContextFx;
-	userHono.openapi(
+	const { sessionHono } = yield* RoutesContextFx;
+	sessionHono.openapi(
 		createRoute({
 			method: "post",
 			path: "/listing/fetch",

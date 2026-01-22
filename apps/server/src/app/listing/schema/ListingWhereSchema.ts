@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingFilterSchema } from "~/app/listing/schema/ListingFilterSchema";
+import { ListingFilterSchema } from "~/@session/listing/schema/ListingFilterSchema";
 
 export const ListingWhereSchema = z
 	.object({

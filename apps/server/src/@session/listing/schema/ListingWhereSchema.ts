@@ -1,11 +1,10 @@
 import { z } from "@hono/zod-openapi";
-import { ListingFilterSchema } from "~/@session/listing/schema/ListingFilterSchema";
+import { ListingFilterSchema } from "./ListingFilterSchema";
 
 export const ListingWhereSchema = z
-	.looseObject({
+	.object({
 		...ListingFilterSchema.shape,
 	})
-	.strip()
 	.openapi("ListingWhere", {
 		description: "App-based filters",
 	});
