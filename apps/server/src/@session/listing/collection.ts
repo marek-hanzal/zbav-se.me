@@ -1,12 +1,12 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { listingCollectionFx } from "~/app/listing/fx/listingCollectionFx";
 import { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
+import { listingCollectionFx } from "./fx/listingCollectionFx";
 import { ListingItemSchema } from "./schema/ListingItemSchema";
 
 const CollectionSchema = withCollectionSchema({
@@ -16,8 +16,8 @@ const CollectionSchema = withCollectionSchema({
 });
 
 export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* () {
-	const { userHono } = yield* RoutesContextFx;
-	userHono.openapi(
+	const { sessionHono } = yield* RoutesContextFx;
+	sessionHono.openapi(
 		createRoute({
 			method: "post",
 			path: "/listing/collection",
