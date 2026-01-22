@@ -3,9 +3,9 @@ import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import type { CategoryDbSchema } from "~/@session/category/schema/CategoryDbSchema";
 import type { ListingDeliveryEnumSchema } from "~/@session/listing/schema/ListingDeliveryEnumSchema";
+import type { LocationDbSchema } from "~/@session/location/schema/LocationDbSchema";
 import { withDraftSourceSelectFx } from "~/@user/draft/db/withDraftSourceSelectFx";
 import { withGallerySelectFx } from "~/@user/gallery/db/withGallerySelectFx";
-import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 
 export namespace withDraftSelectFx {
 	export interface Props extends withDraftSourceSelectFx.Props {}

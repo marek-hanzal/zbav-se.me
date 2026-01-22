@@ -1,9 +1,9 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
+import { TextTooShortErrorFx } from "~/@session/location/error/TextTooShortErrorFx";
+import type { LocationDbSchema } from "~/@session/location/schema/LocationDbSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { TextTooShortErrorFx } from "../error/TextTooShortErrorFx";
-import type { LocationDbSchema } from "../schema/LocationDbSchema";
 import { withLocationListFx } from "./withLocationListFx";
 import { withLocationRequestFx } from "./withLocationRequestFx";
 

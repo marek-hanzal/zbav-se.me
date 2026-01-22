@@ -1,7 +1,7 @@
 import { Effect } from "effect";
+import type { withLocationSelectFx } from "~/@session/location/db/withLocationSelectFx";
+import type { LocationFilterSchema } from "~/@session/location/schema/LocationFilterSchema";
 import { withLikeEx } from "~/database/expression/withLikeEx";
-import type { LocationFilterSchema } from "../schema/LocationFilterSchema";
-import type { withLocationSelectFx } from "./withLocationSelectFx";
 
 export namespace withLocationQueryBuilderFx {
 	export interface Props {

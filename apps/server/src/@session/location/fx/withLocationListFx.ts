@@ -1,9 +1,9 @@
 import { withListFx } from "@use-pico/common/list";
 import { Effect } from "effect";
-import type { LocationFilterSchema } from "~/app/location/schema/LocationFilterSchema";
-import { withLocationQueryBuilderFx } from "../db/withLocationQueryBuilderFx";
-import { withLocationSelectFx } from "../db/withLocationSelectFx";
-import type { LocationQuerySchema } from "../schema/LocationQuerySchema";
+import { withLocationQueryBuilderFx } from "~/@session/location/db/withLocationQueryBuilderFx";
+import { withLocationSelectFx } from "~/@session/location/db/withLocationSelectFx";
+import type { LocationFilterSchema } from "~/@session/location/schema/LocationFilterSchema";
+import type { LocationQuerySchema } from "~/@session/location/schema/LocationQuerySchema";
 
 export namespace withLocationListFx {
 	export interface Props extends LocationQuerySchema.Type {

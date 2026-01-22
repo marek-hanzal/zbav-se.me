@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
+import type { LocationDbSchema } from "~/@session/location/schema/LocationDbSchema";
 import { withGallerySelectFx } from "~/@user/gallery/db/withGallerySelectFx";
-import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import { withTransactionSourceSelectFx } from "~/app/transaction/db/withTransactionSourceSelectFx";
 import type { TransactionSortSchema } from "~/app/transaction/schema/TransactionSortSchema";
 

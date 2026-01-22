@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
+import type { LocationSortSchema } from "~/@session/location/schema/LocationSortSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import type { LocationSortSchema } from "../schema/LocationSortSchema";
 
 export namespace withLocationSelectFx {
 	export interface Props {
