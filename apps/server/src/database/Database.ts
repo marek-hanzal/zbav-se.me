@@ -1,3 +1,4 @@
+import type { ListingDbSchema } from "~/@session/listing/schema/ListingDbSchema";
 import type { CategoryDbSchema } from "~/app/category/schema/CategoryDbSchema";
 import type { CategorySpotlightDbSchema } from "~/app/category/schema/CategorySpotlightDbSchema";
 import type { CategoryMissDbSchema } from "~/app/category-miss/schema/CategoryMissDbSchema";
@@ -9,7 +10,6 @@ import type { GalleryDbSchema } from "~/app/gallery/schema/GalleryDbSchema";
 import type { GalleryItemDbSchema } from "~/app/gallery-item/schema/GalleryItemDbSchema";
 import type { GitHubDbSchema } from "~/app/github/schema/GitHubDbSchema";
 import type { IgnoreDbSchema } from "~/app/ignore/schema/IgnoreDbSchema";
-import type { ListingDbSchema } from "~/app/listing/schema/ListingDbSchema";
 import type { ListingEventDbSchema } from "~/app/listing-event/schema/ListingEventDbSchema";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import type { MessageGalleryDbSchema } from "~/app/message-gallery/schema/MessageGalleryDbSchema";
