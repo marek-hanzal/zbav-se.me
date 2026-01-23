@@ -1,8 +1,8 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { messageCollectionFx } from "~/app/message/fx/messageCollectionFx";
-import { MessageQuerySchema } from "~/app/message/schema/MessageQuerySchema";
+import { messageCollectionFx } from "~/@user/message/fx/messageCollectionFx";
+import { MessageQuerySchema } from "~/@user/message/schema/MessageQuerySchema";
 import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";

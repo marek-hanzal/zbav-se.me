@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import type { MessagePayloadSchema } from "~/app/message/schema/MessagePayloadSchema";
-import type { MessageSortSchema } from "~/app/message/schema/MessageSortSchema";
-import type { MessageTypeEnumSchema } from "~/app/message/schema/MessageTypeEnumSchema";
+import type { MessagePayloadSchema } from "~/@user/message/schema/MessagePayloadSchema";
+import type { MessageSortSchema } from "~/@user/message/schema/MessageSortSchema";
+import type { MessageTypeEnumSchema } from "~/@user/message/schema/MessageTypeEnumSchema";
 import { withMessageGallerySelectFx } from "~/app/message-gallery/db/withMessageGallerySelectFx";
 import { withMessageLocationSelectFx } from "~/app/message-location/db/withMessageLocationSelectFx";
 import { withMessagePackageSelectFx } from "~/app/message-package/db/withMessagePackageSelectFx";

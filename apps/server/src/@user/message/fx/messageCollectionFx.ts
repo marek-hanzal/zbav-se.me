@@ -1,9 +1,9 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { withMessageCollectionSelectFx } from "~/app/message/db/withMessageCollectionSelectFx";
-import { withMessageQueryBuilderFx } from "~/app/message/db/withMessageQueryBuilderFx";
-import type { MessageFilterSchema } from "~/app/message/schema/MessageFilterSchema";
-import type { MessageQuerySchema } from "~/app/message/schema/MessageQuerySchema";
+import { withMessageCollectionSelectFx } from "~/@user/message/db/withMessageCollectionSelectFx";
+import { withMessageQueryBuilderFx } from "~/@user/message/db/withMessageQueryBuilderFx";
+import type { MessageFilterSchema } from "~/@user/message/schema/MessageFilterSchema";
+import type { MessageQuerySchema } from "~/@user/message/schema/MessageQuerySchema";
 
 export namespace messageCollectionFx {
 	export interface Props extends MessageQuerySchema.Type {

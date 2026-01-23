@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
-import { MessageDirectionEnumSchema } from "~/app/message/schema/MessageDirectionEnumSchema";
-import { MessageTypeEnumSchema } from "~/app/message/schema/MessageTypeEnumSchema";
+import { MessageDirectionEnumSchema } from "~/@user/message/schema/MessageDirectionEnumSchema";
+import { MessageTypeEnumSchema } from "~/@user/message/schema/MessageTypeEnumSchema";
 import { MessageLocationDbSchema } from "~/app/message-location/schema/MessageLocationDbSchema";
 
 export const MessageLocationSchema = z

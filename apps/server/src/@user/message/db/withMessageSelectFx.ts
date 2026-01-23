@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { withMessageSourceSelectFx } from "~/app/message/db/withMessageSourceSelectFx";
+import { withMessageSourceSelectFx } from "~/@user/message/db/withMessageSourceSelectFx";
 
 export namespace withMessageSelectFx {
 	export interface Props extends withMessageSourceSelectFx.Props {}

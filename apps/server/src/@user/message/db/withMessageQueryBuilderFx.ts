@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import type { withMessageSourceSelectFx } from "~/app/message/db/withMessageSourceSelectFx";
-import type { MessageFilterSchema } from "~/app/message/schema/MessageFilterSchema";
+import type { withMessageSourceSelectFx } from "~/@user/message/db/withMessageSourceSelectFx";
+import type { MessageFilterSchema } from "~/@user/message/schema/MessageFilterSchema";
 
 export namespace withMessageQueryBuilderFx {
 	export interface Props<TSelect extends withMessageSourceSelectFx.Select> {

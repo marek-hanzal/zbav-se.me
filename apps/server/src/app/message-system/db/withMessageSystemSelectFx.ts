@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import type { MessageDirectionEnumSchema } from "~/app/message/schema/MessageDirectionEnumSchema";
+import type { MessageDirectionEnumSchema } from "~/@user/message/schema/MessageDirectionEnumSchema";
 import type { MessageSystemSortSchema } from "~/app/message-system/schema/MessageSystemSortSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 

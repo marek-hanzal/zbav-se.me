@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
-import { MessageDirectionEnumSchema } from "~/app/message/schema/MessageDirectionEnumSchema";
-import { MessageTypeEnumSchema } from "~/app/message/schema/MessageTypeEnumSchema";
+import { MessageDirectionEnumSchema } from "~/@user/message/schema/MessageDirectionEnumSchema";
+import { MessageTypeEnumSchema } from "~/@user/message/schema/MessageTypeEnumSchema";
 import { MessagePackageDbSchema } from "~/app/message-package/schema/MessagePackageDbSchema";
 
 export const MessagePackageSchema = z

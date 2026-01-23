@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { MessageSchema } from "~/app/message/schema/MessageSchema";
+import { MessageSchema } from "~/@user/message/schema/MessageSchema";
 
 export const MessageItemSchema = z
 	.looseObject({

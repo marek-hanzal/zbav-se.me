@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withMessageSelectFx } from "~/app/message/db/withMessageSelectFx";
-import type { withMessageSourceSelectFx } from "~/app/message/db/withMessageSourceSelectFx";
+import { withMessageSelectFx } from "~/@user/message/db/withMessageSelectFx";
+import type { withMessageSourceSelectFx } from "~/@user/message/db/withMessageSourceSelectFx";
 
 export namespace withMessageCollectionSelectFx {
 	export interface Props extends withMessageSourceSelectFx.Props {}
