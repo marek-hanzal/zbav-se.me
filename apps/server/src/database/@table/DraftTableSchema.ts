@@ -1,0 +1,166 @@
+import { z } from "@hono/zod-openapi";
+import { ListingDeliveryEnumSchema } from "~/@session/listing/schema/ListingDeliveryEnumSchema";
+import { ListingExpireEnumSchema } from "~/@session/listing/schema/ListingExpireEnumSchema";
+import { ListingPriceEnumSchema } from "~/@session/listing/schema/ListingPriceEnumSchema";
+import { ListingWarrantyEnumSchema } from "~/@session/listing/schema/ListingWarrantyEnumSchema";
+import { ProsConsSchema } from "~/@session/listing/schema/ProsConsSchema";
+import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
+
+export const DraftTableSchema = z
+	.looseObject({
+		id: z.string().openapi({
+			description: "ID of the draft",
+		}),
+		userId: z.string().openapi({
+			description: "ID of the user who created the draft",
+		}),
+		//
+		price: z
+			.union([
+				z.coerce.number(),
+				z.null(),
+			])
+			.openapi({
+				description: "Price of the draft",
+			}),
+		priceType: z
+			.union([
+				ListingPriceEnumSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Price type of the draft",
+			}),
+		//
+		currency: z
+			.union([
+				CurrencyListEnumSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Currency of the draft",
+			}),
+		//
+		condition: z
+			.union([
+				z.number(),
+				z.null(),
+			])
+			.openapi({
+				description: "Condition of the item (0-based index)",
+			}),
+		//
+		age: z
+			.union([
+				z.number(),
+				z.null(),
+			])
+			.openapi({
+				description: "Age of the item (0-based index)",
+			}),
+		//
+		delivery: z
+			.union([
+				z.array(ListingDeliveryEnumSchema),
+				z.null(),
+			])
+			.openapi({
+				description: "Delivery methods for the draft",
+			}),
+		//
+		warranty: z
+			.union([
+				ListingWarrantyEnumSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Warranty type for the draft",
+			}),
+		//
+		locationId: z
+			.union([
+				z.string(),
+				z.null(),
+			])
+			.openapi({
+				description: "ID of the location",
+			}),
+		categoryId: z
+			.union([
+				z.string(),
+				z.null(),
+			])
+			.openapi({
+				description: "ID of the category",
+			}),
+		galleryId: z.string().openapi({
+			description: "ID of the gallery",
+		}),
+		expiresAt: z
+			.union([
+				z.null(),
+				ListingExpireEnumSchema,
+			])
+			.openapi({
+				description: "Expiration timestamp",
+			}),
+		//
+		title: z
+			.union([
+				z.string(),
+				z.null(),
+			])
+			.openapi({
+				description: "Title of the item",
+			}),
+		//
+		description: z
+			.union([
+				z.string().max(2048),
+				z.null(),
+			])
+			.openapi({
+				description: "Description of the item",
+			}),
+		//
+		pros: z
+			.union([
+				ProsConsSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Pros of the item",
+			}),
+		cons: z
+			.union([
+				ProsConsSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Cons of the item",
+			}),
+		//
+		createdAt: z.coerce.date().openapi({
+			description: "Creation timestamp",
+			type: "string",
+		}),
+		updatedAt: z.coerce.date().openapi({
+			description: "Last update timestamp",
+			type: "string",
+		}),
+		usedAt: z
+			.union([
+				z.null(),
+				z.coerce.date(),
+			])
+			.openapi({
+				description: "Timestamp when the draft was used to create a listing",
+			}),
+	})
+	.strip();
+
+export type DraftTableSchema = typeof DraftTableSchema;
+
+export namespace DraftTableSchema {
+	export type Type = z.infer<DraftTableSchema>;
+}
