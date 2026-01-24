@@ -3,7 +3,7 @@ import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { match } from "ts-pattern";
-import { transactionCollectionFx } from "~/app/transaction/fx/transactionCollectionFx";
+import { transactionCollectionFx } from "~/@user/transaction/fx/transactionCollectionFx";
 import { transactionStatusCloseFx } from "~/app/transaction-status/fx/transactionStatusCloseFx";
 import { transactionStatusFetchFx } from "~/app/transaction-status/fx/transactionStatusFetchFx";
 import { transactionStatusSuccessFx } from "~/app/transaction-status/fx/transactionStatusSuccessFx";

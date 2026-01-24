@@ -20,8 +20,8 @@ import type { MessageSystemDbSchema } from "~/@user/message-system/schema/Messag
 import type { MessageTextDbSchema } from "~/@user/message-text/schema/MessageTextDbSchema";
 import type { MessageThreadDbSchema } from "~/@user/message-thread/schema/MessageThreadDbSchema";
 import type { MessageThreadUserDbSchema } from "~/@user/message-thread-user/schema/MessageThreadUserDbSchema";
-import type { ThumbDbSchema } from "~/app/thumb/schema/ThumbDbSchema";
-import type { TransactionDbSchema } from "~/app/transaction/schema/TransactionDbSchema";
+import type { ThumbDbSchema } from "~/@user/thumb/schema/ThumbDbSchema";
+import type { TransactionDbSchema } from "~/@user/transaction/schema/TransactionDbSchema";
 import type { TransactionStatusDbSchema } from "~/app/transaction-status/schema/ListingTransactionStatusDbSchema";
 import type { UploadDbSchema } from "~/app/upload/schema/UploadDbSchema";
 import type { UserEventDbSchema } from "~/app/user-event/schema/UserEventDbSchema";

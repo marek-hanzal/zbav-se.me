@@ -3,8 +3,8 @@ import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import type { LocationDbSchema } from "~/@session/location/schema/LocationDbSchema";
 import { withGallerySelectFx } from "~/@user/gallery/db/withGallerySelectFx";
-import { withTransactionSourceSelectFx } from "~/app/transaction/db/withTransactionSourceSelectFx";
-import type { TransactionSortSchema } from "~/app/transaction/schema/TransactionSortSchema";
+import { withTransactionSourceSelectFx } from "~/@user/transaction/db/withTransactionSourceSelectFx";
+import type { TransactionSortSchema } from "~/@user/transaction/schema/TransactionSortSchema";
 
 export namespace withTransactionSelectFx {
 	export interface Props {

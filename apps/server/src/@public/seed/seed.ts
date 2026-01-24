@@ -4,7 +4,7 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { SeedRequestSchema, seedFx } from "~/@public/seed/fx/seedFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
+import { TransactionContextProvider } from "~/@user/transaction/context/TransactionContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 

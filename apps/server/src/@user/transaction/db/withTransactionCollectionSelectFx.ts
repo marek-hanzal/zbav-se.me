@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { withTransactionSourceSelectFx } from "~/app/transaction/db/withTransactionSourceSelectFx";
+import { withTransactionSourceSelectFx } from "~/@user/transaction/db/withTransactionSourceSelectFx";
 
 export namespace withTransactionCollectionSelectFx {
 	export interface Props extends withTransactionSourceSelectFx.Props {}

@@ -4,7 +4,7 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { MessageTextSchema } from "~/@user/message-text/schema/MessageTextSchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
+import { TransactionContextProvider } from "~/@user/transaction/context/TransactionContextFx";
 import { transactionMessageTextCreateFx } from "~/app/transaction-message-text/fx/transactionMessageTextCreateFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";

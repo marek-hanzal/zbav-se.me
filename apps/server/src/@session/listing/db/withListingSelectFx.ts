@@ -4,7 +4,7 @@ import { jsonObjectFrom } from "kysely/helpers/postgres";
 import type { CategoryDbSchema } from "~/@session/category/schema/CategoryDbSchema";
 import type { LocationDbSchema } from "~/@session/location/schema/LocationDbSchema";
 import { withGallerySelectFx } from "~/@user/gallery/db/withGallerySelectFx";
-import type { ThumbEnumSchema } from "~/app/thumb/schema/ThumbEnumSchema";
+import type { ThumbEnumSchema } from "~/@user/thumb/schema/ThumbEnumSchema";
 import type { ListingDeliveryEnumSchema } from "../schema/ListingDeliveryEnumSchema";
 import { withListingSourceSelectFx } from "./withListingSourceSelectFx";
 

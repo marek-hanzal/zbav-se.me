@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { DateContextFx, DateContextLayer } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { listingOfFx } from "~/@public/seed/fx/listingOfFx";
-import { transactionCreateFx } from "~/app/transaction/fx/transactionCreateFx";
+import { transactionCreateFx } from "~/@user/transaction/fx/transactionCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export const SeedTransactionsRequestSchema = z.object({

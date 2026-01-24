@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import { withTransactionListingSourceSelectFx } from "~/app/transaction-listing/db/withTransactionListingSourceSelectFx";
+import { withTransactionListingSourceSelectFx } from "~/@user/transaction-listing/db/withTransactionListingSourceSelectFx";
 
 export namespace withTransactionListingCollectionSelectFx {
 	export interface Props extends withTransactionListingSourceSelectFx.Props {}

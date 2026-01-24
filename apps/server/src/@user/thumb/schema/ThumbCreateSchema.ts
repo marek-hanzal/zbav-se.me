@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ThumbEnumSchema } from "~/app/thumb/schema/ThumbEnumSchema";
+import { ThumbEnumSchema } from "~/@user/thumb/schema/ThumbEnumSchema";
 
 export const ThumbCreateSchema = z
 	.looseObject({

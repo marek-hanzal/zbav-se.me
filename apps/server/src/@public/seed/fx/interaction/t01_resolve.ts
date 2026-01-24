@@ -4,7 +4,7 @@ import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { match } from "ts-pattern";
-import { transactionCollectionFx } from "~/app/transaction/fx/transactionCollectionFx";
+import { transactionCollectionFx } from "~/@user/transaction/fx/transactionCollectionFx";
 import { transactionStatusFetchFx } from "~/app/transaction-status/fx/transactionStatusFetchFx";
 import { transactionStatusResolveFx } from "~/app/transaction-status/fx/transactionStatusResolveFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
