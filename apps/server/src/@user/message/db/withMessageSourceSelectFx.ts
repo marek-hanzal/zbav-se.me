@@ -4,12 +4,12 @@ import { match } from "ts-pattern";
 import type { MessagePayloadSchema } from "~/@user/message/schema/MessagePayloadSchema";
 import type { MessageSortSchema } from "~/@user/message/schema/MessageSortSchema";
 import type { MessageTypeEnumSchema } from "~/@user/message/schema/MessageTypeEnumSchema";
-import { withMessageGallerySelectFx } from "~/app/message-gallery/db/withMessageGallerySelectFx";
-import { withMessageLocationSelectFx } from "~/app/message-location/db/withMessageLocationSelectFx";
-import { withMessagePackageSelectFx } from "~/app/message-package/db/withMessagePackageSelectFx";
-import { withMessagePersonalSelectFx } from "~/app/message-personal/db/withMessagePersonalSelectFx";
-import { withMessageSystemSelectFx } from "~/app/message-system/db/withMessageSystemSelectFx";
-import { withMessageTextSelectFx } from "~/app/message-text/db/withMessageTextSelectFx";
+import { withMessageGallerySelectFx } from "~/@user/message-gallery/db/withMessageGallerySelectFx";
+import { withMessageLocationSelectFx } from "~/@user/message-location/db/withMessageLocationSelectFx";
+import { withMessagePackageSelectFx } from "~/@user/message-package/db/withMessagePackageSelectFx";
+import { withMessagePersonalSelectFx } from "~/@user/message-personal/db/withMessagePersonalSelectFx";
+import { withMessageSystemSelectFx } from "~/@user/message-system/db/withMessageSystemSelectFx";
+import { withMessageTextSelectFx } from "~/@user/message-text/db/withMessageTextSelectFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withMessageSourceSelectFx {

@@ -2,7 +2,7 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { MessageTextSchema } from "~/app/message-text/schema/MessageTextSchema";
+import { MessageTextSchema } from "~/@user/message-text/schema/MessageTextSchema";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
 import { transactionMessageTextCreateFx } from "~/app/transaction-message-text/fx/transactionMessageTextCreateFx";

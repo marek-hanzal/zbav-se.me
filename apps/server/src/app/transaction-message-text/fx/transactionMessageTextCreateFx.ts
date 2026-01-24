@@ -1,6 +1,6 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
-import { messageTextCreateFx } from "~/app/message-text/fx/messageTextCreateFx";
+import { messageTextCreateFx } from "~/@user/message-text/fx/messageTextCreateFx";
 import { TransactionContextFx } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/app/transaction/fx/transactionStatusGateFx";
 import type { TransactionMessageTextCreateSchema } from "~/app/transaction-message-text/schema/TransactionMessageTextCreateSchema";

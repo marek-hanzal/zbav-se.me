@@ -2,7 +2,7 @@ import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { galleryCreateFx } from "~/@session/gallery/fx/galleryCreateFx";
 import { galleryItemCreateFx } from "~/@session/gallery-item/fx/galleryItemCreateFx";
-import { messageGalleryCreateFx } from "~/app/message-gallery/fx/messageGalleryCreateFx";
+import { messageGalleryCreateFx } from "~/@user/message-gallery/fx/messageGalleryCreateFx";
 import { TransactionContextFx } from "~/app/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/app/transaction/fx/transactionStatusGateFx";
 import type { TransactionMessageGalleryCreateSchema } from "~/app/transaction-message-gallery/schema/TransactionMessageGalleryCreateSchema";

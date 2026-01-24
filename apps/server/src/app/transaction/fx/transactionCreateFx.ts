@@ -3,7 +3,7 @@ import { NotFoundErrorFx } from "@use-pico/common/error";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { listingEventCreateFx } from "~/@session/listing-event/fx/listingEventCreateFx";
-import { messageSystemCreateFx } from "~/app/message-system/fx/messageSystemCreateFx";
+import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { messageThreadCreateFx } from "~/app/message-thread/fx/messageThreadCreateFx";
 import { messageUserCreateFx } from "~/app/message-thread-user/fx/messageUserCreateFx";
 import { TransactionContextFx } from "~/app/transaction/context/TransactionContextFx";
