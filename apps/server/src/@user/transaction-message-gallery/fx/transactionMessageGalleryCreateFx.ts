@@ -1,26 +1,35 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
-import { messageTextCreateFx } from "~/@user/message-text/fx/messageTextCreateFx";
+import { galleryCreateFx } from "~/@session/gallery/fx/galleryCreateFx";
+import { galleryItemCreateFx } from "~/@session/gallery-item/fx/galleryItemCreateFx";
+import { messageGalleryCreateFx } from "~/@user/message-gallery/fx/messageGalleryCreateFx";
 import { TransactionContextFx } from "~/@user/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/@user/transaction/fx/transactionStatusGateFx";
-import type { TransactionMessageTextCreateSchema } from "~/app/transaction-message-text/schema/TransactionMessageTextCreateSchema";
+import type { TransactionMessageGalleryCreateSchema } from "~/@user/transaction-message-gallery/schema/TransactionMessageGalleryCreateSchema";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { InvalidRequestError } from "~/error/InvalidRequestError";
 
-export namespace transactionMessageTextCreateFx {
-	export interface Props extends TransactionMessageTextCreateSchema.Type {
+export namespace transactionMessageGalleryCreateFx {
+	export interface Props extends TransactionMessageGalleryCreateSchema.Type {
 		userId: string;
 	}
 }
 
-export const transactionMessageTextCreateFx = Effect.fn("transactionMessageTextCreateFx")(
-	function* ({ userId, transactionId, message }: transactionMessageTextCreateFx.Props) {
+export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGalleryCreateFx")(
+	function* ({ userId, transactionId, uploadIds }: transactionMessageGalleryCreateFx.Props) {
 		return yield* withTransactionFx(
 			Effect.gen(function* () {
 				const { kysely } = yield* KyselyContextFx;
 				const config = yield* TransactionContextFx;
 				const dateContext = yield* DateContextFx;
+
+				if (uploadIds.length === 0) {
+					return yield* new InvalidRequestError({
+						message: "At least one upload is required",
+					});
+				}
 
 				const transaction = yield* transactionStatusGateFx({
 					userId,
@@ -48,6 +57,28 @@ export const transactionMessageTextCreateFx = Effect.fn("transactionMessageTextC
 						.executeTakeFirst();
 				});
 
+				const gallery = yield* galleryCreateFx({
+					userId,
+				});
+
+				yield* Effect.promise(async () => {
+					return kysely
+						.deleteFrom("gallery_item")
+						.where("galleryId", "=", gallery.id)
+						.execute();
+				});
+
+				let sort = 0;
+				for (const uploadId of uploadIds) {
+					yield* galleryItemCreateFx({
+						galleryId: gallery.id,
+						uploadId,
+						sort,
+						userId,
+					});
+					sort++;
+				}
+
 				yield* userInteractionEventFx({
 					userId,
 					targetId:
@@ -58,14 +89,16 @@ export const transactionMessageTextCreateFx = Effect.fn("transactionMessageTextC
 					isTerminal: false,
 				});
 
-				return yield* messageTextCreateFx({
+				return yield* messageGalleryCreateFx({
 					userId,
 					messageThreadId: transaction.messageThreadId,
-					message,
+					galleryId: gallery.id,
 				});
 			}),
 		);
 	},
 );
 
-export type transactionMessageTextCreateFx = ReturnType<typeof transactionMessageTextCreateFx>;
+export type transactionMessageGalleryCreateFx = ReturnType<
+	typeof transactionMessageGalleryCreateFx
+>;

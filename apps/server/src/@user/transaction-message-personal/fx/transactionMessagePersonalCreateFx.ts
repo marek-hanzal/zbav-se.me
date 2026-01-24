@@ -3,7 +3,7 @@ import { Effect } from "effect";
 import { messagePersonalCreateFx } from "~/@user/message-personal/fx/messagePersonalCreateFx";
 import { TransactionContextFx } from "~/@user/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/@user/transaction/fx/transactionStatusGateFx";
-import type { TransactionMessagePersonalCreateSchema } from "~/app/transaction-message-personal/schema/TransactionMessagePersonalCreateSchema";
+import type { TransactionMessagePersonalCreateSchema } from "~/@user/transaction-message-personal/schema/TransactionMessagePersonalCreateSchema";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";

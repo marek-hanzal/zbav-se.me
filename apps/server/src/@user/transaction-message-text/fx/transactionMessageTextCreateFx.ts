@@ -1,21 +1,21 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
-import { messagePackageCreateFx } from "~/@user/message-package/fx/messagePackageCreateFx";
+import { messageTextCreateFx } from "~/@user/message-text/fx/messageTextCreateFx";
 import { TransactionContextFx } from "~/@user/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/@user/transaction/fx/transactionStatusGateFx";
-import type { TransactionMessagePackageCreateSchema } from "~/app/transaction-message-package/schema/TransactionMessagePackageCreateSchema";
+import type { TransactionMessageTextCreateSchema } from "~/@user/transaction-message-text/schema/TransactionMessageTextCreateSchema";
 import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
-export namespace transactionMessagePackageCreateFx {
-	export interface Props extends TransactionMessagePackageCreateSchema.Type {
+export namespace transactionMessageTextCreateFx {
+	export interface Props extends TransactionMessageTextCreateSchema.Type {
 		userId: string;
 	}
 }
 
-export const transactionMessagePackageCreateFx = Effect.fn("transactionMessagePackageCreateFx")(
-	function* ({ userId, transactionId, link, number }: transactionMessagePackageCreateFx.Props) {
+export const transactionMessageTextCreateFx = Effect.fn("transactionMessageTextCreateFx")(
+	function* ({ userId, transactionId, message }: transactionMessageTextCreateFx.Props) {
 		return yield* withTransactionFx(
 			Effect.gen(function* () {
 				const { kysely } = yield* KyselyContextFx;
@@ -58,17 +58,14 @@ export const transactionMessagePackageCreateFx = Effect.fn("transactionMessagePa
 					isTerminal: false,
 				});
 
-				return yield* messagePackageCreateFx({
+				return yield* messageTextCreateFx({
 					userId,
 					messageThreadId: transaction.messageThreadId,
-					link,
-					number,
+					message,
 				});
 			}),
 		);
 	},
 );
 
-export type transactionMessagePackageCreateFx = ReturnType<
-	typeof transactionMessagePackageCreateFx
->;
+export type transactionMessageTextCreateFx = ReturnType<typeof transactionMessageTextCreateFx>;
