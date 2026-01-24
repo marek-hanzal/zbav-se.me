@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { userEventBuyerInfoFx } from "~/app/user-event/fx/userEventBuyerInfoFx";
+import { userEventBuyerInfoFx } from "~/@buyer/user-event/fx/userEventBuyerInfoFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { testabase } from "../../../../testabase";
 
