@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
-import { TransactionDbSchema } from "~/app/transaction/schema/TransactionDbSchema";
-import { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
+import { TransactionDbSchema } from "~/@user/transaction/schema/TransactionDbSchema";
+import { TransactionQuerySchema } from "~/@user/transaction/schema/TransactionQuerySchema";
 
 export const TransactionPatchSchema = z
 	.looseObject({
