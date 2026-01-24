@@ -1,11 +1,11 @@
 import type { GitHubDbSchema } from "~/@public/github/schema/GitHubDbSchema";
 import type { CategoryDbSchema } from "~/@session/category/schema/CategoryDbSchema";
 import type { CategorySpotlightDbSchema } from "~/@session/category/schema/CategorySpotlightDbSchema";
+import type { CategoryMissDbSchema } from "~/@session/category-miss/schema/CategoryMissDbSchema";
 import type { GalleryItemDbSchema } from "~/@session/gallery-item/schema/GalleryItemDbSchema";
 import type { ListingDbSchema } from "~/@session/listing/schema/ListingDbSchema";
 import type { ListingEventDbSchema } from "~/@session/listing-event/schema/ListingEventDbSchema";
 import type { LocationDbSchema } from "~/@session/location/schema/LocationDbSchema";
-import type { CategoryMissDbSchema } from "~/@user/category-miss/schema/CategoryMissDbSchema";
 import type { DraftDbSchema } from "~/@user/draft/schema/DraftDbSchema";
 import type { FavouriteDbSchema } from "~/@user/favourite/schema/FavouriteDbSchema";
 import type { FeedDbSchema } from "~/@user/feed/schema/FeedDbSchema";

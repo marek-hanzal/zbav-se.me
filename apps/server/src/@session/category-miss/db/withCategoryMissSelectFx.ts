@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import type { CategoryMissSortSchema } from "~/@user/category-miss/schema/CategoryMissSortSchema";
+import type { CategoryMissSortSchema } from "~/@session/category-miss/schema/CategoryMissSortSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withCategoryMissSelectFx {

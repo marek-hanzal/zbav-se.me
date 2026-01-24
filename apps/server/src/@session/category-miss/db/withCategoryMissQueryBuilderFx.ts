@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import type { withCategoryMissSelectFx } from "~/@user/category-miss/db/withCategoryMissSelectFx";
-import type { CategoryMissFilterSchema } from "~/@user/category-miss/schema/CategoryMissFilterSchema";
+import type { withCategoryMissSelectFx } from "~/@session/category-miss/db/withCategoryMissSelectFx";
+import type { CategoryMissFilterSchema } from "~/@session/category-miss/schema/CategoryMissFilterSchema";
 
 export namespace withCategoryMissQueryBuilderFx {
 	export interface Props {
