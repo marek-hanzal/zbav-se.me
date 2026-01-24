@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import type { MessageThreadSortSchema } from "~/app/message-thread/schema/MessageThreadSortSchema";
+import type { MessageThreadSortSchema } from "~/@user/message-thread/schema/MessageThreadSortSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withMessageThreadSelectFx {

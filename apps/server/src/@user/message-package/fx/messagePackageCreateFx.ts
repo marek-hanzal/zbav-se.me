@@ -2,7 +2,7 @@ import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import type { MessagePackageCreateSchema } from "~/@user/message-package/schema/MessagePackageCreateSchema";
-import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
+import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { messagePackageFetchFx } from "./messagePackageFetchFx";

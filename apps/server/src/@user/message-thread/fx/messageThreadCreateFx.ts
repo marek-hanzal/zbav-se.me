@@ -1,10 +1,10 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { messageThreadFetchFx } from "~/app/message-thread/fx/messageThreadFetchFx";
-import type { MessageThreadCreateSchema } from "~/app/message-thread/schema/MessageThreadCreateSchema";
+import type { MessageThreadCreateSchema } from "~/@user/message-thread/schema/MessageThreadCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { messageThreadFetchFx } from "./messageThreadFetchFx";
 
 export namespace messageThreadCreateFx {
 	export type Props = MessageThreadCreateSchema.Type;

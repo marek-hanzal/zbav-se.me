@@ -3,7 +3,7 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { messageCollectionFx } from "~/@user/message/fx/messageCollectionFx";
 import { MessageQuerySchema } from "~/@user/message/schema/MessageQuerySchema";
-import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
+import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import type { MessageThreadUserFilterSchema } from "~/app/message-thread-user/schema/MessageThreadUserFilterSchema";
-import type { withMessageThreadUserSelectFx } from "./withMessageThreadUserSelectFx";
+import type { withMessageThreadUserSelectFx } from "~/@user/message-thread-user/db/withMessageThreadUserSelectFx";
+import type { MessageThreadUserFilterSchema } from "~/@user/message-thread-user/schema/MessageThreadUserFilterSchema";
 
 export namespace withMessageThreadUserQueryBuilderFx {
 	export interface Props {

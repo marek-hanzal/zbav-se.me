@@ -1,9 +1,9 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { withMessageThreadQueryBuilderFx } from "~/app/message-thread/db/withMessageThreadQueryBuilderFx";
-import { withMessageThreadSelectFx } from "~/app/message-thread/db/withMessageThreadSelectFx";
-import type { MessageThreadFilterSchema } from "~/app/message-thread/schema/MessageThreadFilterSchema";
-import type { MessageThreadQuerySchema } from "~/app/message-thread/schema/MessageThreadQuerySchema";
+import { withMessageThreadQueryBuilderFx } from "~/@user/message-thread/db/withMessageThreadQueryBuilderFx";
+import { withMessageThreadSelectFx } from "~/@user/message-thread/db/withMessageThreadSelectFx";
+import type { MessageThreadFilterSchema } from "~/@user/message-thread/schema/MessageThreadFilterSchema";
+import type { MessageThreadQuerySchema } from "~/@user/message-thread/schema/MessageThreadQuerySchema";
 
 export namespace messageThreadFetchFx {
 	export interface Props extends MessageThreadQuerySchema.Type {

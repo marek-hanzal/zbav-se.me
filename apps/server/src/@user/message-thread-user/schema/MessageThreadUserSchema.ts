@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { MessageThreadUserDbSchema } from "~/app/message-thread-user/schema/MessageThreadUserDbSchema";
+import { MessageThreadUserDbSchema } from "./MessageThreadUserDbSchema";
 
 export const MessageThreadUserSchema = z
 	.looseObject({

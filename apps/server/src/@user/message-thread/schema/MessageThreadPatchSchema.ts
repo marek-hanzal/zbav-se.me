@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
-import { MessageThreadDbSchema } from "~/app/message-thread/schema/MessageThreadDbSchema";
-import { MessageThreadQuerySchema } from "~/app/message-thread/schema/MessageThreadQuerySchema";
+import { MessageThreadDbSchema } from "./MessageThreadDbSchema";
+import { MessageThreadQuerySchema } from "./MessageThreadQuerySchema";
 
 export const MessageThreadPatchSchema = z
 	.looseObject({

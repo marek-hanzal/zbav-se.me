@@ -5,6 +5,7 @@ import type { GalleryItemDbSchema } from "~/@session/gallery-item/schema/Gallery
 import type { ListingDbSchema } from "~/@session/listing/schema/ListingDbSchema";
 import type { ListingEventDbSchema } from "~/@session/listing-event/schema/ListingEventDbSchema";
 import type { LocationDbSchema } from "~/@session/location/schema/LocationDbSchema";
+import type { CategoryMissDbSchema } from "~/@user/category-miss/schema/CategoryMissDbSchema";
 import type { DraftDbSchema } from "~/@user/draft/schema/DraftDbSchema";
 import type { FavouriteDbSchema } from "~/@user/favourite/schema/FavouriteDbSchema";
 import type { FeedDbSchema } from "~/@user/feed/schema/FeedDbSchema";
@@ -17,9 +18,8 @@ import type { MessagePackageDbSchema } from "~/@user/message-package/schema/Mess
 import type { MessagePersonalDbSchema } from "~/@user/message-personal/schema/MessagePersonalDbSchema";
 import type { MessageSystemDbSchema } from "~/@user/message-system/schema/MessageSystemDbSchema";
 import type { MessageTextDbSchema } from "~/@user/message-text/schema/MessageTextDbSchema";
-import type { CategoryMissDbSchema } from "~/app/category-miss/schema/CategoryMissDbSchema";
-import type { MessageThreadDbSchema } from "~/app/message-thread/schema/MessageThreadDbSchema";
-import type { MessageThreadUserDbSchema } from "~/app/message-thread-user/schema/MessageThreadUserDbSchema";
+import type { MessageThreadDbSchema } from "~/@user/message-thread/schema/MessageThreadDbSchema";
+import type { MessageThreadUserDbSchema } from "~/@user/message-thread-user/schema/MessageThreadUserDbSchema";
 import type { ThumbDbSchema } from "~/app/thumb/schema/ThumbDbSchema";
 import type { TransactionDbSchema } from "~/app/transaction/schema/TransactionDbSchema";
 import type { TransactionStatusDbSchema } from "~/app/transaction-status/schema/ListingTransactionStatusDbSchema";
