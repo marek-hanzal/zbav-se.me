@@ -1,9 +1,9 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { UploadContextFx } from "~/app/upload/context/UploadContextFx";
-import { uploadFetchFx } from "~/app/upload/fx/uploadFetchFx";
-import type { UploadCreateSchema } from "~/app/upload/schema/UploadCreateSchema";
+import { UploadContextFx } from "~/@user/upload/context/UploadContextFx";
+import { uploadFetchFx } from "~/@user/upload/fx/uploadFetchFx";
+import type { UploadCreateSchema } from "~/@user/upload/schema/UploadCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 

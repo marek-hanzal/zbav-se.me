@@ -1,9 +1,9 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { withUploadCollectionSelectFx } from "~/app/upload/db/withUploadCollectionSelectFx";
-import { withUploadQueryBuilderFx } from "~/app/upload/db/withUploadQueryBuilderFx";
-import type { UploadFilterSchema } from "~/app/upload/schema/UploadFilterSchema";
-import type { UploadQuerySchema } from "~/app/upload/schema/UploadQuerySchema";
+import { withUploadCollectionSelectFx } from "~/@user/upload/db/withUploadCollectionSelectFx";
+import { withUploadQueryBuilderFx } from "~/@user/upload/db/withUploadQueryBuilderFx";
+import type { UploadFilterSchema } from "~/@user/upload/schema/UploadFilterSchema";
+import type { UploadQuerySchema } from "~/@user/upload/schema/UploadQuerySchema";
 
 export namespace uploadCollectionFx {
 	export interface Props extends UploadQuerySchema.Type {

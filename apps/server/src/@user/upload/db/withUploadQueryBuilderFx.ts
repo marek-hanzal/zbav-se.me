@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import type { UploadFilterSchema } from "~/app/upload/schema/UploadFilterSchema";
+import type { UploadFilterSchema } from "~/@user/upload/schema/UploadFilterSchema";
 import type { withUploadSourceSelectFx } from "./withUploadSourceSelectFx";
 
 export namespace withUploadQueryBuilderFx {

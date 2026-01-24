@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { withGalleryItemSourceSelectFx } from "~/@session/gallery-item/db/withGalleryItemSourceSelectFx";
-import { withUploadSelectFx } from "~/app/upload/db/withUploadSelectFx";
+import { withUploadSelectFx } from "~/@user/upload/db/withUploadSelectFx";
 
 export namespace withGalleryItemSelectFx {
 	export interface Props extends withGalleryItemSourceSelectFx.Props {}

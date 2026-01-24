@@ -22,8 +22,8 @@ import type { MessageThreadDbSchema } from "~/@user/message-thread/schema/Messag
 import type { MessageThreadUserDbSchema } from "~/@user/message-thread-user/schema/MessageThreadUserDbSchema";
 import type { ThumbDbSchema } from "~/@user/thumb/schema/ThumbDbSchema";
 import type { TransactionDbSchema } from "~/@user/transaction/schema/TransactionDbSchema";
+import type { UploadDbSchema } from "~/@user/upload/schema/UploadDbSchema";
 import type { TransactionStatusDbSchema } from "~/app/transaction-status/schema/ListingTransactionStatusDbSchema";
-import type { UploadDbSchema } from "~/app/upload/schema/UploadDbSchema";
 import type { UserEventDbSchema } from "~/app/user-event/schema/UserEventDbSchema";
 import type { UserExDbSchema } from "~/app/user-ex/schema/UserExDbSchema";
 import type { auth } from "~/auth/auth";

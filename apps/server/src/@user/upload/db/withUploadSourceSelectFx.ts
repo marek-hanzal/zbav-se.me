@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import type { UploadSortSchema } from "~/app/upload/schema/UploadSortSchema";
+import type { UploadSortSchema } from "~/@user/upload/schema/UploadSortSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withUploadSourceSelectFx {

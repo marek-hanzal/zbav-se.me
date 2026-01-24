@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { withUploadSourceSelectFx } from "~/app/upload/db/withUploadSourceSelectFx";
+import { withUploadSourceSelectFx } from "~/@user/upload/db/withUploadSourceSelectFx";
 
 export namespace withUploadCollectionSelectFx {
 	export interface Props extends withUploadSourceSelectFx.Props {}

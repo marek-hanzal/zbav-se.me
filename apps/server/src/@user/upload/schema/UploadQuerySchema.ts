@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { UploadFilterSchema } from "~/app/upload/schema/UploadFilterSchema";
+import { UploadFilterSchema } from "~/@user/upload/schema/UploadFilterSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
 import { UploadSortSchema } from "./UploadSortSchema";
 
