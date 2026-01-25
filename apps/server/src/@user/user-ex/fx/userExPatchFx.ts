@@ -1,6 +1,6 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import type { UserExPatchSchema } from "~/app/user-ex/schema/UserExPatchSchema";
+import type { UserExPatchSchema } from "~/@user/user-ex/schema/UserExPatchSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 

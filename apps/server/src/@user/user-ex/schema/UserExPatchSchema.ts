@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { UserExDbSchema } from "~/app/user-ex/schema/UserExDbSchema";
+import { UserExDbSchema } from "./UserExDbSchema";
 
 export const UserExPatchSchema = z
 	.looseObject({

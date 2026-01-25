@@ -7,7 +7,7 @@ import { LocationContextLayer } from "~/@session/location/context/LocationContex
 import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompleteFx";
 import { UploadContextLayer } from "~/@user/upload/context/UploadContextLayer";
 import { uploadCreateFx } from "~/@user/upload/fx/uploadCreateFx";
-import { userEventSellerInfoFx } from "~/app/user-event/fx/userEventSellerInfoFx";
+import { userEventSellerInfoFx } from "~/@user/user-event/fx/userEventSellerInfoFx";
 import { auth } from "~/auth/auth";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";

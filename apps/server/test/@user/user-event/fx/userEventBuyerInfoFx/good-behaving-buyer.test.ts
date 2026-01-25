@@ -3,7 +3,7 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { userEventBuyerInfoFx } from "~/@buyer/user-event/fx/userEventBuyerInfoFx";
-import { userEventCreateFx } from "~/app/user-event/fx/userEventCreateFx";
+import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
 import { auth } from "~/auth/auth";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { testabase } from "../../../../testabase";

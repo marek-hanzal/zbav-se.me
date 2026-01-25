@@ -6,7 +6,7 @@ import pgvector from "pgvector";
 import { match } from "ts-pattern";
 import { galleryCreateFx as coolGalleryCreateFx } from "~/@session/gallery/fx/galleryCreateFx";
 import { galleryItemCreateFx } from "~/@session/gallery-item/fx/galleryItemCreateFx";
-import { userEventCreateFx } from "~/app/user-event/fx/userEventCreateFx";
+import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";

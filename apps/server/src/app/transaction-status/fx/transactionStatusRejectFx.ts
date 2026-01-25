@@ -2,9 +2,9 @@ import { Effect } from "effect";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
+import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { transactionStatusCreateFx } from "~/app/transaction-status/fx/transactionStatusCreateFx";
 import type { TransactionStatusRejectSchema } from "~/app/transaction-status/schema/TransactionStatusRejectSchema";
-import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
 
 export namespace transactionStatusRejectFx {
 	export interface Props extends TransactionStatusRejectSchema.Type {

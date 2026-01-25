@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { UserSideEnumSchema } from "~/app/user-ex/schema/UserSideEnumSchema";
+import { UserSideEnumSchema } from "~/@user/user-ex/schema/UserSideEnumSchema";
 
 export const UserExTableSchema = z
 	.looseObject({

@@ -9,8 +9,8 @@ import { messageUserCreateFx } from "~/@user/message-thread-user/fx/messageUserC
 import { TransactionContextFx } from "~/@user/transaction/context/TransactionContextFx";
 import { transactionFetchFx } from "~/@user/transaction/fx/transactionFetchFx";
 import type { TransactionCreateSchema } from "~/@user/transaction/schema/TransactionCreateSchema";
+import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { transactionStatusCreateFx } from "~/app/transaction-status/fx/transactionStatusCreateFx";
-import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 

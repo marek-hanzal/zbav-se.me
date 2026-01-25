@@ -6,7 +6,7 @@ import { messageGalleryCreateFx } from "~/@user/message-gallery/fx/messageGaller
 import { TransactionContextFx } from "~/@user/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/@user/transaction/fx/transactionStatusGateFx";
 import type { TransactionMessageGalleryCreateSchema } from "~/@user/transaction-message-gallery/schema/TransactionMessageGalleryCreateSchema";
-import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
+import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";

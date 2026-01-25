@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { userEventCreateFx } from "~/app/user-event/fx/userEventCreateFx";
-import type { UserEventCreateSchema } from "~/app/user-event/schema/UserEventCreateSchema";
+import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
+import type { UserEventCreateSchema } from "~/@user/user-event/schema/UserEventCreateSchema";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace userInteractionEventFx {

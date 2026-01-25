@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
-import { UserEventEnumSchema } from "~/app/user-event/schema/UserEventEnumSchema";
-import { UserEventScopeEnumSchema } from "~/app/user-event/schema/UserEventScopeEnumSchema";
-import { UserEventSourceEnumSchema } from "~/app/user-event/schema/UserEventSourceEnumSchema";
+import { UserEventEnumSchema } from "./UserEventEnumSchema";
+import { UserEventScopeEnumSchema } from "./UserEventScopeEnumSchema";
+import { UserEventSourceEnumSchema } from "./UserEventSourceEnumSchema";
 
 export const UserEventCreateSchema = z
 	.looseObject({

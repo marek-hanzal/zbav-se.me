@@ -4,7 +4,7 @@ import { messageTextCreateFx } from "~/@user/message-text/fx/messageTextCreateFx
 import { TransactionContextFx } from "~/@user/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/@user/transaction/fx/transactionStatusGateFx";
 import type { TransactionMessageTextCreateSchema } from "~/@user/transaction-message-text/schema/TransactionMessageTextCreateSchema";
-import { userInteractionEventFx } from "~/app/user-event/fx/userInteractionEventFx";
+import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
