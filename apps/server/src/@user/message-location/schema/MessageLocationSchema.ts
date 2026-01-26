@@ -2,11 +2,11 @@ import { z } from "@hono/zod-openapi";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { MessageDirectionEnumSchema } from "~/@user/message/schema/MessageDirectionEnumSchema";
 import { MessageTypeEnumSchema } from "~/@user/message/schema/MessageTypeEnumSchema";
-import { MessageLocationDbSchema } from "./MessageLocationDbSchema";
+import { MessageLocationTableSchema } from "~/database/@table/MessageLocationTableSchema";
 
 export const MessageLocationSchema = z
 	.looseObject({
-		...MessageLocationDbSchema.shape,
+		...MessageLocationTableSchema.shape,
 		type: MessageTypeEnumSchema.refine((t): t is "location" => t === "location", {
 			message: `Expected "text"`,
 		}),

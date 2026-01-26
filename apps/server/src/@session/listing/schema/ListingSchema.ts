@@ -3,11 +3,11 @@ import { CategorySchema } from "~/@session/category/schema/CategorySchema";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { ThumbEnumSchema } from "~/@user/thumb/schema/ThumbEnumSchema";
-import { ListingDbSchema } from "./ListingDbSchema";
+import { ListingTableSchema } from "~/database/@table/ListingTableSchema";
 
 export const ListingSchema = z
 	.looseObject({
-		...ListingDbSchema.shape,
+		...ListingTableSchema.shape,
 		location: LocationSchema,
 		category: CategorySchema,
 		distance: z.number().nullable().openapi({

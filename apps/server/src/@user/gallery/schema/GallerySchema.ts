@@ -1,10 +1,10 @@
 import { z } from "@hono/zod-openapi";
 import { GalleryItemSchema } from "~/@session/gallery-item/schema/GalleryItemSchema";
-import { GalleryDbSchema } from "./GalleryDbSchema";
+import { GalleryTableSchema } from "~/database/@table/GalleryTableSchema";
 
 export const GallerySchema = z
 	.looseObject({
-		...GalleryDbSchema.shape,
+		...GalleryTableSchema.shape,
 		items: z.array(GalleryItemSchema).openapi({
 			description: "Gallery items sorted by sort order",
 		}),

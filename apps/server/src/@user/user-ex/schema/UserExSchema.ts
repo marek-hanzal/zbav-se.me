@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { UserExDbSchema } from "~/@user/user-ex/schema/UserExDbSchema";
+import { UserExTableSchema } from "~/database/@table/UserExTableSchema";
 
 export const UserExSchema = z
 	.looseObject({
-		...UserExDbSchema.shape,
+		...UserExTableSchema.shape,
 	})
 	.omit({
 		userId: true,

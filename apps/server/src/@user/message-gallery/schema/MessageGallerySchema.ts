@@ -2,11 +2,11 @@ import { z } from "@hono/zod-openapi";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { MessageDirectionEnumSchema } from "~/@user/message/schema/MessageDirectionEnumSchema";
 import { MessageTypeEnumSchema } from "~/@user/message/schema/MessageTypeEnumSchema";
-import { MessageGalleryDbSchema } from "./MessageGalleryDbSchema";
+import { MessageGalleryTableSchema } from "~/database/@table/MessageGalleryTableSchema";
 
 export const MessageGallerySchema = z
 	.looseObject({
-		...MessageGalleryDbSchema.shape,
+		...MessageGalleryTableSchema.shape,
 		type: MessageTypeEnumSchema.refine((t): t is "gallery" => t === "gallery", {
 			message: `Expected "text"`,
 		}),

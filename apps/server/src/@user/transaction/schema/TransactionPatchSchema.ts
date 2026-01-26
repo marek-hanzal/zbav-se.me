@@ -1,12 +1,12 @@
 import { z } from "@hono/zod-openapi";
-import { TransactionDbSchema } from "~/@user/transaction/schema/TransactionDbSchema";
 import { TransactionQuerySchema } from "~/@user/transaction/schema/TransactionQuerySchema";
+import { TransactionTableSchema } from "~/database/@table/TransactionTableSchema";
 
 export const TransactionPatchSchema = z
 	.looseObject({
 		patch: z
 			.looseObject({
-				...TransactionDbSchema.shape,
+				...TransactionTableSchema.shape,
 			})
 			.omit({
 				id: true,

@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { MessageThreadUserDbSchema } from "./MessageThreadUserDbSchema";
+import { MessageThreadUserTableSchema } from "~/database/@table/MessageThreadUserTableSchema";
 
 export const MessageThreadUserSchema = z
 	.looseObject({
-		...MessageThreadUserDbSchema.shape,
+		...MessageThreadUserTableSchema.shape,
 	})
 	.strip()
 	.openapi("MessageThreadUser", {

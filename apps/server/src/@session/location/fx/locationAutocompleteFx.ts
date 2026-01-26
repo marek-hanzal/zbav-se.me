@@ -1,7 +1,7 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { TextTooShortErrorFx } from "~/@session/location/error/TextTooShortErrorFx";
-import type { LocationDbSchema } from "~/@session/location/schema/LocationDbSchema";
+import type { LocationTableSchema } from "~/database/@table/LocationTableSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withLocationListFx } from "./withLocationListFx";
@@ -80,7 +80,7 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 				//
 				lat: properties.lat,
 				lon: properties.lon,
-			})) satisfies Omit<LocationDbSchema.Type, "geo">[] as LocationDbSchema.Type[];
+			})) satisfies Omit<LocationTableSchema.Type, "geo">[] as LocationTableSchema.Type[];
 
 			if (locations.length > 0) {
 				yield* Effect.promise(async () => {

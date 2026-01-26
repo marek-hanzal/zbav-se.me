@@ -1,12 +1,12 @@
 import { z } from "@hono/zod-openapi";
-import { MessageThreadDbSchema } from "./MessageThreadDbSchema";
+import { MessageThreadTableSchema } from "~/database/@table/MessageThreadTableSchema";
 import { MessageThreadQuerySchema } from "./MessageThreadQuerySchema";
 
 export const MessageThreadPatchSchema = z
 	.looseObject({
 		patch: z
 			.looseObject({
-				...MessageThreadDbSchema.shape,
+				...MessageThreadTableSchema.shape,
 			})
 			.omit({
 				id: true,

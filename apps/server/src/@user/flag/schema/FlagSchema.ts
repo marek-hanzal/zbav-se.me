@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { FlagDbSchema } from "./FlagDbSchema";
+import { FlagTableSchema } from "~/database/@table/FlagTableSchema";
 
 export const FlagSchema = z
 	.looseObject({
-		...FlagDbSchema.shape,
+		...FlagTableSchema.shape,
 	})
 	.omit({
 		userId: true,

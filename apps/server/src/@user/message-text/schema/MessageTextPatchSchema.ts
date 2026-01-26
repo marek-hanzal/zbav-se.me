@@ -1,12 +1,12 @@
 import { z } from "@hono/zod-openapi";
-import { MessageTextDbSchema } from "./MessageTextDbSchema";
+import { MessageTextTableSchema } from "~/database/@table/MessageTextTableSchema";
 import { MessageTextQuerySchema } from "./MessageTextQuerySchema";
 
 export const MessageTextPatchSchema = z
 	.looseObject({
 		patch: z
 			.looseObject({
-				...MessageTextDbSchema.shape,
+				...MessageTextTableSchema.shape,
 			})
 			.omit({
 				id: true,

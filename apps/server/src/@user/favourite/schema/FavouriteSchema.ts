@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { FavouriteDbSchema } from "./FavouriteDbSchema";
+import { FavouriteTableSchema } from "~/database/@table/FavouriteTableSchema";
 
 export const FavouriteSchema = z
 	.looseObject({
-		...FavouriteDbSchema.shape,
+		...FavouriteTableSchema.shape,
 	})
 	.omit({
 		userId: true,

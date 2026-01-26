@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { MessageThreadDbSchema } from "./MessageThreadDbSchema";
+import { MessageThreadTableSchema } from "~/database/@table/MessageThreadTableSchema";
 
 export const MessageThreadSchema = z
 	.looseObject({
-		...MessageThreadDbSchema.shape,
+		...MessageThreadTableSchema.shape,
 	})
 	.strip()
 	.openapi("MessageThread", {

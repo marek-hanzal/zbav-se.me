@@ -1,12 +1,12 @@
 import { z } from "@hono/zod-openapi";
-import { MessageGalleryDbSchema } from "./MessageGalleryDbSchema";
+import { MessageGalleryTableSchema } from "~/database/@table/MessageGalleryTableSchema";
 import { MessageGalleryQuerySchema } from "./MessageGalleryQuerySchema";
 
 export const MessageGalleryPatchSchema = z
 	.looseObject({
 		patch: z
 			.looseObject({
-				...MessageGalleryDbSchema.shape,
+				...MessageGalleryTableSchema.shape,
 			})
 			.omit({
 				id: true,

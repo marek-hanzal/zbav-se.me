@@ -1,13 +1,13 @@
 import { z } from "@hono/zod-openapi";
 import { ListingQuerySchema } from "~/@session/listing/schema/ListingQuerySchema";
-import { FeedDbSchema } from "./FeedDbSchema";
+import { FeedTableSchema } from "~/database/@table/FeedTableSchema";
 import { FeedQuerySchema } from "./FeedQuerySchema";
 
 export const FeedPatchSchema = z
 	.looseObject({
 		patch: z
 			.looseObject({
-				...FeedDbSchema.shape,
+				...FeedTableSchema.shape,
 				query: ListingQuerySchema,
 			})
 			.omit({

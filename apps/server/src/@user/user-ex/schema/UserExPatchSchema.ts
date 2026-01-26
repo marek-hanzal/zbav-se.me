@@ -1,11 +1,11 @@
 import { z } from "@hono/zod-openapi";
-import { UserExDbSchema } from "./UserExDbSchema";
+import { UserExTableSchema } from "~/database/@table/UserExTableSchema";
 
 export const UserExPatchSchema = z
 	.looseObject({
 		patch: z
 			.looseObject({
-				...UserExDbSchema.shape,
+				...UserExTableSchema.shape,
 			})
 			.omit({
 				id: true,

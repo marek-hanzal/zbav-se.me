@@ -1,11 +1,11 @@
 import { z } from "@hono/zod-openapi";
 import { ListingQuerySchema } from "~/@session/listing/schema/ListingQuerySchema";
 import { UploadSchema } from "~/@user/upload/schema/UploadSchema";
-import { FeedDbSchema } from "./FeedDbSchema";
+import { FeedTableSchema } from "~/database/@table/FeedTableSchema";
 
 export const FeedSchema = z
 	.looseObject({
-		...FeedDbSchema.shape,
+		...FeedTableSchema.shape,
 		query: ListingQuerySchema,
 		upload: z
 			.union([

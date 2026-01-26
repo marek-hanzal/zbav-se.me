@@ -1,11 +1,11 @@
 import { z } from "@hono/zod-openapi";
 import { MessageDirectionEnumSchema } from "~/@user/message/schema/MessageDirectionEnumSchema";
 import { MessageTypeEnumSchema } from "~/@user/message/schema/MessageTypeEnumSchema";
-import { MessageTextDbSchema } from "./MessageTextDbSchema";
+import { MessageTextTableSchema } from "~/database/@table/MessageTextTableSchema";
 
 export const MessageTextSchema = z
 	.looseObject({
-		...MessageTextDbSchema.shape,
+		...MessageTextTableSchema.shape,
 		type: MessageTypeEnumSchema.refine((t): t is "text" => t === "text", {
 			message: `Expected "text"`,
 		}),

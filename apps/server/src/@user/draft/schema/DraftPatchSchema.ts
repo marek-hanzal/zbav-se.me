@@ -1,12 +1,12 @@
 import { z } from "@hono/zod-openapi";
-import { DraftDbSchema } from "./DraftDbSchema";
+import { DraftTableSchema } from "~/database/@table/DraftTableSchema";
 import { DraftQuerySchema } from "./DraftQuerySchema";
 
 export const DraftPatchSchema = z
 	.looseObject({
 		patch: z
 			.looseObject({
-				...DraftDbSchema.shape,
+				...DraftTableSchema.shape,
 			})
 			.omit({
 				id: true,

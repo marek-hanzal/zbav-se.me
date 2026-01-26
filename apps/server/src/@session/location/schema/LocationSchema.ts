@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { LocationDbSchema } from "./LocationDbSchema";
+import { LocationTableSchema } from "~/database/@table/LocationTableSchema";
 
 export const LocationSchema = z
 	.looseObject({
-		...LocationDbSchema.shape,
+		...LocationTableSchema.shape,
 	})
 	.omit({
 		geo: true,

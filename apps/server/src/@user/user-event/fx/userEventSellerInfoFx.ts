@@ -5,8 +5,8 @@ import { median } from "@use-pico/common/median";
 import { p90 } from "@use-pico/common/p90";
 import { Effect } from "effect";
 import { userEventCollectionFx } from "~/@user/user-event/fx/userEventCollectionFx";
-import type { UserEventDbSchema } from "~/@user/user-event/schema/UserEventDbSchema";
 import type { UserEventSellerSchema } from "~/@user/user-event/schema/UserEventSellerSchema";
+import type { UserEventTableSchema } from "~/database/@table/UserEventTableSchema";
 
 export namespace userEventSellerInfoFx {
 	export interface Props {
@@ -28,7 +28,7 @@ export namespace userEventSellerInfoFx {
  * 3a. If transaction.closed/rejected (foreign scope) before seller reacts -> terminal
  * 3b. If transaction.message/open/closed/rejected (user scope) after create -> reaction (records delta from create)
  */
-const computeReaction = (source: UserEventDbSchema.Type[]) => {
+const computeReaction = (source: UserEventTableSchema.Type[]) => {
 	let total = 0; // transaction.create (foreign)
 	let reactions = 0;
 	let terminal = 0;
@@ -48,11 +48,11 @@ const computeReaction = (source: UserEventDbSchema.Type[]) => {
 		done = false;
 	};
 
-	const isBuyerTerminal = (event: UserEventDbSchema.Type) =>
+	const isBuyerTerminal = (event: UserEventTableSchema.Type) =>
 		(event.event === "transaction.closed" || event.event === "transaction.rejected") &&
 		event.scope === "foreign";
 
-	const isSellerReaction = (event: UserEventDbSchema.Type) =>
+	const isSellerReaction = (event: UserEventTableSchema.Type) =>
 		event.scope === "user" &&
 		(event.event === "transaction.message" ||
 			event.event === "transaction.open" ||
@@ -124,7 +124,7 @@ const computeReaction = (source: UserEventDbSchema.Type[]) => {
  * 2. Any interaction event between create and reject (e.g., transaction.message) -> marks as dirty
  * 3. transaction.rejected (user scope) - if not dirty, counts as rejected (records delta from create)
  */
-const computeRejected = (source: UserEventDbSchema.Type[]) => {
+const computeRejected = (source: UserEventTableSchema.Type[]) => {
 	let total = 0; // transaction.create (foreign)
 	let rejected = 0;
 	const deltasMs: number[] = [];
@@ -147,10 +147,10 @@ const computeRejected = (source: UserEventDbSchema.Type[]) => {
 		done = false;
 	};
 
-	const isSellerRejected = (event: UserEventDbSchema.Type) =>
+	const isSellerRejected = (event: UserEventTableSchema.Type) =>
 		event.event === "transaction.rejected" && event.scope === "user";
 
-	const isInteraction = (event: UserEventDbSchema.Type) =>
+	const isInteraction = (event: UserEventTableSchema.Type) =>
 		event.event === "transaction.message" ||
 		event.event === "transaction.open" ||
 		event.event === "transaction.closed" ||
@@ -228,7 +228,7 @@ const computeRejected = (source: UserEventDbSchema.Type[]) => {
  * 2b. If transaction.rejected (user scope) -> terminal (seller rejected, not resolved)
  * 2c. If transaction.success/closed (user scope) -> resolved (seller made explicit resolution, records delta from create)
  */
-const computeResolved = (source: UserEventDbSchema.Type[]) => {
+const computeResolved = (source: UserEventTableSchema.Type[]) => {
 	let total = 0;
 	let resolved = 0;
 	let terminal = 0;
@@ -248,16 +248,16 @@ const computeResolved = (source: UserEventDbSchema.Type[]) => {
 		done = false;
 	};
 
-	const isBuyerTerminal = (event: UserEventDbSchema.Type) =>
+	const isBuyerTerminal = (event: UserEventTableSchema.Type) =>
 		(event.event === "transaction.closed" ||
 			event.event === "transaction.rejected" ||
 			event.event === "transaction.success") &&
 		event.scope === "foreign";
 
-	const isSellerTerminal = (event: UserEventDbSchema.Type) =>
+	const isSellerTerminal = (event: UserEventTableSchema.Type) =>
 		event.event === "transaction.rejected" && event.scope === "user";
 
-	const isSellerResolve = (event: UserEventDbSchema.Type) =>
+	const isSellerResolve = (event: UserEventTableSchema.Type) =>
 		event.scope === "user" && event.event === "transaction.resolved";
 
 	for (const event of source) {
@@ -342,7 +342,7 @@ const computeResolved = (source: UserEventDbSchema.Type[]) => {
  * 4a. If transaction.message/open/closed/rejected/success (user scope) after ping -> disqualifies from expired
  * 4b. If transaction.expired/resolved (foreign scope) after ping without seller action -> expired
  */
-const computeExpired = (source: UserEventDbSchema.Type[]) => {
+const computeExpired = (source: UserEventTableSchema.Type[]) => {
 	let total = 0; // transaction.create (foreign)
 	let expired = 0; // transaction.expired OR transaction.resolved (foreign) without seller action after buyer ping
 	let currentGroup: string | null = null;
@@ -359,18 +359,18 @@ const computeExpired = (source: UserEventDbSchema.Type[]) => {
 		done = false;
 	};
 
-	const isBuyerCreate = (event: UserEventDbSchema.Type) =>
+	const isBuyerCreate = (event: UserEventTableSchema.Type) =>
 		event.event === "transaction.create" && event.scope === "foreign";
 
-	const isBuyerMessage = (event: UserEventDbSchema.Type) =>
+	const isBuyerMessage = (event: UserEventTableSchema.Type) =>
 		event.event === "transaction.message" && event.scope === "foreign";
 
-	const isBuyerEnd = (event: UserEventDbSchema.Type) =>
+	const isBuyerEnd = (event: UserEventTableSchema.Type) =>
 		(event.event === "transaction.expired" || event.event === "transaction.resolved") &&
 		event.scope === "foreign";
 
 	// seller "did something" after ping -> not ghost
-	const isSellerAction = (event: UserEventDbSchema.Type) =>
+	const isSellerAction = (event: UserEventTableSchema.Type) =>
 		event.scope === "user" &&
 		(event.event === "transaction.message" ||
 			event.event === "transaction.open" ||
@@ -431,7 +431,7 @@ const computeExpired = (source: UserEventDbSchema.Type[]) => {
 };
 
 const computeLoad = (
-	source: UserEventDbSchema.Type[],
+	source: UserEventTableSchema.Type[],
 	thresholds = {
 		lowMax: 1,
 		mediumMax: 3,
@@ -452,7 +452,7 @@ const computeLoad = (
 		ended = false;
 	};
 
-	const isEnd = (event: UserEventDbSchema.Type) =>
+	const isEnd = (event: UserEventTableSchema.Type) =>
 		event.event === "transaction.success" ||
 		event.event === "transaction.closed" ||
 		event.event === "transaction.rejected" ||
@@ -498,7 +498,7 @@ const computeLoad = (
 	} satisfies UserEventSellerSchema.Type["load"];
 };
 
-const computeActivity = (source: UserEventDbSchema.Type[], days: number) => {
+const computeActivity = (source: UserEventTableSchema.Type[], days: number) => {
 	let lastUserAtMs: number | null = null;
 
 	for (const event of source) {

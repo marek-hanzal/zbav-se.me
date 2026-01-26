@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import type { LocationDbSchema } from "~/@session/location/schema/LocationDbSchema";
 import type { MessageDirectionEnumSchema } from "~/@user/message/schema/MessageDirectionEnumSchema";
 import type { MessagePersonalSortSchema } from "~/@user/message-personal/schema/MessagePersonalSortSchema";
+import type { LocationTableSchema } from "~/database/@table/LocationTableSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withMessagePersonalSelectFx {
@@ -27,7 +27,7 @@ export const withMessagePersonalSelectFx = Effect.fn("withMessagePersonalSelectF
 		.selectAll("mp")
 		.select(sql<"personal">`'personal'`.as("type"))
 		.select((eb) => [
-			sql<LocationDbSchema.Type | null>`to_json(${eb.table("loc")}.*)`
+			sql<LocationTableSchema.Type | null>`to_json(${eb.table("loc")}.*)`
 				.$notNull()
 				.as("location"),
 			eb

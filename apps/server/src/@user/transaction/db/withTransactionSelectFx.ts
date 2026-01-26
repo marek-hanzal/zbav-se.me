@@ -1,10 +1,10 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
-import type { LocationDbSchema } from "~/@session/location/schema/LocationDbSchema";
 import { withGallerySelectFx } from "~/@user/gallery/db/withGallerySelectFx";
 import { withTransactionSourceSelectFx } from "~/@user/transaction/db/withTransactionSourceSelectFx";
 import type { TransactionSortSchema } from "~/@user/transaction/schema/TransactionSortSchema";
+import type { LocationTableSchema } from "~/database/@table/LocationTableSchema";
 
 export namespace withTransactionSelectFx {
 	export interface Props {
@@ -29,7 +29,7 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 		"l.priceType",
 		"l.currency",
 		"lt.updatedAt as lastAt",
-		(eb) => sql<LocationDbSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
+		(eb) => sql<LocationTableSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
 		(eb) =>
 			jsonObjectFrom(gallerySelect.where("gal.id", "=", eb.ref("l.galleryId")).limit(1))
 				.$notNull()

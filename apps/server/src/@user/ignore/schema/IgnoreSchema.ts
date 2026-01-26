@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { IgnoreDbSchema } from "./IgnoreDbSchema";
+import { IgnoreTableSchema } from "~/database/@table/IgnoreTableSchema";
 
 export const IgnoreSchema = z
 	.looseObject({
-		...IgnoreDbSchema.shape,
+		...IgnoreTableSchema.shape,
 	})
 	.omit({
 		userId: true,
