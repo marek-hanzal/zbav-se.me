@@ -1,11 +1,11 @@
 import { withMutation } from "@use-pico/client/mutation";
 import { withApi } from "@use-pico/common/api";
-import { apiFeedGalleryCreate } from "../../../api/user/sdk.gen";
+import { apiFeedGalleryCreate } from "../../../api/session/sdk.gen";
 import type {
 	apiFeedGalleryCreateError,
 	tApiFeedGalleryCreateResponse,
 	tFeedGalleryCreate,
-} from "../../../api/user/types.gen";
+} from "../../../api/session/types.gen";
 import { withFeedCollectionQuery } from "../../../query/user/feed/withFeedCollectionQuery";
 import { withFeedFetchQuery } from "../../../query/user/feed/withFeedFetchQuery";
 import { withGalleryFetchQuery } from "../../../query/user/gallery/withGalleryFetchQuery";

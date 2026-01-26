@@ -3,7 +3,7 @@ import { FormField } from "@use-pico/client/ui/form";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
-import { sFeedCreate } from "@zbav-se.me/sdk/api/user";
+import { sFeedCreate } from "@zbav-se.me/sdk/api/session";
 import { type FC, useState } from "react";
 import { SaveControl } from "~/app/control/SaveControl";
 

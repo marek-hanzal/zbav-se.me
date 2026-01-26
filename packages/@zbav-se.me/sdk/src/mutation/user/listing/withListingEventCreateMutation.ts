@@ -1,11 +1,11 @@
 import { withMutation } from "@use-pico/client/mutation";
 import { withApi } from "@use-pico/common/api";
-import { apiListingEventCreate } from "../../../api/user/sdk.gen";
+import { apiListingEventCreate } from "../../../api/session/sdk.gen";
 import type {
 	apiListingEventCreateError,
 	tApiListingEventCreateResponse,
 	tListingEventCreate,
-} from "../../../api/user/types.gen";
+} from "../../../api/session/types.gen";
 
 export const withListingEventCreateMutation = withMutation<
 	tListingEventCreate,

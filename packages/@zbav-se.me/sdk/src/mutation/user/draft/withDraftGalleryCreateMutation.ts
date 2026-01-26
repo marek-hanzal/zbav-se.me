@@ -1,11 +1,11 @@
 import { withMutation } from "@use-pico/client/mutation";
 import { withApi } from "@use-pico/common/api";
-import { apiDraftGalleryCreate } from "../../../api/user/sdk.gen";
+import { apiDraftGalleryCreate } from "../../../api/session/sdk.gen";
 import type {
 	apiDraftGalleryCreateError,
 	tApiDraftGalleryCreateResponse,
 	tDraftGalleryCreate,
-} from "../../../api/user/types.gen";
+} from "../../../api/session/types.gen";
 
 export const withDraftGalleryCreateMutation = withMutation<
 	tDraftGalleryCreate,
