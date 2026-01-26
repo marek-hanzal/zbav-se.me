@@ -3,9 +3,9 @@ import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
 import { withPublicHono } from "~/@public/withPublicHono";
-import { RoutesContextLayer } from "~/app/routes/RoutesContextLayer";
 import { KyselyContextLayerFx } from "~/database/context/KyselyContextLayerFx";
 import { initMiddlewareFx } from "~/init/initMiddlewareFx";
+import { RoutesContextLayer } from "~/routes/context/RoutesContextLayer";
 import { ServerDatabaseSchema } from "~/schema/env/ServerDatabaseSchema";
 import { withBuyerApiFx } from "./@buyer/withBuyerApiFx";
 import { withBuyerHono } from "./@buyer/withBuyerHono";
@@ -16,9 +16,9 @@ import { withSessionApiFx } from "./@session/withSessionApiFx";
 import { withSessionHono } from "./@session/withSessionHono";
 import { withUserApiFx } from "./@user/withUserApiFx";
 import { withUserHono } from "./@user/withUserHono";
-import { RoutesContextFx } from "./app/routes/RoutesContextFx";
 import { database } from "./database/kysely";
 import { withHono } from "./hono/withHono";
+import { RoutesContextFx } from "./routes/RoutesContextFx";
 import type { NoticeSchema } from "./schema/NoticeSchema";
 
 const app = await Effect.gen(function* () {

@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import type { TransactionStatusFilterSchema } from "~/app/transaction-status/schema/TransactionStatusFilterSchema";
+import type { TransactionStatusFilterSchema } from "~/@session/transaction-status/schema/TransactionStatusFilterSchema";
 import type { withTransactionStatusSelectFx } from "./withTransactionStatusSelectFx";
 
 export namespace withTransactionStatusQueryBuilderFx {
