@@ -4,8 +4,8 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { SeedRequestSchema, seedFx } from "~/@public/seed/fx/seedFx";
 import { TransactionContextProvider } from "~/@user/transaction/context/TransactionContextFx";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {

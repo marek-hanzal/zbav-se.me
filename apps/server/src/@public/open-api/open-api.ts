@@ -1,7 +1,7 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { Scalar } from "@scalar/hono-api-reference";
 import { Effect } from "effect";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { ServerViteSchema } from "~/schema/env/ServerViteSchema";
 
 const docsUrl = "/v3/api-docs";

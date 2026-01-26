@@ -5,8 +5,8 @@ import { Effect, Match } from "effect";
 import { MessagePersonalSchema } from "~/@user/message-personal/schema/MessagePersonalSchema";
 import { TransactionContextProvider } from "~/@user/transaction/context/TransactionContextFx";
 import { transactionMessagePersonalCreateFx } from "~/@user/transaction-message-personal/fx/transactionMessagePersonalCreateFx";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionMessagePersonalCreateSchema } from "./schema/TransactionMessagePersonalCreateSchema";
 

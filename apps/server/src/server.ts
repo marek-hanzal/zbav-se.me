@@ -18,7 +18,7 @@ import { withUserApiFx } from "./@user/withUserApiFx";
 import { withUserHono } from "./@user/withUserHono";
 import { database } from "./database/kysely";
 import { withHono } from "./hono/withHono";
-import { RoutesContextFx } from "./routes/RoutesContextFx";
+import { RoutesContextFx } from "./routes/context/RoutesContextFx";
 import type { NoticeSchema } from "./schema/NoticeSchema";
 
 const app = await Effect.gen(function* () {

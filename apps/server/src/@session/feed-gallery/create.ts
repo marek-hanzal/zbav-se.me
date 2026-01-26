@@ -5,8 +5,8 @@ import { Effect, Match } from "effect";
 import { feedGalleryCreateFx } from "~/@session/feed-gallery/fx/feedGalleryCreateFx";
 import { FeedGalleryCreateSchema } from "~/@session/feed-gallery/schema/FeedGalleryCreateSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {

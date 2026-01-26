@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import type { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCategoryApiFx } from "./category/withCategoryApiFx";
 import { withDraftApiFx } from "./draft/withDraftApiFx";

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { Client } from "minio";
-import { S3ContextFx } from "~/app/s3/context/S3ContextFx";
+import { S3ContextFx } from "~/@session/s3/context/S3ContextFx";
 
 export const s3ClientFx = Effect.fn("s3ClientFx")(function* () {
 	const context = yield* S3ContextFx;

@@ -3,9 +3,9 @@ import { bodyLimit } from "hono/body-limit";
 import { cors } from "hono/cors";
 import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { auth } from "~/auth/auth";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { ServerViteSchema } from "~/schema/env/ServerViteSchema";
 
 export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {

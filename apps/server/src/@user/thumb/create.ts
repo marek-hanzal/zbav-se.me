@@ -4,8 +4,8 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { ListingSchema } from "~/@session/listing/schema/ListingSchema";
 import { thumbCreateFx } from "~/@user/thumb/fx/thumbCreateFx";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { ThumbCreateSchema } from "./schema/ThumbCreateSchema";
 

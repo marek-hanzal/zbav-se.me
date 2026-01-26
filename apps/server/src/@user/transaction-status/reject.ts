@@ -5,8 +5,8 @@ import { Effect, Match } from "effect";
 import { transactionStatusRejectFx } from "~/@session/transaction-status/fx/transactionStatusRejectFx";
 import { TransactionContextProvider } from "~/@user/transaction/context/TransactionContextFx";
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionStatusRejectSchema } from "./schema/TransactionStatusRejectSchema";
 
