@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 
-export const ListingGalleryDbSchema = z.object({
+export const ListingGalleryTableSchema = z.object({
 	id: z.string().openapi({
 		description: "ID of the listing-gallery relationship",
 	}),
@@ -16,8 +16,8 @@ export const ListingGalleryDbSchema = z.object({
 	}),
 });
 
-export type ListingGalleryDbSchema = typeof ListingGalleryDbSchema;
+export type ListingGalleryTableSchema = typeof ListingGalleryTableSchema;
 
-export namespace ListingGalleryDbSchema {
-	export type Type = z.infer<ListingGalleryDbSchema>;
+export namespace ListingGalleryTableSchema {
+	export type Type = z.infer<ListingGalleryTableSchema>;
 }

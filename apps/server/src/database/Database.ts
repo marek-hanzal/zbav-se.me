@@ -11,6 +11,7 @@ import type { GalleryTableSchema } from "~/database/@table/GalleryTableSchema";
 import type { GitHubTableSchema } from "~/database/@table/GitHubTableSchema";
 import type { IgnoreTableSchema } from "~/database/@table/IgnoreTableSchema";
 import type { ListingEventTableSchema } from "~/database/@table/ListingEventTableSchema";
+import type { ListingGalleryTableSchema } from "~/database/@table/ListingGalleryTableSchema";
 import type { ListingTableSchema } from "~/database/@table/ListingTableSchema";
 import type { LocationTableSchema } from "~/database/@table/LocationTableSchema";
 import type { MessageGalleryTableSchema } from "~/database/@table/MessageGalleryTableSchema";
@@ -42,6 +43,7 @@ export interface Database {
 	github: GitHubTableSchema.Type;
 	ignore: IgnoreTableSchema.Type;
 	listing_event: ListingEventTableSchema.Type;
+	listing_gallery: ListingGalleryTableSchema.Type;
 	listing: ListingTableSchema.Type;
 	location: LocationTableSchema.Type;
 	message_gallery: MessageGalleryTableSchema.Type;
