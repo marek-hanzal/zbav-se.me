@@ -2,6 +2,7 @@ import type { auth } from "~/auth/auth";
 import type { CategoryMissTableSchema } from "~/database/@table/CategoryMissTableSchema";
 import type { CategorySpotlightTableSchema } from "~/database/@table/CategorySpotlightTableSchema";
 import type { CategoryTableSchema } from "~/database/@table/CategoryTableSchema";
+import type { DraftGalleryTableSchema } from "~/database/@table/DraftGalleryTableSchema";
 import type { DraftTableSchema } from "~/database/@table/DraftTableSchema";
 import type { FavouriteTableSchema } from "~/database/@table/FavouriteTableSchema";
 import type { FeedTableSchema } from "~/database/@table/FeedTableSchema";
@@ -34,6 +35,7 @@ export interface Database {
 	category_spotlight: CategorySpotlightTableSchema.Type;
 	category: CategoryTableSchema.Type;
 	draft: DraftTableSchema.Type;
+	draft_gallery: DraftGalleryTableSchema.Type;
 	favourite: FavouriteTableSchema.Type;
 	feed: FeedTableSchema.Type;
 	thumb: ThumbTableSchema.Type;

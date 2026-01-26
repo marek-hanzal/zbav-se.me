@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { TransactionStatusDbSchema } from "~/app/transaction-status/schema/ListingTransactionStatusDbSchema";
+import { TransactionStatusTableSchema } from "~/database/@table/TransactionStatusTableSchema";
 
 export const TransactionStatusSchema = z
 	.looseObject({
-		...TransactionStatusDbSchema.shape,
+		...TransactionStatusTableSchema.shape,
 	})
 	.omit({
 		userId: true,
