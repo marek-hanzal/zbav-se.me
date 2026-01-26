@@ -230,6 +230,701 @@ export type tCategoryCountQuery = {
 };
 
 /**
+ * Price type of the listing
+ */
+export const tListingPriceEnum = { closed: 'closed', open: 'open' } as const;
+
+/**
+ * Price type of the listing
+ */
+export type tListingPriceEnum = typeof tListingPriceEnum[keyof typeof tListingPriceEnum];
+
+/**
+ * List of available currencies
+ */
+export const tCurrencyListEnum = {
+    CZK: 'CZK',
+    EUR: 'EUR',
+    USD: 'USD',
+    GBP: 'GBP',
+    PLN: 'PLN',
+    HUF: 'HUF',
+    CHF: 'CHF'
+} as const;
+
+/**
+ * List of available currencies
+ */
+export type tCurrencyListEnum = typeof tCurrencyListEnum[keyof typeof tCurrencyListEnum];
+
+/**
+ * Delivery method for the listing
+ */
+export const tListingDeliveryEnum = {
+    personal: 'personal',
+    post: 'post',
+    package: 'package',
+    other: 'other'
+} as const;
+
+/**
+ * Delivery method for the listing
+ */
+export type tListingDeliveryEnum = typeof tListingDeliveryEnum[keyof typeof tListingDeliveryEnum];
+
+/**
+ * Warranty type for the listing
+ */
+export const tListingWarrantyEnum = {
+    warranty: 'warranty',
+    'no-warranty': 'no-warranty',
+    custom: 'custom'
+} as const;
+
+/**
+ * Warranty type for the listing
+ */
+export type tListingWarrantyEnum = typeof tListingWarrantyEnum[keyof typeof tListingWarrantyEnum];
+
+/**
+ * Expiration time of the listing
+ */
+export const tListingExpireEnum = {
+    '7-days': '7-days',
+    '14-days': '14-days',
+    '1-month': '1-month'
+} as const;
+
+/**
+ * Expiration time of the listing
+ */
+export type tListingExpireEnum = typeof tListingExpireEnum[keyof typeof tListingExpireEnum];
+
+/**
+ * Array of pros or cons, max 5 items, each string max 72 characters
+ */
+export type tProsCons = Array<string>;
+
+/**
+ * Location data
+ */
+export type tLocation = {
+    id: string;
+    /**
+     * The query that was used to get the location
+     */
+    query: string;
+    /**
+     * The language that was used to get the location
+     */
+    lang: string;
+    /**
+     * The country that the location is in
+     */
+    country: string;
+    /**
+     * Country code
+     */
+    code: string;
+    /**
+     * The county that the location is in
+     */
+    county: string | null;
+    /**
+     * The municipality that the location is in
+     */
+    municipality: string | null;
+    /**
+     * The state that the location is in
+     */
+    state: string | null;
+    /**
+     * Full address preview of a location
+     */
+    address: string;
+    /**
+     * The city that the location is in
+     */
+    city: string | null;
+    /**
+     * The street that the location is on
+     */
+    street: string | null;
+    /**
+     * The postal/zip code of the location
+     */
+    zip: string | null;
+    /**
+     * Confidence score of the location (based on query)
+     */
+    confidence: number;
+    /**
+     * Used to uniquely identify this location entry
+     */
+    hash: string;
+    /**
+     * Latitude of the location
+     */
+    lat: number;
+    /**
+     * Longitude of the location
+     */
+    lon: number;
+};
+
+/**
+ * Upload file metadata
+ */
+export type tUpload = {
+    /**
+     * ID of the upload
+     */
+    id: string;
+    /**
+     * Public URL to the uploaded file
+     */
+    url: string;
+};
+
+/**
+ * Gallery item data
+ */
+export type tGalleryItem = {
+    /**
+     * ID of the gallery item
+     */
+    id: string;
+    /**
+     * ID of the gallery this item belongs to
+     */
+    galleryId: string;
+    /**
+     * ID of the upload this image belongs to
+     */
+    uploadId: string;
+    /**
+     * Sort order of the image in the gallery
+     */
+    sort: number;
+    upload: tUpload;
+};
+
+/**
+ * Draft gallery images
+ */
+export type tGallery = {
+    /**
+     * ID of the gallery
+     */
+    id: string;
+    /**
+     * Gallery items sorted by sort order
+     */
+    items: Array<tGalleryItem>;
+};
+
+/**
+ * Draft data
+ */
+export type tDraft = {
+    /**
+     * ID of the draft
+     */
+    id: string;
+    /**
+     * Price of the draft
+     */
+    price: number | null | null;
+    /**
+     * Price type of the draft
+     */
+    priceType: tListingPriceEnum | null;
+    /**
+     * Currency of the draft
+     */
+    currency: tCurrencyListEnum | null;
+    /**
+     * Condition of the item (0-based index)
+     */
+    condition: number | null;
+    /**
+     * Age of the item (0-based index)
+     */
+    age: number | null;
+    /**
+     * Delivery methods for the draft
+     */
+    delivery: Array<tListingDeliveryEnum> | null;
+    /**
+     * Warranty type for the draft
+     */
+    warranty: tListingWarrantyEnum | null;
+    /**
+     * ID of the location
+     */
+    locationId: string | null;
+    /**
+     * ID of the category
+     */
+    categoryId: string | null;
+    /**
+     * ID of the gallery
+     */
+    galleryId: string;
+    /**
+     * Expiration timestamp
+     */
+    expiresAt: null | tListingExpireEnum;
+    /**
+     * Title of the item
+     */
+    title: string | null;
+    /**
+     * Description of the item
+     */
+    description: string | null;
+    /**
+     * Pros of the item
+     */
+    pros: tProsCons | null;
+    /**
+     * Cons of the item
+     */
+    cons: tProsCons | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    /**
+     * Last update timestamp
+     */
+    updatedAt: string;
+    /**
+     * Timestamp when the draft was used to create a listing
+     */
+    usedAt: null | string | null;
+    /**
+     * Location data
+     */
+    location: tLocation | null;
+    /**
+     * Category data
+     */
+    category: tCategory | null;
+    gallery: tGallery;
+};
+
+/**
+ * Data for creating a new draft
+ */
+export type tDraftCreate = {
+    /**
+     * Price of the draft
+     */
+    price?: number;
+    priceType?: tListingPriceEnum & unknown;
+    /**
+     * Condition of the item (0-based index)
+     */
+    condition?: number;
+    /**
+     * Age of the item (0-based index)
+     */
+    age?: number;
+    /**
+     * Warranty type for the draft
+     */
+    warranty?: tListingWarrantyEnum | null;
+    /**
+     * ID of the location
+     */
+    locationId?: string;
+    /**
+     * ID of the category
+     */
+    categoryId?: string;
+    expiresAt?: tListingExpireEnum;
+    /**
+     * Title of the item
+     */
+    title?: string;
+    /**
+     * Description of the item
+     */
+    description?: string;
+    /**
+     * Pros of the item
+     */
+    pros?: tProsCons | null;
+    /**
+     * Cons of the item
+     */
+    cons?: tProsCons | null;
+    /**
+     * IDs of the uploads; order of uploads defines order in the gallery
+     */
+    uploadIds?: Array<string>;
+};
+
+/**
+ * Request to create or update a draft gallery
+ */
+export type tDraftGalleryCreate = {
+    /**
+     * The ID of the draft to add a gallery to
+     */
+    draftId: string;
+    /**
+     * IDs of the uploads; order of uploads defines order in the gallery
+     */
+    uploadIds: Array<string>;
+};
+
+/**
+ * Sets the minimum price for the listings
+ */
+export type tPriceMin = number;
+
+/**
+ * Sets the maximum price for the listings
+ */
+export type tPriceMax = number;
+
+/**
+ * This filter matches listings with delivery methods overlapping the provided array
+ */
+export type tDeliveryIn = Array<tListingDeliveryEnum>;
+
+/**
+ * This filter matches listings with warranty types in the provided array
+ */
+export type tWarrantyIn = Array<tListingWarrantyEnum>;
+
+/**
+ * ID of the category
+ */
+export type tCategoryId = string;
+
+/**
+ * Filter listings based on the provided category IDs
+ */
+export type tCategoryIdIn = Array<string>;
+
+/**
+ * This filter matches listings with currency codes in the provided array
+ */
+export type tCurrencyIn = Array<tCurrencyListEnum>;
+
+/**
+ * ID of the feed
+ */
+export type tFeedId = string;
+
+/**
+ * Filter listings based on the provided feed IDs
+ */
+export type tFeedIdIn = Array<string>;
+
+/**
+ * User-land filters
+ */
+export type tListingFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * ID of the user; does not have an effect on API endpoints
+     */
+    userId?: string;
+    priceMin?: tPriceMin;
+    priceMax?: tPriceMax;
+    /**
+     * This filter matches listings with condition greater than or equal to the provided value
+     */
+    conditionMin?: number;
+    /**
+     * This filter matches listings with condition less than or equal to the provided value
+     */
+    conditionMax?: number;
+    /**
+     * This filter matches listings with conditions in the provided array
+     */
+    conditionIn?: Array<number>;
+    /**
+     * This filter matches listings with age greater than or equal to the provided value
+     */
+    ageMin?: number;
+    /**
+     * This filter matches listings with age less than or equal to the provided value
+     */
+    ageMax?: number;
+    /**
+     * This filter matches listings with ages in the provided array
+     */
+    ageIn?: Array<number>;
+    deliveryIn?: tDeliveryIn;
+    warrantyIn?: tWarrantyIn;
+    categoryId?: tCategoryId;
+    categoryIdIn?: tCategoryIdIn;
+    currency?: tCurrencyListEnum;
+    currencyIn?: tCurrencyIn;
+    /**
+     * This filter matches listings that expire before the provided date
+     */
+    expiresAtBefore?: string;
+    /**
+     * This filter matches listings that expire after the provided date
+     */
+    expiresAtAfter?: string;
+    /**
+     * Range (in km) around the input location to filter listings
+     */
+    range?: number;
+    /**
+     * This filter matches listings with title matching the provided value
+     */
+    title?: string;
+    /**
+     * This filter matches listings with the user's own listings
+     */
+    withOwn?: boolean;
+    /**
+     * Return exclusively user's listings when set to true
+     */
+    my?: boolean;
+    /**
+     * Include ignored listings
+     */
+    withIgnored?: boolean;
+    /**
+     * Show listing that are in the user's favourites
+     */
+    isFavourite?: boolean;
+    feedId?: tFeedId;
+    feedIdIn?: tFeedIdIn;
+    /**
+     * Show listings that are in the user's transaction
+     */
+    transaction?: boolean;
+};
+
+/**
+ * App-based filters
+ */
+export type tListingWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * ID of the user; does not have an effect on API endpoints
+     */
+    userId?: string;
+    priceMin?: tPriceMin;
+    priceMax?: tPriceMax;
+    /**
+     * This filter matches listings with condition greater than or equal to the provided value
+     */
+    conditionMin?: number;
+    /**
+     * This filter matches listings with condition less than or equal to the provided value
+     */
+    conditionMax?: number;
+    /**
+     * This filter matches listings with conditions in the provided array
+     */
+    conditionIn?: Array<number>;
+    /**
+     * This filter matches listings with age greater than or equal to the provided value
+     */
+    ageMin?: number;
+    /**
+     * This filter matches listings with age less than or equal to the provided value
+     */
+    ageMax?: number;
+    /**
+     * This filter matches listings with ages in the provided array
+     */
+    ageIn?: Array<number>;
+    deliveryIn?: tDeliveryIn;
+    warrantyIn?: tWarrantyIn;
+    categoryId?: tCategoryId;
+    categoryIdIn?: tCategoryIdIn;
+    currency?: tCurrencyListEnum;
+    currencyIn?: tCurrencyIn;
+    /**
+     * This filter matches listings that expire before the provided date
+     */
+    expiresAtBefore?: string;
+    /**
+     * This filter matches listings that expire after the provided date
+     */
+    expiresAtAfter?: string;
+    /**
+     * Range (in km) around the input location to filter listings
+     */
+    range?: number;
+    /**
+     * This filter matches listings with title matching the provided value
+     */
+    title?: string;
+    /**
+     * This filter matches listings with the user's own listings
+     */
+    withOwn?: boolean;
+    /**
+     * Return exclusively user's listings when set to true
+     */
+    my?: boolean;
+    /**
+     * Include ignored listings
+     */
+    withIgnored?: boolean;
+    /**
+     * Show listing that are in the user's favourites
+     */
+    isFavourite?: boolean;
+    feedId?: tFeedId;
+    feedIdIn?: tFeedIdIn;
+    /**
+     * Show listings that are in the user's transaction
+     */
+    transaction?: boolean;
+};
+
+/**
+ * Field of the listing sort
+ */
+export const tListingSortField = {
+    price: 'price',
+    condition: 'condition',
+    age: 'age',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    expiresAt: 'expiresAt',
+    geo: 'geo'
+} as const;
+
+/**
+ * Field of the listing sort
+ */
+export type tListingSortField = typeof tListingSortField[keyof typeof tListingSortField];
+
+/**
+ * Sort object for listing collection
+ */
+export type tListingSort = {
+    field: tListingSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * Latitude and longitude coordinates
+ */
+export type tLatLon = {
+    /**
+     * Latitude coordinate
+     */
+    lat: number;
+    /**
+     * Longitude coordinate
+     */
+    lon: number;
+};
+
+/**
+ * Meta data for listing collection
+ */
+export type tListingMeta = {
+    latLon?: tLatLon;
+    feedId?: tFeedId & unknown;
+};
+
+/**
+ * Query object for listing collection
+ */
+export type tListingQuery = {
+    cursor?: tCursor & unknown;
+    filter?: tListingFilter;
+    where?: tListingWhere;
+    sort?: Array<tListingSort>;
+    meta?: tListingMeta;
+};
+
+/**
+ * Feed data
+ */
+export type tFeed = {
+    /**
+     * ID of the feed
+     */
+    id: string;
+    /**
+     * ID of the location associated with the feed
+     */
+    locationId: string | null;
+    /**
+     * Hero image for this feed (usually selected from the listings in the feed)
+     */
+    uploadId: string | null;
+    /**
+     * Name of the feed
+     */
+    name: string;
+    query: tListingQuery;
+    /**
+     * Hero banner for this feed
+     */
+    upload: tUpload | null;
+};
+
+/**
+ * Data for creating a new feed
+ */
+export type tFeedCreate = {
+    /**
+     * Name of the feed
+     */
+    name: string;
+    /**
+     * ID of the location associated with the feed
+     */
+    locationId?: string | null;
+    query: tListingQuery;
+};
+
+/**
+ * Request to create or update a feed gallery
+ */
+export type tFeedGalleryCreate = {
+    /**
+     * The ID of the feed to add a gallery to
+     */
+    feedId: string;
+    /**
+     * IDs of the uploads; order of uploads defines order in the gallery
+     */
+    uploadIds: Array<string>;
+};
+
+/**
  * Initial reaction by seller on transaction created by buyer.
  */
 export type tUserEventSellerReaction = {
@@ -399,70 +1094,259 @@ export type tSellerInfo = {
 };
 
 /**
- * Location data
+ * Listing collection item
  */
-export type tLocation = {
+export type tListingItem = {
+    /**
+     * ID of the listing
+     */
+    id: string;
+};
+
+/**
+ * Collection of listings
+ */
+export type tListingItemSchema = {
+    data: Array<tListingItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Query object for listing count
+ */
+export type tListingCountQuery = {
+    filter?: tListingFilter;
+    where?: tListingWhere;
+    meta?: tListingMeta;
+    count?: Array<'total' | 'filter' | 'where'>;
+};
+
+/**
+ * Type of thumb
+ */
+export const tThumbEnum = { like: 'like', dislike: 'dislike' } as const;
+
+/**
+ * Type of thumb
+ */
+export type tThumbEnum = typeof tThumbEnum[keyof typeof tThumbEnum];
+
+/**
+ * Listing data
+ */
+export type tListing = {
+    /**
+     * ID of the listing
+     */
     id: string;
     /**
-     * The query that was used to get the location
+     * Price of the listing
      */
-    query: string;
+    price: number;
+    priceType: tListingPriceEnum;
+    currency: tCurrencyListEnum;
     /**
-     * The language that was used to get the location
+     * Condition of the item (0-based index)
      */
-    lang: string;
+    condition: number | null;
     /**
-     * The country that the location is in
+     * Age of the item (0-based index)
      */
-    country: string;
+    age: number | null;
     /**
-     * Country code
+     * Delivery methods for the listing
      */
-    code: string;
+    delivery: Array<tListingDeliveryEnum> | null;
     /**
-     * The county that the location is in
+     * Warranty type for the listing
      */
-    county: string | null;
+    warranty: tListingWarrantyEnum | null;
     /**
-     * The municipality that the location is in
+     * ID of the location
      */
-    municipality: string | null;
+    locationId: string;
     /**
-     * The state that the location is in
+     * ID of the category
      */
-    state: string | null;
+    categoryId: string;
     /**
-     * Full address preview of a location
+     * ID of the gallery
      */
-    address: string;
+    galleryId: string;
     /**
-     * The city that the location is in
+     * ID of the draft this listing was created from
      */
-    city: string | null;
+    draftId: string | null;
     /**
-     * The street that the location is on
+     * Expiration timestamp
      */
-    street: string | null;
+    expiresAt: string;
     /**
-     * The postal/zip code of the location
+     * Title of the item
      */
-    zip: string | null;
+    title: string;
     /**
-     * Confidence score of the location (based on query)
+     * Description of the item
      */
-    confidence: number;
+    description: string | null;
     /**
-     * Used to uniquely identify this location entry
+     * Pros of the item
      */
-    hash: string;
+    pros: tProsCons | null;
     /**
-     * Latitude of the location
+     * Cons of the item
      */
-    lat: number;
+    cons: tProsCons | null;
     /**
-     * Longitude of the location
+     * Creation timestamp
      */
-    lon: number;
+    createdAt: string;
+    /**
+     * Last update timestamp
+     */
+    updatedAt: string;
+    location: tLocation;
+    category: tCategory;
+    /**
+     * Distance from the input location to the listing (in km; meta lat/lon must be provided)
+     */
+    distance: number | null;
+    gallery: tGallery & unknown;
+    /**
+     * Whether the user has this listing in favourites
+     */
+    isFavourite: boolean;
+    /**
+     * Whether the user ignored this listing
+     */
+    isIgnored: boolean;
+    /**
+     * Whether the user flagged this listing
+     */
+    hasFlag: boolean;
+    /**
+     * Whether the user has a transaction with this listing
+     */
+    transactionId: string | null;
+    /**
+     * Thumb type provided by the user (like/dislike) or null if not present
+     */
+    thumb: tThumbEnum | null;
+};
+
+/**
+ * Data for creating a new listing
+ */
+export type tListingCreate = {
+    /**
+     * Price of the listing
+     */
+    price: number;
+    priceType: tListingPriceEnum;
+    /**
+     * Condition of the item (0-based index)
+     */
+    condition: number | null;
+    /**
+     * Age of the item (0-based index)
+     */
+    age: number | null;
+    /**
+     * Delivery methods for the listing
+     */
+    delivery?: Array<tListingDeliveryEnum> | null;
+    /**
+     * Warranty type for the listing
+     */
+    warranty?: tListingWarrantyEnum | null;
+    /**
+     * ID of the draft
+     */
+    draftId?: string;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+    /**
+     * ID of the category
+     */
+    categoryId: string;
+    expiresAt: tListingExpireEnum;
+    /**
+     * Title of the item
+     */
+    title: string;
+    /**
+     * Description of the item
+     */
+    description?: string | null;
+    /**
+     * Pros of the item
+     */
+    pros?: tProsCons | null;
+    /**
+     * Cons of the item
+     */
+    cons?: tProsCons | null;
+    /**
+     * IDs of the uploads; order of uploads defines order in the gallery
+     */
+    uploadIds: Array<string>;
+};
+
+/**
+ * Type of listing event
+ */
+export const tListingEventEnum = {
+    impression: 'impression',
+    view: 'view',
+    ignore: 'ignore',
+    unignore: 'unignore',
+    flag: 'flag',
+    unflag: 'unflag',
+    transaction: 'transaction',
+    favourite: 'favourite',
+    unfavourite: 'unfavourite',
+    like: 'like',
+    dislike: 'dislike'
+} as const;
+
+/**
+ * Type of listing event
+ */
+export type tListingEventEnum = typeof tListingEventEnum[keyof typeof tListingEventEnum];
+
+/**
+ * Listing event data
+ */
+export type tListingEvent = {
+    /**
+     * ID of the event
+     */
+    id: string;
+    /**
+     * ID of the listing
+     */
+    listingId: string;
+    event: tListingEventEnum;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+};
+
+/**
+ * Data for creating a new listing event
+ */
+export type tListingEventCreate = {
+    /**
+     * ID of the listing
+     */
+    listingId: string;
+    event: tListingEventEnum;
 };
 
 /**
@@ -586,20 +1470,6 @@ export type tLocationQuery = {
     filter?: tLocationFilter;
     where?: tLocationWhere;
     sort?: Array<tLocationSort>;
-};
-
-/**
- * Upload file metadata
- */
-export type tUpload = {
-    /**
-     * ID of the upload
-     */
-    id: string;
-    /**
-     * Public URL to the uploaded file
-     */
-    url: string;
 };
 
 /**
@@ -748,6 +1618,154 @@ export type tApiCategoryCountResponse = {
 
 export type apiCategoryCountResponse = tApiCategoryCountResponse[keyof tApiCategoryCountResponse];
 
+export type tApiDraftCreateRequest = {
+    /**
+     * Data for creating a new draft
+     */
+    body?: tDraftCreate;
+    path?: never;
+    query?: never;
+    url: '/api/session/draft/create';
+};
+
+export type apiDraftCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Draft not found after creation
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiDraftCreateError = apiDraftCreateErrors[keyof apiDraftCreateErrors];
+
+export type tApiDraftCreateResponse = {
+    /**
+     * The created draft
+     */
+    201: tDraft;
+};
+
+export type apiDraftCreateResponse = tApiDraftCreateResponse[keyof tApiDraftCreateResponse];
+
+export type tApiDraftGalleryCreateRequest = {
+    /**
+     * Query object for draft gallery creation
+     */
+    body?: tDraftGalleryCreate;
+    path?: never;
+    query?: never;
+    url: '/api/session/draft/gallery/create';
+};
+
+export type apiDraftGalleryCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Draft not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiDraftGalleryCreateError = apiDraftGalleryCreateErrors[keyof apiDraftGalleryCreateErrors];
+
+export type tApiDraftGalleryCreateResponse = {
+    /**
+     * Gallery created or updated
+     */
+    200: tGallery & unknown;
+};
+
+export type apiDraftGalleryCreateResponse = tApiDraftGalleryCreateResponse[keyof tApiDraftGalleryCreateResponse];
+
+export type tApiFeedCreateRequest = {
+    /**
+     * Data for creating a new feed item
+     */
+    body?: tFeedCreate;
+    path?: never;
+    query?: never;
+    url: '/api/session/feed/create';
+};
+
+export type apiFeedCreateErrors = {
+    /**
+     * Feed not found after creation
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiFeedCreateError = apiFeedCreateErrors[keyof apiFeedCreateErrors];
+
+export type tApiFeedCreateResponse = {
+    /**
+     * The created feed item
+     */
+    201: tFeed;
+};
+
+export type apiFeedCreateResponse = tApiFeedCreateResponse[keyof tApiFeedCreateResponse];
+
+export type tApiFeedGalleryCreateRequest = {
+    /**
+     * Query object for feed gallery creation
+     */
+    body?: tFeedGalleryCreate;
+    path?: never;
+    query?: never;
+    url: '/api/session/feed/gallery/create';
+};
+
+export type apiFeedGalleryCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Feed not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiFeedGalleryCreateError = apiFeedGalleryCreateErrors[keyof apiFeedGalleryCreateErrors];
+
+export type tApiFeedGalleryCreateResponse = {
+    /**
+     * Gallery created or updated
+     */
+    200: tGallery & unknown;
+};
+
+export type apiFeedGalleryCreateResponse = tApiFeedGalleryCreateResponse[keyof tApiFeedGalleryCreateResponse];
+
 export type tApiListingSellerInfoRequest = {
     body?: never;
     path: {
@@ -781,6 +1799,164 @@ export type tApiListingSellerInfoResponse = {
 };
 
 export type apiListingSellerInfoResponse = tApiListingSellerInfoResponse[keyof tApiListingSellerInfoResponse];
+
+export type tApiListingCollectionRequest = {
+    body?: tListingQuery;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing/collection';
+};
+
+export type apiListingCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiListingCollectionError = apiListingCollectionErrors[keyof apiListingCollectionErrors];
+
+export type tApiListingCollectionResponse = {
+    /**
+     * Access collection of listings based on provided query
+     */
+    200: tListingItemSchema;
+};
+
+export type apiListingCollectionResponse = tApiListingCollectionResponse[keyof tApiListingCollectionResponse];
+
+export type tApiListingCountRequest = {
+    body?: tListingCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing/count';
+};
+
+export type apiListingCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiListingCountError = apiListingCountErrors[keyof apiListingCountErrors];
+
+export type tApiListingCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiListingCountResponse = tApiListingCountResponse[keyof tApiListingCountResponse];
+
+export type tApiListingFetchRequest = {
+    /**
+     * Query object for listing fetch
+     */
+    body?: tListingQuery;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing/fetch';
+};
+
+export type apiListingFetchErrors = {
+    /**
+     * Listing not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiListingFetchError = apiListingFetchErrors[keyof apiListingFetchErrors];
+
+export type tApiListingFetchResponse = {
+    /**
+     * Return a listing based on the provided query
+     */
+    200: tListing;
+};
+
+export type apiListingFetchResponse = tApiListingFetchResponse[keyof tApiListingFetchResponse];
+
+export type tApiListingCreateRequest = {
+    /**
+     * Data for creating a new listing
+     */
+    body?: tListingCreate;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing/create';
+};
+
+export type apiListingCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Listing not found after creation
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiListingCreateError = apiListingCreateErrors[keyof apiListingCreateErrors];
+
+export type tApiListingCreateResponse = {
+    /**
+     * The created listing
+     */
+    201: tListing;
+};
+
+export type apiListingCreateResponse = tApiListingCreateResponse[keyof tApiListingCreateResponse];
+
+export type tApiListingEventCreateRequest = {
+    /**
+     * Data for creating a new listing event
+     */
+    body?: tListingEventCreate;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-event/create';
+};
+
+export type apiListingEventCreateErrors = {
+    /**
+     * Cannot create event on your own listing
+     */
+    400: tNotice;
+    /**
+     * Listing not found
+     */
+    404: tNotice;
+    /**
+     * Too many requests - please wait between events
+     */
+    429: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiListingEventCreateError = apiListingEventCreateErrors[keyof apiListingEventCreateErrors];
+
+export type tApiListingEventCreateResponse = {
+    /**
+     * The listing event was created
+     */
+    201: tListingEvent;
+};
+
+export type apiListingEventCreateResponse = tApiListingEventCreateResponse[keyof tApiListingEventCreateResponse];
 
 export type tApiLocationAutocompleteRequest = {
     /**

@@ -513,72 +513,6 @@ export type tDraft = {
 };
 
 /**
- * Data for creating a new draft
- */
-export type tDraftCreate = {
-    /**
-     * Price of the draft
-     */
-    price?: number;
-    priceType?: tListingPriceEnum & unknown;
-    /**
-     * Condition of the item (0-based index)
-     */
-    condition?: number;
-    /**
-     * Age of the item (0-based index)
-     */
-    age?: number;
-    /**
-     * Warranty type for the draft
-     */
-    warranty?: tListingWarrantyEnum | null;
-    /**
-     * ID of the location
-     */
-    locationId?: string;
-    /**
-     * ID of the category
-     */
-    categoryId?: string;
-    expiresAt?: tListingExpireEnum;
-    /**
-     * Title of the item
-     */
-    title?: string;
-    /**
-     * Description of the item
-     */
-    description?: string;
-    /**
-     * Pros of the item
-     */
-    pros?: tProsCons | null;
-    /**
-     * Cons of the item
-     */
-    cons?: tProsCons | null;
-    /**
-     * IDs of the uploads; order of uploads defines order in the gallery
-     */
-    uploadIds?: Array<string>;
-};
-
-/**
- * Request to create or update a draft gallery
- */
-export type tDraftGalleryCreate = {
-    /**
-     * The ID of the draft to add a gallery to
-     */
-    draftId: string;
-    /**
-     * IDs of the uploads; order of uploads defines order in the gallery
-     */
-    uploadIds: Array<string>;
-};
-
-/**
  * Fields to update (all optional)
  */
 export type tDraftPatchData = {
@@ -1209,21 +1143,6 @@ export type tFeed = {
 };
 
 /**
- * Data for creating a new feed
- */
-export type tFeedCreate = {
-    /**
-     * Name of the feed
-     */
-    name: string;
-    /**
-     * ID of the location associated with the feed
-     */
-    locationId?: string | null;
-    query: tListingQuery;
-};
-
-/**
  * Filter object for feed collection
  */
 export type tFeedFilter = {
@@ -1352,20 +1271,6 @@ export type tFeedCountQuery = {
     filter?: tFeedFilter;
     where?: tFeedWhere;
     count?: Array<'total' | 'filter' | 'where'>;
-};
-
-/**
- * Request to create or update a feed gallery
- */
-export type tFeedGalleryCreate = {
-    /**
-     * The ID of the feed to add a gallery to
-     */
-    feedId: string;
-    /**
-     * IDs of the uploads; order of uploads defines order in the gallery
-     */
-    uploadIds: Array<string>;
 };
 
 /**
@@ -1792,149 +1697,6 @@ export type tIgnoreToggle = {
      * ID of the listing to toggle
      */
     listingId: string;
-};
-
-/**
- * Data for creating a new listing
- */
-export type tListingCreate = {
-    /**
-     * Price of the listing
-     */
-    price: number;
-    priceType: tListingPriceEnum;
-    /**
-     * Condition of the item (0-based index)
-     */
-    condition: number | null;
-    /**
-     * Age of the item (0-based index)
-     */
-    age: number | null;
-    /**
-     * Delivery methods for the listing
-     */
-    delivery?: Array<tListingDeliveryEnum> | null;
-    /**
-     * Warranty type for the listing
-     */
-    warranty?: tListingWarrantyEnum | null;
-    /**
-     * ID of the draft
-     */
-    draftId?: string;
-    /**
-     * ID of the location
-     */
-    locationId: string;
-    /**
-     * ID of the category
-     */
-    categoryId: string;
-    expiresAt: tListingExpireEnum;
-    /**
-     * Title of the item
-     */
-    title: string;
-    /**
-     * Description of the item
-     */
-    description?: string | null;
-    /**
-     * Pros of the item
-     */
-    pros?: tProsCons | null;
-    /**
-     * Cons of the item
-     */
-    cons?: tProsCons | null;
-    /**
-     * IDs of the uploads; order of uploads defines order in the gallery
-     */
-    uploadIds: Array<string>;
-};
-
-/**
- * Listing collection item
- */
-export type tListingItem = {
-    /**
-     * ID of the listing
-     */
-    id: string;
-};
-
-/**
- * Collection of listings
- */
-export type tListingItemSchema = {
-    data: Array<tListingItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Query object for listing count
- */
-export type tListingCountQuery = {
-    filter?: tListingFilter;
-    where?: tListingWhere;
-    meta?: tListingMeta;
-    count?: Array<'total' | 'filter' | 'where'>;
-};
-
-/**
- * Type of listing event
- */
-export const tListingEventEnum = {
-    impression: 'impression',
-    view: 'view',
-    ignore: 'ignore',
-    unignore: 'unignore',
-    flag: 'flag',
-    unflag: 'unflag',
-    transaction: 'transaction',
-    favourite: 'favourite',
-    unfavourite: 'unfavourite',
-    like: 'like',
-    dislike: 'dislike'
-} as const;
-
-/**
- * Type of listing event
- */
-export type tListingEventEnum = typeof tListingEventEnum[keyof typeof tListingEventEnum];
-
-/**
- * Listing event data
- */
-export type tListingEvent = {
-    /**
-     * ID of the event
-     */
-    id: string;
-    /**
-     * ID of the listing
-     */
-    listingId: string;
-    event: tListingEventEnum;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-};
-
-/**
- * Data for creating a new listing event
- */
-export type tListingEventCreate = {
-    /**
-     * ID of the listing
-     */
-    listingId: string;
-    event: tListingEventEnum;
 };
 
 /**
@@ -3015,42 +2777,6 @@ export type tApiDraftCountResponse = {
 
 export type apiDraftCountResponse = tApiDraftCountResponse[keyof tApiDraftCountResponse];
 
-export type tApiDraftCreateRequest = {
-    /**
-     * Data for creating a new draft
-     */
-    body?: tDraftCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/draft/create';
-};
-
-export type apiDraftCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Draft not found after creation
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiDraftCreateError = apiDraftCreateErrors[keyof apiDraftCreateErrors];
-
-export type tApiDraftCreateResponse = {
-    /**
-     * The created draft
-     */
-    201: tDraft;
-};
-
-export type apiDraftCreateResponse = tApiDraftCreateResponse[keyof tApiDraftCreateResponse];
-
 export type tApiDraftDeleteRequest = {
     /**
      * Query object for draft deletion
@@ -3114,46 +2840,6 @@ export type tApiDraftFetchResponse = {
 };
 
 export type apiDraftFetchResponse = tApiDraftFetchResponse[keyof tApiDraftFetchResponse];
-
-export type tApiDraftGalleryCreateRequest = {
-    /**
-     * Query object for draft gallery creation
-     */
-    body?: tDraftGalleryCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/draft/gallery/create';
-};
-
-export type apiDraftGalleryCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
-     * Draft not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiDraftGalleryCreateError = apiDraftGalleryCreateErrors[keyof apiDraftGalleryCreateErrors];
-
-export type tApiDraftGalleryCreateResponse = {
-    /**
-     * Gallery created or updated
-     */
-    200: tGallery & unknown;
-};
-
-export type apiDraftGalleryCreateResponse = tApiDraftGalleryCreateResponse[keyof tApiDraftGalleryCreateResponse];
 
 export type tApiDraftPatchRequest = {
     /**
@@ -3273,38 +2959,6 @@ export type tApiFavouriteToggleResponse = {
 };
 
 export type apiFavouriteToggleResponse = tApiFavouriteToggleResponse[keyof tApiFavouriteToggleResponse];
-
-export type tApiFeedCreateRequest = {
-    /**
-     * Data for creating a new feed item
-     */
-    body?: tFeedCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/feed/create';
-};
-
-export type apiFeedCreateErrors = {
-    /**
-     * Feed not found after creation
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFeedCreateError = apiFeedCreateErrors[keyof apiFeedCreateErrors];
-
-export type tApiFeedCreateResponse = {
-    /**
-     * The created feed item
-     */
-    201: tFeed;
-};
-
-export type apiFeedCreateResponse = tApiFeedCreateResponse[keyof tApiFeedCreateResponse];
 
 export type tApiFeedPatchRequest = {
     /**
@@ -3451,46 +3105,6 @@ export type tApiFeedDeleteResponse = {
 };
 
 export type apiFeedDeleteResponse = tApiFeedDeleteResponse[keyof tApiFeedDeleteResponse];
-
-export type tApiFeedGalleryCreateRequest = {
-    /**
-     * Query object for feed gallery creation
-     */
-    body?: tFeedGalleryCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/feed/gallery/create';
-};
-
-export type apiFeedGalleryCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
-     * Feed not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFeedGalleryCreateError = apiFeedGalleryCreateErrors[keyof apiFeedGalleryCreateErrors];
-
-export type tApiFeedGalleryCreateResponse = {
-    /**
-     * Gallery created or updated
-     */
-    200: tGallery & unknown;
-};
-
-export type apiFeedGalleryCreateResponse = tApiFeedGalleryCreateResponse[keyof tApiFeedGalleryCreateResponse];
 
 export type tApiFeedFavouriteCollectionRequest = {
     body?: tFeedQuery;
@@ -3764,164 +3378,6 @@ export type tApiIgnoreToggleResponse = {
 };
 
 export type apiIgnoreToggleResponse = tApiIgnoreToggleResponse[keyof tApiIgnoreToggleResponse];
-
-export type tApiListingCreateRequest = {
-    /**
-     * Data for creating a new listing
-     */
-    body?: tListingCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing/create';
-};
-
-export type apiListingCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Listing not found after creation
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiListingCreateError = apiListingCreateErrors[keyof apiListingCreateErrors];
-
-export type tApiListingCreateResponse = {
-    /**
-     * The created listing
-     */
-    201: tListing;
-};
-
-export type apiListingCreateResponse = tApiListingCreateResponse[keyof tApiListingCreateResponse];
-
-export type tApiListingFetchRequest = {
-    /**
-     * Query object for listing fetch
-     */
-    body?: tListingQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing/fetch';
-};
-
-export type apiListingFetchErrors = {
-    /**
-     * Listing not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiListingFetchError = apiListingFetchErrors[keyof apiListingFetchErrors];
-
-export type tApiListingFetchResponse = {
-    /**
-     * Return a listing based on the provided query
-     */
-    200: tListing;
-};
-
-export type apiListingFetchResponse = tApiListingFetchResponse[keyof tApiListingFetchResponse];
-
-export type tApiListingCollectionRequest = {
-    body?: tListingQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing/collection';
-};
-
-export type apiListingCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiListingCollectionError = apiListingCollectionErrors[keyof apiListingCollectionErrors];
-
-export type tApiListingCollectionResponse = {
-    /**
-     * Access collection of listings based on provided query
-     */
-    200: tListingItemSchema;
-};
-
-export type apiListingCollectionResponse = tApiListingCollectionResponse[keyof tApiListingCollectionResponse];
-
-export type tApiListingCountRequest = {
-    body?: tListingCountQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing/count';
-};
-
-export type apiListingCountErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiListingCountError = apiListingCountErrors[keyof apiListingCountErrors];
-
-export type tApiListingCountResponse = {
-    /**
-     * Return counts based on provided query
-     */
-    200: tCount;
-};
-
-export type apiListingCountResponse = tApiListingCountResponse[keyof tApiListingCountResponse];
-
-export type tApiListingEventCreateRequest = {
-    /**
-     * Data for creating a new listing event
-     */
-    body?: tListingEventCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing-event/create';
-};
-
-export type apiListingEventCreateErrors = {
-    /**
-     * Cannot create event on your own listing
-     */
-    400: tNotice;
-    /**
-     * Listing not found
-     */
-    404: tNotice;
-    /**
-     * Too many requests - please wait between events
-     */
-    429: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiListingEventCreateError = apiListingEventCreateErrors[keyof apiListingEventCreateErrors];
-
-export type tApiListingEventCreateResponse = {
-    /**
-     * The listing event was created
-     */
-    201: tListingEvent;
-};
-
-export type apiListingEventCreateResponse = tApiListingEventCreateResponse[keyof tApiListingEventCreateResponse];
 
 export type tApiMessageThreadMessageCollectionRequest = {
     body?: tMessageQuery;
