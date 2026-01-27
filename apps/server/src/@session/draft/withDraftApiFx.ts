@@ -1,6 +1,0 @@
-import { Effect } from "effect";
-import { withCreateApiFx } from "./create";
-
-export const withDraftApiFx = Effect.fn("withDraftApiFx")(function* () {
-	yield* withCreateApiFx();
-});

@@ -3,7 +3,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { listingCheckIfOwnFx } from "~/@session/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/@session/listing/fx/listingFetchFx";
-import { listingEventCreateFx } from "~/@session/listing-event/fx/listingEventCreateFx";
+import { listingEventCreateFx } from "~/@user/listing-event/fx/listingEventCreateFx";
 import type { ThumbCreateSchema } from "~/@user/thumb/schema/ThumbCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";

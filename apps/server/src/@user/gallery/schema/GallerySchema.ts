@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { GalleryItemSchema } from "~/@session/gallery-item/schema/GalleryItemSchema";
+import { GalleryItemSchema } from "~/@user/gallery-item/schema/GalleryItemSchema";
 import { GalleryTableSchema } from "~/database/@table/GalleryTableSchema";
 
 export const GallerySchema = z

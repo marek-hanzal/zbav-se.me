@@ -1,7 +1,7 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
-import { galleryCreateFx } from "~/@session/gallery/fx/galleryCreateFx";
-import { galleryItemCreateFx } from "~/@session/gallery-item/fx/galleryItemCreateFx";
+import { galleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
+import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import { messageGalleryCreateFx } from "~/@user/message-gallery/fx/messageGalleryCreateFx";
 import { TransactionContextFx } from "~/@user/transaction/context/TransactionContextFx";
 import { transactionStatusGateFx } from "~/@user/transaction/fx/transactionStatusGateFx";
