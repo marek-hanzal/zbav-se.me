@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingQuerySchema } from "~/@session/listing/schema/ListingQuerySchema";
+import { ListingQuerySchema } from "~/@buyer-session/listing/schema/ListingQuerySchema";
 import { UploadSchema } from "~/@user/upload/schema/UploadSchema";
 import { FeedTableSchema } from "~/database/@table/FeedTableSchema";
 

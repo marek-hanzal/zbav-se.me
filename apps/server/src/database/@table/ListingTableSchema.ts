@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi";
-import { ListingDeliveryEnumSchema } from "~/@session/listing/schema/ListingDeliveryEnumSchema";
-import { ListingPriceEnumSchema } from "~/@session/listing/schema/ListingPriceEnumSchema";
-import { ListingWarrantyEnumSchema } from "~/@session/listing/schema/ListingWarrantyEnumSchema";
-import { ProsConsSchema } from "~/@session/listing/schema/ProsConsSchema";
+import { ListingDeliveryEnumSchema } from "~/@buyer-session/listing/schema/ListingDeliveryEnumSchema";
+import { ListingPriceEnumSchema } from "~/@buyer-session/listing/schema/ListingPriceEnumSchema";
+import { ListingWarrantyEnumSchema } from "~/@buyer-session/listing/schema/ListingWarrantyEnumSchema";
+import { ProsConsSchema } from "~/@buyer-session/listing/schema/ProsConsSchema";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 import { VectorSchema } from "~/schema/VectorSchema";
 

@@ -1,11 +1,11 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { listingGetSellerInfoFx } from "~/@seller-session/listing/fx/listingGetSellerInfoFx";
+import { SellerInfoSchema } from "~/@seller-session/listing/schema/SellerInfoSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { listingGetSellerInfoFx } from "./fx/listingGetSellerInfoFx";
-import { SellerInfoSchema } from "./schema/SellerInfoSchema";
 
 const ListingSellerInfoParamsSchema = z
 	.object({
@@ -18,9 +18,9 @@ const ListingSellerInfoParamsSchema = z
 	});
 
 export const withSellerInfoApiFx = Effect.fn("withSellerInfoApiFx")(function* () {
-	const { sessionHono } = yield* RoutesContextFx;
+	const { sellerSessionHono } = yield* RoutesContextFx;
 
-	sessionHono.openapi(
+	sellerSessionHono.openapi(
 		createRoute({
 			method: "get",
 			path: "/listing/{listingId}/seller-info",

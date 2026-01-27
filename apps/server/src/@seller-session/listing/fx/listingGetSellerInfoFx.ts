@@ -1,9 +1,9 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
+import { SellerInfoSchema } from "~/@seller-session/listing/schema/SellerInfoSchema";
 import { userEventSellerInfoFx } from "~/@seller-user/user-event/fx/userEventSellerInfoFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { SellerInfoSchema } from "../schema/SellerInfoSchema";
 
 export namespace listingGetSellerInfoFx {
 	export interface Props {

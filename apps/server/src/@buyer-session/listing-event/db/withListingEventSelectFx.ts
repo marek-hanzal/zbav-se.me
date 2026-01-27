@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { withListingEventSourceSelectFx } from "~/@session/listing-event/db/withListingEventSourceSelectFx";
+import { withListingEventSourceSelectFx } from "~/@buyer-session/listing-event/db/withListingEventSourceSelectFx";
 
 export namespace withListingEventSelectFx {
 	export interface Props extends withListingEventSourceSelectFx.Props {}

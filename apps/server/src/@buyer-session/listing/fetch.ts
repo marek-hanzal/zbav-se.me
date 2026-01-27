@@ -4,25 +4,18 @@ import { Effect, Match } from "effect";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { withCollectionSchema } from "~/schema/withCollectionSchema";
-import { listingCollectionFx } from "./fx/listingCollectionFx";
-import { ListingItemSchema } from "./schema/ListingItemSchema";
+import { listingFetchFx } from "./fx/listingFetchFx";
 import { ListingQuerySchema } from "./schema/ListingQuerySchema";
+import { ListingSchema } from "./schema/ListingSchema";
 
-const CollectionSchema = withCollectionSchema({
-	schema: ListingItemSchema,
-	type: "ListingItemSchema",
-	description: "Collection of listings",
-});
-
-export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* () {
-	const { sessionHono } = yield* RoutesContextFx;
-	sessionHono.openapi(
+export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
+	const { buyerSessionHono } = yield* RoutesContextFx;
+	buyerSessionHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/listing/collection",
-			description: "Returns listings based on provided parameters",
-			operationId: "apiListingCollection",
+			path: "/listing/fetch",
+			description: "Return a listing based on the provided query",
+			operationId: "apiListingFetch",
 			request: {
 				body: {
 					content: {
@@ -30,16 +23,25 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 							schema: ListingQuerySchema,
 						},
 					},
+					description: "Query object for listing fetch",
 				},
 			},
 			responses: {
 				200: {
 					content: {
 						"application/json": {
-							schema: CollectionSchema,
+							schema: ListingSchema,
 						},
 					},
-					description: "Access collection of listings based on provided query",
+					description: "Return a listing based on the provided query",
+				},
+				404: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Listing not found",
 				},
 				500: {
 					content: {
@@ -53,24 +55,20 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 			tags: [
 				"Listing",
 			],
-			summary: "Fetch a collection of listings based on the provided query",
+			summary: "Fetch a listing based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<withCollectionSchema.Type<ListingItemSchema>, 200>(
+				return c.json<ListingSchema.Type, 200>(
 					yield* zodFx({
-						schema: CollectionSchema,
-						dataFx: listingCollectionFx({
+						schema: ListingSchema,
+						dataFx: listingFetchFx({
 							...c.req.valid("json"),
 							userId: user.id,
 							scope: {},
-						}) satisfies Effect.Effect<
-							withCollectionSchema.Type<ListingItemSchema>,
-							any,
-							any
-						>,
+						}) satisfies Effect.Effect<ListingSchema.Type, any, any>,
 					}),
 					200,
 				);
@@ -80,6 +78,20 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
+							Match.when(
+								{
+									_tag: "NotFoundErrorFx",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 404>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										404,
+									);
+								},
+							),
 							Match.when(
 								{
 									_tag: "ZodErrorFx",

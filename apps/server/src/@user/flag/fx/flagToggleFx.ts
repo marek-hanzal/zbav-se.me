@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { listingCheckIfOwnFx } from "~/@session/listing/fx/listingCheckIfOwnFx";
-import { listingFetchFx } from "~/@session/listing/fx/listingFetchFx";
+import { listingCheckIfOwnFx } from "~/@buyer-session/listing/fx/listingCheckIfOwnFx";
+import { listingFetchFx } from "~/@buyer-session/listing/fx/listingFetchFx";
 import type { FlagToggleSchema } from "~/@user/flag/schema/FlagToggleSchema";
 import { listingEventCreateFx } from "~/@user/listing-event/fx/listingEventCreateFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";

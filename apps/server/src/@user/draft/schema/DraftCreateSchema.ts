@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi";
-import { ListingExpireEnumSchema } from "~/@session/listing/schema/ListingExpireEnumSchema";
-import { ListingPriceEnumSchema } from "~/@session/listing/schema/ListingPriceEnumSchema";
-import { ListingWarrantyEnumSchema } from "~/@session/listing/schema/ListingWarrantyEnumSchema";
-import { ProsConsSchema } from "~/@session/listing/schema/ProsConsSchema";
+import { ListingExpireEnumSchema } from "~/@buyer-session/listing/schema/ListingExpireEnumSchema";
+import { ListingPriceEnumSchema } from "~/@buyer-session/listing/schema/ListingPriceEnumSchema";
+import { ListingWarrantyEnumSchema } from "~/@buyer-session/listing/schema/ListingWarrantyEnumSchema";
+import { ProsConsSchema } from "~/@buyer-session/listing/schema/ProsConsSchema";
 
 export const DraftCreateSchema = z
 	.looseObject({

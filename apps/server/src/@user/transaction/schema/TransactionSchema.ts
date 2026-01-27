@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingPriceEnumSchema } from "~/@session/listing/schema/ListingPriceEnumSchema";
+import { ListingPriceEnumSchema } from "~/@buyer-session/listing/schema/ListingPriceEnumSchema";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { TransactionStatusEnumSchema } from "~/@user/transaction/schema/TransactionStatusEnumSchema";

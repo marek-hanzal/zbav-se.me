@@ -9,8 +9,8 @@ import { listingCountFx } from "./fx/listingCountFx";
 import { ListingCountQuerySchema } from "./schema/ListingCountQuerySchema";
 
 export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
-	const { sessionHono } = yield* RoutesContextFx;
-	sessionHono.openapi(
+	const { buyerSessionHono } = yield* RoutesContextFx;
+	buyerSessionHono.openapi(
 		createRoute({
 			method: "post",
 			path: "/listing/count",

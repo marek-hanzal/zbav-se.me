@@ -1,6 +1,6 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
-import type { ListingEventEnumSchema } from "~/@session/listing-event/schema/ListingEventEnumSchema";
+import type { ListingEventEnumSchema } from "~/@buyer-session/listing-event/schema/ListingEventEnumSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { TooManyRequests } from "~/error/TooManyRequests";
 
