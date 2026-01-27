@@ -2,8 +2,8 @@ import { Effect } from "effect";
 import { transactionStatusCreateFx } from "~/@session/transaction-status/fx/transactionStatusCreateFx";
 import type { TransactionStatusDisputeSchema } from "~/@session/transaction-status/schema/TransactionStatusDisputeSchema";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
-import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
-import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
+import { transactionPatchFx } from "~/@buyer-user/transaction/fx/transactionPatchFx";
+import { transactionResolveFx } from "~/@buyer-user/transaction/fx/transactionResolveFx";
 
 export namespace transactionStatusDisputeFx {
 	export interface Props extends TransactionStatusDisputeSchema.Type {

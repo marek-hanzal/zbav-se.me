@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import type { TransactionSortSchema } from "~/@user/transaction/schema/TransactionSortSchema";
+import type { TransactionSortSchema } from "~/@buyer-user/transaction/schema/TransactionSortSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withTransactionSourceSelectFx {

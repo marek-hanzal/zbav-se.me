@@ -9,6 +9,7 @@ import { withFeedGalleryApiFx } from "./feed-gallery/withFeedGalleryApiFx";
 import { withFlagApiFx } from "./flag/withFlagApiFx";
 import { withIgnoreApiFx } from "./ignore/withIgnoreApiFx";
 import { withThumbApiFx } from "./thumb/withThumbApiFx";
+import { withTransactionApiFx } from "./transaction/withTransactionApiFx";
 
 export const withBuyerUserApiFx = Effect.fn("withBuyerUserApiFx")(function* () {
 	const { root, buyerUserHono } = yield* RoutesContextFx;
@@ -42,6 +43,7 @@ export const withBuyerUserApiFx = Effect.fn("withBuyerUserApiFx")(function* () {
 		withFlagApiFx(),
 		withIgnoreApiFx(),
 		withThumbApiFx(),
+		withTransactionApiFx(),
 	]);
 
 	root.route("/api/buyer-user", buyerUserHono);

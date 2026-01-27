@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import type { withTransactionSourceSelectFx } from "~/@user/transaction/db/withTransactionSourceSelectFx";
-import type { TransactionFilterSchema } from "~/@user/transaction/schema/TransactionFilterSchema";
-import type { TransactionMetaSchema } from "~/@user/transaction/schema/TransactionMetaSchema";
+import type { withTransactionSourceSelectFx } from "~/@buyer-user/transaction/db/withTransactionSourceSelectFx";
+import type { TransactionFilterSchema } from "~/@buyer-user/transaction/schema/TransactionFilterSchema";
+import type { TransactionMetaSchema } from "~/@buyer-user/transaction/schema/TransactionMetaSchema";
 
 export namespace withTransactionQueryBuilderFx {
 	export interface Props<

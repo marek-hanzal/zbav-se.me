@@ -2,50 +2,40 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { SeedRequestSchema, seedFx } from "~/@public/seed/fx/seedFx";
 import { TransactionContextProvider } from "~/@buyer-user/transaction/context/TransactionContextFx";
+import { transactionCreateFx } from "~/@buyer-user/transaction/fx/transactionCreateFx";
+import { TransactionSchema } from "~/@buyer-user/transaction/schema/TransactionSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
+import { TransactionCreateSchema } from "./schema/TransactionCreateSchema";
 
-export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
-	const { publicHono } = yield* RoutesContextFx;
-
-	publicHono.openapi(
+export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
+	const { buyerUserHono } = yield* RoutesContextFx;
+	buyerUserHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/seed",
-			description: "Seed endpoint for user data",
-			operationId: "apiSeed",
+			path: "/transaction/create",
+			description: "Create a new transaction",
+			operationId: "apiTransactionCreate",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: SeedRequestSchema,
+							schema: TransactionCreateSchema,
 						},
 					},
-					description: "User data for seeding",
+					description: "Data for creating a new transaction",
 				},
 			},
 			responses: {
 				201: {
-					description: "Seed operation completed",
-				},
-				400: {
 					content: {
 						"application/json": {
-							schema: NoticeSchema,
+							schema: TransactionSchema,
 						},
 					},
-					description: "Invalid request",
-				},
-				403: {
-					content: {
-						"application/json": {
-							schema: NoticeSchema,
-						},
-					},
-					description: "Access denied",
+					description: "The transaction was created",
 				},
 				404: {
 					content: {
@@ -53,7 +43,7 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 							schema: NoticeSchema,
 						},
 					},
-					description: "User not found",
+					description: "Listing not found",
 				},
 				500: {
 					content: {
@@ -64,70 +54,42 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 					description: "Internal server error",
 				},
 			},
-			security: [],
 			tags: [
-				"Misc",
+				"Transaction",
 			],
+			summary: "Create a new transaction",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json(
+				const user = c.get("user");
+
+				return c.json<TransactionSchema.Type, 201>(
 					yield* zodFx({
-						schema: SeedRequestSchema,
-						dataFx: seedFx({
+						schema: TransactionSchema,
+						dataFx: transactionCreateFx({
 							...c.req.valid("json"),
-						}),
+							userId: user.id,
+						}) satisfies Effect.Effect<TransactionSchema.Type, any, any>,
 					}),
 					201,
 				);
 			}).pipe(
 				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				Effect.provide(DateContextLayer(createDateContext())),
-				TransactionContextProvider({
-					expires: 7,
-					extend: 3,
-				}),
+				TransactionContextProvider(),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
 								{
-									_tag: "InvalidRequestError",
-								},
-								(err) => {
-									return c.json<NoticeSchema.Type, 400>(
-										{
-											type: "error",
-											message: err.message,
-										},
-										400,
-									);
-								},
-							),
-							Match.when(
-								{
-									_tag: "AccessDeniedError",
-								},
-								(err) => {
-									return c.json<NoticeSchema.Type, 403>(
-										{
-											type: "error",
-											message: err.message,
-										},
-										403,
-									);
-								},
-							),
-							Match.when(
-								{
 									_tag: "NotFoundErrorFx",
 								},
-								(err) => {
+								() => {
 									return c.json<NoticeSchema.Type, 404>(
 										{
 											type: "error",
-											message: err.message,
+											message: e.message,
 										},
 										404,
 									);
@@ -142,20 +104,6 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 										{
 											type: "error",
 											message: z.prettifyError(zod),
-										},
-										500,
-									);
-								},
-							),
-							Match.when(
-								{
-									_tag: "RuntimeError",
-								},
-								(err) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: err.message,
 										},
 										500,
 									);

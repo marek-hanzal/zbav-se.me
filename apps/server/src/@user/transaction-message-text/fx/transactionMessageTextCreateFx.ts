@@ -1,8 +1,8 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { messageTextCreateFx } from "~/@user/message-text/fx/messageTextCreateFx";
-import { TransactionContextFx } from "~/@user/transaction/context/TransactionContextFx";
-import { transactionStatusGateFx } from "~/@user/transaction/fx/transactionStatusGateFx";
+import { TransactionContextFx } from "~/@buyer-user/transaction/context/TransactionContextFx";
+import { transactionStatusGateFx } from "~/@buyer-user/transaction/fx/transactionStatusGateFx";
 import type { TransactionMessageTextCreateSchema } from "~/@user/transaction-message-text/schema/TransactionMessageTextCreateSchema";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";

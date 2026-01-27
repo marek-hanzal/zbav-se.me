@@ -3,7 +3,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { transactionStatusFetchFx } from "~/@session/transaction-status/fx/transactionStatusFetchFx";
 import type { TransactionStatusCreateSchema } from "~/@session/transaction-status/schema/TransactionStatusCreateSchema";
-import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
+import { transactionPatchFx } from "~/@buyer-user/transaction/fx/transactionPatchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace transactionStatusCreateFx {

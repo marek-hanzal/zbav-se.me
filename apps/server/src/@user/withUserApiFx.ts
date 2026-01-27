@@ -5,7 +5,6 @@ import type { NoticeSchema } from "~/schema/NoticeSchema";
 import { withGalleryApiFx } from "./gallery/withGalleryApiFx";
 import { withMessageThreadApiFx } from "./message-thread/withMessageThreadApiFx";
 import { withS3ApiFx } from "./s3/withS3ApiFx";
-import { withTransactionApiFx } from "./transaction/withTransactionApiFx";
 import { withTransactionMessageGalleryApiFx } from "./transaction-message-gallery/withTransactionMessageGalleryApiFx";
 import { withTransactionMessageLocationApiFx } from "./transaction-message-location/withTransactionMessageLocationApiFx";
 import { withTransactionMessagePackageApiFx } from "./transaction-message-package/withTransactionMessagePackageApiFx";
@@ -43,7 +42,6 @@ export const withUserApiFx = Effect.fn("withUserApiFx")(function* () {
 		withGalleryApiFx(),
 		withMessageThreadApiFx(),
 		withS3ApiFx(),
-		withTransactionApiFx(),
 		withTransactionMessageGalleryApiFx(),
 		withTransactionMessageLocationApiFx(),
 		withTransactionMessagePackageApiFx(),

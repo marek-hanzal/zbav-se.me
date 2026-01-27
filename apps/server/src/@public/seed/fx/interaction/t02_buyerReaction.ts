@@ -7,7 +7,7 @@ import { transactionStatusCloseFx } from "~/@session/transaction-status/fx/trans
 import { transactionStatusDisputeFx } from "~/@session/transaction-status/fx/transactionStatusDisputeFx";
 import { transactionStatusFetchFx } from "~/@session/transaction-status/fx/transactionStatusFetchFx";
 import { transactionStatusSuccessFx } from "~/@session/transaction-status/fx/transactionStatusSuccessFx";
-import { transactionCollectionFx } from "~/@user/transaction/fx/transactionCollectionFx";
+import { transactionCollectionFx } from "~/@buyer-user/transaction/fx/transactionCollectionFx";
 
 export namespace t02_buyerReaction {
 	export interface Props {

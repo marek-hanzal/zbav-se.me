@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { ListingPriceEnumSchema } from "~/@buyer-session/listing/schema/ListingPriceEnumSchema";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
-import { TransactionStatusEnumSchema } from "~/@user/transaction/schema/TransactionStatusEnumSchema";
+import { TransactionStatusEnumSchema } from "~/@buyer-user/transaction/schema/TransactionStatusEnumSchema";
 import { TransactionTableSchema } from "~/database/@table/TransactionTableSchema";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 

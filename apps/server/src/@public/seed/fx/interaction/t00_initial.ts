@@ -6,8 +6,8 @@ import { DateTime } from "luxon";
 import { match } from "ts-pattern";
 import { transactionStatusAcceptFx } from "~/@session/transaction-status/fx/transactionStatusAcceptFx";
 import { transactionStatusRejectFx } from "~/@session/transaction-status/fx/transactionStatusRejectFx";
-import { transactionCollectionFx } from "~/@user/transaction/fx/transactionCollectionFx";
-import { transactionFetchFx } from "~/@user/transaction/fx/transactionFetchFx";
+import { transactionCollectionFx } from "~/@buyer-user/transaction/fx/transactionCollectionFx";
+import { transactionFetchFx } from "~/@buyer-user/transaction/fx/transactionFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace t00_initial {

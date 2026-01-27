@@ -6,7 +6,7 @@ import { DateTime } from "luxon";
 import { match } from "ts-pattern";
 import { transactionStatusDisputeFx } from "~/@session/transaction-status/fx/transactionStatusDisputeFx";
 import { transactionStatusFetchFx } from "~/@session/transaction-status/fx/transactionStatusFetchFx";
-import { transactionCollectionFx } from "~/@user/transaction/fx/transactionCollectionFx";
+import { transactionCollectionFx } from "~/@buyer-user/transaction/fx/transactionCollectionFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace t03_sellerReaction {

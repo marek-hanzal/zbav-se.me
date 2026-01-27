@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
-import type { TransactionStatusEnumSchema } from "~/@user/transaction/schema/TransactionStatusEnumSchema";
+import { transactionResolveFx } from "~/@buyer-user/transaction/fx/transactionResolveFx";
+import type { TransactionStatusEnumSchema } from "~/@buyer-user/transaction/schema/TransactionStatusEnumSchema";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace transactionStatusGateFx {

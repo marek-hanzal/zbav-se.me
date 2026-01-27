@@ -1,41 +1,39 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { TransactionContextProvider } from "~/@user/transaction/context/TransactionContextFx";
-import { transactionCreateFx } from "~/@user/transaction/fx/transactionCreateFx";
-import { TransactionSchema } from "~/@user/transaction/schema/TransactionSchema";
+import { transactionFetchFx } from "~/@buyer-user/transaction/fx/transactionFetchFx";
+import { TransactionQuerySchema } from "~/@buyer-user/transaction/schema/TransactionQuerySchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { TransactionCreateSchema } from "./schema/TransactionCreateSchema";
+import { TransactionSchema } from "./schema/TransactionSchema";
 
-export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
-	const { userHono } = yield* RoutesContextFx;
-	userHono.openapi(
+export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
+	const { buyerUserHono } = yield* RoutesContextFx;
+	buyerUserHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/transaction/create",
-			description: "Create a new transaction",
-			operationId: "apiTransactionCreate",
+			path: "/transaction/fetch",
+			description: "Return a transaction based on the provided query",
+			operationId: "apiTransactionFetch",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: TransactionCreateSchema,
+							schema: TransactionQuerySchema,
 						},
 					},
-					description: "Data for creating a new transaction",
+					description: "Query object for transaction fetch",
 				},
 			},
 			responses: {
-				201: {
+				200: {
 					content: {
 						"application/json": {
 							schema: TransactionSchema,
 						},
 					},
-					description: "The transaction was created",
+					description: "Transaction matching provided query",
 				},
 				404: {
 					content: {
@@ -43,7 +41,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 							schema: NoticeSchema,
 						},
 					},
-					description: "Listing not found",
+					description: "Transaction not found",
 				},
 				500: {
 					content: {
@@ -57,26 +55,26 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 			tags: [
 				"Transaction",
 			],
-			summary: "Create a new transaction",
+			summary: "Fetch a transaction based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<TransactionSchema.Type, 201>(
+				return c.json<TransactionSchema.Type, 200>(
 					yield* zodFx({
 						schema: TransactionSchema,
-						dataFx: transactionCreateFx({
+						dataFx: transactionFetchFx({
 							...c.req.valid("json"),
-							userId: user.id,
+							scope: {
+								userId: user.id,
+							},
 						}) satisfies Effect.Effect<TransactionSchema.Type, any, any>,
 					}),
-					201,
+					200,
 				);
 			}).pipe(
 				Effect.provide(KyselyContextLayer(c.get("kysely"))),
-				Effect.provide(DateContextLayer(createDateContext())),
-				TransactionContextProvider(),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
