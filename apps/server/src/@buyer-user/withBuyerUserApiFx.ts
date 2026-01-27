@@ -2,6 +2,13 @@ import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import type { NoticeSchema } from "~/schema/NoticeSchema";
+import { withFavouriteApiFx } from "./favourite/withFavouriteApiFx";
+import { withFeedApiFx } from "./feed/withFeedApiFx";
+import { withFeedFavouriteApiFx } from "./feed-favourite/withFeedFavouriteApiFx";
+import { withFeedGalleryApiFx } from "./feed-gallery/withFeedGalleryApiFx";
+import { withFlagApiFx } from "./flag/withFlagApiFx";
+import { withIgnoreApiFx } from "./ignore/withIgnoreApiFx";
+import { withThumbApiFx } from "./thumb/withThumbApiFx";
 
 export const withBuyerUserApiFx = Effect.fn("withBuyerUserApiFx")(function* () {
 	const { root, buyerUserHono } = yield* RoutesContextFx;
@@ -26,6 +33,16 @@ export const withBuyerUserApiFx = Effect.fn("withBuyerUserApiFx")(function* () {
 		}
 		return next();
 	});
+
+	yield* Effect.all([
+		withFavouriteApiFx(),
+		withFeedApiFx(),
+		withFeedFavouriteApiFx(),
+		withFeedGalleryApiFx(),
+		withFlagApiFx(),
+		withIgnoreApiFx(),
+		withThumbApiFx(),
+	]);
 
 	root.route("/api/buyer-user", buyerUserHono);
 });

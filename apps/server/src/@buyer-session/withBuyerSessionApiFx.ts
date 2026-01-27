@@ -3,6 +3,7 @@ import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import type { NoticeSchema } from "~/schema/NoticeSchema";
 import { withListingApiFx } from "./listing/withListingApiFx";
+import { withListingEventApiFx } from "./listing-event/withListingEventApiFx";
 
 export const withBuyerSessionApiFx = Effect.fn("withBuyerSessionApiFx")(function* () {
 	const { root, buyerSessionHono } = yield* RoutesContextFx;
@@ -28,7 +29,10 @@ export const withBuyerSessionApiFx = Effect.fn("withBuyerSessionApiFx")(function
 		return next();
 	});
 
-	yield* withListingApiFx();
+	yield* Effect.all([
+		withListingApiFx(),
+		withListingEventApiFx(),
+	]);
 
 	root.route("/api/buyer-session", buyerSessionHono);
 });

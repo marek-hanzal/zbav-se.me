@@ -2,6 +2,9 @@ import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import type { NoticeSchema } from "~/schema/NoticeSchema";
+import { withDraftApiFx } from "./draft/withDraftApiFx";
+import { withDraftGalleryApiFx } from "./draft-gallery/withDraftGalleryApiFx";
+import { withListingApiFx } from "./listing/withListingApiFx";
 
 export const withSellerUserApiFx = Effect.fn("withSellerUserApiFx")(function* () {
 	const { root, sellerUserHono } = yield* RoutesContextFx;
@@ -26,6 +29,12 @@ export const withSellerUserApiFx = Effect.fn("withSellerUserApiFx")(function* ()
 		}
 		return next();
 	});
+
+	yield* Effect.all([
+		withDraftApiFx(),
+		withDraftGalleryApiFx(),
+		withListingApiFx(),
+	]);
 
 	root.route("/api/seller-user", sellerUserHono);
 });

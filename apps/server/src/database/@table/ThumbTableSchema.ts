@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ThumbEnumSchema } from "~/@user/thumb/schema/ThumbEnumSchema";
+import { ThumbEnumSchema } from "~/@buyer-user/thumb/schema/ThumbEnumSchema";
 
 export const ThumbTableSchema = z.object({
 	id: z.string().openapi({

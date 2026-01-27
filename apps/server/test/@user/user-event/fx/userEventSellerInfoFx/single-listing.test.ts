@@ -5,7 +5,7 @@ import { userEventSellerInfoFx } from "~/@seller-user/user-event/fx/userEventSel
 import { categoryFetchFx } from "~/@session/category/fx/categoryFetchFx";
 import { LocationContextLayer } from "~/@session/location/context/LocationContextLayer";
 import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompleteFx";
-import { listingCreateFx } from "~/@user/listing/fx/listingCreateFx";
+import { listingCreateFx } from "~/@seller-user/listing/fx/listingCreateFx";
 import { UploadContextLayer } from "~/@user/upload/context/UploadContextLayer";
 import { uploadCreateFx } from "~/@user/upload/fx/uploadCreateFx";
 import { auth } from "~/auth/auth";

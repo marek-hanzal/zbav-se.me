@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { CategorySchema } from "~/@session/category/schema/CategorySchema";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
-import { ThumbEnumSchema } from "~/@user/thumb/schema/ThumbEnumSchema";
+import { ThumbEnumSchema } from "~/@buyer-user/thumb/schema/ThumbEnumSchema";
 import { ListingTableSchema } from "~/database/@table/ListingTableSchema";
 
 export const ListingSchema = z

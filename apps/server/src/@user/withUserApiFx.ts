@@ -2,20 +2,9 @@ import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import type { NoticeSchema } from "~/schema/NoticeSchema";
-import { withDraftApiFx } from "./draft/withDraftApiFx";
-import { withDraftGalleryApiFx } from "./draft-gallery/withDraftGalleryApiFx";
-import { withFavouriteApiFx } from "./favourite/withFavouriteApiFx";
-import { withFeedApiFx } from "./feed/withFeedApiFx";
-import { withFeedFavouriteApiFx } from "./feed-favourite/withFeedFavouriteApiFx";
-import { withFeedGalleryApiFx } from "./feed-gallery/withFeedGalleryApiFx";
-import { withFlagApiFx } from "./flag/withFlagApiFx";
 import { withGalleryApiFx } from "./gallery/withGalleryApiFx";
-import { withIgnoreApiFx } from "./ignore/withIgnoreApiFx";
-import { withListingApiFx } from "./listing/withListingApiFx";
-import { withListingEventApiFx } from "./listing-event/withListingEventApiFx";
 import { withMessageThreadApiFx } from "./message-thread/withMessageThreadApiFx";
 import { withS3ApiFx } from "./s3/withS3ApiFx";
-import { withThumbApiFx } from "./thumb/withThumbApiFx";
 import { withTransactionApiFx } from "./transaction/withTransactionApiFx";
 import { withTransactionListingApiFx } from "./transaction-listing/withTransactionListingApiFx";
 import { withTransactionMessageGalleryApiFx } from "./transaction-message-gallery/withTransactionMessageGalleryApiFx";
@@ -52,20 +41,9 @@ export const withUserApiFx = Effect.fn("withUserApiFx")(function* () {
 	});
 
 	yield* Effect.all([
-		withDraftApiFx(),
-		withDraftGalleryApiFx(),
-		withFavouriteApiFx(),
-		withFeedApiFx(),
-		withFeedFavouriteApiFx(),
-		withFeedGalleryApiFx(),
-		withFlagApiFx(),
 		withGalleryApiFx(),
-		withIgnoreApiFx(),
-		withListingApiFx(),
-		withListingEventApiFx(),
 		withMessageThreadApiFx(),
 		withS3ApiFx(),
-		withThumbApiFx(),
 		withTransactionApiFx(),
 		withTransactionListingApiFx(),
 		withTransactionMessageGalleryApiFx(),
