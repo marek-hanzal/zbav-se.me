@@ -2,7 +2,7 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import type { KyselyContext } from "~/database/context/KyselyContextFx";
 import type { auth } from "../auth/auth";
 
-export const withBuyerHono = () => {
+export const withBuyerSessionHono = () => {
 	return new OpenAPIHono<{
 		Variables: {
 			user: auth.User;
@@ -11,4 +11,4 @@ export const withBuyerHono = () => {
 	}>();
 };
 
-export type withBuyerHono = ReturnType<typeof withBuyerHono>;
+export type withBuyerSessionHono = ReturnType<typeof withBuyerSessionHono>;

@@ -4,32 +4,32 @@ import { clamp } from "@use-pico/common/clamp";
 import { median } from "@use-pico/common/median";
 import { p90 } from "@use-pico/common/p90";
 import { Effect } from "effect";
-import type { UserEventBuyerSchema } from "~/@buyer/user-event/schema/UserEventBuyerSchema";
+import type { UserEventSellerSchema } from "~/@seller-user/user-event/schema/UserEventSellerSchema";
 import { userEventCollectionFx } from "~/@user/user-event/fx/userEventCollectionFx";
 import type { UserEventTableSchema } from "~/database/@table/UserEventTableSchema";
 
-export namespace userEventBuyerInfoFx {
+export namespace userEventSellerInfoFx {
 	export interface Props {
 		userId: string;
 	}
 }
 
 /**
- * Computes buyer reaction metrics.
+ * Computes seller reaction metrics.
  *
- * @note Tracks how quickly buyers respond when sellers open transactions, and whether they
- *          react at all before the seller closes/rejects (terminal).
- * @note This is a soft metric used to tell seller if buyer reacts and how long
+ * @note Tracks how quickly sellers respond when buyers create transactions, and whether they
+ *          react at all before the buyer closes/rejects (terminal).
+ * @note This is a soft metric used to tell buyers if seller reacts and how long
  *          it usually takes.
  *
  * Flow tracked:
- * 1. transaction.create (user scope) - counts total
- * 2. transaction.open (foreign scope) - starts reaction window (records openAtMs)
- * 3a. If transaction.closed/rejected (foreign scope) before buyer reacts -> terminal
- * 3b. If transaction.message/closed/rejected (user scope) after open -> reaction (records delta from open)
+ * 1. transaction.create (foreign scope) - counts total (buyer creates transaction)
+ * 2. transaction.open (user scope) - starts reaction window (records createAtMs)
+ * 3a. If transaction.closed/rejected (foreign scope) before seller reacts -> terminal
+ * 3b. If transaction.message/open/closed/rejected (user scope) after create -> reaction (records delta from create)
  */
 const computeReaction = (source: UserEventTableSchema.Type[]) => {
-	let total = 0; // transaction.create (user)
+	let total = 0; // transaction.create (foreign)
 	let reactions = 0;
 	let terminal = 0;
 	const deltasMs: number[] = [];
@@ -37,24 +37,25 @@ const computeReaction = (source: UserEventTableSchema.Type[]) => {
 	let currentGroup: string | null = null;
 
 	let created = false; // counted total for this group
-	let openAtMs: number | null = null;
+	let createAtMs: number | null = null;
 	let done = false; // group resolved (reacted or terminal)
 
 	const flushGroup = () => {
 		currentGroup = null;
 
 		created = false;
-		openAtMs = null;
+		createAtMs = null;
 		done = false;
 	};
 
-	const isSellerTerminal = (event: UserEventTableSchema.Type) =>
+	const isBuyerTerminal = (event: UserEventTableSchema.Type) =>
 		(event.event === "transaction.closed" || event.event === "transaction.rejected") &&
 		event.scope === "foreign";
 
-	const isBuyerReaction = (event: UserEventTableSchema.Type) =>
+	const isSellerReaction = (event: UserEventTableSchema.Type) =>
 		event.scope === "user" &&
 		(event.event === "transaction.message" ||
+			event.event === "transaction.open" ||
 			event.event === "transaction.closed" ||
 			event.event === "transaction.rejected");
 
@@ -66,39 +67,34 @@ const computeReaction = (source: UserEventTableSchema.Type[]) => {
 
 		const createdAt = event.createdAt.getTime();
 
-		// denominator: all created transactions (by buyer) per group
-		if (event.event === "transaction.create" && event.scope === "user") {
+		// denominator: all transactions created by buyers (foreign scope) per group
+		if (event.event === "transaction.create" && event.scope === "foreign") {
 			if (!created) {
 				created = true;
 				total++;
+				createAtMs = createdAt;
 			}
 			continue;
 		}
 
 		if (!created || done) continue;
 
-		// reaction window starts at open (seller opens)
-		if (event.event === "transaction.open" && event.scope === "foreign") {
-			if (openAtMs === null) {
-				openAtMs = createdAt;
+		// buyer ended before seller could react
+		if (isBuyerTerminal(event)) {
+			if (createAtMs != null && createdAt >= createAtMs) {
+				terminal++;
+				done = true;
 			}
 			continue;
 		}
 
-		// seller ended before buyer could react
-		if (isSellerTerminal(event)) {
-			terminal++;
-			done = true;
-			continue;
-		}
-
-		// first buyer reaction after open => reacted (message OR close/reject)
-		if (isBuyerReaction(event)) {
-			if (openAtMs == null) continue;
-			if (createdAt < openAtMs) continue;
+		// first seller reaction after create => reacted (open OR message OR close/reject)
+		if (isSellerReaction(event)) {
+			if (createAtMs == null) continue;
+			if (createdAt < createAtMs) continue;
 
 			reactions++;
-			deltasMs.push(createdAt - openAtMs);
+			deltasMs.push(createdAt - createAtMs);
 			done = true;
 		}
 	}
@@ -112,26 +108,25 @@ const computeReaction = (source: UserEventTableSchema.Type[]) => {
 		percent: total === 0 ? 0 : ((reactions + terminal) / total) * 100,
 		medianMs: median(deltasMs),
 		p90Ms: p90(deltasMs),
-	} satisfies UserEventBuyerSchema.Type["reaction"];
+	} satisfies UserEventSellerSchema.Type["reaction"];
 };
 
 /**
- * Computes buyer closer metrics (transactions closed without interaction).
+ * Computes seller rejected metrics (transactions rejected without interaction).
  *
- * @note Tracks transactions where buyers close them directly without any back-and-forth
+ * @note Tracks transactions where sellers reject them directly without any back-and-forth
  *          interaction (messages, negotiations, etc.).
- * @note This is a hard metric telling the seller, how often buyer closes the
+ * @note This is a hard metric telling buyers how often seller rejects the
  *          transaction without _any_ interaction.
  *
  * Flow tracked:
- * 1. transaction.create (user scope) - counts total (records createAtMs)
- * 2. transaction.open (foreign scope) - allowed between create and end (doesn't mark as dirty)
- * 3. Any other event between create and end (including messages) -> marks as dirty
- * 4. transaction.closed/rejected/success (user scope) - if not dirty, counts as closed (records delta from create)
+ * 1. transaction.create (foreign scope) - counts total (buyer creates transaction, records createAtMs)
+ * 2. Any interaction event between create and reject (e.g., transaction.message) -> marks as dirty
+ * 3. transaction.rejected (user scope) - if not dirty, counts as rejected (records delta from create)
  */
-const computeCloser = (source: UserEventTableSchema.Type[]) => {
-	let total = 0; // transaction.create (user)
-	let closed = 0;
+const computeRejected = (source: UserEventTableSchema.Type[]) => {
+	let total = 0; // transaction.create (foreign)
+	let rejected = 0;
 	const deltasMs: number[] = [];
 
 	let currentGroup: string | null = null;
@@ -152,14 +147,14 @@ const computeCloser = (source: UserEventTableSchema.Type[]) => {
 		done = false;
 	};
 
-	const isAllowedBetween = (event: UserEventTableSchema.Type) =>
-		event.event === "transaction.open" && event.scope === "foreign";
+	const isSellerRejected = (event: UserEventTableSchema.Type) =>
+		event.event === "transaction.rejected" && event.scope === "user";
 
-	const isEnd = (event: UserEventTableSchema.Type) =>
-		event.scope === "user" &&
-		(event.event === "transaction.closed" ||
-			event.event === "transaction.rejected" ||
-			event.event === "transaction.success");
+	const isInteraction = (event: UserEventTableSchema.Type) =>
+		event.event === "transaction.message" ||
+		event.event === "transaction.open" ||
+		event.event === "transaction.closed" ||
+		event.event === "transaction.success";
 
 	for (const event of source) {
 		if (currentGroup !== event.group) {
@@ -169,7 +164,7 @@ const computeCloser = (source: UserEventTableSchema.Type[]) => {
 
 		const createdAt = event.createdAt.getTime();
 
-		if (event.event === "transaction.create" && event.scope === "user") {
+		if (event.event === "transaction.create" && event.scope === "foreign") {
 			if (!created) {
 				created = true;
 				total++;
@@ -191,18 +186,19 @@ const computeCloser = (source: UserEventTableSchema.Type[]) => {
 			continue;
 		}
 
-		if (isEnd(event)) {
+		// seller rejected the transaction
+		if (isSellerRejected(event)) {
 			done = true;
 
 			if (!dirty) {
-				closed++;
+				rejected++;
 				deltasMs.push(createdAt - createAtMs);
 			}
 			continue;
 		}
 
-		// anything else between create and end makes it dirty (messages included)
-		if (!isAllowedBetween(event)) {
+		// any interaction between create and reject makes it dirty
+		if (isInteraction(event)) {
 			dirty = true;
 		}
 	}
@@ -211,50 +207,58 @@ const computeCloser = (source: UserEventTableSchema.Type[]) => {
 
 	return {
 		total,
-		closed,
-		percent: total === 0 ? 0 : (closed / total) * 100,
+		rejected,
+		percent: total === 0 ? 0 : (rejected / total) * 100,
 		medianMs: median(deltasMs),
 		p90Ms: p90(deltasMs),
-	} satisfies UserEventBuyerSchema.Type["closer"];
+	} satisfies UserEventSellerSchema.Type["rejected"];
 };
 
 /**
- * Computes buyer decision metrics.
+ * Computes seller resolve metrics.
  *
- * @note Tracks whether buyers actively made decisions (success/close) or if sellers ended
- *          the transaction before buyers could decide.
- * @note This is a positive metric telling if the buyer comes back after the transaction to mark
+ * @note Tracks whether sellers actively resolve transactions (success/close) or if buyers ended
+ *          the transaction before sellers could resolve.
+ * @note This is a positive metric telling if the seller comes back after the transaction to mark
  *          it as "success/closed".
  *
  * Flow tracked:
- * 1. transaction.create (user scope) - counts total
- * 2a. If transaction.closed/rejected (foreign scope) -> terminal (seller ended, buyer had no choice)
- * 2b. If transaction.success/closed (user scope) -> decision (buyer made explicit decision)
+ * 1. transaction.create (foreign scope) - counts total (buyer creates transaction, records createAtMs)
+ * 2a. If transaction.closed/rejected (foreign scope) -> terminal (buyer ended, seller had no choice)
+ * 2b. If transaction.rejected (user scope) -> terminal (seller rejected, not resolved)
+ * 2c. If transaction.success/closed (user scope) -> resolved (seller made explicit resolution, records delta from create)
  */
-const computeDecision = (source: UserEventTableSchema.Type[]) => {
-	let total = 0; // transaction.create (user)
-	let decisions = 0;
+const computeResolved = (source: UserEventTableSchema.Type[]) => {
+	let total = 0;
+	let resolved = 0;
 	let terminal = 0;
+	const deltasMs: number[] = [];
 
 	let currentGroup: string | null = null;
 
-	let created = false; // counted total for this group
-	let done = false; // group resolved (decision OR terminal)
+	let created = false;
+	let createAtMs: number | null = null;
+	let done = false;
 
 	const flushGroup = () => {
 		currentGroup = null;
 
 		created = false;
+		createAtMs = null;
 		done = false;
 	};
 
-	const isSellerTerminal = (event: UserEventTableSchema.Type) =>
-		(event.event === "transaction.closed" || event.event === "transaction.rejected") &&
+	const isBuyerTerminal = (event: UserEventTableSchema.Type) =>
+		(event.event === "transaction.closed" ||
+			event.event === "transaction.rejected" ||
+			event.event === "transaction.success") &&
 		event.scope === "foreign";
 
-	const isBuyerDecision = (event: UserEventTableSchema.Type) =>
-		event.scope === "user" &&
-		(event.event === "transaction.success" || event.event === "transaction.closed");
+	const isSellerTerminal = (event: UserEventTableSchema.Type) =>
+		event.event === "transaction.rejected" && event.scope === "user";
+
+	const isSellerResolve = (event: UserEventTableSchema.Type) =>
+		event.scope === "user" && event.event === "transaction.resolved";
 
 	for (const event of source) {
 		if (currentGroup !== event.group) {
@@ -262,11 +266,14 @@ const computeDecision = (source: UserEventTableSchema.Type[]) => {
 			currentGroup = event.group;
 		}
 
-		// denominator: all created transactions (by buyer)
-		if (event.event === "transaction.create" && event.scope === "user") {
+		const createdAt = event.createdAt.getTime();
+
+		// denominator: all transactions created by buyers (foreign scope)
+		if (event.event === "transaction.create" && event.scope === "foreign") {
 			if (!created) {
 				created = true;
 				total++;
+				createAtMs = createdAt;
 			}
 			continue;
 		}
@@ -275,50 +282,73 @@ const computeDecision = (source: UserEventTableSchema.Type[]) => {
 			continue;
 		}
 
-		// seller ended it -> buyer had no choice
-		if (isSellerTerminal(event)) {
-			terminal++;
-			done = true;
+		// buyer ended it -> seller had no choice
+		if (isBuyerTerminal(event)) {
+			if (createAtMs != null && createdAt >= createAtMs) {
+				terminal++;
+				done = true;
+			}
 			continue;
 		}
 
-		// buyer explicit decision
-		if (isBuyerDecision(event)) {
-			decisions++;
+		// seller rejected it -> terminal (not resolved)
+		if (isSellerTerminal(event)) {
+			if (createAtMs != null && createdAt >= createAtMs) {
+				terminal++;
+				done = true;
+			}
+			continue;
+		}
+
+		// seller explicit resolved
+		if (isSellerResolve(event)) {
+			if (createAtMs == null) {
+				continue;
+			}
+			if (createdAt < createAtMs) {
+				continue;
+			}
+
+			resolved++;
+			deltasMs.push(createdAt - createAtMs);
 			done = true;
 		}
 	}
 
+	deltasMs.sort((a, b) => a - b);
+
 	return {
 		total,
-		decisions,
+		resolved,
 		terminal,
-		percent: total === 0 ? 0 : ((decisions + terminal) / total) * 100,
-	} satisfies UserEventBuyerSchema.Type["decision"];
+		percent: total === 0 ? 0 : (resolved / total) * 100,
+		medianMs: median(deltasMs),
+		p90Ms: p90(deltasMs),
+	} satisfies UserEventSellerSchema.Type["resolved"];
 };
 
 /**
  * Computes expired/ghosted transaction metrics.
  *
- * @note Tracks transactions where sellers reached out (opened or sent messages) but buyers
- *          never responded, causing them to expire or be resolved without buyer action.
- * @note This is a negative metric telling if the buyer is used to expire transactions
+ * @note Tracks transactions where buyers reached out (created transactions) but sellers
+ *          never responded, causing them to expire or be resolved without seller action.
+ * @note This is a negative metric telling if the seller is used to expire transactions
  *          (no user's messages).
  *
  * Flow tracked:
- * 1. transaction.create (user scope) - counts total
- * 2. transaction.open (foreign scope) - sets pingAtMs (seller "ping" moment)
- * 3. transaction.message (foreign scope) - resets pingAtMs (seller nudged)
- * 4a. If transaction.message/closed/rejected/success (user scope) after ping -> disqualifies from expired
- * 4b. If transaction.expired/resolved (foreign scope) after ping without buyer action -> expired
+ * 1. transaction.create (foreign scope) - counts total (buyer creates transaction)
+ * 2. transaction.create sets pingAtMs (buyer "ping" moment)
+ * 3. transaction.message (foreign scope) - resets pingAtMs (buyer nudged)
+ * 4a. If transaction.message/open/closed/rejected/success (user scope) after ping -> disqualifies from expired
+ * 4b. If transaction.expired/resolved (foreign scope) after ping without seller action -> expired
  */
 const computeExpired = (source: UserEventTableSchema.Type[]) => {
-	let total = 0; // transaction.create (user)
-	let expired = 0; // transaction.expired OR transaction.resolved (foreign) without buyer action after seller ping
+	let total = 0; // transaction.create (foreign)
+	let expired = 0; // transaction.expired OR transaction.resolved (foreign) without seller action after buyer ping
 	let currentGroup: string | null = null;
 
 	let created = false; // counted total for this group
-	let pingAtMs: number | null = null; // seller "ping" moment: open OR last foreign message
+	let pingAtMs: number | null = null; // buyer "ping" moment: create OR last foreign message
 	let done = false;
 
 	const flushGroup = () => {
@@ -329,20 +359,21 @@ const computeExpired = (source: UserEventTableSchema.Type[]) => {
 		done = false;
 	};
 
-	const isSellerOpen = (event: UserEventTableSchema.Type) =>
-		event.event === "transaction.open" && event.scope === "foreign";
+	const isBuyerCreate = (event: UserEventTableSchema.Type) =>
+		event.event === "transaction.create" && event.scope === "foreign";
 
-	const isSellerMessage = (event: UserEventTableSchema.Type) =>
+	const isBuyerMessage = (event: UserEventTableSchema.Type) =>
 		event.event === "transaction.message" && event.scope === "foreign";
 
-	const isSellerEnd = (event: UserEventTableSchema.Type) =>
+	const isBuyerEnd = (event: UserEventTableSchema.Type) =>
 		(event.event === "transaction.expired" || event.event === "transaction.resolved") &&
 		event.scope === "foreign";
 
-	// buyer "did something" after ping -> not ghost
-	const isBuyerAction = (event: UserEventTableSchema.Type) =>
+	// seller "did something" after ping -> not ghost
+	const isSellerAction = (event: UserEventTableSchema.Type) =>
 		event.scope === "user" &&
 		(event.event === "transaction.message" ||
+			event.event === "transaction.open" ||
 			event.event === "transaction.closed" ||
 			event.event === "transaction.rejected" ||
 			event.event === "transaction.success");
@@ -355,11 +386,14 @@ const computeExpired = (source: UserEventTableSchema.Type[]) => {
 
 		const createdAt = event.createdAt.getTime();
 
-		// denominator: all created transactions (by buyer) per group
-		if (event.event === "transaction.create" && event.scope === "user") {
+		// denominator: all transactions created by buyers (foreign scope) per group
+		if (isBuyerCreate(event)) {
 			if (!created) {
 				created = true;
 				total++;
+			}
+			if (pingAtMs === null) {
+				pingAtMs = createdAt;
 			}
 			continue;
 		}
@@ -368,30 +402,22 @@ const computeExpired = (source: UserEventTableSchema.Type[]) => {
 			continue;
 		}
 
-		// seller "ping" starts (or updates) the expectation window
-		if (isSellerOpen(event)) {
-			if (pingAtMs === null) {
-				pingAtMs = createdAt;
-			}
-			continue;
-		}
-
-		if (pingAtMs != null && isSellerMessage(event)) {
-			// seller nudged -> reset ping moment
+		if (pingAtMs != null && isBuyerMessage(event)) {
+			// buyer nudged -> reset ping moment
 			pingAtMs = createdAt;
 			continue;
 		}
 
-		// buyer acted after ping -> disqualify
-		if (pingAtMs != null && isBuyerAction(event)) {
+		// seller acted after ping -> disqualify
+		if (pingAtMs != null && isSellerAction(event)) {
 			if (createdAt >= pingAtMs) {
 				done = true;
 			}
 			continue;
 		}
 
-		// seller ended as expired/resolved -> count only if we had a ping and buyer didn't act after it
-		if (pingAtMs != null && isSellerEnd(event)) {
+		// buyer ended as expired/resolved -> count only if we had a ping and seller didn't act after it
+		if (pingAtMs != null && isBuyerEnd(event)) {
 			expired++;
 			done = true;
 		}
@@ -401,7 +427,7 @@ const computeExpired = (source: UserEventTableSchema.Type[]) => {
 		total,
 		expired,
 		percent: total === 0 ? 0 : (expired / total) * 100,
-	} satisfies UserEventBuyerSchema.Type["expired"];
+	} satisfies UserEventSellerSchema.Type["expired"];
 };
 
 const computeLoad = (
@@ -449,7 +475,7 @@ const computeLoad = (
 			currentGroup = event.group;
 		}
 
-		if (event.event === "transaction.create" && event.scope === "user") {
+		if (event.event === "transaction.create" && event.scope === "foreign") {
 			created = true;
 			continue;
 		}
@@ -469,7 +495,7 @@ const computeLoad = (
 
 	return {
 		bucket,
-	} satisfies UserEventBuyerSchema.Type["load"];
+	} satisfies UserEventSellerSchema.Type["load"];
 };
 
 const computeActivity = (source: UserEventTableSchema.Type[], days: number) => {
@@ -488,7 +514,7 @@ const computeActivity = (source: UserEventTableSchema.Type[], days: number) => {
 	if (lastUserAtMs === null) {
 		return {
 			bucket: "low",
-		} satisfies UserEventBuyerSchema.Type["activity"];
+		} satisfies UserEventSellerSchema.Type["activity"];
 	}
 
 	const nowMs = Date.now();
@@ -502,18 +528,18 @@ const computeActivity = (source: UserEventTableSchema.Type[], days: number) => {
 
 	return {
 		bucket,
-	} satisfies UserEventBuyerSchema.Type["activity"];
+	} satisfies UserEventSellerSchema.Type["activity"];
 };
 
 const computeScore = (input: {
-	reaction: UserEventBuyerSchema.Type["reaction"];
-	decision: UserEventBuyerSchema.Type["decision"];
-	closer: UserEventBuyerSchema.Type["closer"];
-	expired: UserEventBuyerSchema.Type["expired"];
-	activity: UserEventBuyerSchema.Type["activity"];
-	load: UserEventBuyerSchema.Type["load"];
+	reaction: UserEventSellerSchema.Type["reaction"];
+	resolved: UserEventSellerSchema.Type["resolved"];
+	rejected: UserEventSellerSchema.Type["rejected"];
+	expired: UserEventSellerSchema.Type["expired"];
+	activity: UserEventSellerSchema.Type["activity"];
+	load: UserEventSellerSchema.Type["load"];
 }) => {
-	const { reaction, decision, closer, expired, activity, load } = input;
+	const { reaction, resolved, rejected, expired, activity, load } = input;
 
 	const bonusActivity = (bucket: "low" | "medium" | "high") =>
 		bucket === "high" ? 2 : bucket === "medium" ? 1 : 0;
@@ -545,11 +571,11 @@ const computeScore = (input: {
 	};
 
 	// positives
-	const decisionPoints = clamp(decision.percent, 0, 100) * 0.55; // 0..55
+	const resolvePoints = clamp(resolved.percent, 0, 100) * 0.55; // 0..55
 	const reactionPoints = clamp(reaction.percent, 0, 100) * 0.25; // 0..25
 
-	const closerOver = Math.max(0, closer.percent - 10); // allow up to 10%
-	const closerPenalty = clamp(closerOver, 0, 100) * 0.25; // 0..25
+	const rejectedOver = Math.max(0, rejected.percent - 10); // allow up to 10%
+	const rejectedPenalty = clamp(rejectedOver, 0, 100) * 0.25; // 0..25
 
 	const expiredOver = Math.max(0, expired.percent - 10); // allow up to 10%
 	const expiredPenalty = clamp(expiredOver, 0, 100) * 0.1; // 0..10
@@ -560,7 +586,7 @@ const computeScore = (input: {
 	// speed bonus
 	const speed = bonusReactionSpeed(reaction); // 0..6
 
-	const raw = decisionPoints + reactionPoints + micro + speed - closerPenalty - expiredPenalty;
+	const raw = resolvePoints + reactionPoints + micro + speed - rejectedPenalty - expiredPenalty;
 	const score = clamp(Math.round(raw), 0, 100);
 
 	return {
@@ -577,12 +603,12 @@ const computeScore = (input: {
 							: score >= 25
 								? 2
 								: 1,
-	} satisfies UserEventBuyerSchema.Type["score"];
+	} satisfies UserEventSellerSchema.Type["score"];
 };
 
-export const userEventBuyerInfoFx = Effect.fn("userEventBuyerInfoFx")(function* ({
+export const userEventSellerInfoFx = Effect.fn("userEventSellerInfoFx")(function* ({
 	userId,
-}: userEventBuyerInfoFx.Props) {
+}: userEventSellerInfoFx.Props) {
 	const cutoff = 90;
 
 	const { data: source } = yield* userEventCollectionFx({
@@ -616,10 +642,10 @@ export const userEventBuyerInfoFx = Effect.fn("userEventBuyerInfoFx")(function* 
 		return null;
 	}
 
-	const result: Omit<UserEventBuyerSchema.Type, "score"> = {
+	const result: Omit<UserEventSellerSchema.Type, "score"> = {
 		reaction: computeReaction(source),
-		closer: computeCloser(source),
-		decision: computeDecision(source),
+		rejected: computeRejected(source),
+		resolved: computeResolved(source),
 		expired: computeExpired(source),
 		load: computeLoad(source),
 		activity: computeActivity(source, cutoff),
@@ -628,5 +654,5 @@ export const userEventBuyerInfoFx = Effect.fn("userEventBuyerInfoFx")(function* 
 	return {
 		...result,
 		score: computeScore(result),
-	} satisfies UserEventBuyerSchema.Type;
+	} satisfies UserEventSellerSchema.Type;
 });

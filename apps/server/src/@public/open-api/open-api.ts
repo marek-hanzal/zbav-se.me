@@ -7,8 +7,16 @@ import { ServerViteSchema } from "~/schema/env/ServerViteSchema";
 const docsUrl = "/v3/api-docs";
 
 export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function* () {
-	const { root, publicHono, sessionHono, userHono, sellerHono, buyerHono } =
-		yield* RoutesContextFx;
+	const {
+		root,
+		publicHono,
+		sessionHono,
+		userHono,
+		sellerUserHono,
+		sellerSessionHono,
+		buyerUserHono,
+		buyerSessionHono,
+	} = yield* RoutesContextFx;
 
 	const viteConfig = ServerViteSchema.parse(process.env);
 	const apiBase = viteConfig.VITE_SERVER_API.replace(/\/$/, "");
@@ -32,12 +40,20 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 					title: "User",
 				},
 				{
-					url: `${docsUrl}/seller`,
-					title: "Seller",
+					url: `${docsUrl}/seller-user`,
+					title: "Seller User",
 				},
 				{
-					url: `${docsUrl}/buyer`,
-					title: "Buyer",
+					url: `${docsUrl}/seller-session`,
+					title: "Seller Session",
+				},
+				{
+					url: `${docsUrl}/buyer-user`,
+					title: "Buyer User",
+				},
+				{
+					url: `${docsUrl}/buyer-session`,
+					title: "Buyer Session",
 				},
 				{
 					url: "/api/auth/open-api/generate-schema",
@@ -86,8 +102,10 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 		public: unknown;
 		session: unknown;
 		user: unknown;
-		seller: unknown;
-		buyer: unknown;
+		sellerUser: unknown;
+		sellerSession: unknown;
+		buyerUser: unknown;
+		buyerSession: unknown;
 	} = null;
 
 	const docs = () => {
@@ -254,32 +272,62 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 				],
 			}),
 
-			seller: docWithMount("/api/seller", sellerHono, {
+			sellerUser: docWithMount("/api/seller-user", sellerUserHono, {
 				openapi: "3.1.0",
 				info: {
 					version: "0.5.0",
-					title: "Seller zbav-se.me API",
-					description: "Seller related API, needs session",
+					title: "Seller User zbav-se.me API",
+					description:
+						"Private API for seller - requires authentication and access to user's private data",
 				},
-				servers: [
+				...cookieAuth,
+				tags: [
 					{
-						url: viteConfig.VITE_SERVER_API,
+						name: "User Event Seller",
+						description: "Seller event metrics and analytics",
 					},
 				],
 			}),
 
-			buyer: docWithMount("/api/buyer", buyerHono, {
+			sellerSession: docWithMount("/api/seller-session", sellerSessionHono, {
 				openapi: "3.1.0",
 				info: {
 					version: "0.5.0",
-					title: "Buyer zbav-se.me API",
-					description: "Buyer related API, needs session",
+					title: "Seller Session zbav-se.me API",
+					description:
+						"Open API for seller for authenticated users - requires session, but data is public",
 				},
-				servers: [
+				...cookieAuth,
+				tags: [],
+			}),
+
+			buyerUser: docWithMount("/api/buyer-user", buyerUserHono, {
+				openapi: "3.1.0",
+				info: {
+					version: "0.5.0",
+					title: "Buyer User zbav-se.me API",
+					description:
+						"Private API for buyer - requires authentication and access to user's private data",
+				},
+				...cookieAuth,
+				tags: [
 					{
-						url: viteConfig.VITE_SERVER_API,
+						name: "User Event Buyer",
+						description: "Buyer event metrics and analytics",
 					},
 				],
+			}),
+
+			buyerSession: docWithMount("/api/buyer-session", buyerSessionHono, {
+				openapi: "3.1.0",
+				info: {
+					version: "0.5.0",
+					title: "Buyer Session zbav-se.me API",
+					description:
+						"Open API for buyer for authenticated users - requires session, but data is public",
+				},
+				...cookieAuth,
+				tags: [],
 			}),
 		};
 
@@ -289,8 +337,10 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 	root.get(`${docsUrl}/public`, (c) => c.json(docs().public));
 	root.get(`${docsUrl}/session`, (c) => c.json(docs().session));
 	root.get(`${docsUrl}/user`, (c) => c.json(docs().user));
-	root.get(`${docsUrl}/seller`, (c) => c.json(docs().seller));
-	root.get(`${docsUrl}/buyer`, (c) => c.json(docs().buyer));
+	root.get(`${docsUrl}/seller-user`, (c) => c.json(docs().sellerUser));
+	root.get(`${docsUrl}/seller-session`, (c) => c.json(docs().sellerSession));
+	root.get(`${docsUrl}/buyer-user`, (c) => c.json(docs().buyerUser));
+	root.get(`${docsUrl}/buyer-session`, (c) => c.json(docs().buyerSession));
 
 	root.doc31(docsUrl, {
 		openapi: "3.1.0",

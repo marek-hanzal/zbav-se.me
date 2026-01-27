@@ -3,16 +3,16 @@ import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import type { NoticeSchema } from "~/schema/NoticeSchema";
 
-export const withBuyerApiFx = Effect.fn("withBuyerApiFx")(function* () {
-	const { root, buyerHono } = yield* RoutesContextFx;
+export const withSellerSessionApiFx = Effect.fn("withSellerSessionApiFx")(function* () {
+	const { root, sellerSessionHono } = yield* RoutesContextFx;
 	const kysely = yield* KyselyContextFx;
 
-	buyerHono.use(async (c, next) => {
+	sellerSessionHono.use(async (c, next) => {
 		c.set("kysely", kysely);
 		return next();
 	});
 
-	root.use("/api/buyer/*", async (c, next) => {
+	root.use("/api/seller-session/*", async (c, next) => {
 		const user = c.get("user");
 
 		if (!user) {
@@ -27,5 +27,5 @@ export const withBuyerApiFx = Effect.fn("withBuyerApiFx")(function* () {
 		return next();
 	});
 
-	root.route("/api/buyer", buyerHono);
+	root.route("/api/seller-session", sellerSessionHono);
 });

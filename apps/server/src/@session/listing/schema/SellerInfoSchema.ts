@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { UserEventSellerSchema } from "~/@seller/user-event/schema/UserEventSellerSchema";
+import { UserEventSellerSchema } from "~/@seller-user/user-event/schema/UserEventSellerSchema";
 
 export const SellerInfoSchema = z
 	.looseObject({

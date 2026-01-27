@@ -128,9 +128,9 @@ export default defineConfig([
 		],
 	},
 	{
-		input: `${process.env.VITE_SERVER_API}/v3/api-docs/seller`,
+		input: `${process.env.VITE_SERVER_API}/v3/api-docs/seller-user`,
 		output: {
-			path: "src/api/seller",
+			path: "src/api/seller-user",
 			format: "biome",
 			lint: "biome",
 		},
@@ -140,15 +140,15 @@ export default defineConfig([
 				name: "@hey-api/client-axios",
 				exportFromIndex: true,
 				baseUrl: false,
-				runtimeConfigPath: "../seller.client.config",
+				runtimeConfigPath: "../seller-user.client.config",
 			},
 			...common.plugins,
 		],
 	},
 	{
-		input: `${process.env.VITE_SERVER_API}/v3/api-docs/buyer`,
+		input: `${process.env.VITE_SERVER_API}/v3/api-docs/seller-session`,
 		output: {
-			path: "src/api/buyer",
+			path: "src/api/seller-session",
 			format: "biome",
 			lint: "biome",
 		},
@@ -158,7 +158,43 @@ export default defineConfig([
 				name: "@hey-api/client-axios",
 				exportFromIndex: true,
 				baseUrl: false,
-				runtimeConfigPath: "../buyer.client.config",
+				runtimeConfigPath: "../seller-session.client.config",
+			},
+			...common.plugins,
+		],
+	},
+	{
+		input: `${process.env.VITE_SERVER_API}/v3/api-docs/buyer-user`,
+		output: {
+			path: "src/api/buyer-user",
+			format: "biome",
+			lint: "biome",
+		},
+		...common,
+		plugins: [
+			{
+				name: "@hey-api/client-axios",
+				exportFromIndex: true,
+				baseUrl: false,
+				runtimeConfigPath: "../buyer-user.client.config",
+			},
+			...common.plugins,
+		],
+	},
+	{
+		input: `${process.env.VITE_SERVER_API}/v3/api-docs/buyer-session`,
+		output: {
+			path: "src/api/buyer-session",
+			format: "biome",
+			lint: "biome",
+		},
+		...common,
+		plugins: [
+			{
+				name: "@hey-api/client-axios",
+				exportFromIndex: true,
+				baseUrl: false,
+				runtimeConfigPath: "../buyer-session.client.config",
 			},
 			...common.plugins,
 		],

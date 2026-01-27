@@ -7,11 +7,15 @@ import { KyselyContextLayerFx } from "~/database/context/KyselyContextLayerFx";
 import { initMiddlewareFx } from "~/init/initMiddlewareFx";
 import { RoutesContextLayer } from "~/routes/context/RoutesContextLayer";
 import { ServerDatabaseSchema } from "~/schema/env/ServerDatabaseSchema";
-import { withBuyerApiFx } from "./@buyer/withBuyerApiFx";
-import { withBuyerHono } from "./@buyer/withBuyerHono";
+import { withBuyerSessionApiFx } from "./@buyer-session/withBuyerSessionApiFx";
+import { withBuyerSessionHono } from "./@buyer-session/withBuyerSessionHono";
+import { withBuyerUserApiFx } from "./@buyer-user/withBuyerUserApiFx";
+import { withBuyerUserHono } from "./@buyer-user/withBuyerUserHono";
 import { withPublicApiFx } from "./@public/withPublicApiFx";
-import { withSellerApiFx } from "./@seller/withSellerApiFx";
-import { withSellerHono } from "./@seller/withSellerHono";
+import { withSellerSessionApiFx } from "./@seller-session/withSellerSessionApiFx";
+import { withSellerSessionHono } from "./@seller-session/withSellerSessionHono";
+import { withSellerUserApiFx } from "./@seller-user/withSellerUserApiFx";
+import { withSellerUserHono } from "./@seller-user/withSellerUserHono";
 import { withSessionApiFx } from "./@session/withSessionApiFx";
 import { withSessionHono } from "./@session/withSessionHono";
 import { withUserApiFx } from "./@user/withUserApiFx";
@@ -59,8 +63,10 @@ const app = await Effect.gen(function* () {
 		withPublicApiFx(),
 		withSessionApiFx(),
 		withUserApiFx(),
-		withSellerApiFx(),
-		withBuyerApiFx(),
+		withSellerUserApiFx(),
+		withSellerSessionApiFx(),
+		withBuyerUserApiFx(),
+		withBuyerSessionApiFx(),
 	]).pipe(Effect.provide(kyselyContext));
 
 	return root;
@@ -71,8 +77,10 @@ const app = await Effect.gen(function* () {
 			publicHono: withPublicHono(),
 			sessionHono: withSessionHono(),
 			userHono: withUserHono(),
-			sellerHono: withSellerHono(),
-			buyerHono: withBuyerHono(),
+			sellerUserHono: withSellerUserHono(),
+			sellerSessionHono: withSellerSessionHono(),
+			buyerUserHono: withBuyerUserHono(),
+			buyerSessionHono: withBuyerSessionHono(),
 		}),
 	),
 	Effect.runPromise,

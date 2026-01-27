@@ -1,7 +1,9 @@
 import { Context } from "effect";
-import type { withBuyerHono } from "~/@buyer/withBuyerHono";
+import type { withBuyerSessionHono } from "~/@buyer-session/withBuyerSessionHono";
+import type { withBuyerUserHono } from "~/@buyer-user/withBuyerUserHono";
 import type { withPublicHono } from "~/@public/withPublicHono";
-import type { withSellerHono } from "~/@seller/withSellerHono";
+import type { withSellerSessionHono } from "~/@seller-session/withSellerSessionHono";
+import type { withSellerUserHono } from "~/@seller-user/withSellerUserHono";
 import type { withSessionHono } from "~/@session/withSessionHono";
 import type { withUserHono } from "~/@user/withUserHono";
 import type { withHono } from "~/hono/withHono";
@@ -28,17 +30,29 @@ export interface RoutesContext {
 	 */
 	userHono: withUserHono;
 	/**
-	 * Seller app hono (/seller route)
+	 * Seller User app hono (/seller-user route)
 	 *
-	 * Seller-specific transaction and listing operations.
+	 * Seller-specific transaction and listing operations (private API).
 	 */
-	sellerHono: withSellerHono;
+	sellerUserHono: withSellerUserHono;
 	/**
-	 * Buyer app hono (/buyer route)
+	 * Seller Session app hono (/seller-session route)
 	 *
-	 * Buyer-specific transaction operations.
+	 * Seller-specific operations for authenticated users (open API).
 	 */
-	buyerHono: withBuyerHono;
+	sellerSessionHono: withSellerSessionHono;
+	/**
+	 * Buyer User app hono (/buyer-user route)
+	 *
+	 * Buyer-specific transaction operations (private API).
+	 */
+	buyerUserHono: withBuyerUserHono;
+	/**
+	 * Buyer Session app hono (/buyer-session route)
+	 *
+	 * Buyer-specific operations for authenticated users (open API).
+	 */
+	buyerSessionHono: withBuyerSessionHono;
 }
 
 export class RoutesContextFx extends Context.Tag("RoutesContextFx")<
