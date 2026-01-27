@@ -5,6 +5,7 @@ import type { NoticeSchema } from "~/schema/NoticeSchema";
 import { withDraftApiFx } from "./draft/withDraftApiFx";
 import { withDraftGalleryApiFx } from "./draft-gallery/withDraftGalleryApiFx";
 import { withListingApiFx } from "./listing/withListingApiFx";
+import { withTransactionListingApiFx } from "./transaction-listing/withTransactionListingApiFx";
 
 export const withSellerUserApiFx = Effect.fn("withSellerUserApiFx")(function* () {
 	const { root, sellerUserHono } = yield* RoutesContextFx;
@@ -34,6 +35,7 @@ export const withSellerUserApiFx = Effect.fn("withSellerUserApiFx")(function* ()
 		withDraftApiFx(),
 		withDraftGalleryApiFx(),
 		withListingApiFx(),
+		withTransactionListingApiFx(),
 	]);
 
 	root.route("/api/seller-user", sellerUserHono);

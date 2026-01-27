@@ -6,7 +6,6 @@ import { withGalleryApiFx } from "./gallery/withGalleryApiFx";
 import { withMessageThreadApiFx } from "./message-thread/withMessageThreadApiFx";
 import { withS3ApiFx } from "./s3/withS3ApiFx";
 import { withTransactionApiFx } from "./transaction/withTransactionApiFx";
-import { withTransactionListingApiFx } from "./transaction-listing/withTransactionListingApiFx";
 import { withTransactionMessageGalleryApiFx } from "./transaction-message-gallery/withTransactionMessageGalleryApiFx";
 import { withTransactionMessageLocationApiFx } from "./transaction-message-location/withTransactionMessageLocationApiFx";
 import { withTransactionMessagePackageApiFx } from "./transaction-message-package/withTransactionMessagePackageApiFx";
@@ -45,7 +44,6 @@ export const withUserApiFx = Effect.fn("withUserApiFx")(function* () {
 		withMessageThreadApiFx(),
 		withS3ApiFx(),
 		withTransactionApiFx(),
-		withTransactionListingApiFx(),
 		withTransactionMessageGalleryApiFx(),
 		withTransactionMessageLocationApiFx(),
 		withTransactionMessagePackageApiFx(),

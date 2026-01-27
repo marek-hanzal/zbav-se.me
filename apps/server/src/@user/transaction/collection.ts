@@ -17,7 +17,6 @@ const CollectionSchema = withCollectionSchema({
 
 export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;
-
 	userHono.openapi(
 		createRoute({
 			method: "post",

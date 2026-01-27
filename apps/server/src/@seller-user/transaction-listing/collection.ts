@@ -1,8 +1,8 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { transactionListingCollectionFx } from "~/@user/transaction-listing/fx/transactionListingCollectionFx";
-import { TransactionListingQuerySchema } from "~/@user/transaction-listing/schema/TransactionListingQuerySchema";
+import { transactionListingCollectionFx } from "~/@seller-user/transaction-listing/fx/transactionListingCollectionFx";
+import { TransactionListingQuerySchema } from "~/@seller-user/transaction-listing/schema/TransactionListingQuerySchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -16,9 +16,9 @@ const CollectionSchema = withCollectionSchema({
 });
 
 export const withCollectionApiFx = Effect.fn("withTransactionListingCollectionApiFx")(function* () {
-	const { userHono } = yield* RoutesContextFx;
+	const { sellerUserHono } = yield* RoutesContextFx;
 
-	userHono.openapi(
+	sellerUserHono.openapi(
 		createRoute({
 			method: "post",
 			path: "/transaction-listing/collection",
