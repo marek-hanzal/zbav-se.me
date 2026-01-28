@@ -6,7 +6,7 @@ import { listingEventCreateFx } from "~/@buyer-session/listing-event/fx/listingE
 import { transactionFetchFx } from "~/@buyer-user/transaction/fx/transactionFetchFx";
 import type { TransactionCreateSchema } from "~/@buyer-user/transaction/schema/TransactionCreateSchema";
 import { TransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
-import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
+import { transactionStatusCreateFx } from "~/@buyer-user/transaction-status/fx/transactionStatusCreateFx";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { messageThreadCreateFx } from "~/@user/message-thread/fx/messageThreadCreateFx";
 import { messageUserCreateFx } from "~/@user/message-thread-user/fx/messageUserCreateFx";
