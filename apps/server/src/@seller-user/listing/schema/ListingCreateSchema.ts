@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
-import { ListingExpireEnumSchema } from "~/@buyer-session/listing/schema/ListingExpireEnumSchema";
+import { ListingExpireEnumSchema } from "~/@buyer-user/listing/schema/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/database/@enum/ListingWarrantyEnumSchema";
 import { ProsConsSchema } from "~/@common/listing/schema/ProsConsSchema";

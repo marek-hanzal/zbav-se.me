@@ -3,36 +3,45 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { listingCountFx } from "./fx/listingCountFx";
-import { ListingCountQuerySchema } from "./schema/ListingCountQuerySchema";
+import { listingFetchFx } from "./fx/listingFetchFx";
+import { ListingQuerySchema } from "./schema/ListingQuerySchema";
+import { ListingSchema } from "./schema/ListingSchema";
 
-export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
-	const { buyerSessionHono } = yield* RoutesContextFx;
-	buyerSessionHono.openapi(
+export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
+	const { buyerUserHono } = yield* RoutesContextFx;
+	buyerUserHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/listing/count",
-			description: "Returns count of listings based on provided query",
-			operationId: "apiListingCount",
+			path: "/listing/fetch",
+			description: "Return a listing based on the provided query",
+			operationId: "apiListingFetch",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: ListingCountQuerySchema,
+							schema: ListingQuerySchema,
 						},
 					},
+					description: "Query object for listing fetch",
 				},
 			},
 			responses: {
 				200: {
 					content: {
 						"application/json": {
-							schema: CountSchema,
+							schema: ListingSchema,
 						},
 					},
-					description: "Return counts based on provided query",
+					description: "Return a listing based on the provided query",
+				},
+				404: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Listing not found",
 				},
 				500: {
 					content: {
@@ -46,20 +55,20 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 			tags: [
 				"Listing",
 			],
-			summary: "Count listings based on the provided query",
+			summary: "Fetch a listing based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<CountSchema.Type, 200>(
+				return c.json<ListingSchema.Type, 200>(
 					yield* zodFx({
-						schema: CountSchema,
-						dataFx: listingCountFx({
+						schema: ListingSchema,
+						dataFx: listingFetchFx({
 							...c.req.valid("json"),
 							userId: user.id,
 							scope: {},
-						}) satisfies Effect.Effect<CountSchema.Type, any, any>,
+						}) satisfies Effect.Effect<ListingSchema.Type, any, any>,
 					}),
 					200,
 				);
@@ -69,6 +78,20 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
+							Match.when(
+								{
+									_tag: "NotFoundErrorFx",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 404>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										404,
+									);
+								},
+							),
 							Match.when(
 								{
 									_tag: "ZodErrorFx",

@@ -1,7 +1,7 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { listingCheckIfOwnFx } from "~/@buyer-session/listing/fx/listingCheckIfOwnFx";
+import { listingCheckIfOwnFx } from "~/@buyer-user/listing/fx/listingCheckIfOwnFx";
 import type { ListingEventCreateSchema } from "~/@buyer-session/listing-event/schema/ListingEventCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";

@@ -16,8 +16,8 @@ const CollectionSchema = withCollectionSchema({
 });
 
 export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* () {
-	const { buyerSessionHono } = yield* RoutesContextFx;
-	buyerSessionHono.openapi(
+	const { buyerUserHono } = yield* RoutesContextFx;
+	buyerUserHono.openapi(
 		createRoute({
 			method: "post",
 			path: "/listing/collection",

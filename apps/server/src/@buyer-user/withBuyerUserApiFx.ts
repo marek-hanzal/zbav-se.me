@@ -8,6 +8,7 @@ import { withFeedFavouriteApiFx } from "./feed-favourite/withFeedFavouriteApiFx"
 import { withFeedGalleryApiFx } from "./feed-gallery/withFeedGalleryApiFx";
 import { withFlagApiFx } from "./flag/withFlagApiFx";
 import { withIgnoreApiFx } from "./ignore/withIgnoreApiFx";
+import { withListingApiFx } from "./listing/withListingApiFx";
 import { withThumbApiFx } from "./thumb/withThumbApiFx";
 import { withTransactionApiFx } from "./transaction/withTransactionApiFx";
 import { withTransactionStatusApiFx } from "./transaction-status/withTransactionStatusApiFx";
@@ -43,6 +44,7 @@ export const withBuyerUserApiFx = Effect.fn("withBuyerUserApiFx")(function* () {
 		withFeedGalleryApiFx(),
 		withFlagApiFx(),
 		withIgnoreApiFx(),
+		withListingApiFx(),
 		withThumbApiFx(),
 		withTransactionApiFx(),
 		withTransactionStatusApiFx(),

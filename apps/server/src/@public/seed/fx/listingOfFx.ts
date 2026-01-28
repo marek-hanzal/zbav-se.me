@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
 import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
-import { listingCollectionFx } from "~/@buyer-session/listing/fx/listingCollectionFx";
-import { listingCountFx } from "~/@buyer-session/listing/fx/listingCountFx";
-import type { ListingSortSchema } from "~/@buyer-session/listing/schema/ListingSortSchema";
+import { listingCollectionFx } from "~/@buyer-user/listing/fx/listingCollectionFx";
+import { listingCountFx } from "~/@buyer-user/listing/fx/listingCountFx";
+import type { ListingSortSchema } from "~/@buyer-user/listing/schema/ListingSortSchema";
 
 export const ListingOfRequestSchema = z.object({
 	userId: z.string().openapi({
