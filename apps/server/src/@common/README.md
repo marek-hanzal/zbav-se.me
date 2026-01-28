@@ -23,7 +23,6 @@ The `@common` domain exists to:
 - Used across `@buyer-user`, `@seller-user`, `@user`, and `@public` domains
 
 ### Transaction Status Schemas
-- **TransactionStatusDisputeSchema** - Zod schema for disputing a transaction
 - **TransactionStatusRejectSchema** - Zod schema for rejecting a transaction
 - Used in `@user` and `@session` domains for transaction status operations
 
@@ -48,6 +47,7 @@ The `@common` domain exists to:
 
 ### Listing Schema
 - **ProsConsSchema** - Zod schema for pros/cons arrays (max 5 items, each string max 72 characters)
+- **ListingExpireEnumSchema** - Zod schema for listing expiration times (7-days, 14-days, 1-month)
 - Used in `@seller-user` domain for listing and draft creation, and in database table schemas
 
 ## Access Rules
