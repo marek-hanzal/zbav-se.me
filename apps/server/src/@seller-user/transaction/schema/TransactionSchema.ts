@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { ListingPriceEnumSchema } from "~/@buyer-session/listing/schema/ListingPriceEnumSchema";
-import { TransactionStatusEnumSchema } from "~/@buyer-user/transaction/schema/TransactionStatusEnumSchema";
+import { TransactionStatusEnumSchema } from "~/database/@enum/TransactionStatusEnumSchema";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { TransactionTableSchema } from "~/database/@table/TransactionTableSchema";
