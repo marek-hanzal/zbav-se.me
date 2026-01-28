@@ -2,16 +2,16 @@ import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
 import { GalleryItemFilterSchema } from "~/@user/gallery-item/schema/GalleryItemFilterSchema";
 import { GalleryItemSortSchema } from "~/@user/gallery-item/schema/GalleryItemSortSchema";
+import { GalleryItemWhereSchema } from "~/@user/gallery-item/schema/GalleryItemWhereSchema";
 
 export const GalleryItemQuerySchema = z
-	.object({
+	.looseObject({
 		cursor: CursorSchema.optional(),
 		filter: GalleryItemFilterSchema.optional(),
-		where: GalleryItemFilterSchema.openapi("GalleryItemWhere", {
-			description: "App-based filters",
-		}).optional(),
+		where: GalleryItemWhereSchema.optional(),
 		sort: GalleryItemSortSchema.array().optional(),
 	})
+	.strip()
 	.openapi("GalleryItemQuery", {
 		description: "Query object for gallery item collection",
 	});

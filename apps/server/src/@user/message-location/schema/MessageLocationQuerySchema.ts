@@ -2,14 +2,13 @@ import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
 import { MessageLocationFilterSchema } from "~/@user/message-location/schema/MessageLocationFilterSchema";
 import { MessageLocationSortSchema } from "~/@user/message-location/schema/MessageLocationSortSchema";
+import { MessageLocationWhereSchema } from "~/@user/message-location/schema/MessageLocationWhereSchema";
 
 export const MessageLocationQuerySchema = z
 	.object({
 		cursor: CursorSchema.optional(),
 		filter: MessageLocationFilterSchema.optional(),
-		where: MessageLocationFilterSchema.openapi("MessageLocationWhere", {
-			description: "App-based filters",
-		}).optional(),
+		where: MessageLocationWhereSchema.optional(),
 		sort: MessageLocationSortSchema.array().optional(),
 	})
 	.openapi("MessageLocationQuery", {

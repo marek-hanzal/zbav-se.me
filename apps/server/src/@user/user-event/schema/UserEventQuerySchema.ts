@@ -2,6 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
 import { UserEventFilterSchema } from "~/@user/user-event/schema/UserEventFilterSchema";
 import { UserEventSortSchema } from "~/@user/user-event/schema/UserEventSortSchema";
+import { UserEventWhereSchema } from "~/@user/user-event/schema/UserEventWhereSchema";
 
 export const UserEventQuerySchema = z
 	.object({
@@ -9,13 +10,7 @@ export const UserEventQuerySchema = z
 		filter: UserEventFilterSchema.omit({
 			userId: true,
 		}).optional(),
-		where: UserEventFilterSchema.openapi("UserEventWhere", {
-			description: "App-based filters",
-		})
-			.omit({
-				userId: true,
-			})
-			.optional(),
+		where: UserEventWhereSchema.optional(),
 		sort: UserEventSortSchema.array().optional(),
 	})
 	.openapi("UserEventQuery", {

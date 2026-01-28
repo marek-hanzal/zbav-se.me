@@ -2,14 +2,13 @@ import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
 import { LocationFilterSchema } from "~/@session/location/schema/LocationFilterSchema";
 import { LocationSortSchema } from "~/@session/location/schema/LocationSortSchema";
+import { LocationWhereSchema } from "~/@session/location/schema/LocationWhereSchema";
 
 export const LocationQuerySchema = z
 	.looseObject({
 		cursor: CursorSchema.optional(),
 		filter: LocationFilterSchema.optional(),
-		where: LocationFilterSchema.openapi("LocationWhere", {
-			description: "App-based filters",
-		}).optional(),
+		where: LocationWhereSchema.optional(),
 		sort: LocationSortSchema.array().optional(),
 	})
 	.strip()

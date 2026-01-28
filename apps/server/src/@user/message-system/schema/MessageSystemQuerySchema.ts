@@ -2,14 +2,13 @@ import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
 import { MessageSystemFilterSchema } from "~/@user/message-system/schema/MessageSystemFilterSchema";
 import { MessageSystemSortSchema } from "~/@user/message-system/schema/MessageSystemSortSchema";
+import { MessageSystemWhereSchema } from "~/@user/message-system/schema/MessageSystemWhereSchema";
 
 export const MessageSystemQuerySchema = z
 	.object({
 		cursor: CursorSchema.optional(),
 		filter: MessageSystemFilterSchema.optional(),
-		where: MessageSystemFilterSchema.openapi("MessageSystemWhere", {
-			description: "App-based filters",
-		}).optional(),
+		where: MessageSystemWhereSchema.optional(),
 		sort: MessageSystemSortSchema.array().optional(),
 	})
 	.openapi("MessageSystemQuery", {
