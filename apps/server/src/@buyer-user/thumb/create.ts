@@ -7,7 +7,7 @@ import { thumbCreateFx } from "~/@buyer-user/thumb/fx/thumbCreateFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { ThumbCreateSchema } from "./schema/ThumbCreateSchema";
+import { ThumbCreateSchema } from "~/@buyer-user/thumb/schema/ThumbCreateSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 	const { buyerUserHono } = yield* RoutesContextFx;

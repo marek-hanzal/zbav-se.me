@@ -4,8 +4,8 @@ import { listingFetchFx } from "~/@buyer-user/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/@buyer-session/listing-event/fx/listingEventCreateFx";
 import type { FavouriteToggleSchema } from "~/@buyer-user/favourite/schema/FavouriteToggleSchema";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { favouriteCreateFx } from "./favouriteCreateFx";
-import { favouriteDeleteFx } from "./favouriteDeleteFx";
+import { favouriteCreateFx } from "~/@buyer-user/favourite/fx/favouriteCreateFx";
+import { favouriteDeleteFx } from "~/@buyer-user/favourite/fx/favouriteDeleteFx";
 
 export namespace favouriteToggleFx {
 	export interface Props extends FavouriteToggleSchema.Type {

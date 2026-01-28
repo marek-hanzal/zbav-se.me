@@ -1,11 +1,11 @@
 import { z } from "@hono/zod-openapi";
-import { UserEventBuyerActivitySchema } from "./UserEventBuyerActivitySchema";
-import { UserEventBuyerCloserSchema } from "./UserEventBuyerCloserSchema";
-import { UserEventBuyerDecisionSchema } from "./UserEventBuyerDecisionSchema";
-import { UserEventBuyerExpiredSchema } from "./UserEventBuyerExpiredSchema";
-import { UserEventBuyerLoadSchema } from "./UserEventBuyerLoadSchema";
-import { UserEventBuyerReactionSchema } from "./UserEventBuyerReactionSchema";
-import { UserEventBuyerScoreSchema } from "./UserEventBuyerScoreSchema";
+import { UserEventBuyerActivitySchema } from "~/@buyer-user/user-event/schema/UserEventBuyerActivitySchema";
+import { UserEventBuyerCloserSchema } from "~/@buyer-user/user-event/schema/UserEventBuyerCloserSchema";
+import { UserEventBuyerDecisionSchema } from "~/@buyer-user/user-event/schema/UserEventBuyerDecisionSchema";
+import { UserEventBuyerExpiredSchema } from "~/@buyer-user/user-event/schema/UserEventBuyerExpiredSchema";
+import { UserEventBuyerLoadSchema } from "~/@buyer-user/user-event/schema/UserEventBuyerLoadSchema";
+import { UserEventBuyerReactionSchema } from "~/@buyer-user/user-event/schema/UserEventBuyerReactionSchema";
+import { UserEventBuyerScoreSchema } from "~/@buyer-user/user-event/schema/UserEventBuyerScoreSchema";
 
 export const UserEventBuyerSchema = z
 	.looseObject({

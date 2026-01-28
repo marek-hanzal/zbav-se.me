@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { NoticeTypeEnumSchema } from "./NoticeTypeEnumSchema";
+import { NoticeTypeEnumSchema } from "~/schema/NoticeTypeEnumSchema";
 
 export const NoticeSchema = z
 	.object({

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { KyselyContextFx } from "../context/KyselyContextFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export const withTransactionFx = Effect.fn("withTransactionFx")(function* <
 	const A,

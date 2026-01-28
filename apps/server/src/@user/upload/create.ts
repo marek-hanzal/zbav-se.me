@@ -9,7 +9,7 @@ import { UploadCreateSchema } from "~/@user/upload/schema/UploadCreateSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { UploadSchema } from "./schema/UploadSchema";
+import { UploadSchema } from "~/@user/upload/schema/UploadSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;

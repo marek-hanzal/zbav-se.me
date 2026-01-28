@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withLocationAutocompleteApiFx } from "./autocomplete";
-import { withLocationFetchApiFx } from "./fetch";
+import { withLocationAutocompleteApiFx } from "~/@session/location/autocomplete";
+import { withLocationFetchApiFx } from "~/@session/location/fetch";
 
 export const withLocationApiFx = Effect.fn("withLocationApiFx")(function* () {
 	yield* Effect.all([

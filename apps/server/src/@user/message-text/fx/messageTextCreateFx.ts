@@ -5,7 +5,7 @@ import type { MessageTextCreateSchema } from "~/@user/message-text/schema/Messag
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { messageTextFetchFx } from "./messageTextFetchFx";
+import { messageTextFetchFx } from "~/@user/message-text/fx/messageTextFetchFx";
 
 export namespace messageTextCreateFx {
 	export interface Props extends MessageTextCreateSchema.Type {

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { withCreateApiFx } from "./create";
-import { withFetchApiFx } from "./fetch";
+import { withCreateApiFx } from "~/@user/upload/create";
+import { withFetchApiFx } from "~/@user/upload/fetch";
 
 export const withUploadApiFx = Effect.fn("withUploadApiFx")(function* () {
 	yield* Effect.all([

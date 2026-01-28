@@ -6,7 +6,7 @@ import { userExPatchFx } from "~/@user/user-ex/fx/userExPatchFx";
 import { UserExPatchSchema } from "~/@user/user-ex/schema/UserExPatchSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { UserExSchema } from "./schema/UserExSchema";
+import { UserExSchema } from "~/@user/user-ex/schema/UserExSchema";
 
 export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;

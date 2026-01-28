@@ -8,7 +8,7 @@ import { MessageGallerySchema } from "~/@user/message-gallery/schema/MessageGall
 import { transactionMessageGalleryCreateFx } from "~/@user/transaction-message-gallery/fx/transactionMessageGalleryCreateFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { TransactionMessageGalleryCreateSchema } from "./schema/TransactionMessageGalleryCreateSchema";
+import { TransactionMessageGalleryCreateSchema } from "~/@user/transaction-message-gallery/schema/TransactionMessageGalleryCreateSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;

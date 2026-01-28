@@ -4,8 +4,8 @@ import { listingFetchFx } from "~/@buyer-user/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/@buyer-session/listing-event/fx/listingEventCreateFx";
 import type { FlagToggleSchema } from "~/@buyer-user/flag/schema/FlagToggleSchema";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { flagCreateFx } from "./flagCreateFx";
-import { flagDeleteFx } from "./flagDeleteFx";
+import { flagCreateFx } from "~/@buyer-user/flag/fx/flagCreateFx";
+import { flagDeleteFx } from "~/@buyer-user/flag/fx/flagDeleteFx";
 
 export namespace flagToggleFx {
 	export interface Props extends FlagToggleSchema.Type {

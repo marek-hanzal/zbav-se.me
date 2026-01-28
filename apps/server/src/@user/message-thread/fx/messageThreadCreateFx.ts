@@ -4,7 +4,7 @@ import { Effect } from "effect";
 import type { MessageThreadCreateSchema } from "~/@user/message-thread/schema/MessageThreadCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { messageThreadFetchFx } from "./messageThreadFetchFx";
+import { messageThreadFetchFx } from "~/@user/message-thread/fx/messageThreadFetchFx";
 
 export namespace messageThreadCreateFx {
 	export type Props = MessageThreadCreateSchema.Type;

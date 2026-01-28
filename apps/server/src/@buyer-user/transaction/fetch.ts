@@ -6,7 +6,7 @@ import { TransactionQuerySchema } from "~/@buyer-user/transaction/schema/Transac
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { TransactionSchema } from "./schema/TransactionSchema";
+import { TransactionSchema } from "~/@buyer-user/transaction/schema/TransactionSchema";
 
 export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 	const { buyerUserHono } = yield* RoutesContextFx;

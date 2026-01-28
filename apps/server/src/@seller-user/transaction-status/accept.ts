@@ -5,10 +5,10 @@ import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
 import { TransactionStatusSchema } from "~/@seller-user/transaction-status/schema/TransactionStatusSchema";
-import { transactionStatusAcceptFx } from "./fx/transactionStatusAcceptFx";
+import { transactionStatusAcceptFx } from "~/@seller-user/transaction-status/fx/transactionStatusAcceptFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { TransactionStatusAcceptSchema } from "./schema/TransactionStatusAcceptSchema";
+import { TransactionStatusAcceptSchema } from "~/@seller-user/transaction-status/schema/TransactionStatusAcceptSchema";
 
 export const withAcceptApiFx = Effect.fn("withAcceptApiFx")(function* () {
 	const { sellerUserHono } = yield* RoutesContextFx;

@@ -5,8 +5,8 @@ import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { categoryCountFx } from "./fx/categoryCountFx";
-import { CategoryCountQuerySchema } from "./schema/CategoryCountQuerySchema";
+import { categoryCountFx } from "~/@session/category/fx/categoryCountFx";
+import { CategoryCountQuerySchema } from "~/@session/category/schema/CategoryCountQuerySchema";
 
 export const withCategoryCountApiFx = Effect.fn("withCategoryCountApiFx")(function* () {
 	const { sessionHono } = yield* RoutesContextFx;

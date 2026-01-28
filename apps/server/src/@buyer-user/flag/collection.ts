@@ -5,9 +5,9 @@ import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
-import { flagCollectionFx } from "./fx/flagCollectionFx";
-import { FlagItemSchema } from "./schema/FlagItemSchema";
-import { FlagQuerySchema } from "./schema/FlagQuerySchema";
+import { flagCollectionFx } from "~/@buyer-user/flag/fx/flagCollectionFx";
+import { FlagItemSchema } from "~/@buyer-user/flag/schema/FlagItemSchema";
+import { FlagQuerySchema } from "~/@buyer-user/flag/schema/FlagQuerySchema";
 
 const CollectionSchema = withCollectionSchema({
 	schema: FlagItemSchema,

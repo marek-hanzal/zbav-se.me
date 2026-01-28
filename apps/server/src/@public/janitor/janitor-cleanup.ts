@@ -8,7 +8,7 @@ import { S3ContextLayer } from "~/@common/s3/context/S3ContextLayer";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { ServerS3Schema } from "~/schema/env/ServerS3Schema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { CleanupSchema } from "./schema/CleanupSchema";
+import { CleanupSchema } from "~/@public/janitor/schema/CleanupSchema";
 
 export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(function* () {
 	const { publicHono } = yield* RoutesContextFx;

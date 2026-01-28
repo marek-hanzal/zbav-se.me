@@ -5,9 +5,9 @@ import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
-import { ignoreCollectionFx } from "./fx/ignoreCollectionFx";
-import { IgnoreItemSchema } from "./schema/IgnoreItemSchema";
-import { IgnoreQuerySchema } from "./schema/IgnoreQuerySchema";
+import { ignoreCollectionFx } from "~/@buyer-user/ignore/fx/ignoreCollectionFx";
+import { IgnoreItemSchema } from "~/@buyer-user/ignore/schema/IgnoreItemSchema";
+import { IgnoreQuerySchema } from "~/@buyer-user/ignore/schema/IgnoreQuerySchema";
 
 const CollectionSchema = withCollectionSchema({
 	schema: IgnoreItemSchema,

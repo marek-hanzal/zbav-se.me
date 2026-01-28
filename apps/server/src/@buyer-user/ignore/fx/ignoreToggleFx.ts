@@ -4,8 +4,8 @@ import { listingFetchFx } from "~/@buyer-user/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/@buyer-session/listing-event/fx/listingEventCreateFx";
 import type { IgnoreToggleSchema } from "~/@buyer-user/ignore/schema/IgnoreToggleSchema";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { ignoreCreateFx } from "./ignoreCreateFx";
-import { ignoreDeleteFx } from "./ignoreDeleteFx";
+import { ignoreCreateFx } from "~/@buyer-user/ignore/fx/ignoreCreateFx";
+import { ignoreDeleteFx } from "~/@buyer-user/ignore/fx/ignoreDeleteFx";
 
 export namespace ignoreToggleFx {
 	export interface Props extends IgnoreToggleSchema.Type {

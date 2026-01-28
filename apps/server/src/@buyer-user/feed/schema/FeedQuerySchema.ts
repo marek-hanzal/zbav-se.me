@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { FeedFilterSchema } from "./FeedFilterSchema";
-import { FeedSortSchema } from "./FeedSortSchema";
+import { FeedFilterSchema } from "~/@buyer-user/feed/schema/FeedFilterSchema";
+import { FeedSortSchema } from "~/@buyer-user/feed/schema/FeedSortSchema";
 
 export const FeedQuerySchema = z
 	.object({

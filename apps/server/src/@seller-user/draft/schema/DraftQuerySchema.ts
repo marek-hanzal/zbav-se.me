@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { DraftFilterSchema } from "./DraftFilterSchema";
-import { DraftSortSchema } from "./DraftSortSchema";
+import { DraftFilterSchema } from "~/@seller-user/draft/schema/DraftFilterSchema";
+import { DraftSortSchema } from "~/@seller-user/draft/schema/DraftSortSchema";
 
 export const DraftQuerySchema = z
 	.object({

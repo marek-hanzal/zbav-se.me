@@ -5,9 +5,9 @@ import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
-import { galleryCollectionFx } from "./fx/galleryCollectionFx";
-import { GalleryItemSchema } from "./schema/GalleryItemSchema";
-import { GalleryQuerySchema } from "./schema/GalleryQuerySchema";
+import { galleryCollectionFx } from "~/@user/gallery/fx/galleryCollectionFx";
+import { GalleryItemSchema } from "~/@user/gallery/schema/GalleryItemSchema";
+import { GalleryQuerySchema } from "~/@user/gallery/schema/GalleryQuerySchema";
 
 const CollectionSchema = withCollectionSchema({
 	schema: GalleryItemSchema,

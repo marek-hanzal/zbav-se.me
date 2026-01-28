@@ -5,7 +5,7 @@ import type { MessageThreadPatchSchema } from "~/@user/message-thread/schema/Mes
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { messageThreadFetchFx } from "./messageThreadFetchFx";
+import { messageThreadFetchFx } from "~/@user/message-thread/fx/messageThreadFetchFx";
 
 export namespace messageThreadPatchFx {
 	export interface Props extends MessageThreadPatchSchema.Type {

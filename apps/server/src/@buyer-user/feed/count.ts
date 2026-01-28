@@ -5,8 +5,8 @@ import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { feedCountFx } from "./fx/feedCountFx";
-import { FeedCountQuerySchema } from "./schema/FeedCountQuerySchema";
+import { feedCountFx } from "~/@buyer-user/feed/fx/feedCountFx";
+import { FeedCountQuerySchema } from "~/@buyer-user/feed/schema/FeedCountQuerySchema";
 
 export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 	const { buyerUserHono } = yield* RoutesContextFx;

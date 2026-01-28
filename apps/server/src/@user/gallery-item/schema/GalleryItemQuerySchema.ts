@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { GalleryItemFilterSchema } from "./GalleryItemFilterSchema";
-import { GalleryItemSortSchema } from "./GalleryItemSortSchema";
+import { GalleryItemFilterSchema } from "~/@user/gallery-item/schema/GalleryItemFilterSchema";
+import { GalleryItemSortSchema } from "~/@user/gallery-item/schema/GalleryItemSortSchema";
 
 export const GalleryItemQuerySchema = z
 	.object({

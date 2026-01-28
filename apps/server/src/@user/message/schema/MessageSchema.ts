@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
-import { MessagePayloadSchema } from "./MessagePayloadSchema";
-import { MessageTypeEnumSchema } from "./MessageTypeEnumSchema";
+import { MessagePayloadSchema } from "~/@user/message/schema/MessagePayloadSchema";
+import { MessageTypeEnumSchema } from "~/@user/message/schema/MessageTypeEnumSchema";
 
 export const MessageSchema = z
 	.looseObject({

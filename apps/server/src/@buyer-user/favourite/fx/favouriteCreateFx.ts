@@ -4,7 +4,7 @@ import { Effect } from "effect";
 import type { FavouriteCreateSchema } from "~/@buyer-user/favourite/schema/FavouriteCreateSchema";
 import { feedFetchFx } from "~/@buyer-user/feed/fx/feedFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { favouriteFetchFx } from "./favouriteFetchFx";
+import { favouriteFetchFx } from "~/@buyer-user/favourite/fx/favouriteFetchFx";
 
 export namespace favouriteCreateFx {
 	export interface Props extends FavouriteCreateSchema.Type {

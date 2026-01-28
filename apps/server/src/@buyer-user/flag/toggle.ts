@@ -6,8 +6,8 @@ import { ListingSchema } from "~/@buyer-user/listing/schema/ListingSchema";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { flagToggleFx } from "./fx/flagToggleFx";
-import { FlagToggleSchema } from "./schema/FlagToggleSchema";
+import { flagToggleFx } from "~/@buyer-user/flag/fx/flagToggleFx";
+import { FlagToggleSchema } from "~/@buyer-user/flag/schema/FlagToggleSchema";
 
 export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
 	const { buyerUserHono } = yield* RoutesContextFx;

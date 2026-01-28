@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { ListingEventFilterSchema } from "./ListingEventFilterSchema";
-import { ListingEventSortSchema } from "./ListingEventSortSchema";
+import { ListingEventFilterSchema } from "~/@buyer-session/listing-event/schema/ListingEventFilterSchema";
+import { ListingEventSortSchema } from "~/@buyer-session/listing-event/schema/ListingEventSortSchema";
 
 export const ListingEventQuerySchema = z
 	.object({

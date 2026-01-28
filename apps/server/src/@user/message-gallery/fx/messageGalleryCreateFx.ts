@@ -5,7 +5,7 @@ import type { MessageGalleryCreateSchema } from "~/@user/message-gallery/schema/
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { messageGalleryFetchFx } from "./messageGalleryFetchFx";
+import { messageGalleryFetchFx } from "~/@user/message-gallery/fx/messageGalleryFetchFx";
 
 export namespace messageGalleryCreateFx {
 	export interface Props extends MessageGalleryCreateSchema.Type {

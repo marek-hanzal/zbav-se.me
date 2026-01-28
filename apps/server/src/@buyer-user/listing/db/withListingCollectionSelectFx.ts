@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { withListingSourceSelectFx } from "./withListingSourceSelectFx";
+import { withListingSourceSelectFx } from "~/@buyer-user/listing/db/withListingSourceSelectFx";
 
 export namespace withListingCollectionSelectFx {
 	export interface Props extends withListingSourceSelectFx.Props {}

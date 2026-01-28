@@ -4,9 +4,9 @@ import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { categoryFetchFx } from "./fx/categoryFetchFx";
-import { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
-import { CategorySchema } from "./schema/CategorySchema";
+import { categoryFetchFx } from "~/@session/category/fx/categoryFetchFx";
+import { CategoryQuerySchema } from "~/@session/category/schema/CategoryQuerySchema";
+import { CategorySchema } from "~/@session/category/schema/CategorySchema";
 
 export const withCategoryFetchApiFx = Effect.fn("withCategoryFetchApiFx")(function* () {
 	const { sessionHono } = yield* RoutesContextFx;

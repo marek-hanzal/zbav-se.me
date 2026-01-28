@@ -1,7 +1,7 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect } from "effect";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { HealthSchema } from "./schema/HealthSchema";
+import { HealthSchema } from "~/@public/health/schema/HealthSchema";
 
 export const withHealthEndpointFx = Effect.fn("withHealthEndpointFx")(function* () {
 	const { publicHono } = yield* RoutesContextFx;

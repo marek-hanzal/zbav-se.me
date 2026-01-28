@@ -3,7 +3,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import type { GalleryCreateSchema } from "../schema/GalleryCreateSchema";
+import type { GalleryCreateSchema } from "~/@user/gallery/schema/GalleryCreateSchema";
 
 export namespace galleryCreateFx {
 	export interface Props extends GalleryCreateSchema.Type {

@@ -8,7 +8,7 @@ import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCh
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
-import { MessageItemSchema } from "./schema/MessageItemSchema";
+import { MessageItemSchema } from "~/@user/message-thread/message/schema/MessageItemSchema";
 
 const ParamsSchema = z
 	.object({

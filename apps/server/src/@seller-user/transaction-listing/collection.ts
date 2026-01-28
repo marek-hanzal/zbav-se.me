@@ -7,7 +7,7 @@ import { TransactionListingQuerySchema } from "~/@seller-user/transaction-listin
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
-import { TransactionListingItemSchema } from "./schema/TransactionListingItemSchema";
+import { TransactionListingItemSchema } from "~/@seller-user/transaction-listing/schema/TransactionListingItemSchema";
 
 const CollectionSchema = withCollectionSchema({
 	schema: TransactionListingItemSchema,

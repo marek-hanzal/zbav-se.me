@@ -5,9 +5,9 @@ import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { feedPatchFx } from "./fx/feedPatchFx";
-import { FeedPatchSchema } from "./schema/FeedPatchSchema";
-import { FeedSchema } from "./schema/FeedSchema";
+import { feedPatchFx } from "~/@buyer-user/feed/fx/feedPatchFx";
+import { FeedPatchSchema } from "~/@buyer-user/feed/schema/FeedPatchSchema";
+import { FeedSchema } from "~/@buyer-user/feed/schema/FeedSchema";
 
 export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 	const { buyerUserHono } = yield* RoutesContextFx;

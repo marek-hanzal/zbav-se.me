@@ -2,7 +2,7 @@ import { embedMinHash } from "@use-pico/common/embedding";
 import { genId } from "@use-pico/common/gen-id";
 import type { Migration } from "kysely";
 import pgvector from "pgvector";
-import categoriesCsData from "./0001-category/categories.cs.json";
+import categoriesCsData from "~/database/migrations/0001-category/categories.cs.json";
 
 export const CategorySeedMigration: Migration = {
 	async up(db) {

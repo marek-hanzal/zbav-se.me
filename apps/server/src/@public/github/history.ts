@@ -5,7 +5,7 @@ import { DateTime } from "luxon";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerGithubSchema } from "~/schema/env/ServerGithubSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { GitHubHistorySchema } from "./schema/GitHubHistorySchema";
+import { GitHubHistorySchema } from "~/@public/github/schema/GitHubHistorySchema";
 
 const REPO = "marek-hanzal/zbav-se.me";
 

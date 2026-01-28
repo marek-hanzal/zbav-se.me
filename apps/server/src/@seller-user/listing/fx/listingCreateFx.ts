@@ -11,7 +11,7 @@ import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
-import type { ListingCreateSchema } from "../schema/ListingCreateSchema";
+import type { ListingCreateSchema } from "~/@seller-user/listing/schema/ListingCreateSchema";
 
 export namespace listingCreateFx {
 	export interface Props extends ListingCreateSchema.Type {

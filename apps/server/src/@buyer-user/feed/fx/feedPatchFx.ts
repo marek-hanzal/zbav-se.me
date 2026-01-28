@@ -4,7 +4,7 @@ import type { FeedFilterSchema } from "~/@buyer-user/feed/schema/FeedFilterSchem
 import type { FeedPatchSchema } from "~/@buyer-user/feed/schema/FeedPatchSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { feedFetchFx } from "./feedFetchFx";
+import { feedFetchFx } from "~/@buyer-user/feed/fx/feedFetchFx";
 
 export namespace feedPatchFx {
 	export interface Props extends FeedPatchSchema.Type {

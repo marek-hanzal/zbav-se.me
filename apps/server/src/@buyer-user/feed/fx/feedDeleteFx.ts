@@ -3,7 +3,7 @@ import type { FeedFilterSchema } from "~/@buyer-user/feed/schema/FeedFilterSchem
 import type { FeedQuerySchema } from "~/@buyer-user/feed/schema/FeedQuerySchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { feedFetchFx } from "./feedFetchFx";
+import { feedFetchFx } from "~/@buyer-user/feed/fx/feedFetchFx";
 
 export namespace feedDeleteFx {
 	export interface Props extends FeedQuerySchema.Type {

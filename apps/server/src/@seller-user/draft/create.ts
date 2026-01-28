@@ -6,8 +6,8 @@ import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { DraftSchema } from "~/@seller-user/draft/schema/DraftSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { draftCreateFx } from "./fx/draftCreateFx";
-import { DraftCreateSchema } from "./schema/DraftCreateSchema";
+import { draftCreateFx } from "~/@seller-user/draft/fx/draftCreateFx";
+import { DraftCreateSchema } from "~/@seller-user/draft/schema/DraftCreateSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 	const { sellerUserHono } = yield* RoutesContextFx;

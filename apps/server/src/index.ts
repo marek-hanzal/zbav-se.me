@@ -1,1 +1,1 @@
-export type { auth } from "./auth/auth";
+export type { auth } from "~/auth/auth";

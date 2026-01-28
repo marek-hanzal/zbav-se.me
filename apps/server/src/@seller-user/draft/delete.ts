@@ -4,9 +4,9 @@ import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { draftDeleteFx } from "./fx/draftDeleteFx";
-import { DraftQuerySchema } from "./schema/DraftQuerySchema";
-import { DraftSchema } from "./schema/DraftSchema";
+import { draftDeleteFx } from "~/@seller-user/draft/fx/draftDeleteFx";
+import { DraftQuerySchema } from "~/@seller-user/draft/schema/DraftQuerySchema";
+import { DraftSchema } from "~/@seller-user/draft/schema/DraftSchema";
 
 export const withDeleteApiFx = Effect.fn("withDeleteApiFx")(function* () {
 	const { sellerUserHono } = yield* RoutesContextFx;

@@ -6,8 +6,8 @@ import { FeedSchema } from "~/@buyer-user/feed/schema/FeedSchema";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { feedCreateFx } from "./fx/feedCreateFx";
-import { FeedCreateSchema } from "./schema/FeedCreateSchema";
+import { feedCreateFx } from "~/@buyer-user/feed/fx/feedCreateFx";
+import { FeedCreateSchema } from "~/@buyer-user/feed/schema/FeedCreateSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 	const { buyerUserHono } = yield* RoutesContextFx;

@@ -5,7 +5,7 @@ import type { MessagePackageCreateSchema } from "~/@user/message-package/schema/
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { messagePackageFetchFx } from "./messagePackageFetchFx";
+import { messagePackageFetchFx } from "~/@user/message-package/fx/messagePackageFetchFx";
 
 export namespace messagePackageCreateFx {
 	export interface Props extends MessagePackageCreateSchema.Type {

@@ -6,9 +6,9 @@ import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
-import { categoryCollectionFx } from "./fx/categoryCollectionFx";
-import { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
-import { CategorySchema } from "./schema/CategorySchema";
+import { categoryCollectionFx } from "~/@session/category/fx/categoryCollectionFx";
+import { CategoryQuerySchema } from "~/@session/category/schema/CategoryQuerySchema";
+import { CategorySchema } from "~/@session/category/schema/CategorySchema";
 
 const CollectionSchema = withCollectionSchema({
 	schema: CategorySchema,

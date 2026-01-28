@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { TransactionStatusFilterSchema } from "./TransactionStatusFilterSchema";
-import { TransactionStatusSortSchema } from "./TransactionStatusSortSchema";
+import { TransactionStatusFilterSchema } from "~/@session/transaction-status/schema/TransactionStatusFilterSchema";
+import { TransactionStatusSortSchema } from "~/@session/transaction-status/schema/TransactionStatusSortSchema";
 
 export const TransactionStatusQuerySchema = z
 	.looseObject({

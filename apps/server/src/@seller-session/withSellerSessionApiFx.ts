@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import type { NoticeSchema } from "~/schema/NoticeSchema";
-import { withListingApiFx } from "./listing/withListingApiFx";
+import { withListingApiFx } from "~/@seller-session/listing/withListingApiFx";
 
 export const withSellerSessionApiFx = Effect.fn("withSellerSessionApiFx")(function* () {
 	const { root, sellerSessionHono } = yield* RoutesContextFx;

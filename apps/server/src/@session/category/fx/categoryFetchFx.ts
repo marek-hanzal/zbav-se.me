@@ -1,9 +1,9 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { withCategoryQueryBuilderFx } from "../db/withCategoryQueryBuilderFx";
-import { withCategorySelectFx } from "../db/withCategorySelectFx";
-import type { CategoryFilterSchema } from "../schema/CategoryFilterSchema";
-import type { CategoryQuerySchema } from "../schema/CategoryQuerySchema";
+import { withCategoryQueryBuilderFx } from "~/@session/category/db/withCategoryQueryBuilderFx";
+import { withCategorySelectFx } from "~/@session/category/db/withCategorySelectFx";
+import type { CategoryFilterSchema } from "~/@session/category/schema/CategoryFilterSchema";
+import type { CategoryQuerySchema } from "~/@session/category/schema/CategoryQuerySchema";
 
 export namespace categoryFetchFx {
 	export interface Props extends CategoryQuerySchema.Type {

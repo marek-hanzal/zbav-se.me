@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { IgnoreFilterSchema } from "./IgnoreFilterSchema";
-import { IgnoreSortSchema } from "./IgnoreSortSchema";
+import { IgnoreFilterSchema } from "~/@buyer-user/ignore/schema/IgnoreFilterSchema";
+import { IgnoreSortSchema } from "~/@buyer-user/ignore/schema/IgnoreSortSchema";
 
 export const IgnoreQuerySchema = z
 	.object({

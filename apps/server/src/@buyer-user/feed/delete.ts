@@ -4,9 +4,9 @@ import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { feedDeleteFx } from "./fx/feedDeleteFx";
-import { FeedQuerySchema } from "./schema/FeedQuerySchema";
-import { FeedSchema } from "./schema/FeedSchema";
+import { feedDeleteFx } from "~/@buyer-user/feed/fx/feedDeleteFx";
+import { FeedQuerySchema } from "~/@buyer-user/feed/schema/FeedQuerySchema";
+import { FeedSchema } from "~/@buyer-user/feed/schema/FeedSchema";
 
 export const withDeleteApiFx = Effect.fn("withDeleteApiFx")(function* () {
 	const { buyerUserHono } = yield* RoutesContextFx;

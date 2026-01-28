@@ -5,8 +5,8 @@ import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { galleryCountFx } from "./fx/galleryCountFx";
-import { GalleryCountQuerySchema } from "./schema/GalleryCountQuerySchema";
+import { galleryCountFx } from "~/@user/gallery/fx/galleryCountFx";
+import { GalleryCountQuerySchema } from "~/@user/gallery/schema/GalleryCountQuerySchema";
 
 export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;

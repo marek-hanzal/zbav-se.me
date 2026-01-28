@@ -4,11 +4,11 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
-import { transactionStatusCloseFx } from "./fx/transactionStatusCloseFx";
+import { transactionStatusCloseFx } from "~/@buyer-user/transaction-status/fx/transactionStatusCloseFx";
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { TransactionStatusCloseSchema } from "./schema/TransactionStatusCloseSchema";
+import { TransactionStatusCloseSchema } from "~/@buyer-user/transaction-status/schema/TransactionStatusCloseSchema";
 
 export const withCloseApiFx = Effect.fn("withCloseApiFx")(function* () {
 	const { buyerUserHono } = yield* RoutesContextFx;

@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { MessagePackageFilterSchema } from "./MessagePackageFilterSchema";
-import { MessagePackageSortSchema } from "./MessagePackageSortSchema";
+import { MessagePackageFilterSchema } from "~/@user/message-package/schema/MessagePackageFilterSchema";
+import { MessagePackageSortSchema } from "~/@user/message-package/schema/MessagePackageSortSchema";
 
 export const MessagePackageQuerySchema = z
 	.object({

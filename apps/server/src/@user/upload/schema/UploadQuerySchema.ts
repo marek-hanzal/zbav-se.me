@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { UploadFilterSchema } from "~/@user/upload/schema/UploadFilterSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { UploadSortSchema } from "./UploadSortSchema";
+import { UploadSortSchema } from "~/@user/upload/schema/UploadSortSchema";
 
 export const UploadQuerySchema = z
 	.object({

@@ -5,7 +5,7 @@ import { listingCheckIfOwnFx } from "~/@buyer-user/listing/fx/listingCheckIfOwnF
 import type { ListingEventCreateSchema } from "~/@buyer-session/listing-event/schema/ListingEventCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { listingEventRateLimitFx } from "./listingEventRateLimitFx";
+import { listingEventRateLimitFx } from "~/@buyer-session/listing-event/fx/listingEventRateLimitFx";
 
 export namespace listingEventCreateFx {
 	export interface Props extends ListingEventCreateSchema.Type {

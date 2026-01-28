@@ -1,7 +1,7 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { Effect } from "effect";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { MigrationSchema } from "./schema/MigrationSchema";
+import { MigrationSchema } from "~/@public/migration/schema/MigrationSchema";
 
 export const withMigrationRunApiFx = Effect.fn("withMigrationRunApiFx")(function* () {
 	const { publicHono } = yield* RoutesContextFx;

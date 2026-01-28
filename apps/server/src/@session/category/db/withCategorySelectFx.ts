@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { withCategorySourceSelectFx } from "./withCategorySourceSelectFx";
+import { withCategorySourceSelectFx } from "~/@session/category/db/withCategorySourceSelectFx";
 
 export namespace withCategorySelectFx {
 	export interface Props extends withCategorySourceSelectFx.Props {}

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { favouriteFetchFx } from "./favouriteFetchFx";
+import { favouriteFetchFx } from "~/@buyer-user/favourite/fx/favouriteFetchFx";
 
 export namespace favouriteDeleteFx {
 	export interface Props {

@@ -6,8 +6,8 @@ import { ListingSchema } from "~/@buyer-user/listing/schema/ListingSchema";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { listingCreateFx } from "./fx/listingCreateFx";
-import { ListingCreateSchema } from "./schema/ListingCreateSchema";
+import { listingCreateFx } from "~/@seller-user/listing/fx/listingCreateFx";
+import { ListingCreateSchema } from "~/@seller-user/listing/schema/ListingCreateSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 	const { sellerUserHono } = yield* RoutesContextFx;

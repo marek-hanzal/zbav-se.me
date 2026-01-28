@@ -5,7 +5,7 @@ import type { MessagePersonalCreateSchema } from "~/@user/message-personal/schem
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { messagePersonalFetchFx } from "./messagePersonalFetchFx";
+import { messagePersonalFetchFx } from "~/@user/message-personal/fx/messagePersonalFetchFx";
 
 export namespace messagePersonalCreateFx {
 	export interface Props extends MessagePersonalCreateSchema.Type {

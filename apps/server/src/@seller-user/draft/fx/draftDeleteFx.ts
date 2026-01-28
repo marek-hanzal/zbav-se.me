@@ -3,7 +3,7 @@ import type { DraftFilterSchema } from "~/@seller-user/draft/schema/DraftFilterS
 import type { DraftQuerySchema } from "~/@seller-user/draft/schema/DraftQuerySchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { draftFetchFx } from "./draftFetchFx";
+import { draftFetchFx } from "~/@seller-user/draft/fx/draftFetchFx";
 
 export namespace draftDeleteFx {
 	export interface Props extends Omit<DraftQuerySchema.Type, "cursor" | "sort"> {

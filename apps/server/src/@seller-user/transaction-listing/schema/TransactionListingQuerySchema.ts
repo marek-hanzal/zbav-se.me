@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { TransactionListingFilterSchema } from "./TransactionListingFilterSchema";
-import { TransactionListingSortSchema } from "./TransactionListingSortSchema";
+import { TransactionListingFilterSchema } from "~/@seller-user/transaction-listing/schema/TransactionListingFilterSchema";
+import { TransactionListingSortSchema } from "~/@seller-user/transaction-listing/schema/TransactionListingSortSchema";
 
 export const TransactionListingQuerySchema = z
 	.looseObject({

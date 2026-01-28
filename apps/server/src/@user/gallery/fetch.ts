@@ -4,9 +4,9 @@ import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { galleryFetchFx } from "./fx/galleryFetchFx";
-import { GalleryQuerySchema } from "./schema/GalleryQuerySchema";
-import { GallerySchema } from "./schema/GallerySchema";
+import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
+import { GalleryQuerySchema } from "~/@user/gallery/schema/GalleryQuerySchema";
+import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 
 export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;

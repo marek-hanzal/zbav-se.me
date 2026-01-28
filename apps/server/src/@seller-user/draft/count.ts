@@ -5,8 +5,8 @@ import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { draftCountFx } from "./fx/draftCountFx";
-import { DraftCountQuerySchema } from "./schema/DraftCountQuerySchema";
+import { draftCountFx } from "~/@seller-user/draft/fx/draftCountFx";
+import { DraftCountQuerySchema } from "~/@seller-user/draft/schema/DraftCountQuerySchema";
 
 export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 	const { sellerUserHono } = yield* RoutesContextFx;

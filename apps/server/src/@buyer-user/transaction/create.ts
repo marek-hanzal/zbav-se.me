@@ -8,7 +8,7 @@ import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { TransactionCreateSchema } from "./schema/TransactionCreateSchema";
+import { TransactionCreateSchema } from "~/@buyer-user/transaction/schema/TransactionCreateSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 	const { buyerUserHono } = yield* RoutesContextFx;

@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { MessageTextFilterSchema } from "./MessageTextFilterSchema";
-import { MessageTextSortSchema } from "./MessageTextSortSchema";
+import { MessageTextFilterSchema } from "~/@user/message-text/schema/MessageTextFilterSchema";
+import { MessageTextSortSchema } from "~/@user/message-text/schema/MessageTextSortSchema";
 
 export const MessageTextQuerySchema = z
 	.object({

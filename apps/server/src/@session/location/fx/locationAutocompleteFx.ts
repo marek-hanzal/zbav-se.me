@@ -4,8 +4,8 @@ import { TextTooShortErrorFx } from "~/@session/location/error/TextTooShortError
 import type { LocationTableSchema } from "~/database/@table/LocationTableSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withLocationListFx } from "./withLocationListFx";
-import { withLocationRequestFx } from "./withLocationRequestFx";
+import { withLocationListFx } from "~/@session/location/fx/withLocationListFx";
+import { withLocationRequestFx } from "~/@session/location/fx/withLocationRequestFx";
 
 export namespace locationAutocompleteFx {
 	export interface Props {

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import type { TransactionStatusFilterSchema } from "~/@session/transaction-status/schema/TransactionStatusFilterSchema";
-import type { withTransactionStatusSelectFx } from "./withTransactionStatusSelectFx";
+import type { withTransactionStatusSelectFx } from "~/@session/transaction-status/db/withTransactionStatusSelectFx";
 
 export namespace withTransactionStatusQueryBuilderFx {
 	export interface Props {

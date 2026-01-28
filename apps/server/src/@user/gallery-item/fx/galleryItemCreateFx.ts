@@ -4,7 +4,7 @@ import { Effect } from "effect";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import type { GalleryItemCreateSchema } from "~/@user/gallery-item/schema/GalleryItemCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { galleryItemFetchFx } from "./galleryItemFetchFx";
+import { galleryItemFetchFx } from "~/@user/gallery-item/fx/galleryItemFetchFx";
 
 export namespace galleryItemCreateFx {
 	export interface Props extends GalleryItemCreateSchema.Type {

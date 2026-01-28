@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { MessageGalleryFilterSchema } from "./MessageGalleryFilterSchema";
-import { MessageGallerySortSchema } from "./MessageGallerySortSchema";
+import { MessageGalleryFilterSchema } from "~/@user/message-gallery/schema/MessageGalleryFilterSchema";
+import { MessageGallerySortSchema } from "~/@user/message-gallery/schema/MessageGallerySortSchema";
 
 export const MessageGalleryQuerySchema = z
 	.object({
