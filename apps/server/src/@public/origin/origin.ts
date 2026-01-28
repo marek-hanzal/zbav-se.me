@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
+import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerViteSchema } from "~/schema/env/ServerViteSchema";
 
 export const withOriginEndpointFx = Effect.fn("withOriginEndpointFx")(function* () {

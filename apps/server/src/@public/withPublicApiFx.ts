@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
+import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { withAuthApiFx } from "~/@public/auth/withAuthApiFx";
 import { withCorsApiFx } from "~/@public/cors/withCorsApiFx";
 import { withOpenApiApiFx } from "~/@public/open-api/withOpenApiApiFx";

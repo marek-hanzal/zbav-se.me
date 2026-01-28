@@ -22,16 +22,18 @@ The `@common` domain exists to:
 - **TransactionContextProvider** - Effect provider for transaction context
 - Used across `@buyer-user`, `@seller-user`, `@user`, and `@public` domains
 
-### Route Context
-- **RoutesContextFx** - Effect context for Hono route instances (root, public, session, user, buyer-user, seller-user, etc.)
-- **RoutesContextLayer** - Effect layer provider for routes context
-- **RoutesContextLayerFx** - Effect layer factory for routes context
-- Used across all domains to access Hono route instances for API registration
-
 ### Transaction Status Schemas
 - **TransactionStatusDisputeSchema** - Zod schema for disputing a transaction
 - **TransactionStatusRejectSchema** - Zod schema for rejecting a transaction
 - Used in `@user` and `@session` domains for transaction status operations
+
+### S3 Operations
+- **S3ContextFx** - Effect context for S3 configuration (API endpoint, credentials, bucket)
+- **S3ContextLayer** - Effect layer provider for S3 context
+- **S3ContextLayerFx** - Effect layer factory for S3 context
+- **s3ClientFx** - Effect function to create MinIO S3 client
+- **s3PreSignFx** - Effect function to generate pre-signed URLs for S3 uploads
+- Used in `@user` and `@public` domains for file upload operations
 
 ## Access Rules
 

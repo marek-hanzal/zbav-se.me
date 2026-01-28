@@ -1,7 +1,7 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
+import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { messageCollectionFx } from "~/@user/message/fx/messageCollectionFx";
 import { MessageQuerySchema } from "~/@user/message/schema/MessageQuerySchema";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
