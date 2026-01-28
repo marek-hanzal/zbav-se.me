@@ -1,11 +1,11 @@
 import { withMutation } from "@use-pico/client/mutation";
 import { withApi } from "@use-pico/common/api";
-import { apiTransactionStatusDispute } from "../../../api/user/sdk.gen";
+import { apiTransactionStatusDispute } from "../../../api/seller-user/sdk.gen";
 import type {
 	apiTransactionStatusDisputeError,
 	tApiTransactionStatusDisputeResponse,
 	tTransactionStatusDispute,
-} from "../../../api/user/types.gen";
+} from "../../../api/seller-user/types.gen";
 
 export const withTransactionStatusDisputeMutation = withMutation<
 	tTransactionStatusDispute,

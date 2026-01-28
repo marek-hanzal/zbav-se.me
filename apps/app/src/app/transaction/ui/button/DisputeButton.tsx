@@ -2,7 +2,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
-import { withTransactionStatusDisputeMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
+import { withTransactionStatusDisputeMutation as withBuyerTransactionStatusDisputeMutation } from "@zbav-se.me/sdk/mutation/buyer-user/transaction";
+import { withTransactionStatusDisputeMutation as withSellerTransactionStatusDisputeMutation } from "@zbav-se.me/sdk/mutation/seller-user/transaction-status";
 import { withTransactionFetchQuery as withBuyerTransactionFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
 import { withTransactionFetchQuery as withSellerTransactionFetchQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
@@ -19,7 +20,9 @@ export namespace DisputeButton {
 export const DisputeButton: FC<DisputeButton.Props> = ({ transaction, ...props }) => {
 	const queryClient = useQueryClient();
 	const side = useSide();
-	const mutation = withTransactionStatusDisputeMutation.useMutation();
+	const buyerMutation = withBuyerTransactionStatusDisputeMutation.useMutation();
+	const sellerMutation = withSellerTransactionStatusDisputeMutation.useMutation();
+	const mutation = side === "buyer" ? buyerMutation : sellerMutation;
 
 	return (
 		<ConfirmButton

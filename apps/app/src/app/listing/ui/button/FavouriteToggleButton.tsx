@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { FavouriteIcon, FavouriteOffIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { withFavouriteToggleMutation } from "@zbav-se.me/sdk/mutation/buyer-user/favourite";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-session/listing";
+import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { withFeedFavouriteCollectionQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
 

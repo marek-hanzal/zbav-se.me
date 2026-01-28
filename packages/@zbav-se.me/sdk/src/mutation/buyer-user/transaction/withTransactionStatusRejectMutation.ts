@@ -1,11 +1,11 @@
 import { withMutation } from "@use-pico/client/mutation";
 import { withApi } from "@use-pico/common/api";
-import { apiTransactionStatusReject } from "../../../api/user/sdk.gen";
+import { apiTransactionStatusReject } from "../../../api/buyer-user/sdk.gen";
 import type {
 	apiTransactionStatusRejectError,
 	tApiTransactionStatusRejectResponse,
 	tTransactionStatusReject,
-} from "../../../api/user/types.gen";
+} from "../../../api/buyer-user/types.gen";
 import { withTransactionFetchQuery } from "../../../query/buyer-user/transaction/withTransactionFetchQuery";
 
 export const withTransactionStatusRejectMutation = withMutation<

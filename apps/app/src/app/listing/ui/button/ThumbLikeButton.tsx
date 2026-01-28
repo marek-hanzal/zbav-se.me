@@ -3,7 +3,7 @@ import { LikeIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { withThumbCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/thumb";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-session/listing";
+import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import type { FC } from "react";
 
 export namespace ThumbLikeButton {

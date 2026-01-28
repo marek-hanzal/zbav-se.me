@@ -5,11 +5,11 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-session";
+import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import {
 	withListingCollectionQuery,
 	withListingFetchQuery,
-} from "@zbav-se.me/sdk/query/buyer-session/listing";
+} from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { type FC, type ReactNode, useEffect, useRef } from "react";
 import { Hero } from "~/app/listing/ui/Hero";
 

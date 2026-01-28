@@ -10,7 +10,7 @@ import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
-import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/buyer-session/listing";
+import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon, FirstIcon } from "@zbav-se.me/ui/icon";

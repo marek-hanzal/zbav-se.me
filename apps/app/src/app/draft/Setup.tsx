@@ -5,7 +5,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { View } from "@use-pico/client/ui/view";
 import { translator } from "@use-pico/common/translator";
-import type { tListing } from "@zbav-se.me/sdk/api/buyer-session";
+import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
