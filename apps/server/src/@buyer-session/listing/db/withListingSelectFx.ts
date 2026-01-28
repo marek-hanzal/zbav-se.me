@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
-import type { ThumbEnumSchema } from "~/@buyer-user/thumb/schema/ThumbEnumSchema";
+import type { ThumbEnumSchema } from "~/database/@enum/ThumbEnumSchema";
 import { withGallerySelectFx } from "~/@user/gallery/db/withGallerySelectFx";
 import type { CategoryTableSchema } from "~/database/@table/CategoryTableSchema";
 import type { LocationTableSchema } from "~/database/@table/LocationTableSchema";
