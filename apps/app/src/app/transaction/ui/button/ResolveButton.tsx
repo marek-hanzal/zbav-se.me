@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@use-pico/client/ui/button";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
 import { withTransactionStatusResolveMutation } from "@zbav-se.me/sdk/mutation/seller-user/transaction-status";
-import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
+import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
