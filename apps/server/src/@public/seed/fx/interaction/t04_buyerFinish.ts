@@ -3,10 +3,10 @@ import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { match } from "ts-pattern";
+import { transactionCollectionFx } from "~/@buyer-user/transaction/fx/transactionCollectionFx";
 import { transactionStatusCloseFx } from "~/@session/transaction-status/fx/transactionStatusCloseFx";
 import { transactionStatusFetchFx } from "~/@session/transaction-status/fx/transactionStatusFetchFx";
 import { transactionStatusSuccessFx } from "~/@session/transaction-status/fx/transactionStatusSuccessFx";
-import { transactionCollectionFx } from "~/@buyer-user/transaction/fx/transactionCollectionFx";
 
 export namespace t04_buyerFinish {
 	export interface Props {
