@@ -13,7 +13,6 @@ import { UploadSchema } from "./schema/UploadSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;
-
 	userHono.openapi(
 		createRoute({
 			method: "post",
