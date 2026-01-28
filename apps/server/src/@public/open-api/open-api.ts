@@ -6,16 +6,186 @@ import { ServerViteSchema } from "~/schema/env/ServerViteSchema";
 
 const docsUrl = "/v3/api-docs";
 
-const tags: Record<string, { name: string; description: string }> = {
-    "Misc": {
-        name: "Misc",
-        description: "Miscellaneous endpoints for system operations",
-    },
-    "GitHub": {
-        name: "GitHub",
-        description: "GitHub commit history synchronization",
-    },
+const tagsRegistry: Record<
+	string,
+	{
+		name: string;
+		description: string;
+	}
+> = {
+	Misc: {
+		name: "Misc",
+		description: "Miscellaneous endpoints for system operations",
+	},
+	GitHub: {
+		name: "GitHub",
+		description: "GitHub commit history synchronization",
+	},
+	Janitor: {
+		name: "Janitor",
+		description: "System cleanup and maintenance operations",
+	},
+	Cron: {
+		name: "Cron",
+		description: "Scheduled cron job endpoints",
+	},
+	Category: {
+		name: "Category",
+		description: "Category queries",
+	},
+	Location: {
+		name: "Location",
+		description: "Location queries and autocomplete",
+	},
+	Upload: {
+		name: "Upload",
+		description: "Upload file queries",
+	},
+	Gallery: {
+		name: "Gallery",
+		description: "Gallery management for images",
+	},
+	"Message Thread": {
+		name: "Message Thread",
+		description: "Message thread management",
+	},
+	S3: {
+		name: "S3",
+		description: "S3 pre-signed URL generation for direct uploads",
+	},
+	"Transaction Message Gallery": {
+		name: "Transaction Message Gallery",
+		description: "Gallery/image messages within transactions",
+	},
+	"Transaction Message Location": {
+		name: "Transaction Message Location",
+		description: "Location messages within transactions",
+	},
+	"Transaction Message Package": {
+		name: "Transaction Message Package",
+		description: "Package delivery information messages within transactions",
+	},
+	"Transaction Message Personal": {
+		name: "Transaction Message Personal",
+		description: "Personal contact information messages within transactions",
+	},
+	"Transaction Message Text": {
+		name: "Transaction Message Text",
+		description: "Text messages within transactions",
+	},
+	"Transaction Status": {
+		name: "Transaction Status",
+		description: "Transaction status management",
+	},
+	"User Ex": {
+		name: "User Ex",
+		description: "Extended user information management",
+	},
+	Draft: {
+		name: "Draft",
+		description: "Draft is the base (kinda template) for all listings",
+	},
+	"Draft Gallery": {
+		name: "Draft Gallery",
+		description: "Gallery management for draft listings",
+	},
+	Listing: {
+		name: "Listing",
+		description: "Listing information and management",
+	},
+	"Transaction Listing": {
+		name: "Transaction Listing",
+		description: "Listings that have transactions",
+	},
+	"User Event Seller": {
+		name: "User Event Seller",
+		description: "Seller event metrics and analytics",
+	},
+	Feed: {
+		name: "Feed",
+		description: "Feed is user setup (query) for listings",
+	},
+	"Feed Favourite": {
+		name: "Feed Favourite",
+		description: "Feed Favourite is the collection of listings that are favourite",
+	},
+	"Feed Gallery": {
+		name: "Feed Gallery",
+		description: "Gallery management for feed listings",
+	},
+	Favourite: {
+		name: "Favourite",
+		description: "Favourite listing management",
+	},
+	Flag: {
+		name: "Flag",
+		description: "Listing flagging management",
+	},
+	Ignore: {
+		name: "Ignore",
+		description: "Listing ignore management",
+	},
+	Thumb: {
+		name: "Thumb",
+		description: "Thumb (like) management for listings",
+	},
+	Transaction: {
+		name: "Transaction",
+		description: "Transaction management between buyer and seller",
+	},
+	"User Event Buyer": {
+		name: "User Event Buyer",
+		description: "Buyer event metrics and analytics",
+	},
+	"Listing Event": {
+		name: "Listing Event",
+		description: "Listing event tracking and analytics",
+	},
 } as const;
+
+const extractTagsFromOpenApiDocument = (
+	doc: ReturnType<OpenAPIHono["getOpenAPI31Document"]>,
+): Array<{
+	name: string;
+	description: string;
+}> => {
+	const usedTags = new Set<string>();
+
+	if (doc.paths) {
+		for (const pathItem of Object.values(doc.paths)) {
+			if (!pathItem) continue;
+			const operations = [
+				pathItem.get,
+				pathItem.post,
+				pathItem.put,
+				pathItem.patch,
+				pathItem.delete,
+				pathItem.head,
+				pathItem.options,
+			].filter(Boolean);
+
+			for (const operation of operations) {
+				if (operation?.tags) {
+					for (const tag of operation.tags) {
+						usedTags.add(tag);
+					}
+				}
+			}
+		}
+	}
+
+	return Array.from(usedTags)
+		.map((tagName) => tagsRegistry[tagName])
+		.filter(
+			(
+				tag,
+			): tag is {
+				name: string;
+				description: string;
+			} => tag !== undefined,
+		)
+		.sort((a, b) => a.name.localeCompare(b.name));
+};
 
 export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function* () {
 	const {
@@ -99,14 +269,20 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 	) => {
 		const tmp = new OpenAPIHono();
 		tmp.route(mount, app);
-		return tmp.getOpenAPI31Document({
+		const docWithoutTags = tmp.getOpenAPI31Document({
 			...opts,
+			tags: undefined,
 			servers: [
 				{
 					url: apiBase,
 				},
 			],
 		});
+		const extractedTags = extractTagsFromOpenApiDocument(docWithoutTags);
+		return {
+			...docWithoutTags,
+			tags: extractedTags,
+		};
 	};
 
 	let cache: null | {
@@ -133,24 +309,6 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 					description: "Public API for the zbav-se.me app",
 				},
 				security: [],
-				tags: [
-					{
-						name: "Misc",
-						description: "Miscellaneous endpoints for system operations",
-					},
-					{
-						name: "GitHub",
-						description: "GitHub commit history synchronization",
-					},
-					{
-						name: "Janitor",
-						description: "System cleanup and maintenance operations",
-					},
-					{
-						name: "Cron",
-						description: "Scheduled cron job endpoints",
-					},
-				],
 			}),
 
 			session: docWithMount("/api/session", sessionHono, {
@@ -161,20 +319,6 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 					description: "Auth-required API, but open to any user without restriction",
 				},
 				...cookieAuth,
-				tags: [
-					{
-						name: "Category",
-						description: "Category queries",
-					},
-					{
-						name: "Location",
-						description: "Location queries and autocomplete",
-					},
-					{
-						name: "Upload",
-						description: "Upload file queries",
-					},
-				],
 			}),
 
 			user: docWithMount("/api/user", userHono, {
@@ -185,53 +329,6 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 					description: "API related to the user, needs user's context (private data).",
 				},
 				...cookieAuth,
-				tags: [
-					{
-						name: "Gallery",
-						description: "Gallery management for images",
-					},
-					{
-						name: "Message Thread",
-						description: "Message thread management",
-					},
-					{
-						name: "S3",
-						description: "S3 pre-signed URL generation for direct uploads",
-					},
-					{
-						name: "Transaction Message Gallery",
-						description: "Gallery/image messages within transactions",
-					},
-					{
-						name: "Transaction Message Location",
-						description: "Location messages within transactions",
-					},
-					{
-						name: "Transaction Message Package",
-						description: "Package delivery information messages within transactions",
-					},
-					{
-						name: "Transaction Message Personal",
-						description: "Personal contact information messages within transactions",
-					},
-					{
-						name: "Transaction Message Text",
-						description: "Text messages within transactions",
-					},
-					{
-						name: "Transaction Status",
-						description:
-							"Transaction status management (reject, dispute)",
-					},
-					{
-						name: "Upload",
-						description: "Upload file management",
-					},
-					{
-						name: "User Ex",
-						description: "Extended user information management",
-					},
-				],
 			}),
 
 			sellerUser: docWithMount("/api/seller-user", sellerUserHono, {
@@ -243,33 +340,6 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 						"Private API for seller - requires authentication and access to user's private data",
 				},
 				...cookieAuth,
-				tags: [
-					{
-						name: "Draft",
-						description: "Draft is the base (kinda template) for all listings",
-					},
-					{
-						name: "Draft Gallery",
-						description: "Gallery management for draft listings",
-					},
-					{
-						name: "Listing",
-						description: "Listing creation and management",
-					},
-					{
-						name: "Transaction Listing",
-						description: "Listings that have transactions",
-					},
-					{
-						name: "Transaction Status",
-						description:
-							"Transaction status management (accept, resolve)",
-					},
-					{
-						name: "User Event Seller",
-						description: "Seller event metrics and analytics",
-					},
-				],
 			}),
 
 			sellerSession: docWithMount("/api/seller-session", sellerSessionHono, {
@@ -281,12 +351,6 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 						"Open API for seller for authenticated users - requires session, but data is public",
 				},
 				...cookieAuth,
-				tags: [
-					{
-						name: "Listing",
-						description: "Listing information and seller details",
-					},
-				],
 			}),
 
 			buyerUser: docWithMount("/api/buyer-user", buyerUserHono, {
@@ -298,50 +362,6 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 						"Private API for buyer - requires authentication and access to user's private data",
 				},
 				...cookieAuth,
-				tags: [
-					{
-						name: "Feed",
-						description: "Feed is user setup (query) for listings",
-					},
-					{
-						name: "Feed Favourite",
-						description:
-							"Feed Favourite is the collection of listings that are favourite",
-					},
-					{
-						name: "Feed Gallery",
-						description: "Gallery management for feed listings",
-					},
-					{
-						name: "Favourite",
-						description: "Favourite listing management",
-					},
-					{
-						name: "Flag",
-						description: "Listing flagging management",
-					},
-					{
-						name: "Ignore",
-						description: "Listing ignore management",
-					},
-					{
-						name: "Thumb",
-						description: "Thumb (like) management for listings",
-					},
-					{
-						name: "Transaction",
-						description: "Transaction management between buyer and seller",
-					},
-					{
-						name: "Transaction Status",
-						description:
-							"Transaction status management (success, close)",
-					},
-					{
-						name: "User Event Buyer",
-						description: "Buyer event metrics and analytics",
-					},
-				],
 			}),
 
 			buyerSession: docWithMount("/api/buyer-session", buyerSessionHono, {
@@ -353,20 +373,6 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 						"Open API for buyer for authenticated users - requires session, but data is public",
 				},
 				...cookieAuth,
-				tags: [
-					{
-						name: "Listing",
-						description: "Listing information and queries",
-					},
-					{
-						name: "Listing Event",
-						description: "Listing event tracking and analytics",
-					},
-					{
-						name: "Transaction",
-						description: "Transaction information and buyer details",
-					},
-				],
 			}),
 		};
 
