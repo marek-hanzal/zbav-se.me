@@ -6,6 +6,17 @@ import { ServerViteSchema } from "~/schema/env/ServerViteSchema";
 
 const docsUrl = "/v3/api-docs";
 
+const tags: Record<string, { name: string; description: string }> = {
+    "Misc": {
+        name: "Misc",
+        description: "Miscellaneous endpoints for system operations",
+    },
+    "GitHub": {
+        name: "GitHub",
+        description: "GitHub commit history synchronization",
+    },
+} as const;
+
 export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function* () {
 	const {
 		root,
@@ -163,10 +174,6 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 						name: "Upload",
 						description: "Upload file queries",
 					},
-					{
-						name: "Listing",
-						description: "Listing information and seller details",
-					},
 				],
 			}),
 
@@ -180,94 +187,49 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 				...cookieAuth,
 				tags: [
 					{
-						name: "Draft",
-						description: "Draft is the base (kinda template) for all listings",
-					},
-					{
-						name: "Listing",
-						description: "Listing is the base entity to work with in the app",
-					},
-					{
-						name: "Favourite",
-						description: "Favourite listing management",
-					},
-					{
-						name: "Feed",
-						description: "Feed is user setup (query) for listings",
-					},
-					{
-						name: "Feed Favourite",
-						description:
-							"Feed Favourite is the collection of listings that are favourite",
-					},
-					{
-						name: "Flag",
-						description: "Listing flagging management",
-					},
-					{
-						name: "Transaction",
-						description: "Transaction management between buyer and seller",
-					},
-					{
-						name: "Transaction Listing",
-						description: "Listings that have transactions",
-					},
-					{
-						name: "Transaction Status",
-						description:
-							"Transaction status management (accept, reject, resolve, etc.)",
-					},
-					{
-						name: "Transaction Message Text",
-						description: "Text messages within transactions",
-					},
-					{
-						name: "Transaction Message Personal",
-						description: "Personal contact information messages within transactions",
-					},
-					{
-						name: "Transaction Message Package",
-						description: "Package delivery information messages within transactions",
-					},
-					{
-						name: "Transaction Message Location",
-						description: "Location messages within transactions",
-					},
-					{
-						name: "Transaction Message Gallery",
-						description: "Gallery/image messages within transactions",
-					},
-					{
 						name: "Gallery",
 						description: "Gallery management for images",
-					},
-					{
-						name: "Ignore",
-						description: "Listing ignore management",
 					},
 					{
 						name: "Message Thread",
 						description: "Message thread management",
 					},
 					{
-						name: "Upload",
-						description: "Upload file management",
-					},
-					{
 						name: "S3",
 						description: "S3 pre-signed URL generation for direct uploads",
 					},
 					{
+						name: "Transaction Message Gallery",
+						description: "Gallery/image messages within transactions",
+					},
+					{
+						name: "Transaction Message Location",
+						description: "Location messages within transactions",
+					},
+					{
+						name: "Transaction Message Package",
+						description: "Package delivery information messages within transactions",
+					},
+					{
+						name: "Transaction Message Personal",
+						description: "Personal contact information messages within transactions",
+					},
+					{
+						name: "Transaction Message Text",
+						description: "Text messages within transactions",
+					},
+					{
+						name: "Transaction Status",
+						description:
+							"Transaction status management (reject, dispute)",
+					},
+					{
+						name: "Upload",
+						description: "Upload file management",
+					},
+					{
 						name: "User Ex",
 						description: "Extended user information management",
-					},
-					{
-						name: "Thumb",
-						description: "Thumb (like) management for listings",
-					},
-					{
-						name: "Listing Event",
-						description: "Listing event tracking and analytics",
 					},
 				],
 			}),
@@ -282,6 +244,27 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 				},
 				...cookieAuth,
 				tags: [
+					{
+						name: "Draft",
+						description: "Draft is the base (kinda template) for all listings",
+					},
+					{
+						name: "Draft Gallery",
+						description: "Gallery management for draft listings",
+					},
+					{
+						name: "Listing",
+						description: "Listing creation and management",
+					},
+					{
+						name: "Transaction Listing",
+						description: "Listings that have transactions",
+					},
+					{
+						name: "Transaction Status",
+						description:
+							"Transaction status management (accept, resolve)",
+					},
 					{
 						name: "User Event Seller",
 						description: "Seller event metrics and analytics",
@@ -298,7 +281,12 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 						"Open API for seller for authenticated users - requires session, but data is public",
 				},
 				...cookieAuth,
-				tags: [],
+				tags: [
+					{
+						name: "Listing",
+						description: "Listing information and seller details",
+					},
+				],
 			}),
 
 			buyerUser: docWithMount("/api/buyer-user", buyerUserHono, {
@@ -311,6 +299,44 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 				},
 				...cookieAuth,
 				tags: [
+					{
+						name: "Feed",
+						description: "Feed is user setup (query) for listings",
+					},
+					{
+						name: "Feed Favourite",
+						description:
+							"Feed Favourite is the collection of listings that are favourite",
+					},
+					{
+						name: "Feed Gallery",
+						description: "Gallery management for feed listings",
+					},
+					{
+						name: "Favourite",
+						description: "Favourite listing management",
+					},
+					{
+						name: "Flag",
+						description: "Listing flagging management",
+					},
+					{
+						name: "Ignore",
+						description: "Listing ignore management",
+					},
+					{
+						name: "Thumb",
+						description: "Thumb (like) management for listings",
+					},
+					{
+						name: "Transaction",
+						description: "Transaction management between buyer and seller",
+					},
+					{
+						name: "Transaction Status",
+						description:
+							"Transaction status management (success, close)",
+					},
 					{
 						name: "User Event Buyer",
 						description: "Buyer event metrics and analytics",
@@ -327,7 +353,20 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 						"Open API for buyer for authenticated users - requires session, but data is public",
 				},
 				...cookieAuth,
-				tags: [],
+				tags: [
+					{
+						name: "Listing",
+						description: "Listing information and queries",
+					},
+					{
+						name: "Listing Event",
+						description: "Listing event tracking and analytics",
+					},
+					{
+						name: "Transaction",
+						description: "Transaction information and buyer details",
+					},
+				],
 			}),
 		};
 
