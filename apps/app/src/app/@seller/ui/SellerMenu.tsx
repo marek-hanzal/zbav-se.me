@@ -4,7 +4,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import { withDraftCollectionQuery } from "@zbav-se.me/sdk/query/user/draft";
+import { withDraftCollectionQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { DraftIcon, ListingIcon, MessageIcon } from "@zbav-se.me/ui/icon";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import { useRef } from "react";

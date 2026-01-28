@@ -1,7 +1,7 @@
 import { SettingsIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import type { StateType } from "@use-pico/common/type";
-import type { tFeed } from "@zbav-se.me/sdk/api/user";
+import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { type FC, useEffect } from "react";
 
 export namespace SetupButton {

@@ -1,8 +1,8 @@
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/user";
-import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
+import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
+import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
+import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";

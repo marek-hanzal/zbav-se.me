@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
 export const GalleryItemCreateSchema = z
-	.object({
+	.looseObject({
 		galleryId: z.string().openapi({
 			description: "ID of the gallery this item belongs to",
 		}),
@@ -12,6 +12,7 @@ export const GalleryItemCreateSchema = z
 			description: "Sort order of the image in the gallery",
 		}),
 	})
+	.strip()
 	.openapi("GalleryItemCreate", {
 		description: "Data for creating a new gallery item",
 	});
@@ -19,5 +20,5 @@ export const GalleryItemCreateSchema = z
 export type GalleryItemCreateSchema = typeof GalleryItemCreateSchema;
 
 export namespace GalleryItemCreateSchema {
-	export type Type = z.infer<typeof GalleryItemCreateSchema>;
+	export type Type = z.infer<GalleryItemCreateSchema>;
 }

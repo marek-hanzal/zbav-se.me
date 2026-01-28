@@ -1,8 +1,8 @@
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Mx } from "@use-pico/client/ui/mx";
 import { translator } from "@use-pico/common/translator";
-import { withFlagToggleMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { withFlagToggleMutation } from "@zbav-se.me/sdk/mutation/buyer-user/flag";
+import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-session/listing";
 import { FlagIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
 

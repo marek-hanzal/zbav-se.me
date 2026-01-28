@@ -11,12 +11,12 @@
 		"@use-pico/client": "workspace:*",
 		"@use-pico/common": "workspace:*",
 		"@use-pico/server": "workspace:*",
-		"axios": "1.13.2",
-		"zod": "4.3.5"
+		"axios": "1.13.3",
+		"zod": "4.3.6"
 	},
 	"devDependencies": {
-		"@hey-api/openapi-ts": "0.90.6",
-		"@types/node": "25.0.9",
+		"@hey-api/openapi-ts": "0.90.10",
+		"@types/node": "25.0.10",
 		"@typescript/native-preview": "7.0.0-dev.20260120.1",
 		"@use-pico/tsconfig": "5.0.0",
 		"typescript": "5.9.3",

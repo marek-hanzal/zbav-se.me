@@ -2,17 +2,16 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { MessageLocationSchema } from "~/app/message-location/schema/MessageLocationSchema";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
-import { transactionMessageLocationCreateFx } from "~/app/transaction-message-location/fx/transactionMessageLocationCreateFx";
+import { TransactionContextProvider } from "~/@buyer-user/transaction/context/TransactionContextFx";
+import { MessageLocationSchema } from "~/@user/message-location/schema/MessageLocationSchema";
+import { transactionMessageLocationCreateFx } from "~/@user/transaction-message-location/fx/transactionMessageLocationCreateFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionMessageLocationCreateSchema } from "./schema/TransactionMessageLocationCreateSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;
-
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -73,9 +72,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				},
 			},
 			tags: [
-				"transaction-message-location",
-				"user",
+				"Transaction Message Location",
 			],
+			summary: "Create a location message for a transaction",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
@@ -87,7 +86,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 						dataFx: transactionMessageLocationCreateFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<MessageLocationSchema.Type, any, any>,
 					}),
 					200,
 				);

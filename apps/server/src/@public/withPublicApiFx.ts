@@ -1,6 +1,10 @@
 import { Effect } from "effect";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { withAuthApiFx } from "~/@public/auth/withAuthApiFx";
+import { withCorsApiFx } from "~/@public/cors/withCorsApiFx";
+import { withOpenApiApiFx } from "~/@public/open-api/withOpenApiApiFx";
+import { withOriginApiFx } from "~/@public/origin/withOriginApiFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { withCronApiFx } from "./cron/withCronApiFx";
 import { withGithubApiFx } from "./github/withGithubApiFx";
 import { withHealthApiFx } from "./health/withHealthApiFx";
@@ -18,11 +22,15 @@ export const withPublicApiFx = Effect.fn("withPublicApiFx")(function* () {
 	});
 
 	yield* Effect.all([
+		withAuthApiFx(),
+		withCorsApiFx(),
 		withCronApiFx(),
 		withGithubApiFx(),
 		withHealthApiFx(),
 		withJanitorApiFx(),
 		withMigrationApiFx(),
+		withOpenApiApiFx(),
+		withOriginApiFx(),
 		withSeedApiFx(),
 	]);
 

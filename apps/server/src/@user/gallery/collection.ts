@@ -1,18 +1,18 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { galleryCollectionFx } from "~/app/gallery/fx/galleryCollectionFx";
-import { GalleryQuerySchema } from "~/app/gallery/schema/GalleryQuerySchema";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
-import { GallerySchema } from "./schema/GallerySchema";
+import { galleryCollectionFx } from "./fx/galleryCollectionFx";
+import { GalleryItemSchema } from "./schema/GalleryItemSchema";
+import { GalleryQuerySchema } from "./schema/GalleryQuerySchema";
 
 const CollectionSchema = withCollectionSchema({
-	schema: GallerySchema,
-	type: "GalleryCollection",
-	description: "Collection of galleries",
+	schema: GalleryItemSchema,
+	type: "GalleryItemSchema",
+	description: "Collection of gallery items",
 });
 
 export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* () {
@@ -51,15 +51,15 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 				},
 			},
 			tags: [
-				"gallery",
-				"user",
+				"Gallery",
 			],
+			summary: "Fetch a collection of galleries based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<withCollectionSchema.Type<GallerySchema>, 200>(
+				return c.json<withCollectionSchema.Type<GalleryItemSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: galleryCollectionFx({
@@ -67,7 +67,11 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 							scope: {
 								userId: user.id,
 							},
-						}),
+						}) satisfies Effect.Effect<
+							withCollectionSchema.Type<GalleryItemSchema>,
+							any,
+							any
+						>,
 					}),
 					200,
 				);

@@ -1,6 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect } from "effect";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { HealthSchema } from "./schema/HealthSchema";
 
 export const withHealthEndpointFx = Effect.fn("withHealthEndpointFx")(function* () {
@@ -25,8 +25,7 @@ export const withHealthEndpointFx = Effect.fn("withHealthEndpointFx")(function* 
 			},
 			security: [],
 			tags: [
-				"misc",
-				"public",
+				"Misc",
 			],
 		}),
 		(c) => {

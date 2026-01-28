@@ -2,7 +2,7 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { ServerGithubSchema } from "~/schema/env/ServerGithubSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { GitHubHistorySchema } from "./schema/GitHubHistorySchema";
@@ -61,8 +61,7 @@ export const withHistoryApiFx = Effect.fn("withHistoryApiFx")(function* () {
 			},
 			security: [],
 			tags: [
-				"github",
-				"public",
+				"GitHub",
 			],
 		}),
 		async (c) => {

@@ -6,7 +6,6 @@ export const withHono = () => {
 	return new OpenAPIHono<{
 		Variables: {
 			user: auth.User | null;
-			session: auth.Session | null;
 			kysely: KyselyContext;
 		};
 	}>();

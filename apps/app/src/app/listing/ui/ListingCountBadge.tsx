@@ -3,8 +3,8 @@ import { Icon, SpinnerIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
-import { withListingCountQuery } from "@zbav-se.me/sdk/query/user";
+import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-session";
+import { withListingCountQuery } from "@zbav-se.me/sdk/query/buyer-session/listing";
 import { ListingIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 

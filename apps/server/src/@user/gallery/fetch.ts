@@ -1,11 +1,11 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { galleryFetchFx } from "~/app/gallery/fx/galleryFetchFx";
-import { GalleryQuerySchema } from "~/app/gallery/schema/GalleryQuerySchema";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
+import { galleryFetchFx } from "./fx/galleryFetchFx";
+import { GalleryQuerySchema } from "./schema/GalleryQuerySchema";
 import { GallerySchema } from "./schema/GallerySchema";
 
 export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
@@ -53,9 +53,9 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 				},
 			},
 			tags: [
-				"gallery",
-				"user",
+				"Gallery",
 			],
+			summary: "Fetch a gallery based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
@@ -69,7 +69,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 							scope: {
 								userId: user.id,
 							},
-						}),
+						}) satisfies Effect.Effect<GallerySchema.Type, any, any>,
 					}),
 					200,
 				);

@@ -2,13 +2,13 @@ import type { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { SheetView } from "@use-pico/client/ui/sheet-view";
 import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
-import type { tListing } from "@zbav-se.me/sdk/api/user";
+import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
 import { ListingDetail } from "~/app/listing/ui/ListingDetail";
 import { SellerInfo } from "~/app/listing/ui/SellerInfo";
 import { GalleryContent } from "~/app/photo/ui/GalleryContent";
-import { Transaction } from "~/app/transaction/ui/Transaction";
+import { Transaction } from "~/app/transaction/ui/buyer/Transaction";
 
 export namespace ListingSheet {
 	export type View = "detail" | "messages" | "gallery" | "seller-info";

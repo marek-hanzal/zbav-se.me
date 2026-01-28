@@ -1,6 +1,6 @@
 import { useVisible } from "@use-pico/client/hook";
-import type { tListingEventEnum } from "@zbav-se.me/sdk/api/user";
-import { withListingEventCreateMutation } from "@zbav-se.me/sdk/mutation/user";
+import type { tListingEventEnum } from "@zbav-se.me/sdk/api/buyer-session";
+import { withListingEventCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-session/listing-event";
 import { useCallback, useEffect, useRef } from "react";
 
 export namespace useListingEvent {

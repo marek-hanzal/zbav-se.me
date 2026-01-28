@@ -1,6 +1,6 @@
 import { EditIcon, Icon } from "@use-pico/client/icon";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/user";
+import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
 import { LocationValue as BaseLocationValue } from "~/app/location/ui/LocationValue";
 

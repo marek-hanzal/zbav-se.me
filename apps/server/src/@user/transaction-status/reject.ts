@@ -2,11 +2,11 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { TransactionContextProvider } from "~/@buyer-user/transaction/context/TransactionContextFx";
+import { transactionStatusRejectFx } from "~/@session/transaction-status/fx/transactionStatusRejectFx";
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
-import { transactionStatusRejectFx } from "~/app/transaction-status/fx/transactionStatusRejectFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionStatusRejectSchema } from "./schema/TransactionStatusRejectSchema";
 
@@ -63,9 +63,9 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 				},
 			},
 			tags: [
-				"transaction",
-				"user",
+				"Transaction Status",
 			],
+			summary: "Reject a listing transaction",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
@@ -77,7 +77,7 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 						dataFx: transactionStatusRejectFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<TransactionStatusSchema.Type, any, any>,
 					}),
 					200,
 				);

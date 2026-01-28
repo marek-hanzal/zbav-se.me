@@ -12,12 +12,12 @@
 	"dependencies": {
 		"@apollo/client": "4.1.2",
 		"@graphql-typed-document-node/core": "3.2.0",
-		"@paralleldrive/cuid2": "3.1.0",
+		"@paralleldrive/cuid2": "3.3.0",
 		"@types/is-callable": "1.1.2",
 		"@types/is-empty": "1.2.3",
 		"@types/luxon": "3.7.1",
 		"@types/qs": "6.14.0",
-		"effect": "3.19.14",
+		"effect": "3.19.15",
 		"fast-clean": "1.5.3",
 		"flattie": "1.1.1",
 		"is-callable": "1.2.7",
@@ -30,20 +30,20 @@
 		"qs": "6.14.1",
 		"ts-pattern": "5.9.0",
 		"xxhash-wasm": "1.1.0",
-		"zod": "4.3.5"
+		"zod": "4.3.6"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "29.0.0",
 		"@rollup/plugin-node-resolve": "16.0.3",
 		"@rollup/plugin-typescript": "12.3.0",
-		"@types/node": "25.0.9",
+		"@types/node": "25.0.10",
 		"@types/react": "19.2.9",
 		"@typescript/native-preview": "7.0.0-dev.20260120.1",
 		"@use-pico/tsconfig": "5.0.0",
-		"rollup": "4.55.3",
+		"rollup": "4.56.0",
 		"rollup-plugin-dts": "6.3.0",
 		"typescript": "5.9.3",
-		"vitest": "4.0.17"
+		"vitest": "4.0.18"
 	},
 	"files": [
 		"src"

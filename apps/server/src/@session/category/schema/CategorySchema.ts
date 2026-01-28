@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { CategoryDbSchema } from "~/app/category/schema/CategoryDbSchema";
+import { CategoryTableSchema } from "~/database/@table/CategoryTableSchema";
 
 export const CategorySchema = z
 	.object({
-		...CategoryDbSchema.shape,
+		...CategoryTableSchema.shape,
 	})
 	.openapi("Category", {
 		description: "Category data",

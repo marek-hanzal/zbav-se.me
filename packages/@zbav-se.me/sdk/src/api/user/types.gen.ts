@@ -5,50 +5,13 @@ export type clientOptions = {
 };
 
 /**
- * Data for patching a user ex
+ * Upload file metadata
  */
-export type tUserExPatch = {
+export type tUpload = {
     /**
-     * Fields to update (all optional)
-     */
-    patch: {
-        /**
-         * Default location for the user - user for listings & listing sorting
-         */
-        locationId?: string | null;
-        side?: tUserSideEnum | null;
-    };
-};
-
-/**
- * Side of the user
- */
-export const tUserSideEnum = { seller: 'seller', buyer: 'buyer' } as const;
-
-/**
- * Side of the user
- */
-export type tUserSideEnum = typeof tUserSideEnum[keyof typeof tUserSideEnum];
-
-/**
- * User extended information
- */
-export type tUserEx = {
-    /**
-     * ID of the user_ex record
+     * ID of the upload
      */
     id: string;
-    /**
-     * Default location for the user - user for listings & listing sorting
-     */
-    locationId: string | null;
-    side?: tUserSideEnum | null;
-};
-
-/**
- * Data for creating a new upload
- */
-export type tUploadCreate = {
     /**
      * Public URL to the uploaded file
      */
@@ -56,418 +19,277 @@ export type tUploadCreate = {
 };
 
 /**
- * Request to close a listing transaction
+ * Gallery item data
  */
-export type tTransactionStatusClose = {
+export type tGalleryItem = {
     /**
-     * The ID of the listing transaction to close
-     */
-    transactionId: string;
-};
-
-/**
- * Request to dispute a listing transaction
- */
-export type tTransactionStatusDispute = {
-    /**
-     * The ID of the listing transaction to dispute
-     */
-    transactionId: string;
-};
-
-/**
- * Request to mark a listing transaction as successful
- */
-export type tTransactionStatusSuccess = {
-    /**
-     * The ID of the listing transaction to mark as successful
-     */
-    transactionId: string;
-};
-
-/**
- * Request to resolve a listing transaction
- */
-export type tTransactionStatusResolve = {
-    /**
-     * The ID of the listing transaction to resolve
-     */
-    transactionId: string;
-};
-
-/**
- * Request to reject a listing transaction
- */
-export type tTransactionStatusReject = {
-    /**
-     * The ID of the listing transaction to reject
-     */
-    transactionId: string;
-};
-
-/**
- * Request to accept a listing transaction
- */
-export type tTransactionStatusAccept = {
-    /**
-     * The ID of the listing transaction to accept
-     */
-    transactionId: string;
-};
-
-/**
- * Listing transaction status entry
- */
-export type tTransactionStatus = {
-    /**
-     * ID of the transaction status entry
+     * ID of the gallery item
      */
     id: string;
     /**
-     * ID of the transaction referenced by the status
+     * ID of the gallery this item belongs to
      */
-    transactionId: string;
+    galleryId: string;
     /**
-     * ID of the listing referenced by the status
+     * ID of the upload this image belongs to
      */
-    listingId: string;
-    side: tTransactionSideEnum;
-    status: tTransactionStatusEnum & unknown;
+    uploadId: string;
     /**
-     * Creation timestamp
+     * Sort order of the image in the gallery
      */
-    createdAt: string;
+    sort: number;
+    upload: tUpload;
 };
 
 /**
- * This filter matches the current status of the transaction
+ * Gallery data with items
  */
-export const tTransactionStatusEnum = {
-    pending: 'pending',
-    open: 'open',
-    resolved: 'resolved',
-    dispute: 'dispute',
-    rejected: 'rejected',
-    expired: 'expired',
-    success: 'success',
-    closed: 'closed'
-} as const;
-
-/**
- * This filter matches the current status of the transaction
- */
-export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
-
-/**
- * Who initiated or affected the transaction change
- */
-export const tTransactionSideEnum = {
-    seller: 'seller',
-    buyer: 'buyer',
-    transaction: 'transaction',
-    system: 'system',
-    unknown: 'unknown'
-} as const;
-
-/**
- * Who initiated or affected the transaction change
- */
-export type tTransactionSideEnum = typeof tTransactionSideEnum[keyof typeof tTransactionSideEnum];
-
-/**
- * Request to create a transaction message
- */
-export type tTransactionMessageTextCreate = {
+export type tGallery = {
     /**
-     * The ID of the transaction to add a message to
+     * ID of the gallery
      */
-    transactionId: string;
+    id: string;
     /**
-     * The message content
+     * Gallery items sorted by sort order
+     */
+    items: Array<tGalleryItem>;
+};
+
+/**
+ * Type of notice
+ */
+export const tNoticeTypeEnum = {
+    info: 'info',
+    warning: 'warning',
+    error: 'error'
+} as const;
+
+/**
+ * Type of notice
+ */
+export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
+
+/**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export type tNotice = {
+    /**
+     * Message
      */
     message: string;
+    type: tNoticeTypeEnum;
 };
 
 /**
- * Request to create a transaction personal message
+ * Cursor for pagination
  */
-export type tTransactionMessagePersonalCreate = {
+export type tCursor = {
     /**
-     * The ID of the transaction to add a personal message to
+     * Page number (0-indexed)
      */
-    transactionId: string;
+    page: number;
     /**
-     * Name
+     * Page size
      */
-    name: string;
-    /**
-     * Phone number
-     */
-    phone: string;
-    /**
-     * Email address
-     */
-    email: string;
-    /**
-     * ID of the location
-     */
-    locationId: string;
+    size: number;
 };
 
 /**
- * Request to create a transaction message package
+ * Filter object for gallery collection
  */
-export type tTransactionMessagePackageCreate = {
+export type tGalleryFilter = {
     /**
-     * The ID of the transaction to add a package message to
+     * This filter matches the exact id
      */
-    transactionId: string;
+    id?: string;
     /**
-     * Package link
+     * This filter matches the ids
      */
-    link: string;
+    idIn?: Array<string>;
     /**
-     * Tracking number
+     * Runs fulltext on the collection/query.
      */
-    number: string | null;
+    fulltext?: string;
+    /**
+     * Exact user id
+     */
+    userId?: string;
 };
 
 /**
- * Request to create a transaction message location
+ * App-based filters
  */
-export type tTransactionMessageLocationCreate = {
+export type tGalleryWhere = {
     /**
-     * The ID of the transaction to add a location to
+     * This filter matches the exact id
      */
-    transactionId: string;
+    id?: string;
     /**
-     * The ID of the location
+     * This filter matches the ids
      */
-    locationId: string;
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * Exact user id
+     */
+    userId?: string;
 };
 
 /**
- * Request to create a transaction message gallery
+ * Field of the gallery sort
  */
-export type tTransactionMessageGalleryCreate = {
-    /**
-     * The ID of the transaction to add a gallery to
-     */
-    transactionId: string;
-    /**
-     * IDs of the uploads; order of uploads defines order in the gallery
-     */
-    uploadIds: Array<string>;
+export const tGallerySortField = { createdAt: 'createdAt' } as const;
+
+/**
+ * Field of the gallery sort
+ */
+export type tGallerySortField = typeof tGallerySortField[keyof typeof tGallerySortField];
+
+/**
+ * Order
+ */
+export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
+
+/**
+ * Order
+ */
+export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
+
+/**
+ * Sort object for gallery collection
+ */
+export type tGallerySort = {
+    field: tGallerySortField;
+    direction: tOrderEnum;
 };
 
 /**
- * Buyer info for the transaction
+ * Query object for gallery collection
  */
-export type tTransactionBuyerInfo = {
-    /**
-     * Registration date
-     */
-    registered: string;
-    /**
-     * Buyer info may not be available if we don't have enough data
-     */
-    events: null | tUserEventBuyer;
+export type tGalleryQuery = {
+    cursor?: tCursor;
+    filter?: tGalleryFilter;
+    where?: tGalleryWhere;
+    sort?: Array<tGallerySort>;
 };
 
 /**
- * This metric describes the score of the user
+ * Collection of gallery items
  */
-export type tUserEventBuyerScore = {
+export type tGalleryItemSchema = {
+    data: Array<tGalleryItem & {
+        /**
+         * ID of the gallery
+         */
+        id: string;
+    }>;
     /**
-     * Low-level score value, usually not presented in UI
+     * Whether there are more items to fetch
      */
-    score: number;
-    /**
-     * Rank computed from the score (A-F, 1-6)
-     */
-    rank: number;
+    more: boolean;
 };
 
 /**
- * This metric describes the approx activity of the user
+ * Count data
  */
-export type tUserEventBuyerActivity = {
+export type tCount = {
     /**
-     * Activity type of the buyer
+     * Count of items based on provided where query.
      */
-    bucket: 'low' | 'medium' | 'high';
-};
-
-/**
- * Masks number of transactions of the buyer, basically it tells, how busy buyer is.
- */
-export type tUserEventBuyerLoad = {
+    where: number;
     /**
-     * Load type of the buyer
+     * Count of items based on provided filter query.
      */
-    bucket: 'low' | 'medium' | 'high';
-};
-
-/**
- * This metric describes if the user is used to expire transactions (no user's messages)
- */
-export type tUserEventBuyerExpired = {
+    filter: number;
     /**
-     * Total number of samples (transactions)
+     * Total count of items (no filters applied).
      */
     total: number;
-    /**
-     * Total number of expired transactions
-     */
-    expired: number;
-    /**
-     * Percentage of expired transactions (expired / total)
-     */
-    percent: number;
 };
 
 /**
- * This metric describes if the user is used to close/success transactions
+ * Query object for gallery count
  */
-export type tUserEventBuyerDecision = {
-    /**
-     * Total number of samples (transactions)
-     */
-    total: number;
-    /**
-     * Total number of decisions (success, closed)
-     */
-    decisions: number;
-    /**
-     * Total number of terminal decisions (usually from the other side)
-     */
-    terminal: number;
-    /**
-     * Percentage of closed transactions (closed / total)
-     */
-    percent: number;
+export type tGalleryCountQuery = {
+    filter?: tGalleryFilter;
+    where?: tGalleryWhere;
+    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
- * This metric describes if the user instantly closes transactions (means - no interaction, just open and kill)
+ * Type of message
  */
-export type tUserEventBuyerCloser = {
-    /**
-     * Total number of samples (transactions)
-     */
-    total: number;
-    /**
-     * Total number of closed transactions
-     */
-    closed: number;
-    /**
-     * Percentage of closed transactions (closed / total)
-     */
-    percent: number;
-    /**
-     * Median milliseconds between transaction creation and closing
-     */
-    medianMs: number;
-    /**
-     * 90th percentile milliseconds between transaction creation and closing
-     */
-    p90Ms: number;
-};
+export const tMessageTypeEnum = {
+    text: 'text',
+    gallery: 'gallery',
+    location: 'location',
+    personal: 'personal',
+    package: 'package',
+    date: 'date',
+    system: 'system'
+} as const;
 
 /**
- * Initial reaction on opened transaction by seller.
+ * Type of message
  */
-export type tUserEventBuyerReaction = {
-    /**
-     * Total number of samples (transactions)
-     */
-    total: number;
-    /**
-     * Total number of reactions
-     */
-    reactions: number;
-    /**
-     * Total number of terminal reactions (usually from the other side)
-     */
-    terminal: number;
-    /**
-     * Percentage of reactions (reactions + terminal) / total
-     */
-    percent: number;
-    /**
-     * Median milliseconds between transaction opening and reaction
-     */
-    medianMs: number;
-    /**
-     * 90th percentile milliseconds between transaction opening and reaction
-     */
-    p90Ms: number;
-};
+export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
 
 /**
- * Buyer info for the user event
+ * Direction of the message
  */
-export type tUserEventBuyer = {
-    reaction: tUserEventBuyerReaction;
-    closer: tUserEventBuyerCloser;
-    decision: tUserEventBuyerDecision;
-    expired: tUserEventBuyerExpired;
-    load: tUserEventBuyerLoad;
-    activity: tUserEventBuyerActivity;
-    score: tUserEventBuyerScore;
-};
+export const tMessageDirectionEnum = {
+    in: 'in',
+    out: 'out',
+    system: 'system'
+} as const;
 
 /**
- * Data for creating a new transaction
+ * Direction of the message
  */
-export type tTransactionCreate = {
-    /**
-     * ID of the listing to start a transaction for
-     */
-    listingId: string;
-};
+export type tMessageDirectionEnum = typeof tMessageDirectionEnum[keyof typeof tMessageDirectionEnum];
 
 /**
- * Transaction data
+ * Message text entry
  */
-export type tTransaction = {
+export type tMessageText = {
     /**
-     * ID of the transaction
+     * ID of the message entry
      */
     id: string;
     /**
-     * ID of the related listing
+     * Message content (database column name)
      */
-    listingId: string;
-    /**
-     * ID of the message thread associated with the transaction
-     */
-    messageThreadId: string;
+    text: string;
     /**
      * Creation timestamp
      */
     createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+};
+
+/**
+ * Message gallery entry
+ */
+export type tMessageGallery = {
     /**
-     * Last update timestamp
+     * ID of the message gallery entry
      */
-    updatedAt: string;
+    id: string;
     /**
-     * Expiration timestamp
+     * ID of the gallery
      */
-    expiresAt: string;
+    galleryId: string;
     /**
-     * Transaction title
+     * Creation timestamp
      */
-    title: string;
-    status: tTransactionStatusEnum & unknown;
-    gallery: tGallery & unknown;
-    /**
-     * Price of the listing
-     */
-    price: number;
-    priceType: tListingPriceEnum;
-    currency: tCurrencyListEnum;
-    location: tLocation;
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+    gallery: tGallery;
 };
 
 /**
@@ -538,432 +360,24 @@ export type tLocation = {
 };
 
 /**
- * List of available currencies
+ * Message location entry
  */
-export const tCurrencyListEnum = {
-    CZK: 'CZK',
-    EUR: 'EUR',
-    USD: 'USD',
-    GBP: 'GBP',
-    PLN: 'PLN',
-    HUF: 'HUF',
-    CHF: 'CHF'
-} as const;
-
-/**
- * List of available currencies
- */
-export type tCurrencyListEnum = typeof tCurrencyListEnum[keyof typeof tCurrencyListEnum];
-
-/**
- * Price type of the listing
- */
-export const tListingPriceEnum = { closed: 'closed', open: 'open' } as const;
-
-/**
- * Price type of the listing
- */
-export type tListingPriceEnum = typeof tListingPriceEnum[keyof typeof tListingPriceEnum];
-
-/**
- * Upload file metadata
- */
-export type tUpload = {
+export type tMessageLocation = {
     /**
-     * ID of the upload
+     * ID of the message location entry
      */
     id: string;
     /**
-     * Public URL to the uploaded file
+     * ID of the location
      */
-    url: string;
-};
-
-/**
- * Gallery item data
- */
-export type tGalleryItem = {
-    /**
-     * ID of the gallery item
-     */
-    id: string;
-    /**
-     * ID of the gallery this item belongs to
-     */
-    galleryId: string;
-    /**
-     * ID of the upload this image belongs to
-     */
-    uploadId: string;
-    /**
-     * Sort order of the image in the gallery
-     */
-    sort: number;
-    upload: tUpload;
-};
-
-/**
- * Draft gallery images
- */
-export type tGallery = {
-    /**
-     * ID of the gallery
-     */
-    id: string;
-    /**
-     * Gallery items sorted by sort order
-     */
-    items: Array<tGalleryItem>;
-};
-
-/**
- * Query object for transaction collection
- */
-export type tTransactionQuery = {
-    cursor?: tCursor;
-    filter?: tTransactionFilter;
-    where?: tTransactionWhere;
-    sort?: Array<tTransactionSort>;
-    meta?: tTransactionMeta;
-};
-
-/**
- * Meta data for transaction collection
- */
-export type tTransactionMeta = {
-    side?: tUserSideEnum;
-};
-
-/**
- * Order
- */
-export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
-
-/**
- * Order
- */
-export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
-
-/**
- * Field of the transaction sort
- */
-export const tTransactionSortField = {
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    expiresAt: 'expiresAt',
-    status: 'status'
-} as const;
-
-/**
- * Field of the transaction sort
- */
-export type tTransactionSortField = typeof tTransactionSortField[keyof typeof tTransactionSortField];
-
-/**
- * Sort object for transaction collection
- */
-export type tTransactionSort = {
-    field: tTransactionSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * App-based filters
- */
-export type tTransactionWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-    status?: tTransactionStatusEnum;
-    /**
-     * This filter matches any of the provided statuses for the current status of the transaction
-     */
-    statusIn?: Array<tTransactionStatusEnum & unknown>;
-};
-
-/**
- * Filter object for transaction collection
- */
-export type tTransactionFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-    status?: tTransactionStatusEnum;
-    /**
-     * This filter matches any of the provided statuses for the current status of the transaction
-     */
-    statusIn?: Array<tTransactionStatusEnum & unknown>;
-};
-
-/**
- * Cursor for pagination
- */
-export type tCursor = {
-    /**
-     * Page number (0-indexed)
-     */
-    page: number;
-    /**
-     * Page size
-     */
-    size: number;
-};
-
-/**
- * Collection of transactions
- */
-export type tTransactionCollection = {
-    data: Array<{
-        id: string;
-    }>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Allowed content types
- */
-export const tAllowedContentTypesEnum = {
-    'image/jpeg': 'image/jpeg',
-    'image/png': 'image/png',
-    'image/webp': 'image/webp',
-    'image/avif': 'image/avif',
-    'image/heic': 'image/heic',
-    'image/heif': 'image/heif'
-} as const;
-
-/**
- * Allowed content types
- */
-export type tAllowedContentTypesEnum = typeof tAllowedContentTypesEnum[keyof typeof tAllowedContentTypesEnum];
-
-/**
- * Allowed extensions
- */
-export const tAllowedExtensionsEnum = {
-    webp: 'webp',
-    png: 'png',
-    jpg: 'jpg',
-    jpeg: 'jpeg',
-    avif: 'avif',
-    heic: 'heic',
-    heif: 'heif'
-} as const;
-
-/**
- * Allowed extensions
- */
-export type tAllowedExtensionsEnum = typeof tAllowedExtensionsEnum[keyof typeof tAllowedExtensionsEnum];
-
-/**
- * Query object for message collection
- */
-export type tMessageQuery = {
-    cursor?: tCursor;
-    filter?: tMessageFilter;
-    where?: tMessageWhere;
-    sort?: Array<tMessageSort>;
-};
-
-/**
- * Available sort fields for message collection
- */
-export const tMessageSortField = { id: 'id', createdAt: 'createdAt' } as const;
-
-/**
- * Available sort fields for message collection
- */
-export type tMessageSortField = typeof tMessageSortField[keyof typeof tMessageSortField];
-
-/**
- * Sort parameters for message collection
- */
-export type tMessageSort = {
-    field: tMessageSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * App-based filters
- */
-export type tMessageWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact messageThreadId
-     */
-    messageThreadId?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact transactionId
-     */
-    transactionId?: string;
-};
-
-/**
- * Filter object for message collection
- */
-export type tMessageFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact messageThreadId
-     */
-    messageThreadId?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact transactionId
-     */
-    transactionId?: string;
-};
-
-/**
- * Collection of messages
- */
-export type tMessageCollection = {
-    data: Array<tMessage>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Message system entry
- */
-export type tMessageSystem = {
-    /**
-     * ID of the message entry
-     */
-    id: string;
-    /**
-     * Message content
-     */
-    text: string;
+    locationId: string;
     /**
      * Creation timestamp
      */
     createdAt: string;
     type: tMessageTypeEnum;
     direction: tMessageDirectionEnum;
-};
-
-/**
- * Direction of the message
- */
-export const tMessageDirectionEnum = {
-    in: 'in',
-    out: 'out',
-    system: 'system'
-} as const;
-
-/**
- * Direction of the message
- */
-export type tMessageDirectionEnum = typeof tMessageDirectionEnum[keyof typeof tMessageDirectionEnum];
-
-/**
- * Type of message
- */
-export const tMessageTypeEnum = {
-    text: 'text',
-    gallery: 'gallery',
-    location: 'location',
-    personal: 'personal',
-    package: 'package',
-    date: 'date',
-    system: 'system'
-} as const;
-
-/**
- * Type of message
- */
-export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
-
-/**
- * Message package entry
- */
-export type tMessagePackage = {
-    /**
-     * ID of the message package entry
-     */
-    id: string;
-    /**
-     * Package link
-     */
-    link: string;
-    /**
-     * Tracking number
-     */
-    number: string | null;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
+    location: tLocation;
 };
 
 /**
@@ -1000,57 +414,39 @@ export type tMessagePersonal = {
 };
 
 /**
- * Message location entry
+ * Message package entry
  */
-export type tMessageLocation = {
+export type tMessagePackage = {
     /**
-     * ID of the message location entry
+     * ID of the message package entry
      */
     id: string;
     /**
-     * ID of the location
+     * Package link
      */
-    locationId: string;
+    link: string;
+    /**
+     * Tracking number
+     */
+    number: string | null;
     /**
      * Creation timestamp
      */
     createdAt: string;
     type: tMessageTypeEnum;
     direction: tMessageDirectionEnum;
-    location: tLocation;
 };
 
 /**
- * Message gallery entry
+ * Message system entry
  */
-export type tMessageGallery = {
-    /**
-     * ID of the message gallery entry
-     */
-    id: string;
-    /**
-     * ID of the gallery
-     */
-    galleryId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-    gallery: tGallery & unknown;
-};
-
-/**
- * Message text entry
- */
-export type tMessageText = {
+export type tMessageSystem = {
     /**
      * ID of the message entry
      */
     id: string;
     /**
-     * Message content (database column name)
+     * Message content
      */
     text: string;
     /**
@@ -1067,9 +463,9 @@ export type tMessageText = {
 export type tMessagePayload = tMessageText | tMessageGallery | tMessageLocation | tMessagePersonal | tMessagePackage | tMessageSystem;
 
 /**
- * Message entry (unified view across all message types)
+ * Message collection item
  */
-export type tMessage = {
+export type tMessageItem = {
     /**
      * ID of the message entry
      */
@@ -1079,51 +475,278 @@ export type tMessage = {
 };
 
 /**
- * Data for creating a new listing event
+ * Collection of messages
  */
-export type tListingEventCreate = {
+export type tMessageItemSchema = {
+    data: Array<tMessageItem>;
     /**
-     * ID of the listing
+     * Whether there are more items to fetch
      */
-    listingId: string;
-    event: tListingEventEnum;
+    more: boolean;
 };
 
 /**
- * Type of listing event
+ * Filter object for message collection
  */
-export const tListingEventEnum = {
-    impression: 'impression',
-    view: 'view',
-    ignore: 'ignore',
-    unignore: 'unignore',
-    flag: 'flag',
-    unflag: 'unflag',
-    transaction: 'transaction',
-    favourite: 'favourite',
-    unfavourite: 'unfavourite',
-    like: 'like',
-    dislike: 'dislike'
+export type tMessageFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact messageThreadId
+     */
+    messageThreadId?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact transactionId
+     */
+    transactionId?: string;
+};
+
+/**
+ * App-based filters
+ */
+export type tMessageWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact messageThreadId
+     */
+    messageThreadId?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact transactionId
+     */
+    transactionId?: string;
+};
+
+/**
+ * Available sort fields for message collection
+ */
+export const tMessageSortField = { id: 'id', createdAt: 'createdAt' } as const;
+
+/**
+ * Available sort fields for message collection
+ */
+export type tMessageSortField = typeof tMessageSortField[keyof typeof tMessageSortField];
+
+/**
+ * Sort parameters for message collection
+ */
+export type tMessageSort = {
+    field: tMessageSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * Query object for message collection
+ */
+export type tMessageQuery = {
+    cursor?: tCursor;
+    filter?: tMessageFilter;
+    where?: tMessageWhere;
+    sort?: Array<tMessageSort>;
+};
+
+/**
+ * Allowed extensions
+ */
+export const tAllowedExtensionsEnum = {
+    webp: 'webp',
+    png: 'png',
+    jpg: 'jpg',
+    jpeg: 'jpeg',
+    avif: 'avif',
+    heic: 'heic',
+    heif: 'heif'
 } as const;
 
 /**
- * Type of listing event
+ * Allowed extensions
  */
-export type tListingEventEnum = typeof tListingEventEnum[keyof typeof tListingEventEnum];
+export type tAllowedExtensionsEnum = typeof tAllowedExtensionsEnum[keyof typeof tAllowedExtensionsEnum];
 
 /**
- * Listing event data
+ * Allowed content types
  */
-export type tListingEvent = {
+export const tAllowedContentTypesEnum = {
+    'image/jpeg': 'image/jpeg',
+    'image/png': 'image/png',
+    'image/webp': 'image/webp',
+    'image/avif': 'image/avif',
+    'image/heic': 'image/heic',
+    'image/heif': 'image/heif'
+} as const;
+
+/**
+ * Allowed content types
+ */
+export type tAllowedContentTypesEnum = typeof tAllowedContentTypesEnum[keyof typeof tAllowedContentTypesEnum];
+
+/**
+ * Request to create a transaction message gallery
+ */
+export type tTransactionMessageGalleryCreate = {
     /**
-     * ID of the event
+     * The ID of the transaction to add a gallery to
+     */
+    transactionId: string;
+    /**
+     * IDs of the uploads; order of uploads defines order in the gallery
+     */
+    uploadIds: Array<string>;
+};
+
+/**
+ * Request to create a transaction message location
+ */
+export type tTransactionMessageLocationCreate = {
+    /**
+     * The ID of the transaction to add a location to
+     */
+    transactionId: string;
+    /**
+     * The ID of the location
+     */
+    locationId: string;
+};
+
+/**
+ * Request to create a transaction message package
+ */
+export type tTransactionMessagePackageCreate = {
+    /**
+     * The ID of the transaction to add a package message to
+     */
+    transactionId: string;
+    /**
+     * Package link
+     */
+    link: string;
+    /**
+     * Tracking number
+     */
+    number: string | null;
+};
+
+/**
+ * Request to create a transaction personal message
+ */
+export type tTransactionMessagePersonalCreate = {
+    /**
+     * The ID of the transaction to add a personal message to
+     */
+    transactionId: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Phone number
+     */
+    phone: string;
+    /**
+     * Email address
+     */
+    email: string;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+};
+
+/**
+ * Request to create a transaction message
+ */
+export type tTransactionMessageTextCreate = {
+    /**
+     * The ID of the transaction to add a message to
+     */
+    transactionId: string;
+    /**
+     * The message content
+     */
+    message: string;
+};
+
+/**
+ * Who initiated or affected the transaction change
+ */
+export const tTransactionSideEnum = {
+    seller: 'seller',
+    buyer: 'buyer',
+    transaction: 'transaction',
+    system: 'system',
+    unknown: 'unknown'
+} as const;
+
+/**
+ * Who initiated or affected the transaction change
+ */
+export type tTransactionSideEnum = typeof tTransactionSideEnum[keyof typeof tTransactionSideEnum];
+
+/**
+ * Current status of the listing transaction
+ */
+export const tTransactionStatusEnum = {
+    pending: 'pending',
+    open: 'open',
+    resolved: 'resolved',
+    dispute: 'dispute',
+    rejected: 'rejected',
+    expired: 'expired',
+    success: 'success',
+    closed: 'closed'
+} as const;
+
+/**
+ * Current status of the listing transaction
+ */
+export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
+
+/**
+ * Listing transaction status entry
+ */
+export type tTransactionStatus = {
+    /**
+     * ID of the transaction status entry
      */
     id: string;
     /**
-     * ID of the listing
+     * ID of the transaction referenced by the status
+     */
+    transactionId: string;
+    /**
+     * ID of the listing referenced by the status
      */
     listingId: string;
-    event: tListingEventEnum;
+    side: tTransactionSideEnum;
+    status: tTransactionStatusEnum;
     /**
      * Creation timestamp
      */
@@ -1131,2388 +754,75 @@ export type tListingEvent = {
 };
 
 /**
- * Query object for listing count
+ * Request to reject a listing transaction
  */
-export type tListingCountQuery = {
-    filter?: tListingFilter;
-    where?: tListingWhere;
-    meta?: tListingMeta;
-    count?: Array<'total' | 'filter' | 'where'>;
+export type tTransactionStatusReject = {
+    /**
+     * The ID of the listing transaction to reject
+     */
+    transactionId: string;
 };
 
 /**
- * Latitude and longitude coordinates
+ * Request to dispute a listing transaction
  */
-export type tLatLon = {
+export type tTransactionStatusDispute = {
     /**
-     * Latitude coordinate
+     * The ID of the listing transaction to dispute
      */
-    lat: number;
-    /**
-     * Longitude coordinate
-     */
-    lon: number;
+    transactionId: string;
 };
 
 /**
- * Meta data for listing collection
+ * Data for creating a new upload
  */
-export type tListingMeta = {
-    latLon?: tLatLon;
-    feedId?: tFeedId & unknown;
+export type tUploadCreate = {
+    /**
+     * Public URL to the uploaded file
+     */
+    url: string;
 };
 
 /**
- * ID of the feed
+ * Side of the user
  */
-export type tFeedId = string;
+export const tUserSideEnum = { seller: 'seller', buyer: 'buyer' } as const;
 
 /**
- * App-based filters
+ * Side of the user
  */
-export type tListingWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * ID of the user; does not have an effect on API endpoints
-     */
-    userId?: string;
-    priceMin?: tPriceMin;
-    priceMax?: tPriceMax;
-    /**
-     * This filter matches listings with condition greater than or equal to the provided value
-     */
-    conditionMin?: number;
-    /**
-     * This filter matches listings with condition less than or equal to the provided value
-     */
-    conditionMax?: number;
-    /**
-     * This filter matches listings with conditions in the provided array
-     */
-    conditionIn?: Array<number>;
-    /**
-     * This filter matches listings with age greater than or equal to the provided value
-     */
-    ageMin?: number;
-    /**
-     * This filter matches listings with age less than or equal to the provided value
-     */
-    ageMax?: number;
-    /**
-     * This filter matches listings with ages in the provided array
-     */
-    ageIn?: Array<number>;
-    deliveryIn?: tDeliveryIn;
-    warrantyIn?: tWarrantyIn;
-    categoryId?: tCategoryId;
-    categoryIdIn?: tCategoryIdIn;
-    currency?: tCurrencyListEnum;
-    currencyIn?: tCurrencyIn;
-    /**
-     * This filter matches listings that expire before the provided date
-     */
-    expiresAtBefore?: string;
-    /**
-     * This filter matches listings that expire after the provided date
-     */
-    expiresAtAfter?: string;
-    /**
-     * Range (in km) around the input location to filter listings
-     */
-    range?: number;
-    /**
-     * This filter matches listings with title matching the provided value
-     */
-    title?: string;
-    /**
-     * This filter matches listings with the user's own listings
-     */
-    withOwn?: boolean;
-    /**
-     * Return exclusively user's listings when set to true
-     */
-    my?: boolean;
-    /**
-     * Include ignored listings
-     */
-    withIgnored?: boolean;
-    /**
-     * Show listing that are in the user's favourites
-     */
-    isFavourite?: boolean;
-    feedId?: tFeedId;
-    feedIdIn?: tFeedIdIn;
-    /**
-     * Show listings that are in the user's transaction
-     */
-    transaction?: boolean;
-};
+export type tUserSideEnum = typeof tUserSideEnum[keyof typeof tUserSideEnum];
 
 /**
- * Filter listings based on the provided feed IDs
+ * User extended information
  */
-export type tFeedIdIn = Array<string>;
-
-/**
- * This filter matches listings with currency codes in the provided array
- */
-export type tCurrencyIn = Array<tCurrencyListEnum>;
-
-/**
- * Filter listings based on the provided category IDs
- */
-export type tCategoryIdIn = Array<string>;
-
-/**
- * ID of the category
- */
-export type tCategoryId = string;
-
-/**
- * Warranty type for the listing
- */
-export const tListingWarrantyEnum = {
-    warranty: 'warranty',
-    'no-warranty': 'no-warranty',
-    custom: 'custom'
-} as const;
-
-/**
- * Warranty type for the listing
- */
-export type tListingWarrantyEnum = typeof tListingWarrantyEnum[keyof typeof tListingWarrantyEnum];
-
-/**
- * This filter matches listings with warranty types in the provided array
- */
-export type tWarrantyIn = Array<tListingWarrantyEnum>;
-
-/**
- * Delivery method for the listing
- */
-export const tListingDeliveryEnum = {
-    personal: 'personal',
-    post: 'post',
-    package: 'package',
-    other: 'other'
-} as const;
-
-/**
- * Delivery method for the listing
- */
-export type tListingDeliveryEnum = typeof tListingDeliveryEnum[keyof typeof tListingDeliveryEnum];
-
-/**
- * This filter matches listings with delivery methods overlapping the provided array
- */
-export type tDeliveryIn = Array<tListingDeliveryEnum>;
-
-/**
- * Sets the maximum price for the listings
- */
-export type tPriceMax = number;
-
-/**
- * Sets the minimum price for the listings
- */
-export type tPriceMin = number;
-
-/**
- * User-land filters
- */
-export type tListingFilter = {
+export type tUserEx = {
     /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * ID of the user; does not have an effect on API endpoints
-     */
-    userId?: string;
-    priceMin?: tPriceMin;
-    priceMax?: tPriceMax;
-    /**
-     * This filter matches listings with condition greater than or equal to the provided value
-     */
-    conditionMin?: number;
-    /**
-     * This filter matches listings with condition less than or equal to the provided value
-     */
-    conditionMax?: number;
-    /**
-     * This filter matches listings with conditions in the provided array
-     */
-    conditionIn?: Array<number>;
-    /**
-     * This filter matches listings with age greater than or equal to the provided value
-     */
-    ageMin?: number;
-    /**
-     * This filter matches listings with age less than or equal to the provided value
-     */
-    ageMax?: number;
-    /**
-     * This filter matches listings with ages in the provided array
-     */
-    ageIn?: Array<number>;
-    deliveryIn?: tDeliveryIn;
-    warrantyIn?: tWarrantyIn;
-    categoryId?: tCategoryId;
-    categoryIdIn?: tCategoryIdIn;
-    currency?: tCurrencyListEnum;
-    currencyIn?: tCurrencyIn;
-    /**
-     * This filter matches listings that expire before the provided date
-     */
-    expiresAtBefore?: string;
-    /**
-     * This filter matches listings that expire after the provided date
-     */
-    expiresAtAfter?: string;
-    /**
-     * Range (in km) around the input location to filter listings
-     */
-    range?: number;
-    /**
-     * This filter matches listings with title matching the provided value
-     */
-    title?: string;
-    /**
-     * This filter matches listings with the user's own listings
-     */
-    withOwn?: boolean;
-    /**
-     * Return exclusively user's listings when set to true
-     */
-    my?: boolean;
-    /**
-     * Include ignored listings
-     */
-    withIgnored?: boolean;
-    /**
-     * Show listing that are in the user's favourites
-     */
-    isFavourite?: boolean;
-    feedId?: tFeedId;
-    feedIdIn?: tFeedIdIn;
-    /**
-     * Show listings that are in the user's transaction
-     */
-    transaction?: boolean;
-};
-
-/**
- * Collection of listings
- */
-export type tListingCollection = {
-    data: Array<{
-        id: string;
-    }>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Data for creating a new listing
- */
-export type tListingCreate = {
-    /**
-     * Price of the listing
-     */
-    price: number;
-    priceType: tListingPriceEnum;
-    /**
-     * Condition of the item (0-based index)
-     */
-    condition: number | null;
-    /**
-     * Age of the item (0-based index)
-     */
-    age: number | null;
-    /**
-     * Delivery methods for the listing
-     */
-    delivery?: Array<tListingDeliveryEnum> | null;
-    /**
-     * Warranty type for the listing
-     */
-    warranty?: tListingWarrantyEnum | null;
-    /**
-     * ID of the draft
-     */
-    draftId?: string;
-    /**
-     * ID of the location
-     */
-    locationId: string;
-    /**
-     * ID of the category
-     */
-    categoryId: string;
-    expiresAt: tListingExpireEnum;
-    /**
-     * Title of the item
-     */
-    title: string;
-    /**
-     * Description of the item
-     */
-    description?: string | null;
-    /**
-     * Pros of the item
-     */
-    pros?: tProsCons | null;
-    /**
-     * Cons of the item
-     */
-    cons?: tProsCons | null;
-    /**
-     * IDs of the uploads; order of uploads defines order in the gallery
-     */
-    uploadIds: Array<string>;
-};
-
-/**
- * Array of pros or cons, max 5 items, each string max 72 characters
- */
-export type tProsCons = Array<string>;
-
-/**
- * Expiration time of the listing
- */
-export const tListingExpireEnum = {
-    '7-days': '7-days',
-    '14-days': '14-days',
-    '1-month': '1-month'
-} as const;
-
-/**
- * Expiration time of the listing
- */
-export type tListingExpireEnum = typeof tListingExpireEnum[keyof typeof tListingExpireEnum];
-
-/**
- * Data for toggling a listing in ignore list
- */
-export type tIgnoreToggle = {
-    /**
-     * Whether to add (true) or remove (false) the listing from ignore list
-     */
-    toggle: boolean;
-    /**
-     * ID of the listing to toggle
-     */
-    listingId: string;
-};
-
-/**
- * Query object for ignore count
- */
-export type tIgnoreCountQuery = {
-    filter?: tIgnoreFilter;
-    where?: tIgnoreWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
-};
-
-/**
- * App-based filters
- */
-export type tIgnoreWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Filter object for ignore collection
- */
-export type tIgnoreFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Query object for ignore collection
- */
-export type tIgnoreQuery = {
-    cursor?: tCursor;
-    filter?: tIgnoreFilter;
-    where?: tIgnoreWhere;
-    sort?: Array<tIgnoreSort>;
-};
-
-/**
- * Field of the ignore sort
- */
-export const tIgnoreSortField = { createdAt: 'createdAt' } as const;
-
-/**
- * Field of the ignore sort
- */
-export type tIgnoreSortField = typeof tIgnoreSortField[keyof typeof tIgnoreSortField];
-
-/**
- * Sort object for ignore collection
- */
-export type tIgnoreSort = {
-    field: tIgnoreSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * Collection of ignore items
- */
-export type tIgnoreCollection = {
-    data: Array<tIgnore>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Ignore data
- */
-export type tIgnore = {
-    /**
-     * ID of the ignore entry
+     * ID of the user_ex record
      */
     id: string;
     /**
-     * ID of the listing that was ignored
-     */
-    listingId: string;
-};
-
-/**
- * Query object for gallery count
- */
-export type tGalleryCountQuery = {
-    filter?: tGalleryFilter;
-    where?: tGalleryWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
-};
-
-/**
- * App-based filters
- */
-export type tGalleryWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * Exact user id
-     */
-    userId?: string;
-};
-
-/**
- * Filter object for gallery collection
- */
-export type tGalleryFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * Exact user id
-     */
-    userId?: string;
-};
-
-/**
- * Collection of galleries
- */
-export type tGalleryCollection = {
-    data: Array<tGallery & unknown>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Query object for gallery collection
- */
-export type tGalleryQuery = {
-    cursor?: tCursor;
-    filter?: tGalleryFilter;
-    where?: tGalleryWhere;
-    sort?: Array<tGallerySort>;
-};
-
-/**
- * Field of the gallery sort
- */
-export const tGallerySortField = { createdAt: 'createdAt' } as const;
-
-/**
- * Field of the gallery sort
- */
-export type tGallerySortField = typeof tGallerySortField[keyof typeof tGallerySortField];
-
-/**
- * Sort object for gallery collection
- */
-export type tGallerySort = {
-    field: tGallerySortField;
-    direction: tOrderEnum;
-};
-
-/**
- * Data for toggling a flag on a listing
- */
-export type tFlagToggle = {
-    /**
-     * Whether to add (true) or remove (false) the flag on the listing
-     */
-    toggle: boolean;
-    /**
-     * ID of the listing to toggle
-     */
-    listingId: string;
-};
-
-/**
- * Query object for flag count
- */
-export type tFlagCountQuery = {
-    filter?: tFlagFilter;
-    where?: tFlagCountWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
-};
-
-/**
- * App-based filters
- */
-export type tFlagCountWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Filter object for flag collection
- */
-export type tFlagFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Query object for flag collection
- */
-export type tFlagQuery = {
-    cursor?: tCursor;
-    filter?: {
-        /**
-         * This filter matches the exact id
-         */
-        id?: string;
-        /**
-         * This filter matches the ids
-         */
-        idIn?: Array<string>;
-        /**
-         * Runs fulltext on the collection/query.
-         */
-        fulltext?: string;
-        /**
-         * This filter matches the exact listingId
-         */
-        listingId?: string;
-    };
-    where?: tFlagWhere;
-    sort?: Array<tFlagSort>;
-};
-
-/**
- * Field of the flag sort
- */
-export const tFlagSortField = { createdAt: 'createdAt' } as const;
-
-/**
- * Field of the flag sort
- */
-export type tFlagSortField = typeof tFlagSortField[keyof typeof tFlagSortField];
-
-/**
- * Sort object for flag collection
- */
-export type tFlagSort = {
-    field: tFlagSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * App-based filters
- */
-export type tFlagWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Collection of flag items
- */
-export type tFlagCollection = {
-    data: Array<tFlag>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Flag data
- */
-export type tFlag = {
-    /**
-     * ID of the flag entry
-     */
-    id: string;
-    /**
-     * ID of the listing
-     */
-    listingId: string;
-};
-
-/**
- * Collection of feed items from favourites
- */
-export type tFeedFavouriteCollection = {
-    data: Array<tFeedFavourite>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Field of the listing sort
- */
-export const tListingSortField = {
-    price: 'price',
-    condition: 'condition',
-    age: 'age',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    expiresAt: 'expiresAt',
-    geo: 'geo'
-} as const;
-
-/**
- * Field of the listing sort
- */
-export type tListingSortField = typeof tListingSortField[keyof typeof tListingSortField];
-
-/**
- * Sort object for listing collection
- */
-export type tListingSort = {
-    field: tListingSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * Query object for listing collection
- */
-export type tListingQuery = {
-    cursor?: tCursor & unknown;
-    filter?: tListingFilter;
-    where?: tListingWhere;
-    sort?: Array<tListingSort>;
-    meta?: tListingMeta;
-};
-
-/**
- * Feed data from favourites
- */
-export type tFeedFavourite = {
-    /**
-     * ID of the feed
-     */
-    id: string;
-    /**
-     * ID of the location associated with the feed
+     * Default location for the user - user for listings & listing sorting
      */
     locationId: string | null;
-    /**
-     * Hero image for this feed (usually selected from the listings in the feed)
-     */
-    uploadId: string | null;
-    /**
-     * Name of the feed
-     */
-    name: string;
-    query: tListingQuery;
-    /**
-     * Hero banner for this feed
-     */
-    upload: tUpload | null;
-    /**
-     * Number of items in favourites for this feed
-     */
-    count: number;
+    side?: tUserSideEnum | null;
 };
 
 /**
- * Data for creating a new thumb
+ * Data for patching a user ex
  */
-export type tThumbCreate = {
-    /**
-     * ID of the listing
-     */
-    listingId: string;
-    type: tThumbEnum;
-};
-
-/**
- * Type of thumb
- */
-export const tThumbEnum = { like: 'like', dislike: 'dislike' } as const;
-
-/**
- * Type of thumb
- */
-export type tThumbEnum = typeof tThumbEnum[keyof typeof tThumbEnum];
-
-/**
- * Request to create or update a feed gallery
- */
-export type tFeedGalleryCreate = {
-    /**
-     * The ID of the feed to add a gallery to
-     */
-    feedId: string;
-    /**
-     * IDs of the uploads; order of uploads defines order in the gallery
-     */
-    uploadIds: Array<string>;
-};
-
-/**
- * Query object for feed count
- */
-export type tFeedCountQuery = {
-    filter?: tFeedFilter;
-    where?: tFeedWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
-};
-
-/**
- * App-based filters
- */
-export type tFeedWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * Exact user id
-     */
-    userId?: string;
-};
-
-/**
- * Filter object for feed collection
- */
-export type tFeedFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * Exact user id
-     */
-    userId?: string;
-};
-
-/**
- * Collection of feed items
- */
-export type tFeedCollection = {
-    data: Array<{
-        id: string;
-    }>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Data for updating an existing feed
- */
-export type tFeedPatch = {
+export type tUserExPatch = {
     /**
      * Fields to update (all optional)
      */
     patch: {
         /**
-         * ID of the feed
-         */
-        id?: string;
-        /**
-         * ID of the location associated with the feed
+         * Default location for the user - user for listings & listing sorting
          */
         locationId?: string | null;
-        /**
-         * Hero image for this feed (usually selected from the listings in the feed)
-         */
-        uploadId?: string | null;
-        /**
-         * Name of the feed
-         */
-        name?: string;
-        query?: tListingQuery;
+        side?: tUserSideEnum | null;
     };
-    query: tFeedQuery;
 };
-
-/**
- * Field of the feed sort
- */
-export const tFeedSortField = { createdAt: 'createdAt', updatedAt: 'updatedAt' } as const;
-
-/**
- * Field of the feed sort
- */
-export type tFeedSortField = typeof tFeedSortField[keyof typeof tFeedSortField];
-
-/**
- * Sort object for feed collection
- */
-export type tFeedSort = {
-    field: tFeedSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * Query object for feed collection
- */
-export type tFeedQuery = {
-    cursor?: tCursor;
-    filter?: tFeedFilter;
-    where?: tFeedWhere;
-    sort?: Array<tFeedSort>;
-};
-
-/**
- * Data for creating a new feed
- */
-export type tFeedCreate = {
-    /**
-     * Name of the feed
-     */
-    name: string;
-    /**
-     * ID of the location associated with the feed
-     */
-    locationId?: string | null;
-    query: tListingQuery;
-};
-
-/**
- * Feed data
- */
-export type tFeed = {
-    /**
-     * ID of the feed
-     */
-    id: string;
-    /**
-     * ID of the location associated with the feed
-     */
-    locationId: string | null;
-    /**
-     * Hero image for this feed (usually selected from the listings in the feed)
-     */
-    uploadId: string | null;
-    /**
-     * Name of the feed
-     */
-    name: string;
-    query: tListingQuery;
-    /**
-     * Hero banner for this feed
-     */
-    upload: tUpload | null;
-};
-
-/**
- * Data for toggling a listing in favourites
- */
-export type tFavouriteToggle = {
-    /**
-     * Whether to add (true) or remove (false) the listing from favourites
-     */
-    toggle: boolean;
-    /**
-     * Feed this listing belongs to
-     */
-    feedId: string;
-    /**
-     * ID of the listing to toggle
-     */
-    listingId: string;
-};
-
-/**
- * Listing data
- */
-export type tListing = {
-    /**
-     * ID of the listing
-     */
-    id: string;
-    /**
-     * Price of the listing
-     */
-    price: number;
-    priceType: tListingPriceEnum;
-    currency: tCurrencyListEnum;
-    /**
-     * Condition of the item (0-based index)
-     */
-    condition: number | null;
-    /**
-     * Age of the item (0-based index)
-     */
-    age: number | null;
-    /**
-     * Delivery methods for the listing
-     */
-    delivery: Array<tListingDeliveryEnum> | null;
-    /**
-     * Warranty type for the listing
-     */
-    warranty: tListingWarrantyEnum | null;
-    /**
-     * ID of the location
-     */
-    locationId: string;
-    /**
-     * ID of the category
-     */
-    categoryId: string;
-    /**
-     * ID of the gallery
-     */
-    galleryId: string;
-    /**
-     * ID of the draft this listing was created from
-     */
-    draftId: string | null;
-    /**
-     * Expiration timestamp
-     */
-    expiresAt: string;
-    /**
-     * Title of the item
-     */
-    title: string;
-    /**
-     * Description of the item
-     */
-    description: string | null;
-    /**
-     * Pros of the item
-     */
-    pros: tProsCons | null;
-    /**
-     * Cons of the item
-     */
-    cons: tProsCons | null;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    /**
-     * Last update timestamp
-     */
-    updatedAt: string;
-    location: tLocation;
-    category: tCategory;
-    /**
-     * Distance from the input location to the listing (in km; meta lat/lon must be provided)
-     */
-    distance: number | null;
-    gallery: tGallery & unknown;
-    /**
-     * Whether the user has this listing in favourites
-     */
-    isFavourite: boolean;
-    /**
-     * Whether the user ignored this listing
-     */
-    isIgnored: boolean;
-    /**
-     * Whether the user flagged this listing
-     */
-    hasFlag: boolean;
-    /**
-     * Whether the user has a transaction with this listing
-     */
-    transactionId: string | null;
-    /**
-     * Thumb type provided by the user (like/dislike) or null if not present
-     */
-    thumb: tThumbEnum | null;
-};
-
-/**
- * Category data
- */
-export type tCategory = {
-    /**
-     * ID of the category
-     */
-    id: string;
-    /**
-     * Group/name of the category
-     */
-    group: string;
-    /**
-     * Category name within the group
-     */
-    category: string;
-    /**
-     * Slug of the category
-     */
-    slug: string;
-    /**
-     * Sort order (position) of the category
-     */
-    sort: number;
-    /**
-     * Locale/language of the category
-     */
-    locale: string;
-};
-
-/**
- * Query object for favourite count
- */
-export type tFavouriteCountQuery = {
-    filter?: tFavouriteFilter;
-    where?: tFavouriteWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
-};
-
-/**
- * App-based filters
- */
-export type tFavouriteWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Filter object for favourite collection
- */
-export type tFavouriteFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Query object for favourite collection
- */
-export type tFavouriteQuery = {
-    cursor?: tCursor;
-    filter?: tFavouriteFilter;
-    where?: tFavouriteWhere;
-    sort?: Array<tFavouriteSort>;
-};
-
-/**
- * Field of the favourite sort
- */
-export const tFavouriteSortField = { createdAt: 'createdAt' } as const;
-
-/**
- * Field of the favourite sort
- */
-export type tFavouriteSortField = typeof tFavouriteSortField[keyof typeof tFavouriteSortField];
-
-/**
- * Sort object for favourite collection
- */
-export type tFavouriteSort = {
-    field: tFavouriteSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * Collection of favourite items
- */
-export type tFavouriteCollection = {
-    data: Array<tFavourite>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Favourite data
- */
-export type tFavourite = {
-    /**
-     * ID of the favourite item
-     */
-    id: string;
-    /**
-     * Feed this listing belongs to
-     */
-    feedId: string;
-    /**
-     * ID of the listing
-     */
-    listingId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-};
-
-/**
- * Data for updating an existing draft
- */
-export type tDraftPatch = {
-    patch: tDraftPatchData;
-    query: tDraftQuery;
-};
-
-/**
- * Field of the draft sort
- */
-export const tDraftSortField = { createdAt: 'createdAt', updatedAt: 'updatedAt' } as const;
-
-/**
- * Field of the draft sort
- */
-export type tDraftSortField = typeof tDraftSortField[keyof typeof tDraftSortField];
-
-/**
- * Sort object for draft collection
- */
-export type tDraftSort = {
-    field: tDraftSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * App-based filters
- */
-export type tDraftWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches drafts with the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches drafts with updatedAt greater than or equal to the provided date
-     */
-    updatedAtGte?: string;
-    /**
-     * This filter matches drafts with updatedAt less than or equal to the provided date
-     */
-    updatedAtLte?: string;
-    /**
-     * This filter matches drafts where usedAt is null (true) or not null (false)
-     */
-    usedAtIsNull?: boolean;
-};
-
-/**
- * User-land filters
- */
-export type tDraftFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches drafts with the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches drafts with updatedAt greater than or equal to the provided date
-     */
-    updatedAtGte?: string;
-    /**
-     * This filter matches drafts with updatedAt less than or equal to the provided date
-     */
-    updatedAtLte?: string;
-    /**
-     * This filter matches drafts where usedAt is null (true) or not null (false)
-     */
-    usedAtIsNull?: boolean;
-};
-
-/**
- * Query object for draft collection
- */
-export type tDraftQuery = {
-    cursor?: tCursor;
-    filter?: tDraftFilter;
-    where?: tDraftWhere;
-    sort?: Array<tDraftSort>;
-};
-
-/**
- * Fields to update (all optional)
- */
-export type tDraftPatchData = {
-    /**
-     * Price of the draft
-     */
-    price?: number | null | null;
-    /**
-     * Price type of the draft
-     */
-    priceType?: tListingPriceEnum | null;
-    /**
-     * Condition of the item (0-based index)
-     */
-    condition?: number | null;
-    /**
-     * Age of the item (0-based index)
-     */
-    age?: number | null;
-    /**
-     * Delivery methods for the draft
-     */
-    delivery?: Array<tListingDeliveryEnum> | null;
-    /**
-     * Warranty type for the draft
-     */
-    warranty?: tListingWarrantyEnum | null;
-    /**
-     * ID of the location
-     */
-    locationId?: string | null;
-    /**
-     * ID of the category
-     */
-    categoryId?: string | null;
-    /**
-     * ID of the gallery
-     */
-    galleryId?: string;
-    /**
-     * Expiration timestamp
-     */
-    expiresAt?: null | tListingExpireEnum;
-    /**
-     * Title of the item
-     */
-    title?: string | null;
-    /**
-     * Description of the item
-     */
-    description?: string | null;
-    /**
-     * Pros of the item
-     */
-    pros?: tProsCons | null;
-    /**
-     * Cons of the item
-     */
-    cons?: tProsCons | null;
-    /**
-     * Timestamp when the draft was used to create a listing
-     */
-    usedAt?: null | string | null;
-};
-
-/**
- * Request to create or update a draft gallery
- */
-export type tDraftGalleryCreate = {
-    /**
-     * The ID of the draft to add a gallery to
-     */
-    draftId: string;
-    /**
-     * IDs of the uploads; order of uploads defines order in the gallery
-     */
-    uploadIds: Array<string>;
-};
-
-/**
- * Data for creating a new draft
- */
-export type tDraftCreate = {
-    /**
-     * Price of the draft
-     */
-    price?: number;
-    priceType?: tListingPriceEnum & unknown;
-    /**
-     * Condition of the item (0-based index)
-     */
-    condition?: number;
-    /**
-     * Age of the item (0-based index)
-     */
-    age?: number;
-    /**
-     * Warranty type for the draft
-     */
-    warranty?: tListingWarrantyEnum | null;
-    /**
-     * ID of the location
-     */
-    locationId?: string;
-    /**
-     * ID of the category
-     */
-    categoryId?: string;
-    expiresAt?: tListingExpireEnum;
-    /**
-     * Title of the item
-     */
-    title?: string;
-    /**
-     * Description of the item
-     */
-    description?: string;
-    /**
-     * Pros of the item
-     */
-    pros?: tProsCons | null;
-    /**
-     * Cons of the item
-     */
-    cons?: tProsCons | null;
-    /**
-     * IDs of the uploads; order of uploads defines order in the gallery
-     */
-    uploadIds?: Array<string>;
-};
-
-/**
- * Draft data
- */
-export type tDraft = {
-    /**
-     * ID of the draft
-     */
-    id: string;
-    /**
-     * Price of the draft
-     */
-    price: number | null | null;
-    /**
-     * Price type of the draft
-     */
-    priceType: tListingPriceEnum | null;
-    /**
-     * Currency of the draft
-     */
-    currency: tCurrencyListEnum | null;
-    /**
-     * Condition of the item (0-based index)
-     */
-    condition: number | null;
-    /**
-     * Age of the item (0-based index)
-     */
-    age: number | null;
-    /**
-     * Delivery methods for the draft
-     */
-    delivery: Array<tListingDeliveryEnum> | null;
-    /**
-     * Warranty type for the draft
-     */
-    warranty: tListingWarrantyEnum | null;
-    /**
-     * ID of the location
-     */
-    locationId: string | null;
-    /**
-     * ID of the category
-     */
-    categoryId: string | null;
-    /**
-     * ID of the gallery
-     */
-    galleryId: string;
-    /**
-     * Expiration timestamp
-     */
-    expiresAt: null | tListingExpireEnum;
-    /**
-     * Title of the item
-     */
-    title: string | null;
-    /**
-     * Description of the item
-     */
-    description: string | null;
-    /**
-     * Pros of the item
-     */
-    pros: tProsCons | null;
-    /**
-     * Cons of the item
-     */
-    cons: tProsCons | null;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    /**
-     * Last update timestamp
-     */
-    updatedAt: string;
-    /**
-     * Timestamp when the draft was used to create a listing
-     */
-    usedAt: null | string | null;
-    /**
-     * Location data
-     */
-    location: tLocation | null;
-    /**
-     * Category data
-     */
-    category: tCategory | null;
-    gallery: tGallery;
-};
-
-/**
- * Query object for draft count
- */
-export type tDraftCountQuery = {
-    filter?: tDraftFilter;
-    where?: tDraftWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
-};
-
-/**
- * Collection of drafts
- */
-export type tDraftCollection = {
-    data: Array<{
-        id: string;
-    }>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Count data
- */
-export type tCount = {
-    /**
-     * Count of items based on provided where query.
-     */
-    where: number;
-    /**
-     * Count of items based on provided filter query.
-     */
-    filter: number;
-    /**
-     * Total count of items (no filters applied).
-     */
-    total: number;
-};
-
-/**
- * Just a note sent from various reasons, usually when something is fucked up.
- */
-export type tNotice = {
-    /**
-     * Message
-     */
-    message: string;
-    type: tNoticeTypeEnum;
-};
-
-/**
- * Type of notice
- */
-export const tNoticeTypeEnum = {
-    info: 'info',
-    warning: 'warning',
-    error: 'error'
-} as const;
-
-/**
- * Type of notice
- */
-export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
-
-export type tApiDraftCollectionRequest = {
-    body?: tDraftQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/draft/collection';
-};
-
-export type apiDraftCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiDraftCollectionError = apiDraftCollectionErrors[keyof apiDraftCollectionErrors];
-
-export type tApiDraftCollectionResponse = {
-    /**
-     * Access collection of drafts based on provided query
-     */
-    200: tDraftCollection;
-};
-
-export type apiDraftCollectionResponse = tApiDraftCollectionResponse[keyof tApiDraftCollectionResponse];
-
-export type tApiDraftCountRequest = {
-    body?: tDraftCountQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/draft/count';
-};
-
-export type apiDraftCountErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiDraftCountError = apiDraftCountErrors[keyof apiDraftCountErrors];
-
-export type tApiDraftCountResponse = {
-    /**
-     * Return counts based on provided query
-     */
-    200: tCount;
-};
-
-export type apiDraftCountResponse = tApiDraftCountResponse[keyof tApiDraftCountResponse];
-
-export type tApiDraftCreateRequest = {
-    /**
-     * Data for creating a new draft
-     */
-    body?: tDraftCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/draft/create';
-};
-
-export type apiDraftCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Draft not found after creation
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiDraftCreateError = apiDraftCreateErrors[keyof apiDraftCreateErrors];
-
-export type tApiDraftCreateResponse = {
-    /**
-     * The created draft
-     */
-    201: tDraft;
-};
-
-export type apiDraftCreateResponse = tApiDraftCreateResponse[keyof tApiDraftCreateResponse];
-
-export type tApiDraftDeleteRequest = {
-    /**
-     * Query object for draft deletion
-     */
-    body?: tDraftQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/draft/delete';
-};
-
-export type apiDraftDeleteErrors = {
-    /**
-     * Draft not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiDraftDeleteError = apiDraftDeleteErrors[keyof apiDraftDeleteErrors];
-
-export type tApiDraftDeleteResponse = {
-    /**
-     * The deleted draft
-     */
-    200: tDraft;
-};
-
-export type apiDraftDeleteResponse = tApiDraftDeleteResponse[keyof tApiDraftDeleteResponse];
-
-export type tApiDraftFetchRequest = {
-    /**
-     * Query object for draft fetch
-     */
-    body?: tDraftQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/draft/fetch';
-};
-
-export type apiDraftFetchErrors = {
-    /**
-     * Draft not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiDraftFetchError = apiDraftFetchErrors[keyof apiDraftFetchErrors];
-
-export type tApiDraftFetchResponse = {
-    /**
-     * Return a draft based on the provided query
-     */
-    200: tDraft;
-};
-
-export type apiDraftFetchResponse = tApiDraftFetchResponse[keyof tApiDraftFetchResponse];
-
-export type tApiDraftGalleryCreateRequest = {
-    /**
-     * Query object for draft gallery creation
-     */
-    body?: tDraftGalleryCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/draft/gallery/create';
-};
-
-export type apiDraftGalleryCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
-     * Draft not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiDraftGalleryCreateError = apiDraftGalleryCreateErrors[keyof apiDraftGalleryCreateErrors];
-
-export type tApiDraftGalleryCreateResponse = {
-    /**
-     * Gallery created or updated
-     */
-    200: tGallery & unknown;
-};
-
-export type apiDraftGalleryCreateResponse = tApiDraftGalleryCreateResponse[keyof tApiDraftGalleryCreateResponse];
-
-export type tApiDraftPatchRequest = {
-    /**
-     * Data for updating an existing draft
-     */
-    body?: tDraftPatch;
-    path?: never;
-    query?: never;
-    url: '/api/user/draft/patch';
-};
-
-export type apiDraftPatchErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Draft not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiDraftPatchError = apiDraftPatchErrors[keyof apiDraftPatchErrors];
-
-export type tApiDraftPatchResponse = {
-    /**
-     * The updated draft
-     */
-    200: tDraft;
-};
-
-export type apiDraftPatchResponse = tApiDraftPatchResponse[keyof tApiDraftPatchResponse];
-
-export type tApiFavouriteCollectionRequest = {
-    body?: tFavouriteQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/favourite/collection';
-};
-
-export type apiFavouriteCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFavouriteCollectionError = apiFavouriteCollectionErrors[keyof apiFavouriteCollectionErrors];
-
-export type tApiFavouriteCollectionResponse = {
-    /**
-     * Access collection of favourite items based on provided query
-     */
-    200: tFavouriteCollection;
-};
-
-export type apiFavouriteCollectionResponse = tApiFavouriteCollectionResponse[keyof tApiFavouriteCollectionResponse];
-
-export type tApiFavouriteCountRequest = {
-    body?: tFavouriteCountQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/favourite/count';
-};
-
-export type apiFavouriteCountErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFavouriteCountError = apiFavouriteCountErrors[keyof apiFavouriteCountErrors];
-
-export type tApiFavouriteCountResponse = {
-    /**
-     * Return counts based on provided query
-     */
-    200: tCount;
-};
-
-export type apiFavouriteCountResponse = tApiFavouriteCountResponse[keyof tApiFavouriteCountResponse];
-
-export type tApiFavouriteToggleRequest = {
-    body?: tFavouriteToggle;
-    path?: never;
-    query?: never;
-    url: '/api/user/favourite/toggle';
-};
-
-export type apiFavouriteToggleErrors = {
-    /**
-     * You cannot add your own listing to favourites
-     */
-    400: tNotice;
-    /**
-     * Listing not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFavouriteToggleError = apiFavouriteToggleErrors[keyof apiFavouriteToggleErrors];
-
-export type tApiFavouriteToggleResponse = {
-    /**
-     * Nothing to say, we're just happy
-     */
-    200: tListing;
-};
-
-export type apiFavouriteToggleResponse = tApiFavouriteToggleResponse[keyof tApiFavouriteToggleResponse];
-
-export type tApiFeedCreateRequest = {
-    /**
-     * Data for creating a new feed item
-     */
-    body?: tFeedCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/feed/create';
-};
-
-export type apiFeedCreateErrors = {
-    /**
-     * Feed not found after creation
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFeedCreateError = apiFeedCreateErrors[keyof apiFeedCreateErrors];
-
-export type tApiFeedCreateResponse = {
-    /**
-     * The created feed item
-     */
-    201: tFeed;
-};
-
-export type apiFeedCreateResponse = tApiFeedCreateResponse[keyof tApiFeedCreateResponse];
-
-export type tApiFeedPatchRequest = {
-    /**
-     * Data for updating a feed item
-     */
-    body?: tFeedPatch;
-    path?: never;
-    query?: never;
-    url: '/api/user/feed/patch';
-};
-
-export type apiFeedPatchErrors = {
-    /**
-     * Feed item not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFeedPatchError = apiFeedPatchErrors[keyof apiFeedPatchErrors];
-
-export type tApiFeedPatchResponse = {
-    /**
-     * The updated feed item
-     */
-    200: tFeed;
-};
-
-export type apiFeedPatchResponse = tApiFeedPatchResponse[keyof tApiFeedPatchResponse];
-
-export type tApiFeedFetchRequest = {
-    /**
-     * Query object for feed fetch
-     */
-    body?: tFeedQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/feed/fetch';
-};
-
-export type apiFeedFetchErrors = {
-    /**
-     * Feed item not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFeedFetchError = apiFeedFetchErrors[keyof apiFeedFetchErrors];
-
-export type tApiFeedFetchResponse = {
-    /**
-     * Return a feed item based on the provided query
-     */
-    200: tFeed;
-};
-
-export type apiFeedFetchResponse = tApiFeedFetchResponse[keyof tApiFeedFetchResponse];
-
-export type tApiFeedCollectionRequest = {
-    body?: tFeedQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/feed/collection';
-};
-
-export type apiFeedCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFeedCollectionError = apiFeedCollectionErrors[keyof apiFeedCollectionErrors];
-
-export type tApiFeedCollectionResponse = {
-    /**
-     * Access collection of feed items based on provided query
-     */
-    200: tFeedCollection;
-};
-
-export type apiFeedCollectionResponse = tApiFeedCollectionResponse[keyof tApiFeedCollectionResponse];
-
-export type tApiFeedCountRequest = {
-    body?: tFeedCountQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/feed/count';
-};
-
-export type apiFeedCountErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFeedCountError = apiFeedCountErrors[keyof apiFeedCountErrors];
-
-export type tApiFeedCountResponse = {
-    /**
-     * Return counts based on provided query
-     */
-    200: tCount;
-};
-
-export type apiFeedCountResponse = tApiFeedCountResponse[keyof tApiFeedCountResponse];
-
-export type tApiFeedDeleteRequest = {
-    /**
-     * Query object for feed deletion
-     */
-    body?: tFeedQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/feed/delete';
-};
-
-export type apiFeedDeleteErrors = {
-    /**
-     * Feed item not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFeedDeleteError = apiFeedDeleteErrors[keyof apiFeedDeleteErrors];
-
-export type tApiFeedDeleteResponse = {
-    /**
-     * The deleted feed item
-     */
-    200: tFeed;
-};
-
-export type apiFeedDeleteResponse = tApiFeedDeleteResponse[keyof tApiFeedDeleteResponse];
-
-export type tApiFeedGalleryCreateRequest = {
-    /**
-     * Query object for feed gallery creation
-     */
-    body?: tFeedGalleryCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/feed/gallery/create';
-};
-
-export type apiFeedGalleryCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
-     * Feed not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFeedGalleryCreateError = apiFeedGalleryCreateErrors[keyof apiFeedGalleryCreateErrors];
-
-export type tApiFeedGalleryCreateResponse = {
-    /**
-     * Gallery created or updated
-     */
-    200: tGallery & unknown;
-};
-
-export type apiFeedGalleryCreateResponse = tApiFeedGalleryCreateResponse[keyof tApiFeedGalleryCreateResponse];
-
-export type tApiThumbCreateRequest = {
-    /**
-     * Data for creating a new thumb
-     */
-    body?: tThumbCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/thumb/create';
-};
-
-export type apiThumbCreateErrors = {
-    /**
-     * Invalid request - duplicate thumb or invalid data
-     */
-    400: tNotice;
-    /**
-     * Listing not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiThumbCreateError = apiThumbCreateErrors[keyof apiThumbCreateErrors];
-
-export type tApiThumbCreateResponse = {
-    /**
-     * The thumb was created and the updated listing is returned
-     */
-    201: tListing;
-};
-
-export type apiThumbCreateResponse = tApiThumbCreateResponse[keyof tApiThumbCreateResponse];
-
-export type tApiFeedFavouriteCollectionRequest = {
-    body?: tFeedQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/feed-favourite/collection';
-};
-
-export type apiFeedFavouriteCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFeedFavouriteCollectionError = apiFeedFavouriteCollectionErrors[keyof apiFeedFavouriteCollectionErrors];
-
-export type tApiFeedFavouriteCollectionResponse = {
-    /**
-     * Access collection of feed items from favourites based on provided query
-     */
-    200: tFeedFavouriteCollection;
-};
-
-export type apiFeedFavouriteCollectionResponse = tApiFeedFavouriteCollectionResponse[keyof tApiFeedFavouriteCollectionResponse];
-
-export type tApiFlagCollectionRequest = {
-    body?: tFlagQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/flag/collection';
-};
-
-export type apiFlagCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFlagCollectionError = apiFlagCollectionErrors[keyof apiFlagCollectionErrors];
-
-export type tApiFlagCollectionResponse = {
-    /**
-     * Access collection of flag items based on provided query
-     */
-    200: tFlagCollection;
-};
-
-export type apiFlagCollectionResponse = tApiFlagCollectionResponse[keyof tApiFlagCollectionResponse];
-
-export type tApiFlagCountRequest = {
-    body?: tFlagCountQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/flag/count';
-};
-
-export type apiFlagCountErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFlagCountError = apiFlagCountErrors[keyof apiFlagCountErrors];
-
-export type tApiFlagCountResponse = {
-    /**
-     * Return counts based on provided query
-     */
-    200: tCount;
-};
-
-export type apiFlagCountResponse = tApiFlagCountResponse[keyof tApiFlagCountResponse];
-
-export type tApiFlagToggleRequest = {
-    body?: tFlagToggle;
-    path?: never;
-    query?: never;
-    url: '/api/user/flag/toggle';
-};
-
-export type apiFlagToggleErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Listing not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiFlagToggleError = apiFlagToggleErrors[keyof apiFlagToggleErrors];
-
-export type tApiFlagToggleResponse = {
-    /**
-     * Nothing to say, we're just happy
-     */
-    200: tListing;
-};
-
-export type apiFlagToggleResponse = tApiFlagToggleResponse[keyof tApiFlagToggleResponse];
 
 export type tApiGalleryFetchRequest = {
     /**
@@ -3541,7 +851,7 @@ export type tApiGalleryFetchResponse = {
     /**
      * Return a gallery based on the provided query
      */
-    200: tGallery & unknown;
+    200: tGallery;
 };
 
 export type apiGalleryFetchResponse = tApiGalleryFetchResponse[keyof tApiGalleryFetchResponse];
@@ -3566,7 +876,7 @@ export type tApiGalleryCollectionResponse = {
     /**
      * Access collection of galleries based on provided query
      */
-    200: tGalleryCollection;
+    200: tGalleryItemSchema;
 };
 
 export type apiGalleryCollectionResponse = tApiGalleryCollectionResponse[keyof tApiGalleryCollectionResponse];
@@ -3595,247 +905,6 @@ export type tApiGalleryCountResponse = {
 };
 
 export type apiGalleryCountResponse = tApiGalleryCountResponse[keyof tApiGalleryCountResponse];
-
-export type tApiIgnoreCollectionRequest = {
-    body?: tIgnoreQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/ignore/collection';
-};
-
-export type apiIgnoreCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiIgnoreCollectionError = apiIgnoreCollectionErrors[keyof apiIgnoreCollectionErrors];
-
-export type tApiIgnoreCollectionResponse = {
-    /**
-     * Access collection of ignore items based on provided query
-     */
-    200: tIgnoreCollection;
-};
-
-export type apiIgnoreCollectionResponse = tApiIgnoreCollectionResponse[keyof tApiIgnoreCollectionResponse];
-
-export type tApiIgnoreCountRequest = {
-    body?: tIgnoreCountQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/ignore/count';
-};
-
-export type apiIgnoreCountErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiIgnoreCountError = apiIgnoreCountErrors[keyof apiIgnoreCountErrors];
-
-export type tApiIgnoreCountResponse = {
-    /**
-     * Return counts based on provided query
-     */
-    200: tCount;
-};
-
-export type apiIgnoreCountResponse = tApiIgnoreCountResponse[keyof tApiIgnoreCountResponse];
-
-export type tApiIgnoreToggleRequest = {
-    body?: tIgnoreToggle;
-    path?: never;
-    query?: never;
-    url: '/api/user/ignore/toggle';
-};
-
-export type apiIgnoreToggleErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Listing not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiIgnoreToggleError = apiIgnoreToggleErrors[keyof apiIgnoreToggleErrors];
-
-export type tApiIgnoreToggleResponse = {
-    /**
-     * Nothing to say, we're just happy
-     */
-    200: tListing;
-};
-
-export type apiIgnoreToggleResponse = tApiIgnoreToggleResponse[keyof tApiIgnoreToggleResponse];
-
-export type tApiListingCreateRequest = {
-    /**
-     * Data for creating a new listing
-     */
-    body?: tListingCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing/create';
-};
-
-export type apiListingCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Listing not found after creation
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiListingCreateError = apiListingCreateErrors[keyof apiListingCreateErrors];
-
-export type tApiListingCreateResponse = {
-    /**
-     * The created listing
-     */
-    201: tListing;
-};
-
-export type apiListingCreateResponse = tApiListingCreateResponse[keyof tApiListingCreateResponse];
-
-export type tApiListingFetchRequest = {
-    /**
-     * Query object for listing fetch
-     */
-    body?: tListingQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing/fetch';
-};
-
-export type apiListingFetchErrors = {
-    /**
-     * Listing not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiListingFetchError = apiListingFetchErrors[keyof apiListingFetchErrors];
-
-export type tApiListingFetchResponse = {
-    /**
-     * Return a listing based on the provided query
-     */
-    200: tListing;
-};
-
-export type apiListingFetchResponse = tApiListingFetchResponse[keyof tApiListingFetchResponse];
-
-export type tApiListingCollectionRequest = {
-    body?: tListingQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing/collection';
-};
-
-export type apiListingCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiListingCollectionError = apiListingCollectionErrors[keyof apiListingCollectionErrors];
-
-export type tApiListingCollectionResponse = {
-    /**
-     * Access collection of listings based on provided query
-     */
-    200: tListingCollection;
-};
-
-export type apiListingCollectionResponse = tApiListingCollectionResponse[keyof tApiListingCollectionResponse];
-
-export type tApiListingCountRequest = {
-    body?: tListingCountQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing/count';
-};
-
-export type apiListingCountErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiListingCountError = apiListingCountErrors[keyof apiListingCountErrors];
-
-export type tApiListingCountResponse = {
-    /**
-     * Return counts based on provided query
-     */
-    200: tCount;
-};
-
-export type apiListingCountResponse = tApiListingCountResponse[keyof tApiListingCountResponse];
-
-export type tApiListingEventCreateRequest = {
-    /**
-     * Data for creating a new listing event
-     */
-    body?: tListingEventCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing-event/create';
-};
-
-export type apiListingEventCreateErrors = {
-    /**
-     * Cannot create event on your own listing
-     */
-    400: tNotice;
-    /**
-     * Listing not found
-     */
-    404: tNotice;
-    /**
-     * Too many requests - please wait between events
-     */
-    429: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiListingEventCreateError = apiListingEventCreateErrors[keyof apiListingEventCreateErrors];
-
-export type tApiListingEventCreateResponse = {
-    /**
-     * The listing event was created
-     */
-    201: tListingEvent;
-};
-
-export type apiListingEventCreateResponse = tApiListingEventCreateResponse[keyof tApiListingEventCreateResponse];
 
 export type tApiMessageThreadMessageCollectionRequest = {
     body?: tMessageQuery;
@@ -3866,7 +935,7 @@ export type tApiMessageThreadMessageCollectionResponse = {
     /**
      * Access collection of messages based on provided query
      */
-    200: tMessageCollection;
+    200: tMessageItemSchema;
 };
 
 export type apiMessageThreadMessageCollectionResponse = tApiMessageThreadMessageCollectionResponse[keyof tApiMessageThreadMessageCollectionResponse];
@@ -3908,127 +977,6 @@ export type tApiS3PresignResponse = {
 };
 
 export type apiS3PresignResponse = tApiS3PresignResponse[keyof tApiS3PresignResponse];
-
-export type tApiTransactionCollectionRequest = {
-    body?: tTransactionQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction/collection';
-};
-
-export type apiTransactionCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionCollectionError = apiTransactionCollectionErrors[keyof apiTransactionCollectionErrors];
-
-export type tApiTransactionCollectionResponse = {
-    /**
-     * Access collection of transactions based on provided query
-     */
-    200: tTransactionCollection;
-};
-
-export type apiTransactionCollectionResponse = tApiTransactionCollectionResponse[keyof tApiTransactionCollectionResponse];
-
-export type tApiTransactionCreateRequest = {
-    /**
-     * Data for creating a new transaction
-     */
-    body?: tTransactionCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction/create';
-};
-
-export type apiTransactionCreateErrors = {
-    /**
-     * Listing not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionCreateError = apiTransactionCreateErrors[keyof apiTransactionCreateErrors];
-
-export type tApiTransactionCreateResponse = {
-    /**
-     * The transaction was created
-     */
-    201: tTransaction;
-};
-
-export type apiTransactionCreateResponse = tApiTransactionCreateResponse[keyof tApiTransactionCreateResponse];
-
-export type tApiTransactionFetchRequest = {
-    /**
-     * Query object for transaction fetch
-     */
-    body?: tTransactionQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction/fetch';
-};
-
-export type apiTransactionFetchErrors = {
-    /**
-     * Transaction not found
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionFetchError = apiTransactionFetchErrors[keyof apiTransactionFetchErrors];
-
-export type tApiTransactionFetchResponse = {
-    /**
-     * Transaction matching provided query
-     */
-    200: tTransaction;
-};
-
-export type apiTransactionFetchResponse = tApiTransactionFetchResponse[keyof tApiTransactionFetchResponse];
-
-export type tApiTransactionBuyerInfoRequest = {
-    /**
-     * Query object for transaction access validation
-     */
-    body?: tTransactionQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction/buyer-info';
-};
-
-export type apiTransactionBuyerInfoErrors = {
-    /**
-     * Transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionBuyerInfoError = apiTransactionBuyerInfoErrors[keyof apiTransactionBuyerInfoErrors];
-
-export type tApiTransactionBuyerInfoResponse = {
-    /**
-     * Buyer info
-     */
-    200: tTransactionBuyerInfo;
-};
-
-export type apiTransactionBuyerInfoResponse = tApiTransactionBuyerInfoResponse[keyof tApiTransactionBuyerInfoResponse];
 
 export type tApiTransactionMessageGalleryCreateRequest = {
     /**
@@ -4230,42 +1178,6 @@ export type tApiTransactionMessageTextCreateResponse = {
 
 export type apiTransactionMessageTextCreateResponse = tApiTransactionMessageTextCreateResponse[keyof tApiTransactionMessageTextCreateResponse];
 
-export type tApiTransactionStatusAcceptRequest = {
-    /**
-     * Query object for listing transaction access validation
-     */
-    body?: tTransactionStatusAccept;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction/status/accept';
-};
-
-export type apiTransactionStatusAcceptErrors = {
-    /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
-     * Listing transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionStatusAcceptError = apiTransactionStatusAcceptErrors[keyof apiTransactionStatusAcceptErrors];
-
-export type tApiTransactionStatusAcceptResponse = {
-    /**
-     * Accepted status created
-     */
-    200: tTransactionStatus;
-};
-
-export type apiTransactionStatusAcceptResponse = tApiTransactionStatusAcceptResponse[keyof tApiTransactionStatusAcceptResponse];
-
 export type tApiTransactionStatusRejectRequest = {
     /**
      * Query object for listing transaction access validation
@@ -4302,86 +1214,6 @@ export type tApiTransactionStatusRejectResponse = {
 
 export type apiTransactionStatusRejectResponse = tApiTransactionStatusRejectResponse[keyof tApiTransactionStatusRejectResponse];
 
-export type tApiTransactionStatusResolveRequest = {
-    /**
-     * Query object for listing transaction access validation
-     */
-    body?: tTransactionStatusResolve;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction/status/resolve';
-};
-
-export type apiTransactionStatusResolveErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
-     * Listing transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionStatusResolveError = apiTransactionStatusResolveErrors[keyof apiTransactionStatusResolveErrors];
-
-export type tApiTransactionStatusResolveResponse = {
-    /**
-     * Resolved status created
-     */
-    200: tTransactionStatus;
-};
-
-export type apiTransactionStatusResolveResponse = tApiTransactionStatusResolveResponse[keyof tApiTransactionStatusResolveResponse];
-
-export type tApiTransactionStatusSuccessRequest = {
-    /**
-     * Query object for listing transaction access validation
-     */
-    body?: tTransactionStatusSuccess;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction/status/success';
-};
-
-export type apiTransactionStatusSuccessErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
-     * Listing transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionStatusSuccessError = apiTransactionStatusSuccessErrors[keyof apiTransactionStatusSuccessErrors];
-
-export type tApiTransactionStatusSuccessResponse = {
-    /**
-     * Success status created
-     */
-    200: tTransactionStatus;
-};
-
-export type apiTransactionStatusSuccessResponse = tApiTransactionStatusSuccessResponse[keyof tApiTransactionStatusSuccessResponse];
-
 export type tApiTransactionStatusDisputeRequest = {
     /**
      * Query object for listing transaction access validation
@@ -4417,46 +1249,6 @@ export type tApiTransactionStatusDisputeResponse = {
 };
 
 export type apiTransactionStatusDisputeResponse = tApiTransactionStatusDisputeResponse[keyof tApiTransactionStatusDisputeResponse];
-
-export type tApiTransactionStatusCloseRequest = {
-    /**
-     * Query object for listing transaction access validation
-     */
-    body?: tTransactionStatusClose;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction/status/close';
-};
-
-export type apiTransactionStatusCloseErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
-     * Listing transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionStatusCloseError = apiTransactionStatusCloseErrors[keyof apiTransactionStatusCloseErrors];
-
-export type tApiTransactionStatusCloseResponse = {
-    /**
-     * Closed status created
-     */
-    200: tTransactionStatus;
-};
-
-export type apiTransactionStatusCloseResponse = tApiTransactionStatusCloseResponse[keyof tApiTransactionStatusCloseResponse];
 
 export type tApiUploadCreateRequest = {
     /**

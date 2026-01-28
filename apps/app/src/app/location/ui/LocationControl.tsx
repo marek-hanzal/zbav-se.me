@@ -1,5 +1,5 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { tLocation } from "@zbav-se.me/sdk/api/user";
+import type { tLocation } from "@zbav-se.me/sdk/api/seller-user";
 import { type FC, useState } from "react";
 import { SaveControl } from "~/app/control/SaveControl";
 import { LocationSelect } from "~/app/location/ui/LocationSelect";

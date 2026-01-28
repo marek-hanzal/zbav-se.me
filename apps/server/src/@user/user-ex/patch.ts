@@ -1,10 +1,10 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { userExPatchFx } from "~/app/user-ex/fx/userExPatchFx";
-import { UserExPatchSchema } from "~/app/user-ex/schema/UserExPatchSchema";
+import { userExPatchFx } from "~/@user/user-ex/fx/userExPatchFx";
+import { UserExPatchSchema } from "~/@user/user-ex/schema/UserExPatchSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { UserExSchema } from "./schema/UserExSchema";
 
@@ -46,9 +46,9 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 				},
 			},
 			tags: [
-				"user-ex",
-				"user",
+				"User Ex",
 			],
+			summary: "Update user extended information",
 		}),
 		async (c) =>
 			Effect.gen(function* () {
@@ -60,7 +60,7 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 						dataFx: userExPatchFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<UserExSchema.Type, any, any>,
 					}),
 					200,
 				);

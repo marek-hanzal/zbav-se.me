@@ -1,8 +1,8 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
-import { withFeedCollectionQuery, withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
+import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer-user";
+import { withFeedCollectionQuery, withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { type FC, useState } from "react";
 import { CreateButton } from "~/app/feed/ui/button/CreateButton";
 import { Item } from "./Item";

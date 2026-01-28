@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { UploadDbSchema } from "~/app/upload/schema/UploadDbSchema";
+import { UploadTableSchema } from "~/database/@table/UploadTableSchema";
 
 export const UploadSchema = z
 	.object({
-		...UploadDbSchema.shape,
+		...UploadTableSchema.shape,
 	})
 	.omit({
 		userId: true,

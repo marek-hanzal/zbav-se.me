@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { TransactionList } from "~/app/transaction/ui/TransactionList";
+import { TransactionListingList } from "~/app/transaction-listing/ui/TransactionListingList";
 
 export const Route = createFileRoute("/$locale/ui/seller/message/list")({
 	component() {
@@ -9,21 +9,14 @@ export const Route = createFileRoute("/$locale/ui/seller/message/list")({
 				data-ui="/seller/message/list[TitleContainer]"
 				textTitle={"Messages (title)"}
 			>
-				<TransactionList
+				<TransactionListingList
 					query={{
 						sort: [
-							{
-								field: "status",
-								direction: "asc",
-							},
 							{
 								field: "createdAt",
 								direction: "desc",
 							},
 						],
-						meta: {
-							side: "seller",
-						},
 					}}
 					ui={{
 						inner: "default",

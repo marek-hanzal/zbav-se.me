@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiCategoryCollectionErrors, apiCategoryCountErrors, apiCategoryFetchErrors, apiListingSellerInfoErrors, apiLocationAutocompleteErrors, apiLocationFetchErrors, apiUploadFetchErrors, tApiCategoryCollectionRequest, tApiCategoryCollectionResponse, tApiCategoryCountRequest, tApiCategoryCountResponse, tApiCategoryFetchRequest, tApiCategoryFetchResponse, tApiListingSellerInfoRequest, tApiListingSellerInfoResponse, tApiLocationAutocompleteRequest, tApiLocationAutocompleteResponse, tApiLocationFetchRequest, tApiLocationFetchResponse, tApiUploadFetchRequest, tApiUploadFetchResponse } from './types.gen';
-import { zApiCategoryCollectionData, zApiCategoryCollectionResponse, zApiCategoryCountData, zApiCategoryCountResponse, zApiCategoryFetchData, zApiCategoryFetchResponse, zApiListingSellerInfoData, zApiListingSellerInfoResponse, zApiLocationAutocompleteData, zApiLocationAutocompleteResponse, zApiLocationFetchData, zApiLocationFetchResponse, zApiUploadFetchData, zApiUploadFetchResponse } from './zod.gen';
+import type { apiCategoryCollectionErrors, apiCategoryCountErrors, apiCategoryFetchErrors, apiLocationAutocompleteErrors, apiLocationFetchErrors, apiUploadFetchErrors, tApiCategoryCollectionRequest, tApiCategoryCollectionResponse, tApiCategoryCountRequest, tApiCategoryCountResponse, tApiCategoryFetchRequest, tApiCategoryFetchResponse, tApiLocationAutocompleteRequest, tApiLocationAutocompleteResponse, tApiLocationFetchRequest, tApiLocationFetchResponse, tApiUploadFetchRequest, tApiUploadFetchResponse } from './types.gen';
+import { zApiCategoryCollectionData, zApiCategoryCollectionResponse, zApiCategoryCountData, zApiCategoryCountResponse, zApiCategoryFetchData, zApiCategoryFetchResponse, zApiLocationAutocompleteData, zApiLocationAutocompleteResponse, zApiLocationFetchData, zApiLocationFetchResponse, zApiUploadFetchData, zApiUploadFetchResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -20,6 +20,8 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 };
 
 /**
+ * Fetch a category based on the provided query
+ *
  * Return a category based on the provided query
  */
 export const apiCategoryFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiCategoryFetchResponse, apiCategoryFetchErrors, ThrowOnError>({
@@ -35,6 +37,8 @@ export const apiCategoryFetch = <ThrowOnError extends boolean = false>(options?:
 });
 
 /**
+ * Fetch a collection of categories based on the provided query
+ *
  * Returns categories based on provided parameters
  */
 export const apiCategoryCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiCategoryCollectionResponse, apiCategoryCollectionErrors, ThrowOnError>({
@@ -50,6 +54,8 @@ export const apiCategoryCollection = <ThrowOnError extends boolean = false>(opti
 });
 
 /**
+ * Count categories based on the provided query
+ *
  * Returns count of categories based on provided query
  */
 export const apiCategoryCount = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiCategoryCountResponse, apiCategoryCountErrors, ThrowOnError>({
@@ -65,17 +71,8 @@ export const apiCategoryCount = <ThrowOnError extends boolean = false>(options?:
 });
 
 /**
- * Return seller info for a listing.
- */
-export const apiListingSellerInfo = <ThrowOnError extends boolean = false>(options: Options<tApiListingSellerInfoRequest, ThrowOnError>) => (options.client ?? client).post<tApiListingSellerInfoResponse, apiListingSellerInfoErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiListingSellerInfoData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiListingSellerInfoResponse.parseAsync(data),
-    url: '/api/session/listing/{listingId}/seller-info',
-    ...options
-});
-
-/**
+ * Return a location autocomplete
+ *
  * Return a location autocomplete
  */
 export const apiLocationAutocomplete = <ThrowOnError extends boolean = false>(options?: Options<tApiLocationAutocompleteRequest, ThrowOnError>) => (options?.client ?? client).post<tApiLocationAutocompleteResponse, apiLocationAutocompleteErrors, ThrowOnError>({
@@ -91,6 +88,8 @@ export const apiLocationAutocomplete = <ThrowOnError extends boolean = false>(op
 });
 
 /**
+ * Fetch a location based on the provided query
+ *
  * Return a location based on the provided query
  */
 export const apiLocationFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiLocationFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiLocationFetchResponse, apiLocationFetchErrors, ThrowOnError>({
@@ -106,6 +105,8 @@ export const apiLocationFetch = <ThrowOnError extends boolean = false>(options?:
 });
 
 /**
+ * Fetch an upload item based on the provided query
+ *
  * Return an upload item based on the provided query
  */
 export const apiUploadFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiUploadFetchResponse, apiUploadFetchErrors, ThrowOnError>({

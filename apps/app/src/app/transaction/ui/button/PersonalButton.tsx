@@ -1,9 +1,9 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
-import type { tTransaction } from "@zbav-se.me/sdk/api/user";
+import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
 import { withTransactionMessagePersonalCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
-import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user";
+import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { EmailIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useState } from "react";

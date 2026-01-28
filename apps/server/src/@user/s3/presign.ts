@@ -1,10 +1,10 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { S3ContextLayer } from "~/app/s3/context/S3ContextLayer";
-import { s3PreSignFx } from "~/app/s3/fx/s3PreSignFx";
-import { UploadContextLayer } from "~/app/upload/context/UploadContextLayer";
+import { S3ContextLayer } from "~/@session/s3/context/S3ContextLayer";
+import { s3PreSignFx } from "~/@session/s3/fx/s3PreSignFx";
+import { UploadContextLayer } from "~/@user/upload/context/UploadContextLayer";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
 import { ServerS3Schema } from "~/schema/env/ServerS3Schema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -49,9 +49,9 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 				},
 			},
 			tags: [
-				"s3",
-				"user",
+				"S3",
 			],
+			summary: "Generate a pre-signed URL for direct S3-compatible PUT upload",
 		}),
 		async (c) => {
 			const s3Config = ServerS3Schema.parse(process.env);
@@ -68,7 +68,7 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 							userId: user.id,
 							path,
 							extension,
-						}),
+						}) satisfies Effect.Effect<S3PreSignResponseSchema.Type, any, any>,
 					}),
 					200,
 				);

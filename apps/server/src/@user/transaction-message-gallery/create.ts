@@ -2,17 +2,16 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { MessageGallerySchema } from "~/app/message-gallery/schema/MessageGallerySchema";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
-import { transactionMessageGalleryCreateFx } from "~/app/transaction-message-gallery/fx/transactionMessageGalleryCreateFx";
+import { TransactionContextProvider } from "~/@buyer-user/transaction/context/TransactionContextFx";
+import { MessageGallerySchema } from "~/@user/message-gallery/schema/MessageGallerySchema";
+import { transactionMessageGalleryCreateFx } from "~/@user/transaction-message-gallery/fx/transactionMessageGalleryCreateFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionMessageGalleryCreateSchema } from "./schema/TransactionMessageGalleryCreateSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;
-
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -73,9 +72,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				},
 			},
 			tags: [
-				"transaction-message-gallery",
-				"user",
+				"Transaction Message Gallery",
 			],
+			summary: "Create a gallery message for a transaction",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
@@ -87,7 +86,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 						dataFx: transactionMessageGalleryCreateFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}),
+						}) satisfies Effect.Effect<MessageGallerySchema.Type, any, any>,
 					}),
 					200,
 				);

@@ -2,8 +2,11 @@ import { useNavigate } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
-import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
-import { withListingCollectionQuery, withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
+import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-session";
+import {
+	withListingCollectionQuery,
+	withListingFetchQuery,
+} from "@zbav-se.me/sdk/query/buyer-session/listing";
 import type { FC } from "react";
 import { CreateButton } from "~/app/draft/button/CreateButton";
 import { Hero } from "~/app/listing/ui/Hero";

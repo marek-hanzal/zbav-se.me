@@ -2,10 +2,10 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { TransactionContextProvider } from "~/@buyer-user/transaction/context/TransactionContextFx";
 import { SeedRequestSchema, seedFx } from "~/@public/seed/fx/seedFx";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
-import { TransactionContextProvider } from "~/app/transaction/context/TransactionContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
@@ -66,8 +66,7 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 			},
 			security: [],
 			tags: [
-				"misc",
-				"public",
+				"Misc",
 			],
 		}),
 		async (c) => {

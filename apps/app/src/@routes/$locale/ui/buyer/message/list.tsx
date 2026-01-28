@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { TransactionList } from "~/app/transaction/ui/TransactionList";
+import { TransactionList } from "~/app/transaction/ui/buyer/TransactionList";
 
 export const Route = createFileRoute("/$locale/ui/buyer/message/list")({
 	component() {
@@ -18,9 +18,6 @@ export const Route = createFileRoute("/$locale/ui/buyer/message/list")({
 								direction: "desc",
 							},
 						],
-						meta: {
-							side: "buyer",
-						},
 					}}
 					ui={{
 						inner: "default",

@@ -6,7 +6,7 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
-import { withFavouriteCountQuery } from "@zbav-se.me/sdk/query/user";
+import { withFavouriteCountQuery } from "@zbav-se.me/sdk/query/buyer-user/favourite";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";

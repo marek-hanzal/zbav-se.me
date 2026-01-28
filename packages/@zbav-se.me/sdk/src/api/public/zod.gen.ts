@@ -3,22 +3,6 @@
 import { z } from 'zod';
 
 /**
- * GitHub commit history count
- */
-export const zGitHubHistory = z.object({
-    date: z.string().register(z.globalRegistry, {
-        description: 'UTC day (YYYY-MM-DD)'
-    }),
-    count: z.int().gte(0).register(z.globalRegistry, {
-        description: 'Number of commits on this day'
-    })
-}).register(z.globalRegistry, {
-    description: 'GitHub commit history count'
-});
-
-export type zGitHubHistory = z.infer<typeof zGitHubHistory>;
-
-/**
  * Type of notice
  */
 export const zNoticeTypeEnum = z.enum([
@@ -44,6 +28,22 @@ export const zNotice = z.object({
 });
 
 export type zNotice = z.infer<typeof zNotice>;
+
+/**
+ * GitHub commit history count
+ */
+export const zGitHubHistory = z.object({
+    date: z.string().register(z.globalRegistry, {
+        description: 'UTC day (YYYY-MM-DD)'
+    }),
+    count: z.int().gte(0).register(z.globalRegistry, {
+        description: 'Number of commits on this day'
+    })
+}).register(z.globalRegistry, {
+    description: 'GitHub commit history count'
+});
+
+export type zGitHubHistory = z.infer<typeof zGitHubHistory>;
 
 export const zApiCronHourlyData = z.object({
     body: z.optional(z.never()),
@@ -262,6 +262,64 @@ export const zApiHealthResponse = z.object({
 });
 
 export type zapiHealthResponse = z.infer<typeof zApiHealthResponse>;
+
+export const zApiJanitorCleanupData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiJanitorCleanupRequest = z.infer<typeof zApiJanitorCleanupData>;
+
+/**
+ * When cleanup is done
+ */
+export const zApiJanitorCleanupResponse = z.array(z.object({
+    type: z.string().register(z.globalRegistry, {
+        description: 'Type of cleanup operation'
+    }),
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total items scanned'
+    }),
+    deleted: z.number().register(z.globalRegistry, {
+        description: 'Number of items deleted'
+    })
+})).register(z.globalRegistry, {
+    description: 'When cleanup is done'
+});
+
+export type zapiJanitorCleanupResponse = z.infer<typeof zApiJanitorCleanupResponse>;
+
+export const zApiMigrationRunData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiMigrationRunRequest = z.infer<typeof zApiMigrationRunData>;
+
+/**
+ * Executes app migrations
+ */
+export const zApiMigrationRunResponse = z.array(z.object({
+    migrationName: z.string().register(z.globalRegistry, {
+        description: 'Migration name run'
+    }),
+    direction: z.enum(['Up', 'Down']).register(z.globalRegistry, {
+        description: 'Migration direction'
+    }),
+    status: z.enum([
+        'Success',
+        'Error',
+        'NotExecuted'
+    ]).register(z.globalRegistry, {
+        description: 'Migration status'
+    })
+})).register(z.globalRegistry, {
+    description: 'Executes app migrations'
+});
+
+export type zapiMigrationRunResponse = z.infer<typeof zApiMigrationRunResponse>;
 
 export const zApiSeedData = z.object({
     body: z.optional(z.object({

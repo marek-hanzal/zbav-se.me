@@ -1,14 +1,14 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { messageCollectionFx } from "~/app/message/fx/messageCollectionFx";
-import { MessageQuerySchema } from "~/app/message/schema/MessageQuerySchema";
-import { MessageSchema } from "~/app/message/schema/MessageSchema";
-import { messageUserCheckFx } from "~/app/message-thread-user/fx/messageUserCheckFx";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
+import { messageCollectionFx } from "~/@user/message/fx/messageCollectionFx";
+import { MessageQuerySchema } from "~/@user/message/schema/MessageQuerySchema";
+import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
+import { MessageItemSchema } from "./schema/MessageItemSchema";
 
 const ParamsSchema = z
 	.object({
@@ -21,8 +21,8 @@ const ParamsSchema = z
 	});
 
 const CollectionSchema = withCollectionSchema({
-	schema: MessageSchema,
-	type: "MessageCollection",
+	schema: MessageItemSchema,
+	type: "MessageItemSchema",
 	description: "Collection of messages",
 });
 
@@ -72,10 +72,10 @@ export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx"
 				},
 			},
 			tags: [
-				"message-thread",
-				"message",
-				"user",
+				"Message Thread",
 			],
+			summary:
+				"Fetch a collection of messages for a message thread based on the provided query",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
@@ -89,7 +89,7 @@ export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx"
 					],
 				});
 
-				return c.json<withCollectionSchema.Type<MessageSchema>, 200>(
+				return c.json<z.infer<typeof CollectionSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: messageCollectionFx({
@@ -98,7 +98,11 @@ export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx"
 							scope: {
 								messageThreadId,
 							},
-						}),
+						}) satisfies Effect.Effect<
+							withCollectionSchema.Type<MessageItemSchema>,
+							any,
+							any
+						>,
 					}),
 					200,
 				);

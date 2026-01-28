@@ -5,18 +5,18 @@ export type clientOptions = {
 };
 
 /**
- * GitHub commit history count
+ * Type of notice
  */
-export type tGitHubHistory = {
-    /**
-     * UTC day (YYYY-MM-DD)
-     */
-    date: string;
-    /**
-     * Number of commits on this day
-     */
-    count: number;
-};
+export const tNoticeTypeEnum = {
+    info: 'info',
+    warning: 'warning',
+    error: 'error'
+} as const;
+
+/**
+ * Type of notice
+ */
+export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
 
 /**
  * Just a note sent from various reasons, usually when something is fucked up.
@@ -30,18 +30,18 @@ export type tNotice = {
 };
 
 /**
- * Type of notice
+ * GitHub commit history count
  */
-export const tNoticeTypeEnum = {
-    info: 'info',
-    warning: 'warning',
-    error: 'error'
-} as const;
-
-/**
- * Type of notice
- */
-export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
+export type tGitHubHistory = {
+    /**
+     * UTC day (YYYY-MM-DD)
+     */
+    date: string;
+    /**
+     * Number of commits on this day
+     */
+    count: number;
+};
 
 export type tApiCronHourlyRequest = {
     body?: never;
@@ -269,6 +269,73 @@ export type tApiHealthResponse = {
 };
 
 export type apiHealthResponse = tApiHealthResponse[keyof tApiHealthResponse];
+
+export type tApiJanitorCleanupRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/janitor/cleanup';
+};
+
+export type apiJanitorCleanupErrors = {
+    /**
+     * Error during cleanup
+     */
+    500: tNotice;
+};
+
+export type apiJanitorCleanupError = apiJanitorCleanupErrors[keyof apiJanitorCleanupErrors];
+
+export type tApiJanitorCleanupResponse = {
+    /**
+     * When cleanup is done
+     */
+    200: Array<{
+        /**
+         * Type of cleanup operation
+         */
+        type: string;
+        /**
+         * Total items scanned
+         */
+        total: number;
+        /**
+         * Number of items deleted
+         */
+        deleted: number;
+    }>;
+};
+
+export type apiJanitorCleanupResponse = tApiJanitorCleanupResponse[keyof tApiJanitorCleanupResponse];
+
+export type tApiMigrationRunRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/migration/run';
+};
+
+export type tApiMigrationRunResponse = {
+    /**
+     * Executes app migrations
+     */
+    200: Array<{
+        /**
+         * Migration name run
+         */
+        migrationName: string;
+        /**
+         * Migration direction
+         */
+        direction: 'Up' | 'Down';
+        /**
+         * Migration status
+         */
+        status: 'Success' | 'Error' | 'NotExecuted';
+    }>;
+};
+
+export type apiMigrationRunResponse = tApiMigrationRunResponse[keyof tApiMigrationRunResponse];
 
 export type tApiSeedRequest = {
     /**

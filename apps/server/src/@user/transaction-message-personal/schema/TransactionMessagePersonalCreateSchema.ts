@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 
 export const TransactionMessagePersonalCreateSchema = z
-	.object({
+	.looseObject({
 		transactionId: z.string().openapi({
 			description: "The ID of the transaction to add a personal message to",
 		}),
@@ -18,6 +18,7 @@ export const TransactionMessagePersonalCreateSchema = z
 			description: "ID of the location",
 		}),
 	})
+	.strip()
 	.openapi("TransactionMessagePersonalCreate", {
 		description: "Request to create a transaction personal message",
 	});

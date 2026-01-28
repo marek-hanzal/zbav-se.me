@@ -2,7 +2,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
-import { tListingExpireEnum } from "@zbav-se.me/sdk/api/user";
+import { tListingExpireEnum } from "@zbav-se.me/sdk/api/seller-user";
 import { uiSelectButton } from "@zbav-se.me/ui/ui";
 import { DateTime } from "luxon";
 import { type FC, useId } from "react";

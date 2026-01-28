@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiGithubHistoryErrors, apiSeedErrors, tApiCronDay0Request, tApiCronDay0Response, tApiCronDay12Request, tApiCronDay12Response, tApiCronDay16Request, tApiCronDay16Response, tApiCronDay20Request, tApiCronDay20Response, tApiCronDay4Request, tApiCronDay4Response, tApiCronDay8Request, tApiCronDay8Response, tApiCronHourlyRequest, tApiCronHourlyResponse, tApiCronMonthlyRequest, tApiCronMonthlyResponse, tApiGithubHistoryRequest, tApiGithubHistoryResponse, tApiHealthRequest, tApiHealthResponse, tApiSeedRequest, tApiSeedResponse } from './types.gen';
-import { zApiCronDay0Data, zApiCronDay0Response, zApiCronDay12Data, zApiCronDay12Response, zApiCronDay16Data, zApiCronDay16Response, zApiCronDay20Data, zApiCronDay20Response, zApiCronDay4Data, zApiCronDay4Response, zApiCronDay8Data, zApiCronDay8Response, zApiCronHourlyData, zApiCronHourlyResponse, zApiCronMonthlyData, zApiCronMonthlyResponse, zApiGithubHistoryData, zApiGithubHistoryResponse, zApiHealthData, zApiHealthResponse, zApiSeedData } from './zod.gen';
+import type { apiGithubHistoryErrors, apiJanitorCleanupErrors, apiSeedErrors, tApiCronDay0Request, tApiCronDay0Response, tApiCronDay12Request, tApiCronDay12Response, tApiCronDay16Request, tApiCronDay16Response, tApiCronDay20Request, tApiCronDay20Response, tApiCronDay4Request, tApiCronDay4Response, tApiCronDay8Request, tApiCronDay8Response, tApiCronHourlyRequest, tApiCronHourlyResponse, tApiCronMonthlyRequest, tApiCronMonthlyResponse, tApiGithubHistoryRequest, tApiGithubHistoryResponse, tApiHealthRequest, tApiHealthResponse, tApiJanitorCleanupRequest, tApiJanitorCleanupResponse, tApiMigrationRunRequest, tApiMigrationRunResponse, tApiSeedRequest, tApiSeedResponse } from './types.gen';
+import { zApiCronDay0Data, zApiCronDay0Response, zApiCronDay12Data, zApiCronDay12Response, zApiCronDay16Data, zApiCronDay16Response, zApiCronDay20Data, zApiCronDay20Response, zApiCronDay4Data, zApiCronDay4Response, zApiCronDay8Data, zApiCronDay8Response, zApiCronHourlyData, zApiCronHourlyResponse, zApiCronMonthlyData, zApiCronMonthlyResponse, zApiGithubHistoryData, zApiGithubHistoryResponse, zApiHealthData, zApiHealthResponse, zApiJanitorCleanupData, zApiJanitorCleanupResponse, zApiMigrationRunData, zApiMigrationRunResponse, zApiSeedData } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -126,6 +126,28 @@ export const apiHealth = <ThrowOnError extends boolean = false>(options?: Option
     responseType: 'json',
     responseValidator: async (data) => await zApiHealthResponse.parseAsync(data),
     url: '/api/public/health',
+    ...options
+});
+
+/**
+ * General cleanup operation
+ */
+export const apiJanitorCleanup = <ThrowOnError extends boolean = false>(options?: Options<tApiJanitorCleanupRequest, ThrowOnError>) => (options?.client ?? client).get<tApiJanitorCleanupResponse, apiJanitorCleanupErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiJanitorCleanupData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiJanitorCleanupResponse.parseAsync(data),
+    url: '/api/public/janitor/cleanup',
+    ...options
+});
+
+/**
+ * This route directly executes the migrations
+ */
+export const apiMigrationRun = <ThrowOnError extends boolean = false>(options?: Options<tApiMigrationRunRequest, ThrowOnError>) => (options?.client ?? client).post<tApiMigrationRunResponse, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiMigrationRunData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiMigrationRunResponse.parseAsync(data),
+    url: '/api/public/migration/run',
     ...options
 });
 

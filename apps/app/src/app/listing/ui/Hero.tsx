@@ -1,6 +1,6 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Overlay } from "@use-pico/client/ui/overlay";
-import type { tListing } from "@zbav-se.me/sdk/api/user";
+import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";

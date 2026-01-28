@@ -1,9 +1,9 @@
 import { jwtVerify } from "jose";
 import type z from "zod";
-import type { PayloadSchema } from "./PayloadSchema";
+import type { JwtPayloadSchema } from "~/schema/JwtPayloadSchema";
 
 export namespace verify {
-	export interface Props<TSchema extends PayloadSchema> {
+	export interface Props<TSchema extends JwtPayloadSchema> {
 		schema: TSchema;
 		issuer: string;
 		secret: string;
@@ -11,12 +11,12 @@ export namespace verify {
 		scope: string;
 	}
 
-	export interface Result<TSchema extends PayloadSchema> {
+	export interface Result<TSchema extends JwtPayloadSchema> {
 		payload: z.infer<TSchema>;
 	}
 }
 
-export async function verify<TSchema extends PayloadSchema>(
+export async function verify<TSchema extends JwtPayloadSchema>(
 	token: string,
 	{ schema, issuer, secret, audience = "token", scope }: verify.Props<TSchema>,
 ): Promise<verify.Result<TSchema>> {

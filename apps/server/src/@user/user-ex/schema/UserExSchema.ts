@@ -1,13 +1,14 @@
 import { z } from "@hono/zod-openapi";
-import { UserExDbSchema } from "~/app/user-ex/schema/UserExDbSchema";
+import { UserExTableSchema } from "~/database/@table/UserExTableSchema";
 
 export const UserExSchema = z
-	.object({
-		...UserExDbSchema.shape,
+	.looseObject({
+		...UserExTableSchema.shape,
 	})
 	.omit({
 		userId: true,
 	})
+	.strip()
 	.openapi("UserEx", {
 		description: "User extended information",
 	});

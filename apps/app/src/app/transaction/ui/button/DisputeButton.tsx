@@ -1,12 +1,14 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
-import type { tTransaction } from "@zbav-se.me/sdk/api/user";
+import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
 import { withTransactionStatusDisputeMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
-import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user";
-import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
+import { withTransactionFetchQuery as withBuyerTransactionFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
+import { withTransactionFetchQuery as withSellerTransactionFetchQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
+import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { FlagIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import { useSide } from "~/app/user/useSide";
 
 export namespace DisputeButton {
 	export interface Props extends ConfirmButton.Props {
@@ -16,6 +18,7 @@ export namespace DisputeButton {
 
 export const DisputeButton: FC<DisputeButton.Props> = ({ transaction, ...props }) => {
 	const queryClient = useQueryClient();
+	const side = useSide();
 	const mutation = withTransactionStatusDisputeMutation.useMutation();
 
 	return (
@@ -35,11 +38,19 @@ export const DisputeButton: FC<DisputeButton.Props> = ({ transaction, ...props }
 						},
 						{
 							onSuccess() {
-								withTransactionFetchQuery.invalidate(queryClient, {
-									where: {
-										id: transaction.id,
-									},
-								});
+								if (side === "buyer") {
+									withBuyerTransactionFetchQuery.invalidate(queryClient, {
+										where: {
+											id: transaction.id,
+										},
+									});
+								} else {
+									withSellerTransactionFetchQuery.invalidate(queryClient, {
+										where: {
+											id: transaction.id,
+										},
+									});
+								}
 								withMessageThreadMessageCollectionQuery.invalidate(queryClient, {
 									path: {
 										messageThreadId: transaction.messageThreadId,

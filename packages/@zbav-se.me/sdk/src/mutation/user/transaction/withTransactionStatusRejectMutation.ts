@@ -6,7 +6,7 @@ import type {
 	tApiTransactionStatusRejectResponse,
 	tTransactionStatusReject,
 } from "../../../api/user/types.gen";
-import { withTransactionFetchQuery } from "../../../query/user/transaction/withTransactionFetchQuery";
+import { withTransactionFetchQuery } from "../../../query/buyer-user/transaction/withTransactionFetchQuery";
 
 export const withTransactionStatusRejectMutation = withMutation<
 	tTransactionStatusReject,

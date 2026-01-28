@@ -1,9 +1,8 @@
 import { Effect } from "effect";
-import { RoutesContextFx } from "~/app/routes/RoutesContextFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import type { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCategoryApiFx } from "./category/withCategoryApiFx";
-import { withListingApiFx } from "./listing/withListingApiFx";
 import { withLocationApiFx } from "./location/withLocationApiFx";
 import { withUploadApiFx } from "./upload/withUploadApiFx";
 
@@ -17,10 +16,9 @@ export const withSessionApiFx = Effect.fn("withSessionApiFx")(function* () {
 	});
 
 	root.use("/api/session/*", async (c, next) => {
-		const session = c.get("session");
 		const user = c.get("user");
 
-		if (!session || !user) {
+		if (!user) {
 			return c.json<NoticeSchema.Type, 401>(
 				{
 					type: "error",
@@ -34,7 +32,6 @@ export const withSessionApiFx = Effect.fn("withSessionApiFx")(function* () {
 
 	yield* Effect.all([
 		withCategoryApiFx(),
-		withListingApiFx(),
 		withLocationApiFx(),
 		withUploadApiFx(),
 	]);
