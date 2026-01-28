@@ -11,7 +11,7 @@ import { uploadCreateFx } from "~/@user/upload/fx/uploadCreateFx";
 import { auth } from "~/auth/auth";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
-import { testabase } from "../../../../testabase";
+import { testabase } from "~test/testabase";
 
 describe("userEventSellerInfoFx", () => {
 	it("Single listing returns nothing", async () => {

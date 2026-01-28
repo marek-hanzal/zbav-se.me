@@ -6,7 +6,7 @@ import { userEventSellerInfoFx } from "~/@seller-user/user-event/fx/userEventSel
 import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
 import { auth } from "~/auth/auth";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { testabase } from "../../../../testabase";
+import { testabase } from "~test/testabase";
 
 describe("userEventSellerInfoFx", () => {
 	it("Resolved: counts foreign transaction.success as buyer-terminal for seller resolve", async () => {

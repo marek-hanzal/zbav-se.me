@@ -6,7 +6,7 @@ import { userEventBuyerInfoFx } from "~/@buyer-user/user-event/fx/userEventBuyer
 import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
 import { auth } from "~/auth/auth";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { testabase } from "../../../../testabase";
+import { testabase } from "~test/testabase";
 
 describe("userEventBuyerInfoFx", () => {
 	it("Improved buyer - bad behavior earlier, good behavior recently", async () => {
