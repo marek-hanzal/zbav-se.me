@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { S3ContextLayer } from "~/@common/s3/context/S3ContextLayer";
 import { s3PreSignFx } from "~/@common/s3/fx/s3PreSignFx";
-import { UploadContextLayer } from "~/@user/upload/context/UploadContextLayer";
+import { UploadContextLayer } from "~/@common/upload/context/UploadContextLayer";
 import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
 import { ServerS3Schema } from "~/schema/env/ServerS3Schema";
 import { NoticeSchema } from "~/schema/NoticeSchema";

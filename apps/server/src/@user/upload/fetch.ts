@@ -6,12 +6,11 @@ import { uploadFetchFx } from "~/@user/upload/fx/uploadFetchFx";
 import { UploadQuerySchema } from "~/@user/upload/schema/UploadQuerySchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { UploadSchema } from "./schema/UploadSchema";
+import { UploadSchema } from "~/@user/upload/schema/UploadSchema";
 
-export const withUploadFetchApiFx = Effect.fn("withUploadFetchApiFx")(function* () {
-	const { sessionHono } = yield* RoutesContextFx;
-
-	sessionHono.openapi(
+export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
+	userHono.openapi(
 		createRoute({
 			method: "post",
 			path: "/upload/fetch",

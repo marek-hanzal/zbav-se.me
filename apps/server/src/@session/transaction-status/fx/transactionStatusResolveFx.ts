@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { transactionPatchFx } from "~/@buyer-user/transaction/fx/transactionPatchFx";
-import { transactionResolveFx } from "~/@buyer-user/transaction/fx/transactionResolveFx";
+import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/@session/transaction-status/fx/transactionStatusCreateFx";
 import type { TransactionStatusResolveSchema } from "~/@session/transaction-status/schema/TransactionStatusResolveSchema";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";

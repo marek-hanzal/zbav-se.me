@@ -35,6 +35,12 @@ The `@common` domain exists to:
 - **s3PreSignFx** - Effect function to generate pre-signed URLs for S3 uploads
 - Used in `@user` and `@public` domains for file upload operations
 
+### Upload Context
+- **UploadContextFx** - Effect context for upload configuration (CDN base URL)
+- **UploadContextLayer** - Effect layer provider for upload context
+- **UploadContextLayerFx** - Effect layer factory for upload context
+- Used in `@user` domain for upload operations and S3 pre-signing
+
 ## Access Rules
 
 - **No API endpoints** - This domain does not expose HTTP routes

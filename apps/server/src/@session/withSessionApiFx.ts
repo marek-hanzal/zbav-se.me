@@ -4,7 +4,6 @@ import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import type { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCategoryApiFx } from "./category/withCategoryApiFx";
 import { withLocationApiFx } from "./location/withLocationApiFx";
-import { withUploadApiFx } from "./upload/withUploadApiFx";
 
 export const withSessionApiFx = Effect.fn("withSessionApiFx")(function* () {
 	const { root, sessionHono } = yield* RoutesContextFx;
@@ -33,7 +32,6 @@ export const withSessionApiFx = Effect.fn("withSessionApiFx")(function* () {
 	yield* Effect.all([
 		withCategoryApiFx(),
 		withLocationApiFx(),
-		withUploadApiFx(),
 	]);
 
 	root.route("/api/session", sessionHono);
