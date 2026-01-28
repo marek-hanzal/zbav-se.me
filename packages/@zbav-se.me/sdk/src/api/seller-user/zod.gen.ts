@@ -999,6 +999,49 @@ export const zTransactionQuery = z.object({
 export type zTransactionQuery = z.infer<typeof zTransactionQuery>;
 
 /**
+ * Transaction data
+ */
+export const zTransaction = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the related listing'
+    }),
+    messageThreadId: z.string().register(z.globalRegistry, {
+        description: 'ID of the message thread associated with the transaction'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    updatedAt: z.string().register(z.globalRegistry, {
+        description: 'Last update timestamp'
+    }),
+    expiresAt: z.string().register(z.globalRegistry, {
+        description: 'Expiration timestamp'
+    }),
+    title: z.string().register(z.globalRegistry, {
+        description: 'Transaction title'
+    }),
+    status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'Current status of the listing transaction'
+    })),
+    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
+        description: 'Gallery data with items'
+    })),
+    price: z.number().register(z.globalRegistry, {
+        description: 'Price of the listing'
+    }),
+    priceType: zListingPriceEnum,
+    currency: zCurrencyListEnum,
+    location: zLocation
+}).register(z.globalRegistry, {
+    description: 'Transaction data'
+});
+
+export type zTransaction = z.infer<typeof zTransaction>;
+
+/**
  * Transaction listing collection item
  */
 export const zTransactionListingItem = z.object({
@@ -1314,6 +1357,21 @@ export type zapiTransactionCollectionRequest = z.infer<typeof zApiTransactionCol
 export const zApiTransactionCollectionResponse = zTransactionItemSchema;
 
 export type zapiTransactionCollectionResponse = z.infer<typeof zApiTransactionCollectionResponse>;
+
+export const zApiTransactionFetchData = z.object({
+    body: z.optional(zTransactionQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionFetchRequest = z.infer<typeof zApiTransactionFetchData>;
+
+/**
+ * Transaction matching provided query
+ */
+export const zApiTransactionFetchResponse = zTransaction;
+
+export type zapiTransactionFetchResponse = z.infer<typeof zApiTransactionFetchResponse>;
 
 export const zApiTransactionListingCollectionData = z.object({
     body: z.optional(zTransactionListingQuery),

@@ -965,6 +965,49 @@ export type tTransactionQuery = {
 };
 
 /**
+ * Transaction data
+ */
+export type tTransaction = {
+    /**
+     * ID of the transaction
+     */
+    id: string;
+    /**
+     * ID of the related listing
+     */
+    listingId: string;
+    /**
+     * ID of the message thread associated with the transaction
+     */
+    messageThreadId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    /**
+     * Last update timestamp
+     */
+    updatedAt: string;
+    /**
+     * Expiration timestamp
+     */
+    expiresAt: string;
+    /**
+     * Transaction title
+     */
+    title: string;
+    status: tTransactionStatusEnum & unknown;
+    gallery: tGallery & unknown;
+    /**
+     * Price of the listing
+     */
+    price: number;
+    priceType: tListingPriceEnum;
+    currency: tCurrencyListEnum;
+    location: tLocation;
+};
+
+/**
  * Transaction listing collection item
  */
 export type tTransactionListingItem = {
@@ -1411,6 +1454,38 @@ export type tApiTransactionCollectionResponse = {
 };
 
 export type apiTransactionCollectionResponse = tApiTransactionCollectionResponse[keyof tApiTransactionCollectionResponse];
+
+export type tApiTransactionFetchRequest = {
+    /**
+     * Query object for transaction fetch
+     */
+    body?: tTransactionQuery;
+    path?: never;
+    query?: never;
+    url: '/api/seller-user/transaction/fetch';
+};
+
+export type apiTransactionFetchErrors = {
+    /**
+     * Transaction not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionFetchError = apiTransactionFetchErrors[keyof apiTransactionFetchErrors];
+
+export type tApiTransactionFetchResponse = {
+    /**
+     * Transaction matching provided query
+     */
+    200: tTransaction;
+};
+
+export type apiTransactionFetchResponse = tApiTransactionFetchResponse[keyof tApiTransactionFetchResponse];
 
 export type tApiTransactionListingCollectionRequest = {
     body?: tTransactionListingQuery;

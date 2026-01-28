@@ -1671,6 +1671,76 @@ export const sTransactionQuery = {
     }
 } as const;
 
+export const sTransaction = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        },
+        messageThreadId: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string'
+        },
+        updatedAt: {
+            type: 'string'
+        },
+        expiresAt: {
+            type: 'string'
+        },
+        title: {
+            type: 'string'
+        },
+        status: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/TransactionStatusEnum'
+                },
+                {}
+            ]
+        },
+        gallery: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/Gallery'
+                },
+                {}
+            ]
+        },
+        price: {
+            type: 'number'
+        },
+        priceType: {
+            $ref: '#/components/schemas/ListingPriceEnum'
+        },
+        currency: {
+            $ref: '#/components/schemas/CurrencyListEnum'
+        },
+        location: {
+            $ref: '#/components/schemas/Location'
+        }
+    },
+    required: [
+        'id',
+        'listingId',
+        'messageThreadId',
+        'createdAt',
+        'updatedAt',
+        'expiresAt',
+        'title',
+        'status',
+        'gallery',
+        'price',
+        'priceType',
+        'currency',
+        'location'
+    ]
+} as const;
+
 export const sTransactionListingItem = {
     type: 'object',
     properties: {
