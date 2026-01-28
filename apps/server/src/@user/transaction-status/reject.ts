@@ -4,11 +4,11 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
-import { transactionStatusRejectFx } from "~/@session/transaction-status/fx/transactionStatusRejectFx";
-import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
+import { transactionStatusRejectFx } from "./fx/transactionStatusRejectFx";
+import { TransactionStatusSchema } from "./schema/TransactionStatusSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { TransactionStatusRejectSchema } from "~/@common/transaction-status/schema/TransactionStatusRejectSchema";
+import { TransactionStatusRejectSchema } from "./schema/TransactionStatusRejectSchema";
 
 export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;

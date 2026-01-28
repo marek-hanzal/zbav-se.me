@@ -23,7 +23,6 @@ The `@common` domain exists to:
 - Used across `@buyer-user`, `@seller-user`, `@user`, and `@public` domains
 
 ### Transaction Status Schemas
-- **TransactionStatusRejectSchema** - Zod schema for rejecting a transaction
 - Used in `@user` and `@session` domains for transaction status operations
 
 ### S3 Operations
