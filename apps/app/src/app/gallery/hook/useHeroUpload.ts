@@ -1,4 +1,4 @@
-import type { tGalleryItem, tUpload } from "@zbav-se.me/sdk/api/user";
+import type { tGalleryItem, tUpload } from "@zbav-se.me/sdk/api/seller-user";
 import { useMaybeHeroUpload } from "./useMaybeHeroUpload";
 
 export const useHeroUpload = (items: tGalleryItem[]): tUpload => {

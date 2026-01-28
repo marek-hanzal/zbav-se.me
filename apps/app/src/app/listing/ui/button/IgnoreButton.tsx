@@ -1,8 +1,8 @@
 import { TrashIcon } from "@use-pico/client/icon";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
-import { withIgnoreToggleMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { withIgnoreToggleMutation } from "@zbav-se.me/sdk/mutation/buyer-user/ignore";
+import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-session/listing";
 import type { FC } from "react";
 
 export namespace IgnoreButton {

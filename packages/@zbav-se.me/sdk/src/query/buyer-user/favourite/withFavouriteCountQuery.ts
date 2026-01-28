@@ -1,6 +1,9 @@
 import { withQuery } from "@use-pico/client/query";
 import { apiFavouriteCount } from "../../../api/buyer-user/sdk.gen";
-import type { tApiFavouriteCountResponse, tFavouriteCountQuery } from "../../../api/buyer-user/types.gen";
+import type {
+	tApiFavouriteCountResponse,
+	tFavouriteCountQuery,
+} from "../../../api/buyer-user/types.gen";
 
 export const withFavouriteCountQuery = withQuery<
 	tFavouriteCountQuery,

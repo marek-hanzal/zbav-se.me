@@ -1,7 +1,7 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { tDraft, tListingExpireEnum } from "@zbav-se.me/sdk/api/user";
-import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
+import type { tDraft, tListingExpireEnum } from "@zbav-se.me/sdk/api/seller-user";
+import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
+import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveControl } from "~/app/control/SaveControl";

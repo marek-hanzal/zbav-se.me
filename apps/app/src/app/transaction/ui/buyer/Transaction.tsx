@@ -1,8 +1,8 @@
 import { VisibilityContext } from "@use-pico/client/context";
 import { createNoopVisibilityStore } from "@use-pico/client/store";
 import { Container } from "@use-pico/client/ui/container";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user/listing";
-import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user/transaction";
+import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-session/listing";
+import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { useRef, useState } from "react";

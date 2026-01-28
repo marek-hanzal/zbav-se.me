@@ -2,7 +2,7 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { feedCreateDefault } from "~/app/feed/service/feedCreateDefault";

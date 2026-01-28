@@ -2,8 +2,8 @@ import { PlusIcon, SpinnerIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
-import type { tDraft } from "@zbav-se.me/sdk/api/user";
-import { withDraftCreateMutation } from "@zbav-se.me/sdk/mutation/user/draft";
+import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
+import { withDraftCreateMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
 import type { FC } from "react";
 
 export namespace CreateButton {

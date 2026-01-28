@@ -1,6 +1,9 @@
 import { withQuery } from "@use-pico/client/query";
 import { apiListingCollection } from "../../../api/buyer-session/sdk.gen";
-import type { tApiListingCollectionResponse, tListingQuery } from "../../../api/buyer-session/types.gen";
+import type {
+	tApiListingCollectionResponse,
+	tListingQuery,
+} from "../../../api/buyer-session/types.gen";
 
 export const withListingCollectionQuery = withQuery<
 	tListingQuery,

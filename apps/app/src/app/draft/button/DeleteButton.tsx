@@ -1,8 +1,8 @@
 import { TrashIcon } from "@use-pico/client/icon";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/user";
-import { withDraftDeleteMutation } from "@zbav-se.me/sdk/mutation/user";
+import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
+import { withDraftDeleteMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
 import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 

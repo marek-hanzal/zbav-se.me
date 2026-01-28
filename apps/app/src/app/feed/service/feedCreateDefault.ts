@@ -1,6 +1,6 @@
 import type { QueryClient } from "@tanstack/react-query";
 import { translator } from "@use-pico/common/translator";
-import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 
 export namespace feedCreateDefault {
 	export interface Props {

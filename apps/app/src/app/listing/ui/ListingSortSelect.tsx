@@ -3,7 +3,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { StateType } from "@use-pico/common/type";
-import type { tListingSort, tListingSortField } from "@zbav-se.me/sdk/api/user";
+import type { tListingSort, tListingSortField } from "@zbav-se.me/sdk/api/buyer-session";
 import { uiSelectButton } from "@zbav-se.me/ui/ui";
 import { type FC, useId } from "react";
 

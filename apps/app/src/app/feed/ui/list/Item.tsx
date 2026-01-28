@@ -3,7 +3,7 @@ import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { tvc } from "@use-pico/cls";
-import type { tFeed } from "@zbav-se.me/sdk/api/user";
+import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type PropsWithChildren, type ReactNode, useState } from "react";
 import { SetupSheet } from "~/app/feed/ui/SetupSheet";

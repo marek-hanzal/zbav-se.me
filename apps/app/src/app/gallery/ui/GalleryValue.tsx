@@ -1,6 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
-import type { tUpload } from "@zbav-se.me/sdk/api/user";
+import type { tUpload } from "@zbav-se.me/sdk/api/seller-user";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";

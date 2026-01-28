@@ -5,7 +5,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { tvc } from "@use-pico/cls";
-import type { tDraft } from "@zbav-se.me/sdk/api/user";
+import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { useMaybeHeroUpload } from "~/app/gallery/hook/useMaybeHeroUpload";

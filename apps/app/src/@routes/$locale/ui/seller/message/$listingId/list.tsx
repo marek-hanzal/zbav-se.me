@@ -4,7 +4,7 @@ import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { createNoopVisibilityStore } from "@use-pico/client/store";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user/listing";
+import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-session/listing";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { useState } from "react";

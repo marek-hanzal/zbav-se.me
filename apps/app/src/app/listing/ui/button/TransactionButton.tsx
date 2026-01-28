@@ -1,5 +1,5 @@
 import { Button } from "@use-pico/client/ui/button";
-import type { tListing } from "@zbav-se.me/sdk/api/user";
+import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { CreateButton } from "~/app/transaction/ui/CreateButton";

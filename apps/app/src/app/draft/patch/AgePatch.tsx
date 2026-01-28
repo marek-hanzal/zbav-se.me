@@ -1,8 +1,8 @@
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
-import type { tDraft } from "@zbav-se.me/sdk/api/user";
-import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
+import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
+import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
+import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";

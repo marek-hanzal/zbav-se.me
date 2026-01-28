@@ -1,7 +1,7 @@
 import { EditIcon, Icon } from "@use-pico/client/icon";
 import { LabelValue } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import type { tFeed } from "@zbav-se.me/sdk/api/user";
+import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
 
 export namespace TitleValue {

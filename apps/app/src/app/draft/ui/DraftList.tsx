@@ -1,6 +1,9 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import type { tDraft, tDraftQuery } from "@zbav-se.me/sdk/api/user";
-import { withDraftCollectionQuery, withDraftFetchQuery } from "@zbav-se.me/sdk/query/user";
+import type { tDraft, tDraftQuery } from "@zbav-se.me/sdk/api/seller-user";
+import {
+	withDraftCollectionQuery,
+	withDraftFetchQuery,
+} from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { FC } from "react";
 import { CreateButton } from "~/app/draft/button/CreateButton";
 import { DraftItem } from "./DraftItem";

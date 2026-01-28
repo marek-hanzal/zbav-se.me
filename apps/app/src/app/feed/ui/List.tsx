@@ -1,6 +1,6 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
-import { withFeedCountQuery } from "@zbav-se.me/sdk/query/user";
+import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer-user";
+import { withFeedCountQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
 import type { Item } from "~/app/feed/ui/list/Item";
 import { Content } from "./list/Content";

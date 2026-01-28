@@ -2,7 +2,7 @@ import { useLocale } from "@use-pico/client/hook";
 import { Badge } from "@use-pico/client/ui/badge";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tListingPriceEnum } from "@zbav-se.me/sdk/api/user";
+import type { tListingPriceEnum } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 

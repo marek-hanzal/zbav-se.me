@@ -1,8 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
 import type { Container } from "@use-pico/client/ui/container";
-import type { tDraft } from "@zbav-se.me/sdk/api/user";
-import { withDraftGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user";
+import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
+import { withDraftGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
+import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { GalleryUploadControl } from "~/app/photo/ui/GalleryUploadControl";

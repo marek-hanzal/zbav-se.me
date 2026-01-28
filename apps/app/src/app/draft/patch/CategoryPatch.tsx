@@ -1,9 +1,9 @@
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
-import type { tDraft } from "@zbav-se.me/sdk/api/user";
-import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
+import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
+import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
+import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { CategorySelect } from "~/app/category/ui/CategorySelect";

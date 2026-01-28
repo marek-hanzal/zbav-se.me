@@ -3,8 +3,8 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
-import type { tFeed } from "@zbav-se.me/sdk/api/user";
-import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
+import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
+import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import { type FC, useState } from "react";
 import { NameInput } from "../input/NameInput";
 
