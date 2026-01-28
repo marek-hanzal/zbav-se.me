@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { withFeedFavouriteSourceSelectFx } from "~/@buyer-user/feed-favourite/db/withFeedFavouriteSourceSelectFx";
 
 export namespace withFeedFavouriteCollectionSelectFx {
@@ -16,6 +17,26 @@ export const withFeedFavouriteCollectionSelectFx = Effect.fn("withFeedFavouriteC
 			sort,
 		});
 
-		return sourceSelect.select("f.id");
+		return sourceSelect
+			.selectAll("f")
+			.select((eb) =>
+				jsonObjectFrom(
+					eb
+						.selectFrom("upload as u")
+						.selectAll()
+						.whereRef("u.id", "=", "f.uploadId")
+						.limit(1),
+				).as("upload"),
+			)
+			.select((eb) =>
+				eb
+					.selectFrom("favourite")
+					.select((eb) => eb.fn.count<number>("favourite.id").$notNull().as("count"))
+					.whereRef("favourite.feedId", "=", "f.id")
+					.where("favourite.userId", "=", userId)
+					.$asScalar()
+					.$notNull()
+					.as("count"),
+			);
 	},
 );
