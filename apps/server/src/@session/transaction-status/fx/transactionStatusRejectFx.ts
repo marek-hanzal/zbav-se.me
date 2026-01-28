@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { transactionPatchFx } from "~/@buyer-user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@buyer-user/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/@session/transaction-status/fx/transactionStatusCreateFx";
-import type { TransactionStatusRejectSchema } from "~/@session/transaction-status/schema/TransactionStatusRejectSchema";
+import type { TransactionStatusRejectSchema } from "~/@common/transaction-status/schema/TransactionStatusRejectSchema";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 

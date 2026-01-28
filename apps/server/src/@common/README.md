@@ -28,6 +28,11 @@ The `@common` domain exists to:
 - **RoutesContextLayerFx** - Effect layer factory for routes context
 - Used across all domains to access Hono route instances for API registration
 
+### Transaction Status Schemas
+- **TransactionStatusDisputeSchema** - Zod schema for disputing a transaction
+- **TransactionStatusRejectSchema** - Zod schema for rejecting a transaction
+- Used in `@user` and `@session` domains for transaction status operations
+
 ## Access Rules
 
 - **No API endpoints** - This domain does not expose HTTP routes
