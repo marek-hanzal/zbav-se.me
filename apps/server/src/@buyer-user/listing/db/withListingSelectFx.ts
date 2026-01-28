@@ -5,7 +5,7 @@ import type { ThumbEnumSchema } from "~/database/@enum/ThumbEnumSchema";
 import { withGallerySelectFx } from "~/@user/gallery/db/withGallerySelectFx";
 import type { CategoryTableSchema } from "~/database/@table/CategoryTableSchema";
 import type { LocationTableSchema } from "~/database/@table/LocationTableSchema";
-import type { ListingDeliveryEnumSchema } from "~/@buyer-user/listing/schema/ListingDeliveryEnumSchema";
+import type { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
 import { withListingSourceSelectFx } from "~/@buyer-user/listing/db/withListingSourceSelectFx";
 
 export namespace withListingSelectFx {

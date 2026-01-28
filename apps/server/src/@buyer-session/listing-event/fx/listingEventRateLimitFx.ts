@@ -2,7 +2,7 @@ import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { TooManyRequests } from "~/error/TooManyRequests";
-import type { ListingEventEnumSchema } from "~/@buyer-session/listing-event/schema/ListingEventEnumSchema";
+import type { ListingEventEnumSchema } from "~/database/@enum/ListingEventEnumSchema";
 
 export namespace listingEventRateLimitFx {
 	export interface Props {
