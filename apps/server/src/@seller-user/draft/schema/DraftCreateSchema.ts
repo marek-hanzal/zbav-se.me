@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { ListingExpireEnumSchema } from "~/@buyer-session/listing/schema/ListingExpireEnumSchema";
 import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/database/@enum/ListingWarrantyEnumSchema";
-import { ProsConsSchema } from "~/@buyer-session/listing/schema/ProsConsSchema";
+import { ProsConsSchema } from "~/@common/listing/schema/ProsConsSchema";
 
 export const DraftCreateSchema = z
 	.looseObject({

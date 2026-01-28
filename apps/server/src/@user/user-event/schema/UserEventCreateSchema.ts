@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { UserEventEnumSchema } from "./UserEventEnumSchema";
+import { UserEventEnumSchema } from "~/@common/user-event/schema/UserEventEnumSchema";
 import { UserEventScopeEnumSchema } from "./UserEventScopeEnumSchema";
 import { UserEventSourceEnumSchema } from "./UserEventSourceEnumSchema";
 

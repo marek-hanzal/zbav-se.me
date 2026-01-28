@@ -41,6 +41,14 @@ The `@common` domain exists to:
 - **UploadContextLayerFx** - Effect layer factory for upload context
 - Used in `@user` domain for upload operations and S3 pre-signing
 
+### User Event Schema
+- **UserEventEnumSchema** - Zod schema for user event types (like, dislike, listing.create, transaction.* events)
+- Used in `@user` domain for user event operations and database table schemas
+
+### Listing Schema
+- **ProsConsSchema** - Zod schema for pros/cons arrays (max 5 items, each string max 72 characters)
+- Used in `@seller-user` domain for listing and draft creation, and in database table schemas
+
 ## Access Rules
 
 - **No API endpoints** - This domain does not expose HTTP routes

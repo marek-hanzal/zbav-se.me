@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/database/@enum/ListingWarrantyEnumSchema";
-import { ProsConsSchema } from "~/@buyer-session/listing/schema/ProsConsSchema";
+import { ProsConsSchema } from "~/@common/listing/schema/ProsConsSchema";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 import { VectorSchema } from "~/schema/VectorSchema";
 
