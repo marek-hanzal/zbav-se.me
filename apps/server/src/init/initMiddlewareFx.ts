@@ -5,7 +5,7 @@ import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
 import { auth } from "~/auth/auth";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
 import { ServerViteSchema } from "~/schema/env/ServerViteSchema";
 
 export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {

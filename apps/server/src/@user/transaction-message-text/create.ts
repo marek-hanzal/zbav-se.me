@@ -6,7 +6,7 @@ import { TransactionContextProvider } from "~/@common/transaction/context/Transa
 import { MessageTextSchema } from "~/@user/message-text/schema/MessageTextSchema";
 import { transactionMessageTextCreateFx } from "~/@user/transaction-message-text/fx/transactionMessageTextCreateFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionMessageTextCreateSchema } from "./schema/TransactionMessageTextCreateSchema";
 

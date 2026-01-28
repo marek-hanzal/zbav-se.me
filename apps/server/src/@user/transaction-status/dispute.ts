@@ -6,7 +6,7 @@ import { TransactionContextProvider } from "~/@common/transaction/context/Transa
 import { transactionStatusDisputeFx } from "~/@session/transaction-status/fx/transactionStatusDisputeFx";
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionStatusDisputeSchema } from "./schema/TransactionStatusDisputeSchema";
 

@@ -6,7 +6,7 @@ import { UploadContextLayer } from "~/@user/upload/context/UploadContextLayer";
 import { uploadCreateFx } from "~/@user/upload/fx/uploadCreateFx";
 import { UploadCreateSchema } from "~/@user/upload/schema/UploadCreateSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
 import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { UploadSchema } from "./schema/UploadSchema";

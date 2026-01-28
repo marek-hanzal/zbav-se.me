@@ -4,7 +4,7 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { FeedSchema } from "~/@buyer-user/feed/schema/FeedSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { feedCreateFx } from "./fx/feedCreateFx";
 import { FeedCreateSchema } from "./schema/FeedCreateSchema";

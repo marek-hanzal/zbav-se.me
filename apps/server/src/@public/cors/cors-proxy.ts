@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
 
 export const withCorsProxyApiFx = Effect.fn("withCorsProxyApiFx")(function* () {
 	const { root } = yield* RoutesContextFx;

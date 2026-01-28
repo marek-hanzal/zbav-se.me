@@ -22,6 +22,12 @@ The `@common` domain exists to:
 - **TransactionContextProvider** - Effect provider for transaction context
 - Used across `@buyer-user`, `@seller-user`, `@user`, and `@public` domains
 
+### Route Context
+- **RoutesContextFx** - Effect context for Hono route instances (root, public, session, user, buyer-user, seller-user, etc.)
+- **RoutesContextLayer** - Effect layer provider for routes context
+- **RoutesContextLayerFx** - Effect layer factory for routes context
+- Used across all domains to access Hono route instances for API registration
+
 ## Access Rules
 
 - **No API endpoints** - This domain does not expose HTTP routes

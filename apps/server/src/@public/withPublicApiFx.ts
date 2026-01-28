@@ -4,7 +4,7 @@ import { withCorsApiFx } from "~/@public/cors/withCorsApiFx";
 import { withOpenApiApiFx } from "~/@public/open-api/withOpenApiApiFx";
 import { withOriginApiFx } from "~/@public/origin/withOriginApiFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
 import { withCronApiFx } from "./cron/withCronApiFx";
 import { withGithubApiFx } from "./github/withGithubApiFx";
 import { withHealthApiFx } from "./health/withHealthApiFx";

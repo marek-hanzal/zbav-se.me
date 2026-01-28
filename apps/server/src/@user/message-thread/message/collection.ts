@@ -5,7 +5,7 @@ import { messageCollectionFx } from "~/@user/message/fx/messageCollectionFx";
 import { MessageQuerySchema } from "~/@user/message/schema/MessageQuerySchema";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { MessageItemSchema } from "./schema/MessageItemSchema";

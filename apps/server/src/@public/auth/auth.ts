@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { auth } from "~/auth/auth";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
 
 export const withAuthEndpointFx = Effect.fn("withAuthEndpointFx")(function* () {
 	const { root } = yield* RoutesContextFx;

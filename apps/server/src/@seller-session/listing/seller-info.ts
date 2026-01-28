@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { listingGetSellerInfoFx } from "~/@seller-session/listing/fx/listingGetSellerInfoFx";
 import { SellerInfoSchema } from "~/@seller-session/listing/schema/SellerInfoSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 const ListingSellerInfoParamsSchema = z

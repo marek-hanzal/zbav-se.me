@@ -6,7 +6,7 @@ import { feedGalleryCreateFx } from "~/@buyer-user/feed-gallery/fx/feedGalleryCr
 import { FeedGalleryCreateSchema } from "~/@buyer-user/feed-gallery/schema/FeedGalleryCreateSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {

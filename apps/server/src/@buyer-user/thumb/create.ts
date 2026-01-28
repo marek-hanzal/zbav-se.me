@@ -5,7 +5,7 @@ import { Effect, Match } from "effect";
 import { ListingSchema } from "~/@buyer-session/listing/schema/ListingSchema";
 import { thumbCreateFx } from "~/@buyer-user/thumb/fx/thumbCreateFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { ThumbCreateSchema } from "./schema/ThumbCreateSchema";
 

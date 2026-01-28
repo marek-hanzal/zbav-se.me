@@ -5,7 +5,7 @@ import { Effect } from "effect";
 import { cleanupFx } from "~/@public/janitor/cleanup/cleanupFx";
 import { S3ContextLayer } from "~/@session/s3/context/S3ContextLayer";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
 import { ServerS3Schema } from "~/schema/env/ServerS3Schema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { CleanupSchema } from "./schema/CleanupSchema";

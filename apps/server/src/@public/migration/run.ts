@@ -1,6 +1,6 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { Effect } from "effect";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
 import { MigrationSchema } from "./schema/MigrationSchema";
 
 export const withMigrationRunApiFx = Effect.fn("withMigrationRunApiFx")(function* () {

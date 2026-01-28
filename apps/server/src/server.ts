@@ -5,7 +5,7 @@ import { Pool } from "pg";
 import { withPublicHono } from "~/@public/withPublicHono";
 import { KyselyContextLayerFx } from "~/database/context/KyselyContextLayerFx";
 import { initMiddlewareFx } from "~/init/initMiddlewareFx";
-import { RoutesContextLayer } from "~/routes/context/RoutesContextLayer";
+import { RoutesContextLayer } from "~/@common/route/context/RoutesContextLayer";
 import { ServerDatabaseSchema } from "~/schema/env/ServerDatabaseSchema";
 import { withBuyerSessionApiFx } from "./@buyer-session/withBuyerSessionApiFx";
 import { withBuyerSessionHono } from "./@buyer-session/withBuyerSessionHono";
@@ -22,7 +22,7 @@ import { withUserApiFx } from "./@user/withUserApiFx";
 import { withUserHono } from "./@user/withUserHono";
 import { database } from "./database/kysely";
 import { withHono } from "./hono/withHono";
-import { RoutesContextFx } from "./routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
 import type { NoticeSchema } from "./schema/NoticeSchema";
 
 const app = await Effect.gen(function* () {

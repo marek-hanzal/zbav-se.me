@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { userExPatchFx } from "~/@user/user-ex/fx/userExPatchFx";
 import { UserExPatchSchema } from "~/@user/user-ex/schema/UserExPatchSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { UserExSchema } from "./schema/UserExSchema";
 

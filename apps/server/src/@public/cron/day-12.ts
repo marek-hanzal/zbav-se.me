@@ -1,6 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect } from "effect";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/@common/route/context/RoutesContextFx";
 import { CronSchema } from "./schema/CronSchema";
 
 export const withDay12EndpointFx = Effect.fn("withDay12EndpointFx")(function* () {
