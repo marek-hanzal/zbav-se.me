@@ -2,14 +2,13 @@ import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
 import { TransactionFilterSchema } from "~/@seller-user/transaction/schema/TransactionFilterSchema";
 import { TransactionSortSchema } from "~/@seller-user/transaction/schema/TransactionSortSchema";
+import { TransactionWhereSchema } from "~/@seller-user/transaction/schema/TransactionWhereSchema";
 
 export const TransactionQuerySchema = z
 	.looseObject({
 		cursor: CursorSchema.optional(),
 		filter: TransactionFilterSchema.optional(),
-		where: TransactionFilterSchema.openapi("TransactionWhere", {
-			description: "App-based filters",
-		}).optional(),
+		where: TransactionWhereSchema.optional(),
 		sort: TransactionSortSchema.array().optional(),
 	})
 	.strip()

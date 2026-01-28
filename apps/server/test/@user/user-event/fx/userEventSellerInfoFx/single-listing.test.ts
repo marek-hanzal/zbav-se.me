@@ -2,7 +2,7 @@ import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { listingCreateFx } from "~/@seller-user/listing/fx/listingCreateFx";
-import { userEventSellerInfoFx } from "~/@seller-user/user-event/fx/userEventSellerInfoFx";
+import { userEventSellerInfoFx } from "~/@seller-session/user-event/fx/userEventSellerInfoFx";
 import { categoryFetchFx } from "~/@session/category/fx/categoryFetchFx";
 import { LocationContextLayer } from "~/@session/location/context/LocationContextLayer";
 import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompleteFx";

@@ -2,16 +2,16 @@ import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
 import { DraftFilterSchema } from "~/@seller-user/draft/schema/DraftFilterSchema";
 import { DraftSortSchema } from "~/@seller-user/draft/schema/DraftSortSchema";
+import { DraftWhereSchema } from "~/@seller-user/draft/schema/DraftWhereSchema";
 
 export const DraftQuerySchema = z
-	.object({
+	.looseObject({
 		cursor: CursorSchema.optional(),
 		filter: DraftFilterSchema.optional(),
-		where: DraftFilterSchema.optional().openapi("DraftWhere", {
-			description: "App-based filters",
-		}),
+		where: DraftWhereSchema.optional(),
 		sort: DraftSortSchema.array().optional(),
 	})
+	.strip()
 	.openapi("DraftQuery", {
 		description: "Query object for draft collection",
 	});
