@@ -1159,6 +1159,26 @@ export type tTransactionStatusAccept = {
 };
 
 /**
+ * Request to dispute a listing transaction
+ */
+export type tTransactionStatusDispute = {
+    /**
+     * The ID of the listing transaction to dispute
+     */
+    transactionId: string;
+};
+
+/**
+ * Request to reject a listing transaction
+ */
+export type tTransactionStatusReject = {
+    /**
+     * The ID of the listing transaction to reject
+     */
+    transactionId: string;
+};
+
+/**
  * Request to resolve a listing transaction
  */
 export type tTransactionStatusResolve = {
@@ -1547,6 +1567,86 @@ export type tApiTransactionStatusAcceptResponse = {
 };
 
 export type apiTransactionStatusAcceptResponse = tApiTransactionStatusAcceptResponse[keyof tApiTransactionStatusAcceptResponse];
+
+export type tApiTransactionStatusDisputeRequest = {
+    /**
+     * Query object for listing transaction access validation
+     */
+    body?: tTransactionStatusDispute;
+    path?: never;
+    query?: never;
+    url: '/api/seller-user/transaction/status/dispute';
+};
+
+export type apiTransactionStatusDisputeErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionStatusDisputeError = apiTransactionStatusDisputeErrors[keyof apiTransactionStatusDisputeErrors];
+
+export type tApiTransactionStatusDisputeResponse = {
+    /**
+     * Disputed status created
+     */
+    200: tTransactionStatus;
+};
+
+export type apiTransactionStatusDisputeResponse = tApiTransactionStatusDisputeResponse[keyof tApiTransactionStatusDisputeResponse];
+
+export type tApiTransactionStatusRejectRequest = {
+    /**
+     * Query object for listing transaction access validation
+     */
+    body?: tTransactionStatusReject;
+    path?: never;
+    query?: never;
+    url: '/api/seller-user/transaction/status/reject';
+};
+
+export type apiTransactionStatusRejectErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionStatusRejectError = apiTransactionStatusRejectErrors[keyof apiTransactionStatusRejectErrors];
+
+export type tApiTransactionStatusRejectResponse = {
+    /**
+     * Rejected status created
+     */
+    200: tTransactionStatus;
+};
+
+export type apiTransactionStatusRejectResponse = tApiTransactionStatusRejectResponse[keyof tApiTransactionStatusRejectResponse];
 
 export type tApiTransactionStatusResolveRequest = {
     /**

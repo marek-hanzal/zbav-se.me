@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiCategoryCollectionErrors, apiCategoryCountErrors, apiCategoryFetchErrors, apiLocationAutocompleteErrors, apiLocationFetchErrors, apiUploadFetchErrors, tApiCategoryCollectionRequest, tApiCategoryCollectionResponse, tApiCategoryCountRequest, tApiCategoryCountResponse, tApiCategoryFetchRequest, tApiCategoryFetchResponse, tApiLocationAutocompleteRequest, tApiLocationAutocompleteResponse, tApiLocationFetchRequest, tApiLocationFetchResponse, tApiUploadFetchRequest, tApiUploadFetchResponse } from './types.gen';
-import { zApiCategoryCollectionData, zApiCategoryCollectionResponse, zApiCategoryCountData, zApiCategoryCountResponse, zApiCategoryFetchData, zApiCategoryFetchResponse, zApiLocationAutocompleteData, zApiLocationAutocompleteResponse, zApiLocationFetchData, zApiLocationFetchResponse, zApiUploadFetchData, zApiUploadFetchResponse } from './zod.gen';
+import type { apiCategoryCollectionErrors, apiCategoryCountErrors, apiCategoryFetchErrors, apiLocationAutocompleteErrors, apiLocationFetchErrors, tApiCategoryCollectionRequest, tApiCategoryCollectionResponse, tApiCategoryCountRequest, tApiCategoryCountResponse, tApiCategoryFetchRequest, tApiCategoryFetchResponse, tApiLocationAutocompleteRequest, tApiLocationAutocompleteResponse, tApiLocationFetchRequest, tApiLocationFetchResponse } from './types.gen';
+import { zApiCategoryCollectionData, zApiCategoryCollectionResponse, zApiCategoryCountData, zApiCategoryCountResponse, zApiCategoryFetchData, zApiCategoryFetchResponse, zApiLocationAutocompleteData, zApiLocationAutocompleteResponse, zApiLocationFetchData, zApiLocationFetchResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -97,23 +97,6 @@ export const apiLocationFetch = <ThrowOnError extends boolean = false>(options?:
     responseType: 'json',
     responseValidator: async (data) => await zApiLocationFetchResponse.parseAsync(data),
     url: '/api/session/location/fetch',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Fetch an upload item based on the provided query
- *
- * Return an upload item based on the provided query
- */
-export const apiUploadFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiUploadFetchResponse, apiUploadFetchErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiUploadFetchData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiUploadFetchResponse.parseAsync(data),
-    url: '/api/session/upload/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',

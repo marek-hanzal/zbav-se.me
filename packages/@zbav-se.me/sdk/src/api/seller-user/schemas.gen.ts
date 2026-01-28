@@ -1929,6 +1929,30 @@ export const sTransactionStatusAccept = {
     ]
 } as const;
 
+export const sTransactionStatusDispute = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId'
+    ]
+} as const;
+
+export const sTransactionStatusReject = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId'
+    ]
+} as const;
+
 export const sTransactionStatusResolve = {
     type: 'object',
     properties: {

@@ -1209,6 +1209,32 @@ export const zTransactionStatusAccept = z.object({
 export type zTransactionStatusAccept = z.infer<typeof zTransactionStatusAccept>;
 
 /**
+ * Request to dispute a listing transaction
+ */
+export const zTransactionStatusDispute = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the listing transaction to dispute'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to dispute a listing transaction'
+});
+
+export type zTransactionStatusDispute = z.infer<typeof zTransactionStatusDispute>;
+
+/**
+ * Request to reject a listing transaction
+ */
+export const zTransactionStatusReject = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the listing transaction to reject'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to reject a listing transaction'
+});
+
+export type zTransactionStatusReject = z.infer<typeof zTransactionStatusReject>;
+
+/**
  * Request to resolve a listing transaction
  */
 export const zTransactionStatusResolve = z.object({
@@ -1402,6 +1428,36 @@ export type zapiTransactionStatusAcceptRequest = z.infer<typeof zApiTransactionS
 export const zApiTransactionStatusAcceptResponse = zTransactionStatus;
 
 export type zapiTransactionStatusAcceptResponse = z.infer<typeof zApiTransactionStatusAcceptResponse>;
+
+export const zApiTransactionStatusDisputeData = z.object({
+    body: z.optional(zTransactionStatusDispute),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionStatusDisputeRequest = z.infer<typeof zApiTransactionStatusDisputeData>;
+
+/**
+ * Disputed status created
+ */
+export const zApiTransactionStatusDisputeResponse = zTransactionStatus;
+
+export type zapiTransactionStatusDisputeResponse = z.infer<typeof zApiTransactionStatusDisputeResponse>;
+
+export const zApiTransactionStatusRejectData = z.object({
+    body: z.optional(zTransactionStatusReject),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionStatusRejectRequest = z.infer<typeof zApiTransactionStatusRejectData>;
+
+/**
+ * Rejected status created
+ */
+export const zApiTransactionStatusRejectResponse = zTransactionStatus;
+
+export type zapiTransactionStatusRejectResponse = z.infer<typeof zApiTransactionStatusRejectResponse>;
 
 export const zApiTransactionStatusResolveData = z.object({
     body: z.optional(zTransactionStatusResolve),

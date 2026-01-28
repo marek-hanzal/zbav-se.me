@@ -924,87 +924,6 @@ export const sTransactionMessageTextCreate = {
     ]
 } as const;
 
-export const sTransactionSideEnum = {
-    type: 'string',
-    enum: [
-        'seller',
-        'buyer',
-        'transaction',
-        'system',
-        'unknown'
-    ]
-} as const;
-
-export const sTransactionStatusEnum = {
-    type: 'string',
-    enum: [
-        'pending',
-        'open',
-        'resolved',
-        'dispute',
-        'rejected',
-        'expired',
-        'success',
-        'closed'
-    ]
-} as const;
-
-export const sTransactionStatus = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        transactionId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        },
-        side: {
-            $ref: '#/components/schemas/TransactionSideEnum'
-        },
-        status: {
-            $ref: '#/components/schemas/TransactionStatusEnum'
-        },
-        createdAt: {
-            type: 'string'
-        }
-    },
-    required: [
-        'id',
-        'transactionId',
-        'listingId',
-        'side',
-        'status',
-        'createdAt'
-    ]
-} as const;
-
-export const sTransactionStatusReject = {
-    type: 'object',
-    properties: {
-        transactionId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'transactionId'
-    ]
-} as const;
-
-export const sTransactionStatusDispute = {
-    type: 'object',
-    properties: {
-        transactionId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'transactionId'
-    ]
-} as const;
-
 export const sUploadCreate = {
     type: 'object',
     properties: {
@@ -1016,6 +935,86 @@ export const sUploadCreate = {
     required: [
         'url'
     ]
+} as const;
+
+export const sUploadFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sUploadWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sUploadSortField = {
+    type: 'string',
+    enum: [
+        'createdAt'
+    ]
+} as const;
+
+export const sUploadSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/UploadSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sUploadQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/UploadFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/UploadWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/UploadSort'
+            }
+        }
+    }
 } as const;
 
 export const sUserSideEnum = {
