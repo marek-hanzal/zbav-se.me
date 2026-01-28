@@ -1579,34 +1579,13 @@ export const zTransactionSort = z.object({
 export type zTransactionSort = z.infer<typeof zTransactionSort>;
 
 /**
- * Side of the user
- */
-export const zUserSideEnum = z.enum(['seller', 'buyer']).register(z.globalRegistry, {
-    description: 'Side of the user'
-});
-
-export type zUserSideEnum = z.infer<typeof zUserSideEnum>;
-
-/**
- * Meta data for transaction collection
- */
-export const zTransactionMeta = z.object({
-    side: z.optional(zUserSideEnum)
-}).register(z.globalRegistry, {
-    description: 'Meta data for transaction collection'
-});
-
-export type zTransactionMeta = z.infer<typeof zTransactionMeta>;
-
-/**
  * Query object for transaction collection
  */
 export const zTransactionQuery = z.object({
     cursor: z.optional(zCursor),
     filter: z.optional(zTransactionFilter),
     where: z.optional(zTransactionWhere),
-    sort: z.optional(z.array(zTransactionSort)),
-    meta: z.optional(zTransactionMeta)
+    sort: z.optional(z.array(zTransactionSort))
 }).register(z.globalRegistry, {
     description: 'Query object for transaction collection'
 });

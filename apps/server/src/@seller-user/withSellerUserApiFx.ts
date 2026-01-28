@@ -5,6 +5,7 @@ import type { NoticeSchema } from "~/schema/NoticeSchema";
 import { withDraftApiFx } from "./draft/withDraftApiFx";
 import { withDraftGalleryApiFx } from "./draft-gallery/withDraftGalleryApiFx";
 import { withListingApiFx } from "./listing/withListingApiFx";
+import { withTransactionApiFx } from "./transaction/withTransactionApiFx";
 import { withTransactionListingApiFx } from "./transaction-listing/withTransactionListingApiFx";
 import { withTransactionStatusApiFx } from "./transaction-status/withTransactionStatusApiFx";
 
@@ -36,6 +37,7 @@ export const withSellerUserApiFx = Effect.fn("withSellerUserApiFx")(function* ()
 		withDraftApiFx(),
 		withDraftGalleryApiFx(),
 		withListingApiFx(),
+		withTransactionApiFx(),
 		withTransactionListingApiFx(),
 		withTransactionStatusApiFx(),
 	]);

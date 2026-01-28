@@ -849,15 +849,166 @@ export const zListingCreate = z.object({
 export type zListingCreate = z.infer<typeof zListingCreate>;
 
 /**
+ * Transaction collection item with last message timestamp
+ */
+export const zTransactionItem = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction'
+    }),
+    lastAt: z.string().register(z.globalRegistry, {
+        description: 'Timestamp of the last message in the transaction'
+    })
+}).register(z.globalRegistry, {
+    description: 'Transaction collection item with last message timestamp'
+});
+
+export type zTransactionItem = z.infer<typeof zTransactionItem>;
+
+/**
+ * Collection of transactions
+ */
+export const zTransactionItemSchema = z.object({
+    data: z.array(zTransactionItem),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of transactions'
+});
+
+export type zTransactionItemSchema = z.infer<typeof zTransactionItemSchema>;
+
+/**
+ * This filter matches the current status of the transaction
+ */
+export const zTransactionStatusEnum = z.enum([
+    'pending',
+    'open',
+    'resolved',
+    'dispute',
+    'rejected',
+    'expired',
+    'success',
+    'closed'
+]).register(z.globalRegistry, {
+    description: 'This filter matches the current status of the transaction'
+});
+
+export type zTransactionStatusEnum = z.infer<typeof zTransactionStatusEnum>;
+
+/**
+ * Filter object for transaction collection
+ */
+export const zTransactionFilter = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact userId'
+    })),
+    listingId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact listingId'
+    })),
+    status: z.optional(zTransactionStatusEnum),
+    statusIn: z.optional(z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'Current status of the listing transaction'
+    }))).register(z.globalRegistry, {
+        description: 'This filter matches any of the provided statuses for the current status of the transaction'
+    }))
+}).register(z.globalRegistry, {
+    description: 'Filter object for transaction collection'
+});
+
+export type zTransactionFilter = z.infer<typeof zTransactionFilter>;
+
+/**
+ * App-based filters
+ */
+export const zTransactionWhere = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact userId'
+    })),
+    listingId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact listingId'
+    })),
+    status: z.optional(zTransactionStatusEnum),
+    statusIn: z.optional(z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'Current status of the listing transaction'
+    }))).register(z.globalRegistry, {
+        description: 'This filter matches any of the provided statuses for the current status of the transaction'
+    }))
+}).register(z.globalRegistry, {
+    description: 'App-based filters'
+});
+
+export type zTransactionWhere = z.infer<typeof zTransactionWhere>;
+
+/**
+ * Field of the transaction sort
+ */
+export const zTransactionSortField = z.enum([
+    'createdAt',
+    'updatedAt',
+    'expiresAt',
+    'status'
+]).register(z.globalRegistry, {
+    description: 'Field of the transaction sort'
+});
+
+export type zTransactionSortField = z.infer<typeof zTransactionSortField>;
+
+/**
+ * Sort object for transaction collection
+ */
+export const zTransactionSort = z.object({
+    field: zTransactionSortField,
+    direction: zOrderEnum
+}).register(z.globalRegistry, {
+    description: 'Sort object for transaction collection'
+});
+
+export type zTransactionSort = z.infer<typeof zTransactionSort>;
+
+/**
+ * Query object for transaction collection
+ */
+export const zTransactionQuery = z.object({
+    cursor: z.optional(zCursor),
+    filter: z.optional(zTransactionFilter),
+    where: z.optional(zTransactionWhere),
+    sort: z.optional(z.array(zTransactionSort))
+}).register(z.globalRegistry, {
+    description: 'Query object for transaction collection'
+});
+
+export type zTransactionQuery = z.infer<typeof zTransactionQuery>;
+
+/**
  * Transaction listing collection item
  */
 export const zTransactionListingItem = z.object({
     listingId: z.string().register(z.globalRegistry, {
         description: 'ID of the listing'
     }),
-    count: z.number().register(z.globalRegistry, {
-        description: 'Number of transactions for this listing'
-    }),
+    count: z.union([
+        z.number(),
+        z.null()
+    ]),
     lastAt: z.string().register(z.globalRegistry, {
         description: 'Timestamp of the last transaction update'
     })
@@ -976,24 +1127,6 @@ export const zTransactionSideEnum = z.enum([
 export type zTransactionSideEnum = z.infer<typeof zTransactionSideEnum>;
 
 /**
- * Current status of the listing transaction
- */
-export const zTransactionStatusEnum = z.enum([
-    'pending',
-    'open',
-    'resolved',
-    'dispute',
-    'rejected',
-    'expired',
-    'success',
-    'closed'
-]).register(z.globalRegistry, {
-    description: 'Current status of the listing transaction'
-});
-
-export type zTransactionStatusEnum = z.infer<typeof zTransactionStatusEnum>;
-
-/**
  * Listing transaction status entry
  */
 export const zTransactionStatus = z.object({
@@ -1007,7 +1140,9 @@ export const zTransactionStatus = z.object({
         description: 'ID of the listing referenced by the status'
     }),
     side: zTransactionSideEnum,
-    status: zTransactionStatusEnum,
+    status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'Current status of the listing transaction'
+    })),
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     })
@@ -1164,6 +1299,21 @@ export type zapiListingCreateRequest = z.infer<typeof zApiListingCreateData>;
 export const zApiListingCreateResponse = zListing;
 
 export type zapiListingCreateResponse = z.infer<typeof zApiListingCreateResponse>;
+
+export const zApiTransactionCollectionData = z.object({
+    body: z.optional(zTransactionQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionCollectionRequest = z.infer<typeof zApiTransactionCollectionData>;
+
+/**
+ * Access collection of transactions based on provided query
+ */
+export const zApiTransactionCollectionResponse = zTransactionItemSchema;
+
+export type zapiTransactionCollectionResponse = z.infer<typeof zApiTransactionCollectionResponse>;
 
 export const zApiTransactionListingCollectionData = z.object({
     body: z.optional(zTransactionListingQuery),

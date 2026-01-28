@@ -1,0 +1,1 @@
+export { withTransactionCollectionQuery } from "./withTransactionCollectionQuery";

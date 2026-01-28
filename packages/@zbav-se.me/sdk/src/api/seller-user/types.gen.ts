@@ -826,6 +826,145 @@ export type tListingCreate = {
 };
 
 /**
+ * Transaction collection item with last message timestamp
+ */
+export type tTransactionItem = {
+    /**
+     * ID of the transaction
+     */
+    id: string;
+    /**
+     * Timestamp of the last message in the transaction
+     */
+    lastAt: string;
+};
+
+/**
+ * Collection of transactions
+ */
+export type tTransactionItemSchema = {
+    data: Array<tTransactionItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * This filter matches the current status of the transaction
+ */
+export const tTransactionStatusEnum = {
+    pending: 'pending',
+    open: 'open',
+    resolved: 'resolved',
+    dispute: 'dispute',
+    rejected: 'rejected',
+    expired: 'expired',
+    success: 'success',
+    closed: 'closed'
+} as const;
+
+/**
+ * This filter matches the current status of the transaction
+ */
+export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
+
+/**
+ * Filter object for transaction collection
+ */
+export type tTransactionFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+    status?: tTransactionStatusEnum;
+    /**
+     * This filter matches any of the provided statuses for the current status of the transaction
+     */
+    statusIn?: Array<tTransactionStatusEnum & unknown>;
+};
+
+/**
+ * App-based filters
+ */
+export type tTransactionWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+    status?: tTransactionStatusEnum;
+    /**
+     * This filter matches any of the provided statuses for the current status of the transaction
+     */
+    statusIn?: Array<tTransactionStatusEnum & unknown>;
+};
+
+/**
+ * Field of the transaction sort
+ */
+export const tTransactionSortField = {
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    expiresAt: 'expiresAt',
+    status: 'status'
+} as const;
+
+/**
+ * Field of the transaction sort
+ */
+export type tTransactionSortField = typeof tTransactionSortField[keyof typeof tTransactionSortField];
+
+/**
+ * Sort object for transaction collection
+ */
+export type tTransactionSort = {
+    field: tTransactionSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * Query object for transaction collection
+ */
+export type tTransactionQuery = {
+    cursor?: tCursor;
+    filter?: tTransactionFilter;
+    where?: tTransactionWhere;
+    sort?: Array<tTransactionSort>;
+};
+
+/**
  * Transaction listing collection item
  */
 export type tTransactionListingItem = {
@@ -836,7 +975,7 @@ export type tTransactionListingItem = {
     /**
      * Number of transactions for this listing
      */
-    count: number;
+    count: number | null;
     /**
      * Timestamp of the last transaction update
      */
@@ -943,25 +1082,6 @@ export const tTransactionSideEnum = {
 export type tTransactionSideEnum = typeof tTransactionSideEnum[keyof typeof tTransactionSideEnum];
 
 /**
- * Current status of the listing transaction
- */
-export const tTransactionStatusEnum = {
-    pending: 'pending',
-    open: 'open',
-    resolved: 'resolved',
-    dispute: 'dispute',
-    rejected: 'rejected',
-    expired: 'expired',
-    success: 'success',
-    closed: 'closed'
-} as const;
-
-/**
- * Current status of the listing transaction
- */
-export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
-
-/**
  * Listing transaction status entry
  */
 export type tTransactionStatus = {
@@ -978,7 +1098,7 @@ export type tTransactionStatus = {
      */
     listingId: string;
     side: tTransactionSideEnum;
-    status: tTransactionStatusEnum;
+    status: tTransactionStatusEnum & unknown;
     /**
      * Creation timestamp
      */
@@ -1266,6 +1386,31 @@ export type tApiListingCreateResponse = {
 };
 
 export type apiListingCreateResponse = tApiListingCreateResponse[keyof tApiListingCreateResponse];
+
+export type tApiTransactionCollectionRequest = {
+    body?: tTransactionQuery;
+    path?: never;
+    query?: never;
+    url: '/api/seller-user/transaction/collection';
+};
+
+export type apiTransactionCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionCollectionError = apiTransactionCollectionErrors[keyof apiTransactionCollectionErrors];
+
+export type tApiTransactionCollectionResponse = {
+    /**
+     * Access collection of transactions based on provided query
+     */
+    200: tTransactionItemSchema;
+};
+
+export type apiTransactionCollectionResponse = tApiTransactionCollectionResponse[keyof tApiTransactionCollectionResponse];
 
 export type tApiTransactionListingCollectionRequest = {
     body?: tTransactionListingQuery;

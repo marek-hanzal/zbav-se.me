@@ -1432,23 +1432,6 @@ export const sTransactionSort = {
     ]
 } as const;
 
-export const sUserSideEnum = {
-    type: 'string',
-    enum: [
-        'seller',
-        'buyer'
-    ]
-} as const;
-
-export const sTransactionMeta = {
-    type: 'object',
-    properties: {
-        side: {
-            $ref: '#/components/schemas/UserSideEnum'
-        }
-    }
-} as const;
-
 export const sTransactionQuery = {
     type: 'object',
     properties: {
@@ -1466,9 +1449,6 @@ export const sTransactionQuery = {
             items: {
                 $ref: '#/components/schemas/TransactionSort'
             }
-        },
-        meta: {
-            $ref: '#/components/schemas/TransactionMeta'
         }
     }
 } as const;

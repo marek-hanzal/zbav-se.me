@@ -16,7 +16,6 @@ export const transactionFetchFx = Effect.fn("transactionFetchFx")(function* ({
 	where,
 	scope,
 	sort,
-	meta,
 }: transactionFetchFx.Props) {
 	return yield* withFetchFx({
 		resource: "transaction",
@@ -26,12 +25,7 @@ export const transactionFetchFx = Effect.fn("transactionFetchFx")(function* ({
 		filter,
 		where,
 		scope,
-		queryFx(query) {
-			return withTransactionQueryBuilderFx({
-				meta,
-				...query,
-			});
-		},
+		queryFx: withTransactionQueryBuilderFx,
 	});
 });
 

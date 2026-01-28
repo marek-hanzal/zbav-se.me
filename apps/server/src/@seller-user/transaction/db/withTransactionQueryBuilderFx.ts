@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import type { withTransactionSourceSelectFx } from "~/@buyer-user/transaction/db/withTransactionSourceSelectFx";
-import type { TransactionFilterSchema } from "~/@buyer-user/transaction/schema/TransactionFilterSchema";
+import type { withTransactionSourceSelectFx } from "~/@seller-user/transaction/db/withTransactionSourceSelectFx";
+import type { TransactionFilterSchema } from "~/@seller-user/transaction/schema/TransactionFilterSchema";
 
 export namespace withTransactionQueryBuilderFx {
 	export interface Props<
@@ -39,7 +39,15 @@ export const withTransactionQueryBuilderFx = Effect.fn("withTransactionQueryBuil
 	if (where.userId) {
 		const userId = where.userId;
 
-		query = query.where("lt.userId", "=", userId) as TSelect;
+		query = query.where((eb) =>
+			eb.exists((eb) =>
+				eb
+					.selectFrom("listing as l")
+					.select("l.id")
+					.whereRef("l.id", "=", "lt.listingId")
+					.where("l.userId", "=", userId),
+			),
+		) as TSelect;
 	}
 
 	if (where.listingId) {

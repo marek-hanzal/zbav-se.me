@@ -1467,23 +1467,6 @@ export type tTransactionSort = {
 };
 
 /**
- * Side of the user
- */
-export const tUserSideEnum = { seller: 'seller', buyer: 'buyer' } as const;
-
-/**
- * Side of the user
- */
-export type tUserSideEnum = typeof tUserSideEnum[keyof typeof tUserSideEnum];
-
-/**
- * Meta data for transaction collection
- */
-export type tTransactionMeta = {
-    side?: tUserSideEnum;
-};
-
-/**
  * Query object for transaction collection
  */
 export type tTransactionQuery = {
@@ -1491,7 +1474,6 @@ export type tTransactionQuery = {
     filter?: tTransactionFilter;
     where?: tTransactionWhere;
     sort?: Array<tTransactionSort>;
-    meta?: tTransactionMeta;
 };
 
 /**

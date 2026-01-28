@@ -1499,6 +1499,178 @@ export const sListingCreate = {
     ]
 } as const;
 
+export const sTransactionItem = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        lastAt: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'lastAt'
+    ]
+} as const;
+
+export const sTransactionItemSchema = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/TransactionItem'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sTransactionStatusEnum = {
+    type: 'string',
+    enum: [
+        'pending',
+        'open',
+        'resolved',
+        'dispute',
+        'rejected',
+        'expired',
+        'success',
+        'closed'
+    ]
+} as const;
+
+export const sTransactionFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        },
+        status: {
+            $ref: '#/components/schemas/TransactionStatusEnum'
+        },
+        statusIn: {
+            type: 'array',
+            items: {
+                allOf: [
+                    {
+                        $ref: '#/components/schemas/TransactionStatusEnum'
+                    },
+                    {}
+                ]
+            }
+        }
+    }
+} as const;
+
+export const sTransactionWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        },
+        status: {
+            $ref: '#/components/schemas/TransactionStatusEnum'
+        },
+        statusIn: {
+            type: 'array',
+            items: {
+                allOf: [
+                    {
+                        $ref: '#/components/schemas/TransactionStatusEnum'
+                    },
+                    {}
+                ]
+            }
+        }
+    }
+} as const;
+
+export const sTransactionSortField = {
+    type: 'string',
+    enum: [
+        'createdAt',
+        'updatedAt',
+        'expiresAt',
+        'status'
+    ]
+} as const;
+
+export const sTransactionSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/TransactionSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sTransactionQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/TransactionFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/TransactionWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/TransactionSort'
+            }
+        }
+    }
+} as const;
+
 export const sTransactionListingItem = {
     type: 'object',
     properties: {
@@ -1506,7 +1678,10 @@ export const sTransactionListingItem = {
             type: 'string'
         },
         count: {
-            type: 'number'
+            type: [
+                'number',
+                'null'
+            ]
         },
         lastAt: {
             type: 'string'
@@ -1635,20 +1810,6 @@ export const sTransactionSideEnum = {
     ]
 } as const;
 
-export const sTransactionStatusEnum = {
-    type: 'string',
-    enum: [
-        'pending',
-        'open',
-        'resolved',
-        'dispute',
-        'rejected',
-        'expired',
-        'success',
-        'closed'
-    ]
-} as const;
-
 export const sTransactionStatus = {
     type: 'object',
     properties: {
@@ -1665,7 +1826,12 @@ export const sTransactionStatus = {
             $ref: '#/components/schemas/TransactionSideEnum'
         },
         status: {
-            $ref: '#/components/schemas/TransactionStatusEnum'
+            allOf: [
+                {
+                    $ref: '#/components/schemas/TransactionStatusEnum'
+                },
+                {}
+            ]
         },
         createdAt: {
             type: 'string'
