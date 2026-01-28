@@ -1,18 +1,17 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { transactionGetBuyerInfoFx } from "~/@buyer-session/transaction/fx/transactionGetBuyerInfoFx";
+import { transactionGetBuyerInfoFx } from "~/@buyer-user/transaction/fx/transactionGetBuyerInfoFx";
 import { transactionFetchFx } from "~/@buyer-user/transaction/fx/transactionFetchFx";
 import { TransactionQuerySchema } from "~/@buyer-user/transaction/schema/TransactionQuerySchema";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { TransactionBuyerInfoSchema } from "~/@buyer-session/transaction/schema/TransactionBuyerInfoSchema";
+import { TransactionBuyerInfoSchema } from "~/@buyer-user/transaction/schema/TransactionBuyerInfoSchema";
 
 export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
-	const { buyerSessionHono } = yield* RoutesContextFx;
-
-	buyerSessionHono.openapi(
+	const { buyerUserHono } = yield* RoutesContextFx;
+	buyerUserHono.openapi(
 		createRoute({
 			method: "post",
 			path: "/transaction/buyer-info",
