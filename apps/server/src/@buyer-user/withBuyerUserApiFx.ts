@@ -10,6 +10,7 @@ import { withFlagApiFx } from "./flag/withFlagApiFx";
 import { withIgnoreApiFx } from "./ignore/withIgnoreApiFx";
 import { withThumbApiFx } from "./thumb/withThumbApiFx";
 import { withTransactionApiFx } from "./transaction/withTransactionApiFx";
+import { withTransactionStatusApiFx } from "./transaction-status/withTransactionStatusApiFx";
 
 export const withBuyerUserApiFx = Effect.fn("withBuyerUserApiFx")(function* () {
 	const { root, buyerUserHono } = yield* RoutesContextFx;
@@ -44,6 +45,7 @@ export const withBuyerUserApiFx = Effect.fn("withBuyerUserApiFx")(function* () {
 		withIgnoreApiFx(),
 		withThumbApiFx(),
 		withTransactionApiFx(),
+		withTransactionStatusApiFx(),
 	]);
 
 	root.route("/api/buyer-user", buyerUserHono);

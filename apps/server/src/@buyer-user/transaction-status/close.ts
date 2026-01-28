@@ -2,28 +2,27 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { transactionStatusSuccessFx } from "~/@session/transaction-status/fx/transactionStatusSuccessFx";
+import { transactionStatusCloseFx } from "~/@session/transaction-status/fx/transactionStatusCloseFx";
 import { TransactionContextProvider } from "~/@buyer-user/transaction/context/TransactionContextFx";
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { TransactionStatusSuccessSchema } from "./schema/TransactionStatusSuccessSchema";
+import { TransactionStatusCloseSchema } from "./schema/TransactionStatusCloseSchema";
 
-export const withSuccessApiFx = Effect.fn("withSuccessApiFx")(function* () {
-	const { userHono } = yield* RoutesContextFx;
-	userHono.openapi(
+export const withCloseApiFx = Effect.fn("withCloseApiFx")(function* () {
+	const { buyerUserHono } = yield* RoutesContextFx;
+	buyerUserHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/transaction/status/success",
-			description:
-				"Mark a listing transaction as successful. Requires access to the transaction.",
-			operationId: "apiTransactionStatusSuccess",
+			path: "/transaction/status/close",
+			description: "Close a listing transaction. Requires access to the transaction.",
+			operationId: "apiTransactionStatusClose",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: TransactionStatusSuccessSchema,
+							schema: TransactionStatusCloseSchema,
 						},
 					},
 					description: "Query object for listing transaction access validation",
@@ -36,7 +35,7 @@ export const withSuccessApiFx = Effect.fn("withSuccessApiFx")(function* () {
 							schema: TransactionStatusSchema,
 						},
 					},
-					description: "Success status created",
+					description: "Closed status created",
 				},
 				400: {
 					content: {
@@ -74,7 +73,7 @@ export const withSuccessApiFx = Effect.fn("withSuccessApiFx")(function* () {
 			tags: [
 				"Transaction Status",
 			],
-			summary: "Mark a listing transaction as successful",
+			summary: "Close a listing transaction",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
@@ -83,7 +82,7 @@ export const withSuccessApiFx = Effect.fn("withSuccessApiFx")(function* () {
 				return c.json<TransactionStatusSchema.Type, 200>(
 					yield* zodFx({
 						schema: TransactionStatusSchema,
-						dataFx: transactionStatusSuccessFx({
+						dataFx: transactionStatusCloseFx({
 							...c.req.valid("json"),
 							userId: user.id,
 						}) satisfies Effect.Effect<TransactionStatusSchema.Type, any, any>,

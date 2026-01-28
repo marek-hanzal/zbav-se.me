@@ -4,15 +4,15 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { transactionStatusResolveFx } from "~/@session/transaction-status/fx/transactionStatusResolveFx";
 import { TransactionContextProvider } from "~/@buyer-user/transaction/context/TransactionContextFx";
-import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
+import { TransactionStatusSchema } from "~/@seller-user/transaction-status/schema/TransactionStatusSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { TransactionStatusResolveSchema } from "./schema/TransactionStatusResolveSchema";
 
 export const withResolveApiFx = Effect.fn("withResolveApiFx")(function* () {
-	const { userHono } = yield* RoutesContextFx;
-	userHono.openapi(
+	const { sellerUserHono } = yield* RoutesContextFx;
+	sellerUserHono.openapi(
 		createRoute({
 			method: "post",
 			path: "/transaction/status/resolve",

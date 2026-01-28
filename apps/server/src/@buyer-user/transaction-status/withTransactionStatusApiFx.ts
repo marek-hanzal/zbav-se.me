@@ -1,10 +1,10 @@
 import { Effect } from "effect";
-import { withDisputeApiFx } from "./dispute";
-import { withRejectApiFx } from "./reject";
+import { withCloseApiFx } from "./close";
+import { withSuccessApiFx } from "./success";
 
 export const withTransactionStatusApiFx = Effect.fn("withTransactionStatusApiFx")(function* () {
 	yield* Effect.all([
-		withRejectApiFx(),
-		withDisputeApiFx(),
+		withCloseApiFx(),
+		withSuccessApiFx(),
 	]);
 });
