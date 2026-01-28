@@ -38,9 +38,10 @@ The `@common` domain exists to:
 ## Access Rules
 
 - **No API endpoints** - This domain does not expose HTTP routes
-- Can be imported by any domain (`@buyer-user`, `@seller-user`, `@user`, `@session`, `@public`)
-- Should not import from other domains (to avoid circular dependencies)
+- **Completely open** - Can be imported by any domain (`@public`, `@session`, `@user`, `@buyer-session`, `@seller-session`, `@buyer-user`, `@seller-user`)
+- **Should not import from other domains** - To avoid circular dependencies
 - Focus on pure utilities, contexts, and shared types
+- This is the foundation layer - all domains can depend on it
 
 ## Use Cases
 

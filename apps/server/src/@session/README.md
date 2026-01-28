@@ -49,7 +49,10 @@ This domain provides endpoints that require a session (authenticated user) but w
 - Requires authentication (session)
 - Data is "privately open" - any authenticated user can access
 - May return user-related data, but it's considered public in protected space
-- **Cannot import from `@user` domain** (critical rule)
+- **Can be accessed by**: Any domain with session (`@buyer-session`, `@seller-session`, `@buyer-user`, `@seller-user`, `@user`)
+- **Cannot be accessed by**: `@public` (no session)
+- **Can import from**: `@common` only
+- **Cannot import from**: `@user`, `@buyer-user`, `@seller-user` (these are more specialized)
 
 ## Use Cases
 
@@ -61,6 +64,8 @@ This domain provides endpoints that require a session (authenticated user) but w
 
 ## Related Domains
 
-- `@user` - Private user data (cannot import from here)
-- `@buyer-session` / `@seller-session` - Domain-specific session operations
-- `@public` - Unauthenticated access
+- `@common` - Can import shared utilities
+- `@buyer-session` / `@seller-session` - Can access this domain
+- `@buyer-user` / `@seller-user` - Can access this domain
+- `@user` - Can access this domain (but cannot import from `@user`)
+- `@public` - Cannot access (no session)

@@ -1,5 +1,6 @@
 # @user
 
+
 User API - Private user data operations requiring user context.
 
 ## Overview
@@ -79,7 +80,10 @@ This domain handles all operations on user-owned, private data. Everything in th
 - Requires authentication AND user context
 - All endpoints must use `{scope: {userId}}` when available
 - All data is user-private
-- **Can import from `@session`** (but not vice versa)
+- **Can be accessed by**: Only more specialized domains (`@buyer-user`, `@seller-user`)
+- **Cannot be accessed by**: `@session`, `@buyer-session`, `@seller-session` (these are less specialized)
+- **Can import from**: `@common`, `@session`
+- **Cannot import from**: `@buyer-user`, `@seller-user`, `@buyer-session`, `@seller-session` (to avoid circular dependencies)
 
 ## Use Cases
 
@@ -92,6 +96,8 @@ This domain handles all operations on user-owned, private data. Everything in th
 
 ## Related Domains
 
+- `@common` - Can import shared utilities
 - `@session` - Can import from here (public authenticated data)
-- `@buyer-user` / `@seller-user` - Domain-specific user operations
+- `@buyer-user` / `@seller-user` - Can access this domain (more specialized)
+- `@buyer-session` / `@seller-session` - Cannot access (less specialized)
 - `@user` is the foundation for all user-private data

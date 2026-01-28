@@ -62,6 +62,8 @@ This domain provides endpoints that don't require authentication. It includes sy
 - No authentication required
 - Publicly accessible
 - Some endpoints may be restricted by IP or environment (cron, janitor, migration)
+- **Can import from**: `@common` only
+- **Cannot import from**: Any authenticated domain (`@session`, `@user`, `@buyer-session`, `@seller-session`, `@buyer-user`, `@seller-user`)
 
 ## Use Cases
 
@@ -79,6 +81,7 @@ This domain provides endpoints that don't require authentication. It includes sy
 
 ## Related Domains
 
-- All other domains require authentication
+- `@common` - Can import shared utilities
+- All other domains require authentication and cannot be imported
 - `@session` - First step after authentication
 - `@public` is the entry point for unauthenticated users

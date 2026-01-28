@@ -27,7 +27,9 @@ This domain provides buyer-specific endpoints that require a session (authentica
 - Requires authentication (session)
 - Data is considered "public in protected space" - any authenticated user can access
 - No user-private data operations (those belong in `@buyer-user`)
-- Cannot import from `@buyer-user` or `@user` domains
+- **Can be accessed by**: `@buyer-user` (more specialized)
+- **Can import from**: `@common`, `@session`
+- **Cannot import from**: `@user`, `@buyer-user` (more specialized domains)
 
 ## Use Cases
 
@@ -38,6 +40,7 @@ This domain provides buyer-specific endpoints that require a session (authentica
 
 ## Related Domains
 
-- `@buyer-user` - Private buyer operations (feeds, favourites, transactions)
-- `@session` - General session operations (categories, locations)
+- `@common` - Can import shared utilities
+- `@session` - Can import from here (general session operations)
+- `@buyer-user` - Can access this domain (more specialized)
 - `@public` - Unauthenticated listing access

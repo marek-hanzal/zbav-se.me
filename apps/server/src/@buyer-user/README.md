@@ -63,7 +63,9 @@ This domain handles all buyer-specific operations that require access to the use
 - Requires authentication AND user context
 - All operations are user-private
 - Must use `{scope: {userId}}` when available
-- Can import from `@session` but NOT from `@user`
+- **Can import from**: `@common`, `@session`, `@buyer-session`, `@user`
+- **Cannot import from**: `@seller-user`, `@seller-session` (different domain), `@buyer-user` (self)
+- This is the most specialized buyer domain - can access all buyer-related and general user resources
 
 ## Use Cases
 
@@ -76,6 +78,8 @@ This domain handles all buyer-specific operations that require access to the use
 
 ## Related Domains
 
-- `@buyer-session` - Public buyer operations (browsing listings)
-- `@session` - General session operations
-- `@user` - Cross-domain user operations (messages, uploads)
+- `@common` - Can import shared utilities
+- `@session` - Can import from here (general session operations)
+- `@buyer-session` - Can import from here (buyer session operations)
+- `@user` - Can import from here (cross-domain user operations)
+- This is the most specialized buyer domain
