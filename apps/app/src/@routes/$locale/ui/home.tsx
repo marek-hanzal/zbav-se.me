@@ -6,7 +6,7 @@ export const Route = createFileRoute("/$locale/ui/home")({
 	component() {
 		return (
 			<TitleContainer textTitle={"zbav-se.me"}>
-				<Container>Kunda</Container>
+				<Container>Hello there!</Container>
 			</TitleContainer>
 		);
 	},
