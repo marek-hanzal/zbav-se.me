@@ -1,9 +1,9 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { withUserEventCollectionSelectFx } from "~/@user/user-event/db/withUserEventCollectionSelectFx";
-import { withUserEventQueryBuilderFx } from "~/@user/user-event/db/withUserEventQueryBuilderFx";
-import type { UserEventFilterSchema } from "~/@user/user-event/schema/UserEventFilterSchema";
-import type { UserEventQuerySchema } from "~/@user/user-event/schema/UserEventQuerySchema";
+import { withUserEventCollectionSelectFx } from "~/@seller-session/user-event/db/withUserEventCollectionSelectFx";
+import { withUserEventQueryBuilderFx } from "~/@seller-session/user-event/db/withUserEventQueryBuilderFx";
+import type { UserEventFilterSchema } from "~/@seller-session/user-event/schema/UserEventFilterSchema";
+import type { UserEventQuerySchema } from "~/@seller-session/user-event/schema/UserEventQuerySchema";
 
 export namespace userEventCollectionFx {
 	export interface Props extends UserEventQuerySchema.Type {

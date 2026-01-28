@@ -1,11 +1,11 @@
 import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { UserEventFilterSchema } from "~/@user/user-event/schema/UserEventFilterSchema";
-import { UserEventSortSchema } from "~/@user/user-event/schema/UserEventSortSchema";
-import { UserEventWhereSchema } from "~/@user/user-event/schema/UserEventWhereSchema";
+import { UserEventFilterSchema } from "~/@seller-session/user-event/schema/UserEventFilterSchema";
+import { UserEventSortSchema } from "~/@seller-session/user-event/schema/UserEventSortSchema";
+import { UserEventWhereSchema } from "~/@seller-session/user-event/schema/UserEventWhereSchema";
 
 export const UserEventQuerySchema = z
-	.object({
+	.looseObject({
 		cursor: CursorSchema.optional(),
 		filter: UserEventFilterSchema.omit({
 			userId: true,
@@ -13,6 +13,7 @@ export const UserEventQuerySchema = z
 		where: UserEventWhereSchema.optional(),
 		sort: UserEventSortSchema.array().optional(),
 	})
+	.strip()
 	.openapi("UserEventQuery", {
 		description: "Query object for user event collection",
 	});

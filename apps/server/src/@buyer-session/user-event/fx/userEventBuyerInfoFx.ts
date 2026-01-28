@@ -5,7 +5,7 @@ import { median } from "@use-pico/common/median";
 import { p90 } from "@use-pico/common/p90";
 import { Effect } from "effect";
 import type { UserEventBuyerSchema } from "~/@buyer-session/user-event/schema/UserEventBuyerSchema";
-import { userEventCollectionFx } from "~/@user/user-event/fx/userEventCollectionFx";
+import { userEventCollectionFx } from "~/@buyer-session/user-event/fx/userEventCollectionFx";
 import type { UserEventTableSchema } from "~/database/@table/UserEventTableSchema";
 
 export namespace userEventBuyerInfoFx {

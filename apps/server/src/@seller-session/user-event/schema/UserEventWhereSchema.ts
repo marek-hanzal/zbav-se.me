@@ -1,12 +1,12 @@
 import { z } from "@hono/zod-openapi";
-import { UserEventFilterSchema } from "~/@user/user-event/schema/UserEventFilterSchema";
+import { UserEventFilterSchema } from "~/@seller-session/user-event/schema/UserEventFilterSchema";
 
 export const UserEventWhereSchema = z
 	.looseObject({
 		...UserEventFilterSchema.shape,
 	})
-    .omit({ userId: true })
-    .strip()
+	.omit({ userId: true })
+	.strip()
 	.openapi("UserEventWhere", {
 		description: "App-based filters",
 	});
