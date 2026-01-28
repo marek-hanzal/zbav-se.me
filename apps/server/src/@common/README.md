@@ -43,6 +43,7 @@ The `@common` domain exists to:
 
 ### User Event Schema
 - **UserEventEnumSchema** - Zod schema for user event types (like, dislike, listing.create, transaction.* events)
+- **UserEventSourceEnumSchema** - Zod schema for user event source types (listing, transaction)
 - Used in `@user` domain for user event operations and database table schemas
 
 ### Listing Schema
