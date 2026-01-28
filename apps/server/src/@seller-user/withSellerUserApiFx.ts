@@ -6,6 +6,7 @@ import { withDraftApiFx } from "./draft/withDraftApiFx";
 import { withDraftGalleryApiFx } from "./draft-gallery/withDraftGalleryApiFx";
 import { withListingApiFx } from "./listing/withListingApiFx";
 import { withTransactionListingApiFx } from "./transaction-listing/withTransactionListingApiFx";
+import { withTransactionStatusApiFx } from "./transaction-status/withTransactionStatusApiFx";
 
 export const withSellerUserApiFx = Effect.fn("withSellerUserApiFx")(function* () {
 	const { root, sellerUserHono } = yield* RoutesContextFx;
@@ -36,6 +37,7 @@ export const withSellerUserApiFx = Effect.fn("withSellerUserApiFx")(function* ()
 		withDraftGalleryApiFx(),
 		withListingApiFx(),
 		withTransactionListingApiFx(),
+		withTransactionStatusApiFx(),
 	]);
 
 	root.route("/api/seller-user", sellerUserHono);
