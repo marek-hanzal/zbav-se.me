@@ -10,7 +10,6 @@ import { withTransactionMessageLocationApiFx } from "~/@user/transaction-message
 import { withTransactionMessagePackageApiFx } from "~/@user/transaction-message-package/withTransactionMessagePackageApiFx";
 import { withTransactionMessagePersonalApiFx } from "~/@user/transaction-message-personal/withTransactionMessagePersonalApiFx";
 import { withTransactionMessageTextApiFx } from "~/@user/transaction-message-text/withTransactionMessageTextApiFx";
-import { withTransactionStatusApiFx } from "~/@user/transaction-status/withTransactionStatusApiFx";
 import { withUploadApiFx } from "~/@user/upload/withUploadApiFx";
 import { withUserExApiFx } from "~/@user/user-ex/withUserExApiFx";
 
@@ -47,7 +46,6 @@ export const withUserApiFx = Effect.fn("withUserApiFx")(function* () {
 		withTransactionMessagePackageApiFx(),
 		withTransactionMessagePersonalApiFx(),
 		withTransactionMessageTextApiFx(),
-		withTransactionStatusApiFx(),
 		withUploadApiFx(),
 		withUserExApiFx(),
 	]);

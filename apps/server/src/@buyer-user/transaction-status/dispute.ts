@@ -4,15 +4,15 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
-import { transactionStatusDisputeFx } from "~/@user/transaction-status/fx/transactionStatusDisputeFx";
+import { transactionStatusDisputeFx } from "./fx/transactionStatusDisputeFx";
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { TransactionStatusDisputeSchema } from "~/@user/transaction-status/schema/TransactionStatusDisputeSchema";
+import { TransactionStatusDisputeSchema } from "./schema/TransactionStatusDisputeSchema";
 
 export const withDisputeApiFx = Effect.fn("withDisputeApiFx")(function* () {
-	const { userHono } = yield* RoutesContextFx;
-	userHono.openapi(
+	const { buyerUserHono } = yield* RoutesContextFx;
+	buyerUserHono.openapi(
 		createRoute({
 			method: "post",
 			path: "/transaction/status/dispute",
@@ -36,6 +36,14 @@ export const withDisputeApiFx = Effect.fn("withDisputeApiFx")(function* () {
 						},
 					},
 					description: "Disputed status created",
+				},
+				400: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Invalid request",
 				},
 				403: {
 					content: {
@@ -114,6 +122,20 @@ export const withDisputeApiFx = Effect.fn("withDisputeApiFx")(function* () {
 											message: e.message,
 										},
 										403,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "InvalidRequestError",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 400>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										400,
 									);
 								},
 							),

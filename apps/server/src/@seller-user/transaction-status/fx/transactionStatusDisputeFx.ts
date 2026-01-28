@@ -1,9 +1,10 @@
 import { Effect } from "effect";
-import { transactionPatchFx } from "~/@buyer-user/transaction/fx/transactionPatchFx";
+import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
-import type { TransactionStatusDisputeSchema } from "~/@user/transaction-status/schema/TransactionStatusDisputeSchema";
+import type { TransactionStatusDisputeSchema } from "~/@seller-user/transaction-status/schema/TransactionStatusDisputeSchema";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
+import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace transactionStatusDisputeFx {
 	export interface Props extends TransactionStatusDisputeSchema.Type {
@@ -21,6 +22,12 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 		message: "You are not allowed to dispute this listing transaction",
 	});
 
+	if (transaction.side !== "seller") {
+		return yield* new InvalidRequestError({
+			message: "Only seller can dispute a transaction from seller-user endpoint",
+		});
+	}
+
 	yield* transactionPatchFx({
 		userId,
 		patch: {},
@@ -37,7 +44,7 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 	yield* messageSystemCreateFx({
 		userId,
 		messageThreadId: transaction.messageThreadId,
-		text: "Transaction dispute (message)",
+		text: "Seller disputed the transaction (message)",
 	});
 
 	return yield* transactionStatusCreateFx({

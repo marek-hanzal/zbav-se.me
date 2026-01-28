@@ -1,9 +1,5 @@
 import { z } from "@hono/zod-openapi";
 
-/**
- * Dispute can be initiated by both seller and buyer, which is why it's located in the @common package.
- * However, since it's now moved to @user domain, it can be used by both buyer and seller user operations.
- */
 export const TransactionStatusDisputeSchema = z
 	.looseObject({
 		transactionId: z.string().openapi({

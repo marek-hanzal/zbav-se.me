@@ -7,7 +7,8 @@ import { match } from "ts-pattern";
 import { transactionCollectionFx } from "~/@buyer-user/transaction/fx/transactionCollectionFx";
 import { transactionFetchFx } from "~/@buyer-user/transaction/fx/transactionFetchFx";
 import { transactionStatusAcceptFx } from "~/@seller-user/transaction-status/fx/transactionStatusAcceptFx";
-import { transactionStatusRejectFx } from "~/@user/transaction-status/fx/transactionStatusRejectFx";
+import { transactionStatusRejectFx as buyerTransactionStatusRejectFx } from "~/@buyer-user/transaction-status/fx/transactionStatusRejectFx";
+import { transactionStatusRejectFx as sellerTransactionStatusRejectFx } from "~/@seller-user/transaction-status/fx/transactionStatusRejectFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace t00_initial {
@@ -83,7 +84,7 @@ export const t00_initial = Effect.fn("t00_initial")(function* ({
 				);
 			})
 			.with("reject-seller", () => {
-				return transactionStatusRejectFx({
+				return sellerTransactionStatusRejectFx({
 					userId: current.id,
 					transactionId: transactionId.id,
 				}).pipe(
@@ -99,7 +100,7 @@ export const t00_initial = Effect.fn("t00_initial")(function* ({
 				);
 			})
 			.with("reject-buyer", () => {
-				return transactionStatusRejectFx({
+				return buyerTransactionStatusRejectFx({
 					userId: current.id,
 					transactionId: transactionId.id,
 				}).pipe(

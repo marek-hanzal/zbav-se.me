@@ -4,15 +4,15 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
-import { transactionStatusRejectFx } from "~/@user/transaction-status/fx/transactionStatusRejectFx";
+import { transactionStatusRejectFx } from "./fx/transactionStatusRejectFx";
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { TransactionStatusRejectSchema } from "~/@user/transaction-status/schema/TransactionStatusRejectSchema";
+import { TransactionStatusRejectSchema } from "./schema/TransactionStatusRejectSchema";
 
 export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
-	const { userHono } = yield* RoutesContextFx;
-	userHono.openapi(
+	const { buyerUserHono } = yield* RoutesContextFx;
+	buyerUserHono.openapi(
 		createRoute({
 			method: "post",
 			path: "/transaction/status/reject",
@@ -36,6 +36,14 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 						},
 					},
 					description: "Rejected status created",
+				},
+				400: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Invalid request",
 				},
 				403: {
 					content: {
@@ -114,6 +122,20 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 											message: e.message,
 										},
 										403,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "InvalidRequestError",
+								},
+								() => {
+									return c.json<NoticeSchema.Type, 400>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										400,
 									);
 								},
 							),

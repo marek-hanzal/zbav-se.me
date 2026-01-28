@@ -1,10 +1,11 @@
 import { Effect } from "effect";
-import { transactionPatchFx } from "~/@buyer-user/transaction/fx/transactionPatchFx";
+import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
-import type { TransactionStatusRejectSchema } from "~/@user/transaction-status/schema/TransactionStatusRejectSchema";
+import type { TransactionStatusRejectSchema } from "~/@seller-user/transaction-status/schema/TransactionStatusRejectSchema";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
+import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace transactionStatusRejectFx {
 	export interface Props extends TransactionStatusRejectSchema.Type {
@@ -22,6 +23,12 @@ export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(
 		message: "You are not allowed to reject this listing transaction",
 	});
 
+	if (transaction.side !== "seller") {
+		return yield* new InvalidRequestError({
+			message: "Only seller can reject a transaction from seller-user endpoint",
+		});
+	}
+
 	yield* transactionPatchFx({
 		userId,
 		patch: {},
@@ -38,10 +45,7 @@ export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(
 	yield* messageSystemCreateFx({
 		userId,
 		messageThreadId: transaction.messageThreadId,
-		text:
-			transaction.side === "buyer"
-				? "Buyer rejected the transaction (message)"
-				: "Seller rejected the transaction (message)",
+		text: "Seller rejected the transaction (message)",
 	});
 
 	yield* userInteractionEventFx({
