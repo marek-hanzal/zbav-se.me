@@ -1,5 +1,5 @@
 import { Container } from "@use-pico/client/ui/container";
-import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
+import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
 import type { FC } from "react";
 import { useRef } from "react";
 import { MessageList } from "~/app/message/MessageList";

@@ -1,6 +1,6 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
+import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
 import { type FC, useState } from "react";
 import { match } from "ts-pattern";
 import { TransactionSheet } from "~/app/transaction/ui/seller/TransactionSheet";
