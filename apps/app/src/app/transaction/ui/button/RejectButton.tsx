@@ -3,7 +3,7 @@ import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
 import { withTransactionStatusRejectMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
-import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
+import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { CancelIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
