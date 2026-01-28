@@ -253,6 +253,7 @@ translation/           # i18n files (cs.yaml, en.yaml)
 8. **Sensitivity gates**: Always check user's maximum sensitivity before showing content.
 9. **Metrics**: Record events in `listing_event` and `user_event` appropriately.
 10. **No shortcuts**: Don't bypass gates, don't create workarounds. Fix the structure.
+11. **Update README files**: If a README file exists in the directory you're working in, update/extend it to reflect your changes. Keep all README files current and accurate. This includes domain READMEs (`@buyer-user/README.md`, `@seller-user/README.md`, etc.) and any component/module READMEs.
 
 ## Common Patterns to Follow
 
