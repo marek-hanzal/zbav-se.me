@@ -4,12 +4,12 @@ import { clamp } from "@use-pico/common/clamp";
 import { median } from "@use-pico/common/median";
 import { p90 } from "@use-pico/common/p90";
 import { Effect } from "effect";
+import type { UserEventBuyerSchema } from "~/@buyer-session/user-event/schema/UserEventBuyerSchema";
 import { computeActivity } from "~/@common/user-event/fx/computeActivity";
-import { userEventCollectionFx } from "~/@common/user-event/fx/userEventCollectionFx";
 import { computeLoad } from "~/@common/user-event/fx/computeLoad";
+import { userEventCollectionFx } from "~/@common/user-event/fx/userEventCollectionFx";
 import type { ActivityEnumSchema } from "~/@common/user-event/schema/ActivityEnumSchema";
 import type { LoadEnumSchema } from "~/@common/user-event/schema/LoadEnumSchema";
-import type { UserEventBuyerSchema } from "~/@buyer-session/user-event/schema/UserEventBuyerSchema";
 import type { UserEventTableSchema } from "~/database/@table/UserEventTableSchema";
 
 export namespace userEventBuyerInfoFx {

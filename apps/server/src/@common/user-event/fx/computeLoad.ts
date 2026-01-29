@@ -1,5 +1,5 @@
-import type { UserEventTableSchema } from "~/database/@table/UserEventTableSchema";
 import type { LoadEnumSchema } from "~/@common/user-event/schema/LoadEnumSchema";
+import type { UserEventTableSchema } from "~/database/@table/UserEventTableSchema";
 
 const LOAD_THRESHOLDS_DEFAULT = {
 	lowMax: 1,
@@ -15,8 +15,13 @@ const LOAD_THRESHOLDS_DEFAULT = {
 export const computeLoad = (
 	source: UserEventTableSchema.Type[],
 	createScope: "user" | "foreign",
-	thresholds: { lowMax: number; mediumMax: number } = LOAD_THRESHOLDS_DEFAULT,
-): { bucket: LoadEnumSchema.Type } => {
+	thresholds: {
+		lowMax: number;
+		mediumMax: number;
+	} = LOAD_THRESHOLDS_DEFAULT,
+): {
+	bucket: LoadEnumSchema.Type;
+} => {
 	let count = 0;
 
 	let currentGroup: string | null = null;

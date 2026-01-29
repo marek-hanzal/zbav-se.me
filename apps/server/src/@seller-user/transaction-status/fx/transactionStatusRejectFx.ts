@@ -1,7 +1,7 @@
 import { Effect } from "effect";
+import type { TransactionStatusRejectSchema } from "~/@common/transaction-status/schema/TransactionStatusRejectSchema";
 import { transactionPatchFx } from "~/@seller-user/transaction/fx/transactionPatchFx";
 import { transactionStatusCreateFx } from "~/@seller-user/transaction-status/fx/transactionStatusCreateFx";
-import type { TransactionStatusRejectSchema } from "~/@seller-user/transaction-status/schema/TransactionStatusRejectSchema";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";

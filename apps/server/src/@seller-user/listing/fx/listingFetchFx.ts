@@ -7,36 +7,25 @@ import type { ListingQuerySchema } from "~/@seller-user/listing/schema/ListingQu
 
 export namespace listingFetchFx {
 	export interface Props extends ListingQuerySchema.Type {
-		userId: string;
 		scope: ListingFilterSchema.Type;
 	}
 }
 
 export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
-	userId,
 	filter,
 	where,
 	scope,
 	sort,
-	meta,
 }: listingFetchFx.Props) {
 	return yield* withFetchFx({
 		resource: "listing",
 		selectFx: withListingSelectFx({
-			userId,
 			sort,
-			meta,
 		}),
 		filter,
 		where,
 		scope,
-		queryFx(query) {
-			return withListingQueryBuilderFx({
-				...query,
-				userId,
-				meta,
-			});
-		},
+		queryFx: withListingQueryBuilderFx,
 	});
 });
 

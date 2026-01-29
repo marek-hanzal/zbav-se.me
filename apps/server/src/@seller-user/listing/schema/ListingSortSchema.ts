@@ -11,7 +11,6 @@ export const ListingSortSchema = z
 				"createdAt",
 				"updatedAt",
 				"expiresAt",
-				"geo",
 			])
 			.openapi("ListingSortField", {
 				description: "Field of the listing sort",

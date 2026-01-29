@@ -1,5 +1,5 @@
-import type { UserEventTableSchema } from "~/database/@table/UserEventTableSchema";
 import type { ActivityEnumSchema } from "~/@common/user-event/schema/ActivityEnumSchema";
+import type { UserEventTableSchema } from "~/database/@table/UserEventTableSchema";
 
 /**
  * Finds the latest user-scoped event, computes age in days, and buckets into high/medium/low
@@ -8,7 +8,9 @@ import type { ActivityEnumSchema } from "~/@common/user-event/schema/ActivityEnu
 export const computeActivity = (
 	source: UserEventTableSchema.Type[],
 	days: number,
-): { bucket: ActivityEnumSchema.Type } => {
+): {
+	bucket: ActivityEnumSchema.Type;
+} => {
 	let lastUserAtMs: number | null = null;
 
 	for (const event of source) {

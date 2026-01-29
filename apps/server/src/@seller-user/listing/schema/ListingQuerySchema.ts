@@ -1,6 +1,5 @@
 import { z } from "@hono/zod-openapi";
 import { ListingFilterSchema } from "~/@seller-user/listing/schema/ListingFilterSchema";
-import { ListingMetaSchema } from "~/@seller-user/listing/schema/ListingMetaSchema";
 import { ListingSortSchema } from "~/@seller-user/listing/schema/ListingSortSchema";
 import { ListingWhereSchema } from "~/@seller-user/listing/schema/ListingWhereSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
@@ -14,7 +13,6 @@ export const ListingQuerySchema = z
 		filter: ListingFilterSchema.optional(),
 		where: ListingWhereSchema.optional(),
 		sort: ListingSortSchema.array().optional(),
-		meta: ListingMetaSchema.optional(),
 	})
 	.strip()
 	.openapi("ListingQuery", {

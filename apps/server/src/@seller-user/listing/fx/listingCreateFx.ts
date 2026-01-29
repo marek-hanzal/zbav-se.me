@@ -121,10 +121,8 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			});
 
 			return yield* listingFetchFx({
-				userId,
 				where: {
 					id,
-					withOwn: true,
 				},
 				scope: {
 					userId,
