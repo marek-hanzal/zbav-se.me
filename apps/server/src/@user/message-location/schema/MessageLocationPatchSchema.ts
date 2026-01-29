@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
-import { MessageLocationTableSchema } from "~/database/@table/MessageLocationTableSchema";
 import { MessageLocationQuerySchema } from "~/@user/message-location/schema/MessageLocationQuerySchema";
+import { MessageLocationTableSchema } from "~/database/@table/MessageLocationTableSchema";
 
 export const MessageLocationPatchSchema = z
 	.looseObject({

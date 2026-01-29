@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { transactionPatchFx } from "~/@seller-user/transaction/fx/transactionPatchFx";
-import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/@seller-user/transaction-status/fx/transactionStatusCreateFx";
 import type { TransactionStatusAcceptSchema } from "~/@seller-user/transaction-status/schema/TransactionStatusAcceptSchema";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
+import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { RuntimeError } from "~/error/RuntimeError";
 

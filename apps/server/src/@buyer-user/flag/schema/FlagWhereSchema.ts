@@ -5,8 +5,10 @@ export const FlagWhereSchema = z
 	.looseObject({
 		...FlagFilterSchema.shape,
 	})
-    .omit({ userId: true })
-    .strip()
+	.omit({
+		userId: true,
+	})
+	.strip()
 	.openapi("FlagWhere", {
 		description: "App-based filters",
 	});

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import type { CategorySortSchema } from "~/@session/category/schema/CategorySortSchema";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withCategorySourceSelectFx {
 	export interface Props {

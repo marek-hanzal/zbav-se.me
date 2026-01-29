@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import { withLikeEx } from "~/database/expression/withLikeEx";
+import type { withListingSourceSelectFx } from "~/@buyer-user/listing/db/withListingSourceSelectFx";
 import type { ListingFilterSchema } from "~/@buyer-user/listing/schema/ListingFilterSchema";
 import type { ListingMetaSchema } from "~/@buyer-user/listing/schema/ListingMetaSchema";
-import type { withListingSourceSelectFx } from "~/@buyer-user/listing/db/withListingSourceSelectFx";
+import { withLikeEx } from "~/database/expression/withLikeEx";
 
 export namespace withListingQueryBuilderFx {
 	export interface Props<TSelect extends withListingSourceSelectFx.Select> {

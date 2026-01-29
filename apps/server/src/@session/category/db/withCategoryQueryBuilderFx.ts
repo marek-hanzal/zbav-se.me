@@ -1,7 +1,7 @@
 import { Effect } from "effect";
-import { withLikeEx } from "~/database/expression/withLikeEx";
-import type { CategoryFilterSchema } from "~/@session/category/schema/CategoryFilterSchema";
 import type { withCategorySourceSelectFx } from "~/@session/category/db/withCategorySourceSelectFx";
+import type { CategoryFilterSchema } from "~/@session/category/schema/CategoryFilterSchema";
+import { withLikeEx } from "~/database/expression/withLikeEx";
 
 export namespace withCategoryQueryBuilderFx {
 	export interface Props<TSelect extends withCategorySourceSelectFx.Select> {

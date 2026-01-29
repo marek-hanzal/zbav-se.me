@@ -2,10 +2,10 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
+import { GitHubHistorySchema } from "~/@public/github/schema/GitHubHistorySchema";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerGithubSchema } from "~/schema/env/ServerGithubSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { GitHubHistorySchema } from "~/@public/github/schema/GitHubHistorySchema";
 
 const REPO = "marek-hanzal/zbav-se.me";
 

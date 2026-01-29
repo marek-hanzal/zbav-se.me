@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi";
+import { ProsConsSchema } from "~/@common/listing/schema/ProsConsSchema";
 import { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/database/@enum/ListingWarrantyEnumSchema";
-import { ProsConsSchema } from "~/@common/listing/schema/ProsConsSchema";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 import { VectorSchema } from "~/schema/VectorSchema";
 

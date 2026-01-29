@@ -5,8 +5,8 @@ import { DateTime } from "luxon";
 import { match } from "ts-pattern";
 import { transactionCollectionFx } from "~/@buyer-user/transaction/fx/transactionCollectionFx";
 import { transactionStatusCloseFx } from "~/@buyer-user/transaction-status/fx/transactionStatusCloseFx";
-import { transactionStatusFetchFx } from "~/@session/transaction-status/fx/transactionStatusFetchFx";
 import { transactionStatusSuccessFx } from "~/@buyer-user/transaction-status/fx/transactionStatusSuccessFx";
+import { transactionStatusFetchFx } from "~/@session/transaction-status/fx/transactionStatusFetchFx";
 
 export namespace t04_buyerFinish {
 	export interface Props {

@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/schema/CursorSchema";
 import { FavouriteFilterSchema } from "~/@buyer-user/favourite/schema/FavouriteFilterSchema";
 import { FavouriteSortSchema } from "~/@buyer-user/favourite/schema/FavouriteSortSchema";
 import { FavouriteWhereSchema } from "~/@buyer-user/favourite/schema/FavouriteWhereSchema";
+import { CursorSchema } from "~/schema/CursorSchema";
 
 export const FavouriteQuerySchema = z
 	.looseObject({

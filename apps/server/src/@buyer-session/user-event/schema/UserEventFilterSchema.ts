@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi";
-import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 import { UserEventEnumSchema } from "~/@common/user-event/schema/UserEventEnumSchema";
-import { UserEventScopeEnumSchema } from "~/database/@enum/UserEventScopeEnumSchema";
 import { UserEventSourceEnumSchema } from "~/@common/user-event/schema/UserEventSourceEnumSchema";
+import { UserEventScopeEnumSchema } from "~/database/@enum/UserEventScopeEnumSchema";
+import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 
 export const UserEventFilterSchema = z
 	.object({

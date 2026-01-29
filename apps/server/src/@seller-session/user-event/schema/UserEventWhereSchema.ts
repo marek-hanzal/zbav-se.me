@@ -5,7 +5,9 @@ export const UserEventWhereSchema = z
 	.looseObject({
 		...UserEventFilterSchema.shape,
 	})
-	.omit({ userId: true })
+	.omit({
+		userId: true,
+	})
 	.strip()
 	.openapi("UserEventWhere", {
 		description: "App-based filters",

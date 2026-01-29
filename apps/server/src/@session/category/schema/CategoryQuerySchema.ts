@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/schema/CursorSchema";
 import { CategoryFilterSchema } from "~/@session/category/schema/CategoryFilterSchema";
 import { CategorySortSchema } from "~/@session/category/schema/CategorySortSchema";
 import { CategoryWhereSchema } from "~/@session/category/schema/CategoryWhereSchema";
+import { CursorSchema } from "~/schema/CursorSchema";
 
 export const CategoryQuerySchema = z
 	.looseObject({

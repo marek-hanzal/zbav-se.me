@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/schema/CursorSchema";
 import { MessagePersonalFilterSchema } from "~/@user/message-personal/schema/MessagePersonalFilterSchema";
 import { MessagePersonalSortSchema } from "~/@user/message-personal/schema/MessagePersonalSortSchema";
 import { MessagePersonalWhereSchema } from "~/@user/message-personal/schema/MessagePersonalWhereSchema";
+import { CursorSchema } from "~/schema/CursorSchema";
 
 export const MessagePersonalQuerySchema = z
 	.looseObject({

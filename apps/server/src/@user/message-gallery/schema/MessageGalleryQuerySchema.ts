@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/schema/CursorSchema";
 import { MessageGalleryFilterSchema } from "~/@user/message-gallery/schema/MessageGalleryFilterSchema";
 import { MessageGallerySortSchema } from "~/@user/message-gallery/schema/MessageGallerySortSchema";
 import { MessageGalleryWhereSchema } from "~/@user/message-gallery/schema/MessageGalleryWhereSchema";
+import { CursorSchema } from "~/schema/CursorSchema";
 
 export const MessageGalleryQuerySchema = z
 	.looseObject({

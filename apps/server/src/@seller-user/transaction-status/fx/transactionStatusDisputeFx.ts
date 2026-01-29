@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { transactionPatchFx } from "~/@seller-user/transaction/fx/transactionPatchFx";
-import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/@seller-user/transaction-status/fx/transactionStatusCreateFx";
 import type { TransactionStatusDisputeSchema } from "~/@seller-user/transaction-status/schema/TransactionStatusDisputeSchema";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
+import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace transactionStatusDisputeFx {

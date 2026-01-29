@@ -1,7 +1,7 @@
 import { Effect } from "effect";
+import { ignoreFetchFx } from "~/@buyer-user/ignore/fx/ignoreFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { ignoreFetchFx } from "~/@buyer-user/ignore/fx/ignoreFetchFx";
 
 export namespace ignoreDeleteFx {
 	export interface Props {

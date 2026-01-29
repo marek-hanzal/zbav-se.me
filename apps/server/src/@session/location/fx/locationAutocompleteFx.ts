@@ -1,11 +1,11 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { TextTooShortErrorFx } from "~/@session/location/error/TextTooShortErrorFx";
+import { withLocationListFx } from "~/@session/location/fx/withLocationListFx";
+import { withLocationRequestFx } from "~/@session/location/fx/withLocationRequestFx";
 import type { LocationTableSchema } from "~/database/@table/LocationTableSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withLocationListFx } from "~/@session/location/fx/withLocationListFx";
-import { withLocationRequestFx } from "~/@session/location/fx/withLocationRequestFx";
 
 export namespace locationAutocompleteFx {
 	export interface Props {

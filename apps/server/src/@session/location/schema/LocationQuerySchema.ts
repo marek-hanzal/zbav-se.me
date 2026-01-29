@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/schema/CursorSchema";
 import { LocationFilterSchema } from "~/@session/location/schema/LocationFilterSchema";
 import { LocationSortSchema } from "~/@session/location/schema/LocationSortSchema";
 import { LocationWhereSchema } from "~/@session/location/schema/LocationWhereSchema";
+import { CursorSchema } from "~/schema/CursorSchema";
 
 export const LocationQuerySchema = z
 	.looseObject({

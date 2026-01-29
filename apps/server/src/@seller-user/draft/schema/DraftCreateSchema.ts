@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi";
 import { ListingExpireEnumSchema } from "~/@common/listing/schema/ListingExpireEnumSchema";
+import { ProsConsSchema } from "~/@common/listing/schema/ProsConsSchema";
 import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/database/@enum/ListingWarrantyEnumSchema";
-import { ProsConsSchema } from "~/@common/listing/schema/ProsConsSchema";
 
 export const DraftCreateSchema = z
 	.looseObject({

@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "~/schema/CursorSchema";
 import { FlagFilterSchema } from "~/@buyer-user/flag/schema/FlagFilterSchema";
 import { FlagSortSchema } from "~/@buyer-user/flag/schema/FlagSortSchema";
 import { FlagWhereSchema } from "~/@buyer-user/flag/schema/FlagWhereSchema";
+import { CursorSchema } from "~/schema/CursorSchema";
 
 export const FlagQuerySchema = z
 	.looseObject({
