@@ -62,6 +62,10 @@ The `@common` domain exists to:
 - Focus on pure utilities, contexts, and shared types
 - This is the foundation layer - all domains can depend on it
 
+### Security note: “open” means use-anywhere
+
+Common resources are **open** in the sense that they can be used by **any** domain—including `@public` and `@session`. **Extreme caution is required** to avoid unintentional data leaks: anything in `@common` may be used in contexts where sensitive or user-scoped data must not be exposed. When adding or changing shared schemas, query builders, or utilities, ensure they do not bypass domain-level access checks or expose data beyond the intended scope.
+
 ## Use Cases
 
 - Shared Effect contexts and providers
