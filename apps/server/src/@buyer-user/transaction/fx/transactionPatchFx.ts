@@ -1,7 +1,7 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { transactionFetchFx } from "~/@buyer-user/transaction/fx/transactionFetchFx";
-import type { TransactionFilterSchema } from "~/@buyer-user/transaction/schema/TransactionFilterSchema";
+import type { TransactionFilterSchema } from "~/@common/transaction/schema/TransactionFilterSchema";
 import type { TransactionPatchSchema } from "~/@buyer-user/transaction/schema/TransactionPatchSchema";
 import { TransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";

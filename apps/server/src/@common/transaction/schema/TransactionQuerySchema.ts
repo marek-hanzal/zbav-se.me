@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
-import { TransactionFilterSchema } from "~/@buyer-user/transaction/schema/TransactionFilterSchema";
-import { TransactionSortSchema } from "~/@buyer-user/transaction/schema/TransactionSortSchema";
-import { TransactionWhereSchema } from "~/@buyer-user/transaction/schema/TransactionWhereSchema";
+import { TransactionFilterSchema } from "~/@common/transaction/schema/TransactionFilterSchema";
+import { TransactionSortSchema } from "~/@common/transaction/schema/TransactionSortSchema";
+import { TransactionWhereSchema } from "~/@common/transaction/schema/TransactionWhereSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
 
 export const TransactionQuerySchema = z

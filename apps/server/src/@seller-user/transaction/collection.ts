@@ -3,7 +3,7 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { transactionCollectionFx } from "~/@seller-user/transaction/fx/transactionCollectionFx";
 import { TransactionItemSchema } from "~/@seller-user/transaction/schema/TransactionItemSchema";
-import { TransactionQuerySchema } from "~/@seller-user/transaction/schema/TransactionQuerySchema";
+import { TransactionQuerySchema } from "~/@common/transaction/schema/TransactionQuerySchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";

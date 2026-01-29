@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { TransactionFilterSchema } from "~/@buyer-user/transaction/schema/TransactionFilterSchema";
+import { TransactionFilterSchema } from "~/@common/transaction/schema/TransactionFilterSchema";
 
 export const TransactionWhereSchema = z
 	.looseObject({

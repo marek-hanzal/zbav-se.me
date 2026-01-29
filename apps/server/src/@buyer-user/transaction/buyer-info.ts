@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { transactionFetchFx } from "~/@buyer-user/transaction/fx/transactionFetchFx";
 import { transactionGetBuyerInfoFx } from "~/@buyer-user/transaction/fx/transactionGetBuyerInfoFx";
 import { TransactionBuyerInfoSchema } from "~/@buyer-user/transaction/schema/TransactionBuyerInfoSchema";
-import { TransactionQuerySchema } from "~/@buyer-user/transaction/schema/TransactionQuerySchema";
+import { TransactionQuerySchema } from "~/@common/transaction/schema/TransactionQuerySchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";

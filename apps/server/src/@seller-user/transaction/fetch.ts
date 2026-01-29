@@ -2,7 +2,7 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { transactionFetchFx } from "~/@seller-user/transaction/fx/transactionFetchFx";
-import { TransactionQuerySchema } from "~/@seller-user/transaction/schema/TransactionQuerySchema";
+import { TransactionQuerySchema } from "~/@common/transaction/schema/TransactionQuerySchema";
 import { TransactionSchema } from "~/@seller-user/transaction/schema/TransactionSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
