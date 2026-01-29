@@ -653,16 +653,6 @@ export type tDraftGalleryCreate = {
 };
 
 /**
- * Type of thumb
- */
-export const tThumbEnum = { like: 'like', dislike: 'dislike' } as const;
-
-/**
- * Type of thumb
- */
-export type tThumbEnum = typeof tThumbEnum[keyof typeof tThumbEnum];
-
-/**
  * Listing data
  */
 export type tListing = {
@@ -738,31 +728,7 @@ export type tListing = {
     updatedAt: string;
     location: tLocation;
     category: tCategory;
-    /**
-     * Distance from the input location to the listing (in km; meta lat/lon must be provided)
-     */
-    distance: number | null;
     gallery: tGallery & unknown;
-    /**
-     * Whether the user has this listing in favourites
-     */
-    isFavourite: boolean;
-    /**
-     * Whether the user ignored this listing
-     */
-    isIgnored: boolean;
-    /**
-     * Whether the user flagged this listing
-     */
-    hasFlag: boolean;
-    /**
-     * Whether the user has a transaction with this listing
-     */
-    transactionId: string | null;
-    /**
-     * Thumb type provided by the user (like/dislike) or null if not present
-     */
-    thumb: tThumbEnum | null;
 };
 
 /**

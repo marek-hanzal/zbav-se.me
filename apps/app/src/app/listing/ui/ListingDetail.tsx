@@ -4,7 +4,7 @@ import { Markdown } from "@use-pico/client/ui/markdown";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
-import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
+import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/seller-session/listing";
 import { HeroImage } from "@zbav-se.me/ui/img";

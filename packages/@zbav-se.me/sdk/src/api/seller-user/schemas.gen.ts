@@ -1118,14 +1118,6 @@ export const sDraftGalleryCreate = {
     ]
 } as const;
 
-export const sThumbEnum = {
-    type: 'string',
-    enum: [
-        'like',
-        'dislike'
-    ]
-} as const;
-
 export const sListing = {
     type: 'object',
     properties: {
@@ -1275,53 +1267,12 @@ export const sListing = {
         category: {
             $ref: '#/components/schemas/Category'
         },
-        distance: {
-            type: [
-                'number',
-                'null'
-            ]
-        },
         gallery: {
             allOf: [
                 {
                     $ref: '#/components/schemas/Gallery'
                 },
                 {}
-            ]
-        },
-        isFavourite: {
-            type: 'boolean'
-        },
-        isIgnored: {
-            type: 'boolean'
-        },
-        hasFlag: {
-            type: 'boolean'
-        },
-        transactionId: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        thumb: {
-            anyOf: [
-                {
-                    $ref: '#/components/schemas/ThumbEnum'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
             ]
         }
     },
@@ -1347,13 +1298,7 @@ export const sListing = {
         'updatedAt',
         'location',
         'category',
-        'distance',
-        'gallery',
-        'isFavourite',
-        'isIgnored',
-        'hasFlag',
-        'transactionId',
-        'thumb'
+        'gallery'
     ]
 } as const;
 

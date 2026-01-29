@@ -685,15 +685,6 @@ export const zDraftGalleryCreate = z.object({
 export type zDraftGalleryCreate = z.infer<typeof zDraftGalleryCreate>;
 
 /**
- * Type of thumb
- */
-export const zThumbEnum = z.enum(['like', 'dislike']).register(z.globalRegistry, {
-    description: 'Type of thumb'
-});
-
-export type zThumbEnum = z.infer<typeof zThumbEnum>;
-
-/**
  * Listing data
  */
 export const zListing = z.object({
@@ -760,30 +751,9 @@ export const zListing = z.object({
     }),
     location: zLocation,
     category: zCategory,
-    distance: z.union([
-        z.number(),
-        z.null()
-    ]),
     gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
         description: 'Listing gallery images'
-    })),
-    isFavourite: z.boolean().register(z.globalRegistry, {
-        description: 'Whether the user has this listing in favourites'
-    }),
-    isIgnored: z.boolean().register(z.globalRegistry, {
-        description: 'Whether the user ignored this listing'
-    }),
-    hasFlag: z.boolean().register(z.globalRegistry, {
-        description: 'Whether the user flagged this listing'
-    }),
-    transactionId: z.union([
-        z.string(),
-        z.null()
-    ]),
-    thumb: z.union([
-        zThumbEnum,
-        z.null()
-    ])
+    }))
 }).register(z.globalRegistry, {
     description: 'Listing data'
 });
