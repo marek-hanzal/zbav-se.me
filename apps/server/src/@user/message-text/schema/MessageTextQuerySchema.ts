@@ -1,15 +1,14 @@
 import { z } from "@hono/zod-openapi";
+import { MessageTextFilterSchema } from "~/@user/message-text/schema/MessageTextFilterSchema";
+import { MessageTextSortSchema } from "~/@user/message-text/schema/MessageTextSortSchema";
+import { MessageTextWhereSchema } from "~/@user/message-text/schema/MessageTextWhereSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { MessageTextFilterSchema } from "./MessageTextFilterSchema";
-import { MessageTextSortSchema } from "./MessageTextSortSchema";
 
 export const MessageTextQuerySchema = z
 	.object({
 		cursor: CursorSchema.optional(),
 		filter: MessageTextFilterSchema.optional(),
-		where: MessageTextFilterSchema.openapi("MessageTextWhere", {
-			description: "App-based filters",
-		}).optional(),
+		where: MessageTextWhereSchema.optional(),
 		sort: MessageTextSortSchema.array().optional(),
 	})
 	.openapi("MessageTextQuery", {

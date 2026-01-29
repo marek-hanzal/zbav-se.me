@@ -2,7 +2,7 @@ import type { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { SheetView } from "@use-pico/client/ui/sheet-view";
 import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
-import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
+import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
 import { ListingDetail } from "~/app/listing/ui/ListingDetail";

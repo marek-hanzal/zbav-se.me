@@ -1,7 +1,7 @@
 import { Effect } from "effect";
-import { cleanupCategoryFx } from "./cleanupCategoryFx";
-import { cleanupScoreFx } from "./cleanupScoreFx";
-import { cleanupUploadFx } from "./cleanupUploadFx";
+import { cleanupCategoryFx } from "~/@public/janitor/cleanup/cleanupCategoryFx";
+import { cleanupScoreFx } from "~/@public/janitor/cleanup/cleanupScoreFx";
+import { cleanupUploadFx } from "~/@public/janitor/cleanup/cleanupUploadFx";
 
 export const cleanupFx = Effect.fn("cleanupFx")(function* () {
 	return yield* Effect.all([

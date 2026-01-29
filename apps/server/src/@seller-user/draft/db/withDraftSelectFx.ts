@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
-import type { ListingDeliveryEnumSchema } from "~/@buyer-session/listing/schema/ListingDeliveryEnumSchema";
 import { withDraftSourceSelectFx } from "~/@seller-user/draft/db/withDraftSourceSelectFx";
 import { withGallerySelectFx } from "~/@user/gallery/db/withGallerySelectFx";
+import type { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
 import type { CategoryTableSchema } from "~/database/@table/CategoryTableSchema";
 import type { LocationTableSchema } from "~/database/@table/LocationTableSchema";
 

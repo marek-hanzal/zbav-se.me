@@ -1,12 +1,12 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { locationFetchFx } from "~/@session/location/fx/locationFetchFx";
+import { LocationQuerySchema } from "~/@session/location/schema/LocationQuerySchema";
+import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { locationFetchFx } from "./fx/locationFetchFx";
-import { LocationQuerySchema } from "./schema/LocationQuerySchema";
-import { LocationSchema } from "./schema/LocationSchema";
 
 export const withLocationFetchApiFx = Effect.fn("withLocationFetchApiFx")(function* () {
 	const { sessionHono } = yield* RoutesContextFx;

@@ -1,15 +1,14 @@
 import { z } from "@hono/zod-openapi";
+import { ListingEventFilterSchema } from "~/@buyer-session/listing-event/schema/ListingEventFilterSchema";
+import { ListingEventSortSchema } from "~/@buyer-session/listing-event/schema/ListingEventSortSchema";
+import { ListingEventWhereSchema } from "~/@buyer-session/listing-event/schema/ListingEventWhereSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { ListingEventFilterSchema } from "./ListingEventFilterSchema";
-import { ListingEventSortSchema } from "./ListingEventSortSchema";
 
 export const ListingEventQuerySchema = z
 	.object({
 		cursor: CursorSchema.optional(),
 		filter: ListingEventFilterSchema.optional(),
-		where: ListingEventFilterSchema.openapi("ListingEventWhere", {
-			description: "App-based filters",
-		}).optional(),
+		where: ListingEventWhereSchema.optional(),
 		sort: ListingEventSortSchema.array().optional(),
 	})
 	.openapi("ListingEventQuery", {

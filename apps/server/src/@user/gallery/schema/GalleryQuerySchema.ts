@@ -1,15 +1,14 @@
 import { z } from "@hono/zod-openapi";
+import { GalleryFilterSchema } from "~/@user/gallery/schema/GalleryFilterSchema";
+import { GallerySortSchema } from "~/@user/gallery/schema/GallerySortSchema";
+import { GalleryWhereSchema } from "~/@user/gallery/schema/GalleryWhereSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { GalleryFilterSchema } from "./GalleryFilterSchema";
-import { GallerySortSchema } from "./GallerySortSchema";
 
 export const GalleryQuerySchema = z
 	.object({
 		cursor: CursorSchema.optional(),
 		filter: GalleryFilterSchema.optional(),
-		where: GalleryFilterSchema.openapi("GalleryWhere", {
-			description: "App-based filters",
-		}).optional(),
+		where: GalleryWhereSchema.optional(),
 		sort: GallerySortSchema.array().optional(),
 	})
 	.openapi("GalleryQuery", {

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
+import type { withUploadSourceSelectFx } from "~/@user/upload/db/withUploadSourceSelectFx";
 import type { UploadFilterSchema } from "~/@user/upload/schema/UploadFilterSchema";
-import type { withUploadSourceSelectFx } from "./withUploadSourceSelectFx";
 
 export namespace withUploadQueryBuilderFx {
 	export interface Props<

@@ -1,4 +1,4 @@
-import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
+import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
 import { ListingLocation } from "~/app/listing/ui/ListingLocation";
 import { ListingPrice } from "~/app/listing/ui/ListingPrice";

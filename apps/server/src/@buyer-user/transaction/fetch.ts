@@ -2,11 +2,11 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { transactionFetchFx } from "~/@buyer-user/transaction/fx/transactionFetchFx";
-import { TransactionQuerySchema } from "~/@buyer-user/transaction/schema/TransactionQuerySchema";
+import { TransactionSchema } from "~/@buyer-user/transaction/schema/TransactionSchema";
+import { TransactionQuerySchema } from "~/@common/transaction/schema/TransactionQuerySchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { TransactionSchema } from "./schema/TransactionSchema";
 
 export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 	const { buyerUserHono } = yield* RoutesContextFx;

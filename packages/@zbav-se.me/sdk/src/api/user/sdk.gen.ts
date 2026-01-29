@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiGalleryCollectionErrors, apiGalleryCountErrors, apiGalleryFetchErrors, apiMessageThreadMessageCollectionErrors, apiS3PresignErrors, apiTransactionMessageGalleryCreateErrors, apiTransactionMessageLocationCreateErrors, apiTransactionMessagePackageCreateErrors, apiTransactionMessagePersonalCreateErrors, apiTransactionMessageTextCreateErrors, apiTransactionStatusDisputeErrors, apiTransactionStatusRejectErrors, apiUploadCreateErrors, apiUserExPatchErrors, tApiGalleryCollectionRequest, tApiGalleryCollectionResponse, tApiGalleryCountRequest, tApiGalleryCountResponse, tApiGalleryFetchRequest, tApiGalleryFetchResponse, tApiMessageThreadMessageCollectionRequest, tApiMessageThreadMessageCollectionResponse, tApiS3PresignRequest, tApiS3PresignResponse, tApiTransactionMessageGalleryCreateRequest, tApiTransactionMessageGalleryCreateResponse, tApiTransactionMessageLocationCreateRequest, tApiTransactionMessageLocationCreateResponse, tApiTransactionMessagePackageCreateRequest, tApiTransactionMessagePackageCreateResponse, tApiTransactionMessagePersonalCreateRequest, tApiTransactionMessagePersonalCreateResponse, tApiTransactionMessageTextCreateRequest, tApiTransactionMessageTextCreateResponse, tApiTransactionStatusDisputeRequest, tApiTransactionStatusDisputeResponse, tApiTransactionStatusRejectRequest, tApiTransactionStatusRejectResponse, tApiUploadCreateRequest, tApiUploadCreateResponse, tApiUserExPatchRequest, tApiUserExPatchResponse } from './types.gen';
-import { zApiGalleryCollectionData, zApiGalleryCollectionResponse, zApiGalleryCountData, zApiGalleryCountResponse, zApiGalleryFetchData, zApiGalleryFetchResponse, zApiMessageThreadMessageCollectionData, zApiMessageThreadMessageCollectionResponse, zApiS3PresignData, zApiS3PresignResponse, zApiTransactionMessageGalleryCreateData, zApiTransactionMessageGalleryCreateResponse, zApiTransactionMessageLocationCreateData, zApiTransactionMessageLocationCreateResponse, zApiTransactionMessagePackageCreateData, zApiTransactionMessagePackageCreateResponse, zApiTransactionMessagePersonalCreateData, zApiTransactionMessagePersonalCreateResponse, zApiTransactionMessageTextCreateData, zApiTransactionMessageTextCreateResponse, zApiTransactionStatusDisputeData, zApiTransactionStatusDisputeResponse, zApiTransactionStatusRejectData, zApiTransactionStatusRejectResponse, zApiUploadCreateData, zApiUploadCreateResponse, zApiUserExPatchData, zApiUserExPatchResponse } from './zod.gen';
+import type { apiGalleryCollectionErrors, apiGalleryCountErrors, apiGalleryFetchErrors, apiMessageThreadMessageCollectionErrors, apiS3PresignErrors, apiTransactionMessageGalleryCreateErrors, apiTransactionMessageLocationCreateErrors, apiTransactionMessagePackageCreateErrors, apiTransactionMessagePersonalCreateErrors, apiTransactionMessageTextCreateErrors, apiUploadCreateErrors, apiUploadFetchErrors, apiUserExPatchErrors, tApiGalleryCollectionRequest, tApiGalleryCollectionResponse, tApiGalleryCountRequest, tApiGalleryCountResponse, tApiGalleryFetchRequest, tApiGalleryFetchResponse, tApiMessageThreadMessageCollectionRequest, tApiMessageThreadMessageCollectionResponse, tApiS3PresignRequest, tApiS3PresignResponse, tApiTransactionMessageGalleryCreateRequest, tApiTransactionMessageGalleryCreateResponse, tApiTransactionMessageLocationCreateRequest, tApiTransactionMessageLocationCreateResponse, tApiTransactionMessagePackageCreateRequest, tApiTransactionMessagePackageCreateResponse, tApiTransactionMessagePersonalCreateRequest, tApiTransactionMessagePersonalCreateResponse, tApiTransactionMessageTextCreateRequest, tApiTransactionMessageTextCreateResponse, tApiUploadCreateRequest, tApiUploadCreateResponse, tApiUploadFetchRequest, tApiUploadFetchResponse, tApiUserExPatchRequest, tApiUserExPatchResponse } from './types.gen';
+import { zApiGalleryCollectionData, zApiGalleryCollectionResponse, zApiGalleryCountData, zApiGalleryCountResponse, zApiGalleryFetchData, zApiGalleryFetchResponse, zApiMessageThreadMessageCollectionData, zApiMessageThreadMessageCollectionResponse, zApiS3PresignData, zApiS3PresignResponse, zApiTransactionMessageGalleryCreateData, zApiTransactionMessageGalleryCreateResponse, zApiTransactionMessageLocationCreateData, zApiTransactionMessageLocationCreateResponse, zApiTransactionMessagePackageCreateData, zApiTransactionMessagePackageCreateResponse, zApiTransactionMessagePersonalCreateData, zApiTransactionMessagePersonalCreateResponse, zApiTransactionMessageTextCreateData, zApiTransactionMessageTextCreateResponse, zApiUploadCreateData, zApiUploadCreateResponse, zApiUploadFetchData, zApiUploadFetchResponse, zApiUserExPatchData, zApiUserExPatchResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -139,8 +139,6 @@ export const apiTransactionMessageLocationCreate = <ThrowOnError extends boolean
 });
 
 /**
- * Create a package message for a transaction
- *
  * Create a message package for a transaction. Requires access to the transaction.
  */
 export const apiTransactionMessagePackageCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionMessagePackageCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionMessagePackageCreateResponse, apiTransactionMessagePackageCreateErrors, ThrowOnError>({
@@ -156,8 +154,6 @@ export const apiTransactionMessagePackageCreate = <ThrowOnError extends boolean 
 });
 
 /**
- * Create a personal message for a transaction
- *
  * Create a personal message for a transaction. Requires access to the transaction.
  */
 export const apiTransactionMessagePersonalCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionMessagePersonalCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionMessagePersonalCreateResponse, apiTransactionMessagePersonalCreateErrors, ThrowOnError>({
@@ -190,40 +186,6 @@ export const apiTransactionMessageTextCreate = <ThrowOnError extends boolean = f
 });
 
 /**
- * Reject a listing transaction
- *
- * Reject a listing transaction. Requires access to the transaction.
- */
-export const apiTransactionStatusReject = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionStatusRejectRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionStatusRejectResponse, apiTransactionStatusRejectErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiTransactionStatusRejectData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiTransactionStatusRejectResponse.parseAsync(data),
-    url: '/api/user/transaction/status/reject',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Dispute a listing transaction
- *
- * Dispute a listing transaction. Requires access to the transaction.
- */
-export const apiTransactionStatusDispute = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionStatusDisputeRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionStatusDisputeResponse, apiTransactionStatusDisputeErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiTransactionStatusDisputeData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiTransactionStatusDisputeResponse.parseAsync(data),
-    url: '/api/user/transaction/status/dispute',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
  * Create a new upload
  *
  * Create a new upload
@@ -233,6 +195,23 @@ export const apiUploadCreate = <ThrowOnError extends boolean = false>(options?: 
     responseType: 'json',
     responseValidator: async (data) => await zApiUploadCreateResponse.parseAsync(data),
     url: '/api/user/upload/create',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
+ * Fetch an upload item based on the provided query
+ *
+ * Return an upload item based on the provided query
+ */
+export const apiUploadFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiUploadFetchResponse, apiUploadFetchErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiUploadFetchData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiUploadFetchResponse.parseAsync(data),
+    url: '/api/user/upload/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',

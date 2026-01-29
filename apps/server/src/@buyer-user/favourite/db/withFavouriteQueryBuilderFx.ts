@@ -1,6 +1,6 @@
 import { Effect } from "effect";
+import type { withFavouriteSourceSelectFx } from "~/@buyer-user/favourite/db/withFavouriteSourceSelectFx";
 import type { FavouriteFilterSchema } from "~/@buyer-user/favourite/schema/FavouriteFilterSchema";
-import type { withFavouriteSourceSelectFx } from "./withFavouriteSourceSelectFx";
 
 export namespace withFavouriteQueryBuilderFx {
 	export interface Props<

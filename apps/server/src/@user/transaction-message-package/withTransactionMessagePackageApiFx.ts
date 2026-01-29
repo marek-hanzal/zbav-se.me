@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { withCreateApiFx } from "./create";
+import { withCreateApiFx } from "~/@user/transaction-message-package/create";
 
 export const withTransactionMessagePackageApiFx = Effect.fn("withTransactionMessagePackageApiFx")(
 	function* () {

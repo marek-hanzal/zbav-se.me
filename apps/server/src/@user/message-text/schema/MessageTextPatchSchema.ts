@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
+import { MessageTextQuerySchema } from "~/@user/message-text/schema/MessageTextQuerySchema";
 import { MessageTextTableSchema } from "~/database/@table/MessageTextTableSchema";
-import { MessageTextQuerySchema } from "./MessageTextQuerySchema";
 
 export const MessageTextPatchSchema = z
 	.looseObject({

@@ -1,15 +1,14 @@
 import { z } from "@hono/zod-openapi";
+import { MessageThreadFilterSchema } from "~/@user/message-thread/schema/MessageThreadFilterSchema";
+import { MessageThreadSortSchema } from "~/@user/message-thread/schema/MessageThreadSortSchema";
+import { MessageThreadWhereSchema } from "~/@user/message-thread/schema/MessageThreadWhereSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { MessageThreadFilterSchema } from "./MessageThreadFilterSchema";
-import { MessageThreadSortSchema } from "./MessageThreadSortSchema";
 
 export const MessageThreadQuerySchema = z
 	.object({
 		cursor: CursorSchema.optional(),
 		filter: MessageThreadFilterSchema.optional(),
-		where: MessageThreadFilterSchema.openapi("MessageThreadWhere", {
-			description: "App-based filters",
-		}).optional(),
+		where: MessageThreadWhereSchema.optional(),
 		sort: MessageThreadSortSchema.array().optional(),
 	})
 	.openapi("MessageThreadQuery", {

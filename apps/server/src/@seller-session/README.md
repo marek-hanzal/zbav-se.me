@@ -17,7 +17,9 @@ This domain provides seller-specific endpoints that require a session (authentic
 - Requires authentication (session)
 - Data is considered "public in protected space" - any authenticated user can access
 - No user-private data operations (those belong in `@seller-user`)
-- Cannot import from `@seller-user` or `@user` domains
+- **Can be accessed by**: `@seller-user` (more specialized)
+- **Can import from**: `@common`, `@session`
+- **Cannot import from**: `@user`, `@seller-user` (more specialized domains)
 
 ## Use Cases
 
@@ -26,6 +28,7 @@ This domain provides seller-specific endpoints that require a session (authentic
 
 ## Related Domains
 
-- `@seller-user` - Private seller operations (drafts, listings, transactions)
-- `@session` - General session operations
+- `@common` - Can import shared utilities
+- `@session` - Can import from here (general session operations)
+- `@seller-user` - Can access this domain (more specialized)
 - `@public` - Unauthenticated access

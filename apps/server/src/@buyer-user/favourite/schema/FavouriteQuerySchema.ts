@@ -1,17 +1,17 @@
 import { z } from "@hono/zod-openapi";
+import { FavouriteFilterSchema } from "~/@buyer-user/favourite/schema/FavouriteFilterSchema";
+import { FavouriteSortSchema } from "~/@buyer-user/favourite/schema/FavouriteSortSchema";
+import { FavouriteWhereSchema } from "~/@buyer-user/favourite/schema/FavouriteWhereSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { FavouriteFilterSchema } from "./FavouriteFilterSchema";
-import { FavouriteSortSchema } from "./FavouriteSortSchema";
 
 export const FavouriteQuerySchema = z
-	.object({
+	.looseObject({
 		cursor: CursorSchema.optional(),
 		filter: FavouriteFilterSchema.optional(),
-		where: FavouriteFilterSchema.openapi("FavouriteWhere", {
-			description: "App-based filters",
-		}).optional(),
+		where: FavouriteWhereSchema.optional(),
 		sort: FavouriteSortSchema.array().optional(),
 	})
+	.strip()
 	.openapi("FavouriteQuery", {
 		description: "Query object for favourite collection",
 	});

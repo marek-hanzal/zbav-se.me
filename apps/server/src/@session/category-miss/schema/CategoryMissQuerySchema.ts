@@ -1,15 +1,14 @@
 import { z } from "@hono/zod-openapi";
+import { CategoryMissFilterSchema } from "~/@session/category-miss/schema/CategoryMissFilterSchema";
+import { CategoryMissSortSchema } from "~/@session/category-miss/schema/CategoryMissSortSchema";
+import { CategoryMissWhereSchema } from "~/@session/category-miss/schema/CategoryMissWhereSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { CategoryMissFilterSchema } from "./CategoryMissFilterSchema";
-import { CategoryMissSortSchema } from "./CategoryMissSortSchema";
 
 export const CategoryMissQuerySchema = z
 	.looseObject({
 		cursor: CursorSchema.optional(),
 		filter: CategoryMissFilterSchema.optional(),
-		where: CategoryMissFilterSchema.optional().openapi("CategoryMissWhere", {
-			description: "App-based filters for category miss tracking",
-		}),
+		where: CategoryMissWhereSchema.optional(),
 		sort: CategoryMissSortSchema.array().optional(),
 	})
 	.strip()

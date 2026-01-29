@@ -1,15 +1,14 @@
 import { z } from "@hono/zod-openapi";
+import { TransactionListingFilterSchema } from "~/@seller-user/transaction-listing/schema/TransactionListingFilterSchema";
+import { TransactionListingSortSchema } from "~/@seller-user/transaction-listing/schema/TransactionListingSortSchema";
+import { TransactionListingWhereSchema } from "~/@seller-user/transaction-listing/schema/TransactionListingWhereSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { TransactionListingFilterSchema } from "./TransactionListingFilterSchema";
-import { TransactionListingSortSchema } from "./TransactionListingSortSchema";
 
 export const TransactionListingQuerySchema = z
 	.looseObject({
 		cursor: CursorSchema.optional(),
 		filter: TransactionListingFilterSchema.optional(),
-		where: TransactionListingFilterSchema.openapi("TransactionListingWhere", {
-			description: "App-based filters for transaction-listing",
-		}).optional(),
+		where: TransactionListingWhereSchema.optional(),
 		sort: TransactionListingSortSchema.array().optional(),
 	})
 	.strip()

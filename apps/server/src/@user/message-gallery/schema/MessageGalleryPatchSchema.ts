@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
+import { MessageGalleryQuerySchema } from "~/@user/message-gallery/schema/MessageGalleryQuerySchema";
 import { MessageGalleryTableSchema } from "~/database/@table/MessageGalleryTableSchema";
-import { MessageGalleryQuerySchema } from "./MessageGalleryQuerySchema";
 
 export const MessageGalleryPatchSchema = z
 	.looseObject({

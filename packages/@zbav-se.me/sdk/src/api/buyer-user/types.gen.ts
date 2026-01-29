@@ -1128,32 +1128,6 @@ export type tFlagQuery = {
 };
 
 /**
- * Filter object for flag collection
- */
-export type tFlagFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
  * App-based filters
  */
 export type tFlagCountWhere = {
@@ -1170,10 +1144,6 @@ export type tFlagCountWhere = {
      */
     fulltext?: string;
     /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
      * This filter matches the exact listingId
      */
     listingId?: string;
@@ -1183,7 +1153,24 @@ export type tFlagCountWhere = {
  * Query object for flag count
  */
 export type tFlagCountQuery = {
-    filter?: tFlagFilter;
+    filter?: {
+        /**
+         * This filter matches the exact id
+         */
+        id?: string;
+        /**
+         * This filter matches the ids
+         */
+        idIn?: Array<string>;
+        /**
+         * Runs fulltext on the collection/query.
+         */
+        fulltext?: string;
+        /**
+         * This filter matches the exact listingId
+         */
+        listingId?: string;
+    };
     where?: tFlagCountWhere;
     count?: Array<'total' | 'filter' | 'where'>;
 };
@@ -1327,6 +1314,37 @@ export type tIgnoreToggle = {
 };
 
 /**
+ * Listing collection item
+ */
+export type tListingItem = {
+    /**
+     * ID of the listing
+     */
+    id: string;
+};
+
+/**
+ * Collection of listings
+ */
+export type tListingItemSchema = {
+    data: Array<tListingItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Query object for listing count
+ */
+export type tListingCountQuery = {
+    filter?: tListingFilter;
+    where?: tListingWhere;
+    meta?: tListingMeta;
+    count?: Array<'total' | 'filter' | 'where'>;
+};
+
+/**
  * Data for creating a new thumb
  */
 export type tThumbCreate = {
@@ -1338,28 +1356,182 @@ export type tThumbCreate = {
 };
 
 /**
- * Transaction collection item with last message timestamp
+ * Initial reaction on opened transaction by seller.
  */
-export type tTransactionItem = {
+export type tUserEventBuyerReaction = {
     /**
-     * ID of the transaction
+     * Total number of samples (transactions)
      */
-    id: string;
+    total: number;
     /**
-     * Timestamp of the last message in the transaction
+     * Total number of reactions
      */
-    lastAt: string;
+    reactions: number;
+    /**
+     * Total number of terminal reactions (usually from the other side)
+     */
+    terminal: number;
+    /**
+     * Percentage of reactions (reactions + terminal) / total
+     */
+    percent: number;
+    /**
+     * Median milliseconds between transaction opening and reaction
+     */
+    medianMs: number;
+    /**
+     * 90th percentile milliseconds between transaction opening and reaction
+     */
+    p90Ms: number;
 };
 
 /**
- * Collection of transactions
+ * This metric describes if the user instantly closes transactions (means - no interaction, just open and kill)
  */
-export type tTransactionItemSchema = {
-    data: Array<tTransactionItem>;
+export type tUserEventBuyerCloser = {
     /**
-     * Whether there are more items to fetch
+     * Total number of samples (transactions)
      */
-    more: boolean;
+    total: number;
+    /**
+     * Total number of closed transactions
+     */
+    closed: number;
+    /**
+     * Percentage of closed transactions (closed / total)
+     */
+    percent: number;
+    /**
+     * Median milliseconds between transaction creation and closing
+     */
+    medianMs: number;
+    /**
+     * 90th percentile milliseconds between transaction creation and closing
+     */
+    p90Ms: number;
+};
+
+/**
+ * This metric describes if the user is used to close/success transactions
+ */
+export type tUserEventBuyerDecision = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of decisions (success, closed)
+     */
+    decisions: number;
+    /**
+     * Total number of terminal decisions (usually from the other side)
+     */
+    terminal: number;
+    /**
+     * Percentage of closed transactions (closed / total)
+     */
+    percent: number;
+};
+
+/**
+ * This metric describes if the user is used to expire transactions (no user's messages)
+ */
+export type tUserEventBuyerExpired = {
+    /**
+     * Total number of samples (transactions)
+     */
+    total: number;
+    /**
+     * Total number of expired transactions
+     */
+    expired: number;
+    /**
+     * Percentage of expired transactions (expired / total)
+     */
+    percent: number;
+};
+
+/**
+ * Load type of the buyer
+ */
+export const tLoadEnum = {
+    low: 'low',
+    medium: 'medium',
+    high: 'high'
+} as const;
+
+/**
+ * Load type of the buyer
+ */
+export type tLoadEnum = typeof tLoadEnum[keyof typeof tLoadEnum];
+
+/**
+ * Masks number of transactions of the buyer, basically it tells, how busy buyer is.
+ */
+export type tUserEventBuyerLoad = {
+    bucket: tLoadEnum;
+};
+
+/**
+ * Activity type of the buyer
+ */
+export const tActivityEnum = {
+    low: 'low',
+    medium: 'medium',
+    high: 'high'
+} as const;
+
+/**
+ * Activity type of the buyer
+ */
+export type tActivityEnum = typeof tActivityEnum[keyof typeof tActivityEnum];
+
+/**
+ * This metric describes the approx activity of the user
+ */
+export type tUserEventBuyerActivity = {
+    bucket: tActivityEnum;
+};
+
+/**
+ * This metric describes the score of the user
+ */
+export type tUserEventBuyerScore = {
+    /**
+     * Low-level score value, usually not presented in UI
+     */
+    score: number;
+    /**
+     * Rank computed from the score (A-F, 1-6)
+     */
+    rank: number;
+};
+
+/**
+ * Buyer info for the user event
+ */
+export type tUserEventBuyer = {
+    reaction: tUserEventBuyerReaction;
+    closer: tUserEventBuyerCloser;
+    decision: tUserEventBuyerDecision;
+    expired: tUserEventBuyerExpired;
+    load: tUserEventBuyerLoad;
+    activity: tUserEventBuyerActivity;
+    score: tUserEventBuyerScore;
+};
+
+/**
+ * Buyer info for the transaction
+ */
+export type tTransactionBuyerInfo = {
+    /**
+     * Registration date
+     */
+    registered: string;
+    /**
+     * Buyer info may not be available if we don't have enough data
+     */
+    events: null | tUserEventBuyer;
 };
 
 /**
@@ -1477,6 +1649,31 @@ export type tTransactionQuery = {
 };
 
 /**
+ * Transaction collection item with last message timestamp
+ */
+export type tTransactionItem = {
+    /**
+     * ID of the transaction
+     */
+    id: string;
+    /**
+     * Timestamp of the last message in the transaction
+     */
+    lastAt: string;
+};
+
+/**
+ * Collection of transactions
+ */
+export type tTransactionItemSchema = {
+    data: Array<tTransactionItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
  * Transaction data
  */
 export type tTransaction = {
@@ -1575,6 +1772,26 @@ export type tTransactionStatus = {
 export type tTransactionStatusClose = {
     /**
      * The ID of the listing transaction to close
+     */
+    transactionId: string;
+};
+
+/**
+ * Request to dispute a listing transaction
+ */
+export type tTransactionStatusDispute = {
+    /**
+     * The ID of the listing transaction to dispute
+     */
+    transactionId: string;
+};
+
+/**
+ * Request to reject a listing transaction
+ */
+export type tTransactionStatusReject = {
+    /**
+     * The ID of the listing transaction to reject
      */
     transactionId: string;
 };
@@ -2081,6 +2298,88 @@ export type tApiIgnoreToggleResponse = {
 
 export type apiIgnoreToggleResponse = tApiIgnoreToggleResponse[keyof tApiIgnoreToggleResponse];
 
+export type tApiListingCollectionRequest = {
+    body?: tListingQuery;
+    path?: never;
+    query?: never;
+    url: '/api/buyer-user/listing/collection';
+};
+
+export type apiListingCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiListingCollectionError = apiListingCollectionErrors[keyof apiListingCollectionErrors];
+
+export type tApiListingCollectionResponse = {
+    /**
+     * Access collection of listings based on provided query
+     */
+    200: tListingItemSchema;
+};
+
+export type apiListingCollectionResponse = tApiListingCollectionResponse[keyof tApiListingCollectionResponse];
+
+export type tApiListingCountRequest = {
+    body?: tListingCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/buyer-user/listing/count';
+};
+
+export type apiListingCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiListingCountError = apiListingCountErrors[keyof apiListingCountErrors];
+
+export type tApiListingCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiListingCountResponse = tApiListingCountResponse[keyof tApiListingCountResponse];
+
+export type tApiListingFetchRequest = {
+    /**
+     * Query object for listing fetch
+     */
+    body?: tListingQuery;
+    path?: never;
+    query?: never;
+    url: '/api/buyer-user/listing/fetch';
+};
+
+export type apiListingFetchErrors = {
+    /**
+     * Listing not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiListingFetchError = apiListingFetchErrors[keyof apiListingFetchErrors];
+
+export type tApiListingFetchResponse = {
+    /**
+     * Return a listing based on the provided query
+     */
+    200: tListing;
+};
+
+export type apiListingFetchResponse = tApiListingFetchResponse[keyof tApiListingFetchResponse];
+
 export type tApiThumbCreateRequest = {
     /**
      * Data for creating a new thumb
@@ -2116,6 +2415,38 @@ export type tApiThumbCreateResponse = {
 };
 
 export type apiThumbCreateResponse = tApiThumbCreateResponse[keyof tApiThumbCreateResponse];
+
+export type tApiTransactionBuyerInfoRequest = {
+    /**
+     * Query object for transaction access validation
+     */
+    body?: tTransactionQuery;
+    path?: never;
+    query?: never;
+    url: '/api/buyer-user/transaction/buyer-info';
+};
+
+export type apiTransactionBuyerInfoErrors = {
+    /**
+     * Transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionBuyerInfoError = apiTransactionBuyerInfoErrors[keyof apiTransactionBuyerInfoErrors];
+
+export type tApiTransactionBuyerInfoResponse = {
+    /**
+     * Buyer info
+     */
+    200: tTransactionBuyerInfo;
+};
+
+export type apiTransactionBuyerInfoResponse = tApiTransactionBuyerInfoResponse[keyof tApiTransactionBuyerInfoResponse];
 
 export type tApiTransactionCollectionRequest = {
     body?: tTransactionQuery;
@@ -2245,6 +2576,86 @@ export type tApiTransactionStatusCloseResponse = {
 };
 
 export type apiTransactionStatusCloseResponse = tApiTransactionStatusCloseResponse[keyof tApiTransactionStatusCloseResponse];
+
+export type tApiTransactionStatusDisputeRequest = {
+    /**
+     * Query object for listing transaction access validation
+     */
+    body?: tTransactionStatusDispute;
+    path?: never;
+    query?: never;
+    url: '/api/buyer-user/transaction/status/dispute';
+};
+
+export type apiTransactionStatusDisputeErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionStatusDisputeError = apiTransactionStatusDisputeErrors[keyof apiTransactionStatusDisputeErrors];
+
+export type tApiTransactionStatusDisputeResponse = {
+    /**
+     * Disputed status created
+     */
+    200: tTransactionStatus;
+};
+
+export type apiTransactionStatusDisputeResponse = tApiTransactionStatusDisputeResponse[keyof tApiTransactionStatusDisputeResponse];
+
+export type tApiTransactionStatusRejectRequest = {
+    /**
+     * Query object for listing transaction access validation
+     */
+    body?: tTransactionStatusReject;
+    path?: never;
+    query?: never;
+    url: '/api/buyer-user/transaction/status/reject';
+};
+
+export type apiTransactionStatusRejectErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionStatusRejectError = apiTransactionStatusRejectErrors[keyof apiTransactionStatusRejectErrors];
+
+export type tApiTransactionStatusRejectResponse = {
+    /**
+     * Rejected status created
+     */
+    200: tTransactionStatus;
+};
+
+export type apiTransactionStatusRejectResponse = tApiTransactionStatusRejectResponse[keyof tApiTransactionStatusRejectResponse];
 
 export type tApiTransactionStatusSuccessRequest = {
     /**

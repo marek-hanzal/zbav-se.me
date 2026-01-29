@@ -2,16 +2,17 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { TransactionContextProvider } from "~/@buyer-user/transaction/context/TransactionContextFx";
+import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
 import { MessagePersonalSchema } from "~/@user/message-personal/schema/MessagePersonalSchema";
 import { transactionMessagePersonalCreateFx } from "~/@user/transaction-message-personal/fx/transactionMessagePersonalCreateFx";
+import { TransactionMessagePersonalCreateSchema } from "~/@user/transaction-message-personal/schema/TransactionMessagePersonalCreateSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { TransactionMessagePersonalCreateSchema } from "./schema/TransactionMessagePersonalCreateSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;
+
 	userHono.openapi(
 		createRoute({
 			method: "post",
@@ -72,9 +73,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				},
 			},
 			tags: [
-				"Transaction Message Personal",
+				"transaction-message-personal",
+				"user",
 			],
-			summary: "Create a personal message for a transaction",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
@@ -86,7 +87,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 						dataFx: transactionMessagePersonalCreateFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}) satisfies Effect.Effect<MessagePersonalSchema.Type, any, any>,
+						}),
 					}),
 					200,
 				);

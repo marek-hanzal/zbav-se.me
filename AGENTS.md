@@ -11,6 +11,30 @@
 - **packages/@zbav-se.me/** - Domain packages (sdk, ui, common, buyer, seller)
 - **packages/@use-pico/** - Internal framework (client, common, server)
 
+## Tooling & Repo Conventions
+
+### Package manager
+- This repo uses **Bun** (`packageManager: bun@...`) and a single root lockfile `bun.lock`.
+- Use `bun install` and `bun run <script>` from the repo root.
+
+### Common scripts (run from repo root)
+- `bun run dev`: runs all apps in parallel via Turbo (loads env via `dotenv -c development`).
+- `bun run build`, `bun run preview`
+- `bun run format`: Biome formatter (writes changes)
+- `bun run lint`: Biome checks (configured as “check --write”)
+- `bun run typecheck`: Turbo typecheck across workspaces
+- `bun run test`: Turbo tests across workspaces (server uses Vitest)
+- `bun run knip`: Turbo knip across workspaces
+- `bun run sdk`: SDK generation (note `biome.json` excludes `**/sdk/src/api`)
+- `bun run workflow:check`: formatting + lint + typecheck (use as a quick “CI-like” gate)
+
+### Formatting rules (Biome)
+- Indentation is **tabs** and line width is **100** (see `biome.json`).
+- Prefer letting Biome apply formatting rather than manual alignment.
+
+### Local infrastructure
+- `docker-compose.yml` provides PostgreSQL only (port `5432`, database `zbav_se_me`).
+
 ## Core Architecture Principles
 
 ### Domain Separation

@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
+import { DraftQuerySchema } from "~/@seller-user/draft/schema/DraftQuerySchema";
 import { DraftTableSchema } from "~/database/@table/DraftTableSchema";
-import { DraftQuerySchema } from "./DraftQuerySchema";
 
 export const DraftPatchSchema = z
 	.looseObject({

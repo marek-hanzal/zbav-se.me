@@ -2,8 +2,8 @@ import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
 import { withTransactionCollectionSelectFx } from "~/@buyer-user/transaction/db/withTransactionCollectionSelectFx";
 import { withTransactionQueryBuilderFx } from "~/@buyer-user/transaction/db/withTransactionQueryBuilderFx";
-import type { TransactionFilterSchema } from "~/@buyer-user/transaction/schema/TransactionFilterSchema";
-import type { TransactionQuerySchema } from "~/@buyer-user/transaction/schema/TransactionQuerySchema";
+import type { TransactionFilterSchema } from "~/@common/transaction/schema/TransactionFilterSchema";
+import type { TransactionQuerySchema } from "~/@common/transaction/schema/TransactionQuerySchema";
 
 export namespace transactionCollectionFx {
 	export interface Props extends TransactionQuerySchema.Type {

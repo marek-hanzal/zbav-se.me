@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiListingCollectionErrors, apiListingCountErrors, apiListingEventCreateErrors, apiListingFetchErrors, apiTransactionBuyerInfoErrors, tApiListingCollectionRequest, tApiListingCollectionResponse, tApiListingCountRequest, tApiListingCountResponse, tApiListingEventCreateRequest, tApiListingEventCreateResponse, tApiListingFetchRequest, tApiListingFetchResponse, tApiTransactionBuyerInfoRequest, tApiTransactionBuyerInfoResponse } from './types.gen';
-import { zApiListingCollectionData, zApiListingCollectionResponse, zApiListingCountData, zApiListingCountResponse, zApiListingEventCreateData, zApiListingEventCreateResponse, zApiListingFetchData, zApiListingFetchResponse, zApiTransactionBuyerInfoData, zApiTransactionBuyerInfoResponse } from './zod.gen';
+import type { apiListingEventCreateErrors, tApiListingEventCreateRequest, tApiListingEventCreateResponse } from './types.gen';
+import { zApiListingEventCreateData, zApiListingEventCreateResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -20,57 +20,6 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 };
 
 /**
- * Fetch a collection of listings based on the provided query
- *
- * Returns listings based on provided parameters
- */
-export const apiListingCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingCollectionResponse, apiListingCollectionErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiListingCollectionData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiListingCollectionResponse.parseAsync(data),
-    url: '/api/buyer-session/listing/collection',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Count listings based on the provided query
- *
- * Returns count of listings based on provided query
- */
-export const apiListingCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingCountResponse, apiListingCountErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiListingCountData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiListingCountResponse.parseAsync(data),
-    url: '/api/buyer-session/listing/count',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Fetch a listing based on the provided query
- *
- * Return a listing based on the provided query
- */
-export const apiListingFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingFetchResponse, apiListingFetchErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiListingFetchData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiListingFetchResponse.parseAsync(data),
-    url: '/api/buyer-session/listing/fetch',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
  * Create a new listing event
  *
  * Create a new listing event
@@ -80,23 +29,6 @@ export const apiListingEventCreate = <ThrowOnError extends boolean = false>(opti
     responseType: 'json',
     responseValidator: async (data) => await zApiListingEventCreateResponse.parseAsync(data),
     url: '/api/buyer-session/listing-event/create',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Get buyer info for a transaction
- *
- * Return buyer info for a transaction. Requires access to the transaction.
- */
-export const apiTransactionBuyerInfo = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionBuyerInfoRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionBuyerInfoResponse, apiTransactionBuyerInfoErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiTransactionBuyerInfoData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiTransactionBuyerInfoResponse.parseAsync(data),
-    url: '/api/buyer-session/transaction/buyer-info',
     ...options,
     headers: {
         'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { CountEnumSchema } from "@use-pico/common/schema";
-import { GalleryItemQuerySchema } from "./GalleryItemQuerySchema";
+import { GalleryItemQuerySchema } from "~/@user/gallery-item/schema/GalleryItemQuerySchema";
 
 export const GalleryItemCountQuerySchema = z
 	.looseObject({

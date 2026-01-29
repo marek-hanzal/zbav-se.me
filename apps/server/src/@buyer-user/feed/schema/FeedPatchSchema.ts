@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
-import { ListingQuerySchema } from "~/@buyer-session/listing/schema/ListingQuerySchema";
+import { FeedQuerySchema } from "~/@buyer-user/feed/schema/FeedQuerySchema";
+import { ListingQuerySchema } from "~/@buyer-user/listing/schema/ListingQuerySchema";
 import { FeedTableSchema } from "~/database/@table/FeedTableSchema";
-import { FeedQuerySchema } from "./FeedQuerySchema";
 
 export const FeedPatchSchema = z
 	.looseObject({

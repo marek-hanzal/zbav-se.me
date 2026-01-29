@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
+import type { TransactionListingSortSchema } from "~/@seller-user/transaction-listing/schema/TransactionListingSortSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import type { TransactionListingSortSchema } from "../schema/TransactionListingSortSchema";
 
 export namespace withTransactionListingSourceSelectFx {
 	export interface Props {

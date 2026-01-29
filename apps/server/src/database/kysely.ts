@@ -1,8 +1,8 @@
 import { MigrationContextLayer, withDatabaseFx } from "@use-pico/common/database";
 import { Effect } from "effect";
+import { runAuthMigration } from "~/auth/runAuthMigration";
+import type { Database } from "~/database/Database";
 import { migrations } from "~/database/migrations/migrations";
-import { runAuthMigration } from "../auth/runAuthMigration";
-import type { Database } from "./Database";
 
 /**
  * Don't destructure stuff as there is Proxy

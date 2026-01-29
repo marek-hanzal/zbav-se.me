@@ -7,14 +7,16 @@ import { genId } from "@use-pico/common/gen-id";
 import { linkTo } from "@use-pico/common/link-to";
 import { list, object, rangedom } from "@use-pico/common/rangedom";
 import {
+	apiFavouriteToggle,
+	apiFlagToggle,
+	apiIgnoreToggle,
 	apiListingCollection,
 	apiListingCount,
 	tListingDeliveryEnum,
 	tListingPriceEnum,
 	type tListingSort,
 	tListingWarrantyEnum,
-} from "@zbav-se.me/sdk/api/buyer-session";
-import { apiFavouriteToggle, apiFlagToggle, apiIgnoreToggle } from "@zbav-se.me/sdk/api/buyer-user";
+} from "@zbav-se.me/sdk/api/buyer-user";
 import { apiListingCreate, tListingExpireEnum } from "@zbav-se.me/sdk/api/seller-user";
 import {
 	apiCategoryCollection,

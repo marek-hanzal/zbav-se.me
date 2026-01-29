@@ -2,11 +2,11 @@ import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { userEventBuyerInfoFx } from "~/@buyer-user/user-event/fx/userEventBuyerInfoFx";
+import { userEventBuyerInfoFx } from "~/@buyer-session/user-event/fx/userEventBuyerInfoFx";
 import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
 import { auth } from "~/auth/auth";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { testabase } from "../../../../testabase";
+import { testabase } from "~test/testabase";
 
 describe("userEventBuyerInfoFx", () => {
 	it("Closer: end after interaction should be dirty (not counted as instant close)", async () => {

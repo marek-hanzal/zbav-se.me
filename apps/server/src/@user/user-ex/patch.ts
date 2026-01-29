@@ -3,10 +3,10 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { userExPatchFx } from "~/@user/user-ex/fx/userExPatchFx";
 import { UserExPatchSchema } from "~/@user/user-ex/schema/UserExPatchSchema";
+import { UserExSchema } from "~/@user/user-ex/schema/UserExSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { UserExSchema } from "./schema/UserExSchema";
 
 export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;

@@ -103,16 +103,23 @@ export const zUserEventSellerExpired = z.object({
 export type zUserEventSellerExpired = z.infer<typeof zUserEventSellerExpired>;
 
 /**
+ * Load type of the seller
+ */
+export const zLoadEnum = z.enum([
+    'low',
+    'medium',
+    'high'
+]).register(z.globalRegistry, {
+    description: 'Load type of the seller'
+});
+
+export type zLoadEnum = z.infer<typeof zLoadEnum>;
+
+/**
  * Masks number of transactions of the seller, basically it tells, how busy seller is.
  */
 export const zUserEventSellerLoad = z.object({
-    bucket: z.enum([
-        'low',
-        'medium',
-        'high'
-    ]).register(z.globalRegistry, {
-        description: 'Load type of the seller'
-    })
+    bucket: zLoadEnum
 }).register(z.globalRegistry, {
     description: 'Masks number of transactions of the seller, basically it tells, how busy seller is.'
 });
@@ -120,16 +127,23 @@ export const zUserEventSellerLoad = z.object({
 export type zUserEventSellerLoad = z.infer<typeof zUserEventSellerLoad>;
 
 /**
+ * Activity type of the seller
+ */
+export const zActivityEnum = z.enum([
+    'low',
+    'medium',
+    'high'
+]).register(z.globalRegistry, {
+    description: 'Activity type of the seller'
+});
+
+export type zActivityEnum = z.infer<typeof zActivityEnum>;
+
+/**
  * This metric describes the approx activity of the user
  */
 export const zUserEventSellerActivity = z.object({
-    bucket: z.enum([
-        'low',
-        'medium',
-        'high'
-    ]).register(z.globalRegistry, {
-        description: 'Activity type of the seller'
-    })
+    bucket: zActivityEnum
 }).register(z.globalRegistry, {
     description: 'This metric describes the approx activity of the user'
 });

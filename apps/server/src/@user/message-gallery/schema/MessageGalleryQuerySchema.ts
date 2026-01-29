@@ -1,17 +1,17 @@
 import { z } from "@hono/zod-openapi";
+import { MessageGalleryFilterSchema } from "~/@user/message-gallery/schema/MessageGalleryFilterSchema";
+import { MessageGallerySortSchema } from "~/@user/message-gallery/schema/MessageGallerySortSchema";
+import { MessageGalleryWhereSchema } from "~/@user/message-gallery/schema/MessageGalleryWhereSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { MessageGalleryFilterSchema } from "./MessageGalleryFilterSchema";
-import { MessageGallerySortSchema } from "./MessageGallerySortSchema";
 
 export const MessageGalleryQuerySchema = z
-	.object({
+	.looseObject({
 		cursor: CursorSchema.optional(),
 		filter: MessageGalleryFilterSchema.optional(),
-		where: MessageGalleryFilterSchema.openapi("MessageGalleryWhere", {
-			description: "App-based filters",
-		}).optional(),
+		where: MessageGalleryWhereSchema.optional(),
 		sort: MessageGallerySortSchema.array().optional(),
 	})
+	.strip()
 	.openapi("MessageGalleryQuery", {
 		description: "Query object for message gallery",
 	});

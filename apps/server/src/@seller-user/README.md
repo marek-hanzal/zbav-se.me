@@ -47,7 +47,9 @@ This domain handles all seller-specific operations that require access to the us
 - Requires authentication AND user context
 - All operations are user-private
 - Must use `{scope: {userId}}` when available
-- Can import from `@session` but NOT from `@user`
+- **Can import from**: `@common`, `@session`, `@seller-session`, `@user`
+- **Cannot import from**: `@buyer-user`, `@buyer-session` (different domain), `@seller-user` (self)
+- This is the most specialized seller domain - can access all seller-related and general user resources
 
 ## Use Cases
 
@@ -60,6 +62,8 @@ This domain handles all seller-specific operations that require access to the us
 
 ## Related Domains
 
-- `@seller-session` - Public seller operations (seller info)
-- `@session` - General session operations
-- `@user` - Cross-domain user operations (messages, uploads)
+- `@common` - Can import shared utilities
+- `@session` - Can import from here (general session operations)
+- `@seller-session` - Can import from here (seller session operations)
+- `@user` - Can import from here (cross-domain user operations)
+- This is the most specialized seller domain

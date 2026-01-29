@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingEventEnumSchema } from "./ListingEventEnumSchema";
+import { ListingEventEnumSchema } from "~/database/@enum/ListingEventEnumSchema";
 
 export const ListingEventCreateSchema = z
 	.looseObject({

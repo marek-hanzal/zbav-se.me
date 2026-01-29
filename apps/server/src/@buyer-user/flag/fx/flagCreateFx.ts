@@ -1,8 +1,8 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
+import type { FlagCreateSchema } from "~/@buyer-user/flag/schema/FlagCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import type { FlagCreateSchema } from "../schema/FlagCreateSchema";
 
 export namespace flagCreateFx {
 	export interface Props extends FlagCreateSchema.Type {

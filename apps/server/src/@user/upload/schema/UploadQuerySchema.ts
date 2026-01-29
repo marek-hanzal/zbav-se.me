@@ -1,15 +1,14 @@
 import { z } from "@hono/zod-openapi";
 import { UploadFilterSchema } from "~/@user/upload/schema/UploadFilterSchema";
+import { UploadSortSchema } from "~/@user/upload/schema/UploadSortSchema";
+import { UploadWhereSchema } from "~/@user/upload/schema/UploadWhereSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
-import { UploadSortSchema } from "./UploadSortSchema";
 
 export const UploadQuerySchema = z
 	.object({
 		cursor: CursorSchema.optional(),
 		filter: UploadFilterSchema.optional(),
-		where: UploadFilterSchema.openapi("UploadWhere", {
-			description: "App-based filters",
-		}).optional(),
+		where: UploadWhereSchema.optional(),
 		sort: UploadSortSchema.array().optional(),
 	})
 	.openapi("UploadQuery", {

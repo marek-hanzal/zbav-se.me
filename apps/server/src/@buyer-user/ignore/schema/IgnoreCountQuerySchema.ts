@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { CountEnumSchema } from "@use-pico/common/schema";
-import { IgnoreQuerySchema } from "./IgnoreQuerySchema";
+import { IgnoreQuerySchema } from "~/@buyer-user/ignore/schema/IgnoreQuerySchema";
 
 export const IgnoreCountQuerySchema = z
 	.looseObject({

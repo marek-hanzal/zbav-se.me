@@ -4,9 +4,9 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { match } from "ts-pattern";
 import { transactionCollectionFx } from "~/@buyer-user/transaction/fx/transactionCollectionFx";
-import { transactionStatusCloseFx } from "~/@session/transaction-status/fx/transactionStatusCloseFx";
+import { transactionStatusCloseFx } from "~/@buyer-user/transaction-status/fx/transactionStatusCloseFx";
+import { transactionStatusSuccessFx } from "~/@buyer-user/transaction-status/fx/transactionStatusSuccessFx";
 import { transactionStatusFetchFx } from "~/@session/transaction-status/fx/transactionStatusFetchFx";
-import { transactionStatusSuccessFx } from "~/@session/transaction-status/fx/transactionStatusSuccessFx";
 
 export namespace t04_buyerFinish {
 	export interface Props {

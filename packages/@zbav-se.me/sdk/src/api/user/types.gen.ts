@@ -695,85 +695,6 @@ export type tTransactionMessageTextCreate = {
 };
 
 /**
- * Who initiated or affected the transaction change
- */
-export const tTransactionSideEnum = {
-    seller: 'seller',
-    buyer: 'buyer',
-    transaction: 'transaction',
-    system: 'system',
-    unknown: 'unknown'
-} as const;
-
-/**
- * Who initiated or affected the transaction change
- */
-export type tTransactionSideEnum = typeof tTransactionSideEnum[keyof typeof tTransactionSideEnum];
-
-/**
- * Current status of the listing transaction
- */
-export const tTransactionStatusEnum = {
-    pending: 'pending',
-    open: 'open',
-    resolved: 'resolved',
-    dispute: 'dispute',
-    rejected: 'rejected',
-    expired: 'expired',
-    success: 'success',
-    closed: 'closed'
-} as const;
-
-/**
- * Current status of the listing transaction
- */
-export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
-
-/**
- * Listing transaction status entry
- */
-export type tTransactionStatus = {
-    /**
-     * ID of the transaction status entry
-     */
-    id: string;
-    /**
-     * ID of the transaction referenced by the status
-     */
-    transactionId: string;
-    /**
-     * ID of the listing referenced by the status
-     */
-    listingId: string;
-    side: tTransactionSideEnum;
-    status: tTransactionStatusEnum;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-};
-
-/**
- * Request to reject a listing transaction
- */
-export type tTransactionStatusReject = {
-    /**
-     * The ID of the listing transaction to reject
-     */
-    transactionId: string;
-};
-
-/**
- * Request to dispute a listing transaction
- */
-export type tTransactionStatusDispute = {
-    /**
-     * The ID of the listing transaction to dispute
-     */
-    transactionId: string;
-};
-
-/**
  * Data for creating a new upload
  */
 export type tUploadCreate = {
@@ -781,6 +702,70 @@ export type tUploadCreate = {
      * Public URL to the uploaded file
      */
     url: string;
+};
+
+/**
+ * Data for uploading a file
+ */
+export type tUploadFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+};
+
+/**
+ * App-based filters
+ */
+export type tUploadWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+};
+
+/**
+ * Field for uploading a file
+ */
+export const tUploadSortField = { createdAt: 'createdAt' } as const;
+
+/**
+ * Field for uploading a file
+ */
+export type tUploadSortField = typeof tUploadSortField[keyof typeof tUploadSortField];
+
+/**
+ * Data for uploading a file
+ */
+export type tUploadSort = {
+    field: tUploadSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * Data for uploading a file
+ */
+export type tUploadQuery = {
+    cursor?: tCursor;
+    filter?: tUploadFilter;
+    where?: tUploadWhere;
+    sort?: Array<tUploadSort>;
 };
 
 /**
@@ -1178,78 +1163,6 @@ export type tApiTransactionMessageTextCreateResponse = {
 
 export type apiTransactionMessageTextCreateResponse = tApiTransactionMessageTextCreateResponse[keyof tApiTransactionMessageTextCreateResponse];
 
-export type tApiTransactionStatusRejectRequest = {
-    /**
-     * Query object for listing transaction access validation
-     */
-    body?: tTransactionStatusReject;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction/status/reject';
-};
-
-export type apiTransactionStatusRejectErrors = {
-    /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
-     * Listing transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionStatusRejectError = apiTransactionStatusRejectErrors[keyof apiTransactionStatusRejectErrors];
-
-export type tApiTransactionStatusRejectResponse = {
-    /**
-     * Rejected status created
-     */
-    200: tTransactionStatus;
-};
-
-export type apiTransactionStatusRejectResponse = tApiTransactionStatusRejectResponse[keyof tApiTransactionStatusRejectResponse];
-
-export type tApiTransactionStatusDisputeRequest = {
-    /**
-     * Query object for listing transaction access validation
-     */
-    body?: tTransactionStatusDispute;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction/status/dispute';
-};
-
-export type apiTransactionStatusDisputeErrors = {
-    /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
-     * Listing transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionStatusDisputeError = apiTransactionStatusDisputeErrors[keyof apiTransactionStatusDisputeErrors];
-
-export type tApiTransactionStatusDisputeResponse = {
-    /**
-     * Disputed status created
-     */
-    200: tTransactionStatus;
-};
-
-export type apiTransactionStatusDisputeResponse = tApiTransactionStatusDisputeResponse[keyof tApiTransactionStatusDisputeResponse];
-
 export type tApiUploadCreateRequest = {
     /**
      * Data for creating a new upload
@@ -1285,6 +1198,38 @@ export type tApiUploadCreateResponse = {
 };
 
 export type apiUploadCreateResponse = tApiUploadCreateResponse[keyof tApiUploadCreateResponse];
+
+export type tApiUploadFetchRequest = {
+    /**
+     * Query object for upload fetch
+     */
+    body?: tUploadQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/upload/fetch';
+};
+
+export type apiUploadFetchErrors = {
+    /**
+     * Upload not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiUploadFetchError = apiUploadFetchErrors[keyof apiUploadFetchErrors];
+
+export type tApiUploadFetchResponse = {
+    /**
+     * Return an upload item based on the provided query
+     */
+    200: tUpload;
+};
+
+export type apiUploadFetchResponse = tApiUploadFetchResponse[keyof tApiUploadFetchResponse];
 
 export type tApiUserExPatchRequest = {
     /**

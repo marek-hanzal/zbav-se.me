@@ -1,14 +1,14 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { LocationContextLayer } from "~/@session/location/context/LocationContextLayer";
+import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompleteFx";
+import { LocationAutocompleteSchema } from "~/@session/location/schema/LocationAutocompleteSchema";
+import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
+import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { LocationContextLayer } from "./context/LocationContextLayer";
-import { locationAutocompleteFx } from "./fx/locationAutocompleteFx";
-import { LocationAutocompleteSchema } from "./schema/LocationAutocompleteSchema";
-import { LocationSchema } from "./schema/LocationSchema";
 
 export const withLocationAutocompleteApiFx = Effect.fn("withLocationAutocompleteApiFx")(
 	function* () {

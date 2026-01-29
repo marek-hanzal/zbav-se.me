@@ -1,7 +1,7 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect } from "effect";
-import { RoutesContextFx } from "~/routes/context/RoutesContextFx";
-import { CronSchema } from "./schema/CronSchema";
+import { CronSchema } from "~/@public/cron/schema/CronSchema";
+import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 
 export const withDay8EndpointFx = Effect.fn("withDay8EndpointFx")(function* () {
 	const { publicHono } = yield* RoutesContextFx;

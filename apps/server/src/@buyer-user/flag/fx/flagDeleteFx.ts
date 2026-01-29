@@ -1,7 +1,7 @@
 import { Effect } from "effect";
+import { flagFetchFx } from "~/@buyer-user/flag/fx/flagFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { flagFetchFx } from "./flagFetchFx";
 
 export namespace flagDeleteFx {
 	export interface Props {

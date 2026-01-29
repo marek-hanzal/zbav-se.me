@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiDraftCollectionErrors, apiDraftCountErrors, apiDraftCreateErrors, apiDraftDeleteErrors, apiDraftFetchErrors, apiDraftGalleryCreateErrors, apiDraftPatchErrors, apiListingCreateErrors, apiTransactionCollectionErrors, apiTransactionFetchErrors, apiTransactionListingCollectionErrors, apiTransactionStatusAcceptErrors, apiTransactionStatusResolveErrors, tApiDraftCollectionRequest, tApiDraftCollectionResponse, tApiDraftCountRequest, tApiDraftCountResponse, tApiDraftCreateRequest, tApiDraftCreateResponse, tApiDraftDeleteRequest, tApiDraftDeleteResponse, tApiDraftFetchRequest, tApiDraftFetchResponse, tApiDraftGalleryCreateRequest, tApiDraftGalleryCreateResponse, tApiDraftPatchRequest, tApiDraftPatchResponse, tApiListingCreateRequest, tApiListingCreateResponse, tApiTransactionCollectionRequest, tApiTransactionCollectionResponse, tApiTransactionFetchRequest, tApiTransactionFetchResponse, tApiTransactionListingCollectionRequest, tApiTransactionListingCollectionResponse, tApiTransactionStatusAcceptRequest, tApiTransactionStatusAcceptResponse, tApiTransactionStatusResolveRequest, tApiTransactionStatusResolveResponse } from './types.gen';
-import { zApiDraftCollectionData, zApiDraftCollectionResponse, zApiDraftCountData, zApiDraftCountResponse, zApiDraftCreateData, zApiDraftCreateResponse, zApiDraftDeleteData, zApiDraftDeleteResponse, zApiDraftFetchData, zApiDraftFetchResponse, zApiDraftGalleryCreateData, zApiDraftGalleryCreateResponse, zApiDraftPatchData, zApiDraftPatchResponse, zApiListingCreateData, zApiListingCreateResponse, zApiTransactionCollectionData, zApiTransactionCollectionResponse, zApiTransactionFetchData, zApiTransactionFetchResponse, zApiTransactionListingCollectionData, zApiTransactionListingCollectionResponse, zApiTransactionStatusAcceptData, zApiTransactionStatusAcceptResponse, zApiTransactionStatusResolveData, zApiTransactionStatusResolveResponse } from './zod.gen';
+import type { apiDraftCollectionErrors, apiDraftCountErrors, apiDraftCreateErrors, apiDraftDeleteErrors, apiDraftFetchErrors, apiDraftGalleryCreateErrors, apiDraftPatchErrors, apiListingCreateErrors, apiTransactionCollectionErrors, apiTransactionFetchErrors, apiTransactionListingCollectionErrors, apiTransactionStatusAcceptErrors, apiTransactionStatusDisputeErrors, apiTransactionStatusRejectErrors, apiTransactionStatusResolveErrors, tApiDraftCollectionRequest, tApiDraftCollectionResponse, tApiDraftCountRequest, tApiDraftCountResponse, tApiDraftCreateRequest, tApiDraftCreateResponse, tApiDraftDeleteRequest, tApiDraftDeleteResponse, tApiDraftFetchRequest, tApiDraftFetchResponse, tApiDraftGalleryCreateRequest, tApiDraftGalleryCreateResponse, tApiDraftPatchRequest, tApiDraftPatchResponse, tApiListingCreateRequest, tApiListingCreateResponse, tApiTransactionCollectionRequest, tApiTransactionCollectionResponse, tApiTransactionFetchRequest, tApiTransactionFetchResponse, tApiTransactionListingCollectionRequest, tApiTransactionListingCollectionResponse, tApiTransactionStatusAcceptRequest, tApiTransactionStatusAcceptResponse, tApiTransactionStatusDisputeRequest, tApiTransactionStatusDisputeResponse, tApiTransactionStatusRejectRequest, tApiTransactionStatusRejectResponse, tApiTransactionStatusResolveRequest, tApiTransactionStatusResolveResponse } from './types.gen';
+import { zApiDraftCollectionData, zApiDraftCollectionResponse, zApiDraftCountData, zApiDraftCountResponse, zApiDraftCreateData, zApiDraftCreateResponse, zApiDraftDeleteData, zApiDraftDeleteResponse, zApiDraftFetchData, zApiDraftFetchResponse, zApiDraftGalleryCreateData, zApiDraftGalleryCreateResponse, zApiDraftPatchData, zApiDraftPatchResponse, zApiListingCreateData, zApiListingCreateResponse, zApiTransactionCollectionData, zApiTransactionCollectionResponse, zApiTransactionFetchData, zApiTransactionFetchResponse, zApiTransactionListingCollectionData, zApiTransactionListingCollectionResponse, zApiTransactionStatusAcceptData, zApiTransactionStatusAcceptResponse, zApiTransactionStatusDisputeData, zApiTransactionStatusDisputeResponse, zApiTransactionStatusRejectData, zApiTransactionStatusRejectResponse, zApiTransactionStatusResolveData, zApiTransactionStatusResolveResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -216,6 +216,40 @@ export const apiTransactionStatusAccept = <ThrowOnError extends boolean = false>
     responseType: 'json',
     responseValidator: async (data) => await zApiTransactionStatusAcceptResponse.parseAsync(data),
     url: '/api/seller-user/transaction/status/accept',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
+ * Dispute a listing transaction
+ *
+ * Dispute a listing transaction. Requires access to the transaction.
+ */
+export const apiTransactionStatusDispute = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionStatusDisputeRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionStatusDisputeResponse, apiTransactionStatusDisputeErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiTransactionStatusDisputeData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiTransactionStatusDisputeResponse.parseAsync(data),
+    url: '/api/seller-user/transaction/status/dispute',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
+ * Reject a listing transaction
+ *
+ * Reject a listing transaction. Requires access to the transaction.
+ */
+export const apiTransactionStatusReject = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionStatusRejectRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionStatusRejectResponse, apiTransactionStatusRejectErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiTransactionStatusRejectData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiTransactionStatusRejectResponse.parseAsync(data),
+    url: '/api/seller-user/transaction/status/reject',
     ...options,
     headers: {
         'Content-Type': 'application/json',

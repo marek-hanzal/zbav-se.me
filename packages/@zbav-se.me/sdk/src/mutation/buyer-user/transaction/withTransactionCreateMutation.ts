@@ -6,8 +6,8 @@ import type {
 	tApiTransactionCreateResponse,
 	tTransactionCreate,
 } from "../../../api/buyer-user/types.gen";
-import { withListingCollectionQuery } from "../../../query/buyer-session/listing/withListingCollectionQuery";
-import { withListingFetchQuery } from "../../../query/buyer-session/listing/withListingFetchQuery";
+import { withListingCollectionQuery } from "../../../query/buyer-user/listing/withListingCollectionQuery";
+import { withListingFetchQuery } from "../../../query/buyer-user/listing/withListingFetchQuery";
 import { withTransactionCollectionQuery } from "../../../query/buyer-user/transaction/withTransactionCollectionQuery";
 
 export const withTransactionCreateMutation = withMutation<

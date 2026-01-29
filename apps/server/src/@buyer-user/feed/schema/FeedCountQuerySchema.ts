@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { CountEnumSchema } from "@use-pico/common/schema";
-import { FeedQuerySchema } from "./FeedQuerySchema";
+import { FeedQuerySchema } from "~/@buyer-user/feed/schema/FeedQuerySchema";
 
 export const FeedCountQuerySchema = z
 	.looseObject({
