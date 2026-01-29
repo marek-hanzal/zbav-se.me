@@ -39,10 +39,13 @@ The `@common` domain exists to:
 - **UploadContextLayerFx** - Effect layer factory for upload context
 - Used in `@user` domain for upload operations and S3 pre-signing
 
-### User Event Schema
+### User Event
 - **UserEventEnumSchema** - Zod schema for user event types (like, dislike, listing.create, transaction.* events)
 - **UserEventSourceEnumSchema** - Zod schema for user event source types (listing, transaction)
-- Used in `@user` domain for user event operations and database table schemas
+- **UserEventFilterSchema**, **UserEventSortSchema**, **UserEventWhereSchema**, **UserEventQuerySchema** - Query/filter/sort schemas for the `user_event` table
+- **withUserEventSourceSelectFx**, **withUserEventQueryBuilderFx**, **withUserEventCollectionSelectFx** - Kysely query builders for `user_event`
+- **userEventCollectionFx** - Effect function for paginated user event collection
+- Used in `@buyer-session` (userEventBuyerInfoFx), `@seller-session` (userEventSellerInfoFx), and `@user` domain for user event operations and database table schemas
 
 ### Listing Schema
 - **ProsConsSchema** - Zod schema for pros/cons arrays (max 5 items, each string max 72 characters)
@@ -67,9 +70,11 @@ The `@common` domain exists to:
 
 ## Related Domains
 
+- `@buyer-session` - Uses user-event query infrastructure (userEventCollectionFx) for buyer info
+- `@seller-session` - Uses user-event query infrastructure (userEventCollectionFx) for seller info
 - `@buyer-user` - Uses transaction context
 - `@seller-user` - Uses transaction context
-- `@user` - Uses transaction context
+- `@user` - Uses transaction context, user-event schemas
 - `@session` - May use common utilities
 - `@public` - May use common utilities
 
