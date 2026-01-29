@@ -4,6 +4,10 @@ import { clamp } from "@use-pico/common/clamp";
 import { median } from "@use-pico/common/median";
 import { p90 } from "@use-pico/common/p90";
 import { Effect } from "effect";
+import {
+	computeActivity,
+	computeLoad,
+} from "~/@common/user-event/fx/userEventLoadActivity";
 import { userEventCollectionFx } from "~/@common/user-event/fx/userEventCollectionFx";
 import type { UserEventSellerSchema } from "~/@seller-session/user-event/schema/UserEventSellerSchema";
 import type { UserEventTableSchema } from "~/database/@table/UserEventTableSchema";
@@ -430,107 +434,6 @@ const computeExpired = (source: UserEventTableSchema.Type[]) => {
 	} satisfies UserEventSellerSchema.Type["expired"];
 };
 
-const computeLoad = (
-	source: UserEventTableSchema.Type[],
-	thresholds = {
-		lowMax: 1,
-		mediumMax: 3,
-	},
-) => {
-	// count of "active" opened transactions (create+open, no end)
-	let count = 0;
-
-	let currentGroup: string | null = null;
-
-	let created = false;
-	let ended = false;
-
-	const flushGroup = () => {
-		currentGroup = null;
-
-		created = false;
-		ended = false;
-	};
-
-	const isEnd = (event: UserEventTableSchema.Type) =>
-		event.event === "transaction.success" ||
-		event.event === "transaction.closed" ||
-		event.event === "transaction.rejected" ||
-		event.event === "transaction.expired" ||
-		event.event === "transaction.resolved";
-
-	const finishGroup = () => {
-		if (created && !ended) {
-			count++;
-		}
-	};
-
-	for (const event of source) {
-		if (currentGroup !== event.group) {
-			// finish previous group before switching
-			if (currentGroup !== null) {
-				finishGroup();
-			}
-			flushGroup();
-			currentGroup = event.group;
-		}
-
-		if (event.event === "transaction.create" && event.scope === "foreign") {
-			created = true;
-			continue;
-		}
-
-		if (isEnd(event)) {
-			ended = true;
-		}
-	}
-
-	// finish last group
-	if (currentGroup !== null) {
-		finishGroup();
-	}
-
-	const bucket =
-		count <= thresholds.lowMax ? "low" : count <= thresholds.mediumMax ? "medium" : "high";
-
-	return {
-		bucket,
-	} satisfies UserEventSellerSchema.Type["load"];
-};
-
-const computeActivity = (source: UserEventTableSchema.Type[], days: number) => {
-	let lastUserAtMs: number | null = null;
-
-	for (const event of source) {
-		if (event.scope !== "user") continue;
-
-		const t = event.createdAt.getTime();
-		if (lastUserAtMs === null || t > lastUserAtMs) {
-			lastUserAtMs = t;
-		}
-	}
-
-	// "none" -> low
-	if (lastUserAtMs === null) {
-		return {
-			bucket: "low",
-		} satisfies UserEventSellerSchema.Type["activity"];
-	}
-
-	const nowMs = Date.now();
-	const ageMs = Math.max(0, nowMs - lastUserAtMs);
-	const ageDays = Math.floor(ageMs / (24 * 60 * 60 * 1000));
-
-	// split [0..days) into 3 buckets
-	const tier = Math.max(1, Math.floor(days / 3));
-
-	const bucket = ageDays < tier ? "high" : ageDays < tier * 2 ? "medium" : "low";
-
-	return {
-		bucket,
-	} satisfies UserEventSellerSchema.Type["activity"];
-};
-
 const computeScore = (input: {
 	reaction: UserEventSellerSchema.Type["reaction"];
 	resolved: UserEventSellerSchema.Type["resolved"];
@@ -647,7 +550,7 @@ export const userEventSellerInfoFx = Effect.fn("userEventSellerInfoFx")(function
 		rejected: computeRejected(source),
 		resolved: computeResolved(source),
 		expired: computeExpired(source),
-		load: computeLoad(source),
+		load: computeLoad(source, "foreign"),
 		activity: computeActivity(source, cutoff),
 	};
 
