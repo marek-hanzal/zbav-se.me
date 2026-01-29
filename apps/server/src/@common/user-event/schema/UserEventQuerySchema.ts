@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
-import { UserEventFilterSchema } from "~/@buyer-session/user-event/schema/UserEventFilterSchema";
-import { UserEventSortSchema } from "~/@buyer-session/user-event/schema/UserEventSortSchema";
-import { UserEventWhereSchema } from "~/@buyer-session/user-event/schema/UserEventWhereSchema";
+import { UserEventFilterSchema } from "~/@common/user-event/schema/UserEventFilterSchema";
+import { UserEventSortSchema } from "~/@common/user-event/schema/UserEventSortSchema";
+import { UserEventWhereSchema } from "~/@common/user-event/schema/UserEventWhereSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
 
 export const UserEventQuerySchema = z

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import type { UserEventSortSchema } from "~/@seller-session/user-event/schema/UserEventSortSchema";
+import type { UserEventSortSchema } from "~/@common/user-event/schema/UserEventSortSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withUserEventSourceSelectFx {

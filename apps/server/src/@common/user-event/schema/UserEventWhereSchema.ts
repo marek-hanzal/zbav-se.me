@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { UserEventFilterSchema } from "~/@buyer-session/user-event/schema/UserEventFilterSchema";
+import { UserEventFilterSchema } from "~/@common/user-event/schema/UserEventFilterSchema";
 
 export const UserEventWhereSchema = z
 	.looseObject({

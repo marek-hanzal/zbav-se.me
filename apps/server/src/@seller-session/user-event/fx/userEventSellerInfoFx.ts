@@ -4,7 +4,7 @@ import { clamp } from "@use-pico/common/clamp";
 import { median } from "@use-pico/common/median";
 import { p90 } from "@use-pico/common/p90";
 import { Effect } from "effect";
-import { userEventCollectionFx } from "~/@seller-session/user-event/fx/userEventCollectionFx";
+import { userEventCollectionFx } from "~/@common/user-event/fx/userEventCollectionFx";
 import type { UserEventSellerSchema } from "~/@seller-session/user-event/schema/UserEventSellerSchema";
 import type { UserEventTableSchema } from "~/database/@table/UserEventTableSchema";
 

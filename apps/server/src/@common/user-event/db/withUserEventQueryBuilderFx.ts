@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
-import type { withUserEventSourceSelectFx } from "~/@seller-session/user-event/db/withUserEventSourceSelectFx";
-import type { UserEventFilterSchema } from "~/@seller-session/user-event/schema/UserEventFilterSchema";
+import type { withUserEventSourceSelectFx } from "~/@common/user-event/db/withUserEventSourceSelectFx";
+import type { UserEventFilterSchema } from "~/@common/user-event/schema/UserEventFilterSchema";
 
 export namespace withUserEventQueryBuilderFx {
 	export interface Props<
