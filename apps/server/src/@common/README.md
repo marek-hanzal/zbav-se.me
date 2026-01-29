@@ -43,7 +43,7 @@ The `@common` domain exists to:
 - **UserEventEnumSchema** - Zod schema for user event types (like, dislike, listing.create, transaction.* events)
 - **UserEventSourceEnumSchema** - Zod schema for user event source types (listing, transaction)
 - **UserEventFilterSchema**, **UserEventSortSchema**, **UserEventWhereSchema**, **UserEventQuerySchema** - Query/filter/sort schemas for the `user_event` table
-- **withUserEventSourceSelectFx**, **withUserEventQueryBuilderFx**, **withUserEventCollectionSelectFx** - Kysely query builders for `user_event`
+- **withUserEventSourceSelectFx**, **withUserEventQueryBuilderFx**, **withUserEventCollectionSelectFx** - ˛Kysely query builders for `user_event`
 - **userEventCollectionFx** - Effect function for paginated user event collection
 - Used in `@buyer-session` (userEventBuyerInfoFx), `@seller-session` (userEventSellerInfoFx), and `@user` domain for user event operations and database table schemas
 
