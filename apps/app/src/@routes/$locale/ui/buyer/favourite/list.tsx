@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { List } from "~/app/feed-favourite/ui/List";
+import { List } from "~/app/@buyer-user/feed-favourite/ui/List";
 
 export const Route = createFileRoute("/$locale/ui/buyer/favourite/list")({
 	component() {

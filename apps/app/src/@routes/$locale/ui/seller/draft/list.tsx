@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { DraftList } from "~/app/draft/ui/DraftList";
+import { DraftList } from "~/app/@seller-user/draft/ui/DraftList";
 
 export const Route = createFileRoute("/$locale/ui/seller/draft/list")({
 	component() {

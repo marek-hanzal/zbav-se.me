@@ -17,9 +17,9 @@ import { DeadEndIcon, FirstIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, type RefObject, useRef, useState } from "react";
 import z from "zod";
-import { SetupButton as CoolSetupButton } from "~/app/feed/ui/button/SetupButton";
-import { SetupSheet } from "~/app/feed/ui/SetupSheet";
-import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
+import { SetupButton as CoolSetupButton } from "~/app/@buyer-user/feed/ui/button/SetupButton";
+import { SetupSheet } from "~/app/@buyer-user/feed/ui/SetupSheet";
+import { ListingListContainer } from "~/app/@buyer-user/listing/ui/ListingListContainer";
 
 export namespace SetupButton {
 	export interface Props extends Partial<CoolSetupButton.Props> {

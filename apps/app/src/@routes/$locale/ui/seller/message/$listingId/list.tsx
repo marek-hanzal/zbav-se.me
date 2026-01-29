@@ -8,10 +8,10 @@ import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing"
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { useState } from "react";
-import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
-import { ListingSheet } from "~/app/listing/ui/ListingSheet";
-import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
-import { TransactionList } from "~/app/transaction/ui/seller/TransactionList";
+import { ListingSheet } from "~/app/@buyer-user/listing/ui/ListingSheet";
+import { ListingOverlay } from "~/app/@buyer-user/listing/ui/overlay/ListingOverlay";
+import { TransactionList } from "~/app/@seller-user/transaction/TransactionList";
+import { useHeroUpload } from "~/app/@user/gallery/hook/useHeroUpload";
 
 export const Route = createFileRoute("/$locale/ui/seller/message/$listingId/list")({
 	pendingComponent() {

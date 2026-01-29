@@ -1,0 +1,78 @@
+import { Container } from "@use-pico/client/ui/container";
+import type { tFeed, tListingSort } from "@zbav-se.me/sdk/api/buyer-user";
+import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
+import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import { type FC, useState } from "react";
+import { ListingSortSelect } from "~/app/@buyer-user/listing/ui/ListingSortSelect";
+import { SaveControl } from "~/app/@common/control/SaveControl";
+
+export namespace SortPatch {
+	export interface Props extends Container.Props {
+		feed: tFeed;
+		onSettled?(): void;
+		onCancel(): void;
+	}
+}
+
+export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ui, ...props }) => {
+	const patch = withFeedFetchQuery.useSet();
+	const [sort, setSort] = useState<tListingSort[]>(feed.query?.sort ?? []);
+
+	const withGeo = !!feed.query?.meta?.latLon;
+
+	const mutation = withFeedPatchMutation.useMutation({
+		onSuccess(feed) {
+			patch(() => feed, {
+				where: {
+					id: feed.id,
+				},
+			});
+		},
+		onSettled() {
+			onSettled?.();
+		},
+	});
+
+	return (
+		<Container
+			data-ui={"SortPatch[Container]"}
+			ui={{
+				layout: "vertical-content-footer",
+				height: "full",
+				gap: "default",
+				inner: "default",
+				...ui,
+			}}
+			{...props}
+		>
+			<ListingSortSelect
+				withGeo={withGeo}
+				state={{
+					value: sort,
+					set: setSort,
+				}}
+			/>
+
+			<SaveControl
+				onCancel={onCancel}
+				onSave={() => {
+					mutation.mutate({
+						patch: {
+							query: {
+								...feed.query,
+								sort: sort,
+							},
+						},
+						query: {
+							where: {
+								id: feed.id,
+							},
+						},
+					});
+				}}
+				loading={mutation.isPending}
+				disabled={false}
+			/>
+		</Container>
+	);
+};

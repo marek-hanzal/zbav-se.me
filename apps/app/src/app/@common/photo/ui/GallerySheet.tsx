@@ -1,0 +1,30 @@
+import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
+import type { tUpload } from "@zbav-se.me/sdk/api/seller-user";
+import { CloseButton } from "@zbav-se.me/ui/button";
+import type { FC } from "react";
+import { GalleryContent } from "~/app/@common/photo/ui/GalleryContent";
+
+export namespace GallerySheet {
+	export interface Props extends BottomSheet.Props {
+		uploads: tUpload[];
+	}
+}
+
+export const GallerySheet: FC<GallerySheet.Props> = ({ uploads, ...props }) => {
+	return (
+		<BottomSheet
+			data-ui={"GalleryButton[BottomSheet]"}
+			detent={"full"}
+			header={({ close }) => ({
+				title: "Gallery (title)",
+				right: <CloseButton onClick={close} />,
+			})}
+			contentProps={{
+				disableScroll: true,
+			}}
+			{...props}
+		>
+			<GalleryContent uploads={uploads} />
+		</BottomSheet>
+	);
+};

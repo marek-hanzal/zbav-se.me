@@ -185,7 +185,7 @@ export const withDomainApiFx = Effect.fn("withDomainApiFx")(function* () {
 - TanStack Form for forms
 - Server-side rendering with TanStack Start
 - Domain routes: `@routes/$locale/buyer/*`, `@routes/$locale/seller/*`, `@routes/$locale/ui/*`
-- Domain components: `app/@buyer/*`, `app/@seller/*`
+- Domain components: `app/@buyer-user`, `app/@buyer-session`, `app/@seller-user`, `app/@seller-session`, `app/@session`, `app/@user`, `app/@common`
 
 ### SDK Generation
 - `packages/@zbav-se.me/sdk` generated from OpenAPI spec
@@ -213,13 +213,14 @@ error/                 # Custom error types
 ### App (`apps/app/src/`)
 ```
 @routes/               # TanStack Router routes (file-based)
-app/                   # Application components
-  @buyer/              # Buyer domain components
-  @seller/             # Seller domain components
-  auth/                # Authentication
-  home/                # Home/navigation
-  feed/                 # Feed components
-  transaction/         # Transaction components
+app/                   # Application components (domain-separated, mirrors server)
+  @buyer-user/         # Buyer private: feed, feed-favourite, listing browse, transaction (buyer), BuyerMenu
+  @buyer-session/     # Buyer session: listing-event (e.g. useListingEvent)
+  @seller-user/        # Seller private: draft, listing/my, transaction (seller), transaction-listing, SellerMenu
+  @seller-session/    # Seller session: seller-info, user-event UI (if any)
+  @session/            # Session context (shared authenticated)
+  @user/               # User private: gallery, message, personal, package, useSide, useUser
+  @common/             # Shared: age, category, condition, auth, home, locale, photo, transaction UI, message types, listing display
 assets/                # Static assets (fonts, styles)
 translation/           # i18n files (cs.yaml, en.yaml)
 ```
