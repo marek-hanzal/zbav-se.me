@@ -1,17 +1,12 @@
 import { z } from "@hono/zod-openapi";
+import { LoadEnumSchema } from "~/@common/user-event/schema/LoadEnumSchema";
 
 export const UserEventSellerLoadSchema = z
 	.looseObject({
-		bucket: z
-			.enum([
-				"low",
-				"medium",
-				"high",
-			])
-			.openapi({
-				description: "Load type of the seller",
-				example: "low",
-			}),
+		bucket: LoadEnumSchema.openapi({
+			description: "Load type of the seller",
+			example: "low",
+		}),
 	})
 	.strip()
 	.openapi("UserEventSellerLoad", {

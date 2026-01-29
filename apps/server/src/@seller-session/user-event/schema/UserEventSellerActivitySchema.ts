@@ -1,17 +1,12 @@
 import { z } from "@hono/zod-openapi";
+import { ActivityEnumSchema } from "~/@common/user-event/schema/ActivityEnumSchema";
 
 export const UserEventSellerActivitySchema = z
 	.looseObject({
-		bucket: z
-			.enum([
-				"low",
-				"medium",
-				"high",
-			])
-			.openapi({
-				description: "Activity type of the seller",
-				example: "low",
-			}),
+		bucket: ActivityEnumSchema.openapi({
+			description: "Activity type of the seller",
+			example: "low",
+		}),
 	})
 	.strip()
 	.openapi("UserEventSellerActivity", {

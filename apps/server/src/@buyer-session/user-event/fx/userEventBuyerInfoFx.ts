@@ -4,11 +4,11 @@ import { clamp } from "@use-pico/common/clamp";
 import { median } from "@use-pico/common/median";
 import { p90 } from "@use-pico/common/p90";
 import { Effect } from "effect";
-import {
-	computeActivity,
-	computeLoad,
-} from "~/@common/user-event/fx/userEventLoadActivity";
+import { computeActivity } from "~/@common/user-event/fx/computeActivity";
 import { userEventCollectionFx } from "~/@common/user-event/fx/userEventCollectionFx";
+import { computeLoad } from "~/@common/user-event/fx/computeLoad";
+import type { ActivityEnumSchema } from "~/@common/user-event/schema/ActivityEnumSchema";
+import type { LoadEnumSchema } from "~/@common/user-event/schema/LoadEnumSchema";
 import type { UserEventBuyerSchema } from "~/@buyer-session/user-event/schema/UserEventBuyerSchema";
 import type { UserEventTableSchema } from "~/database/@table/UserEventTableSchema";
 
@@ -418,10 +418,10 @@ const computeScore = (input: {
 }) => {
 	const { reaction, decision, closer, expired, activity, load } = input;
 
-	const bonusActivity = (bucket: "low" | "medium" | "high") =>
+	const bonusActivity = (bucket: ActivityEnumSchema.Type) =>
 		bucket === "high" ? 2 : bucket === "medium" ? 1 : 0;
 
-	const bonusLoad = (bucket: "low" | "medium" | "high") =>
+	const bonusLoad = (bucket: LoadEnumSchema.Type) =>
 		bucket === "low" ? 2 : bucket === "medium" ? 1 : 0;
 
 	const bonusReactionSpeed = (reaction: { reactions: number; medianMs: number }) => {

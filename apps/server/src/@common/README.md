@@ -42,10 +42,11 @@ The `@common` domain exists to:
 ### User Event
 - **UserEventEnumSchema** - Zod schema for user event types (like, dislike, listing.create, transaction.* events)
 - **UserEventSourceEnumSchema** - Zod schema for user event source types (listing, transaction)
+- **LoadEnumSchema**, **ActivityEnumSchema** - Zod schemas for load/activity buckets (low, medium, high). Used by buyer/seller load and activity schemas and by computeLoad/computeActivity.
 - **UserEventFilterSchema**, **UserEventSortSchema**, **UserEventWhereSchema**, **UserEventQuerySchema** - Query/filter/sort schemas for the `user_event` table
 - **withUserEventSourceSelectFx**, **withUserEventQueryBuilderFx**, **withUserEventCollectionSelectFx** - Kysely query builders for `user_event`
 - **userEventCollectionFx** - Effect function for paginated user event collection
-- **userEventLoadActivity** - Shared helpers: `computeLoad(source, createScope)` (active-transaction count bucketed into low/medium/high), `computeActivity(source, days)` (last user-scoped event age bucketed into high/medium/low). Used by `@buyer-session` (userEventBuyerInfoFx) and `@seller-session` (userEventSellerInfoFx).
+- **computeLoad** - `computeLoad(source, createScope)` (active-transaction count bucketed into low/medium/high). **computeActivity** - `computeActivity(source, days)` (last user-scoped event age bucketed into high/medium/low). Used by `@buyer-session` (userEventBuyerInfoFx) and `@seller-session` (userEventSellerInfoFx).
 - Used in `@buyer-session` (userEventBuyerInfoFx), `@seller-session` (userEventSellerInfoFx), and `@user` domain for user event operations and database table schemas
 
 ### Listing Schema

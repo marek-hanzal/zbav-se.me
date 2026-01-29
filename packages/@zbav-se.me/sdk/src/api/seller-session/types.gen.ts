@@ -109,23 +109,45 @@ export type tUserEventSellerExpired = {
 };
 
 /**
+ * Load type of the seller
+ */
+export const tLoadEnum = {
+    low: 'low',
+    medium: 'medium',
+    high: 'high'
+} as const;
+
+/**
+ * Load type of the seller
+ */
+export type tLoadEnum = typeof tLoadEnum[keyof typeof tLoadEnum];
+
+/**
  * Masks number of transactions of the seller, basically it tells, how busy seller is.
  */
 export type tUserEventSellerLoad = {
-    /**
-     * Load type of the seller
-     */
-    bucket: 'low' | 'medium' | 'high';
+    bucket: tLoadEnum;
 };
+
+/**
+ * Activity type of the seller
+ */
+export const tActivityEnum = {
+    low: 'low',
+    medium: 'medium',
+    high: 'high'
+} as const;
+
+/**
+ * Activity type of the seller
+ */
+export type tActivityEnum = typeof tActivityEnum[keyof typeof tActivityEnum];
 
 /**
  * This metric describes the approx activity of the user
  */
 export type tUserEventSellerActivity = {
-    /**
-     * Activity type of the seller
-     */
-    bucket: 'low' | 'medium' | 'high';
+    bucket: tActivityEnum;
 };
 
 /**

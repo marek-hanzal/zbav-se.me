@@ -2074,17 +2074,21 @@ export const sUserEventBuyerExpired = {
     ]
 } as const;
 
+export const sLoadEnum = {
+    type: 'string',
+    enum: [
+        'low',
+        'medium',
+        'high'
+    ],
+    example: 'low'
+} as const;
+
 export const sUserEventBuyerLoad = {
     type: 'object',
     properties: {
         bucket: {
-            type: 'string',
-            enum: [
-                'low',
-                'medium',
-                'high'
-            ],
-            example: 'low'
+            $ref: '#/components/schemas/LoadEnum'
         }
     },
     required: [
@@ -2092,17 +2096,21 @@ export const sUserEventBuyerLoad = {
     ]
 } as const;
 
+export const sActivityEnum = {
+    type: 'string',
+    enum: [
+        'low',
+        'medium',
+        'high'
+    ],
+    example: 'low'
+} as const;
+
 export const sUserEventBuyerActivity = {
     type: 'object',
     properties: {
         bucket: {
-            type: 'string',
-            enum: [
-                'low',
-                'medium',
-                'high'
-            ],
-            example: 'low'
+            $ref: '#/components/schemas/ActivityEnum'
         }
     },
     required: [
