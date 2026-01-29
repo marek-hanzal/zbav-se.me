@@ -101,7 +101,7 @@ export const t00_initial = Effect.fn("t00_initial")(function* ({
 			})
 			.with("reject-buyer", () => {
 				return buyerTransactionStatusRejectFx({
-					userId: current.id,
+					userId: transaction.userId,
 					transactionId: transactionId.id,
 				}).pipe(
 					Effect.provide(
