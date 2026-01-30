@@ -1,22 +1,10 @@
-import { z } from "@hono/zod-openapi";
+import type { z } from "@hono/zod-openapi";
+import { BoardItemTableSchema } from "~/database/@table/BoardItemTableSchema";
 
-export const ItemSchema = z
-	.looseObject({
-		id: z.string().openapi({
-			description: "ID of the item",
-		}),
-		//
-		x: z.number().openapi({
-			description: "X coordinate of the item",
-		}),
-		y: z.number().openapi({
-			description: "Y coordinate of the item",
-		}),
-		//
-		level: z.number().openapi({
-			description: "Level of the item",
-		}),
-	})
+export const ItemSchema = BoardItemTableSchema.omit({
+	boardId: true,
+	createdAt: true,
+})
 	.strip()
 	.openapi("Item", {
 		description: "Item on the board",
