@@ -1,8 +1,8 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { tBoardItem } from "@zbav-se.me/sdk/api/arkini";
 import { withBoardSaveMutation } from "@zbav-se.me/sdk/mutation/arkini";
 import { type FC, useRef } from "react";
 import { BoardItem } from "~/app/board/BoardItem";
+import { useBoardStore } from "~/app/board/useBoardStore";
 
 export namespace Board {
 	export interface Props extends Container.Props {
@@ -10,12 +10,12 @@ export namespace Board {
 		width: number;
 		/** rows */
 		height: number;
-		items: tBoardItem[];
 	}
 }
 
-export const Board: FC<Board.Props> = ({ ui, className, width, height, items, ...props }) => {
+export const Board: FC<Board.Props> = ({ ui, className, width, height, ...props }) => {
 	const constraintsRef = useRef<HTMLDivElement | null>(null);
+	const items = useBoardStore((state) => state.items);
 	const saveMutation = withBoardSaveMutation.useMutation();
 
 	const onMove = (itemId: string, nextX: number, nextY: number) => {
