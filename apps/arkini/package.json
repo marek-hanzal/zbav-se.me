@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "vite build",
 		"dev": "vite",
-		"preview": "NITRO_PRESET=node_server vite build --mode production && PORT=3033 node .output/server/index.mjs",
+		"preview": "NITRO_PRESET=node_server vite build --mode production && PORT=4088 node .output/server/index.mjs",
 		"translations": "bun ./cli/translations.ts",
 		"typecheck": "tsc --noEmit",
 		"knip": "knip"

@@ -257,7 +257,7 @@ translation/           # i18n files (cs.yaml, en.yaml)
 - `apps/web`: 3030
 - `apps/app`: 3031
 - `apps/server`: 3032
-- `apps/arkini`: 3033
+- `apps/arkini`: 4088
 - `apps/blog`: 4090
 
 ## Environment Variables
