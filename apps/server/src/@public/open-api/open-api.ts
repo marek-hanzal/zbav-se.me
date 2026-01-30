@@ -197,6 +197,7 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 		sellerSessionHono,
 		buyerUserHono,
 		buyerSessionHono,
+		arkiniHono,
 	} = yield* RoutesContextFx;
 
 	const viteConfig = ServerViteSchema.parse(process.env);
@@ -235,6 +236,10 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 				{
 					url: `${docsUrl}/buyer-session`,
 					title: "Buyer Session",
+				},
+				{
+					url: `${docsUrl}/arkini`,
+					title: "Arkini",
 				},
 				{
 					url: "/api/auth/open-api/generate-schema",
@@ -293,6 +298,7 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 		sellerSession: unknown;
 		buyerUser: unknown;
 		buyerSession: unknown;
+		arkini: unknown;
 	} = null;
 
 	const docs = () => {
@@ -374,6 +380,16 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 				},
 				...cookieAuth,
 			}),
+
+			arkini: docWithMount("/api/arkini", arkiniHono, {
+				openapi: "3.1.0",
+				info: {
+					version: "0.5.0",
+					title: "Arkini zbav-se.me API",
+					description: "API for the Arkini application",
+				},
+				...cookieAuth,
+			}),
 		};
 
 		return cache;
@@ -386,6 +402,7 @@ export const withOpenApiEndpointFx = Effect.fn("withOpenApiEndpointFx")(function
 	root.get(`${docsUrl}/seller-session`, (c) => c.json(docs().sellerSession));
 	root.get(`${docsUrl}/buyer-user`, (c) => c.json(docs().buyerUser));
 	root.get(`${docsUrl}/buyer-session`, (c) => c.json(docs().buyerSession));
+	root.get(`${docsUrl}/arkini`, (c) => c.json(docs().arkini));
 
 	root.doc31(docsUrl, {
 		openapi: "3.1.0",

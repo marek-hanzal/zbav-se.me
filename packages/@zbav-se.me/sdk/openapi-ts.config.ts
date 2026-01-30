@@ -199,4 +199,22 @@ export default defineConfig([
 			...common.plugins,
 		],
 	},
+	{
+		input: `${process.env.VITE_SERVER_API}/v3/api-docs/arkini`,
+		output: {
+			path: "src/api/arkini",
+			format: "biome",
+			lint: "biome",
+		},
+		...common,
+		plugins: [
+			{
+				name: "@hey-api/client-axios",
+				exportFromIndex: true,
+				baseUrl: false,
+				runtimeConfigPath: "../arkini.client.config",
+			},
+			...common.plugins,
+		],
+	},
 ]);
