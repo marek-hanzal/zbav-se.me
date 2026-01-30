@@ -5,11 +5,16 @@ export const ItemSchema = z
 		id: z.string().openapi({
 			description: "ID of the item",
 		}),
+		//
 		x: z.number().openapi({
 			description: "X coordinate of the item",
 		}),
 		y: z.number().openapi({
 			description: "Y coordinate of the item",
+		}),
+		//
+		level: z.number().openapi({
+			description: "Level of the item",
 		}),
 	})
 	.strip()

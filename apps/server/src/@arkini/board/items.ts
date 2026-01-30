@@ -37,7 +37,46 @@ export const withItemsApiFx = Effect.fn("withItemsApiFx")(function* () {
 			summary: "Return current items on the board.",
 		}),
 		async (c) => {
-			return c.json<ItemSchema.Type[], 200>([], 200);
+			const mock: ItemSchema.Type[] = [
+				{
+					id: "wood-1",
+					level: 1,
+					x: 1,
+					y: 2,
+				},
+				{
+					id: "wood-2",
+					level: 1,
+					x: 2,
+					y: 2,
+				},
+				{
+					id: "wood-3",
+					level: 1,
+					x: 6,
+					y: 4,
+				},
+				{
+					id: "wood-4",
+					level: 1,
+					x: 7,
+					y: 4,
+				},
+				{
+					id: "wood-5",
+					level: 2,
+					x: 4,
+					y: 1,
+				},
+				{
+					id: "wood-6",
+					level: 3,
+					x: 0,
+					y: 6,
+				},
+			];
+
+			return c.json<ItemSchema.Type[], 200>(mock, 200);
 		},
 	);
 });
