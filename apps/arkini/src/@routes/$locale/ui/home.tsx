@@ -5,7 +5,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 export const Route = createFileRoute("/$locale/ui/home")({
 	component() {
 		return (
-			<TitleContainer textTitle={"zbav-se.me"}>
+			<TitleContainer textTitle={"Arkini"}>
 				<Container>Hello there!</Container>
 			</TitleContainer>
 		);

@@ -17,6 +17,7 @@ import { Route as LocaleUiRouteImport } from './@routes/$locale/ui'
 import { Route as LocaleUiUserRouteImport } from './@routes/$locale/ui/user'
 import { Route as LocaleUiShopRouteImport } from './@routes/$locale/ui/shop'
 import { Route as LocaleUiHomeRouteImport } from './@routes/$locale/ui/home'
+import { Route as LocaleFlowBoardRouteImport } from './@routes/$locale/flow/board'
 
 const LocaleRoute = LocaleRouteImport.update({
   id: '/$locale',
@@ -58,6 +59,11 @@ const LocaleUiHomeRoute = LocaleUiHomeRouteImport.update({
   path: '/home',
   getParentRoute: () => LocaleUiRoute,
 } as any)
+const LocaleFlowBoardRoute = LocaleFlowBoardRouteImport.update({
+  id: '/flow/board',
+  path: '/flow/board',
+  getParentRoute: () => LocaleRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/$locale/ui': typeof LocaleUiRouteWithChildren
   '/$locale/welcome': typeof LocaleWelcomeRoute
   '/$locale/': typeof LocaleIndexRoute
+  '/$locale/flow/board': typeof LocaleFlowBoardRoute
   '/$locale/ui/home': typeof LocaleUiHomeRoute
   '/$locale/ui/shop': typeof LocaleUiShopRoute
   '/$locale/ui/user': typeof LocaleUiUserRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/$locale/ui': typeof LocaleUiRouteWithChildren
   '/$locale/welcome': typeof LocaleWelcomeRoute
   '/$locale': typeof LocaleIndexRoute
+  '/$locale/flow/board': typeof LocaleFlowBoardRoute
   '/$locale/ui/home': typeof LocaleUiHomeRoute
   '/$locale/ui/shop': typeof LocaleUiShopRoute
   '/$locale/ui/user': typeof LocaleUiUserRoute
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/$locale/ui': typeof LocaleUiRouteWithChildren
   '/$locale/welcome': typeof LocaleWelcomeRoute
   '/$locale/': typeof LocaleIndexRoute
+  '/$locale/flow/board': typeof LocaleFlowBoardRoute
   '/$locale/ui/home': typeof LocaleUiHomeRoute
   '/$locale/ui/shop': typeof LocaleUiShopRoute
   '/$locale/ui/user': typeof LocaleUiUserRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/$locale/ui'
     | '/$locale/welcome'
     | '/$locale/'
+    | '/$locale/flow/board'
     | '/$locale/ui/home'
     | '/$locale/ui/shop'
     | '/$locale/ui/user'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/$locale/ui'
     | '/$locale/welcome'
     | '/$locale'
+    | '/$locale/flow/board'
     | '/$locale/ui/home'
     | '/$locale/ui/shop'
     | '/$locale/ui/user'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/$locale/ui'
     | '/$locale/welcome'
     | '/$locale/'
+    | '/$locale/flow/board'
     | '/$locale/ui/home'
     | '/$locale/ui/shop'
     | '/$locale/ui/user'
@@ -184,6 +196,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleUiHomeRouteImport
       parentRoute: typeof LocaleUiRoute
     }
+    '/$locale/flow/board': {
+      id: '/$locale/flow/board'
+      path: '/flow/board'
+      fullPath: '/$locale/flow/board'
+      preLoaderRoute: typeof LocaleFlowBoardRouteImport
+      parentRoute: typeof LocaleRoute
+    }
   }
 }
 
@@ -207,12 +226,14 @@ interface LocaleRouteChildren {
   LocaleUiRoute: typeof LocaleUiRouteWithChildren
   LocaleWelcomeRoute: typeof LocaleWelcomeRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
+  LocaleFlowBoardRoute: typeof LocaleFlowBoardRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleUiRoute: LocaleUiRouteWithChildren,
   LocaleWelcomeRoute: LocaleWelcomeRoute,
   LocaleIndexRoute: LocaleIndexRoute,
+  LocaleFlowBoardRoute: LocaleFlowBoardRoute,
 }
 
 const LocaleRouteWithChildren =
