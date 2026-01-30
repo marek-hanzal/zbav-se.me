@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { withBoardApiFx } from "~/@arkini/board/withBoardApiFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import type { NoticeSchema } from "~/schema/NoticeSchema";
@@ -27,6 +28,7 @@ export const withArkiniApiFx = Effect.fn("withArkiniApiFx")(function* () {
 		return next();
 	});
 
-	// No endpoints yet - domain is empty
+	yield* withBoardApiFx();
+
 	root.route("/api/arkini", arkiniHono);
 });

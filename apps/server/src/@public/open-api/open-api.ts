@@ -141,6 +141,11 @@ const tagsRegistry: Record<
 		name: "Listing Event",
 		description: "Listing event tracking and analytics",
 	},
+	// @Arkini
+	Board: {
+		name: "Board",
+		description: "Board items and operations",
+	},
 } as const;
 
 const extractTagsFromOpenApiDocument = (

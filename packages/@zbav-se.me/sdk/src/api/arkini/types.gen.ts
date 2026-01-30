@@ -3,3 +3,76 @@
 export type clientOptions = {
     baseURL: 'http://obsidian-ii.local:3032' | (string & {});
 };
+
+/**
+ * Item on the board
+ */
+export type tItem = {
+    /**
+     * ID of the item
+     */
+    id: string;
+    /**
+     * X coordinate of the item
+     */
+    x: number;
+    /**
+     * Y coordinate of the item
+     */
+    y: number;
+};
+
+/**
+ * Items on the board
+ */
+export type tItemsResponse = Array<tItem>;
+
+/**
+ * Type of notice
+ */
+export const tNoticeTypeEnum = {
+    info: 'info',
+    warning: 'warning',
+    error: 'error'
+} as const;
+
+/**
+ * Type of notice
+ */
+export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
+
+/**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export type tNotice = {
+    /**
+     * Message
+     */
+    message: string;
+    type: tNoticeTypeEnum;
+};
+
+export type tApiBoardItemsRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/arkini/board/items';
+};
+
+export type apiBoardItemsErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiBoardItemsError = apiBoardItemsErrors[keyof apiBoardItemsErrors];
+
+export type tApiBoardItemsResponse = {
+    /**
+     * Items on the board
+     */
+    200: tItemsResponse;
+};
+
+export type apiBoardItemsResponse = tApiBoardItemsResponse[keyof tApiBoardItemsResponse];
