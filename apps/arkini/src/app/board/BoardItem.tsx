@@ -83,12 +83,15 @@ export const BoardItem: FC<BoardItem.Props> = ({ boardRef, item, cols, rows }) =
 				}
 
 				boardItemPatch(
-					(prev) => ({
-						...prev,
-						x: nextX,
-						y: nextY,
-						commit: false,
-					}),
+					(prev) =>
+						prev
+							? {
+									...prev,
+									x: nextX,
+									y: nextY,
+									commit: false,
+								}
+							: prev,
 					{
 						where: {
 							id: item.id,
