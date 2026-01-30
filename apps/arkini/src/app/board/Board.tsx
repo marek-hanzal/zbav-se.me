@@ -1,5 +1,5 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { FC } from "react";
+import { type FC, useRef } from "react";
 import { BoardItem } from "~/app/board/BoardItem";
 import { useBoardContext } from "~/app/board/useBoardContext";
 
@@ -13,6 +13,7 @@ export namespace Board {
 }
 
 export const Board: FC<Board.Props> = ({ ui, className, width, height, ...props }) => {
+	const constraintsRef = useRef<HTMLDivElement | null>(null);
 	const useBoardStore = useBoardContext();
 	const items = useBoardStore((state) => state.items);
 
@@ -62,12 +63,14 @@ export const Board: FC<Board.Props> = ({ ui, className, width, height, ...props 
 				/>
 
 				<div
+					ref={constraintsRef}
 					data-ui={"Board[Items]"}
 					className="absolute inset-0"
 				>
 					{items.map((item) => (
 						<BoardItem
 							key={item.id}
+							constraintsRef={constraintsRef}
 							item={item}
 							cols={width}
 							rows={height}

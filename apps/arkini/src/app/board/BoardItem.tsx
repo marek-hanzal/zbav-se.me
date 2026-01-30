@@ -1,31 +1,34 @@
-import { Container } from "@use-pico/client/ui/container";
 import type { tItem } from "@zbav-se.me/sdk/api/arkini";
-import type { FC } from "react";
+import { motion } from "motion/react";
+import type { FC, RefObject } from "react";
 
 export namespace BoardItem {
 	export interface Props {
+		constraintsRef: RefObject<HTMLDivElement | null>;
 		item: tItem;
 		cols: number;
 		rows: number;
 	}
 }
 
-export const BoardItem: FC<BoardItem.Props> = ({ item, cols, rows }) => {
+export const BoardItem: FC<BoardItem.Props> = ({ constraintsRef, item, cols, rows }) => {
 	return (
-		<Container
-			data-ui={"Board[Item]"}
-			className={[
-				"absolute",
-				"pointer-events-auto select-none",
-			]}
+		<motion.div
+			drag
+			dragConstraints={constraintsRef}
+			dragMomentum={false}
+			dragElastic={0}
 			style={{
-				// item zabere 1 cell
 				width: `calc(100% / ${cols})`,
 				height: `calc(100% / ${rows})`,
-
-				// umístění do cell (top-left)
 				left: `calc((100% / ${cols}) * ${item.x})`,
 				top: `calc((100% / ${rows}) * ${item.y})`,
+				position: "absolute",
+				touchAction: "none",
+			}}
+			className="pointer-events-auto select-none"
+			whileDrag={{
+				scale: 1.05,
 			}}
 		>
 			<div className="h-full w-full p-1">
@@ -33,6 +36,6 @@ export const BoardItem: FC<BoardItem.Props> = ({ item, cols, rows }) => {
 					{item.x},{item.y}
 				</div>
 			</div>
-		</Container>
+		</motion.div>
 	);
 };
