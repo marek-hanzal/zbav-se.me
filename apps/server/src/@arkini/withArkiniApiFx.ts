@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { withBoardItemApiFx } from "~/@arkini/board-item/withBoardItemApiFx";
+import { withBoardApiFx } from "~/@arkini/board/withBoardApiFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import type { NoticeSchema } from "~/schema/NoticeSchema";
@@ -28,7 +28,7 @@ export const withArkiniApiFx = Effect.fn("withArkiniApiFx")(function* () {
 		return next();
 	});
 
-	yield* withBoardItemApiFx();
+	yield* withBoardApiFx();
 
 	root.route("/api/arkini", arkiniHono);
 });

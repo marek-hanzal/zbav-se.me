@@ -1,45 +1,47 @@
 import { createRoute, z } from "@hono/zod-openapi";
+import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { boardItemCollectionFx } from "~/@arkini/board-item/fx/boardItemCollectionFx";
-import { BoardItemItemSchema } from "~/@arkini/board-item/schema/BoardItemItemSchema";
-import { BoardItemQuerySchema } from "~/@arkini/board-item/schema/BoardItemQuerySchema";
+import { boardSaveFx } from "~/@arkini/board/fx/boardSaveFx";
+import { BoardItemSchema } from "~/@arkini/board/schema/BoardItemSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
-const CollectionSchema = withCollectionSchema({
-	schema: BoardItemItemSchema,
-	type: "BoardItemCollection",
-	description: "Collection of board items",
-});
-
-export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* () {
+export const withSaveApiFx = Effect.fn("withSaveApiFx")(function* () {
 	const { arkiniHono } = yield* RoutesContextFx;
 	arkiniHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/board-item/collection",
-			description: "Returns board items based on provided parameters",
-			operationId: "apiBoardItemCollection",
+			path: "/board/save",
+			description: "Replaces all items on the board with the provided items",
+			operationId: "apiBoardSave",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: BoardItemQuerySchema,
+							schema: z.array(BoardItemSchema),
 						},
 					},
+					description: "Board items to save (replaces existing)",
 				},
 			},
 			responses: {
 				200: {
 					content: {
 						"application/json": {
-							schema: CollectionSchema,
+							schema: z.array(BoardItemSchema),
 						},
 					},
-					description: "Access collection of board items based on provided query",
+					description: "Saved board items",
+				},
+				404: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Board not found",
 				},
 				500: {
 					content: {
@@ -51,35 +53,44 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 				},
 			},
 			tags: [
-				"Board Item",
+				"Board",
 			],
-			summary: "Fetch a collection of board items based on the provided query",
+			summary: "Save board items",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
 				const user = c.get("user");
+				const items = c.req.valid("json");
 
-				return c.json<withCollectionSchema.Type<BoardItemItemSchema>, 200>(
+				return c.json<BoardItemSchema.Type[], 200>(
 					yield* zodFx({
-						schema: CollectionSchema,
-						dataFx: boardItemCollectionFx({
-							...c.req.valid("json"),
-							scope: {
-								userId: user.id,
-							},
-						}) satisfies Effect.Effect<
-							withCollectionSchema.Type<BoardItemItemSchema>,
-							any,
-							any
-						>,
+						schema: z.array(BoardItemSchema),
+						dataFx: boardSaveFx({
+							userId: user.id,
+							items,
+						}) satisfies Effect.Effect<BoardItemSchema.Type[], any, any>,
 					}),
 					200,
 				);
 			}).pipe(
+				Effect.provide(DateContextLayer(createDateContext())),
 				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
+							Match.when(
+								{
+									_tag: "NotFoundErrorFx",
+								},
+								(err) =>
+									c.json<NoticeSchema.Type, 404>(
+										{
+											type: "error",
+											message: err.message,
+										},
+										404,
+									),
+							),
 							Match.when(
 								{
 									_tag: "ZodErrorFx",

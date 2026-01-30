@@ -1,7 +1,5 @@
 import { clamp } from "@use-pico/common/clamp";
 import type { tBoardItem } from "@zbav-se.me/sdk/api/arkini";
-import { withBoardItemPatchMutation } from "@zbav-se.me/sdk/mutation/arkini/board-item";
-import { withBoardItemFetchQuery } from "@zbav-se.me/sdk/query/arkini";
 import { animate, motion, useMotionValue } from "motion/react";
 import type { FC, RefObject } from "react";
 import { useRef } from "react";
@@ -12,33 +10,17 @@ export namespace BoardItem {
 		item: tBoardItem;
 		cols: number;
 		rows: number;
+		onMove: (itemId: string, nextX: number, nextY: number) => void;
 	}
 }
 
-export const BoardItem: FC<BoardItem.Props> = ({ boardRef, item, cols, rows }) => {
-	const boardItemPatch = withBoardItemFetchQuery.useSet();
-	const boardItemPatchMutation = withBoardItemPatchMutation.useMutation({
-		onSuccess(boardItem) {
-			boardItemPatch(
-				(prev) => ({
-					...prev,
-					...boardItem,
-				}),
-				{
-					where: {
-						id: item.id,
-					},
-				},
-			);
-		},
-	});
-
+export const BoardItem: FC<BoardItem.Props> = ({ boardRef, item, cols, rows, onMove }) => {
 	const dx = useMotionValue(0);
 	const dy = useMotionValue(0);
 
 	const snapTokenRef = useRef(0);
-	const animXRef = useRef<any>(null);
-	const animYRef = useRef<any>(null);
+	const animXRef = useRef<ReturnType<typeof animate> | null>(null);
+	const animYRef = useRef<ReturnType<typeof animate> | null>(null);
 
 	const stopSnap = () => {
 		animXRef.current?.stop?.();
@@ -132,37 +114,10 @@ export const BoardItem: FC<BoardItem.Props> = ({ boardRef, item, cols, rows }) =
 						return;
 					}
 
-					boardItemPatch(
-						(prev) =>
-							prev
-								? {
-										...prev,
-										x: nextX,
-										y: nextY,
-										commit: false,
-									}
-								: prev,
-						{
-							where: {
-								id: item.id,
-							},
-						},
-					);
-
 					dx.set(0);
 					dy.set(0);
 
-					boardItemPatchMutation.mutate({
-						patch: {
-							x: nextX,
-							y: nextY,
-						},
-						query: {
-							where: {
-								id: item.id,
-							},
-						},
-					});
+					onMove(item.id, nextX, nextY);
 				});
 			}}
 		>

@@ -5,153 +5,6 @@ export type clientOptions = {
 };
 
 /**
- * Board item in collection
- */
-export type tBoardItemItem = {
-    /**
-     * ID of the board item
-     */
-    id: string;
-};
-
-/**
- * Collection of board items
- */
-export type tBoardItemCollection = {
-    data: Array<tBoardItemItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Type of notice
- */
-export const tNoticeTypeEnum = {
-    info: 'info',
-    warning: 'warning',
-    error: 'error'
-} as const;
-
-/**
- * Type of notice
- */
-export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
-
-/**
- * Just a note sent from various reasons, usually when something is fucked up.
- */
-export type tNotice = {
-    /**
-     * Message
-     */
-    message: string;
-    type: tNoticeTypeEnum;
-};
-
-/**
- * Cursor for pagination
- */
-export type tCursor = {
-    /**
-     * Page number (0-indexed)
-     */
-    page: number;
-    /**
-     * Page size
-     */
-    size: number;
-};
-
-/**
- * Board item collection filters
- */
-export type tBoardItemFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * Filter by board owner (scope)
-     */
-    userId?: string;
-};
-
-/**
- * App-based filters for board item
- */
-export type tBoardItemWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * Filter by board owner (scope)
-     */
-    userId?: string;
-};
-
-/**
- * Field for board item sort
- */
-export const tBoardItemSortField = {
-    createdAt: 'createdAt',
-    level: 'level',
-    x: 'x',
-    y: 'y'
-} as const;
-
-/**
- * Field for board item sort
- */
-export type tBoardItemSortField = typeof tBoardItemSortField[keyof typeof tBoardItemSortField];
-
-/**
- * Order
- */
-export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
-
-/**
- * Order
- */
-export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
-
-/**
- * Sort object for board item collection
- */
-export type tBoardItemSort = {
-    field: tBoardItemSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * Query object for board item collection
- */
-export type tBoardItemQuery = {
-    cursor?: tCursor;
-    filter?: tBoardItemFilter;
-    where?: tBoardItemWhere;
-    sort?: Array<tBoardItemSort>;
-};
-
-/**
  * Board item
  */
 export type tBoardItem = {
@@ -179,76 +32,43 @@ export type tBoardItem = {
      * Creation timestamp
      */
     createdAt: string;
-    /**
-     * Whether the item has been committed (true from server, false on client-side)
-     */
-    commit: boolean;
 };
 
 /**
- * Fields to update (all optional)
+ * Type of notice
  */
-export type tBoardItemPatchData = {
-    /**
-     * X coordinate of the item
-     */
-    x?: number;
-    /**
-     * Y coordinate of the item
-     */
-    y?: number;
-    /**
-     * Level of the item
-     */
-    level?: number;
-};
+export const tNoticeTypeEnum = {
+    info: 'info',
+    warning: 'warning',
+    error: 'error'
+} as const;
 
 /**
- * Data for updating an existing board item
+ * Type of notice
  */
-export type tBoardItemPatch = {
-    patch: tBoardItemPatchData;
-    query: tBoardItemQuery;
+export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
+
+/**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export type tNotice = {
+    /**
+     * Message
+     */
+    message: string;
+    type: tNoticeTypeEnum;
 };
 
-export type tApiBoardItemCollectionRequest = {
-    body?: tBoardItemQuery;
+export type tApiBoardItemsRequest = {
+    body?: never;
     path?: never;
     query?: never;
-    url: '/api/arkini/board-item/collection';
+    url: '/api/arkini/board/items';
 };
 
-export type apiBoardItemCollectionErrors = {
+export type apiBoardItemsErrors = {
     /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiBoardItemCollectionError = apiBoardItemCollectionErrors[keyof apiBoardItemCollectionErrors];
-
-export type tApiBoardItemCollectionResponse = {
-    /**
-     * Access collection of board items based on provided query
-     */
-    200: tBoardItemCollection;
-};
-
-export type apiBoardItemCollectionResponse = tApiBoardItemCollectionResponse[keyof tApiBoardItemCollectionResponse];
-
-export type tApiBoardItemFetchRequest = {
-    /**
-     * Query object for board item fetch
-     */
-    body?: tBoardItemQuery;
-    path?: never;
-    query?: never;
-    url: '/api/arkini/board-item/fetch';
-};
-
-export type apiBoardItemFetchErrors = {
-    /**
-     * Board item not found
+     * Board not found
      */
     404: tNotice;
     /**
@@ -257,30 +77,30 @@ export type apiBoardItemFetchErrors = {
     500: tNotice;
 };
 
-export type apiBoardItemFetchError = apiBoardItemFetchErrors[keyof apiBoardItemFetchErrors];
+export type apiBoardItemsError = apiBoardItemsErrors[keyof apiBoardItemsErrors];
 
-export type tApiBoardItemFetchResponse = {
+export type tApiBoardItemsResponse = {
     /**
-     * Board item
+     * Board items
      */
-    200: tBoardItem;
+    200: Array<tBoardItem>;
 };
 
-export type apiBoardItemFetchResponse = tApiBoardItemFetchResponse[keyof tApiBoardItemFetchResponse];
+export type apiBoardItemsResponse = tApiBoardItemsResponse[keyof tApiBoardItemsResponse];
 
-export type tApiBoardItemPatchRequest = {
+export type tApiBoardSaveRequest = {
     /**
-     * Data for updating an existing board item
+     * Board items to save (replaces existing)
      */
-    body?: tBoardItemPatch;
+    body?: Array<tBoardItem>;
     path?: never;
     query?: never;
-    url: '/api/arkini/board-item/patch';
+    url: '/api/arkini/board/save';
 };
 
-export type apiBoardItemPatchErrors = {
+export type apiBoardSaveErrors = {
     /**
-     * Board item not found
+     * Board not found
      */
     404: tNotice;
     /**
@@ -289,13 +109,13 @@ export type apiBoardItemPatchErrors = {
     500: tNotice;
 };
 
-export type apiBoardItemPatchError = apiBoardItemPatchErrors[keyof apiBoardItemPatchErrors];
+export type apiBoardSaveError = apiBoardSaveErrors[keyof apiBoardSaveErrors];
 
-export type tApiBoardItemPatchResponse = {
+export type tApiBoardSaveResponse = {
     /**
-     * The updated board item
+     * Saved board items
      */
-    200: tBoardItem;
+    200: Array<tBoardItem>;
 };
 
-export type apiBoardItemPatchResponse = tApiBoardItemPatchResponse[keyof tApiBoardItemPatchResponse];
+export type apiBoardSaveResponse = tApiBoardSaveResponse[keyof tApiBoardSaveResponse];

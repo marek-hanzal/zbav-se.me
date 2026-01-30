@@ -1,6 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { tBoardItemItem } from "@zbav-se.me/sdk/api/arkini";
-import { withBoardItemFetchQuery } from "@zbav-se.me/sdk/query/arkini/board-item";
+import type { tBoardItem } from "@zbav-se.me/sdk/api/arkini";
+import { withBoardSaveMutation } from "@zbav-se.me/sdk/mutation/arkini";
 import { type FC, useRef } from "react";
 import { BoardItem } from "~/app/board/BoardItem";
 
@@ -10,12 +10,26 @@ export namespace Board {
 		width: number;
 		/** rows */
 		height: number;
-		items: tBoardItemItem[];
+		items: tBoardItem[];
 	}
 }
 
 export const Board: FC<Board.Props> = ({ ui, className, width, height, items, ...props }) => {
 	const constraintsRef = useRef<HTMLDivElement | null>(null);
+	const saveMutation = withBoardSaveMutation.useMutation();
+
+	const onMove = (itemId: string, nextX: number, nextY: number) => {
+		const newItems = items.map((it) =>
+			it.id === itemId
+				? {
+						...it,
+						x: nextX,
+						y: nextY,
+					}
+				: it,
+		);
+		saveMutation.mutate(newItems);
+	};
 
 	return (
 		<Container
@@ -68,24 +82,14 @@ export const Board: FC<Board.Props> = ({ ui, className, width, height, items, ..
 					className="absolute inset-0"
 				>
 					{items.map((item) => (
-						<withBoardItemFetchQuery.Suspense
+						<BoardItem
 							key={item.id}
-							data={{
-								where: {
-									id: item.id,
-								},
-							}}
-							fallback={null}
-						>
-							{({ data: item }) => (
-								<BoardItem
-									boardRef={constraintsRef}
-									item={item}
-									cols={width}
-									rows={height}
-								/>
-							)}
-						</withBoardItemFetchQuery.Suspense>
+							boardRef={constraintsRef}
+							item={item}
+							cols={width}
+							rows={height}
+							onMove={onMove}
+						/>
 					))}
 				</div>
 			</Container>

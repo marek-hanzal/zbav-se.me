@@ -144,11 +144,7 @@ const tagsRegistry: Record<
 	// @Arkini
 	Board: {
 		name: "Board",
-		description: "Board items and operations",
-	},
-	"Board Item": {
-		name: "Board Item",
-		description: "Board item collection and patch",
+		description: "Board items and save operations",
 	},
 } as const;
 

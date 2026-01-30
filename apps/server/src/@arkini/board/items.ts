@@ -1,39 +1,30 @@
 import { createRoute, z } from "@hono/zod-openapi";
+import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { boardItemPatchFx } from "~/@arkini/board-item/fx/boardItemPatchFx";
-import { BoardItemPatchSchema } from "~/@arkini/board-item/schema/BoardItemPatchSchema";
-import { BoardItemSchema } from "~/@arkini/board-item/schema/BoardItemSchema";
+import { boardItemsFx } from "~/@arkini/board/fx/boardItemsFx";
+import { BoardItemSchema } from "~/@arkini/board/schema/BoardItemSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
-export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
+export const withItemsApiFx = Effect.fn("withItemsApiFx")(function* () {
 	const { arkiniHono } = yield* RoutesContextFx;
 	arkiniHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/board-item/patch",
-			description: "Update an existing board item",
-			operationId: "apiBoardItemPatch",
-			request: {
-				body: {
-					content: {
-						"application/json": {
-							schema: BoardItemPatchSchema,
-						},
-					},
-					description: "Data for updating an existing board item",
-				},
-			},
+			path: "/board/items",
+			description: "Returns all items on the user's board",
+			operationId: "apiBoardItems",
+			request: {},
 			responses: {
 				200: {
 					content: {
 						"application/json": {
-							schema: BoardItemSchema,
+							schema: z.array(BoardItemSchema),
 						},
 					},
-					description: "The updated board item",
+					description: "Board items",
 				},
 				404: {
 					content: {
@@ -41,7 +32,7 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 							schema: NoticeSchema,
 						},
 					},
-					description: "Board item not found",
+					description: "Board not found",
 				},
 				500: {
 					content: {
@@ -53,27 +44,25 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 				},
 			},
 			tags: [
-				"Board Item",
+				"Board",
 			],
-			summary: "Partial update of a board item",
+			summary: "Get board items",
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<BoardItemSchema.Type, 200>(
+				return c.json<BoardItemSchema.Type[], 200>(
 					yield* zodFx({
-						schema: BoardItemSchema,
-						dataFx: boardItemPatchFx({
-							...c.req.valid("json"),
-							scope: {
-								userId: user.id,
-							},
-						}) satisfies Effect.Effect<BoardItemSchema.Type, any, any>,
+						schema: z.array(BoardItemSchema),
+						dataFx: boardItemsFx({
+							userId: user.id,
+						}) satisfies Effect.Effect<BoardItemSchema.Type[], any, any>,
 					}),
 					200,
 				);
 			}).pipe(
+				Effect.provide(DateContextLayer(createDateContext())),
 				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				Effect.catchAll((e) => {
 					return Effect.succeed(
@@ -82,15 +71,11 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 								{
 									_tag: "NotFoundErrorFx",
 								},
-								() =>
+								(err) =>
 									c.json<NoticeSchema.Type, 404>(
 										{
 											type: "error",
-											message: (
-												e as {
-													message: string;
-												}
-											).message,
+											message: err.message,
 										},
 										404,
 									),
@@ -98,18 +83,12 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 							Match.when(
 								{
 									_tag: "ZodErrorFx",
-								} as const,
-								(e) =>
+								},
+								({ zod }) =>
 									c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: z.prettifyError(
-												(
-													e as {
-														zod: z.ZodError;
-													}
-												).zod,
-											),
+											message: z.prettifyError(zod),
 										},
 										500,
 									),

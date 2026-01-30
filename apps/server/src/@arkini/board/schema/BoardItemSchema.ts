@@ -4,10 +4,6 @@ import { BoardItemTableSchema } from "~/database/@table/BoardItemTableSchema";
 export const BoardItemSchema = z
 	.looseObject({
 		...BoardItemTableSchema.shape,
-		commit: z.boolean().openapi({
-			description:
-				"Whether the item has been committed (true from server, false on client-side)",
-		}),
 	})
 	.strip()
 	.openapi("BoardItem", {
