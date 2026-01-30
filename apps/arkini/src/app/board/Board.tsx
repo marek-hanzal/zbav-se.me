@@ -1,5 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
 import type { FC } from "react";
+import { useBoardContext } from "~/app/board/useBoardContext";
 
 export namespace Board {
 	export interface Props extends Container.Props {
@@ -11,6 +12,9 @@ export namespace Board {
 }
 
 export const Board: FC<Board.Props> = ({ ui, className, width, height, ...props }) => {
+	const useBoardStore = useBoardContext();
+	const items = useBoardStore((state) => state.items);
+
 	return (
 		<Container
 			data-ui={"Board[Container]"}
