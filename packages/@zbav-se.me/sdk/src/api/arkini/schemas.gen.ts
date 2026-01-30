@@ -11,20 +11,17 @@ export const sItem = {
         },
         y: {
             type: 'number'
+        },
+        level: {
+            type: 'number'
         }
     },
     required: [
         'id',
         'x',
-        'y'
+        'y',
+        'level'
     ]
-} as const;
-
-export const sItemsResponse = {
-    type: 'array',
-    items: {
-        $ref: '#/components/schemas/Item'
-    }
 } as const;
 
 export const sNoticeTypeEnum = {

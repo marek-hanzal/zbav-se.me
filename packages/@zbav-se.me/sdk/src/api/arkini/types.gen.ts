@@ -9,7 +9,7 @@ export type clientOptions = {
  */
 export type tItem = {
     /**
-     * ID of the item
+     * ID of the board item
      */
     id: string;
     /**
@@ -20,12 +20,11 @@ export type tItem = {
      * Y coordinate of the item
      */
     y: number;
+    /**
+     * Level of the item
+     */
+    level: number;
 };
-
-/**
- * Items on the board
- */
-export type tItemsResponse = Array<tItem>;
 
 /**
  * Type of notice
@@ -72,7 +71,7 @@ export type tApiBoardItemsResponse = {
     /**
      * Items on the board
      */
-    200: tItemsResponse;
+    200: Array<tItem>;
 };
 
 export type apiBoardItemsResponse = tApiBoardItemsResponse[keyof tApiBoardItemsResponse];

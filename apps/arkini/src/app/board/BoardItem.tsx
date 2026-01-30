@@ -33,7 +33,7 @@ export const BoardItem: FC<BoardItem.Props> = ({ constraintsRef, item, cols, row
 		>
 			<div className="h-full w-full p-1">
 				<div className="h-full w-full rounded-xl bg-white/10 ring-1 ring-white/15 flex items-center justify-center text-white/80 text-sm">
-					{item.x},{item.y}
+					{item.x},{item.y} [{item.level}]
 				</div>
 			</div>
 		</motion.div>

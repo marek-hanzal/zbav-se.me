@@ -7,28 +7,22 @@ import { z } from 'zod';
  */
 export const zItem = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: 'ID of the item'
+        description: 'ID of the board item'
     }),
     x: z.number().register(z.globalRegistry, {
         description: 'X coordinate of the item'
     }),
     y: z.number().register(z.globalRegistry, {
         description: 'Y coordinate of the item'
+    }),
+    level: z.number().register(z.globalRegistry, {
+        description: 'Level of the item'
     })
 }).register(z.globalRegistry, {
     description: 'Item on the board'
 });
 
 export type zItem = z.infer<typeof zItem>;
-
-/**
- * Items on the board
- */
-export const zItemsResponse = z.array(zItem).register(z.globalRegistry, {
-    description: 'Items on the board'
-});
-
-export type zItemsResponse = z.infer<typeof zItemsResponse>;
 
 /**
  * Type of notice
@@ -68,6 +62,8 @@ export type zapiBoardItemsRequest = z.infer<typeof zApiBoardItemsData>;
 /**
  * Items on the board
  */
-export const zApiBoardItemsResponse = zItemsResponse;
+export const zApiBoardItemsResponse = z.array(zItem).register(z.globalRegistry, {
+    description: 'Items on the board'
+});
 
 export type zapiBoardItemsResponse = z.infer<typeof zApiBoardItemsResponse>;
