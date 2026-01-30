@@ -4,7 +4,6 @@ import { Effect, Match } from "effect";
 import { boardItemCollectionFx } from "~/@arkini/board-item/fx/boardItemCollectionFx";
 import { BoardItemItemSchema } from "~/@arkini/board-item/schema/BoardItemItemSchema";
 import { BoardItemQuerySchema } from "~/@arkini/board-item/schema/BoardItemQuerySchema";
-import type { BoardItemSchema } from "~/@arkini/board-item/schema/BoardItemSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -60,7 +59,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<withCollectionSchema.Type<BoardItemSchema>, 200>(
+				return c.json<withCollectionSchema.Type<BoardItemItemSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: boardItemCollectionFx({
