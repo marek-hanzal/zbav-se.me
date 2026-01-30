@@ -2,8 +2,9 @@ import { clamp } from "@use-pico/common/clamp";
 import type { tBoardItem } from "@zbav-se.me/sdk/api/arkini";
 import { withBoardItemPatchMutation } from "@zbav-se.me/sdk/mutation/arkini/board-item";
 import { withBoardItemFetchQuery } from "@zbav-se.me/sdk/query/arkini";
-import { motion, useMotionValue } from "motion/react";
+import { animate, motion, useMotionValue } from "motion/react";
 import type { FC, RefObject } from "react";
+import { useRef } from "react";
 
 export namespace BoardItem {
 	export interface Props {
@@ -35,6 +36,17 @@ export const BoardItem: FC<BoardItem.Props> = ({ boardRef, item, cols, rows }) =
 	const dx = useMotionValue(0);
 	const dy = useMotionValue(0);
 
+	const snapTokenRef = useRef(0);
+	const animXRef = useRef<any>(null);
+	const animYRef = useRef<any>(null);
+
+	const stopSnap = () => {
+		animXRef.current?.stop?.();
+		animYRef.current?.stop?.();
+		animXRef.current = null;
+		animYRef.current = null;
+	};
+
 	return (
 		<motion.div
 			drag
@@ -54,16 +66,22 @@ export const BoardItem: FC<BoardItem.Props> = ({ boardRef, item, cols, rows }) =
 			className={[
 				"pointer-events-auto select-none",
 				"cursor-grab active:cursor-grabbing",
-				item.commit ? "opacity-100" : "opacity-50",
 			].join(" ")}
 			whileDrag={{
 				scale: 1.25,
+			}}
+			onDragStart={() => {
+				snapTokenRef.current += 1;
+				stopSnap();
 			}}
 			onDragEnd={(_, info) => {
 				const boardEl = boardRef.current;
 				if (!boardEl) {
 					return;
 				}
+
+				stopSnap();
+				const token = ++snapTokenRef.current;
 
 				const boardRect = boardEl.getBoundingClientRect();
 				const cellW = boardRect.width / cols;
@@ -75,40 +93,76 @@ export const BoardItem: FC<BoardItem.Props> = ({ boardRef, item, cols, rows }) =
 				const nextX = clamp(Math.floor(localX / cellW), 0, cols - 1);
 				const nextY = clamp(Math.floor(localY / cellH), 0, rows - 1);
 
-				dx.set(0);
-				dy.set(0);
-
 				if (nextX === item.x && nextY === item.y) {
+					animXRef.current = animate(dx, 0, {
+						type: "spring",
+						stiffness: 600,
+						damping: 40,
+					});
+					animYRef.current = animate(dy, 0, {
+						type: "spring",
+						stiffness: 600,
+						damping: 40,
+					});
 					return;
 				}
 
-				boardItemPatch(
-					(prev) =>
-						prev
-							? {
-									...prev,
-									x: nextX,
-									y: nextY,
-									commit: false,
-								}
-							: prev,
-					{
-						where: {
-							id: item.id,
-						},
-					},
-				);
+				const targetDx = (nextX - item.x) * cellW;
+				const targetDy = (nextY - item.y) * cellH;
 
-				boardItemPatchMutation.mutate({
-					patch: {
-						x: nextX,
-						y: nextY,
-					},
-					query: {
-						where: {
-							id: item.id,
+				const ax = animate(dx, targetDx, {
+					type: "spring",
+					stiffness: 700,
+					damping: 45,
+				});
+				const ay = animate(dy, targetDy, {
+					type: "spring",
+					stiffness: 700,
+					damping: 45,
+				});
+
+				animXRef.current = ax;
+				animYRef.current = ay;
+
+				Promise.all([
+					ax.finished,
+					ay.finished,
+				]).then(() => {
+					if (snapTokenRef.current !== token) {
+						return;
+					}
+
+					boardItemPatch(
+						(prev) =>
+							prev
+								? {
+										...prev,
+										x: nextX,
+										y: nextY,
+										commit: false,
+									}
+								: prev,
+						{
+							where: {
+								id: item.id,
+							},
 						},
-					},
+					);
+
+					dx.set(0);
+					dy.set(0);
+
+					boardItemPatchMutation.mutate({
+						patch: {
+							x: nextX,
+							y: nextY,
+						},
+						query: {
+							where: {
+								id: item.id,
+							},
+						},
+					});
 				});
 			}}
 		>
