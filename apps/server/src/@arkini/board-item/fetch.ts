@@ -52,7 +52,9 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 					description: "Internal server error",
 				},
 			},
-			tags: ["Board Item"],
+			tags: [
+				"Board Item",
+			],
 			summary: "Fetch a board item based on the provided query",
 		}),
 		async (c) => {
@@ -77,20 +79,37 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
-								{ _tag: "NotFoundErrorFx" },
+								{
+									_tag: "NotFoundErrorFx",
+								},
 								() =>
 									c.json<NoticeSchema.Type, 404>(
-										{ type: "error", message: (e as { message: string }).message },
+										{
+											type: "error",
+											message: (
+												e as {
+													message: string;
+												}
+											).message,
+										},
 										404,
 									),
 							),
 							Match.when(
-								{ _tag: "ZodErrorFx" } as const,
+								{
+									_tag: "ZodErrorFx",
+								} as const,
 								(err) =>
 									c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
-											message: z.prettifyError((err as { zod: z.ZodError }).zod),
+											message: z.prettifyError(
+												(
+													err as {
+														zod: z.ZodError;
+													}
+												).zod,
+											),
 										},
 										500,
 									),

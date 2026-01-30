@@ -1,5 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
 import type { tBoardItemItem } from "@zbav-se.me/sdk/api/arkini";
+import { withBoardItemFetchQuery } from "@zbav-se.me/sdk/query/arkini/board-item";
 import { type FC, useRef } from "react";
 import { BoardItem } from "~/app/board/BoardItem";
 
@@ -67,17 +68,24 @@ export const Board: FC<Board.Props> = ({ ui, className, width, height, items, ..
 					className="absolute inset-0"
 				>
 					{items.map((item) => (
-						<withBoardItemQuery.Suspense>
-                            {({ data: item }) => (
-                                <BoardItem
-                                    key={item.id}
-                                    constraintsRef={constraintsRef}
-                                    item={item}
-                                    cols={width}
-                                    rows={height}
-                                />
-                            )}
-                        </withBoardItemQuery.Suspense>
+						<withBoardItemFetchQuery.Suspense
+							key={item.id}
+							data={{
+								where: {
+									id: item.id,
+								},
+							}}
+							fallback={null}
+						>
+							{({ data: item }) => (
+								<BoardItem
+									constraintsRef={constraintsRef}
+									item={item}
+									cols={width}
+									rows={height}
+								/>
+							)}
+						</withBoardItemFetchQuery.Suspense>
 					))}
 				</div>
 			</Container>
