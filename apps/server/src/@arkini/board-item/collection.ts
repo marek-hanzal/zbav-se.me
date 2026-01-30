@@ -2,15 +2,16 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { boardItemCollectionFx } from "~/@arkini/board-item/fx/boardItemCollectionFx";
+import { BoardItemItemSchema } from "~/@arkini/board-item/schema/BoardItemItemSchema";
 import { BoardItemQuerySchema } from "~/@arkini/board-item/schema/BoardItemQuerySchema";
-import { BoardItemSchema } from "~/@arkini/board-item/schema/BoardItemSchema";
+import type { BoardItemSchema } from "~/@arkini/board-item/schema/BoardItemSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
 const CollectionSchema = withCollectionSchema({
-	schema: BoardItemSchema,
+	schema: BoardItemItemSchema,
 	type: "BoardItemCollection",
 	description: "Collection of board items",
 });
@@ -68,7 +69,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 								userId: user.id,
 							},
 						}) satisfies Effect.Effect<
-							withCollectionSchema.Type<BoardItemSchema>,
+							withCollectionSchema.Type<BoardItemItemSchema>,
 							any,
 							any
 						>,

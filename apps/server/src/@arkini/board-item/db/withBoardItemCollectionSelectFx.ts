@@ -13,6 +13,6 @@ export const withBoardItemCollectionSelectFx = Effect.fn("withBoardItemCollectio
 			sort,
 		});
 
-		return sourceSelect.selectAll("bi");
+		return sourceSelect.select("bi.id");
 	},
 );

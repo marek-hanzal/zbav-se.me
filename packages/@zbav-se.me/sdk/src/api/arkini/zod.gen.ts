@@ -3,38 +3,23 @@
 import { z } from 'zod';
 
 /**
- * Board item
+ * Board item in collection
  */
-export const zBoardItem = z.object({
+export const zBoardItemItem = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the board item'
-    }),
-    boardId: z.string().register(z.globalRegistry, {
-        description: 'ID of the board this item belongs to'
-    }),
-    x: z.number().register(z.globalRegistry, {
-        description: 'X coordinate of the item'
-    }),
-    y: z.number().register(z.globalRegistry, {
-        description: 'Y coordinate of the item'
-    }),
-    level: z.number().register(z.globalRegistry, {
-        description: 'Level of the item'
-    }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
     })
 }).register(z.globalRegistry, {
-    description: 'Board item'
+    description: 'Board item in collection'
 });
 
-export type zBoardItem = z.infer<typeof zBoardItem>;
+export type zBoardItemItem = z.infer<typeof zBoardItemItem>;
 
 /**
  * Collection of board items
  */
 export const zBoardItemCollection = z.object({
-    data: z.array(zBoardItem),
+    data: z.array(zBoardItemItem),
     more: z.boolean().register(z.globalRegistry, {
         description: 'Whether there are more items to fetch'
     })
@@ -179,6 +164,34 @@ export const zBoardItemQuery = z.object({
 });
 
 export type zBoardItemQuery = z.infer<typeof zBoardItemQuery>;
+
+/**
+ * Board item
+ */
+export const zBoardItem = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the board item'
+    }),
+    boardId: z.string().register(z.globalRegistry, {
+        description: 'ID of the board this item belongs to'
+    }),
+    x: z.number().register(z.globalRegistry, {
+        description: 'X coordinate of the item'
+    }),
+    y: z.number().register(z.globalRegistry, {
+        description: 'Y coordinate of the item'
+    }),
+    level: z.number().register(z.globalRegistry, {
+        description: 'Level of the item'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    })
+}).register(z.globalRegistry, {
+    description: 'Board item'
+});
+
+export type zBoardItem = z.infer<typeof zBoardItem>;
 
 /**
  * Fields to update (all optional)

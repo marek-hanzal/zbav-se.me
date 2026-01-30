@@ -5,40 +5,20 @@ export type clientOptions = {
 };
 
 /**
- * Board item
+ * Board item in collection
  */
-export type tBoardItem = {
+export type tBoardItemItem = {
     /**
      * ID of the board item
      */
     id: string;
-    /**
-     * ID of the board this item belongs to
-     */
-    boardId: string;
-    /**
-     * X coordinate of the item
-     */
-    x: number;
-    /**
-     * Y coordinate of the item
-     */
-    y: number;
-    /**
-     * Level of the item
-     */
-    level: number;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
 };
 
 /**
  * Collection of board items
  */
 export type tBoardItemCollection = {
-    data: Array<tBoardItem>;
+    data: Array<tBoardItemItem>;
     /**
      * Whether there are more items to fetch
      */
@@ -169,6 +149,36 @@ export type tBoardItemQuery = {
     filter?: tBoardItemFilter;
     where?: tBoardItemWhere;
     sort?: Array<tBoardItemSort>;
+};
+
+/**
+ * Board item
+ */
+export type tBoardItem = {
+    /**
+     * ID of the board item
+     */
+    id: string;
+    /**
+     * ID of the board this item belongs to
+     */
+    boardId: string;
+    /**
+     * X coordinate of the item
+     */
+    x: number;
+    /**
+     * Y coordinate of the item
+     */
+    y: number;
+    /**
+     * Level of the item
+     */
+    level: number;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
 };
 
 /**
