@@ -9,9 +9,13 @@ export const BoardMigration: Migration = {
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
 				"board_[userId]_fk",
-				["userId"],
+				[
+					"userId",
+				],
 				"user",
-				["id"],
+				[
+					"id",
+				],
 				(c) => c.onDelete("cascade"),
 			)
 			.execute();

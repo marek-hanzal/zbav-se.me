@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiBoardItemsErrors, tApiBoardItemsRequest, tApiBoardItemsResponse } from './types.gen';
-import { zApiBoardItemsData, zApiBoardItemsResponse } from './zod.gen';
+import type { apiBoardItemCollectionErrors, apiBoardItemPatchErrors, tApiBoardItemCollectionRequest, tApiBoardItemCollectionResponse, tApiBoardItemPatchRequest, tApiBoardItemPatchResponse } from './types.gen';
+import { zApiBoardItemCollectionData, zApiBoardItemCollectionResponse, zApiBoardItemPatchData, zApiBoardItemPatchResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -20,14 +20,35 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 };
 
 /**
- * Return current items on the board.
+ * Fetch a collection of board items based on the provided query
  *
- * Return current items on the board.
+ * Returns board items based on provided parameters
  */
-export const apiBoardItems = <ThrowOnError extends boolean = false>(options?: Options<tApiBoardItemsRequest, ThrowOnError>) => (options?.client ?? client).get<tApiBoardItemsResponse, apiBoardItemsErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiBoardItemsData.parseAsync(data),
+export const apiBoardItemCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiBoardItemCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiBoardItemCollectionResponse, apiBoardItemCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiBoardItemCollectionData.parseAsync(data),
     responseType: 'json',
-    responseValidator: async (data) => await zApiBoardItemsResponse.parseAsync(data),
-    url: '/api/arkini/board/items',
-    ...options
+    responseValidator: async (data) => await zApiBoardItemCollectionResponse.parseAsync(data),
+    url: '/api/arkini/board-item/collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
+ * Partial update of a board item
+ *
+ * Update an existing board item
+ */
+export const apiBoardItemPatch = <ThrowOnError extends boolean = false>(options?: Options<tApiBoardItemPatchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiBoardItemPatchResponse, apiBoardItemPatchErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiBoardItemPatchData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiBoardItemPatchResponse.parseAsync(data),
+    url: '/api/arkini/board-item/patch',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
 });

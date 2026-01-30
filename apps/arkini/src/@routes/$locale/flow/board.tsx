@@ -1,14 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { withBoardItemsQuery } from "@zbav-se.me/sdk/query/arkini/board";
+import { withBoardItemCollectionQuery } from "@zbav-se.me/sdk/query/arkini/board-item";
 import { Board } from "~/app/board/Board";
 import { BoardProvider } from "~/app/board/BoardProvider";
 import { createBoardStore } from "~/app/board/createBoardStore";
 
 export const Route = createFileRoute("/$locale/flow/board")({
 	component() {
-		const { data: items } = withBoardItemsQuery.useSuspenseQuery();
+		const { data } = withBoardItemCollectionQuery.useSuspenseQuery({});
 		const boardStore = createBoardStore({
-			items,
+			items: data.data,
 		});
 
 		return (

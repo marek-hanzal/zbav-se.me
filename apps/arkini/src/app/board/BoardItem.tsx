@@ -1,11 +1,11 @@
-import type { tItem } from "@zbav-se.me/sdk/api/arkini";
+import type { tBoardItem } from "@zbav-se.me/sdk/api/arkini";
 import { motion } from "motion/react";
 import type { FC, RefObject } from "react";
 
 export namespace BoardItem {
 	export interface Props {
 		constraintsRef: RefObject<HTMLDivElement | null>;
-		item: tItem;
+		item: tBoardItem;
 		cols: number;
 		rows: number;
 	}

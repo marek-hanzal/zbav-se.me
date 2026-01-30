@@ -6,8 +6,9 @@ Arkini API - Domain for the Arkini application.
 
 This domain provides API endpoints specific to the Arkini app.
 
-### Board
-- **items** - GET `/api/arkini/board/items` - Returns current items on the board (array of `{ x, y }`)
+### Board Item
+- **collection** - POST `/api/arkini/board-item/collection` - Returns board items (paginated collection)
+- **patch** - POST `/api/arkini/board-item/patch` - Update a board item (x, y, level)
 
 ## Access Rules
 

@@ -1,13 +1,13 @@
-import type { tItem } from "@zbav-se.me/sdk/api/arkini";
+import type { tBoardItem } from "@zbav-se.me/sdk/api/arkini";
 import { create, type StoreApi, type UseBoundStore } from "zustand";
 
 export namespace createBoardStore {
 	export interface Store {
-		items: tItem[];
+		items: tBoardItem[];
 	}
 
 	export interface Props {
-		items: tItem[];
+		items: tBoardItem[];
 	}
 
 	export type Hook = UseBoundStore<StoreApi<Store>>;

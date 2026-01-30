@@ -3,11 +3,14 @@
 import { z } from 'zod';
 
 /**
- * Item on the board
+ * Board item
  */
-export const zItem = z.object({
+export const zBoardItem = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the board item'
+    }),
+    boardId: z.string().register(z.globalRegistry, {
+        description: 'ID of the board this item belongs to'
     }),
     x: z.number().register(z.globalRegistry, {
         description: 'X coordinate of the item'
@@ -17,12 +20,29 @@ export const zItem = z.object({
     }),
     level: z.number().register(z.globalRegistry, {
         description: 'Level of the item'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
     })
 }).register(z.globalRegistry, {
-    description: 'Item on the board'
+    description: 'Board item'
 });
 
-export type zItem = z.infer<typeof zItem>;
+export type zBoardItem = z.infer<typeof zBoardItem>;
+
+/**
+ * Collection of board items
+ */
+export const zBoardItemCollection = z.object({
+    data: z.array(zBoardItem),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of board items'
+});
+
+export type zBoardItemCollection = z.infer<typeof zBoardItemCollection>;
 
 /**
  * Type of notice
@@ -51,19 +71,172 @@ export const zNotice = z.object({
 
 export type zNotice = z.infer<typeof zNotice>;
 
-export const zApiBoardItemsData = z.object({
-    body: z.optional(z.never()),
+/**
+ * Cursor for pagination
+ */
+export const zCursor = z.object({
+    page: z.number().gte(0).register(z.globalRegistry, {
+        description: 'Page number (0-indexed)'
+    }),
+    size: z.number().gte(1).lte(1000).register(z.globalRegistry, {
+        description: 'Page size'
+    })
+}).register(z.globalRegistry, {
+    description: 'Cursor for pagination'
+});
+
+export type zCursor = z.infer<typeof zCursor>;
+
+/**
+ * Board item collection filters
+ */
+export const zBoardItemFilter = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Filter by board owner (scope)'
+    }))
+}).register(z.globalRegistry, {
+    description: 'Board item collection filters'
+});
+
+export type zBoardItemFilter = z.infer<typeof zBoardItemFilter>;
+
+/**
+ * App-based filters for board item
+ */
+export const zBoardItemWhere = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Filter by board owner (scope)'
+    }))
+}).register(z.globalRegistry, {
+    description: 'App-based filters for board item'
+});
+
+export type zBoardItemWhere = z.infer<typeof zBoardItemWhere>;
+
+/**
+ * Field for board item sort
+ */
+export const zBoardItemSortField = z.enum([
+    'createdAt',
+    'level',
+    'x',
+    'y'
+]).register(z.globalRegistry, {
+    description: 'Field for board item sort'
+});
+
+export type zBoardItemSortField = z.infer<typeof zBoardItemSortField>;
+
+/**
+ * Order
+ */
+export const zOrderEnum = z.enum(['asc', 'desc']).register(z.globalRegistry, {
+    description: 'Order'
+});
+
+export type zOrderEnum = z.infer<typeof zOrderEnum>;
+
+/**
+ * Sort object for board item collection
+ */
+export const zBoardItemSort = z.object({
+    field: zBoardItemSortField,
+    direction: zOrderEnum
+}).register(z.globalRegistry, {
+    description: 'Sort object for board item collection'
+});
+
+export type zBoardItemSort = z.infer<typeof zBoardItemSort>;
+
+/**
+ * Query object for board item collection
+ */
+export const zBoardItemQuery = z.object({
+    cursor: z.optional(zCursor),
+    filter: z.optional(zBoardItemFilter),
+    where: z.optional(zBoardItemWhere),
+    sort: z.optional(z.array(zBoardItemSort))
+}).register(z.globalRegistry, {
+    description: 'Query object for board item collection'
+});
+
+export type zBoardItemQuery = z.infer<typeof zBoardItemQuery>;
+
+/**
+ * Fields to update (all optional)
+ */
+export const zBoardItemPatchData = z.object({
+    x: z.optional(z.number().register(z.globalRegistry, {
+        description: 'X coordinate of the item'
+    })),
+    y: z.optional(z.number().register(z.globalRegistry, {
+        description: 'Y coordinate of the item'
+    })),
+    level: z.optional(z.number().register(z.globalRegistry, {
+        description: 'Level of the item'
+    }))
+}).register(z.globalRegistry, {
+    description: 'Fields to update (all optional)'
+});
+
+export type zBoardItemPatchData = z.infer<typeof zBoardItemPatchData>;
+
+/**
+ * Data for updating an existing board item
+ */
+export const zBoardItemPatch = z.object({
+    patch: zBoardItemPatchData,
+    query: zBoardItemQuery
+}).register(z.globalRegistry, {
+    description: 'Data for updating an existing board item'
+});
+
+export type zBoardItemPatch = z.infer<typeof zBoardItemPatch>;
+
+export const zApiBoardItemCollectionData = z.object({
+    body: z.optional(zBoardItemQuery),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });
 
-export type zapiBoardItemsRequest = z.infer<typeof zApiBoardItemsData>;
+export type zapiBoardItemCollectionRequest = z.infer<typeof zApiBoardItemCollectionData>;
 
 /**
- * Items on the board
+ * Access collection of board items based on provided query
  */
-export const zApiBoardItemsResponse = z.array(zItem).register(z.globalRegistry, {
-    description: 'Items on the board'
+export const zApiBoardItemCollectionResponse = zBoardItemCollection;
+
+export type zapiBoardItemCollectionResponse = z.infer<typeof zApiBoardItemCollectionResponse>;
+
+export const zApiBoardItemPatchData = z.object({
+    body: z.optional(zBoardItemPatch),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
 });
 
-export type zapiBoardItemsResponse = z.infer<typeof zApiBoardItemsResponse>;
+export type zapiBoardItemPatchRequest = z.infer<typeof zApiBoardItemPatchData>;
+
+/**
+ * The updated board item
+ */
+export const zApiBoardItemPatchResponse = zBoardItem;
+
+export type zapiBoardItemPatchResponse = z.infer<typeof zApiBoardItemPatchResponse>;

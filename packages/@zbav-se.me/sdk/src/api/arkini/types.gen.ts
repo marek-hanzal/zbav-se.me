@@ -5,13 +5,17 @@ export type clientOptions = {
 };
 
 /**
- * Item on the board
+ * Board item
  */
-export type tItem = {
+export type tBoardItem = {
     /**
      * ID of the board item
      */
     id: string;
+    /**
+     * ID of the board this item belongs to
+     */
+    boardId: string;
     /**
      * X coordinate of the item
      */
@@ -24,6 +28,21 @@ export type tItem = {
      * Level of the item
      */
     level: number;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+};
+
+/**
+ * Collection of board items
+ */
+export type tBoardItemCollection = {
+    data: Array<tBoardItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
 };
 
 /**
@@ -51,27 +70,186 @@ export type tNotice = {
     type: tNoticeTypeEnum;
 };
 
-export type tApiBoardItemsRequest = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/arkini/board/items';
+/**
+ * Cursor for pagination
+ */
+export type tCursor = {
+    /**
+     * Page number (0-indexed)
+     */
+    page: number;
+    /**
+     * Page size
+     */
+    size: number;
 };
 
-export type apiBoardItemsErrors = {
+/**
+ * Board item collection filters
+ */
+export type tBoardItemFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * Filter by board owner (scope)
+     */
+    userId?: string;
+};
+
+/**
+ * App-based filters for board item
+ */
+export type tBoardItemWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * Filter by board owner (scope)
+     */
+    userId?: string;
+};
+
+/**
+ * Field for board item sort
+ */
+export const tBoardItemSortField = {
+    createdAt: 'createdAt',
+    level: 'level',
+    x: 'x',
+    y: 'y'
+} as const;
+
+/**
+ * Field for board item sort
+ */
+export type tBoardItemSortField = typeof tBoardItemSortField[keyof typeof tBoardItemSortField];
+
+/**
+ * Order
+ */
+export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
+
+/**
+ * Order
+ */
+export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
+
+/**
+ * Sort object for board item collection
+ */
+export type tBoardItemSort = {
+    field: tBoardItemSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * Query object for board item collection
+ */
+export type tBoardItemQuery = {
+    cursor?: tCursor;
+    filter?: tBoardItemFilter;
+    where?: tBoardItemWhere;
+    sort?: Array<tBoardItemSort>;
+};
+
+/**
+ * Fields to update (all optional)
+ */
+export type tBoardItemPatchData = {
+    /**
+     * X coordinate of the item
+     */
+    x?: number;
+    /**
+     * Y coordinate of the item
+     */
+    y?: number;
+    /**
+     * Level of the item
+     */
+    level?: number;
+};
+
+/**
+ * Data for updating an existing board item
+ */
+export type tBoardItemPatch = {
+    patch: tBoardItemPatchData;
+    query: tBoardItemQuery;
+};
+
+export type tApiBoardItemCollectionRequest = {
+    body?: tBoardItemQuery;
+    path?: never;
+    query?: never;
+    url: '/api/arkini/board-item/collection';
+};
+
+export type apiBoardItemCollectionErrors = {
     /**
      * Internal server error
      */
     500: tNotice;
 };
 
-export type apiBoardItemsError = apiBoardItemsErrors[keyof apiBoardItemsErrors];
+export type apiBoardItemCollectionError = apiBoardItemCollectionErrors[keyof apiBoardItemCollectionErrors];
 
-export type tApiBoardItemsResponse = {
+export type tApiBoardItemCollectionResponse = {
     /**
-     * Items on the board
+     * Access collection of board items based on provided query
      */
-    200: Array<tItem>;
+    200: tBoardItemCollection;
 };
 
-export type apiBoardItemsResponse = tApiBoardItemsResponse[keyof tApiBoardItemsResponse];
+export type apiBoardItemCollectionResponse = tApiBoardItemCollectionResponse[keyof tApiBoardItemCollectionResponse];
+
+export type tApiBoardItemPatchRequest = {
+    /**
+     * Data for updating an existing board item
+     */
+    body?: tBoardItemPatch;
+    path?: never;
+    query?: never;
+    url: '/api/arkini/board-item/patch';
+};
+
+export type apiBoardItemPatchErrors = {
+    /**
+     * Board item not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiBoardItemPatchError = apiBoardItemPatchErrors[keyof apiBoardItemPatchErrors];
+
+export type tApiBoardItemPatchResponse = {
+    /**
+     * The updated board item
+     */
+    200: tBoardItem;
+};
+
+export type apiBoardItemPatchResponse = tApiBoardItemPatchResponse[keyof tApiBoardItemPatchResponse];

@@ -146,6 +146,10 @@ const tagsRegistry: Record<
 		name: "Board",
 		description: "Board items and operations",
 	},
+	"Board Item": {
+		name: "Board Item",
+		description: "Board item collection and patch",
+	},
 } as const;
 
 const extractTagsFromOpenApiDocument = (
