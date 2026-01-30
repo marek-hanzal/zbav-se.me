@@ -192,6 +192,9 @@ export const sBoardItem = {
         },
         createdAt: {
             type: 'string'
+        },
+        commit: {
+            type: 'boolean'
         }
     },
     required: [
@@ -200,7 +203,8 @@ export const sBoardItem = {
         'x',
         'y',
         'level',
-        'createdAt'
+        'createdAt',
+        'commit'
     ]
 } as const;
 

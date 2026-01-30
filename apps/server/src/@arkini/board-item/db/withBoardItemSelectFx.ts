@@ -14,5 +14,5 @@ export const withBoardItemSelectFx = Effect.fn("withBoardItemSelectFx")(function
 		sort,
 	});
 
-	return sourceSelect.selectAll("bi");
+	return sourceSelect.selectAll("bi").select((eb) => eb.lit(true).as("commit"));
 });

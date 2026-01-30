@@ -186,6 +186,9 @@ export const zBoardItem = z.object({
     }),
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
+    }),
+    commit: z.boolean().register(z.globalRegistry, {
+        description: 'Whether the item has been committed (true from server, false on client-side)'
     })
 }).register(z.globalRegistry, {
     description: 'Board item'

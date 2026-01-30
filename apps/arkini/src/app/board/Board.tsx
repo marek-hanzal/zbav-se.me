@@ -79,7 +79,7 @@ export const Board: FC<Board.Props> = ({ ui, className, width, height, items, ..
 						>
 							{({ data: item }) => (
 								<BoardItem
-									constraintsRef={constraintsRef}
+									boardRef={constraintsRef}
 									item={item}
 									cols={width}
 									rows={height}

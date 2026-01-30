@@ -179,6 +179,10 @@ export type tBoardItem = {
      * Creation timestamp
      */
     createdAt: string;
+    /**
+     * Whether the item has been committed (true from server, false on client-side)
+     */
+    commit: boolean;
 };
 
 /**
