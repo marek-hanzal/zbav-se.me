@@ -239,6 +239,21 @@ export const zApiBoardItemCollectionResponse = zBoardItemCollection;
 
 export type zapiBoardItemCollectionResponse = z.infer<typeof zApiBoardItemCollectionResponse>;
 
+export const zApiBoardItemFetchData = z.object({
+    body: z.optional(zBoardItemQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiBoardItemFetchRequest = z.infer<typeof zApiBoardItemFetchData>;
+
+/**
+ * Board item
+ */
+export const zApiBoardItemFetchResponse = zBoardItem;
+
+export type zapiBoardItemFetchResponse = z.infer<typeof zApiBoardItemFetchResponse>;
+
 export const zApiBoardItemPatchData = z.object({
     body: z.optional(zBoardItemPatch),
     path: z.optional(z.never()),

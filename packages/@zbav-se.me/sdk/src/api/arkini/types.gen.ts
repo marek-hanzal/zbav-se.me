@@ -232,6 +232,38 @@ export type tApiBoardItemCollectionResponse = {
 
 export type apiBoardItemCollectionResponse = tApiBoardItemCollectionResponse[keyof tApiBoardItemCollectionResponse];
 
+export type tApiBoardItemFetchRequest = {
+    /**
+     * Query object for board item fetch
+     */
+    body?: tBoardItemQuery;
+    path?: never;
+    query?: never;
+    url: '/api/arkini/board-item/fetch';
+};
+
+export type apiBoardItemFetchErrors = {
+    /**
+     * Board item not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiBoardItemFetchError = apiBoardItemFetchErrors[keyof apiBoardItemFetchErrors];
+
+export type tApiBoardItemFetchResponse = {
+    /**
+     * Board item
+     */
+    200: tBoardItem;
+};
+
+export type apiBoardItemFetchResponse = tApiBoardItemFetchResponse[keyof tApiBoardItemFetchResponse];
+
 export type tApiBoardItemPatchRequest = {
     /**
      * Data for updating an existing board item

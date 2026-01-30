@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { withBoardItemCollectionQuery } from "@zbav-se.me/sdk/query/arkini/board-item";
+import { withBoardItemCollectionQuery } from "@zbav-se.me/sdk/query/arkini";
 import { Board } from "~/app/board/Board";
 
 export const Route = createFileRoute("/$locale/flow/board")({

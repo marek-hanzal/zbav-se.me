@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiBoardItemCollectionErrors, apiBoardItemPatchErrors, tApiBoardItemCollectionRequest, tApiBoardItemCollectionResponse, tApiBoardItemPatchRequest, tApiBoardItemPatchResponse } from './types.gen';
-import { zApiBoardItemCollectionData, zApiBoardItemCollectionResponse, zApiBoardItemPatchData, zApiBoardItemPatchResponse } from './zod.gen';
+import type { apiBoardItemCollectionErrors, apiBoardItemFetchErrors, apiBoardItemPatchErrors, tApiBoardItemCollectionRequest, tApiBoardItemCollectionResponse, tApiBoardItemFetchRequest, tApiBoardItemFetchResponse, tApiBoardItemPatchRequest, tApiBoardItemPatchResponse } from './types.gen';
+import { zApiBoardItemCollectionData, zApiBoardItemCollectionResponse, zApiBoardItemFetchData, zApiBoardItemFetchResponse, zApiBoardItemPatchData, zApiBoardItemPatchResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -29,6 +29,23 @@ export const apiBoardItemCollection = <ThrowOnError extends boolean = false>(opt
     responseType: 'json',
     responseValidator: async (data) => await zApiBoardItemCollectionResponse.parseAsync(data),
     url: '/api/arkini/board-item/collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
+ * Fetch a board item based on the provided query
+ *
+ * Return a board item based on the provided query
+ */
+export const apiBoardItemFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiBoardItemFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiBoardItemFetchResponse, apiBoardItemFetchErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiBoardItemFetchData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiBoardItemFetchResponse.parseAsync(data),
+    url: '/api/arkini/board-item/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',
