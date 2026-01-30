@@ -1,7 +1,7 @@
 import { Container } from "@use-pico/client/ui/container";
+import type { tBoardItem } from "@zbav-se.me/sdk/api/arkini";
 import { type FC, useRef } from "react";
 import { BoardItem } from "~/app/board/BoardItem";
-import { useBoardContext } from "~/app/board/useBoardContext";
 
 export namespace Board {
 	export interface Props extends Container.Props {
@@ -9,13 +9,12 @@ export namespace Board {
 		width: number;
 		/** rows */
 		height: number;
+		items: tBoardItem[];
 	}
 }
 
-export const Board: FC<Board.Props> = ({ ui, className, width, height, ...props }) => {
+export const Board: FC<Board.Props> = ({ ui, className, width, height, items, ...props }) => {
 	const constraintsRef = useRef<HTMLDivElement | null>(null);
-	const useBoardStore = useBoardContext();
-	const items = useBoardStore((state) => state.items);
 
 	return (
 		<Container
