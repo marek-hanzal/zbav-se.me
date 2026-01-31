@@ -1,4 +1,5 @@
 import { motionValue } from "motion/react";
+import type { RefObject } from "react";
 import type { Cell } from "~/app/motion/Cell";
 import type { Layout } from "~/app/motion/Layout";
 import type { RenderMotionValue } from "~/app/motion/RenderMotionValue";
@@ -9,10 +10,16 @@ export namespace createRenderNode {
 		id: string;
 		cell: Cell;
 		layout: Layout;
+		boardRef: RefObject<HTMLDivElement | null>;
 	}
 }
 
-export function createRenderNode({ id, cell, layout }: createRenderNode.Props): RenderNode {
+export function createRenderNode({
+	id,
+	cell,
+	layout,
+	boardRef,
+}: createRenderNode.Props): RenderNode {
 	const position = layout.cellToPx(cell);
 
 	const motionValues: RenderMotionValue = {
@@ -25,12 +32,19 @@ export function createRenderNode({ id, cell, layout }: createRenderNode.Props): 
 	return {
 		id,
 		motionValues,
+		//
+		drag: true,
+		dragConstraints: boardRef,
+		dragMomentum: false,
+		dragElastic: 0,
+		//
 		style: {
 			position: "absolute",
 			width: layout.cellSize.width,
 			height: layout.cellSize.height,
 			userSelect: "none",
 			zIndex: 1,
+			touchAction: "none",
 			...motionValues,
 		},
 	};

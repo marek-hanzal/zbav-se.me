@@ -1,4 +1,4 @@
-import type { Cell } from "~/app/motion/Cell";
+import type { Position } from "~/app/motion/Position";
 
 interface BaseAction {
 	id: string;
@@ -37,7 +37,7 @@ export interface DragStartAction extends BaseAction {
 
 export interface DragEndAction extends BaseAction {
 	type: "drag-end";
-	target: Cell;
+	target: Position;
 }
 
 //
@@ -48,4 +48,11 @@ export interface NoopAction extends BaseAction {
 
 //
 
-export type Action = MoveAction | ScaleUpAction | ScaleDownAction | PopAction | NoopAction;
+export type Action =
+	| MoveAction
+	| ScaleUpAction
+	| ScaleDownAction
+	| PopAction
+	| NoopAction
+	| DragStartAction
+	| DragEndAction;
