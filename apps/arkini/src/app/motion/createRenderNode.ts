@@ -23,8 +23,8 @@ export function createRenderNode({
 	const position = layout.cellToPx(cell);
 
 	const motionValues: RenderMotionValue = {
-		x: motionValue(position.x),
-		y: motionValue(position.y),
+		x: motionValue(0),
+		y: motionValue(0),
 		opacity: motionValue(1),
 		scale: motionValue(1),
 	};
@@ -45,6 +45,10 @@ export function createRenderNode({
 			userSelect: "none",
 			zIndex: 1,
 			touchAction: "none",
+			//
+			left: position.x,
+			top: position.y,
+			//
 			...motionValues,
 		},
 	};

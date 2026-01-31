@@ -1,6 +1,7 @@
 import type { tBoardItem } from "@zbav-se.me/sdk/api/arkini";
 import type { AnimationPlaybackControlsWithThen } from "motion/react";
 import type { RefObject } from "react";
+import { flushSync } from "react-dom";
 import { match } from "ts-pattern";
 import type { Action } from "~/app/motion/Action";
 import { getLayoutSnapshot } from "~/app/motion/engine/getLayoutSnapshot";
@@ -137,9 +138,11 @@ export function intent({ action, refs, deps }: intent.Props) {
 					return;
 				}
 
-				deps.patch(it.id, {
-					x: next.x,
-					y: next.y,
+				flushSync(() => {
+					deps.patch(it.id, {
+						x: next.x,
+						y: next.y,
+					});
 				});
 
 				const delta = layout.deltaPx(
