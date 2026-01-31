@@ -3,6 +3,7 @@ import type { tBoardItem } from "@zbav-se.me/sdk/api/arkini";
 import { animate, motion, useMotionValue } from "motion/react";
 import type { FC, RefObject } from "react";
 import { useRef } from "react";
+import { useBoardStore } from "~/app/board/useBoardStore";
 
 export namespace BoardItem {
 	export interface Props {
@@ -13,7 +14,9 @@ export namespace BoardItem {
 	}
 }
 
-export const BoardItem: FC<BoardItem.Props> = ({ boardRef, item, cols, rows, onMove }) => {
+export const BoardItem: FC<BoardItem.Props> = ({ boardRef, item, cols, rows }) => {
+	const patch = useBoardStore((state) => state.patch);
+
 	const dx = useMotionValue(0);
 	const dy = useMotionValue(0);
 
@@ -116,7 +119,10 @@ export const BoardItem: FC<BoardItem.Props> = ({ boardRef, item, cols, rows, onM
 					dx.set(0);
 					dy.set(0);
 
-					onMove(item.id, nextX, nextY);
+					patch(item.id, {
+						x: nextX,
+						y: nextY,
+					});
 				});
 			}}
 		>
