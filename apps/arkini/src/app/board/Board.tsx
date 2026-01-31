@@ -1,7 +1,9 @@
 import { Container } from "@use-pico/client/ui/container";
-import { type FC, useRef } from "react";
+import { type FC, useLayoutEffect, useRef } from "react";
 import { BoardItem } from "~/app/board/BoardItem";
 import { useBoardStore } from "~/app/board/useBoardStore";
+import { createLayout } from "~/app/motion/createLayout";
+import type { Motion } from "~/app/motion/Motion";
 
 export namespace Board {
 	export interface Props extends Container.Props {
@@ -13,8 +15,25 @@ export namespace Board {
 }
 
 export const Board: FC<Board.Props> = ({ ui, className, width, height, ...props }) => {
-	const constraintsRef = useRef<HTMLDivElement | null>(null);
+	const boardRef = useRef<HTMLDivElement | null>(null);
 	const items = useBoardStore((state) => state.items);
+	const layoutRef = useRef<Motion.Layout | null>(null);
+
+	useLayoutEffect(() => {
+		if (!boardRef.current) {
+			return;
+		}
+
+		const rect = boardRef.current.getBoundingClientRect();
+		layoutRef.current = createLayout({
+			rect,
+			width,
+			height,
+		});
+	}, [
+		width,
+		height,
+	]);
 
 	return (
 		<Container
@@ -62,14 +81,14 @@ export const Board: FC<Board.Props> = ({ ui, className, width, height, ...props 
 				/>
 
 				<div
-					ref={constraintsRef}
+					ref={boardRef}
 					data-ui={"Board[Items]"}
 					className="absolute inset-0"
 				>
 					{items.map((item) => (
 						<BoardItem
 							key={item.id}
-							boardRef={constraintsRef}
+							boardRef={boardRef}
 							item={item}
 							cols={width}
 							rows={height}
