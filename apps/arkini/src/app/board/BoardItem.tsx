@@ -1,6 +1,11 @@
 import { clamp } from "@use-pico/common/clamp";
 import type { tBoardItem } from "@zbav-se.me/sdk/api/arkini";
-import { animate, motion, useMotionValue } from "motion/react";
+import {
+	type AnimationPlaybackControlsWithThen,
+	animate,
+	motion,
+	useMotionValue,
+} from "motion/react";
 import type { FC, RefObject } from "react";
 import { useRef } from "react";
 import { useBoardStore } from "~/app/board/useBoardStore";
@@ -21,8 +26,8 @@ export const BoardItem: FC<BoardItem.Props> = ({ boardRef, item, cols, rows }) =
 	const dy = useMotionValue(0);
 
 	const snapTokenRef = useRef(0);
-	const animXRef = useRef<ReturnType<typeof animate> | null>(null);
-	const animYRef = useRef<ReturnType<typeof animate> | null>(null);
+	const animXRef = useRef<AnimationPlaybackControlsWithThen | null>(null);
+	const animYRef = useRef<AnimationPlaybackControlsWithThen | null>(null);
 
 	const stopSnap = () => {
 		animXRef.current?.stop?.();
