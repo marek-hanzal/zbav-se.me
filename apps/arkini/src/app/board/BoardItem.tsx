@@ -10,7 +10,6 @@ export namespace BoardItem {
 		item: tBoardItem;
 		cols: number;
 		rows: number;
-		onMove: (itemId: string, nextX: number, nextY: number) => void;
 	}
 }
 
