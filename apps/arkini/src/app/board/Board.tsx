@@ -1,5 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
-import { type FC, useLayoutEffect, useRef } from "react";
+import type { AnimationPlaybackControlsWithThen } from "motion/react";
+import { type FC, useCallback, useLayoutEffect, useRef } from "react";
 import { BoardItem } from "~/app/board/BoardItem";
 import { useBoardStore } from "~/app/board/useBoardStore";
 import { createLayout } from "~/app/motion/createLayout";
@@ -16,8 +17,67 @@ export namespace Board {
 
 export const Board: FC<Board.Props> = ({ ui, className, width, height, ...props }) => {
 	const boardRef = useRef<HTMLDivElement | null>(null);
+	//
 	const items = useBoardStore((state) => state.items);
-	const layoutRef = useRef<Motion.Layout | null>(null);
+	const patch = useBoardStore((state) => state.patch);
+	//
+	const itemsRef = useRef(items);
+	itemsRef.current = items;
+
+	const dimsRef = useRef({
+		width,
+		height,
+	});
+	dimsRef.current = {
+		width,
+		height,
+	};
+
+	const activeLayoutRef = useRef<Motion.Layout | null>(null);
+	const animsByIdRef = useRef<Map<string, Set<AnimationPlaybackControlsWithThen>>>(new Map());
+	const nodesByIdRef = useRef<Map<string, Motion.RenderNode>>(new Map());
+
+	const registerAnim = useCallback((id: string, anim: AnimationPlaybackControlsWithThen) => {
+		let set = animsByIdRef.current.get(id);
+		if (!set) {
+			set = new Set();
+			animsByIdRef.current.set(id, set);
+		}
+		set.add(anim);
+
+		anim.finished.finally(() => {
+			const set = animsByIdRef.current.get(id);
+			if (!set) {
+				return;
+			}
+			set.delete(anim);
+			if (set.size === 0) {
+				animsByIdRef.current.delete(id);
+			}
+		});
+	}, []);
+	const stopAnim = useCallback((id: string) => {
+		const set = animsByIdRef.current.get(id);
+		if (!set) {
+			return;
+		}
+		for (const anim of set) {
+			anim.stop();
+		}
+		animsByIdRef.current.delete(id);
+	}, []);
+
+	const getLayoutSnapshot = (): Motion.Layout | null => {
+		const el = boardRef.current;
+		if (!el) {
+			return null;
+		}
+		return createLayout({
+			rect: el.getBoundingClientRect(),
+			width: dimsRef.current.width,
+			height: dimsRef.current.height,
+		});
+	};
 
 	useLayoutEffect(() => {
 		if (!boardRef.current) {
