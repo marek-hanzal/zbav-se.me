@@ -147,6 +147,34 @@ export const zUserSideEnum = z.enum(['seller', 'buyer']).register(z.globalRegist
 export type zUserSideEnum = z.infer<typeof zUserSideEnum>;
 
 /**
+ * Category data
+ */
+export const zCategory = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the category'
+    }),
+    group: z.string().register(z.globalRegistry, {
+        description: 'Group/name of the category'
+    }),
+    category: z.string().register(z.globalRegistry, {
+        description: 'Category name within the group'
+    }),
+    slug: z.string().register(z.globalRegistry, {
+        description: 'Slug of the category'
+    }),
+    sort: z.number().register(z.globalRegistry, {
+        description: 'Sort order (position) of the category'
+    }),
+    locale: z.string().register(z.globalRegistry, {
+        description: 'Locale/language of the category'
+    })
+}).register(z.globalRegistry, {
+    description: 'Category data'
+});
+
+export type zCategory = z.infer<typeof zCategory>;
+
+/**
  * GitHub commit history count
  */
 export const zGitHubHistory = z.object({
@@ -490,6 +518,23 @@ export const zApiPublicEnumUserSideResponse = z.array(zUserSideEnum).register(z.
 });
 
 export type zapiPublicEnumUserSideResponse = z.infer<typeof zApiPublicEnumUserSideResponse>;
+
+export const zApiPublicSchemaData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiPublicSchemaRequest = z.infer<typeof zApiPublicSchemaData>;
+
+/**
+ * Not returned; for OpenAPI schema registration only.
+ */
+export const zApiPublicSchemaResponse = z.tuple([zCategory]).register(z.globalRegistry, {
+    description: 'Not returned; for OpenAPI schema registration only.'
+});
+
+export type zapiPublicSchemaResponse = z.infer<typeof zApiPublicSchemaResponse>;
 
 export const zApiGithubHistoryData = z.object({
     body: z.optional(z.never()),

@@ -9,6 +9,7 @@ import { withJanitorApiFx } from "~/@public/janitor/withJanitorApiFx";
 import { withMigrationApiFx } from "~/@public/migration/withMigrationApiFx";
 import { withOpenApiApiFx } from "~/@public/open-api/withOpenApiApiFx";
 import { withOriginApiFx } from "~/@public/origin/withOriginApiFx";
+import { withSchemaApiFx } from "~/@public/schema/withSchemaApiFx";
 import { withSeedApiFx } from "~/@public/seed/seed";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
@@ -27,6 +28,7 @@ export const withPublicApiFx = Effect.fn("withPublicApiFx")(function* () {
 		withCorsApiFx(),
 		withCronApiFx(),
 		withEnumApiFx(),
+		withSchemaApiFx(),
 		withGithubApiFx(),
 		withHealthApiFx(),
 		withJanitorApiFx(),

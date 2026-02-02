@@ -146,6 +146,14 @@ const tagsRegistry: Record<
 		name: "Board",
 		description: "Board items and save operations",
 	},
+	Enum: {
+		name: "Enum",
+		description: "Public enum values",
+	},
+	Schema: {
+		name: "Schema",
+		description: "OpenAPI schema exposure only – endpoints return 400",
+	},
 } as const;
 
 const extractTagsFromOpenApiDocument = (

@@ -156,6 +156,36 @@ export const tUserSideEnum = { seller: 'seller', buyer: 'buyer' } as const;
 export type tUserSideEnum = typeof tUserSideEnum[keyof typeof tUserSideEnum];
 
 /**
+ * Category data
+ */
+export type tCategory = {
+    /**
+     * ID of the category
+     */
+    id: string;
+    /**
+     * Group/name of the category
+     */
+    group: string;
+    /**
+     * Category name within the group
+     */
+    category: string;
+    /**
+     * Slug of the category
+     */
+    slug: string;
+    /**
+     * Sort order (position) of the category
+     */
+    sort: number;
+    /**
+     * Locale/language of the category
+     */
+    locale: string;
+};
+
+/**
  * GitHub commit history count
  */
 export type tGitHubHistory = {
@@ -488,6 +518,33 @@ export type tApiPublicEnumUserSideResponse = {
 };
 
 export type apiPublicEnumUserSideResponse = tApiPublicEnumUserSideResponse[keyof tApiPublicEnumUserSideResponse];
+
+export type tApiPublicSchemaRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/schema';
+};
+
+export type apiPublicSchemaErrors = {
+    /**
+     * Bad request – this endpoint is for schema exposure only.
+     */
+    400: tNotice;
+};
+
+export type apiPublicSchemaError = apiPublicSchemaErrors[keyof apiPublicSchemaErrors];
+
+export type tApiPublicSchemaResponse = {
+    /**
+     * Not returned; for OpenAPI schema registration only.
+     */
+    200: [
+        tCategory
+    ];
+};
+
+export type apiPublicSchemaResponse = tApiPublicSchemaResponse[keyof tApiPublicSchemaResponse];
 
 export type tApiGithubHistoryRequest = {
     body?: never;
