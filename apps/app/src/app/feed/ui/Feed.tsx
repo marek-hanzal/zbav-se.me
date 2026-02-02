@@ -9,18 +9,18 @@ import { AgeValueList } from "~/app/@common/age/ui/AgeValueList";
 import { ConditionValueList } from "~/app/@common/condition/ui/ConditionValueList";
 import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";
+import { RangeValue } from "~/app/@common/location/ui/RangeValue";
+import { NameValue } from "~/app/@common/name/ui/NameValue";
 import { CategoryValueList } from "~/app/@session/category/ui/CategoryValueList";
 import { TitleValue } from "~/app/feed/ui/value/TitleValue";
 import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
-import { NameValue } from "./value/NameValue";
-import { RangeValue } from "./value/RangeValue";
 import { SortValue } from "./value/SortValue";
 import { WarrantyValue } from "./value/WarrantyValue";
 
 export namespace Feed {
 	export interface Value {
 		gallery?: Partial<GalleryValue.Props>;
-		name?: Partial<LabelValue.PropsEx>;
+		name?: Partial<NameValue.Props>;
 		category?: Partial<CategoryValueList.Props>;
 		location?: Partial<LabelValue.PropsEx>;
 		range?: Partial<RangeValue.Props>;
@@ -104,7 +104,15 @@ export const Feed: FC<Feed.Props> = ({
 			/>
 
 			<NameValue
-				feed={feed}
+				name={feed.name}
+				action={
+					<Icon
+						icon={EditIcon}
+						ui={{
+							text: "xl",
+						}}
+					/>
+				}
 				{...values?.name}
 			/>
 
@@ -140,7 +148,16 @@ export const Feed: FC<Feed.Props> = ({
 			/>
 
 			<RangeValue
-				feed={feed}
+				range={feed.query?.filter?.range}
+				disabled={!feed.query?.meta?.latLon}
+				action={
+					<Icon
+						icon={EditIcon}
+						ui={{
+							text: "xl",
+						}}
+					/>
+				}
 				{...values?.range}
 			/>
 
