@@ -47,6 +47,19 @@ export const zCurrencyEnum = z.enum([
 export type zCurrencyEnum = z.infer<typeof zCurrencyEnum>;
 
 /**
+ * Expiration time of the listing
+ */
+export const zListingExpireEnum = z.enum([
+    '7-days',
+    '14-days',
+    '1-month'
+]).register(z.globalRegistry, {
+    description: 'Expiration time of the listing'
+});
+
+export type zListingExpireEnum = z.infer<typeof zListingExpireEnum>;
+
+/**
  * Delivery method for the listing
  */
 export const zListingDeliveryEnum = z.enum([
@@ -162,6 +175,134 @@ export const zUserSideEnum = z.enum(['seller', 'buyer']).register(z.globalRegist
 });
 
 export type zUserSideEnum = z.infer<typeof zUserSideEnum>;
+
+/**
+ * Activity bucket (last user-scoped event age: high = recent, low = old)
+ */
+export const zActivityEnum = z.enum([
+    'low',
+    'medium',
+    'high'
+]).register(z.globalRegistry, {
+    description: 'Activity bucket (last user-scoped event age: high = recent, low = old)'
+});
+
+export type zActivityEnum = z.infer<typeof zActivityEnum>;
+
+/**
+ * Load bucket (active transaction count: low/medium/high)
+ */
+export const zLoadEnum = z.enum([
+    'low',
+    'medium',
+    'high'
+]).register(z.globalRegistry, {
+    description: 'Load bucket (active transaction count: low/medium/high)'
+});
+
+export type zLoadEnum = z.infer<typeof zLoadEnum>;
+
+/**
+ * Type of user event
+ */
+export const zUserEventEnum = z.enum([
+    'like',
+    'dislike',
+    'listing.create',
+    'transaction.create',
+    'transaction.open',
+    'transaction.rejected',
+    'transaction.closed',
+    'transaction.message',
+    'transaction.success',
+    'transaction.expired',
+    'transaction.resolved'
+]).register(z.globalRegistry, {
+    description: 'Type of user event'
+});
+
+export type zUserEventEnum = z.infer<typeof zUserEventEnum>;
+
+/**
+ * Source of the user event
+ */
+export const zUserEventSourceEnum = z.enum(['listing', 'transaction']).register(z.globalRegistry, {
+    description: 'Source of the user event'
+});
+
+export type zUserEventSourceEnum = z.infer<typeof zUserEventSourceEnum>;
+
+/**
+ * Direction of the message
+ */
+export const zMessageDirectionEnum = z.enum([
+    'in',
+    'out',
+    'system'
+]).register(z.globalRegistry, {
+    description: 'Direction of the message'
+});
+
+export type zMessageDirectionEnum = z.infer<typeof zMessageDirectionEnum>;
+
+/**
+ * Type of message
+ */
+export const zMessageTypeEnum = z.enum([
+    'text',
+    'gallery',
+    'location',
+    'personal',
+    'package',
+    'date',
+    'system'
+]).register(z.globalRegistry, {
+    description: 'Type of message'
+});
+
+export type zMessageTypeEnum = z.infer<typeof zMessageTypeEnum>;
+
+/**
+ * Order
+ */
+export const zOrderEnum = z.enum(['asc', 'desc']).register(z.globalRegistry, {
+    description: 'Order'
+});
+
+export type zOrderEnum = z.infer<typeof zOrderEnum>;
+
+/**
+ * Allowed content types
+ */
+export const zAllowedContentTypesEnum = z.enum([
+    'image/jpeg',
+    'image/png',
+    'image/webp',
+    'image/avif',
+    'image/heic',
+    'image/heif'
+]).register(z.globalRegistry, {
+    description: 'Allowed content types'
+});
+
+export type zAllowedContentTypesEnum = z.infer<typeof zAllowedContentTypesEnum>;
+
+/**
+ * Allowed extensions
+ */
+export const zAllowedExtensionsEnum = z.enum([
+    'webp',
+    'png',
+    'jpg',
+    'jpeg',
+    'avif',
+    'heic',
+    'heif'
+]).register(z.globalRegistry, {
+    description: 'Allowed extensions'
+});
+
+export type zAllowedExtensionsEnum = z.infer<typeof zAllowedExtensionsEnum>;
 
 /**
  * Category data
@@ -400,6 +541,23 @@ export const zApiPublicEnumCurrencyResponse = z.array(zCurrencyEnum).register(z.
 
 export type zapiPublicEnumCurrencyResponse = z.infer<typeof zApiPublicEnumCurrencyResponse>;
 
+export const zApiPublicEnumListingExpireData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiPublicEnumListingExpireRequest = z.infer<typeof zApiPublicEnumListingExpireData>;
+
+/**
+ * ListingExpire enum
+ */
+export const zApiPublicEnumListingExpireResponse = z.array(zListingExpireEnum).register(z.globalRegistry, {
+    description: 'ListingExpire enum'
+});
+
+export type zapiPublicEnumListingExpireResponse = z.infer<typeof zApiPublicEnumListingExpireResponse>;
+
 export const zApiPublicEnumListingDeliveryData = z.object({
     body: z.optional(z.never()),
     path: z.optional(z.never()),
@@ -552,6 +710,176 @@ export const zApiPublicEnumUserSideResponse = z.array(zUserSideEnum).register(z.
 });
 
 export type zapiPublicEnumUserSideResponse = z.infer<typeof zApiPublicEnumUserSideResponse>;
+
+export const zApiPublicEnumActivityData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiPublicEnumActivityRequest = z.infer<typeof zApiPublicEnumActivityData>;
+
+/**
+ * Activity enum
+ */
+export const zApiPublicEnumActivityResponse = z.array(zActivityEnum).register(z.globalRegistry, {
+    description: 'Activity enum'
+});
+
+export type zapiPublicEnumActivityResponse = z.infer<typeof zApiPublicEnumActivityResponse>;
+
+export const zApiPublicEnumLoadData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiPublicEnumLoadRequest = z.infer<typeof zApiPublicEnumLoadData>;
+
+/**
+ * Load enum
+ */
+export const zApiPublicEnumLoadResponse = z.array(zLoadEnum).register(z.globalRegistry, {
+    description: 'Load enum'
+});
+
+export type zapiPublicEnumLoadResponse = z.infer<typeof zApiPublicEnumLoadResponse>;
+
+export const zApiPublicEnumUserEventData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiPublicEnumUserEventRequest = z.infer<typeof zApiPublicEnumUserEventData>;
+
+/**
+ * UserEvent enum
+ */
+export const zApiPublicEnumUserEventResponse = z.array(zUserEventEnum).register(z.globalRegistry, {
+    description: 'UserEvent enum'
+});
+
+export type zapiPublicEnumUserEventResponse = z.infer<typeof zApiPublicEnumUserEventResponse>;
+
+export const zApiPublicEnumUserEventSourceData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiPublicEnumUserEventSourceRequest = z.infer<typeof zApiPublicEnumUserEventSourceData>;
+
+/**
+ * UserEventSource enum
+ */
+export const zApiPublicEnumUserEventSourceResponse = z.array(zUserEventSourceEnum).register(z.globalRegistry, {
+    description: 'UserEventSource enum'
+});
+
+export type zapiPublicEnumUserEventSourceResponse = z.infer<typeof zApiPublicEnumUserEventSourceResponse>;
+
+export const zApiPublicEnumMessageDirectionData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiPublicEnumMessageDirectionRequest = z.infer<typeof zApiPublicEnumMessageDirectionData>;
+
+/**
+ * MessageDirection enum
+ */
+export const zApiPublicEnumMessageDirectionResponse = z.array(zMessageDirectionEnum).register(z.globalRegistry, {
+    description: 'MessageDirection enum'
+});
+
+export type zapiPublicEnumMessageDirectionResponse = z.infer<typeof zApiPublicEnumMessageDirectionResponse>;
+
+export const zApiPublicEnumMessageTypeData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiPublicEnumMessageTypeRequest = z.infer<typeof zApiPublicEnumMessageTypeData>;
+
+/**
+ * MessageType enum
+ */
+export const zApiPublicEnumMessageTypeResponse = z.array(zMessageTypeEnum).register(z.globalRegistry, {
+    description: 'MessageType enum'
+});
+
+export type zapiPublicEnumMessageTypeResponse = z.infer<typeof zApiPublicEnumMessageTypeResponse>;
+
+export const zApiPublicEnumNoticeTypeData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiPublicEnumNoticeTypeRequest = z.infer<typeof zApiPublicEnumNoticeTypeData>;
+
+/**
+ * NoticeType enum
+ */
+export const zApiPublicEnumNoticeTypeResponse = z.array(zNoticeTypeEnum).register(z.globalRegistry, {
+    description: 'NoticeType enum'
+});
+
+export type zapiPublicEnumNoticeTypeResponse = z.infer<typeof zApiPublicEnumNoticeTypeResponse>;
+
+export const zApiPublicEnumOrderData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiPublicEnumOrderRequest = z.infer<typeof zApiPublicEnumOrderData>;
+
+/**
+ * Order enum
+ */
+export const zApiPublicEnumOrderResponse = z.array(zOrderEnum).register(z.globalRegistry, {
+    description: 'Order enum'
+});
+
+export type zapiPublicEnumOrderResponse = z.infer<typeof zApiPublicEnumOrderResponse>;
+
+export const zApiPublicEnumAllowedContentTypesData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiPublicEnumAllowedContentTypesRequest = z.infer<typeof zApiPublicEnumAllowedContentTypesData>;
+
+/**
+ * AllowedContentTypes enum
+ */
+export const zApiPublicEnumAllowedContentTypesResponse = z.array(zAllowedContentTypesEnum).register(z.globalRegistry, {
+    description: 'AllowedContentTypes enum'
+});
+
+export type zapiPublicEnumAllowedContentTypesResponse = z.infer<typeof zApiPublicEnumAllowedContentTypesResponse>;
+
+export const zApiPublicEnumAllowedExtensionsData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiPublicEnumAllowedExtensionsRequest = z.infer<typeof zApiPublicEnumAllowedExtensionsData>;
+
+/**
+ * AllowedExtensions enum
+ */
+export const zApiPublicEnumAllowedExtensionsResponse = z.array(zAllowedExtensionsEnum).register(z.globalRegistry, {
+    description: 'AllowedExtensions enum'
+});
+
+export type zapiPublicEnumAllowedExtensionsResponse = z.infer<typeof zApiPublicEnumAllowedExtensionsResponse>;
 
 export const zApiPublicSchemaData = z.object({
     body: z.optional(z.never()),

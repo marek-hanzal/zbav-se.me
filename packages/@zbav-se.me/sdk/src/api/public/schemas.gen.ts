@@ -38,6 +38,15 @@ export const sCurrencyEnum = {
     ]
 } as const;
 
+export const sListingExpireEnum = {
+    type: 'string',
+    enum: [
+        '7-days',
+        '14-days',
+        '1-month'
+    ]
+} as const;
+
 export const sListingDeliveryEnum = {
     type: 'string',
     enum: [
@@ -128,6 +137,104 @@ export const sUserSideEnum = {
     enum: [
         'seller',
         'buyer'
+    ]
+} as const;
+
+export const sActivityEnum = {
+    type: 'string',
+    enum: [
+        'low',
+        'medium',
+        'high'
+    ]
+} as const;
+
+export const sLoadEnum = {
+    type: 'string',
+    enum: [
+        'low',
+        'medium',
+        'high'
+    ]
+} as const;
+
+export const sUserEventEnum = {
+    type: 'string',
+    enum: [
+        'like',
+        'dislike',
+        'listing.create',
+        'transaction.create',
+        'transaction.open',
+        'transaction.rejected',
+        'transaction.closed',
+        'transaction.message',
+        'transaction.success',
+        'transaction.expired',
+        'transaction.resolved'
+    ]
+} as const;
+
+export const sUserEventSourceEnum = {
+    type: 'string',
+    enum: [
+        'listing',
+        'transaction'
+    ]
+} as const;
+
+export const sMessageDirectionEnum = {
+    type: 'string',
+    enum: [
+        'in',
+        'out',
+        'system'
+    ]
+} as const;
+
+export const sMessageTypeEnum = {
+    type: 'string',
+    enum: [
+        'text',
+        'gallery',
+        'location',
+        'personal',
+        'package',
+        'date',
+        'system'
+    ]
+} as const;
+
+export const sOrderEnum = {
+    type: 'string',
+    enum: [
+        'asc',
+        'desc'
+    ]
+} as const;
+
+export const sAllowedContentTypesEnum = {
+    type: 'string',
+    enum: [
+        'image/jpeg',
+        'image/png',
+        'image/webp',
+        'image/avif',
+        'image/heic',
+        'image/heif'
+    ]
+} as const;
+
+export const sAllowedExtensionsEnum = {
+    type: 'string',
+    enum: [
+        'webp',
+        'png',
+        'jpg',
+        'jpeg',
+        'avif',
+        'heic',
+        'heif'
     ]
 } as const;
 

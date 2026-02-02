@@ -1,6 +1,13 @@
 import { createRoute } from "@hono/zod-openapi";
 import { keysOf } from "@use-pico/common/keys-of";
 import { Effect } from "effect";
+import { ListingExpireEnumSchema } from "~/@common/listing/schema/ListingExpireEnumSchema";
+import { ActivityEnumSchema } from "~/@common/user-event/schema/ActivityEnumSchema";
+import { LoadEnumSchema } from "~/@common/user-event/schema/LoadEnumSchema";
+import { UserEventEnumSchema } from "~/@common/user-event/schema/UserEventEnumSchema";
+import { UserEventSourceEnumSchema } from "~/@common/user-event/schema/UserEventSourceEnumSchema";
+import { MessageDirectionEnumSchema } from "~/@user/message/schema/MessageDirectionEnumSchema";
+import { MessageTypeEnumSchema } from "~/@user/message/schema/MessageTypeEnumSchema";
 import { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
 import { ListingEventEnumSchema } from "~/database/@enum/ListingEventEnumSchema";
 import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
@@ -11,7 +18,11 @@ import { TransactionStatusEnumSchema } from "~/database/@enum/TransactionStatusE
 import { UserEventScopeEnumSchema } from "~/database/@enum/UserEventScopeEnumSchema";
 import { UserSideEnumSchema } from "~/database/@enum/UserSideEnumSchema";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { AllowedContentTypesEnumSchema } from "~/schema/AllowedContentTypesEnumSchema";
+import { AllowedExtensionsEnumSchema } from "~/schema/AllowedExtensionsEnumSchema";
 import { CurrencyEnumSchema } from "~/schema/CurrencyEnumSchema";
+import { NoticeTypeEnumSchema } from "~/schema/NoticeTypeEnumSchema";
+import { OrderEnumSchema } from "~/schema/OrderEnumSchema";
 
 export const withEnumEndpointFx = Effect.fn("withEnumEndpointFx")(function* () {
 	const { publicHono } = yield* RoutesContextFx;
@@ -38,6 +49,30 @@ export const withEnumEndpointFx = Effect.fn("withEnumEndpointFx")(function* () {
 			],
 		}),
 		(c) => c.json(keysOf(CurrencyEnumSchema.enum)),
+	);
+
+	publicHono.openapi(
+		createRoute({
+			method: "get",
+			path: "/enum/listing-expire",
+			description: "Returns ListingExpire enum values",
+			operationId: "apiPublicEnumListingExpire",
+			responses: {
+				200: {
+					content: {
+						"application/json": {
+							schema: ListingExpireEnumSchema.array(),
+						},
+					},
+					description: "ListingExpire enum",
+				},
+			},
+			security: [],
+			tags: [
+				"Enum",
+			],
+		}),
+		(c) => c.json(keysOf(ListingExpireEnumSchema.enum)),
 	);
 
 	publicHono.openapi(
@@ -254,5 +289,245 @@ export const withEnumEndpointFx = Effect.fn("withEnumEndpointFx")(function* () {
 			],
 		}),
 		(c) => c.json(keysOf(UserSideEnumSchema.enum)),
+	);
+
+	publicHono.openapi(
+		createRoute({
+			method: "get",
+			path: "/enum/activity",
+			description: "Returns Activity enum values",
+			operationId: "apiPublicEnumActivity",
+			responses: {
+				200: {
+					content: {
+						"application/json": {
+							schema: ActivityEnumSchema.array(),
+						},
+					},
+					description: "Activity enum",
+				},
+			},
+			security: [],
+			tags: [
+				"Enum",
+			],
+		}),
+		(c) => c.json(keysOf(ActivityEnumSchema.enum)),
+	);
+
+	publicHono.openapi(
+		createRoute({
+			method: "get",
+			path: "/enum/load",
+			description: "Returns Load enum values",
+			operationId: "apiPublicEnumLoad",
+			responses: {
+				200: {
+					content: {
+						"application/json": {
+							schema: LoadEnumSchema.array(),
+						},
+					},
+					description: "Load enum",
+				},
+			},
+			security: [],
+			tags: [
+				"Enum",
+			],
+		}),
+		(c) => c.json(keysOf(LoadEnumSchema.enum)),
+	);
+
+	publicHono.openapi(
+		createRoute({
+			method: "get",
+			path: "/enum/user-event",
+			description: "Returns UserEvent enum values",
+			operationId: "apiPublicEnumUserEvent",
+			responses: {
+				200: {
+					content: {
+						"application/json": {
+							schema: UserEventEnumSchema.array(),
+						},
+					},
+					description: "UserEvent enum",
+				},
+			},
+			security: [],
+			tags: [
+				"Enum",
+			],
+		}),
+		(c) => c.json(keysOf(UserEventEnumSchema.enum)),
+	);
+
+	publicHono.openapi(
+		createRoute({
+			method: "get",
+			path: "/enum/user-event-source",
+			description: "Returns UserEventSource enum values",
+			operationId: "apiPublicEnumUserEventSource",
+			responses: {
+				200: {
+					content: {
+						"application/json": {
+							schema: UserEventSourceEnumSchema.array(),
+						},
+					},
+					description: "UserEventSource enum",
+				},
+			},
+			security: [],
+			tags: [
+				"Enum",
+			],
+		}),
+		(c) => c.json(keysOf(UserEventSourceEnumSchema.enum)),
+	);
+
+	publicHono.openapi(
+		createRoute({
+			method: "get",
+			path: "/enum/message-direction",
+			description: "Returns MessageDirection enum values",
+			operationId: "apiPublicEnumMessageDirection",
+			responses: {
+				200: {
+					content: {
+						"application/json": {
+							schema: MessageDirectionEnumSchema.array(),
+						},
+					},
+					description: "MessageDirection enum",
+				},
+			},
+			security: [],
+			tags: [
+				"Enum",
+			],
+		}),
+		(c) => c.json(keysOf(MessageDirectionEnumSchema.enum)),
+	);
+
+	publicHono.openapi(
+		createRoute({
+			method: "get",
+			path: "/enum/message-type",
+			description: "Returns MessageType enum values",
+			operationId: "apiPublicEnumMessageType",
+			responses: {
+				200: {
+					content: {
+						"application/json": {
+							schema: MessageTypeEnumSchema.array(),
+						},
+					},
+					description: "MessageType enum",
+				},
+			},
+			security: [],
+			tags: [
+				"Enum",
+			],
+		}),
+		(c) => c.json(keysOf(MessageTypeEnumSchema.enum)),
+	);
+
+	publicHono.openapi(
+		createRoute({
+			method: "get",
+			path: "/enum/notice-type",
+			description: "Returns NoticeType enum values",
+			operationId: "apiPublicEnumNoticeType",
+			responses: {
+				200: {
+					content: {
+						"application/json": {
+							schema: NoticeTypeEnumSchema.array(),
+						},
+					},
+					description: "NoticeType enum",
+				},
+			},
+			security: [],
+			tags: [
+				"Enum",
+			],
+		}),
+		(c) => c.json(keysOf(NoticeTypeEnumSchema.enum)),
+	);
+
+	publicHono.openapi(
+		createRoute({
+			method: "get",
+			path: "/enum/order",
+			description: "Returns Order enum values",
+			operationId: "apiPublicEnumOrder",
+			responses: {
+				200: {
+					content: {
+						"application/json": {
+							schema: OrderEnumSchema.array(),
+						},
+					},
+					description: "Order enum",
+				},
+			},
+			security: [],
+			tags: [
+				"Enum",
+			],
+		}),
+		(c) => c.json(keysOf(OrderEnumSchema.enum)),
+	);
+
+	publicHono.openapi(
+		createRoute({
+			method: "get",
+			path: "/enum/allowed-content-types",
+			description: "Returns AllowedContentTypes enum values",
+			operationId: "apiPublicEnumAllowedContentTypes",
+			responses: {
+				200: {
+					content: {
+						"application/json": {
+							schema: AllowedContentTypesEnumSchema.array(),
+						},
+					},
+					description: "AllowedContentTypes enum",
+				},
+			},
+			security: [],
+			tags: [
+				"Enum",
+			],
+		}),
+		(c) => c.json(keysOf(AllowedContentTypesEnumSchema.enum)),
+	);
+
+	publicHono.openapi(
+		createRoute({
+			method: "get",
+			path: "/enum/allowed-extensions",
+			description: "Returns AllowedExtensions enum values",
+			operationId: "apiPublicEnumAllowedExtensions",
+			responses: {
+				200: {
+					content: {
+						"application/json": {
+							schema: AllowedExtensionsEnumSchema.array(),
+						},
+					},
+					description: "AllowedExtensions enum",
+				},
+			},
+			security: [],
+			tags: [
+				"Enum",
+			],
+		}),
+		(c) => c.json(keysOf(AllowedExtensionsEnumSchema.enum)),
 	);
 });
