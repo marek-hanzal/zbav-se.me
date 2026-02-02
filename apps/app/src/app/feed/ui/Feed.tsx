@@ -11,10 +11,10 @@ import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { RangeValue } from "~/app/@common/location/ui/RangeValue";
 import { NameValue } from "~/app/@common/name/ui/NameValue";
+import { SortValue } from "~/app/@common/sort/ui/SortValue";
 import { CategoryValueList } from "~/app/@session/category/ui/CategoryValueList";
 import { TitleValue } from "~/app/feed/ui/value/TitleValue";
 import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
-import { SortValue } from "./value/SortValue";
 import { WarrantyValue } from "./value/WarrantyValue";
 
 export namespace Feed {
@@ -149,7 +149,9 @@ export const Feed: FC<Feed.Props> = ({
 
 			<RangeValue
 				range={feed.query?.filter?.range}
-				disabled={!feed.query?.meta?.latLon}
+				ui={{
+					disabled: !feed.query?.meta?.latLon,
+				}}
 				action={
 					<Icon
 						icon={EditIcon}
@@ -162,7 +164,15 @@ export const Feed: FC<Feed.Props> = ({
 			/>
 
 			<SortValue
-				feed={feed}
+				sort={feed.query?.sort ?? []}
+				action={
+					<Icon
+						icon={EditIcon}
+						ui={{
+							text: "xl",
+						}}
+					/>
+				}
 				{...values?.sort}
 			/>
 

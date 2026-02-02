@@ -1,27 +1,28 @@
-import { EditIcon, Icon } from "@use-pico/client/icon";
 import { ValueList } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tFeed, tListingSort } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
 
 export namespace SortValue {
+	export interface Sort {
+		field: string;
+		direction: string;
+	}
+
 	export interface Props
 		extends Omit<
 			ValueList.PropsEx<
-				tListingSort & {
+				Sort & {
 					id: string;
 				}
 			>,
 			"items" | "renderFn"
 		> {
-		feed: tFeed;
+		sort: Sort[];
 	}
 }
 
-export const SortValue: FC<SortValue.Props> = ({ feed, ...props }) => {
-	const sort = feed.query?.sort ?? [];
-
+export const SortValue: FC<SortValue.Props> = ({ sort, ...props }) => {
 	return (
 		<ValueList
 			data-ui={"SortValue[ValueList]"}
@@ -40,14 +41,6 @@ export const SortValue: FC<SortValue.Props> = ({ feed, ...props }) => {
 					}}
 				/>
 			)}
-			action={
-				<Icon
-					icon={EditIcon}
-					ui={{
-						text: "xl",
-					}}
-				/>
-			}
 			wrapperProps={{
 				ui:
 					sort.length > 0
