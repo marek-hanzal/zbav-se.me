@@ -16,10 +16,7 @@ export namespace ConditionValueList {
 	}
 }
 
-export const ConditionValueList: FC<ConditionValueList.Props> = ({
-	conditionIn,
-	...props
-}) => {
+export const ConditionValueList: FC<ConditionValueList.Props> = ({ conditionIn, ...props }) => {
 	return (
 		<ValueList
 			data-ui={"ConditionValueList[ValueList]"}

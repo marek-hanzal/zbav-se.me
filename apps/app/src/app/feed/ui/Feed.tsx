@@ -13,9 +13,9 @@ import { RangeValue } from "~/app/@common/location/ui/RangeValue";
 import { NameValue } from "~/app/@common/name/ui/NameValue";
 import { SortValue } from "~/app/@common/sort/ui/SortValue";
 import { TitleValue } from "~/app/@common/title/ui/TitleValue";
+import { WarrantyValueList } from "~/app/@common/warranty/ui/WarrantyValueList";
 import { CategoryValueList } from "~/app/@session/category/ui/CategoryValueList";
 import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
-import { WarrantyValueList } from "~/app/@common/warranty/ui/WarrantyValueList";
 
 export namespace Feed {
 	export interface Value {
