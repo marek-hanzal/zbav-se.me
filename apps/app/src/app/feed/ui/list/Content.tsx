@@ -4,7 +4,7 @@ import { translator } from "@use-pico/common/translator";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedCollectionQuery, withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { type FC, useState } from "react";
-import { CreateButton } from "~/app/feed/ui/button/CreateButton";
+import { CreateButton } from "~/app/@buyer-user/feed/ui/button/CreateButton";
 import { Item } from "./Item";
 
 export namespace Content {

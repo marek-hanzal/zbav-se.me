@@ -6,7 +6,7 @@ import { Status } from "@use-pico/client/ui/status";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import { type FC, useState } from "react";
-import { NameInput } from "../input/NameInput";
+import { NameInput } from "~/app/feed/ui/input/NameInput";
 
 export namespace CreateButton {
 	export interface Props extends Button.Props {
