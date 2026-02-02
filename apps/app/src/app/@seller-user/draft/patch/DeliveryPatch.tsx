@@ -8,7 +8,7 @@ import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { DeliverySelect } from "~/app/delivery/ui/DeliverySelect";
+import { DeliverySelect } from "~/app/@common/delivery/ui/DeliverySelect";
 
 export namespace DeliveryPatch {
 	export interface Props extends TitleContainer.Props {

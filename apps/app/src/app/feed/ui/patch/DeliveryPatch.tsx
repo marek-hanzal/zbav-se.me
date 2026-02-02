@@ -7,7 +7,7 @@ import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed"
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { DeliverySelect } from "~/app/delivery/ui/DeliverySelect";
+import { DeliverySelect } from "~/app/@common/delivery/ui/DeliverySelect";
 
 export namespace DeliveryPatch {
 	export interface Props extends Container.Props {
