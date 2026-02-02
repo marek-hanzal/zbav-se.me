@@ -6,11 +6,11 @@ import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import type { FC } from "react";
 import { AgeValueList } from "~/app/@common/age/ui/AgeValueList";
+import { ConditionValueList } from "~/app/@common/condition/ui/ConditionValueList";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { CategoryValueList } from "~/app/@session/category/ui/CategoryValueList";
 import { TitleValue } from "~/app/feed/ui/value/TitleValue";
 import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
-import { ConditionValue } from "./value/ConditionValue";
 import { DeliveryValue } from "./value/DeliveryValue";
 import { NameValue } from "./value/NameValue";
 import { RangeValue } from "./value/RangeValue";
@@ -25,7 +25,7 @@ export namespace Feed {
 		location?: Partial<LabelValue.PropsEx>;
 		range?: Partial<RangeValue.Props>;
 		sort?: Partial<SortValue.Props>;
-		condition?: Partial<ConditionValue.Props>;
+		condition?: Partial<ConditionValueList.Props>;
 		age?: Partial<AgeValueList.Props>;
 		delivery?: Partial<DeliveryValue.Props>;
 		warranty?: Partial<WarrantyValue.Props>;
@@ -149,8 +149,16 @@ export const Feed: FC<Feed.Props> = ({
 				{...values?.sort}
 			/>
 
-			<ConditionValue
-				feed={feed}
+			<ConditionValueList
+				conditionIn={feed.query?.filter?.conditionIn ?? []}
+				action={
+					<Icon
+						icon={EditIcon}
+						ui={{
+							text: "xl",
+						}}
+					/>
+				}
 				{...values?.condition}
 			/>
 
