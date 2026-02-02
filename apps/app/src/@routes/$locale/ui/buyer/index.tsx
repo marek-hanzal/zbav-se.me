@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useEffect } from "react";
-import { BuyerMenu } from "~/app/@buyer/ui/BuyerMenu";
+import { BuyerMenu } from "~/app/@buyer-user/ui/BuyerMenu";
 import { withSessionQuery } from "~/app/auth/query/withSessionQuery";
 
 export const Route = createFileRoute("/$locale/ui/buyer/")({
