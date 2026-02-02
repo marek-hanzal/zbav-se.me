@@ -30,6 +30,132 @@ export type tNotice = {
 };
 
 /**
+ * Delivery method for the listing
+ */
+export const tListingDeliveryEnum = {
+    personal: 'personal',
+    post: 'post',
+    package: 'package',
+    other: 'other'
+} as const;
+
+/**
+ * Delivery method for the listing
+ */
+export type tListingDeliveryEnum = typeof tListingDeliveryEnum[keyof typeof tListingDeliveryEnum];
+
+/**
+ * Type of listing event
+ */
+export const tListingEventEnum = {
+    impression: 'impression',
+    view: 'view',
+    ignore: 'ignore',
+    unignore: 'unignore',
+    flag: 'flag',
+    unflag: 'unflag',
+    transaction: 'transaction',
+    favourite: 'favourite',
+    unfavourite: 'unfavourite',
+    like: 'like',
+    dislike: 'dislike'
+} as const;
+
+/**
+ * Type of listing event
+ */
+export type tListingEventEnum = typeof tListingEventEnum[keyof typeof tListingEventEnum];
+
+/**
+ * Price type of the listing
+ */
+export const tListingPriceEnum = { closed: 'closed', open: 'open' } as const;
+
+/**
+ * Price type of the listing
+ */
+export type tListingPriceEnum = typeof tListingPriceEnum[keyof typeof tListingPriceEnum];
+
+/**
+ * Warranty type for the listing
+ */
+export const tListingWarrantyEnum = {
+    warranty: 'warranty',
+    'no-warranty': 'no-warranty',
+    custom: 'custom'
+} as const;
+
+/**
+ * Warranty type for the listing
+ */
+export type tListingWarrantyEnum = typeof tListingWarrantyEnum[keyof typeof tListingWarrantyEnum];
+
+/**
+ * Type of thumb
+ */
+export const tThumbEnum = { like: 'like', dislike: 'dislike' } as const;
+
+/**
+ * Type of thumb
+ */
+export type tThumbEnum = typeof tThumbEnum[keyof typeof tThumbEnum];
+
+/**
+ * Who initiated or affected the transaction change
+ */
+export const tTransactionSideEnum = {
+    seller: 'seller',
+    buyer: 'buyer',
+    transaction: 'transaction',
+    system: 'system',
+    unknown: 'unknown'
+} as const;
+
+/**
+ * Who initiated or affected the transaction change
+ */
+export type tTransactionSideEnum = typeof tTransactionSideEnum[keyof typeof tTransactionSideEnum];
+
+/**
+ * Current status of the listing transaction
+ */
+export const tTransactionStatusEnum = {
+    pending: 'pending',
+    open: 'open',
+    resolved: 'resolved',
+    dispute: 'dispute',
+    rejected: 'rejected',
+    expired: 'expired',
+    success: 'success',
+    closed: 'closed'
+} as const;
+
+/**
+ * Current status of the listing transaction
+ */
+export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
+
+/**
+ * Scope of the user event
+ */
+export const tUserEventScopeEnum = { user: 'user', foreign: 'foreign' } as const;
+
+/**
+ * Scope of the user event
+ */
+export type tUserEventScopeEnum = typeof tUserEventScopeEnum[keyof typeof tUserEventScopeEnum];
+
+/**
+ * Side of the user
+ */
+export const tUserSideEnum = { seller: 'seller', buyer: 'buyer' } as const;
+
+/**
+ * Side of the user
+ */
+export type tUserSideEnum = typeof tUserSideEnum[keyof typeof tUserSideEnum];
+
+/**
  * GitHub commit history count
  */
 export type tGitHubHistory = {
@@ -218,6 +344,150 @@ export type tApiCronDay20Response = {
 };
 
 export type apiCronDay20Response = tApiCronDay20Response[keyof tApiCronDay20Response];
+
+export type tApiPublicEnumListingDeliveryRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/listing-delivery';
+};
+
+export type tApiPublicEnumListingDeliveryResponse = {
+    /**
+     * ListingDelivery enum
+     */
+    200: Array<tListingDeliveryEnum>;
+};
+
+export type apiPublicEnumListingDeliveryResponse = tApiPublicEnumListingDeliveryResponse[keyof tApiPublicEnumListingDeliveryResponse];
+
+export type tApiPublicEnumListingEventRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/listing-event';
+};
+
+export type tApiPublicEnumListingEventResponse = {
+    /**
+     * ListingEvent enum
+     */
+    200: Array<tListingEventEnum>;
+};
+
+export type apiPublicEnumListingEventResponse = tApiPublicEnumListingEventResponse[keyof tApiPublicEnumListingEventResponse];
+
+export type tApiPublicEnumListingPriceRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/listing-price';
+};
+
+export type tApiPublicEnumListingPriceResponse = {
+    /**
+     * ListingPrice enum
+     */
+    200: Array<tListingPriceEnum>;
+};
+
+export type apiPublicEnumListingPriceResponse = tApiPublicEnumListingPriceResponse[keyof tApiPublicEnumListingPriceResponse];
+
+export type tApiPublicEnumListingWarrantyRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/listing-warranty';
+};
+
+export type tApiPublicEnumListingWarrantyResponse = {
+    /**
+     * ListingWarranty enum
+     */
+    200: Array<tListingWarrantyEnum>;
+};
+
+export type apiPublicEnumListingWarrantyResponse = tApiPublicEnumListingWarrantyResponse[keyof tApiPublicEnumListingWarrantyResponse];
+
+export type tApiPublicEnumThumbRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/thumb';
+};
+
+export type tApiPublicEnumThumbResponse = {
+    /**
+     * Thumb enum
+     */
+    200: Array<tThumbEnum>;
+};
+
+export type apiPublicEnumThumbResponse = tApiPublicEnumThumbResponse[keyof tApiPublicEnumThumbResponse];
+
+export type tApiPublicEnumTransactionSideRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/transaction-side';
+};
+
+export type tApiPublicEnumTransactionSideResponse = {
+    /**
+     * TransactionSide enum
+     */
+    200: Array<tTransactionSideEnum>;
+};
+
+export type apiPublicEnumTransactionSideResponse = tApiPublicEnumTransactionSideResponse[keyof tApiPublicEnumTransactionSideResponse];
+
+export type tApiPublicEnumTransactionStatusRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/transaction-status';
+};
+
+export type tApiPublicEnumTransactionStatusResponse = {
+    /**
+     * TransactionStatus enum
+     */
+    200: Array<tTransactionStatusEnum>;
+};
+
+export type apiPublicEnumTransactionStatusResponse = tApiPublicEnumTransactionStatusResponse[keyof tApiPublicEnumTransactionStatusResponse];
+
+export type tApiPublicEnumUserEventScopeRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/user-event-scope';
+};
+
+export type tApiPublicEnumUserEventScopeResponse = {
+    /**
+     * UserEventScope enum
+     */
+    200: Array<tUserEventScopeEnum>;
+};
+
+export type apiPublicEnumUserEventScopeResponse = tApiPublicEnumUserEventScopeResponse[keyof tApiPublicEnumUserEventScopeResponse];
+
+export type tApiPublicEnumUserSideRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/user-side';
+};
+
+export type tApiPublicEnumUserSideResponse = {
+    /**
+     * UserSide enum
+     */
+    200: Array<tUserSideEnum>;
+};
+
+export type apiPublicEnumUserSideResponse = tApiPublicEnumUserSideResponse[keyof tApiPublicEnumUserSideResponse];
 
 export type tApiGithubHistoryRequest = {
     body?: never;

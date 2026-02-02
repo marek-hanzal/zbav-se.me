@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiGithubHistoryErrors, apiJanitorCleanupErrors, apiSeedErrors, tApiCronDay0Request, tApiCronDay0Response, tApiCronDay12Request, tApiCronDay12Response, tApiCronDay16Request, tApiCronDay16Response, tApiCronDay20Request, tApiCronDay20Response, tApiCronDay4Request, tApiCronDay4Response, tApiCronDay8Request, tApiCronDay8Response, tApiCronHourlyRequest, tApiCronHourlyResponse, tApiCronMonthlyRequest, tApiCronMonthlyResponse, tApiGithubHistoryRequest, tApiGithubHistoryResponse, tApiHealthRequest, tApiHealthResponse, tApiJanitorCleanupRequest, tApiJanitorCleanupResponse, tApiMigrationRunRequest, tApiMigrationRunResponse, tApiSeedRequest, tApiSeedResponse } from './types.gen';
-import { zApiCronDay0Data, zApiCronDay0Response, zApiCronDay12Data, zApiCronDay12Response, zApiCronDay16Data, zApiCronDay16Response, zApiCronDay20Data, zApiCronDay20Response, zApiCronDay4Data, zApiCronDay4Response, zApiCronDay8Data, zApiCronDay8Response, zApiCronHourlyData, zApiCronHourlyResponse, zApiCronMonthlyData, zApiCronMonthlyResponse, zApiGithubHistoryData, zApiGithubHistoryResponse, zApiHealthData, zApiHealthResponse, zApiJanitorCleanupData, zApiJanitorCleanupResponse, zApiMigrationRunData, zApiMigrationRunResponse, zApiSeedData } from './zod.gen';
+import type { apiGithubHistoryErrors, apiJanitorCleanupErrors, apiSeedErrors, tApiCronDay0Request, tApiCronDay0Response, tApiCronDay12Request, tApiCronDay12Response, tApiCronDay16Request, tApiCronDay16Response, tApiCronDay20Request, tApiCronDay20Response, tApiCronDay4Request, tApiCronDay4Response, tApiCronDay8Request, tApiCronDay8Response, tApiCronHourlyRequest, tApiCronHourlyResponse, tApiCronMonthlyRequest, tApiCronMonthlyResponse, tApiGithubHistoryRequest, tApiGithubHistoryResponse, tApiHealthRequest, tApiHealthResponse, tApiJanitorCleanupRequest, tApiJanitorCleanupResponse, tApiMigrationRunRequest, tApiMigrationRunResponse, tApiPublicEnumListingDeliveryRequest, tApiPublicEnumListingDeliveryResponse, tApiPublicEnumListingEventRequest, tApiPublicEnumListingEventResponse, tApiPublicEnumListingPriceRequest, tApiPublicEnumListingPriceResponse, tApiPublicEnumListingWarrantyRequest, tApiPublicEnumListingWarrantyResponse, tApiPublicEnumThumbRequest, tApiPublicEnumThumbResponse, tApiPublicEnumTransactionSideRequest, tApiPublicEnumTransactionSideResponse, tApiPublicEnumTransactionStatusRequest, tApiPublicEnumTransactionStatusResponse, tApiPublicEnumUserEventScopeRequest, tApiPublicEnumUserEventScopeResponse, tApiPublicEnumUserSideRequest, tApiPublicEnumUserSideResponse, tApiSeedRequest, tApiSeedResponse } from './types.gen';
+import { zApiCronDay0Data, zApiCronDay0Response, zApiCronDay12Data, zApiCronDay12Response, zApiCronDay16Data, zApiCronDay16Response, zApiCronDay20Data, zApiCronDay20Response, zApiCronDay4Data, zApiCronDay4Response, zApiCronDay8Data, zApiCronDay8Response, zApiCronHourlyData, zApiCronHourlyResponse, zApiCronMonthlyData, zApiCronMonthlyResponse, zApiGithubHistoryData, zApiGithubHistoryResponse, zApiHealthData, zApiHealthResponse, zApiJanitorCleanupData, zApiJanitorCleanupResponse, zApiMigrationRunData, zApiMigrationRunResponse, zApiPublicEnumListingDeliveryData, zApiPublicEnumListingDeliveryResponse, zApiPublicEnumListingEventData, zApiPublicEnumListingEventResponse, zApiPublicEnumListingPriceData, zApiPublicEnumListingPriceResponse, zApiPublicEnumListingWarrantyData, zApiPublicEnumListingWarrantyResponse, zApiPublicEnumThumbData, zApiPublicEnumThumbResponse, zApiPublicEnumTransactionSideData, zApiPublicEnumTransactionSideResponse, zApiPublicEnumTransactionStatusData, zApiPublicEnumTransactionStatusResponse, zApiPublicEnumUserEventScopeData, zApiPublicEnumUserEventScopeResponse, zApiPublicEnumUserSideData, zApiPublicEnumUserSideResponse, zApiSeedData } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -104,6 +104,105 @@ export const apiCronDay20 = <ThrowOnError extends boolean = false>(options?: Opt
     responseType: 'json',
     responseValidator: async (data) => await zApiCronDay20Response.parseAsync(data),
     url: '/api/public/cron/day-20',
+    ...options
+});
+
+/**
+ * Returns ListingDelivery enum values
+ */
+export const apiPublicEnumListingDelivery = <ThrowOnError extends boolean = false>(options?: Options<tApiPublicEnumListingDeliveryRequest, ThrowOnError>) => (options?.client ?? client).get<tApiPublicEnumListingDeliveryResponse, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiPublicEnumListingDeliveryData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiPublicEnumListingDeliveryResponse.parseAsync(data),
+    url: '/api/public/enum/listing-delivery',
+    ...options
+});
+
+/**
+ * Returns ListingEvent enum values
+ */
+export const apiPublicEnumListingEvent = <ThrowOnError extends boolean = false>(options?: Options<tApiPublicEnumListingEventRequest, ThrowOnError>) => (options?.client ?? client).get<tApiPublicEnumListingEventResponse, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiPublicEnumListingEventData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiPublicEnumListingEventResponse.parseAsync(data),
+    url: '/api/public/enum/listing-event',
+    ...options
+});
+
+/**
+ * Returns ListingPrice enum values
+ */
+export const apiPublicEnumListingPrice = <ThrowOnError extends boolean = false>(options?: Options<tApiPublicEnumListingPriceRequest, ThrowOnError>) => (options?.client ?? client).get<tApiPublicEnumListingPriceResponse, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiPublicEnumListingPriceData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiPublicEnumListingPriceResponse.parseAsync(data),
+    url: '/api/public/enum/listing-price',
+    ...options
+});
+
+/**
+ * Returns ListingWarranty enum values
+ */
+export const apiPublicEnumListingWarranty = <ThrowOnError extends boolean = false>(options?: Options<tApiPublicEnumListingWarrantyRequest, ThrowOnError>) => (options?.client ?? client).get<tApiPublicEnumListingWarrantyResponse, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiPublicEnumListingWarrantyData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiPublicEnumListingWarrantyResponse.parseAsync(data),
+    url: '/api/public/enum/listing-warranty',
+    ...options
+});
+
+/**
+ * Returns Thumb enum values
+ */
+export const apiPublicEnumThumb = <ThrowOnError extends boolean = false>(options?: Options<tApiPublicEnumThumbRequest, ThrowOnError>) => (options?.client ?? client).get<tApiPublicEnumThumbResponse, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiPublicEnumThumbData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiPublicEnumThumbResponse.parseAsync(data),
+    url: '/api/public/enum/thumb',
+    ...options
+});
+
+/**
+ * Returns TransactionSide enum values
+ */
+export const apiPublicEnumTransactionSide = <ThrowOnError extends boolean = false>(options?: Options<tApiPublicEnumTransactionSideRequest, ThrowOnError>) => (options?.client ?? client).get<tApiPublicEnumTransactionSideResponse, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiPublicEnumTransactionSideData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiPublicEnumTransactionSideResponse.parseAsync(data),
+    url: '/api/public/enum/transaction-side',
+    ...options
+});
+
+/**
+ * Returns TransactionStatus enum values
+ */
+export const apiPublicEnumTransactionStatus = <ThrowOnError extends boolean = false>(options?: Options<tApiPublicEnumTransactionStatusRequest, ThrowOnError>) => (options?.client ?? client).get<tApiPublicEnumTransactionStatusResponse, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiPublicEnumTransactionStatusData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiPublicEnumTransactionStatusResponse.parseAsync(data),
+    url: '/api/public/enum/transaction-status',
+    ...options
+});
+
+/**
+ * Returns UserEventScope enum values
+ */
+export const apiPublicEnumUserEventScope = <ThrowOnError extends boolean = false>(options?: Options<tApiPublicEnumUserEventScopeRequest, ThrowOnError>) => (options?.client ?? client).get<tApiPublicEnumUserEventScopeResponse, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiPublicEnumUserEventScopeData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiPublicEnumUserEventScopeResponse.parseAsync(data),
+    url: '/api/public/enum/user-event-scope',
+    ...options
+});
+
+/**
+ * Returns UserSide enum values
+ */
+export const apiPublicEnumUserSide = <ThrowOnError extends boolean = false>(options?: Options<tApiPublicEnumUserSideRequest, ThrowOnError>) => (options?.client ?? client).get<tApiPublicEnumUserSideResponse, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiPublicEnumUserSideData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiPublicEnumUserSideResponse.parseAsync(data),
+    url: '/api/public/enum/user-side',
     ...options
 });
 

@@ -25,6 +25,99 @@ export const sNotice = {
     ]
 } as const;
 
+export const sListingDeliveryEnum = {
+    type: 'string',
+    enum: [
+        'personal',
+        'post',
+        'package',
+        'other'
+    ]
+} as const;
+
+export const sListingEventEnum = {
+    type: 'string',
+    enum: [
+        'impression',
+        'view',
+        'ignore',
+        'unignore',
+        'flag',
+        'unflag',
+        'transaction',
+        'favourite',
+        'unfavourite',
+        'like',
+        'dislike'
+    ]
+} as const;
+
+export const sListingPriceEnum = {
+    type: 'string',
+    enum: [
+        'closed',
+        'open'
+    ]
+} as const;
+
+export const sListingWarrantyEnum = {
+    type: 'string',
+    enum: [
+        'warranty',
+        'no-warranty',
+        'custom'
+    ]
+} as const;
+
+export const sThumbEnum = {
+    type: 'string',
+    enum: [
+        'like',
+        'dislike'
+    ]
+} as const;
+
+export const sTransactionSideEnum = {
+    type: 'string',
+    enum: [
+        'seller',
+        'buyer',
+        'transaction',
+        'system',
+        'unknown'
+    ]
+} as const;
+
+export const sTransactionStatusEnum = {
+    type: 'string',
+    enum: [
+        'pending',
+        'open',
+        'resolved',
+        'dispute',
+        'rejected',
+        'expired',
+        'success',
+        'closed'
+    ]
+} as const;
+
+export const sUserEventScopeEnum = {
+    type: 'string',
+    enum: [
+        'user',
+        'foreign'
+    ]
+} as const;
+
+export const sUserSideEnum = {
+    type: 'string',
+    enum: [
+        'seller',
+        'buyer'
+    ]
+} as const;
+
 export const sGitHubHistory = {
     type: 'object',
     properties: {
