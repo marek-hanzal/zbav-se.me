@@ -6,7 +6,7 @@ import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
-import { AgeSelection } from "~/app/age/ui/AgeSelection";
+import { AgeSelection } from "~/app/@common/age/ui/AgeSelection";
 import { SaveControl } from "~/app/control/SaveControl";
 
 export namespace AgePatch {
