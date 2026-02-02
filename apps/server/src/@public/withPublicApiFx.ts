@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { withAuthApiFx } from "~/@public/auth/withAuthApiFx";
 import { withCorsApiFx } from "~/@public/cors/withCorsApiFx";
 import { withCronApiFx } from "~/@public/cron/withCronApiFx";
+import { withEnumApiFx } from "~/@public/enum/withEnumApiFx";
 import { withGithubApiFx } from "~/@public/github/withGithubApiFx";
 import { withHealthApiFx } from "~/@public/health/withHealthApiFx";
 import { withJanitorApiFx } from "~/@public/janitor/withJanitorApiFx";
@@ -25,6 +26,7 @@ export const withPublicApiFx = Effect.fn("withPublicApiFx")(function* () {
 		withAuthApiFx(),
 		withCorsApiFx(),
 		withCronApiFx(),
+		withEnumApiFx(),
 		withGithubApiFx(),
 		withHealthApiFx(),
 		withJanitorApiFx(),
