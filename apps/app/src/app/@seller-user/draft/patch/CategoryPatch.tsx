@@ -6,8 +6,8 @@ import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/seller-user/dra
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { CategorySelect } from "~/app/@session/category/ui/CategorySelect";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { CategorySelect } from "~/app/@session/category/ui/CategorySelect";
 
 export namespace CategoryPatch {
 	export interface Props extends TitleContainer.Props {

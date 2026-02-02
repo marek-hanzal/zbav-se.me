@@ -5,8 +5,8 @@ import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
-import { CategorySelect } from "~/app/@session/category/ui/CategorySelect";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { CategorySelect } from "~/app/@session/category/ui/CategorySelect";
 
 export namespace CategoryPatch {
 	export interface Props extends Container.Props {

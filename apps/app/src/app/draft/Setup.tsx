@@ -1,5 +1,5 @@
 import { useLocale } from "@use-pico/client/hook";
-import { SaveIcon } from "@use-pico/client/icon";
+import { EditIcon, Icon, SaveIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
@@ -8,6 +8,9 @@ import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
+import { AgeValue } from "~/app/@common/age/ui/AgeValue";
+import { CreateListingButton } from "~/app/@seller-user/draft/button/CreateListingButton";
+import { DeleteButton } from "~/app/@seller-user/draft/button/DeleteButton";
 import { AgePatch } from "~/app/@seller-user/draft/patch/AgePatch";
 import { CategoryPatch } from "~/app/@seller-user/draft/patch/CategoryPatch";
 import { ConditionPatch } from "~/app/@seller-user/draft/patch/ConditionPatch";
@@ -22,9 +25,6 @@ import { PriceTypePatch } from "~/app/@seller-user/draft/patch/PriceTypePatch";
 import { ProsPatch } from "~/app/@seller-user/draft/patch/ProsPatch";
 import { TitlePatch } from "~/app/@seller-user/draft/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/@seller-user/draft/patch/WarrantyPatch";
-import { CreateListingButton } from "~/app/draft/button/CreateListingButton";
-import { DeleteButton } from "~/app/draft/button/DeleteButton";
-import { AgeValue } from "~/app/draft/value/AgeValue";
 import { CategoryValue } from "~/app/draft/value/CategoryValue";
 import { ConditionValue } from "~/app/draft/value/ConditionValue";
 import { ConsLabel } from "~/app/draft/value/ConsLabel";
@@ -202,7 +202,15 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 								/>
 
 								<AgeValue
-									draft={draft}
+									age={draft.age}
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
 									onClick={() => {
 										setView("age");
 									}}

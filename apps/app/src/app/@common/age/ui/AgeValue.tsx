@@ -1,34 +1,25 @@
-import { EditIcon, Icon } from "@use-pico/client/icon";
 import { LabelValue } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
 
 export namespace AgeValue {
 	export interface Props extends Omit<LabelValue.Props, "textValue"> {
-		draft: tDraft;
+		age: number | null | undefined;
 	}
 }
 
-export const AgeValue: FC<AgeValue.Props> = ({ draft, ...props }) => {
+export const AgeValue: FC<AgeValue.Props> = ({ age, ...props }) => {
+	const hasAge = age != null;
 	return (
 		<LabelValue
 			data-ui={"AgeValue[LabelValue]"}
 			wrapperProps={{
 				ui: {
-					tone: draft.age ? "neutral" : "secondary",
+					tone: hasAge ? "neutral" : "secondary",
 				},
 			}}
-			action={
-				<Icon
-					icon={EditIcon}
-					ui={{
-						text: "xl",
-					}}
-				/>
-			}
 			textLabel={translator.text("Listing age (label)")}
-			textValue={draft.age ? translator.text(`Condition - Age [${draft.age}] (hint)`) : null}
+			textValue={hasAge ? translator.text(`Condition - Age [${age}] (hint)`) : null}
 			textEmpty={translator.text("Age not selected")}
 			textHint={translator.text("Listing age (hint)")}
 			{...props}

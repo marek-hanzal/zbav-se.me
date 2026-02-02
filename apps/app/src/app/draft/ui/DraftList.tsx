@@ -5,7 +5,7 @@ import {
 	withDraftFetchQuery,
 } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { FC } from "react";
-import { CreateButton } from "~/app/draft/button/CreateButton";
+import { CreateButton } from "~/app/@seller-user/draft/button/CreateButton";
 import { DraftItem } from "./DraftItem";
 
 export namespace DraftList {
