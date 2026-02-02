@@ -3,7 +3,7 @@ import { useLocale } from "@use-pico/client/hook";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { feedCreateDefault } from "~/app/feed/service/feedCreateDefault";
+import { feedCreateDefault } from "~/app/@buyer-user/feed/service/feedCreateDefault";
 import { List } from "~/app/feed/ui/List";
 
 export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
