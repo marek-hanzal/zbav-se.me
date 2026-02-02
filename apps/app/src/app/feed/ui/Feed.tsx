@@ -5,11 +5,11 @@ import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import type { FC } from "react";
+import { AgeValueList } from "~/app/@common/age/ui/AgeValueList";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { CategoryValueList } from "~/app/@session/category/ui/CategoryValueList";
 import { TitleValue } from "~/app/feed/ui/value/TitleValue";
 import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
-import { AgeValue } from "./value/AgeValue";
 import { ConditionValue } from "./value/ConditionValue";
 import { DeliveryValue } from "./value/DeliveryValue";
 import { NameValue } from "./value/NameValue";
@@ -26,7 +26,7 @@ export namespace Feed {
 		range?: Partial<RangeValue.Props>;
 		sort?: Partial<SortValue.Props>;
 		condition?: Partial<ConditionValue.Props>;
-		age?: Partial<AgeValue.Props>;
+		age?: Partial<AgeValueList.Props>;
 		delivery?: Partial<DeliveryValue.Props>;
 		warranty?: Partial<WarrantyValue.Props>;
 		title?: Partial<TitleValue.Props>;
@@ -154,8 +154,16 @@ export const Feed: FC<Feed.Props> = ({
 				{...values?.condition}
 			/>
 
-			<AgeValue
-				feed={feed}
+			<AgeValueList
+				ageIn={feed.query?.filter?.ageIn ?? []}
+				action={
+					<Icon
+						icon={EditIcon}
+						ui={{
+							text: "xl",
+						}}
+					/>
+				}
 				{...values?.age}
 			/>
 

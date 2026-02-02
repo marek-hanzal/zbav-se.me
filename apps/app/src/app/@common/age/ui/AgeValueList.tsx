@@ -1,11 +1,9 @@
-import { EditIcon, Icon } from "@use-pico/client/icon";
 import { ValueList } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
 
-export namespace AgeValue {
+export namespace AgeValueList {
 	export interface Props
 		extends Omit<
 			ValueList.PropsEx<{
@@ -14,16 +12,14 @@ export namespace AgeValue {
 			}>,
 			"items" | "renderFn"
 		> {
-		feed: tFeed;
+		ageIn: number[];
 	}
 }
 
-export const AgeValue: FC<AgeValue.Props> = ({ feed, ...props }) => {
-	const ageIn = feed.query?.filter?.ageIn ?? [];
-
+export const AgeValueList: FC<AgeValueList.Props> = ({ ageIn, ...props }) => {
 	return (
 		<ValueList
-			data-ui={"AgeValue[ValueList]"}
+			data-ui={"AgeValueList[ValueList]"}
 			textLabel={translator.text("Feed age (label)")}
 			textEmpty={translator.text("Feed age not selected")}
 			textHint={translator.text("Feed age (hint)")}
@@ -32,14 +28,6 @@ export const AgeValue: FC<AgeValue.Props> = ({ feed, ...props }) => {
 				age: String(item),
 			}))}
 			renderFn={(item) => <Tx label={`Condition - Age [${item.age}] (hint)`} />}
-			action={
-				<Icon
-					icon={EditIcon}
-					ui={{
-						text: "xl",
-					}}
-				/>
-			}
 			wrapperProps={{
 				ui:
 					ageIn.length > 0
