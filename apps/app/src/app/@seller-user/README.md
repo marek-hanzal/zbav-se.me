@@ -1,0 +1,56 @@
+# @seller-user
+
+Seller User – private seller operations requiring user context.
+
+## Overview
+
+This domain contains components and logic for seller operations that work with **user-private data**: drafts, listing creation, and the seller side of transactions.
+
+Maps to server API: `/api/seller-user/*`.
+
+## What's Here (scope)
+
+- **Draft** – list drafts, create, edit (autosave), delete, publish as listing
+- **Draft Gallery** – photos for draft, uploads
+- **Listing Create** – publish draft as live listing
+- **Transaction (seller)** – seller's transaction list, detail, accept/reject
+- **Transaction Listing** – listings linked to transactions
+- **Transaction Status** – accept (pending → open), resolve (listing → sold)
+- **User Events** – seller metrics (activity, reaction time, rejection rate, resolved rate, load, score)
+
+## Rules (critical)
+
+Same dependency rules as server: domain boundaries and package usage must be respected.
+
+### Imports from other app domains
+
+- **May import from**: `@common`, `@session`, `@seller-session`, `@user`.
+- **Must not import from**: `@buyer-user`, `@buyer-session`, `@seller-user` (self), `@public`.
+
+### SDK import rules
+
+SDK is organized by the same domains as the server (and UI). Same rules as domain imports above.
+
+- **May use SDK for**: `seller-user`, `session`, `seller-session`, `user` (i.e. `/api/seller-user/*`, `/api/session/*`, `/api/seller-session/*`, `/api/user/*`).
+- **Must not use SDK for**: `buyer-user`, `buyer-session`, `public` (different or unauthenticated domain).
+
+### Context
+
+- **Requires**: authentication + user context (user-private data).
+- Top-level seller domain – may use all seller-related and general session/user resources.
+
+## Use Cases
+
+- Creating and editing listing drafts.
+- Publishing listings from drafts.
+- Managing incoming buyer requests.
+- Accepting/rejecting transactions.
+- Marking completed sales (resolve).
+- Viewing seller metrics.
+
+## Related Domains
+
+- `@common` – shared utilities.
+- `@session` – categories, location, transaction-status, upload/S3.
+- `@seller-session` – seller info, user events (seller).
+- `@user` – gallery, messages, uploads.
