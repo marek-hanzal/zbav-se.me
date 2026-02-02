@@ -1,37 +1,26 @@
-import { EditIcon, Icon } from "@use-pico/client/icon";
 import { LabelValue } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
+import type { tListingWarrantyEnum } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
 
 export namespace WarrantyValue {
 	export interface Props extends Omit<LabelValue.Props, "textValue"> {
-		draft: tDraft;
+		warranty: tListingWarrantyEnum | null | undefined;
 	}
 }
 
-export const WarrantyValue: FC<WarrantyValue.Props> = ({ draft, ...props }) => {
+export const WarrantyValue: FC<WarrantyValue.Props> = ({ warranty, ...props }) => {
 	return (
 		<LabelValue
 			data-ui={"WarrantyValue[LabelValue]"}
 			wrapperProps={{
 				ui: {
-					tone: draft.warranty ? "neutral" : "secondary",
+					tone: warranty ? "neutral" : "secondary",
 				},
 			}}
-			action={
-				<Icon
-					icon={EditIcon}
-					ui={{
-						text: "xl",
-					}}
-				/>
-			}
 			textLabel={translator.text("Listing warranty (label)")}
-			textValue={
-				draft.warranty ? <Tx label={`Listing warranty - ${draft.warranty}`} /> : null
-			}
+			textValue={warranty ? <Tx label={`Listing warranty - ${warranty}`} /> : null}
 			textEmpty={translator.text("Warranty not selected")}
 			textHint={translator.text("Listing warranty (hint)")}
 			{...props}

@@ -210,7 +210,7 @@ export type tListingPriceEnum = typeof tListingPriceEnum[keyof typeof tListingPr
 /**
  * List of available currencies
  */
-export const tCurrencyListEnum = {
+export const tCurrencyEnum = {
     CZK: 'CZK',
     EUR: 'EUR',
     USD: 'USD',
@@ -223,7 +223,7 @@ export const tCurrencyListEnum = {
 /**
  * List of available currencies
  */
-export type tCurrencyListEnum = typeof tCurrencyListEnum[keyof typeof tCurrencyListEnum];
+export type tCurrencyEnum = typeof tCurrencyEnum[keyof typeof tCurrencyEnum];
 
 /**
  * Delivery method for the listing
@@ -440,7 +440,7 @@ export type tDraft = {
     /**
      * Currency of the draft
      */
-    currency: tCurrencyListEnum | null;
+    currency: tCurrencyEnum | null;
     /**
      * Condition of the item (0-based index)
      */
@@ -665,7 +665,7 @@ export type tListing = {
      */
     price: number;
     priceType: tListingPriceEnum;
-    currency: tCurrencyListEnum;
+    currency: tCurrencyEnum;
     /**
      * Condition of the item (0-based index)
      */
@@ -969,7 +969,7 @@ export type tTransaction = {
      */
     price: number;
     priceType: tListingPriceEnum;
-    currency: tCurrencyListEnum;
+    currency: tCurrencyEnum;
     location: tLocation;
 };
 

@@ -8,7 +8,7 @@ import {
 	withListingFetchQuery,
 } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import type { FC } from "react";
-import { CreateButton } from "~/app/@seller-user/draft/button/CreateButton";
+import { CreateButton } from "~/app/@seller-user/draft/ui/button/CreateButton";
 import { Hero } from "~/app/listing/ui/Hero";
 
 export namespace Content {

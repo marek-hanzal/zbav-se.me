@@ -30,6 +30,23 @@ export const zNotice = z.object({
 export type zNotice = z.infer<typeof zNotice>;
 
 /**
+ * List of available currencies
+ */
+export const zCurrencyEnum = z.enum([
+    'CZK',
+    'EUR',
+    'USD',
+    'GBP',
+    'PLN',
+    'HUF',
+    'CHF'
+]).register(z.globalRegistry, {
+    description: 'List of available currencies'
+});
+
+export type zCurrencyEnum = z.infer<typeof zCurrencyEnum>;
+
+/**
  * Delivery method for the listing
  */
 export const zListingDeliveryEnum = z.enum([
@@ -365,6 +382,23 @@ export const zApiCronDay20Response = z.object({
 });
 
 export type zapiCronDay20Response = z.infer<typeof zApiCronDay20Response>;
+
+export const zApiPublicEnumCurrencyData = z.object({
+    body: z.optional(z.never()),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiPublicEnumCurrencyRequest = z.infer<typeof zApiPublicEnumCurrencyData>;
+
+/**
+ * Currency enum
+ */
+export const zApiPublicEnumCurrencyResponse = z.array(zCurrencyEnum).register(z.globalRegistry, {
+    description: 'Currency enum'
+});
+
+export type zapiPublicEnumCurrencyResponse = z.infer<typeof zApiPublicEnumCurrencyResponse>;
 
 export const zApiPublicEnumListingDeliveryData = z.object({
     body: z.optional(z.never()),

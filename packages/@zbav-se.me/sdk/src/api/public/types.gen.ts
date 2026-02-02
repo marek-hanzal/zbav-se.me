@@ -30,6 +30,24 @@ export type tNotice = {
 };
 
 /**
+ * List of available currencies
+ */
+export const tCurrencyEnum = {
+    CZK: 'CZK',
+    EUR: 'EUR',
+    USD: 'USD',
+    GBP: 'GBP',
+    PLN: 'PLN',
+    HUF: 'HUF',
+    CHF: 'CHF'
+} as const;
+
+/**
+ * List of available currencies
+ */
+export type tCurrencyEnum = typeof tCurrencyEnum[keyof typeof tCurrencyEnum];
+
+/**
  * Delivery method for the listing
  */
 export const tListingDeliveryEnum = {
@@ -374,6 +392,22 @@ export type tApiCronDay20Response = {
 };
 
 export type apiCronDay20Response = tApiCronDay20Response[keyof tApiCronDay20Response];
+
+export type tApiPublicEnumCurrencyRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/currency';
+};
+
+export type tApiPublicEnumCurrencyResponse = {
+    /**
+     * Currency enum
+     */
+    200: Array<tCurrencyEnum>;
+};
+
+export type apiPublicEnumCurrencyResponse = tApiPublicEnumCurrencyResponse[keyof tApiPublicEnumCurrencyResponse];
 
 export type tApiPublicEnumListingDeliveryRequest = {
     body?: never;

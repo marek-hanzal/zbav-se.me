@@ -239,7 +239,7 @@ export const sListingPriceEnum = {
     ]
 } as const;
 
-export const sCurrencyListEnum = {
+export const sCurrencyEnum = {
     type: 'string',
     enum: [
         'CZK',
@@ -555,7 +555,7 @@ export const sDraft = {
         currency: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/CurrencyListEnum'
+                    $ref: '#/components/schemas/CurrencyEnum'
                 },
                 {
                     type: 'null'
@@ -1131,7 +1131,7 @@ export const sListing = {
             $ref: '#/components/schemas/ListingPriceEnum'
         },
         currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
+            $ref: '#/components/schemas/CurrencyEnum'
         },
         condition: {
             anyOf: [
@@ -1663,7 +1663,7 @@ export const sTransaction = {
             $ref: '#/components/schemas/ListingPriceEnum'
         },
         currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
+            $ref: '#/components/schemas/CurrencyEnum'
         },
         location: {
             $ref: '#/components/schemas/Location'

@@ -226,7 +226,7 @@ export const sListingPriceEnum = {
     ]
 } as const;
 
-export const sCurrencyListEnum = {
+export const sCurrencyEnum = {
     type: 'string',
     enum: [
         'CZK',
@@ -516,7 +516,7 @@ export const sListing = {
             $ref: '#/components/schemas/ListingPriceEnum'
         },
         currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
+            $ref: '#/components/schemas/CurrencyEnum'
         },
         condition: {
             anyOf: [
@@ -789,7 +789,7 @@ export const sCategoryIdIn = {
 export const sCurrencyIn = {
     type: 'array',
     items: {
-        $ref: '#/components/schemas/CurrencyListEnum'
+        $ref: '#/components/schemas/CurrencyEnum'
     }
 } as const;
 
@@ -879,7 +879,7 @@ export const sListingFilter = {
             $ref: '#/components/schemas/CategoryIdIn'
         },
         currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
+            $ref: '#/components/schemas/CurrencyEnum'
         },
         currencyIn: {
             $ref: '#/components/schemas/CurrencyIn'
@@ -994,7 +994,7 @@ export const sListingWhere = {
             $ref: '#/components/schemas/CategoryIdIn'
         },
         currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
+            $ref: '#/components/schemas/CurrencyEnum'
         },
         currencyIn: {
             $ref: '#/components/schemas/CurrencyIn'
@@ -2417,7 +2417,7 @@ export const sTransaction = {
             $ref: '#/components/schemas/ListingPriceEnum'
         },
         currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
+            $ref: '#/components/schemas/CurrencyEnum'
         },
         location: {
             $ref: '#/components/schemas/Location'

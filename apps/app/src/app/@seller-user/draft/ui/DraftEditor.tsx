@@ -14,32 +14,32 @@ import { ConditionValue } from "~/app/@common/condition/ui/ConditionValue";
 import { ConsValueList } from "~/app/@common/cons/ui/ConsValueList";
 import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
 import { DescriptionValue } from "~/app/@common/description/ui/DescriptionValue";
-import { CreateListingButton } from "~/app/@seller-user/draft/button/CreateListingButton";
-import { DeleteButton } from "~/app/@seller-user/draft/button/DeleteButton";
-import { AgePatch } from "~/app/@seller-user/draft/patch/AgePatch";
-import { CategoryPatch } from "~/app/@seller-user/draft/patch/CategoryPatch";
-import { ConditionPatch } from "~/app/@seller-user/draft/patch/ConditionPatch";
-import { ConsPatch } from "~/app/@seller-user/draft/patch/ConsPatch";
-import { DeliveryPatch } from "~/app/@seller-user/draft/patch/DeliveryPatch";
-import { DescriptionPatch } from "~/app/@seller-user/draft/patch/DescriptionPatch";
-import { ExpireAtPatch } from "~/app/@seller-user/draft/patch/ExpireAtPatch";
-import { GalleryPatch } from "~/app/@seller-user/draft/patch/GalleryPatch";
-import { LocationPatch } from "~/app/@seller-user/draft/patch/LocationPatch";
-import { PricePatch } from "~/app/@seller-user/draft/patch/PricePatch";
-import { PriceTypePatch } from "~/app/@seller-user/draft/patch/PriceTypePatch";
-import { ProsPatch } from "~/app/@seller-user/draft/patch/ProsPatch";
-import { TitlePatch } from "~/app/@seller-user/draft/patch/TitlePatch";
-import { WarrantyPatch } from "~/app/@seller-user/draft/patch/WarrantyPatch";
 import { ExpireAtValue } from "~/app/@common/expire-at/ui/ExpireAtValue";
-import { LocationValue } from "~/app/draft/value/LocationValue";
-import { PriceTypeValue } from "~/app/draft/value/PriceTypeValue";
-import { PriceValue } from "~/app/draft/value/PriceValue";
-import { ProsLabel } from "~/app/draft/value/ProsLabel";
-import { TitleValue } from "~/app/draft/value/TitleValue";
-import { WarrantyValue } from "~/app/draft/value/WarrantyValue";
+import { LocationValue } from "~/app/@common/location/ui/LocationValue";
+import { PriceValue } from "~/app/@common/price/ui/PriceValue";
+import { PriceTypeValue } from "~/app/@common/price-type/ui/PriceTypeValue";
+import { ProsValueList } from "~/app/@common/pros/ui/ProsValueList";
+import { TitleValue } from "~/app/@common/title/ui/TitleValue";
+import { WarrantyValue } from "~/app/@common/warranty/ui/WarrantyValue";
+import { CreateListingButton } from "~/app/@seller-user/draft/ui/button/CreateListingButton";
+import { DeleteButton } from "~/app/@seller-user/draft/ui/button/DeleteButton";
+import { AgePatch } from "~/app/@seller-user/draft/ui/patch/AgePatch";
+import { CategoryPatch } from "~/app/@seller-user/draft/ui/patch/CategoryPatch";
+import { ConditionPatch } from "~/app/@seller-user/draft/ui/patch/ConditionPatch";
+import { ConsPatch } from "~/app/@seller-user/draft/ui/patch/ConsPatch";
+import { DeliveryPatch } from "~/app/@seller-user/draft/ui/patch/DeliveryPatch";
+import { DescriptionPatch } from "~/app/@seller-user/draft/ui/patch/DescriptionPatch";
+import { ExpireAtPatch } from "~/app/@seller-user/draft/ui/patch/ExpireAtPatch";
+import { GalleryPatch } from "~/app/@seller-user/draft/ui/patch/GalleryPatch";
+import { LocationPatch } from "~/app/@seller-user/draft/ui/patch/LocationPatch";
+import { PricePatch } from "~/app/@seller-user/draft/ui/patch/PricePatch";
+import { PriceTypePatch } from "~/app/@seller-user/draft/ui/patch/PriceTypePatch";
+import { ProsPatch } from "~/app/@seller-user/draft/ui/patch/ProsPatch";
+import { TitlePatch } from "~/app/@seller-user/draft/ui/patch/TitlePatch";
+import { WarrantyPatch } from "~/app/@seller-user/draft/ui/patch/WarrantyPatch";
 import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
 
-export namespace Setup {
+export namespace DraftEditor {
 	export type View =
 		| "default"
 		| "title"
@@ -64,12 +64,12 @@ export namespace Setup {
 	}
 }
 
-export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
+export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete }) => {
 	const locale = useLocale();
-	const [view, setView] = useState<Setup.View>("default");
+	const [view, setView] = useState<DraftEditor.View>("default");
 
 	return (
-		<View<Setup.View, TitleContainer.Props>
+		<View<DraftEditor.View, TitleContainer.Props>
 			state={{
 				value: view,
 				set: setView,
@@ -79,7 +79,7 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 					children: (
 						<TitleContainer textTitle={"Draft edit (title)"}>
 							<Container
-								data-ui={"Setup-[Container.content]"}
+								data-ui={"DraftEditor-[Container.content]"}
 								ui={{
 									flow: "vertical",
 									inner: "default",
@@ -106,7 +106,15 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 								/>
 
 								<TitleValue
-									draft={draft}
+									title={draft.title}
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
 									onClick={() => {
 										setView("title");
 									}}
@@ -120,21 +128,54 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 								/>
 
 								<LocationValue
-									draft={draft}
+									locationId={draft.locationId}
+									textLabel={translator.text("Listing location (label)")}
+									textEmpty={translator.text("Listing location not selected")}
+									textHint={translator.text("Listing location (hint)")}
+									wrapperProps={{
+										ui: {
+											tone: draft.locationId ? "neutral" : "primary",
+										},
+									}}
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
 									onClick={() => {
 										setView("location");
 									}}
 								/>
 
 								<PriceValue
-									draft={draft}
+									price={draft.price}
+									currency={draft.currency}
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
 									onClick={() => {
 										setView("price");
 									}}
 								/>
 
 								<PriceTypeValue
-									draft={draft}
+									priceType={draft.priceType}
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
 									onClick={() => {
 										setView("priceType");
 									}}
@@ -182,8 +223,16 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 									}}
 								/>
 
-								<ProsLabel
-									draft={draft}
+								<ProsValueList
+									pros={draft.pros ?? []}
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
 									onClick={() => {
 										setView("pros");
 									}}
@@ -220,7 +269,15 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 								/>
 
 								<WarrantyValue
-									draft={draft}
+									warranty={draft.warranty}
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
 									onClick={() => {
 										setView("warranty");
 									}}

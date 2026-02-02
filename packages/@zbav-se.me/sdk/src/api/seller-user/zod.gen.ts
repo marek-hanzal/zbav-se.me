@@ -226,7 +226,7 @@ export type zListingPriceEnum = z.infer<typeof zListingPriceEnum>;
 /**
  * List of available currencies
  */
-export const zCurrencyListEnum = z.enum([
+export const zCurrencyEnum = z.enum([
     'CZK',
     'EUR',
     'USD',
@@ -238,7 +238,7 @@ export const zCurrencyListEnum = z.enum([
     description: 'List of available currencies'
 });
 
-export type zCurrencyListEnum = z.infer<typeof zCurrencyListEnum>;
+export type zCurrencyEnum = z.infer<typeof zCurrencyEnum>;
 
 /**
  * Delivery method for the listing
@@ -453,7 +453,7 @@ export const zDraft = z.object({
         z.null()
     ]),
     currency: z.union([
-        zCurrencyListEnum,
+        zCurrencyEnum,
         z.null()
     ]),
     condition: z.union([
@@ -695,7 +695,7 @@ export const zListing = z.object({
         description: 'Price of the listing'
     }),
     priceType: zListingPriceEnum,
-    currency: zCurrencyListEnum,
+    currency: zCurrencyEnum,
     condition: z.union([
         z.number(),
         z.null()
@@ -1003,7 +1003,7 @@ export const zTransaction = z.object({
         description: 'Price of the listing'
     }),
     priceType: zListingPriceEnum,
-    currency: zCurrencyListEnum,
+    currency: zCurrencyEnum,
     location: zLocation
 }).register(z.globalRegistry, {
     description: 'Transaction data'

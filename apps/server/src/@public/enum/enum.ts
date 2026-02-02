@@ -11,9 +11,34 @@ import { TransactionStatusEnumSchema } from "~/database/@enum/TransactionStatusE
 import { UserEventScopeEnumSchema } from "~/database/@enum/UserEventScopeEnumSchema";
 import { UserSideEnumSchema } from "~/database/@enum/UserSideEnumSchema";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { CurrencyEnumSchema } from "~/schema/CurrencyEnumSchema";
 
 export const withEnumEndpointFx = Effect.fn("withEnumEndpointFx")(function* () {
 	const { publicHono } = yield* RoutesContextFx;
+
+	publicHono.openapi(
+		createRoute({
+			method: "get",
+			path: "/enum/currency",
+			description: "Returns Currency enum values",
+			operationId: "apiPublicEnumCurrency",
+			responses: {
+				200: {
+					content: {
+						"application/json": {
+							schema: CurrencyEnumSchema.array(),
+						},
+					},
+					description: "Currency enum",
+				},
+			},
+			security: [],
+			tags: [
+				"Enum",
+			],
+		}),
+		(c) => c.json(keysOf(CurrencyEnumSchema.enum)),
+	);
 
 	publicHono.openapi(
 		createRoute({

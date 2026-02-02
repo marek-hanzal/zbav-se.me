@@ -3,7 +3,7 @@ import { ProsConsSchema } from "~/@common/listing/schema/ProsConsSchema";
 import { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/database/@enum/ListingWarrantyEnumSchema";
-import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
+import { CurrencyEnumSchema } from "~/schema/CurrencyEnumSchema";
 import { VectorSchema } from "~/schema/VectorSchema";
 
 export const ListingTableSchema = z
@@ -23,7 +23,7 @@ export const ListingTableSchema = z
 			description: "Price type of the listing",
 		}),
 		//
-		currency: CurrencyListEnumSchema,
+		currency: CurrencyEnumSchema,
 		//
 		condition: z
 			.union([

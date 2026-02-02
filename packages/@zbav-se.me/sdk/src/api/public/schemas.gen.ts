@@ -25,6 +25,19 @@ export const sNotice = {
     ]
 } as const;
 
+export const sCurrencyEnum = {
+    type: 'string',
+    enum: [
+        'CZK',
+        'EUR',
+        'USD',
+        'GBP',
+        'PLN',
+        'HUF',
+        'CHF'
+    ]
+} as const;
+
 export const sListingDeliveryEnum = {
     type: 'string',
     enum: [

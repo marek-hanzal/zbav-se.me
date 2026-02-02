@@ -194,7 +194,7 @@ export type tListingPriceEnum = typeof tListingPriceEnum[keyof typeof tListingPr
 /**
  * List of available currencies
  */
-export const tCurrencyListEnum = {
+export const tCurrencyEnum = {
     CZK: 'CZK',
     EUR: 'EUR',
     USD: 'USD',
@@ -207,7 +207,7 @@ export const tCurrencyListEnum = {
 /**
  * List of available currencies
  */
-export type tCurrencyListEnum = typeof tCurrencyListEnum[keyof typeof tCurrencyListEnum];
+export type tCurrencyEnum = typeof tCurrencyEnum[keyof typeof tCurrencyEnum];
 
 /**
  * Delivery method for the listing
@@ -414,7 +414,7 @@ export type tListing = {
      */
     price: number;
     priceType: tListingPriceEnum;
-    currency: tCurrencyListEnum;
+    currency: tCurrencyEnum;
     /**
      * Condition of the item (0-based index)
      */
@@ -555,7 +555,7 @@ export type tCategoryIdIn = Array<string>;
 /**
  * This filter matches listings with currency codes in the provided array
  */
-export type tCurrencyIn = Array<tCurrencyListEnum>;
+export type tCurrencyIn = Array<tCurrencyEnum>;
 
 /**
  * ID of the feed
@@ -617,7 +617,7 @@ export type tListingFilter = {
     warrantyIn?: tWarrantyIn;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
-    currency?: tCurrencyListEnum;
+    currency?: tCurrencyEnum;
     currencyIn?: tCurrencyIn;
     /**
      * This filter matches listings that expire before the provided date
@@ -709,7 +709,7 @@ export type tListingWhere = {
     warrantyIn?: tWarrantyIn;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
-    currency?: tCurrencyListEnum;
+    currency?: tCurrencyEnum;
     currencyIn?: tCurrencyIn;
     /**
      * This filter matches listings that expire before the provided date
@@ -1712,7 +1712,7 @@ export type tTransaction = {
      */
     price: number;
     priceType: tListingPriceEnum;
-    currency: tCurrencyListEnum;
+    currency: tCurrencyEnum;
     location: tLocation;
 };
 

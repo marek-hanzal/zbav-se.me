@@ -4,7 +4,7 @@ import { ProsConsSchema } from "~/@common/listing/schema/ProsConsSchema";
 import { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/database/@enum/ListingWarrantyEnumSchema";
-import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
+import { CurrencyEnumSchema } from "~/schema/CurrencyEnumSchema";
 
 export const DraftTableSchema = z
 	.looseObject({
@@ -34,7 +34,7 @@ export const DraftTableSchema = z
 		//
 		currency: z
 			.union([
-				CurrencyListEnumSchema,
+				CurrencyEnumSchema,
 				z.null(),
 			])
 			.openapi({

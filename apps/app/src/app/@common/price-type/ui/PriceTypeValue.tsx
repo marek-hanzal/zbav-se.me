@@ -1,35 +1,27 @@
-import { EditIcon, Icon } from "@use-pico/client/icon";
 import { LabelValue } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
+import type { tListingPriceEnum } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
 
 export namespace PriceTypeValue {
 	export interface Props extends Omit<LabelValue.Props, "textValue"> {
-		draft: tDraft;
+		priceType: tListingPriceEnum | null | undefined;
 	}
 }
 
-export const PriceTypeValue: FC<PriceTypeValue.Props> = ({ draft, ...props }) => {
+export const PriceTypeValue: FC<PriceTypeValue.Props> = ({ priceType, ...props }) => {
+	const hasPriceType = priceType != null;
 	return (
 		<LabelValue
 			data-ui={"PriceTypeValue[LabelValue]"}
 			wrapperProps={{
 				ui: {
-					tone: draft.priceType ? "neutral" : "primary",
+					tone: hasPriceType ? "neutral" : "primary",
 				},
 			}}
-			action={
-				<Icon
-					icon={EditIcon}
-					ui={{
-						text: "xl",
-					}}
-				/>
-			}
 			textLabel={translator.text("Price type (title)")}
-			textValue={draft.priceType ? <Tx label={`Listing price - ${draft.priceType}`} /> : null}
+			textValue={hasPriceType ? <Tx label={`Listing price - ${priceType}`} /> : null}
 			textEmpty={translator.text("Price type not set")}
 			{...props}
 		/>
