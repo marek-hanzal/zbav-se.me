@@ -2,10 +2,10 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedCountQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
-import type { Item } from "~/app/feed/ui/list/Item";
-import { Content } from "./list/Content";
+import { Content } from "./feed-list-container/Content";
+import type { Item } from "./feed-list-container/Item";
 
-export namespace List {
+export namespace FeedListContainer {
 	export interface Props extends Container.Props {
 		query: tFeedQuery;
 		limit?: number;
@@ -14,7 +14,13 @@ export namespace List {
 	}
 }
 
-export const List: FC<List.Props> = ({ query, limit = 10, tools, linkTo, ...props }) => {
+export const FeedListContainer: FC<FeedListContainer.Props> = ({
+	query,
+	limit = 10,
+	tools,
+	linkTo,
+	...props
+}) => {
 	return (
 		<withFeedCountQuery.Suspense
 			data={{}}

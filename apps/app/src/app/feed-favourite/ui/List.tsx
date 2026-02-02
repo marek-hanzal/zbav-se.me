@@ -2,7 +2,7 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedFavouriteCollectionQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
-import { Item } from "~/app/feed/ui/list/Item";
+import { Item } from "~/app/@buyer-user/feed/ui/feed-list-container/Item";
 import { EmptyStatus } from "~/app/feed-favourite/ui/list/EmptyStatus";
 
 export namespace List {
