@@ -1,23 +1,23 @@
 import { EditIcon, Icon } from "@use-pico/client/icon";
 import { LabelValue } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
 
 export namespace ConditionValue {
 	export interface Props extends Omit<LabelValue.Props, "textValue"> {
-		draft: tDraft;
+		condition: number | null | undefined;
 	}
 }
 
-export const ConditionValue: FC<ConditionValue.Props> = ({ draft, ...props }) => {
+export const ConditionValue: FC<ConditionValue.Props> = ({ condition, ...props }) => {
+	const hasCondition = condition != null;
 	return (
 		<LabelValue
 			data-ui={"ConditionValue[LabelValue]"}
 			wrapperProps={{
 				ui: {
-					tone: draft.condition ? "neutral" : "secondary",
+					tone: hasCondition ? "neutral" : "secondary",
 				},
 			}}
 			action={
@@ -30,7 +30,7 @@ export const ConditionValue: FC<ConditionValue.Props> = ({ draft, ...props }) =>
 			}
 			textLabel={translator.text("Listing condition (label)")}
 			textHint={translator.text("Listing condition (hint)")}
-			textValue={draft.condition ? <ConditionIcon condition={draft.condition} /> : null}
+			textValue={hasCondition ? <ConditionIcon condition={condition} /> : null}
 			textEmpty={translator.text("Condition not selected")}
 			{...props}
 		/>

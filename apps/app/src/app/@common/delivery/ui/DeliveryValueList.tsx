@@ -1,45 +1,42 @@
-import { EditIcon, Icon } from "@use-pico/client/icon";
 import { ValueList } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
 
-export namespace DeliveryValue {
-	export interface Props {
-		draft: tDraft;
+export namespace DeliveryValueList {
+	export interface Props
+		extends Omit<
+			ValueList.Props<{
+				id: string;
+				delivery: string;
+			}>,
+			"items" | "renderFn" | "textLabel" | "textEmpty"
+		> {
+		delivery: string[];
 		onClick(): void;
 	}
 }
 
-export const DeliveryValue: FC<DeliveryValue.Props> = ({ draft, onClick }) => {
-	const deliveryItems = (draft.delivery ?? []).map((delivery) => ({
-		id: delivery,
-		delivery,
+export const DeliveryValueList: FC<DeliveryValueList.Props> = ({ delivery, onClick, ...props }) => {
+	const deliveryItems = delivery.map((d) => ({
+		id: d,
+		delivery: d,
 	}));
 
 	return (
 		<ValueList
-			data-ui={"DeliveryValue[ValueList]"}
+			data-ui={"DeliveryValueList[ValueList]"}
 			textLabel={translator.text("Listing delivery (label)")}
 			textEmpty={translator.text("Delivery not selected")}
 			items={deliveryItems}
 			renderFn={(item) => <Tx label={`Listing delivery - ${item.delivery}`} />}
-			action={
-				<Icon
-					icon={EditIcon}
-					onClick={onClick}
-					ui={{
-						text: "xl",
-					}}
-				/>
-			}
 			onClick={onClick}
 			wrapperProps={{
 				ui: {
 					tone: deliveryItems.length > 0 ? "neutral" : "secondary",
 				},
 			}}
+			{...props}
 		/>
 	);
 };

@@ -5,10 +5,10 @@ import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import type { FC } from "react";
-import { CategoryValue } from "~/app/@session/category/ui/CategoryValue";
+import { CategoryValueList } from "~/app/@session/category/ui/CategoryValueList";
 import { TitleValue } from "~/app/feed/ui/value/TitleValue";
 import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
-import { LocationValue } from "~/app/location/ui/LocationValue";
+import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { AgeValue } from "./value/AgeValue";
 import { ConditionValue } from "./value/ConditionValue";
 import { DeliveryValue } from "./value/DeliveryValue";
@@ -21,7 +21,7 @@ export namespace Feed {
 	export interface Value {
 		gallery?: Partial<GalleryValue.Props>;
 		name?: Partial<LabelValue.PropsEx>;
-		category?: Partial<CategoryValue.Props>;
+		category?: Partial<CategoryValueList.Props>;
 		location?: Partial<LabelValue.PropsEx>;
 		range?: Partial<RangeValue.Props>;
 		sort?: Partial<SortValue.Props>;
@@ -108,7 +108,7 @@ export const Feed: FC<Feed.Props> = ({
 				{...values?.name}
 			/>
 
-			<CategoryValue
+			<CategoryValueList
 				categoryIdIn={feed.query?.filter?.categoryIdIn}
 				textLabel={translator.text("Feed category (label)")}
 				textEmpty={translator.text("Feed category not selected")}

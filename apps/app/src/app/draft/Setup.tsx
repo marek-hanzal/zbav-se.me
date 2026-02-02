@@ -9,6 +9,11 @@ import type { tDraft, tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { AgeValue } from "~/app/@common/age/ui/AgeValue";
+import { CategoryValue } from "~/app/@common/category/ui/CategoryValue";
+import { ConditionValue } from "~/app/@common/condition/ui/ConditionValue";
+import { ConsValueList } from "~/app/@common/cons/ui/ConsValueList";
+import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
+import { DescriptionValue } from "~/app/@common/description/ui/DescriptionValue";
 import { CreateListingButton } from "~/app/@seller-user/draft/button/CreateListingButton";
 import { DeleteButton } from "~/app/@seller-user/draft/button/DeleteButton";
 import { AgePatch } from "~/app/@seller-user/draft/patch/AgePatch";
@@ -25,12 +30,7 @@ import { PriceTypePatch } from "~/app/@seller-user/draft/patch/PriceTypePatch";
 import { ProsPatch } from "~/app/@seller-user/draft/patch/ProsPatch";
 import { TitlePatch } from "~/app/@seller-user/draft/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/@seller-user/draft/patch/WarrantyPatch";
-import { CategoryValue } from "~/app/draft/value/CategoryValue";
-import { ConditionValue } from "~/app/draft/value/ConditionValue";
-import { ConsLabel } from "~/app/draft/value/ConsLabel";
-import { DeliveryValue } from "~/app/draft/value/DeliveryValue";
-import { DescriptionValue } from "~/app/draft/value/DescriptionValue";
-import { ExpireAtValue } from "~/app/draft/value/ExpireAtValue";
+import { ExpireAtValue } from "~/app/@common/expire-at/ui/ExpireAtValue";
 import { LocationValue } from "~/app/draft/value/LocationValue";
 import { PriceTypeValue } from "~/app/draft/value/PriceTypeValue";
 import { PriceValue } from "~/app/draft/value/PriceValue";
@@ -113,7 +113,7 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 								/>
 
 								<CategoryValue
-									draft={draft}
+									category={draft.category}
 									onClick={() => {
 										setView("category");
 									}}
@@ -141,7 +141,15 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 								/>
 
 								<ExpireAtValue
-									draft={draft}
+									expiresAt={draft.expiresAt}
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
 									onClick={() => {
 										setView("expireAt");
 									}}
@@ -160,7 +168,15 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 								/>
 
 								<DescriptionValue
-									draft={draft}
+									description={draft.description}
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
 									onClick={() => {
 										setView("description");
 									}}
@@ -173,15 +189,31 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 									}}
 								/>
 
-								<ConsLabel
-									draft={draft}
+								<ConsValueList
+									cons={draft.cons ?? []}
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
 									onClick={() => {
 										setView("cons");
 									}}
 								/>
 
-								<DeliveryValue
-									draft={draft}
+								<DeliveryValueList
+									delivery={draft.delivery ?? []}
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
 									onClick={() => {
 										setView("delivery");
 									}}
@@ -195,7 +227,7 @@ export const Setup: FC<Setup.Props> = ({ draft, onListing, onDelete }) => {
 								/>
 
 								<ConditionValue
-									draft={draft}
+									condition={draft.condition}
 									onClick={() => {
 										setView("condition");
 									}}
