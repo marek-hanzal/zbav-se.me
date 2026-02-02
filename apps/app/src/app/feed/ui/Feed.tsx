@@ -7,11 +7,11 @@ import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed
 import type { FC } from "react";
 import { AgeValueList } from "~/app/@common/age/ui/AgeValueList";
 import { ConditionValueList } from "~/app/@common/condition/ui/ConditionValueList";
+import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { CategoryValueList } from "~/app/@session/category/ui/CategoryValueList";
 import { TitleValue } from "~/app/feed/ui/value/TitleValue";
 import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
-import { DeliveryValue } from "./value/DeliveryValue";
 import { NameValue } from "./value/NameValue";
 import { RangeValue } from "./value/RangeValue";
 import { SortValue } from "./value/SortValue";
@@ -27,7 +27,7 @@ export namespace Feed {
 		sort?: Partial<SortValue.Props>;
 		condition?: Partial<ConditionValueList.Props>;
 		age?: Partial<AgeValueList.Props>;
-		delivery?: Partial<DeliveryValue.Props>;
+		delivery?: Partial<DeliveryValueList.Props>;
 		warranty?: Partial<WarrantyValue.Props>;
 		title?: Partial<TitleValue.Props>;
 	}
@@ -175,8 +175,16 @@ export const Feed: FC<Feed.Props> = ({
 				{...values?.age}
 			/>
 
-			<DeliveryValue
-				feed={feed}
+			<DeliveryValueList
+				deliveryIn={feed.query?.filter?.deliveryIn ?? []}
+				action={
+					<Icon
+						icon={EditIcon}
+						ui={{
+							text: "xl",
+						}}
+					/>
+				}
 				{...values?.delivery}
 			/>
 

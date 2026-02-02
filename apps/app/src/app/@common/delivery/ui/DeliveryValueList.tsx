@@ -6,35 +6,37 @@ import type { FC } from "react";
 export namespace DeliveryValueList {
 	export interface Props
 		extends Omit<
-			ValueList.Props<{
+			ValueList.PropsEx<{
 				id: string;
 				delivery: string;
 			}>,
-			"items" | "renderFn" | "textLabel" | "textEmpty"
+			"items" | "renderFn"
 		> {
-		delivery: string[];
-		onClick(): void;
+		deliveryIn: string[];
 	}
 }
 
-export const DeliveryValueList: FC<DeliveryValueList.Props> = ({ delivery, onClick, ...props }) => {
-	const deliveryItems = delivery.map((d) => ({
-		id: d,
-		delivery: d,
+export const DeliveryValueList: FC<DeliveryValueList.Props> = ({ deliveryIn, ...props }) => {
+	const items = deliveryIn.map((item) => ({
+		id: item,
+		delivery: item,
 	}));
 
 	return (
 		<ValueList
 			data-ui={"DeliveryValueList[ValueList]"}
-			textLabel={translator.text("Listing delivery (label)")}
-			textEmpty={translator.text("Delivery not selected")}
-			items={deliveryItems}
+			textLabel={translator.text("Feed delivery (label)")}
+			textEmpty={translator.text("Feed delivery not selected")}
+			items={items}
 			renderFn={(item) => <Tx label={`Listing delivery - ${item.delivery}`} />}
-			onClick={onClick}
 			wrapperProps={{
-				ui: {
-					tone: deliveryItems.length > 0 ? "neutral" : "secondary",
-				},
+				ui:
+					items.length > 0
+						? {
+								tone: "neutral",
+								theme: "light",
+							}
+						: undefined,
 			}}
 			{...props}
 		/>

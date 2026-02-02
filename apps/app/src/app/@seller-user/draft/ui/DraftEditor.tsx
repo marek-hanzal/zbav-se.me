@@ -254,7 +254,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 								/>
 
 								<DeliveryValueList
-									delivery={draft.delivery ?? []}
+									deliveryIn={draft.delivery ?? []}
 									action={
 										<Icon
 											icon={EditIcon}
@@ -263,9 +263,6 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 											}}
 										/>
 									}
-									onClick={() => {
-										setView("delivery");
-									}}
 								/>
 
 								<WarrantyValue
