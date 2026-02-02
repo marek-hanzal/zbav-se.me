@@ -6,7 +6,7 @@ import { zTransactionMessagePackageCreate } from "@zbav-se.me/sdk/api/user";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import type { z } from "zod";
-import { SaveControl } from "~/app/control/SaveControl";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 // biome-ignore lint/correctness/noUnusedVariables: Ssst
 const PackageSchema = zTransactionMessagePackageCreate.omit({
@@ -131,7 +131,7 @@ export const PackageControl: FC<PackageControl.Props> = ({
 				</form>
 			</Container>
 
-			<SaveControl
+			<SaveContainer
 				onCancel={onCancel}
 				onSave={() => {
 					form.handleSubmit();

@@ -3,7 +3,7 @@ import { ValueList } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
-import { ConditionIcon } from "../../../condition/ui/ConditionIcon";
+import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
 
 export namespace ConditionValue {
 	export interface Props

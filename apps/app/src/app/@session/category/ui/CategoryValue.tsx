@@ -2,7 +2,7 @@ import { ValueList } from "@use-pico/client/ui/container";
 import type { tCategory } from "@zbav-se.me/sdk/api/session";
 import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
-import { CategoryInline } from "./CategoryInline";
+import { CategoryInline } from "~/app/@session/category/ui/CategoryInline";
 
 export namespace CategoryValue {
 	export interface Props extends Omit<ValueList.Props<tCategory>, "items" | "renderFn"> {

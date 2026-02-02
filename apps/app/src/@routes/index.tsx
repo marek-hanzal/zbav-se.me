@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { linkTo } from "@use-pico/common/link-to";
-import { getSessionFn } from "~/app/auth/getSessionFn";
+import { getSessionFn } from "~/app/@common/auth/getSessionFn";
 import { getLocaleFn } from "~/app/locale/getLocaleFn";
 
 export const Route = createFileRoute("/")({

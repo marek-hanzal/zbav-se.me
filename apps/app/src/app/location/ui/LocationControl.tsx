@@ -1,7 +1,7 @@
 import { Container } from "@use-pico/client/ui/container";
 import type { tLocation } from "@zbav-se.me/sdk/api/seller-user";
 import { type FC, useState } from "react";
-import { SaveControl } from "~/app/control/SaveControl";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { LocationSelect } from "~/app/location/ui/LocationSelect";
 
 export namespace LocationControl {
@@ -43,7 +43,7 @@ export const LocationControl: FC<LocationControl.Props> = ({
 				textHint={textHint}
 			/>
 
-			<SaveControl
+			<SaveContainer
 				onCancel={onCancel}
 				onSave={() => {
 					if (!locationId || !location) {

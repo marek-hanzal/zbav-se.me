@@ -6,7 +6,7 @@ import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/seller-user/dra
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { SaveControl } from "~/app/control/SaveControl";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { DeliverySelect } from "~/app/delivery/ui/DeliverySelect";
 
 export namespace DeliveryPatch {
@@ -64,7 +64,7 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({
 			>
 				<DeliverySelect selection={selection} />
 
-				<SaveControl
+				<SaveContainer
 					onCancel={onCancel}
 					onSave={() => {
 						mutation.mutate({

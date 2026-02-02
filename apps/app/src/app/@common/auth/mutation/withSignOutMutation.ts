@@ -1,5 +1,5 @@
 import { withMutation } from "@use-pico/client/mutation";
-import { authClient } from "~/app/auth/authClient";
+import { authClient } from "~/app/@common/auth/authClient";
 
 export const withSignOutMutation = withMutation({
 	keys(variables) {

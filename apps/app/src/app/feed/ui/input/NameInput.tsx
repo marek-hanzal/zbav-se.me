@@ -5,7 +5,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
 import { sFeedCreate } from "@zbav-se.me/sdk/api/buyer-user";
 import { type FC, useState } from "react";
-import { SaveControl } from "~/app/control/SaveControl";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 export namespace NameInput {
 	export interface Props extends Omit<Container.Props, "onSubmit" | "onChange"> {
@@ -80,7 +80,7 @@ export const NameInput: FC<NameInput.Props> = ({
 				</Status>
 			</Container>
 
-			<SaveControl
+			<SaveContainer
 				onCancel={onCancel}
 				onSave={() => {
 					onSave(name);

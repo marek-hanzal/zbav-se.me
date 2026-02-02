@@ -4,7 +4,7 @@ import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
 import { type FC, useState } from "react";
-import { SaveControl } from "~/app/control/SaveControl";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 export namespace TitleInput {
 	export interface Props extends Omit<Container.Props, "onChange"> {
@@ -73,7 +73,7 @@ export const TitleInput: FC<TitleInput.Props> = ({
 				</Status>
 			</Container>
 
-			<SaveControl
+			<SaveContainer
 				onCancel={onCancel}
 				onSave={() => {
 					onSave(title);

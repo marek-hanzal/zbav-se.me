@@ -5,8 +5,8 @@ import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
-import { CategorySelect } from "~/app/category/ui/CategorySelect";
-import { SaveControl } from "~/app/control/SaveControl";
+import { CategorySelect } from "~/app/@session/category/ui/CategorySelect";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 export namespace CategoryPatch {
 	export interface Props extends Container.Props {
@@ -57,7 +57,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCanc
 				categoryId={categoryId ?? undefined}
 			/>
 
-			<SaveControl
+			<SaveContainer
 				onCancel={onCancel}
 				onSave={() => {
 					mutation.mutate({

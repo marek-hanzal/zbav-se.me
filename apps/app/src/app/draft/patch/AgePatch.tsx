@@ -7,7 +7,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 import { AgeSelection } from "~/app/@common/age/ui/AgeSelection";
-import { SaveControl } from "~/app/control/SaveControl";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 export namespace AgePatch {
 	export interface Props extends TitleContainer.Props {
@@ -63,7 +63,7 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSettled, ...pr
 			>
 				<AgeSelection selection={selection} />
 
-				<SaveControl
+				<SaveContainer
 					onCancel={onCancel}
 					onSave={() => {
 						mutation.mutate({

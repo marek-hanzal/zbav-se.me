@@ -7,7 +7,7 @@ import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/seller-user/dra
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
-import { SaveControl } from "~/app/control/SaveControl";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 export namespace ConsPatch {
 	export interface Props extends TitleContainer.Props {
@@ -97,7 +97,7 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onSettled, ...
 					))}
 				</Container>
 
-				<SaveControl
+				<SaveContainer
 					onCancel={onCancel}
 					onSave={() => {
 						mutation.mutate({

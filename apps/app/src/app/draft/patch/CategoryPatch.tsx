@@ -6,8 +6,8 @@ import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/seller-user/dra
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { CategorySelect } from "~/app/category/ui/CategorySelect";
-import { SaveControl } from "~/app/control/SaveControl";
+import { CategorySelect } from "~/app/@session/category/ui/CategorySelect";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 export namespace CategoryPatch {
 	export interface Props extends TitleContainer.Props {
@@ -70,7 +70,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 					categoryId={categoryId ?? undefined}
 				/>
 
-				<SaveControl
+				<SaveContainer
 					onCancel={onCancel}
 					onSave={() => {
 						mutation.mutate({

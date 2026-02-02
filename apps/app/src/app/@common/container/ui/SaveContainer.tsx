@@ -4,7 +4,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { uiCancelButton, uiSaveButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
-export namespace SaveControl {
+export namespace SaveContainer {
 	export interface Props extends Container.Props {
 		onCancel(): void;
 		onSave(): void;
@@ -13,7 +13,7 @@ export namespace SaveControl {
 	}
 }
 
-export const SaveControl: FC<SaveControl.Props> = ({
+export const SaveContainer: FC<SaveContainer.Props> = ({
 	onCancel,
 	onSave,
 	loading,
@@ -23,6 +23,7 @@ export const SaveControl: FC<SaveControl.Props> = ({
 }) => {
 	return (
 		<Container
+			data-ui="SaveContainer[Container]"
 			ui={{
 				flow: "horizontal",
 				items: "center",

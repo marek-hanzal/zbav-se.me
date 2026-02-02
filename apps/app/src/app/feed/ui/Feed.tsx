@@ -5,7 +5,7 @@ import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import type { FC } from "react";
-import { CategoryValue } from "~/app/category/ui/CategoryValue";
+import { CategoryValue } from "~/app/@session/category/ui/CategoryValue";
 import { TitleValue } from "~/app/feed/ui/value/TitleValue";
 import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
 import { LocationValue } from "~/app/location/ui/LocationValue";

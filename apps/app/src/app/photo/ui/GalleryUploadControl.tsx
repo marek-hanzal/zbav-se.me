@@ -1,7 +1,7 @@
 import type { withMutation } from "@use-pico/client/mutation";
 import { Container } from "@use-pico/client/ui/container";
 import { useState } from "react";
-import { SaveControl } from "~/app/control/SaveControl";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { GalleryUpload } from "./GalleryUpload";
 
 export namespace GalleryUploadControl {
@@ -56,7 +56,7 @@ export const GalleryUploadControl = <TData extends GalleryUploadControl.Uploads>
 				limit={limit}
 			/>
 
-			<SaveControl
+			<SaveContainer
 				onCancel={() => {
 					setUploadIds(defaultUploadIds);
 					onCancel();

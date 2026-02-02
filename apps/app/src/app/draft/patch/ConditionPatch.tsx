@@ -6,8 +6,8 @@ import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
-import { ConditionSelect } from "~/app/condition/ui/ConditionSelect";
-import { SaveControl } from "~/app/control/SaveControl";
+import { ConditionSelect } from "~/app/@common/condition/ui/ConditionSelect";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 export namespace ConditionPatch {
 	export interface Props extends TitleContainer.Props {
@@ -69,7 +69,7 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 			>
 				<ConditionSelect selection={selection} />
 
-				<SaveControl
+				<SaveContainer
 					onCancel={onCancel}
 					onSave={() => {
 						mutation.mutate({

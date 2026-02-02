@@ -4,7 +4,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { linkTo } from "@use-pico/common/link-to";
 import { LockIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { withSignOutMutation } from "~/app/auth/withSignOutMutation";
+import { withSignOutMutation } from "~/app/@common/auth/mutation/withSignOutMutation";
 
 export namespace SignOutButton {
 	export interface Props extends Button.Props {}

@@ -5,7 +5,7 @@ import type { tFeed, tListingDeliveryEnum } from "@zbav-se.me/sdk/api/buyer-user
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
-import { SaveControl } from "~/app/control/SaveControl";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { DeliverySelect } from "~/app/delivery/ui/DeliverySelect";
 
 export namespace DeliveryPatch {
@@ -58,7 +58,7 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({
 		>
 			<DeliverySelect selection={selection} />
 
-			<SaveControl
+			<SaveContainer
 				onCancel={onCancel}
 				onSave={() => {
 					mutation.mutate({

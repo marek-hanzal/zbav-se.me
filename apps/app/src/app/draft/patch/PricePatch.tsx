@@ -6,7 +6,7 @@ import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";
-import { SaveControl } from "~/app/control/SaveControl";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 export namespace PricePatch {
 	export interface Props extends TitleContainer.Props {
@@ -59,7 +59,7 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onSettled, .
 					}}
 				/>
 
-				<SaveControl
+				<SaveContainer
 					onCancel={onCancel}
 					onSave={() => {
 						mutation.mutate({

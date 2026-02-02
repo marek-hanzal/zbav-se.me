@@ -6,7 +6,7 @@ import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed"
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";
-import { SaveControl } from "~/app/control/SaveControl";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 export namespace RangePatch {
 	export interface Props extends Container.Props {
@@ -91,7 +91,7 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 				/>
 			</Container>
 
-			<SaveControl
+			<SaveContainer
 				onCancel={onCancel}
 				onSave={handleSave}
 				loading={mutation.isPending}
