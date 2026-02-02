@@ -1,10 +1,9 @@
 import { LabelValue } from "@use-pico/client/ui/container";
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 
 export namespace TitleValue {
-	export interface Props extends Omit<LabelValue.Props, "textValue" | "title"> {
-		title: string | null | undefined;
+	export interface Props extends Omit<LabelValue.PropsEx, "textValue" | "title"> {
+		title: string | null;
 	}
 }
 
@@ -13,14 +12,12 @@ export const TitleValue: FC<TitleValue.Props> = ({ title, ...props }) => {
 	return (
 		<LabelValue
 			data-ui={"TitleValue[LabelValue]"}
+			textValue={hasTitle ? title : null}
 			wrapperProps={{
 				ui: {
 					tone: hasTitle ? "neutral" : "primary",
 				},
 			}}
-			textLabel={translator.text("Listing title (label)")}
-			textValue={hasTitle ? title : null}
-			textEmpty={translator.text("Listing title not filled")}
 			{...props}
 		/>
 	);

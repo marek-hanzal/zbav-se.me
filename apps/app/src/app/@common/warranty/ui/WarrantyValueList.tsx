@@ -1,11 +1,10 @@
-import { EditIcon, Icon } from "@use-pico/client/icon";
 import { ValueList } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
+import type { tListingWarrantyEnum } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
 
-export namespace WarrantyValue {
+export namespace WarrantyValueList {
 	export interface Props
 		extends Omit<
 			ValueList.PropsEx<{
@@ -14,16 +13,14 @@ export namespace WarrantyValue {
 			}>,
 			"items" | "renderFn"
 		> {
-		feed: tFeed;
+		warrantyIn: tListingWarrantyEnum[];
 	}
 }
 
-export const WarrantyValue: FC<WarrantyValue.Props> = ({ feed, ...props }) => {
-	const warrantyIn = feed.query?.filter?.warrantyIn ?? [];
-
+export const WarrantyValueList: FC<WarrantyValueList.Props> = ({ warrantyIn, ...props }) => {
 	return (
 		<ValueList
-			data-ui={"WarrantyValue[ValueList]"}
+			data-ui={"WarrantyValueList[ValueList]"}
 			textLabel={translator.text("Listing warranty (label)")}
 			textEmpty={translator.text("Warranty not selected")}
 			items={warrantyIn.map((item) => ({
@@ -31,14 +28,6 @@ export const WarrantyValue: FC<WarrantyValue.Props> = ({ feed, ...props }) => {
 				warranty: item,
 			}))}
 			renderFn={(item) => <Tx label={`Listing warranty - ${item.warranty}`} />}
-			action={
-				<Icon
-					icon={EditIcon}
-					ui={{
-						text: "xl",
-					}}
-				/>
-			}
 			wrapperProps={{
 				ui:
 					warrantyIn.length > 0

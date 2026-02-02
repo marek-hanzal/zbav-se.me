@@ -12,10 +12,10 @@ import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { RangeValue } from "~/app/@common/location/ui/RangeValue";
 import { NameValue } from "~/app/@common/name/ui/NameValue";
 import { SortValue } from "~/app/@common/sort/ui/SortValue";
+import { TitleValue } from "~/app/@common/title/ui/TitleValue";
 import { CategoryValueList } from "~/app/@session/category/ui/CategoryValueList";
-import { TitleValue } from "~/app/feed/ui/value/TitleValue";
 import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
-import { WarrantyValue } from "./value/WarrantyValue";
+import { WarrantyValueList } from "~/app/@common/warranty/ui/WarrantyValueList";
 
 export namespace Feed {
 	export interface Value {
@@ -28,7 +28,7 @@ export namespace Feed {
 		condition?: Partial<ConditionValueList.Props>;
 		age?: Partial<AgeValueList.Props>;
 		delivery?: Partial<DeliveryValueList.Props>;
-		warranty?: Partial<WarrantyValue.Props>;
+		warranty?: Partial<WarrantyValueList.Props>;
 		title?: Partial<TitleValue.Props>;
 	}
 
@@ -215,13 +215,32 @@ export const Feed: FC<Feed.Props> = ({
 				{...values?.delivery}
 			/>
 
-			<WarrantyValue
-				feed={feed}
+			<WarrantyValueList
+				warrantyIn={feed.query?.filter?.warrantyIn ?? []}
+				action={
+					<Icon
+						icon={EditIcon}
+						ui={{
+							text: "xl",
+						}}
+					/>
+				}
 				{...values?.warranty}
 			/>
 
 			<TitleValue
-				feed={feed}
+				title={feed.query?.filter?.title ?? null}
+				textLabel={translator.text("Feed title (label)")}
+				textEmpty={translator.text("Feed title not filled")}
+				textHint={translator.text("Feed title (hint)")}
+				action={
+					<Icon
+						icon={EditIcon}
+						ui={{
+							text: "xl",
+						}}
+					/>
+				}
 				{...values?.title}
 			/>
 
