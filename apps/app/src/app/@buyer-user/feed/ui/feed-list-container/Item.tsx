@@ -6,7 +6,7 @@ import { tvc } from "@use-pico/cls";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type PropsWithChildren, type ReactNode, useState } from "react";
-import { SetupButton } from "~/app/feed/ui/button/SetupButton";
+import { SheetButton } from "~/app/@common/sheet/ui/SheetButton";
 import { SetupSheet } from "~/app/feed/ui/SetupSheet";
 import { ListingCountBadge } from "~/app/listing/ui/ListingCountBadge";
 
@@ -136,8 +136,9 @@ export const Item: FC<Item.Props> = ({
 
 			{tools.includes("setup") ? (
 				<>
-					<SetupButton
+					<SheetButton
 						data-ui={"Item-[FeedSetupButton]"}
+						label={null}
 						iconProps={{
 							ui: {
 								text: "2xl",
@@ -147,9 +148,7 @@ export const Item: FC<Item.Props> = ({
 							value: isFeedSettings,
 							set: setIsFeedSettings,
 						}}
-						feed={feed}
 						defaultOpen={defaultOpen}
-						label={null}
 						ui={{
 							tone: "secondary",
 							size: "sm",
