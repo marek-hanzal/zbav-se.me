@@ -8,7 +8,7 @@ import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/u
 import { LocationIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useState } from "react";
-import { LocationControl } from "~/app/location/ui/LocationControl";
+import { LocationSelectContainer } from "~/app/@common/location/ui/LocationSelectContainer";
 
 export namespace LocationButton {
 	export interface Props extends Button.Props {
@@ -44,8 +44,8 @@ export const LocationButton: FC<LocationButton.Props> = ({ transaction, ...props
 					title: "Share location (title)",
 				})}
 			>
-				<LocationControl
-					data-ui="LocationButton[LocationControl]"
+				<LocationSelectContainer
+					data-ui="LocationButton[LocationSelectContainer]"
 					value={null}
 					onCancel={() => {
 						setIsOpen(false);

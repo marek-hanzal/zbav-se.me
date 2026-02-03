@@ -5,12 +5,12 @@ import { withTransactionMessageGalleryCreateMutation } from "@zbav-se.me/sdk/mut
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { type FC, useState } from "react";
 import { match } from "ts-pattern";
+import { useSide } from "~/app/@user/useSide";
 import { GalleryUploadButton } from "~/app/photo/ui/GalleryUploadButton";
 import { LocationButton } from "~/app/transaction/ui/button/LocationButton";
 import { PackageButton } from "~/app/transaction/ui/button/PackageButton";
 import { PersonalButton } from "~/app/transaction/ui/button/PersonalButton";
 import { MessageButtonUi } from "~/app/transaction/ui/transaction-status/MessageButtonUi";
-import { useSide } from "~/app/user/useSide";
 
 export namespace DisputeMessage {
 	export interface Props extends Container.Props {

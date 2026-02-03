@@ -1,10 +1,10 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { tLocation } from "@zbav-se.me/sdk/api/seller-user";
+import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { LocationSelect } from "~/app/@common/location/ui/LocationSelect";
 
-export namespace LocationControl {
+export namespace LocationSelectContainer {
 	export interface Props extends Container.Props {
 		value: string | undefined | null;
 		onCancel(): void;
@@ -14,7 +14,7 @@ export namespace LocationControl {
 	}
 }
 
-export const LocationControl: FC<LocationControl.Props> = ({
+export const LocationSelectContainer: FC<LocationSelectContainer.Props> = ({
 	value,
 	onCancel,
 	onSave,
@@ -28,7 +28,7 @@ export const LocationControl: FC<LocationControl.Props> = ({
 
 	return (
 		<Container
-			data-ui="LocationControl[Container]"
+			data-ui="LocationSelectContainer[Container]"
 			ui={{
 				layout: "vertical-content-footer",
 				height: "full",

@@ -8,7 +8,7 @@ import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/u
 import { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { useSide } from "~/app/user/useSide";
+import { useSide } from "~/app/@user/useSide";
 
 export namespace TransactionChat {
 	export interface Props extends Container.Props {

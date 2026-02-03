@@ -4,7 +4,7 @@ import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/seller-user/dra
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { LocationControl } from "~/app/location/ui/LocationControl";
+import { LocationSelectContainer } from "~/app/@common/location/ui/LocationSelectContainer";
 
 export namespace LocationPatch {
 	export interface Props extends TitleContainer.Props {
@@ -40,7 +40,7 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 			textTitle={"Location (title)"}
 			{...props}
 		>
-			<LocationControl
+			<LocationSelectContainer
 				textHint={translator.text("Location security (hint)")}
 				onCancel={onCancel}
 				onSave={({ locationId }) => {

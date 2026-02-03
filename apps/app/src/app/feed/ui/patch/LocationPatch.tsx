@@ -4,7 +4,7 @@ import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
-import { LocationControl } from "~/app/location/ui/LocationControl";
+import { LocationSelectContainer } from "~/app/@common/location/ui/LocationSelectContainer";
 
 export namespace LocationPatch {
 	export interface Props extends Container.Props {
@@ -30,7 +30,7 @@ export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCanc
 	});
 
 	return (
-		<LocationControl
+		<LocationSelectContainer
 			textHint={translator.text("Feed location security (hint)")}
 			onCancel={onCancel}
 			onSave={({ locationId, location }) => {

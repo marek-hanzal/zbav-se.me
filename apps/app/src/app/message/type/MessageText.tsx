@@ -6,7 +6,7 @@ import { toTimeDiff } from "@use-pico/common/time";
 import type { tMessageText } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { useSide } from "~/app/user/useSide";
+import { useSide } from "~/app/@user/useSide";
 
 export namespace MessageText {
 	export interface Props extends Container.Props {

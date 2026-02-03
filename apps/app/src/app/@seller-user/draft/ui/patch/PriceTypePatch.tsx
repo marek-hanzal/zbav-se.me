@@ -8,7 +8,7 @@ import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { PriceTypeSelect } from "~/app/price-type/ui/PriceTypeSelect";
+import { PriceTypeSelect } from "~/app/@common/price-type/ui/PriceTypeSelect";
 
 export namespace PriceTypePatch {
 	export interface Props extends TitleContainer.Props {

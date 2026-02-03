@@ -7,7 +7,7 @@ import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed"
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { WarrantySelect } from "~/app/warranty/ui/WarrantySelect";
+import { WarrantySelect } from "~/app/@common/warranty/ui/WarrantySelect";
 
 export namespace WarrantyPatch {
 	export interface Props extends Container.Props {

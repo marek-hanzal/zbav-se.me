@@ -2,12 +2,12 @@ import { Container, type uiContainer } from "@use-pico/client/ui/container";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import { useSide } from "~/app/@user/useSide";
 import { SellerInfoButton } from "~/app/listing/ui/button/SellerInfoButton";
 import { AcceptButton } from "~/app/transaction/ui/button/AcceptButton";
 import { RejectButton } from "~/app/transaction/ui/button/RejectButton";
 import { BuyerInfoButton } from "~/app/transaction/ui/buyer/BuyerInfoButton";
 import { MessageButtonUi } from "~/app/transaction/ui/transaction-status/MessageButtonUi";
-import { useSide } from "~/app/user/useSide";
 
 export namespace PendingMessage {
 	export interface Props extends Container.Props {

@@ -8,7 +8,7 @@ import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { WarrantySelect } from "~/app/warranty/ui/WarrantySelect";
+import { WarrantySelect } from "~/app/@common/warranty/ui/WarrantySelect";
 
 export namespace WarrantyPatch {
 	export interface Props extends TitleContainer.Props {

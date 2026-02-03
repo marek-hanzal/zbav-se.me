@@ -9,7 +9,7 @@ import { withTransactionFetchQuery as withSellerTransactionFetchQuery } from "@z
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { FlagIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { useSide } from "~/app/user/useSide";
+import { useSide } from "~/app/@user/useSide";
 
 export namespace DisputeButton {
 	export interface Props extends ConfirmButton.Props {
