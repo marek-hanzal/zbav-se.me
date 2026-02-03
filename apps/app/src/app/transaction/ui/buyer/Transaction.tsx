@@ -6,9 +6,9 @@ import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/tran
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { useRef, useState } from "react";
+import { ListingOverlay } from "~/app/@buyer-user/listing/ui/ListingOverlay";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
 import { ListingSheet } from "~/app/listing/ui/ListingSheet";
-import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 import { MessageList } from "~/app/message/MessageList";
 import { TransactionChat } from "~/app/transaction/ui/TransactionChat";
 import { TransactionMessage } from "~/app/transaction/ui/TransactionMessage";

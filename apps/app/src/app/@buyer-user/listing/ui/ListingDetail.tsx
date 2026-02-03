@@ -10,16 +10,16 @@ import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/seller-session
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { useListingEvent } from "~/app/@buyer-session/listing/hook/useListingEvent";
+import { FavouriteButton } from "~/app/@buyer-user/listing/ui/button/FavouriteButton";
+import { FlagButton } from "~/app/@buyer-user/listing/ui/button/FlagButton";
+import { IgnoreButton } from "~/app/@buyer-user/listing/ui/button/IgnoreButton";
+import { ThumbDislikeButton } from "~/app/@buyer-user/listing/ui/button/ThumbDislikeButton";
+import { ThumbLikeButton } from "~/app/@buyer-user/listing/ui/button/ThumbLikeButton";
+import { ListingOverlay } from "~/app/@buyer-user/listing/ui/ListingOverlay";
 import { CategoryInline } from "~/app/@common/category/ui/CategoryInline";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
-import { FavouriteToggleButton } from "~/app/listing/ui/button/FavouriteToggleButton";
-import { FlagButton } from "~/app/listing/ui/button/FlagButton";
-import { IgnoreButton } from "~/app/listing/ui/button/IgnoreButton";
-import { ThumbDislikeButton } from "~/app/listing/ui/button/ThumbDislikeButton";
-import { ThumbLikeButton } from "~/app/listing/ui/button/ThumbLikeButton";
-import { TransactionButton } from "~/app/listing/ui/button/TransactionButton";
-import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
+import { TransactionButton } from "~/app/@buyer-user/listing/ui/button/TransactionButton";
 import { SellerScoreIcon } from "~/app/listing/ui/SellerScoreIcon";
 
 export namespace ListingDetail {
@@ -85,7 +85,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 						/>
 
 						{feedId ? (
-							<FavouriteToggleButton
+							<FavouriteButton
 								feedId={feedId}
 								listingId={listing.id}
 								label={null}

@@ -8,8 +8,8 @@ import {
 	withListingFetchQuery,
 } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import type { FC } from "react";
+import { Hero } from "~/app/@buyer-user/listing/ui/Hero";
 import { CreateButton } from "~/app/@seller-user/draft/ui/button/CreateButton";
-import { Hero } from "~/app/listing/ui/Hero";
 
 export namespace Content {
 	export interface Props extends MarkSuspense.Props {

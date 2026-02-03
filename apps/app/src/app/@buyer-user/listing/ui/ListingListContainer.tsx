@@ -11,7 +11,7 @@ import {
 	withListingFetchQuery,
 } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { type FC, type ReactNode, useEffect, useRef } from "react";
-import { Hero } from "~/app/listing/ui/Hero";
+import { Hero } from "~/app/@buyer-user/listing/ui/Hero";
 
 export namespace ListingListContainer {
 	export interface Props extends Container.Props {

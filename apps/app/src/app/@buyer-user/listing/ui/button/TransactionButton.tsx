@@ -2,7 +2,7 @@ import { Button } from "@use-pico/client/ui/button";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { CreateButton } from "~/app/transaction/ui/CreateButton";
+import { TransactionCreateButton } from "~/app/@buyer-user/transaction/ui/TransactionCreateButton";
 
 export namespace TransactionButton {
 	export interface Props extends Button.Props {
@@ -40,7 +40,7 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 	}
 
 	return (
-		<CreateButton
+		<TransactionCreateButton
 			listingId={listing.id}
 			ui={ui}
 			{...props}

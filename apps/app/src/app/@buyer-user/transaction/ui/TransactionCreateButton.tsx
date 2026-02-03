@@ -5,13 +5,17 @@ import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing"
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
-export namespace CreateButton {
+export namespace TransactionCreateButton {
 	export interface Props extends Button.Props {
 		listingId: string;
 	}
 }
 
-export const CreateButton: FC<CreateButton.Props> = ({ listingId, ui, ...props }) => {
+export const TransactionCreateButton: FC<TransactionCreateButton.Props> = ({
+	listingId,
+	ui,
+	...props
+}) => {
 	const queryClient = useQueryClient();
 	const transactionCreateMutation = withTransactionCreateMutation.useMutation({
 		onSuccess() {

@@ -333,6 +333,68 @@ export const zCategory = z.object({
 export type zCategory = z.infer<typeof zCategory>;
 
 /**
+ * Location data
+ */
+export const zLocation = z.object({
+    id: z.string(),
+    query: z.string().register(z.globalRegistry, {
+        description: 'The query that was used to get the location'
+    }),
+    lang: z.string().register(z.globalRegistry, {
+        description: 'The language that was used to get the location'
+    }),
+    country: z.string().register(z.globalRegistry, {
+        description: 'The country that the location is in'
+    }),
+    code: z.string().register(z.globalRegistry, {
+        description: 'Country code'
+    }),
+    county: z.union([
+        z.string(),
+        z.null()
+    ]),
+    municipality: z.union([
+        z.string(),
+        z.null()
+    ]),
+    state: z.union([
+        z.string(),
+        z.null()
+    ]),
+    address: z.string().register(z.globalRegistry, {
+        description: 'Full address preview of a location'
+    }),
+    city: z.union([
+        z.string(),
+        z.null()
+    ]),
+    street: z.union([
+        z.string(),
+        z.null()
+    ]),
+    zip: z.union([
+        z.string(),
+        z.null()
+    ]),
+    confidence: z.number().register(z.globalRegistry, {
+        description: 'Confidence score of the location (based on query)'
+    }),
+    hash: z.string().register(z.globalRegistry, {
+        description: 'Used to uniquely identify this location entry'
+    }),
+    lat: z.number().register(z.globalRegistry, {
+        description: 'Latitude of the location'
+    }),
+    lon: z.number().register(z.globalRegistry, {
+        description: 'Longitude of the location'
+    })
+}).register(z.globalRegistry, {
+    description: 'Location data'
+});
+
+export type zLocation = z.infer<typeof zLocation>;
+
+/**
  * GitHub commit history count
  */
 export const zGitHubHistory = z.object({
@@ -892,7 +954,7 @@ export type zapiPublicSchemaRequest = z.infer<typeof zApiPublicSchemaData>;
 /**
  * Not returned; for OpenAPI schema registration only.
  */
-export const zApiPublicSchemaResponse = z.tuple([zCategory]).register(z.globalRegistry, {
+export const zApiPublicSchemaResponse = z.tuple([zCategory, zLocation]).register(z.globalRegistry, {
     description: 'Not returned; for OpenAPI schema registration only.'
 });
 

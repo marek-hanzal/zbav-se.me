@@ -6,14 +6,14 @@ import { withFeedFavouriteCollectionQuery } from "@zbav-se.me/sdk/query/buyer-us
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import type { FC } from "react";
 
-export namespace FavouriteToggleButton {
+export namespace FavouriteButton {
 	export interface Props extends Button.Props {
 		feedId: string;
 		listingId: string;
 	}
 }
 
-export const FavouriteToggleButton: FC<FavouriteToggleButton.Props> = ({
+export const FavouriteButton: FC<FavouriteButton.Props> = ({
 	feedId,
 	listingId,
 	ui,

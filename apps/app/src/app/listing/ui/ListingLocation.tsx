@@ -2,7 +2,7 @@ import { useLocale } from "@use-pico/client/hook";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import type { tLocation } from "@zbav-se.me/sdk/api/session";
+import type { tLocation } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
 
 export namespace ListingLocation {

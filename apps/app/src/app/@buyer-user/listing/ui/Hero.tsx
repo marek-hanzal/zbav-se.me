@@ -4,10 +4,10 @@ import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { useListingEvent } from "~/app/@buyer-session/listing/hook/useListingEvent";
+import type { ListingDetail } from "~/app/@buyer-user/listing/ui/ListingDetail";
+import { ListingOverlay } from "~/app/@buyer-user/listing/ui/ListingOverlay";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
-import type { ListingDetail } from "~/app/listing/ui/ListingDetail";
 import { ListingSheet } from "~/app/listing/ui/ListingSheet";
-import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 
 export namespace Hero {
 	/**

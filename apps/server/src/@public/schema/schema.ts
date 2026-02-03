@@ -1,6 +1,7 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { Effect } from "effect";
 import { CategorySchema } from "~/@session/category/schema/CategorySchema";
+import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -21,6 +22,7 @@ export const withSchemaEndpointFx = Effect.fn("withSchemaEndpointFx")(function* 
 							schema: z
 								.tuple([
 									CategorySchema,
+									LocationSchema,
 								])
 								.optional()
 								.openapi({

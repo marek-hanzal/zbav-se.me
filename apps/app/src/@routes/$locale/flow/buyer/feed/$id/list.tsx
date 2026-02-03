@@ -19,7 +19,7 @@ import { type FC, type RefObject, useRef, useState } from "react";
 import z from "zod";
 import { SheetButton } from "~/app/@common/sheet/ui/SheetButton";
 import { SetupSheet } from "~/app/feed/ui/SetupSheet";
-import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
+import { ListingListContainer } from "~/app/@buyer-user/listing/ui/ListingListContainer";
 
 export namespace SetupButton {
 	export interface Props extends Partial<SheetButton.Props> {
