@@ -9,10 +9,10 @@ import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing"
 import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/seller-session/listing";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
+import { useListingEvent } from "~/app/@buyer-session/listing/hook/useListingEvent";
 import { CategoryInline } from "~/app/@common/category/ui/CategoryInline";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
-import { useListingEvent } from "~/app/listing/hook/useListingEvent";
 import { FavouriteToggleButton } from "~/app/listing/ui/button/FavouriteToggleButton";
 import { FlagButton } from "~/app/listing/ui/button/FlagButton";
 import { IgnoreButton } from "~/app/listing/ui/button/IgnoreButton";

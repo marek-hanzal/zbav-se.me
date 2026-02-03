@@ -13,6 +13,10 @@ This domain contains **shared components, types, and utilities** used by multipl
 - Central shared business logic and types.
 - Consistency at domain boundaries.
 
+## Scope note
+
+What goes into `@common` should be **low-level, foundational** pieces. Prefer putting here only things that are clearly **@session**, **@user**, or **@public** in nature. Avoid moving **buyer/seller-specific** logic or UI into `@common`; with role-specific code there is a higher risk of context or domain leaking (e.g. buyer/seller assumptions used in the wrong place or data exposed across boundaries).
+
 ## What's Here (scope)
 
 - **Shared UI** – buttons, forms, layout pieces without domain logic
