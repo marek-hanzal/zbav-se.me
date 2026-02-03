@@ -26,6 +26,10 @@ What goes into `@common` should be **low-level, foundational** pieces. Prefer pu
 - **Transaction context** – default transaction settings (expires, extend)
 - **Upload / S3** – shared upload configuration (CDN, bucket) – when used on the frontend
 
+## ⚠️ Important: @common relaxes import rules
+
+**Placing something in `@common` effectively loosens the usage rules** — anything here can be imported by every domain (`@public`, `@session`, `@user`, buyer/seller, etc.). That makes `@common` a potential way to bypass the normal import restrictions between domains. **You must be extremely careful**: only add truly shared, low-level, and non–role-specific pieces. Do not use `@common` as a shortcut to share code that really belongs in one domain or that could leak context or data across boundaries.
+
 ## Rules (critical)
 
 Same dependency rules as server: domain boundaries and package usage must be respected. `@common` is the foundation layer; it must not depend on other app domains or on role-specific packages.

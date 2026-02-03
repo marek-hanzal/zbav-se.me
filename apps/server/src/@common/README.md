@@ -57,6 +57,10 @@ The `@common` domain exists to:
 - **ListingExpireEnumSchema** - Zod schema for listing expiration times (7-days, 14-days, 1-month)
 - Used in `@seller-user` domain for listing and draft creation, and in database table schemas
 
+## ⚠️ Important: @common relaxes import rules
+
+**Placing something in `@common` effectively loosens the usage rules** — anything here can be imported by every domain (`@public`, `@session`, `@user`, buyer/seller, etc.). That makes `@common` a potential way to bypass the normal import restrictions between domains. **You must be extremely careful**: only add truly shared, low-level, and non–role-specific pieces. Do not use `@common` as a shortcut to share code that really belongs in one domain or that could leak context or data across boundaries.
+
 ## Access Rules
 
 - **No API endpoints** - This domain does not expose HTTP routes

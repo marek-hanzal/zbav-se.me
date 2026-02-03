@@ -10,7 +10,7 @@ import { uiWarningStatus } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 import type { z } from "zod";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { LocationSelect } from "~/app/location/ui/LocationSelect";
+import { LocationSelect } from "~/app/@common/location/ui/LocationSelect";
 
 // biome-ignore lint/correctness/noUnusedVariables: Ssst
 const PersonalSchema = zTransactionMessagePersonalCreate.omit({

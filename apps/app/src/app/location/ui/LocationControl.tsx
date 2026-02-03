@@ -2,7 +2,7 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tLocation } from "@zbav-se.me/sdk/api/seller-user";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { LocationSelect } from "~/app/location/ui/LocationSelect";
+import { LocationSelect } from "~/app/@common/location/ui/LocationSelect";
 
 export namespace LocationControl {
 	export interface Props extends Container.Props {
