@@ -3,10 +3,11 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
-import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
+import { translator } from "@use-pico/common/translator";
+import { sFeedCreate, type tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import { type FC, useState } from "react";
-import { NameInput } from "~/app/feed/ui/input/NameInput";
+import { TextInputContainer } from "~/app/@common/input/ui/TextInputContainer";
 
 export namespace CreateButton {
 	export interface Props extends Button.Props {
@@ -85,7 +86,12 @@ export const CreateButton: FC<CreateButton.Props> = ({
 					title: "Create new feed (title)",
 				})}
 			>
-				<NameInput
+				<TextInputContainer
+					data-ui={"CreateButton[TextInputContainer]"}
+					textTitle={translator.text("Feed name (title)")}
+					placeholder={translator.text("Feed name (placeholder)")}
+					hint={translator.text("Feed name (required)")}
+					minLength={sFeedCreate.properties.name.minLength}
 					onSave={(name) => {
 						if (!feedCreateMutation.isPending) {
 							feedCreateMutation.mutate({

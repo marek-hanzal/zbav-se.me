@@ -6,28 +6,39 @@ import { TextInput } from "@use-pico/client/ui/text-input";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
-export namespace TitleInput {
-	export interface Props extends Omit<Container.Props, "onChange"> {
+export namespace TextInputContainer {
+	export interface Props extends Omit<Container.Props, "onSubmit" | "onChange"> {
 		defaultValue: string;
 		onSave(value: string): void;
 		onCancel(): void;
 		loading: boolean;
+		statusProps?: Status.Props;
+		textTitle: string;
+		hint?: string;
+		placeholder?: string;
+		minLength?: number;
 	}
 }
 
-export const TitleInput: FC<TitleInput.Props> = ({
+export const TextInputContainer: FC<TextInputContainer.Props> = ({
 	defaultValue,
 	onSave,
 	onCancel,
 	loading,
+	statusProps,
+	textTitle,
+	placeholder,
+	hint,
+	minLength,
+	children,
 	ui,
 	...props
 }) => {
-	const [title, setTitle] = useState(defaultValue);
+	const [value, setValue] = useState(defaultValue);
+	const invalid = minLength != null && (!value || value.length < minLength);
 
 	return (
 		<Container
-			data-ui={"TitleInput[Container]"}
 			ui={{
 				layout: "vertical-content-footer",
 				height: "full",
@@ -44,16 +55,19 @@ export const TitleInput: FC<TitleInput.Props> = ({
 				}}
 			>
 				<Status
-					textTitle={"Feed title (title)"}
+					textTitle={textTitle}
 					action={
 						<FormField>
-							{(props) => (
+							{(fieldProps) => (
 								<TextInput
-									value={title}
-									onChange={(e) => setTitle(e.target.value)}
-									placeholder={"Feed title (placeholder)"}
+									value={value}
+									onChange={(e) => {
+										setValue(e.target.value);
+									}}
+									placeholder={placeholder}
 									autoFocus
-									{...props}
+									minLength={minLength}
+									{...fieldProps}
 								/>
 							)}
 						</FormField>
@@ -62,24 +76,27 @@ export const TitleInput: FC<TitleInput.Props> = ({
 						text: "md",
 						inner: "4xl",
 					}}
+					{...statusProps}
 				>
-					<Mx
-						label={"Feed title (hint)"}
-						ui={{
-							tone: "secondary",
-							theme: "light",
-						}}
-					/>
+					{hint ? (
+						<Mx
+							label={hint}
+							ui={{
+								tone: "neutral",
+								theme: "light",
+							}}
+						/>
+					) : null}
 				</Status>
 			</Container>
 
 			<SaveContainer
 				onCancel={onCancel}
 				onSave={() => {
-					onSave(title);
+					onSave(value);
 				}}
 				loading={loading}
-				disabled={false}
+				disabled={invalid}
 			/>
 		</Container>
 	);
