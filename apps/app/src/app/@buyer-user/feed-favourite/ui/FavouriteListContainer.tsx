@@ -3,9 +3,9 @@ import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedFavouriteCollectionQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
 import { Item } from "~/app/@buyer-user/feed/ui/feed-list-container/Item";
-import { EmptyStatus } from "~/app/feed-favourite/ui/list/EmptyStatus";
+import { EmptyStatus } from "~/app/@buyer-user/feed-favourite/ui/favourite-list-container/EmptyStatus";
 
-export namespace List {
+export namespace FavouriteListContainer {
 	export interface Props extends Container.Props {
 		query: tFeedQuery;
 		linkTo: Item.LinkTo;
@@ -21,10 +21,15 @@ export namespace List {
  *
  * @see {@link Item} - The component used to render individual feed items
  */
-export const List: FC<List.Props> = ({ query, linkTo, ui, ...props }) => {
+export const FavouriteListContainer: FC<FavouriteListContainer.Props> = ({
+	query,
+	linkTo,
+	ui,
+	...props
+}) => {
 	return (
 		<Container
-			data-ui={"List[Container]"}
+			data-ui={"FavouriteListContainer[Container]"}
 			ui={{
 				layout: "vertical-flex",
 				scroll: "vertical",
@@ -45,7 +50,7 @@ export const List: FC<List.Props> = ({ query, linkTo, ui, ...props }) => {
 
 					return (
 						<Container
-							data-ui={"List-[Container.content]"}
+							data-ui={"FavouriteListContainer-[Container.content]"}
 							ui={{
 								layout: "vertical-flex",
 								gap: "default",
@@ -53,7 +58,7 @@ export const List: FC<List.Props> = ({ query, linkTo, ui, ...props }) => {
 						>
 							{data.data.map((feed) => (
 								<Item
-									data-ui={"List-[Item]"}
+									data-ui={"FavouriteListContainer-[Item]"}
 									key={feed.id}
 									feed={feed}
 									defaultOpen={false}

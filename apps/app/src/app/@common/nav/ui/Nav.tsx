@@ -4,7 +4,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { BuyerIcon, HomeIcon, SellerIcon, ShopIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { uiNavButton } from "~/app/home/uiNavButton";
+import { uiNavButton } from "~/app/@common/nav/uiNavButton";
 
 export namespace Nav {
 	export interface Props extends Container.Props {

@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { Container } from "@use-pico/client/ui/container";
-import { Nav } from "~/app/home/Nav";
+import { Nav } from "~/app/@common/nav/ui/Nav";
 
 export const Route = createFileRoute("/$locale/ui")({
 	component() {
