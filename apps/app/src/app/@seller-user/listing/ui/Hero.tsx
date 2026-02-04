@@ -24,12 +24,7 @@ export namespace Hero {
  *
  * @param props Component props extending `Container.Props`.
  */
-export const Hero: FC<Hero.Props> = ({
-	ref,
-	listing,
-	heroImageProps,
-	...props
-}) => {
+export const Hero: FC<Hero.Props> = ({ ref, listing, heroImageProps, ...props }) => {
 	const hero = useHeroUpload(listing.gallery.items);
 
 	const [detail, setDetail] = useState<boolean>(false);

@@ -6,9 +6,9 @@ import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
-import { ListingOverlay } from "~/app/@seller-user/listing/ui/ListingOverlay";
 import { CategoryInline } from "~/app/@common/category/ui/CategoryInline";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
+import { ListingOverlay } from "~/app/@seller-user/listing/ui/ListingOverlay";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
 
 export namespace ListingDetail {
@@ -23,12 +23,7 @@ export namespace ListingDetail {
 	}
 }
 
-export const ListingDetail: FC<ListingDetail.Props> = ({
-	listing,
-	ui,
-	hooks,
-	...props
-}) => {
+export const ListingDetail: FC<ListingDetail.Props> = ({ listing, ui, hooks, ...props }) => {
 	const hero = useHeroUpload(listing.gallery.items);
 
 	return (
@@ -126,27 +121,21 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 							id: delivery,
 							delivery,
 						}))}
-						renderFn={(item) => (
-							<Tx label={`Listing delivery - ${item.delivery}`} />
-						)}
+						renderFn={(item) => <Tx label={`Listing delivery - ${item.delivery}`} />}
 					/>
 				) : null}
 
 				{listing.warranty !== null ? (
 					<LabelValue
 						textLabel={translator.text("Listing warranty (label)")}
-						textValue={
-							<Tx label={`Listing warranty - ${listing.warranty}`} />
-						}
+						textValue={<Tx label={`Listing warranty - ${listing.warranty}`} />}
 					/>
 				) : null}
 
 				{listing.condition !== null ? (
 					<LabelValue
 						textLabel={"Listing condition (label)"}
-						textValue={
-							<ConditionIcon condition={listing.condition} />
-						}
+						textValue={<ConditionIcon condition={listing.condition} />}
 					/>
 				) : null}
 

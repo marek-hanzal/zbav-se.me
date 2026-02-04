@@ -39,7 +39,9 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({ transaction, 
 				width: "full",
 				...ui,
 			}}
-			className={["py-1"]}
+			className={[
+				"py-1",
+			]}
 			{...props}
 		>
 			{toolbar}

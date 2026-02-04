@@ -2,10 +2,10 @@ import { Container } from "@use-pico/client/ui/container";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
 import type { FC } from "react";
 import { useRef } from "react";
+import { TransactionToolbar } from "~/app/@seller-user/transaction/ui/TransactionToolbar";
 import { MessageList } from "~/app/message/MessageList";
 import { TransactionChat } from "~/app/transaction/ui/TransactionChat";
 import { TransactionMessage } from "~/app/transaction/ui/TransactionMessage";
-import { TransactionToolbar } from "~/app/@seller-user/transaction/ui/TransactionToolbar";
 
 export namespace Transaction {
 	export interface Props extends Container.Props {
