@@ -1,14 +1,12 @@
 import { useSelection } from "@use-pico/client/hook";
-import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { tListingPriceEnum } from "@zbav-se.me/sdk/api/public";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
-import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
-import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
-import { TitleContainer } from "@zbav-se.me/ui/container";
+import type { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
 import { PriceTypeSelect } from "~/app/@common/price-type/ui/PriceTypeSelect";
+import { useDraftPatch } from "~/app/@seller-user/draft/hook/useDraftPatch";
 
 export namespace PriceTypePatch {
 	export interface Props extends TitleContainer.Props {
@@ -24,7 +22,10 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
 	onSettled,
 	...props
 }) => {
-	const patch = withDraftFetchQuery.useSet();
+	const { patch, isPending } = useDraftPatch({
+		draft,
+		onSettled,
+	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "single",
 		initial: draft.priceType
@@ -39,54 +40,21 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
 	const priceTypeId = selection.optional.singleId();
 	const priceType = (priceTypeId as tListingPriceEnum) ?? null;
 
-	const mutation = withDraftPatchMutation.useMutation({
-		onSuccess(draft) {
-			patch(() => draft, {
-				where: {
-					id: draft.id,
-				},
-			});
-		},
-		onSettled() {
-			onSettled?.();
-		},
-	});
-
 	return (
-		<TitleContainer
+		<PatchContainer
+			title="Price type (title)"
 			data-ui={"Setup-[TitleContainer.priceType]"}
-			textTitle={"Price type (title)"}
+			onCancel={onCancel}
+			onSave={() =>
+				patch({
+					priceType,
+				})
+			}
+			loading={isPending}
+			disabled={priceType === null}
 			{...props}
 		>
-			<Container
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					width: "full",
-					inner: "default",
-					gap: "default",
-				}}
-			>
-				<PriceTypeSelect selection={selection} />
-
-				<SaveContainer
-					onCancel={onCancel}
-					onSave={() => {
-						mutation.mutate({
-							patch: {
-								priceType,
-							},
-							query: {
-								where: {
-									id: draft.id,
-								},
-							},
-						});
-					}}
-					loading={mutation.isPending}
-					disabled={!priceType}
-				/>
-			</Container>
-		</TitleContainer>
+			<PriceTypeSelect selection={selection} />
+		</PatchContainer>
 	);
 };

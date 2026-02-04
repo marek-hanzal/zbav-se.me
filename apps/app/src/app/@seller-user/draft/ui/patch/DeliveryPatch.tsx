@@ -1,14 +1,12 @@
 import { useSelection } from "@use-pico/client/hook";
-import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { tListingDeliveryEnum } from "@zbav-se.me/sdk/api/public";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
-import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
-import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
-import { TitleContainer } from "@zbav-se.me/ui/container";
+import type { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
 import { DeliverySelect } from "~/app/@common/delivery/ui/DeliverySelect";
+import { useDraftPatch } from "~/app/@seller-user/draft/hook/useDraftPatch";
 
 export namespace DeliveryPatch {
 	export interface Props extends TitleContainer.Props {
@@ -24,7 +22,10 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({
 	onSettled,
 	...props
 }) => {
-	const patch = withDraftFetchQuery.useSet();
+	const { patch, isPending } = useDraftPatch({
+		draft,
+		onSettled,
+	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
 		initial: (draft.delivery ?? []).map((delivery) => ({
@@ -35,54 +36,21 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({
 	const deliveryIds = selection.optional.multiId();
 	const delivery = deliveryIds.length > 0 ? (deliveryIds as tListingDeliveryEnum[]) : null;
 
-	const mutation = withDraftPatchMutation.useMutation({
-		onSuccess(draft) {
-			patch(() => draft, {
-				where: {
-					id: draft.id,
-				},
-			});
-		},
-		onSettled() {
-			onSettled?.();
-		},
-	});
-
 	return (
-		<TitleContainer
+		<PatchContainer
+			title="Delivery (title)"
 			data-ui={"Setup-[TitleContainer.delivery]"}
-			textTitle={"Delivery (title)"}
+			onCancel={onCancel}
+			onSave={() =>
+				patch({
+					delivery,
+				})
+			}
+			loading={isPending}
+			disabled={false}
 			{...props}
 		>
-			<Container
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					width: "full",
-					inner: "default",
-					gap: "default",
-				}}
-			>
-				<DeliverySelect selection={selection} />
-
-				<SaveContainer
-					onCancel={onCancel}
-					onSave={() => {
-						mutation.mutate({
-							patch: {
-								delivery,
-							},
-							query: {
-								where: {
-									id: draft.id,
-								},
-							},
-						});
-					}}
-					loading={mutation.isPending}
-					disabled={false}
-				/>
-			</Container>
-		</TitleContainer>
+			<DeliverySelect selection={selection} />
+		</PatchContainer>
 	);
 };

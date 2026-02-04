@@ -1,13 +1,11 @@
 import { useSelection } from "@use-pico/client/hook";
-import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { tListingWarrantyEnum } from "@zbav-se.me/sdk/api/public";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
-import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
-import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { useDraftPatch } from "~/app/@seller-user/draft/hook/useDraftPatch";
+import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
 import { WarrantySelect } from "~/app/@common/warranty/ui/WarrantySelect";
 
 export namespace WarrantyPatch {
@@ -24,7 +22,7 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({
 	onSettled,
 	...props
 }) => {
-	const patch = withDraftFetchQuery.useSet();
+	const { patch, isPending } = useDraftPatch({ draft, onSettled });
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "single",
 		initial: draft.warranty
@@ -39,54 +37,17 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({
 	const warrantyId = selection.optional.singleId();
 	const warranty = (warrantyId as tListingWarrantyEnum) ?? null;
 
-	const mutation = withDraftPatchMutation.useMutation({
-		onSuccess(draft) {
-			patch(() => draft, {
-				where: {
-					id: draft.id,
-				},
-			});
-		},
-		onSettled() {
-			onSettled?.();
-		},
-	});
-
 	return (
-		<TitleContainer
+		<PatchContainer
+			title="Warranty (title)"
 			data-ui={"Setup-[TitleContainer.warranty]"}
-			textTitle={"Warranty (title)"}
+			onCancel={onCancel}
+			onSave={() => patch({ warranty })}
+			loading={isPending}
+			disabled={false}
 			{...props}
 		>
-			<Container
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					width: "full",
-					inner: "default",
-					gap: "default",
-				}}
-			>
-				<WarrantySelect selection={selection} />
-
-				<SaveContainer
-					onCancel={onCancel}
-					onSave={() => {
-						mutation.mutate({
-							patch: {
-								warranty,
-							},
-							query: {
-								where: {
-									id: draft.id,
-								},
-							},
-						});
-					}}
-					loading={mutation.isPending}
-					disabled={false}
-				/>
-			</Container>
-		</TitleContainer>
+			<WarrantySelect selection={selection} />
+		</PatchContainer>
 	);
 };

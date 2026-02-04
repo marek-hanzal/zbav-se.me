@@ -1,10 +1,10 @@
 import { useSelection } from "@use-pico/client/hook";
-import { Container } from "@use-pico/client/ui/container";
+import type { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
 import { useFeedPatch } from "~/app/@buyer-user/feed/hook/useFeedPatch";
-import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
 import { CategorySelect } from "~/app/@session/category/ui/CategorySelect";
 
 export namespace CategoryPatch {
@@ -30,38 +30,28 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCanc
 	const categoryId = selection.optional.singleId() ?? null;
 
 	return (
-		<Container
+		<PatchContainer
 			data-ui={"CategoryPatch[Container]"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				width: "full",
-				gap: "default",
-				inner: "default",
+			onCancel={onCancel}
+			onSave={() => {
+				patch({
+					query: {
+						...feed.query,
+						filter: {
+							...feed.query?.filter,
+							categoryIdIn: selection.optional.multiId(),
+						},
+					},
+				});
 			}}
+			loading={isPending}
+			disabled={false}
 			{...props}
 		>
 			<CategorySelect
 				selection={selection}
 				categoryId={categoryId ?? undefined}
 			/>
-
-			<SaveContainer
-				onCancel={onCancel}
-				onSave={() => {
-					patch({
-						query: {
-							...feed.query,
-							filter: {
-								...feed.query?.filter,
-								categoryIdIn: selection.optional.multiId(),
-							},
-						},
-					});
-				}}
-				loading={isPending}
-				disabled={false}
-			/>
-		</Container>
+		</PatchContainer>
 	);
 };

@@ -1,9 +1,9 @@
-import { Container } from "@use-pico/client/ui/container";
+import type { Container } from "@use-pico/client/ui/container";
 import type { tFeed, tListingSort } from "@zbav-se.me/sdk/api/buyer-user";
 import { type FC, useState } from "react";
 import { useFeedPatch } from "~/app/@buyer-user/feed/hook/useFeedPatch";
 import { ListingSortSelect } from "~/app/@buyer-user/listing/ui/ListingSortSelect";
-import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
 
 export namespace SortPatch {
 	export interface Props extends Container.Props {
@@ -19,19 +19,23 @@ export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ui, 
 		onSettled,
 	});
 	const [sort, setSort] = useState<tListingSort[]>(feed.query?.sort ?? []);
-
 	const withGeo = !!feed.query?.meta?.latLon;
 
 	return (
-		<Container
+		<PatchContainer
 			data-ui={"SortPatch[Container]"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				gap: "default",
-				inner: "default",
-				...ui,
+			ui={ui}
+			onCancel={onCancel}
+			onSave={() => {
+				patch({
+					query: {
+						...feed.query,
+						sort,
+					},
+				});
 			}}
+			loading={isPending}
+			disabled={false}
 			{...props}
 		>
 			<ListingSortSelect
@@ -41,20 +45,6 @@ export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ui, 
 					set: setSort,
 				}}
 			/>
-
-			<SaveContainer
-				onCancel={onCancel}
-				onSave={() => {
-					patch({
-						query: {
-							...feed.query,
-							sort: sort,
-						},
-					});
-				}}
-				loading={isPending}
-				disabled={false}
-			/>
-		</Container>
+		</PatchContainer>
 	);
 };

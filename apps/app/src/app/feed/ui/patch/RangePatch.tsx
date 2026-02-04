@@ -5,7 +5,7 @@ import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";
 import { useFeedPatch } from "~/app/@buyer-user/feed/hook/useFeedPatch";
-import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
 
 export namespace RangePatch {
 	export interface Props extends Container.Props {
@@ -39,14 +39,12 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 	};
 
 	return (
-		<Container
+		<PatchContainer
 			data-ui={"RangePatch[Container]"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				inner: "default",
-				gap: "default",
-			}}
+			onCancel={onCancel}
+			onSave={handleSave}
+			loading={isPending}
+			disabled={false}
 			{...props}
 		>
 			<Container
@@ -62,7 +60,6 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 						text: "sm",
 					}}
 				/>
-
 				<Dial
 					value={rangeValue}
 					onChange={setRangeValue}
@@ -72,13 +69,6 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 					}}
 				/>
 			</Container>
-
-			<SaveContainer
-				onCancel={onCancel}
-				onSave={handleSave}
-				loading={isPending}
-				disabled={false}
-			/>
-		</Container>
+		</PatchContainer>
 	);
 };

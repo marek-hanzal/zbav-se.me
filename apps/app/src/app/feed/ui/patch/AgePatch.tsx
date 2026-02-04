@@ -5,7 +5,7 @@ import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 import { useFeedPatch } from "~/app/@buyer-user/feed/hook/useFeedPatch";
 import { AgeSelection } from "~/app/@common/age/ui/AgeSelection";
-import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
 
 export namespace AgePatch {
 	export interface Props extends Container.Props {
@@ -16,10 +16,7 @@ export namespace AgePatch {
 }
 
 export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
-	const { patch: mutatePatch, isPending } = useFeedPatch({
-		feed,
-		onSettled,
-	});
+	const { patch, isPending } = useFeedPatch({ feed, onSettled });
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "multi",
 		initial: feed.query?.filter?.ageIn?.map((item) => ({
@@ -28,39 +25,27 @@ export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettled, onCancel, ...pro
 	});
 
 	return (
-		<Container
+		<PatchContainer
 			data-ui={"AgePatch[Container]"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				gap: "default",
-				inner: "default",
+			onCancel={onCancel}
+			onSave={() => {
+				patch({
+					query: {
+						...feed.query,
+						filter: {
+							...feed.query?.filter,
+							ageIn: selection.optional
+								.multiId()
+								.map((id) => Number.parseInt(id, 10)),
+						},
+					},
+				});
 			}}
+			loading={isPending}
+			disabled={false}
 			{...props}
 		>
-			<AgeSelection
-				selection={selection}
-				allowClear
-			/>
-
-			<SaveContainer
-				onCancel={onCancel}
-				onSave={() => {
-					mutatePatch({
-						query: {
-							...feed.query,
-							filter: {
-								...feed.query?.filter,
-								ageIn: selection.optional
-									.multiId()
-									.map((id) => Number.parseInt(id, 10)),
-							},
-						},
-					});
-				}}
-				loading={isPending}
-				disabled={false}
-			/>
-		</Container>
+			<AgeSelection selection={selection} allowClear />
+		</PatchContainer>
 	);
 };

@@ -1,12 +1,10 @@
 import { useSelection } from "@use-pico/client/hook";
-import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
-import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
-import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
-import { TitleContainer } from "@zbav-se.me/ui/container";
+import type { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
+import { useDraftPatch } from "~/app/@seller-user/draft/hook/useDraftPatch";
 import { CategorySelect } from "~/app/@session/category/ui/CategorySelect";
 
 export namespace CategoryPatch {
@@ -23,7 +21,10 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 	onSettled,
 	...props
 }) => {
-	const patch = withDraftFetchQuery.useSet();
+	const { patch, isPending } = useDraftPatch({
+		draft,
+		onSettled,
+	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "single",
 		initial: draft.categoryId
@@ -37,57 +38,24 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 
 	const categoryId = selection.optional.singleId() ?? null;
 
-	const mutation = withDraftPatchMutation.useMutation({
-		onSuccess(draft) {
-			patch(() => draft, {
-				where: {
-					id: draft.id,
-				},
-			});
-		},
-		onSettled() {
-			onSettled?.();
-		},
-	});
-
 	return (
-		<TitleContainer
+		<PatchContainer
+			title="Listing category (title)"
 			data-ui={"Setup-[TitleContainer.category]"}
-			textTitle={"Listing category (title)"}
+			onCancel={onCancel}
+			onSave={() =>
+				patch({
+					categoryId,
+				})
+			}
+			loading={isPending}
+			disabled={!categoryId}
 			{...props}
 		>
-			<Container
-				ui={{
-					layout: "vertical-content-footer",
-					height: "full",
-					width: "full",
-					gap: "default",
-					inner: "default",
-				}}
-			>
-				<CategorySelect
-					selection={selection}
-					categoryId={categoryId ?? undefined}
-				/>
-
-				<SaveContainer
-					onCancel={onCancel}
-					onSave={() => {
-						mutation.mutate({
-							patch: {
-								categoryId,
-							},
-							query: {
-								where: {
-									id: draft.id,
-								},
-							},
-						});
-					}}
-					loading={mutation.isPending}
-					disabled={!categoryId}
-				/>
-			</Container>
-		</TitleContainer>
+			<CategorySelect
+				selection={selection}
+				categoryId={categoryId ?? undefined}
+			/>
+		</PatchContainer>
 	);
 };

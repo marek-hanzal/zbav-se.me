@@ -5,10 +5,9 @@ import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { sListingCreate } from "@zbav-se.me/sdk/api/seller-user";
-import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
-import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
+import { useDraftPatch } from "~/app/@seller-user/draft/hook/useDraftPatch";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 export namespace TitlePatch {
@@ -20,21 +19,8 @@ export namespace TitlePatch {
 }
 
 export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
-	const patch = withDraftFetchQuery.useSet();
+	const { patch, isPending } = useDraftPatch({ draft, onSettled });
 	const [title, setTitle] = useState(draft.title ?? "");
-
-	const mutation = withDraftPatchMutation.useMutation({
-		onSuccess(draft) {
-			patch(() => draft, {
-				where: {
-					id: draft.id,
-				},
-			});
-		},
-		onSettled() {
-			onSettled?.();
-		},
-	});
 
 	return (
 		<TitleContainer
@@ -60,17 +46,15 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSettled, .
 						textTitle={"Listing title (title)"}
 						action={
 							<FormField>
-								{(props) => (
+								{(fieldProps) => (
 									<TextInput
 										value={title}
-										onChange={(e) => {
-											setTitle(e.target.value);
-										}}
+										onChange={(e) => setTitle(e.target.value)}
 										placeholder={"Listing title (placeholder)"}
 										autoFocus
 										minLength={sListingCreate.properties.title.minLength}
 										maxLength={sListingCreate.properties.title.maxLength}
-										{...props}
+										{...fieldProps}
 									/>
 								)}
 							</FormField>
@@ -88,19 +72,8 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSettled, .
 
 				<SaveContainer
 					onCancel={onCancel}
-					onSave={() => {
-						mutation.mutate({
-							patch: {
-								title,
-							},
-							query: {
-								where: {
-									id: draft.id,
-								},
-							},
-						});
-					}}
-					loading={mutation.isPending}
+					onSave={() => patch({ title })}
+					loading={isPending}
 					disabled={!title}
 				/>
 			</Container>

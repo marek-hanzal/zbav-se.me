@@ -1,10 +1,9 @@
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
-import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
-import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { LocationSelectContainer } from "~/app/@common/location/ui/LocationSelectContainer";
+import { useDraftPatch } from "~/app/@seller-user/draft/hook/useDraftPatch";
 
 export namespace LocationPatch {
 	export interface Props extends TitleContainer.Props {
@@ -20,18 +19,9 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 	onSettled,
 	...props
 }) => {
-	const patch = withDraftFetchQuery.useSet();
-	const mutation = withDraftPatchMutation.useMutation({
-		onSuccess(draft) {
-			patch(() => draft, {
-				where: {
-					id: draft.id,
-				},
-			});
-		},
-		onSettled() {
-			onSettled?.();
-		},
+	const { patch, isPending } = useDraftPatch({
+		draft,
+		onSettled,
 	});
 
 	return (
@@ -43,19 +33,12 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 			<LocationSelectContainer
 				textHint={translator.text("Location security (hint)")}
 				onCancel={onCancel}
-				onSave={({ locationId }) => {
-					mutation.mutate({
-						patch: {
-							locationId,
-						},
-						query: {
-							where: {
-								id: draft.id,
-							},
-						},
-					});
-				}}
-				loading={mutation.isPending}
+				onSave={({ locationId }) =>
+					patch({
+						locationId,
+					})
+				}
+				loading={isPending}
 				value={draft.locationId}
 				ui={{
 					inner: "default",

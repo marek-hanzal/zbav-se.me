@@ -5,7 +5,7 @@ import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import type { tListingWarrantyEnum } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
 import { useFeedPatch } from "~/app/@buyer-user/feed/hook/useFeedPatch";
-import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
 import { WarrantySelect } from "~/app/@common/warranty/ui/WarrantySelect";
 
 export namespace WarrantyPatch {
@@ -23,10 +23,7 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({
 	ui,
 	...props
 }) => {
-	const { patch, isPending } = useFeedPatch({
-		feed,
-		onSettled,
-	});
+	const { patch, isPending } = useFeedPatch({ feed, onSettled });
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
 		initial: (feed.query?.filter?.warrantyIn ?? []).map((warranty) => ({
@@ -35,35 +32,26 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({
 	});
 
 	return (
-		<Container
+		<PatchContainer
 			data-ui={"WarrantyPatch[Container]"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				inner: "default",
-				gap: "default",
-				...ui,
+			ui={ui}
+			onCancel={onCancel}
+			onSave={() => {
+				patch({
+					query: {
+						...feed.query,
+						filter: {
+							...feed.query?.filter,
+							warrantyIn: selection.optional.multiId() as tListingWarrantyEnum[],
+						},
+					},
+				});
 			}}
+			loading={isPending}
+			disabled={false}
 			{...props}
 		>
 			<WarrantySelect selection={selection} />
-
-			<SaveContainer
-				onCancel={onCancel}
-				onSave={() => {
-					patch({
-						query: {
-							...feed.query,
-							filter: {
-								...feed.query?.filter,
-								warrantyIn: selection.optional.multiId() as tListingWarrantyEnum[],
-							},
-						},
-					});
-				}}
-				loading={isPending}
-				disabled={false}
-			/>
-		</Container>
+		</PatchContainer>
 	);
 };
