@@ -6,8 +6,8 @@ import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/u
 import { type FC, useState } from "react";
 import { LocationButton } from "~/app/@buyer-user/transaction/ui/button/LocationButton";
 import { PersonalButton } from "~/app/@buyer-user/transaction/ui/button/PersonalButton";
+import { MessageButtonUi } from "~/app/@common/transaction/ui/MessageButtonUi";
 import { GalleryUploadButton } from "~/app/photo/ui/GalleryUploadButton";
-import { MessageButtonUi } from "~/app/transaction/ui/transaction-status/MessageButtonUi";
 
 export namespace DisputeMessage {
 	export interface Props extends Container.Props {

@@ -4,11 +4,11 @@ import type { tTransaction } from "@zbav-se.me/sdk/api/seller-user";
 import { withTransactionMessageGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { type FC, useState } from "react";
+import { MessageButtonUi } from "~/app/@common/transaction/ui/MessageButtonUi";
 import { LocationButton } from "~/app/@seller-user/transaction/ui/button/LocationButton";
 import { PackageButton } from "~/app/@seller-user/transaction/ui/button/PackageButton";
 import { PersonalButton } from "~/app/@seller-user/transaction/ui/button/PersonalButton";
 import { GalleryUploadButton } from "~/app/photo/ui/GalleryUploadButton";
-import { MessageButtonUi } from "~/app/transaction/ui/transaction-status/MessageButtonUi";
 
 export namespace OpenMessage {
 	export interface Props extends Container.Props {
