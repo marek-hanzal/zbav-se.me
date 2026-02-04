@@ -1,6 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
-import type { tUpload } from "@zbav-se.me/sdk/api/seller-user";
+import type { tUpload } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef } from "react";
 

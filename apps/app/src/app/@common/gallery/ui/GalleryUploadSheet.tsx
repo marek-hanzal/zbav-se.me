@@ -1,7 +1,7 @@
 import type { withMutation } from "@use-pico/client/mutation";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import type { StateType } from "@use-pico/common/type";
-import { GalleryUploadControl } from "./GalleryUploadControl";
+import { GalleryUploadContainer } from "~/app/@common/gallery/ui/GalleryUploadContainer";
 
 export namespace GalleryUploadSheet {
 	export interface Uploads {
@@ -37,7 +37,7 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 			onClose={() => state.set(false)}
 			{...props}
 		>
-			<GalleryUploadControl
+			<GalleryUploadContainer
 				withMutation={withMutation}
 				toMutation={toMutation}
 				onCancel={onCancel}

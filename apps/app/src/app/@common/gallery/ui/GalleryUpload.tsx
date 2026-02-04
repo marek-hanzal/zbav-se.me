@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { SnapperNav } from "@use-pico/client/ui/snapper-nav";
 import type { StateType } from "@use-pico/common/type";
 import { type FC, useRef } from "react";
-import { PhotoUpload } from "./PhotoUpload";
+import { PhotoUpload } from "~/app/@common/photo/ui/PhotoUpload";
 
 export namespace GalleryUpload {
 	export interface Props extends Container.Props {

@@ -4,11 +4,11 @@ import type { tTransaction } from "@zbav-se.me/sdk/api/seller-user";
 import { withTransactionMessageGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { type FC, useState } from "react";
+import { GalleryUploadButton } from "~/app/@common/gallery/ui/GalleryUploadButton";
 import { LocationButton } from "~/app/@common/location/ui/LocationButton";
 import { PackageButton } from "~/app/@common/package/ui/PackageButton";
 import { PersonalButton } from "~/app/@common/personal/ui/PersonalButton";
 import { MessageButtonUi } from "~/app/@common/transaction/ui/MessageButtonUi";
-import { GalleryUploadButton } from "~/app/photo/ui/GalleryUploadButton";
 
 export namespace DisputeMessage {
 	export interface Props extends Container.Props {

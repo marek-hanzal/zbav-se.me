@@ -5,7 +5,7 @@ import { withDraftGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/seller-
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { GalleryUploadControl } from "~/app/photo/ui/GalleryUploadControl";
+import { GalleryUploadContainer } from "~/app/@common/gallery/ui/GalleryUploadContainer";
 
 export namespace GalleryPatch {
 	export interface Props extends Container.Props {
@@ -37,7 +37,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 			}}
 			{...props}
 		>
-			<GalleryUploadControl
+			<GalleryUploadContainer
 				withMutation={withDraftGalleryCreateMutation}
 				toMutation={(uploadIds) => ({
 					draftId: draft.id,

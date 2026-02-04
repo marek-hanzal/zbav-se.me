@@ -18,7 +18,7 @@ import { RangePatch } from "~/app/feed/ui/patch/RangePatch";
 import { SortPatch } from "~/app/feed/ui/patch/SortPatch";
 import { TitlePatch } from "~/app/feed/ui/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/feed/ui/patch/WarrantyPatch";
-import { GalleryUploadControl } from "~/app/photo/ui/GalleryUploadControl";
+import { GalleryUploadContainer } from "~/app/@common/gallery/ui/GalleryUploadContainer";
 
 export namespace EditorSheet {
 	export type Views =
@@ -140,7 +140,7 @@ export const EditorSheet: FC<EditorSheet.Props> = ({
 				},
 				gallery: {
 					children: (
-						<GalleryUploadControl
+						<GalleryUploadContainer
 							data-ui={"FeedDetailContainer-[GalleryUploadSheet]"}
 							withMutation={withFeedGalleryCreateMutation}
 							defaultUploadIds={

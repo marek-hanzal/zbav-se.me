@@ -4,10 +4,10 @@ import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
 import { withTransactionMessageGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { type FC, useState } from "react";
+import { GalleryUploadButton } from "~/app/@common/gallery/ui/GalleryUploadButton";
 import { LocationButton } from "~/app/@common/location/ui/LocationButton";
 import { PersonalButton } from "~/app/@common/personal/ui/PersonalButton";
 import { MessageButtonUi } from "~/app/@common/transaction/ui/MessageButtonUi";
-import { GalleryUploadButton } from "~/app/photo/ui/GalleryUploadButton";
 
 export namespace OpenMessage {
 	export interface Props extends Container.Props {

@@ -2,9 +2,9 @@ import type { withMutation } from "@use-pico/client/mutation";
 import { Container } from "@use-pico/client/ui/container";
 import { useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { GalleryUpload } from "./GalleryUpload";
+import { GalleryUpload } from "~/app/@common/gallery/ui/GalleryUpload";
 
-export namespace GalleryUploadControl {
+export namespace GalleryUploadContainer {
 	export interface Uploads {
 		uploadIds: string[];
 	}
@@ -20,7 +20,7 @@ export namespace GalleryUploadControl {
 	}
 }
 
-export const GalleryUploadControl = <TData extends GalleryUploadControl.Uploads>({
+export const GalleryUploadContainer = <TData extends GalleryUploadContainer.Uploads>({
 	withMutation,
 	toMutation,
 	defaultUploadIds = [],
@@ -29,7 +29,7 @@ export const GalleryUploadControl = <TData extends GalleryUploadControl.Uploads>
 	ui,
 	limit = 1,
 	...props
-}: GalleryUploadControl.Props<TData>) => {
+}: GalleryUploadContainer.Props<TData>) => {
 	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
 	const mutation = withMutation.useMutation({
 		async onPostMutation() {
@@ -39,7 +39,7 @@ export const GalleryUploadControl = <TData extends GalleryUploadControl.Uploads>
 
 	return (
 		<Container
-			data-ui={"GalleryUploadControl-[Container]"}
+			data-ui={"GalleryUploadContainer-[Container]"}
 			ui={{
 				layout: "vertical-content-footer",
 				gap: "default",
