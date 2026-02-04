@@ -4,10 +4,10 @@ import type { tTransaction } from "@zbav-se.me/sdk/api/seller-user";
 import { withTransactionMessageGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { type FC, useState } from "react";
+import { LocationButton } from "~/app/@seller-user/transaction/ui/button/LocationButton";
 import { PackageButton } from "~/app/@seller-user/transaction/ui/button/PackageButton";
+import { PersonalButton } from "~/app/@seller-user/transaction/ui/button/PersonalButton";
 import { GalleryUploadButton } from "~/app/photo/ui/GalleryUploadButton";
-import { LocationButton } from "~/app/transaction/ui/button/LocationButton";
-import { PersonalButton } from "~/app/transaction/ui/button/PersonalButton";
 import { MessageButtonUi } from "~/app/transaction/ui/transaction-status/MessageButtonUi";
 
 export namespace OpenMessage {
@@ -41,12 +41,12 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ transaction, ui, ...props }
 			/>
 
 			<PersonalButton
-				transaction={transaction as import("@zbav-se.me/sdk/api/buyer-user").tTransaction}
+				transaction={transaction}
 				{...MessageButtonUi}
 			/>
 
 			<LocationButton
-				transaction={transaction as import("@zbav-se.me/sdk/api/buyer-user").tTransaction}
+				transaction={transaction}
 				{...MessageButtonUi}
 			/>
 

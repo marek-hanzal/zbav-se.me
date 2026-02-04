@@ -9,11 +9,9 @@ export namespace ResolvedToolbar {
 	}
 }
 
-export const ResolvedToolbar: FC<ResolvedToolbar.Props> = ({ transaction }) => {
-	return (
-		<DisputeButton
-			transaction={transaction}
-			{...TransactionButtonUi}
-		/>
-	);
-};
+export const ResolvedToolbar: FC<ResolvedToolbar.Props> = ({ transaction }) => (
+	<DisputeButton
+		transaction={transaction}
+		{...TransactionButtonUi}
+	/>
+);
