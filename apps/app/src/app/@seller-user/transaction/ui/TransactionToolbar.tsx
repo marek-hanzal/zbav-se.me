@@ -1,10 +1,10 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
+import type { tTransaction } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { DisputeToolbar } from "~/app/transaction/ui/transaction-status/DisputeToolbar";
-import { OpenToolbar } from "~/app/transaction/ui/transaction-status/OpenToolbar";
-import { ResolvedToolbar } from "~/app/transaction/ui/transaction-status/ResolvedToolbar";
+import { DisputeToolbar } from "~/app/@seller-user/transaction/ui/transaction-status/DisputeToolbar";
+import { OpenToolbar } from "~/app/@seller-user/transaction/ui/transaction-status/OpenToolbar";
+import { ResolvedToolbar } from "~/app/@seller-user/transaction/ui/transaction-status/ResolvedToolbar";
 
 export namespace TransactionToolbar {
 	export interface Props extends Container.Props {
@@ -39,9 +39,7 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({ transaction, 
 				width: "full",
 				...ui,
 			}}
-			className={[
-				"py-1",
-			]}
+			className={["py-1"]}
 			{...props}
 		>
 			{toolbar}

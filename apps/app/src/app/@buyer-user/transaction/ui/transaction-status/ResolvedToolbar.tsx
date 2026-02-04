@@ -1,8 +1,7 @@
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
 import { CloseButton } from "~/app/@buyer-user/transaction/ui/button/CloseButton";
-import { useSide } from "~/app/@user/useSide";
-import { DisputeButton } from "~/app/transaction/ui/button/DisputeButton";
+import { DisputeButton } from "~/app/@buyer-user/transaction/ui/button/DisputeButton";
 import { SuccessButton } from "~/app/transaction/ui/button/SuccessButton";
 import { TransactionButtonUi } from "~/app/transaction/ui/transaction-status/TransactionButtonUi";
 
@@ -13,24 +12,16 @@ export namespace ResolvedToolbar {
 }
 
 export const ResolvedToolbar: FC<ResolvedToolbar.Props> = ({ transaction }) => {
-	const side = useSide();
-
 	return (
 		<>
-			{side === "buyer" ? (
-				<SuccessButton
-					transaction={transaction}
-					{...TransactionButtonUi}
-				/>
-			) : null}
-
-			{side === "buyer" ? (
-				<CloseButton
-					transaction={transaction}
-					{...TransactionButtonUi}
-				/>
-			) : null}
-
+			<SuccessButton
+				transaction={transaction}
+				{...TransactionButtonUi}
+			/>
+			<CloseButton
+				transaction={transaction}
+				{...TransactionButtonUi}
+			/>
 			<DisputeButton
 				transaction={transaction}
 				{...TransactionButtonUi}

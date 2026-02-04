@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { MessageList } from "~/app/message/MessageList";
 import { TransactionChat } from "~/app/transaction/ui/TransactionChat";
 import { TransactionMessage } from "~/app/transaction/ui/TransactionMessage";
-import { TransactionToolbar } from "~/app/transaction/ui/TransactionToolbar";
+import { TransactionToolbar } from "~/app/@seller-user/transaction/ui/TransactionToolbar";
 
 export namespace Transaction {
 	export interface Props extends Container.Props {
