@@ -9,15 +9,15 @@ import type { tListingQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/seller-user/listing";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useRef } from "react";
-import { Content } from "./Content";
+import { Content } from "./listing-list-container/Content";
 
-export namespace List {
+export namespace ListingListContainer {
 	export interface Props extends Container.Props {
 		query: tListingQuery;
 	}
 }
 
-export const List: FC<List.Props> = ({ query, ...props }) => {
+export const ListingListContainer: FC<ListingListContainer.Props> = ({ query, ...props }) => {
 	const locale = useLocale();
 	const scrollerRef = useRef<HTMLDivElement>(null);
 

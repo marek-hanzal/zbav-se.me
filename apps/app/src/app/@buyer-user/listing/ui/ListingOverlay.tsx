@@ -1,7 +1,7 @@
 import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
+import { ListingPrice } from "~/app/@common/listing-price/ui/ListingPrice";
 import { ListingLocation } from "~/app/listing/ui/ListingLocation";
-import { ListingPrice } from "~/app/listing/ui/ListingPrice";
 
 export namespace ListingOverlay {
 	export interface Props {
