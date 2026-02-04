@@ -1,21 +1,22 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { transactionFetchFx } from "~/@buyer-user/transaction/fx/transactionFetchFx";
-import { transactionGetBuyerInfoFx } from "~/@buyer-user/transaction/fx/transactionGetBuyerInfoFx";
-import { TransactionBuyerInfoSchema } from "~/@buyer-user/transaction/schema/TransactionBuyerInfoSchema";
 import { TransactionQuerySchema } from "~/@common/transaction/schema/TransactionQuerySchema";
+import { transactionGetBuyerInfoFx } from "~/@seller-session/transaction/fx/transactionGetBuyerInfoFx";
+import { TransactionBuyerInfoSchema } from "~/@seller-session/transaction/schema/TransactionBuyerInfoSchema";
+import { transactionFetchFx } from "~/@seller-user/transaction/fx/transactionFetchFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
-	const { buyerUserHono } = yield* RoutesContextFx;
-	buyerUserHono.openapi(
+	const { sellerSessionHono } = yield* RoutesContextFx;
+	sellerSessionHono.openapi(
 		createRoute({
 			method: "post",
 			path: "/transaction/buyer-info",
-			description: "Return buyer info for a transaction. Requires access to the transaction.",
+			description:
+				"Return buyer info for a transaction. Requires seller access to the transaction.",
 			operationId: "apiTransactionBuyerInfo",
 			request: {
 				body: {

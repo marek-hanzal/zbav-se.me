@@ -24,5 +24,5 @@ export const TransactionBuyerInfoSchema = z
 export type TransactionBuyerInfoSchema = typeof TransactionBuyerInfoSchema;
 
 export namespace TransactionBuyerInfoSchema {
-	export type Type = z.infer<TransactionBuyerInfoSchema>;
+	export type Type = z.infer<typeof TransactionBuyerInfoSchema>;
 }

@@ -5,7 +5,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
-import { withTransactionBuyerInfoQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
+import { withTransactionBuyerInfoQuery } from "@zbav-se.me/sdk/query/seller-session/transaction";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
 import { RatingToIcon } from "@zbav-se.me/ui/rating";
 import { DateTime } from "luxon";

@@ -1473,196 +1473,34 @@ export const zThumbCreate = z.object({
 export type zThumbCreate = z.infer<typeof zThumbCreate>;
 
 /**
- * Initial reaction on opened transaction by seller.
+ * Transaction collection item with last message timestamp
  */
-export const zUserEventBuyerReaction = z.object({
-    total: z.number().register(z.globalRegistry, {
-        description: 'Total number of samples (transactions)'
+export const zTransactionItem = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction'
     }),
-    reactions: z.number().register(z.globalRegistry, {
-        description: 'Total number of reactions'
-    }),
-    terminal: z.number().register(z.globalRegistry, {
-        description: 'Total number of terminal reactions (usually from the other side)'
-    }),
-    percent: z.number().register(z.globalRegistry, {
-        description: 'Percentage of reactions (reactions + terminal) / total'
-    }),
-    medianMs: z.number().register(z.globalRegistry, {
-        description: 'Median milliseconds between transaction opening and reaction'
-    }),
-    p90Ms: z.number().register(z.globalRegistry, {
-        description: '90th percentile milliseconds between transaction opening and reaction'
+    lastAt: z.string().register(z.globalRegistry, {
+        description: 'Timestamp of the last message in the transaction'
     })
 }).register(z.globalRegistry, {
-    description: 'Initial reaction on opened transaction by seller.'
+    description: 'Transaction collection item with last message timestamp'
 });
 
-export type zUserEventBuyerReaction = z.infer<typeof zUserEventBuyerReaction>;
+export type zTransactionItem = z.infer<typeof zTransactionItem>;
 
 /**
- * This metric describes if the user instantly closes transactions (means - no interaction, just open and kill)
+ * Collection of transactions
  */
-export const zUserEventBuyerCloser = z.object({
-    total: z.number().register(z.globalRegistry, {
-        description: 'Total number of samples (transactions)'
-    }),
-    closed: z.number().register(z.globalRegistry, {
-        description: 'Total number of closed transactions'
-    }),
-    percent: z.number().register(z.globalRegistry, {
-        description: 'Percentage of closed transactions (closed / total)'
-    }),
-    medianMs: z.number().register(z.globalRegistry, {
-        description: 'Median milliseconds between transaction creation and closing'
-    }),
-    p90Ms: z.number().register(z.globalRegistry, {
-        description: '90th percentile milliseconds between transaction creation and closing'
+export const zTransactionItemSchema = z.object({
+    data: z.array(zTransactionItem),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
     })
 }).register(z.globalRegistry, {
-    description: 'This metric describes if the user instantly closes transactions (means - no interaction, just open and kill)'
+    description: 'Collection of transactions'
 });
 
-export type zUserEventBuyerCloser = z.infer<typeof zUserEventBuyerCloser>;
-
-/**
- * This metric describes if the user is used to close/success transactions
- */
-export const zUserEventBuyerDecision = z.object({
-    total: z.number().register(z.globalRegistry, {
-        description: 'Total number of samples (transactions)'
-    }),
-    decisions: z.number().register(z.globalRegistry, {
-        description: 'Total number of decisions (success, closed)'
-    }),
-    terminal: z.number().register(z.globalRegistry, {
-        description: 'Total number of terminal decisions (usually from the other side)'
-    }),
-    percent: z.number().register(z.globalRegistry, {
-        description: 'Percentage of closed transactions (closed / total)'
-    })
-}).register(z.globalRegistry, {
-    description: 'This metric describes if the user is used to close/success transactions'
-});
-
-export type zUserEventBuyerDecision = z.infer<typeof zUserEventBuyerDecision>;
-
-/**
- * This metric describes if the user is used to expire transactions (no user's messages)
- */
-export const zUserEventBuyerExpired = z.object({
-    total: z.number().register(z.globalRegistry, {
-        description: 'Total number of samples (transactions)'
-    }),
-    expired: z.number().register(z.globalRegistry, {
-        description: 'Total number of expired transactions'
-    }),
-    percent: z.number().register(z.globalRegistry, {
-        description: 'Percentage of expired transactions (expired / total)'
-    })
-}).register(z.globalRegistry, {
-    description: 'This metric describes if the user is used to expire transactions (no user\'s messages)'
-});
-
-export type zUserEventBuyerExpired = z.infer<typeof zUserEventBuyerExpired>;
-
-/**
- * Load type of the buyer
- */
-export const zLoadEnum = z.enum([
-    'low',
-    'medium',
-    'high'
-]).register(z.globalRegistry, {
-    description: 'Load type of the buyer'
-});
-
-export type zLoadEnum = z.infer<typeof zLoadEnum>;
-
-/**
- * Masks number of transactions of the buyer, basically it tells, how busy buyer is.
- */
-export const zUserEventBuyerLoad = z.object({
-    bucket: zLoadEnum
-}).register(z.globalRegistry, {
-    description: 'Masks number of transactions of the buyer, basically it tells, how busy buyer is.'
-});
-
-export type zUserEventBuyerLoad = z.infer<typeof zUserEventBuyerLoad>;
-
-/**
- * Activity type of the buyer
- */
-export const zActivityEnum = z.enum([
-    'low',
-    'medium',
-    'high'
-]).register(z.globalRegistry, {
-    description: 'Activity type of the buyer'
-});
-
-export type zActivityEnum = z.infer<typeof zActivityEnum>;
-
-/**
- * This metric describes the approx activity of the user
- */
-export const zUserEventBuyerActivity = z.object({
-    bucket: zActivityEnum
-}).register(z.globalRegistry, {
-    description: 'This metric describes the approx activity of the user'
-});
-
-export type zUserEventBuyerActivity = z.infer<typeof zUserEventBuyerActivity>;
-
-/**
- * This metric describes the score of the user
- */
-export const zUserEventBuyerScore = z.object({
-    score: z.number().register(z.globalRegistry, {
-        description: 'Low-level score value, usually not presented in UI'
-    }),
-    rank: z.number().register(z.globalRegistry, {
-        description: 'Rank computed from the score (A-F, 1-6)'
-    })
-}).register(z.globalRegistry, {
-    description: 'This metric describes the score of the user'
-});
-
-export type zUserEventBuyerScore = z.infer<typeof zUserEventBuyerScore>;
-
-/**
- * Buyer info for the user event
- */
-export const zUserEventBuyer = z.object({
-    reaction: zUserEventBuyerReaction,
-    closer: zUserEventBuyerCloser,
-    decision: zUserEventBuyerDecision,
-    expired: zUserEventBuyerExpired,
-    load: zUserEventBuyerLoad,
-    activity: zUserEventBuyerActivity,
-    score: zUserEventBuyerScore
-}).register(z.globalRegistry, {
-    description: 'Buyer info for the user event'
-});
-
-export type zUserEventBuyer = z.infer<typeof zUserEventBuyer>;
-
-/**
- * Buyer info for the transaction
- */
-export const zTransactionBuyerInfo = z.object({
-    registered: z.string().register(z.globalRegistry, {
-        description: 'Registration date'
-    }),
-    events: z.union([
-        z.null(),
-        zUserEventBuyer
-    ])
-}).register(z.globalRegistry, {
-    description: 'Buyer info for the transaction'
-});
-
-export type zTransactionBuyerInfo = z.infer<typeof zTransactionBuyerInfo>;
+export type zTransactionItemSchema = z.infer<typeof zTransactionItemSchema>;
 
 /**
  * This filter matches the current status of the transaction
@@ -1783,36 +1621,6 @@ export const zTransactionQuery = z.object({
 });
 
 export type zTransactionQuery = z.infer<typeof zTransactionQuery>;
-
-/**
- * Transaction collection item with last message timestamp
- */
-export const zTransactionItem = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the transaction'
-    }),
-    lastAt: z.string().register(z.globalRegistry, {
-        description: 'Timestamp of the last message in the transaction'
-    })
-}).register(z.globalRegistry, {
-    description: 'Transaction collection item with last message timestamp'
-});
-
-export type zTransactionItem = z.infer<typeof zTransactionItem>;
-
-/**
- * Collection of transactions
- */
-export const zTransactionItemSchema = z.object({
-    data: z.array(zTransactionItem),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of transactions'
-});
-
-export type zTransactionItemSchema = z.infer<typeof zTransactionItemSchema>;
 
 /**
  * Transaction data
@@ -2279,21 +2087,6 @@ export type zapiThumbCreateRequest = z.infer<typeof zApiThumbCreateData>;
 export const zApiThumbCreateResponse = zListing;
 
 export type zapiThumbCreateResponse = z.infer<typeof zApiThumbCreateResponse>;
-
-export const zApiTransactionBuyerInfoData = z.object({
-    body: z.optional(zTransactionQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export type zapiTransactionBuyerInfoRequest = z.infer<typeof zApiTransactionBuyerInfoData>;
-
-/**
- * Buyer info
- */
-export const zApiTransactionBuyerInfoResponse = zTransactionBuyerInfo;
-
-export type zapiTransactionBuyerInfoResponse = z.infer<typeof zApiTransactionBuyerInfoResponse>;
 
 export const zApiTransactionCollectionData = z.object({
     body: z.optional(zTransactionQuery),

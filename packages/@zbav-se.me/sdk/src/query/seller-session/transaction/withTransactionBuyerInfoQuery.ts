@@ -1,12 +1,12 @@
 import { withQuery } from "@use-pico/client/query";
-import { apiTransactionBuyerInfo } from "../../../api/buyer-user/sdk.gen";
-import type {
-	tApiTransactionBuyerInfoResponse,
-	tTransactionQuery,
-} from "../../../api/buyer-user/types.gen";
+import {
+	apiTransactionBuyerInfo,
+	type tApiTransactionBuyerInfoRequest,
+	type tApiTransactionBuyerInfoResponse,
+} from "@zbav-se.me/sdk/api/seller-session";
 
 export const withTransactionBuyerInfoQuery = withQuery<
-	tTransactionQuery,
+	tApiTransactionBuyerInfoRequest["body"],
 	tApiTransactionBuyerInfoResponse[200]
 >({
 	keys(variables) {
@@ -20,6 +20,6 @@ export const withTransactionBuyerInfoQuery = withQuery<
 		return apiTransactionBuyerInfo({
 			body,
 			throwOnError: true,
-		}).then((res: { data: tApiTransactionBuyerInfoResponse[200] }) => res.data);
+		}).then((res) => res.data);
 	},
 });
