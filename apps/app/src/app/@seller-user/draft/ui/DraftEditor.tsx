@@ -15,6 +15,7 @@ import { ConsValueList } from "~/app/@common/cons/ui/ConsValueList";
 import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
 import { DescriptionValue } from "~/app/@common/description/ui/DescriptionValue";
 import { ExpireAtValue } from "~/app/@common/expire-at/ui/ExpireAtValue";
+import { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { PriceValue } from "~/app/@common/price/ui/PriceValue";
 import { PriceTypeValue } from "~/app/@common/price-type/ui/PriceTypeValue";
@@ -37,7 +38,6 @@ import { PriceTypePatch } from "~/app/@seller-user/draft/ui/patch/PriceTypePatch
 import { ProsPatch } from "~/app/@seller-user/draft/ui/patch/ProsPatch";
 import { TitlePatch } from "~/app/@seller-user/draft/ui/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/@seller-user/draft/ui/patch/WarrantyPatch";
-import { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 
 export namespace DraftEditor {
 	export type View =

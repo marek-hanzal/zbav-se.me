@@ -19,8 +19,8 @@ import { TransactionButton } from "~/app/@buyer-user/listing/ui/button/Transacti
 import { ListingOverlay } from "~/app/@buyer-user/listing/ui/ListingOverlay";
 import { CategoryInline } from "~/app/@common/category/ui/CategoryInline";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
-import { ScoreIcon } from "~/app/@common/score/ui/ScoreIcon";
 import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
+import { ScoreIcon } from "~/app/@common/score/ui/ScoreIcon";
 
 export namespace ListingDetail {
 	export type Tools = "destructive" | "hero" | "thumb";
