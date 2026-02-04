@@ -1,7 +1,6 @@
 import { useSelection } from "@use-pico/client/hook";
 import type { EntitySchema } from "@use-pico/common/schema";
-import type { tListingPriceEnum } from "@zbav-se.me/sdk/api/public";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
+import type { tDraft, tListingPriceEnum } from "@zbav-se.me/sdk/api/seller-user";
 import type { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
