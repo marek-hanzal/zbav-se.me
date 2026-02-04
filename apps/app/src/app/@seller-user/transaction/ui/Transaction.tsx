@@ -3,7 +3,7 @@ import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/seller-user/tra
 import type { FC } from "react";
 import { useRef } from "react";
 import { MessageList } from "~/app/@common/message/MessageList";
-import { TransactionMessage } from "~/app/@seller-session/transaction/ui/TransactionMessage";
+import { TransactionMessage } from "~/app/@seller-user/transaction/ui/TransactionMessage";
 import { TransactionChat } from "~/app/@seller-user/transaction/ui/TransactionChat";
 import { TransactionToolbar } from "~/app/@seller-user/transaction/ui/TransactionToolbar";
 

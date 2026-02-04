@@ -2,7 +2,7 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { PendingMessage } from "~/app/@seller-session/transaction/ui/PendingMessage";
+import { PendingMessage } from "~/app/@seller-user/transaction/ui/PendingMessage";
 import { DisputeMessage } from "~/app/@seller-user/transaction-status/ui/DisputeMessage";
 import { OpenMessage } from "~/app/@seller-user/transaction-status/ui/OpenMessage";
 
