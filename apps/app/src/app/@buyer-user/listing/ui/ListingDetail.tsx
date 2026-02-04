@@ -20,7 +20,7 @@ import { ListingOverlay } from "~/app/@buyer-user/listing/ui/ListingOverlay";
 import { CategoryInline } from "~/app/@common/category/ui/CategoryInline";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
-import { SellerScoreIcon } from "~/app/listing/ui/SellerScoreIcon";
+import { ScoreIcon } from "~/app/@common/score/ui/ScoreIcon";
 
 export namespace ListingDetail {
 	export type Tools = "destructive" | "hero" | "thumb";
@@ -233,7 +233,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 								textLabel={"Listing seller hint (label)"}
 								textValue={
 									sellerInfo.events ? (
-										<SellerScoreIcon score={sellerInfo.events.score.rank} />
+										<ScoreIcon score={sellerInfo.events.score.rank} />
 									) : null
 								}
 								textEmpty={translator.text(
