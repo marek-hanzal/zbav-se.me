@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { CloseButton } from "~/app/@buyer-user/transaction/ui/button/CloseButton";
 import { DisputeButton } from "~/app/@buyer-user/transaction/ui/button/DisputeButton";
 import { SuccessButton } from "~/app/@buyer-user/transaction/ui/button/SuccessButton";
-import { TransactionButtonUi } from "~/app/transaction/ui/transaction-status/TransactionButtonUi";
+import { TransactionButtonUi } from "~/app/@common/transaction/ui/TransactionButtonUi";
 
 export namespace ResolvedToolbar {
 	export interface Props {

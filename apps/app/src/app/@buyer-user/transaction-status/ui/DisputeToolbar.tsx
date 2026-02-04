@@ -2,7 +2,7 @@ import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
 import { CloseButton } from "~/app/@buyer-user/transaction/ui/button/CloseButton";
 import { SuccessButton } from "~/app/@buyer-user/transaction/ui/button/SuccessButton";
-import { TransactionButtonUi } from "~/app/transaction/ui/transaction-status/TransactionButtonUi";
+import { TransactionButtonUi } from "~/app/@common/transaction/ui/TransactionButtonUi";
 
 export namespace DisputeToolbar {
 	export interface Props {
