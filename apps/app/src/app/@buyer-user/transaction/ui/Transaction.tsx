@@ -9,10 +9,10 @@ import { useRef, useState } from "react";
 import { TransactionMessage } from "~/app/@buyer-session/transaction/ui/TransactionMessage";
 import { ListingOverlay } from "~/app/@buyer-user/listing/ui/ListingOverlay";
 import { ListingSheet } from "~/app/@buyer-user/listing/ui/ListingSheet";
+import { TransactionChat } from "~/app/@buyer-user/transaction/ui/TransactionChat";
 import { TransactionToolbar } from "~/app/@buyer-user/transaction/ui/TransactionToolbar";
 import { MessageList } from "~/app/@common/message/MessageList";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
-import { TransactionChat } from "~/app/transaction/ui/TransactionChat";
 
 export namespace Transaction {
 	export interface Props extends Container.Props {

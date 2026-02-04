@@ -7,7 +7,7 @@ import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/u
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useState } from "react";
-import { PackageControl } from "~/app/package/ui/PackageControl";
+import { PackageControl } from "~/app/@common/package/ui/PackageControl";
 
 export namespace PackageButton {
 	export interface Props extends Button.Props {

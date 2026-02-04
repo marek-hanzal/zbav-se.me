@@ -2,13 +2,12 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
+import type { tTransaction } from "@zbav-se.me/sdk/api/seller-user";
 import { withTransactionMessageTextCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { useSide } from "~/app/@user/useSide";
 
 export namespace TransactionChat {
 	export interface Props extends Container.Props {
@@ -17,7 +16,6 @@ export namespace TransactionChat {
 }
 
 export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ...props }) => {
-	const side = useSide();
 	const queryClient = useQueryClient();
 	const messageMutation = withTransactionMessageTextCreateMutation.useMutation();
 
@@ -97,11 +95,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 				.with("pending", () => {
 					return (
 						<Tx
-							label={
-								side === "seller"
-									? "Transaction not accepted - seller (message)"
-									: "Transaction not accepted - buyer (message)"
-							}
+							label={"Transaction not accepted - seller (message)"}
 							ui={{
 								width: "full",
 								text: "sm",
