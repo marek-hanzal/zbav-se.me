@@ -1,9 +1,8 @@
 import type { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import { sFeedCreate, type tFeed } from "@zbav-se.me/sdk/api/buyer-user";
-import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
-import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
+import { useFeedPatch } from "~/app/@buyer-user/feed/hook/useFeedPatch";
 import { TextInputContainer } from "~/app/@common/input/ui/TextInputContainer";
 
 export namespace NamePatch {
@@ -14,19 +13,10 @@ export namespace NamePatch {
 	}
 }
 
-export const NamePatch: FC<NamePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
-	const patch = withFeedFetchQuery.useSet();
-	const mutation = withFeedPatchMutation.useMutation({
-		onSuccess(feed) {
-			patch(() => feed, {
-				where: {
-					id: feed.id,
-				},
-			});
-		},
-		onSettled() {
-			onSettled?.();
-		},
+export const NamePatch: FC<NamePatch.Props> = ({ feed, onSettled, ...props }) => {
+	const { patch, isPending } = useFeedPatch({
+		feed,
+		onSettled,
 	});
 
 	return (
@@ -37,20 +27,12 @@ export const NamePatch: FC<NamePatch.Props> = ({ feed, onSettled, onCancel, ...p
 			hint={translator.text("Feed name (required)")}
 			minLength={sFeedCreate.properties.name.minLength}
 			onSave={(name) => {
-				mutation.mutate({
-					patch: {
-						name,
-					},
-					query: {
-						where: {
-							id: feed.id,
-						},
-					},
+				patch({
+					name,
 				});
 			}}
-			onCancel={onCancel}
 			defaultValue={feed.name ?? ""}
-			loading={mutation.isPending}
+			loading={isPending}
 			{...props}
 		/>
 	);

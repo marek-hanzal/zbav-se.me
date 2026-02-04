@@ -2,10 +2,9 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
-import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
-import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";
+import { useFeedPatch } from "~/app/@buyer-user/feed/hook/useFeedPatch";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 export namespace RangePatch {
@@ -17,40 +16,23 @@ export namespace RangePatch {
 }
 
 export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
-	const patch = withFeedFetchQuery.useSet();
+	const { patch, isPending } = useFeedPatch({
+		feed,
+		onSettled,
+	});
 	const currentRange = feed.query?.filter?.range;
 	const [rangeValue, setRangeValue] = useState<string | undefined>(
 		currentRange !== undefined ? String(currentRange) : undefined,
 	);
 
-	const mutation = withFeedPatchMutation.useMutation({
-		onSuccess(feed) {
-			patch(() => feed, {
-				where: {
-					id: feed.id,
-				},
-			});
-		},
-		onSettled() {
-			onSettled?.();
-		},
-	});
-
 	const handleSave = () => {
 		const range = rangeValue ? parseFloat(rangeValue) : undefined;
-		mutation.mutate({
-			patch: {
-				query: {
-					...feed.query,
-					filter: {
-						...feed.query?.filter,
-						range: range !== undefined && !Number.isNaN(range) ? range : undefined,
-					},
-				},
-			},
+		patch({
 			query: {
-				where: {
-					id: feed.id,
+				...feed.query,
+				filter: {
+					...feed.query?.filter,
+					range: range !== undefined && !Number.isNaN(range) ? range : undefined,
 				},
 			},
 		});
@@ -94,7 +76,7 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 			<SaveContainer
 				onCancel={onCancel}
 				onSave={handleSave}
-				loading={mutation.isPending}
+				loading={isPending}
 				disabled={false}
 			/>
 		</Container>

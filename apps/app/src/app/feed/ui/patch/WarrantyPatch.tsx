@@ -3,9 +3,8 @@ import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import type { tListingWarrantyEnum } from "@zbav-se.me/sdk/api/public";
-import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
-import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
+import { useFeedPatch } from "~/app/@buyer-user/feed/hook/useFeedPatch";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { WarrantySelect } from "~/app/@common/warranty/ui/WarrantySelect";
 
@@ -24,25 +23,15 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({
 	ui,
 	...props
 }) => {
-	const patch = withFeedFetchQuery.useSet();
+	const { patch, isPending } = useFeedPatch({
+		feed,
+		onSettled,
+	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
 		initial: (feed.query?.filter?.warrantyIn ?? []).map((warranty) => ({
 			id: warranty,
 		})),
-	});
-
-	const mutation = withFeedPatchMutation.useMutation({
-		onSuccess(feed) {
-			patch(() => feed, {
-				where: {
-					id: feed.id,
-				},
-			});
-		},
-		onSettled() {
-			onSettled?.();
-		},
 	});
 
 	return (
@@ -62,25 +51,17 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({
 			<SaveContainer
 				onCancel={onCancel}
 				onSave={() => {
-					mutation.mutate({
-						patch: {
-							query: {
-								...feed.query,
-								filter: {
-									...feed.query?.filter,
-									warrantyIn:
-										selection.optional.multiId() as tListingWarrantyEnum[],
-								},
-							},
-						},
+					patch({
 						query: {
-							where: {
-								id: feed.id,
+							...feed.query,
+							filter: {
+								...feed.query?.filter,
+								warrantyIn: selection.optional.multiId() as tListingWarrantyEnum[],
 							},
 						},
 					});
 				}}
-				loading={mutation.isPending}
+				loading={isPending}
 				disabled={false}
 			/>
 		</Container>
