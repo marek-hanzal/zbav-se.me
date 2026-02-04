@@ -20,7 +20,7 @@ export namespace withListingQueryBuilderFx {
  */
 export const withListingQueryBuilderFx = Effect.fn("withListingQueryBuilderFx")(function* <
 	TSelect extends withListingSourceSelectFx.Select,
->({ userId, select, where }: withListingQueryBuilderFx.Props<TSelect>) {
+>({ select, where }: withListingQueryBuilderFx.Props<TSelect>) {
 	let query = select;
 
 	if (!where) {
