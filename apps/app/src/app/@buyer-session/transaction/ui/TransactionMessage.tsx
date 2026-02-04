@@ -3,8 +3,8 @@ import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { PendingMessage } from "~/app/@buyer-session/transaction/ui/PendingMessage";
-import { DisputeMessage } from "~/app/@buyer-user/transaction/ui/transaction-status/DisputeMessage";
-import { OpenMessage } from "~/app/@buyer-user/transaction/ui/transaction-status/OpenMessage";
+import { DisputeMessage } from "~/app/@buyer-user/transaction-status/ui/DisputeMessage";
+import { OpenMessage } from "~/app/@buyer-user/transaction-status/ui/OpenMessage";
 
 export namespace TransactionMessage {
 	export interface Props extends Container.Props {
