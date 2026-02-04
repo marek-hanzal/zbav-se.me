@@ -49,8 +49,8 @@ The `@common` domain exists to:
 - **UserEventFilterSchema**, **UserEventSortSchema**, **UserEventWhereSchema**, **UserEventQuerySchema** - Query/filter/sort schemas for the `user_event` table
 - **withUserEventSourceSelectFx**, **withUserEventQueryBuilderFx**, **withUserEventCollectionSelectFx** - Kysely query builders for `user_event`
 - **userEventCollectionFx** - Effect function for paginated user event collection
-- **computeLoad** - `computeLoad(source, createScope)` (active-transaction count bucketed into low/medium/high). **computeActivity** - `computeActivity(source, days)` (last user-scoped event age bucketed into high/medium/low). Used by `@buyer-session` (userEventBuyerInfoFx) and `@seller-session` (userEventSellerInfoFx).
-- Used in `@buyer-session` (userEventBuyerInfoFx), `@seller-session` (userEventSellerInfoFx), and `@user` domain for user event operations and database table schemas
+- **computeLoad** - `computeLoad(source, createScope)` (active-transaction count bucketed into low/medium/high). **computeActivity** - `computeActivity(source, days)` (last user-scoped event age bucketed into high/medium/low). Used by `@buyer-session` (userEventBuyerInfoFx, userEventSellerInfoFx).
+- Used in `@buyer-session` (userEventBuyerInfoFx, userEventSellerInfoFx), and `@user` domain for user event operations and database table schemas
 
 ### Listing Schema
 - **ProsConsSchema** - Zod schema for pros/cons arrays (max 5 items, each string max 72 characters)

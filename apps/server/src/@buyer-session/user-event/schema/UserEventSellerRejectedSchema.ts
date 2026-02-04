@@ -32,5 +32,5 @@ export const UserEventSellerRejectedSchema = z
 export type UserEventSellerRejectedSchema = typeof UserEventSellerRejectedSchema;
 
 export namespace UserEventSellerRejectedSchema {
-	export type Type = z.infer<UserEventSellerRejectedSchema>;
+	export type Type = z.infer<typeof UserEventSellerRejectedSchema>;
 }

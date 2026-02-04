@@ -1,8 +1,8 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { listingGetSellerInfoFx } from "~/@seller-session/listing/fx/listingGetSellerInfoFx";
-import { SellerInfoSchema } from "~/@seller-session/listing/schema/SellerInfoSchema";
+import { listingGetSellerInfoFx } from "~/@buyer-session/listing/fx/listingGetSellerInfoFx";
+import { SellerInfoSchema } from "~/@buyer-session/listing/schema/SellerInfoSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -18,9 +18,9 @@ const ListingSellerInfoParamsSchema = z
 	});
 
 export const withSellerInfoApiFx = Effect.fn("withSellerInfoApiFx")(function* () {
-	const { sellerSessionHono } = yield* RoutesContextFx;
+	const { buyerSessionHono } = yield* RoutesContextFx;
 
-	sellerSessionHono.openapi(
+	buyerSessionHono.openapi(
 		createRoute({
 			method: "get",
 			path: "/listing/{listingId}/seller-info",
@@ -75,7 +75,6 @@ export const withSellerInfoApiFx = Effect.fn("withSellerInfoApiFx")(function* ()
 				);
 			}).pipe(
 				Effect.provide(KyselyContextLayer(c.get("kysely"))),
-				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(

@@ -24,5 +24,5 @@ export const UserEventSellerExpiredSchema = z
 export type UserEventSellerExpiredSchema = typeof UserEventSellerExpiredSchema;
 
 export namespace UserEventSellerExpiredSchema {
-	export type Type = z.infer<UserEventSellerExpiredSchema>;
+	export type Type = z.infer<typeof UserEventSellerExpiredSchema>;
 }

@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiListingEventCreateErrors, tApiListingEventCreateRequest, tApiListingEventCreateResponse } from './types.gen';
-import { zApiListingEventCreateData, zApiListingEventCreateResponse } from './zod.gen';
+import type { apiListingEventCreateErrors, apiListingSellerInfoErrors, tApiListingEventCreateRequest, tApiListingEventCreateResponse, tApiListingSellerInfoRequest, tApiListingSellerInfoResponse } from './types.gen';
+import { zApiListingEventCreateData, zApiListingEventCreateResponse, zApiListingSellerInfoData, zApiListingSellerInfoResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -18,6 +18,19 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
      */
     meta?: Record<string, unknown>;
 };
+
+/**
+ * Return seller info for a listing.
+ *
+ * Return seller info for a listing.
+ */
+export const apiListingSellerInfo = <ThrowOnError extends boolean = false>(options: Options<tApiListingSellerInfoRequest, ThrowOnError>) => (options.client ?? client).get<tApiListingSellerInfoResponse, apiListingSellerInfoErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingSellerInfoData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingSellerInfoResponse.parseAsync(data),
+    url: '/api/buyer-session/listing/{listingId}/seller-info',
+    ...options
+});
 
 /**
  * Create a new listing event

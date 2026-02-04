@@ -35,5 +35,5 @@ export const UserEventSellerReactionSchema = z
 export type UserEventSellerReactionSchema = typeof UserEventSellerReactionSchema;
 
 export namespace UserEventSellerReactionSchema {
-	export type Type = z.infer<UserEventSellerReactionSchema>;
+	export type Type = z.infer<typeof UserEventSellerReactionSchema>;
 }

@@ -17,5 +17,5 @@ export const UserEventSellerLoadSchema = z
 export type UserEventSellerLoadSchema = typeof UserEventSellerLoadSchema;
 
 export namespace UserEventSellerLoadSchema {
-	export type Type = z.infer<UserEventSellerLoadSchema>;
+	export type Type = z.infer<typeof UserEventSellerLoadSchema>;
 }
