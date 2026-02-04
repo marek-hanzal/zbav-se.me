@@ -1,27 +1,24 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { Container, type uiContainer } from "@use-pico/client/ui/container";
-import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
+import { Container } from "@use-pico/client/ui/container";
+import type { tTransaction } from "@zbav-se.me/sdk/api/seller-user";
 import { withTransactionMessageGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { type FC, useState } from "react";
-import { match } from "ts-pattern";
-import { useSide } from "~/app/@user/useSide";
+import { PackageButton } from "~/app/@seller-user/transaction/ui/button/PackageButton";
 import { GalleryUploadButton } from "~/app/photo/ui/GalleryUploadButton";
 import { LocationButton } from "~/app/transaction/ui/button/LocationButton";
-import { PackageButton } from "~/app/transaction/ui/button/PackageButton";
 import { PersonalButton } from "~/app/transaction/ui/button/PersonalButton";
 import { MessageButtonUi } from "~/app/transaction/ui/transaction-status/MessageButtonUi";
 
-export namespace DisputeMessage {
+export namespace OpenMessage {
 	export interface Props extends Container.Props {
 		transaction: tTransaction;
 	}
 }
 
-export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...props }) => {
+export const OpenMessage: FC<OpenMessage.Props> = ({ transaction, ui, ...props }) => {
 	const queryClient = useQueryClient();
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-	const side = useSide();
 
 	return (
 		<Container
@@ -29,21 +26,7 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...p
 				round: "default",
 				flow: "vertical",
 				gap: "default",
-				...match<typeof side, uiContainer.Ui>(side)
-					.with("seller", () => {
-						return {
-							tone: "link",
-						};
-					})
-					.with("buyer", () => {
-						return {
-							tone: "primary",
-						};
-					})
-					.with(null, undefined, () => {
-						return {};
-					})
-					.exhaustive(),
+				tone: "link",
 				...ui,
 			}}
 			className={[
@@ -52,12 +35,20 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...p
 			]}
 			{...props}
 		>
-			{side === "seller" ? (
-				<PackageButton
-					transaction={transaction}
-					{...MessageButtonUi}
-				/>
-			) : null}
+			<PackageButton
+				transaction={transaction}
+				{...MessageButtonUi}
+			/>
+
+			<PersonalButton
+				transaction={transaction as import("@zbav-se.me/sdk/api/buyer-user").tTransaction}
+				{...MessageButtonUi}
+			/>
+
+			<LocationButton
+				transaction={transaction as import("@zbav-se.me/sdk/api/buyer-user").tTransaction}
+				{...MessageButtonUi}
+			/>
 
 			<GalleryUploadButton
 				defaultUploadIds={[]}
@@ -81,16 +72,6 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...p
 				onCancel={() => {
 					setIsGalleryOpen(false);
 				}}
-				{...MessageButtonUi}
-			/>
-
-			<LocationButton
-				transaction={transaction}
-				{...MessageButtonUi}
-			/>
-
-			<PersonalButton
-				transaction={transaction}
 				{...MessageButtonUi}
 			/>
 		</Container>
