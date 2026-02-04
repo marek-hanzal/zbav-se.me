@@ -1,5 +1,5 @@
 import { useSelection } from "@use-pico/client/hook";
-import { Container } from "@use-pico/client/ui/container";
+import type { Container } from "@use-pico/client/ui/container";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
@@ -16,7 +16,10 @@ export namespace AgePatch {
 }
 
 export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
-	const { patch, isPending } = useFeedPatch({ feed, onSettled });
+	const { patch, isPending } = useFeedPatch({
+		feed,
+		onSettled,
+	});
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "multi",
 		initial: feed.query?.filter?.ageIn?.map((item) => ({
@@ -45,7 +48,10 @@ export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettled, onCancel, ...pro
 			disabled={false}
 			{...props}
 		>
-			<AgeSelection selection={selection} allowClear />
+			<AgeSelection
+				selection={selection}
+				allowClear
+			/>
 		</PatchContainer>
 	);
 };
