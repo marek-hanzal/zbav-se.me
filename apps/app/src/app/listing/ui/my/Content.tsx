@@ -2,11 +2,12 @@ import { useNavigate } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
-import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-user";
+import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
+import type { tListingQuery } from "@zbav-se.me/sdk/api/seller-user";
 import {
 	withListingCollectionQuery,
 	withListingFetchQuery,
-} from "@zbav-se.me/sdk/query/buyer-user/listing";
+} from "@zbav-se.me/sdk/query/seller-user/listing";
 import type { FC } from "react";
 import { Hero } from "~/app/@buyer-user/listing/ui/Hero";
 import { CreateButton } from "~/app/@seller-user/draft/ui/button/CreateButton";
@@ -60,10 +61,19 @@ export const Content: FC<Content.Props> = ({ _suspense, query }) => {
 							}
 						>
 							{({ data: listing }) => {
+								const listingForHero: tListing = {
+									...listing,
+									distance: null,
+									isFavourite: false,
+									isIgnored: false,
+									hasFlag: false,
+									transactionId: null,
+									thumb: null,
+								};
 								return (
 									<Hero
 										data-ui={"MyListing-[Hero]"}
-										listing={listing}
+										listing={listingForHero}
 										feedId={undefined}
 										withScore={false}
 										tools={[

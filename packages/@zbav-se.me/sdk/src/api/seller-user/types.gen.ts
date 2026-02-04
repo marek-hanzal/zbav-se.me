@@ -653,6 +653,115 @@ export type tDraftGalleryCreate = {
 };
 
 /**
+ * Listing collection item
+ */
+export type tListingItem = {
+    /**
+     * ID of the listing
+     */
+    id: string;
+};
+
+/**
+ * Collection of listings
+ */
+export type tListingItemSchema = {
+    data: Array<tListingItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * User-land filters
+ */
+export type tListingFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * ID of the user; does not have an effect on API endpoints
+     */
+    userId?: string;
+};
+
+/**
+ * App-based filters
+ */
+export type tListingWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * ID of the user; does not have an effect on API endpoints
+     */
+    userId?: string;
+};
+
+/**
+ * Field of the listing sort
+ */
+export const tListingSortField = {
+    price: 'price',
+    condition: 'condition',
+    age: 'age',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    expiresAt: 'expiresAt'
+} as const;
+
+/**
+ * Field of the listing sort
+ */
+export type tListingSortField = typeof tListingSortField[keyof typeof tListingSortField];
+
+/**
+ * Sort object for listing collection
+ */
+export type tListingSort = {
+    field: tListingSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * Query object for listing collection
+ */
+export type tListingQuery = {
+    cursor?: tCursor & unknown;
+    filter?: tListingFilter;
+    where?: tListingWhere;
+    sort?: Array<tListingSort>;
+};
+
+/**
+ * Query object for listing count
+ */
+export type tListingCountQuery = {
+    filter?: tListingFilter;
+    where?: tListingWhere;
+    count?: Array<'total' | 'filter' | 'where'>;
+};
+
+/**
  * Listing data
  */
 export type tListing = {
@@ -1380,6 +1489,56 @@ export type tApiDraftGalleryCreateResponse = {
 
 export type apiDraftGalleryCreateResponse = tApiDraftGalleryCreateResponse[keyof tApiDraftGalleryCreateResponse];
 
+export type tApiListingCollectionRequest = {
+    body?: tListingQuery;
+    path?: never;
+    query?: never;
+    url: '/api/seller-user/listing/collection';
+};
+
+export type apiListingCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiListingCollectionError = apiListingCollectionErrors[keyof apiListingCollectionErrors];
+
+export type tApiListingCollectionResponse = {
+    /**
+     * Access collection of listings based on provided query
+     */
+    200: tListingItemSchema;
+};
+
+export type apiListingCollectionResponse = tApiListingCollectionResponse[keyof tApiListingCollectionResponse];
+
+export type tApiListingCountRequest = {
+    body?: tListingCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/seller-user/listing/count';
+};
+
+export type apiListingCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiListingCountError = apiListingCountErrors[keyof apiListingCountErrors];
+
+export type tApiListingCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiListingCountResponse = tApiListingCountResponse[keyof tApiListingCountResponse];
+
 export type tApiListingCreateRequest = {
     /**
      * Data for creating a new listing
@@ -1415,6 +1574,38 @@ export type tApiListingCreateResponse = {
 };
 
 export type apiListingCreateResponse = tApiListingCreateResponse[keyof tApiListingCreateResponse];
+
+export type tApiListingFetchRequest = {
+    /**
+     * Query object for listing fetch
+     */
+    body?: tListingQuery;
+    path?: never;
+    query?: never;
+    url: '/api/seller-user/listing/fetch';
+};
+
+export type apiListingFetchErrors = {
+    /**
+     * Listing not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiListingFetchError = apiListingFetchErrors[keyof apiListingFetchErrors];
+
+export type tApiListingFetchResponse = {
+    /**
+     * Return a listing based on the provided query
+     */
+    200: tListing;
+};
+
+export type apiListingFetchResponse = tApiListingFetchResponse[keyof tApiListingFetchResponse];
 
 export type tApiTransactionCollectionRequest = {
     body?: tTransactionQuery;

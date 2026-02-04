@@ -8,9 +8,6 @@ export const Route = createFileRoute("/$locale/ui/seller/listing/my")({
 			<TitleContainer textTitle={"My listings (title)"}>
 				<List
 					query={{
-						filter: {
-							my: true,
-						},
 						sort: [
 							{
 								field: "createdAt",
