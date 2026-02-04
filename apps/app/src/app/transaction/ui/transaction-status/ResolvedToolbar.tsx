@@ -1,7 +1,7 @@
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
+import { CloseButton } from "~/app/@buyer-user/transaction/ui/button/CloseButton";
 import { useSide } from "~/app/@user/useSide";
-import { CloseButton } from "~/app/transaction/ui/button/CloseButton";
 import { DisputeButton } from "~/app/transaction/ui/button/DisputeButton";
 import { SuccessButton } from "~/app/transaction/ui/button/SuccessButton";
 import { TransactionButtonUi } from "~/app/transaction/ui/transaction-status/TransactionButtonUi";
