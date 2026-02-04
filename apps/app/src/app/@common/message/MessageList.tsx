@@ -11,11 +11,11 @@ import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/u
 import { type FC, type RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { match } from "ts-pattern";
 import { useDebouncedCallback } from "use-debounce";
-import { MessageGallery } from "~/app/message/type/MessageGallery";
-import { MessageLocation } from "~/app/message/type/MessageLocation";
-import { MessagePackage } from "~/app/message/type/MessagePackage";
-import { MessagePersonal } from "~/app/message/type/MessagePersonal";
-import { MessageText } from "~/app/message/type/MessageText";
+import { MessageGallery } from "~/app/@common/message/type/MessageGallery";
+import { MessageLocation } from "~/app/@common/message/type/MessageLocation";
+import { MessagePackage } from "~/app/@common/message/type/MessagePackage";
+import { MessagePersonal } from "~/app/@common/message/type/MessagePersonal";
+import { MessageText } from "~/app/@common/message/type/MessageText";
 
 export namespace MessageList {
 	export interface Props extends Container.Props {

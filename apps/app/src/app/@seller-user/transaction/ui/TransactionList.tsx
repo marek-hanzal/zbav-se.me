@@ -8,7 +8,7 @@ import type { tTransactionQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { withTransactionCollectionQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
 import { MessageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { TransactionItem } from "~/app/transaction/ui/seller/TransactionItem";
+import { TransactionItem } from "~/app/@seller-user/transaction/ui/TransactionItem";
 
 export namespace TransactionList {
 	export interface Props extends Container.Props {

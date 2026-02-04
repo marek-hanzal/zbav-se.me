@@ -9,8 +9,8 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { useState } from "react";
 import { ListingSheet } from "~/app/@seller-user/listing/ui/ListingSheet";
+import { TransactionList } from "~/app/@seller-user/transaction/ui/TransactionList";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
-import { TransactionList } from "~/app/transaction/ui/seller/TransactionList";
 
 export const Route = createFileRoute("/$locale/ui/seller/message/$listingId/list")({
 	pendingComponent() {
