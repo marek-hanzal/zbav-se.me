@@ -1,32 +1,35 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
-import { translator } from "@use-pico/common/translator";
-import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
-import { withTransactionMessageLocationCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
+import { withTransactionMessagePackageCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
-import { LocationIcon } from "@zbav-se.me/ui/icon";
+import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useState } from "react";
-import { LocationSelectContainer } from "~/app/@common/location/ui/LocationSelectContainer";
+import { PackageControl } from "~/app/@common/package/ui/PackageControl";
 
-export namespace LocationButton {
+export namespace PackageButton {
 	export interface Props extends Button.Props {
-		transaction: tTransaction;
+		transactionId: string;
+		messageThreadId: string;
 	}
 }
 
-export const LocationButton: FC<LocationButton.Props> = ({ transaction, ...props }) => {
+export const PackageButton: FC<PackageButton.Props> = ({
+	transactionId,
+	messageThreadId,
+	...props
+}) => {
 	const queryClient = useQueryClient();
 	const [isOpen, setIsOpen] = useState(false);
-	const mutation = withTransactionMessageLocationCreateMutation.useMutation();
+	const mutation = withTransactionMessagePackageCreateMutation.useMutation();
 
 	return (
 		<>
 			<Button
-				data-ui="LocationButton[Button]"
-				label={"Share location (button)"}
-				iconEnabled={LocationIcon}
+				data-ui="PackageButton[Button]"
+				label={"Share package (button)"}
+				iconEnabled={SendPackageIcon}
 				onClick={() => {
 					setIsOpen(true);
 				}}
@@ -41,20 +44,20 @@ export const LocationButton: FC<LocationButton.Props> = ({ transaction, ...props
 				detent={"full"}
 				withHeader
 				header={() => ({
-					title: "Share location (title)",
+					title: "Share package (title)",
 				})}
 			>
-				<LocationSelectContainer
-					data-ui="LocationButton[LocationSelectContainer]"
-					value={null}
+				<PackageControl
+					data-ui="PackageButton[PackageControl]"
 					onCancel={() => {
 						setIsOpen(false);
 					}}
-					onSave={({ locationId }) => {
-						mutation.mutate(
+					onSave={({ link, number }) => {
+						return mutation.mutateAsync(
 							{
-								transactionId: transaction.id,
-								locationId,
+								transactionId,
+								link,
+								number,
 							},
 							{
 								onSuccess() {
@@ -63,7 +66,7 @@ export const LocationButton: FC<LocationButton.Props> = ({ transaction, ...props
 										queryClient,
 										{
 											path: {
-												messageThreadId: transaction.messageThreadId,
+												messageThreadId,
 											},
 										},
 									);
@@ -72,7 +75,6 @@ export const LocationButton: FC<LocationButton.Props> = ({ transaction, ...props
 						);
 					}}
 					loading={mutation.isPending}
-					textHint={translator.text("Message location security (hint)")}
 					ui={{
 						inner: "default",
 					}}
