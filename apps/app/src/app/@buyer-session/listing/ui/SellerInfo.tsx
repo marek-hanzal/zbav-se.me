@@ -10,7 +10,7 @@ import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/buyer-session/
 import { SearchIcon } from "@zbav-se.me/ui/icon";
 import { RatingToIcon } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
-import { toSellerScoreHint } from "~/app/transaction/ui/seller/toSellerScoreHint";
+import { toSellerScoreHint } from "~/app/@buyer-session/listing/ui/toSellerScoreHint";
 
 export namespace SellerInfo {
 	export interface Props extends Container.Props {
