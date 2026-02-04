@@ -64,11 +64,6 @@ export const Content: FC<Content.Props> = ({ _suspense, query }) => {
 									<Hero
 										data-ui={"MyListing-[Hero]"}
 										listing={listing}
-										feedId={undefined}
-										withScore={false}
-										tools={[
-											"hero",
-										]}
 										heroImageProps={{
 											ui: {
 												round: "default",

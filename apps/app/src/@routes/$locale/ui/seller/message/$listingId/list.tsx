@@ -4,13 +4,12 @@ import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { createNoopVisibilityStore } from "@use-pico/client/store";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
+import { withListingFetchQuery } from "@zbav-se.me/sdk/query/seller-user/listing";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { useState } from "react";
-import { ListingOverlay } from "~/app/@buyer-user/listing/ui/ListingOverlay";
+import { ListingSheet } from "~/app/@seller-user/listing/ui/ListingSheet";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
-import { ListingSheet } from "~/app/listing/ui/ListingSheet";
 import { TransactionList } from "~/app/transaction/ui/seller/TransactionList";
 
 export const Route = createFileRoute("/$locale/ui/seller/message/$listingId/list")({
@@ -76,7 +75,6 @@ export const Route = createFileRoute("/$locale/ui/seller/message/$listingId/list
 							alt={`Hero image for listing ${listing.id}`}
 							className={"h-42"}
 						/>
-						<ListingOverlay listing={listing} />
 					</Container>
 
 					<TransactionList
@@ -108,9 +106,6 @@ export const Route = createFileRoute("/$locale/ui/seller/message/$listingId/list
 							value: detail,
 							set: setDetail,
 						}}
-						withScore={false}
-						feedId={undefined}
-						tools={[]}
 					/>
 				</VisibilityProvider>
 			</TitleContainer>
