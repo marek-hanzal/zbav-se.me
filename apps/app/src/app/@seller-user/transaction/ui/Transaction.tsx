@@ -3,9 +3,9 @@ import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/seller-user/tra
 import type { FC } from "react";
 import { useRef } from "react";
 import { MessageList } from "~/app/@common/message/MessageList";
-import { TransactionChat } from "~/app/transaction/ui/TransactionChat";
-import { TransactionMessage } from "~/app/transaction/ui/TransactionMessage";
+import { TransactionMessage } from "~/app/@seller-session/transaction/ui/TransactionMessage";
 import { TransactionToolbar } from "~/app/@seller-user/transaction/ui/TransactionToolbar";
+import { TransactionChat } from "~/app/transaction/ui/TransactionChat";
 
 export namespace Transaction {
 	export interface Props extends Container.Props {

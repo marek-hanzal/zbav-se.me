@@ -2,9 +2,9 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import { PendingMessage } from "~/app/@buyer-session/transaction/ui/PendingMessage";
 import { DisputeMessage } from "~/app/transaction/ui/transaction-status/DisputeMessage";
 import { OpenMessage } from "~/app/transaction/ui/transaction-status/OpenMessage";
-import { PendingMessage } from "~/app/transaction/ui/transaction-status/PendingMessage";
 
 export namespace TransactionMessage {
 	export interface Props extends Container.Props {
