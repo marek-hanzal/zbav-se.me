@@ -6,7 +6,7 @@ import { useSide } from "~/app/@user/useSide";
 import { SellerInfoButton } from "~/app/listing/ui/button/SellerInfoButton";
 import { AcceptButton } from "~/app/transaction/ui/button/AcceptButton";
 import { RejectButton } from "~/app/transaction/ui/button/RejectButton";
-import { BuyerInfoButton } from "~/app/transaction/ui/buyer/BuyerInfoButton";
+import { BuyerInfoButton } from "~/app/@seller-session/transaction/ui/BuyerInfoButton";
 import { MessageButtonUi } from "~/app/transaction/ui/transaction-status/MessageButtonUi";
 
 export namespace PendingMessage {

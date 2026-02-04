@@ -10,7 +10,7 @@ import { SearchIcon } from "@zbav-se.me/ui/icon";
 import { RatingToIcon } from "@zbav-se.me/ui/rating";
 import { DateTime } from "luxon";
 import type { FC } from "react";
-import { toBuyerScoreHint } from "~/app/transaction/ui/buyer/toBuyerScoreHint";
+import { toBuyerScoreHint } from "~/app/@seller-session/transaction/ui/toBuyerScoreHint";
 
 const percentLabel = (value: number) => `${Math.round(value)}%`;
 
