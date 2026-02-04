@@ -15,11 +15,11 @@ import { FlagButton } from "~/app/@buyer-user/listing/ui/button/FlagButton";
 import { IgnoreButton } from "~/app/@buyer-user/listing/ui/button/IgnoreButton";
 import { ThumbDislikeButton } from "~/app/@buyer-user/listing/ui/button/ThumbDislikeButton";
 import { ThumbLikeButton } from "~/app/@buyer-user/listing/ui/button/ThumbLikeButton";
+import { TransactionButton } from "~/app/@buyer-user/listing/ui/button/TransactionButton";
 import { ListingOverlay } from "~/app/@buyer-user/listing/ui/ListingOverlay";
 import { CategoryInline } from "~/app/@common/category/ui/CategoryInline";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
 import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
-import { TransactionButton } from "~/app/@buyer-user/listing/ui/button/TransactionButton";
 import { SellerScoreIcon } from "~/app/listing/ui/SellerScoreIcon";
 
 export namespace ListingDetail {

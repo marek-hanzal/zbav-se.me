@@ -5,10 +5,7 @@ import type {
 	tListingCountQuery,
 } from "../../../api/seller-user/types.gen";
 
-export const withListingCountQuery = withQuery<
-	tListingCountQuery,
-	tApiListingCountResponse[200]
->({
+export const withListingCountQuery = withQuery<tListingCountQuery, tApiListingCountResponse[200]>({
 	keys(data) {
 		return [
 			"listing",

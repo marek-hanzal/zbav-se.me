@@ -13,12 +13,7 @@ export namespace FavouriteButton {
 	}
 }
 
-export const FavouriteButton: FC<FavouriteButton.Props> = ({
-	feedId,
-	listingId,
-	ui,
-	...props
-}) => {
+export const FavouriteButton: FC<FavouriteButton.Props> = ({ feedId, listingId, ui, ...props }) => {
 	const queryClient = useQueryClient();
 	const patch = withListingFetchQuery.useSet();
 	const favouriteToggle = withFavouriteToggleMutation.useMutation({
