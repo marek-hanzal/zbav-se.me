@@ -5,10 +5,10 @@ import type { StateType } from "@use-pico/common/type";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
-import { ListingDetail } from "~/app/@buyer-user/listing/ui/ListingDetail";
 import { SellerInfo } from "~/app/@buyer-session/listing/ui/SellerInfo";
+import { ListingDetail } from "~/app/@buyer-user/listing/ui/ListingDetail";
+import { Transaction } from "~/app/@buyer-user/transaction/ui/Transaction";
 import { GalleryContent } from "~/app/photo/ui/GalleryContent";
-import { Transaction } from "~/app/transaction/ui/buyer/Transaction";
 
 export namespace ListingSheet {
 	export type View = "detail" | "messages" | "gallery" | "seller-info";

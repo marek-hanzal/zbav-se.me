@@ -2,7 +2,7 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { translator } from "@use-pico/common/translator";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import type { FC } from "react";
-import { Transaction } from "~/app/transaction/ui/buyer/Transaction";
+import { Transaction } from "~/app/@buyer-user/transaction/ui/Transaction";
 
 export namespace TransactionSheet {
 	export interface Props extends BottomSheet.Props {
