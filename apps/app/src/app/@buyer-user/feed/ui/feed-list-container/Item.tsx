@@ -6,9 +6,9 @@ import { tvc } from "@use-pico/cls";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type PropsWithChildren, type ReactNode, useState } from "react";
+import { EditorSheet } from "~/app/@buyer-user/feed/ui/EditorSheet";
 import { ListingCountBadge } from "~/app/@buyer-user/listing/ui/ListingCountBadge";
 import { SheetButton } from "~/app/@common/sheet/ui/SheetButton";
-import { SetupSheet } from "~/app/feed/ui/SetupSheet";
 
 export namespace Item {
 	export type Tools = "setup";
@@ -162,8 +162,8 @@ export const Item: FC<Item.Props> = ({
 						}}
 					/>
 
-					<SetupSheet
-						data-ui={"Item-[FeedSetupSheet]"}
+					<EditorSheet
+						data-ui={"Item-[FeedEditorSheet]"}
 						feed={feed}
 						state={{
 							value: isFeedSettings,

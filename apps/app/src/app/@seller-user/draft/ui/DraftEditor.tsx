@@ -37,7 +37,7 @@ import { PriceTypePatch } from "~/app/@seller-user/draft/ui/patch/PriceTypePatch
 import { ProsPatch } from "~/app/@seller-user/draft/ui/patch/ProsPatch";
 import { TitlePatch } from "~/app/@seller-user/draft/ui/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/@seller-user/draft/ui/patch/WarrantyPatch";
-import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
+import { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 
 export namespace DraftEditor {
 	export type View =

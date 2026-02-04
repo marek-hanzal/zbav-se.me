@@ -7,7 +7,7 @@ import { useListingEvent } from "~/app/@buyer-session/listing/hook/useListingEve
 import type { ListingDetail } from "~/app/@buyer-user/listing/ui/ListingDetail";
 import { ListingOverlay } from "~/app/@buyer-user/listing/ui/ListingOverlay";
 import { ListingSheet } from "~/app/@buyer-user/listing/ui/ListingSheet";
-import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
+import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
 
 export namespace Hero {
 	/**

@@ -8,6 +8,7 @@ import type { FC } from "react";
 import { AgeValueList } from "~/app/@common/age/ui/AgeValueList";
 import { ConditionValueList } from "~/app/@common/condition/ui/ConditionValueList";
 import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
+import { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { RangeValue } from "~/app/@common/location/ui/RangeValue";
 import { NameValue } from "~/app/@common/name/ui/NameValue";
@@ -15,9 +16,8 @@ import { SortValue } from "~/app/@common/sort/ui/SortValue";
 import { TitleValue } from "~/app/@common/title/ui/TitleValue";
 import { WarrantyValueList } from "~/app/@common/warranty/ui/WarrantyValueList";
 import { CategoryValueList } from "~/app/@session/category/ui/CategoryValueList";
-import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
 
-export namespace Feed {
+export namespace FeedContainer {
 	export interface Value {
 		gallery?: Partial<GalleryValue.Props>;
 		name?: Partial<NameValue.Props>;
@@ -43,7 +43,7 @@ export namespace Feed {
 		 * Feed data to display and edit
 		 */
 		feed: tFeed;
-		values?: Feed.Value;
+		values?: FeedContainer.Value;
 		/**
 		 * If true, hides the delete button
 		 */
@@ -62,13 +62,13 @@ export namespace Feed {
  *
  * @example
  * ```tsx
- * <Feed
+ * <FeedContainer
  *   feed={feedData}
  *   noDelete={false}
  * />
  * ```
  */
-export const Feed: FC<Feed.Props> = ({
+export const FeedContainer: FC<FeedContainer.Props> = ({
 	feed,
 	values,
 	noDelete = false,

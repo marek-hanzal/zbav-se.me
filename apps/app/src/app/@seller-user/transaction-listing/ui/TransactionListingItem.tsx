@@ -13,7 +13,7 @@ import { withListingFetchQuery } from "@zbav-se.me/sdk/query/seller-user/listing
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
-import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
+import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
 
 export namespace TransactionListingItem {
 	export interface Props extends Container.Props {

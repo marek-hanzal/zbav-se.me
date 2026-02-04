@@ -8,7 +8,7 @@ import { tvc } from "@use-pico/cls";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
-import { useMaybeHeroUpload } from "~/app/gallery/hook/useMaybeHeroUpload";
+import { useMaybeHeroUpload } from "~/app/@common/gallery/hook/useMaybeHeroUpload";
 
 export namespace DraftItem {
 	export interface Props extends Omit<Badge.Props, "children"> {

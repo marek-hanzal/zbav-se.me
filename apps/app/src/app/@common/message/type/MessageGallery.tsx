@@ -5,7 +5,7 @@ import { toTimeDiff } from "@use-pico/common/time";
 import type { tMessageGallery } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
-import { useHeroUpload } from "~/app/gallery/hook/useHeroUpload";
+import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
 import { GallerySheet } from "~/app/photo/ui/GallerySheet";
 
 export namespace MessageGallery {

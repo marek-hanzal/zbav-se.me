@@ -7,7 +7,7 @@ import type { StateType } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import { type FC, useState } from "react";
-import { Feed } from "~/app/feed/ui/Feed";
+import { FeedContainer } from "~/app/@buyer-user/feed/ui/FeedContainer";
 import { AgePatch } from "~/app/feed/ui/patch/AgePatch";
 import { CategoryPatch } from "~/app/feed/ui/patch/CategoryPatch";
 import { ConditionPatch } from "~/app/feed/ui/patch/ConditionPatch";
@@ -20,7 +20,7 @@ import { TitlePatch } from "~/app/feed/ui/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/feed/ui/patch/WarrantyPatch";
 import { GalleryUploadControl } from "~/app/photo/ui/GalleryUploadControl";
 
-export namespace SetupSheet {
+export namespace EditorSheet {
 	export type Views =
 		| "detail"
 		| "name"
@@ -42,18 +42,18 @@ export namespace SetupSheet {
 	}
 }
 
-export const SetupSheet: FC<SetupSheet.Props> = ({
+export const EditorSheet: FC<EditorSheet.Props> = ({
 	feed,
 	state,
 	noDelete = false,
 	children,
 	...props
 }) => {
-	const [view, setView] = useState<SetupSheet.Views>("detail");
+	const [view, setView] = useState<EditorSheet.Views>("detail");
 
 	return (
-		<SheetView<SetupSheet.Views>
-			data-ui={"FeedSetupSheet[SheetView]"}
+		<SheetView<EditorSheet.Views>
+			data-ui={"FeedEditorSheet[SheetView]"}
 			isOpen={state.value}
 			onClose={() => {
 				state.set(false);
@@ -67,8 +67,8 @@ export const SetupSheet: FC<SetupSheet.Props> = ({
 			views={{
 				detail: {
 					children: (
-						<Feed
-							data-ui={"FeedSetupButton-[FeedDetailContainer]"}
+						<FeedContainer
+							data-ui={"FeedEditorSheet-[FeedDetailContainer]"}
 							feed={feed}
 							noDelete={noDelete}
 							ui={{
@@ -132,7 +132,7 @@ export const SetupSheet: FC<SetupSheet.Props> = ({
 							/>
 
 							{children}
-						</Feed>
+						</FeedContainer>
 					),
 					header: () => ({
 						title: translator.text("Feed setup (title)"),
