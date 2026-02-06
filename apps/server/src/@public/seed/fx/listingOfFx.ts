@@ -47,7 +47,7 @@ export const listingOfFx = Effect.fn("listingOfFx")(function* ({
 			[
 				{
 					field: "age",
-					direction: list([
+					order: list([
 						"asc",
 						"desc",
 					]),
@@ -56,7 +56,7 @@ export const listingOfFx = Effect.fn("listingOfFx")(function* ({
 			[
 				{
 					field: "price",
-					direction: list([
+					order: list([
 						"asc",
 						"desc",
 					]),
@@ -65,7 +65,7 @@ export const listingOfFx = Effect.fn("listingOfFx")(function* ({
 			[
 				{
 					field: "createdAt",
-					direction: list([
+					order: list([
 						"asc",
 						"desc",
 					]),

@@ -10,7 +10,7 @@ export const TransactionStatusSortSchema = z
 			.openapi("TransactionStatusSortField", {
 				description: "Available sort fields for listing transaction status",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.strip()
 	.openapi("TransactionStatusSort", {

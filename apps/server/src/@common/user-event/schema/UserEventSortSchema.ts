@@ -12,7 +12,7 @@ export const UserEventSortSchema = z
 			.openapi("UserEventSortField", {
 				description: "Field of the user event sort",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.openapi("UserEventSort", {
 		description: "Sort object for user event collection",

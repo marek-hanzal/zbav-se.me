@@ -360,7 +360,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 									: [
 											{
 												field: "createdAt",
-												direction: "desc",
+												order: "desc",
 											},
 										],
 								meta: {

@@ -10,7 +10,7 @@ export const FlagSortSchema = z
 			.openapi("FlagSortField", {
 				description: "Field of the flag sort",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.strip()
 	.openapi("FlagSort", {

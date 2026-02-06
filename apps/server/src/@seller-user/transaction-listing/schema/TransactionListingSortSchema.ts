@@ -10,7 +10,7 @@ export const TransactionListingSortSchema = z
 			.openapi("TransactionListingSortField", {
 				description: "Field of the transaction-listing sort",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.openapi("TransactionListingSort", {
 		description: "Sort object for transaction-listing collection",

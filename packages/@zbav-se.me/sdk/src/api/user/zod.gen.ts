@@ -167,7 +167,7 @@ export type zOrderEnum = z.infer<typeof zOrderEnum>;
  */
 export const zGallerySort = z.object({
     field: zGallerySortField,
-    direction: zOrderEnum
+    order: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for gallery collection'
 });
@@ -591,7 +591,7 @@ export type zMessageSortField = z.infer<typeof zMessageSortField>;
  */
 export const zMessageSort = z.object({
     field: zMessageSortField,
-    direction: zOrderEnum
+    order: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort parameters for message collection'
 });
@@ -803,7 +803,7 @@ export type zUploadSortField = z.infer<typeof zUploadSortField>;
  */
 export const zUploadSort = z.object({
     field: zUploadSortField,
-    direction: zOrderEnum
+    order: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Data for uploading a file'
 });

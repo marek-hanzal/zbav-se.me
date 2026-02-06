@@ -103,7 +103,7 @@ export const MessageList: FC<MessageList.Props> = ({
 						sort: [
 							{
 								field: "createdAt",
-								direction: "asc",
+								order: "asc",
 							},
 						],
 					},

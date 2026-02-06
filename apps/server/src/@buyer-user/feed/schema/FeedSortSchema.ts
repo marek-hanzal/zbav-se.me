@@ -11,7 +11,7 @@ export const FeedSortSchema = z
 			.openapi("FeedSortField", {
 				description: "Field of the feed sort",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.openapi("FeedSort", {
 		description: "Sort object for feed collection",

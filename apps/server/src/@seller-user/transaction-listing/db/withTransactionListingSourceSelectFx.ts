@@ -25,7 +25,7 @@ export const withTransactionListingSourceSelectFx = Effect.fn(
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("l.createdAt", item.direction))
+			.with("createdAt", () => query.orderBy("l.createdAt", item.order))
 			.exhaustive();
 	}
 

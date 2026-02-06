@@ -163,7 +163,7 @@ export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
  */
 export type tGallerySort = {
     field: tGallerySortField;
-    direction: tOrderEnum;
+    order: tOrderEnum;
 };
 
 /**
@@ -560,7 +560,7 @@ export type tMessageSortField = typeof tMessageSortField[keyof typeof tMessageSo
  */
 export type tMessageSort = {
     field: tMessageSortField;
-    direction: tOrderEnum;
+    order: tOrderEnum;
 };
 
 /**
@@ -755,7 +755,7 @@ export type tUploadSortField = typeof tUploadSortField[keyof typeof tUploadSortF
  */
 export type tUploadSort = {
     field: tUploadSortField;
-    direction: tOrderEnum;
+    order: tOrderEnum;
 };
 
 /**

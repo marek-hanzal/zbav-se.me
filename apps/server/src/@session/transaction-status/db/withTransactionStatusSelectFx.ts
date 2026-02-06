@@ -20,7 +20,7 @@ export const withTransactionStatusSelectFx = Effect.fn("withTransactionStatusSel
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("createdAt", item.direction))
+			.with("createdAt", () => query.orderBy("createdAt", item.order))
 			.exhaustive();
 	}
 

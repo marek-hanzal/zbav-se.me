@@ -10,7 +10,7 @@ export const MessageGallerySortSchema = z
 			.openapi("MessageGallerySortField", {
 				description: "Available sort fields for message gallery",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.openapi("MessageGallerySort", {
 		description: "Sort parameters for message gallery collection",

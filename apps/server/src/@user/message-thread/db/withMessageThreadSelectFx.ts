@@ -20,8 +20,8 @@ export const withMessageThreadSelectFx = Effect.fn("withMessageThreadSelectFx")(
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("mt.createdAt", item.direction))
-			.with("updatedAt", () => query.orderBy("mt.updatedAt", item.direction))
+			.with("createdAt", () => query.orderBy("mt.createdAt", item.order))
+			.with("updatedAt", () => query.orderBy("mt.updatedAt", item.order))
 			.exhaustive();
 	}
 

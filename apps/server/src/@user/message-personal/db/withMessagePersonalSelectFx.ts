@@ -41,7 +41,7 @@ export const withMessagePersonalSelectFx = Effect.fn("withMessagePersonalSelectF
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("mp.createdAt", item.direction))
+			.with("createdAt", () => query.orderBy("mp.createdAt", item.order))
 			.exhaustive();
 	}
 

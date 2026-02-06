@@ -10,7 +10,7 @@ export const IgnoreSortSchema = z
 			.openapi("IgnoreSortField", {
 				description: "Field of the ignore sort",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.openapi("IgnoreSort", {
 		description: "Sort object for ignore collection",

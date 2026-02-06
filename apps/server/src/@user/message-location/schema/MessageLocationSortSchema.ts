@@ -10,7 +10,7 @@ export const MessageLocationSortSchema = z
 			.openapi("MessageLocationSortField", {
 				description: "Available sort fields for message location",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.openapi("MessageLocationSort", {
 		description: "Sort parameters for message location collection",

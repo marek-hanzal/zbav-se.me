@@ -144,13 +144,13 @@ export const sFavouriteSort = {
         field: {
             $ref: '#/components/schemas/FavouriteSortField'
         },
-        direction: {
+        order: {
             $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
         'field',
-        'direction'
+        'order'
     ]
 } as const;
 
@@ -1069,13 +1069,13 @@ export const sListingSort = {
         field: {
             $ref: '#/components/schemas/ListingSortField'
         },
-        direction: {
+        order: {
             $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
         'field',
-        'direction'
+        'order'
     ]
 } as const;
 
@@ -1298,13 +1298,13 @@ export const sFeedSort = {
         field: {
             $ref: '#/components/schemas/FeedSortField'
         },
-        direction: {
+        order: {
             $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
         'field',
-        'direction'
+        'order'
     ]
 } as const;
 
@@ -1606,13 +1606,13 @@ export const sFlagSort = {
         field: {
             $ref: '#/components/schemas/FlagSortField'
         },
-        direction: {
+        order: {
             $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
         'field',
-        'direction'
+        'order'
     ]
 } as const;
 
@@ -1823,13 +1823,13 @@ export const sIgnoreSort = {
         field: {
             $ref: '#/components/schemas/IgnoreSortField'
         },
-        direction: {
+        order: {
             $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
         'field',
-        'direction'
+        'order'
     ]
 } as const;
 
@@ -2107,13 +2107,13 @@ export const sTransactionSort = {
         field: {
             $ref: '#/components/schemas/TransactionSortField'
         },
-        direction: {
+        order: {
             $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
         'field',
-        'direction'
+        'order'
     ]
 } as const;
 

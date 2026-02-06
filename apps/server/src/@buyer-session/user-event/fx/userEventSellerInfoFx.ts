@@ -528,15 +528,15 @@ export const userEventSellerInfoFx = Effect.fn("userEventSellerInfoFx")(function
 		sort: [
 			{
 				field: "group",
-				direction: "asc",
+				order: "asc",
 			},
 			{
 				field: "createdAt",
-				direction: "asc",
+				order: "asc",
 			},
 			{
 				field: "id",
-				direction: "asc",
+				order: "asc",
 			},
 		],
 	});

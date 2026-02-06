@@ -20,7 +20,7 @@ export const withUploadSourceSelectFx = Effect.fn("withUploadSourceSelectFx")(fu
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("u.createdAt", item.direction))
+			.with("createdAt", () => query.orderBy("u.createdAt", item.order))
 			.exhaustive();
 	}
 

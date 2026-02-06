@@ -41,7 +41,7 @@ export const t02_buyerReaction = Effect.fn("t02_buyerReaction")(function* ({
 			sort: [
 				{
 					field: "createdAt",
-					direction: "desc",
+					order: "desc",
 				},
 			],
 			scope: {},

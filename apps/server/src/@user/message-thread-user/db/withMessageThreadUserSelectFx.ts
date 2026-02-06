@@ -20,7 +20,7 @@ export const withMessageThreadUserSelectFx = Effect.fn("withMessageThreadUserSel
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("mtu.createdAt", item.direction))
+			.with("createdAt", () => query.orderBy("mtu.createdAt", item.order))
 			.exhaustive();
 	}
 

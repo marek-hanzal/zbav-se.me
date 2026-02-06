@@ -10,7 +10,7 @@ export const UploadSortSchema = z
 			.openapi("UploadSortField", {
 				description: "Field for uploading a file",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.openapi("UploadSort", {
 		description: "Data for uploading a file",

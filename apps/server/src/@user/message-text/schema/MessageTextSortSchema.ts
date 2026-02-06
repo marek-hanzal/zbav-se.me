@@ -10,7 +10,7 @@ export const MessageTextSortSchema = z
 			.openapi("MessageTextSortField", {
 				description: "Available sort fields for listing transaction message",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.openapi("MessageTextSort", {
 		description: "Sort parameters for listing transaction message collection",

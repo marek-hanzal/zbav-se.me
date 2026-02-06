@@ -20,9 +20,9 @@ export const withCategoryMissSelectFx = Effect.fn("withCategoryMissSelectFx")(fu
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("category", () => query.orderBy("cm.category", item.direction))
-			.with("count", () => query.orderBy("cm.count", item.direction))
-			.with("updatedAt", () => query.orderBy("cm.updatedAt", item.direction))
+			.with("category", () => query.orderBy("cm.category", item.order))
+			.with("count", () => query.orderBy("cm.count", item.order))
+			.with("updatedAt", () => query.orderBy("cm.updatedAt", item.order))
 			.exhaustive();
 	}
 

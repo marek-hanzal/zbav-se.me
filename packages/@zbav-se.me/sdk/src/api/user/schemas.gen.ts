@@ -171,13 +171,13 @@ export const sGallerySort = {
         field: {
             $ref: '#/components/schemas/GallerySortField'
         },
-        direction: {
+        order: {
             $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
         'field',
-        'direction'
+        'order'
     ]
 } as const;
 
@@ -763,13 +763,13 @@ export const sMessageSort = {
         field: {
             $ref: '#/components/schemas/MessageSortField'
         },
-        direction: {
+        order: {
             $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
         'field',
-        'direction'
+        'order'
     ]
 } as const;
 
@@ -986,13 +986,13 @@ export const sUploadSort = {
         field: {
             $ref: '#/components/schemas/UploadSortField'
         },
-        direction: {
+        order: {
             $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
         'field',
-        'direction'
+        'order'
     ]
 } as const;
 

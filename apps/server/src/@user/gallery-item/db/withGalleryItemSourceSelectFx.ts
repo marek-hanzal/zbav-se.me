@@ -20,8 +20,8 @@ export const withGalleryItemSourceSelectFx = Effect.fn("withGalleryItemSourceSel
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("sort", () => query.orderBy("gal_item.sort", item.direction))
-			.with("createdAt", () => query.orderBy("gal_item.createdAt", item.direction))
+			.with("sort", () => query.orderBy("gal_item.sort", item.order))
+			.with("createdAt", () => query.orderBy("gal_item.createdAt", item.order))
 			.exhaustive();
 	}
 

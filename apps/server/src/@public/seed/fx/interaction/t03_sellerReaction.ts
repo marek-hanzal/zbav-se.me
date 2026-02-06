@@ -59,7 +59,7 @@ export const t03_sellerReaction = Effect.fn("t03_sellerReaction")(function* ({
 			sort: [
 				{
 					field: "createdAt",
-					direction: "desc",
+					order: "desc",
 				},
 			],
 			scope: {},

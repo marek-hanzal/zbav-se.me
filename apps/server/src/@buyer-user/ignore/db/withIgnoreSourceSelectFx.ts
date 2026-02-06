@@ -20,7 +20,7 @@ export const withIgnoreSourceSelectFx = Effect.fn("withIgnoreSourceSelectFx")(fu
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("i.createdAt", item.direction))
+			.with("createdAt", () => query.orderBy("i.createdAt", item.order))
 			.exhaustive();
 	}
 

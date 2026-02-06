@@ -23,8 +23,8 @@ export const withDraftSourceSelectFx = Effect.fn("withDraftSourceSelectFx")(func
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("d.createdAt", item.direction))
-			.with("updatedAt", () => query.orderBy("d.updatedAt", item.direction))
+			.with("createdAt", () => query.orderBy("d.createdAt", item.order))
+			.with("updatedAt", () => query.orderBy("d.updatedAt", item.order))
 			.exhaustive();
 	}
 

@@ -301,7 +301,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/lis
 						sort: [
 							{
 								field: "expiresAt",
-								direction: "desc",
+								order: "desc",
 							},
 						],
 					}}

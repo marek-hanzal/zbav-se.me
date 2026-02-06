@@ -6,7 +6,7 @@ import type { FC } from "react";
 export namespace SortValue {
 	export interface Sort {
 		field: string;
-		direction: string;
+		order: string;
 	}
 
 	export interface Props
@@ -35,7 +35,7 @@ export const SortValue: FC<SortValue.Props> = ({ sort, ...props }) => {
 			}))}
 			renderFn={(sortItem) => (
 				<Tx
-					label={`Listing common sort value ${sortItem.field} - ${sortItem.direction}`}
+					label={`Listing common sort value ${sortItem.field} - ${sortItem.order}`}
 					ui={{
 						tone: "secondary",
 					}}

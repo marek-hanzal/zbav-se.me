@@ -404,13 +404,13 @@ export const sTransactionSort = {
         field: {
             $ref: '#/components/schemas/TransactionSortField'
         },
-        direction: {
+        order: {
             $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
         'field',
-        'direction'
+        'order'
     ]
 } as const;
 

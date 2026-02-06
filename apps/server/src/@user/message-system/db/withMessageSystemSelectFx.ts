@@ -26,7 +26,7 @@ export const withMessageSystemSelectFx = Effect.fn("withMessageSystemSelectFx")(
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("ms.createdAt", item.direction))
+			.with("createdAt", () => query.orderBy("ms.createdAt", item.order))
 			.exhaustive();
 	}
 

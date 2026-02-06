@@ -157,7 +157,7 @@ export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
  */
 export type tDraftSort = {
     field: tDraftSortField;
-    direction: tOrderEnum;
+    order: tOrderEnum;
 };
 
 /**
@@ -766,7 +766,7 @@ export type tListingSortField = typeof tListingSortField[keyof typeof tListingSo
  */
 export type tListingSort = {
     field: tListingSortField;
-    direction: tOrderEnum;
+    order: tOrderEnum;
 };
 
 /**
@@ -1055,7 +1055,7 @@ export type tTransactionSortField = typeof tTransactionSortField[keyof typeof tT
  */
 export type tTransactionSort = {
     field: tTransactionSortField;
-    direction: tOrderEnum;
+    order: tOrderEnum;
 };
 
 /**
@@ -1199,7 +1199,7 @@ export type tTransactionListingSortField = typeof tTransactionListingSortField[k
  */
 export type tTransactionListingSort = {
     field: tTransactionListingSortField;
-    direction: tOrderEnum;
+    order: tOrderEnum;
 };
 
 /**

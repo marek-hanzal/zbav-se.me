@@ -11,7 +11,7 @@ export const DraftSortSchema = z
 			.openapi("DraftSortField", {
 				description: "Field of the draft sort",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.openapi("DraftSort", {
 		description: "Sort object for draft collection",

@@ -10,7 +10,7 @@ export const MessageThreadUserSortSchema = z
 			.openapi("MessageThreadUserSortField", {
 				description: "Available sort fields for message thread user",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.openapi("MessageThreadUserSort", {
 		description: "Sort parameters for message thread user collection",

@@ -178,7 +178,7 @@ export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
  */
 export type tCategorySort = {
     field: tCategorySortField;
-    direction: tOrderEnum;
+    order: tOrderEnum;
 };
 
 /**
@@ -436,7 +436,7 @@ export type tLocationSortField = typeof tLocationSortField[keyof typeof tLocatio
  */
 export type tLocationSort = {
     field: tLocationSortField;
-    direction: tOrderEnum;
+    order: tOrderEnum;
 };
 
 /**

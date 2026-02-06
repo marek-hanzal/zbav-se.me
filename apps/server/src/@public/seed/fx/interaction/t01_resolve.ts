@@ -59,7 +59,7 @@ export const t01_resolve = Effect.fn("t01_resolve")(function* ({
 			sort: [
 				{
 					field: "createdAt",
-					direction: "desc",
+					order: "desc",
 				},
 			],
 			scope: {},

@@ -27,12 +27,12 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("price", () => query.orderBy("l.price", item.direction))
-			.with("condition", () => query.orderBy("l.condition", item.direction))
-			.with("age", () => query.orderBy("l.age", item.direction))
-			.with("createdAt", () => query.orderBy("l.createdAt", item.direction))
-			.with("updatedAt", () => query.orderBy("l.updatedAt", item.direction))
-			.with("expiresAt", () => query.orderBy("l.expiresAt", item.direction))
+			.with("price", () => query.orderBy("l.price", item.order))
+			.with("condition", () => query.orderBy("l.condition", item.order))
+			.with("age", () => query.orderBy("l.age", item.order))
+			.with("createdAt", () => query.orderBy("l.createdAt", item.order))
+			.with("updatedAt", () => query.orderBy("l.updatedAt", item.order))
+			.with("expiresAt", () => query.orderBy("l.expiresAt", item.order))
 			.with("geo", () => {
 				if (!meta?.latLon) {
 					return query;
@@ -44,7 +44,7 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 						sql`${eb.ref("loc.geo")} <-> ST_SetSRID(ST_MakePoint(${eb.val(
 							lon,
 						)}, ${eb.val(lat)}), 4326)`,
-					item.direction,
+					item.order,
 				);
 			})
 			.exhaustive();

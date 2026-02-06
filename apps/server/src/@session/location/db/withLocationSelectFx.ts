@@ -20,10 +20,10 @@ export const withLocationSelectFx = Effect.fn("withLocationSelectFx")(function* 
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("confidence", () => query.orderBy("loc.confidence", item.direction))
-			.with("query", () => query.orderBy("loc.query", item.direction))
-			.with("country", () => query.orderBy("loc.country", item.direction))
-			.with("address", () => query.orderBy("loc.address", item.direction))
+			.with("confidence", () => query.orderBy("loc.confidence", item.order))
+			.with("query", () => query.orderBy("loc.query", item.order))
+			.with("country", () => query.orderBy("loc.country", item.order))
+			.with("address", () => query.orderBy("loc.address", item.order))
 			.exhaustive();
 	}
 
