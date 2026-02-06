@@ -5,6 +5,7 @@ import { Effect, Match } from "effect";
 import { ignoreToggleFx } from "~/@buyer-user/ignore/fx/ignoreToggleFx";
 import { IgnoreToggleSchema } from "~/@buyer-user/ignore/schema/IgnoreToggleSchema";
 import { ListingSchema } from "~/@buyer-user/listing/schema/ListingSchema";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -105,13 +106,7 @@ export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
 								},
 							),
 							Match.when(

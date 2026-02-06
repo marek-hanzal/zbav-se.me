@@ -2,6 +2,7 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
 import { transactionStatusAcceptFx } from "~/@seller-user/transaction-status/fx/transactionStatusAcceptFx";
 import { TransactionStatusAcceptSchema } from "~/@seller-user/transaction-status/schema/TransactionStatusAcceptSchema";
@@ -86,13 +87,7 @@ export const withAcceptApiFx = Effect.fn("withAcceptApiFx")(function* () {
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
 								},
 							),
 							Match.when(
@@ -100,13 +95,7 @@ export const withAcceptApiFx = Effect.fn("withAcceptApiFx")(function* () {
 									_tag: "AccessDeniedError",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
 								},
 							),
 							Match.when(

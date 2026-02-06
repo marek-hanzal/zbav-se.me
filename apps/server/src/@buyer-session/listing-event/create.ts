@@ -5,6 +5,7 @@ import { Effect, Match } from "effect";
 import { listingEventCreateFx } from "~/@buyer-session/listing-event/fx/listingEventCreateFx";
 import { ListingEventCreateSchema } from "~/@buyer-session/listing-event/schema/ListingEventCreateSchema";
 import { ListingEventSchema } from "~/@buyer-session/listing-event/schema/ListingEventSchema";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -114,13 +115,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
 								},
 							),
 							Match.when(

@@ -3,6 +3,7 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { transactionFetchFx } from "~/@buyer-user/transaction/fx/transactionFetchFx";
 import { TransactionSchema } from "~/@buyer-user/transaction/schema/TransactionSchema";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { TransactionQuerySchema } from "~/@common/transaction/schema/TransactionQuerySchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
@@ -84,13 +85,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
 								},
 							),
 							Match.when(

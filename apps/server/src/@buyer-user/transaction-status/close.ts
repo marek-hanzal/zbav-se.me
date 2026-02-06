@@ -4,6 +4,7 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { transactionStatusCloseFx } from "~/@buyer-user/transaction-status/fx/transactionStatusCloseFx";
 import { TransactionStatusCloseSchema } from "~/@buyer-user/transaction-status/schema/TransactionStatusCloseSchema";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
@@ -94,13 +95,7 @@ export const withCloseApiFx = Effect.fn("withCloseApiFx")(function* () {
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
 								},
 							),
 							Match.when(
@@ -108,13 +103,7 @@ export const withCloseApiFx = Effect.fn("withCloseApiFx")(function* () {
 									_tag: "AccessDeniedError",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
 								},
 							),
 							Match.when(

@@ -3,6 +3,7 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { listingGetSellerInfoFx } from "~/@buyer-session/listing/fx/listingGetSellerInfoFx";
 import { SellerInfoSchema } from "~/@buyer-session/listing/schema/SellerInfoSchema";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -83,13 +84,7 @@ export const withSellerInfoApiFx = Effect.fn("withSellerInfoApiFx")(function* ()
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
 								},
 							),
 							Match.when(

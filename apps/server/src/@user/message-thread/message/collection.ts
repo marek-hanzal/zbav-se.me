@@ -1,6 +1,7 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { messageCollectionFx } from "~/@user/message/fx/messageCollectionFx";
 import { MessageQuerySchema } from "~/@user/message/schema/MessageQuerySchema";
 import { MessageItemSchema } from "~/@user/message-thread/message/schema/MessageItemSchema";
@@ -117,13 +118,7 @@ export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx"
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
 								},
 							),
 							Match.when(

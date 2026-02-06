@@ -1,7 +1,10 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
+import { noticeError } from "~/@common/notice/noticeError";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
 import { TransactionStatusRejectSchema } from "~/@common/transaction-status/schema/TransactionStatusRejectSchema";
 import { TransactionStatusSchema } from "~/@seller-user/transaction-status/schema/TransactionStatusSchema";
@@ -94,13 +97,7 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json(NotFoundNotice, 404);
 								},
 							),
 							Match.when(
@@ -108,13 +105,7 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 									_tag: "AccessDeniedError",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json(NotFoundNotice, 404);
 								},
 							),
 							Match.when(
@@ -122,13 +113,7 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 									_tag: "InvalidRequestError",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 400>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										400,
-									);
+									return c.json(noticeError(e), 400);
 								},
 							),
 							Match.when(
@@ -136,13 +121,7 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 									_tag: "RuntimeError",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										500,
-									);
+									return c.json(noticeError(e), 500);
 								},
 							),
 							Match.when(
@@ -150,13 +129,7 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 									_tag: "ZodErrorFx",
 								},
 								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
-									);
+									return c.json(noticeZodError(zod), 500);
 								},
 							),
 							Match.exhaustive,

@@ -4,6 +4,7 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { feedGalleryCreateFx } from "~/@buyer-user/feed-gallery/fx/feedGalleryCreateFx";
 import { FeedGalleryCreateSchema } from "~/@buyer-user/feed-gallery/schema/FeedGalleryCreateSchema";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
@@ -107,13 +108,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
 								},
 							),
 							Match.when(
@@ -121,13 +116,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 									_tag: "AccessDeniedError",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
 								},
 							),
 							Match.when(

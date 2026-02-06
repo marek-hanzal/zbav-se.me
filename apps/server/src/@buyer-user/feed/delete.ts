@@ -4,6 +4,7 @@ import { Effect, Match } from "effect";
 import { feedDeleteFx } from "~/@buyer-user/feed/fx/feedDeleteFx";
 import { FeedQuerySchema } from "~/@buyer-user/feed/schema/FeedQuerySchema";
 import { FeedSchema } from "~/@buyer-user/feed/schema/FeedSchema";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -84,13 +85,7 @@ export const withDeleteApiFx = Effect.fn("withDeleteApiFx")(function* () {
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
 								},
 							),
 							Match.when(

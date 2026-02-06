@@ -2,6 +2,7 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { draftPatchFx } from "~/@seller-user/draft/fx/draftPatchFx";
 import { DraftPatchSchema } from "~/@seller-user/draft/schema/DraftPatchSchema";
 import { DraftSchema } from "~/@seller-user/draft/schema/DraftSchema";
@@ -95,13 +96,7 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
 								},
 							),
 							Match.when(

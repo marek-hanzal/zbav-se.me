@@ -5,6 +5,7 @@ import { Effect, Match } from "effect";
 import { transactionCreateFx } from "~/@buyer-user/transaction/fx/transactionCreateFx";
 import { TransactionCreateSchema } from "~/@buyer-user/transaction/schema/TransactionCreateSchema";
 import { TransactionSchema } from "~/@buyer-user/transaction/schema/TransactionSchema";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
@@ -86,13 +87,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
 								},
 							),
 							Match.when(

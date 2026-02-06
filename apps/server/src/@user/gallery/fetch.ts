@@ -1,6 +1,7 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import { GalleryQuerySchema } from "~/@user/gallery/schema/GalleryQuerySchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
@@ -84,13 +85,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
 								},
 							),
 							Match.when(

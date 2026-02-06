@@ -5,6 +5,7 @@ import { TransactionContextProvider } from "~/@common/transaction/context/Transa
 import { SeedRequestSchema, seedFx } from "~/@public/seed/fx/seedFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
@@ -98,13 +99,7 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 									_tag: "AccessDeniedError",
 								},
 								(err) => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: err.message,
-										},
-										404,
-									);
+									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
 								},
 							),
 							Match.when(
@@ -112,13 +107,7 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 									_tag: "NotFoundErrorFx",
 								},
 								(err) => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: err.message,
-										},
-										404,
-									);
+									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
 								},
 							),
 							Match.when(
