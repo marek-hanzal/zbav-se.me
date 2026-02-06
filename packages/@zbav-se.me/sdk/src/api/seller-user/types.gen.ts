@@ -1494,10 +1494,6 @@ export type apiDraftGalleryCreateErrors = {
      */
     400: tNotice;
     /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
      * Draft not found or not accessible
      */
     404: tNotice;
@@ -1730,10 +1726,6 @@ export type tApiTransactionStatusAcceptRequest = {
 
 export type apiTransactionStatusAcceptErrors = {
     /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
      * Listing transaction not found or not accessible
      */
     404: tNotice;
@@ -1769,10 +1761,6 @@ export type apiTransactionStatusDisputeErrors = {
      * Invalid request
      */
     400: tNotice;
-    /**
-     * Access denied
-     */
-    403: tNotice;
     /**
      * Listing transaction not found or not accessible
      */
@@ -1810,10 +1798,6 @@ export type apiTransactionStatusRejectErrors = {
      */
     400: tNotice;
     /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
      * Listing transaction not found or not accessible
      */
     404: tNotice;
@@ -1849,10 +1833,6 @@ export type apiTransactionStatusResolveErrors = {
      * Invalid request
      */
     400: tNotice;
-    /**
-     * Access denied
-     */
-    403: tNotice;
     /**
      * Listing transaction not found or not accessible
      */

@@ -1,6 +1,7 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { galleryCountFx } from "~/@user/gallery/fx/galleryCountFx";
 import { GalleryCountQuerySchema } from "~/@user/gallery/schema/GalleryCountQuerySchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
@@ -71,18 +72,8 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
-								{
-									_tag: "ZodErrorFx",
-								},
-								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
-									);
-								},
+								{ _tag: "ZodErrorFx" },
+								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,
 						),

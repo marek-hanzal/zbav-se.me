@@ -5,6 +5,8 @@ import { TransactionContextProvider } from "~/@common/transaction/context/Transa
 import { SeedRequestSchema, seedFx } from "~/@public/seed/fx/seedFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
+import { noticeError } from "~/@common/notice/noticeError";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
@@ -37,14 +39,6 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 						},
 					},
 					description: "Invalid request",
-				},
-				403: {
-					content: {
-						"application/json": {
-							schema: NoticeSchema,
-						},
-					},
-					description: "Access denied",
 				},
 				404: {
 					content: {
@@ -88,60 +82,20 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
-								{
-									_tag: "InvalidRequestError",
-								},
-								(err) => {
-									return c.json<NoticeSchema.Type, 400>(
-										{
-											type: "error",
-											message: err.message,
-										},
-										400,
-									);
-								},
+								{ _tag: "InvalidRequestError" },
+								(err) => c.json(noticeError(err), 400),
 							),
 							Match.when(
-								{
-									_tag: "AccessDeniedError",
-								},
-								(err) => {
-									return c.json<NoticeSchema.Type, 403>(
-										{
-											type: "error",
-											message: err.message,
-										},
-										403,
-									);
-								},
+								{ _tag: "AccessDeniedError" },
+								() => c.json(NotFoundNotice, 404),
 							),
 							Match.when(
-								{
-									_tag: "NotFoundErrorFx",
-								},
-								(err) => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: err.message,
-										},
-										404,
-									);
-								},
+								{ _tag: "NotFoundErrorFx" },
+								() => c.json(NotFoundNotice, 404),
 							),
 							Match.when(
-								{
-									_tag: "RuntimeError",
-								},
-								(err) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: err.message,
-										},
-										500,
-									);
-								},
+								{ _tag: "RuntimeError" },
+								(err) => c.json(noticeError(err), 500),
 							),
 							Match.exhaustive,
 						),

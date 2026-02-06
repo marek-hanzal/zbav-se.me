@@ -1,7 +1,10 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
+import { noticeError } from "~/@common/notice/noticeError";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
 import { TransactionStatusDisputeSchema } from "~/@common/transaction-status/schema/TransactionStatusDisputeSchema";
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
@@ -44,14 +47,6 @@ export const withDisputeApiFx = Effect.fn("withDisputeApiFx")(function* () {
 						},
 					},
 					description: "Invalid request",
-				},
-				403: {
-					content: {
-						"application/json": {
-							schema: NoticeSchema,
-						},
-					},
-					description: "Access denied",
 				},
 				404: {
 					content: {
@@ -102,13 +97,7 @@ export const withDisputeApiFx = Effect.fn("withDisputeApiFx")(function* () {
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json(NotFoundNotice, 404);
 								},
 							),
 							Match.when(
@@ -116,56 +105,26 @@ export const withDisputeApiFx = Effect.fn("withDisputeApiFx")(function* () {
 									_tag: "AccessDeniedError",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 403>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										403,
-									);
+									return c.json(NotFoundNotice, 404);
 								},
 							),
 							Match.when(
 								{
 									_tag: "InvalidRequestError",
 								},
-								() => {
-									return c.json<NoticeSchema.Type, 400>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										400,
-									);
-								},
+								() => c.json(noticeError(e), 400),
 							),
 							Match.when(
 								{
 									_tag: "RuntimeError",
 								},
-								() => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										500,
-									);
-								},
+								() => c.json(noticeError(e), 500),
 							),
 							Match.when(
 								{
 									_tag: "ZodErrorFx",
 								},
-								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
-									);
-								},
+								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,
 						),

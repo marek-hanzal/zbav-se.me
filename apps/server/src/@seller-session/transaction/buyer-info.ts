@@ -1,6 +1,8 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { TransactionQuerySchema } from "~/@common/transaction/schema/TransactionQuerySchema";
 import { transactionGetBuyerInfoFx } from "~/@seller-session/transaction/fx/transactionGetBuyerInfoFx";
 import { TransactionBuyerInfoSchema } from "~/@seller-session/transaction/schema/TransactionBuyerInfoSchema";
@@ -91,13 +93,7 @@ export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json(NotFoundNotice, 404);
 								},
 							),
 							Match.when(
@@ -105,13 +101,7 @@ export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
 									_tag: "ZodErrorFx",
 								},
 								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
-									);
+									return c.json(noticeZodError(zod), 500);
 								},
 							),
 							Match.exhaustive,

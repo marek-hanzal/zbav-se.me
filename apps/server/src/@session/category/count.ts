@@ -1,7 +1,8 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { categoryCountFx } from "~/@session/category/fx/categoryCountFx";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { CategoryCountQuerySchema } from "~/@session/category/schema/CategoryCountQuerySchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
@@ -68,18 +69,8 @@ export const withCategoryCountApiFx = Effect.fn("withCategoryCountApiFx")(functi
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
-								{
-									_tag: "ZodErrorFx",
-								},
-								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
-									);
-								},
+								{ _tag: "ZodErrorFx" },
+								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,
 						),

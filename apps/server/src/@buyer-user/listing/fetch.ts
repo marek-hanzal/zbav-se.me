@@ -1,9 +1,11 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { listingFetchFx } from "~/@buyer-user/listing/fx/listingFetchFx";
 import { ListingQuerySchema } from "~/@buyer-user/listing/schema/ListingQuerySchema";
 import { ListingSchema } from "~/@buyer-user/listing/schema/ListingSchema";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -83,13 +85,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
+									return c.json(NotFoundNotice, 404);
 								},
 							),
 							Match.when(
@@ -97,13 +93,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 									_tag: "ZodErrorFx",
 								},
 								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
-									);
+									return c.json(noticeZodError(zod), 500);
 								},
 							),
 							Match.exhaustive,

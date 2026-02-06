@@ -1155,10 +1155,6 @@ export type apiSeedErrors = {
      */
     400: tNotice;
     /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
      * User not found
      */
     404: tNotice;

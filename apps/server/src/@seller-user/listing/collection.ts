@@ -1,6 +1,7 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { listingCollectionFx } from "~/@seller-user/listing/fx/listingCollectionFx";
 import { ListingItemSchema } from "~/@seller-user/listing/schema/ListingItemSchema";
 import { ListingQuerySchema } from "~/@seller-user/listing/schema/ListingQuerySchema";
@@ -84,15 +85,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 								{
 									_tag: "ZodErrorFx",
 								},
-								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
-									);
-								},
+								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,
 						),

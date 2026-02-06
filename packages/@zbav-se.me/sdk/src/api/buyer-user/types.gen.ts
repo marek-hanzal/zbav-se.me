@@ -1945,10 +1945,6 @@ export type apiFeedGalleryCreateErrors = {
      */
     400: tNotice;
     /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
      * Feed not found or not accessible
      */
     404: tNotice;
@@ -2358,10 +2354,6 @@ export type apiTransactionStatusCloseErrors = {
      */
     400: tNotice;
     /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
      * Listing transaction not found or not accessible
      */
     404: tNotice;
@@ -2397,10 +2389,6 @@ export type apiTransactionStatusDisputeErrors = {
      * Invalid request
      */
     400: tNotice;
-    /**
-     * Access denied
-     */
-    403: tNotice;
     /**
      * Listing transaction not found or not accessible
      */
@@ -2438,10 +2426,6 @@ export type apiTransactionStatusRejectErrors = {
      */
     400: tNotice;
     /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
      * Listing transaction not found or not accessible
      */
     404: tNotice;
@@ -2477,10 +2461,6 @@ export type apiTransactionStatusSuccessErrors = {
      * Invalid request
      */
     400: tNotice;
-    /**
-     * Access denied
-     */
-    403: tNotice;
     /**
      * Listing transaction not found or not accessible
      */

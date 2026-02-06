@@ -1,7 +1,10 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
+import { noticeError } from "~/@common/notice/noticeError";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { UploadContextLayer } from "~/@common/upload/context/UploadContextLayer";
 import { uploadCreateFx } from "~/@user/upload/fx/uploadCreateFx";
 import { UploadCreateSchema } from "~/@user/upload/schema/UploadCreateSchema";
@@ -97,46 +100,16 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
-								{
-									_tag: "InvalidRequestError",
-								},
-								() => {
-									return c.json<NoticeSchema.Type, 400>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										400,
-									);
-								},
+								{ _tag: "InvalidRequestError" },
+								() => c.json(noticeError(e), 400),
 							),
 							Match.when(
-								{
-									_tag: "NotFoundErrorFx",
-								},
-								() => {
-									return c.json<NoticeSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
-								},
+								{ _tag: "NotFoundErrorFx" },
+								() => c.json(NotFoundNotice, 404),
 							),
 							Match.when(
-								{
-									_tag: "ZodErrorFx",
-								},
-								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
-									);
-								},
+								{ _tag: "ZodErrorFx" },
+								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,
 						),

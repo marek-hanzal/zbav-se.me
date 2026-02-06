@@ -1,6 +1,7 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { draftCountFx } from "~/@seller-user/draft/fx/draftCountFx";
 import { DraftCountQuerySchema } from "~/@seller-user/draft/schema/DraftCountQuerySchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
@@ -75,15 +76,7 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 								{
 									_tag: "ZodErrorFx",
 								},
-								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
-									);
-								},
+								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,
 						),

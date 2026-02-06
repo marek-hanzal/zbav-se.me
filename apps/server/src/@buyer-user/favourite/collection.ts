@@ -1,9 +1,10 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { favouriteCollectionFx } from "~/@buyer-user/favourite/fx/favouriteCollectionFx";
 import { FavouriteItemSchema } from "~/@buyer-user/favourite/schema/FavouriteItemSchema";
 import { FavouriteQuerySchema } from "~/@buyer-user/favourite/schema/FavouriteQuerySchema";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -86,15 +87,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 								{
 									_tag: "ZodErrorFx",
 								},
-								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
-									);
-								},
+								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,
 						),

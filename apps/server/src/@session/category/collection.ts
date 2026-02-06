@@ -1,7 +1,8 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { categoryCollectionFx } from "~/@session/category/fx/categoryCollectionFx";
 import { CategoryItemSchema } from "~/@session/category/schema/CategoryItemSchema";
 import { CategoryQuerySchema } from "~/@session/category/schema/CategoryQuerySchema";
@@ -84,15 +85,7 @@ export const withCategoryCollectionApiFx = Effect.fn("withCategoryCollectionApiF
 								{
 									_tag: "ZodErrorFx",
 								},
-								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
-									);
-								},
+								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,
 						),
