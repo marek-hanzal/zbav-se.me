@@ -37,14 +37,6 @@ export const withAcceptApiFx = Effect.fn("withAcceptApiFx")(function* () {
 					},
 					description: "Accepted status created",
 				},
-				403: {
-					content: {
-						"application/json": {
-							schema: NoticeSchema,
-						},
-					},
-					description: "Access denied",
-				},
 				404: {
 					content: {
 						"application/json": {
@@ -108,12 +100,12 @@ export const withAcceptApiFx = Effect.fn("withAcceptApiFx")(function* () {
 									_tag: "AccessDeniedError",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 403>(
+									return c.json<NoticeSchema.Type, 404>(
 										{
 											type: "error",
 											message: e.message,
 										},
-										403,
+										404,
 									);
 								},
 							),

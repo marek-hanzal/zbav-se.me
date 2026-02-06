@@ -66,7 +66,9 @@ export namespace seedListings {
 
 const generateProsCons = (): string[] | null => {
 	const count = rangedom(0, 5);
-	if (count === 0) return null;
+	if (count === 0) {
+		return null;
+	}
 
 	const samples = [
 		"Výborný stav, jako nové",

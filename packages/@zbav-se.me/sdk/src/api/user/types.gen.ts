@@ -979,10 +979,6 @@ export type apiTransactionMessageGalleryCreateErrors = {
      */
     400: tNotice;
     /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
      * Transaction not found or not accessible
      */
     404: tNotice;
@@ -1018,10 +1014,6 @@ export type apiTransactionMessageLocationCreateErrors = {
      * Invalid request
      */
     400: tNotice;
-    /**
-     * Access denied
-     */
-    403: tNotice;
     /**
      * Transaction not found or not accessible
      */
@@ -1059,10 +1051,6 @@ export type apiTransactionMessagePackageCreateErrors = {
      */
     400: tNotice;
     /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
      * Transaction not found or not accessible
      */
     404: tNotice;
@@ -1099,10 +1087,6 @@ export type apiTransactionMessagePersonalCreateErrors = {
      */
     400: tNotice;
     /**
-     * Access denied
-     */
-    403: tNotice;
-    /**
      * Transaction not found or not accessible
      */
     404: tNotice;
@@ -1138,10 +1122,6 @@ export type apiTransactionMessageTextCreateErrors = {
      * Invalid request
      */
     400: tNotice;
-    /**
-     * Access denied
-     */
-    403: tNotice;
     /**
      * Transaction not found or not accessible
      */
