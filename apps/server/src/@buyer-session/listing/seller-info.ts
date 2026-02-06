@@ -69,7 +69,7 @@ export const withSellerInfoApiFx = Effect.fn("withSellerInfoApiFx")(function* ()
 						schema: SellerInfoSchema,
 						dataFx: listingGetSellerInfoFx({
 							listingId,
-						}),
+						}) satisfies Effect.Effect<SellerInfoSchema.Type, any, any>,
 					}),
 					200,
 				);

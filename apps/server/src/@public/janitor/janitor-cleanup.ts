@@ -50,7 +50,11 @@ export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(func
 					return c.json(
 						yield* zodFx({
 							schema: z.array(CleanupSchema),
-							dataFx: cleanupFx(),
+							dataFx: cleanupFx() satisfies Effect.Effect<
+								CleanupSchema.Type[],
+								any,
+								any
+							>,
 						}),
 						200,
 					);

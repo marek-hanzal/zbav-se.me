@@ -1,6 +1,5 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
-import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
 import { SeedRequestSchema, seedFx } from "~/@public/seed/fx/seedFx";
@@ -72,11 +71,8 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json(
-					yield* zodFx({
-						schema: SeedRequestSchema,
-						dataFx: seedFx({
-							...c.req.valid("json"),
-						}),
+					yield* seedFx({
+						...c.req.valid("json"),
 					}),
 					201,
 				);
@@ -130,20 +126,6 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 											message: err.message,
 										},
 										404,
-									);
-								},
-							),
-							Match.when(
-								{
-									_tag: "ZodErrorFx",
-								},
-								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
 									);
 								},
 							),

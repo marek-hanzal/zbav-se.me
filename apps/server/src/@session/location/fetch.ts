@@ -65,7 +65,7 @@ export const withLocationFetchApiFx = Effect.fn("withLocationFetchApiFx")(functi
 						schema: LocationSchema,
 						dataFx: locationFetchFx({
 							...c.req.valid("json"),
-						}),
+						}) satisfies Effect.Effect<LocationSchema.Type, any, any>,
 					}),
 					200,
 				);

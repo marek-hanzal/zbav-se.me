@@ -3,16 +3,16 @@ import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { categoryCollectionFx } from "~/@session/category/fx/categoryCollectionFx";
+import { CategoryItemSchema } from "~/@session/category/schema/CategoryItemSchema";
 import { CategoryQuerySchema } from "~/@session/category/schema/CategoryQuerySchema";
-import { CategorySchema } from "~/@session/category/schema/CategorySchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
 const CollectionSchema = withCollectionSchema({
-	schema: CategorySchema,
-	type: "CategoryCollection",
+	schema: CategoryItemSchema,
+	type: "CategoryItemSchema",
 	description: "Collection of categories",
 });
 
@@ -59,13 +59,17 @@ export const withCategoryCollectionApiFx = Effect.fn("withCategoryCollectionApiF
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json<withCollectionSchema.Type<CategorySchema>, 200>(
+				return c.json<withCollectionSchema.Type<CategoryItemSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: categoryCollectionFx({
 							...c.req.valid("json"),
 							scope: {},
-						}),
+						}) satisfies Effect.Effect<
+							withCollectionSchema.Type<CategoryItemSchema>,
+							any,
+							any
+						>,
 					}),
 					200,
 				);

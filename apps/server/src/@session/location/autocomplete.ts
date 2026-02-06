@@ -62,7 +62,7 @@ export const withLocationAutocompleteApiFx = Effect.fn("withLocationAutocomplete
 							schema: z.array(LocationSchema),
 							dataFx: locationAutocompleteFx({
 								...c.req.valid("json"),
-							}),
+							}) satisfies Effect.Effect<LocationSchema.Type[], any, any>,
 						}),
 						200,
 					);

@@ -202,13 +202,45 @@ export const sCategoryQuery = {
     }
 } as const;
 
-export const sCategoryCollection = {
+export const sCategoryItem = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        group: {
+            type: 'string'
+        },
+        category: {
+            type: 'string'
+        },
+        slug: {
+            type: 'string'
+        },
+        sort: {
+            type: 'number'
+        },
+        locale: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'group',
+        'category',
+        'slug',
+        'sort',
+        'locale'
+    ]
+} as const;
+
+export const sCategoryItemSchema = {
     type: 'object',
     properties: {
         data: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/Category'
+                $ref: '#/components/schemas/CategoryItem'
             }
         },
         more: {

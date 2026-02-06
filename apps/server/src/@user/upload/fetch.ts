@@ -65,7 +65,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 						dataFx: uploadFetchFx({
 							...c.req.valid("json"),
 							scope: {},
-						}),
+						}) satisfies Effect.Effect<UploadSchema.Type, any, any>,
 					}),
 					200,
 				);
