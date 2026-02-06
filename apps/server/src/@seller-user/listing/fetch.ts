@@ -2,6 +2,7 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { listingFetchFx } from "~/@seller-user/listing/fx/listingFetchFx";
 import { ListingQuerySchema } from "~/@seller-user/listing/schema/ListingQuerySchema";
 import { ListingSchema } from "~/@seller-user/listing/schema/ListingSchema";
@@ -84,7 +85,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
+									return c.json(NotFoundNotice, 404);
 								},
 							),
 							Match.when(
@@ -92,13 +93,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 									_tag: "ZodErrorFx",
 								},
 								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
-									);
+									return c.json(noticeZodError(zod), 500);
 								},
 							),
 							Match.exhaustive,

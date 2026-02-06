@@ -95,7 +95,7 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
+									return c.json(NotFoundNotice, 404);
 								},
 							),
 							Match.when(
@@ -103,7 +103,7 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 									_tag: "AccessDeniedError",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
+									return c.json(NotFoundNotice, 404);
 								},
 							),
 							Match.when(

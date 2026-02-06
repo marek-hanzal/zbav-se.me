@@ -2,6 +2,7 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { locationFetchFx } from "~/@session/location/fx/locationFetchFx";
 import { LocationQuerySchema } from "~/@session/location/schema/LocationQuerySchema";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
@@ -81,7 +82,7 @@ export const withLocationFetchApiFx = Effect.fn("withLocationFetchApiFx")(functi
 									_tag: "NotFoundErrorFx",
 								},
 								() => {
-									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
+									return c.json(NotFoundNotice, 404);
 								},
 							),
 							Match.when(
@@ -89,13 +90,7 @@ export const withLocationFetchApiFx = Effect.fn("withLocationFetchApiFx")(functi
 									_tag: "ZodErrorFx",
 								},
 								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
-									);
+									return c.json(noticeZodError(zod), 500);
 								},
 							),
 							Match.exhaustive,

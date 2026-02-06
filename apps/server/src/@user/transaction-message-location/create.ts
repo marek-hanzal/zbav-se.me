@@ -1,8 +1,10 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
+import { noticeError } from "~/@common/notice/noticeError";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
 import { MessageLocationSchema } from "~/@user/message-location/schema/MessageLocationSchema";
 import { transactionMessageLocationCreateFx } from "~/@user/transaction-message-location/fx/transactionMessageLocationCreateFx";
@@ -95,59 +97,31 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 								{
 									_tag: "InvalidRequestError",
 								},
-								() => {
-									return c.json<NoticeSchema.Type, 400>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										400,
-									);
-								},
+								() => c.json(noticeError(e), 400),
 							),
 							Match.when(
 								{
 									_tag: "NotFoundErrorFx",
 								},
-								() => {
-									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
-								},
+								() => c.json(NotFoundNotice, 404),
 							),
 							Match.when(
 								{
 									_tag: "AccessDeniedError",
 								},
-								() => {
-									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
-								},
+								() => c.json(NotFoundNotice, 404),
 							),
 							Match.when(
 								{
 									_tag: "RuntimeError",
 								},
-								() => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										500,
-									);
-								},
+								() => c.json(noticeError(e), 500),
 							),
 							Match.when(
 								{
 									_tag: "ZodErrorFx",
 								},
-								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
-									);
-								},
+								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,
 						),

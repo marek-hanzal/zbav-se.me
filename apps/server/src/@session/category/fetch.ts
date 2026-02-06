@@ -2,6 +2,7 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { categoryFetchFx } from "~/@session/category/fx/categoryFetchFx";
 import { CategoryQuerySchema } from "~/@session/category/schema/CategoryQuerySchema";
 import { CategorySchema } from "~/@session/category/schema/CategorySchema";
@@ -81,23 +82,11 @@ export const withCategoryFetchApiFx = Effect.fn("withCategoryFetchApiFx")(functi
 								{
 									_tag: "NotFoundErrorFx",
 								},
-								() => {
-									return c.json<NoticeSchema.Type, 404>(NotFoundNotice, 404);
-								},
+								() => c.json(NotFoundNotice, 404),
 							),
 							Match.when(
-								{
-									_tag: "ZodErrorFx",
-								},
-								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
-									);
-								},
+								{ _tag: "ZodErrorFx" },
+								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,
 						),

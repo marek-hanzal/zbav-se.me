@@ -96,41 +96,31 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 								{
 									_tag: "NotFoundErrorFx",
 								},
-								() => {
-									return c.json(NotFoundNotice, 404);
-								},
+								() => c.json(NotFoundNotice, 404),
 							),
 							Match.when(
 								{
 									_tag: "AccessDeniedError",
 								},
-								() => {
-									return c.json(NotFoundNotice, 404);
-								},
+								() => c.json(NotFoundNotice, 404),
 							),
 							Match.when(
 								{
 									_tag: "InvalidRequestError",
 								},
-								() => {
-									return c.json(noticeError(e), 400);
-								},
+								() => c.json(noticeError(e), 400),
 							),
 							Match.when(
 								{
 									_tag: "RuntimeError",
 								},
-								() => {
-									return c.json(noticeError(e), 500);
-								},
+								() => c.json(noticeError(e), 500),
 							),
 							Match.when(
 								{
 									_tag: "ZodErrorFx",
 								},
-								({ zod }) => {
-									return c.json(noticeZodError(zod), 500);
-								},
+								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,
 						),
