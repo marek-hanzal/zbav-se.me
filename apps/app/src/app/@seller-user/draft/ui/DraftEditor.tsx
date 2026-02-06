@@ -20,6 +20,7 @@ import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { PriceValue } from "~/app/@common/price/ui/PriceValue";
 import { PriceTypeValue } from "~/app/@common/price-type/ui/PriceTypeValue";
 import { ProsValueList } from "~/app/@common/pros/ui/ProsValueList";
+import { RestrictionValue } from "~/app/@common/restriction/ui/RestrictionValue";
 import { TitleValue } from "~/app/@common/title/ui/TitleValue";
 import { WarrantyValue } from "~/app/@common/warranty/ui/WarrantyValue";
 import { CreateListingButton } from "~/app/@seller-user/draft/ui/button/CreateListingButton";
@@ -36,6 +37,7 @@ import { LocationPatch } from "~/app/@seller-user/draft/ui/patch/LocationPatch";
 import { PricePatch } from "~/app/@seller-user/draft/ui/patch/PricePatch";
 import { PriceTypePatch } from "~/app/@seller-user/draft/ui/patch/PriceTypePatch";
 import { ProsPatch } from "~/app/@seller-user/draft/ui/patch/ProsPatch";
+import { RestrictionPatch } from "~/app/@seller-user/draft/ui/patch/RestrictionPatch";
 import { TitlePatch } from "~/app/@seller-user/draft/ui/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/@seller-user/draft/ui/patch/WarrantyPatch";
 
@@ -51,6 +53,7 @@ export namespace DraftEditor {
 		| "age"
 		| "delivery"
 		| "warranty"
+		| "restriction"
 		| "gallery"
 		| "expireAt"
 		| "description"
@@ -280,6 +283,21 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 									}}
 								/>
 
+								<RestrictionValue
+									restriction={draft.restriction}
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
+									onClick={() => {
+										setView("restriction");
+									}}
+								/>
+
 								<ConditionValue
 									condition={draft.condition}
 									onClick={() => {
@@ -441,6 +459,15 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 				warranty: {
 					children: (
 						<WarrantyPatch
+							draft={draft}
+							onCancel={() => setView("default")}
+							onSettled={() => setView("default")}
+						/>
+					),
+				},
+				restriction: {
+					children: (
+						<RestrictionPatch
 							draft={draft}
 							onCancel={() => setView("default")}
 							onSettled={() => setView("default")}

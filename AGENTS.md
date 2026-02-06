@@ -8,7 +8,6 @@
 
 **Zbav-se.me** is a marketplace application (buying/selling items) built as a monorepo with:
 - **apps/app** - Main PWA application (React 19, TanStack Router, TanStack Start SSR)
-- **apps/arkini** - Arkini application (React 19, TanStack Router, TanStack Start SSR)
 - **apps/web** - Public marketing website (React 19, TanStack Router)
 - **apps/server** - Backend API (Hono, Nitro, PostgreSQL, Kysely, Better Auth, Redis, S3)
 - **packages/@zbav-se.me/** - Domain packages (sdk, ui, common, buyer, seller)
@@ -46,7 +45,6 @@
 - **Session domain** (`@session`): Public data requiring authentication (categories, locations, transaction-status operations)
 - **User domain** (`@user`): Private user data (gallery, messages, uploads, user-events)
 - **Public domain** (`@public`): Unauthenticated endpoints
-- **Arkini domain** (`@arkini`): Arkini app API
 
 ### API Structure Pattern
 Server API is organized by access level and domain:
@@ -57,7 +55,6 @@ Server API is organized by access level and domain:
 - `/api/buyer-session/*` - Buyer-specific session operations
 - `/api/seller-user/*` - Seller-specific private operations
 - `/api/seller-session/*` - Seller-specific session operations
-- `/api/arkini/*` - Arkini app API
 
 Each domain has:
 - `with*ApiFx.ts` - Main API setup (Effect-based)
@@ -260,7 +257,6 @@ translation/           # i18n files (cs.yaml, en.yaml)
 - `apps/web`: 3030
 - `apps/app`: 3031
 - `apps/server`: 3032
-- `apps/arkini`: 4088
 - `apps/blog`: 4090
 
 ## Environment Variables

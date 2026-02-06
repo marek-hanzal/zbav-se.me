@@ -8,13 +8,5 @@ export default defineNitroConfig({
 	compatibilityDate: "latest",
 	preset: "vercel",
 	serverDir: "src",
-	externals: {
-		external: [
-			"pg",
-			"pg-native",
-			"stripe",
-			"minio",
-			"@upstash/redis",
-		],
-	},
+	serverEntry: "./src/server.ts",
 });

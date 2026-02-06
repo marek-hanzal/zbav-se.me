@@ -11,6 +11,7 @@ import { MessageTypeEnumSchema } from "~/@user/message/schema/MessageTypeEnumSch
 import { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
 import { ListingEventEnumSchema } from "~/database/@enum/ListingEventEnumSchema";
 import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
+import { ListingRestrictionEnumSchema } from "~/database/@enum/ListingRestrictionEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/database/@enum/ListingWarrantyEnumSchema";
 import { ThumbEnumSchema } from "~/database/@enum/ThumbEnumSchema";
 import { TransactionSideEnumSchema } from "~/database/@enum/TransactionSideEnumSchema";
@@ -169,6 +170,30 @@ export const withEnumEndpointFx = Effect.fn("withEnumEndpointFx")(function* () {
 			],
 		}),
 		(c) => c.json(keysOf(ListingWarrantyEnumSchema.enum)),
+	);
+
+	publicHono.openapi(
+		createRoute({
+			method: "get",
+			path: "/enum/listing-restriction",
+			description: "Returns ListingRestriction enum values",
+			operationId: "apiPublicEnumListingRestriction",
+			responses: {
+				200: {
+					content: {
+						"application/json": {
+							schema: ListingRestrictionEnumSchema.array(),
+						},
+					},
+					description: "ListingRestriction enum",
+				},
+			},
+			security: [],
+			tags: [
+				"Enum",
+			],
+		}),
+		(c) => c.json(keysOf(ListingRestrictionEnumSchema.enum)),
 	);
 
 	publicHono.openapi(

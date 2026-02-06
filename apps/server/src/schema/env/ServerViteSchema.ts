@@ -9,7 +9,6 @@ export const ServerViteSchema = z
 		VITE_APP_ORIGIN: z
 			.string()
 			.min(1, "App domain ORIGIN is required (used for CORS and auth)"),
-		VITE_ARKINI_ORIGIN: z.string().optional(),
 		VITE_SERVER_API: z.url(),
 	})
 	.strip();

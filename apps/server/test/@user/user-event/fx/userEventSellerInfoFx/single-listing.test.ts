@@ -61,6 +61,7 @@ describe("userEventSellerInfoFx", () => {
 				locationId: location[0]!.id,
 				price: 100,
 				priceType: "open",
+				restriction: "none",
 				title: "Some piece of crap",
 				uploadIds: [
 					upload.id,

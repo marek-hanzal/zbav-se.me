@@ -12,11 +12,6 @@ export const withOriginEndpointFx = Effect.fn("withOriginEndpointFx")(function* 
 			origin: [
 				viteConfig.VITE_WEB_ORIGIN,
 				viteConfig.VITE_APP_ORIGIN,
-				...(viteConfig.VITE_ARKINI_ORIGIN
-					? [
-							viteConfig.VITE_ARKINI_ORIGIN,
-						]
-					: []),
 			],
 		});
 	});

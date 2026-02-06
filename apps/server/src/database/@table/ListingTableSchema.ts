@@ -2,6 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { ProsConsSchema } from "~/@common/listing/schema/ProsConsSchema";
 import { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
+import { ListingRestrictionEnumSchema } from "~/database/@enum/ListingRestrictionEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/database/@enum/ListingWarrantyEnumSchema";
 import { CurrencyEnumSchema } from "~/schema/CurrencyEnumSchema";
 import { VectorSchema } from "~/schema/VectorSchema";
@@ -60,6 +61,10 @@ export const ListingTableSchema = z
 			.openapi({
 				description: "Warranty type for the listing",
 			}),
+		//
+		restriction: ListingRestrictionEnumSchema.openapi({
+			description: "Content restriction level of the listing",
+		}),
 		//
 		locationId: z.string().openapi({
 			description: "ID of the location",

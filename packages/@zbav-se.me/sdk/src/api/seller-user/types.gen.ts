@@ -255,6 +255,21 @@ export const tListingWarrantyEnum = {
 export type tListingWarrantyEnum = typeof tListingWarrantyEnum[keyof typeof tListingWarrantyEnum];
 
 /**
+ * Content restriction level of the listing
+ */
+export const tListingRestrictionEnum = {
+    none: 'none',
+    adult: 'adult',
+    sensitive: 'sensitive',
+    restricted: 'restricted'
+} as const;
+
+/**
+ * Content restriction level of the listing
+ */
+export type tListingRestrictionEnum = typeof tListingRestrictionEnum[keyof typeof tListingRestrictionEnum];
+
+/**
  * Expiration time of the listing
  */
 export const tListingExpireEnum = {
@@ -458,6 +473,10 @@ export type tDraft = {
      */
     warranty: tListingWarrantyEnum | null;
     /**
+     * Content restriction level of the draft
+     */
+    restriction: tListingRestrictionEnum | null;
+    /**
      * ID of the location
      */
     locationId: string | null;
@@ -534,6 +553,10 @@ export type tDraftCreate = {
      */
     warranty?: tListingWarrantyEnum | null;
     /**
+     * Content restriction level of the draft
+     */
+    restriction?: tListingRestrictionEnum | null;
+    /**
      * ID of the location
      */
     locationId?: string;
@@ -592,6 +615,10 @@ export type tDraftPatchData = {
      * Warranty type for the draft
      */
     warranty?: tListingWarrantyEnum | null;
+    /**
+     * Content restriction level of the draft
+     */
+    restriction?: tListingRestrictionEnum | null;
     /**
      * ID of the location
      */
@@ -791,6 +818,7 @@ export type tListing = {
      * Warranty type for the listing
      */
     warranty: tListingWarrantyEnum | null;
+    restriction: tListingRestrictionEnum;
     /**
      * ID of the location
      */
@@ -865,6 +893,7 @@ export type tListingCreate = {
      * Warranty type for the listing
      */
     warranty?: tListingWarrantyEnum | null;
+    restriction: tListingRestrictionEnum & unknown;
     /**
      * ID of the draft
      */

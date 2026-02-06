@@ -271,6 +271,16 @@ export const sListingWarrantyEnum = {
     ]
 } as const;
 
+export const sListingRestrictionEnum = {
+    type: 'string',
+    enum: [
+        'none',
+        'adult',
+        'sensitive',
+        'restricted'
+    ]
+} as const;
+
 export const sListingExpireEnum = {
     type: 'string',
     enum: [
@@ -620,6 +630,19 @@ export const sDraft = {
                 }
             ]
         },
+        restriction: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ListingRestrictionEnum'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
         locationId: {
             anyOf: [
                 {
@@ -777,6 +800,7 @@ export const sDraft = {
         'age',
         'delivery',
         'warranty',
+        'restriction',
         'locationId',
         'categoryId',
         'galleryId',
@@ -818,6 +842,19 @@ export const sDraftCreate = {
             anyOf: [
                 {
                     $ref: '#/components/schemas/ListingWarrantyEnum'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        restriction: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ListingRestrictionEnum'
                 },
                 {
                     type: 'null'
@@ -958,6 +995,19 @@ export const sDraftPatchData = {
             anyOf: [
                 {
                     $ref: '#/components/schemas/ListingWarrantyEnum'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        restriction: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/ListingRestrictionEnum'
                 },
                 {
                     type: 'null'
@@ -1343,6 +1393,9 @@ export const sListing = {
                 }
             ]
         },
+        restriction: {
+            $ref: '#/components/schemas/ListingRestrictionEnum'
+        },
         locationId: {
             type: 'string'
         },
@@ -1440,6 +1493,7 @@ export const sListing = {
         'age',
         'delivery',
         'warranty',
+        'restriction',
         'locationId',
         'categoryId',
         'galleryId',
@@ -1521,6 +1575,14 @@ export const sListingCreate = {
                 }
             ]
         },
+        restriction: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/ListingRestrictionEnum'
+                },
+                {}
+            ]
+        },
         draftId: {
             type: 'string'
         },
@@ -1591,6 +1653,7 @@ export const sListingCreate = {
         'priceType',
         'condition',
         'age',
+        'restriction',
         'locationId',
         'categoryId',
         'expiresAt',

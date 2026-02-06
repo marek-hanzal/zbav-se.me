@@ -3,6 +3,7 @@ import { ListingExpireEnumSchema } from "~/@common/listing/schema/ListingExpireE
 import { ProsConsSchema } from "~/@common/listing/schema/ProsConsSchema";
 import { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
+import { ListingRestrictionEnumSchema } from "~/database/@enum/ListingRestrictionEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/database/@enum/ListingWarrantyEnumSchema";
 import { CurrencyEnumSchema } from "~/schema/CurrencyEnumSchema";
 
@@ -75,6 +76,15 @@ export const DraftTableSchema = z
 			])
 			.openapi({
 				description: "Warranty type for the draft",
+			}),
+		//
+		restriction: z
+			.xor([
+				ListingRestrictionEnumSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Content restriction level of the draft",
 			}),
 		//
 		locationId: z

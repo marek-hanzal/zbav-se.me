@@ -77,11 +77,6 @@ export const auth = (dialect: () => Dialect) => {
 		trustedOrigins: [
 			viteConfig.VITE_WEB_ORIGIN,
 			viteConfig.VITE_APP_ORIGIN,
-			...(viteConfig.VITE_ARKINI_ORIGIN
-				? [
-						viteConfig.VITE_ARKINI_ORIGIN,
-					]
-				: []),
 		],
 		rateLimit: {
 			window: 10,
