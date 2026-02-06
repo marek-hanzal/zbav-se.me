@@ -45,7 +45,10 @@ export function useDraftPatch({ draft, onSettled }: useDraftPatch.Params) {
 				},
 			});
 		},
-		[draft.id, mutation],
+		[
+			draft.id,
+			mutation,
+		],
 	);
 
 	return {

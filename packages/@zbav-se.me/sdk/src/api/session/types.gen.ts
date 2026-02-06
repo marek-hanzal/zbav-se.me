@@ -192,10 +192,40 @@ export type tCategoryQuery = {
 };
 
 /**
+ * Category collection item
+ */
+export type tCategoryItem = {
+    /**
+     * ID of the category
+     */
+    id: string;
+    /**
+     * Group/name of the category
+     */
+    group: string;
+    /**
+     * Category name within the group
+     */
+    category: string;
+    /**
+     * Slug of the category
+     */
+    slug: string;
+    /**
+     * Sort order (position) of the category
+     */
+    sort: number;
+    /**
+     * Locale/language of the category
+     */
+    locale: string;
+};
+
+/**
  * Collection of categories
  */
-export type tCategoryCollection = {
-    data: Array<tCategory>;
+export type tCategoryItemSchema = {
+    data: Array<tCategoryItem>;
     /**
      * Whether there are more items to fetch
      */
@@ -471,7 +501,7 @@ export type tApiCategoryCollectionResponse = {
     /**
      * Access collection of categories based on provided query
      */
-    200: tCategoryCollection;
+    200: tCategoryItemSchema;
 };
 
 export type apiCategoryCollectionResponse = tApiCategoryCollectionResponse[keyof tApiCategoryCollectionResponse];

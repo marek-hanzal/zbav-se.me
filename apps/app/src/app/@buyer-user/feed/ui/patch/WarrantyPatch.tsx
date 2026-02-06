@@ -1,5 +1,5 @@
 import { useSelection } from "@use-pico/client/hook";
-import { Container } from "@use-pico/client/ui/container";
+import type { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { tFeed, tListingWarrantyEnum } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
@@ -22,7 +22,10 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({
 	ui,
 	...props
 }) => {
-	const { patch, isPending } = useFeedPatch({ feed, onSettled });
+	const { patch, isPending } = useFeedPatch({
+		feed,
+		onSettled,
+	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
 		initial: (feed.query?.filter?.warrantyIn ?? []).map((warranty) => ({

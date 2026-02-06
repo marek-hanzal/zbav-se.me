@@ -7,8 +7,8 @@ import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { sListingCreate } from "@zbav-se.me/sdk/api/seller-user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
-import { useDraftPatch } from "~/app/@seller-user/draft/hook/useDraftPatch";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { useDraftPatch } from "~/app/@seller-user/draft/hook/useDraftPatch";
 
 export namespace TitlePatch {
 	export interface Props extends TitleContainer.Props {
@@ -19,7 +19,10 @@ export namespace TitlePatch {
 }
 
 export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
-	const { patch, isPending } = useDraftPatch({ draft, onSettled });
+	const { patch, isPending } = useDraftPatch({
+		draft,
+		onSettled,
+	});
 	const [title, setTitle] = useState(draft.title ?? "");
 
 	return (
@@ -72,7 +75,11 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSettled, .
 
 				<SaveContainer
 					onCancel={onCancel}
-					onSave={() => patch({ title })}
+					onSave={() =>
+						patch({
+							title,
+						})
+					}
 					loading={isPending}
 					disabled={!title}
 				/>

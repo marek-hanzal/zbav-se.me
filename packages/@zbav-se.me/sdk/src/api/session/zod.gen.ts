@@ -190,10 +190,38 @@ export const zCategoryQuery = z.object({
 export type zCategoryQuery = z.infer<typeof zCategoryQuery>;
 
 /**
+ * Category collection item
+ */
+export const zCategoryItem = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the category'
+    }),
+    group: z.string().register(z.globalRegistry, {
+        description: 'Group/name of the category'
+    }),
+    category: z.string().register(z.globalRegistry, {
+        description: 'Category name within the group'
+    }),
+    slug: z.string().register(z.globalRegistry, {
+        description: 'Slug of the category'
+    }),
+    sort: z.number().register(z.globalRegistry, {
+        description: 'Sort order (position) of the category'
+    }),
+    locale: z.string().register(z.globalRegistry, {
+        description: 'Locale/language of the category'
+    })
+}).register(z.globalRegistry, {
+    description: 'Category collection item'
+});
+
+export type zCategoryItem = z.infer<typeof zCategoryItem>;
+
+/**
  * Collection of categories
  */
-export const zCategoryCollection = z.object({
-    data: z.array(zCategory),
+export const zCategoryItemSchema = z.object({
+    data: z.array(zCategoryItem),
     more: z.boolean().register(z.globalRegistry, {
         description: 'Whether there are more items to fetch'
     })
@@ -201,7 +229,7 @@ export const zCategoryCollection = z.object({
     description: 'Collection of categories'
 });
 
-export type zCategoryCollection = z.infer<typeof zCategoryCollection>;
+export type zCategoryItemSchema = z.infer<typeof zCategoryItemSchema>;
 
 /**
  * Count data
@@ -451,7 +479,7 @@ export type zapiCategoryCollectionRequest = z.infer<typeof zApiCategoryCollectio
 /**
  * Access collection of categories based on provided query
  */
-export const zApiCategoryCollectionResponse = zCategoryCollection;
+export const zApiCategoryCollectionResponse = zCategoryItemSchema;
 
 export type zapiCategoryCollectionResponse = z.infer<typeof zApiCategoryCollectionResponse>;
 
