@@ -37,20 +37,25 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 	});
 
 	const restrictionId = selection.optional.singleId();
-	const restriction = (restrictionId as tListingRestrictionEnum | undefined) ?? null;
+	const restriction: tListingRestrictionEnum | null =
+		(restrictionId as tListingRestrictionEnum | undefined) ?? draft.restriction;
 
 	return (
 		<PatchContainer
 			title="Listing restriction (title)"
 			data-ui={"Setup-[TitleContainer.restriction]"}
 			onCancel={onCancel}
-			onSave={() =>
+			onSave={() => {
+				if (restriction === null) {
+					return;
+				}
+
 				patch({
 					restriction,
-				} as unknown as useDraftPatch.Payload)
-			}
+				});
+			}}
 			loading={isPending}
-			disabled={false}
+			disabled={restriction === null}
 			{...props}
 		>
 			<RestrictionSelect selection={selection} />
