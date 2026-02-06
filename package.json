@@ -33,7 +33,8 @@
 	"license": "MIT",
 	"repository": "marek-hanzal/zbav-se.me.git",
 	"overrides": {
-		"@types/react": "19.2.13"
+		"@types/react": "19.2.13",
+		"kysely": "0.28.11"
 	},
 	"packageManager": "bun@1.3.0",
 	"private": true,
