@@ -13,6 +13,6 @@ export const withCategoryCollectionSelectFx = Effect.fn("withCategoryCollectionS
 			sort,
 		});
 
-		return sourceSelect.select("cat.id");
+		return sourceSelect.selectAll("cat");
 	},
 );

@@ -66,7 +66,7 @@ export const withCategoryFetchApiFx = Effect.fn("withCategoryFetchApiFx")(functi
 						dataFx: categoryFetchFx({
 							...c.req.valid("json"),
 							scope: {},
-						}),
+						}) satisfies Effect.Effect<CategorySchema.Type, any, any>,
 					}),
 					200,
 				);

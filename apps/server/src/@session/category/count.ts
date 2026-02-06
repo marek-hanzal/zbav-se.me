@@ -57,7 +57,7 @@ export const withCategoryCountApiFx = Effect.fn("withCategoryCountApiFx")(functi
 						dataFx: categoryCountFx({
 							...c.req.valid("json"),
 							scope: {},
-						}),
+						}) satisfies Effect.Effect<CountSchema.Type, any, any>,
 					}),
 					200,
 				);

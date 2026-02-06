@@ -13,9 +13,9 @@ export const SeedRequestSchema = z.object({
 	transaction: SeedTransactionsRequestSchema,
 });
 
-type SeedRequestSchema = typeof SeedRequestSchema;
+export type SeedRequestSchema = typeof SeedRequestSchema;
 
-namespace SeedRequestSchema {
+export namespace SeedRequestSchema {
 	export type Type = z.infer<SeedRequestSchema>;
 }
 
