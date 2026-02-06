@@ -56,7 +56,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 									...state.value,
 									{
 										field: sortValue,
-										direction: "asc",
+										order: "asc",
 									} satisfies tListingSort,
 								]);
 								return;
@@ -68,13 +68,13 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 								return;
 							}
 
-							if (cur.direction === "asc") {
+							if (cur.order === "asc") {
 								const next = [
 									...state.value,
 								];
 								next[idx] = {
 									field: cur.field,
-									direction: "desc",
+									order: "desc",
 								} satisfies tListingSort;
 								state.set(next);
 								return;
@@ -83,7 +83,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 							state.set(state.value.filter((_, i) => i !== idx));
 						}}
 						{...uiSelectButton({
-							isSelected: Boolean(current?.direction),
+							isSelected: Boolean(current?.order),
 							ui: {
 								size: "default",
 							},
@@ -100,7 +100,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 							}}
 						>
 							<Tx
-								label={`Listing common sort value ${sortValue} - ${current?.direction ?? "unused"}`}
+								label={`Listing common sort value ${sortValue} - ${current?.order ?? "unused"}`}
 								ui={{
 									font: position ? "bold" : "normal",
 								}}

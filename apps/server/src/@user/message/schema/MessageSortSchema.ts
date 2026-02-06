@@ -11,7 +11,7 @@ export const MessageSortSchema = z
 			.openapi("MessageSortField", {
 				description: "Available sort fields for message collection",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.openapi("MessageSort", {
 		description: "Sort parameters for message collection",

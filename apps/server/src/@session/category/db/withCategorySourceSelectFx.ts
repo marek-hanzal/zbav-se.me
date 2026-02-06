@@ -20,9 +20,9 @@ export const withCategorySourceSelectFx = Effect.fn("withCategorySourceSelectFx"
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("group", () => query.orderBy("cat.group", item.direction))
-			.with("category", () => query.orderBy("cat.category", item.direction))
-			.with("sort", () => query.orderBy("cat.sort", item.direction))
+			.with("group", () => query.orderBy("cat.group", item.order))
+			.with("category", () => query.orderBy("cat.category", item.order))
+			.with("sort", () => query.orderBy("cat.sort", item.order))
 			.exhaustive();
 	}
 

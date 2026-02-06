@@ -171,13 +171,13 @@ export const sCategorySort = {
         field: {
             $ref: '#/components/schemas/CategorySortField'
         },
-        direction: {
+        order: {
             $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
         'field',
-        'direction'
+        'order'
     ]
 } as const;
 
@@ -528,13 +528,13 @@ export const sLocationSort = {
         field: {
             $ref: '#/components/schemas/LocationSortField'
         },
-        direction: {
+        order: {
             $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
         'field',
-        'direction'
+        'order'
     ]
 } as const;
 

@@ -157,7 +157,7 @@ export type zOrderEnum = z.infer<typeof zOrderEnum>;
  */
 export const zDraftSort = z.object({
     field: zDraftSortField,
-    direction: zOrderEnum
+    order: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for draft collection'
 });
@@ -802,7 +802,7 @@ export type zListingSortField = z.infer<typeof zListingSortField>;
  */
 export const zListingSort = z.object({
     field: zListingSortField,
-    direction: zOrderEnum
+    order: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for listing collection'
 });
@@ -1107,7 +1107,7 @@ export type zTransactionSortField = z.infer<typeof zTransactionSortField>;
  */
 export const zTransactionSort = z.object({
     field: zTransactionSortField,
-    direction: zOrderEnum
+    order: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for transaction collection'
 });
@@ -1263,7 +1263,7 @@ export type zTransactionListingSortField = z.infer<typeof zTransactionListingSor
  */
 export const zTransactionListingSort = z.object({
     field: zTransactionListingSortField,
-    direction: zOrderEnum
+    order: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for transaction-listing collection'
 });

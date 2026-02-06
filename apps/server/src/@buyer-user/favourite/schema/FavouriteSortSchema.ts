@@ -10,7 +10,7 @@ export const FavouriteSortSchema = z
 			.openapi("FavouriteSortField", {
 				description: "Field of the favourite sort",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.openapi("FavouriteSort", {
 		description: "Sort object for favourite collection",

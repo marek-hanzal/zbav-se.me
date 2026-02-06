@@ -345,7 +345,7 @@ export type zOrderEnum = z.infer<typeof zOrderEnum>;
  */
 export const zTransactionSort = z.object({
     field: zTransactionSortField,
-    direction: zOrderEnum
+    order: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for transaction collection'
 });

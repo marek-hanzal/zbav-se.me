@@ -20,7 +20,7 @@ export const withGallerySelectFx = Effect.fn("withGallerySelectFx")(function* ({
 		sort: [
 			{
 				field: "sort",
-				direction: "asc",
+				order: "asc",
 			},
 		],
 	});

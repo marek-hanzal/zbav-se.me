@@ -12,7 +12,7 @@ export const CategoryMissSortSchema = z
 			.openapi("CategoryMissSortField", {
 				description: "Field for category miss sort",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.strip()
 	.openapi("CategoryMissSort", {

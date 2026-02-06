@@ -36,7 +36,7 @@ export const withMessageTextSelectFx = Effect.fn("withMessageTextSelectFx")(func
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("mt.createdAt", item.direction))
+			.with("createdAt", () => query.orderBy("mt.createdAt", item.order))
 			.exhaustive();
 	}
 

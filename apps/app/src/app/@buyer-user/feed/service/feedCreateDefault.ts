@@ -32,19 +32,19 @@ export const feedCreateDefault = async ({ queryClient }: feedCreateDefault.Props
 			sort: [
 				{
 					field: "createdAt",
-					direction: "desc",
+					order: "desc",
 				},
 				{
 					field: "price",
-					direction: "asc",
+					order: "asc",
 				},
 				{
 					field: "condition",
-					direction: "desc",
+					order: "desc",
 				},
 				{
 					field: "age",
-					direction: "desc",
+					order: "desc",
 				},
 			],
 		},

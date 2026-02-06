@@ -39,7 +39,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 		sort: [
 			{
 				field: "sort",
-				direction: "asc",
+				order: "asc",
 			},
 		],
 	});

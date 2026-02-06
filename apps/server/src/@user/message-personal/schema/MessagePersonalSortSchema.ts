@@ -10,7 +10,7 @@ export const MessagePersonalSortSchema = z
 			.openapi("MessagePersonalSortField", {
 				description: "Available sort fields for message personal collection",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.openapi("MessagePersonalSort", {
 		description: "Sort configuration for message personal collection",

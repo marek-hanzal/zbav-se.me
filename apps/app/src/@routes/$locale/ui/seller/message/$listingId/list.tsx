@@ -85,11 +85,11 @@ export const Route = createFileRoute("/$locale/ui/seller/message/$listingId/list
 							sort: [
 								{
 									field: "status",
-									direction: "asc",
+									order: "asc",
 								},
 								{
 									field: "createdAt",
-									direction: "desc",
+									order: "desc",
 								},
 							],
 						}}

@@ -249,43 +249,43 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 			const sort = list([
 				{
 					field: "age",
-					direction: "desc",
+					order: "desc",
 				},
 				{
 					field: "price",
-					direction: "desc",
+					order: "desc",
 				},
 				{
 					field: "condition",
-					direction: "desc",
+					order: "desc",
 				},
 				{
 					field: "createdAt",
-					direction: "desc",
+					order: "desc",
 				},
 				{
 					field: "updatedAt",
-					direction: "desc",
+					order: "desc",
 				},
 				{
 					field: "age",
-					direction: "asc",
+					order: "asc",
 				},
 				{
 					field: "price",
-					direction: "asc",
+					order: "asc",
 				},
 				{
 					field: "condition",
-					direction: "asc",
+					order: "asc",
 				},
 				{
 					field: "createdAt",
-					direction: "asc",
+					order: "asc",
 				},
 				{
 					field: "updatedAt",
-					direction: "asc",
+					order: "asc",
 				},
 			] satisfies tListingSort[]);
 

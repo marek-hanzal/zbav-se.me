@@ -12,7 +12,7 @@ export const CategorySortSchema = z
 			.openapi("CategorySortField", {
 				description: "Field of the category sort",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.strip()
 	.openapi("CategorySort", {

@@ -37,9 +37,9 @@ export const withTransactionSourceSelectFx = Effect.fn("withTransactionSourceSel
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("lt.createdAt", item.direction))
-			.with("updatedAt", () => query.orderBy("lt.updatedAt", item.direction))
-			.with("expiresAt", () => query.orderBy("lt.expiresAt", item.direction))
+			.with("createdAt", () => query.orderBy("lt.createdAt", item.order))
+			.with("updatedAt", () => query.orderBy("lt.updatedAt", item.order))
+			.with("expiresAt", () => query.orderBy("lt.expiresAt", item.order))
 			.with("status", () =>
 				query.orderBy(
 					(eb) =>
@@ -63,7 +63,7 @@ export const withTransactionSourceSelectFx = Effect.fn("withTransactionSourceSel
 							.then(70)
 							.else(999)
 							.end(),
-					item.direction,
+					item.order,
 				),
 			)
 			.exhaustive();

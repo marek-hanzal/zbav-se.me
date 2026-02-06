@@ -10,7 +10,7 @@ export const ListingEventSortSchema = z
 			.openapi("ListingEventSortField", {
 				description: "Field of the listing event sort",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.openapi("ListingEventSort", {
 		description: "Sort object for listing event collection",

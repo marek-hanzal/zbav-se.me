@@ -58,7 +58,7 @@ export const SellerMenu = ({ ui, ...props }: SellerMenu.Props) => {
 						sort: [
 							{
 								field: "updatedAt",
-								direction: "desc",
+								order: "desc",
 							},
 						],
 					}}

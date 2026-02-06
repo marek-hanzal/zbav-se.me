@@ -20,7 +20,7 @@ export const withFlagSourceSelectFx = Effect.fn("withFlagSourceSelectFx")(functi
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("f.createdAt", item.direction))
+			.with("createdAt", () => query.orderBy("f.createdAt", item.order))
 			.exhaustive();
 	}
 

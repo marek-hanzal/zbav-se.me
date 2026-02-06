@@ -22,7 +22,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/default")({
 				sort: [
 					{
 						field: "updatedAt",
-						direction: "desc",
+						order: "desc",
 					},
 				],
 			})

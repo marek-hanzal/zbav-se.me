@@ -15,7 +15,7 @@ export const Route = createFileRoute("/$locale/ui/seller/draft/list")({
 						sort: [
 							{
 								field: "createdAt",
-								direction: "asc",
+								order: "asc",
 							},
 						],
 					}}

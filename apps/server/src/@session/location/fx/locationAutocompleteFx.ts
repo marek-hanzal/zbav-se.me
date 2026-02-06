@@ -38,7 +38,7 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 				sort: [
 					{
 						field: "confidence",
-						direction: "desc",
+						order: "desc",
 					},
 				],
 				cursor: {
@@ -107,7 +107,7 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 				sort: [
 					{
 						field: "confidence",
-						direction: "desc",
+						order: "desc",
 					},
 				],
 				cursor: {

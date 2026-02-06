@@ -141,7 +141,7 @@ export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
  */
 export type tFavouriteSort = {
     field: tFavouriteSortField;
-    direction: tOrderEnum;
+    order: tOrderEnum;
 };
 
 /**
@@ -790,7 +790,7 @@ export type tListingSortField = typeof tListingSortField[keyof typeof tListingSo
  */
 export type tListingSort = {
     field: tListingSortField;
-    direction: tOrderEnum;
+    order: tOrderEnum;
 };
 
 /**
@@ -927,7 +927,7 @@ export type tFeedSortField = typeof tFeedSortField[keyof typeof tFeedSortField];
  */
 export type tFeedSort = {
     field: tFeedSortField;
-    direction: tOrderEnum;
+    order: tOrderEnum;
 };
 
 /**
@@ -1113,7 +1113,7 @@ export type tFlagSortField = typeof tFlagSortField[keyof typeof tFlagSortField];
  */
 export type tFlagSort = {
     field: tFlagSortField;
-    direction: tOrderEnum;
+    order: tOrderEnum;
 };
 
 /**
@@ -1293,7 +1293,7 @@ export type tIgnoreSortField = typeof tIgnoreSortField[keyof typeof tIgnoreSortF
  */
 export type tIgnoreSort = {
     field: tIgnoreSortField;
-    direction: tOrderEnum;
+    order: tOrderEnum;
 };
 
 /**
@@ -1497,7 +1497,7 @@ export type tTransactionSortField = typeof tTransactionSortField[keyof typeof tT
  */
 export type tTransactionSort = {
     field: tTransactionSortField;
-    direction: tOrderEnum;
+    order: tOrderEnum;
 };
 
 /**

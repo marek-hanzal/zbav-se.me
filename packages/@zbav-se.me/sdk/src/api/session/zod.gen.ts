@@ -168,7 +168,7 @@ export type zOrderEnum = z.infer<typeof zOrderEnum>;
  */
 export const zCategorySort = z.object({
     field: zCategorySortField,
-    direction: zOrderEnum
+    order: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for category collection'
 });
@@ -432,7 +432,7 @@ export type zLocationSortField = z.infer<typeof zLocationSortField>;
  */
 export const zLocationSort = z.object({
     field: zLocationSortField,
-    direction: zOrderEnum
+    order: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Data for location sort'
 });

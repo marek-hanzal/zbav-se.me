@@ -41,7 +41,7 @@ export const withMessageLocationSelectFx = Effect.fn("withMessageLocationSelectF
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("ml.createdAt", item.direction))
+			.with("createdAt", () => query.orderBy("ml.createdAt", item.order))
 			.exhaustive();
 	}
 

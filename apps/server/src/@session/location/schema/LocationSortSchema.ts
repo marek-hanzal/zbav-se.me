@@ -13,7 +13,7 @@ export const LocationSortSchema = z
 			.openapi("LocationSortField", {
 				description: "Field for location sort",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.strip()
 	.openapi("LocationSort", {

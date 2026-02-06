@@ -157,13 +157,13 @@ export const sDraftSort = {
         field: {
             $ref: '#/components/schemas/DraftSortField'
         },
-        direction: {
+        order: {
             $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
         'field',
-        'direction'
+        'order'
     ]
 } as const;
 
@@ -1259,13 +1259,13 @@ export const sListingSort = {
         field: {
             $ref: '#/components/schemas/ListingSortField'
         },
-        direction: {
+        order: {
             $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
         'field',
-        'direction'
+        'order'
     ]
 } as const;
 
@@ -1803,13 +1803,13 @@ export const sTransactionSort = {
         field: {
             $ref: '#/components/schemas/TransactionSortField'
         },
-        direction: {
+        order: {
             $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
         'field',
-        'direction'
+        'order'
     ]
 } as const;
 
@@ -2001,13 +2001,13 @@ export const sTransactionListingSort = {
         field: {
             $ref: '#/components/schemas/TransactionListingSortField'
         },
-        direction: {
+        order: {
             $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
         'field',
-        'direction'
+        'order'
     ]
 } as const;
 

@@ -10,7 +10,7 @@ export const GallerySortSchema = z
 			.openapi("GallerySortField", {
 				description: "Field of the gallery sort",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.openapi("GallerySort", {
 		description: "Sort object for gallery collection",

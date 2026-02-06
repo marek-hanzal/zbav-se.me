@@ -20,9 +20,9 @@ export const withUserEventSourceSelectFx = Effect.fn("withUserEventSourceSelectF
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("ue.createdAt", item.direction))
-			.with("group", () => query.orderBy("ue.group", item.direction))
-			.with("id", () => query.orderBy("ue.id", item.direction))
+			.with("createdAt", () => query.orderBy("ue.createdAt", item.order))
+			.with("group", () => query.orderBy("ue.group", item.order))
+			.with("id", () => query.orderBy("ue.id", item.order))
 			.exhaustive();
 	}
 

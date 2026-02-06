@@ -109,8 +109,8 @@ export const withMessageSourceSelectFx = Effect.fn("withMessageSourceSelectFx")(
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("id", () => query.orderBy("msg.id", item.direction))
-			.with("createdAt", () => query.orderBy("msg.createdAt", item.direction))
+			.with("id", () => query.orderBy("msg.id", item.order))
+			.with("createdAt", () => query.orderBy("msg.createdAt", item.order))
 			.exhaustive();
 	}
 

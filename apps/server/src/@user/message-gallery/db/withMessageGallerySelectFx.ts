@@ -45,7 +45,7 @@ export const withMessageGallerySelectFx = Effect.fn("withMessageGallerySelectFx"
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("mg.createdAt", item.direction))
+			.with("createdAt", () => query.orderBy("mg.createdAt", item.order))
 			.exhaustive();
 	}
 

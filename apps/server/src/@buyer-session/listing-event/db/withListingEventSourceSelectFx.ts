@@ -19,7 +19,7 @@ export const withListingEventSourceSelectFx = Effect.fn("withListingEventSourceS
 
 		for (const item of sort ?? []) {
 			query = match(item.field)
-				.with("createdAt", () => query.orderBy("le.createdAt", item.direction))
+				.with("createdAt", () => query.orderBy("le.createdAt", item.order))
 				.exhaustive();
 		}
 

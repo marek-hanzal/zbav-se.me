@@ -15,7 +15,7 @@ export const ListingSortSchema = z
 			.openapi("ListingSortField", {
 				description: "Field of the listing sort",
 			}),
-		direction: OrderEnumSchema,
+		order: OrderEnumSchema,
 	})
 	.openapi("ListingSort", {
 		description: "Sort object for listing collection",

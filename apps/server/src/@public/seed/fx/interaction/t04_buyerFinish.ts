@@ -44,7 +44,7 @@ export const t04_buyerFinish = Effect.fn("t04_buyerFinish")(function* ({
 			sort: [
 				{
 					field: "createdAt",
-					direction: "desc",
+					order: "desc",
 				},
 			],
 			scope: {},

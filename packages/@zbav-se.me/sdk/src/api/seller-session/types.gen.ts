@@ -333,7 +333,7 @@ export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
  */
 export type tTransactionSort = {
     field: tTransactionSortField;
-    direction: tOrderEnum;
+    order: tOrderEnum;
 };
 
 /**
