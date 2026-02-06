@@ -38,7 +38,7 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 
 	const restrictionId = selection.optional.singleId();
 	const restriction: tListingRestrictionEnum | null =
-		(restrictionId as tListingRestrictionEnum | undefined) ?? draft.restriction;
+		(restrictionId as tListingRestrictionEnum | undefined) ?? null;
 
 	return (
 		<PatchContainer
