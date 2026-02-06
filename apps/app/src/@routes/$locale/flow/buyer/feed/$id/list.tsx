@@ -17,26 +17,32 @@ import { DeadEndIcon, FirstIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, type RefObject, useRef, useState } from "react";
 import z from "zod";
-import { SetupButton as CoolSetupButton } from "~/app/feed/ui/button/SetupButton";
-import { SetupSheet } from "~/app/feed/ui/SetupSheet";
-import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
+import { EditorSheet } from "~/app/@buyer-user/feed/ui/EditorSheet";
+import { ListingListContainer } from "~/app/@buyer-user/listing/ui/ListingListContainer";
+import { SheetButton } from "~/app/@common/sheet/ui/SheetButton";
 
 export namespace SetupButton {
-	export interface Props extends Partial<CoolSetupButton.Props> {
+	export interface Props extends Partial<SheetButton.Props> {
 		feed: tFeed;
 		containerRef: RefObject<HTMLDivElement | null>;
 		state: StateType.State<boolean>;
 	}
 }
 
-export const SetupButton: FC<SetupButton.Props> = ({ feed, containerRef, state, ui, ...props }) => {
+export const SetupButton: FC<SetupButton.Props> = ({
+	feed,
+	containerRef,
+	state,
+	label,
+	ui,
+	...props
+}) => {
 	return (
-		<CoolSetupButton
+		<SheetButton
 			data-ui={"/buyer/feed/$id/list-[FeedSetupButton]"}
+			label={label ?? null}
 			state={state}
-			feed={feed}
 			defaultOpen={false}
-			label={null}
 			ui={{
 				tone: "secondary",
 				theme: "light",
@@ -480,8 +486,8 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 				>
 					{({ data: feed }) => {
 						return (
-							<SetupSheet
-								data-ui={"/buyer/feed/$id/list-[FeedSetupSheet]"}
+							<EditorSheet
+								data-ui={"/buyer/feed/$id/list-[FeedEditorSheet]"}
 								feed={feed}
 								state={{
 									value: isFeedSettings,
@@ -512,7 +518,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 										border: true,
 									}}
 								/>
-							</SetupSheet>
+							</EditorSheet>
 						);
 					}}
 				</withFeedFetchQuery.Suspense>

@@ -4,7 +4,7 @@ import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
 import { TransactionStatusEnumSchema } from "~/database/@enum/TransactionStatusEnumSchema";
 import { TransactionTableSchema } from "~/database/@table/TransactionTableSchema";
-import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
+import { CurrencyEnumSchema } from "~/schema/CurrencyEnumSchema";
 
 export const TransactionSchema = z
 	.looseObject({
@@ -21,7 +21,7 @@ export const TransactionSchema = z
 			type: "number",
 		}),
 		priceType: ListingPriceEnumSchema,
-		currency: CurrencyListEnumSchema,
+		currency: CurrencyEnumSchema,
 		//
 		location: LocationSchema,
 	})

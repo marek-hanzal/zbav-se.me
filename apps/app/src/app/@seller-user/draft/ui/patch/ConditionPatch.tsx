@@ -1,0 +1,60 @@
+import { useSelection } from "@use-pico/client/hook";
+import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
+import type { TitleContainer } from "@zbav-se.me/ui/container";
+import type { Rating } from "@zbav-se.me/ui/rating";
+import type { FC } from "react";
+import { ConditionSelect } from "~/app/@common/condition/ui/ConditionSelect";
+import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
+import { useDraftPatch } from "~/app/@seller-user/draft/hook/useDraftPatch";
+
+export namespace ConditionPatch {
+	export interface Props extends TitleContainer.Props {
+		draft: tDraft;
+		onCancel(): void;
+		onSettled?(): void;
+	}
+}
+
+export const ConditionPatch: FC<ConditionPatch.Props> = ({
+	draft,
+	onCancel,
+	onSettled,
+	...props
+}) => {
+	const { patch, isPending } = useDraftPatch({
+		draft,
+		onSettled,
+	});
+	const selection = useSelection<Rating.RatingItem>({
+		mode: "single",
+		initial:
+			draft.condition !== null && draft.condition !== undefined
+				? [
+						{
+							id: String(draft.condition),
+						},
+					]
+				: [],
+	});
+
+	const itemId = selection.optional.singleId();
+	const condition = itemId ? Number.parseInt(itemId, 10) : null;
+
+	return (
+		<PatchContainer
+			title="Condition (title)"
+			data-ui={"Setup-[TitleContainer.condition]"}
+			onCancel={onCancel}
+			onSave={() =>
+				patch({
+					condition,
+				})
+			}
+			loading={isPending}
+			disabled={condition === null}
+			{...props}
+		>
+			<ConditionSelect selection={selection} />
+		</PatchContainer>
+	);
+};

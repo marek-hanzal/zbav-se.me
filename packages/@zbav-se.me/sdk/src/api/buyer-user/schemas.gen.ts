@@ -226,7 +226,7 @@ export const sListingPriceEnum = {
     ]
 } as const;
 
-export const sCurrencyListEnum = {
+export const sCurrencyEnum = {
     type: 'string',
     enum: [
         'CZK',
@@ -516,7 +516,7 @@ export const sListing = {
             $ref: '#/components/schemas/ListingPriceEnum'
         },
         currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
+            $ref: '#/components/schemas/CurrencyEnum'
         },
         condition: {
             anyOf: [
@@ -789,7 +789,7 @@ export const sCategoryIdIn = {
 export const sCurrencyIn = {
     type: 'array',
     items: {
-        $ref: '#/components/schemas/CurrencyListEnum'
+        $ref: '#/components/schemas/CurrencyEnum'
     }
 } as const;
 
@@ -879,7 +879,7 @@ export const sListingFilter = {
             $ref: '#/components/schemas/CategoryIdIn'
         },
         currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
+            $ref: '#/components/schemas/CurrencyEnum'
         },
         currencyIn: {
             $ref: '#/components/schemas/CurrencyIn'
@@ -994,7 +994,7 @@ export const sListingWhere = {
             $ref: '#/components/schemas/CategoryIdIn'
         },
         currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
+            $ref: '#/components/schemas/CurrencyEnum'
         },
         currencyIn: {
             $ref: '#/components/schemas/CurrencyIn'
@@ -1952,249 +1952,38 @@ export const sThumbCreate = {
     ]
 } as const;
 
-export const sUserEventBuyerReaction = {
+export const sTransactionItem = {
     type: 'object',
     properties: {
-        total: {
-            type: 'number',
-            example: 0
-        },
-        reactions: {
-            type: 'number',
-            example: 0
-        },
-        terminal: {
-            type: 'number',
-            example: 0
-        },
-        percent: {
-            type: 'number',
-            example: 0
-        },
-        medianMs: {
-            type: 'number',
-            example: 0
-        },
-        p90Ms: {
-            type: 'number',
-            example: 0
-        }
-    },
-    required: [
-        'total',
-        'reactions',
-        'terminal',
-        'percent',
-        'medianMs',
-        'p90Ms'
-    ]
-} as const;
-
-export const sUserEventBuyerCloser = {
-    type: 'object',
-    properties: {
-        total: {
-            type: 'number',
-            example: 0
-        },
-        closed: {
-            type: 'number',
-            example: 0
-        },
-        percent: {
-            type: 'number',
-            example: 0
-        },
-        medianMs: {
-            type: 'number',
-            example: 0
-        },
-        p90Ms: {
-            type: 'number',
-            example: 0
-        }
-    },
-    required: [
-        'total',
-        'closed',
-        'percent',
-        'medianMs',
-        'p90Ms'
-    ]
-} as const;
-
-export const sUserEventBuyerDecision = {
-    type: 'object',
-    properties: {
-        total: {
-            type: 'number',
-            example: 0
-        },
-        decisions: {
-            type: 'number',
-            example: 0
-        },
-        terminal: {
-            type: 'number',
-            example: 0
-        },
-        percent: {
-            type: 'number',
-            example: 0
-        }
-    },
-    required: [
-        'total',
-        'decisions',
-        'terminal',
-        'percent'
-    ]
-} as const;
-
-export const sUserEventBuyerExpired = {
-    type: 'object',
-    properties: {
-        total: {
-            type: 'number',
-            example: 0
-        },
-        expired: {
-            type: 'number',
-            example: 0
-        },
-        percent: {
-            type: 'number',
-            example: 0
-        }
-    },
-    required: [
-        'total',
-        'expired',
-        'percent'
-    ]
-} as const;
-
-export const sLoadEnum = {
-    type: 'string',
-    enum: [
-        'low',
-        'medium',
-        'high'
-    ],
-    example: 'low'
-} as const;
-
-export const sUserEventBuyerLoad = {
-    type: 'object',
-    properties: {
-        bucket: {
-            $ref: '#/components/schemas/LoadEnum'
-        }
-    },
-    required: [
-        'bucket'
-    ]
-} as const;
-
-export const sActivityEnum = {
-    type: 'string',
-    enum: [
-        'low',
-        'medium',
-        'high'
-    ],
-    example: 'low'
-} as const;
-
-export const sUserEventBuyerActivity = {
-    type: 'object',
-    properties: {
-        bucket: {
-            $ref: '#/components/schemas/ActivityEnum'
-        }
-    },
-    required: [
-        'bucket'
-    ]
-} as const;
-
-export const sUserEventBuyerScore = {
-    type: 'object',
-    properties: {
-        score: {
-            type: 'number',
-            example: 0
-        },
-        rank: {
-            type: 'number',
-            example: 2
-        }
-    },
-    required: [
-        'score',
-        'rank'
-    ]
-} as const;
-
-export const sUserEventBuyer = {
-    type: 'object',
-    properties: {
-        reaction: {
-            $ref: '#/components/schemas/UserEventBuyerReaction'
-        },
-        closer: {
-            $ref: '#/components/schemas/UserEventBuyerCloser'
-        },
-        decision: {
-            $ref: '#/components/schemas/UserEventBuyerDecision'
-        },
-        expired: {
-            $ref: '#/components/schemas/UserEventBuyerExpired'
-        },
-        load: {
-            $ref: '#/components/schemas/UserEventBuyerLoad'
-        },
-        activity: {
-            $ref: '#/components/schemas/UserEventBuyerActivity'
-        },
-        score: {
-            $ref: '#/components/schemas/UserEventBuyerScore'
-        }
-    },
-    required: [
-        'reaction',
-        'closer',
-        'decision',
-        'expired',
-        'load',
-        'activity',
-        'score'
-    ]
-} as const;
-
-export const sTransactionBuyerInfo = {
-    type: 'object',
-    properties: {
-        registered: {
+        id: {
             type: 'string'
         },
-        events: {
-            anyOf: [
-                {
-                    type: 'null'
-                },
-                {
-                    $ref: '#/components/schemas/UserEventBuyer'
-                },
-                {
-                    type: 'null'
-                }
-            ]
+        lastAt: {
+            type: 'string'
         }
     },
     required: [
-        'registered',
-        'events'
+        'id',
+        'lastAt'
+    ]
+} as const;
+
+export const sTransactionItemSchema = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/TransactionItem'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
     ]
 } as const;
 
@@ -2335,41 +2124,6 @@ export const sTransactionQuery = {
     }
 } as const;
 
-export const sTransactionItem = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        lastAt: {
-            type: 'string'
-        }
-    },
-    required: [
-        'id',
-        'lastAt'
-    ]
-} as const;
-
-export const sTransactionItemSchema = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/TransactionItem'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
 export const sTransaction = {
     type: 'object',
     properties: {
@@ -2417,7 +2171,7 @@ export const sTransaction = {
             $ref: '#/components/schemas/ListingPriceEnum'
         },
         currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
+            $ref: '#/components/schemas/CurrencyEnum'
         },
         location: {
             $ref: '#/components/schemas/Location'

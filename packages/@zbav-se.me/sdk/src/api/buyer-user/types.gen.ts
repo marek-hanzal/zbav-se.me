@@ -194,7 +194,7 @@ export type tListingPriceEnum = typeof tListingPriceEnum[keyof typeof tListingPr
 /**
  * List of available currencies
  */
-export const tCurrencyListEnum = {
+export const tCurrencyEnum = {
     CZK: 'CZK',
     EUR: 'EUR',
     USD: 'USD',
@@ -207,7 +207,7 @@ export const tCurrencyListEnum = {
 /**
  * List of available currencies
  */
-export type tCurrencyListEnum = typeof tCurrencyListEnum[keyof typeof tCurrencyListEnum];
+export type tCurrencyEnum = typeof tCurrencyEnum[keyof typeof tCurrencyEnum];
 
 /**
  * Delivery method for the listing
@@ -414,7 +414,7 @@ export type tListing = {
      */
     price: number;
     priceType: tListingPriceEnum;
-    currency: tCurrencyListEnum;
+    currency: tCurrencyEnum;
     /**
      * Condition of the item (0-based index)
      */
@@ -555,7 +555,7 @@ export type tCategoryIdIn = Array<string>;
 /**
  * This filter matches listings with currency codes in the provided array
  */
-export type tCurrencyIn = Array<tCurrencyListEnum>;
+export type tCurrencyIn = Array<tCurrencyEnum>;
 
 /**
  * ID of the feed
@@ -617,7 +617,7 @@ export type tListingFilter = {
     warrantyIn?: tWarrantyIn;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
-    currency?: tCurrencyListEnum;
+    currency?: tCurrencyEnum;
     currencyIn?: tCurrencyIn;
     /**
      * This filter matches listings that expire before the provided date
@@ -709,7 +709,7 @@ export type tListingWhere = {
     warrantyIn?: tWarrantyIn;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
-    currency?: tCurrencyListEnum;
+    currency?: tCurrencyEnum;
     currencyIn?: tCurrencyIn;
     /**
      * This filter matches listings that expire before the provided date
@@ -1356,182 +1356,28 @@ export type tThumbCreate = {
 };
 
 /**
- * Initial reaction on opened transaction by seller.
+ * Transaction collection item with last message timestamp
  */
-export type tUserEventBuyerReaction = {
+export type tTransactionItem = {
     /**
-     * Total number of samples (transactions)
+     * ID of the transaction
      */
-    total: number;
+    id: string;
     /**
-     * Total number of reactions
+     * Timestamp of the last message in the transaction
      */
-    reactions: number;
-    /**
-     * Total number of terminal reactions (usually from the other side)
-     */
-    terminal: number;
-    /**
-     * Percentage of reactions (reactions + terminal) / total
-     */
-    percent: number;
-    /**
-     * Median milliseconds between transaction opening and reaction
-     */
-    medianMs: number;
-    /**
-     * 90th percentile milliseconds between transaction opening and reaction
-     */
-    p90Ms: number;
+    lastAt: string;
 };
 
 /**
- * This metric describes if the user instantly closes transactions (means - no interaction, just open and kill)
+ * Collection of transactions
  */
-export type tUserEventBuyerCloser = {
+export type tTransactionItemSchema = {
+    data: Array<tTransactionItem>;
     /**
-     * Total number of samples (transactions)
+     * Whether there are more items to fetch
      */
-    total: number;
-    /**
-     * Total number of closed transactions
-     */
-    closed: number;
-    /**
-     * Percentage of closed transactions (closed / total)
-     */
-    percent: number;
-    /**
-     * Median milliseconds between transaction creation and closing
-     */
-    medianMs: number;
-    /**
-     * 90th percentile milliseconds between transaction creation and closing
-     */
-    p90Ms: number;
-};
-
-/**
- * This metric describes if the user is used to close/success transactions
- */
-export type tUserEventBuyerDecision = {
-    /**
-     * Total number of samples (transactions)
-     */
-    total: number;
-    /**
-     * Total number of decisions (success, closed)
-     */
-    decisions: number;
-    /**
-     * Total number of terminal decisions (usually from the other side)
-     */
-    terminal: number;
-    /**
-     * Percentage of closed transactions (closed / total)
-     */
-    percent: number;
-};
-
-/**
- * This metric describes if the user is used to expire transactions (no user's messages)
- */
-export type tUserEventBuyerExpired = {
-    /**
-     * Total number of samples (transactions)
-     */
-    total: number;
-    /**
-     * Total number of expired transactions
-     */
-    expired: number;
-    /**
-     * Percentage of expired transactions (expired / total)
-     */
-    percent: number;
-};
-
-/**
- * Load type of the buyer
- */
-export const tLoadEnum = {
-    low: 'low',
-    medium: 'medium',
-    high: 'high'
-} as const;
-
-/**
- * Load type of the buyer
- */
-export type tLoadEnum = typeof tLoadEnum[keyof typeof tLoadEnum];
-
-/**
- * Masks number of transactions of the buyer, basically it tells, how busy buyer is.
- */
-export type tUserEventBuyerLoad = {
-    bucket: tLoadEnum;
-};
-
-/**
- * Activity type of the buyer
- */
-export const tActivityEnum = {
-    low: 'low',
-    medium: 'medium',
-    high: 'high'
-} as const;
-
-/**
- * Activity type of the buyer
- */
-export type tActivityEnum = typeof tActivityEnum[keyof typeof tActivityEnum];
-
-/**
- * This metric describes the approx activity of the user
- */
-export type tUserEventBuyerActivity = {
-    bucket: tActivityEnum;
-};
-
-/**
- * This metric describes the score of the user
- */
-export type tUserEventBuyerScore = {
-    /**
-     * Low-level score value, usually not presented in UI
-     */
-    score: number;
-    /**
-     * Rank computed from the score (A-F, 1-6)
-     */
-    rank: number;
-};
-
-/**
- * Buyer info for the user event
- */
-export type tUserEventBuyer = {
-    reaction: tUserEventBuyerReaction;
-    closer: tUserEventBuyerCloser;
-    decision: tUserEventBuyerDecision;
-    expired: tUserEventBuyerExpired;
-    load: tUserEventBuyerLoad;
-    activity: tUserEventBuyerActivity;
-    score: tUserEventBuyerScore;
-};
-
-/**
- * Buyer info for the transaction
- */
-export type tTransactionBuyerInfo = {
-    /**
-     * Registration date
-     */
-    registered: string;
-    /**
-     * Buyer info may not be available if we don't have enough data
-     */
-    events: null | tUserEventBuyer;
+    more: boolean;
 };
 
 /**
@@ -1649,31 +1495,6 @@ export type tTransactionQuery = {
 };
 
 /**
- * Transaction collection item with last message timestamp
- */
-export type tTransactionItem = {
-    /**
-     * ID of the transaction
-     */
-    id: string;
-    /**
-     * Timestamp of the last message in the transaction
-     */
-    lastAt: string;
-};
-
-/**
- * Collection of transactions
- */
-export type tTransactionItemSchema = {
-    data: Array<tTransactionItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
  * Transaction data
  */
 export type tTransaction = {
@@ -1712,7 +1533,7 @@ export type tTransaction = {
      */
     price: number;
     priceType: tListingPriceEnum;
-    currency: tCurrencyListEnum;
+    currency: tCurrencyEnum;
     location: tLocation;
 };
 
@@ -2415,38 +2236,6 @@ export type tApiThumbCreateResponse = {
 };
 
 export type apiThumbCreateResponse = tApiThumbCreateResponse[keyof tApiThumbCreateResponse];
-
-export type tApiTransactionBuyerInfoRequest = {
-    /**
-     * Query object for transaction access validation
-     */
-    body?: tTransactionQuery;
-    path?: never;
-    query?: never;
-    url: '/api/buyer-user/transaction/buyer-info';
-};
-
-export type apiTransactionBuyerInfoErrors = {
-    /**
-     * Transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionBuyerInfoError = apiTransactionBuyerInfoErrors[keyof apiTransactionBuyerInfoErrors];
-
-export type tApiTransactionBuyerInfoResponse = {
-    /**
-     * Buyer info
-     */
-    200: tTransactionBuyerInfo;
-};
-
-export type apiTransactionBuyerInfoResponse = tApiTransactionBuyerInfoResponse[keyof tApiTransactionBuyerInfoResponse];
 
 export type tApiTransactionCollectionRequest = {
     body?: tTransactionQuery;

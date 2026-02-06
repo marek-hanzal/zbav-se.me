@@ -1,0 +1,1 @@
+export { withBoardItemsQuery } from "./withBoardItemsQuery";

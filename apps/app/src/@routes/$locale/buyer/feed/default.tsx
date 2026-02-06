@@ -5,7 +5,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { feedCreateDefault } from "~/app/feed/service/feedCreateDefault";
+import { feedCreateDefault } from "~/app/@buyer-user/feed/service/feedCreateDefault";
 
 export const Route = createFileRoute("/$locale/buyer/feed/default")({
 	/**

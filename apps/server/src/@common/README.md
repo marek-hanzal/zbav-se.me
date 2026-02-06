@@ -49,13 +49,17 @@ The `@common` domain exists to:
 - **UserEventFilterSchema**, **UserEventSortSchema**, **UserEventWhereSchema**, **UserEventQuerySchema** - Query/filter/sort schemas for the `user_event` table
 - **withUserEventSourceSelectFx**, **withUserEventQueryBuilderFx**, **withUserEventCollectionSelectFx** - Kysely query builders for `user_event`
 - **userEventCollectionFx** - Effect function for paginated user event collection
-- **computeLoad** - `computeLoad(source, createScope)` (active-transaction count bucketed into low/medium/high). **computeActivity** - `computeActivity(source, days)` (last user-scoped event age bucketed into high/medium/low). Used by `@buyer-session` (userEventBuyerInfoFx) and `@seller-session` (userEventSellerInfoFx).
-- Used in `@buyer-session` (userEventBuyerInfoFx), `@seller-session` (userEventSellerInfoFx), and `@user` domain for user event operations and database table schemas
+- **computeLoad** - `computeLoad(source, createScope)` (active-transaction count bucketed into low/medium/high). **computeActivity** - `computeActivity(source, days)` (last user-scoped event age bucketed into high/medium/low). Used by `@buyer-session` (userEventBuyerInfoFx, userEventSellerInfoFx).
+- Used in `@buyer-session` (userEventBuyerInfoFx, userEventSellerInfoFx), and `@user` domain for user event operations and database table schemas
 
 ### Listing Schema
 - **ProsConsSchema** - Zod schema for pros/cons arrays (max 5 items, each string max 72 characters)
 - **ListingExpireEnumSchema** - Zod schema for listing expiration times (7-days, 14-days, 1-month)
 - Used in `@seller-user` domain for listing and draft creation, and in database table schemas
+
+## ⚠️ Important: @common relaxes import rules
+
+**Placing something in `@common` effectively loosens the usage rules** — anything here can be imported by every domain (`@public`, `@session`, `@user`, buyer/seller, etc.). That makes `@common` a potential way to bypass the normal import restrictions between domains. **You must be extremely careful**: only add truly shared, low-level, and non–role-specific pieces. Do not use `@common` as a shortcut to share code that really belongs in one domain or that could leak context or data across boundaries.
 
 ## Access Rules
 

@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { withListingApiFx } from "~/@buyer-session/listing/withListingApiFx";
 import { withListingEventApiFx } from "~/@buyer-session/listing-event/withListingEventApiFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
@@ -28,6 +29,7 @@ export const withBuyerSessionApiFx = Effect.fn("withBuyerSessionApiFx")(function
 		return next();
 	});
 
+	yield* withListingApiFx();
 	yield* withListingEventApiFx();
 
 	root.route("/api/buyer-session", buyerSessionHono);

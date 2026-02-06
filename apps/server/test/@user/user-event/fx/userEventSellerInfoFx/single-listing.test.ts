@@ -1,8 +1,8 @@
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
+import { userEventSellerInfoFx } from "~/@buyer-session/user-event/fx/userEventSellerInfoFx";
 import { UploadContextLayer } from "~/@common/upload/context/UploadContextLayer";
-import { userEventSellerInfoFx } from "~/@seller-session/user-event/fx/userEventSellerInfoFx";
 import { listingCreateFx } from "~/@seller-user/listing/fx/listingCreateFx";
 import { categoryFetchFx } from "~/@session/category/fx/categoryFetchFx";
 import { LocationContextLayer } from "~/@session/location/context/LocationContextLayer";

@@ -5,9 +5,9 @@ export type clientOptions = {
 };
 
 /**
- * Initial reaction by seller on transaction created by buyer.
+ * Initial reaction on opened transaction by seller.
  */
-export type tUserEventSellerReaction = {
+export type tUserEventBuyerReaction = {
     /**
      * Total number of samples (transactions)
      */
@@ -25,75 +25,67 @@ export type tUserEventSellerReaction = {
      */
     percent: number;
     /**
-     * Median milliseconds between transaction creation and reaction
+     * Median milliseconds between transaction opening and reaction
      */
     medianMs: number;
     /**
-     * 90th percentile milliseconds between transaction creation and reaction
+     * 90th percentile milliseconds between transaction opening and reaction
      */
     p90Ms: number;
 };
 
 /**
- * This metric describes if the user rejects transactions without any interaction (no messages between create and reject)
+ * This metric describes if the user instantly closes transactions (means - no interaction, just open and kill)
  */
-export type tUserEventSellerRejected = {
+export type tUserEventBuyerCloser = {
     /**
      * Total number of samples (transactions)
      */
     total: number;
     /**
-     * Total number of rejected transactions
+     * Total number of closed transactions
      */
-    rejected: number;
+    closed: number;
     /**
-     * Percentage of rejected transactions (rejected / total)
+     * Percentage of closed transactions (closed / total)
      */
     percent: number;
     /**
-     * Median milliseconds between transaction creation and rejection
+     * Median milliseconds between transaction creation and closing
      */
     medianMs: number;
     /**
-     * 90th percentile milliseconds between transaction creation and rejection
+     * 90th percentile milliseconds between transaction creation and closing
      */
     p90Ms: number;
 };
 
 /**
- * This metric describes if the user resolves transactions (success/closed)
+ * This metric describes if the user is used to close/success transactions
  */
-export type tUserEventSellerResolved = {
+export type tUserEventBuyerDecision = {
     /**
      * Total number of samples (transactions)
      */
     total: number;
     /**
-     * Total number of resolved transactions (success, closed)
+     * Total number of decisions (success, closed)
      */
-    resolved: number;
+    decisions: number;
     /**
-     * Total number of terminal transactions (usually from the other side)
+     * Total number of terminal decisions (usually from the other side)
      */
     terminal: number;
     /**
-     * Percentage of resolved transactions (resolved / total)
+     * Percentage of closed transactions (closed / total)
      */
     percent: number;
-    /**
-     * Median milliseconds until the transaction gets resolved
-     */
-    medianMs: number;
-    /**
-     * 90th percentile milliseconds until the transaction gets resolved
-     */
-    p90Ms: number;
 };
 
 /**
  * This metric describes if the user is used to expire transactions (no user's messages)
  */
-export type tUserEventSellerExpired = {
+export type tUserEventBuyerExpired = {
     /**
      * Total number of samples (transactions)
      */
@@ -109,7 +101,7 @@ export type tUserEventSellerExpired = {
 };
 
 /**
- * Load type of the seller
+ * Load type of the buyer
  */
 export const tLoadEnum = {
     low: 'low',
@@ -118,19 +110,19 @@ export const tLoadEnum = {
 } as const;
 
 /**
- * Load type of the seller
+ * Load type of the buyer
  */
 export type tLoadEnum = typeof tLoadEnum[keyof typeof tLoadEnum];
 
 /**
- * Masks number of transactions of the seller, basically it tells, how busy seller is.
+ * Masks number of transactions of the buyer, basically it tells, how busy buyer is.
  */
-export type tUserEventSellerLoad = {
+export type tUserEventBuyerLoad = {
     bucket: tLoadEnum;
 };
 
 /**
- * Activity type of the seller
+ * Activity type of the buyer
  */
 export const tActivityEnum = {
     low: 'low',
@@ -139,21 +131,21 @@ export const tActivityEnum = {
 } as const;
 
 /**
- * Activity type of the seller
+ * Activity type of the buyer
  */
 export type tActivityEnum = typeof tActivityEnum[keyof typeof tActivityEnum];
 
 /**
  * This metric describes the approx activity of the user
  */
-export type tUserEventSellerActivity = {
+export type tUserEventBuyerActivity = {
     bucket: tActivityEnum;
 };
 
 /**
  * This metric describes the score of the user
  */
-export type tUserEventSellerScore = {
+export type tUserEventBuyerScore = {
     /**
      * Low-level score value, usually not presented in UI
      */
@@ -165,34 +157,30 @@ export type tUserEventSellerScore = {
 };
 
 /**
- * Seller info for the user event
+ * Buyer info for the user event
  */
-export type tUserEventSeller = {
-    reaction: tUserEventSellerReaction;
-    rejected: tUserEventSellerRejected;
-    resolved: tUserEventSellerResolved;
-    expired: tUserEventSellerExpired;
-    load: tUserEventSellerLoad;
-    activity: tUserEventSellerActivity;
-    score: tUserEventSellerScore;
+export type tUserEventBuyer = {
+    reaction: tUserEventBuyerReaction;
+    closer: tUserEventBuyerCloser;
+    decision: tUserEventBuyerDecision;
+    expired: tUserEventBuyerExpired;
+    load: tUserEventBuyerLoad;
+    activity: tUserEventBuyerActivity;
+    score: tUserEventBuyerScore;
 };
 
 /**
- * Seller info for the listing
+ * Buyer info for the transaction
  */
-export type tSellerInfo = {
+export type tTransactionBuyerInfo = {
     /**
      * Registration date
      */
     registered: string;
     /**
-     * Number of listings
+     * Buyer info may not be available if we don't have enough data
      */
-    listings: number;
-    /**
-     * Seller info may not be available if we don't have enough data
-     */
-    events: null | tUserEventSeller;
+    events: null | tUserEventBuyer;
 };
 
 /**
@@ -220,21 +208,157 @@ export type tNotice = {
     type: tNoticeTypeEnum;
 };
 
-export type tApiListingSellerInfoRequest = {
-    body?: never;
-    path: {
-        /**
-         * ID of the listing
-         */
-        listingId: string;
-    };
-    query?: never;
-    url: '/api/seller-session/listing/{listingId}/seller-info';
+/**
+ * Cursor for pagination
+ */
+export type tCursor = {
+    /**
+     * Page number (0-indexed)
+     */
+    page: number;
+    /**
+     * Page size
+     */
+    size: number;
 };
 
-export type apiListingSellerInfoErrors = {
+/**
+ * This filter matches the current status of the transaction
+ */
+export const tTransactionStatusEnum = {
+    pending: 'pending',
+    open: 'open',
+    resolved: 'resolved',
+    dispute: 'dispute',
+    rejected: 'rejected',
+    expired: 'expired',
+    success: 'success',
+    closed: 'closed'
+} as const;
+
+/**
+ * This filter matches the current status of the transaction
+ */
+export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
+
+/**
+ * Filter object for transaction collection
+ */
+export type tTransactionFilter = {
     /**
-     * Listing not found or seller info not available
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+    status?: tTransactionStatusEnum;
+    /**
+     * This filter matches any of the provided statuses for the current status of the transaction
+     */
+    statusIn?: Array<tTransactionStatusEnum & unknown>;
+};
+
+/**
+ * App-based filters
+ */
+export type tTransactionWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+    status?: tTransactionStatusEnum;
+    /**
+     * This filter matches any of the provided statuses for the current status of the transaction
+     */
+    statusIn?: Array<tTransactionStatusEnum & unknown>;
+};
+
+/**
+ * Field of the transaction sort
+ */
+export const tTransactionSortField = {
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    expiresAt: 'expiresAt',
+    status: 'status'
+} as const;
+
+/**
+ * Field of the transaction sort
+ */
+export type tTransactionSortField = typeof tTransactionSortField[keyof typeof tTransactionSortField];
+
+/**
+ * Order
+ */
+export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
+
+/**
+ * Order
+ */
+export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
+
+/**
+ * Sort object for transaction collection
+ */
+export type tTransactionSort = {
+    field: tTransactionSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * Query object for transaction collection
+ */
+export type tTransactionQuery = {
+    cursor?: tCursor;
+    filter?: tTransactionFilter;
+    where?: tTransactionWhere;
+    sort?: Array<tTransactionSort>;
+};
+
+export type tApiTransactionBuyerInfoRequest = {
+    /**
+     * Query object for transaction access validation
+     */
+    body?: tTransactionQuery;
+    path?: never;
+    query?: never;
+    url: '/api/seller-session/transaction/buyer-info';
+};
+
+export type apiTransactionBuyerInfoErrors = {
+    /**
+     * Transaction not found or not accessible
      */
     404: tNotice;
     /**
@@ -243,13 +367,13 @@ export type apiListingSellerInfoErrors = {
     500: tNotice;
 };
 
-export type apiListingSellerInfoError = apiListingSellerInfoErrors[keyof apiListingSellerInfoErrors];
+export type apiTransactionBuyerInfoError = apiTransactionBuyerInfoErrors[keyof apiTransactionBuyerInfoErrors];
 
-export type tApiListingSellerInfoResponse = {
+export type tApiTransactionBuyerInfoResponse = {
     /**
-     * Seller info
+     * Buyer info
      */
-    200: tSellerInfo;
+    200: tTransactionBuyerInfo;
 };
 
-export type apiListingSellerInfoResponse = tApiListingSellerInfoResponse[keyof tApiListingSellerInfoResponse];
+export type apiTransactionBuyerInfoResponse = tApiTransactionBuyerInfoResponse[keyof tApiTransactionBuyerInfoResponse];

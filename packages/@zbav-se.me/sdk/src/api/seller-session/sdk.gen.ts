@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiListingSellerInfoErrors, tApiListingSellerInfoRequest, tApiListingSellerInfoResponse } from './types.gen';
-import { zApiListingSellerInfoData, zApiListingSellerInfoResponse } from './zod.gen';
+import type { apiTransactionBuyerInfoErrors, tApiTransactionBuyerInfoRequest, tApiTransactionBuyerInfoResponse } from './types.gen';
+import { zApiTransactionBuyerInfoData, zApiTransactionBuyerInfoResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -20,14 +20,18 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 };
 
 /**
- * Return seller info for a listing.
+ * Get buyer info for a transaction
  *
- * Return seller info for a listing.
+ * Return buyer info for a transaction. Requires seller access to the transaction.
  */
-export const apiListingSellerInfo = <ThrowOnError extends boolean = false>(options: Options<tApiListingSellerInfoRequest, ThrowOnError>) => (options.client ?? client).get<tApiListingSellerInfoResponse, apiListingSellerInfoErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiListingSellerInfoData.parseAsync(data),
+export const apiTransactionBuyerInfo = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionBuyerInfoRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionBuyerInfoResponse, apiTransactionBuyerInfoErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiTransactionBuyerInfoData.parseAsync(data),
     responseType: 'json',
-    responseValidator: async (data) => await zApiListingSellerInfoResponse.parseAsync(data),
-    url: '/api/seller-session/listing/{listingId}/seller-info',
-    ...options
+    responseValidator: async (data) => await zApiTransactionBuyerInfoResponse.parseAsync(data),
+    url: '/api/seller-session/transaction/buyer-info',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
 });

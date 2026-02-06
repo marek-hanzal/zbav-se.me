@@ -30,6 +30,398 @@ export type tNotice = {
 };
 
 /**
+ * List of available currencies
+ */
+export const tCurrencyEnum = {
+    CZK: 'CZK',
+    EUR: 'EUR',
+    USD: 'USD',
+    GBP: 'GBP',
+    PLN: 'PLN',
+    HUF: 'HUF',
+    CHF: 'CHF'
+} as const;
+
+/**
+ * List of available currencies
+ */
+export type tCurrencyEnum = typeof tCurrencyEnum[keyof typeof tCurrencyEnum];
+
+/**
+ * Expiration time of the listing
+ */
+export const tListingExpireEnum = {
+    '7-days': '7-days',
+    '14-days': '14-days',
+    '1-month': '1-month'
+} as const;
+
+/**
+ * Expiration time of the listing
+ */
+export type tListingExpireEnum = typeof tListingExpireEnum[keyof typeof tListingExpireEnum];
+
+/**
+ * Delivery method for the listing
+ */
+export const tListingDeliveryEnum = {
+    personal: 'personal',
+    post: 'post',
+    package: 'package',
+    other: 'other'
+} as const;
+
+/**
+ * Delivery method for the listing
+ */
+export type tListingDeliveryEnum = typeof tListingDeliveryEnum[keyof typeof tListingDeliveryEnum];
+
+/**
+ * Type of listing event
+ */
+export const tListingEventEnum = {
+    impression: 'impression',
+    view: 'view',
+    ignore: 'ignore',
+    unignore: 'unignore',
+    flag: 'flag',
+    unflag: 'unflag',
+    transaction: 'transaction',
+    favourite: 'favourite',
+    unfavourite: 'unfavourite',
+    like: 'like',
+    dislike: 'dislike'
+} as const;
+
+/**
+ * Type of listing event
+ */
+export type tListingEventEnum = typeof tListingEventEnum[keyof typeof tListingEventEnum];
+
+/**
+ * Price type of the listing
+ */
+export const tListingPriceEnum = { closed: 'closed', open: 'open' } as const;
+
+/**
+ * Price type of the listing
+ */
+export type tListingPriceEnum = typeof tListingPriceEnum[keyof typeof tListingPriceEnum];
+
+/**
+ * Warranty type for the listing
+ */
+export const tListingWarrantyEnum = {
+    warranty: 'warranty',
+    'no-warranty': 'no-warranty',
+    custom: 'custom'
+} as const;
+
+/**
+ * Warranty type for the listing
+ */
+export type tListingWarrantyEnum = typeof tListingWarrantyEnum[keyof typeof tListingWarrantyEnum];
+
+/**
+ * Type of thumb
+ */
+export const tThumbEnum = { like: 'like', dislike: 'dislike' } as const;
+
+/**
+ * Type of thumb
+ */
+export type tThumbEnum = typeof tThumbEnum[keyof typeof tThumbEnum];
+
+/**
+ * Who initiated or affected the transaction change
+ */
+export const tTransactionSideEnum = {
+    seller: 'seller',
+    buyer: 'buyer',
+    transaction: 'transaction',
+    system: 'system',
+    unknown: 'unknown'
+} as const;
+
+/**
+ * Who initiated or affected the transaction change
+ */
+export type tTransactionSideEnum = typeof tTransactionSideEnum[keyof typeof tTransactionSideEnum];
+
+/**
+ * Current status of the listing transaction
+ */
+export const tTransactionStatusEnum = {
+    pending: 'pending',
+    open: 'open',
+    resolved: 'resolved',
+    dispute: 'dispute',
+    rejected: 'rejected',
+    expired: 'expired',
+    success: 'success',
+    closed: 'closed'
+} as const;
+
+/**
+ * Current status of the listing transaction
+ */
+export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
+
+/**
+ * Scope of the user event
+ */
+export const tUserEventScopeEnum = { user: 'user', foreign: 'foreign' } as const;
+
+/**
+ * Scope of the user event
+ */
+export type tUserEventScopeEnum = typeof tUserEventScopeEnum[keyof typeof tUserEventScopeEnum];
+
+/**
+ * Side of the user
+ */
+export const tUserSideEnum = { seller: 'seller', buyer: 'buyer' } as const;
+
+/**
+ * Side of the user
+ */
+export type tUserSideEnum = typeof tUserSideEnum[keyof typeof tUserSideEnum];
+
+/**
+ * Activity bucket (last user-scoped event age: high = recent, low = old)
+ */
+export const tActivityEnum = {
+    low: 'low',
+    medium: 'medium',
+    high: 'high'
+} as const;
+
+/**
+ * Activity bucket (last user-scoped event age: high = recent, low = old)
+ */
+export type tActivityEnum = typeof tActivityEnum[keyof typeof tActivityEnum];
+
+/**
+ * Load bucket (active transaction count: low/medium/high)
+ */
+export const tLoadEnum = {
+    low: 'low',
+    medium: 'medium',
+    high: 'high'
+} as const;
+
+/**
+ * Load bucket (active transaction count: low/medium/high)
+ */
+export type tLoadEnum = typeof tLoadEnum[keyof typeof tLoadEnum];
+
+/**
+ * Type of user event
+ */
+export const tUserEventEnum = {
+    like: 'like',
+    dislike: 'dislike',
+    'listing.create': 'listing.create',
+    'transaction.create': 'transaction.create',
+    'transaction.open': 'transaction.open',
+    'transaction.rejected': 'transaction.rejected',
+    'transaction.closed': 'transaction.closed',
+    'transaction.message': 'transaction.message',
+    'transaction.success': 'transaction.success',
+    'transaction.expired': 'transaction.expired',
+    'transaction.resolved': 'transaction.resolved'
+} as const;
+
+/**
+ * Type of user event
+ */
+export type tUserEventEnum = typeof tUserEventEnum[keyof typeof tUserEventEnum];
+
+/**
+ * Source of the user event
+ */
+export const tUserEventSourceEnum = { listing: 'listing', transaction: 'transaction' } as const;
+
+/**
+ * Source of the user event
+ */
+export type tUserEventSourceEnum = typeof tUserEventSourceEnum[keyof typeof tUserEventSourceEnum];
+
+/**
+ * Direction of the message
+ */
+export const tMessageDirectionEnum = {
+    in: 'in',
+    out: 'out',
+    system: 'system'
+} as const;
+
+/**
+ * Direction of the message
+ */
+export type tMessageDirectionEnum = typeof tMessageDirectionEnum[keyof typeof tMessageDirectionEnum];
+
+/**
+ * Type of message
+ */
+export const tMessageTypeEnum = {
+    text: 'text',
+    gallery: 'gallery',
+    location: 'location',
+    personal: 'personal',
+    package: 'package',
+    date: 'date',
+    system: 'system'
+} as const;
+
+/**
+ * Type of message
+ */
+export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
+
+/**
+ * Order
+ */
+export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
+
+/**
+ * Order
+ */
+export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
+
+/**
+ * Allowed content types
+ */
+export const tAllowedContentTypesEnum = {
+    'image/jpeg': 'image/jpeg',
+    'image/png': 'image/png',
+    'image/webp': 'image/webp',
+    'image/avif': 'image/avif',
+    'image/heic': 'image/heic',
+    'image/heif': 'image/heif'
+} as const;
+
+/**
+ * Allowed content types
+ */
+export type tAllowedContentTypesEnum = typeof tAllowedContentTypesEnum[keyof typeof tAllowedContentTypesEnum];
+
+/**
+ * Allowed extensions
+ */
+export const tAllowedExtensionsEnum = {
+    webp: 'webp',
+    png: 'png',
+    jpg: 'jpg',
+    jpeg: 'jpeg',
+    avif: 'avif',
+    heic: 'heic',
+    heif: 'heif'
+} as const;
+
+/**
+ * Allowed extensions
+ */
+export type tAllowedExtensionsEnum = typeof tAllowedExtensionsEnum[keyof typeof tAllowedExtensionsEnum];
+
+/**
+ * Category data
+ */
+export type tCategory = {
+    /**
+     * ID of the category
+     */
+    id: string;
+    /**
+     * Group/name of the category
+     */
+    group: string;
+    /**
+     * Category name within the group
+     */
+    category: string;
+    /**
+     * Slug of the category
+     */
+    slug: string;
+    /**
+     * Sort order (position) of the category
+     */
+    sort: number;
+    /**
+     * Locale/language of the category
+     */
+    locale: string;
+};
+
+/**
+ * Location data
+ */
+export type tLocation = {
+    id: string;
+    /**
+     * The query that was used to get the location
+     */
+    query: string;
+    /**
+     * The language that was used to get the location
+     */
+    lang: string;
+    /**
+     * The country that the location is in
+     */
+    country: string;
+    /**
+     * Country code
+     */
+    code: string;
+    /**
+     * The county that the location is in
+     */
+    county: string | null;
+    /**
+     * The municipality that the location is in
+     */
+    municipality: string | null;
+    /**
+     * The state that the location is in
+     */
+    state: string | null;
+    /**
+     * Full address preview of a location
+     */
+    address: string;
+    /**
+     * The city that the location is in
+     */
+    city: string | null;
+    /**
+     * The street that the location is on
+     */
+    street: string | null;
+    /**
+     * The postal/zip code of the location
+     */
+    zip: string | null;
+    /**
+     * Confidence score of the location (based on query)
+     */
+    confidence: number;
+    /**
+     * Used to uniquely identify this location entry
+     */
+    hash: string;
+    /**
+     * Latitude of the location
+     */
+    lat: number;
+    /**
+     * Longitude of the location
+     */
+    lon: number;
+};
+
+/**
  * GitHub commit history count
  */
 export type tGitHubHistory = {
@@ -218,6 +610,370 @@ export type tApiCronDay20Response = {
 };
 
 export type apiCronDay20Response = tApiCronDay20Response[keyof tApiCronDay20Response];
+
+export type tApiPublicEnumCurrencyRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/currency';
+};
+
+export type tApiPublicEnumCurrencyResponse = {
+    /**
+     * Currency enum
+     */
+    200: Array<tCurrencyEnum>;
+};
+
+export type apiPublicEnumCurrencyResponse = tApiPublicEnumCurrencyResponse[keyof tApiPublicEnumCurrencyResponse];
+
+export type tApiPublicEnumListingExpireRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/listing-expire';
+};
+
+export type tApiPublicEnumListingExpireResponse = {
+    /**
+     * ListingExpire enum
+     */
+    200: Array<tListingExpireEnum>;
+};
+
+export type apiPublicEnumListingExpireResponse = tApiPublicEnumListingExpireResponse[keyof tApiPublicEnumListingExpireResponse];
+
+export type tApiPublicEnumListingDeliveryRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/listing-delivery';
+};
+
+export type tApiPublicEnumListingDeliveryResponse = {
+    /**
+     * ListingDelivery enum
+     */
+    200: Array<tListingDeliveryEnum>;
+};
+
+export type apiPublicEnumListingDeliveryResponse = tApiPublicEnumListingDeliveryResponse[keyof tApiPublicEnumListingDeliveryResponse];
+
+export type tApiPublicEnumListingEventRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/listing-event';
+};
+
+export type tApiPublicEnumListingEventResponse = {
+    /**
+     * ListingEvent enum
+     */
+    200: Array<tListingEventEnum>;
+};
+
+export type apiPublicEnumListingEventResponse = tApiPublicEnumListingEventResponse[keyof tApiPublicEnumListingEventResponse];
+
+export type tApiPublicEnumListingPriceRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/listing-price';
+};
+
+export type tApiPublicEnumListingPriceResponse = {
+    /**
+     * ListingPrice enum
+     */
+    200: Array<tListingPriceEnum>;
+};
+
+export type apiPublicEnumListingPriceResponse = tApiPublicEnumListingPriceResponse[keyof tApiPublicEnumListingPriceResponse];
+
+export type tApiPublicEnumListingWarrantyRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/listing-warranty';
+};
+
+export type tApiPublicEnumListingWarrantyResponse = {
+    /**
+     * ListingWarranty enum
+     */
+    200: Array<tListingWarrantyEnum>;
+};
+
+export type apiPublicEnumListingWarrantyResponse = tApiPublicEnumListingWarrantyResponse[keyof tApiPublicEnumListingWarrantyResponse];
+
+export type tApiPublicEnumThumbRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/thumb';
+};
+
+export type tApiPublicEnumThumbResponse = {
+    /**
+     * Thumb enum
+     */
+    200: Array<tThumbEnum>;
+};
+
+export type apiPublicEnumThumbResponse = tApiPublicEnumThumbResponse[keyof tApiPublicEnumThumbResponse];
+
+export type tApiPublicEnumTransactionSideRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/transaction-side';
+};
+
+export type tApiPublicEnumTransactionSideResponse = {
+    /**
+     * TransactionSide enum
+     */
+    200: Array<tTransactionSideEnum>;
+};
+
+export type apiPublicEnumTransactionSideResponse = tApiPublicEnumTransactionSideResponse[keyof tApiPublicEnumTransactionSideResponse];
+
+export type tApiPublicEnumTransactionStatusRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/transaction-status';
+};
+
+export type tApiPublicEnumTransactionStatusResponse = {
+    /**
+     * TransactionStatus enum
+     */
+    200: Array<tTransactionStatusEnum>;
+};
+
+export type apiPublicEnumTransactionStatusResponse = tApiPublicEnumTransactionStatusResponse[keyof tApiPublicEnumTransactionStatusResponse];
+
+export type tApiPublicEnumUserEventScopeRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/user-event-scope';
+};
+
+export type tApiPublicEnumUserEventScopeResponse = {
+    /**
+     * UserEventScope enum
+     */
+    200: Array<tUserEventScopeEnum>;
+};
+
+export type apiPublicEnumUserEventScopeResponse = tApiPublicEnumUserEventScopeResponse[keyof tApiPublicEnumUserEventScopeResponse];
+
+export type tApiPublicEnumUserSideRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/user-side';
+};
+
+export type tApiPublicEnumUserSideResponse = {
+    /**
+     * UserSide enum
+     */
+    200: Array<tUserSideEnum>;
+};
+
+export type apiPublicEnumUserSideResponse = tApiPublicEnumUserSideResponse[keyof tApiPublicEnumUserSideResponse];
+
+export type tApiPublicEnumActivityRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/activity';
+};
+
+export type tApiPublicEnumActivityResponse = {
+    /**
+     * Activity enum
+     */
+    200: Array<tActivityEnum>;
+};
+
+export type apiPublicEnumActivityResponse = tApiPublicEnumActivityResponse[keyof tApiPublicEnumActivityResponse];
+
+export type tApiPublicEnumLoadRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/load';
+};
+
+export type tApiPublicEnumLoadResponse = {
+    /**
+     * Load enum
+     */
+    200: Array<tLoadEnum>;
+};
+
+export type apiPublicEnumLoadResponse = tApiPublicEnumLoadResponse[keyof tApiPublicEnumLoadResponse];
+
+export type tApiPublicEnumUserEventRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/user-event';
+};
+
+export type tApiPublicEnumUserEventResponse = {
+    /**
+     * UserEvent enum
+     */
+    200: Array<tUserEventEnum>;
+};
+
+export type apiPublicEnumUserEventResponse = tApiPublicEnumUserEventResponse[keyof tApiPublicEnumUserEventResponse];
+
+export type tApiPublicEnumUserEventSourceRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/user-event-source';
+};
+
+export type tApiPublicEnumUserEventSourceResponse = {
+    /**
+     * UserEventSource enum
+     */
+    200: Array<tUserEventSourceEnum>;
+};
+
+export type apiPublicEnumUserEventSourceResponse = tApiPublicEnumUserEventSourceResponse[keyof tApiPublicEnumUserEventSourceResponse];
+
+export type tApiPublicEnumMessageDirectionRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/message-direction';
+};
+
+export type tApiPublicEnumMessageDirectionResponse = {
+    /**
+     * MessageDirection enum
+     */
+    200: Array<tMessageDirectionEnum>;
+};
+
+export type apiPublicEnumMessageDirectionResponse = tApiPublicEnumMessageDirectionResponse[keyof tApiPublicEnumMessageDirectionResponse];
+
+export type tApiPublicEnumMessageTypeRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/message-type';
+};
+
+export type tApiPublicEnumMessageTypeResponse = {
+    /**
+     * MessageType enum
+     */
+    200: Array<tMessageTypeEnum>;
+};
+
+export type apiPublicEnumMessageTypeResponse = tApiPublicEnumMessageTypeResponse[keyof tApiPublicEnumMessageTypeResponse];
+
+export type tApiPublicEnumNoticeTypeRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/notice-type';
+};
+
+export type tApiPublicEnumNoticeTypeResponse = {
+    /**
+     * NoticeType enum
+     */
+    200: Array<tNoticeTypeEnum>;
+};
+
+export type apiPublicEnumNoticeTypeResponse = tApiPublicEnumNoticeTypeResponse[keyof tApiPublicEnumNoticeTypeResponse];
+
+export type tApiPublicEnumOrderRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/order';
+};
+
+export type tApiPublicEnumOrderResponse = {
+    /**
+     * Order enum
+     */
+    200: Array<tOrderEnum>;
+};
+
+export type apiPublicEnumOrderResponse = tApiPublicEnumOrderResponse[keyof tApiPublicEnumOrderResponse];
+
+export type tApiPublicEnumAllowedContentTypesRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/allowed-content-types';
+};
+
+export type tApiPublicEnumAllowedContentTypesResponse = {
+    /**
+     * AllowedContentTypes enum
+     */
+    200: Array<tAllowedContentTypesEnum>;
+};
+
+export type apiPublicEnumAllowedContentTypesResponse = tApiPublicEnumAllowedContentTypesResponse[keyof tApiPublicEnumAllowedContentTypesResponse];
+
+export type tApiPublicEnumAllowedExtensionsRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/allowed-extensions';
+};
+
+export type tApiPublicEnumAllowedExtensionsResponse = {
+    /**
+     * AllowedExtensions enum
+     */
+    200: Array<tAllowedExtensionsEnum>;
+};
+
+export type apiPublicEnumAllowedExtensionsResponse = tApiPublicEnumAllowedExtensionsResponse[keyof tApiPublicEnumAllowedExtensionsResponse];
+
+export type tApiPublicSchemaRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/schema';
+};
+
+export type apiPublicSchemaErrors = {
+    /**
+     * Bad request – this endpoint is for schema exposure only.
+     */
+    400: tNotice;
+};
+
+export type apiPublicSchemaError = apiPublicSchemaErrors[keyof apiPublicSchemaErrors];
+
+export type tApiPublicSchemaResponse = {
+    /**
+     * Not returned; for OpenAPI schema registration only.
+     */
+    200: [
+        tCategory,
+        tLocation
+    ];
+};
+
+export type apiPublicSchemaResponse = tApiPublicSchemaResponse[keyof tApiPublicSchemaResponse];
 
 export type tApiGithubHistoryRequest = {
     body?: never;

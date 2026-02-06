@@ -1,0 +1,82 @@
+import { Container } from "@use-pico/client/ui/container";
+import { FormField } from "@use-pico/client/ui/form";
+import { Mx } from "@use-pico/client/ui/mx";
+import { Status } from "@use-pico/client/ui/status";
+import { TextInput } from "@use-pico/client/ui/text-input";
+import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
+import { sListingCreate } from "@zbav-se.me/sdk/api/seller-user";
+import { TitleContainer } from "@zbav-se.me/ui/container";
+import { type FC, useState } from "react";
+import { useDraftPatch } from "~/app/@seller-user/draft/hook/useDraftPatch";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+
+export namespace TitlePatch {
+	export interface Props extends TitleContainer.Props {
+		draft: tDraft;
+		onCancel(): void;
+		onSettled?(): void;
+	}
+}
+
+export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
+	const { patch, isPending } = useDraftPatch({ draft, onSettled });
+	const [title, setTitle] = useState(draft.title ?? "");
+
+	return (
+		<TitleContainer
+			data-ui={"Setup-[TitleContainer.title]"}
+			textTitle={"Listing title (title)"}
+			{...props}
+		>
+			<Container
+				ui={{
+					layout: "vertical-content-footer",
+					height: "full",
+					width: "full",
+					inner: "default",
+				}}
+			>
+				<Container
+					ui={{
+						layout: "vertical-centered",
+						height: "full",
+					}}
+				>
+					<Status
+						textTitle={"Listing title (title)"}
+						action={
+							<FormField>
+								{(fieldProps) => (
+									<TextInput
+										value={title}
+										onChange={(e) => setTitle(e.target.value)}
+										placeholder={"Listing title (placeholder)"}
+										autoFocus
+										minLength={sListingCreate.properties.title.minLength}
+										maxLength={sListingCreate.properties.title.maxLength}
+										{...fieldProps}
+									/>
+								)}
+							</FormField>
+						}
+					>
+						<Mx
+							label={"Listing title (required)"}
+							ui={{
+								tone: "secondary",
+								theme: "light",
+							}}
+						/>
+					</Status>
+				</Container>
+
+				<SaveContainer
+					onCancel={onCancel}
+					onSave={() => patch({ title })}
+					loading={isPending}
+					disabled={!title}
+				/>
+			</Container>
+		</TitleContainer>
+	);
+};

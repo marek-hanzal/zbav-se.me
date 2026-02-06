@@ -2,7 +2,7 @@ import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { LocaleContext } from "@use-pico/client/context";
 import { linkTo } from "@use-pico/common/link-to";
 import { translator } from "@use-pico/common/translator";
-import { withSessionQuery } from "~/app/auth/query/withSessionQuery";
+import { withSessionQuery } from "~/app/@common/auth/query/withSessionQuery";
 
 export const Route = createFileRoute("/$locale")({
 	ssr: false,

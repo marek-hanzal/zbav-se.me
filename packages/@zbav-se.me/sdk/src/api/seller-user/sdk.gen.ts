@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiDraftCollectionErrors, apiDraftCountErrors, apiDraftCreateErrors, apiDraftDeleteErrors, apiDraftFetchErrors, apiDraftGalleryCreateErrors, apiDraftPatchErrors, apiListingCreateErrors, apiTransactionCollectionErrors, apiTransactionFetchErrors, apiTransactionListingCollectionErrors, apiTransactionStatusAcceptErrors, apiTransactionStatusDisputeErrors, apiTransactionStatusRejectErrors, apiTransactionStatusResolveErrors, tApiDraftCollectionRequest, tApiDraftCollectionResponse, tApiDraftCountRequest, tApiDraftCountResponse, tApiDraftCreateRequest, tApiDraftCreateResponse, tApiDraftDeleteRequest, tApiDraftDeleteResponse, tApiDraftFetchRequest, tApiDraftFetchResponse, tApiDraftGalleryCreateRequest, tApiDraftGalleryCreateResponse, tApiDraftPatchRequest, tApiDraftPatchResponse, tApiListingCreateRequest, tApiListingCreateResponse, tApiTransactionCollectionRequest, tApiTransactionCollectionResponse, tApiTransactionFetchRequest, tApiTransactionFetchResponse, tApiTransactionListingCollectionRequest, tApiTransactionListingCollectionResponse, tApiTransactionStatusAcceptRequest, tApiTransactionStatusAcceptResponse, tApiTransactionStatusDisputeRequest, tApiTransactionStatusDisputeResponse, tApiTransactionStatusRejectRequest, tApiTransactionStatusRejectResponse, tApiTransactionStatusResolveRequest, tApiTransactionStatusResolveResponse } from './types.gen';
-import { zApiDraftCollectionData, zApiDraftCollectionResponse, zApiDraftCountData, zApiDraftCountResponse, zApiDraftCreateData, zApiDraftCreateResponse, zApiDraftDeleteData, zApiDraftDeleteResponse, zApiDraftFetchData, zApiDraftFetchResponse, zApiDraftGalleryCreateData, zApiDraftGalleryCreateResponse, zApiDraftPatchData, zApiDraftPatchResponse, zApiListingCreateData, zApiListingCreateResponse, zApiTransactionCollectionData, zApiTransactionCollectionResponse, zApiTransactionFetchData, zApiTransactionFetchResponse, zApiTransactionListingCollectionData, zApiTransactionListingCollectionResponse, zApiTransactionStatusAcceptData, zApiTransactionStatusAcceptResponse, zApiTransactionStatusDisputeData, zApiTransactionStatusDisputeResponse, zApiTransactionStatusRejectData, zApiTransactionStatusRejectResponse, zApiTransactionStatusResolveData, zApiTransactionStatusResolveResponse } from './zod.gen';
+import type { apiDraftCollectionErrors, apiDraftCountErrors, apiDraftCreateErrors, apiDraftDeleteErrors, apiDraftFetchErrors, apiDraftGalleryCreateErrors, apiDraftPatchErrors, apiListingCollectionErrors, apiListingCountErrors, apiListingCreateErrors, apiListingFetchErrors, apiTransactionCollectionErrors, apiTransactionFetchErrors, apiTransactionListingCollectionErrors, apiTransactionStatusAcceptErrors, apiTransactionStatusDisputeErrors, apiTransactionStatusRejectErrors, apiTransactionStatusResolveErrors, tApiDraftCollectionRequest, tApiDraftCollectionResponse, tApiDraftCountRequest, tApiDraftCountResponse, tApiDraftCreateRequest, tApiDraftCreateResponse, tApiDraftDeleteRequest, tApiDraftDeleteResponse, tApiDraftFetchRequest, tApiDraftFetchResponse, tApiDraftGalleryCreateRequest, tApiDraftGalleryCreateResponse, tApiDraftPatchRequest, tApiDraftPatchResponse, tApiListingCollectionRequest, tApiListingCollectionResponse, tApiListingCountRequest, tApiListingCountResponse, tApiListingCreateRequest, tApiListingCreateResponse, tApiListingFetchRequest, tApiListingFetchResponse, tApiTransactionCollectionRequest, tApiTransactionCollectionResponse, tApiTransactionFetchRequest, tApiTransactionFetchResponse, tApiTransactionListingCollectionRequest, tApiTransactionListingCollectionResponse, tApiTransactionStatusAcceptRequest, tApiTransactionStatusAcceptResponse, tApiTransactionStatusDisputeRequest, tApiTransactionStatusDisputeResponse, tApiTransactionStatusRejectRequest, tApiTransactionStatusRejectResponse, tApiTransactionStatusResolveRequest, tApiTransactionStatusResolveResponse } from './types.gen';
+import { zApiDraftCollectionData, zApiDraftCollectionResponse, zApiDraftCountData, zApiDraftCountResponse, zApiDraftCreateData, zApiDraftCreateResponse, zApiDraftDeleteData, zApiDraftDeleteResponse, zApiDraftFetchData, zApiDraftFetchResponse, zApiDraftGalleryCreateData, zApiDraftGalleryCreateResponse, zApiDraftPatchData, zApiDraftPatchResponse, zApiListingCollectionData, zApiListingCollectionResponse, zApiListingCountData, zApiListingCountResponse, zApiListingCreateData, zApiListingCreateResponse, zApiListingFetchData, zApiListingFetchResponse, zApiTransactionCollectionData, zApiTransactionCollectionResponse, zApiTransactionFetchData, zApiTransactionFetchResponse, zApiTransactionListingCollectionData, zApiTransactionListingCollectionResponse, zApiTransactionStatusAcceptData, zApiTransactionStatusAcceptResponse, zApiTransactionStatusDisputeData, zApiTransactionStatusDisputeResponse, zApiTransactionStatusRejectData, zApiTransactionStatusRejectResponse, zApiTransactionStatusResolveData, zApiTransactionStatusResolveResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -139,6 +139,40 @@ export const apiDraftGalleryCreate = <ThrowOnError extends boolean = false>(opti
 });
 
 /**
+ * Fetch a collection of listings based on the provided query
+ *
+ * Returns the authenticated seller's listings based on provided query
+ */
+export const apiListingCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingCollectionResponse, apiListingCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingCollectionData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingCollectionResponse.parseAsync(data),
+    url: '/api/seller-user/listing/collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
+ * Count listings based on the provided query
+ *
+ * Returns count of listings based on provided query
+ */
+export const apiListingCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingCountResponse, apiListingCountErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingCountData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingCountResponse.parseAsync(data),
+    url: '/api/seller-user/listing/count',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
  * Create a new listing
  *
  * Create a new listing
@@ -148,6 +182,23 @@ export const apiListingCreate = <ThrowOnError extends boolean = false>(options?:
     responseType: 'json',
     responseValidator: async (data) => await zApiListingCreateResponse.parseAsync(data),
     url: '/api/seller-user/listing/create',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
+ * Fetch a listing based on the provided query
+ *
+ * Return a listing based on the provided query
+ */
+export const apiListingFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingFetchResponse, apiListingFetchErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingFetchData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingFetchResponse.parseAsync(data),
+    url: '/api/seller-user/listing/fetch',
     ...options,
     headers: {
         'Content-Type': 'application/json',

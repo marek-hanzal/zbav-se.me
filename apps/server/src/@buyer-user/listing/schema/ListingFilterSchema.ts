@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/database/@enum/ListingWarrantyEnumSchema";
-import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
+import { CurrencyEnumSchema } from "~/schema/CurrencyEnumSchema";
 import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 import { PriceSchema } from "~/schema/PriceSchema";
 
@@ -58,8 +58,8 @@ export const ListingFilterSchema = z
 				description: "Filter listings based on the provided category IDs",
 			})
 			.optional(),
-		currency: CurrencyListEnumSchema.optional(),
-		currencyIn: z.array(CurrencyListEnumSchema).optional().openapi("CurrencyIn", {
+		currency: CurrencyEnumSchema.optional(),
+		currencyIn: z.array(CurrencyEnumSchema).optional().openapi("CurrencyIn", {
 			description: "This filter matches listings with currency codes in the provided array",
 		}),
 		expiresAtBefore: z.coerce.date().optional().openapi({

@@ -25,6 +25,383 @@ export const sNotice = {
     ]
 } as const;
 
+export const sCurrencyEnum = {
+    type: 'string',
+    enum: [
+        'CZK',
+        'EUR',
+        'USD',
+        'GBP',
+        'PLN',
+        'HUF',
+        'CHF'
+    ]
+} as const;
+
+export const sListingExpireEnum = {
+    type: 'string',
+    enum: [
+        '7-days',
+        '14-days',
+        '1-month'
+    ]
+} as const;
+
+export const sListingDeliveryEnum = {
+    type: 'string',
+    enum: [
+        'personal',
+        'post',
+        'package',
+        'other'
+    ]
+} as const;
+
+export const sListingEventEnum = {
+    type: 'string',
+    enum: [
+        'impression',
+        'view',
+        'ignore',
+        'unignore',
+        'flag',
+        'unflag',
+        'transaction',
+        'favourite',
+        'unfavourite',
+        'like',
+        'dislike'
+    ]
+} as const;
+
+export const sListingPriceEnum = {
+    type: 'string',
+    enum: [
+        'closed',
+        'open'
+    ]
+} as const;
+
+export const sListingWarrantyEnum = {
+    type: 'string',
+    enum: [
+        'warranty',
+        'no-warranty',
+        'custom'
+    ]
+} as const;
+
+export const sThumbEnum = {
+    type: 'string',
+    enum: [
+        'like',
+        'dislike'
+    ]
+} as const;
+
+export const sTransactionSideEnum = {
+    type: 'string',
+    enum: [
+        'seller',
+        'buyer',
+        'transaction',
+        'system',
+        'unknown'
+    ]
+} as const;
+
+export const sTransactionStatusEnum = {
+    type: 'string',
+    enum: [
+        'pending',
+        'open',
+        'resolved',
+        'dispute',
+        'rejected',
+        'expired',
+        'success',
+        'closed'
+    ]
+} as const;
+
+export const sUserEventScopeEnum = {
+    type: 'string',
+    enum: [
+        'user',
+        'foreign'
+    ]
+} as const;
+
+export const sUserSideEnum = {
+    type: 'string',
+    enum: [
+        'seller',
+        'buyer'
+    ]
+} as const;
+
+export const sActivityEnum = {
+    type: 'string',
+    enum: [
+        'low',
+        'medium',
+        'high'
+    ]
+} as const;
+
+export const sLoadEnum = {
+    type: 'string',
+    enum: [
+        'low',
+        'medium',
+        'high'
+    ]
+} as const;
+
+export const sUserEventEnum = {
+    type: 'string',
+    enum: [
+        'like',
+        'dislike',
+        'listing.create',
+        'transaction.create',
+        'transaction.open',
+        'transaction.rejected',
+        'transaction.closed',
+        'transaction.message',
+        'transaction.success',
+        'transaction.expired',
+        'transaction.resolved'
+    ]
+} as const;
+
+export const sUserEventSourceEnum = {
+    type: 'string',
+    enum: [
+        'listing',
+        'transaction'
+    ]
+} as const;
+
+export const sMessageDirectionEnum = {
+    type: 'string',
+    enum: [
+        'in',
+        'out',
+        'system'
+    ]
+} as const;
+
+export const sMessageTypeEnum = {
+    type: 'string',
+    enum: [
+        'text',
+        'gallery',
+        'location',
+        'personal',
+        'package',
+        'date',
+        'system'
+    ]
+} as const;
+
+export const sOrderEnum = {
+    type: 'string',
+    enum: [
+        'asc',
+        'desc'
+    ]
+} as const;
+
+export const sAllowedContentTypesEnum = {
+    type: 'string',
+    enum: [
+        'image/jpeg',
+        'image/png',
+        'image/webp',
+        'image/avif',
+        'image/heic',
+        'image/heif'
+    ]
+} as const;
+
+export const sAllowedExtensionsEnum = {
+    type: 'string',
+    enum: [
+        'webp',
+        'png',
+        'jpg',
+        'jpeg',
+        'avif',
+        'heic',
+        'heif'
+    ]
+} as const;
+
+export const sCategory = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        group: {
+            type: 'string'
+        },
+        category: {
+            type: 'string'
+        },
+        slug: {
+            type: 'string'
+        },
+        sort: {
+            type: 'number'
+        },
+        locale: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'group',
+        'category',
+        'slug',
+        'sort',
+        'locale'
+    ]
+} as const;
+
+export const sLocation = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        query: {
+            type: 'string'
+        },
+        lang: {
+            type: 'string'
+        },
+        country: {
+            type: 'string'
+        },
+        code: {
+            type: 'string'
+        },
+        county: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        municipality: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        state: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        address: {
+            type: 'string'
+        },
+        city: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        street: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        zip: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        confidence: {
+            type: 'number'
+        },
+        hash: {
+            type: 'string'
+        },
+        lat: {
+            type: 'number'
+        },
+        lon: {
+            type: 'number'
+        }
+    },
+    required: [
+        'id',
+        'query',
+        'lang',
+        'country',
+        'code',
+        'county',
+        'municipality',
+        'state',
+        'address',
+        'city',
+        'street',
+        'zip',
+        'confidence',
+        'hash',
+        'lat',
+        'lon'
+    ]
+} as const;
+
 export const sGitHubHistory = {
     type: 'object',
     properties: {

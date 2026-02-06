@@ -1,0 +1,1229 @@
+004c2d8c48721c30d51a0ac1fee6dd63e3ef793ceb45c8dc20cba5ed:
+    ref: Feed title (placeholder)
+    value: Např. "iPhone" nebo "Bosh"
+00fe87831f1cf10d096e179276a76be35428b05897001db72f3850be:
+    ref: Chat - transaction closed (message)
+    value: Vše vyřízeno, chat je vypnutý.
+022cc5c29a7e44c9fd5d268e2abcc13f44f38fcabbe0552e3d6c0710:
+    ref: Buyer info (button)
+    value: Informace o kupujícím
+02d821a7f6c8c860ddf14a10fa006f1668bf485d4832ffa830cf1a82:
+    ref: Feed age (title)
+    value: Věk, co tě zajímá
+02f54a138498265f2292afce551a161674bb2c202a0eb6d09fb5d295:
+    ref: horizontal
+    value: horizontal
+032bf5ced2d92548bee53096a31662b5527c60c21a75a711303d95de:
+    ref: Age - from oldest (label)
+    value: Nejstarší
+035b4a691d02ff22e504324450fa9d11678d834249e37ad92b5a3545:
+    ref: Dispute transaction (button)
+    value: Vyřešit problém
+03dd4711e2aaba77a79e582ae21f6acf1aaa8b9bcd089b1b8e2de80e:
+    ref: Close draft (button)
+    value: Odložit na později
+0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
+    ref: Listing category (title)
+    value: Kategorie
+050d325dc0ab4741ff8dd2e315e563bf0a746ea997e21d31bc54f8dd:
+    ref: Listing category not selected
+    value: Kategorii nemáš vybranou
+065d90dd69a514382210796119a244615affeef496284f86ceeb388d:
+    ref: Feed sorting (label)
+    value: Řazení inzerátů
+069a14aec9bb4a553c78c2032f6e521d3b8dccbbb4cfac68e67fa1c1:
+    ref: Listing - Pros (title)
+    value: Co chci vyzdvihnout
+06daab7b2990f20995e68b97e1294770e4a81d9fe49bd931a2930d47:
+    ref: Feed delivery (title)
+    value: Možnosti předání
+08f72ffcbaab104481353781fb5142ff29a99fb6dff9f34a65d0c991:
+    ref: Gallery (title)
+    value: Galerie
+0a5c73cd28c41a15c8769a38be34b6d388bcba18e90ca7e28b762bc9:
+    ref: Listing - Cons (title)
+    value: Chci být upřímný
+0ad19851932e8a648ab674bd1e2c9d2b8057d4f4136877c7eb288b32:
+    ref: Transaction buyer info not available (message)
+    value: |
+        Zatím nemám dost dat o kupujícím - teď je to na tvé vlastní intuici.
+0bfcff0fd8397bbe2de9284b3fe89a16ac4fbf192d890b04a396258b:
+    ref: Draft edit (title)
+    value: Nový inzerát
+0c0a4ce653f7b616d85e4445a31bdafdb550d7239869be85731a82a4:
+    ref: Delete draft - confirm (button)
+    value: Potvrď pro smazání
+0d29ca1c9c2f361ad6ca220d2f75eb557df9f9035c224ea097261207:
+    ref: _blank
+    value: _blank
+0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
+    ref: Location security (hint)
+    value: |
+        **Nikdy** nezadávej svou **přesnou adresu**, jelikož inzeráty jsou veřejné.
+
+
+        Můžeš např. napsat jenom **název města, vesnice, čtvrť** a pod.
+
+
+        _Později si budeš moci v rámci transakce adresu upřesnit, když budeš chtít._
+0e1e457dd548460d3511979a215ab49d00f3ff2b73150c6d0c23f0d6:
+    ref: First listing - go home (button)
+    value: Přejít domů
+0e2d6ae59d756678e034197ebd80f4723aecad41dc953699684a443e:
+    ref: Listings (label)
+    value: Inzeráty
+0e6cf0e3ce32e8ff03c1c483fa275fb0f2baa4ec9e5e3dcc47b5442f:
+    ref: Delivery (title)
+    value: Možnosti předání
+0f44d510d8a8cf53325df192dfac3d02f4299c2d9a4a5dbe2dad9a6f:
+    ref: Price type not set
+    value: Typ ceny nemáš nastavený
+1033ff575b4fcc2a5f68f0546b255961c4cf9514267255fbd76e2920:
+    ref: Listing title not filled
+    value: Čeká na vyplnění
+1088c3fcabd70b4e385443272326be10f59a63b577e719b5ac8c5821:
+    ref: Listing ignore (hint)
+    value: >
+        Pokud vidíš něco nezákonného, nahlas to. Inzerát musí vysloveně porušovat
+        zákon nebo podmínky
+
+        používání.
+
+
+        _**Hlášení jsou kontrolována na obou stranách - zneužití může vést k postihu
+        (např. omezení účtu).**_
+1127abe5ce9696ad1b6477d3c6557314bacdf45155e4e890091f1d3e:
+    ref: Save (button)
+    value: Uložit
+124648485fb6d6f50a0829d36808e384ad3c0904126f300a12fda2e7:
+    ref: Reject transaction - confirm (button)
+    value: Opravdu?
+14663fea507627f6c98c1360a9aa3c6d275ed885e44051e7d88af28a:
+    ref: Feed age (hint)
+    value: >
+        Jedná se o stáří nabízeného předmětu - orientační hodnota, podle které můžeš
+        odhadnout,
+
+        zda jde o úplně novou věc (moderní) nebo třeba historický kousek (např.
+        stará auta).
+14c26d2816c7d80dbb0d3d6314d8229e7c3eb85ea3089c55c570051a:
+    ref: Condition (title)
+    value: Stav
+15edabc6931564b26e9e7c4e83be79266953662d2a96c4544f5988e5:
+    ref: Price type (title)
+    value: Typ ceny
+16e1f53d97e50b6ca414cf36d052667d99adcf92c2076887e7567d01:
+    ref: Feed condition not selected
+    value: Cokoliv
+17d657e028b311247a42416aa1a3a6a7bbd603c9ad2640db1a845a89:
+    ref: Feed location security (hint)
+    value: >
+        Nastavení polohy seznamu je jenom pro tebe - může to být např. práce,
+        chalupa
+
+        nebo domov - nikdo jiný tuto polohu neuvidí.
+1811df87a53f79aa1a04eecb5ca04f535da2826613b2ca23a131e2ba:
+    ref: Close (button)
+    value: Zavřít
+1943b1ef0623fcc6116ef391b30cce37b7fd75dcde851410b1d5f9d6:
+    ref: Upload photos (button)
+    value: Nahraj fotky
+19be7c986ac14c2bf115207f1c2292064ecaad2932ed3e1edecc40e2:
+    ref: Clear all sorts (button)
+    value: Odstranit všechna řazení
+1a00e3132b4ec4354f31e4587706c9f9789d015fad0636361dee68f1:
+    ref: space-between
+    value: space-between
+1a42649744bb921f8df25fa685691c73b59d91161d88967e3519efa9:
+    ref: Personal - Email (label)
+    value: Email
+1ab95d6fcbacebf206a0388ee4204fbc371b89b1ab3d74df245149fa:
+    ref: Feed setup (title)
+    value: Nastavení seznamu
+1b2f63dad0a59127c719c92424917ab45f0be0f48e494174d2e36b69:
+    ref: Logo motto (label)
+    value: Chytré tržiště pro všechny
+1b63424af287e8864ce39b0f977235e745ee16c2db56823d017bc4fd:
+    ref: Listing warranty (label)
+    value: Záruka
+1bbdc9dc7f6591dc1499c568c88587d61a1993247ea04942fc818c14:
+    ref: No listings in feed (message)
+    value: >
+        ...bohužel jsem nenašel žádné pro tvůj seznam. **Ale určitě se nějaké
+        objeví**!
+1db65f00c76028b1ac9c7c45672cbf0ad4130d6fd354960e762f05e4:
+    ref: Reaction rate (hint)
+    value: Udává poměr reakcí na zprávy - vyšší číslo znamená více reakcí.
+1dcb2f3cf441e457db2a028bf490818c077bc6ce4ec21d35a15b6259:
+    ref: Buyer info (title)
+    value: Informace o kupujícím
+1e2825e05d0a8e168a812a6bb29ff8f7b5f58b3c0b29bbffd2c8dfa5:
+    ref: Closer p90 (hint)
+    value: Udává čas, za jak dlouho kupující obvykle zavře zprávu bez další interakce.
+2250c7f0548b5cbe0fbdac80837ac558866128e004997e4f6b879f72:
+    ref: Feed delivery not selected
+    value: Jakékoli
+2289af1a641ed88c830c51264e24fa501b3d0fe0b0c05d5d20077bce:
+    ref: wrap
+    value: wrap
+23609a4b2bc2ea2da20065b7286ff1892586974ad83ab17bf92ab7f0:
+    ref: Resolve transaction (button)
+    value: Vyřízeno
+23d96471b4cb8b94656db913455c655d345ce88c217df03f385d2750:
+    ref: Personal - Location (label)
+    value: Adresa
+255174a1e467263f9445031755d0c4df78c9c89f4835c67fe40b7e2d:
+    ref: Buyer activity (label)
+    value: Přibližná aktivita
+25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
+    ref: Location (title)
+    value: Lokalita inzerátu
+26a562bfcfee8d3595e7d3f87dd79a4174db90edc3b52f5bdc5dc683:
+    ref: First listing (title)
+    value: Buď jednička!
+27199be77960fa6b867fcd30bf00eb0f6d4ff1e4279ba9b3d99b82ca:
+    ref: Create new draft (title)
+    value: Nová šablona
+2859860f0fbe866d9afaae1eb7cf9a5d30c144214a21772397315050:
+    ref: Condition - from worst (label)
+    value: Nejhorší
+29b5698dbd428037dfdf3d01534751de7b9bbdce4a6eeb4df2655548:
+    ref: Price not set
+    value: Cenu nemáš vyplněnou
+2a78710504a9af9d66b9fa9e2c9afb55d6612509f413ea535758007a:
+    ref: zbav-se.me
+    value: Arkini
+2ac60df8de3be5a28fe6e27ec9ca9926b0f06b399189491de2a4480f:
+    ref: Listing gallery (title)
+    value: Fotky
+2b8fe8725888d2731e48730886edcba6b89f8bba62b68812a8e5738b:
+    ref: Reaction p90 (label)
+    value: Obvyklý reakční čas na zprávu
+2bad77ac9199d19ca4cf85d780cf6f7f747cc6520bc1899bb6717029:
+    ref: Go to home (link)
+    value: Zpět domů
+2cc4d8606ebcda522231e7ebd01a2df339a8f8edc36ec3830eedf4c6:
+    ref: Listing seller info not available (message)
+    value: >
+        **Pokročilé metriky** nejsou zatím dostupné, teď je to na tvé vlastní
+        intuici.
+2f30c1c4a6d75472712f25fde84d88a7087c8e5d41e7aa3b4b3030fc:
+    ref: Feed range not set
+    value: Vzdálenost není nenastavená
+2fa23e1765e15c1a005abdda3ac938e3dc2ec15fd61a147b8f73f986:
+    ref: Closer p90 (label)
+    value: Čas zavření zprávy
+2ff3786d4505b98b160e38838692be1ceb7b97965d65a15f2e095e9f:
+    ref: Decision rate (label)
+    value: Poměr dokončených zpráv
+2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
+    ref: Age (title)
+    value: Stáří
+3136e34a81ab39a2fb1e4198edccbf10acf6244b0543a98136311b44:
+    ref: Listing warranty (hint)
+    value: |
+        Vyber, jestli jsi schopný poskytnout zákonnou záruku
+        (máš fakturu nebo účtenku), případně vlastní nebo žádnou záruku.
+318a99c187d3d8f3a5362513928a7589e883e0a83ca13ac8136e9b4f:
+    ref: Age - from youngest (label)
+    value: Nejmladší
+339d9753b567b5672f79522f5fbd8264123ec49f0c6601c07043a408:
+    ref: Feed range (description)
+    value: Maximální vzdálenost
+34bdcd50896fe69fe1b0d6c306e1c7283ab8dcb99505410792bd356b:
+    ref: Reaction p90 (hint)
+    value: Zevrubná doba reakce kupujícího na zprávu (pro zvědavce, p90).
+356d8a83f26af88932bbce72d41eafdda319a008f3675379a1fc57d0:
+    ref: Go to listings (button)
+    value: Přejít k inzerátům
+356f63775751bd5232d3021e2d6775a39bb1f9a2ec6041b1e763e6b9:
+    ref: Dispute transaction - confirm (button)
+    value: Opravdu si přeješ pokračovat?
+36446a1dd7dd20bdfb36bbbe57ab18e8413e7f446d937fa6f2cdd00f:
+    ref: Feed setup (button)
+    value: Nastavení seznamu
+36e3a2076a652d8613c8604b631fa834372b465cfc2497d82b2c4b04:
+    ref: seller
+    value: seller
+376b4e9c64fcef908876651b54c8c0d6a03a96798a140ba2a9c865f2:
+    ref: rejected
+    value: rejected
+39506faaa681b27e6ed65d4237e07c6a2c63838b44f9495159f1ec8b:
+    ref: Listing - Pros not filled
+    value: Nechceš něco vyzdvihnout?
+3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
+    ref: Price (placeholder)
+    value: Cena
+3b61dc41f15a2b32908b8edd88933f05bf9155117676167a679964d7:
+    ref: User score (hint)
+    value: >
+        Skóre rizika odhaduje základní chování kupujícího - obecně A/B/C jsou v
+        pohodě, D zvedlé obočí a E/F už může být risk.
+3c053b1e31a27b42457f488aabe08c89ccd7268700f1cc41b5c77f2f:
+    ref: No my listings (title)
+    value: Zatím nic neprodáváš
+3c0d23d8d2fcf80e677c141686af773dc5dd3e140c8e9e4459a35ac9:
+    ref: Empty favourite feed (message)
+    value: |
+        Tady už sice nic víc není, ale stéle je co objevovat!
+3ca78530a9e9985ed4678eeb359e23a9c8e913ec6de9f637c0f53e46:
+    ref: Price - free
+    value: Zdarma
+3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
+    ref: Without VAT
+    value: Without VAT
+4034c9134481a06e13f39b3d2b927ade85886fc9bbfb379d51f01153:
+    ref: Photo upload placeholder (message)
+    value: Ťuknutím vyfoť obrázek nebo si vyber z galerie.
+420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
+    ref: Cancel (button)
+    value: Zrušit
+42aa1874f3af8785eb64edf4e4d73e3d25f3c7afec890830b1654ab0:
+    ref: Listing category (label)
+    value: Kategorie
+4363f4fb6f819cf057645cd3a62c4560949f8c20bae08b9619b2518e:
+    ref: Your favourites (title)
+    value: Oblíbené
+43c97e37d539928f112ef93039df9510299f8c68dc170da7c864a3ba:
+    ref: Draft list (label)
+    value: Šablony
+44730392630376ff51d9117fa4de944bb7209b64056ee497a9b10308:
+    ref: Listing messages (title)
+    value: Zprávy
+45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
+    ref: Uploading photo (title)
+    value: Nahrávám fotku, momentík...
+45fd6a456d2df867fc9e5e6b00a48088350c9551963f2be871e604e3:
+    ref: No my listings (message)
+    value: Koukni kolem sebe, jestli si něco nezaslouží druhou šanci.
+46fc4830636405387727b8b88545e0e351e9227eaeac0426eafdb244:
+    ref: Ignore listing (button)
+    value: Ignorovat inzerát
+47babec012e4f310636ec7ddbcd6e5b33dbe7fe9f946fde7d3cb0d48:
+    ref: Package - Link (placeholder)
+    value: Např. https://www.zasilkovna.cz/sledovani/Z488654
+486106a7527d8d2727d2c29ae0bf04b30c60032b353b74b4c1abf20a:
+    ref: Personal - Warning (message)
+    value: >
+        Buď velmi opatrný, s kým sdílíš osobní údaje, jelikož po předání už
+
+        je nemáme pod kontrolou.
+
+
+        **Aplikace tyto údaje drží pouze v rámci této transakce, pak je nenávratně
+        smaže.**
+
+
+        _Nikdy prosím nepiš své jméno ani jiné údaje přímo do chatu, jelikož ten je
+        zachován
+
+        v archivu a zůstává dostupný._
+489d00517dfd05ee3a0d97637b9717d03aa5ae79bab228d5eed3e1e4:
+    ref: Loading... (label)
+    value: ...přemýšlím...
+4a3927203489e82672dc24ffdae6d9ee72b4b486e2562f0debce4b59:
+    ref: That's all for now (message)
+    value: |
+        Zatím jsi na konci, ale časem se určitě něco objeví!
+4a6d672731040044ea10a6210d1d72de8ce2a49c57e6eab1ba45eb66:
+    ref: Feed name (required)
+    value: >
+        Nastav si svůj název seznamu, abys poznal, co v něm očekáváš (např. zimní
+        pneu).
+4d603e3fca4e9f047b0fd3fdd009a1808b0b50eda2aa6f12c206a9c7:
+    ref: Share location (button)
+    value: Sdílet polohu
+4e8be956938d9f4112c3219e6c3412bc41010bc446c725492d7ec5c2:
+    ref: Personal - Email (placeholder)
+    value: Vyplň emailovou adresu
+4eb3d56cc03fa74ef6b354ce77013a361c781ed09a840f269a732617:
+    ref: light
+    value: light
+4ef6b46bcbfc54a9f2aa64abf2856c01cded2d9bf090cbaec1bbd32d:
+    ref: Create first listing (button)
+    value: Chci být první
+4f04083c52884888c6258c7fe83a35ff1ce96d78ee8c600a0397392c:
+    ref: Seller info (button)
+    value: Informace o prodejci
+4f33d281913ab576aa19c5c0e77df9e293b7f6ddee93358784861015:
+    ref: Feed range (title)
+    value: Maximální vzdálenost
+5216a97ce804ea83d2142778cf1659ad70adc72c670ea7365e396fcb:
+    ref: Go home (welcome)
+    value: Jdeme na to!
+523bef97e177163c4710b0138d4a2f8166cce50ebb8930b74298d0f8:
+    ref: relative
+    value: relative
+56093b0ee9cd3eadf7db4a59a8ec98132bacd22fa07691fdac66874a:
+    ref: Buyer - shop (title)
+    value: Obchod pro kupující
+5611e161fc48366fdb56f2529712795617513c1b346552e32a53ff19:
+    ref: Loading... (button)
+    value: ...Rozjímám...
+563cf82f9c7a157200839bedd8ac219fbcf8727857b117482dd5300b:
+    ref: Description (placeholder)
+    value: Co nabízíš?
+564debf52b19422fec7c41c13caf2b5416f0c8b03bb2e36a07be7139:
+    ref: Expired rate (label)
+    value: Poměr automaticky zavřených zpráv
+57cf1f27b485ad4ccfff9487dc973c5a5a9d3582b03670f822646bc0:
+    ref: Transaction not accepted - seller (message)
+    value: Zprávy můžeš psát až po přijetí transakce.
+58a92c1f41bf1041dacdc744234255b7bcbfda299f147f7ddbf60fe2:
+    ref: Feed category (title)
+    value: Kategorie
+591b812973b8193e4ba322d124037a7e66dfb4eedbbd74a82a527d6a:
+    ref: Feed name (label)
+    value: Název seznamu
+59934a1f13d42118882c0a0a64cf3f270c5ad2f54185826385cb2abf:
+    ref: Go to feed (link)
+    value: Inzeráty
+59e4c4c7191a4de1ac5a2debf4ed14ba44d3f4c2af0488a28d835701:
+    ref: Transaction buyer info not available (title)
+    value: Víc toho o kupujícím nevím
+5a5a2baed8c4a4673ac53e4bffc4d31e2508fb9c8c1fb184da880680:
+    ref: Listing - Pros (message)
+    value: |
+        Je něco, co bys chtěl zdůraznit? Tato pole jsou pouze
+        informativní určená pro detail inzerátu.
+5b65a4cf7255c3e4465c81b9bc1b31317d2f4aa306b4c038a4a5b00c:
+    ref: Feed category (label)
+    value: Kategorie, co tě zajímají
+5b876ebf0baeb9151587119a072df35bfc9ca2d5569b4ff537ae0305:
+    ref: Flag listing - confirm (button)
+    value: Závažná akce - opravdu?
+5c8983bc9f6b82b7d54e9d2de54f4a5e12120ac5ec4c523d723b166b:
+    ref: Continue listing (label)
+    value: Pokračovat
+5dc3ea5f4971a9d3d71980e83f4d740bae8b6fb905950d61523b432a:
+    ref: Draft - bunch of required (title)
+    value: Nutné pro zveřejnění
+5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
+    ref: Listing age (label)
+    value: Stáří
+5ed9b024fb2638630326495ab7b573814766a680c0bdc1a02eba157e:
+    ref: Feed name (placeholder)
+    value: Např. nářadí
+5f8d3eb16bf7b5c857416890f7e4c3ff3d02dfa73a7d621f9a603e9f:
+    ref: Listing photo gallery (label)
+    value: Galerie inzerátu
+5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
+    ref: Really delete feed (button)
+    value: Opravdu?
+61324250f05e5b53c0994000ad235a587fa6c894a2414d561a434548:
+    ref: Draft list (title)
+    value: Seznam šablon
+62f79d721e1f64279cdb9c76ae70447c285af806b3d67a6223a7aa14:
+    ref: Share contact info (title)
+    value: Sdílet osobní údaje
+6311813e1e6c15a1177e1bf2fcc765faef3e9c9aea1851a72163366a:
+    ref: View transactions (button)
+    value: Zprávy
+63420be8140a114dea070923e4838659e1d7a62fb9748d2550303791:
+    ref: Feed photo gallery (label)
+    value: Obrázek seznamu
+6404e218d58affb344a49493074e2a22a0bef1cc9743c426c995b49b:
+    ref: Feed name (default)
+    value: Můj seznam
+64330c4baddecdf72a3e12b12827c2f9fc66b0966292e042eab4d26f:
+    ref: expired
+    value: expired
+6497eaff1f9488a6d56e36cb92e86be36eac35a43ee18669931093eb:
+    ref: Closer rate (label)
+    value: Poměr zavřených zpráv
+6526401dc54716accd5e7f420d3f70d39b06beff9a4a9bf64dcd15d0:
+    ref: Share contact info (button)
+    value: Sdílet osobní údaje
+66c5975c97c2be7afe44dcec132ec657eac3943eeb2688ad68bd0193:
+    ref: Transaction - send a message (placeholder)
+    value: Co máš na srdci?
+679eb0f6d4d2b7cf7359439e3b87d205ff8b061c3f6f33bfe8052367:
+    ref: Empty favourite - category and favourite (title)
+    value: Empty favourite - category and favourite (title)
+689fe7e74ce92585be4ccf137ca4787a8d74c2e05f6e1ae1a444150a:
+    ref: 2xl
+    value: 2xl
+6986d09f4aa2bbe69df817149dd90758babe79f2f510910b43cfe310:
+    ref: secondary
+    value: secondary
+69b8258820206f2dc2cded5a9cf7c8b51708a5a81d8de92c0ef3450f:
+    ref: Feed category not selected
+    value: Všechno
+7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
+    ref: Feed sorting not selected
+    value: Výchozí řazení
+7201a0b43309e21b15fefb9dc14ca54a24e4547e10be8950066bb04b:
+    ref: block underline
+    value: block underline
+730685ddac55ab05051064ae829f90b99a300329a4818c287d8f51a5:
+    ref: Tracking number not filled
+    value: Číslo zásilky není vyplněné
+7375db8ba1d4534eb55b16f42a2aa4350c5bb0ed60dfba9f45bc8e3c:
+    ref: No listings in feed (title)
+    value: Inzeráty jsou, ale...
+762a69754130506fe02ffe5a75e930686249ef4fe12d6ec21706de37:
+    ref: Buyer load (label)
+    value: Odhadovaná dostupnost
+770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
+    ref: Listing location (label)
+    value: Umístění
+79a7862454115c39814f1654d4e06bde698323ab23a0214e8df7111c:
+    ref: Create new feed (title)
+    value: Nový seznam inzerátů
+7a2ff42f7d0739100696527fd6cd76b05a231a3251e56fe2566d0810:
+    ref: Open gallery (button)
+    value: Otevřít galerii
+7a82926bb5336fd34c1755025654a057c7419b9e9e71e717eb89c249:
+    ref: Feed range (hint)
+    value:
+        Nastav si okruh v km, v jakém chceš vidět inzeráty; pro tuto funkci si
+        musíš nastavit polohu.
+7b472479e6400e6c2e09906123f97a7c1bd6279166ae118d06b0a53b:
+    ref: Personal - Phone (label)
+    value: Telefon
+7b76eaae7e44c7090565c9a3f68a77cc082807fbf7f1c1111dfadb29:
+    ref: Unignore listing (button)
+    value: Zrušit ignoraci
+7b93a66595d88c60241f7eb48599cc8738e54decdbca0730a8aa958d:
+    ref: Buyer load (hint)
+    value: >
+        Pokud kupující odbavuje více zpráv, promítne se to v tomto údaji - tobě to
+        může nastavit očekávání např. v
+
+        čekání na odpověď.
+7bd8fc15e1d93b10be826ce8e00ebabcfb79fbb806b8c52e2fcef824:
+    ref: Feed name (title)
+    value: Vyber si název
+7c4c135a16c52d890c89f22c80c0457270fe347976ad1339098e430e:
+    ref: icon
+    value: icon
+7dbeb77d3b315a1061d4bcd83875d872181ea3f46593933720e8dc4a:
+    ref: Close transaction (button)
+    value: Hotovo, zavřít
+7f2df328f0f16e7c1fd38d50d6a91a5160b4daf7ba80e34a5907d814:
+    ref: Feed range (placeholder)
+    value: Okruh v km
+7f89976c181499cadaa8961f43343f08d5d5660f0188347e382dc807:
+    ref: Listing delivery (label)
+    value: Možnosti předání
+7fff5a32624ca773f775bae93783cbc55b943a4c968052d2b32e91cd:
+    ref: Mark transaction as successful (button)
+    value: Jsem spokojený, zavřít
+80eb01c4f083e6af9055876045562a9157c605f15686e89854ee632b:
+    ref: unused
+    value: unused
+81c4d07e10662bb6e4aaabc348129b026766ab5f1200c052899255bc:
+    ref: Feed range (label)
+    value: Maximální vzdálenost
+8239714e7da3bb0847e7e0f4bd956f5dff5fe8037a32a4fbbd354331:
+    ref: Create transaction (button)
+    value: Mám zájem!
+847f52b94d2fd82f89cf548490067c305182a98ca1342616d166ae6a:
+    ref: Personal - Phone (placeholder)
+    value: Tvoje telefonní číslo
+85ac6be17be3adb14aa92cb457175f48d0dd61a23f5766a50c160d51:
+    ref: No listings (title)
+    value: Kde nic, tu nic. Ale všechno bude, všechno bude!
+86856c2ffab9a4998ded4e5585299bf873d60db1bcaed1e4f8f13869:
+    ref: Image not available anymore
+    value: Obrázek už není dostupný, tohle by se nemělo stát.
+86fded4e70c3438ddd65c42c33c6c2494acbd968db8b5e9b51104a9c:
+    ref: Delete feed (button)
+    value: Smazat nastavení
+870fc2701477d91f2aa04bf1a3372358f5a880be79c038fb370953f3:
+    ref: Buyer activity (hint)
+    value: >
+        Zevrubná aktivita napovídá, zda je kupující jinak aktivní, nastavuje
+        potenciální očekávání
+
+        reakce na zprávy.
+877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
+    ref: With VAT
+    value: With VAT
+87cb8c1046c61d317f72daec59ac4f94b3e54de9c4fca5792aa73784:
+    ref: That's all for now - favourite (title)
+    value: Čas hledat dál
+886e7f1206862942937e7dc0ca0620af2e9bf5d3055337548bdba3d9:
+    ref: Messages (label)
+    value: Zprávy
+892fa1e47fe46e918f187198c917e00504737676df992315e0c40b8c:
+    ref: Warranty not selected
+    value: Bez garance záruky
+8934b7cd7560e4ff51988a56a295f330a17e5109dbdc4cb542b1f6cb:
+    ref: Limit reached (title)
+    value: Víc seznamů bohužel nejde.
+8a1aa12fd03400172454828dba4c0e3bf755d16c69c73449f540cbb7:
+    ref: No items in favourites (message)
+    value: ...ale můžeš se podívat na inzeráty a nějaké si sem přidat!
+8ad39860649daeaa240849b5f8b11601c75b062f71eb258cc4557169:
+    ref: Feed sorting (hint)
+    value: |
+        Tvoje vlastní řazení, nicméně zvýrazněné inzeráty můžou řazení přeskočit.
+8b45608bd106d13d544cc9d7aa8d9c7fdb279ac083715341bc1afbb8:
+    ref: User registered (label)
+    value: Datum registrace
+8c38d8ac3140e2fb666243047eb1a394a10ec1487ad707d29716fac1:
+    ref: Transaction - resolved -send a message (placeholder)
+    value: Chceš něco dodat?
+8c6d2bdeb456deef3c09b5cf942ad58c1aae654bebec45a62cd2599c:
+    ref: Ignore listing - confirm (button)
+    value: Opravdu?
+8c6d637b17a817c8335245b499c9f7a36a9a82cc52d4c64693fa5839:
+    ref: Feed location (hint)
+    value:
+        Poloha je jenom pro tebe - slouží pro řazení a filtrování inzerátů podle
+        vzdálenosti.
+8c91adfb877cb388a51f813326810fc71d05ca63282c35066b8570ef:
+    ref: No more listings to show - favourite (message)
+    value: |
+        Víc v oblíbených už nemáš, ale to se dá snadno napravit.
+8d47c2c64d234b088c046d1b9327decc0b007667bc9cec30ea49fced:
+    ref: Feed location (label)
+    value: Poloha
+8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
+    ref: Feed (label)
+    value: Moje seznamy
+8d5224a1dcfa23a630c6e76f7921d15195a42e649e050d26a7b5c8f8:
+    ref: Delete draft (button)
+    value: Smazat
+8df15cc86b6018c3f7f2cf9dd1799775eb374add9037534d7354766c:
+    ref: No transactions as seller (title)
+    value: Zatím nikdo nenapsal
+8e2fc55a3696f2163e1e926bfcecab6b1eedd38aefc5d37abb4ebc0c:
+    ref: Description (message)
+    value:
+        Volitelný popis inzerátu. Tento text se **nepoužívá ve vyhledávání**, buď
+        prosím _věcný_.
+92f8ed3e921515bd08034e9707119cb1472e34759a88f45647289475:
+    ref: resolved
+    value: resolved
+93766f804027b28f5ce55c85ccb887c09c3d8e78a84074aed256ca9a:
+    ref: Listing title (title)
+    value: Co prodáváš?
+93e4f0b9a0dc4d17c33a08d475281a1a736fff83763a516958a1f693:
+    ref: Feed title (title)
+    value: Co hledáš?
+957897e367a94096dcbfda99c8cf5bd4dc9f4d2a2292065c65990299:
+    ref: Draft - action section (title)
+    value: Co dál?
+987bae9b81c35e9840767773141ed1ff4f077d951fa808c85af4250f:
+    ref: Decision rate (hint)
+    value: >
+        Sleduje explicitně dokončené obchody; nízké procento pouze vyjadřuje
+        přirozené chování, kdy např.
+
+        po předání balíčku kupující transakci neodklikne.
+98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
+    ref: Create listing (label)
+    value: Nový inzerát
+990f159a82184824fdafb2ab63fa2ab1f67849d8a138773d04be2fd4:
+    ref: Seller - listings (label)
+    value: Celkový počet inzerátů
+99a01d47de05fca49beed74c16c785a68dec6e729694b5a3e7076e1c:
+    ref: No items in favourites (title)
+    value: Zatím tu nic nemáš...
+9a23de247d53984321cd59852cc78c51be5369fcae87518e33d8b38b:
+    ref: Seller info (title)
+    value: Informace o prodejci
+9b7458c481fd08b7afd860d8537e178cc9c6b202e12918923906e59c:
+    ref: Buyer home (title)
+    value: Chci nakupovat
+9be03a22c6dda814a581e5407a9d23f5a7660c55eb918e86f93d2951:
+    ref: Listing seller info not available (title)
+    value: Zatím nemám dost dat
+9c3fe974c3406ab797b01c788fe766c42ecec159dffdb93ffdbb2940:
+    ref: Condition - from best (label)
+    value: Nejlepší
+9c9daf461c6095205f5fde4031225d9f27b27b90b6b55aa197c67948:
+    ref: No categories found (message)
+    value: |
+        Tuhle kategorii bohužel nemáme. Zkus jinou nebo v případě nouze
+        vyber "Ostatní". Tak či tak, tvůj dotaz byl zaznamenán a třeba
+        kategorii přidáme.
+9d96a108b9c86846287f96e8664fd01cd443ac91d6eb92649db0a909:
+    ref: Feed select (title)
+    value: Seznam inzerátů
+9da7a14d4dc999a28f1935fd5781e0d5f609bf8f28fc86ef66b5c605:
+    ref: Add to favourite (button)
+    value: Add to favourite (button)
+9dced25fcc591774e6324d19f6e85e64b06b431e2eed98692b12fa8d:
+    ref: User profile (title)
+    value: Moje údaje
+9ec0c5126167d5163918eaad873d557770c9bf65cd72b2ee8bd27c29:
+    ref: Share package (button)
+    value: Trasování balíčku
+9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
+    ref: Fulltext (placeholder)
+    value: Co hledáme?
+Buyer activity high:
+    static: true
+    value: Vysoká aktivita
+Buyer activity low:
+    static: true
+    value: Nízká aktivita
+Buyer activity medium:
+    static: true
+    value: Střední aktivita
+Buyer load high:
+    static: true
+    value: Vysoká dostupnost
+Buyer load low:
+    static: true
+    value: Vysoká dostupnost
+Buyer load medium:
+    static: true
+    value: Střední dostupnost
+Buyer rejected the transaction (message):
+    value: Kupující odmítl transakci.
+    static: true
+Buyer score 1:
+    static: true
+    value: Potenciálně vysoké riziko
+Buyer score 2:
+    static: true
+    value: Rizikovější profil chování
+Buyer score 3:
+    static: true
+    value: Průměrné riziko
+Buyer score 4:
+    static: true
+    value: Běžný uživatel
+Buyer score 5:
+    static: true
+    value: Nízké riziko
+Buyer score 6:
+    static: true
+    value: Perfektní
+"Buyer: Transaction request created (message)":
+    value: Nový zájemce!
+    static: true
+Condition - Age [1] (hint):
+    static: true
+    value: Velmi staré/zastaralé
+Condition - Age [2] (hint):
+    static: true
+    value: Staré
+Condition - Age [3] (hint):
+    static: true
+    value: Průměrný věk/životnost
+Condition - Age [4] (hint):
+    static: true
+    value: Zánovní
+Condition - Age [5] (hint):
+    static: true
+    value: Jako nové
+Condition - Age [6] (hint):
+    static: true
+    value: Čerstvá novinka
+Expire in 1-month:
+    static: true
+    value: Za měsíc
+Expire in 14-days:
+    static: true
+    value: Za dva týdny
+Expire in 7-days:
+    static: true
+    value: Za týden
+Invalid URL:
+    static: true
+    value: Špatně vyplněná adresa
+Invalid email address:
+    static: true
+    value: Špatně vyplněná emailová adresa
+Listing common sort value age - asc:
+    static: true
+    value: Od nejstaršího
+Listing common sort value age - desc:
+    static: true
+    value: Od nejmladšího
+Listing common sort value age - unused:
+    static: true
+    value: Stáří (bez řazení)
+Listing common sort value condition - asc:
+    static: true
+    value: Od nejhoršího
+Listing common sort value condition - desc:
+    static: true
+    value: Od nejlepšího
+Listing common sort value condition - unused:
+    static: true
+    value: Stav (bez řazení)
+Listing common sort value createdAt - asc:
+    static: true
+    value: Nejstarší inzerát
+Listing common sort value createdAt - desc:
+    static: true
+    value: Nejnovější inzerát
+Listing common sort value geo - asc:
+    static: true
+    value: Od nejbližšího
+Listing common sort value geo - desc:
+    static: true
+    value: Od nejvzdálenějšího
+Listing common sort value geo - unused:
+    static: true
+    value: Poloha (bez řazení)
+Listing common sort value price - asc:
+    static: true
+    value: Od nejlevnějšího
+Listing common sort value price - desc:
+    static: true
+    value: Od nejdražšího
+Listing common sort value price - unused:
+    static: true
+    value: Cena (bez řazení)
+Listing delivery - other:
+    static: true
+    value: Domluvou/ostatní
+Listing delivery - package:
+    static: true
+    value: Balík (kurýr)
+Listing delivery - personal:
+    static: true
+    value: Osobní převzetí
+Listing delivery - post:
+    static: true
+    value: Pošta
+Listing price - closed:
+    static: true
+    value: Pevná cena
+Listing price - open:
+    static: true
+    value: K vyjednávání
+Listing warranty - custom:
+    static: true
+    value: Vlastní
+Listing warranty - no-warranty:
+    static: true
+    value: Bez záruky
+Listing warranty - warranty:
+    static: true
+    value: Se zárukou
+a012442134ffb92cd4a9b82e225dcf084a14efd16c7ad75c91f1b338:
+    ref: human
+    value: human
+a038a4da09ca1bfcd3d73f545e72575a33516d5e7ef37b09b4f5b397:
+    ref: Welcome (title)
+    value: Klikej. Zkoumej. Nemáš tu co posrat.
+a0d2788aec3760e59aa4f698966708ab8ece9b28608ff2bef10db62d:
+    ref: Messages (title)
+    value: Zprávy
+a1afd40fa760408a3d789acdbaf42d52d40d45f34dcc9af5fccedffc:
+    ref: Age not selected
+    value: Stáří nemáš vybrané
+a221a6d62ef13cc1c9f1269bcb08f09d61d7aea9f0bcea418d744384:
+    ref: Transaction - dispute - send a message (placeholder)
+    value: Je třeba něco dořešit?
+a46be85abba5f0371038aa633d7378f4fd8376be6b7e7a9b7b22ec05:
+    ref: Listing age (hint)
+    value: |
+        Definuje, jak moc moderní věc je.
+a5fecc06a3719ab30505196a44d06c91c2c7e8497978d8572efb9e30:
+    ref: Remove from favourite (button)
+    value: Remove from favourite (button)
+a62fb7339fce50f73673412c11f10a25880e1e7b942b7261366a8529:
+    ref: closed
+    value: closed
+a64e91c4e68c901ac59593d15028b96e00c9b01c7163080eb97502c2:
+    ref: Listing - Cons (message)
+    value: |
+        Upřímné hodnocení ti přidá na důvěře - je něco, na co bys chtěl upozornit?
+a67ea5aaab8eb99644b1412ae291882a3d6e0ddefd49b19cc413abaf:
+    ref: Listing description (label)
+    value: Popis inzerátu
+a78ed5f38f0cf730dc1a618d9df1ca5011cc5d947d61f00075e0c5da:
+    ref: Expired rate (hint)
+    value: >
+        Nastavuje očekávání, kdy se kupující např. po předání balíčku už ke zprávám
+        nevrátí a obchod neuzavře.
+a92a914e77188202f38d6b42be76d7f92cee60d777d0c00ca5aecbde:
+    ref: Package - Tracking number (placeholder)
+    value: Např. Z488654
+aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
+    ref: Photo upload placeholder (title)
+    value: Nahraj obrázek
+acf5cd0bee4e6bd74eea745c51c41f0b3a17a1de314afd2d76eb056c:
+    ref: Personal - Warning (title)
+    value: Sdílíš osobní údaje
+ad463b7f3d6f1eaa5308848bc97d5f303534c5cd5e2ddeed8fd6b57b:
+    ref: Package - Tracking number (label)
+    value: Číslo zásilky
+ae950e0bec2d1974388d1f6c740fdf352a815785827793f06a418b2a:
+    ref: center
+    value: center
+b00de300bf157b03b1058da19b680a271fa960ab182ee923c3994e03:
+    ref: Listing condition (hint)
+    value: Stav má přímý vliv na možnosti doručení inzerátu, přesto se snaž být upřímný.
+b0a721169f47da108f0195d392e3d788b2d417564f50dd126981465a:
+    ref: No transactions as seller (message)
+    value: Můžeš se podívat, jak se tvým inzerátům daří.
+b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
+    ref: Expire (title)
+    value: Automatické ukončení
+b1c2d0799271082a0dee9aff6d0d911d9ca94c48f4efa8287557e28d:
+    ref: Personal - Name (placeholder)
+    value: Celé jméno
+b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
+    ref: Sign out
+    value: Odhlásit se
+b46060e6e02e9a672bd27f869c2d7206d0c7a0584e298065557d7954:
+    ref: Draft expire (hint)
+    value: |
+        Nemusíš se bát, čas se spustí až po zveřejnění inzerátu.
+b48018d27bcd6409768ac5c0dd69a1a716d97c25a2dbfe6713cf393b:
+    ref: success
+    value: success
+b4ffae5235999f10f6bbff965753e7d17285ec1f06ba0d8035409f7f:
+    ref: Empty favourite feed (title)
+    value: Čisto a jasno
+b69e7c81a2cf955f47aaed9418e325ed9cedbe08fda6ee8d438f1752:
+    ref: dispute
+    value: dispute
+b6c76a2cd866bcc2fc175c7fb66093264226f4695f2dfe3c41d7056f:
+    ref: Feed age (label)
+    value: Stáří
+b8ff3ed6b71e3332fcbe61d56e37ad7a849b09934d4514084cc0b710:
+    ref: No transactions as buyer (message)
+    value: Podívej se na nějaké inzeráty, zda ti něco nepadne do oka.
+b9280e542386de06015c0360e53e55cfccee8b1bf03cea7ef44c26c0:
+    ref: Feed delivery (label)
+    value: Možnosti předání
+b9c5a03896d71b41f7828f3747be6c509689c279e60f845ab3b23480:
+    ref: pending
+    value: pending
+ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
+    ref: My listings (label)
+    value: Moje inzeráty
+babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
+    ref: Location search (placeholder)
+    value: Napiš město, kraj, co tě napadne
+bb5e50b301be27567cdb705ba4f700188154893f0faee5a597fd9284:
+    ref: User score (label)
+    value: Skóre
+bcd9934e20e9f9156bc934d5ff4ae78c96d19fdc0ec072a3a20e1371:
+    ref: Listing - Pros (label)
+    value: Co chci vyzdvihnout
+bda14ae9f8cb30b7b7440f39407eb24b991ad4b512e8118780fac091:
+    ref: Expiration date not set
+    value: Datum vypršení není nastaveno
+bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
+    ref:
+        Missing identity for an Entity (id). I'm sorry, but I cannot provide better
+        message than this :(
+    value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
+        better message than this :(
+buyer - Buyer rejected the transaction (message):
+    value: |
+        **Odmítl jsi obchod.**
+
+        Toto se promítne do údajů, které o tobě prodejce může vidět.
+    static: true
+buyer - Seller accepted the transaction (message):
+    value: |
+        **Prodejce přijal obchod**
+
+        Teď je na tobě se domluvit, co bude dál.
+    static: true
+buyer - Seller rejected the transaction (message):
+    value: Prodejce odmítl, obchod je uzavřený.
+    static: true
+buyer - Seller resolved the transaction (message):
+    value: |
+        Prodejce má vyřízeno.
+
+        Ty máš ještě prostor se vyjádřit, případně obchod úspěšně zavřít.
+
+        _Nic dalšího již není třeba dělat._
+    static: true
+buyer - Transaction closed (message):
+    value: |
+        **Tento obchod jsi uzavřel.**
+
+        Dál už tu nic není.
+    static: true
+buyer - Transaction dispute (message):
+    value: >
+        Otevřel jsi řešení problému s obchodníkem - teď máš prostor dořešit
+        nesrovnalosti.
+
+
+        Buď prosím ohleduplný, pořád jsme lidi a chyby se mohou stát.
+    static: true
+buyer - Transaction pending (message):
+    value: >
+        **Projevil jsi zájem o inzerát.**
+
+
+        Abys mohl pokračovat, _prodejce musí obchod přijmout_.
+
+
+        Obchod můžeš odmítnout, _nicméně ber prosím v potaz_, že prodejce vidí
+        základní údaje o
+
+        tvém chování (např. otevření a okamžité odmítnutí obchodu).
+    static: true
+buyer - Transaction successful (message):
+    value: |
+        **Jsi spokojený, obchod byl úspěšný!**
+
+        Dál už tu nic není.
+    static: true
+c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
+    ref: Feed title not filled
+    value: Všechno
+c3cfe2aa73f2129c42c9fc884e58bbbbceff97836e48baabfa7675af:
+    ref: That's all for now (title)
+    value: To je prozatím vše!
+c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
+    ref: Price (title)
+    value: Nastav cenu
+c68690759b1f3a6cf13d49b52c69b6e23d6283ab1edc17681d363407:
+    ref: Feed gallery (title)
+    value: Nastav si obrázek
+c7011d532414a06429fe3823d5c970b1de99d6e19fd0f06ea309c7c3:
+    ref: First listing (message)
+    value: |
+        Přidej první inzerát a získej unikátní odznak - je to rychlé
+        a jednoduché!
+c7147aaa47c54e90b7023be8ee57d73010a71c259e352067aaad48e6:
+    ref: Reject transaction (button)
+    value: Odmítnout a zavřít
+cb3a34c7200192f3cf99f4312074d252b890df7647e1e65c2ee986ab:
+    ref: Share location (title)
+    value: Sdílet polohu
+cb8c6bb348b937ffa8d1caf9789deeba0ad9997b963f584fa58a535d:
+    ref: Feed location (title)
+    value: Tvoje lokalita
+cbac5f835956010c5b45bed61ee098674baef1e75ef17acc19462ac1:
+    ref: Flag listing (button)
+    value: Nahlásit inzerát
+cc5a2127ca406287f39de76d080bdb0177b2a7ed32304f05afde64be:
+    ref: Listing seller info not available (empty)
+    value: Zatím nemám dost dat
+cce3e05a5e2cf26a26d41e907d0fade717c5fbffe10b7f77fd83e8db:
+    ref: Accept transaction (button)
+    value: Přijmout a pokračovat
+ceeb32aea866f45126224f7ff0fc5a65a8fa268c581d023ffe309e03:
+    ref: Unflag listing (button)
+    value: Zrušit nahlášení
+cf07f8ef398a12baec9f7ce95c03328d6fcaac83ea30fc0940302802:
+    ref: Listing - Cons not filled
+    value: Nechceš na něco upozornit?
+d123af005af0e5af73b3d1a3f223b7cbc7a4457fbf74669fd87c5690:
+    ref: Description not filled
+    value: Bez popisu
+d23c8b151ddf6f4eaf6a6fde7cff150ae7ce6671543f43f712b88545:
+    ref: Location not found (badge)
+    value: Adres známe hodně, ale tuhle ne
+d30ca5022499ee9c8ab4d9d4a2bb4f65292849e295cbb63503707671:
+    ref: Feed title (label)
+    value: Titulek
+d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
+    ref: Listing condition (label)
+    value: Stav
+d8afcd78535d2c0ab7b58dfcc92c11456c55fe96dab19a1de6a24218:
+    ref: Closer rate (hint)
+    value: >
+        Důležitá metrika, která říká poměr zavřených zpráv bez další interakce.
+        Nižší číslo je lepší.
+d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
+    ref: Feed title (hint)
+    value: >
+        Nastav si, jaké titulky inzerátů se mají zobrazovat (např. iPhone nebo Bosh).
+d93ae180759797f0ad3bc741552efefb4290ee7b7d2c19108209fd2b:
+    ref: Feed condition (title)
+    value: Stavy
+d95b6247e69f90b9f6f613b62be4396f37f5c45acb205f993f42dd18:
+    ref: Reaction rate (label)
+    value: Reakce na zprávy
+da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
+    ref: Feed sorting (title)
+    value: Řazení
+db19de463c98378f66569f482fa6839883350859bf1fe5f4d577fd96:
+    ref: Adjust feed (button)
+    value: Uprav si seznam
+dc9bf90858ca4e7cede4dc10e9939dea37d678f40fb69f16c9b30d9e:
+    ref: Personal - Name (label)
+    value: Celé jméno
+de8832ba89f066ff957f2387c53ed8c543d4ed977d7fac554ab3f590:
+    ref: Go to my feed (button)
+    value: Inzeráty
+dfec30446df33c9964dde3bb9c8be06978e570503cd029ffd4447dde:
+    ref: md
+    value: md
+e14a7b455d617b56b9ff6118784b59871a8191a5b9db34d76e02d9fa:
+    ref: Back to favourites (link)
+    value: Oblíbené
+e24d776c431f2cb9d46c2bbd22e31dcbf906057798f788ae78b0e9c8:
+    ref: Draft - those others (title)
+    value: Další volby
+e3266cd018839cfa0447b6d0547389479db5fa4752179ba885848ad8:
+    ref: Share package (title)
+    value: Sdílet trasování balíčku
+e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
+    ref: Listing title (required)
+    value: |
+        Trefně napsaný titulek ti **výrazně** pomůže inzerát dostat mezi ostatní
+        uživatele. Vynech "prodám" a pod.
+
+
+        _Smyslem je popsat, co prodáváš._
+e4889b76006e4faf6c6b72d87f7711888de501f0e58936e7053832d6:
+    ref: Refresh feed (button)
+    value: Obnovit
+e6ae675232ef4ec304588531c21f87323fba1e262aff12e5dccf22d5:
+    ref: Warranty (title)
+    value: Záruka
+e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
+    ref: Seller home (title)
+    value: Chci prodávat
+e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
+    ref: Feed location not selected
+    value: Nemáš uvedenou
+eb18c941e11fe2d241983a0df227512b3e3691c12cc66af2303bc987:
+    ref: Draft (label)
+    value: (Bez názvu)
+ebff4121130dcb1e32bc8706a7005ec0c78e811db18e0ae28a6abb4c:
+    ref: Close draft (hint)
+    value: Později můžeš pokračovat, kdy jsi skončil.
+efad125c4eaaacfc95cadc0edaef1e9a5220f1c5a643e9b2c7364f50:
+    ref: Feed setup - name (title)
+    value: Nastav si název
+f0e8b3c2dda2512b55e4dc5d4859b1877e98109c7c4e755ccd2a5763:
+    ref: default
+    value: default
+f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
+    ref: Submit listing (button)
+    value: Zveřejnit inzerát
+f17512f4ea86964511c8c06419c3e45fb8a04a38bbe1ebdc8750b0de:
+    ref: Listing title (placeholder)
+    value: Např. "iPhone 14 Pro Max, 256GB, černá"
+f18a36932d031042735ffe9b5fbf3fad95a86de7b3b04e8ae3f43986:
+    ref: Tracking number (label)
+    value: Číslo zásilky
+f2a9bcc0bb7a0f3ad780dd42bc9a00c5a6335c480e3cb14512d5934c:
+    ref: Favourites (label)
+    value: Oblíbené
+f3f9c0a66a107af2911fa0f9019dc4526940d1afe4a957e1445e3447:
+    ref: Condition not selected
+    value: Stav nemáš vybraný
+f542390407cec6e7359028bb4c89623a355be9cb790e086164c3c4c2:
+    ref: My listings (title)
+    value: Moje inzeráty
+f614ee6abd82ea21f37d43a4669a4ccdcda5dfb0553501b5cd572420:
+    ref: No transactions as buyer (title)
+    value: Zatím tu nic nemáš
+f7656349927879425de1f295c96260d551349336336a22ada2d9ff70:
+    ref: Clear all (button)
+    value: Vyčistit vše
+f7e0ec1bfc4a3e3a1766b4f3f07644ce4a036f0e83bd3f138796434b:
+    ref: Go to my listings (button)
+    value: Moje inzeráty
+f807d8f885d618d3ba330d91e5719faba4383e66108e44f61570ab43:
+    ref: Listing seller hint (label)
+    value: Informace o prodejci
+f8e11e40da643ca8591082d562def7e52fe18e6922da04ac3e53b8ef:
+    ref: Feed age not selected
+    value: Jakékoli
+f913b44b2e4a6e6c285a180b07437d54bbfc97fbdeb8bb1e6df7ff58:
+    ref: Listing - Cons (label)
+    value: Chci být upřímný
+f9cf1337b7ea576370fd65ccd16343099c3d316564ea46381241d7a1:
+    ref: Listing location not selected
+    value: Polohu nemáš vyplněnou
+fa6165a1f31837973b2b0797274535b064db2f341bf26976563565aa:
+    ref: Description (title)
+    value: Popis
+fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
+    ref: Feed condition (label)
+    value: Vybrané stavy
+fa65ccecdeb5bdcf00a832c72eb27cdaca5a549ea59fc48ad7267ab9:
+    ref: Delivery not selected
+    value: Možnost předání nemáš vybranou
+fa8d4af882062a1148f43f806622a6851ff29ff80f66467624617d7a:
+    ref: Listing location (hint)
+    value: Pozor, umístění je veřejný údaj, ale můžeš napsat třeba název obce.
+faecab53142a1792e02de1dfa45f39cc83797a47dc171d3687e10fa0:
+    ref: Transaction not accepted - buyer (message)
+    value: Zprávy můžeš psát až po přijetí prodávajícím.
+fb5f656c01caafdecfd1468991d74a7ab481b89ce6df9a8c229d726e:
+    ref: Package - Link (label)
+    value: Odkaz na zásilku
+fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
+    ref: Back to home (link)
+    value: Zpět domů
+fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
+    ref: Listing title (label)
+    value: Titulek inzerátu
+fcc9463d3dd7e334473f2e8319498e268ee92bfeb56ec07041368960:
+    ref: noopener noreferrer
+    value: noopener noreferrer
+fe53b76f86226fc536cae35874aff7a3ccfbc38e4700d3ac5c087b9b:
+    ref: Message location security (hint)
+    value: |
+        Buď opatrný, komu důvěřuješ - tato poloha může sloužit třeba jako
+        místo setkání, nemusí být nutně domů.
+
+        **Lokalita předaná tímto způsobem se vymaže po ukončení obchodu.**
+ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
+    ref: No categories found (title)
+    value: Ajajaj, nic jsme nenašli!
+ff95e127f3feec3ae1c640001d56b07697ca4fa473da4213348be958:
+    ref: open
+    value: open
+seller - Buyer rejected the transaction (message):
+    value: |
+        **Kupující odmítl obchod.**
+
+        Tato informace se promítne do údajů, které si můžeš zkontrolovat před
+        otevřením obchodu.
+
+        Nic víc tu teď k řešení není.
+    static: true
+seller - Seller accepted the transaction (message):
+    value: |
+        **Přijal jsi obchod**
+
+        Kupující o tobě ví, prozatím se od tebe nic nečeká.
+    static: true
+seller - Seller rejected the transaction (message):
+    value: Odmítl jsi zájemce, obchod je uzavřený.
+    static: true
+seller - Seller resolved the transaction (message):
+    value: Máš vyřízeno, nic dalšího již není třeba dělat.
+    static: true
+seller - Transaction closed (message):
+    value: |
+        **Kupující uzavřel obchod.**
+
+        Dál už tu nic není.
+    static: true
+seller - Transaction dispute (message):
+    value: |
+        Kupující otevřel řešení problému.
+
+        Teď máte prostor spolu najít řešení, případně odladit nesrovnalosti.
+    static: true
+seller - Transaction pending (message):
+    value: >
+        **Máš nového zájemce!**
+
+
+        Můžeš si prohlédnout zájemce a rozhodnout se, zda budeš pokračovat v
+        obchodu.
+
+
+        _V tento okamžik lze obchod bezpečně odmítnout._
+    static: true
+seller - Transaction successful (message):
+    value: |
+        **Všechno v pohodě, obchod byl úspěšný!**
+
+        Dál už tu nic není.
+    static: true
+Seller score 2:
+    static: true
+    value: Vyšší riziko
+Seller score 1:
+    static: true
+    value: Vysoké riziko

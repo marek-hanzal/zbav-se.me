@@ -2,6 +2,8 @@ import { DialectContextLayer } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
+import { withArkiniApiFx } from "~/@arkini/withArkiniApiFx";
+import { withArkiniHono } from "~/@arkini/withArkiniHono";
 import { withBuyerSessionApiFx } from "~/@buyer-session/withBuyerSessionApiFx";
 import { withBuyerSessionHono } from "~/@buyer-session/withBuyerSessionHono";
 import { withBuyerUserApiFx } from "~/@buyer-user/withBuyerUserApiFx";
@@ -67,6 +69,7 @@ const app = await Effect.gen(function* () {
 		withSellerSessionApiFx(),
 		withBuyerUserApiFx(),
 		withBuyerSessionApiFx(),
+		withArkiniApiFx(),
 	]).pipe(Effect.provide(kyselyContext));
 
 	return root;
@@ -81,6 +84,7 @@ const app = await Effect.gen(function* () {
 			sellerSessionHono: withSellerSessionHono(),
 			buyerUserHono: withBuyerUserHono(),
 			buyerSessionHono: withBuyerSessionHono(),
+			arkiniHono: withArkiniHono(),
 		}),
 	),
 	Effect.runPromise,

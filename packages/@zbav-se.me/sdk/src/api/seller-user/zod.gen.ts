@@ -226,7 +226,7 @@ export type zListingPriceEnum = z.infer<typeof zListingPriceEnum>;
 /**
  * List of available currencies
  */
-export const zCurrencyListEnum = z.enum([
+export const zCurrencyEnum = z.enum([
     'CZK',
     'EUR',
     'USD',
@@ -238,7 +238,7 @@ export const zCurrencyListEnum = z.enum([
     description: 'List of available currencies'
 });
 
-export type zCurrencyListEnum = z.infer<typeof zCurrencyListEnum>;
+export type zCurrencyEnum = z.infer<typeof zCurrencyEnum>;
 
 /**
  * Delivery method for the listing
@@ -453,7 +453,7 @@ export const zDraft = z.object({
         z.null()
     ]),
     currency: z.union([
-        zCurrencyListEnum,
+        zCurrencyEnum,
         z.null()
     ]),
     condition: z.union([
@@ -685,6 +685,136 @@ export const zDraftGalleryCreate = z.object({
 export type zDraftGalleryCreate = z.infer<typeof zDraftGalleryCreate>;
 
 /**
+ * Listing collection item
+ */
+export const zListingItem = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing'
+    })
+}).register(z.globalRegistry, {
+    description: 'Listing collection item'
+});
+
+export type zListingItem = z.infer<typeof zListingItem>;
+
+/**
+ * Collection of listings
+ */
+export const zListingItemSchema = z.object({
+    data: z.array(zListingItem),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of listings'
+});
+
+export type zListingItemSchema = z.infer<typeof zListingItemSchema>;
+
+/**
+ * User-land filters
+ */
+export const zListingFilter = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'ID of the user; does not have an effect on API endpoints'
+    }))
+}).register(z.globalRegistry, {
+    description: 'User-land filters'
+});
+
+export type zListingFilter = z.infer<typeof zListingFilter>;
+
+/**
+ * App-based filters
+ */
+export const zListingWhere = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'ID of the user; does not have an effect on API endpoints'
+    }))
+}).register(z.globalRegistry, {
+    description: 'App-based filters'
+});
+
+export type zListingWhere = z.infer<typeof zListingWhere>;
+
+/**
+ * Field of the listing sort
+ */
+export const zListingSortField = z.enum([
+    'price',
+    'condition',
+    'age',
+    'createdAt',
+    'updatedAt',
+    'expiresAt'
+]).register(z.globalRegistry, {
+    description: 'Field of the listing sort'
+});
+
+export type zListingSortField = z.infer<typeof zListingSortField>;
+
+/**
+ * Sort object for listing collection
+ */
+export const zListingSort = z.object({
+    field: zListingSortField,
+    direction: zOrderEnum
+}).register(z.globalRegistry, {
+    description: 'Sort object for listing collection'
+});
+
+export type zListingSort = z.infer<typeof zListingSort>;
+
+/**
+ * Query object for listing collection
+ */
+export const zListingQuery = z.object({
+    cursor: z.optional(zCursor.and(z.unknown().default({ page: 0, size: 256 }))),
+    filter: z.optional(zListingFilter),
+    where: z.optional(zListingWhere),
+    sort: z.optional(z.array(zListingSort))
+}).register(z.globalRegistry, {
+    description: 'Query object for listing collection'
+});
+
+export type zListingQuery = z.infer<typeof zListingQuery>;
+
+/**
+ * Query object for listing count
+ */
+export const zListingCountQuery = z.object({
+    filter: z.optional(zListingFilter),
+    where: z.optional(zListingWhere),
+    count: z.optional(z.array(z.enum([
+        'total',
+        'filter',
+        'where'
+    ])))
+}).register(z.globalRegistry, {
+    description: 'Query object for listing count'
+});
+
+export type zListingCountQuery = z.infer<typeof zListingCountQuery>;
+
+/**
  * Listing data
  */
 export const zListing = z.object({
@@ -695,7 +825,7 @@ export const zListing = z.object({
         description: 'Price of the listing'
     }),
     priceType: zListingPriceEnum,
-    currency: zCurrencyListEnum,
+    currency: zCurrencyEnum,
     condition: z.union([
         z.number(),
         z.null()
@@ -1003,7 +1133,7 @@ export const zTransaction = z.object({
         description: 'Price of the listing'
     }),
     priceType: zListingPriceEnum,
-    currency: zCurrencyListEnum,
+    currency: zCurrencyEnum,
     location: zLocation
 }).register(z.globalRegistry, {
     description: 'Transaction data'
@@ -1324,6 +1454,36 @@ export const zApiDraftGalleryCreateResponse = zGallery.and(z.unknown().register(
 
 export type zapiDraftGalleryCreateResponse = z.infer<typeof zApiDraftGalleryCreateResponse>;
 
+export const zApiListingCollectionData = z.object({
+    body: z.optional(zListingQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiListingCollectionRequest = z.infer<typeof zApiListingCollectionData>;
+
+/**
+ * Access collection of listings based on provided query
+ */
+export const zApiListingCollectionResponse = zListingItemSchema;
+
+export type zapiListingCollectionResponse = z.infer<typeof zApiListingCollectionResponse>;
+
+export const zApiListingCountData = z.object({
+    body: z.optional(zListingCountQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiListingCountRequest = z.infer<typeof zApiListingCountData>;
+
+/**
+ * Return counts based on provided query
+ */
+export const zApiListingCountResponse = zCount;
+
+export type zapiListingCountResponse = z.infer<typeof zApiListingCountResponse>;
+
 export const zApiListingCreateData = z.object({
     body: z.optional(zListingCreate),
     path: z.optional(z.never()),
@@ -1338,6 +1498,21 @@ export type zapiListingCreateRequest = z.infer<typeof zApiListingCreateData>;
 export const zApiListingCreateResponse = zListing;
 
 export type zapiListingCreateResponse = z.infer<typeof zApiListingCreateResponse>;
+
+export const zApiListingFetchData = z.object({
+    body: z.optional(zListingQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiListingFetchRequest = z.infer<typeof zApiListingFetchData>;
+
+/**
+ * Return a listing based on the provided query
+ */
+export const zApiListingFetchResponse = zListing;
+
+export type zapiListingFetchResponse = z.infer<typeof zApiListingFetchResponse>;
 
 export const zApiTransactionCollectionData = z.object({
     body: z.optional(zTransactionQuery),

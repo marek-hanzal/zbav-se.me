@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { withListingApiFx } from "~/@seller-session/listing/withListingApiFx";
+import { withTransactionApiFx } from "~/@seller-session/transaction/withTransactionApiFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import type { NoticeSchema } from "~/schema/NoticeSchema";
@@ -28,7 +28,7 @@ export const withSellerSessionApiFx = Effect.fn("withSellerSessionApiFx")(functi
 		return next();
 	});
 
-	yield* withListingApiFx();
+	yield* withTransactionApiFx();
 
 	root.route("/api/seller-session", sellerSessionHono);
 });

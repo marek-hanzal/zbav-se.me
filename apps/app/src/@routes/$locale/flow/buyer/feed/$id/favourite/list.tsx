@@ -11,7 +11,7 @@ import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, useRef } from "react";
-import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
+import { ListingListContainer } from "~/app/@buyer-user/listing/ui/ListingListContainer";
 
 export namespace EmptyFavourite {
 	export interface Props extends Status.Props {

@@ -3,6 +3,234 @@
 import { z } from 'zod';
 
 /**
+ * Initial reaction by seller on transaction created by buyer.
+ */
+export const zUserEventSellerReaction = z.object({
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total number of samples (transactions)'
+    }),
+    reactions: z.number().register(z.globalRegistry, {
+        description: 'Total number of reactions'
+    }),
+    terminal: z.number().register(z.globalRegistry, {
+        description: 'Total number of terminal reactions (usually from the other side)'
+    }),
+    percent: z.number().register(z.globalRegistry, {
+        description: 'Percentage of reactions (reactions + terminal) / total'
+    }),
+    medianMs: z.number().register(z.globalRegistry, {
+        description: 'Median milliseconds between transaction creation and reaction'
+    }),
+    p90Ms: z.number().register(z.globalRegistry, {
+        description: '90th percentile milliseconds between transaction creation and reaction'
+    })
+}).register(z.globalRegistry, {
+    description: 'Initial reaction by seller on transaction created by buyer.'
+});
+
+export type zUserEventSellerReaction = z.infer<typeof zUserEventSellerReaction>;
+
+/**
+ * This metric describes if the user rejects transactions without any interaction (no messages between create and reject)
+ */
+export const zUserEventSellerRejected = z.object({
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total number of samples (transactions)'
+    }),
+    rejected: z.number().register(z.globalRegistry, {
+        description: 'Total number of rejected transactions'
+    }),
+    percent: z.number().register(z.globalRegistry, {
+        description: 'Percentage of rejected transactions (rejected / total)'
+    }),
+    medianMs: z.number().register(z.globalRegistry, {
+        description: 'Median milliseconds between transaction creation and rejection'
+    }),
+    p90Ms: z.number().register(z.globalRegistry, {
+        description: '90th percentile milliseconds between transaction creation and rejection'
+    })
+}).register(z.globalRegistry, {
+    description: 'This metric describes if the user rejects transactions without any interaction (no messages between create and reject)'
+});
+
+export type zUserEventSellerRejected = z.infer<typeof zUserEventSellerRejected>;
+
+/**
+ * This metric describes if the user resolves transactions (success/closed)
+ */
+export const zUserEventSellerResolved = z.object({
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total number of samples (transactions)'
+    }),
+    resolved: z.number().register(z.globalRegistry, {
+        description: 'Total number of resolved transactions (success, closed)'
+    }),
+    terminal: z.number().register(z.globalRegistry, {
+        description: 'Total number of terminal transactions (usually from the other side)'
+    }),
+    percent: z.number().register(z.globalRegistry, {
+        description: 'Percentage of resolved transactions (resolved / total)'
+    }),
+    medianMs: z.number().register(z.globalRegistry, {
+        description: 'Median milliseconds until the transaction gets resolved'
+    }),
+    p90Ms: z.number().register(z.globalRegistry, {
+        description: '90th percentile milliseconds until the transaction gets resolved'
+    })
+}).register(z.globalRegistry, {
+    description: 'This metric describes if the user resolves transactions (success/closed)'
+});
+
+export type zUserEventSellerResolved = z.infer<typeof zUserEventSellerResolved>;
+
+/**
+ * This metric describes if the user is used to expire transactions (no user's messages)
+ */
+export const zUserEventSellerExpired = z.object({
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total number of samples (transactions)'
+    }),
+    expired: z.number().register(z.globalRegistry, {
+        description: 'Total number of expired transactions'
+    }),
+    percent: z.number().register(z.globalRegistry, {
+        description: 'Percentage of expired transactions (expired / total)'
+    })
+}).register(z.globalRegistry, {
+    description: 'This metric describes if the user is used to expire transactions (no user\'s messages)'
+});
+
+export type zUserEventSellerExpired = z.infer<typeof zUserEventSellerExpired>;
+
+/**
+ * Load type of the seller
+ */
+export const zLoadEnum = z.enum([
+    'low',
+    'medium',
+    'high'
+]).register(z.globalRegistry, {
+    description: 'Load type of the seller'
+});
+
+export type zLoadEnum = z.infer<typeof zLoadEnum>;
+
+/**
+ * Masks number of transactions of the seller, basically it tells, how busy seller is.
+ */
+export const zUserEventSellerLoad = z.object({
+    bucket: zLoadEnum
+}).register(z.globalRegistry, {
+    description: 'Masks number of transactions of the seller, basically it tells, how busy seller is.'
+});
+
+export type zUserEventSellerLoad = z.infer<typeof zUserEventSellerLoad>;
+
+/**
+ * Activity type of the seller
+ */
+export const zActivityEnum = z.enum([
+    'low',
+    'medium',
+    'high'
+]).register(z.globalRegistry, {
+    description: 'Activity type of the seller'
+});
+
+export type zActivityEnum = z.infer<typeof zActivityEnum>;
+
+/**
+ * This metric describes the approx activity of the user
+ */
+export const zUserEventSellerActivity = z.object({
+    bucket: zActivityEnum
+}).register(z.globalRegistry, {
+    description: 'This metric describes the approx activity of the user'
+});
+
+export type zUserEventSellerActivity = z.infer<typeof zUserEventSellerActivity>;
+
+/**
+ * This metric describes the score of the user
+ */
+export const zUserEventSellerScore = z.object({
+    score: z.number().register(z.globalRegistry, {
+        description: 'Low-level score value, usually not presented in UI'
+    }),
+    rank: z.number().register(z.globalRegistry, {
+        description: 'Rank computed from the score (A-F, 1-6)'
+    })
+}).register(z.globalRegistry, {
+    description: 'This metric describes the score of the user'
+});
+
+export type zUserEventSellerScore = z.infer<typeof zUserEventSellerScore>;
+
+/**
+ * Seller info for the user event
+ */
+export const zUserEventSeller = z.object({
+    reaction: zUserEventSellerReaction,
+    rejected: zUserEventSellerRejected,
+    resolved: zUserEventSellerResolved,
+    expired: zUserEventSellerExpired,
+    load: zUserEventSellerLoad,
+    activity: zUserEventSellerActivity,
+    score: zUserEventSellerScore
+}).register(z.globalRegistry, {
+    description: 'Seller info for the user event'
+});
+
+export type zUserEventSeller = z.infer<typeof zUserEventSeller>;
+
+/**
+ * Seller info for the listing
+ */
+export const zSellerInfo = z.object({
+    registered: z.string().register(z.globalRegistry, {
+        description: 'Registration date'
+    }),
+    listings: z.number().register(z.globalRegistry, {
+        description: 'Number of listings'
+    }),
+    events: z.union([
+        z.null(),
+        zUserEventSeller
+    ])
+}).register(z.globalRegistry, {
+    description: 'Seller info for the listing'
+});
+
+export type zSellerInfo = z.infer<typeof zSellerInfo>;
+
+/**
+ * Type of notice
+ */
+export const zNoticeTypeEnum = z.enum([
+    'info',
+    'warning',
+    'error'
+]).register(z.globalRegistry, {
+    description: 'Type of notice'
+});
+
+export type zNoticeTypeEnum = z.infer<typeof zNoticeTypeEnum>;
+
+/**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export const zNotice = z.object({
+    message: z.string().register(z.globalRegistry, {
+        description: 'Message'
+    }),
+    type: zNoticeTypeEnum
+}).register(z.globalRegistry, {
+    description: 'Just a note sent from various reasons, usually when something is fucked up.'
+});
+
+export type zNotice = z.infer<typeof zNotice>;
+
+/**
  * Type of listing event
  */
 export const zListingEventEnum = z.enum([
@@ -44,33 +272,6 @@ export const zListingEvent = z.object({
 export type zListingEvent = z.infer<typeof zListingEvent>;
 
 /**
- * Type of notice
- */
-export const zNoticeTypeEnum = z.enum([
-    'info',
-    'warning',
-    'error'
-]).register(z.globalRegistry, {
-    description: 'Type of notice'
-});
-
-export type zNoticeTypeEnum = z.infer<typeof zNoticeTypeEnum>;
-
-/**
- * Just a note sent from various reasons, usually when something is fucked up.
- */
-export const zNotice = z.object({
-    message: z.string().register(z.globalRegistry, {
-        description: 'Message'
-    }),
-    type: zNoticeTypeEnum
-}).register(z.globalRegistry, {
-    description: 'Just a note sent from various reasons, usually when something is fucked up.'
-});
-
-export type zNotice = z.infer<typeof zNotice>;
-
-/**
  * Data for creating a new listing event
  */
 export const zListingEventCreate = z.object({
@@ -83,6 +284,25 @@ export const zListingEventCreate = z.object({
 });
 
 export type zListingEventCreate = z.infer<typeof zListingEventCreate>;
+
+export const zApiListingSellerInfoData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        listingId: z.string().register(z.globalRegistry, {
+            description: 'ID of the listing'
+        })
+    }),
+    query: z.optional(z.never())
+});
+
+export type zapiListingSellerInfoRequest = z.infer<typeof zApiListingSellerInfoData>;
+
+/**
+ * Seller info
+ */
+export const zApiListingSellerInfoResponse = zSellerInfo;
+
+export type zapiListingSellerInfoResponse = z.infer<typeof zApiListingSellerInfoResponse>;
 
 export const zApiListingEventCreateData = z.object({
     body: z.optional(zListingEventCreate),

@@ -3,8 +3,8 @@ import { useLocale } from "@use-pico/client/hook";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { feedCreateDefault } from "~/app/feed/service/feedCreateDefault";
-import { List } from "~/app/feed/ui/List";
+import { feedCreateDefault } from "~/app/@buyer-user/feed/service/feedCreateDefault";
+import { FeedListContainer } from "~/app/@buyer-user/feed/ui/FeedListContainer";
 
 export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
 	async loader({ context: { queryClient } }) {
@@ -31,8 +31,8 @@ export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
 					layout: "vertical-header-content",
 				}}
 			>
-				<List
-					data-ui={"/buyer/feed/select[List]"}
+				<FeedListContainer
+					data-ui={"/buyer/feed/select[FeedListContainer]"}
 					query={{
 						cursor: {
 							page: 0,
