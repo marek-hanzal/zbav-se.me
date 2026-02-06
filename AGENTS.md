@@ -2,6 +2,8 @@
 
 **Primary Reference**: See `MASTER.md` for complete product concepts, rules, and domain logic. This document focuses on technical architecture and implementation patterns for LLM agents.
 
+**Output language**: Regardless of the input language (e.g. Czech), outputs to files (code, comments, docs, commit messages) must always be in English.
+
 ## Project Overview
 
 **Zbav-se.me** is a marketplace application (buying/selling items) built as a monorepo with:
@@ -189,6 +191,7 @@ export const withDomainApiFx = Effect.fn("withDomainApiFx")(function* () {
 - Server-side rendering with TanStack Start
 - Domain routes: `@routes/$locale/buyer/*`, `@routes/$locale/seller/*`, `@routes/$locale/ui/*`
 - Domain components: `app/@buyer/*`, `app/@seller/*`
+- **Translations**: Translations in the app are automatically generated when using `translator.text(key, fallback?)` from `packages/@use-pico/common/src/translator/translator.ts` — used translation keys are collected and added to i18n files.
 
 ### SDK Generation
 - `packages/@zbav-se.me/sdk` generated from OpenAPI spec
