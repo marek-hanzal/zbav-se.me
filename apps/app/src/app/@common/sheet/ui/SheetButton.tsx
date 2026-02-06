@@ -11,14 +11,16 @@ export namespace SheetButton {
 }
 
 export const SheetButton: FC<SheetButton.Props> = ({ defaultOpen, state, ...props }) => {
+	// biome-ignore lint/correctness/useExhaustiveDependencies: One-time-effect
 	useEffect(() => {
-		setTimeout(() => {
+		const id = setTimeout(() => {
 			state.set(defaultOpen);
 		}, 100);
-	}, [
-		defaultOpen,
-		state.set,
-	]);
+
+		return () => {
+			clearTimeout(id);
+		};
+	}, []);
 
 	return (
 		<Button
