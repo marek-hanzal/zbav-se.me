@@ -1,4 +1,4 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
@@ -109,15 +109,21 @@ export const withDisputeApiFx = Effect.fn("withDisputeApiFx")(function* () {
 								},
 							),
 							Match.when(
-								{ _tag: "InvalidRequestError" },
+								{
+									_tag: "InvalidRequestError",
+								},
 								() => c.json(noticeError(e), 400),
 							),
 							Match.when(
-								{ _tag: "RuntimeError" },
+								{
+									_tag: "RuntimeError",
+								},
 								() => c.json(noticeError(e), 500),
 							),
 							Match.when(
-								{ _tag: "ZodErrorFx" },
+								{
+									_tag: "ZodErrorFx",
+								},
 								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,

@@ -1,7 +1,8 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { S3ContextLayer } from "~/@common/s3/context/S3ContextLayer";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { s3PreSignFx } from "~/@common/s3/fx/s3PreSignFx";
 import { UploadContextLayer } from "~/@common/upload/context/UploadContextLayer";
 import { S3PreSignRequestSchema } from "~/@user/s3/schema/S3PreSignRequestSchema";
@@ -91,18 +92,8 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
-								{
-									_tag: "ZodErrorFx",
-								},
-								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
-									);
-								},
+								{ _tag: "ZodErrorFx" },
+								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,
 						),

@@ -1,7 +1,8 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { transactionListingCollectionFx } from "~/@seller-user/transaction-listing/fx/transactionListingCollectionFx";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { TransactionListingItemSchema } from "~/@seller-user/transaction-listing/schema/TransactionListingItemSchema";
 import { TransactionListingQuerySchema } from "~/@seller-user/transaction-listing/schema/TransactionListingQuerySchema";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
@@ -85,18 +86,8 @@ export const withCollectionApiFx = Effect.fn("withTransactionListingCollectionAp
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
-								{
-									_tag: "ZodErrorFx",
-								},
-								({ zod }) => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: z.prettifyError(zod),
-										},
-										500,
-									);
-								},
+								{ _tag: "ZodErrorFx" },
+								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,
 						),
