@@ -258,6 +258,16 @@ export const sListingWarrantyEnum = {
     ]
 } as const;
 
+export const sListingRestrictionEnum = {
+    type: 'string',
+    enum: [
+        'none',
+        'adult',
+        'sensitive',
+        'restricted'
+    ]
+} as const;
+
 export const sProsCons = {
     type: 'array',
     items: {
@@ -573,6 +583,9 @@ export const sListing = {
                 }
             ]
         },
+        restriction: {
+            $ref: '#/components/schemas/ListingRestrictionEnum'
+        },
         locationId: {
             type: 'string'
         },
@@ -706,6 +719,7 @@ export const sListing = {
         'age',
         'delivery',
         'warranty',
+        'restriction',
         'locationId',
         'categoryId',
         'galleryId',

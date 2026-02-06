@@ -91,6 +91,16 @@ export const sListingWarrantyEnum = {
     ]
 } as const;
 
+export const sListingRestrictionEnum = {
+    type: 'string',
+    enum: [
+        'none',
+        'adult',
+        'sensitive',
+        'restricted'
+    ]
+} as const;
+
 export const sThumbEnum = {
     type: 'string',
     enum: [

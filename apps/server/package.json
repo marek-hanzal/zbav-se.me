@@ -3,7 +3,7 @@
 	"version": "workspace:*",
 	"type": "module",
 	"scripts": {
-		"dev": "PORT=3032 nitro dev --host",
+		"dev": "PORT=3032 nitro dev --host 0.0.0.0",
 		"build": "nitro build && bun ./cli/size.ts",
 		"typecheck": "tsc --noEmit",
 		"test": "bunx --bun vitest --run",

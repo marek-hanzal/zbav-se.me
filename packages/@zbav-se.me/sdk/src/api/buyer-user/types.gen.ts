@@ -239,6 +239,21 @@ export const tListingWarrantyEnum = {
 export type tListingWarrantyEnum = typeof tListingWarrantyEnum[keyof typeof tListingWarrantyEnum];
 
 /**
+ * Content restriction level of the listing
+ */
+export const tListingRestrictionEnum = {
+    none: 'none',
+    adult: 'adult',
+    sensitive: 'sensitive',
+    restricted: 'restricted'
+} as const;
+
+/**
+ * Content restriction level of the listing
+ */
+export type tListingRestrictionEnum = typeof tListingRestrictionEnum[keyof typeof tListingRestrictionEnum];
+
+/**
  * Array of pros or cons, max 5 items, each string max 72 characters
  */
 export type tProsCons = Array<string>;
@@ -431,6 +446,7 @@ export type tListing = {
      * Warranty type for the listing
      */
     warranty: tListingWarrantyEnum | null;
+    restriction: tListingRestrictionEnum;
     /**
      * ID of the location
      */

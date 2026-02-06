@@ -17,6 +17,7 @@ export const ListingMigration: Migration = {
 			.addColumn("age", "integer")
 			.addColumn("delivery", sql`listing_delivery_enum[]`)
 			.addColumn("warranty", sql`listing_warranty_enum`)
+			.addColumn("restriction", sql`listing_restriction_enum`, (col) => col.notNull())
 			.addColumn("locationId", "text", (col) => col.notNull())
 			.addColumn("categoryId", "text", (col) => col.notNull())
 			.addColumn("galleryId", "text", (col) => col.notNull())

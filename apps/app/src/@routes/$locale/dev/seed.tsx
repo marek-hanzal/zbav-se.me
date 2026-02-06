@@ -134,6 +134,7 @@ const seedListings = async ({ categories, locationIds, uploadIds }: seedListings
 			expiresAt: object(tListingExpireEnum),
 			locationId: list(locationIds),
 			delivery,
+			restriction: "none",
 			warranty,
 			pros,
 			cons,

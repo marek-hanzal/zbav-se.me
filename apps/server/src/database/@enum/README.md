@@ -22,6 +22,7 @@ All enum schemas correspond to PostgreSQL enum types created in migrations:
 - **ListingPriceEnumSchema** - Price type (`closed`, `open`)
 - **ListingDeliveryEnumSchema** - Delivery method (`personal`, `post`, `package`, `other`)
 - **ListingWarrantyEnumSchema** - Warranty type (`warranty`, `no-warranty`, `custom`)
+- **ListingRestrictionEnumSchema** - Content restriction level (`none`, `adult`, `sensitive`, `restricted`)
 - **ListingEventEnumSchema** - Listing event types (`impression`, `view`, `ignore`, `unignore`, `flag`, `unflag`, `transaction`, `favourite`, `unfavourite`, `like`, `dislike`)
 
 ### Transaction Enums
@@ -57,6 +58,7 @@ Each enum schema corresponds to a PostgreSQL enum type created in migrations:
 - `listing_price_enum` → `ListingPriceEnumSchema`
 - `listing_delivery_enum` → `ListingDeliveryEnumSchema`
 - `listing_warranty_enum` → `ListingWarrantyEnumSchema`
+- `listing_restriction_enum` → `ListingRestrictionEnumSchema`
 - `listing_event_type_enum` → `ListingEventEnumSchema`
 - `transaction_status_enum` → `TransactionStatusEnumSchema`
 - `transaction_side_enum` → `TransactionSideEnumSchema`

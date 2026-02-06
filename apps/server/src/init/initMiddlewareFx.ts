@@ -21,11 +21,6 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 			origin: [
 				viteConfig.VITE_WEB_ORIGIN,
 				viteConfig.VITE_APP_ORIGIN,
-				...(viteConfig.VITE_ARKINI_ORIGIN
-					? [
-							viteConfig.VITE_ARKINI_ORIGIN,
-						]
-					: []),
 			],
 			allowHeaders: [
 				"User-Agent",

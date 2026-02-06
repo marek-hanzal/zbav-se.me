@@ -215,7 +215,6 @@ Server-side environment variables used by the backend API:
 - `VITE_SERVER_API` - Server API endpoint URL (for server-side requests)
 - `VITE_WEB_ORIGIN` - Web application origin URL (for CORS)
 - `VITE_APP_ORIGIN` - App application origin URL (for CORS)
-- `VITE_ARKINI_ORIGIN` - Arkini app origin URL (optional, for CORS and auth)
 
 ### Web App (`apps/web/`)
 

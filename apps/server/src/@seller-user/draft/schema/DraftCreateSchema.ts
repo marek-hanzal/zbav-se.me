@@ -2,6 +2,7 @@ import { z } from "@hono/zod-openapi";
 import { ListingExpireEnumSchema } from "~/@common/listing/schema/ListingExpireEnumSchema";
 import { ProsConsSchema } from "~/@common/listing/schema/ProsConsSchema";
 import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
+import { ListingRestrictionEnumSchema } from "~/database/@enum/ListingRestrictionEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/database/@enum/ListingWarrantyEnumSchema";
 
 export const DraftCreateSchema = z
@@ -27,6 +28,15 @@ export const DraftCreateSchema = z
 			.optional()
 			.openapi({
 				description: "Warranty type for the draft",
+			}),
+		restriction: z
+			.xor([
+				ListingRestrictionEnumSchema,
+				z.null(),
+			])
+			.optional()
+			.openapi({
+				description: "Content restriction level of the draft",
 			}),
 		locationId: z.string().optional().openapi({
 			description: "ID of the location",

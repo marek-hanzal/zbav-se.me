@@ -1,5 +1,4 @@
 import { Context } from "effect";
-import type { withArkiniHono } from "~/@arkini/withArkiniHono";
 import type { withBuyerSessionHono } from "~/@buyer-session/withBuyerSessionHono";
 import type { withBuyerUserHono } from "~/@buyer-user/withBuyerUserHono";
 import type { withPublicHono } from "~/@public/withPublicHono";
@@ -54,12 +53,6 @@ export interface RoutesContext {
 	 * Buyer-specific operations for authenticated users (open API).
 	 */
 	buyerSessionHono: withBuyerSessionHono;
-	/**
-	 * Arkini app hono (/arkini route)
-	 *
-	 * API for the Arkini application.
-	 */
-	arkiniHono: withArkiniHono;
 }
 
 export class RoutesContextFx extends Context.Tag("RoutesContextFx")<

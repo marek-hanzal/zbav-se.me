@@ -123,6 +123,21 @@ export const tListingWarrantyEnum = {
 export type tListingWarrantyEnum = typeof tListingWarrantyEnum[keyof typeof tListingWarrantyEnum];
 
 /**
+ * Content restriction level of the listing
+ */
+export const tListingRestrictionEnum = {
+    none: 'none',
+    adult: 'adult',
+    sensitive: 'sensitive',
+    restricted: 'restricted'
+} as const;
+
+/**
+ * Content restriction level of the listing
+ */
+export type tListingRestrictionEnum = typeof tListingRestrictionEnum[keyof typeof tListingRestrictionEnum];
+
+/**
  * Type of thumb
  */
 export const tThumbEnum = { like: 'like', dislike: 'dislike' } as const;
@@ -706,6 +721,22 @@ export type tApiPublicEnumListingWarrantyResponse = {
 };
 
 export type apiPublicEnumListingWarrantyResponse = tApiPublicEnumListingWarrantyResponse[keyof tApiPublicEnumListingWarrantyResponse];
+
+export type tApiPublicEnumListingRestrictionRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/public/enum/listing-restriction';
+};
+
+export type tApiPublicEnumListingRestrictionResponse = {
+    /**
+     * ListingRestriction enum
+     */
+    200: Array<tListingRestrictionEnum>;
+};
+
+export type apiPublicEnumListingRestrictionResponse = tApiPublicEnumListingRestrictionResponse[keyof tApiPublicEnumListingRestrictionResponse];
 
 export type tApiPublicEnumThumbRequest = {
     body?: never;

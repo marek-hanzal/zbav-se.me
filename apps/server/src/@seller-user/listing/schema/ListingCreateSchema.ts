@@ -3,6 +3,7 @@ import { ListingExpireEnumSchema } from "~/@common/listing/schema/ListingExpireE
 import { ProsConsSchema } from "~/@common/listing/schema/ProsConsSchema";
 import { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
 import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
+import { ListingRestrictionEnumSchema } from "~/database/@enum/ListingRestrictionEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/database/@enum/ListingWarrantyEnumSchema";
 
 export const ListingCreateSchema = z
@@ -48,6 +49,9 @@ export const ListingCreateSchema = z
 			.openapi({
 				description: "Warranty type for the listing",
 			}),
+		restriction: ListingRestrictionEnumSchema.openapi({
+			description: "Content restriction level of the listing (required)",
+		}),
 		draftId: z.string().optional().openapi({
 			description: "ID of the draft",
 		}),
