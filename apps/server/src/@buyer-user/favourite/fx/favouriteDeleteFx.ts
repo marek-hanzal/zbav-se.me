@@ -14,6 +14,11 @@ export const favouriteDeleteFx = Effect.fn("favouriteDeleteFx")(function* ({
 	userId,
 	listingId,
 }: favouriteDeleteFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"favouriteDeleteFx.userId": userId,
+		"favouriteDeleteFx.listingId": listingId,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

@@ -18,6 +18,14 @@ export const transactionCollectionFx = Effect.fn("transactionCollectionFx")(func
 	cursor,
 	sort,
 }: transactionCollectionFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"transactionCollectionFx.filter": filter,
+		"transactionCollectionFx.where": where,
+		"transactionCollectionFx.scope": scope,
+		"transactionCollectionFx.cursor": cursor,
+		"transactionCollectionFx.sort": sort,
+	});
+
 	return yield* withCollectionFx({
 		selectFx: withTransactionCollectionSelectFx({
 			sort,

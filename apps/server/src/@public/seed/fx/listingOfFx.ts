@@ -24,6 +24,11 @@ export const listingOfFx = Effect.fn("listingOfFx")(function* ({
 	userId,
 	count,
 }: ListingOfRequestSchema.Type) {
+	yield* Effect.annotateLogsScoped({
+		"listingOfFx.userId": userId,
+		"listingOfFx.count": count,
+	});
+
 	const total = yield* listingCountFx({
 		where: {
 			withOwn: false,

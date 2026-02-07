@@ -19,6 +19,12 @@ export namespace transactionMessageGalleryCreateFx {
 
 export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGalleryCreateFx")(
 	function* ({ userId, transactionId, uploadIds }: transactionMessageGalleryCreateFx.Props) {
+		yield* Effect.annotateLogsScoped({
+			"transactionMessageGalleryCreateFx.userId": userId,
+			"transactionMessageGalleryCreateFx.transactionId": transactionId,
+			"transactionMessageGalleryCreateFx.uploadIds": uploadIds,
+		});
+
 		return yield* withTransactionFx(
 			Effect.gen(function* () {
 				const { kysely } = yield* KyselyContextFx;

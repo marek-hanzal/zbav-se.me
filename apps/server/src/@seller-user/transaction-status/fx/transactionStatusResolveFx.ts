@@ -18,6 +18,11 @@ export const transactionStatusResolveFx = Effect.fn("transactionStatusResolveFx"
 	userId,
 	transactionId,
 }: transactionStatusResolveFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"transactionStatusResolveFx.userId": userId,
+		"transactionStatusResolveFx.transactionId": transactionId,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const transaction = yield* transactionResolveFx({

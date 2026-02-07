@@ -20,6 +20,13 @@ export const messageThreadPatchFx = Effect.fn("messageThreadPatchFx")(function* 
 	query,
 	scope,
 }: messageThreadPatchFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"messageThreadPatchFx.userId": userId,
+		"messageThreadPatchFx.patch": patch,
+		"messageThreadPatchFx.query": query,
+		"messageThreadPatchFx.scope": scope,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

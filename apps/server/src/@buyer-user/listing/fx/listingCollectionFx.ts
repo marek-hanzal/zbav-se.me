@@ -21,6 +21,16 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 	sort,
 	meta,
 }: listingCollectionFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"listingCollectionFx.userId": userId,
+		"listingCollectionFx.cursor": cursor,
+		"listingCollectionFx.filter": filter,
+		"listingCollectionFx.where": where,
+		"listingCollectionFx.scope": scope,
+		"listingCollectionFx.sort": sort,
+		"listingCollectionFx.meta": meta,
+	});
+
 	return yield* withCollectionFx({
 		selectFx: withListingCollectionSelectFx({
 			sort,

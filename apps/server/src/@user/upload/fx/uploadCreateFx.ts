@@ -18,6 +18,12 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 	url,
 	...data
 }: uploadCreateFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"uploadCreateFx.userId": userId,
+		"uploadCreateFx.url": url,
+		"uploadCreateFx.data": data,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 	const uploadContext = yield* UploadContextFx;
 	const dateContext = yield* DateContextFx;

@@ -20,6 +20,12 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 	lang,
 	limit = 5,
 }: locationAutocompleteFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"locationAutocompleteFx.text": text,
+		"locationAutocompleteFx.lang": lang,
+		"locationAutocompleteFx.limit": limit,
+	});
+
 	if (text.length < 3) {
 		return yield* new TextTooShortErrorFx({
 			message: "Text too short",

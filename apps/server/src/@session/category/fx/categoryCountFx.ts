@@ -17,6 +17,13 @@ export const categoryCountFx = Effect.fn("categoryCountFx")(function* ({
 	scope,
 	count,
 }: categoryCountFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"categoryCountFx.filter": filter,
+		"categoryCountFx.where": where,
+		"categoryCountFx.scope": scope,
+		"categoryCountFx.count": count,
+	});
+
 	return yield* withCountFx({
 		selectFx: withCategoryCollectionSelectFx({}),
 		filter,

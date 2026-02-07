@@ -14,6 +14,11 @@ export const ignoreCreateFx = Effect.fn("ignoreCreateFx")(function* ({
 	userId,
 	listingId,
 }: ignoreCreateFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"ignoreCreateFx.userId": userId,
+		"ignoreCreateFx.listingId": listingId,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 

@@ -16,11 +16,14 @@ export namespace messagePersonalCreateFx {
 export const messagePersonalCreateFx = Effect.fn("messagePersonalCreateFx")(function* ({
 	userId,
 	messageThreadId,
-	name,
-	phone,
-	email,
-	locationId,
+	...data
 }: messagePersonalCreateFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"messagePersonalCreateFx.userId": userId,
+		"messagePersonalCreateFx.messageThreadId": messageThreadId,
+		"messagePersonalCreateFx.data": "(redacted)",
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
@@ -39,13 +42,10 @@ export const messagePersonalCreateFx = Effect.fn("messagePersonalCreateFx")(func
 				return kysely
 					.insertInto("message_personal")
 					.values({
+						...data,
 						id,
 						messageThreadId,
 						userId,
-						name,
-						phone,
-						email,
-						locationId,
 						createdAt: dateContext.now().toJSDate(),
 					})
 					.returningAll()

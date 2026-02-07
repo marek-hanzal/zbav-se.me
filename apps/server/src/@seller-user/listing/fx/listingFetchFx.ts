@@ -17,6 +17,13 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 	scope,
 	sort,
 }: listingFetchFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"listingFetchFx.filter": filter,
+		"listingFetchFx.where": where,
+		"listingFetchFx.scope": scope,
+		"listingFetchFx.sort": sort,
+	});
+
 	return yield* withFetchFx({
 		resource: "listing",
 		selectFx: withListingSelectFx({

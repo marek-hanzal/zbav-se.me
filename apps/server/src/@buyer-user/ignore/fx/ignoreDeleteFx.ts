@@ -14,6 +14,11 @@ export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
 	userId,
 	listingId,
 }: ignoreDeleteFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"ignoreDeleteFx.userId": userId,
+		"ignoreDeleteFx.listingId": listingId,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

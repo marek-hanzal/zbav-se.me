@@ -12,11 +12,19 @@ export namespace feedDeleteFx {
 }
 
 export const feedDeleteFx = Effect.fn("feedDeleteFx")(function* (query: feedDeleteFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"feedDeleteFx.query": query,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
 
 			const feed = yield* feedFetchFx(query);
+
+			yield* Effect.annotateLogsScoped({
+				"feedDeleteFx.feedId": feed.id,
+			});
 
 			yield* Effect.promise(async () => {
 				return kysely.deleteFrom("feed").where("id", "=", feed.id).execute();

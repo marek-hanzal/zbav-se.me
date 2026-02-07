@@ -17,6 +17,13 @@ export const categoryFetchFx = Effect.fn("categoryFetchFx")(function* ({
 	scope,
 	sort,
 }: categoryFetchFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"categoryFetchFx.filter": filter,
+		"categoryFetchFx.where": where,
+		"categoryFetchFx.scope": scope,
+		"categoryFetchFx.sort": sort,
+	});
+
 	return yield* withFetchFx({
 		resource: "category",
 		selectFx: withCategorySelectFx({

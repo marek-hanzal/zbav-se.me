@@ -17,6 +17,13 @@ export const draftFetchFx = Effect.fn("draftFetchFx")(function* ({
 	scope,
 	sort,
 }: draftFetchFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"draftFetchFx.filter": filter,
+		"draftFetchFx.where": where,
+		"draftFetchFx.scope": scope,
+		"draftFetchFx.sort": sort,
+	});
+
 	return yield* withFetchFx({
 		resource: "draft",
 		selectFx: withDraftSelectFx({

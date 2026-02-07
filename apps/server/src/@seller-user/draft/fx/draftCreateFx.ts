@@ -18,6 +18,11 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 	userId,
 	...data
 }: draftCreateFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"draftCreateFx.userId": userId,
+		"draftCreateFx.data": data,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

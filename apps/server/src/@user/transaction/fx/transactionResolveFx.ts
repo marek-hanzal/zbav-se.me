@@ -16,6 +16,12 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 	transactionId,
 	message = "You are not allowed to access this transaction",
 }: transactionResolveFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"transactionResolveFx.userId": userId,
+		"transactionResolveFx.transactionId": transactionId,
+		"transactionResolveFx.message": message,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 
 	const transaction = yield* Effect.promise(async () => {

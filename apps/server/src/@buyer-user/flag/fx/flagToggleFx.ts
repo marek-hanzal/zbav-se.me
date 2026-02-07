@@ -18,6 +18,12 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 	toggle,
 	listingId,
 }: flagToggleFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"flagToggleFx.userId": userId,
+		"flagToggleFx.toggle": toggle,
+		"flagToggleFx.listingId": listingId,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			yield* listingCheckIfOwnFx({

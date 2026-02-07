@@ -18,6 +18,14 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 	scope,
 	sort,
 }: listingCollectionFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"listingCollectionFx.cursor": cursor,
+		"listingCollectionFx.filter": filter,
+		"listingCollectionFx.where": where,
+		"listingCollectionFx.scope": scope,
+		"listingCollectionFx.sort": sort,
+	});
+
 	return yield* withCollectionFx({
 		selectFx: withListingCollectionSelectFx({
 			sort,

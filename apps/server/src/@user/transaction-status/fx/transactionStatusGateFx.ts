@@ -18,6 +18,13 @@ export const transactionStatusGateFx = Effect.fn("transactionStatusGateFx")(func
 	allowedStatuses,
 	message,
 }: transactionStatusGateFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"transactionStatusGateFx.userId": userId,
+		"transactionStatusGateFx.transactionId": transactionId,
+		"transactionStatusGateFx.allowedStatuses": allowedStatuses,
+		"transactionStatusGateFx.message": message,
+	});
+
 	const transaction = yield* transactionResolveFx({
 		userId,
 		transactionId,

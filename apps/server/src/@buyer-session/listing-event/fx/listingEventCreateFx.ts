@@ -18,6 +18,12 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 	listingId,
 	event,
 }: listingEventCreateFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"listingEventCreateFx.userId": userId,
+		"listingEventCreateFx.listingId": listingId,
+		"listingEventCreateFx.event": event,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

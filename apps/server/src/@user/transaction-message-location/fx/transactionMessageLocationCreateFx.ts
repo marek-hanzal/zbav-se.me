@@ -16,6 +16,12 @@ export namespace transactionMessageLocationCreateFx {
 
 export const transactionMessageLocationCreateFx = Effect.fn("transactionMessageLocationCreateFx")(
 	function* ({ userId, transactionId, locationId }: transactionMessageLocationCreateFx.Props) {
+		yield* Effect.annotateLogsScoped({
+			"transactionMessageLocationCreateFx.userId": userId,
+			"transactionMessageLocationCreateFx.transactionId": transactionId,
+			"transactionMessageLocationCreateFx.locationId": "(redacted)",
+		});
+
 		return yield* withTransactionFx(
 			Effect.gen(function* () {
 				const { kysely } = yield* KyselyContextFx;

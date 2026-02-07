@@ -19,6 +19,14 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 	scope,
 	sort,
 }: categoryCollectionFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"categoryCollectionFx.cursor": cursor,
+		"categoryCollectionFx.filter": filter,
+		"categoryCollectionFx.where": where,
+		"categoryCollectionFx.scope": scope,
+		"categoryCollectionFx.sort": sort,
+	});
+
 	const data = yield* withCollectionFx({
 		selectFx: withCategoryCollectionSelectFx({
 			sort,

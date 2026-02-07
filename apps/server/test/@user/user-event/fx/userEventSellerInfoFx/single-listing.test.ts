@@ -1,4 +1,3 @@
-import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { userEventSellerInfoFx } from "~/@buyer-session/user-event/fx/userEventSellerInfoFx";
@@ -9,7 +8,8 @@ import { LocationContextLayer } from "~/@session/location/context/LocationContex
 import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompleteFx";
 import { uploadCreateFx } from "~/@user/upload/fx/uploadCreateFx";
 import { auth } from "~/auth/auth";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withDateFx } from "~/database/fx/withDateFx";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
 import { testabase } from "~test/testabase";
 
@@ -73,8 +73,8 @@ describe("userEventSellerInfoFx", () => {
 				userId: seller.id,
 			});
 		}).pipe(
-			Effect.provide(KyselyContextLayer(database)),
-			Effect.provide(DateContextLayer(createDateContext())),
+			withKyselyFx(database),
+			withDateFx,
 			Effect.provide(
 				LocationContextLayer({
 					api: "https://api.geoapify.com",
@@ -87,6 +87,7 @@ describe("userEventSellerInfoFx", () => {
 					cdn: "https://cdn.zbav-se.me",
 				}),
 			),
+			Effect.scoped,
 			Effect.runPromise,
 		);
 

@@ -12,11 +12,19 @@ export namespace draftDeleteFx {
 }
 
 export const draftDeleteFx = Effect.fn("draftDeleteFx")(function* (query: draftDeleteFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"draftDeleteFx.query": query,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
 
 			const draft = yield* draftFetchFx(query);
+
+			yield* Effect.annotateLogsScoped({
+				"draftDeleteFx.draftId": draft.id,
+			});
 
 			yield* Effect.promise(async () => {
 				return kysely.deleteFrom("draft").where("id", "=", draft.id).execute();

@@ -14,6 +14,11 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 	userId,
 	listingId,
 }: flagCreateFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"flagCreateFx.userId": userId,
+		"flagCreateFx.listingId": listingId,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 

@@ -1,11 +1,12 @@
-import { createDateContext, DateContextLayer } from "@use-pico/common/date";
+import { DateContextLayer } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
 import { userEventBuyerInfoFx } from "~/@buyer-session/user-event/fx/userEventBuyerInfoFx";
 import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
 import { auth } from "~/auth/auth";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withDateFx } from "~/database/fx/withDateFx";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { testabase } from "~test/testabase";
 
 describe("userEventBuyerInfoFx", () => {
@@ -260,11 +261,7 @@ describe("userEventBuyerInfoFx", () => {
 			return yield* userEventBuyerInfoFx({
 				userId: buyerId,
 			});
-		}).pipe(
-			Effect.provide(KyselyContextLayer(database)),
-			Effect.provide(DateContextLayer(createDateContext())),
-			Effect.runPromise,
-		);
+		}).pipe(withKyselyFx(database), withDateFx, Effect.scoped, Effect.runPromise);
 
 		expect(result).not.toBeNull();
 		if (!result) return;

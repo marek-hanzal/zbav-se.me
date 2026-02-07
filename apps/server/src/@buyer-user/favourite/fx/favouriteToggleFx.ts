@@ -19,6 +19,13 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 	listingId,
 	toggle,
 }: favouriteToggleFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"favouriteToggleFx.userId": userId,
+		"favouriteToggleFx.feedId": feedId,
+		"favouriteToggleFx.listingId": listingId,
+		"favouriteToggleFx.toggle": toggle,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			yield* listingCheckIfOwnFx({

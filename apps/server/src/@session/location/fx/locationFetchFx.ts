@@ -13,6 +13,12 @@ export const locationFetchFx = Effect.fn("locationFetchFx")(function* ({
 	where,
 	sort,
 }: locationFetchFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"locationFetchFx.filter": filter,
+		"locationFetchFx.where": where,
+		"locationFetchFx.sort": sort,
+	});
+
 	return yield* withFetchFx({
 		resource: "location",
 		selectFx: withLocationSelectFx({

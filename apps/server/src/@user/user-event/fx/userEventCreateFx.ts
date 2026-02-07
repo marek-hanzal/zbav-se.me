@@ -22,6 +22,12 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 	group,
 	...data
 }: userEventCreateFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"userEventCreateFx.userId": userId,
+		"userEventCreateFx.group": group,
+		"userEventCreateFx.data": data,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

@@ -14,6 +14,11 @@ export const flagDeleteFx = Effect.fn("flagDeleteFx")(function* ({
 	userId,
 	listingId,
 }: flagDeleteFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"flagDeleteFx.userId": userId,
+		"flagDeleteFx.listingId": listingId,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

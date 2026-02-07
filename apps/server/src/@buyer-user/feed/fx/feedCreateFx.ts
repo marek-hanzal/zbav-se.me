@@ -17,6 +17,12 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 	query,
 	...data
 }: feedCreateFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"feedCreateFx.userId": userId,
+		"feedCreateFx.query": query,
+		"feedCreateFx.data": data,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

@@ -17,6 +17,11 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 	userId,
 	...create
 }: transactionStatusCreateFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"transactionStatusCreateFx.userId": userId,
+		"transactionStatusCreateFx.create": create,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 

@@ -20,6 +20,13 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 	type,
 	...data
 }: thumbCreateFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"thumbCreateFx.userId": userId,
+		"thumbCreateFx.listingId": listingId,
+		"thumbCreateFx.type": type,
+		"thumbCreateFx.data": data,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

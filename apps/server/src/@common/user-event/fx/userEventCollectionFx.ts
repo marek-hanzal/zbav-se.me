@@ -18,6 +18,14 @@ export const userEventCollectionFx = Effect.fn("userEventCollectionFx")(function
 	cursor,
 	sort,
 }: userEventCollectionFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"userEventCollectionFx.filter": filter,
+		"userEventCollectionFx.where": where,
+		"userEventCollectionFx.scope": scope,
+		"userEventCollectionFx.cursor": cursor,
+		"userEventCollectionFx.sort": sort,
+	});
+
 	return yield* withCollectionFx({
 		selectFx: withUserEventCollectionSelectFx({
 			sort,

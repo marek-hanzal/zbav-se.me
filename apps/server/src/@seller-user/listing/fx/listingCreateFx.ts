@@ -24,6 +24,12 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 	uploadIds,
 	...data
 }: listingCreateFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"listingCreateFx.userId": userId,
+		"listingCreateFx.uploadIds": uploadIds,
+		"listingCreateFx.data": data,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

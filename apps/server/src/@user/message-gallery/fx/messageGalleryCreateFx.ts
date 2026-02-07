@@ -18,6 +18,12 @@ export const messageGalleryCreateFx = Effect.fn("messageGalleryCreateFx")(functi
 	messageThreadId,
 	galleryId,
 }: messageGalleryCreateFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"messageGalleryCreateFx.userId": userId,
+		"messageGalleryCreateFx.messageThreadId": messageThreadId,
+		"messageGalleryCreateFx.galleryId": galleryId,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

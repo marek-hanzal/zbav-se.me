@@ -17,6 +17,12 @@ export const listingEventRateLimitFx = Effect.fn("listingEventRateLimitFx")(func
 	event,
 	minutes = 10,
 }: listingEventRateLimitFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"listingEventRateLimitFx.listingId": listingId,
+		"listingEventRateLimitFx.event": event,
+		"listingEventRateLimitFx.minutes": minutes,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 

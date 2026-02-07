@@ -17,6 +17,13 @@ export const feedFetchFx = Effect.fn("feedFetchFx")(function* ({
 	scope,
 	sort,
 }: feedFetchFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"feedFetchFx.filter": filter,
+		"feedFetchFx.where": where,
+		"feedFetchFx.scope": scope,
+		"feedFetchFx.sort": sort,
+	});
+
 	return yield* withFetchFx({
 		resource: "feed",
 		selectFx: withFeedSelectFx({

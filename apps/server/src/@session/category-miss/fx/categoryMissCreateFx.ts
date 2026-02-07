@@ -15,6 +15,11 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 	fulltext,
 	limit = 4,
 }: categoryMissCreateFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"categoryMissCreateFx.fulltext": fulltext,
+		"categoryMissCreateFx.limit": limit,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 

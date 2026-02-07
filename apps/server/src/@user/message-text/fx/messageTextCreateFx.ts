@@ -18,6 +18,12 @@ export const messageTextCreateFx = Effect.fn("messageTextCreateFx")(function* ({
 	messageThreadId,
 	message,
 }: messageTextCreateFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"messageTextCreateFx.userId": userId,
+		"messageTextCreateFx.messageThreadId": messageThreadId,
+		"messageTextCreateFx.message": "(redacted)",
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

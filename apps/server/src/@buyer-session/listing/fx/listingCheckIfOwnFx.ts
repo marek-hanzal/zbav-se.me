@@ -20,6 +20,12 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 	listingId,
 	message,
 }: listingCheckIfOwnFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"listingCheckIfOwnFx.userId": userId,
+		"listingCheckIfOwnFx.listingId": listingId,
+		"listingCheckIfOwnFx.message": message,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 	const listing = yield* Effect.promise(async () => {
 		return kysely

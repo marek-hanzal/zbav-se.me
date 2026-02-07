@@ -17,6 +17,12 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 	query,
 	scope,
 }: feedPatchFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"feedPatchFx.patch": patch,
+		"feedPatchFx.query": query,
+		"feedPatchFx.scope": scope,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

@@ -17,6 +17,12 @@ export const galleryItemCreateFx = Effect.fn("galleryItemCreateFx")(function* ({
 	galleryId,
 	...data
 }: galleryItemCreateFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"galleryItemCreateFx.userId": userId,
+		"galleryItemCreateFx.galleryId": galleryId,
+		"galleryItemCreateFx.data": data,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 

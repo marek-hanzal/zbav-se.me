@@ -19,6 +19,12 @@ export const s3PreSignFx = Effect.fn("s3PreSignFx")(function* ({
 	path,
 	extension,
 }: s3PreSignFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"s3PreSignFx.userId": userId,
+		"s3PreSignFx.path": path,
+		"s3PreSignFx.extension": extension,
+	});
+
 	const { cdn } = yield* UploadContextFx;
 	const { bucket } = yield* S3ContextFx;
 

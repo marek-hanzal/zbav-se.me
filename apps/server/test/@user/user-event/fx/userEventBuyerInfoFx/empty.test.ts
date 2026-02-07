@@ -1,20 +1,19 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { userEventBuyerInfoFx } from "~/@buyer-session/user-event/fx/userEventBuyerInfoFx";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withDateFx } from "~/database/fx/withDateFx";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { testabase } from "~test/testabase";
 
 describe("userEventBuyerInfoFx", () => {
 	it("Empty user's info returns nothing", async () => {
 		const kysely = await testabase("userEventBuyerInfoFx-empty");
 
-		const result = await Effect.runPromise(
-			Effect.gen(function* () {
-				return yield* userEventBuyerInfoFx({
-					userId: "test-user-id",
-				});
-			}).pipe(Effect.provide(KyselyContextLayer(kysely))),
-		);
+		const result = await Effect.gen(function* () {
+			return yield* userEventBuyerInfoFx({
+				userId: "test-user-id",
+			});
+		}).pipe(withKyselyFx(kysely), withDateFx, Effect.scoped, Effect.runPromise);
 
 		expect(result).toBeNull();
 	});

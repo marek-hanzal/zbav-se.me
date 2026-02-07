@@ -16,6 +16,11 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 	userId,
 	transactionId,
 }: transactionGetBuyerInfoFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"transactionGetBuyerInfoFx.userId": userId,
+		"transactionGetBuyerInfoFx.transactionId": transactionId,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 
 	const userInfo = yield* Effect.promise(async () => {

@@ -17,6 +17,12 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 	query,
 	scope,
 }: draftPatchFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"draftPatchFx.patch": patch,
+		"draftPatchFx.query": query,
+		"draftPatchFx.scope": scope,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

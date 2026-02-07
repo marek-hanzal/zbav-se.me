@@ -17,6 +17,13 @@ export const listingEventCountFx = Effect.fn("listingEventCountFx")(function* ({
 	scope,
 	count,
 }: listingEventCountFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"listingEventCountFx.filter": filter,
+		"listingEventCountFx.where": where,
+		"listingEventCountFx.scope": scope,
+		"listingEventCountFx.count": count,
+	});
+
 	return yield* withCountFx({
 		selectFx: withListingEventCollectionSelectFx({}),
 		filter,

@@ -512,6 +512,10 @@ const computeScore = (input: {
 export const userEventSellerInfoFx = Effect.fn("userEventSellerInfoFx")(function* ({
 	userId,
 }: userEventSellerInfoFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"userEventSellerInfoFx.userId": userId,
+	});
+
 	const cutoff = 90;
 
 	const { data: source } = yield* userEventCollectionFx({

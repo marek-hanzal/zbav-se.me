@@ -11,8 +11,12 @@ export namespace messageThreadCreateFx {
 }
 
 export const messageThreadCreateFx = Effect.fn("messageThreadCreateFx")(function* (
-	_: messageThreadCreateFx.Props,
+	props: messageThreadCreateFx.Props,
 ) {
+	yield* Effect.annotateLogsScoped({
+		"messageThreadCreateFx.props": props,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

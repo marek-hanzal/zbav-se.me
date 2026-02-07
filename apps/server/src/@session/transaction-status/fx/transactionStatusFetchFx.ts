@@ -17,6 +17,13 @@ export const transactionStatusFetchFx = Effect.fn("transactionStatusFetchFx")(fu
 	scope,
 	sort,
 }: transactionStatusFetchFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"transactionStatusFetchFx.filter": filter,
+		"transactionStatusFetchFx.where": where,
+		"transactionStatusFetchFx.scope": scope,
+		"transactionStatusFetchFx.sort": sort,
+	});
+
 	return yield* withFetchFx({
 		resource: "transaction-status",
 		selectFx: withTransactionStatusSelectFx({

@@ -18,6 +18,12 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 	toggle,
 	listingId,
 }: ignoreToggleFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"ignoreToggleFx.userId": userId,
+		"ignoreToggleFx.toggle": toggle,
+		"ignoreToggleFx.listingId": listingId,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			yield* listingCheckIfOwnFx({

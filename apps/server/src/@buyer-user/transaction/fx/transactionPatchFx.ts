@@ -20,6 +20,13 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 	query,
 	scope,
 }: transactionPatchFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"transactionPatchFx.userId": userId,
+		"transactionPatchFx.patch": patch,
+		"transactionPatchFx.query": query,
+		"transactionPatchFx.scope": scope,
+	});
+
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

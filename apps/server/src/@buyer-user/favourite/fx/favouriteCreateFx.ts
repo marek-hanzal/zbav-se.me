@@ -17,6 +17,12 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 	feedId,
 	...data
 }: favouriteCreateFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"favouriteCreateFx.userId": userId,
+		"favouriteCreateFx.feedId": feedId,
+		"favouriteCreateFx.data": data,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 

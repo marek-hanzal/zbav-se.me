@@ -14,6 +14,10 @@ export namespace listingGetSellerInfoFx {
 export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(function* ({
 	listingId,
 }: listingGetSellerInfoFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"listingGetSellerInfoFx.listingId": listingId,
+	});
+
 	const { kysely } = yield* KyselyContextFx;
 
 	const userInfo = yield* Effect.promise(async () => {

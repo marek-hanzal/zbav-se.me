@@ -23,6 +23,11 @@ export const seedFx = Effect.fn("seedFx")(function* ({
 	email,
 	transaction,
 }: SeedRequestSchema.Type) {
+	yield* Effect.annotateLogsScoped({
+		"seedFx.email": email,
+		"seedFx.transaction": transaction,
+	});
+
 	const current = yield* seedUserFx({
 		email,
 	});
