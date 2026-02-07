@@ -6,7 +6,7 @@ import { FeedItemSchema } from "~/@buyer-user/feed/schema/FeedItemSchema";
 import { FeedQuerySchema } from "~/@buyer-user/feed/schema/FeedQuerySchema";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -90,7 +90,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 
 				return result;
 			}).pipe(
-				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				withKyselyFx(c.get("kysely")),
 				withLoggingFx(axiomConfig),
 				//
 				Effect.catchAll((e) => {
