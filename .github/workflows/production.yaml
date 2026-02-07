@@ -33,7 +33,8 @@ env:
     SERVER_UPSTASH_REDIS_URL: ${{ secrets.SERVER_UPSTASH_REDIS_URL }}
     SERVER_CONTENT_CDN: ${{ vars.SERVER_CONTENT_CDN }}
     SERVER_GITHUB: ${{ secrets.SERVER_GITHUB }}
-    SERVER_AXIOM: ${{ secrets.SERVER_AXIOM }}
+    SERVER_AXIOM_TOKEN: ${{ secrets.SERVER_AXIOM_TOKEN }}
+    SERVER_AXIOM_DATASET: ${{ vars.SERVER_AXIOM_DATASET }}
     # -------------------------------
     # Local (GHA only)
     # -------------------------------
@@ -88,7 +89,8 @@ env:
         SERVER_S3_BUCKET
         SERVER_S3_KEY
         SERVER_S3_SECRET
-        SERVER_AXIOM
+        SERVER_AXIOM_TOKEN
+        SERVER_AXIOM_DATASET
         SERVER_UPSTASH_REDIS_TOKEN
         SERVER_UPSTASH_REDIS_URL
         VITE_APP_ORIGIN
@@ -124,7 +126,8 @@ jobs:
                   check_var SERVER_S3_BUCKET
                   check_var SERVER_S3_KEY
                   check_var SERVER_S3_SECRET
-                  check_var SERVER_AXIOM
+                  check_var SERVER_AXIOM_TOKEN
+                  check_var SERVER_AXIOM_DATASET
                   check_var SERVER_BETTER_AUTH_SECRET
                   check_var SERVER_GEOAPIFY_TOKEN
                   check_var SERVER_JWT_SECRET

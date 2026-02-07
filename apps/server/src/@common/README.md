@@ -41,7 +41,7 @@ The `@common` domain exists to:
 - **AxiomContextLayer** - Effect layer provider for Axiom context
 - **AxiomContextLayerFx** - Effect layer factory for Axiom context
 - **axiomClientFx** - Effect function to create Axiom client for log ingestion
-- Reads from `SERVER_AXIOM` environment variable
+- Reads from `SERVER_AXIOM_TOKEN` and `SERVER_AXIOM_DATASET` environment variables
 
 ### Upload Context
 - **UploadContextFx** - Effect context for upload configuration (CDN base URL)

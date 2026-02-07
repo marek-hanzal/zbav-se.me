@@ -1,12 +1,14 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
-import { Effect, Logger, LogLevel, Match } from "effect";
+import { Effect, Match } from "effect";
 import { feedCollectionFx } from "~/@buyer-user/feed/fx/feedCollectionFx";
 import { FeedItemSchema } from "~/@buyer-user/feed/schema/FeedItemSchema";
 import { FeedQuerySchema } from "~/@buyer-user/feed/schema/FeedQuerySchema";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
@@ -57,8 +59,15 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 			summary: "Fetch a collection of feed items based on the provided query",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
+
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiFeedCollection",
+					userId: user.id,
+				});
 
 				const result = c.json<withCollectionSchema.Type<FeedItemSchema>, 200>(
 					yield* zodFx({
@@ -82,6 +91,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 				return result;
 			}).pipe(
 				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				withLoggingFx(axiomConfig),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
@@ -96,11 +106,6 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 						),
 					);
 				}),
-				//
-				Effect.scoped,
-				Effect.withLogSpan("runtime"),
-				Effect.provide(Logger.json),
-				Logger.withMinimumLogLevel(LogLevel.Info),
 				//
 				Effect.runPromise,
 			);
