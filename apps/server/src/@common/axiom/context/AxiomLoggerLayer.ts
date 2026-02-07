@@ -6,12 +6,10 @@ const annotationsToObject = (hm: HashMap.HashMap<string, unknown>) =>
 	Object.fromEntries(HashMap.toEntries(hm));
 
 const toSpans = (spans: List.List<LogSpan.LogSpan>) => {
-	return List.toArray(spans)
-		.map((s) => ({
-			label: s.label,
-			time: Date.now() - s.startTime,
-		}))
-		.reverse();
+	return List.toArray(spans).reduce<Record<string, number>>((acc, value) => {
+		acc[value.label] = Date.now() - value.startTime;
+		return acc;
+	}, {});
 };
 
 export const AxiomLoggerLayer = Logger.replaceScoped(
