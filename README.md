@@ -204,6 +204,7 @@ Server-side environment variables used by the backend API:
 - `SERVER_BETTER_AUTH_SECRET` - Better Auth secret key
 - `SERVER_JWT_SECRET` - JWT token signing secret
 - `SERVER_GEOAPIFY_TOKEN` - Geoapify API key for location services
+- `SERVER_AXIOM` - Axiom API token for log ingestion
 - `SERVER_S3_API` - S3 API endpoint URL
 - `SERVER_S3_KEY` - S3 access key
 - `SERVER_S3_SECRET` - S3 secret key

@@ -36,6 +36,13 @@ The `@common` domain exists to:
 - **s3PreSignFx** - Effect function to generate pre-signed URLs for S3 uploads
 - Used in `@user` and `@public` domains for file upload operations
 
+### Axiom Operations
+- **AxiomContextFx** - Effect context for Axiom configuration (API token)
+- **AxiomContextLayer** - Effect layer provider for Axiom context
+- **AxiomContextLayerFx** - Effect layer factory for Axiom context
+- **axiomClientFx** - Effect function to create Axiom client for log ingestion
+- Reads from `SERVER_AXIOM` environment variable
+
 ### Upload Context
 - **UploadContextFx** - Effect context for upload configuration (CDN base URL)
 - **UploadContextLayer** - Effect layer provider for upload context
