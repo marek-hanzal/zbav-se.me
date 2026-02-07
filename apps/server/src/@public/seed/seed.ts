@@ -1,10 +1,10 @@
 import { createRoute } from "@hono/zod-openapi";
-import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { Effect, Match } from "effect";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
-import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
+import { withTransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
 import { SeedRequestSchema, seedFx } from "~/@public/seed/fx/seedFx";
+import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -72,8 +72,8 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 				);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				Effect.provide(DateContextLayer(createDateContext())),
-				TransactionContextProvider({
+				withDateFx,
+				withTransactionContextFx({
 					expires: 7,
 					extend: 3,
 				}),

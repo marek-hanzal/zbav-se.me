@@ -19,7 +19,7 @@ The `@common` domain exists to:
 ### Transaction Context & Schemas
 - **TransactionContextFx** - Effect context for transaction configuration
 - **DefaultTransactionContext** - Default transaction settings (expires: 3 days, extend: 3 days)
-- **TransactionContextProvider** - Effect provider for transaction context
+- **withTransactionContextFx** - Effect provider for transaction context
 - **TransactionFilterSchema**, **TransactionSortSchema**, **TransactionWhereSchema**, **TransactionQuerySchema** - Query/filter/sort schemas for transaction collection (used in `@buyer-user`, `@seller-user`)
 - Used across `@buyer-user`, `@seller-user`, `@user`, and `@public` domains
 

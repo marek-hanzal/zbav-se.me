@@ -20,8 +20,7 @@ export class TransactionContextFx extends Context.Tag("TransactionContextFx")<
 	//
 }
 
-export const TransactionContextProvider = (
-	context: TransactionContext = DefaultTransactionContext,
-) => {
-	return Effect.provideService(TransactionContextFx, context);
-};
+export const withTransactionContextFx =
+	(context: TransactionContext = DefaultTransactionContext) =>
+	<A, E, R>(eff: Effect.Effect<A, E, R>) =>
+		eff.pipe(Effect.provideService(TransactionContextFx, context));

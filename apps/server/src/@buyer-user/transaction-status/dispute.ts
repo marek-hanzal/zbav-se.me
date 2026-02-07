@@ -1,13 +1,13 @@
 import { createRoute } from "@hono/zod-openapi";
-import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
-import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
+import { withTransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
 import { TransactionStatusDisputeSchema } from "~/@common/transaction-status/schema/TransactionStatusDisputeSchema";
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
+import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -86,8 +86,8 @@ export const withDisputeApiFx = Effect.fn("withDisputeApiFx")(function* () {
 				);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				Effect.provide(DateContextLayer(createDateContext())),
-				TransactionContextProvider(),
+				withDateFx,
+				withTransactionContextFx(),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

@@ -1,5 +1,4 @@
 import { createRoute } from "@hono/zod-openapi";
-import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
@@ -7,6 +6,7 @@ import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { draftCreateFx } from "~/@seller-user/draft/fx/draftCreateFx";
 import { DraftCreateSchema } from "~/@seller-user/draft/schema/DraftCreateSchema";
 import { DraftSchema } from "~/@seller-user/draft/schema/DraftSchema";
+import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -85,7 +85,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				Effect.provide(DateContextLayer(createDateContext())),
+				withDateFx,
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
