@@ -91,11 +91,15 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
-								{ _tag: "NotFoundErrorFx" },
+								{
+									_tag: "NotFoundErrorFx",
+								},
 								() => c.json(NotFoundNotice, 404),
 							),
 							Match.when(
-								{ _tag: "ZodErrorFx" },
+								{
+									_tag: "ZodErrorFx",
+								},
 								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,

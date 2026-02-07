@@ -1,12 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { Effect, Match } from "effect";
+import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
+import { noticeError } from "~/@common/notice/noticeError";
 import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
 import { SeedRequestSchema, seedFx } from "~/@public/seed/fx/seedFx";
 import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
-import { noticeError } from "~/@common/notice/noticeError";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
@@ -82,19 +82,27 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
-								{ _tag: "InvalidRequestError" },
+								{
+									_tag: "InvalidRequestError",
+								},
 								(err) => c.json(noticeError(err), 400),
 							),
 							Match.when(
-								{ _tag: "AccessDeniedError" },
+								{
+									_tag: "AccessDeniedError",
+								},
 								() => c.json(NotFoundNotice, 404),
 							),
 							Match.when(
-								{ _tag: "NotFoundErrorFx" },
+								{
+									_tag: "NotFoundErrorFx",
+								},
 								() => c.json(NotFoundNotice, 404),
 							),
 							Match.when(
-								{ _tag: "RuntimeError" },
+								{
+									_tag: "RuntimeError",
+								},
 								(err) => c.json(noticeError(err), 500),
 							),
 							Match.exhaustive,

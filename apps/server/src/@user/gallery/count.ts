@@ -72,7 +72,9 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 					return Effect.succeed(
 						Match.value(e).pipe(
 							Match.when(
-								{ _tag: "ZodErrorFx" },
+								{
+									_tag: "ZodErrorFx",
+								},
 								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,

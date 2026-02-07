@@ -18,6 +18,14 @@ export const feedCollectionFx = Effect.fn("feedCollectionFx")(function* ({
 	cursor,
 	sort,
 }: feedCollectionFx.Props) {
+	yield* Effect.annotateLogsScoped({
+		"feedCollectionFx.filter": filter,
+		"feedCollectionFx.where": where,
+		"feedCollectionFx.scope": scope,
+		"feedCollectionFx.cursor": cursor,
+		"feedCollectionFx.sort": sort,
+	});
+
 	return yield* withCollectionFx({
 		selectFx: withFeedCollectionSelectFx({
 			sort,

@@ -10,6 +10,8 @@
 		"knip": "knip"
 	},
 	"dependencies": {
+		"@axiomhq/js": "1.4.0",
+		"@axiomhq/logging": "0.2.0",
 		"@better-auth/passkey": "1.4.18",
 		"@effect/platform": "0.94.3",
 		"@effect/platform-node": "0.104.1",
@@ -38,7 +40,7 @@
 		"@types/pg": "8.16.0",
 		"@typescript/native-preview": "7.0.0-dev.20260206.1",
 		"@use-pico/tsconfig": "5.0.0",
-		"knip": "5.83.0",
+		"knip": "5.83.1",
 		"nitro": "3.0.1-alpha.2",
 		"rolldown": "^1.0.0-beta.58",
 		"typescript": "5.9.3",

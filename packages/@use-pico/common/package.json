@@ -17,7 +17,6 @@
 		"@types/is-empty": "1.2.3",
 		"@types/luxon": "3.7.1",
 		"@types/qs": "6.14.0",
-		"effect": "3.19.16",
 		"fast-clean": "1.5.3",
 		"flattie": "1.1.1",
 		"is-callable": "1.2.7",
@@ -32,6 +31,9 @@
 		"xxhash-wasm": "1.1.0",
 		"zod": "4.3.6"
 	},
+	"peerDependencies": {
+		"effect": "3.19.16"
+	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "29.0.0",
 		"@rollup/plugin-node-resolve": "16.0.3",
@@ -40,6 +42,7 @@
 		"@types/react": "19.2.13",
 		"@typescript/native-preview": "7.0.0-dev.20260206.1",
 		"@use-pico/tsconfig": "5.0.0",
+		"effect": "3.19.16",
 		"rollup": "4.57.1",
 		"rollup-plugin-dts": "6.3.0",
 		"typescript": "5.9.3",

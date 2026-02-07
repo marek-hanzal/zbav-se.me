@@ -33,6 +33,7 @@ export const auth = (dialect: () => Dialect) => {
 
 	return betterAuth({
 		database: connection,
+		baseURL: viteConfig.VITE_SERVER_API,
 		secret: betterAuthConfig.SERVER_BETTER_AUTH_SECRET,
 		plugins: [
 			passkey({

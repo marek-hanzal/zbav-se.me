@@ -1,4 +1,4 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
@@ -85,7 +85,9 @@ export const withCategoryFetchApiFx = Effect.fn("withCategoryFetchApiFx")(functi
 								() => c.json(NotFoundNotice, 404),
 							),
 							Match.when(
-								{ _tag: "ZodErrorFx" },
+								{
+									_tag: "ZodErrorFx",
+								},
 								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,

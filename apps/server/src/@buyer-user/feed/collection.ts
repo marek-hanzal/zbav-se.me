@@ -1,6 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
-import { Effect, Match } from "effect";
+import { Effect, Logger, LogLevel, Match } from "effect";
 import { feedCollectionFx } from "~/@buyer-user/feed/fx/feedCollectionFx";
 import { FeedItemSchema } from "~/@buyer-user/feed/schema/FeedItemSchema";
 import { FeedQuerySchema } from "~/@buyer-user/feed/schema/FeedQuerySchema";
@@ -60,7 +60,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<withCollectionSchema.Type<FeedItemSchema>, 200>(
+				const result = c.json<withCollectionSchema.Type<FeedItemSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: feedCollectionFx({
@@ -76,6 +76,10 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiFeedCollection");
+
+				return result;
 			}).pipe(
 				Effect.provide(KyselyContextLayer(c.get("kysely"))),
 				//
@@ -92,6 +96,12 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 						),
 					);
 				}),
+				//
+				Effect.scoped,
+				Effect.withLogSpan("runtime"),
+				Effect.provide(Logger.json),
+				Logger.withMinimumLogLevel(LogLevel.Info),
+				//
 				Effect.runPromise,
 			);
 		},

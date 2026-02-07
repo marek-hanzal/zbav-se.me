@@ -109,15 +109,21 @@ export const withCloseApiFx = Effect.fn("withCloseApiFx")(function* () {
 								},
 							),
 							Match.when(
-								{ _tag: "InvalidRequestError" },
+								{
+									_tag: "InvalidRequestError",
+								},
 								() => c.json(noticeError(e), 400),
 							),
 							Match.when(
-								{ _tag: "RuntimeError" },
+								{
+									_tag: "RuntimeError",
+								},
 								() => c.json(noticeError(e), 500),
 							),
 							Match.when(
-								{ _tag: "ZodErrorFx" },
+								{
+									_tag: "ZodErrorFx",
+								},
 								({ zod }) => c.json(noticeZodError(zod), 500),
 							),
 							Match.exhaustive,
