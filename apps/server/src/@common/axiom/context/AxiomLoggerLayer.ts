@@ -22,7 +22,7 @@ export const AxiomLoggerLayer = Logger.replaceScoped(
 			const event = {
 				_time: log.date.toISOString(),
 				level: log.logLevel.label,
-				msg: log.message,
+				msg: Array.isArray(log.message) ? log.message.join(", ") : log.message,
 				spans: toSpans(log.spans),
 				...annotationsToObject(log.annotations),
 			};
