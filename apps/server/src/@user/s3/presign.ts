@@ -7,9 +7,11 @@ import { s3PreSignFx } from "~/@common/s3/fx/s3PreSignFx";
 import { UploadContextLayer } from "~/@common/upload/context/UploadContextLayer";
 import { S3PreSignRequestSchema } from "~/@user/s3/schema/S3PreSignRequestSchema";
 import { S3PreSignResponseSchema } from "~/@user/s3/schema/S3PreSignResponseSchema";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
 import { ServerS3Schema } from "~/schema/env/ServerS3Schema";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
@@ -55,6 +57,7 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 			summary: "Generate a pre-signed URL for direct S3-compatible PUT upload",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
 			const s3Config = ServerS3Schema.parse(process.env);
 			const cdnConfig = ServerCdnSchema.parse(process.env);
 
@@ -62,7 +65,12 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 				const user = c.get("user");
 				const { path, extension } = c.req.valid("json");
 
-				return c.json<S3PreSignResponseSchema.Type, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiS3Presign",
+					userId: user.id,
+				});
+
+				const result = c.json<S3PreSignResponseSchema.Type, 200>(
 					yield* zodFx({
 						schema: S3PreSignResponseSchema,
 						dataFx: s3PreSignFx({
@@ -73,6 +81,10 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiS3Presign");
+
+				return result;
 			}).pipe(
 				Effect.provide(
 					S3ContextLayer({
@@ -87,6 +99,7 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 						cdn: cdnConfig.SERVER_CONTENT_CDN,
 					}),
 				),
+				withLoggingFx(axiomConfig),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

@@ -7,7 +7,9 @@ import { draftDeleteFx } from "~/@seller-user/draft/fx/draftDeleteFx";
 import { DraftQuerySchema } from "~/@seller-user/draft/schema/DraftQuerySchema";
 import { DraftSchema } from "~/@seller-user/draft/schema/DraftSchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withDeleteApiFx = Effect.fn("withDeleteApiFx")(function* () {
@@ -61,10 +63,17 @@ export const withDeleteApiFx = Effect.fn("withDeleteApiFx")(function* () {
 			summary: "Delete a draft based on the provided query",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<DraftSchema.Type, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiDraftDelete",
+					userId: user.id,
+				});
+
+				const result = c.json<DraftSchema.Type, 200>(
 					yield* zodFx({
 						schema: DraftSchema,
 						dataFx: draftDeleteFx({
@@ -76,7 +85,12 @@ export const withDeleteApiFx = Effect.fn("withDeleteApiFx")(function* () {
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiDraftDelete");
+
+				return result;
 			}).pipe(
+				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {

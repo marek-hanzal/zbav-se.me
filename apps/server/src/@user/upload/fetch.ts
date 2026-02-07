@@ -1,6 +1,7 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { uploadFetchFx } from "~/@user/upload/fx/uploadFetchFx";
@@ -8,6 +9,7 @@ import { UploadQuerySchema } from "~/@user/upload/schema/UploadQuerySchema";
 import { UploadSchema } from "~/@user/upload/schema/UploadSchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
@@ -60,8 +62,17 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 			summary: "Fetch an upload item based on the provided query",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
-				return c.json<UploadSchema.Type, 200>(
+				const user = c.get("user");
+
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiUploadFetch",
+					userId: user.id,
+				});
+
+				const result = c.json<UploadSchema.Type, 200>(
 					yield* zodFx({
 						schema: UploadSchema,
 						dataFx: uploadFetchFx({
@@ -71,7 +82,12 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiUploadFetch");
+
+				return result;
 			}).pipe(
+				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {

@@ -1,6 +1,5 @@
 import { createDateContext, DateContextLayer } from "@use-pico/common/date";
 import { Effect } from "effect";
 
-export const withDateFx =
-	<A, E, R>(eff: Effect.Effect<A, E, R>) =>
-		eff.pipe(Effect.provide(DateContextLayer(createDateContext())));
+export const withDateFx = <A, E, R>(eff: Effect.Effect<A, E, R>) =>
+	eff.pipe(Effect.provide(DateContextLayer(createDateContext())));

@@ -8,7 +8,9 @@ import { DraftCreateSchema } from "~/@seller-user/draft/schema/DraftCreateSchema
 import { DraftSchema } from "~/@seller-user/draft/schema/DraftSchema";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
@@ -70,10 +72,17 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 			summary: "Create a new draft",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<DraftSchema.Type, 201>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiDraftCreate",
+					userId: user.id,
+				});
+
+				const result = c.json<DraftSchema.Type, 201>(
 					yield* zodFx({
 						schema: DraftSchema,
 						dataFx: draftCreateFx({
@@ -83,7 +92,12 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					}),
 					201,
 				);
+
+				yield* Effect.log("apiDraftCreate");
+
+				return result;
 			}).pipe(
+				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				//

@@ -9,7 +9,9 @@ import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
@@ -70,10 +72,17 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 			summary: "Create a new thumb for a listing",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<ListingSchema.Type, 201>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiThumbCreate",
+					userId: user.id,
+				});
+
+				const result = c.json<ListingSchema.Type, 201>(
 					yield* zodFx({
 						schema: ListingSchema,
 						dataFx: thumbCreateFx({
@@ -83,8 +92,14 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					}),
 					201,
 				);
+
+				yield* Effect.log("apiThumbCreate");
+
+				return result;
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
+				withLoggingFx(axiomConfig),
+				//
 				withDateFx,
 				//
 				Effect.catchAll((e) => {

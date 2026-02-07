@@ -6,7 +6,9 @@ import { TransactionQuerySchema } from "~/@common/transaction/schema/Transaction
 import { transactionCollectionFx } from "~/@seller-user/transaction/fx/transactionCollectionFx";
 import { TransactionItemSchema } from "~/@seller-user/transaction/schema/TransactionItemSchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
@@ -57,10 +59,17 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 			summary: "Fetch a collection of transactions based on the provided query",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<withCollectionSchema.Type<TransactionItemSchema>, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiTransactionCollection",
+					userId: user.id,
+				});
+
+				const result = c.json<withCollectionSchema.Type<TransactionItemSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: transactionCollectionFx({
@@ -76,7 +85,12 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiTransactionCollection");
+
+				return result;
 			}).pipe(
+				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {

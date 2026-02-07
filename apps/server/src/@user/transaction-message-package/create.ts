@@ -10,7 +10,9 @@ import { transactionMessagePackageCreateFx } from "~/@user/transaction-message-p
 import { TransactionMessagePackageCreateSchema } from "~/@user/transaction-message-package/schema/TransactionMessagePackageCreateSchema";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
@@ -72,10 +74,17 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 			],
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<MessagePackageSchema.Type, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiTransactionMessagePackageCreate",
+					userId: user.id,
+				});
+
+				const result = c.json<MessagePackageSchema.Type, 200>(
 					yield* zodFx({
 						schema: MessagePackageSchema,
 						dataFx: transactionMessagePackageCreateFx({
@@ -85,7 +94,12 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiTransactionMessagePackageCreate");
+
+				return result;
 			}).pipe(
+				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx(),

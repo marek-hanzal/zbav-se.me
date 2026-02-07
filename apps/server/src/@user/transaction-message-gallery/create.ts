@@ -10,7 +10,9 @@ import { transactionMessageGalleryCreateFx } from "~/@user/transaction-message-g
 import { TransactionMessageGalleryCreateSchema } from "~/@user/transaction-message-gallery/schema/TransactionMessageGalleryCreateSchema";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
@@ -72,10 +74,17 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 			summary: "Create a gallery message for a transaction",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<MessageGallerySchema.Type, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiTransactionMessageGalleryCreate",
+					userId: user.id,
+				});
+
+				const result = c.json<MessageGallerySchema.Type, 200>(
 					yield* zodFx({
 						schema: MessageGallerySchema,
 						dataFx: transactionMessageGalleryCreateFx({
@@ -85,7 +94,12 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiTransactionMessageGalleryCreate");
+
+				return result;
 			}).pipe(
+				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx(),

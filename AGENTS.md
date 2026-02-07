@@ -153,6 +153,30 @@ Server uses Effect for:
 - Async operations
 - Function composition (`Effect.fn`, `yield*`)
 
+### Scoped log annotations
+Logging is shipped to **Axiom**. The server uses `withLoggingFx` (`apps/server/src/@common/axiom/fx/withLoggingFx.ts`) to wrap handler effects with the Axiom logger layer and context; Axiom config comes from env validated by `ServerAxiomSchema` (`apps/server/src/schema/env/ServerAxiomSchema.ts`) (`SERVER_AXIOM_TOKEN`, `SERVER_AXIOM_DATASET`).
+
+All new server endpoints and Effect-based flows should use **scoped annotated logs** so that logs are tagged with endpoint and context (e.g. `userId`). Use `Effect.annotateLogsScoped` at the start of the handler scope:
+
+```typescript
+return Effect.gen(function* () {
+  const user = c.get("user");
+
+  yield* Effect.annotateLogsScoped({
+    endpoint: "apiTransactionStatusReject",
+    userId: user.id,
+  });
+
+  // ... rest of handler; all logs in this scope get the above attributes
+  const result = c.json(/* ... */);
+  yield* Effect.log("apiTransactionStatusReject");
+  return result;
+}).pipe(/* ... */);
+```
+
+- Use a stable `endpoint` name (e.g. API route identifier) and include relevant context such as `userId` when available.
+- **Must** log once at the end with the same endpoint name for successful completion; without this log nothing is sent to Axiom.
+
 Example pattern:
 ```typescript
 export const withDomainApiFx = Effect.fn("withDomainApiFx")(function* () {
@@ -272,7 +296,7 @@ translation/           # i18n files (cs.yaml, en.yaml)
 
 1. **Check MASTER.md first**: All domain concepts, rules, and business logic are there.
 2. **Respect domain boundaries**: Don't mix buyer/seller logic. Use appropriate API context.
-3. **Follow Effect patterns**: Use Context.Tag for dependencies, Effect.fn for composition.
+3. **Follow Effect patterns**: Use Context.Tag for dependencies, Effect.fn for composition. Use `Effect.annotateLogsScoped` in handlers so logs are tagged with endpoint and context.
 4. **Type safety**: Use Kysely for DB, Zod for schemas, generated SDK types.
 5. **Error handling**: Use custom error types (AccessDeniedError, InvalidRequestError, etc.).
 6. **Respect limits**: Check subscription tiers, pass states, listing limits before operations.
@@ -290,6 +314,7 @@ translation/           # i18n files (cs.yaml, en.yaml)
 3. Create effect function in `fx/`
 4. Wire up in `with*ApiFx.ts`
 5. Add route in appropriate Hono instance
+6. In the handler, use `Effect.annotateLogsScoped({ endpoint, userId, ... })` so all logs are annotated (see **Scoped log annotations** under Technical Patterns).
 
 ### Frontend Component
 1. Use domain package if shared (`@zbav-se.me/buyer`, `@zbav-se.me/seller`)

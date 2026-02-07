@@ -10,7 +10,9 @@ import { withTransactionContextFx } from "~/@common/transaction/context/Transact
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withSuccessApiFx = Effect.fn("withSuccessApiFx")(function* () {
@@ -72,10 +74,17 @@ export const withSuccessApiFx = Effect.fn("withSuccessApiFx")(function* () {
 			summary: "Mark a listing transaction as successful",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<TransactionStatusSchema.Type, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiTransactionStatusSuccess",
+					userId: user.id,
+				});
+
+				const result = c.json<TransactionStatusSchema.Type, 200>(
 					yield* zodFx({
 						schema: TransactionStatusSchema,
 						dataFx: transactionStatusSuccessFx({
@@ -85,7 +94,12 @@ export const withSuccessApiFx = Effect.fn("withSuccessApiFx")(function* () {
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiTransactionStatusSuccess");
+
+				return result;
 			}).pipe(
+				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx(),

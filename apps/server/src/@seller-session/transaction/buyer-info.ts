@@ -8,7 +8,9 @@ import { transactionGetBuyerInfoFx } from "~/@seller-session/transaction/fx/tran
 import { TransactionBuyerInfoSchema } from "~/@seller-session/transaction/schema/TransactionBuyerInfoSchema";
 import { transactionFetchFx } from "~/@seller-user/transaction/fx/transactionFetchFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
@@ -62,8 +64,15 @@ export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
 			summary: "Get buyer info for a transaction",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
+
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiTransactionBuyerInfo",
+					userId: user.id,
+				});
 
 				const transaction = yield* transactionFetchFx({
 					...c.req.valid("json"),
@@ -72,7 +81,7 @@ export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
 					},
 				});
 
-				return c.json<TransactionBuyerInfoSchema.Type, 200>(
+				const result = c.json<TransactionBuyerInfoSchema.Type, 200>(
 					yield* zodFx({
 						schema: TransactionBuyerInfoSchema,
 						dataFx: transactionGetBuyerInfoFx({
@@ -82,7 +91,12 @@ export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiTransactionBuyerInfo");
+
+				return result;
 			}).pipe(
+				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {

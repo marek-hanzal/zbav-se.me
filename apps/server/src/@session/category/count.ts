@@ -5,8 +5,10 @@ import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { categoryCountFx } from "~/@session/category/fx/categoryCountFx";
 import { CategoryCountQuerySchema } from "~/@session/category/schema/CategoryCountQuerySchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { CountSchema } from "~/schema/CountSchema";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withCategoryCountApiFx = Effect.fn("withCategoryCountApiFx")(function* () {
@@ -51,8 +53,17 @@ export const withCategoryCountApiFx = Effect.fn("withCategoryCountApiFx")(functi
 			summary: "Count categories based on the provided query",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
-				return c.json<CountSchema.Type, 200>(
+				const user = c.get("user");
+
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiCategoryCount",
+					userId: user.id,
+				});
+
+				const result = c.json<CountSchema.Type, 200>(
 					yield* zodFx({
 						schema: CountSchema,
 						dataFx: categoryCountFx({
@@ -62,7 +73,12 @@ export const withCategoryCountApiFx = Effect.fn("withCategoryCountApiFx")(functi
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiCategoryCount");
+
+				return result;
 			}).pipe(
+				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {

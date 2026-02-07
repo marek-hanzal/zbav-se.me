@@ -7,7 +7,9 @@ import { locationFetchFx } from "~/@session/location/fx/locationFetchFx";
 import { LocationQuerySchema } from "~/@session/location/schema/LocationQuerySchema";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withLocationFetchApiFx = Effect.fn("withLocationFetchApiFx")(function* () {
@@ -61,8 +63,17 @@ export const withLocationFetchApiFx = Effect.fn("withLocationFetchApiFx")(functi
 			summary: "Fetch a location based on the provided query",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
-				return c.json<LocationSchema.Type, 200>(
+				const user = c.get("user");
+
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiLocationFetch",
+					userId: user.id,
+				});
+
+				const result = c.json<LocationSchema.Type, 200>(
 					yield* zodFx({
 						schema: LocationSchema,
 						dataFx: locationFetchFx({
@@ -71,7 +82,12 @@ export const withLocationFetchApiFx = Effect.fn("withLocationFetchApiFx")(functi
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiLocationFetch");
+
+				return result;
 			}).pipe(
+				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {

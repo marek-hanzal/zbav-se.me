@@ -1,12 +1,14 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { draftCollectionFx } from "~/@seller-user/draft/fx/draftCollectionFx";
 import { DraftItemSchema } from "~/@seller-user/draft/schema/DraftItemSchema";
 import { DraftQuerySchema } from "~/@seller-user/draft/schema/DraftQuerySchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
@@ -58,10 +60,17 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 			summary: "Fetch a collection of drafts based on the provided query",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<withCollectionSchema.Type<DraftItemSchema>, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiDraftCollection",
+					userId: user.id,
+				});
+
+				const result = c.json<withCollectionSchema.Type<DraftItemSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: draftCollectionFx({
@@ -77,8 +86,13 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiDraftCollection");
+
+				return result;
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
+				withLoggingFx(axiomConfig),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

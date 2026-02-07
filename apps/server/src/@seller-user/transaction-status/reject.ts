@@ -9,7 +9,9 @@ import { TransactionStatusRejectSchema } from "~/@common/transaction-status/sche
 import { TransactionStatusSchema } from "~/@seller-user/transaction-status/schema/TransactionStatusSchema";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { transactionStatusRejectFx } from "./fx/transactionStatusRejectFx";
 
@@ -71,10 +73,17 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 			summary: "Reject a listing transaction",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<TransactionStatusSchema.Type, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiTransactionStatusReject",
+					userId: user.id,
+				});
+
+				const result = c.json<TransactionStatusSchema.Type, 200>(
 					yield* zodFx({
 						schema: TransactionStatusSchema,
 						dataFx: transactionStatusRejectFx({
@@ -84,7 +93,12 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiTransactionStatusReject");
+
+				return result;
 			}).pipe(
+				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx(),

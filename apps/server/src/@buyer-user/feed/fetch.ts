@@ -7,7 +7,9 @@ import { FeedSchema } from "~/@buyer-user/feed/schema/FeedSchema";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
@@ -61,10 +63,17 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 			summary: "Fetch a feed item based on the provided query",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<FeedSchema.Type, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiFeedFetch",
+					userId: user.id,
+				});
+
+				const result = c.json<FeedSchema.Type, 200>(
 					yield* zodFx({
 						schema: FeedSchema,
 						dataFx: feedFetchFx({
@@ -76,8 +85,13 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiFeedFetch");
+
+				return result;
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
+				withLoggingFx(axiomConfig),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

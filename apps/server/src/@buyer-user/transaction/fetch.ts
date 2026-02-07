@@ -3,11 +3,13 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
 import { transactionFetchFx } from "~/@buyer-user/transaction/fx/transactionFetchFx";
 import { TransactionSchema } from "~/@buyer-user/transaction/schema/TransactionSchema";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { TransactionQuerySchema } from "~/@common/transaction/schema/TransactionQuerySchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
@@ -60,10 +62,17 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 			summary: "Fetch a transaction based on the provided query",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<TransactionSchema.Type, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiTransactionFetch",
+					userId: user.id,
+				});
+
+				const result = c.json<TransactionSchema.Type, 200>(
 					yield* zodFx({
 						schema: TransactionSchema,
 						dataFx: transactionFetchFx({
@@ -75,8 +84,13 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiTransactionFetch");
+
+				return result;
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
+				withLoggingFx(axiomConfig),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

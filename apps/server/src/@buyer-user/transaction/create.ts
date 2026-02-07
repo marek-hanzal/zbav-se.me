@@ -4,12 +4,14 @@ import { Effect, Match } from "effect";
 import { transactionCreateFx } from "~/@buyer-user/transaction/fx/transactionCreateFx";
 import { TransactionCreateSchema } from "~/@buyer-user/transaction/schema/TransactionCreateSchema";
 import { TransactionSchema } from "~/@buyer-user/transaction/schema/TransactionSchema";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withTransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
@@ -62,10 +64,17 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 			summary: "Create a new transaction",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<TransactionSchema.Type, 201>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiTransactionCreate",
+					userId: user.id,
+				});
+
+				const result = c.json<TransactionSchema.Type, 201>(
 					yield* zodFx({
 						schema: TransactionSchema,
 						dataFx: transactionCreateFx({
@@ -75,8 +84,13 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					}),
 					201,
 				);
+
+				yield* Effect.log("apiTransactionCreate");
+
+				return result;
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
+				withLoggingFx(axiomConfig),
 				withDateFx,
 				withTransactionContextFx(),
 				//

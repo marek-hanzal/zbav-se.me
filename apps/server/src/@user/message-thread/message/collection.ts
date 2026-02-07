@@ -8,7 +8,9 @@ import { MessageQuerySchema } from "~/@user/message/schema/MessageQuerySchema";
 import { MessageItemSchema } from "~/@user/message-thread/message/schema/MessageItemSchema";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
@@ -80,9 +82,16 @@ export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx"
 				"Fetch a collection of messages for a message thread based on the provided query",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const { messageThreadId } = c.req.valid("param");
 				const user = c.get("user");
+
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiMessageThreadMessageCollection",
+					userId: user.id,
+				});
 
 				yield* messageUserCheckFx({
 					messageThreadId: messageThreadId,
@@ -91,7 +100,7 @@ export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx"
 					],
 				});
 
-				return c.json<z.infer<typeof CollectionSchema>, 200>(
+				const result = c.json<z.infer<typeof CollectionSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: messageCollectionFx({
@@ -108,7 +117,12 @@ export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx"
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiMessageThreadMessageCollection");
+
+				return result;
 			}).pipe(
+				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {

@@ -1,12 +1,14 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { S3ContextLayer } from "~/@common/s3/context/S3ContextLayer";
 import { cleanupFx } from "~/@public/janitor/cleanup/cleanupFx";
 import { CleanupSchema } from "~/@public/janitor/schema/CleanupSchema";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { ServerS3Schema } from "~/schema/env/ServerS3Schema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -43,11 +45,17 @@ export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(func
 			],
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			try {
 				const s3Config = ServerS3Schema.parse(process.env);
 
 				return await Effect.gen(function* () {
-					return c.json(
+					yield* Effect.annotateLogsScoped({
+						endpoint: "apiJanitorCleanup",
+					});
+
+					const result = c.json(
 						yield* zodFx({
 							schema: z.array(CleanupSchema),
 							dataFx: cleanupFx() satisfies Effect.Effect<
@@ -58,6 +66,10 @@ export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(func
 						}),
 						200,
 					);
+
+					yield* Effect.log("apiJanitorCleanup");
+
+					return result;
 				}).pipe(
 					withKyselyFx(c.get("kysely")),
 					withDateFx,
@@ -69,6 +81,7 @@ export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(func
 							bucket: s3Config.SERVER_S3_BUCKET,
 						}),
 					),
+					withLoggingFx(axiomConfig),
 					Effect.runPromise,
 				);
 			} catch (e) {

@@ -7,7 +7,9 @@ import { listingFetchFx } from "~/@seller-user/listing/fx/listingFetchFx";
 import { ListingQuerySchema } from "~/@seller-user/listing/schema/ListingQuerySchema";
 import { ListingSchema } from "~/@seller-user/listing/schema/ListingSchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
@@ -60,10 +62,17 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 			summary: "Fetch a listing based on the provided query",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<ListingSchema.Type, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiListingFetch",
+					userId: user.id,
+				});
+
+				const result = c.json<ListingSchema.Type, 200>(
 					yield* zodFx({
 						schema: ListingSchema,
 						dataFx: listingFetchFx({
@@ -75,7 +84,12 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiListingFetch");
+
+				return result;
 			}).pipe(
+				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				Effect.catchAll((e) => {
 					return Effect.succeed(

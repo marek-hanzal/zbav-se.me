@@ -9,7 +9,9 @@ import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
@@ -69,10 +71,17 @@ export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
 			summary: "Toggle flag state on listing (add or remove)",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<ListingSchema.Type, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiFlagToggle",
+					userId: user.id,
+				});
+
+				const result = c.json<ListingSchema.Type, 200>(
 					yield* zodFx({
 						schema: ListingSchema,
 						dataFx: flagToggleFx({
@@ -82,8 +91,14 @@ export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiFlagToggle");
+
+				return result;
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
+				withLoggingFx(axiomConfig),
+				//
 				withDateFx,
 				//
 				Effect.catchAll((e) => {

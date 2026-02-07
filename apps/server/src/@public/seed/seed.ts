@@ -1,5 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
 import { withTransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
@@ -7,6 +8,7 @@ import { SeedRequestSchema, seedFx } from "~/@public/seed/fx/seedFx";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
@@ -63,13 +65,23 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 			],
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
-				return c.json(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiSeed",
+				});
+
+				const result = c.json(
 					yield* seedFx({
 						...c.req.valid("json"),
 					}),
 					201,
 				);
+
+				yield* Effect.log("apiSeed");
+
+				return result;
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
@@ -77,6 +89,7 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 					expires: 7,
 					extend: 3,
 				}),
+				withLoggingFx(axiomConfig),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

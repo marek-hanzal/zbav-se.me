@@ -1,12 +1,14 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { draftCountFx } from "~/@seller-user/draft/fx/draftCountFx";
 import { DraftCountQuerySchema } from "~/@seller-user/draft/schema/DraftCountQuerySchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { CountSchema } from "~/schema/CountSchema";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
@@ -51,10 +53,17 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 			summary: "Count drafts based on the provided query",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<CountSchema.Type, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiDraftCount",
+					userId: user.id,
+				});
+
+				const result = c.json<CountSchema.Type, 200>(
 					yield* zodFx({
 						schema: CountSchema,
 						dataFx: draftCountFx({
@@ -66,8 +75,13 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiDraftCount");
+
+				return result;
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
+				withLoggingFx(axiomConfig),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

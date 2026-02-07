@@ -5,7 +5,9 @@ import { listingCountFx } from "~/@buyer-user/listing/fx/listingCountFx";
 import { ListingCountQuerySchema } from "~/@buyer-user/listing/schema/ListingCountQuerySchema";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -50,10 +52,17 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 			summary: "Count listings based on the provided query",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<CountSchema.Type, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiListingCount",
+					userId: user.id,
+				});
+
+				const result = c.json<CountSchema.Type, 200>(
 					yield* zodFx({
 						schema: CountSchema,
 						dataFx: listingCountFx({
@@ -64,8 +73,13 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiListingCount");
+
+				return result;
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
+				withLoggingFx(axiomConfig),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

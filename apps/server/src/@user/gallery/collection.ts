@@ -6,7 +6,9 @@ import { galleryCollectionFx } from "~/@user/gallery/fx/galleryCollectionFx";
 import { GalleryItemSchema } from "~/@user/gallery/schema/GalleryItemSchema";
 import { GalleryQuerySchema } from "~/@user/gallery/schema/GalleryQuerySchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
@@ -57,10 +59,17 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 			summary: "Fetch a collection of galleries based on the provided query",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<withCollectionSchema.Type<GalleryItemSchema>, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiGalleryCollection",
+					userId: user.id,
+				});
+
+				const result = c.json<withCollectionSchema.Type<GalleryItemSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: galleryCollectionFx({
@@ -76,7 +85,12 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiGalleryCollection");
+
+				return result;
 			}).pipe(
+				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {

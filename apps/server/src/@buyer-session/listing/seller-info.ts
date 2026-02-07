@@ -6,7 +6,9 @@ import { SellerInfoSchema } from "~/@buyer-session/listing/schema/SellerInfoSche
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 const ListingSellerInfoParamsSchema = z
@@ -63,10 +65,18 @@ export const withSellerInfoApiFx = Effect.fn("withSellerInfoApiFx")(function* ()
 			summary: "Return seller info for a listing.",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
+				const user = c.get("user");
 				const { listingId } = c.req.valid("param");
 
-				return c.json<SellerInfoSchema.Type, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiListingSellerInfo",
+					userId: user.id,
+				});
+
+				const result = c.json<SellerInfoSchema.Type, 200>(
 					yield* zodFx({
 						schema: SellerInfoSchema,
 						dataFx: listingGetSellerInfoFx({
@@ -75,7 +85,12 @@ export const withSellerInfoApiFx = Effect.fn("withSellerInfoApiFx")(function* ()
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiListingSellerInfo");
+
+				return result;
 			}).pipe(
+				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				Effect.catchAll((e) => {
 					return Effect.succeed(

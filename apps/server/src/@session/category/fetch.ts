@@ -7,7 +7,9 @@ import { categoryFetchFx } from "~/@session/category/fx/categoryFetchFx";
 import { CategoryQuerySchema } from "~/@session/category/schema/CategoryQuerySchema";
 import { CategorySchema } from "~/@session/category/schema/CategorySchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withCategoryFetchApiFx = Effect.fn("withCategoryFetchApiFx")(function* () {
@@ -61,8 +63,17 @@ export const withCategoryFetchApiFx = Effect.fn("withCategoryFetchApiFx")(functi
 			summary: "Fetch a category based on the provided query",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
-				return c.json<CategorySchema.Type, 200>(
+				const user = c.get("user");
+
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiCategoryFetch",
+					userId: user.id,
+				});
+
+				const result = c.json<CategorySchema.Type, 200>(
 					yield* zodFx({
 						schema: CategorySchema,
 						dataFx: categoryFetchFx({
@@ -72,7 +83,12 @@ export const withCategoryFetchApiFx = Effect.fn("withCategoryFetchApiFx")(functi
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiCategoryFetch");
+
+				return result;
 			}).pipe(
+				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {

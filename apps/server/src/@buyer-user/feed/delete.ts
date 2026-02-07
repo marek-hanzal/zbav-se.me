@@ -4,10 +4,12 @@ import { Effect, Match } from "effect";
 import { feedDeleteFx } from "~/@buyer-user/feed/fx/feedDeleteFx";
 import { FeedQuerySchema } from "~/@buyer-user/feed/schema/FeedQuerySchema";
 import { FeedSchema } from "~/@buyer-user/feed/schema/FeedSchema";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withDeleteApiFx = Effect.fn("withDeleteApiFx")(function* () {
@@ -60,10 +62,17 @@ export const withDeleteApiFx = Effect.fn("withDeleteApiFx")(function* () {
 			summary: "Delete a feed item based on the provided query",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<FeedSchema.Type, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiFeedDelete",
+					userId: user.id,
+				});
+
+				const result = c.json<FeedSchema.Type, 200>(
 					yield* zodFx({
 						schema: FeedSchema,
 						dataFx: feedDeleteFx({
@@ -75,8 +84,13 @@ export const withDeleteApiFx = Effect.fn("withDeleteApiFx")(function* () {
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiFeedDelete");
+
+				return result;
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
+				withLoggingFx(axiomConfig),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

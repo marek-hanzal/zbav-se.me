@@ -6,7 +6,9 @@ import { FlagItemSchema } from "~/@buyer-user/flag/schema/FlagItemSchema";
 import { FlagQuerySchema } from "~/@buyer-user/flag/schema/FlagQuerySchema";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
@@ -57,10 +59,17 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 			summary: "Fetch a collection of flag items based on the provided query",
 		}),
 		async (c) => {
+			const axiomConfig = ServerAxiomSchema.parse(process.env);
+
 			return Effect.gen(function* () {
 				const user = c.get("user");
 
-				return c.json<withCollectionSchema.Type<FlagItemSchema>, 200>(
+				yield* Effect.annotateLogsScoped({
+					endpoint: "apiFlagCollection",
+					userId: user.id,
+				});
+
+				const result = c.json<withCollectionSchema.Type<FlagItemSchema>, 200>(
 					yield* zodFx({
 						schema: CollectionSchema,
 						dataFx: flagCollectionFx({
@@ -76,8 +85,13 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 					}),
 					200,
 				);
+
+				yield* Effect.log("apiFlagCollection");
+
+				return result;
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
+				withLoggingFx(axiomConfig),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
