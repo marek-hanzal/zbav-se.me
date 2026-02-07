@@ -1,5 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { Effect, Match } from "effect";
+import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
@@ -7,6 +7,7 @@ import { withTransactionContextFx } from "~/@common/transaction/context/Transact
 import { SeedRequestSchema, seedFx } from "~/@public/seed/fx/seedFx";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -90,37 +91,19 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 					extend: 3,
 				}),
 				withLoggingFx(axiomConfig),
-				//
-				Effect.catchAll((e) => {
-					return Effect.succeed(
-						Match.value(e).pipe(
-							Match.when(
-								{
-									_tag: "InvalidRequestError",
-								},
-								(err) => c.json(noticeError(err), 400),
-							),
-							Match.when(
-								{
-									_tag: "AccessDeniedError",
-								},
-								() => c.json(NotFoundNotice, 404),
-							),
-							Match.when(
-								{
-									_tag: "NotFoundErrorFx",
-								},
-								() => c.json(NotFoundNotice, 404),
-							),
-							Match.when(
-								{
-									_tag: "RuntimeError",
-								},
-								(err) => c.json(noticeError(err), 500),
-							),
-							Match.exhaustive,
-						),
-					);
+				withCatchFx({
+					InvalidRequestError(err) {
+						return c.json(noticeError(err), 400);
+					},
+					AccessDeniedError() {
+						return c.json(NotFoundNotice, 404);
+					},
+					NotFoundErrorFx() {
+						return c.json(NotFoundNotice, 404);
+					},
+					RuntimeError(err) {
+						return c.json(noticeError(err), 500);
+					},
 				}),
 				Effect.runPromise,
 			);

@@ -1,12 +1,13 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
-import { Effect, Match } from "effect";
+import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { userExPatchFx } from "~/@user/user-ex/fx/userExPatchFx";
 import { UserExPatchSchema } from "~/@user/user-ex/schema/UserExPatchSchema";
 import { UserExSchema } from "~/@user/user-ex/schema/UserExSchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -81,20 +82,11 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
 				withLoggingFx(axiomConfig),
-				//
-				Effect.catchAll((e) =>
-					Effect.succeed(
-						Match.value(e).pipe(
-							Match.when(
-								{
-									_tag: "ZodErrorFx",
-								},
-								({ zod }) => c.json(noticeZodError(zod), 500),
-							),
-							Match.exhaustive,
-						),
-					),
-				),
+				withCatchFx({
+					ZodErrorFx({ zod }) {
+						return c.json(noticeZodError(zod), 500);
+					},
+				}),
 				Effect.runPromise,
 			);
 		},

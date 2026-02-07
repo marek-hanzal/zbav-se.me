@@ -1,17 +1,18 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
-import { Effect, Match } from "effect";
+import { Effect } from "effect";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { S3ContextLayer } from "~/@common/s3/context/S3ContextLayer";
 import { s3PreSignFx } from "~/@common/s3/fx/s3PreSignFx";
 import { UploadContextLayer } from "~/@common/upload/context/UploadContextLayer";
 import { S3PreSignRequestSchema } from "~/@user/s3/schema/S3PreSignRequestSchema";
 import { S3PreSignResponseSchema } from "~/@user/s3/schema/S3PreSignResponseSchema";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
+import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
 import { ServerS3Schema } from "~/schema/env/ServerS3Schema";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
@@ -100,19 +101,10 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 					}),
 				),
 				withLoggingFx(axiomConfig),
-				//
-				Effect.catchAll((e) => {
-					return Effect.succeed(
-						Match.value(e).pipe(
-							Match.when(
-								{
-									_tag: "ZodErrorFx",
-								},
-								({ zod }) => c.json(noticeZodError(zod), 500),
-							),
-							Match.exhaustive,
-						),
-					);
+				withCatchFx({
+					ZodErrorFx({ zod }) {
+						return c.json(noticeZodError(zod), 500);
+					},
 				}),
 				Effect.runPromise,
 			);

@@ -1,6 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
-import { Effect, Match } from "effect";
+import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
@@ -11,6 +11,7 @@ import { UploadCreateSchema } from "~/@user/upload/schema/UploadCreateSchema";
 import { UploadSchema } from "~/@user/upload/schema/UploadSchema";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
@@ -108,31 +109,16 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					}),
 				),
 				withLoggingFx(axiomConfig),
-				//
-				Effect.catchAll((e) => {
-					return Effect.succeed(
-						Match.value(e).pipe(
-							Match.when(
-								{
-									_tag: "InvalidRequestError",
-								},
-								() => c.json(noticeError(e), 400),
-							),
-							Match.when(
-								{
-									_tag: "NotFoundErrorFx",
-								},
-								() => c.json(NotFoundNotice, 404),
-							),
-							Match.when(
-								{
-									_tag: "ZodErrorFx",
-								},
-								({ zod }) => c.json(noticeZodError(zod), 500),
-							),
-							Match.exhaustive,
-						),
-					);
+				withCatchFx({
+					InvalidRequestError(e) {
+						return c.json(noticeError(e), 400);
+					},
+					NotFoundErrorFx() {
+						return c.json(NotFoundNotice, 404);
+					},
+					ZodErrorFx({ zod }) {
+						return c.json(noticeZodError(zod), 500);
+					},
 				}),
 				Effect.runPromise,
 			);

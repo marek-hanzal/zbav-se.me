@@ -1,6 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
-import { Effect, Match } from "effect";
+import { Effect } from "effect";
 import { transactionCreateFx } from "~/@buyer-user/transaction/fx/transactionCreateFx";
 import { TransactionCreateSchema } from "~/@buyer-user/transaction/schema/TransactionCreateSchema";
 import { TransactionSchema } from "~/@buyer-user/transaction/schema/TransactionSchema";
@@ -10,6 +10,7 @@ import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withTransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -93,25 +94,13 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				withLoggingFx(axiomConfig),
 				withDateFx,
 				withTransactionContextFx(),
-				//
-				Effect.catchAll((e) => {
-					return Effect.succeed(
-						Match.value(e).pipe(
-							Match.when(
-								{
-									_tag: "NotFoundErrorFx",
-								},
-								() => c.json(NotFoundNotice, 404),
-							),
-							Match.when(
-								{
-									_tag: "ZodErrorFx",
-								},
-								({ zod }) => c.json(noticeZodError(zod), 500),
-							),
-							Match.exhaustive,
-						),
-					);
+				withCatchFx({
+					NotFoundErrorFx() {
+						return c.json(NotFoundNotice, 404);
+					},
+					ZodErrorFx({ zod }) {
+						return c.json(noticeZodError(zod), 500);
+					},
 				}),
 				Effect.runPromise,
 			);

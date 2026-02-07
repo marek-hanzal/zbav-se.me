@@ -1,15 +1,16 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodFx } from "@use-pico/common/schema";
-import { Effect, Match } from "effect";
+import { Effect } from "effect";
 import { feedGalleryCreateFx } from "~/@buyer-user/feed-gallery/fx/feedGalleryCreateFx";
 import { FeedGalleryCreateSchema } from "~/@buyer-user/feed-gallery/schema/FeedGalleryCreateSchema";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
+import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -102,37 +103,19 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				withLoggingFx(axiomConfig),
 				//
 				withDateFx,
-				//
-				Effect.catchAll((e) => {
-					return Effect.succeed(
-						Match.value(e).pipe(
-							Match.when(
-								{
-									_tag: "InvalidRequestError",
-								},
-								() => c.json(noticeError(e), 400),
-							),
-							Match.when(
-								{
-									_tag: "NotFoundErrorFx",
-								},
-								() => c.json(NotFoundNotice, 404),
-							),
-							Match.when(
-								{
-									_tag: "AccessDeniedError",
-								},
-								() => c.json(NotFoundNotice, 404),
-							),
-							Match.when(
-								{
-									_tag: "ZodErrorFx",
-								},
-								({ zod }) => c.json(noticeZodError(zod), 500),
-							),
-							Match.exhaustive,
-						),
-					);
+				withCatchFx({
+					InvalidRequestError(e) {
+						return c.json(noticeError(e), 400);
+					},
+					NotFoundErrorFx() {
+						return c.json(NotFoundNotice, 404);
+					},
+					AccessDeniedError() {
+						return c.json(NotFoundNotice, 404);
+					},
+					ZodErrorFx({ zod }) {
+						return c.json(noticeZodError(zod), 500);
+					},
 				}),
 				Effect.runPromise,
 			);
