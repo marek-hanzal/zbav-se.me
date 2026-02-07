@@ -62,7 +62,7 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 				text,
 				lang,
 				limit,
-			});
+			}).pipe(Effect.withLogSpan("withLocationRequestFx"));
 
 			const locations = features.map(({ properties }) => ({
 				id: genId(),
