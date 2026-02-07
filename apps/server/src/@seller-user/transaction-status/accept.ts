@@ -9,7 +9,7 @@ import { TransactionContextProvider } from "~/@common/transaction/context/Transa
 import { transactionStatusAcceptFx } from "~/@seller-user/transaction-status/fx/transactionStatusAcceptFx";
 import { TransactionStatusAcceptSchema } from "~/@seller-user/transaction-status/schema/TransactionStatusAcceptSchema";
 import { TransactionStatusSchema } from "~/@seller-user/transaction-status/schema/TransactionStatusSchema";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -77,7 +77,7 @@ export const withAcceptApiFx = Effect.fn("withAcceptApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				withKyselyFx(c.get("kysely")),
 				Effect.provide(DateContextLayer(createDateContext())),
 				TransactionContextProvider(),
 				//

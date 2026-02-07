@@ -4,7 +4,7 @@ import { Effect, Match } from "effect";
 import { ignoreCountFx } from "~/@buyer-user/ignore/fx/ignoreCountFx";
 import { IgnoreCountQuerySchema } from "~/@buyer-user/ignore/schema/IgnoreCountQuerySchema";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -66,7 +66,7 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				withKyselyFx(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

@@ -5,7 +5,7 @@ import { favouriteCollectionFx } from "~/@buyer-user/favourite/fx/favouriteColle
 import { FavouriteItemSchema } from "~/@buyer-user/favourite/schema/FavouriteItemSchema";
 import { FavouriteQuerySchema } from "~/@buyer-user/favourite/schema/FavouriteQuerySchema";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
@@ -78,7 +78,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 					200,
 				);
 			}).pipe(
-				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				withKyselyFx(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

@@ -6,7 +6,7 @@ import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { listingFetchFx } from "~/@seller-user/listing/fx/listingFetchFx";
 import { ListingQuerySchema } from "~/@seller-user/listing/schema/ListingQuerySchema";
 import { ListingSchema } from "~/@seller-user/listing/schema/ListingSchema";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -76,7 +76,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				withKyselyFx(c.get("kysely")),
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(

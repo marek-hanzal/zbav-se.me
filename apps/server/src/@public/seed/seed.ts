@@ -5,7 +5,7 @@ import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
 import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
 import { SeedRequestSchema, seedFx } from "~/@public/seed/fx/seedFx";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -71,7 +71,7 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 					201,
 				);
 			}).pipe(
-				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				withKyselyFx(c.get("kysely")),
 				Effect.provide(DateContextLayer(createDateContext())),
 				TransactionContextProvider({
 					expires: 7,

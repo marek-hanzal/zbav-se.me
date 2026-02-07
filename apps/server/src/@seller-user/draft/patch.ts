@@ -7,7 +7,7 @@ import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { draftPatchFx } from "~/@seller-user/draft/fx/draftPatchFx";
 import { DraftPatchSchema } from "~/@seller-user/draft/schema/DraftPatchSchema";
 import { DraftSchema } from "~/@seller-user/draft/schema/DraftSchema";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -86,7 +86,7 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				withKyselyFx(c.get("kysely")),
 				Effect.provide(DateContextLayer(createDateContext())),
 				//
 				Effect.catchAll((e) => {

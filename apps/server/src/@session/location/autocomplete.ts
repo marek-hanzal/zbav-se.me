@@ -6,7 +6,7 @@ import { LocationContextLayer } from "~/@session/location/context/LocationContex
 import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompleteFx";
 import { LocationAutocompleteSchema } from "~/@session/location/schema/LocationAutocompleteSchema";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
@@ -68,7 +68,7 @@ export const withLocationAutocompleteApiFx = Effect.fn("withLocationAutocomplete
 						200,
 					);
 				}).pipe(
-					Effect.provide(KyselyContextLayer(c.get("kysely"))),
+					withKyselyFx(c.get("kysely")),
 					Effect.provide(
 						LocationContextLayer({
 							geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,

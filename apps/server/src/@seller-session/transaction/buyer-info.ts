@@ -7,7 +7,7 @@ import { TransactionQuerySchema } from "~/@common/transaction/schema/Transaction
 import { transactionGetBuyerInfoFx } from "~/@seller-session/transaction/fx/transactionGetBuyerInfoFx";
 import { TransactionBuyerInfoSchema } from "~/@seller-session/transaction/schema/TransactionBuyerInfoSchema";
 import { transactionFetchFx } from "~/@seller-user/transaction/fx/transactionFetchFx";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -83,7 +83,7 @@ export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				withKyselyFx(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

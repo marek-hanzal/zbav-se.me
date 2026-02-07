@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 
 export const withTransactionFx = Effect.fn("withTransactionFx")(function* <
 	const A,
@@ -10,18 +10,16 @@ export const withTransactionFx = Effect.fn("withTransactionFx")(function* <
 	const kysely = yield* KyselyContextFx;
 
 	if (kysely.kysely.isTransaction) {
-		return yield* effect.pipe(Effect.provide(KyselyContextLayer(kysely)));
+		return yield* effect.pipe(withKyselyFx(kysely));
 	}
 
 	const trx = yield* Effect.promise(async () => kysely.kysely.startTransaction().execute());
 
 	return yield* effect.pipe(
-		Effect.provide(
-			KyselyContextLayer({
-				...kysely,
-				kysely: trx,
-			}),
-		),
+		withKyselyFx({
+			...kysely,
+			kysely: trx,
+		}),
 		Effect.matchEffect({
 			onSuccess(value) {
 				return Effect.promise(async () => trx.commit().execute()).pipe(

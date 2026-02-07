@@ -5,7 +5,7 @@ import { FeedQuerySchema } from "~/@buyer-user/feed/schema/FeedQuerySchema";
 import { feedFavouriteCollectionFx } from "~/@buyer-user/feed-favourite/fx/feedFavouriteCollectionFx";
 import { FeedFavouriteItemSchema } from "~/@buyer-user/feed-favourite/schema/FeedFavouriteItemSchema";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
@@ -81,7 +81,7 @@ export const withFeedFavouriteCollectionApiFx = Effect.fn("withFeedFavouriteColl
 						200,
 					);
 				}).pipe(
-					Effect.provide(KyselyContextLayer(c.get("kysely"))),
+					withKyselyFx(c.get("kysely")),
 					//
 					Effect.catchAll((e) => {
 						return Effect.succeed(

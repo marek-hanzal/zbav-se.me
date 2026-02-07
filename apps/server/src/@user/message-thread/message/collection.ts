@@ -7,7 +7,7 @@ import { messageCollectionFx } from "~/@user/message/fx/messageCollectionFx";
 import { MessageQuerySchema } from "~/@user/message/schema/MessageQuerySchema";
 import { MessageItemSchema } from "~/@user/message-thread/message/schema/MessageItemSchema";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
@@ -109,7 +109,7 @@ export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx"
 					200,
 				);
 			}).pipe(
-				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				withKyselyFx(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

@@ -7,7 +7,7 @@ import { FeedPatchSchema } from "~/@buyer-user/feed/schema/FeedPatchSchema";
 import { FeedSchema } from "~/@buyer-user/feed/schema/FeedSchema";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -77,7 +77,7 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				withKyselyFx(c.get("kysely")),
 				Effect.provide(DateContextLayer(createDateContext())),
 				//
 				Effect.catchAll((e) => {

@@ -5,7 +5,7 @@ import { listingCollectionFx } from "~/@buyer-user/listing/fx/listingCollectionF
 import { ListingItemSchema } from "~/@buyer-user/listing/schema/ListingItemSchema";
 import { ListingQuerySchema } from "~/@buyer-user/listing/schema/ListingQuerySchema";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
@@ -76,7 +76,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 					200,
 				);
 			}).pipe(
-				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				withKyselyFx(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

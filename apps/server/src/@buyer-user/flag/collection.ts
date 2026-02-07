@@ -5,7 +5,7 @@ import { flagCollectionFx } from "~/@buyer-user/flag/fx/flagCollectionFx";
 import { FlagItemSchema } from "~/@buyer-user/flag/schema/FlagItemSchema";
 import { FlagQuerySchema } from "~/@buyer-user/flag/schema/FlagQuerySchema";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
@@ -77,7 +77,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 					200,
 				);
 			}).pipe(
-				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				withKyselyFx(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

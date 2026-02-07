@@ -9,7 +9,7 @@ import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { TransactionContextProvider } from "~/@common/transaction/context/TransactionContextFx";
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -86,7 +86,7 @@ export const withSuccessApiFx = Effect.fn("withSuccessApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				withKyselyFx(c.get("kysely")),
 				Effect.provide(DateContextLayer(createDateContext())),
 				TransactionContextProvider(),
 				//

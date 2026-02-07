@@ -6,7 +6,7 @@ import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { locationFetchFx } from "~/@session/location/fx/locationFetchFx";
 import { LocationQuerySchema } from "~/@session/location/schema/LocationQuerySchema";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -72,7 +72,7 @@ export const withLocationFetchApiFx = Effect.fn("withLocationFetchApiFx")(functi
 					200,
 				);
 			}).pipe(
-				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				withKyselyFx(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

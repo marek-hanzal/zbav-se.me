@@ -6,7 +6,7 @@ import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { categoryFetchFx } from "~/@session/category/fx/categoryFetchFx";
 import { CategoryQuerySchema } from "~/@session/category/schema/CategoryQuerySchema";
 import { CategorySchema } from "~/@session/category/schema/CategorySchema";
-import { KyselyContextLayer } from "~/database/context/KyselyContextLayer";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -73,7 +73,7 @@ export const withCategoryFetchApiFx = Effect.fn("withCategoryFetchApiFx")(functi
 					200,
 				);
 			}).pipe(
-				Effect.provide(KyselyContextLayer(c.get("kysely"))),
+				withKyselyFx(c.get("kysely")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
