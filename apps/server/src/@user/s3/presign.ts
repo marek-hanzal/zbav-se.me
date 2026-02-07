@@ -5,7 +5,7 @@ import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { S3ContextLayer } from "~/@common/s3/context/S3ContextLayer";
 import { s3PreSignFx } from "~/@common/s3/fx/s3PreSignFx";
-import { UploadContextLayer } from "~/@common/upload/context/UploadContextLayer";
+import { withUploadFx } from "~/@common/upload/context/withUploadFx";
 import { S3PreSignRequestSchema } from "~/@user/s3/schema/S3PreSignRequestSchema";
 import { S3PreSignResponseSchema } from "~/@user/s3/schema/S3PreSignResponseSchema";
 import { withCatchFx } from "~/effect/withCatchFx";
@@ -95,11 +95,9 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 						bucket: s3Config.SERVER_S3_BUCKET,
 					}),
 				),
-				Effect.provide(
-					UploadContextLayer({
-						cdn: cdnConfig.SERVER_CONTENT_CDN,
-					}),
-				),
+				withUploadFx({
+					cdn: cdnConfig.SERVER_CONTENT_CDN,
+				}),
 				withLoggingFx(axiomConfig),
 				withCatchFx({
 					ZodErrorFx({ zod }) {

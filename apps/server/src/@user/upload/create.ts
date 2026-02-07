@@ -5,7 +5,7 @@ import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
-import { UploadContextLayer } from "~/@common/upload/context/UploadContextLayer";
+import { withUploadFx } from "~/@common/upload/context/withUploadFx";
 import { uploadCreateFx } from "~/@user/upload/fx/uploadCreateFx";
 import { UploadCreateSchema } from "~/@user/upload/schema/UploadCreateSchema";
 import { UploadSchema } from "~/@user/upload/schema/UploadSchema";
@@ -103,11 +103,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
-				Effect.provide(
-					UploadContextLayer({
-						cdn: cdnConfig.SERVER_CONTENT_CDN,
-					}),
-				),
+				withUploadFx({
+					cdn: cdnConfig.SERVER_CONTENT_CDN,
+				}),
 				withLoggingFx(axiomConfig),
 				withCatchFx({
 					InvalidRequestError(e) {

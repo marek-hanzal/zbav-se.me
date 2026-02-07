@@ -3,8 +3,8 @@ import { zodFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
-import { LocationContextLayer } from "~/@session/location/context/LocationContextLayer";
 import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompleteFx";
+import { withLocationFx } from "~/@session/location/fx/withLocationFx";
 import { LocationAutocompleteSchema } from "~/@session/location/schema/LocationAutocompleteSchema";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
@@ -86,13 +86,11 @@ export const withLocationAutocompleteApiFx = Effect.fn("withLocationAutocomplete
 				}).pipe(
 					withLoggingFx(axiomConfig),
 					withKyselyFx(c.get("kysely")),
-					Effect.provide(
-						LocationContextLayer({
-							geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,
-							api: "https://api.geoapify.com",
-							autocomplete: "/v1/geocode/autocomplete",
-						}),
-					),
+					withLocationFx({
+						geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,
+						api: "https://api.geoapify.com",
+						autocomplete: "/v1/geocode/autocomplete",
+					}),
 					withCatchFx({
 						TextTooShortErrorFx() {
 							return c.json<LocationSchema.Type[], 200>([], 200, {
