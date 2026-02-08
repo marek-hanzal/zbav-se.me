@@ -96,8 +96,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				Effect.tap(() => Effect.log("apiTransactionMessagePackageCreate")),
-				withLoggingFx(axiomConfig),
+				withLoggingFx(axiomConfig, "apiTransactionMessagePackageCreate"),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx(),

@@ -86,9 +86,8 @@ export const withDeleteApiFx = Effect.fn("withDeleteApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				Effect.tap(() => Effect.log("apiFeedDelete")),
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig),
+				withLoggingFx(axiomConfig, "apiFeedDelete"),
 				withCatchFx({
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);

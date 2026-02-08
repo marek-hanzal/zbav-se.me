@@ -76,9 +76,8 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				Effect.tap(() => Effect.log("apiUserExPatch")),
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig),
+				withLoggingFx(axiomConfig, "apiUserExPatch"),
 				withCatchFx({
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);

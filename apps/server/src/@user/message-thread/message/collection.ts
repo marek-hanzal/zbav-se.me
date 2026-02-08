@@ -115,8 +115,7 @@ export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx"
 					200,
 				);
 			}).pipe(
-				Effect.tap(() => Effect.log("apiMessageThreadMessageCollection")),
-				withLoggingFx(axiomConfig),
+				withLoggingFx(axiomConfig, "apiMessageThreadMessageCollection"),
 				withKyselyFx(c.get("kysely")),
 				//
 				withCatchFx({

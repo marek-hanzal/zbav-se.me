@@ -95,8 +95,7 @@ export const withResolveApiFx = Effect.fn("withResolveApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				Effect.tap(() => Effect.log("apiTransactionStatusResolve")),
-				withLoggingFx(axiomConfig),
+				withLoggingFx(axiomConfig, "apiTransactionStatusResolve"),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx(),

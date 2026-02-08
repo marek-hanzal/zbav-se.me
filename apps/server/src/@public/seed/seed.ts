@@ -80,14 +80,13 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 					201,
 				);
 			}).pipe(
-				Effect.tap(() => Effect.log("apiSeed")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx({
 					expires: 7,
 					extend: 3,
 				}),
-				withLoggingFx(axiomConfig),
+				withLoggingFx(axiomConfig, "apiSeed"),
 				withCatchFx({
 					InvalidRequestError(err) {
 						return c.json(noticeError(err), 400);

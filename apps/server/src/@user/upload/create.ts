@@ -97,13 +97,12 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					201,
 				);
 			}).pipe(
-				Effect.tap(() => Effect.log("apiUploadCreate")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withUploadFx({
 					cdn: cdnConfig.SERVER_CONTENT_CDN,
 				}),
-				withLoggingFx(axiomConfig),
+				withLoggingFx(axiomConfig, "apiUploadCreate"),
 				withCatchFx({
 					InvalidRequestError(e) {
 						return c.json(noticeError(e), 400);

@@ -80,8 +80,7 @@ export const withLocationAutocompleteApiFx = Effect.fn("withLocationAutocomplete
 						200,
 					);
 				}).pipe(
-					Effect.tap(() => Effect.log("apiLocationAutocomplete")),
-					withLoggingFx(axiomConfig),
+					withLoggingFx(axiomConfig, "apiLocationAutocomplete"),
 					withKyselyFx(c.get("kysely")),
 					withLocationFx({
 						geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,

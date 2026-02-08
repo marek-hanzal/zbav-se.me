@@ -76,8 +76,7 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				Effect.tap(() => Effect.log("apiGalleryCount")),
-				withLoggingFx(axiomConfig),
+				withLoggingFx(axiomConfig, "apiGalleryCount"),
 				withKyselyFx(c.get("kysely")),
 				withCatchFx({
 					ZodErrorFx({ zod }) {

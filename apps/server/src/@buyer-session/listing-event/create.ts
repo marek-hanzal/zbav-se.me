@@ -102,8 +102,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					201,
 				);
 			}).pipe(
-				Effect.tap(() => Effect.log("apiListingEventCreate")),
-				withLoggingFx(axiomConfig),
+				withLoggingFx(axiomConfig, "apiListingEventCreate"),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withCatchFx({

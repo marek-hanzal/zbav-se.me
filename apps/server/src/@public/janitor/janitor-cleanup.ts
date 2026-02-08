@@ -63,7 +63,6 @@ export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(func
 						200,
 					);
 				}).pipe(
-					Effect.tap(() => Effect.log("apiJanitorCleanup")),
 					withKyselyFx(c.get("kysely")),
 					withDateFx,
 					Effect.provide(
@@ -74,7 +73,7 @@ export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(func
 							bucket: s3Config.SERVER_S3_BUCKET,
 						}),
 					),
-					withLoggingFx(axiomConfig),
+					withLoggingFx(axiomConfig, "apiJanitorCleanup"),
 					Effect.runPromise,
 				);
 			} catch (e) {

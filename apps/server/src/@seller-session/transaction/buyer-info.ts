@@ -93,8 +93,7 @@ export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				Effect.tap(() => Effect.log("apiTransactionBuyerInfo")),
-				withLoggingFx(axiomConfig),
+				withLoggingFx(axiomConfig, "apiTransactionBuyerInfo"),
 				withKyselyFx(c.get("kysely")),
 				withCatchFx({
 					NotFoundErrorFx() {

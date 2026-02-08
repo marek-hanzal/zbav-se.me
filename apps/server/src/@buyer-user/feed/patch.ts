@@ -87,10 +87,9 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				Effect.tap(() => Effect.log("apiFeedPatch")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
-				withLoggingFx(axiomConfig),
+				withLoggingFx(axiomConfig, "apiFeedPatch"),
 				withCatchFx({
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);

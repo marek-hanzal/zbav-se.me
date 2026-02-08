@@ -84,8 +84,7 @@ export const withLocationFetchApiFx = Effect.fn("withLocationFetchApiFx")(functi
 					200,
 				);
 			}).pipe(
-				Effect.tap(() => Effect.log("apiLocationFetch")),
-				withLoggingFx(axiomConfig),
+				withLoggingFx(axiomConfig, "apiLocationFetch"),
 				withKyselyFx(c.get("kysely")),
 				withCatchFx({
 					NotFoundErrorFx() {

@@ -86,8 +86,7 @@ export const withCollectionApiFx = Effect.fn("withTransactionListingCollectionAp
 					200,
 				);
 			}).pipe(
-				Effect.tap(() => Effect.log("apiTransactionListingCollection")),
-				withLoggingFx(axiomConfig),
+				withLoggingFx(axiomConfig, "apiTransactionListingCollection"),
 				withKyselyFx(c.get("kysely")),
 				withCatchFx({
 					ZodErrorFx({ zod }) {

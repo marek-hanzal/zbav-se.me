@@ -83,7 +83,6 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				Effect.tap(() => Effect.log("apiS3Presign")),
 				Effect.provide(
 					S3ContextLayer({
 						api: s3Config.SERVER_S3_API,
@@ -95,7 +94,7 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 				withUploadFx({
 					cdn: cdnConfig.SERVER_CONTENT_CDN,
 				}),
-				withLoggingFx(axiomConfig),
+				withLoggingFx(axiomConfig, "apiS3Presign"),
 				withCatchFx({
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);

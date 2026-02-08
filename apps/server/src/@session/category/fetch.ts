@@ -85,8 +85,7 @@ export const withCategoryFetchApiFx = Effect.fn("withCategoryFetchApiFx")(functi
 					200,
 				);
 			}).pipe(
-				Effect.tap(() => Effect.log("apiCategoryFetch")),
-				withLoggingFx(axiomConfig),
+				withLoggingFx(axiomConfig, "apiCategoryFetch"),
 				withKyselyFx(c.get("kysely")),
 				withCatchFx({
 					NotFoundErrorFx() {
