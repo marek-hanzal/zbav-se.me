@@ -8,7 +8,15 @@ export const withLoggingFx =
 	<A, E, R>(eff: Effect.Effect<A, E, R>) =>
 		eff.pipe(
 			Effect.tap(() => Effect.log(name)),
-			Effect.tapError(() => Effect.logError(name)),
+			Effect.tapError((e) => {
+				return Effect.gen(function* () {
+					yield* Effect.annotateLogsScoped({
+						$catch: e,
+					});
+
+					return yield* Effect.logError(name);
+				});
+			}),
 			Effect.tapDefect(() => Effect.logFatal(name)),
 			//
 			Effect.withLogSpan("runtime"),
