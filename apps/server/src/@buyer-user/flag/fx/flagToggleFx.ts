@@ -6,6 +6,7 @@ import { flagDeleteFx } from "~/@buyer-user/flag/fx/flagDeleteFx";
 import type { FlagToggleSchema } from "~/@buyer-user/flag/schema/FlagToggleSchema";
 import { listingFetchFx } from "~/@buyer-user/listing/fx/listingFetchFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace flagToggleFx {
 	export interface Props extends FlagToggleSchema.Type {
@@ -18,10 +19,9 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 	toggle,
 	listingId,
 }: flagToggleFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"flagToggleFx.userId": userId,
-		"flagToggleFx.toggle": toggle,
-		"flagToggleFx.listingId": listingId,
+	yield* withTraceFx({
+		fx: "flagToggleFx",
+		input: { userId, toggle, listingId },
 	});
 
 	return yield* withTransactionFx(

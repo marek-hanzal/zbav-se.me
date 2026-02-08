@@ -11,6 +11,7 @@ import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx
 import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace listingCreateFx {
@@ -24,10 +25,9 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 	uploadIds,
 	...data
 }: listingCreateFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"listingCreateFx.userId": userId,
-		"listingCreateFx.uploadIds": uploadIds,
-		"listingCreateFx.data": data,
+	yield* withTraceFx({
+		fx: "listingCreateFx",
+		input: { userId, uploadIds, ...data },
 	});
 
 	return yield* withTransactionFx(
@@ -39,6 +39,10 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			const now = dateContext.now();
 
 			if (uploadIds.length === 0) {
+				yield* withTraceFx({
+					fx: "listingCreateFx",
+					error: { message: "At least one upload is required" },
+				});
 				return yield* new InvalidRequestErrorFx({
 					message: "At least one upload is required",
 				});

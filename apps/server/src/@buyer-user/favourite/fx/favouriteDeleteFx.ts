@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { favouriteFetchFx } from "~/@buyer-user/favourite/fx/favouriteFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace favouriteDeleteFx {
 	export interface Props {
@@ -14,9 +15,9 @@ export const favouriteDeleteFx = Effect.fn("favouriteDeleteFx")(function* ({
 	userId,
 	listingId,
 }: favouriteDeleteFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"favouriteDeleteFx.userId": userId,
-		"favouriteDeleteFx.listingId": listingId,
+	yield* withTraceFx({
+		fx: "favouriteDeleteFx",
+		input: { userId, listingId },
 	});
 
 	return yield* withTransactionFx(

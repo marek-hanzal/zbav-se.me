@@ -1,5 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { Effect } from "effect";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { seedTransactionInteractionFx } from "~/@public/seed/fx/seedTransactionInteractionFx";
 import { SeedTransactionsRequestSchema } from "~/@public/seed/fx/seedTransactionsFx";
 import { seedUserFx } from "~/@public/seed/fx/seedUserFx";
@@ -23,9 +24,9 @@ export const seedFx = Effect.fn("seedFx")(function* ({
 	email,
 	transaction,
 }: SeedRequestSchema.Type) {
-	yield* Effect.annotateLogsScoped({
-		"seedFx.email": email,
-		"seedFx.transaction": transaction,
+	yield* withTraceFx({
+		fx: "seedFx",
+		input: { email, transaction },
 	});
 
 	const current = yield* seedUserFx({

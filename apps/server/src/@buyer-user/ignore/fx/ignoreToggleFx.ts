@@ -6,6 +6,7 @@ import { ignoreDeleteFx } from "~/@buyer-user/ignore/fx/ignoreDeleteFx";
 import type { IgnoreToggleSchema } from "~/@buyer-user/ignore/schema/IgnoreToggleSchema";
 import { listingFetchFx } from "~/@buyer-user/listing/fx/listingFetchFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace ignoreToggleFx {
 	export interface Props extends IgnoreToggleSchema.Type {
@@ -18,10 +19,9 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 	toggle,
 	listingId,
 }: ignoreToggleFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"ignoreToggleFx.userId": userId,
-		"ignoreToggleFx.toggle": toggle,
-		"ignoreToggleFx.listingId": listingId,
+	yield* withTraceFx({
+		fx: "ignoreToggleFx",
+		input: { userId, toggle, listingId },
 	});
 
 	return yield* withTransactionFx(

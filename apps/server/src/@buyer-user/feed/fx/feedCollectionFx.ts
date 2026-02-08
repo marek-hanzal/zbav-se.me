@@ -1,5 +1,6 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { withFeedCollectionSelectFx } from "~/@buyer-user/feed/db/withFeedCollectionSelectFx";
 import { withFeedQueryBuilderFx } from "~/@buyer-user/feed/db/withFeedQueryBuilderFx";
 import type { FeedFilterSchema } from "~/@buyer-user/feed/schema/FeedFilterSchema";
@@ -18,12 +19,9 @@ export const feedCollectionFx = Effect.fn("feedCollectionFx")(function* ({
 	cursor,
 	sort,
 }: feedCollectionFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"feedCollectionFx.filter": filter,
-		"feedCollectionFx.where": where,
-		"feedCollectionFx.scope": scope,
-		"feedCollectionFx.cursor": cursor,
-		"feedCollectionFx.sort": sort,
+	yield* withTraceFx({
+		fx: "feedCollectionFx",
+		input: { filter, where, scope, cursor, sort },
 	});
 
 	return yield* withCollectionFx({

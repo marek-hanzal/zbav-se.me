@@ -4,6 +4,7 @@ import { withCategoryQueryBuilderFx } from "~/@session/category/db/withCategoryQ
 import { withCategorySelectFx } from "~/@session/category/db/withCategorySelectFx";
 import type { CategoryFilterSchema } from "~/@session/category/schema/CategoryFilterSchema";
 import type { CategoryQuerySchema } from "~/@session/category/schema/CategoryQuerySchema";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace categoryFetchFx {
 	export interface Props extends CategoryQuerySchema.Type {
@@ -17,11 +18,9 @@ export const categoryFetchFx = Effect.fn("categoryFetchFx")(function* ({
 	scope,
 	sort,
 }: categoryFetchFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"categoryFetchFx.filter": filter,
-		"categoryFetchFx.where": where,
-		"categoryFetchFx.scope": scope,
-		"categoryFetchFx.sort": sort,
+	yield* withTraceFx({
+		fx: "categoryFetchFx",
+		input: { filter, where, scope, sort },
 	});
 
 	return yield* withFetchFx({

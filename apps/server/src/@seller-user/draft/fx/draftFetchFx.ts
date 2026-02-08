@@ -4,6 +4,7 @@ import { withDraftQueryBuilderFx } from "~/@seller-user/draft/db/withDraftQueryB
 import { withDraftSelectFx } from "~/@seller-user/draft/db/withDraftSelectFx";
 import type { DraftFilterSchema } from "~/@seller-user/draft/schema/DraftFilterSchema";
 import type { DraftQuerySchema } from "~/@seller-user/draft/schema/DraftQuerySchema";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace draftFetchFx {
 	export interface Props extends DraftQuerySchema.Type {
@@ -17,11 +18,9 @@ export const draftFetchFx = Effect.fn("draftFetchFx")(function* ({
 	scope,
 	sort,
 }: draftFetchFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"draftFetchFx.filter": filter,
-		"draftFetchFx.where": where,
-		"draftFetchFx.scope": scope,
-		"draftFetchFx.sort": sort,
+	yield* withTraceFx({
+		fx: "draftFetchFx",
+		input: { filter, where, scope, sort },
 	});
 
 	return yield* withFetchFx({

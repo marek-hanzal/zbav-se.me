@@ -7,6 +7,7 @@ import { galleryCreateFx as coolGalleryCreateFx } from "~/@user/gallery/fx/galle
 import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace draftCreateFx {
 	export interface Props extends DraftCreateSchema.Type {
@@ -18,9 +19,9 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 	userId,
 	...data
 }: draftCreateFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"draftCreateFx.userId": userId,
-		"draftCreateFx.data": data,
+	yield* withTraceFx({
+		fx: "draftCreateFx",
+		input: { userId, ...data },
 	});
 
 	return yield* withTransactionFx(

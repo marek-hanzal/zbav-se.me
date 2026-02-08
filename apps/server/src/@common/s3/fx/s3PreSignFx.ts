@@ -2,6 +2,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { keyOf } from "@use-pico/common/key-of";
 import { linkTo } from "@use-pico/common/link-to";
 import { Effect } from "effect";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { S3ContextFx } from "~/@common/s3/context/S3ContextFx";
 import { s3ClientFx } from "~/@common/s3/fx/s3ClientFx";
 import { UploadContextFx } from "~/@common/upload/context/UploadContextFx";
@@ -19,10 +20,9 @@ export const s3PreSignFx = Effect.fn("s3PreSignFx")(function* ({
 	path,
 	extension,
 }: s3PreSignFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"s3PreSignFx.userId": userId,
-		"s3PreSignFx.path": path,
-		"s3PreSignFx.extension": extension,
+	yield* withTraceFx({
+		fx: "s3PreSignFx",
+		input: { userId, path, extension },
 	});
 
 	const { cdn } = yield* UploadContextFx;

@@ -5,6 +5,7 @@ import { messageThreadFetchFx } from "~/@user/message-thread/fx/messageThreadFet
 import type { MessageThreadCreateSchema } from "~/@user/message-thread/schema/MessageThreadCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace messageThreadCreateFx {
 	export type Props = MessageThreadCreateSchema.Type;
@@ -13,8 +14,9 @@ export namespace messageThreadCreateFx {
 export const messageThreadCreateFx = Effect.fn("messageThreadCreateFx")(function* (
 	props: messageThreadCreateFx.Props,
 ) {
-	yield* Effect.annotateLogsScoped({
-		"messageThreadCreateFx.props": props,
+	yield* withTraceFx({
+		fx: "messageThreadCreateFx",
+		input: props,
 	});
 
 	return yield* withTransactionFx(

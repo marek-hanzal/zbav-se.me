@@ -6,6 +6,7 @@ import type { MessagePersonalCreateSchema } from "~/@user/message-personal/schem
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace messagePersonalCreateFx {
 	export interface Props extends MessagePersonalCreateSchema.Type {
@@ -18,10 +19,9 @@ export const messagePersonalCreateFx = Effect.fn("messagePersonalCreateFx")(func
 	messageThreadId,
 	...data
 }: messagePersonalCreateFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"messagePersonalCreateFx.userId": userId,
-		"messagePersonalCreateFx.messageThreadId": messageThreadId,
-		"messagePersonalCreateFx.data": "(redacted)",
+	yield* withTraceFx({
+		fx: "messagePersonalCreateFx",
+		input: { userId, messageThreadId, ...data },
 	});
 
 	return yield* withTransactionFx(

@@ -1,5 +1,6 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { withListingEventCollectionSelectFx } from "~/@buyer-session/listing-event/db/withListingEventCollectionSelectFx";
 import { withListingEventQueryBuilderFx } from "~/@buyer-session/listing-event/db/withListingEventQueryBuilderFx";
 import type { ListingEventFilterSchema } from "~/@buyer-session/listing-event/schema/ListingEventFilterSchema";
@@ -18,12 +19,9 @@ export const listingEventCollectionFx = Effect.fn("listingEventCollectionFx")(fu
 	sort,
 	scope,
 }: listingEventCollectionFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"listingEventCollectionFx.cursor": cursor,
-		"listingEventCollectionFx.filter": filter,
-		"listingEventCollectionFx.where": where,
-		"listingEventCollectionFx.sort": sort,
-		"listingEventCollectionFx.scope": scope,
+	yield* withTraceFx({
+		fx: "listingEventCollectionFx",
+		input: { cursor, filter, where, sort, scope },
 	});
 
 	return yield* withCollectionFx({

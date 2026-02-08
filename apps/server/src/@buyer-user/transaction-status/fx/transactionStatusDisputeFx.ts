@@ -4,6 +4,7 @@ import { transactionStatusCreateFx } from "~/@buyer-user/transaction-status/fx/t
 import type { TransactionStatusDisputeSchema } from "~/@common/transaction-status/schema/TransactionStatusDisputeSchema";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionStatusDisputeFx {
@@ -16,9 +17,9 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 	userId,
 	transactionId,
 }: transactionStatusDisputeFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"transactionStatusDisputeFx.userId": userId,
-		"transactionStatusDisputeFx.transactionId": transactionId,
+	yield* withTraceFx({
+		fx: "transactionStatusDisputeFx",
+		input: { userId, transactionId },
 	});
 
 	const transaction = yield* transactionResolveFx({
@@ -28,6 +29,12 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 	});
 
 	if (transaction.side !== "buyer") {
+		yield* withTraceFx({
+			fx: "transactionStatusDisputeFx",
+			error: {
+				message: "Only buyer can dispute a transaction from buyer-user endpoint",
+			},
+		});
 		return yield* new InvalidRequestErrorFx({
 			message: "Only buyer can dispute a transaction from buyer-user endpoint",
 		});

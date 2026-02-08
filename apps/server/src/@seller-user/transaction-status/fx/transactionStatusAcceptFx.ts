@@ -5,6 +5,7 @@ import type { TransactionStatusAcceptSchema } from "~/@seller-user/transaction-s
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
 
 export namespace transactionStatusAcceptFx {
@@ -17,9 +18,9 @@ export const transactionStatusAcceptFx = Effect.fn("transactionStatusAcceptFx")(
 	userId,
 	transactionId,
 }: transactionStatusAcceptFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"transactionStatusAcceptFx.userId": userId,
-		"transactionStatusAcceptFx.transactionId": transactionId,
+	yield* withTraceFx({
+		fx: "transactionStatusAcceptFx",
+		input: { userId, transactionId },
 	});
 
 	const transaction = yield* transactionResolveFx({
@@ -29,6 +30,10 @@ export const transactionStatusAcceptFx = Effect.fn("transactionStatusAcceptFx")(
 	});
 
 	if (transaction.side === "buyer") {
+		yield* withTraceFx({
+			fx: "transactionStatusAcceptFx",
+			error: { message: "Buyer cannot accept a transaction" },
+		});
 		return yield* new RuntimeErrorFx({
 			message: "Buyer cannot accept a transaction",
 		});

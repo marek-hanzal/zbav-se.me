@@ -1,6 +1,7 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace listingCheckIfOwnFx {
@@ -20,10 +21,9 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 	listingId,
 	message,
 }: listingCheckIfOwnFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"listingCheckIfOwnFx.userId": userId,
-		"listingCheckIfOwnFx.listingId": listingId,
-		"listingCheckIfOwnFx.message": message,
+	yield* withTraceFx({
+		fx: "listingCheckIfOwnFx",
+		input: { userId, listingId, message },
 	});
 
 	const { kysely } = yield* KyselyContextFx;
@@ -36,6 +36,14 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 	});
 
 	if (!listing) {
+		yield* withTraceFx({
+			fx: "listingCheckIfOwnFx",
+			error: {
+				resource: "listing",
+				resourceId: listingId,
+				message: "Listing not found",
+			},
+		});
 		return yield* new NotFoundErrorFx({
 			resource: "listing",
 			resourceId: listingId,
@@ -44,6 +52,10 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 	}
 
 	if (listing.userId === userId) {
+		yield* withTraceFx({
+			fx: "listingCheckIfOwnFx",
+			error: { message },
+		});
 		return yield* new InvalidRequestErrorFx({
 			message,
 		});

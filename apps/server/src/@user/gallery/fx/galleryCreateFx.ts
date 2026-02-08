@@ -4,6 +4,7 @@ import { Effect } from "effect";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import type { GalleryCreateSchema } from "~/@user/gallery/schema/GalleryCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace galleryCreateFx {
 	export interface Props extends GalleryCreateSchema.Type {
@@ -17,10 +18,9 @@ export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* ({
 	id,
 	...props
 }: galleryCreateFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"galleryCreateFx.userId": userId,
-		"galleryCreateFx.id": id,
-		"galleryCreateFx.props": props,
+	yield* withTraceFx({
+		fx: "galleryCreateFx",
+		input: { userId, id, ...props },
 	});
 
 	const { kysely } = yield* KyselyContextFx;

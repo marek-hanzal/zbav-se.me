@@ -7,6 +7,7 @@ import { transactionStatusGateFx } from "~/@user/transaction-status/fx/transacti
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace transactionMessageLocationCreateFx {
 	export interface Props extends TransactionMessageLocationCreateSchema.Type {
@@ -16,10 +17,9 @@ export namespace transactionMessageLocationCreateFx {
 
 export const transactionMessageLocationCreateFx = Effect.fn("transactionMessageLocationCreateFx")(
 	function* ({ userId, transactionId, locationId }: transactionMessageLocationCreateFx.Props) {
-		yield* Effect.annotateLogsScoped({
-			"transactionMessageLocationCreateFx.userId": userId,
-			"transactionMessageLocationCreateFx.transactionId": transactionId,
-			"transactionMessageLocationCreateFx.locationId": "(redacted)",
+		yield* withTraceFx({
+			fx: "transactionMessageLocationCreateFx",
+			input: { userId, transactionId, locationId },
 		});
 
 		return yield* withTransactionFx(

@@ -1,5 +1,6 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { withCategoryCollectionSelectFx } from "~/@session/category/db/withCategoryCollectionSelectFx";
 import { withCategoryQueryBuilderFx } from "~/@session/category/db/withCategoryQueryBuilderFx";
 import type { CategoryCountQuerySchema } from "~/@session/category/schema/CategoryCountQuerySchema";
@@ -17,11 +18,9 @@ export const categoryCountFx = Effect.fn("categoryCountFx")(function* ({
 	scope,
 	count,
 }: categoryCountFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"categoryCountFx.filter": filter,
-		"categoryCountFx.where": where,
-		"categoryCountFx.scope": scope,
-		"categoryCountFx.count": count,
+	yield* withTraceFx({
+		fx: "categoryCountFx",
+		input: { filter, where, scope, count },
 	});
 
 	return yield* withCountFx({

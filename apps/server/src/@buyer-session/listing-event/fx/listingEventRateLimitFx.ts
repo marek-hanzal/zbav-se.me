@@ -2,6 +2,7 @@ import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import type { ListingEventEnumSchema } from "~/database/@enum/ListingEventEnumSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { TooManyRequestsFx } from "~/error/TooManyRequestsFx";
 
 export namespace listingEventRateLimitFx {
@@ -17,10 +18,9 @@ export const listingEventRateLimitFx = Effect.fn("listingEventRateLimitFx")(func
 	event,
 	minutes = 10,
 }: listingEventRateLimitFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"listingEventRateLimitFx.listingId": listingId,
-		"listingEventRateLimitFx.event": event,
-		"listingEventRateLimitFx.minutes": minutes,
+	yield* withTraceFx({
+		fx: "listingEventRateLimitFx",
+		input: { listingId, event, minutes },
 	});
 
 	const { kysely } = yield* KyselyContextFx;

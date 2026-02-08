@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { feedFetchFx } from "~/@buyer-user/feed/fx/feedFetchFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { AccessDeniedErrorFx } from "~/error/AccessDeniedErrorFx";
 
 export namespace feedResolveFx {
@@ -25,6 +26,12 @@ export const feedResolveFx = Effect.fn("feedResolveFx")(function* ({
 	});
 
 	if (feed.userId !== userId) {
+		yield* withTraceFx({
+			fx: "feedResolveFx",
+			error: {
+				message,
+			},
+		});
 		return yield* new AccessDeniedErrorFx({
 			message,
 		});

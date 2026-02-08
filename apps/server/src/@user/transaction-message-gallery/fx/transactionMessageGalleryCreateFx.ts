@@ -9,6 +9,7 @@ import { transactionStatusGateFx } from "~/@user/transaction-status/fx/transacti
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionMessageGalleryCreateFx {
@@ -19,10 +20,13 @@ export namespace transactionMessageGalleryCreateFx {
 
 export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGalleryCreateFx")(
 	function* ({ userId, transactionId, uploadIds }: transactionMessageGalleryCreateFx.Props) {
-		yield* Effect.annotateLogsScoped({
-			"transactionMessageGalleryCreateFx.userId": userId,
-			"transactionMessageGalleryCreateFx.transactionId": transactionId,
-			"transactionMessageGalleryCreateFx.uploadIds": uploadIds,
+		yield* withTraceFx({
+			fx: "transactionMessageGalleryCreateFx",
+			input: {
+				userId,
+				transactionId,
+				uploadIds,
+			},
 		});
 
 		return yield* withTransactionFx(
@@ -32,6 +36,12 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 				const dateContext = yield* DateContextFx;
 
 				if (uploadIds.length === 0) {
+					yield* withTraceFx({
+						fx: "transactionMessageGalleryCreateFx",
+						error: {
+							message: "At least one upload is required",
+						},
+					});
 					return yield* new InvalidRequestErrorFx({
 						message: "At least one upload is required",
 					});

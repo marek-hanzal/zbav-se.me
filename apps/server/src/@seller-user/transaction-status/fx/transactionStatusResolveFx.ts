@@ -6,6 +6,7 @@ import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCr
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionStatusResolveFx {
@@ -18,9 +19,12 @@ export const transactionStatusResolveFx = Effect.fn("transactionStatusResolveFx"
 	userId,
 	transactionId,
 }: transactionStatusResolveFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"transactionStatusResolveFx.userId": userId,
-		"transactionStatusResolveFx.transactionId": transactionId,
+	yield* withTraceFx({
+		fx: "transactionStatusResolveFx",
+		input: {
+			userId,
+			transactionId,
+		},
 	});
 
 	return yield* withTransactionFx(
@@ -32,6 +36,12 @@ export const transactionStatusResolveFx = Effect.fn("transactionStatusResolveFx"
 			});
 
 			if (transaction.side === "buyer") {
+				yield* withTraceFx({
+					fx: "transactionStatusResolveFx",
+					error: {
+						message: "Buyer cannot resolve a transaction",
+					},
+				});
 				return yield* new InvalidRequestErrorFx({
 					message: "Buyer cannot resolve a transaction",
 				});

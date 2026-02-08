@@ -1,6 +1,7 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { AccessDeniedErrorFx } from "~/error/AccessDeniedErrorFx";
 
 export namespace draftResolveFx {
@@ -23,6 +24,14 @@ export const draftResolveFx = Effect.fn("draftResolveFx")(function* ({
 	});
 
 	if (!draft) {
+		yield* withTraceFx({
+			fx: "draftResolveFx",
+			error: {
+				resource: "draft",
+				resourceId: draftId,
+				message,
+			},
+		});
 		return yield* new NotFoundErrorFx({
 			resource: "draft",
 			resourceId: draftId,
@@ -31,6 +40,12 @@ export const draftResolveFx = Effect.fn("draftResolveFx")(function* ({
 	}
 
 	if (draft.userId !== userId) {
+		yield* withTraceFx({
+			fx: "draftResolveFx",
+			error: {
+				message,
+			},
+		});
 		return yield* new AccessDeniedErrorFx({
 			message,
 		});

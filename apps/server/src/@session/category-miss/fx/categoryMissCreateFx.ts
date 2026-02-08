@@ -3,6 +3,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace categoryMissCreateFx {
 	export interface Props {
@@ -15,9 +16,9 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 	fulltext,
 	limit = 4,
 }: categoryMissCreateFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"categoryMissCreateFx.fulltext": fulltext,
-		"categoryMissCreateFx.limit": limit,
+	yield* withTraceFx({
+		fx: "categoryMissCreateFx",
+		input: { fulltext, limit },
 	});
 
 	const { kysely } = yield* KyselyContextFx;
