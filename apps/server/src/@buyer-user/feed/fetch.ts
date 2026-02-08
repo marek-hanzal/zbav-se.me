@@ -1,5 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { zodFx } from "@use-pico/common/schema";
+import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { feedFetchFx } from "~/@buyer-user/feed/fx/feedFetchFx";
 import { FeedQuerySchema } from "~/@buyer-user/feed/schema/FeedQuerySchema";
@@ -73,15 +73,15 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 					userId: user.id,
 				});
 
-				return c.json<FeedSchema.Type, 200>(
-					yield* zodFx({
+				return c.json(
+					yield* zodGuardFx({
 						schema: FeedSchema,
 						dataFx: feedFetchFx({
 							...c.req.valid("json"),
 							scope: {
 								userId: user.id,
 							},
-						}) satisfies Effect.Effect<FeedSchema.Type, any, any>,
+						}),
 					}),
 					200,
 				);

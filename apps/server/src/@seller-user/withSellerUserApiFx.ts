@@ -7,7 +7,6 @@ import { withTransactionListingApiFx } from "~/@seller-user/transaction-listing/
 import { withTransactionStatusApiFx } from "~/@seller-user/transaction-status/withTransactionStatusApiFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import type { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withSellerUserApiFx = Effect.fn("withSellerUserApiFx")(function* () {
 	const { root, sellerUserHono } = yield* RoutesContextFx;
@@ -22,7 +21,7 @@ export const withSellerUserApiFx = Effect.fn("withSellerUserApiFx")(function* ()
 		const user = c.get("user");
 
 		if (!user) {
-			return c.json<NoticeSchema.Type, 401>(
+			return c.json(
 				{
 					type: "error",
 					message: "Shooooo! Shooo!",

@@ -1,5 +1,5 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { zodFx } from "@use-pico/common/schema";
+import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
@@ -70,20 +70,17 @@ export const withLocationAutocompleteApiFx = Effect.fn("withLocationAutocomplete
 						userId: user.id,
 					});
 
-					const result = c.json<LocationSchema.Type[], 200>(
-						yield* zodFx({
+					return c.json(
+						yield* zodGuardFx({
 							schema: z.array(LocationSchema),
 							dataFx: locationAutocompleteFx({
 								...c.req.valid("json"),
-							}) satisfies Effect.Effect<LocationSchema.Type[], any, any>,
+							}),
 						}),
 						200,
 					);
-
-					yield* Effect.log("apiLocationAutocomplete");
-
-					return result;
 				}).pipe(
+					Effect.tap(() => Effect.log("apiLocationAutocomplete")),
 					withLoggingFx(axiomConfig),
 					withKyselyFx(c.get("kysely")),
 					withLocationFx({
@@ -93,7 +90,7 @@ export const withLocationAutocompleteApiFx = Effect.fn("withLocationAutocomplete
 					}),
 					withCatchFx({
 						TextTooShortErrorFx() {
-							return c.json<LocationSchema.Type[], 200>([], 200, {
+							return c.json([], 200, {
 								"X-Location-Error": "Text too short",
 							});
 						},

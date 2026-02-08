@@ -1,5 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { zodFx } from "@use-pico/common/schema";
+import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
@@ -70,27 +70,20 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 					userId: user.id,
 				});
 
-				const result = c.json<withCollectionSchema.Type<ListingItemSchema>, 200>(
-					yield* zodFx({
+				return c.json(
+					yield* zodGuardFx({
 						schema: CollectionSchema,
 						dataFx: listingCollectionFx({
 							...c.req.valid("json"),
 							scope: {
 								userId: user.id,
 							},
-						}) satisfies Effect.Effect<
-							withCollectionSchema.Type<ListingItemSchema>,
-							any,
-							any
-						>,
+						}),
 					}),
 					200,
 				);
-
-				yield* Effect.log("apiListingCollection");
-
-				return result;
 			}).pipe(
+				Effect.tap(() => Effect.log("apiListingCollection")),
 				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				withCatchFx({

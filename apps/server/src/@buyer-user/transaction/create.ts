@@ -1,5 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { zodFx } from "@use-pico/common/schema";
+import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { transactionCreateFx } from "~/@buyer-user/transaction/fx/transactionCreateFx";
 import { TransactionCreateSchema } from "~/@buyer-user/transaction/schema/TransactionCreateSchema";
@@ -75,21 +75,18 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					userId: user.id,
 				});
 
-				const result = c.json<TransactionSchema.Type, 201>(
-					yield* zodFx({
+				return c.json(
+					yield* zodGuardFx({
 						schema: TransactionSchema,
 						dataFx: transactionCreateFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}) satisfies Effect.Effect<TransactionSchema.Type, any, any>,
+						}),
 					}),
 					201,
 				);
-
-				yield* Effect.log("apiTransactionCreate");
-
-				return result;
 			}).pipe(
+				Effect.tap(() => Effect.log("apiTransactionCreate")),
 				withKyselyFx(c.get("kysely")),
 				withLoggingFx(axiomConfig),
 				withDateFx,

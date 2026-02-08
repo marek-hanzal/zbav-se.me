@@ -1,5 +1,5 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { zodFx } from "@use-pico/common/schema";
+import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { S3ContextLayer } from "~/@common/s3/context/S3ContextLayer";
@@ -55,22 +55,15 @@ export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(func
 						endpoint: "apiJanitorCleanup",
 					});
 
-					const result = c.json(
-						yield* zodFx({
+					return c.json(
+						yield* zodGuardFx({
 							schema: z.array(CleanupSchema),
-							dataFx: cleanupFx() satisfies Effect.Effect<
-								CleanupSchema.Type[],
-								any,
-								any
-							>,
+							dataFx: cleanupFx(),
 						}),
 						200,
 					);
-
-					yield* Effect.log("apiJanitorCleanup");
-
-					return result;
 				}).pipe(
+					Effect.tap(() => Effect.log("apiJanitorCleanup")),
 					withKyselyFx(c.get("kysely")),
 					withDateFx,
 					Effect.provide(

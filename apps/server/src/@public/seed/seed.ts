@@ -73,17 +73,14 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 					endpoint: "apiSeed",
 				});
 
-				const result = c.json(
+				return c.json(
 					yield* seedFx({
 						...c.req.valid("json"),
 					}),
 					201,
 				);
-
-				yield* Effect.log("apiSeed");
-
-				return result;
 			}).pipe(
+				Effect.tap(() => Effect.log("apiSeed")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx({

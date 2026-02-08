@@ -1,5 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { zodFx } from "@use-pico/common/schema";
+import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
@@ -83,21 +83,18 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					userId: user.id,
 				});
 
-				const result = c.json<DraftSchema.Type, 201>(
-					yield* zodFx({
+				return c.json(
+					yield* zodGuardFx({
 						schema: DraftSchema,
 						dataFx: draftCreateFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}) satisfies Effect.Effect<DraftSchema.Type, any, any>,
+						}),
 					}),
 					201,
 				);
-
-				yield* Effect.log("apiDraftCreate");
-
-				return result;
 			}).pipe(
+				Effect.tap(() => Effect.log("apiDraftCreate")),
 				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,

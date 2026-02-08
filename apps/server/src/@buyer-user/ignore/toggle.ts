@@ -1,5 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { zodFx } from "@use-pico/common/schema";
+import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { ignoreToggleFx } from "~/@buyer-user/ignore/fx/ignoreToggleFx";
 import { IgnoreToggleSchema } from "~/@buyer-user/ignore/schema/IgnoreToggleSchema";
@@ -82,21 +82,18 @@ export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
 					userId: user.id,
 				});
 
-				const result = c.json<ListingSchema.Type, 200>(
-					yield* zodFx({
+				return c.json(
+					yield* zodGuardFx({
 						schema: ListingSchema,
 						dataFx: ignoreToggleFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}) satisfies Effect.Effect<ListingSchema.Type, any, any>,
+						}),
 					}),
 					200,
 				);
-
-				yield* Effect.log("apiIgnoreToggle");
-
-				return result;
 			}).pipe(
+				Effect.tap(() => Effect.log("apiIgnoreToggle")),
 				withKyselyFx(c.get("kysely")),
 				withLoggingFx(axiomConfig),
 				withDateFx,

@@ -1,5 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { zodFx } from "@use-pico/common/schema";
+import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { listingCountFx } from "~/@buyer-user/listing/fx/listingCountFx";
 import { ListingCountQuerySchema } from "~/@buyer-user/listing/schema/ListingCountQuerySchema";
@@ -63,22 +63,19 @@ export const withCountApiFx = Effect.fn("withCountApiFx")(function* () {
 					userId: user.id,
 				});
 
-				const result = c.json<CountSchema.Type, 200>(
-					yield* zodFx({
+				return c.json(
+					yield* zodGuardFx({
 						schema: CountSchema,
 						dataFx: listingCountFx({
 							...c.req.valid("json"),
 							userId: user.id,
 							scope: {},
-						}) satisfies Effect.Effect<CountSchema.Type, any, any>,
+						}),
 					}),
 					200,
 				);
-
-				yield* Effect.log("apiListingCount");
-
-				return result;
 			}).pipe(
+				Effect.tap(() => Effect.log("apiListingCount")),
 				withKyselyFx(c.get("kysely")),
 				withLoggingFx(axiomConfig),
 				withCatchFx({

@@ -23,13 +23,12 @@ import { initMiddlewareFx } from "~/init/initMiddlewareFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { RoutesContextLayer } from "~/route/context/RoutesContextLayer";
 import { ServerDatabaseSchema } from "~/schema/env/ServerDatabaseSchema";
-import type { NoticeSchema } from "~/schema/NoticeSchema";
 
 const app = await Effect.gen(function* () {
 	const { root } = yield* RoutesContextFx;
 
 	root.onError((err, c) => {
-		return c.json<NoticeSchema.Type, 500>(
+		return c.json(
 			{
 				type: "error",
 				message: err instanceof Error ? err.message : "Internal server error",

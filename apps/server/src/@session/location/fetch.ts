@@ -1,5 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { zodFx } from "@use-pico/common/schema";
+import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
@@ -74,20 +74,17 @@ export const withLocationFetchApiFx = Effect.fn("withLocationFetchApiFx")(functi
 					userId: user.id,
 				});
 
-				const result = c.json<LocationSchema.Type, 200>(
-					yield* zodFx({
+				return c.json(
+					yield* zodGuardFx({
 						schema: LocationSchema,
 						dataFx: locationFetchFx({
 							...c.req.valid("json"),
-						}) satisfies Effect.Effect<LocationSchema.Type, any, any>,
+						}),
 					}),
 					200,
 				);
-
-				yield* Effect.log("apiLocationFetch");
-
-				return result;
 			}).pipe(
+				Effect.tap(() => Effect.log("apiLocationFetch")),
 				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				withCatchFx({

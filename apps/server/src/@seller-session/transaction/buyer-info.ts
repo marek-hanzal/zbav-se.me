@@ -1,5 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { zodFx } from "@use-pico/common/schema";
+import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
@@ -82,21 +82,18 @@ export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
 					},
 				});
 
-				const result = c.json<TransactionBuyerInfoSchema.Type, 200>(
-					yield* zodFx({
+				return c.json(
+					yield* zodGuardFx({
 						schema: TransactionBuyerInfoSchema,
 						dataFx: transactionGetBuyerInfoFx({
 							userId: user.id,
 							transactionId: transaction.id,
-						}) satisfies Effect.Effect<TransactionBuyerInfoSchema.Type, any, any>,
+						}),
 					}),
 					200,
 				);
-
-				yield* Effect.log("apiTransactionBuyerInfo");
-
-				return result;
 			}).pipe(
+				Effect.tap(() => Effect.log("apiTransactionBuyerInfo")),
 				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				withCatchFx({

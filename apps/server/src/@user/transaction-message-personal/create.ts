@@ -1,5 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { zodFx } from "@use-pico/common/schema";
+import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
@@ -86,21 +86,18 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					userId: user.id,
 				});
 
-				const result = c.json<MessagePersonalSchema.Type, 200>(
-					yield* zodFx({
+				return c.json(
+					yield* zodGuardFx({
 						schema: MessagePersonalSchema,
 						dataFx: transactionMessagePersonalCreateFx({
 							...c.req.valid("json"),
 							userId: user.id,
-						}) satisfies Effect.Effect<MessagePersonalSchema.Type, any, any>,
+						}),
 					}),
 					200,
 				);
-
-				yield* Effect.log("apiTransactionMessagePersonalCreate");
-
-				return result;
 			}).pipe(
+				Effect.tap(() => Effect.log("apiTransactionMessagePersonalCreate")),
 				withLoggingFx(axiomConfig),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,

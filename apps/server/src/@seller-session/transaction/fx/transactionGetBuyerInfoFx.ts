@@ -1,5 +1,5 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
-import { zodFx } from "@use-pico/common/schema";
+import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { userEventBuyerInfoFx } from "~/@buyer-session/user-event/fx/userEventBuyerInfoFx";
 import { TransactionBuyerInfoSchema } from "~/@seller-session/transaction/schema/TransactionBuyerInfoSchema";
@@ -52,7 +52,7 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 		});
 	}
 
-	return yield* zodFx({
+	return yield* zodGuardFx({
 		schema: TransactionBuyerInfoSchema,
 		dataFx: Effect.succeed({
 			registered: userInfo.createdAt,

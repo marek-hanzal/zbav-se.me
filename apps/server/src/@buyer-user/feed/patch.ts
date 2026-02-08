@@ -1,5 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { zodFx } from "@use-pico/common/schema";
+import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { feedPatchFx } from "~/@buyer-user/feed/fx/feedPatchFx";
 import { FeedPatchSchema } from "~/@buyer-user/feed/schema/FeedPatchSchema";
@@ -74,23 +74,20 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 					userId: user.id,
 				});
 
-				const result = c.json<FeedSchema.Type, 200>(
-					yield* zodFx({
+				return c.json(
+					yield* zodGuardFx({
 						schema: FeedSchema,
 						dataFx: feedPatchFx({
 							...c.req.valid("json"),
 							scope: {
 								userId: user.id,
 							},
-						}) satisfies Effect.Effect<FeedSchema.Type, any, any>,
+						}),
 					}),
 					200,
 				);
-
-				yield* Effect.log("apiFeedPatch");
-
-				return result;
 			}).pipe(
+				Effect.tap(() => Effect.log("apiFeedPatch")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withLoggingFx(axiomConfig),

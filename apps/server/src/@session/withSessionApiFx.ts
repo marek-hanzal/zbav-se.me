@@ -18,7 +18,7 @@ export const withSessionApiFx = Effect.fn("withSessionApiFx")(function* () {
 		const user = c.get("user");
 
 		if (!user) {
-			return c.json<NoticeSchema.Type, 401>(
+			return c.json(
 				{
 					type: "error",
 					message: "Shooooo! Shooo!",

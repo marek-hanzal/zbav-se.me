@@ -11,7 +11,6 @@ import { withUploadApiFx } from "~/@user/upload/withUploadApiFx";
 import { withUserExApiFx } from "~/@user/user-ex/withUserExApiFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import type { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withUserApiFx = Effect.fn("withUserApiFx")(function* () {
 	const { root, userHono } = yield* RoutesContextFx;
@@ -26,7 +25,7 @@ export const withUserApiFx = Effect.fn("withUserApiFx")(function* () {
 		const user = c.get("user");
 
 		if (!user) {
-			return c.json<NoticeSchema.Type, 401>(
+			return c.json(
 				{
 					type: "error",
 					message: "Shooooo! Shooo!",

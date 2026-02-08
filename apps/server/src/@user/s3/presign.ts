@@ -1,5 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { zodFx } from "@use-pico/common/schema";
+import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
@@ -71,22 +71,19 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 					userId: user.id,
 				});
 
-				const result = c.json<S3PreSignResponseSchema.Type, 200>(
-					yield* zodFx({
+				return c.json(
+					yield* zodGuardFx({
 						schema: S3PreSignResponseSchema,
 						dataFx: s3PreSignFx({
 							userId: user.id,
 							path,
 							extension,
-						}) satisfies Effect.Effect<S3PreSignResponseSchema.Type, any, any>,
+						}),
 					}),
 					200,
 				);
-
-				yield* Effect.log("apiS3Presign");
-
-				return result;
 			}).pipe(
+				Effect.tap(() => Effect.log("apiS3Presign")),
 				Effect.provide(
 					S3ContextLayer({
 						api: s3Config.SERVER_S3_API,
