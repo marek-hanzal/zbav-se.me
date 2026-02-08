@@ -6,7 +6,7 @@ import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCr
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionStatusResolveFx {
 	export interface Props extends TransactionStatusResolveSchema.Type {
@@ -32,7 +32,7 @@ export const transactionStatusResolveFx = Effect.fn("transactionStatusResolveFx"
 			});
 
 			if (transaction.side === "buyer") {
-				return yield* new InvalidRequestError({
+				return yield* new InvalidRequestErrorFx({
 					message: "Buyer cannot resolve a transaction",
 				});
 			}

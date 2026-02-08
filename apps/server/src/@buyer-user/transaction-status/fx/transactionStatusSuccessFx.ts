@@ -6,7 +6,7 @@ import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCr
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionStatusSuccessFx {
 	export interface Props extends TransactionStatusSuccessSchema.Type {
@@ -32,7 +32,7 @@ export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx"
 			});
 
 			if (transaction.side === "seller") {
-				return yield* new InvalidRequestError({
+				return yield* new InvalidRequestErrorFx({
 					message: "Seller cannot mark a transaction as successful",
 				});
 			}

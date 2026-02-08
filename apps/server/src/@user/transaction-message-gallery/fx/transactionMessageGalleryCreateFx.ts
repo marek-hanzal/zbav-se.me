@@ -9,7 +9,7 @@ import { transactionStatusGateFx } from "~/@user/transaction-status/fx/transacti
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionMessageGalleryCreateFx {
 	export interface Props extends TransactionMessageGalleryCreateSchema.Type {
@@ -32,7 +32,7 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 				const dateContext = yield* DateContextFx;
 
 				if (uploadIds.length === 0) {
-					return yield* new InvalidRequestError({
+					return yield* new InvalidRequestErrorFx({
 						message: "At least one upload is required",
 					});
 				}

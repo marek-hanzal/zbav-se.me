@@ -1,7 +1,7 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace listingCheckIfOwnFx {
 	export interface Props {
@@ -44,7 +44,7 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 	}
 
 	if (listing.userId === userId) {
-		return yield* new InvalidRequestError({
+		return yield* new InvalidRequestErrorFx({
 			message,
 		});
 	}

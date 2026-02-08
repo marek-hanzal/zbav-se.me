@@ -97,7 +97,7 @@ export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
 				withLoggingFx(axiomConfig, "apiIgnoreToggle"),
 				withDateFx,
 				withCatchFx({
-					InvalidRequestError(e) {
+					InvalidRequestErrorFx(e) {
 						return c.json(noticeError(e), 400);
 					},
 					NotFoundErrorFx() {

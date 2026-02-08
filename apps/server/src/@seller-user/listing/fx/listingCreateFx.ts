@@ -11,7 +11,7 @@ import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx
 import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace listingCreateFx {
 	export interface Props extends ListingCreateSchema.Type {
@@ -39,7 +39,7 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			const now = dateContext.now();
 
 			if (uploadIds.length === 0) {
-				return yield* new InvalidRequestError({
+				return yield* new InvalidRequestErrorFx({
 					message: "At least one upload is required",
 				});
 			}

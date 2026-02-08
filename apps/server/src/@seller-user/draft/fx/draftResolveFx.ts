@@ -1,7 +1,7 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { AccessDeniedError } from "~/error/AccessDeniedError";
+import { AccessDeniedErrorFx } from "~/error/AccessDeniedErrorFx";
 
 export namespace draftResolveFx {
 	export interface Props {
@@ -31,7 +31,7 @@ export const draftResolveFx = Effect.fn("draftResolveFx")(function* ({
 	}
 
 	if (draft.userId !== userId) {
-		return yield* new AccessDeniedError({
+		return yield* new AccessDeniedErrorFx({
 			message,
 		});
 	}

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import type { TransactionStatusEnumSchema } from "~/database/@enum/TransactionStatusEnumSchema";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionStatusGateFx {
 	export interface Props {
@@ -31,7 +31,7 @@ export const transactionStatusGateFx = Effect.fn("transactionStatusGateFx")(func
 	});
 
 	if (!transaction.status || !allowedStatuses.includes(transaction.status)) {
-		return yield* new InvalidRequestError({
+		return yield* new InvalidRequestErrorFx({
 			message:
 				message ??
 				`Transaction must be in one of the following statuses: ${allowedStatuses.join(", ")}`,

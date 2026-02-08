@@ -103,10 +103,10 @@ export const withDisputeApiFx = Effect.fn("withDisputeApiFx")(function* () {
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);
 					},
-					AccessDeniedError() {
+					AccessDeniedErrorFx() {
 						return c.json(NotFoundNotice, 404);
 					},
-					InvalidRequestError(e) {
+					InvalidRequestErrorFx(e) {
 						return c.json(noticeError(e), 400);
 					},
 					RuntimeErrorFx(e) {

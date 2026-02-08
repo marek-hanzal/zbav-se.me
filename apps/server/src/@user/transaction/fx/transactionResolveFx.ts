@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { AccessDeniedError } from "~/error/AccessDeniedError";
+import { AccessDeniedErrorFx } from "~/error/AccessDeniedErrorFx";
 import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
 
 export namespace transactionResolveFx {
@@ -63,7 +63,7 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 	});
 
 	if (!transaction) {
-		return yield* new AccessDeniedError({
+		return yield* new AccessDeniedErrorFx({
 			message,
 		});
 	}

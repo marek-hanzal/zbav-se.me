@@ -5,7 +5,7 @@ import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace draftGalleryCreateFx {
 	export interface Props extends DraftGalleryCreateSchema.Type {
@@ -23,7 +23,7 @@ export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* 
 			const { kysely } = yield* KyselyContextFx;
 
 			if (uploadIds.length === 0) {
-				return yield* new InvalidRequestError({
+				return yield* new InvalidRequestErrorFx({
 					message: "At least one upload is required",
 				});
 			}

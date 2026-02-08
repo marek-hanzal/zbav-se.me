@@ -5,7 +5,7 @@ import type { TransactionStatusRejectSchema } from "~/@common/transaction-status
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionStatusRejectFx {
 	export interface Props extends TransactionStatusRejectSchema.Type {
@@ -29,7 +29,7 @@ export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(
 	});
 
 	if (transaction.side !== "buyer") {
-		return yield* new InvalidRequestError({
+		return yield* new InvalidRequestErrorFx({
 			message: "Only buyer can reject a transaction from buyer-user endpoint",
 		});
 	}

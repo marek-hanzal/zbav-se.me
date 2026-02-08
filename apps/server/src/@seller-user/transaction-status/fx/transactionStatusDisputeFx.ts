@@ -4,7 +4,7 @@ import { transactionPatchFx } from "~/@seller-user/transaction/fx/transactionPat
 import { transactionStatusCreateFx } from "~/@seller-user/transaction-status/fx/transactionStatusCreateFx";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionStatusDisputeFx {
 	export interface Props extends TransactionStatusDisputeSchema.Type {
@@ -28,7 +28,7 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 	});
 
 	if (transaction.side !== "seller") {
-		return yield* new InvalidRequestError({
+		return yield* new InvalidRequestErrorFx({
 			message: "Only seller can dispute a transaction from seller-user endpoint",
 		});
 	}

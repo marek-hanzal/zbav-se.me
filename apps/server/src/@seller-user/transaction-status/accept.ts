@@ -95,7 +95,7 @@ export const withAcceptApiFx = Effect.fn("withAcceptApiFx")(function* () {
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);
 					},
-					AccessDeniedError() {
+					AccessDeniedErrorFx() {
 						return c.json(NotFoundNotice, 404);
 					},
 					RuntimeErrorFx(e) {

@@ -100,13 +100,13 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				//
 				withDateFx,
 				withCatchFx({
-					InvalidRequestError(e) {
+					InvalidRequestErrorFx(e) {
 						return c.json(noticeError(e), 400);
 					},
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);
 					},
-					AccessDeniedError() {
+					AccessDeniedErrorFx() {
 						return c.json(NotFoundNotice, 404);
 					},
 					ZodErrorFx({ zod }) {

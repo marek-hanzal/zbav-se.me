@@ -1,6 +1,6 @@
 import { Data } from "effect";
 
-export class NoContentError extends Data.TaggedError("NoContentError")<{
+export class NoContentErrorFx extends Data.TaggedError("NoContentErrorFx")<{
 	resource: string;
 	message: string;
 }> {

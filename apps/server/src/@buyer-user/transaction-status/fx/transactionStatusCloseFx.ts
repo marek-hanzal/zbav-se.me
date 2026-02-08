@@ -6,7 +6,7 @@ import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCr
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionStatusCloseFx {
 	export interface Props extends TransactionStatusCloseSchema.Type {
@@ -32,7 +32,7 @@ export const transactionStatusCloseFx = Effect.fn("transactionStatusCloseFx")(fu
 			});
 
 			if (transaction.side === "seller") {
-				return yield* new InvalidRequestError({
+				return yield* new InvalidRequestErrorFx({
 					message: "Seller cannot close a transaction",
 				});
 			}

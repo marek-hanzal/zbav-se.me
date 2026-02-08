@@ -5,7 +5,7 @@ import { UploadContextFx } from "~/@common/upload/context/UploadContextFx";
 import { uploadFetchFx } from "~/@user/upload/fx/uploadFetchFx";
 import type { UploadCreateSchema } from "~/@user/upload/schema/UploadCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace uploadCreateFx {
 	export interface Props extends UploadCreateSchema.Type {
@@ -29,7 +29,7 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 	const dateContext = yield* DateContextFx;
 
 	if (!url.startsWith(uploadContext.cdn)) {
-		return yield* new InvalidRequestError({
+		return yield* new InvalidRequestErrorFx({
 			message: "Only content from the CDN can be uploaded",
 		});
 	}

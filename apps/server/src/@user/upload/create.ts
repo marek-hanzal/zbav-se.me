@@ -104,7 +104,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				}),
 				withLoggingFx(axiomConfig, "apiUploadCreate"),
 				withCatchFx({
-					InvalidRequestError(e) {
+					InvalidRequestErrorFx(e) {
 						return c.json(noticeError(e), 400);
 					},
 					NotFoundErrorFx() {

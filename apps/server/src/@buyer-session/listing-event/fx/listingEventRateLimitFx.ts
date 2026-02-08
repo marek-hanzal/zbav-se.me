@@ -2,7 +2,7 @@ import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import type { ListingEventEnumSchema } from "~/database/@enum/ListingEventEnumSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { TooManyRequests } from "~/error/TooManyRequests";
+import { TooManyRequestsFx } from "~/error/TooManyRequestsFx";
 
 export namespace listingEventRateLimitFx {
 	export interface Props {
@@ -47,7 +47,7 @@ export const listingEventRateLimitFx = Effect.fn("listingEventRateLimitFx")(func
 	});
 
 	if (listingEvent) {
-		return yield* new TooManyRequests({
+		return yield* new TooManyRequestsFx({
 			message: "You have already created this event",
 		});
 	}

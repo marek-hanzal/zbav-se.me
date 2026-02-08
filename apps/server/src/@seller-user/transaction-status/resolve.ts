@@ -103,10 +103,10 @@ export const withResolveApiFx = Effect.fn("withResolveApiFx")(function* () {
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);
 					},
-					InvalidRequestError(e) {
+					InvalidRequestErrorFx(e) {
 						return c.json(noticeError(e), 400);
 					},
-					AccessDeniedError() {
+					AccessDeniedErrorFx() {
 						return c.json(NotFoundNotice, 404);
 					},
 					RuntimeErrorFx(e) {
