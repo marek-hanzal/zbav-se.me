@@ -5,6 +5,7 @@ import type { FeedFilterSchema } from "~/@buyer-user/feed/schema/FeedFilterSchem
 import type { FeedPatchSchema } from "~/@buyer-user/feed/schema/FeedPatchSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace feedPatchFx {
 	export interface Props extends FeedPatchSchema.Type {
@@ -17,10 +18,13 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 	query,
 	scope,
 }: feedPatchFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"feedPatchFx.patch": patch,
-		"feedPatchFx.query": query,
-		"feedPatchFx.scope": scope,
+	yield* withTraceFx({
+		fx: "feedPatchFx",
+		input: {
+			patch,
+			query,
+			scope,
+		},
 	});
 
 	return yield* withTransactionFx(

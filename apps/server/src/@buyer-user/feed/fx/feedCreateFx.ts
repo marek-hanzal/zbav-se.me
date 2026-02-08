@@ -6,6 +6,7 @@ import { feedFetchFx } from "~/@buyer-user/feed/fx/feedFetchFx";
 import type { FeedCreateSchema } from "~/@buyer-user/feed/schema/FeedCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
 
 export namespace feedCreateFx {
@@ -19,10 +20,13 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 	query,
 	...data
 }: feedCreateFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"feedCreateFx.userId": userId,
-		"feedCreateFx.query": query,
-		"feedCreateFx.data": data,
+	yield* withTraceFx({
+		fx: "feedCreateFx",
+		input: {
+			userId,
+			query,
+			...data,
+		},
 	});
 
 	return yield* withTransactionFx(
