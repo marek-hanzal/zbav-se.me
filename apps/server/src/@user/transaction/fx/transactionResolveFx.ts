@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { AccessDeniedError } from "~/error/AccessDeniedError";
-import { RuntimeError } from "~/error/RuntimeError";
+import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
 
 export namespace transactionResolveFx {
 	export interface Props {
@@ -69,7 +69,7 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 	}
 
 	if (!transaction.status) {
-		return yield* new RuntimeError({
+		return yield* new RuntimeErrorFx({
 			message: "Transaction status is missing",
 		});
 	}

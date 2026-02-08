@@ -1,10 +1,12 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
+import { DatabaseError } from "pg";
 import { feedFetchFx } from "~/@buyer-user/feed/fx/feedFetchFx";
 import type { FeedCreateSchema } from "~/@buyer-user/feed/schema/FeedCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
 
 export namespace feedCreateFx {
 	export interface Props extends FeedCreateSchema.Type {
@@ -31,20 +33,33 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 			const id = genId();
 			const now = dateContext.now();
 
-			yield* Effect.promise(async () => {
-				return kysely
-					.insertInto("feed")
-					.values({
-						...data,
-						id,
-						userId,
-						uploadId: null,
-						query: JSON.stringify(query) as any,
-						createdAt: now.toJSDate(),
-						updatedAt: now.toJSDate(),
-					})
-					.returningAll()
-					.executeTakeFirstOrThrow();
+			yield* Effect.tryPromise({
+				async try() {
+					return kysely
+						.insertInto("feed")
+						.values({
+							...data,
+							id,
+							userId,
+							uploadId: null,
+							query: JSON.stringify(query) as any,
+							createdAt: now.toJSDate(),
+							updatedAt: now.toJSDate(),
+						})
+						.returningAll()
+						.executeTakeFirstOrThrow();
+				},
+				catch(error) {
+					if (error instanceof DatabaseError) {
+						return new RuntimeErrorFx({
+							message: error.message,
+						});
+					}
+
+					return new RuntimeErrorFx({
+						message: error instanceof Error ? error.message : String(error),
+					});
+				},
 			});
 
 			return yield* feedFetchFx({

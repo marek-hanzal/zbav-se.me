@@ -109,7 +109,7 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 					InvalidRequestError(e) {
 						return c.json(noticeError(e), 400);
 					},
-					RuntimeError(e) {
+					RuntimeErrorFx(e) {
 						return c.json(noticeError(e), 500);
 					},
 					ZodErrorFx({ zod }) {

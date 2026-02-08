@@ -5,7 +5,7 @@ import type { TransactionStatusAcceptSchema } from "~/@seller-user/transaction-s
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
-import { RuntimeError } from "~/error/RuntimeError";
+import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
 
 export namespace transactionStatusAcceptFx {
 	export interface Props extends TransactionStatusAcceptSchema.Type {
@@ -29,7 +29,7 @@ export const transactionStatusAcceptFx = Effect.fn("transactionStatusAcceptFx")(
 	});
 
 	if (transaction.side === "buyer") {
-		return yield* new RuntimeError({
+		return yield* new RuntimeErrorFx({
 			message: "Buyer cannot accept a transaction",
 		});
 	}

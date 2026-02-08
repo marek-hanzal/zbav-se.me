@@ -97,7 +97,7 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);
 					},
-					RuntimeError(err) {
+					RuntimeErrorFx(err) {
 						return c.json(noticeError(err), 500);
 					},
 				}),

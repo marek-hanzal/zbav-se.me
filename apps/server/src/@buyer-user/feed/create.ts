@@ -6,6 +6,7 @@ import { FeedCreateSchema } from "~/@buyer-user/feed/schema/FeedCreateSchema";
 import { FeedSchema } from "~/@buyer-user/feed/schema/FeedSchema";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
+import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
@@ -94,6 +95,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					},
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);
+					},
+					RuntimeErrorFx(e) {
+						return c.json(noticeError(e), 500);
 					},
 				}),
 				Effect.runPromise,

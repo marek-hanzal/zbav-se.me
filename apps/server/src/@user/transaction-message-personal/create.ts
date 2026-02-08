@@ -105,7 +105,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);
 					},
-					RuntimeError(e) {
+					RuntimeErrorFx(e) {
 						return c.json(noticeError(e), 500);
 					},
 					InvalidRequestError(e) {

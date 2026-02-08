@@ -109,7 +109,7 @@ export const withResolveApiFx = Effect.fn("withResolveApiFx")(function* () {
 					AccessDeniedError() {
 						return c.json(NotFoundNotice, 404);
 					},
-					RuntimeError(e) {
+					RuntimeErrorFx(e) {
 						return c.json(noticeError(e), 500);
 					},
 					ZodErrorFx({ zod }) {

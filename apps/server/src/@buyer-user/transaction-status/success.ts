@@ -110,7 +110,7 @@ export const withSuccessApiFx = Effect.fn("withSuccessApiFx")(function* () {
 					InvalidRequestError(e) {
 						return c.json(noticeError(e), 400);
 					},
-					RuntimeError(e) {
+					RuntimeErrorFx(e) {
 						return c.json(noticeError(e), 500);
 					},
 					ZodErrorFx({ zod }) {
