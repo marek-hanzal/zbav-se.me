@@ -17,7 +17,15 @@ export const withLoggingFx =
 					return yield* Effect.logError(name);
 				});
 			}),
-			Effect.tapDefect(() => Effect.logFatal(name)),
+			Effect.tapDefect((e) => {
+				return Effect.gen(function* () {
+					yield* Effect.annotateLogsScoped({
+						$fatal: e,
+					});
+
+					return yield* Effect.logFatal(name);
+				});
+			}),
 			//
 			Effect.withLogSpan("runtime"),
 			Effect.provide(AxiomLoggerLayer),
