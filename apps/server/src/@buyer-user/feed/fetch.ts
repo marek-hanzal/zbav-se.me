@@ -15,7 +15,6 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 	const { buyerUserHono } = yield* RoutesContextFx;
-
 	buyerUserHono.openapi(
 		createRoute({
 			method: "post",
@@ -74,7 +73,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 					userId: user.id,
 				});
 
-				const result = c.json<FeedSchema.Type, 200>(
+				return c.json<FeedSchema.Type, 200>(
 					yield* zodFx({
 						schema: FeedSchema,
 						dataFx: feedFetchFx({
@@ -86,11 +85,8 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 					}),
 					200,
 				);
-
-				yield* Effect.log("apiFeedFetch");
-
-				return result;
 			}).pipe(
+				Effect.tap(() => Effect.log("apiFeedFetch")),
 				withKyselyFx(c.get("kysely")),
 				withLoggingFx(axiomConfig),
 				withCatchFx({
