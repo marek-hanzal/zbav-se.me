@@ -4,9 +4,13 @@ import { AxiomLoggerLayer } from "~/@common/axiom/context/AxiomLoggerLayer";
 import type { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 
 export const withLoggingFx =
-	(cfg: ServerAxiomSchema.Type) =>
+	(cfg: ServerAxiomSchema.Type, name: string) =>
 	<A, E, R>(eff: Effect.Effect<A, E, R>) =>
 		eff.pipe(
+			Effect.tap(() => Effect.log(name)),
+			Effect.tapError(() => Effect.logError(name)),
+			Effect.tapDefect(() => Effect.logFatal(name)),
+			//
 			Effect.withLogSpan("runtime"),
 			Effect.provide(AxiomLoggerLayer),
 			Effect.provide(
