@@ -4,6 +4,7 @@ import type { FeedFilterSchema } from "~/@buyer-user/feed/schema/FeedFilterSchem
 import type { FeedQuerySchema } from "~/@buyer-user/feed/schema/FeedQuerySchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace feedDeleteFx {
 	export interface Props extends FeedQuerySchema.Type {
@@ -12,8 +13,9 @@ export namespace feedDeleteFx {
 }
 
 export const feedDeleteFx = Effect.fn("feedDeleteFx")(function* (query: feedDeleteFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"feedDeleteFx.query": query,
+	yield* withTraceFx({
+		fx: "feedDeleteFx",
+		input: { query },
 	});
 
 	return yield* withTransactionFx(

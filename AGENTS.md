@@ -298,7 +298,7 @@ translation/           # i18n files (cs.yaml, en.yaml)
 2. **Respect domain boundaries**: Don't mix buyer/seller logic. Use appropriate API context.
 3. **Follow Effect patterns**: Use Context.Tag for dependencies, Effect.fn for composition. Use `Effect.annotateLogsScoped` in handlers so logs are tagged with endpoint and context.
 4. **Type safety**: Use Kysely for DB, Zod for schemas, generated SDK types.
-5. **Error handling**: Use custom error types (AccessDeniedError, InvalidRequestError, etc.).
+5. **Error handling**: Use custom error types (AccessDeniedErrorFx, InvalidRequestErrorFx, etc.).
 6. **Respect limits**: Check subscription tiers, pass states, listing limits before operations.
 7. **Transaction lifecycle**: Understand states and terminal conditions.
 8. **Sensitivity gates**: Always check user's maximum sensitivity before showing content.

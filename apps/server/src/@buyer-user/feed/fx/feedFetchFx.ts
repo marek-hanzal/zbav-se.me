@@ -4,6 +4,7 @@ import { withFeedQueryBuilderFx } from "~/@buyer-user/feed/db/withFeedQueryBuild
 import { withFeedSelectFx } from "~/@buyer-user/feed/db/withFeedSelectFx";
 import type { FeedFilterSchema } from "~/@buyer-user/feed/schema/FeedFilterSchema";
 import type { FeedQuerySchema } from "~/@buyer-user/feed/schema/FeedQuerySchema";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace feedFetchFx {
 	export interface Props extends FeedQuerySchema.Type {
@@ -17,11 +18,14 @@ export const feedFetchFx = Effect.fn("feedFetchFx")(function* ({
 	scope,
 	sort,
 }: feedFetchFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"feedFetchFx.filter": filter,
-		"feedFetchFx.where": where,
-		"feedFetchFx.scope": scope,
-		"feedFetchFx.sort": sort,
+	yield* withTraceFx({
+		fx: "feedFetchFx",
+		input: {
+			filter,
+			where,
+			scope,
+			sort,
+		},
 	});
 
 	return yield* withFetchFx({

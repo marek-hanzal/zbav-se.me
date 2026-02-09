@@ -1,5 +1,6 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { withLocationQueryBuilderFx } from "~/@session/location/db/withLocationQueryBuilderFx";
 import { withLocationSelectFx } from "~/@session/location/db/withLocationSelectFx";
 import type { LocationQuerySchema } from "~/@session/location/schema/LocationQuerySchema";
@@ -13,10 +14,9 @@ export const locationFetchFx = Effect.fn("locationFetchFx")(function* ({
 	where,
 	sort,
 }: locationFetchFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"locationFetchFx.filter": filter,
-		"locationFetchFx.where": where,
-		"locationFetchFx.sort": sort,
+	yield* withTraceFx({
+		fx: "locationFetchFx",
+		input: { filter, where, sort },
 	});
 
 	return yield* withFetchFx({

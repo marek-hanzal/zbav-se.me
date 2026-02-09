@@ -3,6 +3,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import type { IgnoreCreateSchema } from "~/@buyer-user/ignore/schema/IgnoreCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace ignoreCreateFx {
 	export interface Props extends IgnoreCreateSchema.Type {
@@ -14,9 +15,9 @@ export const ignoreCreateFx = Effect.fn("ignoreCreateFx")(function* ({
 	userId,
 	listingId,
 }: ignoreCreateFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"ignoreCreateFx.userId": userId,
-		"ignoreCreateFx.listingId": listingId,
+	yield* withTraceFx({
+		fx: "ignoreCreateFx",
+		input: { userId, listingId },
 	});
 
 	const { kysely } = yield* KyselyContextFx;

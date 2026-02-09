@@ -5,7 +5,8 @@ import { UploadContextFx } from "~/@common/upload/context/UploadContextFx";
 import { uploadFetchFx } from "~/@user/upload/fx/uploadFetchFx";
 import type { UploadCreateSchema } from "~/@user/upload/schema/UploadCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { withTraceFx } from "~/effect/withTraceFx";
+import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace uploadCreateFx {
 	export interface Props extends UploadCreateSchema.Type {
@@ -18,10 +19,13 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 	url,
 	...data
 }: uploadCreateFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"uploadCreateFx.userId": userId,
-		"uploadCreateFx.url": url,
-		"uploadCreateFx.data": data,
+	yield* withTraceFx({
+		fx: "uploadCreateFx",
+		input: {
+			userId,
+			url,
+			...data,
+		},
 	});
 
 	const { kysely } = yield* KyselyContextFx;
@@ -29,7 +33,13 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 	const dateContext = yield* DateContextFx;
 
 	if (!url.startsWith(uploadContext.cdn)) {
-		return yield* new InvalidRequestError({
+		yield* withTraceFx({
+			fx: "uploadCreateFx",
+			error: {
+				message: "Only content from the CDN can be uploaded",
+			},
+		});
+		return yield* new InvalidRequestErrorFx({
 			message: "Only content from the CDN can be uploaded",
 		});
 	}

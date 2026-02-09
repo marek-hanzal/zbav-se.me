@@ -5,6 +5,7 @@ import { favouriteFetchFx } from "~/@buyer-user/favourite/fx/favouriteFetchFx";
 import type { FavouriteCreateSchema } from "~/@buyer-user/favourite/schema/FavouriteCreateSchema";
 import { feedFetchFx } from "~/@buyer-user/feed/fx/feedFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace favouriteCreateFx {
 	export interface Props extends FavouriteCreateSchema.Type {
@@ -17,10 +18,9 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 	feedId,
 	...data
 }: favouriteCreateFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"favouriteCreateFx.userId": userId,
-		"favouriteCreateFx.feedId": feedId,
-		"favouriteCreateFx.data": data,
+	yield* withTraceFx({
+		fx: "favouriteCreateFx",
+		input: { userId, feedId, ...data },
 	});
 
 	const { kysely } = yield* KyselyContextFx;

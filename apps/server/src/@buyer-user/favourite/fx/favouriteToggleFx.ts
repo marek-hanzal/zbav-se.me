@@ -6,6 +6,7 @@ import { favouriteDeleteFx } from "~/@buyer-user/favourite/fx/favouriteDeleteFx"
 import type { FavouriteToggleSchema } from "~/@buyer-user/favourite/schema/FavouriteToggleSchema";
 import { listingFetchFx } from "~/@buyer-user/listing/fx/listingFetchFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace favouriteToggleFx {
 	export interface Props extends FavouriteToggleSchema.Type {
@@ -19,11 +20,9 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 	listingId,
 	toggle,
 }: favouriteToggleFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"favouriteToggleFx.userId": userId,
-		"favouriteToggleFx.feedId": feedId,
-		"favouriteToggleFx.listingId": listingId,
-		"favouriteToggleFx.toggle": toggle,
+	yield* withTraceFx({
+		fx: "favouriteToggleFx",
+		input: { userId, feedId, listingId, toggle },
 	});
 
 	return yield* withTransactionFx(

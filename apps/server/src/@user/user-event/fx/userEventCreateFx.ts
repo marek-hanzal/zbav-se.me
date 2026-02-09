@@ -6,6 +6,7 @@ import type { UserEventEnumSchema } from "~/@common/user-event/schema/UserEventE
 import type { UserEventCreateSchema } from "~/@user/user-event/schema/UserEventCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 const ignored: UserEventEnumSchema.Type[] = [
 	"listing.create",
@@ -22,10 +23,13 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 	group,
 	...data
 }: userEventCreateFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"userEventCreateFx.userId": userId,
-		"userEventCreateFx.group": group,
-		"userEventCreateFx.data": data,
+	yield* withTraceFx({
+		fx: "userEventCreateFx",
+		input: {
+			userId,
+			group,
+			...data,
+		},
 	});
 
 	return yield* withTransactionFx(

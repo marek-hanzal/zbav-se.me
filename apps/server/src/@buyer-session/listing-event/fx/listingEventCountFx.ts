@@ -1,5 +1,6 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { withListingEventCollectionSelectFx } from "~/@buyer-session/listing-event/db/withListingEventCollectionSelectFx";
 import { withListingEventQueryBuilderFx } from "~/@buyer-session/listing-event/db/withListingEventQueryBuilderFx";
 import type { ListingEventCountQuerySchema } from "~/@buyer-session/listing-event/schema/ListingEventCountQuerySchema";
@@ -17,11 +18,9 @@ export const listingEventCountFx = Effect.fn("listingEventCountFx")(function* ({
 	scope,
 	count,
 }: listingEventCountFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"listingEventCountFx.filter": filter,
-		"listingEventCountFx.where": where,
-		"listingEventCountFx.scope": scope,
-		"listingEventCountFx.count": count,
+	yield* withTraceFx({
+		fx: "listingEventCountFx",
+		input: { filter, where, scope, count },
 	});
 
 	return yield* withCountFx({

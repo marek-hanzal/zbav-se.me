@@ -1,6 +1,6 @@
 import { Data } from "effect";
 
-export class InfraError extends Data.TaggedError("InfraError")<{
+export class InfraErrorFx extends Data.TaggedError("InfraErrorFx")<{
 	type: string;
 	message?: string;
 }> {

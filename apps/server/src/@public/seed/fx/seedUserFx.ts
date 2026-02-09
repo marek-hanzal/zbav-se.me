@@ -1,6 +1,7 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace seedUserFx {
 	export interface Props {
@@ -16,6 +17,14 @@ export const seedUserFx = Effect.fn("seedUserFx")(function* ({ email }: seedUser
 	});
 
 	if (!current) {
+		yield* withTraceFx({
+			fx: "seedUserFx",
+			error: {
+				resource: "user",
+				resourceId: email,
+				message: "User not found",
+			},
+		});
 		return yield* new NotFoundErrorFx({
 			resource: "user",
 			resourceId: email,

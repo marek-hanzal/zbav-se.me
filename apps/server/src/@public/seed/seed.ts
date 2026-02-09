@@ -88,16 +88,16 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 				}),
 				withLoggingFx(axiomConfig, "apiSeed"),
 				withCatchFx({
-					InvalidRequestError(err) {
+					InvalidRequestErrorFx(err) {
 						return c.json(noticeError(err), 400);
 					},
-					AccessDeniedError() {
+					AccessDeniedErrorFx() {
 						return c.json(NotFoundNotice, 404);
 					},
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);
 					},
-					RuntimeError(err) {
+					RuntimeErrorFx(err) {
 						return c.json(noticeError(err), 500);
 					},
 				}),

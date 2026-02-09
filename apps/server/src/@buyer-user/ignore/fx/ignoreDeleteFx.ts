@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { ignoreFetchFx } from "~/@buyer-user/ignore/fx/ignoreFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace ignoreDeleteFx {
 	export interface Props {
@@ -14,9 +15,9 @@ export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
 	userId,
 	listingId,
 }: ignoreDeleteFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"ignoreDeleteFx.userId": userId,
-		"ignoreDeleteFx.listingId": listingId,
+	yield* withTraceFx({
+		fx: "ignoreDeleteFx",
+		input: { userId, listingId },
 	});
 
 	return yield* withTransactionFx(

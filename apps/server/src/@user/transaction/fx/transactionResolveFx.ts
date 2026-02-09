@@ -1,7 +1,8 @@
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { AccessDeniedError } from "~/error/AccessDeniedError";
-import { RuntimeError } from "~/error/RuntimeError";
+import { withTraceFx } from "~/effect/withTraceFx";
+import { AccessDeniedErrorFx } from "~/error/AccessDeniedErrorFx";
+import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
 
 export namespace transactionResolveFx {
 	export interface Props {
@@ -16,10 +17,9 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 	transactionId,
 	message = "You are not allowed to access this transaction",
 }: transactionResolveFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"transactionResolveFx.userId": userId,
-		"transactionResolveFx.transactionId": transactionId,
-		"transactionResolveFx.message": message,
+	yield* withTraceFx({
+		fx: "transactionResolveFx",
+		input: { userId, transactionId, message },
 	});
 
 	const { kysely } = yield* KyselyContextFx;
@@ -63,13 +63,21 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 	});
 
 	if (!transaction) {
-		return yield* new AccessDeniedError({
+		yield* withTraceFx({
+			fx: "transactionResolveFx",
+			error: { message },
+		});
+		return yield* new AccessDeniedErrorFx({
 			message,
 		});
 	}
 
 	if (!transaction.status) {
-		return yield* new RuntimeError({
+		yield* withTraceFx({
+			fx: "transactionResolveFx",
+			error: { message: "Transaction status is missing" },
+		});
+		return yield* new RuntimeErrorFx({
 			message: "Transaction status is missing",
 		});
 	}

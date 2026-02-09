@@ -1,5 +1,6 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { withCategoryCollectionSelectFx } from "~/@session/category/db/withCategoryCollectionSelectFx";
 import { withCategoryQueryBuilderFx } from "~/@session/category/db/withCategoryQueryBuilderFx";
 import type { CategoryFilterSchema } from "~/@session/category/schema/CategoryFilterSchema";
@@ -19,12 +20,9 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 	scope,
 	sort,
 }: categoryCollectionFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"categoryCollectionFx.cursor": cursor,
-		"categoryCollectionFx.filter": filter,
-		"categoryCollectionFx.where": where,
-		"categoryCollectionFx.scope": scope,
-		"categoryCollectionFx.sort": sort,
+	yield* withTraceFx({
+		fx: "categoryCollectionFx",
+		input: { cursor, filter, where, scope, sort },
 	});
 
 	const data = yield* withCollectionFx({

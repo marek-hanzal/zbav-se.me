@@ -5,7 +5,8 @@ import type { TransactionStatusRejectSchema } from "~/@common/transaction-status
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { withTraceFx } from "~/effect/withTraceFx";
+import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionStatusRejectFx {
 	export interface Props extends TransactionStatusRejectSchema.Type {
@@ -17,9 +18,9 @@ export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(
 	userId,
 	transactionId,
 }: transactionStatusRejectFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"transactionStatusRejectFx.userId": userId,
-		"transactionStatusRejectFx.transactionId": transactionId,
+	yield* withTraceFx({
+		fx: "transactionStatusRejectFx",
+		input: { userId, transactionId },
 	});
 
 	const transaction = yield* transactionResolveFx({
@@ -29,7 +30,13 @@ export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(
 	});
 
 	if (transaction.side !== "buyer") {
-		return yield* new InvalidRequestError({
+		yield* withTraceFx({
+			fx: "transactionStatusRejectFx",
+			error: {
+				message: "Only buyer can reject a transaction from buyer-user endpoint",
+			},
+		});
+		return yield* new InvalidRequestErrorFx({
 			message: "Only buyer can reject a transaction from buyer-user endpoint",
 		});
 	}

@@ -4,6 +4,7 @@ import { Effect } from "effect";
 import { userEventBuyerInfoFx } from "~/@buyer-session/user-event/fx/userEventBuyerInfoFx";
 import { TransactionBuyerInfoSchema } from "~/@seller-session/transaction/schema/TransactionBuyerInfoSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace transactionGetBuyerInfoFx {
 	export interface Props {
@@ -16,9 +17,9 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 	userId,
 	transactionId,
 }: transactionGetBuyerInfoFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"transactionGetBuyerInfoFx.userId": userId,
-		"transactionGetBuyerInfoFx.transactionId": transactionId,
+	yield* withTraceFx({
+		fx: "transactionGetBuyerInfoFx",
+		input: { userId, transactionId },
 	});
 
 	const { kysely } = yield* KyselyContextFx;
@@ -46,6 +47,13 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 	});
 
 	if (!userInfo) {
+		yield* withTraceFx({
+			fx: "transactionGetBuyerInfoFx",
+			error: {
+				resource: "transaction-buyer-info",
+				message: "Buyer info not available",
+			},
+		});
 		return yield* new NotFoundErrorFx({
 			resource: "transaction-buyer-info",
 			message: "Buyer info not available",

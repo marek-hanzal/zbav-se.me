@@ -5,6 +5,7 @@ import { messageGalleryFetchFx } from "~/@user/message-gallery/fx/messageGallery
 import type { MessageGalleryCreateSchema } from "~/@user/message-gallery/schema/MessageGalleryCreateSchema";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace messageGalleryCreateFx {
@@ -18,10 +19,9 @@ export const messageGalleryCreateFx = Effect.fn("messageGalleryCreateFx")(functi
 	messageThreadId,
 	galleryId,
 }: messageGalleryCreateFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"messageGalleryCreateFx.userId": userId,
-		"messageGalleryCreateFx.messageThreadId": messageThreadId,
-		"messageGalleryCreateFx.galleryId": galleryId,
+	yield* withTraceFx({
+		fx: "messageGalleryCreateFx",
+		input: { userId, messageThreadId, galleryId },
 	});
 
 	return yield* withTransactionFx(

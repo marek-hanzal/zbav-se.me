@@ -11,6 +11,7 @@ import { userEventCollectionFx } from "~/@common/user-event/fx/userEventCollecti
 import type { ActivityEnumSchema } from "~/@common/user-event/schema/ActivityEnumSchema";
 import type { LoadEnumSchema } from "~/@common/user-event/schema/LoadEnumSchema";
 import type { UserEventTableSchema } from "~/database/@table/UserEventTableSchema";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace userEventSellerInfoFx {
 	export interface Props {
@@ -512,8 +513,9 @@ const computeScore = (input: {
 export const userEventSellerInfoFx = Effect.fn("userEventSellerInfoFx")(function* ({
 	userId,
 }: userEventSellerInfoFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"userEventSellerInfoFx.userId": userId,
+	yield* withTraceFx({
+		fx: "userEventSellerInfoFx",
+		input: { userId },
 	});
 
 	const cutoff = 90;

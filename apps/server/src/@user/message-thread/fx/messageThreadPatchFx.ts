@@ -6,6 +6,7 @@ import type { MessageThreadPatchSchema } from "~/@user/message-thread/schema/Mes
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace messageThreadPatchFx {
 	export interface Props extends MessageThreadPatchSchema.Type {
@@ -20,11 +21,9 @@ export const messageThreadPatchFx = Effect.fn("messageThreadPatchFx")(function* 
 	query,
 	scope,
 }: messageThreadPatchFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"messageThreadPatchFx.userId": userId,
-		"messageThreadPatchFx.patch": patch,
-		"messageThreadPatchFx.query": query,
-		"messageThreadPatchFx.scope": scope,
+	yield* withTraceFx({
+		fx: "messageThreadPatchFx",
+		input: { userId, patch, query, scope },
 	});
 
 	return yield* withTransactionFx(

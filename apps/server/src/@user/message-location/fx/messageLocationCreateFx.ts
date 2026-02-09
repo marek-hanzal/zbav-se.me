@@ -6,6 +6,7 @@ import type { MessageLocationCreateSchema } from "~/@user/message-location/schem
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace messageLocationCreateFx {
 	export interface Props extends MessageLocationCreateSchema.Type {
@@ -18,10 +19,13 @@ export const messageLocationCreateFx = Effect.fn("messageLocationCreateFx")(func
 	messageThreadId,
 	locationId,
 }: messageLocationCreateFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"messageLocationCreateFx.userId": userId,
-		"messageLocationCreateFx.messageThreadId": messageThreadId,
-		"messageLocationCreateFx.locationId": "(redacted)",
+	yield* withTraceFx({
+		fx: "messageLocationCreateFx",
+		input: {
+			userId,
+			messageThreadId,
+			locationId: "(redacted)",
+		},
 	});
 
 	return yield* withTransactionFx(

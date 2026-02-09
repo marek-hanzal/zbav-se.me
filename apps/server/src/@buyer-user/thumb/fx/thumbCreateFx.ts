@@ -6,6 +6,7 @@ import { listingEventCreateFx } from "~/@buyer-session/listing-event/fx/listingE
 import { listingFetchFx } from "~/@buyer-user/listing/fx/listingFetchFx";
 import type { ThumbCreateSchema } from "~/@buyer-user/thumb/schema/ThumbCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace thumbCreateFx {
@@ -20,11 +21,9 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 	type,
 	...data
 }: thumbCreateFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"thumbCreateFx.userId": userId,
-		"thumbCreateFx.listingId": listingId,
-		"thumbCreateFx.type": type,
-		"thumbCreateFx.data": data,
+	yield* withTraceFx({
+		fx: "thumbCreateFx",
+		input: { userId, listingId, type, ...data },
 	});
 
 	return yield* withTransactionFx(

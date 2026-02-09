@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { flagFetchFx } from "~/@buyer-user/flag/fx/flagFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace flagDeleteFx {
 	export interface Props {
@@ -14,9 +15,9 @@ export const flagDeleteFx = Effect.fn("flagDeleteFx")(function* ({
 	userId,
 	listingId,
 }: flagDeleteFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"flagDeleteFx.userId": userId,
-		"flagDeleteFx.listingId": listingId,
+	yield* withTraceFx({
+		fx: "flagDeleteFx",
+		input: { userId, listingId },
 	});
 
 	return yield* withTransactionFx(

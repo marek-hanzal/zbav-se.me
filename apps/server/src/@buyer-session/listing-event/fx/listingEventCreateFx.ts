@@ -5,6 +5,7 @@ import { listingCheckIfOwnFx } from "~/@buyer-session/listing/fx/listingCheckIfO
 import { listingEventRateLimitFx } from "~/@buyer-session/listing-event/fx/listingEventRateLimitFx";
 import type { ListingEventCreateSchema } from "~/@buyer-session/listing-event/schema/ListingEventCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace listingEventCreateFx {
@@ -18,10 +19,9 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 	listingId,
 	event,
 }: listingEventCreateFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"listingEventCreateFx.userId": userId,
-		"listingEventCreateFx.listingId": listingId,
-		"listingEventCreateFx.event": event,
+	yield* withTraceFx({
+		fx: "listingEventCreateFx",
+		input: { userId, listingId, event },
 	});
 
 	return yield* withTransactionFx(

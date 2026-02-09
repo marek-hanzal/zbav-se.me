@@ -1,6 +1,7 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace messageUserCheckFx {
 	export interface Props {
@@ -26,6 +27,14 @@ export const messageUserCheckFx = Effect.fn("messageUserCheckFx")(function* ({
 	});
 
 	if (!result) {
+		yield* withTraceFx({
+			fx: "messageUserCheckFx",
+			error: {
+				resource: "message-thread-user",
+				resourceId: "(user-ids+messageThreadId)",
+				message: "User is not in the related thread",
+			},
+		});
 		return yield* new NotFoundErrorFx({
 			resource: "message-thread-user",
 			resourceId: "(user-ids+messageThreadId)",

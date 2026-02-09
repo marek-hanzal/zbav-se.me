@@ -1,6 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { listingCollectionFx } from "~/@buyer-user/listing/fx/listingCollectionFx";
 import { listingCountFx } from "~/@buyer-user/listing/fx/listingCountFx";
 import type { ListingSortSchema } from "~/@buyer-user/listing/schema/ListingSortSchema";
@@ -24,9 +25,9 @@ export const listingOfFx = Effect.fn("listingOfFx")(function* ({
 	userId,
 	count,
 }: ListingOfRequestSchema.Type) {
-	yield* Effect.annotateLogsScoped({
-		"listingOfFx.userId": userId,
-		"listingOfFx.count": count,
+	yield* withTraceFx({
+		fx: "listingOfFx",
+		input: { userId, count },
 	});
 
 	const total = yield* listingCountFx({

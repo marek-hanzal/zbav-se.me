@@ -4,6 +4,7 @@ import { draftFetchFx } from "~/@seller-user/draft/fx/draftFetchFx";
 import type { DraftFilterSchema } from "~/@seller-user/draft/schema/DraftFilterSchema";
 import type { DraftPatchSchema } from "~/@seller-user/draft/schema/DraftPatchSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace draftPatchFx {
@@ -17,10 +18,9 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 	query,
 	scope,
 }: draftPatchFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"draftPatchFx.patch": patch,
-		"draftPatchFx.query": query,
-		"draftPatchFx.scope": scope,
+	yield* withTraceFx({
+		fx: "draftPatchFx",
+		input: { patch, query, scope },
 	});
 
 	return yield* withTransactionFx(

@@ -5,6 +5,7 @@ import type { TransactionStatusCreateSchema } from "~/@common/transaction-status
 import { transactionPatchFx } from "~/@seller-user/transaction/fx/transactionPatchFx";
 import { transactionStatusFetchFx } from "~/@session/transaction-status/fx/transactionStatusFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace transactionStatusCreateFx {
 	export interface Props extends TransactionStatusCreateSchema.Type {
@@ -17,9 +18,9 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 	userId,
 	...create
 }: transactionStatusCreateFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"transactionStatusCreateFx.userId": userId,
-		"transactionStatusCreateFx.create": create,
+	yield* withTraceFx({
+		fx: "transactionStatusCreateFx",
+		input: { userId, ...create },
 	});
 
 	const { kysely } = yield* KyselyContextFx;

@@ -13,6 +13,7 @@ import { messageUserCreateFx } from "~/@user/message-thread-user/fx/messageUserC
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace transactionCreateFx {
 	export interface Props extends TransactionCreateSchema.Type {
@@ -25,10 +26,9 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 	listingId,
 	...data
 }: transactionCreateFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"transactionCreateFx.userId": userId,
-		"transactionCreateFx.listingId": listingId,
-		"transactionCreateFx.data": data,
+	yield* withTraceFx({
+		fx: "transactionCreateFx",
+		input: { userId, listingId, ...data },
 	});
 
 	return yield* withTransactionFx(
@@ -49,6 +49,14 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 			});
 
 			if (!listing) {
+				yield* withTraceFx({
+					fx: "transactionCreateFx",
+					error: {
+						resource: "listing",
+						resourceId: listingId,
+						message: "Listing not found",
+					},
+				});
 				return yield* new NotFoundErrorFx({
 					resource: "listing",
 					resourceId: listingId,

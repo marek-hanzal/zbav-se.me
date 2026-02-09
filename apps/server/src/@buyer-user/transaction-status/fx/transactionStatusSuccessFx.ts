@@ -6,7 +6,8 @@ import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCr
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { withTraceFx } from "~/effect/withTraceFx";
+import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionStatusSuccessFx {
 	export interface Props extends TransactionStatusSuccessSchema.Type {
@@ -18,9 +19,9 @@ export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx"
 	userId,
 	transactionId,
 }: transactionStatusSuccessFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"transactionStatusSuccessFx.userId": userId,
-		"transactionStatusSuccessFx.transactionId": transactionId,
+	yield* withTraceFx({
+		fx: "transactionStatusSuccessFx",
+		input: { userId, transactionId },
 	});
 
 	return yield* withTransactionFx(
@@ -32,7 +33,13 @@ export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx"
 			});
 
 			if (transaction.side === "seller") {
-				return yield* new InvalidRequestError({
+				yield* withTraceFx({
+					fx: "transactionStatusSuccessFx",
+					error: {
+						message: "Seller cannot mark a transaction as successful",
+					},
+				});
+				return yield* new InvalidRequestErrorFx({
 					message: "Seller cannot mark a transaction as successful",
 				});
 			}

@@ -4,6 +4,7 @@ import { Effect } from "effect";
 import { SellerInfoSchema } from "~/@buyer-session/listing/schema/SellerInfoSchema";
 import { userEventSellerInfoFx } from "~/@buyer-session/user-event/fx/userEventSellerInfoFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace listingGetSellerInfoFx {
 	export interface Props {
@@ -14,8 +15,9 @@ export namespace listingGetSellerInfoFx {
 export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(function* ({
 	listingId,
 }: listingGetSellerInfoFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"listingGetSellerInfoFx.listingId": listingId,
+	yield* withTraceFx({
+		fx: "listingGetSellerInfoFx",
+		input: { listingId },
 	});
 
 	const { kysely } = yield* KyselyContextFx;
@@ -40,6 +42,13 @@ export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(functi
 	});
 
 	if (!userInfo) {
+		yield* withTraceFx({
+			fx: "listingGetSellerInfoFx",
+			error: {
+				resource: "listing-seller-info",
+				message: "Seller info not available",
+			},
+		});
 		return yield* new NotFoundErrorFx({
 			resource: "listing-seller-info",
 			message: "Seller info not available",

@@ -1,5 +1,6 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { withTransactionQueryBuilderFx } from "~/@buyer-user/transaction/db/withTransactionQueryBuilderFx";
 import { withTransactionSelectFx } from "~/@buyer-user/transaction/db/withTransactionSelectFx";
 import type { TransactionFilterSchema } from "~/@common/transaction/schema/TransactionFilterSchema";
@@ -17,11 +18,9 @@ export const transactionFetchFx = Effect.fn("transactionFetchFx")(function* ({
 	scope,
 	sort,
 }: transactionFetchFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"transactionFetchFx.filter": filter,
-		"transactionFetchFx.where": where,
-		"transactionFetchFx.scope": scope,
-		"transactionFetchFx.sort": sort,
+	yield* withTraceFx({
+		fx: "transactionFetchFx",
+		input: { filter, where, scope, sort },
 	});
 
 	return yield* withFetchFx({

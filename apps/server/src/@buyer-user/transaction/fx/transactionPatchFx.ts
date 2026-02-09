@@ -6,6 +6,7 @@ import { TransactionContextFx } from "~/@common/transaction/context/TransactionC
 import type { TransactionFilterSchema } from "~/@common/transaction/schema/TransactionFilterSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace transactionPatchFx {
 	export interface Props extends TransactionPatchSchema.Type {
@@ -20,11 +21,9 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 	query,
 	scope,
 }: transactionPatchFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"transactionPatchFx.userId": userId,
-		"transactionPatchFx.patch": patch,
-		"transactionPatchFx.query": query,
-		"transactionPatchFx.scope": scope,
+	yield* withTraceFx({
+		fx: "transactionPatchFx",
+		input: { userId, patch, query, scope },
 	});
 
 	return yield* withTransactionFx(

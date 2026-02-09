@@ -1,5 +1,6 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
+import { withTraceFx } from "~/effect/withTraceFx";
 import { withListingCollectionSelectFx } from "~/@buyer-user/listing/db/withListingCollectionSelectFx";
 import { withListingQueryBuilderFx } from "~/@buyer-user/listing/db/withListingQueryBuilderFx";
 import type { ListingCountQuerySchema } from "~/@buyer-user/listing/schema/ListingCountQuerySchema";
@@ -19,12 +20,9 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	scope,
 	meta,
 }: listingCountFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"listingCountFx.userId": userId,
-		"listingCountFx.filter": filter,
-		"listingCountFx.where": where,
-		"listingCountFx.scope": scope,
-		"listingCountFx.meta": meta,
+	yield* withTraceFx({
+		fx: "listingCountFx",
+		input: { userId, filter, where, scope, meta },
 	});
 
 	return yield* withCountFx({

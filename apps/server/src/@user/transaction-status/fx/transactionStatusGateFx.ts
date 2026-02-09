@@ -1,7 +1,8 @@
 import { Effect } from "effect";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import type { TransactionStatusEnumSchema } from "~/database/@enum/TransactionStatusEnumSchema";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { withTraceFx } from "~/effect/withTraceFx";
+import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionStatusGateFx {
 	export interface Props {
@@ -18,11 +19,14 @@ export const transactionStatusGateFx = Effect.fn("transactionStatusGateFx")(func
 	allowedStatuses,
 	message,
 }: transactionStatusGateFx.Props) {
-	yield* Effect.annotateLogsScoped({
-		"transactionStatusGateFx.userId": userId,
-		"transactionStatusGateFx.transactionId": transactionId,
-		"transactionStatusGateFx.allowedStatuses": allowedStatuses,
-		"transactionStatusGateFx.message": message,
+	yield* withTraceFx({
+		fx: "transactionStatusGateFx",
+		input: {
+			userId,
+			transactionId,
+			allowedStatuses,
+			message,
+		},
 	});
 
 	const transaction = yield* transactionResolveFx({
@@ -31,10 +35,17 @@ export const transactionStatusGateFx = Effect.fn("transactionStatusGateFx")(func
 	});
 
 	if (!transaction.status || !allowedStatuses.includes(transaction.status)) {
-		return yield* new InvalidRequestError({
-			message:
-				message ??
-				`Transaction must be in one of the following statuses: ${allowedStatuses.join(", ")}`,
+		const errorMessage =
+			message ??
+			`Transaction must be in one of the following statuses: ${allowedStatuses.join(", ")}`;
+		yield* withTraceFx({
+			fx: "transactionStatusGateFx",
+			error: {
+				message: errorMessage,
+			},
+		});
+		return yield* new InvalidRequestErrorFx({
+			message: errorMessage,
 		});
 	}
 
