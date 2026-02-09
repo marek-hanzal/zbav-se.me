@@ -19,7 +19,11 @@ export const transactionMessageLocationCreateFx = Effect.fn("transactionMessageL
 	function* ({ userId, transactionId, locationId }: transactionMessageLocationCreateFx.Props) {
 		yield* withTraceFx({
 			fx: "transactionMessageLocationCreateFx",
-			input: { userId, transactionId, locationId },
+			input: {
+				userId,
+				transactionId,
+				locationId: "(redacted)",
+			},
 		});
 
 		return yield* withTransactionFx(

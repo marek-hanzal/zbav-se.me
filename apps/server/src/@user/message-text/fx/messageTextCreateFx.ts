@@ -21,7 +21,11 @@ export const messageTextCreateFx = Effect.fn("messageTextCreateFx")(function* ({
 }: messageTextCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "messageTextCreateFx",
-		input: { userId, messageThreadId, message },
+		input: {
+			userId,
+			messageThreadId,
+			message: "(redacted)",
+		},
 	});
 
 	return yield* withTransactionFx(

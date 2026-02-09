@@ -19,7 +19,11 @@ export const transactionMessageTextCreateFx = Effect.fn("transactionMessageTextC
 	function* ({ userId, transactionId, message }: transactionMessageTextCreateFx.Props) {
 		yield* withTraceFx({
 			fx: "transactionMessageTextCreateFx",
-			input: { userId, transactionId, message },
+			input: {
+				userId,
+				transactionId,
+				message: "(redacted)",
+			},
 		});
 
 		return yield* withTransactionFx(
