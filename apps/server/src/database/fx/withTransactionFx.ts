@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 
 export const withTransactionFx = Effect.fn("withTransactionFx")(function* <
@@ -13,7 +14,7 @@ export const withTransactionFx = Effect.fn("withTransactionFx")(function* <
 		return yield* effect.pipe(withKyselyFx(kysely));
 	}
 
-	const trx = yield* Effect.promise(async () => kysely.kysely.startTransaction().execute());
+	const trx = yield* tryDbFx(async () => kysely.kysely.startTransaction().execute());
 
 	return yield* effect.pipe(
 		withKyselyFx({
@@ -22,12 +23,10 @@ export const withTransactionFx = Effect.fn("withTransactionFx")(function* <
 		}),
 		Effect.matchEffect({
 			onSuccess(value) {
-				return Effect.promise(async () => trx.commit().execute()).pipe(
-					Effect.map(() => value),
-				);
+				return tryDbFx(async () => trx.commit().execute()).pipe(Effect.map(() => value));
 			},
 			onFailure(error) {
-				return Effect.promise(async () => trx.rollback().execute()).pipe(
+				return tryDbFx(async () => trx.rollback().execute()).pipe(
 					Effect.flatMap(() => Effect.fail(error)),
 				);
 			},

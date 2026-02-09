@@ -3,6 +3,7 @@ import { draftFetchFx } from "~/@seller-user/draft/fx/draftFetchFx";
 import type { DraftFilterSchema } from "~/@seller-user/draft/schema/DraftFilterSchema";
 import type { DraftQuerySchema } from "~/@seller-user/draft/schema/DraftQuerySchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
@@ -30,9 +31,9 @@ export const draftDeleteFx = Effect.fn("draftDeleteFx")(function* (query: draftD
 				"draftDeleteFx.draftId": draft.id,
 			});
 
-			yield* Effect.promise(async () => {
-				return kysely.deleteFrom("draft").where("id", "=", draft.id).execute();
-			});
+			yield* tryDbFx(async () =>
+				kysely.deleteFrom("draft").where("id", "=", draft.id).execute(),
+			);
 
 			return draft;
 		}),

@@ -10,6 +10,7 @@ import { transactionStatusRejectFx as buyerTransactionStatusRejectFx } from "~/@
 import { transactionStatusAcceptFx } from "~/@seller-user/transaction-status/fx/transactionStatusAcceptFx";
 import { transactionStatusRejectFx as sellerTransactionStatusRejectFx } from "~/@seller-user/transaction-status/fx/transactionStatusRejectFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 
 export namespace t00_initial {
 	export interface Props {
@@ -33,15 +34,15 @@ export const t00_initial = Effect.fn("t00_initial")(function* ({
 	});
 
 	for (const transactionId of transactions) {
-		const current = yield* Effect.promise(async () => {
-			return kysely
+		const current = yield* tryDbFx(async () =>
+			kysely
 				.selectFrom("user as user")
 				.innerJoin("listing as l", "l.userId", "user.id")
 				.innerJoin("transaction as t", "t.listingId", "l.id")
 				.where("t.id", "=", transactionId.id)
 				.selectAll("user")
-				.executeTakeFirst();
-		});
+				.executeTakeFirst(),
+		);
 
 		if (!current) {
 			return yield* new NotFoundErrorFx({

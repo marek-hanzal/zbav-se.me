@@ -4,6 +4,7 @@ import { Effect } from "effect";
 import { userEventBuyerInfoFx } from "~/@buyer-session/user-event/fx/userEventBuyerInfoFx";
 import { TransactionBuyerInfoSchema } from "~/@seller-session/transaction/schema/TransactionBuyerInfoSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace transactionGetBuyerInfoFx {
@@ -27,8 +28,8 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 
 	const { kysely } = yield* KyselyContextFx;
 
-	const userInfo = yield* Effect.promise(async () => {
-		return kysely
+	const userInfo = yield* tryDbFx(async () =>
+		kysely
 			.selectFrom("user as u")
 			.innerJoin("transaction as lt", (eb) => {
 				/**
@@ -46,8 +47,8 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 				"u.id",
 				"u.createdAt",
 			])
-			.executeTakeFirst();
-	});
+			.executeTakeFirst(),
+	);
 
 	if (!userInfo) {
 		yield* withTraceFx({

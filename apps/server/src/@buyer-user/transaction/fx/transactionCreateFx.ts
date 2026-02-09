@@ -42,16 +42,16 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 			const config = yield* TransactionContextFx;
 			const dateContext = yield* DateContextFx;
 
-			const listing = yield* Effect.promise(async () => {
-				return kysely
+			const listing = yield* tryDbFx(async () =>
+				kysely
 					.selectFrom("listing")
 					.select([
 						"id",
 						"userId",
 					])
 					.where("id", "=", listingId)
-					.executeTakeFirst();
-			});
+					.executeTakeFirst(),
+			);
 
 			if (!listing) {
 				yield* withTraceFx({

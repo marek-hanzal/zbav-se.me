@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { flagFetchFx } from "~/@buyer-user/flag/fx/flagFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
@@ -36,9 +37,9 @@ export const flagDeleteFx = Effect.fn("flagDeleteFx")(function* ({
 				},
 			});
 
-			yield* Effect.promise(async () => {
-				return kysely.deleteFrom("flag").where("id", "=", flag.id).execute();
-			});
+			yield* tryDbFx(async () =>
+				kysely.deleteFrom("flag").where("id", "=", flag.id).execute(),
+			);
 
 			return flag;
 		}),

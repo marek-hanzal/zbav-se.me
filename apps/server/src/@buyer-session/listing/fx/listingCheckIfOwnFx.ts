@@ -1,6 +1,7 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
@@ -31,13 +32,13 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 	});
 
 	const { kysely } = yield* KyselyContextFx;
-	const listing = yield* Effect.promise(async () => {
-		return kysely
+	const listing = yield* tryDbFx(async () =>
+		kysely
 			.selectFrom("listing")
 			.select("userId")
 			.where("id", "=", listingId)
-			.executeTakeFirst();
-	});
+			.executeTakeFirst(),
+	);
 
 	if (!listing) {
 		yield* withTraceFx({

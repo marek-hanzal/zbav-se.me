@@ -115,8 +115,8 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 
 			if (data.draftId) {
 				const draftId = data.draftId;
-				yield* Effect.promise(async () => {
-					return kysely
+				yield* tryDbFx(async () =>
+					kysely
 						.updateTable("draft")
 						.set({
 							usedAt: now.toJSDate(),
@@ -124,8 +124,8 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						})
 						.where("id", "=", draftId)
 						.where("userId", "=", userId)
-						.execute();
-				});
+						.execute(),
+				);
 			}
 
 			yield* userEventCreateFx({

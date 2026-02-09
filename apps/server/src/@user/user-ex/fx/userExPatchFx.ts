@@ -20,13 +20,13 @@ export const userExPatchFx = Effect.fn("userExPatchFx")(function* ({
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
 
-			const userEx = yield* Effect.promise(async () => {
-				return kysely
+			const userEx = yield* tryDbFx(async () =>
+				kysely
 					.selectFrom("user_ex")
 					.where("userId", "=", userId)
 					.selectAll()
-					.executeTakeFirst();
-			});
+					.executeTakeFirst(),
+			);
 
 			if (!userEx) {
 				return yield* tryDbFx(
@@ -50,14 +50,14 @@ export const userExPatchFx = Effect.fn("userExPatchFx")(function* ({
 				);
 			}
 
-			return yield* Effect.promise(async () => {
-				return kysely
+			return yield* tryDbFx(async () =>
+				kysely
 					.updateTable("user_ex")
 					.set(patch)
 					.where("id", "=", userEx.id)
 					.returningAll()
-					.executeTakeFirstOrThrow();
-			});
+					.executeTakeFirstOrThrow(),
+			);
 		}),
 	);
 });

@@ -6,6 +6,7 @@ import { galleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
@@ -59,12 +60,9 @@ export const feedGalleryCreateFx = Effect.fn("feedGalleryCreateFx")(function* ({
 				}),
 			);
 
-			yield* Effect.promise(async () => {
-				return kysely
-					.deleteFrom("gallery_item")
-					.where("galleryId", "=", gallery.id)
-					.execute();
-			});
+			yield* tryDbFx(async () =>
+				kysely.deleteFrom("gallery_item").where("galleryId", "=", gallery.id).execute(),
+			);
 
 			let sort = 0;
 			for (const uploadId of uploadIds) {

@@ -5,6 +5,7 @@ import type { MessageThreadFilterSchema } from "~/@user/message-thread/schema/Me
 import type { MessageThreadPatchSchema } from "~/@user/message-thread/schema/MessageThreadPatchSchema";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
@@ -48,16 +49,16 @@ export const messageThreadPatchFx = Effect.fn("messageThreadPatchFx")(function* 
 				messageThreadId: messageThread.id,
 			});
 
-			yield* Effect.promise(async () => {
-				return kysely
+			yield* tryDbFx(async () =>
+				kysely
 					.updateTable("message_thread")
 					.set({
 						...patch,
 						updatedAt: dateContext.now().toJSDate(),
 					})
 					.where("id", "=", messageThread.id)
-					.executeTakeFirst();
-			});
+					.executeTakeFirst(),
+			);
 
 			return yield* messageThreadFetchFx({
 				where: {

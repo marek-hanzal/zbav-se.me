@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { favouriteFetchFx } from "~/@buyer-user/favourite/fx/favouriteFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
@@ -36,9 +37,9 @@ export const favouriteDeleteFx = Effect.fn("favouriteDeleteFx")(function* ({
 				},
 			});
 
-			yield* Effect.promise(async () => {
-				return kysely.deleteFrom("favourite").where("id", "=", favourite.id).execute();
-			});
+			yield* tryDbFx(async () =>
+				kysely.deleteFrom("favourite").where("id", "=", favourite.id).execute(),
+			);
 
 			return favourite;
 		}),

@@ -6,6 +6,7 @@ import type { TransactionMessagePersonalCreateSchema } from "~/@user/transaction
 import { transactionStatusGateFx } from "~/@user/transaction-status/fx/transactionStatusGateFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
@@ -43,8 +44,8 @@ export const transactionMessagePersonalCreateFx = Effect.fn("transactionMessageP
 
 				const now = dateContext.now();
 
-				yield* Effect.promise(async () => {
-					return kysely
+				yield* tryDbFx(async () =>
+					kysely
 						.updateTable("transaction")
 						.set({
 							updatedAt: now.toJSDate(),
@@ -55,8 +56,8 @@ export const transactionMessagePersonalCreateFx = Effect.fn("transactionMessageP
 								.toJSDate(),
 						})
 						.where("id", "=", transaction.id)
-						.executeTakeFirst();
-				});
+						.executeTakeFirst(),
+				);
 
 				yield* userInteractionEventFx({
 					userId,

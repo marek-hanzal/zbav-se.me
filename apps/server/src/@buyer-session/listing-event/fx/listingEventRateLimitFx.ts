@@ -2,6 +2,7 @@ import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import type { ListingEventEnumSchema } from "~/database/@enum/ListingEventEnumSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 import { TooManyRequestsFx } from "~/error/TooManyRequestsFx";
 
@@ -30,8 +31,8 @@ export const listingEventRateLimitFx = Effect.fn("listingEventRateLimitFx")(func
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 
-	const listingEvent = yield* Effect.promise(async () => {
-		return kysely
+	const listingEvent = yield* tryDbFx(async () =>
+		kysely
 			.selectFrom("listing_event")
 			.select("createdAt")
 			.where("listingId", "=", listingId)
@@ -47,8 +48,8 @@ export const listingEventRateLimitFx = Effect.fn("listingEventRateLimitFx")(func
 					.toJSDate(),
 			)
 			.orderBy("createdAt", "desc")
-			.executeTakeFirst();
-	});
+			.executeTakeFirst(),
+	);
 
 	if (listingEvent) {
 		return yield* new TooManyRequestsFx({
