@@ -23,20 +23,20 @@ const tryDbFxImpl = Effect.fn("tryDbFx")(
 					}
 
 					return new RuntimeErrorFx({
-						message: error.message,
+						message: "Database Error",
 						cause: error,
 					});
 				}
 
 				if (error instanceof Error) {
 					return new RuntimeErrorFx({
-						message: error.message,
+						message: "Generic Error",
 						cause: error,
 					});
 				}
 
 				return new RuntimeErrorFx({
-					message: String(error),
+					message: "Unknown Error",
 					cause: error,
 				});
 			},
