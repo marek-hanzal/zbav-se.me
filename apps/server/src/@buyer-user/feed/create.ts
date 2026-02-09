@@ -99,6 +99,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					RuntimeErrorFx(e) {
 						return c.json(noticeError(e), 500);
 					},
+					ConflictErrorFx(e) {
+						return c.json(noticeError(e), 409);
+					},
 				}),
 				Effect.runPromise,
 			);

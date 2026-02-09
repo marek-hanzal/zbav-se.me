@@ -1,10 +1,10 @@
 import { z } from "@hono/zod-openapi";
 import { Effect } from "effect";
-import { withTraceFx } from "~/effect/withTraceFx";
 import { seedTransactionInteractionFx } from "~/@public/seed/fx/seedTransactionInteractionFx";
 import { SeedTransactionsRequestSchema } from "~/@public/seed/fx/seedTransactionsFx";
 import { seedUserFx } from "~/@public/seed/fx/seedUserFx";
 import { transactionFx } from "~/@public/seed/fx/transactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export const SeedRequestSchema = z.object({
 	email: z.string().openapi({
@@ -26,7 +26,10 @@ export const seedFx = Effect.fn("seedFx")(function* ({
 }: SeedRequestSchema.Type) {
 	yield* withTraceFx({
 		fx: "seedFx",
-		input: { email, transaction },
+		input: {
+			email,
+			transaction,
+		},
 	});
 
 	const current = yield* seedUserFx({

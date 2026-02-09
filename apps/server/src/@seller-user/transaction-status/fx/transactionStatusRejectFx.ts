@@ -20,7 +20,10 @@ export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(
 }: transactionStatusRejectFx.Props) {
 	yield* withTraceFx({
 		fx: "transactionStatusRejectFx",
-		input: { userId, transactionId },
+		input: {
+			userId,
+			transactionId,
+		},
 	});
 
 	const transaction = yield* transactionResolveFx({

@@ -17,7 +17,9 @@ export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(functi
 }: listingGetSellerInfoFx.Props) {
 	yield* withTraceFx({
 		fx: "listingGetSellerInfoFx",
-		input: { listingId },
+		input: {
+			listingId,
+		},
 	});
 
 	const { kysely } = yield* KyselyContextFx;

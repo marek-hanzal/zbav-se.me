@@ -17,7 +17,10 @@ export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
 }: ignoreDeleteFx.Props) {
 	yield* withTraceFx({
 		fx: "ignoreDeleteFx",
-		input: { userId, listingId },
+		input: {
+			userId,
+			listingId,
+		},
 	});
 
 	return yield* withTransactionFx(

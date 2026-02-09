@@ -28,7 +28,11 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 }: transactionCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "transactionCreateFx",
-		input: { userId, listingId, ...data },
+		input: {
+			userId,
+			listingId,
+			...data,
+		},
 	});
 
 	return yield* withTransactionFx(

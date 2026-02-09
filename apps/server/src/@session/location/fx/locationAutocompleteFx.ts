@@ -23,13 +23,19 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 }: locationAutocompleteFx.Props) {
 	yield* withTraceFx({
 		fx: "locationAutocompleteFx",
-		input: { text, lang, limit },
+		input: {
+			text,
+			lang,
+			limit,
+		},
 	});
 
 	if (text.length < 3) {
 		yield* withTraceFx({
 			fx: "locationAutocompleteFx",
-			error: { message: "Text too short" },
+			error: {
+				message: "Text too short",
+			},
 		});
 		return yield* new TextTooShortErrorFx({
 			message: "Text too short",

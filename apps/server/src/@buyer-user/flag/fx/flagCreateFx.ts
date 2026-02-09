@@ -17,7 +17,10 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 }: flagCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "flagCreateFx",
-		input: { userId, listingId },
+		input: {
+			userId,
+			listingId,
+		},
 	});
 
 	const { kysely } = yield* KyselyContextFx;

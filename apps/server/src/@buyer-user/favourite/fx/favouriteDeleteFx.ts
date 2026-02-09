@@ -17,7 +17,10 @@ export const favouriteDeleteFx = Effect.fn("favouriteDeleteFx")(function* ({
 }: favouriteDeleteFx.Props) {
 	yield* withTraceFx({
 		fx: "favouriteDeleteFx",
-		input: { userId, listingId },
+		input: {
+			userId,
+			listingId,
+		},
 	});
 
 	return yield* withTransactionFx(

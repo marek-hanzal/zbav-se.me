@@ -23,7 +23,12 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 }: transactionPatchFx.Props) {
 	yield* withTraceFx({
 		fx: "transactionPatchFx",
-		input: { userId, patch, query, scope },
+		input: {
+			userId,
+			patch,
+			query,
+			scope,
+		},
 	});
 
 	return yield* withTransactionFx(

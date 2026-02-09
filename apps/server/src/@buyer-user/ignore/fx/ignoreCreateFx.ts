@@ -17,7 +17,10 @@ export const ignoreCreateFx = Effect.fn("ignoreCreateFx")(function* ({
 }: ignoreCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "ignoreCreateFx",
-		input: { userId, listingId },
+		input: {
+			userId,
+			listingId,
+		},
 	});
 
 	const { kysely } = yield* KyselyContextFx;

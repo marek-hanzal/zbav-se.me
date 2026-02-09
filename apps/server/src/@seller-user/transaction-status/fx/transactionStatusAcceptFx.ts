@@ -20,7 +20,10 @@ export const transactionStatusAcceptFx = Effect.fn("transactionStatusAcceptFx")(
 }: transactionStatusAcceptFx.Props) {
 	yield* withTraceFx({
 		fx: "transactionStatusAcceptFx",
-		input: { userId, transactionId },
+		input: {
+			userId,
+			transactionId,
+		},
 	});
 
 	const transaction = yield* transactionResolveFx({
@@ -32,7 +35,9 @@ export const transactionStatusAcceptFx = Effect.fn("transactionStatusAcceptFx")(
 	if (transaction.side === "buyer") {
 		yield* withTraceFx({
 			fx: "transactionStatusAcceptFx",
-			error: { message: "Buyer cannot accept a transaction" },
+			error: {
+				message: "Buyer cannot accept a transaction",
+			},
 		});
 		return yield* new RuntimeErrorFx({
 			message: "Buyer cannot accept a transaction",

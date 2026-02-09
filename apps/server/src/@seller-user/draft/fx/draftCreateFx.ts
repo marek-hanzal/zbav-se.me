@@ -21,7 +21,10 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 }: draftCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "draftCreateFx",
-		input: { userId, ...data },
+		input: {
+			userId,
+			...data,
+		},
 	});
 
 	return yield* withTransactionFx(

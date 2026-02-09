@@ -18,7 +18,10 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 }: categoryMissCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "categoryMissCreateFx",
-		input: { fulltext, limit },
+		input: {
+			fulltext,
+			limit,
+		},
 	});
 
 	const { kysely } = yield* KyselyContextFx;

@@ -17,7 +17,10 @@ export const flagDeleteFx = Effect.fn("flagDeleteFx")(function* ({
 }: flagDeleteFx.Props) {
 	yield* withTraceFx({
 		fx: "flagDeleteFx",
-		input: { userId, listingId },
+		input: {
+			userId,
+			listingId,
+		},
 	});
 
 	return yield* withTransactionFx(

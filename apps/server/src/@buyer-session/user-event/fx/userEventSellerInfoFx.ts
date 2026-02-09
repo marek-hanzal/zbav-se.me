@@ -515,7 +515,9 @@ export const userEventSellerInfoFx = Effect.fn("userEventSellerInfoFx")(function
 }: userEventSellerInfoFx.Props) {
 	yield* withTraceFx({
 		fx: "userEventSellerInfoFx",
-		input: { userId },
+		input: {
+			userId,
+		},
 	});
 
 	const cutoff = 90;

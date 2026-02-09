@@ -27,7 +27,11 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 }: listingCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "listingCreateFx",
-		input: { userId, uploadIds, ...data },
+		input: {
+			userId,
+			uploadIds,
+			...data,
+		},
 	});
 
 	return yield* withTransactionFx(
@@ -41,7 +45,9 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			if (uploadIds.length === 0) {
 				yield* withTraceFx({
 					fx: "listingCreateFx",
-					error: { message: "At least one upload is required" },
+					error: {
+						message: "At least one upload is required",
+					},
 				});
 				return yield* new InvalidRequestErrorFx({
 					message: "At least one upload is required",

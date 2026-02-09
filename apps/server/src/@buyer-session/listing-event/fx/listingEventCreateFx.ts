@@ -5,8 +5,8 @@ import { listingCheckIfOwnFx } from "~/@buyer-session/listing/fx/listingCheckIfO
 import { listingEventRateLimitFx } from "~/@buyer-session/listing-event/fx/listingEventRateLimitFx";
 import type { ListingEventCreateSchema } from "~/@buyer-session/listing-event/schema/ListingEventCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { withTraceFx } from "~/effect/withTraceFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace listingEventCreateFx {
 	export interface Props extends ListingEventCreateSchema.Type {
@@ -21,7 +21,11 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 }: listingEventCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "listingEventCreateFx",
-		input: { userId, listingId, event },
+		input: {
+			userId,
+			listingId,
+			event,
+		},
 	});
 
 	return yield* withTransactionFx(

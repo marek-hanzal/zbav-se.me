@@ -19,7 +19,10 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 }: transactionStatusDisputeFx.Props) {
 	yield* withTraceFx({
 		fx: "transactionStatusDisputeFx",
-		input: { userId, transactionId },
+		input: {
+			userId,
+			transactionId,
+		},
 	});
 
 	const transaction = yield* transactionResolveFx({

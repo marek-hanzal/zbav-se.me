@@ -23,7 +23,11 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 }: listingCheckIfOwnFx.Props) {
 	yield* withTraceFx({
 		fx: "listingCheckIfOwnFx",
-		input: { userId, listingId, message },
+		input: {
+			userId,
+			listingId,
+			message,
+		},
 	});
 
 	const { kysely } = yield* KyselyContextFx;
@@ -54,7 +58,9 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 	if (listing.userId === userId) {
 		yield* withTraceFx({
 			fx: "listingCheckIfOwnFx",
-			error: { message },
+			error: {
+				message,
+			},
 		});
 		return yield* new InvalidRequestErrorFx({
 			message,

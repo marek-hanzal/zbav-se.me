@@ -20,7 +20,11 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 }: favouriteCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "favouriteCreateFx",
-		input: { userId, feedId, ...data },
+		input: {
+			userId,
+			feedId,
+			...data,
+		},
 	});
 
 	const { kysely } = yield* KyselyContextFx;

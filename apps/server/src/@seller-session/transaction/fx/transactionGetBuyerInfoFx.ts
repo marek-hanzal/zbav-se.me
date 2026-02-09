@@ -19,7 +19,10 @@ export const transactionGetBuyerInfoFx = Effect.fn("transactionGetBuyerInfoFx")(
 }: transactionGetBuyerInfoFx.Props) {
 	yield* withTraceFx({
 		fx: "transactionGetBuyerInfoFx",
-		input: { userId, transactionId },
+		input: {
+			userId,
+			transactionId,
+		},
 	});
 
 	const { kysely } = yield* KyselyContextFx;

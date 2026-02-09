@@ -19,7 +19,11 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 }: transactionResolveFx.Props) {
 	yield* withTraceFx({
 		fx: "transactionResolveFx",
-		input: { userId, transactionId, message },
+		input: {
+			userId,
+			transactionId,
+			message,
+		},
 	});
 
 	const { kysely } = yield* KyselyContextFx;
@@ -65,7 +69,9 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 	if (!transaction) {
 		yield* withTraceFx({
 			fx: "transactionResolveFx",
-			error: { message },
+			error: {
+				message,
+			},
 		});
 		return yield* new AccessDeniedErrorFx({
 			message,
@@ -75,7 +81,9 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 	if (!transaction.status) {
 		yield* withTraceFx({
 			fx: "transactionResolveFx",
-			error: { message: "Transaction status is missing" },
+			error: {
+				message: "Transaction status is missing",
+			},
 		});
 		return yield* new RuntimeErrorFx({
 			message: "Transaction status is missing",

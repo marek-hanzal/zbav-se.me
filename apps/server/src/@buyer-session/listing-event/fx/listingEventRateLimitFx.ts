@@ -20,7 +20,11 @@ export const listingEventRateLimitFx = Effect.fn("listingEventRateLimitFx")(func
 }: listingEventRateLimitFx.Props) {
 	yield* withTraceFx({
 		fx: "listingEventRateLimitFx",
-		input: { listingId, event, minutes },
+		input: {
+			listingId,
+			event,
+			minutes,
+		},
 	});
 
 	const { kysely } = yield* KyselyContextFx;

@@ -20,7 +20,11 @@ export const galleryItemCreateFx = Effect.fn("galleryItemCreateFx")(function* ({
 }: galleryItemCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "galleryItemCreateFx",
-		input: { userId, galleryId, ...data },
+		input: {
+			userId,
+			galleryId,
+			...data,
+		},
 	});
 
 	const { kysely } = yield* KyselyContextFx;

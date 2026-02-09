@@ -6,8 +6,8 @@ import { listingEventCreateFx } from "~/@buyer-session/listing-event/fx/listingE
 import { listingFetchFx } from "~/@buyer-user/listing/fx/listingFetchFx";
 import type { ThumbCreateSchema } from "~/@buyer-user/thumb/schema/ThumbCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { withTraceFx } from "~/effect/withTraceFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace thumbCreateFx {
 	export interface Props extends ThumbCreateSchema.Type {
@@ -23,7 +23,12 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 }: thumbCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "thumbCreateFx",
-		input: { userId, listingId, type, ...data },
+		input: {
+			userId,
+			listingId,
+			type,
+			...data,
+		},
 	});
 
 	return yield* withTransactionFx(

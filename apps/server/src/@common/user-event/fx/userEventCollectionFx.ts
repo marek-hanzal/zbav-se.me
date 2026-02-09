@@ -1,10 +1,10 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { withTraceFx } from "~/effect/withTraceFx";
 import { withUserEventCollectionSelectFx } from "~/@common/user-event/db/withUserEventCollectionSelectFx";
 import { withUserEventQueryBuilderFx } from "~/@common/user-event/db/withUserEventQueryBuilderFx";
 import type { UserEventFilterSchema } from "~/@common/user-event/schema/UserEventFilterSchema";
 import type { UserEventQuerySchema } from "~/@common/user-event/schema/UserEventQuerySchema";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace userEventCollectionFx {
 	export interface Props extends UserEventQuerySchema.Type {
@@ -21,7 +21,13 @@ export const userEventCollectionFx = Effect.fn("userEventCollectionFx")(function
 }: userEventCollectionFx.Props) {
 	yield* withTraceFx({
 		fx: "userEventCollectionFx",
-		input: { filter, where, scope, cursor, sort },
+		input: {
+			filter,
+			where,
+			scope,
+			cursor,
+			sort,
+		},
 	});
 
 	return yield* withCollectionFx({

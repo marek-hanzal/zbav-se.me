@@ -15,7 +15,9 @@ export namespace feedDeleteFx {
 export const feedDeleteFx = Effect.fn("feedDeleteFx")(function* (query: feedDeleteFx.Props) {
 	yield* withTraceFx({
 		fx: "feedDeleteFx",
-		input: { query },
+		input: {
+			query,
+		},
 	});
 
 	return yield* withTransactionFx(

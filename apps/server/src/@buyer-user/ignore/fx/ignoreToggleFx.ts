@@ -21,7 +21,11 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 }: ignoreToggleFx.Props) {
 	yield* withTraceFx({
 		fx: "ignoreToggleFx",
-		input: { userId, toggle, listingId },
+		input: {
+			userId,
+			toggle,
+			listingId,
+		},
 	});
 
 	return yield* withTransactionFx(

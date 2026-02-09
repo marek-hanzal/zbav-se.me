@@ -5,8 +5,8 @@ import { messageSystemFetchFx } from "~/@user/message-system/fx/messageSystemFet
 import type { MessageSystemCreateSchema } from "~/@user/message-system/schema/MessageSystemCreateSchema";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { withTraceFx } from "~/effect/withTraceFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace messageSystemCreateFx {
 	export interface Props extends MessageSystemCreateSchema.Type {
@@ -21,7 +21,11 @@ export const messageSystemCreateFx = Effect.fn("messageSystemCreateFx")(function
 }: messageSystemCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "messageSystemCreateFx",
-		input: { userId, messageThreadId, ...data },
+		input: {
+			userId,
+			messageThreadId,
+			...data,
+		},
 	});
 
 	return yield* withTransactionFx(

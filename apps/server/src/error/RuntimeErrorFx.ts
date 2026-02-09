@@ -5,6 +5,7 @@ import { Data } from "effect";
  */
 export class RuntimeErrorFx extends Data.TaggedError("RuntimeErrorFx")<{
 	message: string;
+	cause?: unknown;
 }> {
 	//
 }

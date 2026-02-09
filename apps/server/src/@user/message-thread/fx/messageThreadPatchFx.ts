@@ -23,7 +23,12 @@ export const messageThreadPatchFx = Effect.fn("messageThreadPatchFx")(function* 
 }: messageThreadPatchFx.Props) {
 	yield* withTraceFx({
 		fx: "messageThreadPatchFx",
-		input: { userId, patch, query, scope },
+		input: {
+			userId,
+			patch,
+			query,
+			scope,
+		},
 	});
 
 	return yield* withTransactionFx(

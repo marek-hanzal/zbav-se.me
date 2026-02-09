@@ -4,8 +4,8 @@ import { draftFetchFx } from "~/@seller-user/draft/fx/draftFetchFx";
 import type { DraftFilterSchema } from "~/@seller-user/draft/schema/DraftFilterSchema";
 import type { DraftPatchSchema } from "~/@seller-user/draft/schema/DraftPatchSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { withTraceFx } from "~/effect/withTraceFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace draftPatchFx {
 	export interface Props extends DraftPatchSchema.Type {
@@ -20,7 +20,11 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 }: draftPatchFx.Props) {
 	yield* withTraceFx({
 		fx: "draftPatchFx",
-		input: { patch, query, scope },
+		input: {
+			patch,
+			query,
+			scope,
+		},
 	});
 
 	return yield* withTransactionFx(

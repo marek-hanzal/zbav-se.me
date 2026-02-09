@@ -1,10 +1,10 @@
 import { z } from "@hono/zod-openapi";
 import { list, rangedom } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
-import { withTraceFx } from "~/effect/withTraceFx";
 import { listingCollectionFx } from "~/@buyer-user/listing/fx/listingCollectionFx";
 import { listingCountFx } from "~/@buyer-user/listing/fx/listingCountFx";
 import type { ListingSortSchema } from "~/@buyer-user/listing/schema/ListingSortSchema";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export const ListingOfRequestSchema = z.object({
 	userId: z.string().openapi({
@@ -27,7 +27,10 @@ export const listingOfFx = Effect.fn("listingOfFx")(function* ({
 }: ListingOfRequestSchema.Type) {
 	yield* withTraceFx({
 		fx: "listingOfFx",
-		input: { userId, count },
+		input: {
+			userId,
+			count,
+		},
 	});
 
 	const total = yield* listingCountFx({

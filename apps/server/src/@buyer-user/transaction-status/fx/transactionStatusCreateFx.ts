@@ -20,7 +20,10 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 }: transactionStatusCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "transactionStatusCreateFx",
-		input: { userId, ...create },
+		input: {
+			userId,
+			...create,
+		},
 	});
 
 	const { kysely } = yield* KyselyContextFx;
