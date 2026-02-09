@@ -2,8 +2,9 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import type { UserExPatchSchema } from "~/@user/user-ex/schema/UserExPatchSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { mapToError } from "~/database/mapToError";
+import { ConflictErrorFx } from "~/error/ConflictErrorFx";
 
 export namespace userExPatchFx {
 	export interface Props extends UserExPatchSchema.Type {
@@ -28,8 +29,8 @@ export const userExPatchFx = Effect.fn("userExPatchFx")(function* ({
 			});
 
 			if (!userEx) {
-				return yield* Effect.tryPromise({
-					try: async () =>
+				return yield* tryDbFx(
+					async () =>
 						kysely
 							.insertInto("user_ex")
 							.values({
@@ -39,10 +40,14 @@ export const userExPatchFx = Effect.fn("userExPatchFx")(function* ({
 							})
 							.returningAll()
 							.executeTakeFirstOrThrow(),
-					catch: mapToError({
-						conflict: "User ex already exists",
-					}),
-				});
+					{
+						"23505": (e) =>
+							new ConflictErrorFx({
+								message: "User ex already exists",
+								cause: e,
+							}),
+					},
+				);
 			}
 
 			return yield* Effect.promise(async () => {

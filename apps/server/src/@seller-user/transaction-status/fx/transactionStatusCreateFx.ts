@@ -5,7 +5,7 @@ import type { TransactionStatusCreateSchema } from "~/@common/transaction-status
 import { transactionPatchFx } from "~/@seller-user/transaction/fx/transactionPatchFx";
 import { transactionStatusFetchFx } from "~/@session/transaction-status/fx/transactionStatusFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { mapToError } from "~/database/mapToError";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace transactionStatusCreateFx {
@@ -33,20 +33,18 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 	const id = genId();
 	const now = dateContext.now();
 
-	yield* Effect.tryPromise({
-		try: async () =>
-			kysely
-				.insertInto("transaction_status")
-				.values({
-					...create,
-					id,
-					userId,
-					createdAt: now.toJSDate(),
-				})
-				.returningAll()
-				.executeTakeFirstOrThrow(),
-		catch: mapToError({}),
-	});
+	yield* tryDbFx(async () =>
+		kysely
+			.insertInto("transaction_status")
+			.values({
+				...create,
+				id,
+				userId,
+				createdAt: now.toJSDate(),
+			})
+			.returningAll()
+			.executeTakeFirstOrThrow(),
+	);
 
 	yield* transactionPatchFx({
 		userId,

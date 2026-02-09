@@ -5,7 +5,7 @@ import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import { galleryItemFetchFx } from "~/@user/gallery-item/fx/galleryItemFetchFx";
 import type { GalleryItemCreateSchema } from "~/@user/gallery-item/schema/GalleryItemCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { mapToError } from "~/database/mapToError";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace galleryItemCreateFx {
@@ -46,19 +46,17 @@ export const galleryItemCreateFx = Effect.fn("galleryItemCreateFx")(function* ({
 		},
 	});
 
-	yield* Effect.tryPromise({
-		try: async () =>
-			kysely
-				.insertInto("gallery_item")
-				.values({
-					...data,
-					id,
-					galleryId,
-					createdAt: now.toJSDate(),
-				})
-				.execute(),
-		catch: mapToError({}),
-	});
+	yield* tryDbFx(async () =>
+		kysely
+			.insertInto("gallery_item")
+			.values({
+				...data,
+				id,
+				galleryId,
+				createdAt: now.toJSDate(),
+			})
+			.execute(),
+	);
 
 	return yield* galleryItemFetchFx({
 		where: {

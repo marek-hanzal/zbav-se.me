@@ -5,8 +5,8 @@ import { messagePackageFetchFx } from "~/@user/message-package/fx/messagePackage
 import type { MessagePackageCreateSchema } from "~/@user/message-package/schema/MessagePackageCreateSchema";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace messagePackageCreateFx {
@@ -43,21 +43,19 @@ export const messagePackageCreateFx = Effect.fn("messagePackageCreateFx")(functi
 
 			const id = genId();
 
-			yield* Effect.tryPromise({
-				try: async () =>
-					kysely
-						.insertInto("message_package")
-						.values({
-							...data,
-							id,
-							messageThreadId,
-							userId,
-							createdAt: dateContext.now().toJSDate(),
-						})
-						.returningAll()
-						.executeTakeFirstOrThrow(),
-				catch: mapToError({}),
-			});
+			yield* tryDbFx(async () =>
+				kysely
+					.insertInto("message_package")
+					.values({
+						...data,
+						id,
+						messageThreadId,
+						userId,
+						createdAt: dateContext.now().toJSDate(),
+					})
+					.returningAll()
+					.executeTakeFirstOrThrow(),
+			);
 
 			return yield* messagePackageFetchFx({
 				where: {

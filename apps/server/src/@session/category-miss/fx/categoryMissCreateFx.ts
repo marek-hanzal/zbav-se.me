@@ -3,7 +3,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { mapToError } from "~/database/mapToError";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace categoryMissCreateFx {
@@ -34,29 +34,27 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 
 	const now = dateContext.now();
 
-	yield* Effect.tryPromise({
-		try: async () =>
-			kysely
-				.insertInto("category_miss")
-				.values({
-					id: genId(),
-					category: fulltext,
-					count: 1,
-					updatedAt: now.toJSDate(),
-				})
-				.onConflict((oc) =>
-					oc
-						.columns([
-							"category",
-						])
-						.doUpdateSet({
-							count: sql`category_miss.count + 1`,
-							updatedAt: now.toJSDate(),
-						}),
-				)
-				.execute(),
-		catch: mapToError({}),
-	});
+	yield* tryDbFx(async () =>
+		kysely
+			.insertInto("category_miss")
+			.values({
+				id: genId(),
+				category: fulltext,
+				count: 1,
+				updatedAt: now.toJSDate(),
+			})
+			.onConflict((oc) =>
+				oc
+					.columns([
+						"category",
+					])
+					.doUpdateSet({
+						count: sql`category_miss.count + 1`,
+						updatedAt: now.toJSDate(),
+					}),
+			)
+			.execute(),
+	);
 
 	return yield* Effect.void;
 });

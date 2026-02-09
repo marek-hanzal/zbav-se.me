@@ -10,8 +10,8 @@ import { galleryCreateFx as coolGalleryCreateFx } from "~/@user/gallery/fx/galle
 import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
@@ -70,50 +70,48 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 				sort++;
 			}
 
-			yield* Effect.tryPromise({
-				try: async () =>
-					kysely
-						.insertInto("listing")
-						.values({
-							id,
-							userId,
-							galleryId: gallery.id,
-							createdAt: now.toJSDate(),
-							updatedAt: now.toJSDate(),
-							currency: "CZK",
-							...data,
-							titleVec: pgvector.toSql(
-								embedMinHash({
-									value: data.title,
-								}),
-							),
-							expiresAt: match(data.expiresAt)
-								.with("7-days", () =>
-									now
-										.plus({
-											days: 7,
-										})
-										.toJSDate(),
-								)
-								.with("14-days", () =>
-									now
-										.plus({
-											days: 14,
-										})
-										.toJSDate(),
-								)
-								.with("1-month", () =>
-									now
-										.plus({
-											months: 1,
-										})
-										.toJSDate(),
-								)
-								.exhaustive(),
-						})
-						.execute(),
-				catch: mapToError({}),
-			});
+			yield* tryDbFx(async () =>
+				kysely
+					.insertInto("listing")
+					.values({
+						id,
+						userId,
+						galleryId: gallery.id,
+						createdAt: now.toJSDate(),
+						updatedAt: now.toJSDate(),
+						currency: "CZK",
+						...data,
+						titleVec: pgvector.toSql(
+							embedMinHash({
+								value: data.title,
+							}),
+						),
+						expiresAt: match(data.expiresAt)
+							.with("7-days", () =>
+								now
+									.plus({
+										days: 7,
+									})
+									.toJSDate(),
+							)
+							.with("14-days", () =>
+								now
+									.plus({
+										days: 14,
+									})
+									.toJSDate(),
+							)
+							.with("1-month", () =>
+								now
+									.plus({
+										months: 1,
+									})
+									.toJSDate(),
+							)
+							.exhaustive(),
+					})
+					.execute(),
+			);
 
 			if (data.draftId) {
 				const draftId = data.draftId;

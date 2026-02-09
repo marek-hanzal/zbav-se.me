@@ -5,8 +5,8 @@ import { messageTextFetchFx } from "~/@user/message-text/fx/messageTextFetchFx";
 import type { MessageTextCreateSchema } from "~/@user/message-text/schema/MessageTextCreateSchema";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace messageTextCreateFx {
@@ -43,21 +43,19 @@ export const messageTextCreateFx = Effect.fn("messageTextCreateFx")(function* ({
 
 			const id = genId();
 
-			yield* Effect.tryPromise({
-				try: async () =>
-					kysely
-						.insertInto("message_text")
-						.values({
-							id,
-							messageThreadId,
-							userId,
-							text: message,
-							createdAt: dateContext.now().toJSDate(),
-						})
-						.returningAll()
-						.executeTakeFirstOrThrow(),
-				catch: mapToError({}),
-			});
+			yield* tryDbFx(async () =>
+				kysely
+					.insertInto("message_text")
+					.values({
+						id,
+						messageThreadId,
+						userId,
+						text: message,
+						createdAt: dateContext.now().toJSDate(),
+					})
+					.returningAll()
+					.executeTakeFirstOrThrow(),
+			);
 
 			return yield* messageTextFetchFx({
 				userId,

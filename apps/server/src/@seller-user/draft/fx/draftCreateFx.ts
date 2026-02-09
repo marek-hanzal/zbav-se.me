@@ -54,7 +54,7 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 			}
 
 			yield* tryDbFx(async () => {
-				kysely
+				return kysely
 					.insertInto("draft")
 					.values({
 						...data,
@@ -66,7 +66,7 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 						currency: "CZK",
 					})
 					.execute();
-			}, {});
+			});
 
 			return yield* draftFetchFx({
 				where: {

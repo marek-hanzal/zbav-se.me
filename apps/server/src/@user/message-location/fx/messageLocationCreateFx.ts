@@ -5,8 +5,8 @@ import { messageLocationFetchFx } from "~/@user/message-location/fx/messageLocat
 import type { MessageLocationCreateSchema } from "~/@user/message-location/schema/MessageLocationCreateSchema";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace messageLocationCreateFx {
@@ -43,21 +43,19 @@ export const messageLocationCreateFx = Effect.fn("messageLocationCreateFx")(func
 
 			const id = genId();
 
-			yield* Effect.tryPromise({
-				try: async () =>
-					kysely
-						.insertInto("message_location")
-						.values({
-							id,
-							messageThreadId,
-							userId,
-							locationId,
-							createdAt: dateContext.now().toJSDate(),
-						})
-						.returningAll()
-						.executeTakeFirstOrThrow(),
-				catch: mapToError({}),
-			});
+			yield* tryDbFx(async () =>
+				kysely
+					.insertInto("message_location")
+					.values({
+						id,
+						messageThreadId,
+						userId,
+						locationId,
+						createdAt: dateContext.now().toJSDate(),
+					})
+					.returningAll()
+					.executeTakeFirstOrThrow(),
+			);
 
 			return yield* messageLocationFetchFx({
 				where: {

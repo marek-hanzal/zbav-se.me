@@ -5,8 +5,8 @@ import { listingCheckIfOwnFx } from "~/@buyer-session/listing/fx/listingCheckIfO
 import { listingEventRateLimitFx } from "~/@buyer-session/listing-event/fx/listingEventRateLimitFx";
 import type { ListingEventCreateSchema } from "~/@buyer-session/listing-event/schema/ListingEventCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace listingEventCreateFx {
@@ -47,20 +47,18 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 				event,
 			});
 
-			return yield* Effect.tryPromise({
-				try: async () =>
-					kysely
-						.insertInto("listing_event")
-						.values({
-							id: genId(),
-							listingId,
-							event,
-							createdAt: now.toJSDate(),
-						})
-						.returningAll()
-						.executeTakeFirstOrThrow(),
-				catch: mapToError({}),
-			});
+			return yield* tryDbFx(async () =>
+				kysely
+					.insertInto("listing_event")
+					.values({
+						id: genId(),
+						listingId,
+						event,
+						createdAt: now.toJSDate(),
+					})
+					.returningAll()
+					.executeTakeFirstOrThrow(),
+			);
 		}),
 	);
 });

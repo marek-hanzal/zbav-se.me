@@ -4,9 +4,10 @@ import { Effect } from "effect";
 import { feedFetchFx } from "~/@buyer-user/feed/fx/feedFetchFx";
 import type { FeedCreateSchema } from "~/@buyer-user/feed/schema/FeedCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
+import { ConflictErrorFx } from "~/error/ConflictErrorFx";
 
 export namespace feedCreateFx {
 	export interface Props extends FeedCreateSchema.Type {
@@ -36,9 +37,9 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 			const id = genId();
 			const now = dateContext.now();
 
-			yield* Effect.tryPromise({
-				async try() {
-					return kysely
+			yield* tryDbFx(
+				async () =>
+					kysely
 						.insertInto("feed")
 						.values({
 							...data,
@@ -50,12 +51,15 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 							updatedAt: now.toJSDate(),
 						})
 						.returningAll()
-						.executeTakeFirstOrThrow();
+						.executeTakeFirstOrThrow(),
+				{
+					"23505": (e) =>
+						new ConflictErrorFx({
+							message: "Feed already exists",
+							cause: e,
+						}),
 				},
-				catch: mapToError({
-					conflict: "Feed already exists",
-				}),
-			});
+			);
 
 			return yield* feedFetchFx({
 				where: {

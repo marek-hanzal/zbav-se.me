@@ -12,8 +12,8 @@ import { messageThreadCreateFx } from "~/@user/message-thread/fx/messageThreadCr
 import { messageUserCreateFx } from "~/@user/message-thread-user/fx/messageUserCreateFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace transactionCreateFx {
@@ -88,28 +88,26 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 
 			const id = genId();
 
-			yield* Effect.tryPromise({
-				try: async () =>
-					kysely
-						.insertInto("transaction")
-						.values({
-							...data,
-							id,
-							userId,
-							listingId,
-							messageThreadId: messageThread.id,
-							createdAt: now.toJSDate(),
-							updatedAt: now.toJSDate(),
-							expiresAt: now
-								.plus({
-									days: config.expires,
-								})
-								.toJSDate(),
-						})
-						.returningAll()
-						.executeTakeFirstOrThrow(),
-				catch: mapToError({}),
-			});
+			yield* tryDbFx(async () =>
+				kysely
+					.insertInto("transaction")
+					.values({
+						...data,
+						id,
+						userId,
+						listingId,
+						messageThreadId: messageThread.id,
+						createdAt: now.toJSDate(),
+						updatedAt: now.toJSDate(),
+						expiresAt: now
+							.plus({
+								days: config.expires,
+							})
+							.toJSDate(),
+					})
+					.returningAll()
+					.executeTakeFirstOrThrow(),
+			);
 
 			yield* transactionStatusCreateFx({
 				userId,

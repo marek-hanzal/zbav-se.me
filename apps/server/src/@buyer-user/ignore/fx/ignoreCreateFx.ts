@@ -3,7 +3,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import type { IgnoreCreateSchema } from "~/@buyer-user/ignore/schema/IgnoreCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { mapToError } from "~/database/mapToError";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace ignoreCreateFx {
@@ -29,21 +29,19 @@ export const ignoreCreateFx = Effect.fn("ignoreCreateFx")(function* ({
 
 	const id = genId();
 
-	return yield* Effect.tryPromise({
-		try: async () =>
-			kysely
-				.insertInto("ignore")
-				.values({
-					id,
-					userId,
-					listingId,
-					createdAt: dateContext.now().toJSDate(),
-				})
-				.onConflict((eb) => eb.doNothing())
-				.returningAll()
-				.executeTakeFirstOrThrow(),
-		catch: mapToError({}),
-	});
+	return yield* tryDbFx(async () =>
+		kysely
+			.insertInto("ignore")
+			.values({
+				id,
+				userId,
+				listingId,
+				createdAt: dateContext.now().toJSDate(),
+			})
+			.onConflict((eb) => eb.doNothing())
+			.returningAll()
+			.executeTakeFirstOrThrow(),
+	);
 });
 
 export type ignoreCreateFx = ReturnType<typeof ignoreCreateFx>;
