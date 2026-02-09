@@ -3,6 +3,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import type { FlagCreateSchema } from "~/@buyer-user/flag/schema/FlagCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace flagCreateFx {
@@ -28,18 +29,20 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 
 	const id = genId();
 
-	return yield* Effect.promise(async () => {
-		return kysely
-			.insertInto("flag")
-			.values({
-				id,
-				userId,
-				listingId,
-				createdAt: dateContext.now().toJSDate(),
-			})
-			.onConflict((eb) => eb.doNothing())
-			.returningAll()
-			.executeTakeFirstOrThrow();
+	return yield* Effect.tryPromise({
+		try: async () =>
+			kysely
+				.insertInto("flag")
+				.values({
+					id,
+					userId,
+					listingId,
+					createdAt: dateContext.now().toJSDate(),
+				})
+				.onConflict((eb) => eb.doNothing())
+				.returningAll()
+				.executeTakeFirstOrThrow(),
+		catch: mapToError({}),
 	});
 });
 

@@ -7,6 +7,7 @@ import { listingFetchFx } from "~/@buyer-user/listing/fx/listingFetchFx";
 import type { ThumbCreateSchema } from "~/@buyer-user/thumb/schema/ThumbCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace thumbCreateFx {
@@ -50,20 +51,24 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 				event: type,
 			}).pipe(Effect.ignore);
 
-			yield* Effect.promise(async () => {
-				return kysely
-					.insertInto("thumb")
-					.values({
-						...data,
-						id,
-						userId,
-						listingId,
-						type,
-						createdAt: dateContext.now().toJSDate(),
-					})
-					.onConflict((eb) => eb.doNothing())
-					.returningAll()
-					.executeTakeFirstOrThrow();
+			yield* Effect.tryPromise({
+				try: async () =>
+					kysely
+						.insertInto("thumb")
+						.values({
+							...data,
+							id,
+							userId,
+							listingId,
+							type,
+							createdAt: dateContext.now().toJSDate(),
+						})
+						.onConflict((eb) => eb.doNothing())
+						.returningAll()
+						.executeTakeFirstOrThrow(),
+				catch: mapToError({
+					conflict: "Thumb already exists",
+				}),
 			});
 
 			return yield* listingFetchFx({

@@ -5,6 +5,7 @@ import { UploadContextFx } from "~/@common/upload/context/UploadContextFx";
 import { uploadFetchFx } from "~/@user/upload/fx/uploadFetchFx";
 import type { UploadCreateSchema } from "~/@user/upload/schema/UploadCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
@@ -47,17 +48,19 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 	const id = genId();
 	const now = dateContext.now();
 
-	yield* Effect.promise(async () => {
-		return kysely
-			.insertInto("upload")
-			.values({
-				...data,
-				id,
-				userId,
-				url,
-				createdAt: now.toJSDate(),
-			})
-			.execute();
+	yield* Effect.tryPromise({
+		try: async () =>
+			kysely
+				.insertInto("upload")
+				.values({
+					...data,
+					id,
+					userId,
+					url,
+					createdAt: now.toJSDate(),
+				})
+				.execute(),
+		catch: mapToError({}),
 	});
 
 	return yield* uploadFetchFx({

@@ -6,6 +6,7 @@ import type { DraftCreateSchema } from "~/@seller-user/draft/schema/DraftCreateS
 import { galleryCreateFx as coolGalleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
 import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
@@ -52,8 +53,8 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 				}
 			}
 
-			yield* Effect.promise(async () => {
-				return kysely
+			yield* tryDbFx(async () => {
+				kysely
 					.insertInto("draft")
 					.values({
 						...data,
@@ -65,7 +66,7 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 						currency: "CZK",
 					})
 					.execute();
-			});
+			}, {});
 
 			return yield* draftFetchFx({
 				where: {

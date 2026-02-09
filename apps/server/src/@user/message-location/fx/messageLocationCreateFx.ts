@@ -6,6 +6,7 @@ import type { MessageLocationCreateSchema } from "~/@user/message-location/schem
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace messageLocationCreateFx {
@@ -42,18 +43,20 @@ export const messageLocationCreateFx = Effect.fn("messageLocationCreateFx")(func
 
 			const id = genId();
 
-			yield* Effect.promise(async () => {
-				return kysely
-					.insertInto("message_location")
-					.values({
-						id,
-						messageThreadId,
-						userId,
-						locationId,
-						createdAt: dateContext.now().toJSDate(),
-					})
-					.returningAll()
-					.executeTakeFirstOrThrow();
+			yield* Effect.tryPromise({
+				try: async () =>
+					kysely
+						.insertInto("message_location")
+						.values({
+							id,
+							messageThreadId,
+							userId,
+							locationId,
+							createdAt: dateContext.now().toJSDate(),
+						})
+						.returningAll()
+						.executeTakeFirstOrThrow(),
+				catch: mapToError({}),
 			});
 
 			return yield* messageLocationFetchFx({

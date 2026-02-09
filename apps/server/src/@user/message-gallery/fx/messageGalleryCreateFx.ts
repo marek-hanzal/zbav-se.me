@@ -6,6 +6,7 @@ import type { MessageGalleryCreateSchema } from "~/@user/message-gallery/schema/
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace messageGalleryCreateFx {
@@ -42,18 +43,20 @@ export const messageGalleryCreateFx = Effect.fn("messageGalleryCreateFx")(functi
 
 			const id = genId();
 
-			yield* Effect.promise(async () => {
-				return kysely
-					.insertInto("message_gallery")
-					.values({
-						id,
-						messageThreadId,
-						userId,
-						galleryId,
-						createdAt: dateContext.now().toJSDate(),
-					})
-					.returningAll()
-					.executeTakeFirstOrThrow();
+			yield* Effect.tryPromise({
+				try: async () =>
+					kysely
+						.insertInto("message_gallery")
+						.values({
+							id,
+							messageThreadId,
+							userId,
+							galleryId,
+							createdAt: dateContext.now().toJSDate(),
+						})
+						.returningAll()
+						.executeTakeFirstOrThrow(),
+				catch: mapToError({}),
 			});
 
 			return yield* messageGalleryFetchFx({

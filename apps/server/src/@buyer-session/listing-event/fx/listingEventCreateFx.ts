@@ -6,6 +6,7 @@ import { listingEventRateLimitFx } from "~/@buyer-session/listing-event/fx/listi
 import type { ListingEventCreateSchema } from "~/@buyer-session/listing-event/schema/ListingEventCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace listingEventCreateFx {
@@ -46,17 +47,19 @@ export const listingEventCreateFx = Effect.fn("listingEventCreateFx")(function* 
 				event,
 			});
 
-			return yield* Effect.promise(async () => {
-				return kysely
-					.insertInto("listing_event")
-					.values({
-						id: genId(),
-						listingId,
-						event,
-						createdAt: now.toJSDate(),
-					})
-					.returningAll()
-					.executeTakeFirstOrThrow();
+			return yield* Effect.tryPromise({
+				try: async () =>
+					kysely
+						.insertInto("listing_event")
+						.values({
+							id: genId(),
+							listingId,
+							event,
+							createdAt: now.toJSDate(),
+						})
+						.returningAll()
+						.executeTakeFirstOrThrow(),
+				catch: mapToError({}),
 			});
 		}),
 	);

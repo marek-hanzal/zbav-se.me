@@ -6,6 +6,7 @@ import type { UserEventEnumSchema } from "~/@common/user-event/schema/UserEventE
 import type { UserEventCreateSchema } from "~/@user/user-event/schema/UserEventCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 const ignored: UserEventEnumSchema.Type[] = [
@@ -41,18 +42,20 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 				return yield* Effect.void;
 			}
 
-			return yield* Effect.promise(async () => {
-				return kysely
-					.insertInto("user_event")
-					.values({
-						...data,
-						id: genId(),
-						group: keyOf(group),
-						userId,
-						createdAt: dateContext.now().toJSDate(),
-					})
-					.returningAll()
-					.executeTakeFirstOrThrow();
+			return yield* Effect.tryPromise({
+				try: async () =>
+					kysely
+						.insertInto("user_event")
+						.values({
+							...data,
+							id: genId(),
+							group: keyOf(group),
+							userId,
+							createdAt: dateContext.now().toJSDate(),
+						})
+						.returningAll()
+						.executeTakeFirstOrThrow(),
+				catch: mapToError({}),
 			});
 		}),
 	);

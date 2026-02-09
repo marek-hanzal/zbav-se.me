@@ -6,6 +6,7 @@ import { withLocationRequestFx } from "~/@session/location/fx/withLocationReques
 import type { LocationTableSchema } from "~/database/@table/LocationTableSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace locationAutocompleteFx {
@@ -99,19 +100,21 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 			})) satisfies Omit<LocationTableSchema.Type, "geo">[] as LocationTableSchema.Type[];
 
 			if (locations.length > 0) {
-				yield* Effect.promise(async () => {
-					return kysely
-						.insertInto("location")
-						.values(locations)
-						.onConflict((oc) =>
-							oc
-								.columns([
-									"lang",
-									"hash",
-								])
-								.doNothing(),
-						)
-						.execute();
+				yield* Effect.tryPromise({
+					try: async () =>
+						kysely
+							.insertInto("location")
+							.values(locations)
+							.onConflict((oc) =>
+								oc
+									.columns([
+										"lang",
+										"hash",
+									])
+									.doNothing(),
+							)
+							.execute(),
+					catch: mapToError({}),
 				});
 			}
 

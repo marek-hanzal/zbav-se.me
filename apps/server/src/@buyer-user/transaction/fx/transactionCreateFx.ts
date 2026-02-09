@@ -13,6 +13,7 @@ import { messageUserCreateFx } from "~/@user/message-thread-user/fx/messageUserC
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace transactionCreateFx {
@@ -87,25 +88,27 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 
 			const id = genId();
 
-			yield* Effect.promise(async () => {
-				return kysely
-					.insertInto("transaction")
-					.values({
-						...data,
-						id,
-						userId,
-						listingId,
-						messageThreadId: messageThread.id,
-						createdAt: now.toJSDate(),
-						updatedAt: now.toJSDate(),
-						expiresAt: now
-							.plus({
-								days: config.expires,
-							})
-							.toJSDate(),
-					})
-					.returningAll()
-					.executeTakeFirstOrThrow();
+			yield* Effect.tryPromise({
+				try: async () =>
+					kysely
+						.insertInto("transaction")
+						.values({
+							...data,
+							id,
+							userId,
+							listingId,
+							messageThreadId: messageThread.id,
+							createdAt: now.toJSDate(),
+							updatedAt: now.toJSDate(),
+							expiresAt: now
+								.plus({
+									days: config.expires,
+								})
+								.toJSDate(),
+						})
+						.returningAll()
+						.executeTakeFirstOrThrow(),
+				catch: mapToError({}),
 			});
 
 			yield* transactionStatusCreateFx({

@@ -3,6 +3,7 @@ import { Effect } from "effect";
 import type { UserExPatchSchema } from "~/@user/user-ex/schema/UserExPatchSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { mapToError } from "~/database/mapToError";
 
 export namespace userExPatchFx {
 	export interface Props extends UserExPatchSchema.Type {
@@ -27,16 +28,20 @@ export const userExPatchFx = Effect.fn("userExPatchFx")(function* ({
 			});
 
 			if (!userEx) {
-				return yield* Effect.promise(async () => {
-					return kysely
-						.insertInto("user_ex")
-						.values({
-							id: genId(),
-							userId,
-							...patch,
-						})
-						.returningAll()
-						.executeTakeFirstOrThrow();
+				return yield* Effect.tryPromise({
+					try: async () =>
+						kysely
+							.insertInto("user_ex")
+							.values({
+								id: genId(),
+								userId,
+								...patch,
+							})
+							.returningAll()
+							.executeTakeFirstOrThrow(),
+					catch: mapToError({
+						conflict: "User ex already exists",
+					}),
 				});
 			}
 

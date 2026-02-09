@@ -4,7 +4,7 @@ import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
 
 export namespace mapToError {
 	export interface Props {
-		conflict: string;
+		conflict?: string;
 	}
 }
 
@@ -14,7 +14,7 @@ export const mapToError = (props: mapToError.Props) => {
 			switch (error.code) {
 				case "23505":
 					return new ConflictErrorFx({
-						message: props.conflict,
+						message: props.conflict ?? "(unknown conflict)",
 						cause: error,
 					});
 			}

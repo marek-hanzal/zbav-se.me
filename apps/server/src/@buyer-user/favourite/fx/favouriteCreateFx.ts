@@ -5,6 +5,7 @@ import { favouriteFetchFx } from "~/@buyer-user/favourite/fx/favouriteFetchFx";
 import type { FavouriteCreateSchema } from "~/@buyer-user/favourite/schema/FavouriteCreateSchema";
 import { feedFetchFx } from "~/@buyer-user/feed/fx/feedFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace favouriteCreateFx {
@@ -41,19 +42,21 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 		},
 	});
 
-	yield* Effect.promise(async () => {
-		return kysely
-			.insertInto("favourite")
-			.values({
-				...data,
-				id,
-				userId,
-				feedId,
-				createdAt: dateContext.now().toJSDate(),
-			})
-			.onConflict((eb) => eb.doNothing())
-			.returningAll()
-			.executeTakeFirstOrThrow();
+	yield* Effect.tryPromise({
+		try: async () =>
+			kysely
+				.insertInto("favourite")
+				.values({
+					...data,
+					id,
+					userId,
+					feedId,
+					createdAt: dateContext.now().toJSDate(),
+				})
+				.onConflict((eb) => eb.doNothing())
+				.returningAll()
+				.executeTakeFirstOrThrow(),
+		catch: mapToError({}),
 	});
 
 	return yield* favouriteFetchFx({

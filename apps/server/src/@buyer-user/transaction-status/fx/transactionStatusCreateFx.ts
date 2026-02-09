@@ -5,6 +5,7 @@ import { transactionPatchFx } from "~/@buyer-user/transaction/fx/transactionPatc
 import type { TransactionStatusCreateSchema } from "~/@common/transaction-status/schema/TransactionStatusCreateSchema";
 import { transactionStatusFetchFx } from "~/@session/transaction-status/fx/transactionStatusFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace transactionStatusCreateFx {
@@ -32,17 +33,19 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 	const id = genId();
 	const now = dateContext.now();
 
-	yield* Effect.promise(async () => {
-		return kysely
-			.insertInto("transaction_status")
-			.values({
-				...create,
-				id,
-				userId,
-				createdAt: now.toJSDate(),
-			})
-			.returningAll()
-			.executeTakeFirstOrThrow();
+	yield* Effect.tryPromise({
+		try: async () =>
+			kysely
+				.insertInto("transaction_status")
+				.values({
+					...create,
+					id,
+					userId,
+					createdAt: now.toJSDate(),
+				})
+				.returningAll()
+				.executeTakeFirstOrThrow(),
+		catch: mapToError({}),
 	});
 
 	yield* transactionPatchFx({

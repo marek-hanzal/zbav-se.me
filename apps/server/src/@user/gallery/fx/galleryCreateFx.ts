@@ -4,6 +4,7 @@ import { Effect } from "effect";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import type { GalleryCreateSchema } from "~/@user/gallery/schema/GalleryCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace galleryCreateFx {
@@ -32,19 +33,21 @@ export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* ({
 
 	const galleryId = id ?? genId();
 
-	yield* Effect.promise(async () => {
-		return kysely
-			.insertInto("gallery")
-			.values({
-				...props,
-				id: galleryId,
-				userId,
-				createdAt: dateContext.now().toJSDate(),
-			})
-			.onConflict((eb) => {
-				return eb.doNothing();
-			})
-			.execute();
+	yield* Effect.tryPromise({
+		try: async () =>
+			kysely
+				.insertInto("gallery")
+				.values({
+					...props,
+					id: galleryId,
+					userId,
+					createdAt: dateContext.now().toJSDate(),
+				})
+				.onConflict((eb) => {
+					return eb.doNothing();
+				})
+				.execute(),
+		catch: mapToError({}),
 	});
 
 	return yield* galleryFetchFx({
