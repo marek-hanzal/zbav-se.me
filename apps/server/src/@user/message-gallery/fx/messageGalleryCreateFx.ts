@@ -5,9 +5,10 @@ import { messageGalleryFetchFx } from "~/@user/message-gallery/fx/messageGallery
 import type { MessageGalleryCreateSchema } from "~/@user/message-gallery/schema/MessageGalleryCreateSchema";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { mapToError } from "~/database/mapToError";
 import { withTraceFx } from "~/effect/withTraceFx";
+import { ConflictErrorFx } from "~/error/ConflictErrorFx";
 
 export namespace messageGalleryCreateFx {
 	export interface Props extends MessageGalleryCreateSchema.Type {
@@ -43,9 +44,9 @@ export const messageGalleryCreateFx = Effect.fn("messageGalleryCreateFx")(functi
 
 			const id = genId();
 
-			yield* Effect.tryPromise({
-				try: async () =>
-					kysely
+			yield* tryDbFx({
+				async run() {
+					return kysely
 						.insertInto("message_gallery")
 						.values({
 							id,
@@ -55,8 +56,9 @@ export const messageGalleryCreateFx = Effect.fn("messageGalleryCreateFx")(functi
 							createdAt: dateContext.now().toJSDate(),
 						})
 						.returningAll()
-						.executeTakeFirstOrThrow(),
-				catch: mapToError({}),
+						.executeTakeFirstOrThrow();
+				},
+                
 			});
 
 			return yield* messageGalleryFetchFx({
