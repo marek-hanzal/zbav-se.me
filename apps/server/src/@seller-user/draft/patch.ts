@@ -3,6 +3,7 @@ import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
+import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { draftPatchFx } from "~/@seller-user/draft/fx/draftPatchFx";
 import { DraftPatchSchema } from "~/@seller-user/draft/schema/DraftPatchSchema";
@@ -102,6 +103,9 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 				withCatchFx({
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);
+					},
+					RuntimeErrorFx(e) {
+						return c.json(noticeError(e), 500);
 					},
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);

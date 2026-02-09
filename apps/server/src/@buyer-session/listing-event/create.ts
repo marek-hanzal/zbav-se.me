@@ -118,6 +118,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);
 					},
+					RuntimeErrorFx(e) {
+						return c.json(noticeError(e), 500);
+					},
 				}),
 				Effect.runPromise,
 			);

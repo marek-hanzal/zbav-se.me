@@ -6,6 +6,7 @@ import { TransactionCreateSchema } from "~/@buyer-user/transaction/schema/Transa
 import { TransactionSchema } from "~/@buyer-user/transaction/schema/TransactionSchema";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
+import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withTransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
 import { withDateFx } from "~/database/fx/withDateFx";
@@ -50,6 +51,14 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					},
 					description: "Listing not found",
 				},
+				409: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Conflict (e.g. duplicate transaction)",
+				},
 				500: {
 					content: {
 						"application/json": {
@@ -93,6 +102,12 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				withCatchFx({
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);
+					},
+					RuntimeErrorFx(e) {
+						return c.json(noticeError(e), 500);
+					},
+					ConflictErrorFx(e) {
+						return c.json(noticeError(e), 409);
 					},
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);

@@ -3,6 +3,7 @@ import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
+import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { messageCollectionFx } from "~/@user/message/fx/messageCollectionFx";
 import { MessageQuerySchema } from "~/@user/message/schema/MessageQuerySchema";
@@ -121,6 +122,9 @@ export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx"
 				withCatchFx({
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);
+					},
+					RuntimeErrorFx(e) {
+						return c.json(noticeError(e), 500);
 					},
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);

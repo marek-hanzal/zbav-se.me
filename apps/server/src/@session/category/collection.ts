@@ -2,6 +2,7 @@ import { createRoute } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
+import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { categoryCollectionFx } from "~/@session/category/fx/categoryCollectionFx";
 import { CategoryItemSchema } from "~/@session/category/schema/CategoryItemSchema";
@@ -88,6 +89,9 @@ export const withCategoryCollectionApiFx = Effect.fn("withCategoryCollectionApiF
 				withDateFx,
 				//
 				withCatchFx({
+					RuntimeErrorFx(e) {
+						return c.json(noticeError(e), 500);
+					},
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);
 					},

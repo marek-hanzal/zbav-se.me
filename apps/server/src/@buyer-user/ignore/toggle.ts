@@ -103,6 +103,9 @@ export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);
 					},
+					RuntimeErrorFx(e) {
+						return c.json(noticeError(e), 500);
+					},
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);
 					},

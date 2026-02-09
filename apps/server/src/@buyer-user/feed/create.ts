@@ -50,6 +50,14 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					},
 					description: "Feed not found after creation",
 				},
+				409: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Conflict (e.g. duplicate feed)",
+				},
 				500: {
 					content: {
 						"application/json": {

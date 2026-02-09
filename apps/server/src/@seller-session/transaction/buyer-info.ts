@@ -3,6 +3,7 @@ import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
+import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { TransactionQuerySchema } from "~/@common/transaction/schema/TransactionQuerySchema";
 import { transactionGetBuyerInfoFx } from "~/@seller-session/transaction/fx/transactionGetBuyerInfoFx";
@@ -98,6 +99,9 @@ export const withBuyerInfoApiFx = Effect.fn("withBuyerInfoApiFx")(function* () {
 				withCatchFx({
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);
+					},
+					RuntimeErrorFx(e) {
+						return c.json(noticeError(e), 500);
 					},
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);

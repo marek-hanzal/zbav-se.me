@@ -2,6 +2,7 @@ import { createRoute } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
+import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { userExPatchFx } from "~/@user/user-ex/fx/userExPatchFx";
 import { UserExPatchSchema } from "~/@user/user-ex/schema/UserExPatchSchema";
@@ -39,6 +40,14 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 						},
 					},
 					description: "User extended information updated successfully",
+				},
+				409: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Conflict (e.g. duplicate)",
 				},
 				500: {
 					content: {
@@ -79,6 +88,12 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 				withKyselyFx(c.get("kysely")),
 				withLoggingFx(axiomConfig, "apiUserExPatch"),
 				withCatchFx({
+					RuntimeErrorFx(e) {
+						return c.json(noticeError(e), 500);
+					},
+					ConflictErrorFx(e) {
+						return c.json(noticeError(e), 409);
+					},
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);
 					},

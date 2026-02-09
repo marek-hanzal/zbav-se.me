@@ -104,6 +104,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					InvalidRequestErrorFx(e) {
 						return c.json(noticeError(e), 400);
 					},
+					RuntimeErrorFx(e) {
+						return c.json(noticeError(e), 500);
+					},
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);
 					},
