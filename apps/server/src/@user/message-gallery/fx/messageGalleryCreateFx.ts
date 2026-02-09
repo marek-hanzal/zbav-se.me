@@ -8,7 +8,6 @@ import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
-import { ConflictErrorFx } from "~/error/ConflictErrorFx";
 
 export namespace messageGalleryCreateFx {
 	export interface Props extends MessageGalleryCreateSchema.Type {
@@ -44,21 +43,18 @@ export const messageGalleryCreateFx = Effect.fn("messageGalleryCreateFx")(functi
 
 			const id = genId();
 
-			yield* tryDbFx({
-				async run() {
-					return kysely
-						.insertInto("message_gallery")
-						.values({
-							id,
-							messageThreadId,
-							userId,
-							galleryId,
-							createdAt: dateContext.now().toJSDate(),
-						})
-						.returningAll()
-						.executeTakeFirstOrThrow();
-				},
-                
+			yield* tryDbFx(async () => {
+				return kysely
+					.insertInto("message_gallery")
+					.values({
+						id,
+						messageThreadId,
+						userId,
+						galleryId,
+						createdAt: dateContext.now().toJSDate(),
+					})
+					.returningAll()
+					.executeTakeFirstOrThrow();
 			});
 
 			return yield* messageGalleryFetchFx({
