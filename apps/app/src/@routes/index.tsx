@@ -10,7 +10,7 @@ export const Route = createFileRoute("/")({
 
 		if (session) {
 			throw redirect({
-				to: "/$locale/ui/home",
+				to: "/$locale/flow/home",
 				params: {
 					locale,
 				},

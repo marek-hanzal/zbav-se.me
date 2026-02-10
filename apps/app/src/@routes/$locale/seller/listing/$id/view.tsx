@@ -26,7 +26,7 @@ export const Route = createFileRoute("/$locale/seller/listing/$id/view")({
 					{listingQuery.data.location.address}
 
 					<LinkTo
-						to={"/$locale/ui/home"}
+						to={"/$locale/flow/home"}
 						params={{
 							locale,
 						}}

@@ -16,7 +16,7 @@ import { Route as LocaleWelcomeRouteImport } from './@routes/$locale/welcome'
 import { Route as LocaleUiRouteImport } from './@routes/$locale/ui'
 import { Route as LocaleUiUserRouteImport } from './@routes/$locale/ui/user'
 import { Route as LocaleUiShopRouteImport } from './@routes/$locale/ui/shop'
-import { Route as LocaleUiHomeRouteImport } from './@routes/$locale/ui/home'
+import { Route as LocaleFlowHomeRouteImport } from './@routes/$locale/flow/home'
 import { Route as LocaleDevSeedRouteImport } from './@routes/$locale/dev/seed'
 import { Route as LocaleUiSellerIndexRouteImport } from './@routes/$locale/ui/seller/index'
 import { Route as LocaleUiBuyerIndexRouteImport } from './@routes/$locale/ui/buyer/index'
@@ -69,10 +69,10 @@ const LocaleUiShopRoute = LocaleUiShopRouteImport.update({
   path: '/shop',
   getParentRoute: () => LocaleUiRoute,
 } as any)
-const LocaleUiHomeRoute = LocaleUiHomeRouteImport.update({
-  id: '/home',
-  path: '/home',
-  getParentRoute: () => LocaleUiRoute,
+const LocaleFlowHomeRoute = LocaleFlowHomeRouteImport.update({
+  id: '/flow/home',
+  path: '/flow/home',
+  getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleDevSeedRoute = LocaleDevSeedRouteImport.update({
   id: '/dev/seed',
@@ -171,7 +171,7 @@ export interface FileRoutesByFullPath {
   '/$locale/welcome': typeof LocaleWelcomeRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/dev/seed': typeof LocaleDevSeedRoute
-  '/$locale/ui/home': typeof LocaleUiHomeRoute
+  '/$locale/flow/home': typeof LocaleFlowHomeRoute
   '/$locale/ui/shop': typeof LocaleUiShopRoute
   '/$locale/ui/user': typeof LocaleUiUserRoute
   '/$locale/buyer/feed/default': typeof LocaleBuyerFeedDefaultRoute
@@ -196,7 +196,7 @@ export interface FileRoutesByTo {
   '/$locale/welcome': typeof LocaleWelcomeRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/dev/seed': typeof LocaleDevSeedRoute
-  '/$locale/ui/home': typeof LocaleUiHomeRoute
+  '/$locale/flow/home': typeof LocaleFlowHomeRoute
   '/$locale/ui/shop': typeof LocaleUiShopRoute
   '/$locale/ui/user': typeof LocaleUiUserRoute
   '/$locale/buyer/feed/default': typeof LocaleBuyerFeedDefaultRoute
@@ -223,7 +223,7 @@ export interface FileRoutesById {
   '/$locale/welcome': typeof LocaleWelcomeRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/dev/seed': typeof LocaleDevSeedRoute
-  '/$locale/ui/home': typeof LocaleUiHomeRoute
+  '/$locale/flow/home': typeof LocaleFlowHomeRoute
   '/$locale/ui/shop': typeof LocaleUiShopRoute
   '/$locale/ui/user': typeof LocaleUiUserRoute
   '/$locale/buyer/feed/default': typeof LocaleBuyerFeedDefaultRoute
@@ -251,7 +251,7 @@ export interface FileRouteTypes {
     | '/$locale/welcome'
     | '/$locale/'
     | '/$locale/dev/seed'
-    | '/$locale/ui/home'
+    | '/$locale/flow/home'
     | '/$locale/ui/shop'
     | '/$locale/ui/user'
     | '/$locale/buyer/feed/default'
@@ -276,7 +276,7 @@ export interface FileRouteTypes {
     | '/$locale/welcome'
     | '/$locale'
     | '/$locale/dev/seed'
-    | '/$locale/ui/home'
+    | '/$locale/flow/home'
     | '/$locale/ui/shop'
     | '/$locale/ui/user'
     | '/$locale/buyer/feed/default'
@@ -302,7 +302,7 @@ export interface FileRouteTypes {
     | '/$locale/welcome'
     | '/$locale/'
     | '/$locale/dev/seed'
-    | '/$locale/ui/home'
+    | '/$locale/flow/home'
     | '/$locale/ui/shop'
     | '/$locale/ui/user'
     | '/$locale/buyer/feed/default'
@@ -378,12 +378,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleUiShopRouteImport
       parentRoute: typeof LocaleUiRoute
     }
-    '/$locale/ui/home': {
-      id: '/$locale/ui/home'
-      path: '/home'
-      fullPath: '/$locale/ui/home'
-      preLoaderRoute: typeof LocaleUiHomeRouteImport
-      parentRoute: typeof LocaleUiRoute
+    '/$locale/flow/home': {
+      id: '/$locale/flow/home'
+      path: '/flow/home'
+      fullPath: '/$locale/flow/home'
+      preLoaderRoute: typeof LocaleFlowHomeRouteImport
+      parentRoute: typeof LocaleRoute
     }
     '/$locale/dev/seed': {
       id: '/$locale/dev/seed'
@@ -501,7 +501,6 @@ declare module '@tanstack/react-router' {
 }
 
 interface LocaleUiRouteChildren {
-  LocaleUiHomeRoute: typeof LocaleUiHomeRoute
   LocaleUiShopRoute: typeof LocaleUiShopRoute
   LocaleUiUserRoute: typeof LocaleUiUserRoute
   LocaleUiBuyerIndexRoute: typeof LocaleUiBuyerIndexRoute
@@ -518,7 +517,6 @@ interface LocaleUiRouteChildren {
 }
 
 const LocaleUiRouteChildren: LocaleUiRouteChildren = {
-  LocaleUiHomeRoute: LocaleUiHomeRoute,
   LocaleUiShopRoute: LocaleUiShopRoute,
   LocaleUiUserRoute: LocaleUiUserRoute,
   LocaleUiBuyerIndexRoute: LocaleUiBuyerIndexRoute,
@@ -544,6 +542,7 @@ interface LocaleRouteChildren {
   LocaleWelcomeRoute: typeof LocaleWelcomeRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
   LocaleDevSeedRoute: typeof LocaleDevSeedRoute
+  LocaleFlowHomeRoute: typeof LocaleFlowHomeRoute
   LocaleBuyerFeedDefaultRoute: typeof LocaleBuyerFeedDefaultRoute
   LocaleSellerListingIdViewRoute: typeof LocaleSellerListingIdViewRoute
   LocaleFlowBuyerFeedIdListRoute: typeof LocaleFlowBuyerFeedIdListRoute
@@ -555,6 +554,7 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleWelcomeRoute: LocaleWelcomeRoute,
   LocaleIndexRoute: LocaleIndexRoute,
   LocaleDevSeedRoute: LocaleDevSeedRoute,
+  LocaleFlowHomeRoute: LocaleFlowHomeRoute,
   LocaleBuyerFeedDefaultRoute: LocaleBuyerFeedDefaultRoute,
   LocaleSellerListingIdViewRoute: LocaleSellerListingIdViewRoute,
   LocaleFlowBuyerFeedIdListRoute: LocaleFlowBuyerFeedIdListRoute,

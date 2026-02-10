@@ -48,7 +48,7 @@ export const EmptyFavourite: FC<EmptyFavourite.Props> = ({ ...props }) => {
 					<LinkTo
 						icon={ArrowRightIcon}
 						iconPosition={"right"}
-						to={"/$locale/ui/home"}
+						to={"/$locale/flow/home"}
 						params={{
 							locale,
 						}}

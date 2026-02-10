@@ -30,7 +30,7 @@ export const Route = createFileRoute("/$locale/welcome")({
 						<LinkTo
 							icon={ArrowRightIcon}
 							iconPosition={"right"}
-							to={"/$locale/ui/home"}
+							to={"/$locale/flow/home"}
 							params={{
 								locale,
 							}}

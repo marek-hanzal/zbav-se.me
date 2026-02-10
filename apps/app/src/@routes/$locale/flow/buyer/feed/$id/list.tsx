@@ -451,7 +451,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 									<LinkTo
 										icon={ArrowRightIcon}
 										iconPosition={"right"}
-										to={"/$locale/ui/home"}
+										to={"/$locale/flow/home"}
 										params={{
 											locale,
 										}}
