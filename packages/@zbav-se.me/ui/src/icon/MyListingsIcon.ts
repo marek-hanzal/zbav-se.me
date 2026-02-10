@@ -1,1 +1,1 @@
-export const MyListingsIcon = "icon-[solar--earth-linear]";
+export const MyListingsIcon = "icon-[solar--globus-linear]";
