@@ -1,6 +1,7 @@
 import { VisibilityContext } from "@use-pico/client/context";
 import { createNoopVisibilityStore } from "@use-pico/client/store";
 import { Container } from "@use-pico/client/ui/container";
+import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
@@ -90,6 +91,7 @@ export const Transaction: FC<Transaction.Props> = ({ transactionId, refresh, ...
 								</Container>
 
 								<MessageList
+									side={tUserSideEnum.buyer}
 									containerRef={containerRef}
 									messageThreadId={transaction.messageThreadId}
 									refresh={refresh}
