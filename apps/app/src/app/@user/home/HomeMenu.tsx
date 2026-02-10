@@ -19,7 +19,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 	const locale = useLocale();
 	const containerRef = useRef<HTMLDivElement>(null);
 	const icon: uiIcon.Ui = {
-		text: "3xl",
+		text: "2xl",
 	};
 
 	return (
@@ -44,7 +44,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 					height: "full",
 					inner: "default",
 					items: "center",
-					gap: "lg",
+					// gap: "lg",
 				}}
 			>
 				<LinkTo
@@ -154,6 +154,8 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 						theme: "light",
 						color: "lead",
 						font: "bold",
+						opacity: "medium",
+						size: "lg",
 					}}
 					label={"Advanced settings (menu)"}
 				/>

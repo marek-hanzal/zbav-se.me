@@ -25,6 +25,8 @@ export namespace uiTypo {
 		shadow?: CoolUi.Shadow;
 		round?: CoolUi.Round;
 		width?: CoolUi.Width;
+		//
+		size?: CoolUi.Size;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;

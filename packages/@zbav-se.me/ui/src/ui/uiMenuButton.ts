@@ -15,17 +15,22 @@ export namespace uiMenuButton {
 export const uiMenuButton = ({ ui, className }: uiMenuButton.Props) => {
 	return uiButton({
 		ui: {
-			flow: "vertical",
-			items: "center",
+			flow: "horizontal",
 			tone: "primary",
 			theme: "light",
 			width: "full",
-			justify: "center",
+			//
+			items: "center",
+			justify: "start",
+			//
 			background: "default",
 			border: false,
+			//
 			color: "lead",
 			text: "lg",
-			size: "lg",
+			size: "md",
+			shadow: false,
+			round: undefined,
 			...ui,
 		},
 		className: [
