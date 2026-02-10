@@ -22,9 +22,6 @@
 03dd4711e2aaba77a79e582ae21f6acf1aaa8b9bcd089b1b8e2de80e:
     ref: Close draft (button)
     value: Odložit na později
-0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
-    ref: Listing category (title)
-    value: Kategorie
 050d325dc0ab4741ff8dd2e315e563bf0a746ea997e21d31bc54f8dd:
     ref: Listing category not selected
     value: Kategorii nemáš vybranou
@@ -40,6 +37,12 @@
 08f72ffcbaab104481353781fb5142ff29a99fb6dff9f34a65d0c991:
     ref: Gallery (title)
     value: Galerie
+0931bae674f385d4352f8bb5199e1d2390a7e0008f4c93551330702f:
+    ref: No listings with transactions (message)
+    value: No listings with transactions (message)
+0a08e45b023a7e9c7c4856084c91d4a78b31861ac5bf75f91fe4780a:
+    ref: Listing restriction (label)
+    value: Listing restriction (label)
 0a5c73cd28c41a15c8769a38be34b6d388bcba18e90ca7e28b762bc9:
     ref: Listing - Cons (title)
     value: Chci být upřímný
@@ -72,15 +75,9 @@
 0e2d6ae59d756678e034197ebd80f4723aecad41dc953699684a443e:
     ref: Listings (label)
     value: Inzeráty
-0e6cf0e3ce32e8ff03c1c483fa275fb0f2baa4ec9e5e3dcc47b5442f:
-    ref: Delivery (title)
-    value: Možnosti předání
 0f44d510d8a8cf53325df192dfac3d02f4299c2d9a4a5dbe2dad9a6f:
     ref: Price type not set
     value: Typ ceny nemáš nastavený
-1033ff575b4fcc2a5f68f0546b255961c4cf9514267255fbd76e2920:
-    ref: Listing title not filled
-    value: Čeká na vyplnění
 1088c3fcabd70b4e385443272326be10f59a63b577e719b5ac8c5821:
     ref: Listing ignore (hint)
     value: >
@@ -98,6 +95,9 @@
 124648485fb6d6f50a0829d36808e384ad3c0904126f300a12fda2e7:
     ref: Reject transaction - confirm (button)
     value: Opravdu?
+12e75835dcd53665e98ab2e6c1064379dd6094870afd31f532f39e47:
+    ref: Listing restriction (hint)
+    value: Listing restriction (hint)
 14663fea507627f6c98c1360a9aa3c6d275ed885e44051e7d88af28a:
     ref: Feed age (hint)
     value: >
@@ -106,9 +106,6 @@
 
         zda jde o úplně novou věc (moderní) nebo třeba historický kousek (např.
         stará auta).
-14c26d2816c7d80dbb0d3d6314d8229e7c3eb85ea3089c55c570051a:
-    ref: Condition (title)
-    value: Stav
 15edabc6931564b26e9e7c4e83be79266953662d2a96c4544f5988e5:
     ref: Price type (title)
     value: Typ ceny
@@ -216,9 +213,6 @@
 2ff3786d4505b98b160e38838692be1ceb7b97965d65a15f2e095e9f:
     ref: Decision rate (label)
     value: Poměr dokončených zpráv
-2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
-    ref: Age (title)
-    value: Stáří
 3136e34a81ab39a2fb1e4198edccbf10acf6244b0543a98136311b44:
     ref: Listing warranty (hint)
     value: |
@@ -239,12 +233,6 @@
 356f63775751bd5232d3021e2d6775a39bb1f9a2ec6041b1e763e6b9:
     ref: Dispute transaction - confirm (button)
     value: Opravdu si přeješ pokračovat?
-36446a1dd7dd20bdfb36bbbe57ab18e8413e7f446d937fa6f2cdd00f:
-    ref: Feed setup (button)
-    value: Nastavení seznamu
-36e3a2076a652d8613c8604b631fa834372b465cfc2497d82b2c4b04:
-    ref: seller
-    value: seller
 376b4e9c64fcef908876651b54c8c0d6a03a96798a140ba2a9c865f2:
     ref: rejected
     value: rejected
@@ -354,6 +342,9 @@
 523bef97e177163c4710b0138d4a2f8166cce50ebb8930b74298d0f8:
     ref: relative
     value: relative
+548d0024b62f956b195355bcba15a04b732cc00221c20a4a7494f2a5:
+    ref: Advanced settings (menu)
+    value: Pokročilé
 56093b0ee9cd3eadf7db4a59a8ec98132bacd22fa07691fdac66874a:
     ref: Buyer - shop (title)
     value: Obchod pro kupující
@@ -394,7 +385,7 @@
     value: Závažná akce - opravdu?
 5c8983bc9f6b82b7d54e9d2de54f4a5e12120ac5ec4c523d723b166b:
     ref: Continue listing (label)
-    value: Pokračovat
+    value: Dokončit inzerát
 5dc3ea5f4971a9d3d71980e83f4d740bae8b6fb905950d61523b432a:
     ref: Draft - bunch of required (title)
     value: Nutné pro zveřejnění
@@ -470,9 +461,6 @@
 79a7862454115c39814f1654d4e06bde698323ab23a0214e8df7111c:
     ref: Create new feed (title)
     value: Nový seznam inzerátů
-7a2ff42f7d0739100696527fd6cd76b05a231a3251e56fe2566d0810:
-    ref: Open gallery (button)
-    value: Otevřít galerii
 7a82926bb5336fd34c1755025654a057c7419b9e9e71e717eb89c249:
     ref: Feed range (hint)
     value:
@@ -615,7 +603,7 @@
         po předání balíčku kupující transakci neodklikne.
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
     ref: Create listing (label)
-    value: Nový inzerát
+    value: Vystavit inzerát
 990f159a82184824fdafb2ab63fa2ab1f67849d8a138773d04be2fd4:
     ref: Seller - listings (label)
     value: Celkový počet inzerátů
@@ -799,6 +787,12 @@ Listing warranty - no-warranty:
 Listing warranty - warranty:
     static: true
     value: Se zárukou
+Seller score 1:
+    static: true
+    value: Vysoké riziko
+Seller score 2:
+    static: true
+    value: Vyšší riziko
 a012442134ffb92cd4a9b82e225dcf084a14efd16c7ad75c91f1b338:
     ref: human
     value: human
@@ -842,6 +836,9 @@ a92a914e77188202f38d6b42be76d7f92cee60d777d0c00ca5aecbde:
 aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
     ref: Photo upload placeholder (title)
     value: Nahraj obrázek
+acca87272a911bd673bc0f526d8ddaf4bedf8c4d04a375401d80df47:
+    ref: Restriction not selected
+    value: Restriction not selected
 acf5cd0bee4e6bd74eea745c51c41f0b3a17a1de314afd2d76eb056c:
     ref: Personal - Warning (title)
     value: Sdílíš osobní údaje
@@ -1042,6 +1039,9 @@ da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
 db19de463c98378f66569f482fa6839883350859bf1fe5f4d577fd96:
     ref: Adjust feed (button)
     value: Uprav si seznam
+dbb55f0c704298dbeda11ddad88ff05b151057e984bf244f0d09c4d9:
+    ref: No listings with transactions (title)
+    value: No listings with transactions (title)
 dc9bf90858ca4e7cede4dc10e9939dea37d678f40fb69f16c9b30d9e:
     ref: Personal - Name (label)
     value: Celé jméno
@@ -1152,9 +1152,6 @@ fb5f656c01caafdecfd1468991d74a7ab481b89ce6df9a8c229d726e:
 fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
     ref: Back to home (link)
     value: Zpět domů
-fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
-    ref: Listing title (label)
-    value: Titulek inzerátu
 fcc9463d3dd7e334473f2e8319498e268ee92bfeb56ec07041368960:
     ref: noopener noreferrer
     value: noopener noreferrer
@@ -1221,9 +1218,3 @@ seller - Transaction successful (message):
 
         Dál už tu nic není.
     static: true
-Seller score 2:
-    static: true
-    value: Vyšší riziko
-Seller score 1:
-    static: true
-    value: Vysoké riziko

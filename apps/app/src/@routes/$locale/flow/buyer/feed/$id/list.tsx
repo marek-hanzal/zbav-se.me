@@ -119,7 +119,7 @@ export const Appendix: FC<Appendix.Props> = ({ feed, containerRef, state, ui, ..
 									text: "xl",
 								},
 							}}
-							to={"/$locale/ui/buyer"}
+							to={"/$locale/flow/home"}
 							params={{
 								locale,
 							}}
@@ -213,7 +213,7 @@ export const FeedEmpty: FC<FeedEmpty.Props> = ({ feed, containerRef, state, ui, 
 									text: "xl",
 								},
 							}}
-							to={"/$locale/ui/buyer"}
+							to={"/$locale/flow/home"}
 							params={{
 								locale,
 							}}
@@ -322,7 +322,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 						})}
 						data-ui={"/buyer/feed/$id/list-[LinkTo.left]"}
 						icon={ArrowLeftIcon}
-						to={"/$locale/ui/buyer"}
+						to={"/$locale/flow/home"}
 						params={{
 							locale,
 						}}

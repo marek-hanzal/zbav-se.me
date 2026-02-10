@@ -2,7 +2,7 @@ import { useLocale } from "@use-pico/client/hook";
 import { UserIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { BuyerIcon, HomeIcon, SellerIcon, ShopIcon } from "@zbav-se.me/ui/icon";
+import { HomeIcon, ShopIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { uiNavButton } from "~/app/@common/nav/uiNavButton";
 
@@ -32,40 +32,6 @@ export const Nav: FC<Nav.Props> = ({ className, ...props }) => {
 			<LinkTo
 				icon={HomeIcon}
 				to="/$locale/flow/home"
-				activeProps={{
-					...uiNavButton({
-						ui: activeUi,
-						className: [],
-					}),
-				}}
-				params={{
-					locale,
-				}}
-				{...uiNavButton({
-					className: [],
-				})}
-			/>
-
-			<LinkTo
-				icon={SellerIcon}
-				to="/$locale/ui/seller"
-				activeProps={{
-					...uiNavButton({
-						ui: activeUi,
-						className: [],
-					}),
-				}}
-				params={{
-					locale,
-				}}
-				{...uiNavButton({
-					className: [],
-				})}
-			/>
-
-			<LinkTo
-				icon={BuyerIcon}
-				to="/$locale/ui/buyer"
 				activeProps={{
 					...uiNavButton({
 						ui: activeUi,
