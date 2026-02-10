@@ -56,13 +56,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 					gap: "md",
 				}}
 			>
-				<Group
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						width: "full",
-					}}
-				>
+				<Group>
 					<LinkTo
 						{...uiMenuButton({
 							className: [],
@@ -197,7 +191,9 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 							);
 						}}
 					</withDraftCollectionQuery.Suspense>
+				</Group>
 
+				<Group>
 					<LinkTo
 						{...uiMenuButton({
 							className: [],
@@ -227,11 +223,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 					</LinkTo>
 				</Group>
 
-				<Group
-					ui={{
-						width: "full",
-					}}
-				>
+				<Group>
 					<LinkTo
 						{...uiMenuButton({
 							className: [],
@@ -287,7 +279,9 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 							<Tx label={"Draft list (label)"} />
 						</TypoIcon>
 					</LinkTo>
+				</Group>
 
+				<Group>
 					<LinkTo
 						{...uiMenuButton({
 							className: [],
@@ -345,11 +339,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 					</LinkTo>
 				</Group>
 
-				<Group
-					ui={{
-						width: "full",
-					}}
-				>
+				<Group>
 					<LinkTo
 						{...uiMenuButton({
 							className: [],

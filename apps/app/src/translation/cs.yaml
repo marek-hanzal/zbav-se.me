@@ -283,7 +283,7 @@
     value: Zprávy
 44768dba85d12f054b4b9820de22bfdf8dcd0d561e4edc9d5546340b:
     ref: Find listings (label)
-    value: Hledat inzeráty
+    value: Hledat
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
     ref: Uploading photo (title)
     value: Nahrávám fotku, momentík...
@@ -573,7 +573,7 @@
     value: Poloha
 8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
     ref: Feed (label)
-    value: Moje seznamy
+    value: Seznamy
 8d5224a1dcfa23a630c6e76f7921d15195a42e649e050d26a7b5c8f8:
     ref: Delete draft (button)
     value: Smazat
@@ -606,7 +606,7 @@
         po předání balíčku kupující transakci neodklikne.
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
     ref: Create listing (label)
-    value: Vystavit inzerát
+    value: Vystavit
 990f159a82184824fdafb2ab63fa2ab1f67849d8a138773d04be2fd4:
     ref: Seller - listings (label)
     value: Celkový počet inzerátů
@@ -890,7 +890,7 @@ b9c5a03896d71b41f7828f3747be6c509689c279e60f845ab3b23480:
     value: pending
 ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
     ref: My listings (label)
-    value: Moje inzeráty
+    value: Vystavené
 babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
     ref: Location search (placeholder)
     value: Napiš město, kraj, co tě napadne

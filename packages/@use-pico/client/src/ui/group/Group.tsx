@@ -14,6 +14,7 @@ export const Group: FC<Group.Props> = ({ children, ui, className, ...props }) =>
 			ui={{
 				shadow: true,
 				round: "default",
+				width: "full",
 				...ui,
 			}}
 			className={[
