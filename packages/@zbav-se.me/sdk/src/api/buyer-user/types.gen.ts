@@ -1742,6 +1742,10 @@ export type apiFeedCreateErrors = {
      */
     404: tNotice;
     /**
+     * Conflict (e.g. duplicate feed)
+     */
+    409: tNotice;
+    /**
      * Internal server error
      */
     500: tNotice;
@@ -2289,6 +2293,10 @@ export type apiTransactionCreateErrors = {
      * Listing not found
      */
     404: tNotice;
+    /**
+     * Conflict (e.g. duplicate transaction)
+     */
+    409: tNotice;
     /**
      * Internal server error
      */

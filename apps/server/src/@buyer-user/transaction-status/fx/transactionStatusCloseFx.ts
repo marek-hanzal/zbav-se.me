@@ -21,7 +21,10 @@ export const transactionStatusCloseFx = Effect.fn("transactionStatusCloseFx")(fu
 }: transactionStatusCloseFx.Props) {
 	yield* withTraceFx({
 		fx: "transactionStatusCloseFx",
-		input: { userId, transactionId },
+		input: {
+			userId,
+			transactionId,
+		},
 	});
 
 	return yield* withTransactionFx(
@@ -35,7 +38,9 @@ export const transactionStatusCloseFx = Effect.fn("transactionStatusCloseFx")(fu
 			if (transaction.side === "seller") {
 				yield* withTraceFx({
 					fx: "transactionStatusCloseFx",
-					error: { message: "Seller cannot close a transaction" },
+					error: {
+						message: "Seller cannot close a transaction",
+					},
 				});
 				return yield* new InvalidRequestErrorFx({
 					message: "Seller cannot close a transaction",

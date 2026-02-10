@@ -1,10 +1,10 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { withTraceFx } from "~/effect/withTraceFx";
 import { withTransactionStatusQueryBuilderFx } from "~/@session/transaction-status/db/withTransactionStatusQueryBuilderFx";
 import { withTransactionStatusSelectFx } from "~/@session/transaction-status/db/withTransactionStatusSelectFx";
 import type { TransactionStatusFilterSchema } from "~/@session/transaction-status/schema/TransactionStatusFilterSchema";
 import type { TransactionStatusQuerySchema } from "~/@session/transaction-status/schema/TransactionStatusQuerySchema";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace transactionStatusFetchFx {
 	export interface Props extends TransactionStatusQuerySchema.Type {
@@ -20,7 +20,12 @@ export const transactionStatusFetchFx = Effect.fn("transactionStatusFetchFx")(fu
 }: transactionStatusFetchFx.Props) {
 	yield* withTraceFx({
 		fx: "transactionStatusFetchFx",
-		input: { filter, where, scope, sort },
+		input: {
+			filter,
+			where,
+			scope,
+			sort,
+		},
 	});
 
 	return yield* withFetchFx({

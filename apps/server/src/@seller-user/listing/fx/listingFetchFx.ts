@@ -1,10 +1,10 @@
 import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { withTraceFx } from "~/effect/withTraceFx";
 import { withListingQueryBuilderFx } from "~/@seller-user/listing/db/withListingQueryBuilderFx";
 import { withListingSelectFx } from "~/@seller-user/listing/db/withListingSelectFx";
 import type { ListingFilterSchema } from "~/@seller-user/listing/schema/ListingFilterSchema";
 import type { ListingQuerySchema } from "~/@seller-user/listing/schema/ListingQuerySchema";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace listingFetchFx {
 	export interface Props extends ListingQuerySchema.Type {
@@ -20,7 +20,12 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 }: listingFetchFx.Props) {
 	yield* withTraceFx({
 		fx: "listingFetchFx",
-		input: { filter, where, scope, sort },
+		input: {
+			filter,
+			where,
+			scope,
+			sort,
+		},
 	});
 
 	return yield* withFetchFx({

@@ -8,6 +8,7 @@ import type { TransactionMessageGalleryCreateSchema } from "~/@user/transaction-
 import { transactionStatusGateFx } from "~/@user/transaction-status/fx/transactionStatusGateFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
@@ -58,8 +59,8 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 
 				const now = dateContext.now();
 
-				yield* Effect.promise(async () => {
-					return kysely
+				yield* tryDbFx(async () =>
+					kysely
 						.updateTable("transaction")
 						.set({
 							updatedAt: now.toJSDate(),
@@ -70,19 +71,16 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 								.toJSDate(),
 						})
 						.where("id", "=", transaction.id)
-						.executeTakeFirst();
-				});
+						.executeTakeFirst(),
+				);
 
 				const gallery = yield* galleryCreateFx({
 					userId,
 				});
 
-				yield* Effect.promise(async () => {
-					return kysely
-						.deleteFrom("gallery_item")
-						.where("galleryId", "=", gallery.id)
-						.execute();
-				});
+				yield* tryDbFx(async () =>
+					kysely.deleteFrom("gallery_item").where("galleryId", "=", gallery.id).execute(),
+				);
 
 				let sort = 0;
 				for (const uploadId of uploadIds) {

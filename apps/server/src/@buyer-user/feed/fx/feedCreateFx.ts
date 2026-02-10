@@ -1,13 +1,13 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { DatabaseError } from "pg";
 import { feedFetchFx } from "~/@buyer-user/feed/fx/feedFetchFx";
 import type { FeedCreateSchema } from "~/@buyer-user/feed/schema/FeedCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
-import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
+import { ConflictErrorFx } from "~/error/ConflictErrorFx";
 
 export namespace feedCreateFx {
 	export interface Props extends FeedCreateSchema.Type {
@@ -37,9 +37,9 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 			const id = genId();
 			const now = dateContext.now();
 
-			yield* Effect.tryPromise({
-				async try() {
-					return kysely
+			yield* tryDbFx(
+				async () =>
+					kysely
 						.insertInto("feed")
 						.values({
 							...data,
@@ -51,20 +51,15 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 							updatedAt: now.toJSDate(),
 						})
 						.returningAll()
-						.executeTakeFirstOrThrow();
+						.executeTakeFirstOrThrow(),
+				{
+					"23505": (e) =>
+						new ConflictErrorFx({
+							message: "Feed already exists",
+							cause: e,
+						}),
 				},
-				catch(error) {
-					if (error instanceof DatabaseError) {
-						return new RuntimeErrorFx({
-							message: error.message,
-						});
-					}
-
-					return new RuntimeErrorFx({
-						message: error instanceof Error ? error.message : String(error),
-					});
-				},
-			});
+			);
 
 			return yield* feedFetchFx({
 				where: {

@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { ignoreFetchFx } from "~/@buyer-user/ignore/fx/ignoreFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
@@ -17,7 +18,10 @@ export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
 }: ignoreDeleteFx.Props) {
 	yield* withTraceFx({
 		fx: "ignoreDeleteFx",
-		input: { userId, listingId },
+		input: {
+			userId,
+			listingId,
+		},
 	});
 
 	return yield* withTransactionFx(
@@ -33,9 +37,9 @@ export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
 				},
 			});
 
-			yield* Effect.promise(async () => {
-				return kysely.deleteFrom("ignore").where("id", "=", ignore.id).execute();
-			});
+			yield* tryDbFx(async () =>
+				kysely.deleteFrom("ignore").where("id", "=", ignore.id).execute(),
+			);
 
 			return ignore;
 		}),

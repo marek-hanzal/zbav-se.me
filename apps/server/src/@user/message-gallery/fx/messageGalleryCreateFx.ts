@@ -5,8 +5,9 @@ import { messageGalleryFetchFx } from "~/@user/message-gallery/fx/messageGallery
 import type { MessageGalleryCreateSchema } from "~/@user/message-gallery/schema/MessageGalleryCreateSchema";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace messageGalleryCreateFx {
 	export interface Props extends MessageGalleryCreateSchema.Type {
@@ -21,7 +22,11 @@ export const messageGalleryCreateFx = Effect.fn("messageGalleryCreateFx")(functi
 }: messageGalleryCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "messageGalleryCreateFx",
-		input: { userId, messageThreadId, galleryId },
+		input: {
+			userId,
+			messageThreadId,
+			galleryId,
+		},
 	});
 
 	return yield* withTransactionFx(
@@ -38,7 +43,7 @@ export const messageGalleryCreateFx = Effect.fn("messageGalleryCreateFx")(functi
 
 			const id = genId();
 
-			yield* Effect.promise(async () => {
+			yield* tryDbFx(async () => {
 				return kysely
 					.insertInto("message_gallery")
 					.values({

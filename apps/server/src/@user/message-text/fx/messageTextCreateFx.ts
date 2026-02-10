@@ -5,6 +5,7 @@ import { messageTextFetchFx } from "~/@user/message-text/fx/messageTextFetchFx";
 import type { MessageTextCreateSchema } from "~/@user/message-text/schema/MessageTextCreateSchema";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
@@ -42,8 +43,8 @@ export const messageTextCreateFx = Effect.fn("messageTextCreateFx")(function* ({
 
 			const id = genId();
 
-			yield* Effect.promise(async () => {
-				return kysely
+			yield* tryDbFx(async () =>
+				kysely
 					.insertInto("message_text")
 					.values({
 						id,
@@ -53,8 +54,8 @@ export const messageTextCreateFx = Effect.fn("messageTextCreateFx")(function* ({
 						createdAt: dateContext.now().toJSDate(),
 					})
 					.returningAll()
-					.executeTakeFirstOrThrow();
-			});
+					.executeTakeFirstOrThrow(),
+			);
 
 			return yield* messageTextFetchFx({
 				userId,

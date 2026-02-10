@@ -5,6 +5,7 @@ import { favouriteFetchFx } from "~/@buyer-user/favourite/fx/favouriteFetchFx";
 import type { FavouriteCreateSchema } from "~/@buyer-user/favourite/schema/FavouriteCreateSchema";
 import { feedFetchFx } from "~/@buyer-user/feed/fx/feedFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace favouriteCreateFx {
@@ -20,7 +21,11 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 }: favouriteCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "favouriteCreateFx",
-		input: { userId, feedId, ...data },
+		input: {
+			userId,
+			feedId,
+			...data,
+		},
 	});
 
 	const { kysely } = yield* KyselyContextFx;
@@ -37,8 +42,8 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 		},
 	});
 
-	yield* Effect.promise(async () => {
-		return kysely
+	yield* tryDbFx(async () =>
+		kysely
 			.insertInto("favourite")
 			.values({
 				...data,
@@ -49,8 +54,8 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 			})
 			.onConflict((eb) => eb.doNothing())
 			.returningAll()
-			.executeTakeFirstOrThrow();
-	});
+			.executeTakeFirstOrThrow(),
+	);
 
 	return yield* favouriteFetchFx({
 		where: {

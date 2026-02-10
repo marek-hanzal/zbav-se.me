@@ -3,6 +3,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import type { FlagCreateSchema } from "~/@buyer-user/flag/schema/FlagCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace flagCreateFx {
@@ -17,7 +18,10 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 }: flagCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "flagCreateFx",
-		input: { userId, listingId },
+		input: {
+			userId,
+			listingId,
+		},
 	});
 
 	const { kysely } = yield* KyselyContextFx;
@@ -25,8 +29,8 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 
 	const id = genId();
 
-	return yield* Effect.promise(async () => {
-		return kysely
+	return yield* tryDbFx(async () =>
+		kysely
 			.insertInto("flag")
 			.values({
 				id,
@@ -36,8 +40,8 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 			})
 			.onConflict((eb) => eb.doNothing())
 			.returningAll()
-			.executeTakeFirstOrThrow();
-	});
+			.executeTakeFirstOrThrow(),
+	);
 });
 
 export type flagCreateFx = ReturnType<typeof flagCreateFx>;

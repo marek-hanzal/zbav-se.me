@@ -1223,6 +1223,10 @@ export type tApiUserExPatchRequest = {
 
 export type apiUserExPatchErrors = {
     /**
+     * Conflict (e.g. duplicate)
+     */
+    409: tNotice;
+    /**
      * Internal server error
      */
     500: tNotice;

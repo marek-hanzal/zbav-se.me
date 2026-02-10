@@ -4,6 +4,7 @@ import { Effect } from "effect";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import type { GalleryCreateSchema } from "~/@user/gallery/schema/GalleryCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace galleryCreateFx {
@@ -20,7 +21,11 @@ export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* ({
 }: galleryCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "galleryCreateFx",
-		input: { userId, id, ...props },
+		input: {
+			userId,
+			id,
+			...props,
+		},
 	});
 
 	const { kysely } = yield* KyselyContextFx;
@@ -28,8 +33,8 @@ export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* ({
 
 	const galleryId = id ?? genId();
 
-	yield* Effect.promise(async () => {
-		return kysely
+	yield* tryDbFx(async () =>
+		kysely
 			.insertInto("gallery")
 			.values({
 				...props,
@@ -37,11 +42,9 @@ export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* ({
 				userId,
 				createdAt: dateContext.now().toJSDate(),
 			})
-			.onConflict((eb) => {
-				return eb.doNothing();
-			})
-			.execute();
-	});
+			.onConflict((eb) => eb.doNothing())
+			.execute(),
+	);
 
 	return yield* galleryFetchFx({
 		where: {

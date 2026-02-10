@@ -10,6 +10,7 @@ import { galleryCreateFx as coolGalleryCreateFx } from "~/@user/gallery/fx/galle
 import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
@@ -27,7 +28,11 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 }: listingCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "listingCreateFx",
-		input: { userId, uploadIds, ...data },
+		input: {
+			userId,
+			uploadIds,
+			...data,
+		},
 	});
 
 	return yield* withTransactionFx(
@@ -41,7 +46,9 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			if (uploadIds.length === 0) {
 				yield* withTraceFx({
 					fx: "listingCreateFx",
-					error: { message: "At least one upload is required" },
+					error: {
+						message: "At least one upload is required",
+					},
 				});
 				return yield* new InvalidRequestErrorFx({
 					message: "At least one upload is required",
@@ -63,8 +70,8 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 				sort++;
 			}
 
-			yield* Effect.promise(async () => {
-				return kysely
+			yield* tryDbFx(async () =>
+				kysely
 					.insertInto("listing")
 					.values({
 						id,
@@ -103,13 +110,13 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 							)
 							.exhaustive(),
 					})
-					.execute();
-			});
+					.execute(),
+			);
 
 			if (data.draftId) {
 				const draftId = data.draftId;
-				yield* Effect.promise(async () => {
-					return kysely
+				yield* tryDbFx(async () =>
+					kysely
 						.updateTable("draft")
 						.set({
 							usedAt: now.toJSDate(),
@@ -117,8 +124,8 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 						})
 						.where("id", "=", draftId)
 						.where("userId", "=", userId)
-						.execute();
-				});
+						.execute(),
+				);
 			}
 
 			yield* userEventCreateFx({

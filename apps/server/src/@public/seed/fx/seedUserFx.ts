@@ -1,6 +1,7 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace seedUserFx {
@@ -12,9 +13,9 @@ export namespace seedUserFx {
 export const seedUserFx = Effect.fn("seedUserFx")(function* ({ email }: seedUserFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
-	const current = yield* Effect.promise(async () => {
-		return kysely.selectFrom("user").where("email", "=", email).selectAll().executeTakeFirst();
-	});
+	const current = yield* tryDbFx(async () =>
+		kysely.selectFrom("user").where("email", "=", email).selectAll().executeTakeFirst(),
+	);
 
 	if (!current) {
 		yield* withTraceFx({

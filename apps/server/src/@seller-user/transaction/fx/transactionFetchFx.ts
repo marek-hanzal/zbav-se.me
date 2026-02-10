@@ -20,7 +20,12 @@ export const transactionFetchFx = Effect.fn("transactionFetchFx")(function* ({
 }: transactionFetchFx.Props) {
 	yield* withTraceFx({
 		fx: "transactionFetchFx",
-		input: { filter, where, scope, sort },
+		input: {
+			filter,
+			where,
+			scope,
+			sort,
+		},
 	});
 
 	return yield* withFetchFx({

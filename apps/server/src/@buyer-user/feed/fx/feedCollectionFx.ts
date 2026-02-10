@@ -1,10 +1,10 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { withTraceFx } from "~/effect/withTraceFx";
 import { withFeedCollectionSelectFx } from "~/@buyer-user/feed/db/withFeedCollectionSelectFx";
 import { withFeedQueryBuilderFx } from "~/@buyer-user/feed/db/withFeedQueryBuilderFx";
 import type { FeedFilterSchema } from "~/@buyer-user/feed/schema/FeedFilterSchema";
 import type { FeedQuerySchema } from "~/@buyer-user/feed/schema/FeedQuerySchema";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace feedCollectionFx {
 	export interface Props extends FeedQuerySchema.Type {
@@ -21,7 +21,13 @@ export const feedCollectionFx = Effect.fn("feedCollectionFx")(function* ({
 }: feedCollectionFx.Props) {
 	yield* withTraceFx({
 		fx: "feedCollectionFx",
-		input: { filter, where, scope, cursor, sort },
+		input: {
+			filter,
+			where,
+			scope,
+			cursor,
+			sort,
+		},
 	});
 
 	return yield* withCollectionFx({

@@ -2,6 +2,7 @@ import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import type { CleanupSchema } from "~/@public/janitor/schema/CleanupSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 
 export const cleanupScoreFx = Effect.fn("cleanupScoreFx")(function* () {
 	const { kysely } = yield* KyselyContextFx;
@@ -14,19 +15,16 @@ export const cleanupScoreFx = Effect.fn("cleanupScoreFx")(function* () {
 		})
 		.toJSDate();
 
-	const total = yield* Effect.promise(async () => {
-		return kysely
+	const total = yield* tryDbFx(async () =>
+		kysely
 			.selectFrom("listing_event")
 			.select((eb) => eb.fn.count<number>("id").as("count"))
-			.executeTakeFirstOrThrow();
-	});
+			.executeTakeFirstOrThrow(),
+	);
 
-	const result = yield* Effect.promise(async () => {
-		return kysely
-			.deleteFrom("listing_event")
-			.where("createdAt", "<", cutoffDate)
-			.executeTakeFirst();
-	});
+	const result = yield* tryDbFx(async () =>
+		kysely.deleteFrom("listing_event").where("createdAt", "<", cutoffDate).executeTakeFirst(),
+	);
 
 	return {
 		type: "listing-event",

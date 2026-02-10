@@ -4,6 +4,7 @@ import { Effect } from "effect";
 import { SellerInfoSchema } from "~/@buyer-session/listing/schema/SellerInfoSchema";
 import { userEventSellerInfoFx } from "~/@buyer-session/user-event/fx/userEventSellerInfoFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace listingGetSellerInfoFx {
@@ -17,13 +18,15 @@ export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(functi
 }: listingGetSellerInfoFx.Props) {
 	yield* withTraceFx({
 		fx: "listingGetSellerInfoFx",
-		input: { listingId },
+		input: {
+			listingId,
+		},
 	});
 
 	const { kysely } = yield* KyselyContextFx;
 
-	const userInfo = yield* Effect.promise(async () => {
-		return kysely
+	const userInfo = yield* tryDbFx(async () =>
+		kysely
 			.selectFrom("listing as l")
 			.innerJoin("user as u", "u.id", "l.userId")
 			.select((eb) => [
@@ -38,8 +41,8 @@ export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(functi
 					.as("listings"),
 			])
 			.where("l.id", "=", listingId)
-			.executeTakeFirst();
-	});
+			.executeTakeFirst(),
+	);
 
 	if (!userInfo) {
 		yield* withTraceFx({

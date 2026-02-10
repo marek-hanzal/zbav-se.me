@@ -4,6 +4,7 @@ import type { DraftGalleryCreateSchema } from "~/@seller-user/draft-gallery/sche
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
@@ -41,12 +42,12 @@ export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* 
 				message: "You are not allowed to create a gallery for this draft",
 			});
 
-			yield* Effect.promise(async () => {
-				return kysely
+			yield* tryDbFx(async () =>
+				kysely
 					.deleteFrom("gallery_item")
 					.where("galleryId", "=", draft.galleryId)
-					.execute();
-			});
+					.execute(),
+			);
 
 			let sort = 0;
 			for (const uploadId of uploadIds) {

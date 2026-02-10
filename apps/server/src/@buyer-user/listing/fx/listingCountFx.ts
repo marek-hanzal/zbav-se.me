@@ -1,10 +1,10 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
-import { withTraceFx } from "~/effect/withTraceFx";
 import { withListingCollectionSelectFx } from "~/@buyer-user/listing/db/withListingCollectionSelectFx";
 import { withListingQueryBuilderFx } from "~/@buyer-user/listing/db/withListingQueryBuilderFx";
 import type { ListingCountQuerySchema } from "~/@buyer-user/listing/schema/ListingCountQuerySchema";
 import type { ListingFilterSchema } from "~/@buyer-user/listing/schema/ListingFilterSchema";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace listingCountFx {
 	export interface Props extends ListingCountQuerySchema.Type {
@@ -22,7 +22,13 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 }: listingCountFx.Props) {
 	yield* withTraceFx({
 		fx: "listingCountFx",
-		input: { userId, filter, where, scope, meta },
+		input: {
+			userId,
+			filter,
+			where,
+			scope,
+			meta,
+		},
 	});
 
 	return yield* withCountFx({

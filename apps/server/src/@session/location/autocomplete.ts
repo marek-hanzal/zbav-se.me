@@ -2,6 +2,7 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
+import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompleteFx";
 import { withLocationFx } from "~/@session/location/fx/withLocationFx";
@@ -92,6 +93,9 @@ export const withLocationAutocompleteApiFx = Effect.fn("withLocationAutocomplete
 							return c.json([], 200, {
 								"X-Location-Error": "Text too short",
 							});
+						},
+						RuntimeErrorFx(e) {
+							return c.json(noticeError(e), 500);
 						},
 						ZodErrorFx({ zod }) {
 							return c.json(noticeZodError(zod), 500);

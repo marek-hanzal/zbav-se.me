@@ -100,6 +100,9 @@ export const withSeedApiFx = Effect.fn("withSeedApiFx")(function* () {
 					RuntimeErrorFx(err) {
 						return c.json(noticeError(err), 500);
 					},
+					ConflictErrorFx(e) {
+						return c.json(noticeError(e), 409);
+					},
 				}),
 				Effect.runPromise,
 			);

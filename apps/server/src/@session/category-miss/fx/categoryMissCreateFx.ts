@@ -3,6 +3,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace categoryMissCreateFx {
@@ -18,7 +19,10 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 }: categoryMissCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "categoryMissCreateFx",
-		input: { fulltext, limit },
+		input: {
+			fulltext,
+			limit,
+		},
 	});
 
 	const { kysely } = yield* KyselyContextFx;
@@ -30,8 +34,8 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 
 	const now = dateContext.now();
 
-	yield* Effect.promise(async () => {
-		return kysely
+	yield* tryDbFx(async () =>
+		kysely
 			.insertInto("category_miss")
 			.values({
 				id: genId(),
@@ -49,8 +53,8 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 						updatedAt: now.toJSDate(),
 					}),
 			)
-			.execute();
-	});
+			.execute(),
+	);
 
 	return yield* Effect.void;
 });

@@ -12,6 +12,7 @@ import { messageThreadCreateFx } from "~/@user/message-thread/fx/messageThreadCr
 import { messageUserCreateFx } from "~/@user/message-thread-user/fx/messageUserCreateFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
@@ -28,7 +29,11 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 }: transactionCreateFx.Props) {
 	yield* withTraceFx({
 		fx: "transactionCreateFx",
-		input: { userId, listingId, ...data },
+		input: {
+			userId,
+			listingId,
+			...data,
+		},
 	});
 
 	return yield* withTransactionFx(
@@ -37,16 +42,16 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 			const config = yield* TransactionContextFx;
 			const dateContext = yield* DateContextFx;
 
-			const listing = yield* Effect.promise(async () => {
-				return kysely
+			const listing = yield* tryDbFx(async () =>
+				kysely
 					.selectFrom("listing")
 					.select([
 						"id",
 						"userId",
 					])
 					.where("id", "=", listingId)
-					.executeTakeFirst();
-			});
+					.executeTakeFirst(),
+			);
 
 			if (!listing) {
 				yield* withTraceFx({
@@ -83,8 +88,8 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 
 			const id = genId();
 
-			yield* Effect.promise(async () => {
-				return kysely
+			yield* tryDbFx(async () =>
+				kysely
 					.insertInto("transaction")
 					.values({
 						...data,
@@ -101,8 +106,8 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 							.toJSDate(),
 					})
 					.returningAll()
-					.executeTakeFirstOrThrow();
-			});
+					.executeTakeFirstOrThrow(),
+			);
 
 			yield* transactionStatusCreateFx({
 				userId,

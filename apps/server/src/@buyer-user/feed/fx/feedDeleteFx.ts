@@ -3,6 +3,7 @@ import { feedFetchFx } from "~/@buyer-user/feed/fx/feedFetchFx";
 import type { FeedFilterSchema } from "~/@buyer-user/feed/schema/FeedFilterSchema";
 import type { FeedQuerySchema } from "~/@buyer-user/feed/schema/FeedQuerySchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
@@ -15,7 +16,9 @@ export namespace feedDeleteFx {
 export const feedDeleteFx = Effect.fn("feedDeleteFx")(function* (query: feedDeleteFx.Props) {
 	yield* withTraceFx({
 		fx: "feedDeleteFx",
-		input: { query },
+		input: {
+			query,
+		},
 	});
 
 	return yield* withTransactionFx(
@@ -28,9 +31,9 @@ export const feedDeleteFx = Effect.fn("feedDeleteFx")(function* (query: feedDele
 				"feedDeleteFx.feedId": feed.id,
 			});
 
-			yield* Effect.promise(async () => {
-				return kysely.deleteFrom("feed").where("id", "=", feed.id).execute();
-			});
+			yield* tryDbFx(async () =>
+				kysely.deleteFrom("feed").where("id", "=", feed.id).execute(),
+			);
 
 			return feed;
 		}),

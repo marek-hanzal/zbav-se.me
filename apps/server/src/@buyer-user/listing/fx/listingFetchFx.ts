@@ -23,7 +23,14 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 }: listingFetchFx.Props) {
 	yield* withTraceFx({
 		fx: "listingFetchFx",
-		input: { userId, filter, where, scope, sort, meta },
+		input: {
+			userId,
+			filter,
+			where,
+			scope,
+			sort,
+			meta,
+		},
 	});
 
 	return yield* withFetchFx({

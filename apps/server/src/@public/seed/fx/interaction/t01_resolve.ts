@@ -8,6 +8,7 @@ import { transactionCollectionFx } from "~/@buyer-user/transaction/fx/transactio
 import { transactionStatusResolveFx } from "~/@seller-user/transaction-status/fx/transactionStatusResolveFx";
 import { transactionStatusFetchFx } from "~/@session/transaction-status/fx/transactionStatusFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 
 export namespace t01_resolve {
 	export interface Props {
@@ -34,15 +35,15 @@ export const t01_resolve = Effect.fn("t01_resolve")(function* ({
 	});
 
 	for (const transactionId of transactions.data) {
-		const current = yield* Effect.promise(async () => {
-			return kysely
+		const current = yield* tryDbFx(async () =>
+			kysely
 				.selectFrom("user as user")
 				.innerJoin("listing as l", "l.userId", "user.id")
 				.innerJoin("transaction as t", "t.listingId", "l.id")
 				.where("t.id", "=", transactionId.id)
 				.selectAll("user")
-				.executeTakeFirst();
-		});
+				.executeTakeFirst(),
+		);
 
 		if (!current) {
 			return yield* new NotFoundErrorFx({

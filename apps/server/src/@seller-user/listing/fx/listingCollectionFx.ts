@@ -1,10 +1,10 @@
 import { withCollectionFx } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { withTraceFx } from "~/effect/withTraceFx";
 import { withListingCollectionSelectFx } from "~/@seller-user/listing/db/withListingCollectionSelectFx";
 import { withListingQueryBuilderFx } from "~/@seller-user/listing/db/withListingQueryBuilderFx";
 import type { ListingFilterSchema } from "~/@seller-user/listing/schema/ListingFilterSchema";
 import type { ListingQuerySchema } from "~/@seller-user/listing/schema/ListingQuerySchema";
+import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace listingCollectionFx {
 	export interface Props extends ListingQuerySchema.Type {
@@ -21,7 +21,13 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 }: listingCollectionFx.Props) {
 	yield* withTraceFx({
 		fx: "listingCollectionFx",
-		input: { cursor, filter, where, scope, sort },
+		input: {
+			cursor,
+			filter,
+			where,
+			scope,
+			sort,
+		},
 	});
 
 	return yield* withCollectionFx({

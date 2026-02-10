@@ -22,7 +22,12 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 }: favouriteToggleFx.Props) {
 	yield* withTraceFx({
 		fx: "favouriteToggleFx",
-		input: { userId, feedId, listingId, toggle },
+		input: {
+			userId,
+			feedId,
+			listingId,
+			toggle,
+		},
 	});
 
 	return yield* withTransactionFx(

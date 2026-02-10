@@ -5,6 +5,7 @@ import { withLocationListFx } from "~/@session/location/fx/withLocationListFx";
 import { withLocationRequestFx } from "~/@session/location/fx/withLocationRequestFx";
 import type { LocationTableSchema } from "~/database/@table/LocationTableSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
@@ -23,13 +24,19 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 }: locationAutocompleteFx.Props) {
 	yield* withTraceFx({
 		fx: "locationAutocompleteFx",
-		input: { text, lang, limit },
+		input: {
+			text,
+			lang,
+			limit,
+		},
 	});
 
 	if (text.length < 3) {
 		yield* withTraceFx({
 			fx: "locationAutocompleteFx",
-			error: { message: "Text too short" },
+			error: {
+				message: "Text too short",
+			},
 		});
 		return yield* new TextTooShortErrorFx({
 			message: "Text too short",
@@ -93,8 +100,8 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 			})) satisfies Omit<LocationTableSchema.Type, "geo">[] as LocationTableSchema.Type[];
 
 			if (locations.length > 0) {
-				yield* Effect.promise(async () => {
-					return kysely
+				yield* tryDbFx(async () =>
+					kysely
 						.insertInto("location")
 						.values(locations)
 						.onConflict((oc) =>
@@ -105,8 +112,8 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 								])
 								.doNothing(),
 						)
-						.execute();
-				});
+						.execute(),
+				);
 			}
 
 			return yield* withLocationListFx({

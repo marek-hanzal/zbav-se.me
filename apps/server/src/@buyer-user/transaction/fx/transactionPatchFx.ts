@@ -5,6 +5,7 @@ import type { TransactionPatchSchema } from "~/@buyer-user/transaction/schema/Tr
 import { TransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
 import type { TransactionFilterSchema } from "~/@common/transaction/schema/TransactionFilterSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
@@ -23,7 +24,12 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 }: transactionPatchFx.Props) {
 	yield* withTraceFx({
 		fx: "transactionPatchFx",
-		input: { userId, patch, query, scope },
+		input: {
+			userId,
+			patch,
+			query,
+			scope,
+		},
 	});
 
 	return yield* withTransactionFx(
@@ -39,8 +45,8 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 
 			const now = dateContext.now();
 
-			yield* Effect.promise(async () => {
-				return kysely
+			yield* tryDbFx(async () =>
+				kysely
 					.updateTable("transaction")
 					.set({
 						...patch,
@@ -52,8 +58,8 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 							.toJSDate(),
 					})
 					.where("id", "=", transaction.id)
-					.executeTakeFirst();
-			});
+					.executeTakeFirst(),
+			);
 
 			return yield* transactionFetchFx({
 				where: {

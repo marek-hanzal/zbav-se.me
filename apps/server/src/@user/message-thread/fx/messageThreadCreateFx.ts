@@ -4,6 +4,7 @@ import { Effect } from "effect";
 import { messageThreadFetchFx } from "~/@user/message-thread/fx/messageThreadFetchFx";
 import type { MessageThreadCreateSchema } from "~/@user/message-thread/schema/MessageThreadCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
@@ -27,8 +28,8 @@ export const messageThreadCreateFx = Effect.fn("messageThreadCreateFx")(function
 			const id = genId();
 			const now = dateContext.now();
 
-			yield* Effect.promise(async () => {
-				return kysely
+			yield* tryDbFx(async () =>
+				kysely
 					.insertInto("message_thread")
 					.values({
 						id,
@@ -36,8 +37,8 @@ export const messageThreadCreateFx = Effect.fn("messageThreadCreateFx")(function
 						updatedAt: now.toJSDate(),
 					})
 					.returningAll()
-					.executeTakeFirstOrThrow();
-			});
+					.executeTakeFirstOrThrow(),
+			);
 
 			return yield* messageThreadFetchFx({
 				where: {

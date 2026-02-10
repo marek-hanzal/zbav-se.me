@@ -20,7 +20,12 @@ export const draftFetchFx = Effect.fn("draftFetchFx")(function* ({
 }: draftFetchFx.Props) {
 	yield* withTraceFx({
 		fx: "draftFetchFx",
-		input: { filter, where, scope, sort },
+		input: {
+			filter,
+			where,
+			scope,
+			sort,
+		},
 	});
 
 	return yield* withFetchFx({

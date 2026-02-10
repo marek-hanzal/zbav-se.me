@@ -1,6 +1,7 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 import { AccessDeniedErrorFx } from "~/error/AccessDeniedErrorFx";
 
@@ -19,9 +20,9 @@ export const draftResolveFx = Effect.fn("draftResolveFx")(function* ({
 }: draftResolveFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
-	const draft = yield* Effect.promise(async () => {
-		return kysely.selectFrom("draft").selectAll().where("id", "=", draftId).executeTakeFirst();
-	});
+	const draft = yield* tryDbFx(async () =>
+		kysely.selectFrom("draft").selectAll().where("id", "=", draftId).executeTakeFirst(),
+	);
 
 	if (!draft) {
 		yield* withTraceFx({

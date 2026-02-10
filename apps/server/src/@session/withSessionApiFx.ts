@@ -3,7 +3,6 @@ import { withCategoryApiFx } from "~/@session/category/withCategoryApiFx";
 import { withLocationApiFx } from "~/@session/location/withLocationApiFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import type { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withSessionApiFx = Effect.fn("withSessionApiFx")(function* () {
 	const { root, sessionHono } = yield* RoutesContextFx;

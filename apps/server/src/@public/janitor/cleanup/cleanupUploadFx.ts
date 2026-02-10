@@ -4,6 +4,7 @@ import { S3ContextFx } from "~/@common/s3/context/S3ContextFx";
 import { s3ClientFx } from "~/@common/s3/fx/s3ClientFx";
 import type { CleanupSchema } from "~/@public/janitor/schema/CleanupSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 
 export const cleanupUploadFx = Effect.fn("cleanupUpload")(function* () {
 	const { kysely } = yield* KyselyContextFx;
@@ -22,8 +23,8 @@ export const cleanupUploadFx = Effect.fn("cleanupUpload")(function* () {
 		})
 		.toJSDate();
 
-	const uploads = yield* Effect.promise(async () => {
-		return kysely
+	const uploads = yield* tryDbFx(async () =>
+		kysely
 			.selectFrom("upload as u")
 			.leftJoin("gallery_item as gi", "gi.uploadId", "u.id")
 			.leftJoin("gallery as g", "gi.uploadId", "u.id")
@@ -31,8 +32,8 @@ export const cleanupUploadFx = Effect.fn("cleanupUpload")(function* () {
 			.select([
 				"u.url",
 			])
-			.execute();
-	});
+			.execute(),
+	);
 
 	const urls = uploads.map((r) => new URL(r.url).pathname);
 

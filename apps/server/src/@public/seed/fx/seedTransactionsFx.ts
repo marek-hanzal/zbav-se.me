@@ -4,6 +4,7 @@ import { Effect } from "effect";
 import { transactionCreateFx } from "~/@buyer-user/transaction/fx/transactionCreateFx";
 import { listingOfFx } from "~/@public/seed/fx/listingOfFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 
 export const SeedTransactionsRequestSchema = z.object({
 	count: z.number().openapi({
@@ -30,9 +31,9 @@ export const seedTransactionsFx = Effect.fn("seedTransactionsFx")(function* ({
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 
-	yield* Effect.promise(async () => {
-		return kysely.deleteFrom("transaction").where("userId", "=", userId).execute();
-	});
+	yield* tryDbFx(async () =>
+		kysely.deleteFrom("transaction").where("userId", "=", userId).execute(),
+	);
 
 	const { data: listings } = yield* listingOfFx({
 		userId,

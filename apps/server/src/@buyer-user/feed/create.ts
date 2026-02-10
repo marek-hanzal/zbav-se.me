@@ -50,6 +50,14 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					},
 					description: "Feed not found after creation",
 				},
+				409: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Conflict (e.g. duplicate feed)",
+				},
 				500: {
 					content: {
 						"application/json": {
@@ -98,6 +106,9 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					},
 					RuntimeErrorFx(e) {
 						return c.json(noticeError(e), 500);
+					},
+					ConflictErrorFx(e) {
+						return c.json(noticeError(e), 409);
 					},
 				}),
 				Effect.runPromise,

@@ -20,7 +20,12 @@ export const categoryFetchFx = Effect.fn("categoryFetchFx")(function* ({
 }: categoryFetchFx.Props) {
 	yield* withTraceFx({
 		fx: "categoryFetchFx",
-		input: { filter, where, scope, sort },
+		input: {
+			filter,
+			where,
+			scope,
+			sort,
+		},
 	});
 
 	return yield* withFetchFx({

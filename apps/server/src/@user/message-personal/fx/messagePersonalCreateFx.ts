@@ -5,6 +5,7 @@ import { messagePersonalFetchFx } from "~/@user/message-personal/fx/messagePerso
 import type { MessagePersonalCreateSchema } from "~/@user/message-personal/schema/MessagePersonalCreateSchema";
 import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
@@ -42,8 +43,8 @@ export const messagePersonalCreateFx = Effect.fn("messagePersonalCreateFx")(func
 
 			const id = genId();
 
-			yield* Effect.promise(async () => {
-				return kysely
+			yield* tryDbFx(async () =>
+				kysely
 					.insertInto("message_personal")
 					.values({
 						...data,
@@ -53,8 +54,8 @@ export const messagePersonalCreateFx = Effect.fn("messagePersonalCreateFx")(func
 						createdAt: dateContext.now().toJSDate(),
 					})
 					.returningAll()
-					.executeTakeFirstOrThrow();
-			});
+					.executeTakeFirstOrThrow(),
+			);
 
 			return yield* messagePersonalFetchFx({
 				where: {

@@ -21,7 +21,11 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 }: flagToggleFx.Props) {
 	yield* withTraceFx({
 		fx: "flagToggleFx",
-		input: { userId, toggle, listingId },
+		input: {
+			userId,
+			toggle,
+			listingId,
+		},
 	});
 
 	return yield* withTransactionFx(

@@ -1,6 +1,7 @@
 import { NotFoundErrorFx } from "@use-pico/common/error";
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace messageUserCheckFx {
@@ -16,15 +17,15 @@ export const messageUserCheckFx = Effect.fn("messageUserCheckFx")(function* ({
 }: messageUserCheckFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
-	const result = yield* Effect.promise(async () => {
-		return kysely
+	const result = yield* tryDbFx(async () =>
+		kysely
 			.selectFrom("message_thread_user as mtu")
 			.select("mtu.userId")
 			.where("mtu.messageThreadId", "=", messageThreadId)
 			.where("mtu.userId", "in", userIds)
 			.limit(1)
-			.executeTakeFirst();
-	});
+			.executeTakeFirst(),
+	);
 
 	if (!result) {
 		yield* withTraceFx({

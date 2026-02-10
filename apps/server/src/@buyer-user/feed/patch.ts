@@ -6,6 +6,7 @@ import { FeedPatchSchema } from "~/@buyer-user/feed/schema/FeedPatchSchema";
 import { FeedSchema } from "~/@buyer-user/feed/schema/FeedSchema";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
+import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
@@ -93,6 +94,9 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 				withCatchFx({
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);
+					},
+					RuntimeErrorFx(e) {
+						return c.json(noticeError(e), 500);
 					},
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);
