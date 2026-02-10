@@ -1,0 +1,9 @@
+@layer components {
+	.Group > * {
+		border-bottom: var(--border-default) solid var(--color-border);
+	}
+
+	.Group > *:last-child {
+		@apply border-b-0;
+	}
+}

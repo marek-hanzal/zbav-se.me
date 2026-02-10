@@ -16,7 +16,7 @@ export const uiMenuButton = ({ ui, className }: uiMenuButton.Props) => {
 	return uiButton({
 		ui: {
 			flow: "horizontal",
-			tone: "primary",
+			tone: "neutral",
 			theme: "light",
 			width: "full",
 			//
