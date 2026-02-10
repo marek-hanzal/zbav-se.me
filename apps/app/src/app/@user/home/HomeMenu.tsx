@@ -1,5 +1,5 @@
 import { useLocale } from "@use-pico/client/hook";
-import { ChevronRightIcon, ListIcon, type uiIcon } from "@use-pico/client/icon";
+import { ChevronRightIcon, ListIcon, UserIcon, type uiIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { Group } from "@use-pico/client/ui/group";
@@ -303,6 +303,40 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 							}}
 						>
 							<Tx label="Favourites (label)" />
+						</TypoIcon>
+					</LinkTo>
+				</Group>
+
+				<Group
+					ui={{
+						width: "full",
+					}}
+				>
+					<LinkTo
+						{...uiMenuButton({
+							className: [],
+						})}
+						icon={UserIcon}
+						iconProps={{
+							ui: {
+								...icon,
+							},
+						}}
+						to="/$locale/ui/user"
+						params={{
+							locale,
+						}}
+					>
+						<TypoIcon
+							flip
+							icon={ChevronRightIcon}
+							iconProps={{
+								ui: {
+									opacity: "xl",
+								},
+							}}
+						>
+							<Tx label="Profile (label)" />
 						</TypoIcon>
 					</LinkTo>
 				</Group>
