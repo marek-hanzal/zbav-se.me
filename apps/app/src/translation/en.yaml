@@ -70,6 +70,9 @@
 0f44d510d8a8cf53325df192dfac3d02f4299c2d9a4a5dbe2dad9a6f:
   ref: Price type not set
   value: Price type not set
+101cc7814a89a0bf8a96e0d41398d9dd6cc933b49b7a1534a52b2d93:
+  ref: My Profile (label)
+  value: My Profile (label)
 1088c3fcabd70b4e385443272326be10f59a63b577e719b5ac8c5821:
   ref: Listing ignore (hint)
   value: Listing ignore (hint)
@@ -244,6 +247,9 @@
 44730392630376ff51d9117fa4de944bb7209b64056ee497a9b10308:
   ref: Listing messages (title)
   value: Listing messages (title)
+44768dba85d12f054b4b9820de22bfdf8dcd0d561e4edc9d5546340b:
+  ref: Find listings (label)
+  value: Find listings (label)
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
   ref: Uploading photo (title)
   value: Uploading photo (title)
@@ -292,9 +298,6 @@
 523bef97e177163c4710b0138d4a2f8166cce50ebb8930b74298d0f8:
   ref: relative
   value: relative
-548d0024b62f956b195355bcba15a04b732cc00221c20a4a7494f2a5:
-  ref: Advanced settings (menu)
-  value: Advanced settings (menu)
 56093b0ee9cd3eadf7db4a59a8ec98132bacd22fa07691fdac66874a:
   ref: Buyer - shop (title)
   value: Buyer - shop (title)
@@ -541,9 +544,6 @@
 9a23de247d53984321cd59852cc78c51be5369fcae87518e33d8b38b:
   ref: Seller info (title)
   value: Seller info (title)
-9b7458c481fd08b7afd860d8537e178cc9c6b202e12918923906e59c:
-  ref: Buyer home (title)
-  value: Buyer home (title)
 9be03a22c6dda814a581e5407a9d23f5a7660c55eb918e86f93d2951:
   ref: Listing seller info not available (title)
   value: Listing seller info not available (title)
@@ -777,9 +777,6 @@ e4889b76006e4faf6c6b72d87f7711888de501f0e58936e7053832d6:
 e6ae675232ef4ec304588531c21f87323fba1e262aff12e5dccf22d5:
   ref: Warranty (title)
   value: Warranty (title)
-e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
-  ref: Seller home (title)
-  value: Seller home (title)
 e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
   ref: Feed location not selected
   value: Feed location not selected

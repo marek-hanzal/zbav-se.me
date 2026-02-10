@@ -374,7 +374,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								},
 							}}
 						>
-							<Tx label="Profile (label)" />
+							<Tx label="My Profile (label)" />
 						</TypoIcon>
 					</LinkTo>
 				</Group>
