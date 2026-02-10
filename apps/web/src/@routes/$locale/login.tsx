@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router";
-import { ArrowRightIcon } from "@use-pico/client/icon";
+import { ChevronRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
@@ -213,7 +213,7 @@ export const Route = createFileRoute("/$locale/login")({
 									}}
 								>
 									<form.SubmitButton
-										iconEnabled={ArrowRightIcon}
+										iconEnabled={ChevronRightIcon}
 										iconPosition={"right"}
 										disabled={signInMutation.isPending}
 									>

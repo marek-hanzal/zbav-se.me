@@ -1,6 +1,6 @@
 import { VisibilityProvider } from "@use-pico/client/context";
 import { useElementVisibility, useLocale, useMergeRefs, useScrollTo } from "@use-pico/client/hook";
-import { ArrowLeftIcon } from "@use-pico/client/icon";
+import { ChevronLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -101,7 +101,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 										}}
 									>
 										<Button
-											iconEnabled={ArrowLeftIcon}
+											iconEnabled={ChevronLeftIcon}
 											label={"Back to home (link)"}
 											ui={{
 												tone: "secondary",

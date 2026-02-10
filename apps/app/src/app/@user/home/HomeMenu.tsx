@@ -1,5 +1,5 @@
 import { useLocale } from "@use-pico/client/hook";
-import { ArrowRightIcon, ListIcon, type uiIcon } from "@use-pico/client/icon";
+import { ChevronRightIcon, ListIcon, type uiIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { Group } from "@use-pico/client/ui/group";
@@ -74,7 +74,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 					>
 						<TypoIcon
 							flip
-							icon={ArrowRightIcon}
+							icon={ChevronRightIcon}
 							iconProps={{
 								ui: {
 									opacity: "xl",
@@ -140,7 +140,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								>
 									<TypoIcon
 										flip
-										icon={ArrowRightIcon}
+										icon={ChevronRightIcon}
 										iconProps={{
 											ui: {
 												opacity: "xl",
@@ -177,7 +177,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 					>
 						<TypoIcon
 							flip
-							icon={ArrowRightIcon}
+							icon={ChevronRightIcon}
 							iconProps={{
 								ui: {
 									opacity: "xl",
@@ -211,7 +211,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 					>
 						<TypoIcon
 							flip
-							icon={ArrowRightIcon}
+							icon={ChevronRightIcon}
 							iconProps={{
 								ui: {
 									opacity: "xl",
@@ -239,7 +239,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 					>
 						<TypoIcon
 							flip
-							icon={ArrowRightIcon}
+							icon={ChevronRightIcon}
 							iconProps={{
 								ui: {
 									opacity: "xl",
@@ -267,7 +267,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 					>
 						<TypoIcon
 							flip
-							icon={ArrowRightIcon}
+							icon={ChevronRightIcon}
 							iconProps={{
 								ui: {
 									opacity: "xl",
@@ -295,7 +295,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 					>
 						<TypoIcon
 							flip
-							icon={ArrowRightIcon}
+							icon={ChevronRightIcon}
 							iconProps={{
 								ui: {
 									opacity: "xl",
