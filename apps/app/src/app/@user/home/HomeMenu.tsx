@@ -1,12 +1,18 @@
 import { useLocale } from "@use-pico/client/hook";
-import { ChevronRightIcon, ListIcon, UserIcon, type uiIcon } from "@use-pico/client/icon";
+import { CartIcon, ChevronRightIcon, UserIcon, type uiIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withDraftCollectionQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
-import { DraftIcon, FavouriteIcon, FeedIcon, ListingIcon, MessageIcon } from "@zbav-se.me/ui/icon";
+import {
+	DraftIcon,
+	FavouriteIcon,
+	FindListingsIcon,
+	MessageIcon,
+	MyListingsIcon,
+} from "@zbav-se.me/ui/icon";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import { useRef } from "react";
@@ -61,7 +67,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 						{...uiMenuButton({
 							className: [],
 						})}
-						icon={ListingIcon}
+						icon={CartIcon}
 						iconProps={{
 							ui: {
 								...icon,
@@ -82,6 +88,34 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 							}}
 						>
 							<Tx label="Listings (label)" />
+						</TypoIcon>
+					</LinkTo>
+
+					<LinkTo
+						{...uiMenuButton({
+							className: [],
+						})}
+						icon={FindListingsIcon}
+						iconProps={{
+							ui: {
+								...icon,
+							},
+						}}
+						to="/$locale/buyer/feed/default"
+						params={{
+							locale,
+						}}
+					>
+						<TypoIcon
+							flip
+							icon={ChevronRightIcon}
+							iconProps={{
+								ui: {
+									opacity: "xl",
+								},
+							}}
+						>
+							<Tx label="Find listings (label)" />
 						</TypoIcon>
 					</LinkTo>
 
@@ -106,7 +140,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								{...uiMenuButton({
 									className: [],
 								})}
-								icon={ListingIcon}
+								icon={DraftIcon}
 								iconProps={{
 									ui: {
 										...icon,
@@ -121,13 +155,17 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 							</LinkTo>
 						}
 					>
-						{({ data }) => {
+						{({ data: { data } }) => {
 							return (
 								<LinkTo
 									{...uiMenuButton({
 										className: [],
 									})}
-									icon={ListingIcon}
+									icon={
+										data.length > 0
+											? "icon-[solar--bill-check-linear]"
+											: "icon-[solar--bill-list-linear]"
+									}
 									iconProps={{
 										ui: {
 											...icon,
@@ -149,7 +187,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 									>
 										<Tx
 											label={
-												data.data.length > 0
+												data.length > 0
 													? "Continue listing (label)"
 													: "Create listing (label)"
 											}
@@ -198,7 +236,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 						{...uiMenuButton({
 							className: [],
 						})}
-						icon={ListIcon}
+						icon={MyListingsIcon}
 						iconProps={{
 							ui: {
 								...icon,
@@ -254,7 +292,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 						{...uiMenuButton({
 							className: [],
 						})}
-						icon={FeedIcon}
+						icon={"icon-[solar--archive-up-minimlistic-linear]"}
 						iconProps={{
 							ui: {
 								...icon,

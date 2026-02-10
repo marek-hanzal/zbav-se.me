@@ -1,1 +1,1 @@
-export const ChevronUpIcon = "icon-[fluent--chevron-up-12-regular]";
+export const ChevronUpIcon = "icon-[solar--alt-arrow-up-linear]";
