@@ -745,7 +745,17 @@ export const sDraft = {
             type: 'string'
         },
         usedAt: {
-            type: 'string'
+            anyOf: [
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         },
         location: {
             anyOf: [
@@ -1099,7 +1109,17 @@ export const sDraftPatchData = {
             ]
         },
         usedAt: {
-            type: 'string'
+            anyOf: [
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         }
     }
 } as const;

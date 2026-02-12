@@ -527,9 +527,10 @@ export const zDraft = z.object({
     updatedAt: z.string().register(z.globalRegistry, {
         description: 'Last update timestamp'
     }),
-    usedAt: z.string().register(z.globalRegistry, {
-        description: 'Timestamp when the draft was used to create a listing'
-    }),
+    usedAt: z.union([
+        z.null(),
+        z.string()
+    ]),
     location: z.union([
         z.null(),
         zLocation
@@ -665,9 +666,10 @@ export const zDraftPatchData = z.object({
         z.null(),
         zProsCons
     ])),
-    usedAt: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Timestamp when the draft was used to create a listing'
-    }))
+    usedAt: z.optional(z.union([
+        z.null(),
+        z.string()
+    ]))
 }).register(z.globalRegistry, {
     description: 'Fields to update (all optional)'
 });

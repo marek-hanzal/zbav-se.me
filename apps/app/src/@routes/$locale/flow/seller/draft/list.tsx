@@ -3,7 +3,7 @@ import { useLocale } from "@use-pico/client/hook";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { DraftList } from "~/app/@seller-user/draft/ui/DraftList";
 
-export const Route = createFileRoute("/$locale/ui/seller/draft/list")({
+export const Route = createFileRoute("/$locale/flow/seller/draft/list")({
 	component() {
 		const locale = useLocale();
 		const navigate = Route.useNavigate();
