@@ -3,7 +3,7 @@
 	"version": "workspace:*",
 	"scripts": {
 		"docusaurus": "docusaurus",
-		"dev": "PORT=4090 docusaurus start --no-open",
+		"no:dev": "PORT=4090 docusaurus start --no-open",
 		"build": "docusaurus build",
 		"swizzle": "docusaurus swizzle",
 		"deploy": "docusaurus deploy",

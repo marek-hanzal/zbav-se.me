@@ -20,7 +20,7 @@
 		"@typescript/native-preview": "7.0.0-dev.20260206.1",
 		"@use-pico/tsconfig": "5.0.0",
 		"typescript": "5.9.3",
-		"vite": "8.0.0-beta.0"
+		"vite": "8.0.0-beta.14"
 	},
 	"exports": {
 		"./api/*": {
