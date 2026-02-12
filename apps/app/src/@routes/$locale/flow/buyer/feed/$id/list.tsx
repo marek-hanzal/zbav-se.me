@@ -1,6 +1,11 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useLocale, useSentinel } from "@use-pico/client/hook";
-import { ChevronLeftIcon, ChevronRightIcon, RefreshIcon } from "@use-pico/client/icon";
+import {
+	ArrowLeftIcon,
+	ChevronLeftIcon,
+	ChevronRightIcon,
+	RefreshIcon,
+} from "@use-pico/client/icon";
 import { Button, uiButton } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -321,7 +326,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 							className: [],
 						})}
 						data-ui={"/buyer/feed/$id/list-[LinkTo.left]"}
-						icon={ChevronLeftIcon}
+						icon={ArrowLeftIcon}
 						to={"/$locale/flow/home"}
 						params={{
 							locale,

@@ -8,6 +8,8 @@ import { View } from "@use-pico/client/ui/view";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { HomeIcon } from "@zbav-se.me/ui/icon";
+import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
 import { AgeValue } from "~/app/@common/age/ui/AgeValue";
 import { CategoryValue } from "~/app/@common/category/ui/CategoryValue";
@@ -81,7 +83,24 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 			views={{
 				default: {
 					children: (
-						<TitleContainer textTitle={"Draft edit (title)"}>
+						<TitleContainer
+							textTitle={"Draft edit (title)"}
+							right={
+								<LinkTo
+									{...uiBackButton({
+										ui: {},
+										className: [],
+									})}
+									data-ui={"DraftEditor-[LinkTo.left]"}
+									icon={HomeIcon}
+									to={"/$locale/flow/home"}
+									params={{
+										locale,
+									}}
+									className={"transition-all"}
+								/>
+							}
+						>
 							<Container
 								data-ui={"DraftEditor-[Container.content]"}
 								ui={{
