@@ -14,11 +14,6 @@ export const RestrictionValue: FC<RestrictionValue.Props> = ({ restriction, ...p
 	return (
 		<LabelValue
 			data-ui={"RestrictionValue[LabelValue]"}
-			wrapperProps={{
-				ui: {
-					tone: restriction ? "neutral" : "secondary",
-				},
-			}}
 			textLabel={translator.text("Listing restriction (label)")}
 			textValue={restriction ? <Tx label={`Listing restriction - ${restriction}`} /> : null}
 			textEmpty={translator.text("Restriction not selected")}

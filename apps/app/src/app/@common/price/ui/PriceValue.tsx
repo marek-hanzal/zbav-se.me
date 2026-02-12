@@ -18,11 +18,6 @@ export const PriceValue: FC<PriceValue.Props> = ({ price, currency, ...props }) 
 	return (
 		<LabelValue
 			data-ui={"PriceValue[LabelValue]"}
-			wrapperProps={{
-				ui: {
-					tone: hasPrice ? "neutral" : "primary",
-				},
-			}}
 			textLabel={translator.text("Price (title)")}
 			textValue={
 				hasPrice ? (

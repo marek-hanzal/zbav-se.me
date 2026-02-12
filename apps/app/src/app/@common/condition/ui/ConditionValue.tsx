@@ -14,11 +14,6 @@ export const ConditionValue: FC<ConditionValue.Props> = ({ condition, ...props }
 	return (
 		<LabelValue
 			data-ui={"ConditionValue[LabelValue]"}
-			wrapperProps={{
-				ui: {
-					tone: hasCondition ? "neutral" : "secondary",
-				},
-			}}
 			textLabel={translator.text("Listing condition (label)")}
 			textHint={translator.text("Listing condition (hint)")}
 			textValue={hasCondition ? <ConditionIcon condition={condition} /> : null}

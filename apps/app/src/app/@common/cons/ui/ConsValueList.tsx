@@ -13,11 +13,10 @@ export namespace ConsValueList {
 			"items" | "renderFn" | "textLabel" | "textEmpty"
 		> {
 		cons: string[];
-		onClick(): void;
 	}
 }
 
-export const ConsValueList: FC<ConsValueList.Props> = ({ cons, onClick, ...props }) => {
+export const ConsValueList: FC<ConsValueList.Props> = ({ cons, ...props }) => {
 	const consItems = cons.map((con, index) => ({
 		id: String(index),
 		con,
@@ -30,12 +29,6 @@ export const ConsValueList: FC<ConsValueList.Props> = ({ cons, onClick, ...props
 			textEmpty={translator.text("Listing - Cons not filled")}
 			items={consItems}
 			renderFn={(item) => <Tx label={item.con} />}
-			onClick={onClick}
-			wrapperProps={{
-				ui: {
-					tone: consItems.length > 0 ? "neutral" : "secondary",
-				},
-			}}
 			{...props}
 		/>
 	);

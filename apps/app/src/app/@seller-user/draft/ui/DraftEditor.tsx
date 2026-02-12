@@ -1,6 +1,6 @@
 import { useLocale } from "@use-pico/client/hook";
 import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
-import { Container, type LabelValue } from "@use-pico/client/ui/container";
+import { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
@@ -71,11 +71,6 @@ export namespace DraftEditor {
 export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete }) => {
 	const locale = useLocale();
 	const [view, setView] = useState<DraftEditor.View>("default");
-	const labelValueUi: LabelValue.Props["ui"] = {
-		round: undefined,
-		border: false,
-		shadow: false,
-	};
 
 	return (
 		<View<DraftEditor.View, TitleContainer.Props>
@@ -101,7 +96,6 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 										uploads={draft.gallery.items.map((item) => item.upload)}
 										label={translator.text("Listing photo gallery (label)")}
 										onClick={() => setView("gallery")}
-										ui={labelValueUi}
 									/>
 								</Group>
 
@@ -133,7 +127,11 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 										onClick={() => {
 											setView("title");
 										}}
-										ui={labelValueUi}
+										wrapperProps={{
+											ui: {
+												tone: draft.title ? "neutral" : "primary",
+											},
+										}}
 									/>
 
 									<CategoryValue
@@ -149,7 +147,11 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 										onClick={() => {
 											setView("category");
 										}}
-										ui={labelValueUi}
+										wrapperProps={{
+											ui: {
+												tone: draft.categoryId ? "neutral" : "primary",
+											},
+										}}
 									/>
 
 									<LocationValue
@@ -173,7 +175,6 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 										onClick={() => {
 											setView("location");
 										}}
-										ui={labelValueUi}
 									/>
 								</Group>
 
@@ -192,7 +193,11 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 										onClick={() => {
 											setView("price");
 										}}
-										ui={labelValueUi}
+										wrapperProps={{
+											ui: {
+												tone: draft.price !== null ? "neutral" : "primary",
+											},
+										}}
 									/>
 
 									<PriceTypeValue
@@ -208,7 +213,11 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 										onClick={() => {
 											setView("priceType");
 										}}
-										ui={labelValueUi}
+										wrapperProps={{
+											ui: {
+												tone: draft.priceType ? "neutral" : "primary",
+											},
+										}}
 									/>
 								</Group>
 
@@ -226,7 +235,11 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 										onClick={() => {
 											setView("expireAt");
 										}}
-										ui={labelValueUi}
+										wrapperProps={{
+											ui: {
+												tone: draft.expiresAt ? "neutral" : "primary",
+											},
+										}}
 									/>
 								</Group>
 
@@ -256,7 +269,11 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 										onClick={() => {
 											setView("description");
 										}}
-										ui={labelValueUi}
+										wrapperProps={{
+											ui: {
+												tone: draft.description ? "neutral" : "secondary",
+											},
+										}}
 									/>
 								</Group>
 
@@ -274,7 +291,14 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 										onClick={() => {
 											setView("pros");
 										}}
-										ui={labelValueUi}
+										wrapperProps={{
+											ui: {
+												tone:
+													(draft.pros ?? []).length > 0
+														? "neutral"
+														: "secondary",
+											},
+										}}
 									/>
 
 									<ConsValueList
@@ -290,7 +314,14 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 										onClick={() => {
 											setView("cons");
 										}}
-										ui={labelValueUi}
+										wrapperProps={{
+											ui: {
+												tone:
+													(draft.cons ?? []).length > 0
+														? "neutral"
+														: "secondary",
+											},
+										}}
 									/>
 								</Group>
 
@@ -305,7 +336,14 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 												}}
 											/>
 										}
-										ui={labelValueUi}
+										wrapperProps={{
+											ui: {
+												tone:
+													(draft.delivery ?? []).length > 0
+														? "neutral"
+														: "secondary",
+											},
+										}}
 									/>
 								</Group>
 
@@ -323,7 +361,11 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 										onClick={() => {
 											setView("warranty");
 										}}
-										ui={labelValueUi}
+										wrapperProps={{
+											ui: {
+												tone: draft.warranty ? "neutral" : "secondary",
+											},
+										}}
 									/>
 								</Group>
 
@@ -341,7 +383,14 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 										onClick={() => {
 											setView("condition");
 										}}
-										ui={labelValueUi}
+										wrapperProps={{
+											ui: {
+												tone:
+													draft.condition !== null
+														? "neutral"
+														: "secondary",
+											},
+										}}
 									/>
 
 									<AgeValue
@@ -357,7 +406,11 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 										onClick={() => {
 											setView("age");
 										}}
-										ui={labelValueUi}
+										wrapperProps={{
+											ui: {
+												tone: draft.age !== null ? "neutral" : "secondary",
+											},
+										}}
 									/>
 								</Group>
 
@@ -375,7 +428,11 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 										onClick={() => {
 											setView("restriction");
 										}}
-										ui={labelValueUi}
+										wrapperProps={{
+											ui: {
+												tone: draft.restriction ? "neutral" : "secondary",
+											},
+										}}
 									/>
 								</Group>
 

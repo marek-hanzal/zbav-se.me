@@ -13,11 +13,10 @@ export namespace ProsValueList {
 			"items" | "renderFn" | "textLabel" | "textEmpty"
 		> {
 		pros: string[];
-		onClick(): void;
 	}
 }
 
-export const ProsValueList: FC<ProsValueList.Props> = ({ pros, onClick, ...props }) => {
+export const ProsValueList: FC<ProsValueList.Props> = ({ pros, ...props }) => {
 	const prosItems = pros.map((pro, index) => ({
 		id: String(index),
 		pro,
@@ -30,12 +29,6 @@ export const ProsValueList: FC<ProsValueList.Props> = ({ pros, onClick, ...props
 			textEmpty={translator.text("Listing - Pros not filled")}
 			items={prosItems}
 			renderFn={(item) => <Tx label={item.pro} />}
-			onClick={onClick}
-			wrapperProps={{
-				ui: {
-					tone: prosItems.length > 0 ? "neutral" : "secondary",
-				},
-			}}
 			{...props}
 		/>
 	);

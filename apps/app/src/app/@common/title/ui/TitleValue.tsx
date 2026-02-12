@@ -13,11 +13,6 @@ export const TitleValue: FC<TitleValue.Props> = ({ title, ...props }) => {
 		<LabelValue
 			data-ui={"TitleValue[LabelValue]"}
 			textValue={hasTitle ? title : null}
-			wrapperProps={{
-				ui: {
-					tone: hasTitle ? "neutral" : "primary",
-				},
-			}}
 			{...props}
 		/>
 	);

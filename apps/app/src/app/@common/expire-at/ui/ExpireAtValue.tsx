@@ -13,11 +13,6 @@ export const ExpireAtValue: FC<ExpireAtValue.Props> = ({ expiresAt, ...props }) 
 	return (
 		<LabelValue
 			data-ui={"ExpireAtValue[LabelValue]"}
-			wrapperProps={{
-				ui: {
-					tone: hasExpiresAt ? "neutral" : "primary",
-				},
-			}}
 			textLabel={translator.text("Expire (title)")}
 			textValue={hasExpiresAt ? `Expire in ${expiresAt}` : null}
 			textEmpty={translator.text("Expiration date not set")}

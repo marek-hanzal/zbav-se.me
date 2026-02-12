@@ -16,11 +16,6 @@ export const CategoryValue: FC<CategoryValue.Props> = ({ category, ...props }) =
 		<LabelValue
 			data-ui={"CategoryValue[LabelValue]"}
 			{...props}
-			wrapperProps={{
-				ui: {
-					tone: category ? "neutral" : "primary",
-				},
-			}}
 			textLabel={translator.text("Listing category (label)")}
 			textValue={
 				category ? (
