@@ -1,1 +1,1 @@
-export const CloseIcon = "icon-[iconamoon--close-light]";
+export const CloseIcon = "icon-[solar--reply-linear]";

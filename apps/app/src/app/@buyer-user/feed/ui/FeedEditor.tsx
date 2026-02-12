@@ -326,47 +326,51 @@ export const FeedEditor: FC<FeedEditor.Props> = ({
 				/>
 			</Group>
 
-			{children}
+			<Group>
+				{children}
 
-			{noDelete ? null : (
-				<ConfirmButton
-					iconEnabled={TrashIcon}
-					iconProps={{
-						ui: {
-							text: "xl",
-						},
-					}}
-					buttonProps={{
-						label: translator.text("Delete feed (button)"),
-					}}
-					confirmProps={{
-						iconEnabled: TrashIcon,
-						ui: {
-							tone: "danger",
+				{noDelete ? null : (
+					<ConfirmButton
+						iconEnabled={TrashIcon}
+						iconProps={{
+							ui: {
+								text: "xl",
+							},
+						}}
+						buttonProps={{
+							label: translator.text("Delete feed (button)"),
+						}}
+						confirmProps={{
+							iconEnabled: TrashIcon,
+							ui: {
+								tone: "danger",
+								theme: "light",
+							},
+							label: translator.text("Really delete feed (button)"),
+							onClick() {
+								feedDeleteMutation.mutate({
+									where: {
+										id: feed.id,
+									},
+								});
+							},
+						}}
+						loading={feedDeleteMutation.isPending}
+						ui={{
+							tone: "neutral",
 							theme: "light",
-						},
-						label: translator.text("Really delete feed (button)"),
-						onClick() {
-							feedDeleteMutation.mutate({
-								where: {
-									id: feed.id,
-								},
-							});
-						},
-					}}
-					loading={feedDeleteMutation.isPending}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						size: "default",
-						justify: "start",
-						items: "center",
-						background: "default",
-						shadow: true,
-						border: true,
-					}}
-				/>
-			)}
+							size: "default",
+							justify: "start",
+							items: "center",
+							background: "default",
+							round: undefined,
+							shadow: false,
+							border: false,
+							width: "full",
+						}}
+					/>
+				)}
+			</Group>
 		</Container>
 	);
 };

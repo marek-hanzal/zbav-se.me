@@ -26,8 +26,8 @@ export const useListingEvent = ({
 	const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
 	const listingEventCreateMutation = withListingEventCreateMutation.useMutation({
-		retry() {
-			return visible;
+		retry(_, error) {
+			return visible || error.type !== "error";
 		},
 		retryDelay(count) {
 			if (count >= 3) {

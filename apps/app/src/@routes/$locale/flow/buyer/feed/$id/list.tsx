@@ -514,8 +514,10 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 										justify: "start",
 										items: "center",
 										background: "default",
-										shadow: true,
-										border: true,
+										round: undefined,
+										shadow: false,
+										border: false,
+										width: "full",
 									}}
 								/>
 							</EditorSheet>

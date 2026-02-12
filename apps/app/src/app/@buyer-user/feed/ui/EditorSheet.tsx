@@ -126,8 +126,10 @@ export const EditorSheet: FC<EditorSheet.Props> = ({
 									justify: "start",
 									items: "center",
 									background: "default",
-									shadow: true,
-									border: true,
+									width: "full",
+									round: undefined,
+									shadow: false,
+									border: false,
 								}}
 							/>
 
