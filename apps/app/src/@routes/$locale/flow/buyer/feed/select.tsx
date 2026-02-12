@@ -5,8 +5,9 @@ import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { feedCreateDefault } from "~/app/@buyer-user/feed/service/feedCreateDefault";
 import { FeedListContainer } from "~/app/@buyer-user/feed/ui/FeedListContainer";
+import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
-export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
+export const Route = createFileRoute("/$locale/flow/buyer/feed/select")({
 	async loader({ context: { queryClient } }) {
 		/**
 		 * Dummy catch is intentional - we don't care about results here (not found throws an error).
@@ -30,6 +31,7 @@ export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
 				ui={{
 					layout: "vertical-header-content",
 				}}
+				right={<HomeMenuButton />}
 			>
 				<FeedListContainer
 					data-ui={"/buyer/feed/select[FeedListContainer]"}

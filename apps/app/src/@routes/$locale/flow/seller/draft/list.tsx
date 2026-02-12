@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { DraftList } from "~/app/@seller-user/draft/ui/DraftList";
+import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/flow/seller/draft/list")({
 	component() {
@@ -9,7 +10,10 @@ export const Route = createFileRoute("/$locale/flow/seller/draft/list")({
 		const navigate = Route.useNavigate();
 
 		return (
-			<TitleContainer textTitle={"Draft list (title)"}>
+			<TitleContainer
+				textTitle={"Draft list (title)"}
+				right={<HomeMenuButton />}
+			>
 				<DraftList
 					query={{
 						sort: [

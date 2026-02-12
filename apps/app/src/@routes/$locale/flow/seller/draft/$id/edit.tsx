@@ -24,7 +24,7 @@ export const Route = createFileRoute("/$locale/flow/seller/draft/$id/edit")({
 						draft={data}
 						onListing={async () => {
 							await navigate({
-								to: "/$locale/ui/seller/listing/my",
+								to: "/$locale/flow/seller/listing/my",
 								params: {
 									locale,
 								},

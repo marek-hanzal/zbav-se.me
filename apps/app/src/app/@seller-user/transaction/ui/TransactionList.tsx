@@ -52,7 +52,7 @@ export const TransactionList: FC<TransactionList.Props> = ({ query, ui, ...props
 										<LinkTo
 											icon={ChevronRightIcon}
 											iconPosition={"right"}
-											to={"/$locale/ui/seller/listing/my"}
+											to={"/$locale/flow/seller/listing/my"}
 											params={{
 												locale,
 											}}

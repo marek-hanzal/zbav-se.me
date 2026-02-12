@@ -48,7 +48,7 @@ export const Nav: FC<Nav.Props> = ({ className, ...props }) => {
 
 			<LinkTo
 				icon={ShopIcon}
-				to="/$locale/ui/shop"
+				to="/$locale/flow/shop"
 				activeProps={{
 					...uiNavButton({
 						ui: activeUi,
@@ -65,7 +65,7 @@ export const Nav: FC<Nav.Props> = ({ className, ...props }) => {
 
 			<LinkTo
 				icon={UserIcon}
-				to="/$locale/ui/user"
+				to="/$locale/flow/user"
 				activeProps={{
 					...uiNavButton({
 						ui: activeUi,

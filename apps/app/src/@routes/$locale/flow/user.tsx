@@ -1,12 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { UserIcon } from "@use-pico/client/icon";
-import { Container } from "@use-pico/client/ui/container";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useUser } from "~/app/@common/auth/hook/useUser";
 import { SignOutButton } from "~/app/@common/auth/ui/SignOutButton";
+import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
-export const Route = createFileRoute("/$locale/ui/user")({
+export const Route = createFileRoute("/$locale/flow/user")({
+	pendingComponent() {
+		return (
+			<TitleContainer
+				data-ui={"User"}
+				textTitle={"User profile (title)"}
+				ui={{
+					layout: "vertical-header-content",
+				}}
+				right={<HomeMenuButton />}
+			>
+				<SpinnerContainer />
+			</TitleContainer>
+		);
+	},
 	component() {
 		const user = useUser();
 
@@ -17,6 +32,7 @@ export const Route = createFileRoute("/$locale/ui/user")({
 				ui={{
 					layout: "vertical-header-content",
 				}}
+				right={<HomeMenuButton />}
 			>
 				<Container
 					ui={{
