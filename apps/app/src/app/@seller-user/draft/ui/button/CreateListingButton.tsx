@@ -47,6 +47,7 @@ export const CreateListingButton: FC<CreateListingButton.Props> = ({
 			}}
 			{...uiSaveButton({
 				ui: {
+					tone: listing.success ? "secondary" : "neutral",
 					justify: "start",
 					...ui,
 				},

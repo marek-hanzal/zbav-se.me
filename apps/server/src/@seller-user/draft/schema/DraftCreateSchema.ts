@@ -30,9 +30,9 @@ export const DraftCreateSchema = z
 				description: "Warranty type for the draft",
 			}),
 		restriction: z
-			.xor([
-				ListingRestrictionEnumSchema,
+			.union([
 				z.null(),
+				ListingRestrictionEnumSchema,
 			])
 			.optional()
 			.openapi({

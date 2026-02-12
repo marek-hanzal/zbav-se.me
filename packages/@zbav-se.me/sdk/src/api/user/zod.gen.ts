@@ -335,31 +335,31 @@ export const zLocation = z.object({
         description: 'Country code'
     }),
     county: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     municipality: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     state: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     address: z.string().register(z.globalRegistry, {
         description: 'Full address preview of a location'
     }),
     city: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     street: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     zip: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     confidence: z.number().register(z.globalRegistry, {
         description: 'Confidence score of the location (based on query)'
@@ -841,12 +841,12 @@ export const zUserEx = z.object({
         description: 'ID of the user_ex record'
     }),
     locationId: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     side: z.optional(z.union([
-        zUserSideEnum,
-        z.null()
+        z.null(),
+        zUserSideEnum
     ]))
 }).register(z.globalRegistry, {
     description: 'User extended information'
@@ -860,12 +860,12 @@ export type zUserEx = z.infer<typeof zUserEx>;
 export const zUserExPatch = z.object({
     patch: z.object({
         locationId: z.optional(z.union([
-            z.string(),
-            z.null()
+            z.null(),
+            z.string()
         ])),
         side: z.optional(z.union([
-            zUserSideEnum,
-            z.null()
+            z.null(),
+            zUserSideEnum
         ]))
     }).register(z.globalRegistry, {
         description: 'Fields to update (all optional)'

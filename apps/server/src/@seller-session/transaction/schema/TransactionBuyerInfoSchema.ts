@@ -8,7 +8,7 @@ export const TransactionBuyerInfoSchema = z
 			type: "string",
 		}),
 		events: z
-			.xor([
+			.union([
 				z.null(),
 				UserEventBuyerSchema,
 			])

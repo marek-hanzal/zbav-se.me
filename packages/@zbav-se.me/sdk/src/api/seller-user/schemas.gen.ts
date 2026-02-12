@@ -320,10 +320,10 @@ export const sLocation = {
         county: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -333,10 +333,10 @@ export const sLocation = {
         municipality: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -346,10 +346,10 @@ export const sLocation = {
         state: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -362,10 +362,10 @@ export const sLocation = {
         city: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -375,10 +375,10 @@ export const sLocation = {
         street: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -388,10 +388,10 @@ export const sLocation = {
         zip: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -543,16 +543,19 @@ export const sDraft = {
                         'number',
                         'null'
                     ]
+                },
+                {
+                    type: 'null'
                 }
             ]
         },
         priceType: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ListingPriceEnum'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ListingPriceEnum'
                 },
                 {
                     type: 'null'
@@ -562,10 +565,10 @@ export const sDraft = {
         currency: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/CurrencyEnum'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/CurrencyEnum'
                 },
                 {
                     type: 'null'
@@ -575,10 +578,10 @@ export const sDraft = {
         condition: {
             anyOf: [
                 {
-                    type: 'number'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'number'
                 },
                 {
                     type: 'null'
@@ -588,10 +591,10 @@ export const sDraft = {
         age: {
             anyOf: [
                 {
-                    type: 'number'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'number'
                 },
                 {
                     type: 'null'
@@ -601,13 +604,13 @@ export const sDraft = {
         delivery: {
             anyOf: [
                 {
+                    type: 'null'
+                },
+                {
                     type: 'array',
                     items: {
                         $ref: '#/components/schemas/ListingDeliveryEnum'
                     }
-                },
-                {
-                    type: 'null'
                 },
                 {
                     type: 'null'
@@ -617,10 +620,10 @@ export const sDraft = {
         warranty: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ListingWarrantyEnum'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ListingWarrantyEnum'
                 },
                 {
                     type: 'null'
@@ -630,10 +633,10 @@ export const sDraft = {
         restriction: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ListingRestrictionEnum'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ListingRestrictionEnum'
                 },
                 {
                     type: 'null'
@@ -643,10 +646,10 @@ export const sDraft = {
         locationId: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -656,10 +659,10 @@ export const sDraft = {
         categoryId: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -685,10 +688,10 @@ export const sDraft = {
         title: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -698,11 +701,11 @@ export const sDraft = {
         description: {
             anyOf: [
                 {
-                    type: 'string',
-                    maxLength: 2048
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string',
+                    maxLength: 2048
                 },
                 {
                     type: 'null'
@@ -712,10 +715,10 @@ export const sDraft = {
         pros: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ProsCons'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ProsCons'
                 },
                 {
                     type: 'null'
@@ -725,10 +728,10 @@ export const sDraft = {
         cons: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ProsCons'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ProsCons'
                 },
                 {
                     type: 'null'
@@ -761,10 +764,10 @@ export const sDraft = {
         location: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/Location'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/Location'
                 },
                 {
                     type: 'null'
@@ -774,10 +777,10 @@ export const sDraft = {
         category: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/Category'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/Category'
                 },
                 {
                     type: 'null'
@@ -838,10 +841,10 @@ export const sDraftCreate = {
         warranty: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ListingWarrantyEnum'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ListingWarrantyEnum'
                 },
                 {
                     type: 'null'
@@ -851,10 +854,10 @@ export const sDraftCreate = {
         restriction: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ListingRestrictionEnum'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ListingRestrictionEnum'
                 },
                 {
                     type: 'null'
@@ -882,10 +885,10 @@ export const sDraftCreate = {
         pros: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ProsCons'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ProsCons'
                 },
                 {
                     type: 'null'
@@ -895,10 +898,10 @@ export const sDraftCreate = {
         cons: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ProsCons'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ProsCons'
                 },
                 {
                     type: 'null'
@@ -927,16 +930,19 @@ export const sDraftPatchData = {
                         'number',
                         'null'
                     ]
+                },
+                {
+                    type: 'null'
                 }
             ]
         },
         priceType: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ListingPriceEnum'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ListingPriceEnum'
                 },
                 {
                     type: 'null'
@@ -946,10 +952,10 @@ export const sDraftPatchData = {
         condition: {
             anyOf: [
                 {
-                    type: 'number'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'number'
                 },
                 {
                     type: 'null'
@@ -959,10 +965,10 @@ export const sDraftPatchData = {
         age: {
             anyOf: [
                 {
-                    type: 'number'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'number'
                 },
                 {
                     type: 'null'
@@ -972,13 +978,13 @@ export const sDraftPatchData = {
         delivery: {
             anyOf: [
                 {
+                    type: 'null'
+                },
+                {
                     type: 'array',
                     items: {
                         $ref: '#/components/schemas/ListingDeliveryEnum'
                     }
-                },
-                {
-                    type: 'null'
                 },
                 {
                     type: 'null'
@@ -988,10 +994,10 @@ export const sDraftPatchData = {
         warranty: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ListingWarrantyEnum'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ListingWarrantyEnum'
                 },
                 {
                     type: 'null'
@@ -1001,10 +1007,10 @@ export const sDraftPatchData = {
         restriction: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ListingRestrictionEnum'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ListingRestrictionEnum'
                 },
                 {
                     type: 'null'
@@ -1014,10 +1020,10 @@ export const sDraftPatchData = {
         locationId: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -1027,10 +1033,10 @@ export const sDraftPatchData = {
         categoryId: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -1056,10 +1062,10 @@ export const sDraftPatchData = {
         title: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -1069,11 +1075,11 @@ export const sDraftPatchData = {
         description: {
             anyOf: [
                 {
-                    type: 'string',
-                    maxLength: 2048
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string',
+                    maxLength: 2048
                 },
                 {
                     type: 'null'
@@ -1083,10 +1089,10 @@ export const sDraftPatchData = {
         pros: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ProsCons'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ProsCons'
                 },
                 {
                     type: 'null'
@@ -1096,10 +1102,10 @@ export const sDraftPatchData = {
         cons: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ProsCons'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ProsCons'
                 },
                 {
                     type: 'null'
@@ -1335,10 +1341,10 @@ export const sListing = {
         condition: {
             anyOf: [
                 {
-                    type: 'number'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'number'
                 },
                 {
                     type: 'null'
@@ -1348,10 +1354,10 @@ export const sListing = {
         age: {
             anyOf: [
                 {
-                    type: 'number'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'number'
                 },
                 {
                     type: 'null'
@@ -1361,13 +1367,13 @@ export const sListing = {
         delivery: {
             anyOf: [
                 {
+                    type: 'null'
+                },
+                {
                     type: 'array',
                     items: {
                         $ref: '#/components/schemas/ListingDeliveryEnum'
                     }
-                },
-                {
-                    type: 'null'
                 },
                 {
                     type: 'null'
@@ -1377,10 +1383,10 @@ export const sListing = {
         warranty: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ListingWarrantyEnum'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ListingWarrantyEnum'
                 },
                 {
                     type: 'null'
@@ -1402,10 +1408,10 @@ export const sListing = {
         draftId: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -1421,10 +1427,10 @@ export const sListing = {
         description: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -1434,10 +1440,10 @@ export const sListing = {
         pros: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ProsCons'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ProsCons'
                 },
                 {
                     type: 'null'
@@ -1447,10 +1453,10 @@ export const sListing = {
         cons: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ProsCons'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ProsCons'
                 },
                 {
                     type: 'null'
@@ -1517,10 +1523,10 @@ export const sListingCreate = {
         condition: {
             anyOf: [
                 {
-                    type: 'number'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'number'
                 },
                 {
                     type: 'null'
@@ -1530,10 +1536,10 @@ export const sListingCreate = {
         age: {
             anyOf: [
                 {
-                    type: 'number'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'number'
                 },
                 {
                     type: 'null'
@@ -1543,13 +1549,13 @@ export const sListingCreate = {
         delivery: {
             anyOf: [
                 {
+                    type: 'null'
+                },
+                {
                     type: 'array',
                     items: {
                         $ref: '#/components/schemas/ListingDeliveryEnum'
                     }
-                },
-                {
-                    type: 'null'
                 },
                 {
                     type: 'null'
@@ -1559,10 +1565,10 @@ export const sListingCreate = {
         warranty: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ListingWarrantyEnum'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ListingWarrantyEnum'
                 },
                 {
                     type: 'null'
@@ -1597,11 +1603,11 @@ export const sListingCreate = {
         description: {
             anyOf: [
                 {
-                    type: 'string',
-                    maxLength: 2048
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string',
+                    maxLength: 2048
                 },
                 {
                     type: 'null'
@@ -1611,10 +1617,10 @@ export const sListingCreate = {
         pros: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ProsCons'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ProsCons'
                 },
                 {
                     type: 'null'
@@ -1624,10 +1630,10 @@ export const sListingCreate = {
         cons: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ProsCons'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ProsCons'
                 },
                 {
                     type: 'null'

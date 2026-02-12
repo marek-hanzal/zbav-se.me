@@ -316,15 +316,15 @@ export type tLocation = {
     /**
      * The county that the location is in
      */
-    county: string | null;
+    county: null | string;
     /**
      * The municipality that the location is in
      */
-    municipality: string | null;
+    municipality: null | string;
     /**
      * The state that the location is in
      */
-    state: string | null;
+    state: null | string;
     /**
      * Full address preview of a location
      */
@@ -332,15 +332,15 @@ export type tLocation = {
     /**
      * The city that the location is in
      */
-    city: string | null;
+    city: null | string;
     /**
      * The street that the location is on
      */
-    street: string | null;
+    street: null | string;
     /**
      * The postal/zip code of the location
      */
-    zip: string | null;
+    zip: null | string;
     /**
      * Confidence score of the location (based on query)
      */
@@ -789,8 +789,8 @@ export type tUserEx = {
     /**
      * Default location for the user - user for listings & listing sorting
      */
-    locationId: string | null;
-    side?: tUserSideEnum | null;
+    locationId: null | string;
+    side?: null | tUserSideEnum;
 };
 
 /**
@@ -804,8 +804,8 @@ export type tUserExPatch = {
         /**
          * Default location for the user - user for listings & listing sorting
          */
-        locationId?: string | null;
-        side?: tUserSideEnum | null;
+        locationId?: null | string;
+        side?: null | tUserSideEnum;
     };
 };
 

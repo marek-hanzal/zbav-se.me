@@ -301,10 +301,10 @@ export const sLocation = {
         county: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -314,10 +314,10 @@ export const sLocation = {
         municipality: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -327,10 +327,10 @@ export const sLocation = {
         state: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -343,10 +343,10 @@ export const sLocation = {
         city: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -356,10 +356,10 @@ export const sLocation = {
         street: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -369,10 +369,10 @@ export const sLocation = {
         zip: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'

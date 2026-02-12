@@ -298,10 +298,10 @@ export const sLocation = {
         county: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -311,10 +311,10 @@ export const sLocation = {
         municipality: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -324,10 +324,10 @@ export const sLocation = {
         state: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -340,10 +340,10 @@ export const sLocation = {
         city: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -353,10 +353,10 @@ export const sLocation = {
         street: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -366,10 +366,10 @@ export const sLocation = {
         zip: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -531,10 +531,10 @@ export const sListing = {
         condition: {
             anyOf: [
                 {
-                    type: 'number'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'number'
                 },
                 {
                     type: 'null'
@@ -544,10 +544,10 @@ export const sListing = {
         age: {
             anyOf: [
                 {
-                    type: 'number'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'number'
                 },
                 {
                     type: 'null'
@@ -557,13 +557,13 @@ export const sListing = {
         delivery: {
             anyOf: [
                 {
+                    type: 'null'
+                },
+                {
                     type: 'array',
                     items: {
                         $ref: '#/components/schemas/ListingDeliveryEnum'
                     }
-                },
-                {
-                    type: 'null'
                 },
                 {
                     type: 'null'
@@ -573,10 +573,10 @@ export const sListing = {
         warranty: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ListingWarrantyEnum'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ListingWarrantyEnum'
                 },
                 {
                     type: 'null'
@@ -598,10 +598,10 @@ export const sListing = {
         draftId: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -617,10 +617,10 @@ export const sListing = {
         description: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -630,10 +630,10 @@ export const sListing = {
         pros: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ProsCons'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ProsCons'
                 },
                 {
                     type: 'null'
@@ -643,10 +643,10 @@ export const sListing = {
         cons: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ProsCons'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ProsCons'
                 },
                 {
                     type: 'null'
@@ -686,10 +686,10 @@ export const sListing = {
         transactionId: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -699,10 +699,10 @@ export const sListing = {
         thumb: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/ThumbEnum'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/ThumbEnum'
                 },
                 {
                     type: 'null'
@@ -1159,10 +1159,10 @@ export const sFeed = {
         locationId: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -1172,10 +1172,10 @@ export const sFeed = {
         uploadId: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -1191,10 +1191,10 @@ export const sFeed = {
         upload: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/Upload'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/Upload'
                 },
                 {
                     type: 'null'
@@ -1222,10 +1222,10 @@ export const sFeedCreate = {
         locationId: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -1341,10 +1341,10 @@ export const sFeedPatch = {
                 locationId: {
                     anyOf: [
                         {
-                            type: 'string'
+                            type: 'null'
                         },
                         {
-                            type: 'null'
+                            type: 'string'
                         },
                         {
                             type: 'null'
@@ -1354,10 +1354,10 @@ export const sFeedPatch = {
                 uploadId: {
                     anyOf: [
                         {
-                            type: 'string'
+                            type: 'null'
                         },
                         {
-                            type: 'null'
+                            type: 'string'
                         },
                         {
                             type: 'null'
@@ -1445,10 +1445,10 @@ export const sFeedFavouriteItem = {
         locationId: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -1458,10 +1458,10 @@ export const sFeedFavouriteItem = {
         uploadId: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -1477,10 +1477,10 @@ export const sFeedFavouriteItem = {
         upload: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/Upload'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/Upload'
                 },
                 {
                     type: 'null'

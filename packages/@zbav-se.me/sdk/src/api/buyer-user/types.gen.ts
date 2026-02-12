@@ -282,15 +282,15 @@ export type tLocation = {
     /**
      * The county that the location is in
      */
-    county: string | null;
+    county: null | string;
     /**
      * The municipality that the location is in
      */
-    municipality: string | null;
+    municipality: null | string;
     /**
      * The state that the location is in
      */
-    state: string | null;
+    state: null | string;
     /**
      * Full address preview of a location
      */
@@ -298,15 +298,15 @@ export type tLocation = {
     /**
      * The city that the location is in
      */
-    city: string | null;
+    city: null | string;
     /**
      * The street that the location is on
      */
-    street: string | null;
+    street: null | string;
     /**
      * The postal/zip code of the location
      */
-    zip: string | null;
+    zip: null | string;
     /**
      * Confidence score of the location (based on query)
      */
@@ -433,19 +433,19 @@ export type tListing = {
     /**
      * Condition of the item (0-based index)
      */
-    condition: number | null;
+    condition: null | number;
     /**
      * Age of the item (0-based index)
      */
-    age: number | null;
+    age: null | number;
     /**
      * Delivery methods for the listing
      */
-    delivery: Array<tListingDeliveryEnum> | null;
+    delivery: null | Array<tListingDeliveryEnum>;
     /**
      * Warranty type for the listing
      */
-    warranty: tListingWarrantyEnum | null;
+    warranty: null | tListingWarrantyEnum;
     restriction: tListingRestrictionEnum;
     /**
      * ID of the location
@@ -462,7 +462,7 @@ export type tListing = {
     /**
      * ID of the draft this listing was created from
      */
-    draftId: string | null;
+    draftId: null | string;
     /**
      * Expiration timestamp
      */
@@ -474,15 +474,15 @@ export type tListing = {
     /**
      * Description of the item
      */
-    description: string | null;
+    description: null | string;
     /**
      * Pros of the item
      */
-    pros: tProsCons | null;
+    pros: null | tProsCons;
     /**
      * Cons of the item
      */
-    cons: tProsCons | null;
+    cons: null | tProsCons;
     /**
      * Creation timestamp
      */
@@ -513,11 +513,11 @@ export type tListing = {
     /**
      * Whether the user has a transaction with this listing
      */
-    transactionId: string | null;
+    transactionId: null | string;
     /**
      * Thumb type provided by the user (like/dislike) or null if not present
      */
-    thumb: tThumbEnum | null;
+    thumb: null | tThumbEnum;
 };
 
 /**
@@ -837,11 +837,11 @@ export type tFeed = {
     /**
      * ID of the location associated with the feed
      */
-    locationId: string | null;
+    locationId: null | string;
     /**
      * Hero image for this feed (usually selected from the listings in the feed)
      */
-    uploadId: string | null;
+    uploadId: null | string;
     /**
      * Name of the feed
      */
@@ -850,7 +850,7 @@ export type tFeed = {
     /**
      * Hero banner for this feed
      */
-    upload: tUpload | null;
+    upload: null | tUpload;
 };
 
 /**
@@ -864,7 +864,7 @@ export type tFeedCreate = {
     /**
      * ID of the location associated with the feed
      */
-    locationId?: string | null;
+    locationId?: null | string;
     query: tListingQuery;
 };
 
@@ -955,11 +955,11 @@ export type tFeedPatch = {
         /**
          * ID of the location associated with the feed
          */
-        locationId?: string | null;
+        locationId?: null | string;
         /**
          * Hero image for this feed (usually selected from the listings in the feed)
          */
-        uploadId?: string | null;
+        uploadId?: null | string;
         /**
          * Name of the feed
          */
@@ -1010,11 +1010,11 @@ export type tFeedFavouriteItem = {
     /**
      * ID of the location associated with the feed
      */
-    locationId: string | null;
+    locationId: null | string;
     /**
      * Hero image for this feed (usually selected from the listings in the feed)
      */
-    uploadId: string | null;
+    uploadId: null | string;
     /**
      * Name of the feed
      */
@@ -1023,7 +1023,7 @@ export type tFeedFavouriteItem = {
     /**
      * Hero banner for this feed
      */
-    upload: tUpload | null;
+    upload: null | tUpload;
     /**
      * Number of items in favourites for this feed
      */

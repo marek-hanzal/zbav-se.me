@@ -312,15 +312,15 @@ export type tLocation = {
     /**
      * The county that the location is in
      */
-    county: string | null;
+    county: null | string;
     /**
      * The municipality that the location is in
      */
-    municipality: string | null;
+    municipality: null | string;
     /**
      * The state that the location is in
      */
-    state: string | null;
+    state: null | string;
     /**
      * Full address preview of a location
      */
@@ -328,15 +328,15 @@ export type tLocation = {
     /**
      * The city that the location is in
      */
-    city: string | null;
+    city: null | string;
     /**
      * The street that the location is on
      */
-    street: string | null;
+    street: null | string;
     /**
      * The postal/zip code of the location
      */
-    zip: string | null;
+    zip: null | string;
     /**
      * Confidence score of the location (based on query)
      */
@@ -451,39 +451,39 @@ export type tDraft = {
     /**
      * Price type of the draft
      */
-    priceType: tListingPriceEnum | null;
+    priceType: null | tListingPriceEnum;
     /**
      * Currency of the draft
      */
-    currency: tCurrencyEnum | null;
+    currency: null | tCurrencyEnum;
     /**
      * Condition of the item (0-based index)
      */
-    condition: number | null;
+    condition: null | number;
     /**
      * Age of the item (0-based index)
      */
-    age: number | null;
+    age: null | number;
     /**
      * Delivery methods for the draft
      */
-    delivery: Array<tListingDeliveryEnum> | null;
+    delivery: null | Array<tListingDeliveryEnum>;
     /**
      * Warranty type for the draft
      */
-    warranty: tListingWarrantyEnum | null;
+    warranty: null | tListingWarrantyEnum;
     /**
      * Content restriction level of the draft
      */
-    restriction: tListingRestrictionEnum | null;
+    restriction: null | tListingRestrictionEnum;
     /**
      * ID of the location
      */
-    locationId: string | null;
+    locationId: null | string;
     /**
      * ID of the category
      */
-    categoryId: string | null;
+    categoryId: null | string;
     /**
      * ID of the gallery
      */
@@ -495,19 +495,19 @@ export type tDraft = {
     /**
      * Title of the item
      */
-    title: string | null;
+    title: null | string;
     /**
      * Description of the item
      */
-    description: string | null;
+    description: null | string;
     /**
      * Pros of the item
      */
-    pros: tProsCons | null;
+    pros: null | tProsCons;
     /**
      * Cons of the item
      */
-    cons: tProsCons | null;
+    cons: null | tProsCons;
     /**
      * Creation timestamp
      */
@@ -523,11 +523,11 @@ export type tDraft = {
     /**
      * Location data
      */
-    location: tLocation | null;
+    location: null | tLocation;
     /**
      * Category data
      */
-    category: tCategory | null;
+    category: null | tCategory;
     gallery: tGallery;
 };
 
@@ -551,11 +551,11 @@ export type tDraftCreate = {
     /**
      * Warranty type for the draft
      */
-    warranty?: tListingWarrantyEnum | null;
+    warranty?: null | tListingWarrantyEnum;
     /**
      * Content restriction level of the draft
      */
-    restriction?: tListingRestrictionEnum | null;
+    restriction?: null | tListingRestrictionEnum;
     /**
      * ID of the location
      */
@@ -576,11 +576,11 @@ export type tDraftCreate = {
     /**
      * Pros of the item
      */
-    pros?: tProsCons | null;
+    pros?: null | tProsCons;
     /**
      * Cons of the item
      */
-    cons?: tProsCons | null;
+    cons?: null | tProsCons;
     /**
      * IDs of the uploads; order of uploads defines order in the gallery
      */
@@ -598,35 +598,35 @@ export type tDraftPatchData = {
     /**
      * Price type of the draft
      */
-    priceType?: tListingPriceEnum | null;
+    priceType?: null | tListingPriceEnum;
     /**
      * Condition of the item (0-based index)
      */
-    condition?: number | null;
+    condition?: null | number;
     /**
      * Age of the item (0-based index)
      */
-    age?: number | null;
+    age?: null | number;
     /**
      * Delivery methods for the draft
      */
-    delivery?: Array<tListingDeliveryEnum> | null;
+    delivery?: null | Array<tListingDeliveryEnum>;
     /**
      * Warranty type for the draft
      */
-    warranty?: tListingWarrantyEnum | null;
+    warranty?: null | tListingWarrantyEnum;
     /**
      * Content restriction level of the draft
      */
-    restriction?: tListingRestrictionEnum | null;
+    restriction?: null | tListingRestrictionEnum;
     /**
      * ID of the location
      */
-    locationId?: string | null;
+    locationId?: null | string;
     /**
      * ID of the category
      */
-    categoryId?: string | null;
+    categoryId?: null | string;
     /**
      * ID of the gallery
      */
@@ -638,19 +638,19 @@ export type tDraftPatchData = {
     /**
      * Title of the item
      */
-    title?: string | null;
+    title?: null | string;
     /**
      * Description of the item
      */
-    description?: string | null;
+    description?: null | string;
     /**
      * Pros of the item
      */
-    pros?: tProsCons | null;
+    pros?: null | tProsCons;
     /**
      * Cons of the item
      */
-    cons?: tProsCons | null;
+    cons?: null | tProsCons;
     /**
      * Timestamp when the draft was used to create a listing
      */
@@ -805,19 +805,19 @@ export type tListing = {
     /**
      * Condition of the item (0-based index)
      */
-    condition: number | null;
+    condition: null | number;
     /**
      * Age of the item (0-based index)
      */
-    age: number | null;
+    age: null | number;
     /**
      * Delivery methods for the listing
      */
-    delivery: Array<tListingDeliveryEnum> | null;
+    delivery: null | Array<tListingDeliveryEnum>;
     /**
      * Warranty type for the listing
      */
-    warranty: tListingWarrantyEnum | null;
+    warranty: null | tListingWarrantyEnum;
     restriction: tListingRestrictionEnum;
     /**
      * ID of the location
@@ -834,7 +834,7 @@ export type tListing = {
     /**
      * ID of the draft this listing was created from
      */
-    draftId: string | null;
+    draftId: null | string;
     /**
      * Expiration timestamp
      */
@@ -846,15 +846,15 @@ export type tListing = {
     /**
      * Description of the item
      */
-    description: string | null;
+    description: null | string;
     /**
      * Pros of the item
      */
-    pros: tProsCons | null;
+    pros: null | tProsCons;
     /**
      * Cons of the item
      */
-    cons: tProsCons | null;
+    cons: null | tProsCons;
     /**
      * Creation timestamp
      */
@@ -880,19 +880,19 @@ export type tListingCreate = {
     /**
      * Condition of the item (0-based index)
      */
-    condition: number | null;
+    condition: null | number;
     /**
      * Age of the item (0-based index)
      */
-    age: number | null;
+    age: null | number;
     /**
      * Delivery methods for the listing
      */
-    delivery?: Array<tListingDeliveryEnum> | null;
+    delivery?: null | Array<tListingDeliveryEnum>;
     /**
      * Warranty type for the listing
      */
-    warranty?: tListingWarrantyEnum | null;
+    warranty?: null | tListingWarrantyEnum;
     restriction: tListingRestrictionEnum & unknown;
     /**
      * ID of the draft
@@ -914,15 +914,15 @@ export type tListingCreate = {
     /**
      * Description of the item
      */
-    description?: string | null;
+    description?: null | string;
     /**
      * Pros of the item
      */
-    pros?: tProsCons | null;
+    pros?: null | tProsCons;
     /**
      * Cons of the item
      */
-    cons?: tProsCons | null;
+    cons?: null | tProsCons;
     /**
      * IDs of the uploads; order of uploads defines order in the gallery
      */

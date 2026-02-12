@@ -381,10 +381,10 @@ export const sLocation = {
         county: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -394,10 +394,10 @@ export const sLocation = {
         municipality: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -407,10 +407,10 @@ export const sLocation = {
         state: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -423,10 +423,10 @@ export const sLocation = {
         city: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -436,10 +436,10 @@ export const sLocation = {
         street: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -449,10 +449,10 @@ export const sLocation = {
         zip: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -1034,10 +1034,10 @@ export const sUserEx = {
         locationId: {
             anyOf: [
                 {
-                    type: 'string'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    type: 'string'
                 },
                 {
                     type: 'null'
@@ -1047,10 +1047,10 @@ export const sUserEx = {
         side: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/UserSideEnum'
+                    type: 'null'
                 },
                 {
-                    type: 'null'
+                    $ref: '#/components/schemas/UserSideEnum'
                 },
                 {
                     type: 'null'
@@ -1073,10 +1073,10 @@ export const sUserExPatch = {
                 locationId: {
                     anyOf: [
                         {
-                            type: 'string'
+                            type: 'null'
                         },
                         {
-                            type: 'null'
+                            type: 'string'
                         },
                         {
                             type: 'null'
@@ -1086,10 +1086,10 @@ export const sUserExPatch = {
                 side: {
                     anyOf: [
                         {
-                            $ref: '#/components/schemas/UserSideEnum'
+                            type: 'null'
                         },
                         {
-                            type: 'null'
+                            $ref: '#/components/schemas/UserSideEnum'
                         },
                         {
                             type: 'null'

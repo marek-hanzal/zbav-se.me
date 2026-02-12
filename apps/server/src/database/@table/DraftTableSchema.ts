@@ -79,9 +79,9 @@ export const DraftTableSchema = z
 			}),
 		//
 		restriction: z
-			.xor([
-				ListingRestrictionEnumSchema,
+			.union([
 				z.null(),
+				ListingRestrictionEnumSchema,
 			])
 			.openapi({
 				description: "Content restriction level of the draft",
