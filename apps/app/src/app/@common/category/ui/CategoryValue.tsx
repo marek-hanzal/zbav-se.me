@@ -21,14 +21,6 @@ export const CategoryValue: FC<CategoryValue.Props> = ({ category, ...props }) =
 					tone: category ? "neutral" : "primary",
 				},
 			}}
-			action={
-				<Icon
-					icon={EditIcon}
-					ui={{
-						text: "xl",
-					}}
-				/>
-			}
 			textLabel={translator.text("Listing category (label)")}
 			textValue={
 				category ? (

@@ -456,11 +456,11 @@ export const zDraft = z.object({
         description: 'ID of the draft'
     }),
     price: z.union([
+        z.null(),
         z.union([
             z.number(),
             z.null()
-        ]),
-        z.null()
+        ])
     ]),
     priceType: z.union([
         zListingPriceEnum,
@@ -608,11 +608,11 @@ export type zDraftCreate = z.infer<typeof zDraftCreate>;
  */
 export const zDraftPatchData = z.object({
     price: z.optional(z.union([
+        z.null(),
         z.union([
             z.number(),
             z.null()
-        ]),
-        z.null()
+        ])
     ])),
     priceType: z.optional(z.union([
         zListingPriceEnum,

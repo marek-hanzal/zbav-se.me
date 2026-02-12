@@ -36,7 +36,10 @@ export const DeliveryValueList: FC<DeliveryValueList.Props> = ({ deliveryIn, ...
 								tone: "neutral",
 								theme: "light",
 							}
-						: undefined,
+						: {
+								tone: "secondary",
+								theme: "light",
+							},
 			}}
 			{...props}
 		/>

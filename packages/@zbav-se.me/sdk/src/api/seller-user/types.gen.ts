@@ -447,7 +447,7 @@ export type tDraft = {
     /**
      * Price of the draft
      */
-    price: number | null | null;
+    price: null | number | null;
     /**
      * Price type of the draft
      */
@@ -594,7 +594,7 @@ export type tDraftPatchData = {
     /**
      * Price of the draft
      */
-    price?: number | null | null;
+    price?: null | number | null;
     /**
      * Price type of the draft
      */

@@ -536,16 +536,13 @@ export const sDraft = {
         price: {
             anyOf: [
                 {
+                    type: 'null'
+                },
+                {
                     type: [
                         'number',
                         'null'
                     ]
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
                 }
             ]
         },
@@ -923,16 +920,13 @@ export const sDraftPatchData = {
         price: {
             anyOf: [
                 {
+                    type: 'null'
+                },
+                {
                     type: [
                         'number',
                         'null'
                     ]
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
                 }
             ]
         },

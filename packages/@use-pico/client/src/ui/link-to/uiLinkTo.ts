@@ -11,6 +11,7 @@ export namespace uiLinkTo {
 		items?: CoolUi.Items;
 		gap?: CoolUi.Gap;
 		round?: CoolUi.Round;
+		inner?: CoolUi.Inner;
 		snapTo?: CoolUi.SnapTo;
 		color?: CoolUi.Color;
 		flow?: CoolUi.Flow;

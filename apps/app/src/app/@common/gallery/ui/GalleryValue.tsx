@@ -13,7 +13,13 @@ export namespace GalleryValue {
 	}
 }
 
-export const GalleryValue: FC<GalleryValue.Props> = ({ uploads, label, statusProps, ...props }) => {
+export const GalleryValue: FC<GalleryValue.Props> = ({
+	uploads,
+	label,
+	statusProps,
+	ui,
+	...props
+}) => {
 	return (
 		<Container
 			data-ui={"GalleryValue[Container]"}
@@ -28,6 +34,7 @@ export const GalleryValue: FC<GalleryValue.Props> = ({ uploads, label, statusPro
 				background: "default",
 				shadow: true,
 				border: true,
+				...ui,
 			}}
 			className="h-42"
 			{...props}

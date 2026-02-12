@@ -1,1 +1,1 @@
-export const TrashIcon = "icon-[ph--trash]";
+export const TrashIcon = "icon-[solar--trash-bin-trash-linear]";

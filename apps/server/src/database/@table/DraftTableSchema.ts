@@ -18,8 +18,8 @@ export const DraftTableSchema = z
 		//
 		price: z
 			.union([
-				z.coerce.number(),
 				z.null(),
+				z.coerce.number(),
 			])
 			.openapi({
 				description: "Price of the draft",
