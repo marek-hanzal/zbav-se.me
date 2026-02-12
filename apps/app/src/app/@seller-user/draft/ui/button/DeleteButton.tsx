@@ -16,6 +16,7 @@ export namespace DeleteButton {
 export const DeleteButton: FC<DeleteButton.Props> = ({
 	draft,
 	onDelete,
+	buttonProps,
 	confirmProps,
 	ui,
 	className,
@@ -37,9 +38,11 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 			disabled={deleteMutation.isPending}
 			loading={deleteMutation.isPending}
 			buttonProps={{
+				...buttonProps,
 				ui: {
 					justify: "start",
 					items: "center",
+					...buttonProps?.ui,
 				},
 			}}
 			confirmProps={{
