@@ -27,7 +27,7 @@ export const useListingEvent = ({
 
 	const listingEventCreateMutation = withListingEventCreateMutation.useMutation({
 		retry(_, error) {
-			return visible || error.type !== "error";
+			return visible && error.type !== "error";
 		},
 		retryDelay(count) {
 			if (count >= 3) {
