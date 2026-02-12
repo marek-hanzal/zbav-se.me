@@ -115,6 +115,11 @@ export const FeedEditor: FC<FeedEditor.Props> = ({
 							}}
 						/>
 					}
+					wrapperProps={{
+						ui: {
+							tone: feed.name ? "neutral" : "secondary",
+						},
+					}}
 					{...values?.name}
 				/>
 			</Group>
@@ -132,6 +137,14 @@ export const FeedEditor: FC<FeedEditor.Props> = ({
 							}}
 						/>
 					}
+					wrapperProps={{
+						ui: {
+							tone:
+								(feed.query?.filter?.categoryIdIn ?? []).length > 0
+									? "neutral"
+									: "secondary",
+						},
+					}}
 					{...values?.category}
 				/>
 			</Group>
@@ -150,6 +163,11 @@ export const FeedEditor: FC<FeedEditor.Props> = ({
 							}}
 						/>
 					}
+					wrapperProps={{
+						ui: {
+							tone: feed.locationId ? "neutral" : "secondary",
+						},
+					}}
 					{...values?.location}
 				/>
 
@@ -166,6 +184,11 @@ export const FeedEditor: FC<FeedEditor.Props> = ({
 							}}
 						/>
 					}
+					wrapperProps={{
+						ui: {
+							tone: feed.query?.filter?.range ? "neutral" : "secondary",
+						},
+					}}
 					{...values?.range}
 				/>
 			</Group>
@@ -181,6 +204,11 @@ export const FeedEditor: FC<FeedEditor.Props> = ({
 							}}
 						/>
 					}
+					wrapperProps={{
+						ui: {
+							tone: (feed.query?.sort ?? []).length > 0 ? "neutral" : "secondary",
+						},
+					}}
 					{...values?.sort}
 				/>
 			</Group>
@@ -196,6 +224,14 @@ export const FeedEditor: FC<FeedEditor.Props> = ({
 							}}
 						/>
 					}
+					wrapperProps={{
+						ui: {
+							tone:
+								(feed.query?.filter?.conditionIn ?? []).length > 0
+									? "neutral"
+									: "secondary",
+						},
+					}}
 					{...values?.condition}
 				/>
 
@@ -209,6 +245,14 @@ export const FeedEditor: FC<FeedEditor.Props> = ({
 							}}
 						/>
 					}
+					wrapperProps={{
+						ui: {
+							tone:
+								(feed.query?.filter?.ageIn ?? []).length > 0
+									? "neutral"
+									: "secondary",
+						},
+					}}
 					{...values?.age}
 				/>
 			</Group>
@@ -224,6 +268,14 @@ export const FeedEditor: FC<FeedEditor.Props> = ({
 							}}
 						/>
 					}
+					wrapperProps={{
+						ui: {
+							tone:
+								(feed.query?.filter?.deliveryIn ?? []).length > 0
+									? "neutral"
+									: "secondary",
+						},
+					}}
 					{...values?.delivery}
 				/>
 			</Group>
@@ -239,6 +291,14 @@ export const FeedEditor: FC<FeedEditor.Props> = ({
 							}}
 						/>
 					}
+					wrapperProps={{
+						ui: {
+							tone:
+								(feed.query?.filter?.warrantyIn ?? []).length > 0
+									? "neutral"
+									: "secondary",
+						},
+					}}
 					{...values?.warranty}
 				/>
 			</Group>
@@ -257,6 +317,11 @@ export const FeedEditor: FC<FeedEditor.Props> = ({
 							}}
 						/>
 					}
+					wrapperProps={{
+						ui: {
+							tone: feed.query?.filter?.title ? "neutral" : "secondary",
+						},
+					}}
 					{...values?.title}
 				/>
 			</Group>

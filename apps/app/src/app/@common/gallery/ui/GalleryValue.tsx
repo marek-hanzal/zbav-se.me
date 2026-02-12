@@ -65,7 +65,7 @@ export const GalleryValue: FC<GalleryValue.Props> = ({
 						},
 					}}
 					ui={{
-						tone: uploads.length > 0 ? "neutral" : "primary",
+						tone: "neutral",
 						theme: "light",
 						text: "default",
 					}}
