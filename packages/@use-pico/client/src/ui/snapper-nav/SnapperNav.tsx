@@ -6,6 +6,11 @@ import { Icon } from "../../icon/Icon";
 import type { uiIcon } from "../../icon/uiIcon";
 import { Container } from "../container/Container";
 
+const activeIconUi: uiIcon.Ui = {
+	text: "lg",
+	color: "lead",
+};
+
 export namespace SnapperNav {
 	export namespace IconProps {
 		export interface Props {
@@ -112,11 +117,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 		$pages,
 		snapperNav.state.current,
 	]);
-
-	const activeIconUi: uiIcon.Ui = {
-		text: "lg",
-		color: "lead",
-	};
 
 	const renderLimiter = useCallback(() => {
 		// const leftIcon: Icon.Type =

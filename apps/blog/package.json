@@ -26,7 +26,7 @@
 		"@docusaurus/tsconfig": "3.9.2",
 		"@docusaurus/types": "3.9.2",
 		"@tailwindcss/postcss": "4.1.18",
-		"@types/react": "19.2.13",
+		"@types/react": "19.2.14",
 		"@typescript/native-preview": "7.0.0-dev.20260206.1",
 		"autoprefixer": "10.4.24",
 		"postcss": "8.5.6",
