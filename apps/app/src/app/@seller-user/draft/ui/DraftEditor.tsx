@@ -8,8 +8,6 @@ import { View } from "@use-pico/client/ui/view";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { HomeIcon } from "@zbav-se.me/ui/icon";
-import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
 import { AgeValue } from "~/app/@common/age/ui/AgeValue";
 import { CategoryValue } from "~/app/@common/category/ui/CategoryValue";
@@ -43,6 +41,7 @@ import { ProsPatch } from "~/app/@seller-user/draft/ui/patch/ProsPatch";
 import { RestrictionPatch } from "~/app/@seller-user/draft/ui/patch/RestrictionPatch";
 import { TitlePatch } from "~/app/@seller-user/draft/ui/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/@seller-user/draft/ui/patch/WarrantyPatch";
+import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
 export namespace DraftEditor {
 	export type View =
@@ -85,21 +84,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 					children: (
 						<TitleContainer
 							textTitle={"Draft edit (title)"}
-							right={
-								<LinkTo
-									{...uiBackButton({
-										ui: {},
-										className: [],
-									})}
-									data-ui={"DraftEditor-[LinkTo.left]"}
-									icon={HomeIcon}
-									to={"/$locale/flow/home"}
-									params={{
-										locale,
-									}}
-									className={"transition-all"}
-								/>
-							}
+							right={<HomeMenuButton />}
 						>
 							<Container
 								data-ui={"DraftEditor-[Container.content]"}

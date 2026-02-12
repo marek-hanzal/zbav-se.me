@@ -67,7 +67,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/buyer/feed/default"
+						to="/$locale/flow/buyer/feed/default"
 						params={{
 							locale,
 						}}
@@ -95,7 +95,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/buyer/feed/default"
+						to="/$locale/flow/buyer/feed/default"
 						params={{
 							locale,
 						}}

@@ -28,7 +28,7 @@ export const EmptyFavourite: FC<EmptyFavourite.Props> = ({ ...props }) => {
 			action={
 				<>
 					<LinkTo
-						to={"/$locale/buyer/feed/default"}
+						to={"/$locale/flow/buyer/feed/default"}
 						icon={ChevronRightIcon}
 						iconPosition={"right"}
 						params={{
@@ -107,7 +107,7 @@ export const EmptyFeed: FC<EmptyFeed.Props> = ({ ...props }) => {
 						<LinkTo
 							icon={ChevronRightIcon}
 							iconPosition={"right"}
-							to={"/$locale/buyer/feed/default"}
+							to={"/$locale/flow/buyer/feed/default"}
 							params={{
 								locale,
 							}}
@@ -194,7 +194,7 @@ export const Appendix: FC<Appendix.Props> = ({ ...props }) => {
 						<LinkTo
 							icon={ChevronRightIcon}
 							iconPosition={"right"}
-							to={"/$locale/buyer/feed/default"}
+							to={"/$locale/flow/buyer/feed/default"}
 							params={{
 								locale,
 							}}
