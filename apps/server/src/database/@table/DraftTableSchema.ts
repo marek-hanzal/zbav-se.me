@@ -158,14 +158,10 @@ export const DraftTableSchema = z
 			description: "Last update timestamp",
 			type: "string",
 		}),
-		usedAt: z
-			.union([
-				z.null(),
-				z.coerce.date(),
-			])
-			.openapi({
-				description: "Timestamp when the draft was used to create a listing",
-			}),
+		usedAt: z.coerce.date().openapi({
+			description: "Timestamp when the draft was used to create a listing",
+			type: "string",
+		}),
 	})
 	.strip();
 

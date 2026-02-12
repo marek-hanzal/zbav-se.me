@@ -1,1 +1,1 @@
-export const CloseIcon = "icon-[solar--reply-linear]";
+export const CloseIcon = "icon-[solar--close-circle-linear]";
