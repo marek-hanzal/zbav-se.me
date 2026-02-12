@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { VisibilityProvider } from "@use-pico/client/context";
-import { ArrowLeftIcon } from "@use-pico/client/icon";
+import { ChevronLeftIcon } from "@use-pico/client/icon";
 import { createNoopVisibilityStore } from "@use-pico/client/store";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/$locale/ui/seller/message/$listingId/list
 				textTitle={"Messages (title)"}
 				left={
 					<LinkTo
-						icon={ArrowLeftIcon}
+						icon={ChevronLeftIcon}
 						to="/$locale/ui/seller/message/list"
 						params={{
 							locale,
@@ -53,7 +53,7 @@ export const Route = createFileRoute("/$locale/ui/seller/message/$listingId/list
 				textSubtitle={listing.title}
 				left={
 					<LinkTo
-						icon={ArrowLeftIcon}
+						icon={ChevronLeftIcon}
 						to="/$locale/ui/seller/message/list"
 						params={{
 							locale,

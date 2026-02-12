@@ -3,20 +3,23 @@ import { Container, type uiContainer } from "@use-pico/client/ui/container";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
+import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import type { tMessageText } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { useSide } from "~/app/@common/auth/hook/useSide";
 
 export namespace MessageText {
 	export interface Props extends Container.Props {
+		/**
+		 * From which point of view the message is displayed
+		 */
+		side: tUserSideEnum;
 		message: tMessageText;
 	}
 }
 
-export const MessageText: FC<MessageText.Props> = ({ message, ...props }) => {
+export const MessageText: FC<MessageText.Props> = ({ side, message, ...props }) => {
 	const locale = useLocale();
-	const side = useSide();
 
 	return (
 		<Container

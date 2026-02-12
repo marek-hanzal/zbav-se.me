@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useLocale, useSentinel } from "@use-pico/client/hook";
-import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
+import { ChevronLeftIcon, ChevronRightIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -29,7 +29,7 @@ export const EmptyFavourite: FC<EmptyFavourite.Props> = ({ ...props }) => {
 				<>
 					<LinkTo
 						to={"/$locale/buyer/feed/default"}
-						icon={ArrowRightIcon}
+						icon={ChevronRightIcon}
 						iconPosition={"right"}
 						params={{
 							locale,
@@ -46,9 +46,9 @@ export const EmptyFavourite: FC<EmptyFavourite.Props> = ({ ...props }) => {
 					</LinkTo>
 
 					<LinkTo
-						icon={ArrowRightIcon}
+						icon={ChevronRightIcon}
 						iconPosition={"right"}
-						to={"/$locale/ui/home"}
+						to={"/$locale/flow/home"}
 						params={{
 							locale,
 						}}
@@ -105,7 +105,7 @@ export const EmptyFeed: FC<EmptyFeed.Props> = ({ ...props }) => {
 						}}
 					>
 						<LinkTo
-							icon={ArrowRightIcon}
+							icon={ChevronRightIcon}
 							iconPosition={"right"}
 							to={"/$locale/buyer/feed/default"}
 							params={{
@@ -127,7 +127,7 @@ export const EmptyFeed: FC<EmptyFeed.Props> = ({ ...props }) => {
 						</LinkTo>
 
 						<LinkTo
-							icon={ArrowLeftIcon}
+							icon={ChevronLeftIcon}
 							to={"/$locale/ui/buyer/favourite/list"}
 							params={{
 								locale,
@@ -192,7 +192,7 @@ export const Appendix: FC<Appendix.Props> = ({ ...props }) => {
 						}}
 					>
 						<LinkTo
-							icon={ArrowRightIcon}
+							icon={ChevronRightIcon}
 							iconPosition={"right"}
 							to={"/$locale/buyer/feed/default"}
 							params={{
@@ -214,7 +214,7 @@ export const Appendix: FC<Appendix.Props> = ({ ...props }) => {
 						</LinkTo>
 
 						<LinkTo
-							icon={ArrowLeftIcon}
+							icon={ChevronLeftIcon}
 							to={"/$locale/ui/buyer/favourite/list"}
 							params={{
 								locale,
@@ -268,7 +268,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/lis
 							},
 							className: [],
 						})}
-						icon={ArrowLeftIcon}
+						icon={ChevronLeftIcon}
 						to={"/$locale/ui/buyer/favourite/list"}
 						params={{
 							locale,

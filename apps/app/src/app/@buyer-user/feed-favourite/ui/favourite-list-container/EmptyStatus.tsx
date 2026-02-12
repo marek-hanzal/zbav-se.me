@@ -1,5 +1,5 @@
 import { useLocale } from "@use-pico/client/hook";
-import { ArrowRightIcon } from "@use-pico/client/icon";
+import { ChevronRightIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -52,7 +52,7 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({ ...props }) => {
 							},
 							className: [],
 						})}
-						icon={ArrowRightIcon}
+						icon={ChevronRightIcon}
 						iconPosition={"right"}
 						to={"/$locale/buyer/feed/default"}
 						params={{

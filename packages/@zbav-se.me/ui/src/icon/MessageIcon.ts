@@ -1,1 +1,1 @@
-export const MessageIcon = "icon-[mdi-light--message-text]";
+export const MessageIcon = "icon-[solar--dialog-linear]";

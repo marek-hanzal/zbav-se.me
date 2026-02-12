@@ -1,4 +1,5 @@
 import { Container } from "@use-pico/client/ui/container";
+import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
 import type { FC } from "react";
 import { useRef } from "react";
@@ -56,6 +57,7 @@ export const Transaction: FC<Transaction.Props> = ({ transactionId, refresh, ...
 								}}
 							>
 								<MessageList
+									side={tUserSideEnum.seller}
 									containerRef={containerRef}
 									messageThreadId={transaction.messageThreadId}
 									refresh={refresh}

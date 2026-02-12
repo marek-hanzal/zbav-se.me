@@ -338,7 +338,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 								/>
 
 								<LinkTo
-									to={"/$locale/ui/seller"}
+									to={"/$locale/flow/home"}
 									params={{
 										locale,
 									}}

@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { ArrowLeftIcon } from "@use-pico/client/icon";
+import { ChevronLeftIcon } from "@use-pico/client/icon";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
@@ -58,8 +58,8 @@ export const Route = createFileRoute("/$locale/buyer/feed/default")({
 						{...uiBackButton({
 							className: [],
 						})}
-						icon={ArrowLeftIcon}
-						to={"/$locale/ui/buyer"}
+						icon={ChevronLeftIcon}
+						to={"/$locale/flow/home"}
 						params={{
 							locale,
 						}}

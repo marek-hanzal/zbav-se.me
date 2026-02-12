@@ -1,4 +1,4 @@
-import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
+import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
@@ -100,7 +100,7 @@ export const Item: FC<Item.Props> = ({
 						}}
 					>
 						<Icon
-							icon={ArrowRightIcon}
+							icon={ChevronRightIcon}
 							ui={{
 								text: "3xl",
 								color: "text",

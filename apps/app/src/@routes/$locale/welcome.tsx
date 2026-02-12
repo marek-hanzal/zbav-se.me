@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRightIcon } from "@use-pico/client/icon";
+import { ChevronRightIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -28,9 +28,9 @@ export const Route = createFileRoute("/$locale/welcome")({
 					}}
 					action={
 						<LinkTo
-							icon={ArrowRightIcon}
+							icon={ChevronRightIcon}
 							iconPosition={"right"}
-							to={"/$locale/ui/home"}
+							to={"/$locale/flow/home"}
 							params={{
 								locale,
 							}}

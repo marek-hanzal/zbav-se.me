@@ -1,5 +1,5 @@
 import { useLocale } from "@use-pico/client/hook";
-import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
+import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -76,7 +76,7 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 						}}
 					>
 						<Icon
-							icon={ArrowRightIcon}
+							icon={ChevronRightIcon}
 							ui={{
 								text: "3xl",
 								color: "text",

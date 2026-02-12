@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router";
-import { ArrowRightIcon } from "@use-pico/client/icon";
+import { ChevronRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
@@ -45,7 +45,7 @@ export const Route = createFileRoute("/$locale/login")({
 				return navigate({
 					href: linkTo({
 						base: import.meta.env.VITE_APP_ORIGIN,
-						href: "/:locale/ui/home",
+						href: "/:locale/flow/home",
 						query: {
 							locale,
 						},
@@ -60,7 +60,7 @@ export const Route = createFileRoute("/$locale/login")({
 				await navigate({
 					href: linkTo({
 						base: import.meta.env.VITE_APP_ORIGIN,
-						href: "/:locale/ui/home",
+						href: "/:locale/flow/home",
 						query: {
 							locale,
 						},
@@ -213,7 +213,7 @@ export const Route = createFileRoute("/$locale/login")({
 									}}
 								>
 									<form.SubmitButton
-										iconEnabled={ArrowRightIcon}
+										iconEnabled={ChevronRightIcon}
 										iconPosition={"right"}
 										disabled={signInMutation.isPending}
 									>

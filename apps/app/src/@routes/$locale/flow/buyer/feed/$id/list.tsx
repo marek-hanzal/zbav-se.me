@@ -1,6 +1,6 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useLocale, useSentinel } from "@use-pico/client/hook";
-import { ArrowLeftIcon, ArrowRightIcon, RefreshIcon } from "@use-pico/client/icon";
+import { ChevronLeftIcon, ChevronRightIcon, RefreshIcon } from "@use-pico/client/icon";
 import { Button, uiButton } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -112,14 +112,14 @@ export const Appendix: FC<Appendix.Props> = ({ feed, containerRef, state, ui, ..
 						/>
 
 						<LinkTo
-							icon={ArrowRightIcon}
+							icon={ChevronRightIcon}
 							iconPosition={"right"}
 							iconProps={{
 								ui: {
 									text: "xl",
 								},
 							}}
-							to={"/$locale/ui/buyer"}
+							to={"/$locale/flow/home"}
 							params={{
 								locale,
 							}}
@@ -206,14 +206,14 @@ export const FeedEmpty: FC<FeedEmpty.Props> = ({ feed, containerRef, state, ui, 
 						/>
 
 						<LinkTo
-							icon={ArrowLeftIcon}
+							icon={ChevronLeftIcon}
 							iconPosition={"left"}
 							iconProps={{
 								ui: {
 									text: "xl",
 								},
 							}}
-							to={"/$locale/ui/buyer"}
+							to={"/$locale/flow/home"}
 							params={{
 								locale,
 							}}
@@ -321,8 +321,8 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 							className: [],
 						})}
 						data-ui={"/buyer/feed/$id/list-[LinkTo.left]"}
-						icon={ArrowLeftIcon}
-						to={"/$locale/ui/buyer"}
+						icon={ChevronLeftIcon}
+						to={"/$locale/flow/home"}
 						params={{
 							locale,
 						}}
@@ -428,7 +428,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 							action={
 								<>
 									<LinkTo
-										icon={ArrowRightIcon}
+										icon={ChevronRightIcon}
 										iconPosition={"right"}
 										to={"/$locale/ui/seller/draft/resolve"}
 										params={{
@@ -449,9 +449,9 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 									</LinkTo>
 
 									<LinkTo
-										icon={ArrowRightIcon}
+										icon={ChevronRightIcon}
 										iconPosition={"right"}
-										to={"/$locale/ui/home"}
+										to={"/$locale/flow/home"}
 										params={{
 											locale,
 										}}

@@ -1,4 +1,5 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import {
 	zMessageGallery,
 	zMessageLocation,
@@ -19,6 +20,7 @@ import { MessageText } from "~/app/@common/message/type/MessageText";
 
 export namespace MessageList {
 	export interface Props extends Container.Props {
+		side: tUserSideEnum;
 		containerRef: RefObject<HTMLDivElement | null>;
 		messageThreadId: string;
 		refresh: number;
@@ -26,6 +28,7 @@ export namespace MessageList {
 }
 
 export const MessageList: FC<MessageList.Props> = ({
+	side,
 	messageThreadId,
 	containerRef,
 	ui,
@@ -121,12 +124,14 @@ export const MessageList: FC<MessageList.Props> = ({
 									.with("text", () => (
 										<MessageText
 											key={message.id}
+											side={side}
 											message={zMessageText.parse(message.payload)}
 										/>
 									))
 									.with("system", () => (
 										<MessageText
 											key={message.id}
+											side={side}
 											message={zMessageSystem.parse(message.payload)}
 										/>
 									))

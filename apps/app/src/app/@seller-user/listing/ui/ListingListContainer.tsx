@@ -1,6 +1,6 @@
 import { VisibilityProvider } from "@use-pico/client/context";
 import { useElementVisibility, useLocale } from "@use-pico/client/hook";
-import { ArrowRightIcon } from "@use-pico/client/icon";
+import { ChevronRightIcon } from "@use-pico/client/icon";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
@@ -61,7 +61,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({ query, ..
 									textMessage={"No my listings (message)"}
 									action={
 										<LinkTo
-											icon={ArrowRightIcon}
+											icon={ChevronRightIcon}
 											iconPosition={"right"}
 											to={"/$locale/ui/seller/draft/resolve"}
 											params={{

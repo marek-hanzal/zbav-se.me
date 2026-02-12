@@ -1,5 +1,5 @@
 import { useLocale } from "@use-pico/client/hook";
-import { ArrowRightIcon } from "@use-pico/client/icon";
+import { ChevronRightIcon } from "@use-pico/client/icon";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
@@ -54,7 +54,7 @@ export const TransactionListingList: FC<TransactionListingList.Props> = ({
 									textMessage={"No listings with transactions (message)"}
 									action={
 										<LinkTo
-											icon={ArrowRightIcon}
+											icon={ChevronRightIcon}
 											iconPosition={"right"}
 											to={"/$locale/ui/seller/listing/my"}
 											params={{

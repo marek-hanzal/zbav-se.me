@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRightIcon, GitHubIcon, Icon } from "@use-pico/client/icon";
+import { ChevronRightIcon, GitHubIcon, Icon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo, uiLinkTo } from "@use-pico/client/ui/link-to";
@@ -77,7 +77,7 @@ export const Route = createFileRoute("/$locale/landing")({
 									},
 									className: [],
 								})}
-								icon={ArrowRightIcon}
+								icon={ChevronRightIcon}
 								iconPosition={"right"}
 								iconProps={{
 									ui: {
@@ -104,7 +104,7 @@ export const Route = createFileRoute("/$locale/landing")({
 									},
 									className: [],
 								})}
-								icon={ArrowRightIcon}
+								icon={ChevronRightIcon}
 								iconPosition={"right"}
 								iconProps={{
 									ui: {

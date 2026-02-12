@@ -1,1 +1,1 @@
-export const FavouriteIcon = "icon-[solar--heart-line-duotone]";
+export const FavouriteIcon = "icon-[solar--heart-angle-linear]";
