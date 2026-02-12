@@ -17,24 +17,24 @@ export const ListingCreateSchema = z
 		}),
 		condition: z
 			.union([
-				z.number(),
 				z.null(),
+				z.number(),
 			])
 			.openapi({
 				description: "Condition of the item (0-based index)",
 			}),
 		age: z
 			.union([
-				z.number(),
 				z.null(),
+				z.number(),
 			])
 			.openapi({
 				description: "Age of the item (0-based index)",
 			}),
 		delivery: z
 			.union([
-				z.array(ListingDeliveryEnumSchema),
 				z.null(),
+				z.array(ListingDeliveryEnumSchema),
 			])
 			.optional()
 			.openapi({
@@ -42,8 +42,8 @@ export const ListingCreateSchema = z
 			}),
 		warranty: z
 			.union([
-				ListingWarrantyEnumSchema,
 				z.null(),
+				ListingWarrantyEnumSchema,
 			])
 			.optional()
 			.openapi({
@@ -67,8 +67,8 @@ export const ListingCreateSchema = z
 		}),
 		description: z
 			.union([
-				z.string().max(2048),
 				z.null(),
+				z.string().max(2048),
 			])
 			.optional()
 			.openapi({
@@ -76,8 +76,8 @@ export const ListingCreateSchema = z
 			}),
 		pros: z
 			.union([
-				ProsConsSchema,
 				z.null(),
+				ProsConsSchema,
 			])
 			.optional()
 			.openapi({
@@ -85,8 +85,8 @@ export const ListingCreateSchema = z
 			}),
 		cons: z
 			.union([
-				ProsConsSchema,
 				z.null(),
+				ProsConsSchema,
 			])
 			.optional()
 			.openapi({

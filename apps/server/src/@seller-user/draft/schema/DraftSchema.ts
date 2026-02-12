@@ -9,16 +9,16 @@ export const DraftSchema = z
 		...DraftTableSchema.shape,
 		location: z
 			.union([
-				LocationSchema,
 				z.null(),
+				LocationSchema,
 			])
 			.openapi({
 				description: "Location data",
 			}),
 		category: z
 			.union([
-				CategorySchema,
 				z.null(),
+				CategorySchema,
 			])
 			.openapi({
 				description: "Category data",

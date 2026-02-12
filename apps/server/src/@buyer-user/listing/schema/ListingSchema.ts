@@ -28,16 +28,16 @@ export const ListingSchema = z
 		}),
 		transactionId: z
 			.union([
-				z.string(),
 				z.null(),
+				z.string(),
 			])
 			.openapi({
 				description: "Whether the user has a transaction with this listing",
 			}),
 		thumb: z
 			.union([
-				ThumbEnumSchema,
 				z.null(),
+				ThumbEnumSchema,
 			])
 			.openapi({
 				description:

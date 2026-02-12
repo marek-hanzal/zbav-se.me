@@ -10,17 +10,17 @@ export const UserExTableSchema = z
 			description: "ID of the user (foreign key)",
 		}),
 		locationId: z
-			.xor([
-				z.string(),
+			.union([
 				z.null(),
+				z.string(),
 			])
 			.openapi({
 				description: "Default location for the user - user for listings & listing sorting",
 			}),
 		side: z
 			.union([
-				UserSideEnumSchema,
 				z.null(),
+				UserSideEnumSchema,
 			])
 			.optional(),
 	})

@@ -6,8 +6,8 @@ export const CategoryMissFilterSchema = z
 		...DefaultFilterSchema.shape,
 		category: z
 			.union([
-				z.string(),
 				z.null(),
+				z.string(),
 			])
 			.openapi({
 				description: "This filter matches the exact category name that was missed",

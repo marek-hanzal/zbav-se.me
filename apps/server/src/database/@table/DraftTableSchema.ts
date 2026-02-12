@@ -26,8 +26,8 @@ export const DraftTableSchema = z
 			}),
 		priceType: z
 			.union([
-				ListingPriceEnumSchema,
 				z.null(),
+				ListingPriceEnumSchema,
 			])
 			.openapi({
 				description: "Price type of the draft",
@@ -35,8 +35,8 @@ export const DraftTableSchema = z
 		//
 		currency: z
 			.union([
-				CurrencyEnumSchema,
 				z.null(),
+				CurrencyEnumSchema,
 			])
 			.openapi({
 				description: "Currency of the draft",
@@ -44,8 +44,8 @@ export const DraftTableSchema = z
 		//
 		condition: z
 			.union([
-				z.number(),
 				z.null(),
+				z.number(),
 			])
 			.openapi({
 				description: "Condition of the item (0-based index)",
@@ -53,8 +53,8 @@ export const DraftTableSchema = z
 		//
 		age: z
 			.union([
-				z.number(),
 				z.null(),
+				z.number(),
 			])
 			.openapi({
 				description: "Age of the item (0-based index)",
@@ -62,8 +62,8 @@ export const DraftTableSchema = z
 		//
 		delivery: z
 			.union([
-				z.array(ListingDeliveryEnumSchema),
 				z.null(),
+				z.array(ListingDeliveryEnumSchema),
 			])
 			.openapi({
 				description: "Delivery methods for the draft",
@@ -71,8 +71,8 @@ export const DraftTableSchema = z
 		//
 		warranty: z
 			.union([
-				ListingWarrantyEnumSchema,
 				z.null(),
+				ListingWarrantyEnumSchema,
 			])
 			.openapi({
 				description: "Warranty type for the draft",
@@ -89,16 +89,16 @@ export const DraftTableSchema = z
 		//
 		locationId: z
 			.union([
-				z.string(),
 				z.null(),
+				z.string(),
 			])
 			.openapi({
 				description: "ID of the location",
 			}),
 		categoryId: z
 			.union([
-				z.string(),
 				z.null(),
+				z.string(),
 			])
 			.openapi({
 				description: "ID of the category",
@@ -117,8 +117,8 @@ export const DraftTableSchema = z
 		//
 		title: z
 			.union([
-				z.string(),
 				z.null(),
+				z.string(),
 			])
 			.openapi({
 				description: "Title of the item",
@@ -126,8 +126,8 @@ export const DraftTableSchema = z
 		//
 		description: z
 			.union([
-				z.string().max(2048),
 				z.null(),
+				z.string().max(2048),
 			])
 			.openapi({
 				description: "Description of the item",
@@ -135,16 +135,16 @@ export const DraftTableSchema = z
 		//
 		pros: z
 			.union([
-				ProsConsSchema,
 				z.null(),
+				ProsConsSchema,
 			])
 			.openapi({
 				description: "Pros of the item",
 			}),
 		cons: z
 			.union([
-				ProsConsSchema,
 				z.null(),
+				ProsConsSchema,
 			])
 			.openapi({
 				description: "Cons of the item",
