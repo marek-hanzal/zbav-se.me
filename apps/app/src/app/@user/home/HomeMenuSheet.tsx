@@ -16,8 +16,17 @@ export const HomeMenuSheet: FC<HomeMenuSheet.Props> = (props) => {
 			data-ui={"HomeMenuSheet[BottomSheet]"}
 			detent={"full"}
 			header={({ close }) => ({
-				title: translator.text("Menu (title)"),
-				right: <CloseButton onClick={close} />,
+				title: translator.text("zbav-se.me"),
+				right: (
+					<CloseButton
+						onClick={close}
+						ui={{
+							background: undefined,
+							shadow: false,
+							border: false,
+						}}
+					/>
+				),
 			})}
 			contentProps={{
 				disableScroll: true,
