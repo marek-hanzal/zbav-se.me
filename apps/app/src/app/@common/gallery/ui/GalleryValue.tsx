@@ -26,14 +26,14 @@ export const GalleryValue: FC<GalleryValue.Props> = ({
 			ui={{
 				tone: "neutral",
 				theme: "light",
-				round: "md",
+				round: undefined,
 				width: "full",
 				flow: "horizontal",
 				items: "center",
 				justify: "center",
 				background: "default",
-				shadow: true,
-				border: true,
+				shadow: false,
+				border: false,
 				...ui,
 			}}
 			className="h-42"

@@ -1,6 +1,7 @@
-import { EditIcon, Icon, TrashIcon } from "@use-pico/client/icon";
+import { ChevronRightIcon, Icon, TrashIcon } from "@use-pico/client/icon";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Container, type LabelValue } from "@use-pico/client/ui/container";
+import { Group } from "@use-pico/client/ui/group";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
@@ -91,158 +92,174 @@ export const FeedEditor: FC<FeedEditor.Props> = ({
 			}}
 			{...props}
 		>
-			<GalleryValue
-				label={translator.text("Feed photo gallery (label)")}
-				uploads={
-					feed.upload
-						? [
-								feed.upload,
-							]
-						: []
-				}
-				{...values?.gallery}
-			/>
+			<Group>
+				<GalleryValue
+					label={translator.text("Feed photo gallery (label)")}
+					uploads={
+						feed.upload
+							? [
+									feed.upload,
+								]
+							: []
+					}
+					{...values?.gallery}
+				/>
 
-			<NameValue
-				name={feed.name}
-				action={
-					<Icon
-						icon={EditIcon}
-						ui={{
-							text: "xl",
-						}}
-					/>
-				}
-				{...values?.name}
-			/>
+				<NameValue
+					name={feed.name}
+					action={
+						<Icon
+							icon={ChevronRightIcon}
+							ui={{
+								text: "xl",
+							}}
+						/>
+					}
+					{...values?.name}
+				/>
+			</Group>
 
-			<CategoryValueList
-				categoryIdIn={feed.query?.filter?.categoryIdIn}
-				textLabel={translator.text("Feed category (label)")}
-				textEmpty={translator.text("Feed category not selected")}
-				action={
-					<Icon
-						icon={EditIcon}
-						ui={{
-							text: "xl",
-						}}
-					/>
-				}
-				{...values?.category}
-			/>
+			<Group>
+				<CategoryValueList
+					categoryIdIn={feed.query?.filter?.categoryIdIn}
+					textLabel={translator.text("Feed category (label)")}
+					textEmpty={translator.text("Feed category not selected")}
+					action={
+						<Icon
+							icon={ChevronRightIcon}
+							ui={{
+								text: "xl",
+							}}
+						/>
+					}
+					{...values?.category}
+				/>
+			</Group>
 
-			<LocationValue
-				locationId={feed.locationId}
-				textLabel={translator.text("Feed location (label)")}
-				textEmpty={translator.text("Feed location not selected")}
-				textHint={translator.text("Feed location (hint)")}
-				action={
-					<Icon
-						icon={EditIcon}
-						ui={{
-							text: "xl",
-						}}
-					/>
-				}
-				{...values?.location}
-			/>
+			<Group>
+				<LocationValue
+					locationId={feed.locationId}
+					textLabel={translator.text("Feed location (label)")}
+					textEmpty={translator.text("Feed location not selected")}
+					textHint={translator.text("Feed location (hint)")}
+					action={
+						<Icon
+							icon={ChevronRightIcon}
+							ui={{
+								text: "xl",
+							}}
+						/>
+					}
+					{...values?.location}
+				/>
 
-			<RangeValue
-				range={feed.query?.filter?.range}
-				ui={{
-					disabled: !feed.query?.meta?.latLon,
-				}}
-				action={
-					<Icon
-						icon={EditIcon}
-						ui={{
-							text: "xl",
-						}}
-					/>
-				}
-				{...values?.range}
-			/>
+				<RangeValue
+					range={feed.query?.filter?.range}
+					ui={{
+						disabled: !feed.query?.meta?.latLon,
+					}}
+					action={
+						<Icon
+							icon={ChevronRightIcon}
+							ui={{
+								text: "xl",
+							}}
+						/>
+					}
+					{...values?.range}
+				/>
+			</Group>
 
-			<SortValue
-				sort={feed.query?.sort ?? []}
-				action={
-					<Icon
-						icon={EditIcon}
-						ui={{
-							text: "xl",
-						}}
-					/>
-				}
-				{...values?.sort}
-			/>
+			<Group>
+				<SortValue
+					sort={feed.query?.sort ?? []}
+					action={
+						<Icon
+							icon={ChevronRightIcon}
+							ui={{
+								text: "xl",
+							}}
+						/>
+					}
+					{...values?.sort}
+				/>
+			</Group>
 
-			<ConditionValueList
-				conditionIn={feed.query?.filter?.conditionIn ?? []}
-				action={
-					<Icon
-						icon={EditIcon}
-						ui={{
-							text: "xl",
-						}}
-					/>
-				}
-				{...values?.condition}
-			/>
+			<Group>
+				<ConditionValueList
+					conditionIn={feed.query?.filter?.conditionIn ?? []}
+					action={
+						<Icon
+							icon={ChevronRightIcon}
+							ui={{
+								text: "xl",
+							}}
+						/>
+					}
+					{...values?.condition}
+				/>
 
-			<AgeValueList
-				ageIn={feed.query?.filter?.ageIn ?? []}
-				action={
-					<Icon
-						icon={EditIcon}
-						ui={{
-							text: "xl",
-						}}
-					/>
-				}
-				{...values?.age}
-			/>
+				<AgeValueList
+					ageIn={feed.query?.filter?.ageIn ?? []}
+					action={
+						<Icon
+							icon={ChevronRightIcon}
+							ui={{
+								text: "xl",
+							}}
+						/>
+					}
+					{...values?.age}
+				/>
+			</Group>
 
-			<DeliveryValueList
-				deliveryIn={feed.query?.filter?.deliveryIn ?? []}
-				action={
-					<Icon
-						icon={EditIcon}
-						ui={{
-							text: "xl",
-						}}
-					/>
-				}
-				{...values?.delivery}
-			/>
+			<Group>
+				<DeliveryValueList
+					deliveryIn={feed.query?.filter?.deliveryIn ?? []}
+					action={
+						<Icon
+							icon={ChevronRightIcon}
+							ui={{
+								text: "xl",
+							}}
+						/>
+					}
+					{...values?.delivery}
+				/>
+			</Group>
 
-			<WarrantyValueList
-				warrantyIn={feed.query?.filter?.warrantyIn ?? []}
-				action={
-					<Icon
-						icon={EditIcon}
-						ui={{
-							text: "xl",
-						}}
-					/>
-				}
-				{...values?.warranty}
-			/>
+			<Group>
+				<WarrantyValueList
+					warrantyIn={feed.query?.filter?.warrantyIn ?? []}
+					action={
+						<Icon
+							icon={ChevronRightIcon}
+							ui={{
+								text: "xl",
+							}}
+						/>
+					}
+					{...values?.warranty}
+				/>
+			</Group>
 
-			<TitleValue
-				title={feed.query?.filter?.title ?? null}
-				textLabel={translator.text("Feed title (label)")}
-				textEmpty={translator.text("Feed title not filled")}
-				textHint={translator.text("Feed title (hint)")}
-				action={
-					<Icon
-						icon={EditIcon}
-						ui={{
-							text: "xl",
-						}}
-					/>
-				}
-				{...values?.title}
-			/>
+			<Group>
+				<TitleValue
+					title={feed.query?.filter?.title ?? null}
+					textLabel={translator.text("Feed title (label)")}
+					textEmpty={translator.text("Feed title not filled")}
+					textHint={translator.text("Feed title (hint)")}
+					action={
+						<Icon
+							icon={ChevronRightIcon}
+							ui={{
+								text: "xl",
+							}}
+						/>
+					}
+					{...values?.title}
+				/>
+			</Group>
 
 			{children}
 
