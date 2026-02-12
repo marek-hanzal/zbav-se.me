@@ -1,5 +1,6 @@
 import { Icon, ShowIcon } from "@use-pico/client/icon";
 import { Container, LabelValue, ValueList } from "@use-pico/client/ui/container";
+import { Group } from "@use-pico/client/ui/group";
 import { Markdown } from "@use-pico/client/ui/markdown";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
@@ -277,17 +278,27 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 						}
 
 						return (
-							<Container
-								data-ui="ListingDetail-[Container.destructive]"
-								ui={{
-									layout: "vertical-flex",
-									gap: "sm",
-								}}
-							>
-								<IgnoreButton listingId={listing.id} />
+							<Group>
+								<IgnoreButton
+									listingId={listing.id}
+									ui={{
+										round: undefined,
+										border: false,
+										shadow: false,
+										width: "full",
+									}}
+								/>
 
-								<FlagButton listingId={listing.id} />
-							</Container>
+								<FlagButton
+									listingId={listing.id}
+									ui={{
+										round: undefined,
+										border: false,
+										shadow: false,
+										width: "full",
+									}}
+								/>
+							</Group>
 						);
 					}}
 				</withListingFetchQuery.Suspense>

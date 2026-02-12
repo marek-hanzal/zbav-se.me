@@ -111,19 +111,26 @@ export const FlagButton: FC<FlagButton.Props> = ({
 							}}
 							{...props}
 						/>
+
 						{listing.hasFlag ? null : (
 							<Mx
 								label={"Listing ignore (hint)"}
 								ui={
 									isConfirm
 										? {
-												tone: "brand",
+												tone: "danger",
 												theme: "light",
 												color: "lead",
 												text: "sm",
+												background: "default",
+												inner: "default",
 											}
 										: {
+												tone: "neutral",
+												theme: "light",
 												text: "sm",
+												background: "default",
+												inner: "default",
 											}
 								}
 							/>

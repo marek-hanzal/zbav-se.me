@@ -11,8 +11,9 @@ import { useState } from "react";
 import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
 import { ListingSheet } from "~/app/@seller-user/listing/ui/ListingSheet";
 import { TransactionList } from "~/app/@seller-user/transaction/ui/TransactionList";
+import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
-export const Route = createFileRoute("/$locale/ui/seller/message/$listingId/list")({
+export const Route = createFileRoute("/$locale/flow/seller/message/$listingId/list")({
 	pendingComponent() {
 		const { locale } = Route.useParams();
 
@@ -23,7 +24,7 @@ export const Route = createFileRoute("/$locale/ui/seller/message/$listingId/list
 				left={
 					<LinkTo
 						icon={ChevronLeftIcon}
-						to="/$locale/ui/seller/message/list"
+						to="/$locale/flow/seller/message/list"
 						params={{
 							locale,
 						}}
@@ -54,12 +55,13 @@ export const Route = createFileRoute("/$locale/ui/seller/message/$listingId/list
 				left={
 					<LinkTo
 						icon={ChevronLeftIcon}
-						to="/$locale/ui/seller/message/list"
+						to="/$locale/flow/seller/message/list"
 						params={{
 							locale,
 						}}
 					/>
 				}
+				right={<HomeMenuButton />}
 			>
 				<Container>
 					<Container

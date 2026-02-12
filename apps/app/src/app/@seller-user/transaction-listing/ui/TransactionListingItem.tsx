@@ -48,7 +48,7 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 			{...props}
 		>
 			<LinkTo
-				to={"/$locale/ui/seller/message/$listingId/list"}
+				to={"/$locale/flow/seller/message/$listingId/list"}
 				params={{
 					locale,
 					listingId: transactionListingItem.listingId,

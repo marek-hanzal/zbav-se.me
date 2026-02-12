@@ -18,16 +18,16 @@ import { Route as LocaleFlowUserRouteImport } from './@routes/$locale/flow/user'
 import { Route as LocaleFlowShopRouteImport } from './@routes/$locale/flow/shop'
 import { Route as LocaleFlowHomeRouteImport } from './@routes/$locale/flow/home'
 import { Route as LocaleDevSeedRouteImport } from './@routes/$locale/dev/seed'
-import { Route as LocaleUiSellerMessageListRouteImport } from './@routes/$locale/ui/seller/message/list'
-import { Route as LocaleUiBuyerMessageListRouteImport } from './@routes/$locale/ui/buyer/message/list'
 import { Route as LocaleSellerListingIdViewRouteImport } from './@routes/$locale/seller/listing/$id/view'
+import { Route as LocaleFlowSellerMessageListRouteImport } from './@routes/$locale/flow/seller/message/list'
 import { Route as LocaleFlowSellerListingMyRouteImport } from './@routes/$locale/flow/seller/listing/my'
 import { Route as LocaleFlowSellerDraftResolveRouteImport } from './@routes/$locale/flow/seller/draft/resolve'
 import { Route as LocaleFlowSellerDraftListRouteImport } from './@routes/$locale/flow/seller/draft/list'
+import { Route as LocaleFlowBuyerMessageListRouteImport } from './@routes/$locale/flow/buyer/message/list'
 import { Route as LocaleFlowBuyerFeedSelectRouteImport } from './@routes/$locale/flow/buyer/feed/select'
 import { Route as LocaleFlowBuyerFeedDefaultRouteImport } from './@routes/$locale/flow/buyer/feed/default'
 import { Route as LocaleFlowBuyerFavouriteListRouteImport } from './@routes/$locale/flow/buyer/favourite/list'
-import { Route as LocaleUiSellerMessageListingIdListRouteImport } from './@routes/$locale/ui/seller/message/$listingId/list'
+import { Route as LocaleFlowSellerMessageListingIdListRouteImport } from './@routes/$locale/flow/seller/message/$listingId/list'
 import { Route as LocaleFlowSellerDraftIdEditRouteImport } from './@routes/$locale/flow/seller/draft/$id/edit'
 import { Route as LocaleFlowBuyerFeedIdListRouteImport } from './@routes/$locale/flow/buyer/feed/$id/list'
 import { Route as LocaleFlowBuyerFeedIdFavouriteListRouteImport } from './@routes/$locale/flow/buyer/feed/$id/favourite/list'
@@ -77,22 +77,16 @@ const LocaleDevSeedRoute = LocaleDevSeedRouteImport.update({
   path: '/dev/seed',
   getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleUiSellerMessageListRoute =
-  LocaleUiSellerMessageListRouteImport.update({
-    id: '/seller/message/list',
-    path: '/seller/message/list',
-    getParentRoute: () => LocaleUiRoute,
-  } as any)
-const LocaleUiBuyerMessageListRoute =
-  LocaleUiBuyerMessageListRouteImport.update({
-    id: '/buyer/message/list',
-    path: '/buyer/message/list',
-    getParentRoute: () => LocaleUiRoute,
-  } as any)
 const LocaleSellerListingIdViewRoute =
   LocaleSellerListingIdViewRouteImport.update({
     id: '/seller/listing/$id/view',
     path: '/seller/listing/$id/view',
+    getParentRoute: () => LocaleRoute,
+  } as any)
+const LocaleFlowSellerMessageListRoute =
+  LocaleFlowSellerMessageListRouteImport.update({
+    id: '/flow/seller/message/list',
+    path: '/flow/seller/message/list',
     getParentRoute: () => LocaleRoute,
   } as any)
 const LocaleFlowSellerListingMyRoute =
@@ -113,6 +107,12 @@ const LocaleFlowSellerDraftListRoute =
     path: '/flow/seller/draft/list',
     getParentRoute: () => LocaleRoute,
   } as any)
+const LocaleFlowBuyerMessageListRoute =
+  LocaleFlowBuyerMessageListRouteImport.update({
+    id: '/flow/buyer/message/list',
+    path: '/flow/buyer/message/list',
+    getParentRoute: () => LocaleRoute,
+  } as any)
 const LocaleFlowBuyerFeedSelectRoute =
   LocaleFlowBuyerFeedSelectRouteImport.update({
     id: '/flow/buyer/feed/select',
@@ -131,11 +131,11 @@ const LocaleFlowBuyerFavouriteListRoute =
     path: '/flow/buyer/favourite/list',
     getParentRoute: () => LocaleRoute,
   } as any)
-const LocaleUiSellerMessageListingIdListRoute =
-  LocaleUiSellerMessageListingIdListRouteImport.update({
-    id: '/seller/message/$listingId/list',
-    path: '/seller/message/$listingId/list',
-    getParentRoute: () => LocaleUiRoute,
+const LocaleFlowSellerMessageListingIdListRoute =
+  LocaleFlowSellerMessageListingIdListRouteImport.update({
+    id: '/flow/seller/message/$listingId/list',
+    path: '/flow/seller/message/$listingId/list',
+    getParentRoute: () => LocaleRoute,
   } as any)
 const LocaleFlowSellerDraftIdEditRoute =
   LocaleFlowSellerDraftIdEditRouteImport.update({
@@ -159,7 +159,7 @@ const LocaleFlowBuyerFeedIdFavouriteListRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
-  '/$locale/ui': typeof LocaleUiRouteWithChildren
+  '/$locale/ui': typeof LocaleUiRoute
   '/$locale/welcome': typeof LocaleWelcomeRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/dev/seed': typeof LocaleDevSeedRoute
@@ -169,20 +169,20 @@ export interface FileRoutesByFullPath {
   '/$locale/flow/buyer/favourite/list': typeof LocaleFlowBuyerFavouriteListRoute
   '/$locale/flow/buyer/feed/default': typeof LocaleFlowBuyerFeedDefaultRoute
   '/$locale/flow/buyer/feed/select': typeof LocaleFlowBuyerFeedSelectRoute
+  '/$locale/flow/buyer/message/list': typeof LocaleFlowBuyerMessageListRoute
   '/$locale/flow/seller/draft/list': typeof LocaleFlowSellerDraftListRoute
   '/$locale/flow/seller/draft/resolve': typeof LocaleFlowSellerDraftResolveRoute
   '/$locale/flow/seller/listing/my': typeof LocaleFlowSellerListingMyRoute
+  '/$locale/flow/seller/message/list': typeof LocaleFlowSellerMessageListRoute
   '/$locale/seller/listing/$id/view': typeof LocaleSellerListingIdViewRoute
-  '/$locale/ui/buyer/message/list': typeof LocaleUiBuyerMessageListRoute
-  '/$locale/ui/seller/message/list': typeof LocaleUiSellerMessageListRoute
   '/$locale/flow/buyer/feed/$id/list': typeof LocaleFlowBuyerFeedIdListRoute
   '/$locale/flow/seller/draft/$id/edit': typeof LocaleFlowSellerDraftIdEditRoute
-  '/$locale/ui/seller/message/$listingId/list': typeof LocaleUiSellerMessageListingIdListRoute
+  '/$locale/flow/seller/message/$listingId/list': typeof LocaleFlowSellerMessageListingIdListRoute
   '/$locale/flow/buyer/feed/$id/favourite/list': typeof LocaleFlowBuyerFeedIdFavouriteListRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$locale/ui': typeof LocaleUiRouteWithChildren
+  '/$locale/ui': typeof LocaleUiRoute
   '/$locale/welcome': typeof LocaleWelcomeRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/dev/seed': typeof LocaleDevSeedRoute
@@ -192,22 +192,22 @@ export interface FileRoutesByTo {
   '/$locale/flow/buyer/favourite/list': typeof LocaleFlowBuyerFavouriteListRoute
   '/$locale/flow/buyer/feed/default': typeof LocaleFlowBuyerFeedDefaultRoute
   '/$locale/flow/buyer/feed/select': typeof LocaleFlowBuyerFeedSelectRoute
+  '/$locale/flow/buyer/message/list': typeof LocaleFlowBuyerMessageListRoute
   '/$locale/flow/seller/draft/list': typeof LocaleFlowSellerDraftListRoute
   '/$locale/flow/seller/draft/resolve': typeof LocaleFlowSellerDraftResolveRoute
   '/$locale/flow/seller/listing/my': typeof LocaleFlowSellerListingMyRoute
+  '/$locale/flow/seller/message/list': typeof LocaleFlowSellerMessageListRoute
   '/$locale/seller/listing/$id/view': typeof LocaleSellerListingIdViewRoute
-  '/$locale/ui/buyer/message/list': typeof LocaleUiBuyerMessageListRoute
-  '/$locale/ui/seller/message/list': typeof LocaleUiSellerMessageListRoute
   '/$locale/flow/buyer/feed/$id/list': typeof LocaleFlowBuyerFeedIdListRoute
   '/$locale/flow/seller/draft/$id/edit': typeof LocaleFlowSellerDraftIdEditRoute
-  '/$locale/ui/seller/message/$listingId/list': typeof LocaleUiSellerMessageListingIdListRoute
+  '/$locale/flow/seller/message/$listingId/list': typeof LocaleFlowSellerMessageListingIdListRoute
   '/$locale/flow/buyer/feed/$id/favourite/list': typeof LocaleFlowBuyerFeedIdFavouriteListRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
-  '/$locale/ui': typeof LocaleUiRouteWithChildren
+  '/$locale/ui': typeof LocaleUiRoute
   '/$locale/welcome': typeof LocaleWelcomeRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/dev/seed': typeof LocaleDevSeedRoute
@@ -217,15 +217,15 @@ export interface FileRoutesById {
   '/$locale/flow/buyer/favourite/list': typeof LocaleFlowBuyerFavouriteListRoute
   '/$locale/flow/buyer/feed/default': typeof LocaleFlowBuyerFeedDefaultRoute
   '/$locale/flow/buyer/feed/select': typeof LocaleFlowBuyerFeedSelectRoute
+  '/$locale/flow/buyer/message/list': typeof LocaleFlowBuyerMessageListRoute
   '/$locale/flow/seller/draft/list': typeof LocaleFlowSellerDraftListRoute
   '/$locale/flow/seller/draft/resolve': typeof LocaleFlowSellerDraftResolveRoute
   '/$locale/flow/seller/listing/my': typeof LocaleFlowSellerListingMyRoute
+  '/$locale/flow/seller/message/list': typeof LocaleFlowSellerMessageListRoute
   '/$locale/seller/listing/$id/view': typeof LocaleSellerListingIdViewRoute
-  '/$locale/ui/buyer/message/list': typeof LocaleUiBuyerMessageListRoute
-  '/$locale/ui/seller/message/list': typeof LocaleUiSellerMessageListRoute
   '/$locale/flow/buyer/feed/$id/list': typeof LocaleFlowBuyerFeedIdListRoute
   '/$locale/flow/seller/draft/$id/edit': typeof LocaleFlowSellerDraftIdEditRoute
-  '/$locale/ui/seller/message/$listingId/list': typeof LocaleUiSellerMessageListingIdListRoute
+  '/$locale/flow/seller/message/$listingId/list': typeof LocaleFlowSellerMessageListingIdListRoute
   '/$locale/flow/buyer/feed/$id/favourite/list': typeof LocaleFlowBuyerFeedIdFavouriteListRoute
 }
 export interface FileRouteTypes {
@@ -243,15 +243,15 @@ export interface FileRouteTypes {
     | '/$locale/flow/buyer/favourite/list'
     | '/$locale/flow/buyer/feed/default'
     | '/$locale/flow/buyer/feed/select'
+    | '/$locale/flow/buyer/message/list'
     | '/$locale/flow/seller/draft/list'
     | '/$locale/flow/seller/draft/resolve'
     | '/$locale/flow/seller/listing/my'
+    | '/$locale/flow/seller/message/list'
     | '/$locale/seller/listing/$id/view'
-    | '/$locale/ui/buyer/message/list'
-    | '/$locale/ui/seller/message/list'
     | '/$locale/flow/buyer/feed/$id/list'
     | '/$locale/flow/seller/draft/$id/edit'
-    | '/$locale/ui/seller/message/$listingId/list'
+    | '/$locale/flow/seller/message/$listingId/list'
     | '/$locale/flow/buyer/feed/$id/favourite/list'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -266,15 +266,15 @@ export interface FileRouteTypes {
     | '/$locale/flow/buyer/favourite/list'
     | '/$locale/flow/buyer/feed/default'
     | '/$locale/flow/buyer/feed/select'
+    | '/$locale/flow/buyer/message/list'
     | '/$locale/flow/seller/draft/list'
     | '/$locale/flow/seller/draft/resolve'
     | '/$locale/flow/seller/listing/my'
+    | '/$locale/flow/seller/message/list'
     | '/$locale/seller/listing/$id/view'
-    | '/$locale/ui/buyer/message/list'
-    | '/$locale/ui/seller/message/list'
     | '/$locale/flow/buyer/feed/$id/list'
     | '/$locale/flow/seller/draft/$id/edit'
-    | '/$locale/ui/seller/message/$listingId/list'
+    | '/$locale/flow/seller/message/$listingId/list'
     | '/$locale/flow/buyer/feed/$id/favourite/list'
   id:
     | '__root__'
@@ -290,15 +290,15 @@ export interface FileRouteTypes {
     | '/$locale/flow/buyer/favourite/list'
     | '/$locale/flow/buyer/feed/default'
     | '/$locale/flow/buyer/feed/select'
+    | '/$locale/flow/buyer/message/list'
     | '/$locale/flow/seller/draft/list'
     | '/$locale/flow/seller/draft/resolve'
     | '/$locale/flow/seller/listing/my'
+    | '/$locale/flow/seller/message/list'
     | '/$locale/seller/listing/$id/view'
-    | '/$locale/ui/buyer/message/list'
-    | '/$locale/ui/seller/message/list'
     | '/$locale/flow/buyer/feed/$id/list'
     | '/$locale/flow/seller/draft/$id/edit'
-    | '/$locale/ui/seller/message/$listingId/list'
+    | '/$locale/flow/seller/message/$listingId/list'
     | '/$locale/flow/buyer/feed/$id/favourite/list'
   fileRoutesById: FileRoutesById
 }
@@ -372,25 +372,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleDevSeedRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/ui/seller/message/list': {
-      id: '/$locale/ui/seller/message/list'
-      path: '/seller/message/list'
-      fullPath: '/$locale/ui/seller/message/list'
-      preLoaderRoute: typeof LocaleUiSellerMessageListRouteImport
-      parentRoute: typeof LocaleUiRoute
-    }
-    '/$locale/ui/buyer/message/list': {
-      id: '/$locale/ui/buyer/message/list'
-      path: '/buyer/message/list'
-      fullPath: '/$locale/ui/buyer/message/list'
-      preLoaderRoute: typeof LocaleUiBuyerMessageListRouteImport
-      parentRoute: typeof LocaleUiRoute
-    }
     '/$locale/seller/listing/$id/view': {
       id: '/$locale/seller/listing/$id/view'
       path: '/seller/listing/$id/view'
       fullPath: '/$locale/seller/listing/$id/view'
       preLoaderRoute: typeof LocaleSellerListingIdViewRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/flow/seller/message/list': {
+      id: '/$locale/flow/seller/message/list'
+      path: '/flow/seller/message/list'
+      fullPath: '/$locale/flow/seller/message/list'
+      preLoaderRoute: typeof LocaleFlowSellerMessageListRouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/flow/seller/listing/my': {
@@ -414,6 +407,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleFlowSellerDraftListRouteImport
       parentRoute: typeof LocaleRoute
     }
+    '/$locale/flow/buyer/message/list': {
+      id: '/$locale/flow/buyer/message/list'
+      path: '/flow/buyer/message/list'
+      fullPath: '/$locale/flow/buyer/message/list'
+      preLoaderRoute: typeof LocaleFlowBuyerMessageListRouteImport
+      parentRoute: typeof LocaleRoute
+    }
     '/$locale/flow/buyer/feed/select': {
       id: '/$locale/flow/buyer/feed/select'
       path: '/flow/buyer/feed/select'
@@ -435,12 +435,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleFlowBuyerFavouriteListRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/ui/seller/message/$listingId/list': {
-      id: '/$locale/ui/seller/message/$listingId/list'
-      path: '/seller/message/$listingId/list'
-      fullPath: '/$locale/ui/seller/message/$listingId/list'
-      preLoaderRoute: typeof LocaleUiSellerMessageListingIdListRouteImport
-      parentRoute: typeof LocaleUiRoute
+    '/$locale/flow/seller/message/$listingId/list': {
+      id: '/$locale/flow/seller/message/$listingId/list'
+      path: '/flow/seller/message/$listingId/list'
+      fullPath: '/$locale/flow/seller/message/$listingId/list'
+      preLoaderRoute: typeof LocaleFlowSellerMessageListingIdListRouteImport
+      parentRoute: typeof LocaleRoute
     }
     '/$locale/flow/seller/draft/$id/edit': {
       id: '/$locale/flow/seller/draft/$id/edit'
@@ -466,25 +466,8 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface LocaleUiRouteChildren {
-  LocaleUiBuyerMessageListRoute: typeof LocaleUiBuyerMessageListRoute
-  LocaleUiSellerMessageListRoute: typeof LocaleUiSellerMessageListRoute
-  LocaleUiSellerMessageListingIdListRoute: typeof LocaleUiSellerMessageListingIdListRoute
-}
-
-const LocaleUiRouteChildren: LocaleUiRouteChildren = {
-  LocaleUiBuyerMessageListRoute: LocaleUiBuyerMessageListRoute,
-  LocaleUiSellerMessageListRoute: LocaleUiSellerMessageListRoute,
-  LocaleUiSellerMessageListingIdListRoute:
-    LocaleUiSellerMessageListingIdListRoute,
-}
-
-const LocaleUiRouteWithChildren = LocaleUiRoute._addFileChildren(
-  LocaleUiRouteChildren,
-)
-
 interface LocaleRouteChildren {
-  LocaleUiRoute: typeof LocaleUiRouteWithChildren
+  LocaleUiRoute: typeof LocaleUiRoute
   LocaleWelcomeRoute: typeof LocaleWelcomeRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
   LocaleDevSeedRoute: typeof LocaleDevSeedRoute
@@ -494,17 +477,20 @@ interface LocaleRouteChildren {
   LocaleFlowBuyerFavouriteListRoute: typeof LocaleFlowBuyerFavouriteListRoute
   LocaleFlowBuyerFeedDefaultRoute: typeof LocaleFlowBuyerFeedDefaultRoute
   LocaleFlowBuyerFeedSelectRoute: typeof LocaleFlowBuyerFeedSelectRoute
+  LocaleFlowBuyerMessageListRoute: typeof LocaleFlowBuyerMessageListRoute
   LocaleFlowSellerDraftListRoute: typeof LocaleFlowSellerDraftListRoute
   LocaleFlowSellerDraftResolveRoute: typeof LocaleFlowSellerDraftResolveRoute
   LocaleFlowSellerListingMyRoute: typeof LocaleFlowSellerListingMyRoute
+  LocaleFlowSellerMessageListRoute: typeof LocaleFlowSellerMessageListRoute
   LocaleSellerListingIdViewRoute: typeof LocaleSellerListingIdViewRoute
   LocaleFlowBuyerFeedIdListRoute: typeof LocaleFlowBuyerFeedIdListRoute
   LocaleFlowSellerDraftIdEditRoute: typeof LocaleFlowSellerDraftIdEditRoute
+  LocaleFlowSellerMessageListingIdListRoute: typeof LocaleFlowSellerMessageListingIdListRoute
   LocaleFlowBuyerFeedIdFavouriteListRoute: typeof LocaleFlowBuyerFeedIdFavouriteListRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
-  LocaleUiRoute: LocaleUiRouteWithChildren,
+  LocaleUiRoute: LocaleUiRoute,
   LocaleWelcomeRoute: LocaleWelcomeRoute,
   LocaleIndexRoute: LocaleIndexRoute,
   LocaleDevSeedRoute: LocaleDevSeedRoute,
@@ -514,12 +500,16 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleFlowBuyerFavouriteListRoute: LocaleFlowBuyerFavouriteListRoute,
   LocaleFlowBuyerFeedDefaultRoute: LocaleFlowBuyerFeedDefaultRoute,
   LocaleFlowBuyerFeedSelectRoute: LocaleFlowBuyerFeedSelectRoute,
+  LocaleFlowBuyerMessageListRoute: LocaleFlowBuyerMessageListRoute,
   LocaleFlowSellerDraftListRoute: LocaleFlowSellerDraftListRoute,
   LocaleFlowSellerDraftResolveRoute: LocaleFlowSellerDraftResolveRoute,
   LocaleFlowSellerListingMyRoute: LocaleFlowSellerListingMyRoute,
+  LocaleFlowSellerMessageListRoute: LocaleFlowSellerMessageListRoute,
   LocaleSellerListingIdViewRoute: LocaleSellerListingIdViewRoute,
   LocaleFlowBuyerFeedIdListRoute: LocaleFlowBuyerFeedIdListRoute,
   LocaleFlowSellerDraftIdEditRoute: LocaleFlowSellerDraftIdEditRoute,
+  LocaleFlowSellerMessageListingIdListRoute:
+    LocaleFlowSellerMessageListingIdListRoute,
   LocaleFlowBuyerFeedIdFavouriteListRoute:
     LocaleFlowBuyerFeedIdFavouriteListRoute,
 }
