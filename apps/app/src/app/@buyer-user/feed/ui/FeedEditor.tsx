@@ -17,7 +17,7 @@ import { TitleValue } from "~/app/@common/title/ui/TitleValue";
 import { WarrantyValueList } from "~/app/@common/warranty/ui/WarrantyValueList";
 import { CategoryValueList } from "~/app/@session/category/ui/CategoryValueList";
 
-export namespace FeedContainer {
+export namespace FeedEditor {
 	export interface Value {
 		gallery?: Partial<GalleryValue.Props>;
 		name?: Partial<NameValue.Props>;
@@ -33,7 +33,7 @@ export namespace FeedContainer {
 	}
 
 	/**
-	 * Props for the Feed detail container component.
+	 * Props for the Feed detail editor component.
 	 *
 	 * This component displays feed details and allows editing individual fields
 	 * through inline editable value components.
@@ -43,7 +43,7 @@ export namespace FeedContainer {
 		 * Feed data to display and edit
 		 */
 		feed: tFeed;
-		values?: FeedContainer.Value;
+		values?: FeedEditor.Value;
 		/**
 		 * If true, hides the delete button
 		 */
@@ -52,7 +52,7 @@ export namespace FeedContainer {
 }
 
 /**
- * Feed detail container component.
+ * Feed detail editor component.
  *
  * Displays a feed's details including hero image, name, category, location,
  * sort preferences, condition, age, and title. Each field can be edited inline
@@ -62,13 +62,13 @@ export namespace FeedContainer {
  *
  * @example
  * ```tsx
- * <FeedContainer
+ * <FeedEditor
  *   feed={feedData}
  *   noDelete={false}
  * />
  * ```
  */
-export const FeedContainer: FC<FeedContainer.Props> = ({
+export const FeedEditor: FC<FeedEditor.Props> = ({
 	feed,
 	values,
 	noDelete = false,
@@ -80,7 +80,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({
 
 	return (
 		<Container
-			data-ui="FeedDetailContainer[Container]"
+			data-ui="FeedDetailEditor[Container]"
 			ui={{
 				layout: "vertical-flex",
 				height: "content",

@@ -7,7 +7,7 @@ import type { StateType } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import { type FC, useState } from "react";
-import { FeedContainer } from "~/app/@buyer-user/feed/ui/FeedContainer";
+import { FeedEditor } from "~/app/@buyer-user/feed/ui/FeedEditor";
 import { AgePatch } from "~/app/@buyer-user/feed/ui/patch/AgePatch";
 import { CategoryPatch } from "~/app/@buyer-user/feed/ui/patch/CategoryPatch";
 import { ConditionPatch } from "~/app/@buyer-user/feed/ui/patch/ConditionPatch";
@@ -67,8 +67,8 @@ export const EditorSheet: FC<EditorSheet.Props> = ({
 			views={{
 				detail: {
 					children: (
-						<FeedContainer
-							data-ui={"FeedEditorSheet-[FeedDetailContainer]"}
+						<FeedEditor
+							data-ui={"FeedEditorSheet-[FeedDetailEditor]"}
 							feed={feed}
 							noDelete={noDelete}
 							ui={{
@@ -132,7 +132,7 @@ export const EditorSheet: FC<EditorSheet.Props> = ({
 							/>
 
 							{children}
-						</FeedContainer>
+						</FeedEditor>
 					),
 					header: () => ({
 						title: translator.text("Feed setup (title)"),
