@@ -21,7 +21,7 @@ export const Route = createFileRoute("/$locale/ui/seller/draft/list")({
 					}}
 					onSuccess={(draft) => {
 						navigate({
-							to: "/$locale/ui/seller/draft/$id/edit",
+							to: "/$locale/flow/seller/draft/$id/edit",
 							params: {
 								locale,
 								id: draft.id,

@@ -430,7 +430,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 									<LinkTo
 										icon={ChevronRightIcon}
 										iconPosition={"right"}
-										to={"/$locale/ui/seller/draft/resolve"}
+										to={"/$locale/flow/seller/draft/resolve"}
 										params={{
 											locale,
 										}}

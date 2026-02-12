@@ -1,4 +1,3 @@
-import { EditIcon, Icon } from "@use-pico/client/icon";
 import { LabelValue } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { tCategory } from "@zbav-se.me/sdk/api/session";

@@ -140,7 +140,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 										...icon,
 									},
 								}}
-								to="/$locale/ui/seller/draft/resolve"
+								to="/$locale/flow/seller/draft/resolve"
 								params={{
 									locale,
 								}}
@@ -165,7 +165,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 											...icon,
 										},
 									}}
-									to="/$locale/ui/seller/draft/resolve"
+									to="/$locale/flow/seller/draft/resolve"
 									params={{
 										locale,
 									}}

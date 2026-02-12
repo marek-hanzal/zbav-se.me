@@ -7,7 +7,7 @@ import {
 } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { DateTime } from "luxon";
 
-export const Route = createFileRoute("/$locale/ui/seller/draft/resolve")({
+export const Route = createFileRoute("/$locale/flow/seller/draft/resolve")({
 	async loader({ context: { queryClient }, params: { locale } }) {
 		const current = await withDraftFetchQuery
 			.query({
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/$locale/ui/seller/draft/resolve")({
 
 		if (current) {
 			throw redirect({
-				to: "/$locale/ui/seller/draft/$id/edit",
+				to: "/$locale/flow/seller/draft/$id/edit",
 				params: {
 					id: current.id,
 					locale,
@@ -36,7 +36,7 @@ export const Route = createFileRoute("/$locale/ui/seller/draft/resolve")({
 		await withDraftCollectionQuery.invalidate(queryClient);
 
 		throw redirect({
-			to: "/$locale/ui/seller/draft/$id/edit",
+			to: "/$locale/flow/seller/draft/$id/edit",
 			params: {
 				id: draft.id,
 				locale,

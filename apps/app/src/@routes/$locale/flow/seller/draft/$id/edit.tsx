@@ -4,7 +4,7 @@ import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { DraftEditor } from "~/app/@seller-user/draft/ui/DraftEditor";
 
-export const Route = createFileRoute("/$locale/ui/seller/draft/$id/edit")({
+export const Route = createFileRoute("/$locale/flow/seller/draft/$id/edit")({
 	component() {
 		const { id } = Route.useParams();
 		const locale = useLocale();
