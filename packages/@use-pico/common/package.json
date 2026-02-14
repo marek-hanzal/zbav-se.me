@@ -32,7 +32,7 @@
 		"zod": "4.3.6"
 	},
 	"peerDependencies": {
-		"effect": "3.19.16"
+		"effect": "3.19.17"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "29.0.0",
@@ -42,7 +42,7 @@
 		"@types/react": "19.2.14",
 		"@typescript/native-preview": "7.0.0-dev.20260206.1",
 		"@use-pico/tsconfig": "5.0.0",
-		"effect": "3.19.16",
+		"effect": "3.19.17",
 		"rollup": "4.57.1",
 		"rollup-plugin-dts": "6.3.0",
 		"typescript": "5.9.3",
