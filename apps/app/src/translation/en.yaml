@@ -301,9 +301,6 @@
 523bef97e177163c4710b0138d4a2f8166cce50ebb8930b74298d0f8:
   ref: relative
   value: relative
-56093b0ee9cd3eadf7db4a59a8ec98132bacd22fa07691fdac66874a:
-  ref: Buyer - shop (title)
-  value: Buyer - shop (title)
 5611e161fc48366fdb56f2529712795617513c1b346552e32a53ff19:
   ref: Loading... (button)
   value: Loading... (button)
@@ -681,6 +678,9 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     message than this :(
   value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
     better message than this :(
+c360a8542e6f85f8f1c9cacccc525cb1fcdf6b743584428ee6111e55:
+  ref: Shop (title)
+  value: Shop (title)
 c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
   ref: Feed title not filled
   value: Feed title not filled

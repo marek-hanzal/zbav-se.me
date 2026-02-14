@@ -6,7 +6,7 @@ export const Route = createFileRoute("/$locale/flow/shop")({
 	component() {
 		return (
 			<TitleContainer
-				textTitle={"Show (title)"}
+				textTitle={"Shop (title)"}
 				right={<HomeMenuButton />}
 			>
 				Shop
