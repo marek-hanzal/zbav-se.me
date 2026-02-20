@@ -26,23 +26,23 @@
 		"kysely": "0.28.11",
 		"luxon": "3.7.2",
 		"preferred-locale": "2.0.2",
-		"qs": "6.14.2",
+		"qs": "6.15.0",
 		"ts-pattern": "5.9.0",
 		"xxhash-wasm": "1.1.0",
 		"zod": "4.3.6"
 	},
 	"peerDependencies": {
-		"effect": "3.19.17"
+		"effect": "3.19.18"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "29.0.0",
 		"@rollup/plugin-node-resolve": "16.0.3",
 		"@rollup/plugin-typescript": "12.3.0",
-		"@types/node": "25.2.3",
+		"@types/node": "25.3.0",
 		"@types/react": "19.2.14",
-		"@typescript/native-preview": "7.0.0-dev.20260206.1",
+		"@typescript/native-preview": "7.0.0-dev.20260219.1",
 		"@use-pico/tsconfig": "5.0.0",
-		"effect": "3.19.17",
+		"effect": "3.19.18",
 		"rollup": "4.57.1",
 		"rollup-plugin-dts": "6.3.0",
 		"typescript": "5.9.3",
