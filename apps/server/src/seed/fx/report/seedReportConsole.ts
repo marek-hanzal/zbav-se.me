@@ -1,3 +1,5 @@
+import { appendFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { terminal as term } from "terminal-kit";
 import type { SeedCoreReportSchema } from "~/seed/fx/report/SeedCoreReportSchema";
 import type { SeedInteractionReportSchema } from "~/seed/fx/report/SeedInteractionReportSchema";
@@ -94,7 +96,7 @@ export const withInlineCounts = (tables: Record<string, number>, max = 6) => {
 const withTotalCount = (totals: Record<string, number>) =>
 	Object.values(totals).reduce((acc, value) => acc + Number(value || 0), 0);
 
-export const printSeedBenchmarkJsonl = ({
+export const toSeedBenchmarkJsonl = ({
 	kind,
 	count,
 	totals,
@@ -109,13 +111,36 @@ export const printSeedBenchmarkJsonl = ({
 	const safeCount = Math.max(1, count);
 	const runtimePerItemMs = Number((runtimeMs / safeCount).toFixed(3));
 
-	console.log(
-		JSON.stringify({
-			stamp: new Date().toISOString(),
-			kind,
-			count,
-			totalCount,
-			runtimePerItemMs,
-		}),
-	);
+	return JSON.stringify({
+		stamp: new Date().toISOString(),
+		kind,
+		count,
+		totalCount,
+		runtimePerItemMs,
+	});
+};
+
+export const appendSeedBenchmarkJsonl = ({
+	kind,
+	count,
+	totals,
+	runtimeMs,
+	filePath = "benchmark.jsonl",
+}: {
+	kind: "core" | "interaction";
+	count: number;
+	totals: Record<string, number>;
+	runtimeMs: number;
+	filePath?: string;
+}) => {
+	const line = toSeedBenchmarkJsonl({
+		kind,
+		count,
+		totals,
+		runtimeMs,
+	});
+
+	appendFileSync(resolve(process.cwd(), filePath), `${line}\n`, "utf8");
+
+	return line;
 };
