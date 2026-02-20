@@ -43,6 +43,15 @@ export const GalleryItemMigration: Migration = {
 			.execute();
 
 		await db.schema
+			.createIndex("gallery_item_[galleryId-sort]_idx")
+			.on("gallery_item")
+			.columns([
+				"galleryId",
+				"sort",
+			])
+			.execute();
+
+		await db.schema
 			.createIndex("gallery_item_[createdAt]_idx")
 			.on("gallery_item")
 			.column("createdAt")
