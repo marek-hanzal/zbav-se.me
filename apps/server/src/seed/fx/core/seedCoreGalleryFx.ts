@@ -94,6 +94,7 @@ export const seedCoreGalleryFx = Effect.fn("seedCoreGalleryFx")(function* ({
 	).pipe(
 		Effect.map((counts) => {
 			createdItems = counts.reduce((acc, value) => acc + value, 0);
+			return counts;
 		}),
 	);
 
