@@ -141,7 +141,7 @@ export const seedInteractionFx = Effect.fn("seedInteractionFx")(function* ({
 	});
 	yield* progress.finishAll();
 
-	const report = SeedInteractionReportSchema.parse({
+	return SeedInteractionReportSchema.parse({
 		userId: current.id,
 		user,
 		count,
@@ -149,8 +149,6 @@ export const seedInteractionFx = Effect.fn("seedInteractionFx")(function* ({
 		tables,
 		totals,
 	});
-
-	return report;
 });
 
 export type seedInteractionFx = ReturnType<typeof seedInteractionFx>;

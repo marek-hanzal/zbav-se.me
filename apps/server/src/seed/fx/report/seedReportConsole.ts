@@ -90,3 +90,32 @@ export const withInlineCounts = (tables: Record<string, number>, max = 6) => {
 	const suffix = rest > 0 ? ` ${style.dim(`(+${rest} more)`)}` : "";
 	return `${items.join(", ")}${suffix}`;
 };
+
+const withTotalCount = (totals: Record<string, number>) =>
+	Object.values(totals).reduce((acc, value) => acc + Number(value || 0), 0);
+
+export const printSeedBenchmarkJsonl = ({
+	kind,
+	count,
+	totals,
+	runtimeMs,
+}: {
+	kind: "core" | "interaction";
+	count: number;
+	totals: Record<string, number>;
+	runtimeMs: number;
+}) => {
+	const totalCount = withTotalCount(totals);
+	const safeCount = Math.max(1, count);
+	const runtimePerItemMs = Number((runtimeMs / safeCount).toFixed(3));
+
+	console.log(
+		JSON.stringify({
+			stamp: new Date().toISOString(),
+			kind,
+			count,
+			totalCount,
+			runtimePerItemMs,
+		}),
+	);
+};

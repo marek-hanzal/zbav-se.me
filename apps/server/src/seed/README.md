@@ -43,3 +43,5 @@ Location warmup queries are loaded from `src/seed/data/location.json` (copied fr
 - Core report shows generated deltas for the current run
 - Seed runtime manages a scoped PostgreSQL pool and explicitly closes it on program end
   to avoid delayed process exit after report rendering
+- Both CLI scripts also emit a benchmark JSONL line to stdout with:
+  `stamp`, `count`, `totalCount`, and normalized `runtimePerItemMs`

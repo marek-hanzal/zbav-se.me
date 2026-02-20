@@ -1,11 +1,12 @@
 import { Effect } from "effect";
 import { seedCoreFx } from "~/seed/fx/seedCoreFx";
-import { printSeedCoreReport } from "~/seed/fx/report/seedReportConsole";
+import { printSeedBenchmarkJsonl, printSeedCoreReport } from "~/seed/fx/report/seedReportConsole";
 import { withSeedRuntimeFx } from "~/seed/fx/withSeedRuntimeFx";
 import { parseSeedArgsFx } from "~/seed/schema/SeedArgsSchema";
 import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
 
 const program = Effect.gen(function* () {
+	const start = yield* Effect.sync(() => Date.now());
 	const args = yield* parseSeedArgsFx({
 		name: "seed-core",
 		args: process.argv.slice(2),
@@ -16,8 +17,20 @@ const program = Effect.gen(function* () {
 		user: args.user,
 		cdn: cdnConfig.SERVER_CONTENT_CDN,
 	});
+	const end = yield* Effect.sync(() => Date.now());
 
-	printSeedCoreReport(report);
+	return {
+		report,
+		runtimeMs: end - start,
+	};
 });
 
-await program.pipe(withSeedRuntimeFx, Effect.scoped, Effect.runPromise);
+const { report, runtimeMs } = await program.pipe(withSeedRuntimeFx, Effect.scoped, Effect.runPromise);
+
+printSeedCoreReport(report);
+printSeedBenchmarkJsonl({
+	kind: "core",
+	count: report.count,
+	totals: report.totals,
+	runtimeMs,
+});
