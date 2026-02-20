@@ -39,7 +39,7 @@ export const TransactionListingList: FC<TransactionListingList.Props> = ({
 					refetchInterval: 5_000,
 				}}
 			>
-				{({ data: { data } }) => {
+				{({ data }) => {
 					if (data.length === 0) {
 						return (
 							<Container

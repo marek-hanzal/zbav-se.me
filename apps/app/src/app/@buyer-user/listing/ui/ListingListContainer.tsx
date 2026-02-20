@@ -84,7 +84,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 				fallback={<SpinnerContainer data-ui={"ListingListContainer-[SpinnerContainer]"} />}
 			>
 				{({ data }) => {
-					if (data.data.length === 0) {
+					if (data.length === 0) {
 						return renderEmptyFn ? (
 							renderEmptyFn()
 						) : (
@@ -115,7 +115,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 
 					return (
 						<VisibilityProvider store={visibility}>
-							{data.data.map((listing) => (
+							{data.map((listing) => (
 								<VisibleContainer
 									key={listing.id}
 									id={listing.id}

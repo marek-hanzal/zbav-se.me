@@ -25,13 +25,13 @@ export const Content: FC<Content.Props> = ({ _suspense, query }) => {
 	 */
 	const listingCollectionQuery = withListingCollectionQuery.useSuspenseQuery(query);
 
-	if (listingCollectionQuery.data.data.length === 0) {
+	if (listingCollectionQuery.data.length === 0) {
 		return null;
 	}
 
 	return (
 		<>
-			{listingCollectionQuery.data.data.map(({ id: listingId }) => {
+			{listingCollectionQuery.data.map(({ id: listingId }) => {
 				return (
 					<VisibleContainer
 						key={listingId}

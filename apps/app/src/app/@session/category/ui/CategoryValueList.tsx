@@ -1,11 +1,11 @@
 import { ValueList } from "@use-pico/client/ui/container";
-import type { tCategory } from "@zbav-se.me/sdk/api/session";
+import type { tCategoryItem } from "@zbav-se.me/sdk/api/session";
 import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
 import { CategoryInline } from "~/app/@common/category/ui/CategoryInline";
 
 export namespace CategoryValueList {
-	export interface Props extends Omit<ValueList.Props<tCategory>, "items" | "renderFn"> {
+	export interface Props extends Omit<ValueList.Props<tCategoryItem>, "items" | "renderFn"> {
 		categoryIdIn: string[] | undefined | null;
 	}
 }
@@ -13,7 +13,7 @@ export namespace CategoryValueList {
 export const CategoryValueList: FC<CategoryValueList.Props> = ({ categoryIdIn, ...props }) => {
 	if (!categoryIdIn || categoryIdIn.length === 0) {
 		return (
-			<ValueList
+			<ValueList<tCategoryItem>
 				renderFn={() => null}
 				items={[]}
 				{...props}
@@ -29,7 +29,7 @@ export const CategoryValueList: FC<CategoryValueList.Props> = ({ categoryIdIn, .
 				},
 			}}
 			fallback={
-				<ValueList
+				<ValueList<tCategoryItem>
 					renderFn={() => null}
 					items={[]}
 					loading={true}
@@ -39,9 +39,9 @@ export const CategoryValueList: FC<CategoryValueList.Props> = ({ categoryIdIn, .
 		>
 			{({ data }) => {
 				return (
-					<ValueList
+					<ValueList<tCategoryItem>
 						renderFn={(category) => <CategoryInline category={category} />}
-						items={data.data}
+						items={data}
 						wrapperProps={{
 							ui: {
 								tone: "neutral",

@@ -119,7 +119,7 @@ export const MessageList: FC<MessageList.Props> = ({
 				{({ data }) => {
 					return (
 						<>
-							{data.data.map((message) => {
+							{data.map((message) => {
 								return match(message.type)
 									.with("text", () => (
 										<MessageText

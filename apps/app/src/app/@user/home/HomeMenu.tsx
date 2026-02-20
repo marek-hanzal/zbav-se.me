@@ -163,7 +163,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 							</LinkTo>
 						}
 					>
-						{({ data: { data } }) => {
+						{({ data }) => {
 							return (
 								<LinkTo
 									{...uiMenuButton({

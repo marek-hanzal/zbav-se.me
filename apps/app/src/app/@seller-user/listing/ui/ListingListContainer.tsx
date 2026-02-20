@@ -46,7 +46,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({ query, ..
 				fallback={<SpinnerContainer />}
 			>
 				{({ data }) => {
-					if (data.data.length === 0) {
+					if (data.length === 0) {
 						return (
 							<Container
 								ui={{

@@ -38,7 +38,7 @@ export const DraftList: FC<DraftList.Props> = ({ query, onSuccess, ui, ...props 
 								gap: "default",
 							}}
 						>
-							{data.data.map(({ id: draftId }) => {
+							{data.map(({ id: draftId }) => {
 								return (
 									<withDraftFetchQuery.Suspense
 										key={draftId}

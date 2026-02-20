@@ -64,7 +64,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 		categoryQuery.data,
 	]);
 
-	if (categoryQuery.data.data.length === 0) {
+	if (categoryQuery.data.length === 0) {
 		return (
 			<Container
 				data-ui="ListContainer[Container.empty]"
@@ -86,7 +86,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 		);
 	}
 
-	return categoryQuery.data.data.length > 0 ? (
+	return categoryQuery.data.length > 0 ? (
 		<Container
 			data-ui="ListContainer[Container.content]"
 			ref={mergedRef}
@@ -97,7 +97,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 			}}
 			{...props}
 		>
-			{categoryQuery.data.data.map((item) => {
+			{categoryQuery.data.map((item) => {
 				return (
 					<CategoryItem
 						key={item.id}
