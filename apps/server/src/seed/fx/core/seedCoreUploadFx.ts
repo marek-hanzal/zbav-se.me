@@ -11,7 +11,7 @@ import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
 import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
 
 const MAX_UPLOAD_FETCH = 128;
-const MAX_PHOTOBANK_FETCH_PER_RUN = 24;
+const MAX_PHOTOBANK_FETCH_PER_RUN = 64;
 const PHOTOBANK_FETCH_CONCURRENCY = 3;
 const UPLOAD_INSERT_CHUNK = 1000;
 
@@ -159,12 +159,7 @@ export const seedCoreUploadFx = Effect.fn("seedCoreUploadFx")(function* ({
 				break;
 			}
 
-			yield* tryDbFx(async () =>
-				kysely
-					.insertInto("upload")
-					.values(rows)
-					.execute(),
-			);
+			yield* tryDbFx(async () => kysely.insertInto("upload").values(rows).execute());
 
 			for (const row of rows) {
 				pool.push({
