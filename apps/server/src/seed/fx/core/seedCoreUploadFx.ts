@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { S3ContextFx } from "~/@common/s3/context/S3ContextFx";
@@ -10,6 +11,9 @@ import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
 import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
 
 const MAX_UPLOAD_FETCH = 128;
+const MAX_PHOTOBANK_FETCH_PER_RUN = 24;
+const PHOTOBANK_FETCH_CONCURRENCY = 3;
+const UPLOAD_INSERT_CHUNK = 1000;
 
 const fetchPhotoBufferFx = Effect.fn("fetchPhotoBufferFx")(function* () {
 	const sig = genId();
@@ -54,6 +58,7 @@ export const seedCoreUploadFx = Effect.fn("seedCoreUploadFx")(function* ({
 	const progress = yield* SeedProgressContextFx;
 	const { kysely } = yield* KyselyContextFx;
 	const { bucket } = yield* S3ContextFx;
+	const dateContext = yield* DateContextFx;
 
 	const existingByUser = yield* tryDbFx(async () =>
 		kysely
@@ -64,7 +69,7 @@ export const seedCoreUploadFx = Effect.fn("seedCoreUploadFx")(function* ({
 			])
 			.where("userId", "=", userId)
 			.orderBy("createdAt", "desc")
-			.limit(Math.max(MAX_UPLOAD_FETCH, deficit))
+			.limit(MAX_UPLOAD_FETCH)
 			.execute(),
 	);
 
@@ -78,58 +83,100 @@ export const seedCoreUploadFx = Effect.fn("seedCoreUploadFx")(function* ({
 	const missingPool = Math.max(0, targetPoolSize - pool.length);
 	if (missingPool > 0) {
 		const s3 = yield* s3ClientFx();
-		for (let i = 0; i < missingPool; i++) {
-			const data = yield* fetchPhotoBufferFx();
-			const key = `${userId}/seed/${randomUUID()}.jpg`;
+		const photobankBudget = Math.min(MAX_PHOTOBANK_FETCH_PER_RUN, missingPool);
+		const fetched = yield* Effect.forEach(
+			Array.from({
+				length: photobankBudget,
+			}),
+			() =>
+				Effect.gen(function* () {
+					const data = yield* fetchPhotoBufferFx();
+					const key = `${userId}/seed/${randomUUID()}.jpg`;
 
-			yield* Effect.tryPromise({
-				try: async () => {
-					await s3.putObject(bucket, key, data, data.length, {
-						"Content-Type": "image/jpeg",
+					yield* Effect.tryPromise({
+						try: async () => {
+							await s3.putObject(bucket, key, data, data.length, {
+								"Content-Type": "image/jpeg",
+							});
+						},
+						catch: (cause) =>
+							new RuntimeErrorFx({
+								message: "Failed to upload image to S3",
+								cause,
+							}),
 					});
-				},
-				catch: (cause) =>
-					new RuntimeErrorFx({
-						message: "Failed to upload image to S3",
-						cause,
-					}),
-			});
 
-			const upload = yield* uploadCreateFx({
-				userId,
-				url: `${cdn.replace(/\/$/, "")}/${key}`,
-			});
+					const upload = yield* uploadCreateFx({
+						userId,
+						url: `${cdn.replace(/\/$/, "")}/${key}`,
+					});
 
-			pool.push({
-				id: upload.id,
-				url: upload.url,
-			});
-			created += 1;
-			yield* progress.advance({
-				delta: 1,
-			});
-		}
+					yield* progress.advance({
+						delta: 1,
+					});
+
+					return {
+						id: upload.id,
+						url: upload.url,
+					};
+				}),
+			{
+				concurrency: PHOTOBANK_FETCH_CONCURRENCY,
+			},
+		);
+
+		pool.push(...fetched);
+		created += fetched.length;
 	}
 
 	if (deficit > 0 && pool.length > 0) {
 		let remaining = Math.max(0, deficit - created);
 		while (remaining > 0) {
-			const source = pool[Math.floor(Math.random() * pool.length)];
-			if (!source) {
+			const chunk = Math.min(remaining, UPLOAD_INSERT_CHUNK);
+			const now = dateContext.now().toJSDate();
+
+			const rows: Array<{
+				id: string;
+				userId: string;
+				url: string;
+				createdAt: Date;
+			}> = [];
+
+			for (let i = 0; i < chunk; i++) {
+				const source = pool[Math.floor(Math.random() * pool.length)];
+				if (!source) {
+					break;
+				}
+				rows.push({
+					id: genId(),
+					userId,
+					url: source.url,
+					createdAt: now,
+				});
+			}
+
+			if (rows.length === 0) {
 				break;
 			}
-			const upload = yield* uploadCreateFx({
-				userId,
-				url: source.url,
-			});
-			pool.push({
-				id: upload.id,
-				url: upload.url,
-			});
-			remaining -= 1;
-			created += 1;
+
+			yield* tryDbFx(async () =>
+				kysely
+					.insertInto("upload")
+					.values(rows)
+					.execute(),
+			);
+
+			for (const row of rows) {
+				pool.push({
+					id: row.id,
+					url: row.url,
+				});
+			}
+
+			remaining -= rows.length;
+			created += rows.length;
 			yield* progress.advance({
-				delta: 1,
+				delta: rows.length,
 			});
 		}
 	}
