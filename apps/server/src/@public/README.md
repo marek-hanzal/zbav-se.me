@@ -57,6 +57,7 @@ This domain provides endpoints that don't require authentication. It includes sy
 - **Transaction Interactions** - Seed transaction flows
 - **User Seed** - Seed user accounts
 - Development and testing utilities
+- **CLI Seed Domain** - New Effect-only seed implementation now lives in `src/seed` and is executed via Turbo scripts (`seed:core`, `seed:interaction`).
 
 ## Access Rules
 
