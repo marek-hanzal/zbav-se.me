@@ -2,10 +2,12 @@ import { rangedom, sample } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { galleryInsertFx } from "~/@user/gallery/fx/galleryInsertFx";
 import { galleryItemInsertFx } from "~/@user/gallery-item/fx/galleryItemInsertFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
 import { withSeedConcurrency } from "~/seed/fx/core/seedConcurrency";
 
 const GALLERY_SEED_CONCURRENCY = withSeedConcurrency("SEED_GALLERY_CONCURRENCY");
+const GALLERY_TX_CHUNK_SIZE = 25;
 
 export const seedCoreGalleryFx = Effect.fn("seedCoreGalleryFx")(function* ({
 	userId,
@@ -54,46 +56,56 @@ export const seedCoreGalleryFx = Effect.fn("seedCoreGalleryFx")(function* ({
 	}
 
 	let createdItems = 0;
+	const indices = Array.from({
+		length: galleryDeficit,
+	}).map((_, i) => i);
+	const chunks: number[][] = [];
+	for (let i = 0; i < indices.length; i += GALLERY_TX_CHUNK_SIZE) {
+		chunks.push(indices.slice(i, i + GALLERY_TX_CHUNK_SIZE));
+	}
+
 	yield* Effect.forEach(
-		Array.from({
-			length: galleryDeficit,
-		}).map((_, i) => i),
-		(i) =>
-			Effect.gen(function* () {
-				const gallery = yield* galleryInsertFx({
-					userId,
-				});
+		chunks,
+		(chunk) =>
+			withTransactionFx(
+				Effect.forEach(chunk, (i) =>
+					Effect.gen(function* () {
+						const gallery = yield* galleryInsertFx({
+							userId,
+						});
 
-				const planned = galleryItemPlan[i] ?? 0;
-				const requested =
-					galleryItemDeficit > 0 ? planned : rangedom(1, Math.min(6, uploadIds.length));
-				const uploads = sample(uploadIds, requested);
-				let sort = 0;
-				let localCreated = 0;
-				for (const uploadId of uploads) {
-					yield* galleryItemInsertFx({
-						userId,
-						galleryId: gallery.id,
-						uploadId,
-						sort,
-						check: false,
-					});
-					sort += 1;
-					localCreated += 1;
-				}
+						const planned = galleryItemPlan[i] ?? 0;
+						const requested =
+							galleryItemDeficit > 0 ? planned : rangedom(1, Math.min(6, uploadIds.length));
+						const uploads = sample(uploadIds, requested);
+						let sort = 0;
+						let localCreated = 0;
+						for (const uploadId of uploads) {
+							yield* galleryItemInsertFx({
+								userId,
+								galleryId: gallery.id,
+								uploadId,
+								sort,
+								check: false,
+							});
+							sort += 1;
+							localCreated += 1;
+						}
 
-				yield* progress.advance({
-					delta: 1,
-				});
+						yield* progress.advance({
+							delta: 1,
+						});
 
-				return localCreated;
-			}),
+						return localCreated;
+					}),
+				),
+			),
 		{
 			concurrency: GALLERY_SEED_CONCURRENCY,
 		},
 	).pipe(
 		Effect.map((counts) => {
-			createdItems = counts.reduce((acc, value) => acc + value, 0);
+			createdItems = counts.flat().reduce((acc, value) => acc + value, 0);
 			return counts;
 		}),
 	);

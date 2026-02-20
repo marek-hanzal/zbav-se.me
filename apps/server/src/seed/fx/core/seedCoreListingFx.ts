@@ -4,6 +4,7 @@ import { draftCreateFx } from "~/@seller-user/draft/fx/draftCreateFx";
 import { listingCreateFx } from "~/@seller-user/listing/fx/listingCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
 import Cons from "~/seed/data/listing-cons.json";
 import Descriptions from "~/seed/data/listing-description.json";
@@ -12,6 +13,7 @@ import Titles from "~/seed/data/listing-title.json";
 import { withSeedConcurrency } from "~/seed/fx/core/seedConcurrency";
 
 const LISTING_SEED_CONCURRENCY = withSeedConcurrency("SEED_LISTING_CONCURRENCY");
+const LISTING_TX_CHUNK_SIZE = 25;
 
 export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 	userId,
@@ -53,79 +55,94 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 		} as const;
 	};
 
+	const toChunks = (size: number) => (total: number) => {
+		const indices = Array.from({
+			length: total,
+		}).map((_, i) => i);
+		const chunks: number[][] = [];
+		for (let i = 0; i < indices.length; i += size) {
+			chunks.push(indices.slice(i, i + size));
+		}
+		return chunks;
+	};
+
 	yield* Effect.forEach(
-		Array.from({
-			length: draftDeficit,
-		}).map((_, i) => i),
-		() =>
-			Effect.gen(function* () {
-				const categoryId = list(categoryIds);
-				const locationId = list(locationIds);
+		toChunks(LISTING_TX_CHUNK_SIZE)(draftDeficit),
+		(chunk) =>
+			withTransactionFx(
+				Effect.forEach(chunk, () =>
+					Effect.gen(function* () {
+						const categoryId = list(categoryIds);
+						const locationId = list(locationIds);
 
-				yield* draftCreateFx({
-					...withProsCons(),
-					userId,
-					title: Titles.length > 0 ? list(Titles) : "Item",
-					description: Descriptions.length > 0 ? list(Descriptions) : "",
-					categoryId,
-					locationId,
-					expiresAt: list([
-						"7-days",
-						"14-days",
-						"1-month",
-					]),
-					uploadIds: sample(uploadIds, rangedom(1, Math.min(4, uploadIds.length))),
-				});
+						yield* draftCreateFx({
+							...withProsCons(),
+							userId,
+							title: Titles.length > 0 ? list(Titles) : "Item",
+							description: Descriptions.length > 0 ? list(Descriptions) : "",
+							categoryId,
+							locationId,
+							expiresAt: list([
+								"7-days",
+								"14-days",
+								"1-month",
+							]),
+							uploadIds: sample(uploadIds, rangedom(1, Math.min(4, uploadIds.length))),
+						});
 
-				yield* progress.advance({
-					delta: 1,
-				});
-			}),
+						yield* progress.advance({
+							delta: 1,
+						});
+					}),
+				),
+			),
 		{
 			concurrency: LISTING_SEED_CONCURRENCY,
 		},
 	);
 
 	yield* Effect.forEach(
-		Array.from({
-			length: listingDeficit,
-		}).map((_, i) => i),
-		(i) =>
-			Effect.gen(function* () {
-				const categoryId = list(categoryIds);
-				const locationId = list(locationIds);
+		toChunks(LISTING_TX_CHUNK_SIZE)(listingDeficit),
+		(chunk) =>
+			withTransactionFx(
+				Effect.forEach(chunk, (i) =>
+					Effect.gen(function* () {
+						const categoryId = list(categoryIds);
+						const locationId = list(locationIds);
 
-				yield* listingCreateFx({
-					...withProsCons(),
-					userId,
-					title: `${Titles.length > 0 ? list(Titles) : "Item"} #${i + 1}`,
-					description: Descriptions.length > 0 ? list(Descriptions) : null,
-					categoryId,
-					locationId,
-					age: rangedom(0, 5),
-					condition: rangedom(0, 5),
-					price: rangedom(1, 100_000),
-					priceType: list([
-						"closed",
-						"open",
-					]),
-					restriction: "none",
-					delivery: [
-						"personal",
-					],
-					warranty: null,
-					expiresAt: list([
-						"7-days",
-						"14-days",
-						"1-month",
-					]),
-					uploadIds: sample(uploadIds, rangedom(1, Math.min(6, uploadIds.length))),
-				});
+						yield* listingCreateFx({
+							...withProsCons(),
+							userId,
+							title: `${Titles.length > 0 ? list(Titles) : "Item"} #${i + 1}`,
+							description: Descriptions.length > 0 ? list(Descriptions) : null,
+							categoryId,
+							locationId,
+							age: rangedom(0, 5),
+							condition: rangedom(0, 5),
+							price: rangedom(1, 100_000),
+							priceType: list([
+								"closed",
+								"open",
+							]),
+							restriction: "none",
+							delivery: [
+								"personal",
+							],
+							warranty: null,
+							expiresAt: list([
+								"7-days",
+								"14-days",
+								"1-month",
+							]),
+							uploadIds: sample(uploadIds, rangedom(1, Math.min(6, uploadIds.length))),
+						});
 
-				yield* progress.advance({
-					delta: 1,
-				});
-			}),
+						yield* progress.advance({
+							delta: 1,
+						});
+					}),
+				),
+			),
 		{
 			concurrency: LISTING_SEED_CONCURRENCY,
 		},
