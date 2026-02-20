@@ -49,48 +49,59 @@ export const withInteractionTimeline = ({ from }: { from: DateTime }): Interacti
 	const start = withRandomDateBetween(
 		baseline,
 		now.minus({
-			hours: 1,
+			days: 3,
 		}),
 	);
-	const limit = start.plus({
-		hours: withRandomInt(24, 72),
-	});
 	const ghostHours = Math.random() < 0.35 ? withRandomInt(6, 18) : 0;
+	const totalMinutes = withRandomInt(24 * 60, 72 * 60);
+	const baseGaps = [
+		withRandomInt(5, 180),
+		withRandomInt(1, 45),
+		withRandomInt(5, 180),
+		ghostHours * 60 + withRandomInt(5, 120),
+		withRandomInt(2 * 60, 24 * 60),
+		withRandomInt(1 * 60, 24 * 60),
+	];
+	const baseTotal = baseGaps.reduce((sum, value) => sum + value, 0);
+	const ratio = baseTotal > 0 ? Math.min(1, totalMinutes / baseTotal) : 1;
+	const scaledGaps = baseGaps.map((value) => Math.max(1, Math.floor(value * ratio)));
+	const scaledTotal = scaledGaps.reduce((sum, value) => sum + value, 0);
+	const lastGap = scaledGaps.at(-1) ?? 1;
+	scaledGaps[scaledGaps.length - 1] = lastGap + Math.max(0, totalMinutes - scaledTotal);
 
-	const clamp = (value: DateTime) => (value.toMillis() > limit.toMillis() ? limit : value);
-
+	const [acceptGap, buyerGap, sellerGap, metadataGap, resolveGap, finalGap] = scaledGaps;
 	const createAt = start;
-	const acceptAt = clamp(
-		createAt.plus({
-			minutes: withRandomInt(5, 180),
-		}),
-	);
-	const buyerMessageAt = clamp(
-		acceptAt.plus({
-			minutes: withRandomInt(1, 45),
-		}),
-	);
-	const sellerMessageAt = clamp(
-		buyerMessageAt.plus({
-			minutes: withRandomInt(5, 180),
-		}),
-	);
-	const metadataAt = clamp(
-		sellerMessageAt.plus({
-			hours: ghostHours,
-			minutes: withRandomInt(5, 120),
-		}),
-	);
-	const resolveAt = clamp(
-		metadataAt.plus({
-			hours: withRandomInt(2, 24),
-		}),
-	);
-	const finalAt = clamp(
-		resolveAt.plus({
-			hours: withRandomInt(1, 24),
-		}),
-	);
+	const acceptAt = createAt.plus({
+		minutes: acceptGap,
+	});
+	const buyerMessageAt = acceptAt.plus({
+		minutes: buyerGap,
+	});
+	const sellerMessageAt = buyerMessageAt.plus({
+		minutes: sellerGap,
+	});
+	const metadataAt = sellerMessageAt.plus({
+		minutes: metadataGap,
+	});
+	const resolveAt = metadataAt.plus({
+		minutes: resolveGap,
+	});
+	const finalAt = resolveAt.plus({
+		minutes: finalGap,
+	});
+
+	const boundedFinalAt =
+		finalAt.toMillis() >= now.toMillis()
+			? now.minus({
+					minutes: 1,
+				})
+			: finalAt;
+	const boundedResolveAt =
+		resolveAt.toMillis() >= boundedFinalAt.toMillis()
+			? boundedFinalAt.minus({
+					minutes: 1,
+				})
+			: resolveAt;
 
 	return {
 		createAt,
@@ -98,7 +109,12 @@ export const withInteractionTimeline = ({ from }: { from: DateTime }): Interacti
 		buyerMessageAt,
 		sellerMessageAt,
 		metadataAt,
-		resolveAt,
-		finalAt,
+		resolveAt:
+			boundedResolveAt.toMillis() <= metadataAt.toMillis()
+				? metadataAt.plus({
+						minutes: 1,
+					})
+				: boundedResolveAt,
+		finalAt: boundedFinalAt,
 	};
 };

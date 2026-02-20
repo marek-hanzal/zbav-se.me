@@ -32,6 +32,19 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 
 	const id = genId();
 	const now = dateContext.now();
+	const latestStatus = yield* tryDbFx(async () =>
+		kysely
+			.selectFrom("transaction_status as ts")
+			.select("ts.createdAt")
+			.where("ts.transactionId", "=", create.transactionId)
+			.orderBy("ts.createdAt", "desc")
+			.limit(1)
+			.executeTakeFirst(),
+	);
+	const createdAt =
+		latestStatus && latestStatus.createdAt.getTime() >= now.toMillis()
+			? new Date(latestStatus.createdAt.getTime() + 1)
+			: now.toJSDate();
 
 	yield* tryDbFx(async () =>
 		kysely
@@ -40,7 +53,7 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 				...create,
 				id,
 				userId,
-				createdAt: now.toJSDate(),
+				createdAt,
 			})
 			.returningAll()
 			.executeTakeFirstOrThrow(),

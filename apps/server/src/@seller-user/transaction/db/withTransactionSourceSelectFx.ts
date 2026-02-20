@@ -30,6 +30,7 @@ export const withTransactionSourceSelectFx = Effect.fn("withTransactionSourceSel
 					])
 					.whereRef("lts2.transactionId", "=", eb.ref("lt.id"))
 					.orderBy("lts2.createdAt", "desc")
+					.orderBy("lts2.id", "desc")
 					.limit(1)
 					.as("status"),
 			(join) => join.onTrue(),

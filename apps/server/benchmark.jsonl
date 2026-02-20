@@ -68,3 +68,17 @@
 {"stamp":"2026-02-20T14:10:54.771Z","kind":"core","count":20,"totalCount":2905681,"runtimePerItemMs":242.95}
 {"stamp":"2026-02-20T14:11:09.087Z","kind":"interaction","count":20,"totalCount":59852,"runtimePerItemMs":107.6}
 {"stamp":"2026-02-20T14:15:43.865Z","kind":"core","count":100,"totalCount":2907201,"runtimePerItemMs":374.54}
+{"stamp":"2026-02-20T14:40:54.430Z","kind":"core","count":10000,"totalCount":562709,"runtimePerItemMs":10.973}
+{"stamp":"2026-02-20T14:42:55.614Z","kind":"core","count":10000,"totalCount":702914,"runtimePerItemMs":11.278}
+{"stamp":"2026-02-20T14:44:40.270Z","kind":"core","count":10000,"totalCount":843140,"runtimePerItemMs":10.184}
+{"stamp":"2026-02-20T14:46:16.978Z","kind":"core","count":10000,"totalCount":983036,"runtimePerItemMs":9.197}
+{"stamp":"2026-02-20T14:47:17.700Z","kind":"core","count":5000,"totalCount":1053086,"runtimePerItemMs":10.233}
+{"stamp":"2026-02-20T14:48:14.484Z","kind":"core","count":5000,"totalCount":1123439,"runtimePerItemMs":10.485}
+{"stamp":"2026-02-20T14:54:47.877Z","kind":"core","count":25000,"totalCount":1473379,"runtimePerItemMs":15.244}
+{"stamp":"2026-02-20T15:36:38.446Z","kind":"core","count":25000,"totalCount":1823449,"runtimePerItemMs":14.716}
+{"stamp":"2026-02-20T16:52:45.896Z","kind":"interaction","count":1000,"totalCount":34916,"runtimePerItemMs":271.475}
+{"stamp":"2026-02-20T16:55:00.193Z","kind":"core","count":25000,"totalCount":2173344,"runtimePerItemMs":16.943}
+{"stamp":"2026-02-20T17:01:29.428Z","kind":"interaction","count":100,"totalCount":38398,"runtimePerItemMs":114.61}
+{"stamp":"2026-02-20T17:03:03.587Z","kind":"interaction","count":250,"totalCount":47070,"runtimePerItemMs":107.184}
+{"stamp":"2026-02-20T17:04:28.217Z","kind":"interaction","count":80,"totalCount":49887,"runtimePerItemMs":106.375}
+{"stamp":"2026-02-20T17:05:03.808Z","kind":"core","count":25000,"totalCount":2523420,"runtimePerItemMs":16.474}

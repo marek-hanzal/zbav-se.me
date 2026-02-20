@@ -46,6 +46,7 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 					.select("lts.status")
 					.whereRef("lts.transactionId", "=", "lt.id")
 					.orderBy("lts.createdAt", "desc")
+					.orderBy("lts.id", "desc")
 					.limit(1)
 					.as("status");
 			})

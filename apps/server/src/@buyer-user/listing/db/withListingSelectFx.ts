@@ -109,6 +109,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 								.select("lts2.id")
 								.whereRef("lts2.transactionId", "=", "lt.id")
 								.orderBy("lts2.createdAt", "desc")
+								.orderBy("lts2.id", "desc")
 								.limit(1),
 						),
 					),
@@ -124,6 +125,7 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 				"success",
 			])
 			.orderBy("lts.createdAt", "desc")
+			.orderBy("lts.id", "desc")
 			.limit(1)
 			.as("transactionId"),
 
