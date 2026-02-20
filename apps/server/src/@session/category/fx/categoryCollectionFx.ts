@@ -45,7 +45,7 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 		queryFx: withCategoryQueryBuilderFx,
 	});
 
-	if (data.data.length === 0) {
+	if (data.length === 0) {
 		yield* categoryMissCreateFx({
 			fulltext: filter?.fulltext || where?.fulltext,
 		});

@@ -16,20 +16,6 @@ export const zDraftItem = z.object({
 export type zDraftItem = z.infer<typeof zDraftItem>;
 
 /**
- * Collection of drafts
- */
-export const zDraftItemSchema = z.object({
-    data: z.array(zDraftItem),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of drafts'
-});
-
-export type zDraftItemSchema = z.infer<typeof zDraftItemSchema>;
-
-/**
  * Type of notice
  */
 export const zNoticeTypeEnum = z.enum([
@@ -718,20 +704,6 @@ export const zListingItem = z.object({
 export type zListingItem = z.infer<typeof zListingItem>;
 
 /**
- * Collection of listings
- */
-export const zListingItemSchema = z.object({
-    data: z.array(zListingItem),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of listings'
-});
-
-export type zListingItemSchema = z.infer<typeof zListingItemSchema>;
-
-/**
  * User-land filters
  */
 export const zListingFilter = z.object({
@@ -989,20 +961,6 @@ export const zTransactionItem = z.object({
 export type zTransactionItem = z.infer<typeof zTransactionItem>;
 
 /**
- * Collection of transactions
- */
-export const zTransactionItemSchema = z.object({
-    data: z.array(zTransactionItem),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of transactions'
-});
-
-export type zTransactionItemSchema = z.infer<typeof zTransactionItemSchema>;
-
-/**
  * This filter matches the current status of the transaction
  */
 export const zTransactionStatusEnum = z.enum([
@@ -1184,20 +1142,6 @@ export const zTransactionListingItem = z.object({
 });
 
 export type zTransactionListingItem = z.infer<typeof zTransactionListingItem>;
-
-/**
- * Collection of listings that have transactions
- */
-export const zTransactionListingItemSchema = z.object({
-    data: z.array(zTransactionListingItem),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of listings that have transactions'
-});
-
-export type zTransactionListingItemSchema = z.infer<typeof zTransactionListingItemSchema>;
 
 /**
  * Filter object for transaction-listing collection
@@ -1382,7 +1326,9 @@ export type zapiDraftCollectionRequest = z.infer<typeof zApiDraftCollectionData>
 /**
  * Access collection of drafts based on provided query
  */
-export const zApiDraftCollectionResponse = zDraftItemSchema;
+export const zApiDraftCollectionResponse = z.array(zDraftItem).register(z.globalRegistry, {
+    description: 'Access collection of drafts based on provided query'
+});
 
 export type zapiDraftCollectionResponse = z.infer<typeof zApiDraftCollectionResponse>;
 
@@ -1489,7 +1435,9 @@ export type zapiListingCollectionRequest = z.infer<typeof zApiListingCollectionD
 /**
  * Access collection of listings based on provided query
  */
-export const zApiListingCollectionResponse = zListingItemSchema;
+export const zApiListingCollectionResponse = z.array(zListingItem).register(z.globalRegistry, {
+    description: 'Access collection of listings based on provided query'
+});
 
 export type zapiListingCollectionResponse = z.infer<typeof zApiListingCollectionResponse>;
 
@@ -1549,7 +1497,9 @@ export type zapiTransactionCollectionRequest = z.infer<typeof zApiTransactionCol
 /**
  * Access collection of transactions based on provided query
  */
-export const zApiTransactionCollectionResponse = zTransactionItemSchema;
+export const zApiTransactionCollectionResponse = z.array(zTransactionItem).register(z.globalRegistry, {
+    description: 'Access collection of transactions based on provided query'
+});
 
 export type zapiTransactionCollectionResponse = z.infer<typeof zApiTransactionCollectionResponse>;
 
@@ -1579,7 +1529,9 @@ export type zapiTransactionListingCollectionRequest = z.infer<typeof zApiTransac
 /**
  * Access collection of listings that have transactions based on provided query
  */
-export const zApiTransactionListingCollectionResponse = zTransactionListingItemSchema;
+export const zApiTransactionListingCollectionResponse = z.array(zTransactionListingItem).register(z.globalRegistry, {
+    description: 'Access collection of listings that have transactions based on provided query'
+});
 
 export type zapiTransactionListingCollectionResponse = z.infer<typeof zApiTransactionListingCollectionResponse>;
 

@@ -189,22 +189,6 @@ export const zGalleryQuery = z.object({
 export type zGalleryQuery = z.infer<typeof zGalleryQuery>;
 
 /**
- * Collection of gallery items
- */
-export const zGalleryItemSchema = z.object({
-    data: z.array(zGalleryItem.and(z.unknown().register(z.globalRegistry, {
-        description: 'Gallery collection item'
-    }))),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of gallery items'
-});
-
-export type zGalleryItemSchema = z.infer<typeof zGalleryItemSchema>;
-
-/**
  * Count data
  */
 export const zCount = z.object({
@@ -502,20 +486,6 @@ export const zMessageItem = z.object({
 });
 
 export type zMessageItem = z.infer<typeof zMessageItem>;
-
-/**
- * Collection of messages
- */
-export const zMessageItemSchema = z.object({
-    data: z.array(zMessageItem),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of messages'
-});
-
-export type zMessageItemSchema = z.infer<typeof zMessageItemSchema>;
 
 /**
  * Filter object for message collection
@@ -898,7 +868,11 @@ export type zapiGalleryCollectionRequest = z.infer<typeof zApiGalleryCollectionD
 /**
  * Access collection of galleries based on provided query
  */
-export const zApiGalleryCollectionResponse = zGalleryItemSchema;
+export const zApiGalleryCollectionResponse = z.array(zGalleryItem.and(z.unknown().register(z.globalRegistry, {
+    description: 'Gallery collection item'
+}))).register(z.globalRegistry, {
+    description: 'Access collection of galleries based on provided query'
+});
 
 export type zapiGalleryCollectionResponse = z.infer<typeof zApiGalleryCollectionResponse>;
 
@@ -932,7 +906,9 @@ export type zapiMessageThreadMessageCollectionRequest = z.infer<typeof zApiMessa
 /**
  * Access collection of messages based on provided query
  */
-export const zApiMessageThreadMessageCollectionResponse = zMessageItemSchema;
+export const zApiMessageThreadMessageCollectionResponse = z.array(zMessageItem).register(z.globalRegistry, {
+    description: 'Access collection of messages based on provided query'
+});
 
 export type zapiMessageThreadMessageCollectionResponse = z.infer<typeof zApiMessageThreadMessageCollectionResponse>;
 

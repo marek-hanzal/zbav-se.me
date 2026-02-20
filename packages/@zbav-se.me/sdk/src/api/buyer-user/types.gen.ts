@@ -5,17 +5,6 @@ export type clientOptions = {
 };
 
 /**
- * Collection of favourite items
- */
-export type tFavouriteItemSchema = {
-    data: Array<tFavouriteItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
  * Favourite collection item
  */
 export type tFavouriteItem = {
@@ -970,17 +959,6 @@ export const tFeedSortField = { createdAt: 'createdAt', updatedAt: 'updatedAt' }
 export type tFeedSortField = typeof tFeedSortField[keyof typeof tFeedSortField];
 
 /**
- * Collection of feed items
- */
-export type tFeedItemSchema = {
-    data: Array<tFeedItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
  * Feed collection item
  */
 export type tFeedItem = {
@@ -997,17 +975,6 @@ export type tFeedCountQuery = {
     filter?: tFeedFilter;
     where?: tFeedWhere;
     count?: Array<'total' | 'filter' | 'where'>;
-};
-
-/**
- * Collection of feed items from favourites
- */
-export type tFeedFavouriteItemSchema = {
-    data: Array<tFeedFavouriteItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
 };
 
 /**
@@ -1053,17 +1020,6 @@ export type tFeedGalleryCreate = {
      * IDs of the uploads; order of uploads defines order in the gallery
      */
     uploadIds: Array<string>;
-};
-
-/**
- * Collection of flag items
- */
-export type tFlagItemSchema = {
-    data: Array<tFlagItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
 };
 
 /**
@@ -1206,17 +1162,6 @@ export type tFlagToggle = {
 };
 
 /**
- * Collection of ignore items
- */
-export type tIgnoreItemSchema = {
-    data: Array<tIgnoreItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
  * Ignore collection item
  */
 export type tIgnoreItem = {
@@ -1330,17 +1275,6 @@ export type tIgnoreToggle = {
 };
 
 /**
- * Collection of listings
- */
-export type tListingItemSchema = {
-    data: Array<tListingItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
  * Listing collection item
  */
 export type tListingItem = {
@@ -1369,17 +1303,6 @@ export type tThumbCreate = {
      */
     listingId: string;
     type: tThumbEnum;
-};
-
-/**
- * Collection of transactions
- */
-export type tTransactionItemSchema = {
-    data: Array<tTransactionItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
 };
 
 /**
@@ -1663,7 +1586,7 @@ export type tApiFavouriteCollectionResponse = {
     /**
      * Access collection of favourite items based on provided query
      */
-    200: tFavouriteItemSchema;
+    200: Array<tFavouriteItem>;
 };
 
 export type apiFavouriteCollectionResponse = tApiFavouriteCollectionResponse[keyof tApiFavouriteCollectionResponse];
@@ -1846,7 +1769,7 @@ export type tApiFeedCollectionResponse = {
     /**
      * Access collection of feed items based on provided query
      */
-    200: tFeedItemSchema;
+    200: Array<tFeedItem>;
 };
 
 export type apiFeedCollectionResponse = tApiFeedCollectionResponse[keyof tApiFeedCollectionResponse];
@@ -1928,7 +1851,7 @@ export type tApiFeedFavouriteCollectionResponse = {
     /**
      * Access collection of feed items from favourites based on provided query
      */
-    200: tFeedFavouriteItemSchema;
+    200: Array<tFeedFavouriteItem>;
 };
 
 export type apiFeedFavouriteCollectionResponse = tApiFeedFavouriteCollectionResponse[keyof tApiFeedFavouriteCollectionResponse];
@@ -1989,7 +1912,7 @@ export type tApiFlagCollectionResponse = {
     /**
      * Access collection of flag items based on provided query
      */
-    200: tFlagItemSchema;
+    200: Array<tFlagItem>;
 };
 
 export type apiFlagCollectionResponse = tApiFlagCollectionResponse[keyof tApiFlagCollectionResponse];
@@ -2072,7 +1995,7 @@ export type tApiIgnoreCollectionResponse = {
     /**
      * Access collection of ignore items based on provided query
      */
-    200: tIgnoreItemSchema;
+    200: Array<tIgnoreItem>;
 };
 
 export type apiIgnoreCollectionResponse = tApiIgnoreCollectionResponse[keyof tApiIgnoreCollectionResponse];
@@ -2155,7 +2078,7 @@ export type tApiListingCollectionResponse = {
     /**
      * Access collection of listings based on provided query
      */
-    200: tListingItemSchema;
+    200: Array<tListingItem>;
 };
 
 export type apiListingCollectionResponse = tApiListingCollectionResponse[keyof tApiListingCollectionResponse];
@@ -2273,7 +2196,7 @@ export type tApiTransactionCollectionResponse = {
     /**
      * Access collection of transactions based on provided query
      */
-    200: tTransactionItemSchema;
+    200: Array<tTransactionItem>;
 };
 
 export type apiTransactionCollectionResponse = tApiTransactionCollectionResponse[keyof tApiTransactionCollectionResponse];

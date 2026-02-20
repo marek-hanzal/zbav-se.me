@@ -5,17 +5,6 @@ export type clientOptions = {
 };
 
 /**
- * Collection of drafts
- */
-export type tDraftItemSchema = {
-    data: Array<tDraftItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
  * Draft collection item
  */
 export type tDraftItem = {
@@ -680,17 +669,6 @@ export type tDraftGalleryCreate = {
 };
 
 /**
- * Collection of listings
- */
-export type tListingItemSchema = {
-    data: Array<tListingItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
  * Listing collection item
  */
 export type tListingItem = {
@@ -930,17 +908,6 @@ export type tListingCreate = {
 };
 
 /**
- * Collection of transactions
- */
-export type tTransactionItemSchema = {
-    data: Array<tTransactionItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
  * Transaction collection item with last message timestamp
  */
 export type tTransactionItem = {
@@ -1109,17 +1076,6 @@ export type tTransaction = {
     priceType: tListingPriceEnum;
     currency: tCurrencyEnum;
     location: tLocation;
-};
-
-/**
- * Collection of listings that have transactions
- */
-export type tTransactionListingItemSchema = {
-    data: Array<tTransactionListingItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
 };
 
 /**
@@ -1312,7 +1268,7 @@ export type tApiDraftCollectionResponse = {
     /**
      * Access collection of drafts based on provided query
      */
-    200: tDraftItemSchema;
+    200: Array<tDraftItem>;
 };
 
 export type apiDraftCollectionResponse = tApiDraftCollectionResponse[keyof tApiDraftCollectionResponse];
@@ -1534,7 +1490,7 @@ export type tApiListingCollectionResponse = {
     /**
      * Access collection of listings based on provided query
      */
-    200: tListingItemSchema;
+    200: Array<tListingItem>;
 };
 
 export type apiListingCollectionResponse = tApiListingCollectionResponse[keyof tApiListingCollectionResponse];
@@ -1652,7 +1608,7 @@ export type tApiTransactionCollectionResponse = {
     /**
      * Access collection of transactions based on provided query
      */
-    200: tTransactionItemSchema;
+    200: Array<tTransactionItem>;
 };
 
 export type apiTransactionCollectionResponse = tApiTransactionCollectionResponse[keyof tApiTransactionCollectionResponse];
@@ -1709,7 +1665,7 @@ export type tApiTransactionListingCollectionResponse = {
     /**
      * Access collection of listings that have transactions based on provided query
      */
-    200: tTransactionListingItemSchema;
+    200: Array<tTransactionListingItem>;
 };
 
 export type apiTransactionListingCollectionResponse = tApiTransactionListingCollectionResponse[keyof tApiTransactionListingCollectionResponse];

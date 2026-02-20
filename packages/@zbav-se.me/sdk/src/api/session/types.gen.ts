@@ -192,17 +192,6 @@ export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
 export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
 
 /**
- * Collection of categories
- */
-export type tCategoryItemSchema = {
-    data: Array<tCategoryItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
  * Category collection item
  */
 export type tCategoryItem = {
@@ -501,7 +490,7 @@ export type tApiCategoryCollectionResponse = {
     /**
      * Access collection of categories based on provided query
      */
-    200: tCategoryItemSchema;
+    200: Array<tCategoryItem>;
 };
 
 export type apiCategoryCollectionResponse = tApiCategoryCollectionResponse[keyof tApiCategoryCollectionResponse];

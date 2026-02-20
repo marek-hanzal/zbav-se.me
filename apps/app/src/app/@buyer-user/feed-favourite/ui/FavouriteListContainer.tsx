@@ -44,7 +44,7 @@ export const FavouriteListContainer: FC<FavouriteListContainer.Props> = ({
 				fallback={<SpinnerContainer />}
 			>
 				{({ data }) => {
-					if (data.data.length === 0) {
+					if (data.length === 0) {
 						return <EmptyStatus />;
 					}
 
@@ -56,7 +56,7 @@ export const FavouriteListContainer: FC<FavouriteListContainer.Props> = ({
 								gap: "default",
 							}}
 						>
-							{data.data.map((feed) => (
+							{data.map((feed) => (
 								<Item
 									data-ui={"FavouriteListContainer-[Item]"}
 									key={feed.id}

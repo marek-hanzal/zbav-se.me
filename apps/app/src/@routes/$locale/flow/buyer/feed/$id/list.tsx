@@ -335,7 +335,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 					/>
 				}
 			>
-				{listing.data.length > 0 ? (
+				{listing.length > 0 ? (
 					<>
 						<SetupButton
 							feed={feed}
@@ -408,7 +408,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 					</>
 				) : null}
 
-				{listing.data.length > 0 ? null : (
+				{listing.length > 0 ? null : (
 					<Container
 						ui={{
 							layout: "vertical-centered",

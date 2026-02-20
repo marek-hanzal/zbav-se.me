@@ -202,30 +202,6 @@ export const sOrderEnum = {
     ]
 } as const;
 
-export const sGalleryItemSchema = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                allOf: [
-                    {
-                        $ref: '#/components/schemas/GalleryItem'
-                    },
-                    {}
-                ]
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
 export const sCount = {
     type: 'object',
     properties: {
@@ -267,25 +243,6 @@ export const sGalleryCountQuery = {
             }
         }
     }
-} as const;
-
-export const sMessageItemSchema = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/MessageItem'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
 } as const;
 
 export const sMessageItem = {

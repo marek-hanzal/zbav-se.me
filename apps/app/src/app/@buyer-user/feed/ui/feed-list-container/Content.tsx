@@ -33,7 +33,7 @@ export const Content: FC<Content.Props> = ({
 	 */
 	const [defaultOpenId, setDefaultOpenId] = useState<string | undefined>(undefined);
 
-	if (feedCollectionQuery.data.data.length === 0) {
+	if (feedCollectionQuery.data.length === 0) {
 		return null;
 	}
 
@@ -46,7 +46,7 @@ export const Content: FC<Content.Props> = ({
 			}}
 			{...props}
 		>
-			{feedCollectionQuery.data.data.map(({ id: feedId }) => {
+			{feedCollectionQuery.data.map(({ id: feedId }) => {
 				return (
 					<withFeedFetchQuery.Suspense
 						key={feedId}

@@ -202,25 +202,6 @@ export const sOrderEnum = {
     ]
 } as const;
 
-export const sCategoryItemSchema = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/CategoryItem'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
 export const sCategoryItem = {
     type: 'object',
     properties: {

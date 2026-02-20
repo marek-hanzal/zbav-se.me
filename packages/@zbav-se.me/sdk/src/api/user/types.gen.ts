@@ -177,17 +177,6 @@ export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
 export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
 
 /**
- * Collection of gallery items
- */
-export type tGalleryItemSchema = {
-    data: Array<tGalleryItem & unknown>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
  * Count data
  */
 export type tCount = {
@@ -212,17 +201,6 @@ export type tGalleryCountQuery = {
     filter?: tGalleryFilter;
     where?: tGalleryWhere;
     count?: Array<'total' | 'filter' | 'where'>;
-};
-
-/**
- * Collection of messages
- */
-export type tMessageItemSchema = {
-    data: Array<tMessageItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
 };
 
 /**
@@ -856,7 +834,7 @@ export type tApiGalleryCollectionResponse = {
     /**
      * Access collection of galleries based on provided query
      */
-    200: tGalleryItemSchema;
+    200: Array<tGalleryItem & unknown>;
 };
 
 export type apiGalleryCollectionResponse = tApiGalleryCollectionResponse[keyof tApiGalleryCollectionResponse];
@@ -915,7 +893,7 @@ export type tApiMessageThreadMessageCollectionResponse = {
     /**
      * Access collection of messages based on provided query
      */
-    200: tMessageItemSchema;
+    200: Array<tMessageItem>;
 };
 
 export type apiMessageThreadMessageCollectionResponse = tApiMessageThreadMessageCollectionResponse[keyof tApiMessageThreadMessageCollectionResponse];

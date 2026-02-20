@@ -218,20 +218,6 @@ export const zCategoryItem = z.object({
 export type zCategoryItem = z.infer<typeof zCategoryItem>;
 
 /**
- * Collection of categories
- */
-export const zCategoryItemSchema = z.object({
-    data: z.array(zCategoryItem),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of categories'
-});
-
-export type zCategoryItemSchema = z.infer<typeof zCategoryItemSchema>;
-
-/**
  * Count data
  */
 export const zCount = z.object({
@@ -479,7 +465,9 @@ export type zapiCategoryCollectionRequest = z.infer<typeof zApiCategoryCollectio
 /**
  * Access collection of categories based on provided query
  */
-export const zApiCategoryCollectionResponse = zCategoryItemSchema;
+export const zApiCategoryCollectionResponse = z.array(zCategoryItem).register(z.globalRegistry, {
+    description: 'Access collection of categories based on provided query'
+});
 
 export type zapiCategoryCollectionResponse = z.infer<typeof zApiCategoryCollectionResponse>;
 
