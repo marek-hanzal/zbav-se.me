@@ -3,6 +3,21 @@ import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompl
 import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
 import Queries from "~/seed/data/location.json";
 
+const withShuffle = (items: string[]) => {
+	const next = items.slice();
+	for (let i = next.length - 1; i > 0; i -= 1) {
+		const j = Math.floor(Math.random() * (i + 1));
+		const a = next[i];
+		const b = next[j];
+		if (!a || !b) {
+			continue;
+		}
+		next[i] = b;
+		next[j] = a;
+	}
+	return next;
+};
+
 export const seedCoreLocationFx = Effect.fn("seedCoreLocationFx")(function* ({
 	deficit,
 }: {
@@ -14,9 +29,11 @@ export const seedCoreLocationFx = Effect.fn("seedCoreLocationFx")(function* ({
 		return;
 	}
 
+	const queryPool = withShuffle(Queries);
+
 	let cycles = 0;
 	while (cycles < deficit) {
-		const query = Queries[cycles % Queries.length] ?? "Praha";
+		const query = queryPool[cycles % queryPool.length] ?? "Praha";
 		yield* locationAutocompleteFx({
 			text: query,
 			lang: "cs",

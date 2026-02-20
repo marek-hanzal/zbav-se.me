@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Alex Carter",
+		"phone": "+420 601 123 111",
+		"email": "alex.carter@example.test"
+	},
+	{
+		"name": "Mia Turner",
+		"phone": "+420 602 456 222",
+		"email": "mia.turner@example.test"
+	},
+	{
+		"name": "Noah Bennett",
+		"phone": "+420 603 789 333",
+		"email": "noah.bennett@example.test"
+	},
+	{
+		"name": "Emma Brooks",
+		"phone": "+420 604 321 444",
+		"email": "emma.brooks@example.test"
+	},
+	{
+		"name": "Liam Foster",
+		"phone": "+420 605 654 555",
+		"email": "liam.foster@example.test"
+	},
+	{
+		"name": "Olivia Hayes",
+		"phone": "+420 606 987 666",
+		"email": "olivia.hayes@example.test"
+	},
+	{
+		"name": "Ethan Reed",
+		"phone": "+420 607 111 777",
+		"email": "ethan.reed@example.test"
+	},
+	{
+		"name": "Sofia Quinn",
+		"phone": "+420 608 222 888",
+		"email": "sofia.quinn@example.test"
+	}
+]

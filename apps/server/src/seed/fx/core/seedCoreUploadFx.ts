@@ -1,5 +1,4 @@
 import { randomUUID } from "node:crypto";
-import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { S3ContextFx } from "~/@common/s3/context/S3ContextFx";
@@ -9,6 +8,8 @@ import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
 import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
+import { withRandomPastDate } from "~/seed/fx/time/seedTime";
+import { withSeedNowFx } from "~/seed/fx/time/withSeedNowFx";
 
 const MAX_UPLOAD_FETCH = 128;
 const MAX_PHOTOBANK_FETCH_PER_RUN = 64;
@@ -58,7 +59,6 @@ export const seedCoreUploadFx = Effect.fn("seedCoreUploadFx")(function* ({
 	const progress = yield* SeedProgressContextFx;
 	const { kysely } = yield* KyselyContextFx;
 	const { bucket } = yield* S3ContextFx;
-	const dateContext = yield* DateContextFx;
 
 	const existingByUser = yield* tryDbFx(async () =>
 		kysely
@@ -109,7 +109,7 @@ export const seedCoreUploadFx = Effect.fn("seedCoreUploadFx")(function* ({
 					const upload = yield* uploadCreateFx({
 						userId,
 						url: `${cdn.replace(/\/$/, "")}/${key}`,
-					});
+					}).pipe(withSeedNowFx(withRandomPastDate()));
 
 					yield* progress.advance({
 						delta: 1,
@@ -133,8 +133,6 @@ export const seedCoreUploadFx = Effect.fn("seedCoreUploadFx")(function* ({
 		let remaining = Math.max(0, deficit - created);
 		while (remaining > 0) {
 			const chunk = Math.min(remaining, UPLOAD_INSERT_CHUNK);
-			const now = dateContext.now().toJSDate();
-
 			const rows: Array<{
 				id: string;
 				userId: string;
@@ -151,7 +149,7 @@ export const seedCoreUploadFx = Effect.fn("seedCoreUploadFx")(function* ({
 					id: genId(),
 					userId,
 					url: source.url,
-					createdAt: now,
+					createdAt: withRandomPastDate().toJSDate(),
 				});
 			}
 

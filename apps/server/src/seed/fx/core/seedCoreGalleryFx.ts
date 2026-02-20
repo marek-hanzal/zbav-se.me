@@ -5,6 +5,8 @@ import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
 import { withSeedConcurrency } from "~/seed/fx/core/seedConcurrency";
 import { seedGalleryItemBulkInsertFx } from "~/seed/fx/core/seedGalleryItemBulkInsertFx";
+import { withRandomPastDate } from "~/seed/fx/time/seedTime";
+import { withSeedNowFx } from "~/seed/fx/time/withSeedNowFx";
 
 const GALLERY_SEED_CONCURRENCY = withSeedConcurrency("SEED_GALLERY_CONCURRENCY");
 const GALLERY_TX_CHUNK_SIZE = 25;
@@ -55,9 +57,10 @@ export const seedCoreGalleryFx = Effect.fn("seedCoreGalleryFx")(function* ({
 				Effect.gen(function* () {
 					const counts = yield* Effect.forEach(chunk, (i) =>
 						Effect.gen(function* () {
+							const seededAt = withRandomPastDate();
 							const gallery = yield* galleryInsertFx({
 								userId,
-							});
+							}).pipe(withSeedNowFx(seededAt));
 
 							const planned = galleryItemPlan[i] ?? 0;
 							const requested =
@@ -68,7 +71,7 @@ export const seedCoreGalleryFx = Effect.fn("seedCoreGalleryFx")(function* ({
 							const localCreated = yield* seedGalleryItemBulkInsertFx({
 								galleryId: gallery.id,
 								uploadIds: uploads,
-							});
+							}).pipe(withSeedNowFx(seededAt));
 							return localCreated;
 						}),
 					);

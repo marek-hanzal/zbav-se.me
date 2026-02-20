@@ -11,6 +11,8 @@ import Titles from "~/seed/data/listing-title.json";
 import { withSeedConcurrency } from "~/seed/fx/core/seedConcurrency";
 import { seedDraftInsertFx } from "~/seed/fx/core/seedDraftInsertFx";
 import { seedListingInsertFx } from "~/seed/fx/core/seedListingInsertFx";
+import { withRandomPastDate } from "~/seed/fx/time/seedTime";
+import { withSeedNowFx } from "~/seed/fx/time/withSeedNowFx";
 
 const LISTING_SEED_CONCURRENCY = withSeedConcurrency("SEED_LISTING_CONCURRENCY");
 const LISTING_TX_CHUNK_SIZE = 25;
@@ -33,7 +35,7 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 		kysely.selectFrom("category").select("id").limit(512).execute(),
 	);
 	const locations = yield* tryDbFx(async () =>
-		kysely.selectFrom("location").select("id").limit(2048).execute(),
+		kysely.selectFrom("location").select("id").limit(10000).execute(),
 	);
 
 	const categoryIds = categories.map((item) => item.id);
@@ -92,7 +94,7 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 									uploadIds,
 									rangedom(1, Math.min(4, uploadIds.length)),
 								),
-							});
+							}).pipe(withSeedNowFx(withRandomPastDate()));
 						}),
 					);
 					yield* progress.advance({
@@ -143,7 +145,7 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 									uploadIds,
 									rangedom(1, Math.min(6, uploadIds.length)),
 								),
-							});
+							}).pipe(withSeedNowFx(withRandomPastDate()));
 						}),
 					);
 					yield* progress.advance({

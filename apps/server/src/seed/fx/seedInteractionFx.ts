@@ -1,6 +1,7 @@
 import { genId } from "@use-pico/common/gen-id";
 import { list } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
+import { DateTime } from "luxon";
 import { feedCreateFx } from "~/@buyer-user/feed/fx/feedCreateFx";
 import { userExPatchFx } from "~/@user/user-ex/fx/userExPatchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
@@ -9,12 +10,17 @@ import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
 import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
 import { ensureSeedUserFx } from "~/seed/fx/ensureSeedUserFx";
 import { seedInteractionScenarioFx } from "~/seed/fx/interaction/seedInteractionScenarioFx";
+import { seedThumbBatchFx } from "~/seed/fx/interaction/seedThumbBatchFx";
 import { SeedInteractionReportSchema } from "~/seed/fx/report/SeedInteractionReportSchema";
 import { withInlineCounts } from "~/seed/fx/report/seedReportConsole";
 import {
 	SeedPrimaryInteractionTables,
 	withSeedTableCountsFx,
 } from "~/seed/fx/report/withSeedTableCountsFx";
+import { withInteractionTimeline } from "~/seed/fx/time/seedTime";
+
+const INTERACTION_SEED_CONCURRENCY = Number(process.env.SEED_INTERACTION_CONCURRENCY ?? 6);
+const INTERACTION_BATCH_SIZE = Number(process.env.SEED_INTERACTION_BATCH_SIZE ?? 25);
 
 export namespace seedInteractionFx {
 	export interface Props {
@@ -61,23 +67,84 @@ export const seedInteractionFx = Effect.fn("seedInteractionFx")(function* ({
 			locationId: null,
 		})).id;
 
-	const listingCandidates = yield* tryDbFx(async () =>
+	const listingCandidatesRaw = yield* tryDbFx(async () =>
 		kysely
 			.selectFrom("listing")
 			.select([
 				"id",
 				"userId",
+				"locationId",
+				"createdAt",
 			])
 			.where("userId", "!=", current.id)
-			.limit(10000)
+			.limit(Math.max(10000, count * 3))
 			.execute(),
 	);
 
-	if (listingCandidates.length === 0) {
-		return yield* new RuntimeErrorFx({
-			message:
-				"seed-interaction requires listings from other users. Run seed-core with existing multi-user data first.",
+	const thumbedListingIds = yield* listingCandidatesRaw.length === 0
+		? Effect.succeed(
+				[] as Array<{
+					listingId: string;
+				}>,
+			)
+		: tryDbFx(async () =>
+				kysely
+					.selectFrom("thumb")
+					.select("listingId")
+					.where("userId", "=", current.id)
+					.where(
+						"listingId",
+						"in",
+						listingCandidatesRaw.map((item) => item.id),
+					)
+					.execute(),
+			);
+	const thumbedListingIdSet = new Set(thumbedListingIds.map((item) => item.listingId));
+
+	const listingCandidates = listingCandidatesRaw.filter(
+		(item) => !thumbedListingIdSet.has(item.id),
+	);
+	const listingCandidatesFromOtherUsers = listingCandidates.filter(
+		(item) => item.userId !== current.id,
+	);
+
+	const uniqueByListing = Array.from(
+		new Map(
+			listingCandidatesFromOtherUsers.map((item) => [
+				item.id,
+				item,
+			]),
+		).values(),
+	);
+
+	if (listingCandidatesFromOtherUsers.length !== listingCandidates.length) {
+		yield* progress.log({
+			message: `Excluded ${listingCandidates.length - listingCandidatesFromOtherUsers.length} own listings from interaction candidates.`,
 		});
+	}
+
+	if (thumbedListingIdSet.size > 0) {
+		yield* progress.log({
+			message: `Excluded ${thumbedListingIdSet.size} already-thumbed listings from interaction candidates.`,
+		});
+	}
+
+	if (uniqueByListing.length < count) {
+		return yield* new RuntimeErrorFx({
+			message: `seed-interaction requires at least ${count} listings from other users, found ${uniqueByListing.length}.`,
+		});
+	}
+
+	const shuffled = uniqueByListing.slice();
+	for (let i = shuffled.length - 1; i > 0; i -= 1) {
+		const j = Math.floor(Math.random() * (i + 1));
+		const a = shuffled[i];
+		const b = shuffled[j];
+		if (!a || !b) {
+			continue;
+		}
+		shuffled[i] = b;
+		shuffled[j] = a;
 	}
 
 	const before = yield* withSeedTableCountsFx({
@@ -90,31 +157,53 @@ export const seedInteractionFx = Effect.fn("seedInteractionFx")(function* ({
 	});
 
 	let executed = 0;
-	let attempts = 0;
-	const maxAttempts = Math.max(count * 20, 100);
+	let cursor = 0;
 
-	while (executed < count && attempts < maxAttempts) {
-		attempts += 1;
-		const listing = listingCandidates[Math.floor(Math.random() * listingCandidates.length)];
-		if (!listing) {
-			continue;
+	while (executed < count && cursor < shuffled.length) {
+		const remaining = count - executed;
+		const batchSize = Math.min(
+			remaining,
+			Math.max(1, INTERACTION_BATCH_SIZE),
+			shuffled.length - cursor,
+		);
+		const batch = shuffled.slice(cursor, cursor + batchSize);
+		cursor += batch.length;
+
+		const batchResults = yield* Effect.forEach(
+			batch,
+			(listing) =>
+				seedInteractionScenarioFx({
+					actorUserId: current.id,
+					listingId: listing.id,
+					sellerId: listing.userId,
+					locationId: listing.locationId,
+					feedId,
+					timeline: withInteractionTimeline({
+						from: DateTime.fromJSDate(listing.createdAt),
+					}),
+				}).pipe(Effect.either),
+			{
+				concurrency: INTERACTION_SEED_CONCURRENCY,
+			},
+		);
+
+		const successCount = batchResults.reduce(
+			(acc, item) => acc + (item._tag === "Right" ? 1 : 0),
+			0,
+		);
+		const accepted = Math.min(successCount, remaining);
+		executed += accepted;
+
+		if (accepted > 0) {
+			yield* progress.advance({
+				delta: accepted,
+			});
 		}
 
-		const result = yield* seedInteractionScenarioFx({
-			actorUserId: current.id,
-			listingId: listing.id,
-			sellerId: listing.userId,
-			feedId,
-		}).pipe(Effect.either);
-
-		if (result._tag === "Right") {
-			executed += 1;
-			yield* progress.advance({
-				delta: 1,
-			});
-		} else if (attempts % 25 === 0) {
+		const failureCount = batchResults.length - accepted;
+		if (failureCount > 0) {
 			yield* progress.log({
-				message: `Retrying scenarios (${attempts} attempts, ${executed} executed): ${String(result.left)}`,
+				message: `Scenario batch retries needed (${failureCount}/${batchResults.length} failed, executed=${executed}/${count})`,
 			});
 		}
 	}
@@ -126,6 +215,19 @@ export const seedInteractionFx = Effect.fn("seedInteractionFx")(function* ({
 			message: `Unable to execute requested interaction count. Requested ${count}, executed ${executed}`,
 		});
 	}
+
+	yield* progress.startPhase({
+		name: "Thumb reactions",
+		total: count,
+	});
+	const thumbBatch = yield* seedThumbBatchFx({
+		userId: current.id,
+		count,
+	});
+	yield* progress.finishPhase();
+	yield* progress.log({
+		message: `Thumb batch done (processed=${thumbBatch.processed}, created=${thumbBatch.created})`,
+	});
 
 	const totals = yield* withSeedTableCountsFx({
 		tables: SeedPrimaryInteractionTables,

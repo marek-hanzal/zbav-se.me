@@ -27,6 +27,7 @@ Location warmup queries are loaded from `src/seed/data/location.json` (copied fr
 
 - `schema/` - CLI argument schemas
 - `data/` - seed datasets (`location`, listing titles, listing descriptions, listing pros, listing cons)
+  plus interaction datasets (`message-text-buyer`, `message-text-seller`, `message-personal`, `message-package`)
 - `context/` - shared Effect contexts (progress/TUI)
 - `fx/core/` - core seed units (locations, uploads, listings, feeds)
   plus seed-only high-throughput insert helpers (`seed*InsertFx`, bulk gallery item inserts)
@@ -45,6 +46,10 @@ Location warmup queries are loaded from `src/seed/data/location.json` (copied fr
 - CLI progress rendering is implemented with `terminal-kit` behind `SeedProgressContextFx`
 - Console output uses colored progress and formatted final reports (no raw JSON dump)
 - Core report shows generated deltas for the current run
+- Core seed records are backdated with randomized timestamps across the last 2 years
+- Location warmup uses shuffled location queries from `data/location.json` to avoid repeatedly seeding
+  the same first subset on every run. You can override the warmup amount with:
+  - `SEED_LOCATION_CYCLES`
 - Seed runtime manages a scoped PostgreSQL pool and explicitly closes it on program end
   to avoid delayed process exit after report rendering
 - Both CLI scripts append one benchmark JSONL line into `benchmark.jsonl`
@@ -55,3 +60,13 @@ Location warmup queries are loaded from `src/seed/data/location.json` (copied fr
 - Concurrency defaults to `7` and can be tuned using:
   - `SEED_CORE_CONCURRENCY` (shared override)
   - `SEED_FEED_CONCURRENCY`, `SEED_GALLERY_CONCURRENCY`, `SEED_LISTING_CONCURRENCY`
+- Interaction seed executes unique listing candidates in bounded parallel batches and can be tuned using:
+  - `SEED_INTERACTION_CONCURRENCY` (default `6`)
+  - `SEED_INTERACTION_BATCH_SIZE` (default `25`)
+- Interaction seed contains an explicit thumb batch phase (`none|like|dislike`) and can be tuned using:
+  - `SEED_INTERACTION_THUMB_BATCH_SIZE` (default `100`)
+  - `SEED_INTERACTION_THUMB_CONCURRENCY` (default `12`)
+- Interaction scenarios are generated with coherent timeline windows:
+  - each scenario starts at a random point within the last 2 years
+  - scenario actions stay grouped in a 1-3 day window
+  - optional "ghost" gaps are inserted between selected message/status steps

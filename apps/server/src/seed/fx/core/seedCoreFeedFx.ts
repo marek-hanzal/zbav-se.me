@@ -6,6 +6,8 @@ import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
 import { withSeedConcurrency } from "~/seed/fx/core/seedConcurrency";
 import { seedFeedInsertFx } from "~/seed/fx/core/seedFeedInsertFx";
+import { withRandomPastDate } from "~/seed/fx/time/seedTime";
+import { withSeedNowFx } from "~/seed/fx/time/withSeedNowFx";
 
 const FEED_SEED_CONCURRENCY = withSeedConcurrency("SEED_FEED_CONCURRENCY");
 const FEED_TX_CHUNK_SIZE = 25;
@@ -53,7 +55,7 @@ export const seedCoreFeedFx = Effect.fn("seedCoreFeedFx")(function* ({
 								name: `seed-${genId()}-${i}`,
 								locationId: location?.id ?? null,
 								query: {},
-							});
+							}).pipe(withSeedNowFx(withRandomPastDate()));
 						}),
 					);
 					yield* progress.advance({
