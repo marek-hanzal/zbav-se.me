@@ -134,7 +134,9 @@ const withProgressRenderer = (): SeedProgress => {
 				updateBar();
 				stopBar();
 				const elapsed = ((Date.now() - phase.startedAt) / 1000).toFixed(1);
-				console.log(`${style.bold(style.green("[DONE]"))} Phase finished: ${phase.name} (${elapsed}s)`);
+				console.log(
+					`${style.bold(style.green("[DONE]"))} Phase finished: ${phase.name} (${elapsed}s)`,
+				);
 			});
 		},
 		finishAll() {

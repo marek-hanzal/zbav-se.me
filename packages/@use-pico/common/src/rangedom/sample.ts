@@ -19,4 +19,3 @@ export const sample = <T>(items: readonly T[], count: number): T[] => {
 
 	return copy.slice(0, Math.min(copy.length, count));
 };
-
