@@ -3,7 +3,7 @@ import { Effect } from "effect";
 import { feedCreateFx } from "~/@buyer-user/feed/fx/feedCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
-import { seedProgressAdvanceFx, seedProgressLogFx } from "~/seed/fx/progress/seedProgressFx";
+import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
 
 export const seedCoreFeedFx = Effect.fn("seedCoreFeedFx")(function* ({
 	userId,
@@ -12,6 +12,7 @@ export const seedCoreFeedFx = Effect.fn("seedCoreFeedFx")(function* ({
 	userId: string;
 	deficit: number;
 }) {
+	const progress = yield* SeedProgressContextFx;
 	const { kysely } = yield* KyselyContextFx;
 	if (deficit <= 0) {
 		return;
@@ -34,12 +35,12 @@ export const seedCoreFeedFx = Effect.fn("seedCoreFeedFx")(function* ({
 			locationId: location?.id ?? null,
 			query: {},
 		});
-		yield* seedProgressAdvanceFx({
+		yield* progress.advance({
 			delta: 1,
 		});
 	}
 
-	yield* seedProgressLogFx({
+	yield* progress.log({
 		message: `Feed generation done (${deficit})`,
 	});
 });

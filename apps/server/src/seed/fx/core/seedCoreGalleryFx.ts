@@ -1,9 +1,8 @@
-import { rangedom } from "@use-pico/common/rangedom";
+import { rangedom, sample } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { galleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
 import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
-import { withTakeRandom } from "~/seed/fx/core/seedCoreShared";
-import { seedProgressAdvanceFx, seedProgressLogFx } from "~/seed/fx/progress/seedProgressFx";
+import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
 
 export const seedCoreGalleryFx = Effect.fn("seedCoreGalleryFx")(function* ({
 	userId,
@@ -16,6 +15,7 @@ export const seedCoreGalleryFx = Effect.fn("seedCoreGalleryFx")(function* ({
 	galleryDeficit: number;
 	galleryItemDeficit: number;
 }) {
+	const progress = yield* SeedProgressContextFx;
 	if (galleryDeficit <= 0 || uploadIds.length === 0) {
 		return;
 	}
@@ -27,7 +27,7 @@ export const seedCoreGalleryFx = Effect.fn("seedCoreGalleryFx")(function* ({
 		});
 
 		const requested = rangedom(1, Math.min(6, uploadIds.length));
-		const uploads = withTakeRandom(uploadIds, requested);
+		const uploads = sample(uploadIds, requested);
 		let sort = 0;
 		for (const uploadId of uploads) {
 			if (createdItems >= galleryItemDeficit && galleryItemDeficit > 0) {
@@ -43,12 +43,12 @@ export const seedCoreGalleryFx = Effect.fn("seedCoreGalleryFx")(function* ({
 			createdItems += 1;
 		}
 
-		yield* seedProgressAdvanceFx({
+		yield* progress.advance({
 			delta: 1,
 		});
 	}
 
-	yield* seedProgressLogFx({
+	yield* progress.log({
 		message: `Gallery generation done (gallery=${galleryDeficit}, gallery_item=${createdItems})`,
 	});
 });
