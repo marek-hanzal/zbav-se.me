@@ -26,7 +26,7 @@ Location warmup queries are loaded from `src/seed/data/location.json` (copied fr
 ## Structure
 
 - `schema/` - CLI argument schemas
-- `data/` - seed datasets (`location`, listing titles, listing descriptions)
+- `data/` - seed datasets (`location`, listing titles, listing descriptions, listing pros, listing cons)
 - `context/` - shared Effect contexts (progress/TUI)
 - `fx/core/` - core seed units (locations, uploads, listings, feeds)
 - `fx/interaction/` - interaction seed units (transactions, messages, reactions)

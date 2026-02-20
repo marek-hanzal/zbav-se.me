@@ -5,7 +5,9 @@ import { listingCreateFx } from "~/@seller-user/listing/fx/listingCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
+import Cons from "~/seed/data/listing-cons.json";
 import Descriptions from "~/seed/data/listing-description.json";
+import Pros from "~/seed/data/listing-pros.json";
 import Titles from "~/seed/data/listing-title.json";
 
 export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
@@ -31,6 +33,15 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 
 	const categoryIds = categories.map((item) => item.id);
 	const locationIds = locations.map((item) => item.id);
+	const withProsCons = () => {
+		const prosCount = rangedom(0, 5);
+		const consCount = rangedom(0, 5);
+
+		return {
+			pros: sample(Pros, prosCount),
+			cons: sample(Cons, consCount),
+		} as const;
+	};
 
 	for (let i = 0; i < draftDeficit; i++) {
 		const categoryId = categoryIds.length > 0 ? list(categoryIds) : undefined;
@@ -40,6 +51,7 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 		}
 
 		yield* draftCreateFx({
+			...withProsCons(),
 			userId,
 			title: Titles.length > 0 ? list(Titles) : "Item",
 			description: Descriptions.length > 0 ? list(Descriptions) : "",
@@ -66,6 +78,7 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 		}
 
 		yield* listingCreateFx({
+			...withProsCons(),
 			userId,
 			title: `${Titles.length > 0 ? list(Titles) : "Item"} #${i + 1}`,
 			description: Descriptions.length > 0 ? list(Descriptions) : null,
@@ -89,8 +102,6 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 				"1-month",
 			]),
 			uploadIds: sample(uploadIds, rangedom(1, Math.min(6, uploadIds.length))),
-			pros: null,
-			cons: null,
 		});
 
 		yield* progress.advance({
