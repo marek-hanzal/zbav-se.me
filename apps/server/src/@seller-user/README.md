@@ -28,6 +28,7 @@ This domain handles all seller-specific operations that require access to the us
 - **Collection** - List seller's transactions (incoming buyer requests)
 - **Fetch** - Get transaction details
 - Seller-side view of transactions on their listings
+- Query performance: seller transaction filtering uses the joined listing owner (`l.userId`) and latest status lateral join (`status.latestStatus`) instead of nested `EXISTS` subqueries.
 
 ### Transaction Listing
 - **Collection** - Get listings associated with transactions

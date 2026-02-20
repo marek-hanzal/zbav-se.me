@@ -50,6 +50,7 @@ This domain handles all buyer-specific operations that require access to the use
 - **Patch** - Update transaction
 - **Resolve** - Resolve transaction context
 - **Status Gate** - Check transaction status permissions
+- Query performance: transaction status filters are resolved from the latest status lateral join (`status.latestStatus`) to avoid repeated correlated `EXISTS` subqueries per transaction row.
 
 ### Transaction Status
 - Buyer-side transaction status operations

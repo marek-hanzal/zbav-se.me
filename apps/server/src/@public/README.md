@@ -37,6 +37,7 @@ This domain provides endpoints that don't require authentication. It includes sy
   - Score cleanup
   - Upload cleanup
 - Maintenance and data hygiene
+- Query performance: upload cleanup resolves orphan uploads using `NOT EXISTS (gallery_item)` and avoids broad joins that can multiply rows.
 
 ### Migration
 - **Run** - Database migration execution

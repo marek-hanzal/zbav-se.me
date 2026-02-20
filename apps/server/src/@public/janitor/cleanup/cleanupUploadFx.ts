@@ -26,16 +26,23 @@ export const cleanupUploadFx = Effect.fn("cleanupUpload")(function* () {
 	const uploads = yield* tryDbFx(async () =>
 		kysely
 			.selectFrom("upload as u")
-			.leftJoin("gallery_item as gi", "gi.uploadId", "u.id")
-			.leftJoin("gallery as g", "gi.uploadId", "u.id")
 			.where("u.createdAt", "<", cutoffDate)
+			.where(({ not, exists, selectFrom }) =>
+				not(
+					exists(
+						selectFrom("gallery_item as gi")
+							.select("gi.id")
+							.whereRef("gi.uploadId", "=", "u.id"),
+					),
+				),
+			)
 			.select([
 				"u.url",
 			])
 			.execute(),
 	);
 
-	const urls = uploads.map((r) => new URL(r.url).pathname);
+	const urls = new Set(uploads.map((r) => new URL(r.url).pathname));
 
 	let scanned = 0;
 	const kill: string[] = [];
@@ -55,7 +62,7 @@ export const cleanupUploadFx = Effect.fn("cleanupUpload")(function* () {
 				if (!obj.name || obj.name.endsWith("/")) {
 					return;
 				}
-				if (!urls.includes(`/${obj.name}`) && kill.length < limit) {
+				if (!urls.has(`/${obj.name}`) && kill.length < limit) {
 					kill.push(obj.name);
 				}
 			});
