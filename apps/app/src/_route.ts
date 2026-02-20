@@ -17,7 +17,6 @@ import { Route as LocaleUiRouteImport } from './@routes/$locale/ui'
 import { Route as LocaleFlowUserRouteImport } from './@routes/$locale/flow/user'
 import { Route as LocaleFlowShopRouteImport } from './@routes/$locale/flow/shop'
 import { Route as LocaleFlowHomeRouteImport } from './@routes/$locale/flow/home'
-import { Route as LocaleDevSeedRouteImport } from './@routes/$locale/dev/seed'
 import { Route as LocaleSellerListingIdViewRouteImport } from './@routes/$locale/seller/listing/$id/view'
 import { Route as LocaleFlowSellerMessageListRouteImport } from './@routes/$locale/flow/seller/message/list'
 import { Route as LocaleFlowSellerListingMyRouteImport } from './@routes/$locale/flow/seller/listing/my'
@@ -70,11 +69,6 @@ const LocaleFlowShopRoute = LocaleFlowShopRouteImport.update({
 const LocaleFlowHomeRoute = LocaleFlowHomeRouteImport.update({
   id: '/flow/home',
   path: '/flow/home',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleDevSeedRoute = LocaleDevSeedRouteImport.update({
-  id: '/dev/seed',
-  path: '/dev/seed',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleSellerListingIdViewRoute =
@@ -162,7 +156,6 @@ export interface FileRoutesByFullPath {
   '/$locale/ui': typeof LocaleUiRoute
   '/$locale/welcome': typeof LocaleWelcomeRoute
   '/$locale/': typeof LocaleIndexRoute
-  '/$locale/dev/seed': typeof LocaleDevSeedRoute
   '/$locale/flow/home': typeof LocaleFlowHomeRoute
   '/$locale/flow/shop': typeof LocaleFlowShopRoute
   '/$locale/flow/user': typeof LocaleFlowUserRoute
@@ -185,7 +178,6 @@ export interface FileRoutesByTo {
   '/$locale/ui': typeof LocaleUiRoute
   '/$locale/welcome': typeof LocaleWelcomeRoute
   '/$locale': typeof LocaleIndexRoute
-  '/$locale/dev/seed': typeof LocaleDevSeedRoute
   '/$locale/flow/home': typeof LocaleFlowHomeRoute
   '/$locale/flow/shop': typeof LocaleFlowShopRoute
   '/$locale/flow/user': typeof LocaleFlowUserRoute
@@ -210,7 +202,6 @@ export interface FileRoutesById {
   '/$locale/ui': typeof LocaleUiRoute
   '/$locale/welcome': typeof LocaleWelcomeRoute
   '/$locale/': typeof LocaleIndexRoute
-  '/$locale/dev/seed': typeof LocaleDevSeedRoute
   '/$locale/flow/home': typeof LocaleFlowHomeRoute
   '/$locale/flow/shop': typeof LocaleFlowShopRoute
   '/$locale/flow/user': typeof LocaleFlowUserRoute
@@ -236,7 +227,6 @@ export interface FileRouteTypes {
     | '/$locale/ui'
     | '/$locale/welcome'
     | '/$locale/'
-    | '/$locale/dev/seed'
     | '/$locale/flow/home'
     | '/$locale/flow/shop'
     | '/$locale/flow/user'
@@ -259,7 +249,6 @@ export interface FileRouteTypes {
     | '/$locale/ui'
     | '/$locale/welcome'
     | '/$locale'
-    | '/$locale/dev/seed'
     | '/$locale/flow/home'
     | '/$locale/flow/shop'
     | '/$locale/flow/user'
@@ -283,7 +272,6 @@ export interface FileRouteTypes {
     | '/$locale/ui'
     | '/$locale/welcome'
     | '/$locale/'
-    | '/$locale/dev/seed'
     | '/$locale/flow/home'
     | '/$locale/flow/shop'
     | '/$locale/flow/user'
@@ -363,13 +351,6 @@ declare module '@tanstack/react-router' {
       path: '/flow/home'
       fullPath: '/$locale/flow/home'
       preLoaderRoute: typeof LocaleFlowHomeRouteImport
-      parentRoute: typeof LocaleRoute
-    }
-    '/$locale/dev/seed': {
-      id: '/$locale/dev/seed'
-      path: '/dev/seed'
-      fullPath: '/$locale/dev/seed'
-      preLoaderRoute: typeof LocaleDevSeedRouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/seller/listing/$id/view': {
@@ -470,7 +451,6 @@ interface LocaleRouteChildren {
   LocaleUiRoute: typeof LocaleUiRoute
   LocaleWelcomeRoute: typeof LocaleWelcomeRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
-  LocaleDevSeedRoute: typeof LocaleDevSeedRoute
   LocaleFlowHomeRoute: typeof LocaleFlowHomeRoute
   LocaleFlowShopRoute: typeof LocaleFlowShopRoute
   LocaleFlowUserRoute: typeof LocaleFlowUserRoute
@@ -493,7 +473,6 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleUiRoute: LocaleUiRoute,
   LocaleWelcomeRoute: LocaleWelcomeRoute,
   LocaleIndexRoute: LocaleIndexRoute,
-  LocaleDevSeedRoute: LocaleDevSeedRoute,
   LocaleFlowHomeRoute: LocaleFlowHomeRoute,
   LocaleFlowShopRoute: LocaleFlowShopRoute,
   LocaleFlowUserRoute: LocaleFlowUserRoute,
