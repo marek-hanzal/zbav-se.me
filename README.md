@@ -194,6 +194,11 @@ Legend:
 - **Biome** - Linting and formatting
 - **Turbo** - Monorepo task runner
 
+## Tooling Notes
+
+- The repository is Bun-first, but Syncpack with `.syncpackrc.ts` still requires Node.js in CI for TypeScript config loading.
+- GitHub Actions must provide Node.js `22.6.0` or newer so `bun x syncpack ...` can read `.syncpackrc.ts`.
+
 ## Environment Variables
 
 ### Server (`apps/server/`)
