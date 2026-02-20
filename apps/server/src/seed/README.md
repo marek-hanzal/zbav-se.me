@@ -41,3 +41,5 @@ Location warmup queries are loaded from `src/seed/data/location.json` (copied fr
 - CLI progress rendering is implemented with `terminal-kit` behind `SeedProgressContextFx`
 - Console output uses colored progress and formatted final reports (no raw JSON dump)
 - Core report shows generated deltas for the current run
+- Seed runtime manages a scoped PostgreSQL pool and explicitly closes it on program end
+  to avoid delayed process exit after report rendering
