@@ -109,6 +109,25 @@ export const ListingMigration: Migration = {
 			.execute();
 
 		await db.schema
+			.createIndex("listing_[categoryId-createdAt]_idx")
+			.on("listing")
+			.columns([
+				"categoryId",
+				"createdAt",
+			])
+			.execute();
+
+		await db.schema
+			.createIndex("listing_[locationId-categoryId-createdAt]_idx")
+			.on("listing")
+			.columns([
+				"locationId",
+				"categoryId",
+				"createdAt",
+			])
+			.execute();
+
+		await db.schema
 			.createIndex("listing_[galleryId]_idx")
 			.on("listing")
 			.column("galleryId")

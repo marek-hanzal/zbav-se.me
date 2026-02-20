@@ -42,7 +42,7 @@
     value: No listings with transactions (message)
 0a08e45b023a7e9c7c4856084c91d4a78b31861ac5bf75f91fe4780a:
     ref: Listing restriction (label)
-    value: Listing restriction (label)
+    value: Nastavení omezení
 0a5c73cd28c41a15c8769a38be34b6d388bcba18e90ca7e28b762bc9:
     ref: Listing - Cons (title)
     value: Chci být upřímný
@@ -81,6 +81,9 @@
 101cc7814a89a0bf8a96e0d41398d9dd6cc933b49b7a1534a52b2d93:
     ref: My Profile (label)
     value: Můj profil
+1033ff575b4fcc2a5f68f0546b255961c4cf9514267255fbd76e2920:
+    ref: Listing title not filled
+    value: Titulek nemáš vyplněný
 1088c3fcabd70b4e385443272326be10f59a63b577e719b5ac8c5821:
     ref: Listing ignore (hint)
     value: >
@@ -100,7 +103,9 @@
     value: Opravdu?
 12e75835dcd53665e98ab2e6c1064379dd6094870afd31f532f39e47:
     ref: Listing restriction (hint)
-    value: Listing restriction (hint)
+    value: >
+        Důležitá hodnota, pokud prodáváš něco, co podléhá např. omezení věku nebo
+        dokonce vyžaduje oprávnění k užití.
 14663fea507627f6c98c1360a9aa3c6d275ed885e44051e7d88af28a:
     ref: Feed age (hint)
     value: >
@@ -348,9 +353,6 @@
 523bef97e177163c4710b0138d4a2f8166cce50ebb8930b74298d0f8:
     ref: relative
     value: relative
-56093b0ee9cd3eadf7db4a59a8ec98132bacd22fa07691fdac66874a:
-    ref: Buyer - shop (title)
-    value: Obchod pro kupující
 5611e161fc48366fdb56f2529712795617513c1b346552e32a53ff19:
     ref: Loading... (button)
     value: ...Rozjímám...
@@ -838,7 +840,7 @@ aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
     value: Nahraj obrázek
 acca87272a911bd673bc0f526d8ddaf4bedf8c4d04a375401d80df47:
     ref: Restriction not selected
-    value: Restriction not selected
+    value: Bez omezení
 acf5cd0bee4e6bd74eea745c51c41f0b3a17a1de314afd2d76eb056c:
     ref: Personal - Warning (title)
     value: Sdílíš osobní údaje
@@ -965,6 +967,9 @@ buyer - Transaction successful (message):
 
         Dál už tu nic není.
     static: true
+c360a8542e6f85f8f1c9cacccc525cb1fcdf6b743584428ee6111e55:
+    ref: Shop (title)
+    value: Obchod
 c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
     ref: Feed title not filled
     value: Všechno
@@ -1082,7 +1087,7 @@ eb18c941e11fe2d241983a0df227512b3e3691c12cc66af2303bc987:
     value: (Bez názvu)
 ebff4121130dcb1e32bc8706a7005ec0c78e811db18e0ae28a6abb4c:
     ref: Close draft (hint)
-    value: Později můžeš pokračovat, kdy jsi skončil.
+    value: Později můžeš pokračovat, kde jsi skončil.
 efad125c4eaaacfc95cadc0edaef1e9a5220f1c5a643e9b2c7364f50:
     ref: Feed setup - name (title)
     value: Nastav si název
@@ -1149,6 +1154,9 @@ fb5f656c01caafdecfd1468991d74a7ab481b89ce6df9a8c229d726e:
 fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
     ref: Back to home (link)
     value: Zpět domů
+fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
+    ref: Listing title (label)
+    value: Titulek
 fcc9463d3dd7e334473f2e8319498e268ee92bfeb56ec07041368960:
     ref: noopener noreferrer
     value: noopener noreferrer

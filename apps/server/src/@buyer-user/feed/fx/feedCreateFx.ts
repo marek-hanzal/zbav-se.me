@@ -50,7 +50,6 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 							createdAt: now.toJSDate(),
 							updatedAt: now.toJSDate(),
 						})
-						.returningAll()
 						.executeTakeFirstOrThrow(),
 				{
 					"23505": (e) =>

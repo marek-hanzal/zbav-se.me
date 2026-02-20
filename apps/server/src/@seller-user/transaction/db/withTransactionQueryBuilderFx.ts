@@ -37,17 +37,7 @@ export const withTransactionQueryBuilderFx = Effect.fn("withTransactionQueryBuil
 	}
 
 	if (where.userId) {
-		const userId = where.userId;
-
-		query = query.where((eb) =>
-			eb.exists((eb) =>
-				eb
-					.selectFrom("listing as l")
-					.select("l.id")
-					.whereRef("l.id", "=", "lt.listingId")
-					.where("l.userId", "=", userId),
-			),
-		) as TSelect;
+		query = query.where("l.userId", "=", where.userId) as TSelect;
 	}
 
 	if (where.listingId) {
@@ -55,53 +45,11 @@ export const withTransactionQueryBuilderFx = Effect.fn("withTransactionQueryBuil
 	}
 
 	if (where.status) {
-		const status = where.status;
-
-		query = query.where((eb) => {
-			return eb.exists((eb) =>
-				eb
-					.selectFrom("transaction_status as lts")
-					.select("lts.id")
-					.whereRef("lts.transactionId", "=", "lt.id")
-					.where("lts.status", "=", status)
-					.where((eb) => {
-						return eb.not(
-							eb.exists((eb) =>
-								eb
-									.selectFrom("transaction_status as lts2")
-									.select("lts2.id")
-									.whereRef("lts2.transactionId", "=", "lt.id")
-									.whereRef("lts2.createdAt", ">", "lts.createdAt"),
-							),
-						);
-					}),
-			);
-		}) as TSelect;
+		query = query.where("status.latestStatus", "=", where.status) as TSelect;
 	}
 
 	if (where.statusIn && where.statusIn.length > 0) {
-		const statusIn = where.statusIn;
-
-		query = query.where((eb) => {
-			return eb.exists((eb) =>
-				eb
-					.selectFrom("transaction_status as lts")
-					.select("lts.id")
-					.whereRef("lts.transactionId", "=", "lt.id")
-					.where("lts.status", "in", statusIn)
-					.where((eb) => {
-						return eb.not(
-							eb.exists((eb) =>
-								eb
-									.selectFrom("transaction_status as lts2")
-									.select("lts2.id")
-									.whereRef("lts2.transactionId", "=", "lt.id")
-									.whereRef("lts2.createdAt", ">", "lts.createdAt"),
-							),
-						);
-					}),
-			);
-		}) as TSelect;
+		query = query.where("status.latestStatus", "in", where.statusIn) as TSelect;
 	}
 
 	return yield* Effect.succeed(query);

@@ -285,31 +285,31 @@ export const zLocation = z.object({
         description: 'Country code'
     }),
     county: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     municipality: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     state: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     address: z.string().register(z.globalRegistry, {
         description: 'Full address preview of a location'
     }),
     city: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     street: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     zip: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     confidence: z.number().register(z.globalRegistry, {
         description: 'Confidence score of the location (based on query)'

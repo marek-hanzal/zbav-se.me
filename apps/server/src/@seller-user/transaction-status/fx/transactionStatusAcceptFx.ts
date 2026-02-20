@@ -43,6 +43,17 @@ export const transactionStatusAcceptFx = Effect.fn("transactionStatusAcceptFx")(
 			message: "Buyer cannot accept a transaction",
 		});
 	}
+	if (transaction.status !== "pending") {
+		yield* withTraceFx({
+			fx: "transactionStatusAcceptFx",
+			error: {
+				message: `Transaction must be pending before accept, got ${transaction.status}`,
+			},
+		});
+		return yield* new RuntimeErrorFx({
+			message: "Transaction must be pending before accept",
+		});
+	}
 
 	yield* transactionPatchFx({
 		userId,

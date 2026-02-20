@@ -2,7 +2,6 @@ import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { UploadContextFx } from "~/@common/upload/context/UploadContextFx";
-import { uploadFetchFx } from "~/@user/upload/fx/uploadFetchFx";
 import type { UploadCreateSchema } from "~/@user/upload/schema/UploadCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
@@ -61,12 +60,10 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 			.execute(),
 	);
 
-	return yield* uploadFetchFx({
-		where: {
-			id,
-		},
-		scope: {},
-	});
+	return {
+		id,
+		url,
+	};
 });
 
 export type uploadCreateFx = ReturnType<typeof uploadCreateFx>;

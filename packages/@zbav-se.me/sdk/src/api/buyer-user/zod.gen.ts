@@ -296,31 +296,31 @@ export const zLocation = z.object({
         description: 'Country code'
     }),
     county: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     municipality: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     state: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     address: z.string().register(z.globalRegistry, {
         description: 'Full address preview of a location'
     }),
     city: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     street: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     zip: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     confidence: z.number().register(z.globalRegistry, {
         description: 'Confidence score of the location (based on query)'
@@ -445,20 +445,20 @@ export const zListing = z.object({
     priceType: zListingPriceEnum,
     currency: zCurrencyEnum,
     condition: z.union([
-        z.number(),
-        z.null()
+        z.null(),
+        z.number()
     ]),
     age: z.union([
-        z.number(),
-        z.null()
+        z.null(),
+        z.number()
     ]),
     delivery: z.union([
-        z.array(zListingDeliveryEnum),
-        z.null()
+        z.null(),
+        z.array(zListingDeliveryEnum)
     ]),
     warranty: z.union([
-        zListingWarrantyEnum,
-        z.null()
+        z.null(),
+        zListingWarrantyEnum
     ]),
     restriction: zListingRestrictionEnum,
     locationId: z.string().register(z.globalRegistry, {
@@ -471,8 +471,8 @@ export const zListing = z.object({
         description: 'ID of the gallery'
     }),
     draftId: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     expiresAt: z.string().register(z.globalRegistry, {
         description: 'Expiration timestamp'
@@ -481,16 +481,16 @@ export const zListing = z.object({
         description: 'Title of the item'
     }),
     description: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     pros: z.union([
-        zProsCons,
-        z.null()
+        z.null(),
+        zProsCons
     ]),
     cons: z.union([
-        zProsCons,
-        z.null()
+        z.null(),
+        zProsCons
     ]),
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
@@ -515,12 +515,12 @@ export const zListing = z.object({
         description: 'Whether the user flagged this listing'
     }),
     transactionId: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     thumb: z.union([
-        zThumbEnum,
-        z.null()
+        z.null(),
+        zThumbEnum
     ])
 }).register(z.globalRegistry, {
     description: 'Listing data'
@@ -845,7 +845,7 @@ export type zListingMeta = z.infer<typeof zListingMeta>;
  * Query object for listing collection
  */
 export const zListingQuery = z.object({
-    cursor: z.optional(zCursor.and(z.unknown().default({ page: 0, size: 256 }))),
+    cursor: z.optional(zCursor),
     filter: z.optional(zListingFilter),
     where: z.optional(zListingWhere),
     sort: z.optional(z.array(zListingSort)),
@@ -864,20 +864,20 @@ export const zFeed = z.object({
         description: 'ID of the feed'
     }),
     locationId: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     uploadId: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     name: z.string().register(z.globalRegistry, {
         description: 'Name of the feed'
     }),
     query: zListingQuery,
     upload: z.union([
-        zUpload,
-        z.null()
+        z.null(),
+        zUpload
     ])
 }).register(z.globalRegistry, {
     description: 'Feed data'
@@ -893,8 +893,8 @@ export const zFeedCreate = z.object({
         description: 'Name of the feed'
     }),
     locationId: z.optional(z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ])),
     query: zListingQuery
 }).register(z.globalRegistry, {
@@ -991,12 +991,12 @@ export const zFeedPatch = z.object({
             description: 'ID of the feed'
         })),
         locationId: z.optional(z.union([
-            z.string(),
-            z.null()
+            z.null(),
+            z.string()
         ])),
         uploadId: z.optional(z.union([
-            z.string(),
-            z.null()
+            z.null(),
+            z.string()
         ])),
         name: z.optional(z.string().register(z.globalRegistry, {
             description: 'Name of the feed'
@@ -1064,20 +1064,20 @@ export const zFeedFavouriteItem = z.object({
         description: 'ID of the feed'
     }),
     locationId: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     uploadId: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     name: z.string().register(z.globalRegistry, {
         description: 'Name of the feed'
     }),
     query: zListingQuery,
     upload: z.union([
-        zUpload,
-        z.null()
+        z.null(),
+        zUpload
     ]),
     count: z.number().register(z.globalRegistry, {
         description: 'Number of items in favourites for this feed'

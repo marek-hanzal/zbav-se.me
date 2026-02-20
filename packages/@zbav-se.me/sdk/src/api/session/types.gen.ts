@@ -35,6 +35,17 @@ export type tCategory = {
 };
 
 /**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export type tNotice = {
+    /**
+     * Message
+     */
+    message: string;
+    type: tNoticeTypeEnum;
+};
+
+/**
  * Type of notice
  */
 export const tNoticeTypeEnum = {
@@ -49,14 +60,13 @@ export const tNoticeTypeEnum = {
 export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
 
 /**
- * Just a note sent from various reasons, usually when something is fucked up.
+ * Category query parameters
  */
-export type tNotice = {
-    /**
-     * Message
-     */
-    message: string;
-    type: tNoticeTypeEnum;
+export type tCategoryQuery = {
+    cursor?: tCursor;
+    filter?: tCategoryFilter;
+    where?: tCategoryWhere;
+    sort?: Array<tCategorySort>;
 };
 
 /**
@@ -150,6 +160,14 @@ export type tCategoryWhere = {
 };
 
 /**
+ * Sort object for category collection
+ */
+export type tCategorySort = {
+    field: tCategorySortField;
+    order: tOrderEnum;
+};
+
+/**
  * Field of the category sort
  */
 export const tCategorySortField = {
@@ -174,21 +192,14 @@ export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
 export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
 
 /**
- * Sort object for category collection
+ * Collection of categories
  */
-export type tCategorySort = {
-    field: tCategorySortField;
-    order: tOrderEnum;
-};
-
-/**
- * Category query parameters
- */
-export type tCategoryQuery = {
-    cursor?: tCursor;
-    filter?: tCategoryFilter;
-    where?: tCategoryWhere;
-    sort?: Array<tCategorySort>;
+export type tCategoryItemSchema = {
+    data: Array<tCategoryItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
 };
 
 /**
@@ -219,17 +230,6 @@ export type tCategoryItem = {
      * Locale/language of the category
      */
     locale: string;
-};
-
-/**
- * Collection of categories
- */
-export type tCategoryItemSchema = {
-    data: Array<tCategoryItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
 };
 
 /**
@@ -283,15 +283,15 @@ export type tLocation = {
     /**
      * The county that the location is in
      */
-    county: string | null;
+    county: null | string;
     /**
      * The municipality that the location is in
      */
-    municipality: string | null;
+    municipality: null | string;
     /**
      * The state that the location is in
      */
-    state: string | null;
+    state: null | string;
     /**
      * Full address preview of a location
      */
@@ -299,15 +299,15 @@ export type tLocation = {
     /**
      * The city that the location is in
      */
-    city: string | null;
+    city: null | string;
     /**
      * The street that the location is on
      */
-    street: string | null;
+    street: null | string;
     /**
      * The postal/zip code of the location
      */
-    zip: string | null;
+    zip: null | string;
     /**
      * Confidence score of the location (based on query)
      */
@@ -338,6 +338,16 @@ export type tLocationAutocomplete = {
      * The language code for the location search
      */
     lang: string;
+};
+
+/**
+ * Data for location query
+ */
+export type tLocationQuery = {
+    cursor?: tCursor;
+    filter?: tLocationFilter;
+    where?: tLocationWhere;
+    sort?: Array<tLocationSort>;
 };
 
 /**
@@ -417,6 +427,14 @@ export type tLocationWhere = {
 };
 
 /**
+ * Data for location sort
+ */
+export type tLocationSort = {
+    field: tLocationSortField;
+    order: tOrderEnum;
+};
+
+/**
  * Field for location sort
  */
 export const tLocationSortField = {
@@ -430,24 +448,6 @@ export const tLocationSortField = {
  * Field for location sort
  */
 export type tLocationSortField = typeof tLocationSortField[keyof typeof tLocationSortField];
-
-/**
- * Data for location sort
- */
-export type tLocationSort = {
-    field: tLocationSortField;
-    order: tOrderEnum;
-};
-
-/**
- * Data for location query
- */
-export type tLocationQuery = {
-    cursor?: tCursor;
-    filter?: tLocationFilter;
-    where?: tLocationWhere;
-    sort?: Array<tLocationSort>;
-};
 
 export type tApiCategoryFetchRequest = {
     /**

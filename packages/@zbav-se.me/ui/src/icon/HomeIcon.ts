@@ -1,1 +1,1 @@
-export const HomeIcon = "icon-[stash--home-light]";
+export const HomeIcon = "icon-[solar--home-linear]";

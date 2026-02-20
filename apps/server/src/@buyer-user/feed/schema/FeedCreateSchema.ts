@@ -8,8 +8,8 @@ export const FeedCreateSchema = z
 		}),
 		locationId: z
 			.union([
-				z.string(),
 				z.null(),
+				z.string(),
 			])
 			.optional()
 			.openapi({

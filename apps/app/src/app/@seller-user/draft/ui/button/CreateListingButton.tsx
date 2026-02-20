@@ -2,18 +2,23 @@ import { Button } from "@use-pico/client/ui/button";
 import type { tDraft, tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { zListingCreate } from "@zbav-se.me/sdk/api/seller-user";
 import { withListingCreateMutation } from "@zbav-se.me/sdk/mutation/seller-user/listing";
-import { ListingIcon } from "@zbav-se.me/ui/icon";
 import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
 export namespace CreateListingButton {
-	export interface Props {
+	export interface Props extends Button.Props {
 		draft: tDraft;
 		onListing(listing: tListing): Promise<any>;
 	}
 }
 
-export const CreateListingButton: FC<CreateListingButton.Props> = ({ draft, onListing }) => {
+export const CreateListingButton: FC<CreateListingButton.Props> = ({
+	draft,
+	onListing,
+	ui,
+	className,
+	...props
+}) => {
 	const listingCreateMutation = withListingCreateMutation.useMutation({
 		onSuccess: onListing,
 	});
@@ -26,7 +31,7 @@ export const CreateListingButton: FC<CreateListingButton.Props> = ({ draft, onLi
 
 	return (
 		<Button
-			iconEnabled={ListingIcon}
+			iconEnabled={"icon-[solar--globus-linear]"}
 			iconProps={{
 				ui: {
 					text: "2xl",
@@ -42,10 +47,13 @@ export const CreateListingButton: FC<CreateListingButton.Props> = ({ draft, onLi
 			}}
 			{...uiSaveButton({
 				ui: {
+					tone: listing.success ? "secondary" : "neutral",
 					justify: "start",
+					...ui,
 				},
-				className: [],
+				className,
 			})}
+			{...props}
 		/>
 	);
 };

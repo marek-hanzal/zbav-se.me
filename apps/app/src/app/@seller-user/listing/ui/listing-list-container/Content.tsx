@@ -89,7 +89,7 @@ export const Content: FC<Content.Props> = ({ _suspense, query }) => {
 					}}
 					onSuccess={(draft) => {
 						navigate({
-							to: "/$locale/ui/seller/draft/$id/edit",
+							to: "/$locale/flow/seller/draft/$id/edit",
 							params: {
 								locale,
 								id: draft.id,

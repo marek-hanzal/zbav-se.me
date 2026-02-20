@@ -65,7 +65,16 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 					),
 					header: ({ close }) => ({
 						title: listing.title,
-						right: <CloseButton onClick={close} />,
+						right: (
+							<CloseButton
+								onClick={close}
+								ui={{
+									background: undefined,
+									shadow: false,
+									border: false,
+								}}
+							/>
+						),
 					}),
 				},
 				gallery: {

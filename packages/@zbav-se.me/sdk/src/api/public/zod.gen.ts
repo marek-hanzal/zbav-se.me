@@ -364,31 +364,31 @@ export const zLocation = z.object({
         description: 'Country code'
     }),
     county: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     municipality: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     state: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     address: z.string().register(z.globalRegistry, {
         description: 'Full address preview of a location'
     }),
     city: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     street: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     zip: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     confidence: z.number().register(z.globalRegistry, {
         description: 'Confidence score of the location (based on query)'
@@ -1090,25 +1090,3 @@ export const zApiMigrationRunResponse = z.array(z.object({
 });
 
 export type zapiMigrationRunResponse = z.infer<typeof zApiMigrationRunResponse>;
-
-export const zApiSeedData = z.object({
-    body: z.optional(z.object({
-        email: z.string().register(z.globalRegistry, {
-            description: 'User data for seeding'
-        }),
-        transaction: z.object({
-            count: z.number().register(z.globalRegistry, {
-                description: 'Number of listings to create transactions for'
-            }),
-            months: z.number().register(z.globalRegistry, {
-                description: 'Number of months to create transactions for'
-            })
-        })
-    }).register(z.globalRegistry, {
-        description: 'User data for seeding'
-    })),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export type zapiSeedRequest = z.infer<typeof zApiSeedData>;

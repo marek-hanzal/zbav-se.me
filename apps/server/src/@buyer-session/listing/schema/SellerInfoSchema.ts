@@ -12,7 +12,7 @@ export const SellerInfoSchema = z
 			example: 1,
 		}),
 		events: z
-			.xor([
+			.union([
 				z.null(),
 				UserEventSellerSchema,
 			])

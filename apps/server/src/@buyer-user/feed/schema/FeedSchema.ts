@@ -9,8 +9,8 @@ export const FeedSchema = z
 		query: ListingQuerySchema,
 		upload: z
 			.union([
-				UploadSchema,
 				z.null(),
+				UploadSchema,
 			])
 			.openapi({
 				description: "Hero banner for this feed",

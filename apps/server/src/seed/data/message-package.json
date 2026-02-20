@@ -1,0 +1,34 @@
+[
+	{
+		"link": "https://tracking.example.test/parcel/PKG-1001",
+		"number": "PKG-1001-CZ"
+	},
+	{
+		"link": "https://tracking.example.test/parcel/PKG-1002",
+		"number": "PKG-1002-CZ"
+	},
+	{
+		"link": "https://tracking.example.test/parcel/PKG-1003",
+		"number": "PKG-1003-CZ"
+	},
+	{
+		"link": "https://tracking.example.test/parcel/PKG-1004",
+		"number": "PKG-1004-CZ"
+	},
+	{
+		"link": "https://tracking.example.test/parcel/PKG-1005",
+		"number": "PKG-1005-CZ"
+	},
+	{
+		"link": "https://tracking.example.test/parcel/PKG-1006",
+		"number": null
+	},
+	{
+		"link": "https://tracking.example.test/parcel/PKG-1007",
+		"number": null
+	},
+	{
+		"link": "https://tracking.example.test/parcel/PKG-1008",
+		"number": "PKG-1008-CZ"
+	}
+]

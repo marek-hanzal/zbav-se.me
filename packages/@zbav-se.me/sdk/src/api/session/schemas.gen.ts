@@ -32,15 +32,6 @@ export const sCategory = {
     ]
 } as const;
 
-export const sNoticeTypeEnum = {
-    type: 'string',
-    enum: [
-        'info',
-        'warning',
-        'error'
-    ]
-} as const;
-
 export const sNotice = {
     type: 'object',
     properties: {
@@ -55,6 +46,36 @@ export const sNotice = {
         'message',
         'type'
     ]
+} as const;
+
+export const sNoticeTypeEnum = {
+    type: 'string',
+    enum: [
+        'info',
+        'warning',
+        'error'
+    ]
+} as const;
+
+export const sCategoryQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/CategoryFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/CategoryWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/CategorySort'
+            }
+        }
+    }
 } as const;
 
 export const sCursor = {
@@ -148,6 +169,22 @@ export const sCategoryWhere = {
     }
 } as const;
 
+export const sCategorySort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/CategorySortField'
+        },
+        order: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'order'
+    ]
+} as const;
+
 export const sCategorySortField = {
     type: 'string',
     enum: [
@@ -165,41 +202,23 @@ export const sOrderEnum = {
     ]
 } as const;
 
-export const sCategorySort = {
+export const sCategoryItemSchema = {
     type: 'object',
     properties: {
-        field: {
-            $ref: '#/components/schemas/CategorySortField'
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/CategoryItem'
+            }
         },
-        order: {
-            $ref: '#/components/schemas/OrderEnum'
+        more: {
+            type: 'boolean'
         }
     },
     required: [
-        'field',
-        'order'
+        'data',
+        'more'
     ]
-} as const;
-
-export const sCategoryQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
-        },
-        filter: {
-            $ref: '#/components/schemas/CategoryFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/CategoryWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/CategorySort'
-            }
-        }
-    }
 } as const;
 
 export const sCategoryItem = {
@@ -231,25 +250,6 @@ export const sCategoryItem = {
         'slug',
         'sort',
         'locale'
-    ]
-} as const;
-
-export const sCategoryItemSchema = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/CategoryItem'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
     ]
 } as const;
 
@@ -317,39 +317,30 @@ export const sLocation = {
         county: {
             anyOf: [
                 {
+                    type: 'null'
+                },
+                {
                     type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
                 }
             ]
         },
         municipality: {
             anyOf: [
                 {
+                    type: 'null'
+                },
+                {
                     type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
                 }
             ]
         },
         state: {
             anyOf: [
                 {
+                    type: 'null'
+                },
+                {
                     type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
                 }
             ]
         },
@@ -359,39 +350,30 @@ export const sLocation = {
         city: {
             anyOf: [
                 {
+                    type: 'null'
+                },
+                {
                     type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
                 }
             ]
         },
         street: {
             anyOf: [
                 {
+                    type: 'null'
+                },
+                {
                     type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
                 }
             ]
         },
         zip: {
             anyOf: [
                 {
+                    type: 'null'
+                },
+                {
                     type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
                 }
             ]
         },
@@ -444,6 +426,27 @@ export const sLocationAutocomplete = {
         'text',
         'lang'
     ]
+} as const;
+
+export const sLocationQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/LocationFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/LocationWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/LocationSort'
+            }
+        }
+    }
 } as const;
 
 export const sLocationFilter = {
@@ -512,16 +515,6 @@ export const sLocationWhere = {
     }
 } as const;
 
-export const sLocationSortField = {
-    type: 'string',
-    enum: [
-        'confidence',
-        'query',
-        'country',
-        'address'
-    ]
-} as const;
-
 export const sLocationSort = {
     type: 'object',
     properties: {
@@ -538,23 +531,12 @@ export const sLocationSort = {
     ]
 } as const;
 
-export const sLocationQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
-        },
-        filter: {
-            $ref: '#/components/schemas/LocationFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/LocationWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/LocationSort'
-            }
-        }
-    }
+export const sLocationSortField = {
+    type: 'string',
+    enum: [
+        'confidence',
+        'query',
+        'country',
+        'address'
+    ]
 } as const;

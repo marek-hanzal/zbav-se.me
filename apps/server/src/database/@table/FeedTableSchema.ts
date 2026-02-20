@@ -9,16 +9,16 @@ export const FeedTableSchema = z.object({
 	}),
 	locationId: z
 		.union([
-			z.string(),
 			z.null(),
+			z.string(),
 		])
 		.openapi({
 			description: "ID of the location associated with the feed",
 		}),
 	uploadId: z
 		.union([
-			z.string(),
 			z.null(),
+			z.string(),
 		])
 		.openapi({
 			description:

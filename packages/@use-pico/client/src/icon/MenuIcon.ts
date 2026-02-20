@@ -1,1 +1,1 @@
-export const MenuIcon = "icon-[typcn--th-menu]";
+export const MenuIcon = "icon-[solar--hamburger-menu-linear]";

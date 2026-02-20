@@ -5,17 +5,17 @@ export type clientOptions = {
 };
 
 /**
- * Upload file metadata
+ * Gallery data with items
  */
-export type tUpload = {
+export type tGallery = {
     /**
-     * ID of the upload
+     * ID of the gallery
      */
     id: string;
     /**
-     * Public URL to the uploaded file
+     * Gallery items sorted by sort order
      */
-    url: string;
+    items: Array<tGalleryItem>;
 };
 
 /**
@@ -42,17 +42,28 @@ export type tGalleryItem = {
 };
 
 /**
- * Gallery data with items
+ * Upload file metadata
  */
-export type tGallery = {
+export type tUpload = {
     /**
-     * ID of the gallery
+     * ID of the upload
      */
     id: string;
     /**
-     * Gallery items sorted by sort order
+     * Public URL to the uploaded file
      */
-    items: Array<tGalleryItem>;
+    url: string;
+};
+
+/**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export type tNotice = {
+    /**
+     * Message
+     */
+    message: string;
+    type: tNoticeTypeEnum;
 };
 
 /**
@@ -70,14 +81,13 @@ export const tNoticeTypeEnum = {
 export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
 
 /**
- * Just a note sent from various reasons, usually when something is fucked up.
+ * Query object for gallery collection
  */
-export type tNotice = {
-    /**
-     * Message
-     */
-    message: string;
-    type: tNoticeTypeEnum;
+export type tGalleryQuery = {
+    cursor?: tCursor;
+    filter?: tGalleryFilter;
+    where?: tGalleryWhere;
+    sort?: Array<tGallerySort>;
 };
 
 /**
@@ -139,6 +149,14 @@ export type tGalleryWhere = {
 };
 
 /**
+ * Sort object for gallery collection
+ */
+export type tGallerySort = {
+    field: tGallerySortField;
+    order: tOrderEnum;
+};
+
+/**
  * Field of the gallery sort
  */
 export const tGallerySortField = { createdAt: 'createdAt' } as const;
@@ -159,33 +177,10 @@ export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
 export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
 
 /**
- * Sort object for gallery collection
- */
-export type tGallerySort = {
-    field: tGallerySortField;
-    order: tOrderEnum;
-};
-
-/**
- * Query object for gallery collection
- */
-export type tGalleryQuery = {
-    cursor?: tCursor;
-    filter?: tGalleryFilter;
-    where?: tGalleryWhere;
-    sort?: Array<tGallerySort>;
-};
-
-/**
  * Collection of gallery items
  */
 export type tGalleryItemSchema = {
-    data: Array<tGalleryItem & {
-        /**
-         * ID of the gallery
-         */
-        id: string;
-    }>;
+    data: Array<tGalleryItem & unknown>;
     /**
      * Whether there are more items to fetch
      */
@@ -220,6 +215,29 @@ export type tGalleryCountQuery = {
 };
 
 /**
+ * Collection of messages
+ */
+export type tMessageItemSchema = {
+    data: Array<tMessageItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Message collection item
+ */
+export type tMessageItem = {
+    /**
+     * ID of the message entry
+     */
+    id: string;
+    type: tMessageTypeEnum;
+    payload: tMessagePayload;
+};
+
+/**
  * Type of message
  */
 export const tMessageTypeEnum = {
@@ -238,18 +256,9 @@ export const tMessageTypeEnum = {
 export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
 
 /**
- * Direction of the message
+ * Message payload (unified view across all message types)
  */
-export const tMessageDirectionEnum = {
-    in: 'in',
-    out: 'out',
-    system: 'system'
-} as const;
-
-/**
- * Direction of the message
- */
-export type tMessageDirectionEnum = typeof tMessageDirectionEnum[keyof typeof tMessageDirectionEnum];
+export type tMessagePayload = tMessageText | tMessageGallery | tMessageLocation | tMessagePersonal | tMessagePackage | tMessageSystem;
 
 /**
  * Message text entry
@@ -272,6 +281,20 @@ export type tMessageText = {
 };
 
 /**
+ * Direction of the message
+ */
+export const tMessageDirectionEnum = {
+    in: 'in',
+    out: 'out',
+    system: 'system'
+} as const;
+
+/**
+ * Direction of the message
+ */
+export type tMessageDirectionEnum = typeof tMessageDirectionEnum[keyof typeof tMessageDirectionEnum];
+
+/**
  * Message gallery entry
  */
 export type tMessageGallery = {
@@ -290,6 +313,27 @@ export type tMessageGallery = {
     type: tMessageTypeEnum;
     direction: tMessageDirectionEnum;
     gallery: tGallery;
+};
+
+/**
+ * Message location entry
+ */
+export type tMessageLocation = {
+    /**
+     * ID of the message location entry
+     */
+    id: string;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    type: tMessageTypeEnum;
+    direction: tMessageDirectionEnum;
+    location: tLocation;
 };
 
 /**
@@ -316,15 +360,15 @@ export type tLocation = {
     /**
      * The county that the location is in
      */
-    county: string | null;
+    county: null | string;
     /**
      * The municipality that the location is in
      */
-    municipality: string | null;
+    municipality: null | string;
     /**
      * The state that the location is in
      */
-    state: string | null;
+    state: null | string;
     /**
      * Full address preview of a location
      */
@@ -332,15 +376,15 @@ export type tLocation = {
     /**
      * The city that the location is in
      */
-    city: string | null;
+    city: null | string;
     /**
      * The street that the location is on
      */
-    street: string | null;
+    street: null | string;
     /**
      * The postal/zip code of the location
      */
-    zip: string | null;
+    zip: null | string;
     /**
      * Confidence score of the location (based on query)
      */
@@ -357,27 +401,6 @@ export type tLocation = {
      * Longitude of the location
      */
     lon: number;
-};
-
-/**
- * Message location entry
- */
-export type tMessageLocation = {
-    /**
-     * ID of the message location entry
-     */
-    id: string;
-    /**
-     * ID of the location
-     */
-    locationId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-    location: tLocation;
 };
 
 /**
@@ -458,31 +481,13 @@ export type tMessageSystem = {
 };
 
 /**
- * Message payload (unified view across all message types)
+ * Query object for message collection
  */
-export type tMessagePayload = tMessageText | tMessageGallery | tMessageLocation | tMessagePersonal | tMessagePackage | tMessageSystem;
-
-/**
- * Message collection item
- */
-export type tMessageItem = {
-    /**
-     * ID of the message entry
-     */
-    id: string;
-    type: tMessageTypeEnum;
-    payload: tMessagePayload;
-};
-
-/**
- * Collection of messages
- */
-export type tMessageItemSchema = {
-    data: Array<tMessageItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
+export type tMessageQuery = {
+    cursor?: tCursor;
+    filter?: tMessageFilter;
+    where?: tMessageWhere;
+    sort?: Array<tMessageSort>;
 };
 
 /**
@@ -546,16 +551,6 @@ export type tMessageWhere = {
 };
 
 /**
- * Available sort fields for message collection
- */
-export const tMessageSortField = { id: 'id', createdAt: 'createdAt' } as const;
-
-/**
- * Available sort fields for message collection
- */
-export type tMessageSortField = typeof tMessageSortField[keyof typeof tMessageSortField];
-
-/**
  * Sort parameters for message collection
  */
 export type tMessageSort = {
@@ -564,14 +559,14 @@ export type tMessageSort = {
 };
 
 /**
- * Query object for message collection
+ * Available sort fields for message collection
  */
-export type tMessageQuery = {
-    cursor?: tCursor;
-    filter?: tMessageFilter;
-    where?: tMessageWhere;
-    sort?: Array<tMessageSort>;
-};
+export const tMessageSortField = { id: 'id', createdAt: 'createdAt' } as const;
+
+/**
+ * Available sort fields for message collection
+ */
+export type tMessageSortField = typeof tMessageSortField[keyof typeof tMessageSortField];
 
 /**
  * Allowed extensions
@@ -707,6 +702,16 @@ export type tUploadCreate = {
 /**
  * Data for uploading a file
  */
+export type tUploadQuery = {
+    cursor?: tCursor;
+    filter?: tUploadFilter;
+    where?: tUploadWhere;
+    sort?: Array<tUploadSort>;
+};
+
+/**
+ * Data for uploading a file
+ */
 export type tUploadFilter = {
     /**
      * This filter matches the exact id
@@ -741,6 +746,14 @@ export type tUploadWhere = {
 };
 
 /**
+ * Data for uploading a file
+ */
+export type tUploadSort = {
+    field: tUploadSortField;
+    order: tOrderEnum;
+};
+
+/**
  * Field for uploading a file
  */
 export const tUploadSortField = { createdAt: 'createdAt' } as const;
@@ -751,21 +764,18 @@ export const tUploadSortField = { createdAt: 'createdAt' } as const;
 export type tUploadSortField = typeof tUploadSortField[keyof typeof tUploadSortField];
 
 /**
- * Data for uploading a file
+ * User extended information
  */
-export type tUploadSort = {
-    field: tUploadSortField;
-    order: tOrderEnum;
-};
-
-/**
- * Data for uploading a file
- */
-export type tUploadQuery = {
-    cursor?: tCursor;
-    filter?: tUploadFilter;
-    where?: tUploadWhere;
-    sort?: Array<tUploadSort>;
+export type tUserEx = {
+    /**
+     * ID of the user_ex record
+     */
+    id: string;
+    /**
+     * Default location for the user - user for listings & listing sorting
+     */
+    locationId: null | string;
+    side?: null | tUserSideEnum;
 };
 
 /**
@@ -779,21 +789,6 @@ export const tUserSideEnum = { seller: 'seller', buyer: 'buyer' } as const;
 export type tUserSideEnum = typeof tUserSideEnum[keyof typeof tUserSideEnum];
 
 /**
- * User extended information
- */
-export type tUserEx = {
-    /**
-     * ID of the user_ex record
-     */
-    id: string;
-    /**
-     * Default location for the user - user for listings & listing sorting
-     */
-    locationId: string | null;
-    side?: tUserSideEnum | null;
-};
-
-/**
  * Data for patching a user ex
  */
 export type tUserExPatch = {
@@ -804,8 +799,8 @@ export type tUserExPatch = {
         /**
          * Default location for the user - user for listings & listing sorting
          */
-        locationId?: string | null;
-        side?: tUserSideEnum | null;
+        locationId?: null | string;
+        side?: null | tUserSideEnum;
     };
 };
 

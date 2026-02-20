@@ -2,7 +2,6 @@ import { createRoute } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
-import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withUploadFx } from "~/@common/upload/context/withUploadFx";
@@ -106,9 +105,6 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				withCatchFx({
 					InvalidRequestErrorFx(e) {
 						return c.json(noticeError(e), 400);
-					},
-					NotFoundErrorFx() {
-						return c.json(NotFoundNotice, 404);
 					},
 					RuntimeErrorFx(e) {
 						return c.json(noticeError(e), 500);

@@ -37,6 +37,7 @@ This domain provides endpoints that don't require authentication. It includes sy
   - Score cleanup
   - Upload cleanup
 - Maintenance and data hygiene
+- Query performance: upload cleanup resolves orphan uploads using `NOT EXISTS (gallery_item)` and avoids broad joins that can multiply rows.
 
 ### Migration
 - **Run** - Database migration execution
@@ -51,11 +52,11 @@ This domain provides endpoints that don't require authentication. It includes sy
 - **Origin** - Origin/domain information
 - Configuration and CORS utilities
 
-### Seed Data
-- **Seed** - Development seed data generation
-- **Transaction Interactions** - Seed transaction flows
-- **User Seed** - Seed user accounts
-- Development and testing utilities
+### Seed
+- Public seed API endpoints were removed.
+- Effect-only seed implementation lives in `src/seed` and is executed via root scripts:
+  - `bun run seed:core --count <n> --user <email>`
+  - `bun run seed:interaction --count <n> --user <email>`
 
 ## Access Rules
 
@@ -69,7 +70,7 @@ This domain provides endpoints that don't require authentication. It includes sy
 
 - User registration and login
 - System health monitoring
-- Development and testing (seed, migration)
+- Development and testing (migration)
 - API documentation access
 - Scheduled maintenance tasks
 

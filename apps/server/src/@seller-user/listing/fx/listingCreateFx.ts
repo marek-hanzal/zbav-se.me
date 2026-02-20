@@ -6,8 +6,8 @@ import pgvector from "pgvector";
 import { match } from "ts-pattern";
 import { listingFetchFx } from "~/@seller-user/listing/fx/listingFetchFx";
 import type { ListingCreateSchema } from "~/@seller-user/listing/schema/ListingCreateSchema";
-import { galleryCreateFx as coolGalleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
-import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
+import { galleryInsertFx } from "~/@user/gallery/fx/galleryInsertFx";
+import { galleryItemInsertFx } from "~/@user/gallery-item/fx/galleryItemInsertFx";
 import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
@@ -55,17 +55,18 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 				});
 			}
 
-			const gallery = yield* coolGalleryCreateFx({
+			const gallery = yield* galleryInsertFx({
 				userId,
 			});
 
 			let sort = 0;
 			for (const uploadId of uploadIds) {
-				yield* galleryItemCreateFx({
+				yield* galleryItemInsertFx({
 					galleryId: gallery.id,
 					uploadId,
 					sort,
 					userId,
+					check: false,
 				});
 				sort++;
 			}

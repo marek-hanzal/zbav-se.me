@@ -5,6 +5,17 @@ export type clientOptions = {
 };
 
 /**
+ * Collection of drafts
+ */
+export type tDraftItemSchema = {
+    data: Array<tDraftItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
  * Draft collection item
  */
 export type tDraftItem = {
@@ -15,14 +26,14 @@ export type tDraftItem = {
 };
 
 /**
- * Collection of drafts
+ * Just a note sent from various reasons, usually when something is fucked up.
  */
-export type tDraftItemSchema = {
-    data: Array<tDraftItem>;
+export type tNotice = {
     /**
-     * Whether there are more items to fetch
+     * Message
      */
-    more: boolean;
+    message: string;
+    type: tNoticeTypeEnum;
 };
 
 /**
@@ -40,14 +51,13 @@ export const tNoticeTypeEnum = {
 export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
 
 /**
- * Just a note sent from various reasons, usually when something is fucked up.
+ * Query object for draft collection
  */
-export type tNotice = {
-    /**
-     * Message
-     */
-    message: string;
-    type: tNoticeTypeEnum;
+export type tDraftQuery = {
+    cursor?: tCursor;
+    filter?: tDraftFilter;
+    where?: tDraftWhere;
+    sort?: Array<tDraftSort>;
 };
 
 /**
@@ -133,6 +143,14 @@ export type tDraftWhere = {
 };
 
 /**
+ * Sort object for draft collection
+ */
+export type tDraftSort = {
+    field: tDraftSortField;
+    order: tOrderEnum;
+};
+
+/**
  * Field of the draft sort
  */
 export const tDraftSortField = { createdAt: 'createdAt', updatedAt: 'updatedAt' } as const;
@@ -151,24 +169,6 @@ export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
  * Order
  */
 export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
-
-/**
- * Sort object for draft collection
- */
-export type tDraftSort = {
-    field: tDraftSortField;
-    order: tOrderEnum;
-};
-
-/**
- * Query object for draft collection
- */
-export type tDraftQuery = {
-    cursor?: tCursor;
-    filter?: tDraftFilter;
-    where?: tDraftWhere;
-    sort?: Array<tDraftSort>;
-};
 
 /**
  * Count data
@@ -195,6 +195,101 @@ export type tDraftCountQuery = {
     filter?: tDraftFilter;
     where?: tDraftWhere;
     count?: Array<'total' | 'filter' | 'where'>;
+};
+
+/**
+ * Draft data
+ */
+export type tDraft = {
+    /**
+     * ID of the draft
+     */
+    id: string;
+    /**
+     * Price of the draft
+     */
+    price: null | number | null;
+    /**
+     * Price type of the draft
+     */
+    priceType: null | tListingPriceEnum;
+    /**
+     * Currency of the draft
+     */
+    currency: null | tCurrencyEnum;
+    /**
+     * Condition of the item (0-based index)
+     */
+    condition: null | number;
+    /**
+     * Age of the item (0-based index)
+     */
+    age: null | number;
+    /**
+     * Delivery methods for the draft
+     */
+    delivery: null | Array<tListingDeliveryEnum>;
+    /**
+     * Warranty type for the draft
+     */
+    warranty: null | tListingWarrantyEnum;
+    /**
+     * Content restriction level of the draft
+     */
+    restriction: null | tListingRestrictionEnum;
+    /**
+     * ID of the location
+     */
+    locationId: null | string;
+    /**
+     * ID of the category
+     */
+    categoryId: null | string;
+    /**
+     * ID of the gallery
+     */
+    galleryId: string;
+    /**
+     * Expiration timestamp
+     */
+    expiresAt: null | tListingExpireEnum;
+    /**
+     * Title of the item
+     */
+    title: null | string;
+    /**
+     * Description of the item
+     */
+    description: null | string;
+    /**
+     * Pros of the item
+     */
+    pros: null | tProsCons;
+    /**
+     * Cons of the item
+     */
+    cons: null | tProsCons;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    /**
+     * Last update timestamp
+     */
+    updatedAt: string;
+    /**
+     * Timestamp when the draft was used to create a listing
+     */
+    usedAt: null | string;
+    /**
+     * Location data
+     */
+    location: null | tLocation;
+    /**
+     * Category data
+     */
+    category: null | tCategory;
+    gallery: tGallery;
 };
 
 /**
@@ -312,15 +407,15 @@ export type tLocation = {
     /**
      * The county that the location is in
      */
-    county: string | null;
+    county: null | string;
     /**
      * The municipality that the location is in
      */
-    municipality: string | null;
+    municipality: null | string;
     /**
      * The state that the location is in
      */
-    state: string | null;
+    state: null | string;
     /**
      * Full address preview of a location
      */
@@ -328,15 +423,15 @@ export type tLocation = {
     /**
      * The city that the location is in
      */
-    city: string | null;
+    city: null | string;
     /**
      * The street that the location is on
      */
-    street: string | null;
+    street: null | string;
     /**
      * The postal/zip code of the location
      */
-    zip: string | null;
+    zip: null | string;
     /**
      * Confidence score of the location (based on query)
      */
@@ -386,17 +481,17 @@ export type tCategory = {
 };
 
 /**
- * Upload file metadata
+ * Draft gallery images
  */
-export type tUpload = {
+export type tGallery = {
     /**
-     * ID of the upload
+     * ID of the gallery
      */
     id: string;
     /**
-     * Public URL to the uploaded file
+     * Gallery items sorted by sort order
      */
-    url: string;
+    items: Array<tGalleryItem>;
 };
 
 /**
@@ -423,112 +518,17 @@ export type tGalleryItem = {
 };
 
 /**
- * Draft gallery images
+ * Upload file metadata
  */
-export type tGallery = {
+export type tUpload = {
     /**
-     * ID of the gallery
+     * ID of the upload
      */
     id: string;
     /**
-     * Gallery items sorted by sort order
+     * Public URL to the uploaded file
      */
-    items: Array<tGalleryItem>;
-};
-
-/**
- * Draft data
- */
-export type tDraft = {
-    /**
-     * ID of the draft
-     */
-    id: string;
-    /**
-     * Price of the draft
-     */
-    price: number | null | null;
-    /**
-     * Price type of the draft
-     */
-    priceType: tListingPriceEnum | null;
-    /**
-     * Currency of the draft
-     */
-    currency: tCurrencyEnum | null;
-    /**
-     * Condition of the item (0-based index)
-     */
-    condition: number | null;
-    /**
-     * Age of the item (0-based index)
-     */
-    age: number | null;
-    /**
-     * Delivery methods for the draft
-     */
-    delivery: Array<tListingDeliveryEnum> | null;
-    /**
-     * Warranty type for the draft
-     */
-    warranty: tListingWarrantyEnum | null;
-    /**
-     * Content restriction level of the draft
-     */
-    restriction: tListingRestrictionEnum | null;
-    /**
-     * ID of the location
-     */
-    locationId: string | null;
-    /**
-     * ID of the category
-     */
-    categoryId: string | null;
-    /**
-     * ID of the gallery
-     */
-    galleryId: string;
-    /**
-     * Expiration timestamp
-     */
-    expiresAt: null | tListingExpireEnum;
-    /**
-     * Title of the item
-     */
-    title: string | null;
-    /**
-     * Description of the item
-     */
-    description: string | null;
-    /**
-     * Pros of the item
-     */
-    pros: tProsCons | null;
-    /**
-     * Cons of the item
-     */
-    cons: tProsCons | null;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    /**
-     * Last update timestamp
-     */
-    updatedAt: string;
-    /**
-     * Timestamp when the draft was used to create a listing
-     */
-    usedAt: null | string | null;
-    /**
-     * Location data
-     */
-    location: tLocation | null;
-    /**
-     * Category data
-     */
-    category: tCategory | null;
-    gallery: tGallery;
+    url: string;
 };
 
 /**
@@ -551,11 +551,11 @@ export type tDraftCreate = {
     /**
      * Warranty type for the draft
      */
-    warranty?: tListingWarrantyEnum | null;
+    warranty?: null | tListingWarrantyEnum;
     /**
      * Content restriction level of the draft
      */
-    restriction?: tListingRestrictionEnum | null;
+    restriction?: null | tListingRestrictionEnum;
     /**
      * ID of the location
      */
@@ -576,15 +576,23 @@ export type tDraftCreate = {
     /**
      * Pros of the item
      */
-    pros?: tProsCons | null;
+    pros?: null | tProsCons;
     /**
      * Cons of the item
      */
-    cons?: tProsCons | null;
+    cons?: null | tProsCons;
     /**
      * IDs of the uploads; order of uploads defines order in the gallery
      */
     uploadIds?: Array<string>;
+};
+
+/**
+ * Data for updating an existing draft
+ */
+export type tDraftPatch = {
+    patch: tDraftPatchData;
+    query: tDraftQuery;
 };
 
 /**
@@ -594,39 +602,39 @@ export type tDraftPatchData = {
     /**
      * Price of the draft
      */
-    price?: number | null | null;
+    price?: null | number | null;
     /**
      * Price type of the draft
      */
-    priceType?: tListingPriceEnum | null;
+    priceType?: null | tListingPriceEnum;
     /**
      * Condition of the item (0-based index)
      */
-    condition?: number | null;
+    condition?: null | number;
     /**
      * Age of the item (0-based index)
      */
-    age?: number | null;
+    age?: null | number;
     /**
      * Delivery methods for the draft
      */
-    delivery?: Array<tListingDeliveryEnum> | null;
+    delivery?: null | Array<tListingDeliveryEnum>;
     /**
      * Warranty type for the draft
      */
-    warranty?: tListingWarrantyEnum | null;
+    warranty?: null | tListingWarrantyEnum;
     /**
      * Content restriction level of the draft
      */
-    restriction?: tListingRestrictionEnum | null;
+    restriction?: null | tListingRestrictionEnum;
     /**
      * ID of the location
      */
-    locationId?: string | null;
+    locationId?: null | string;
     /**
      * ID of the category
      */
-    categoryId?: string | null;
+    categoryId?: null | string;
     /**
      * ID of the gallery
      */
@@ -638,31 +646,23 @@ export type tDraftPatchData = {
     /**
      * Title of the item
      */
-    title?: string | null;
+    title?: null | string;
     /**
      * Description of the item
      */
-    description?: string | null;
+    description?: null | string;
     /**
      * Pros of the item
      */
-    pros?: tProsCons | null;
+    pros?: null | tProsCons;
     /**
      * Cons of the item
      */
-    cons?: tProsCons | null;
+    cons?: null | tProsCons;
     /**
      * Timestamp when the draft was used to create a listing
      */
-    usedAt?: null | string | null;
-};
-
-/**
- * Data for updating an existing draft
- */
-export type tDraftPatch = {
-    patch: tDraftPatchData;
-    query: tDraftQuery;
+    usedAt?: null | string;
 };
 
 /**
@@ -680,6 +680,17 @@ export type tDraftGalleryCreate = {
 };
 
 /**
+ * Collection of listings
+ */
+export type tListingItemSchema = {
+    data: Array<tListingItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
  * Listing collection item
  */
 export type tListingItem = {
@@ -690,14 +701,13 @@ export type tListingItem = {
 };
 
 /**
- * Collection of listings
+ * Query object for listing collection
  */
-export type tListingItemSchema = {
-    data: Array<tListingItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
+export type tListingQuery = {
+    cursor?: tCursor;
+    filter?: tListingFilter;
+    where?: tListingWhere;
+    sort?: Array<tListingSort>;
 };
 
 /**
@@ -745,6 +755,14 @@ export type tListingWhere = {
 };
 
 /**
+ * Sort object for listing collection
+ */
+export type tListingSort = {
+    field: tListingSortField;
+    order: tOrderEnum;
+};
+
+/**
  * Field of the listing sort
  */
 export const tListingSortField = {
@@ -760,24 +778,6 @@ export const tListingSortField = {
  * Field of the listing sort
  */
 export type tListingSortField = typeof tListingSortField[keyof typeof tListingSortField];
-
-/**
- * Sort object for listing collection
- */
-export type tListingSort = {
-    field: tListingSortField;
-    order: tOrderEnum;
-};
-
-/**
- * Query object for listing collection
- */
-export type tListingQuery = {
-    cursor?: tCursor & unknown;
-    filter?: tListingFilter;
-    where?: tListingWhere;
-    sort?: Array<tListingSort>;
-};
 
 /**
  * Query object for listing count
@@ -805,19 +805,19 @@ export type tListing = {
     /**
      * Condition of the item (0-based index)
      */
-    condition: number | null;
+    condition: null | number;
     /**
      * Age of the item (0-based index)
      */
-    age: number | null;
+    age: null | number;
     /**
      * Delivery methods for the listing
      */
-    delivery: Array<tListingDeliveryEnum> | null;
+    delivery: null | Array<tListingDeliveryEnum>;
     /**
      * Warranty type for the listing
      */
-    warranty: tListingWarrantyEnum | null;
+    warranty: null | tListingWarrantyEnum;
     restriction: tListingRestrictionEnum;
     /**
      * ID of the location
@@ -834,7 +834,7 @@ export type tListing = {
     /**
      * ID of the draft this listing was created from
      */
-    draftId: string | null;
+    draftId: null | string;
     /**
      * Expiration timestamp
      */
@@ -846,15 +846,15 @@ export type tListing = {
     /**
      * Description of the item
      */
-    description: string | null;
+    description: null | string;
     /**
      * Pros of the item
      */
-    pros: tProsCons | null;
+    pros: null | tProsCons;
     /**
      * Cons of the item
      */
-    cons: tProsCons | null;
+    cons: null | tProsCons;
     /**
      * Creation timestamp
      */
@@ -880,19 +880,19 @@ export type tListingCreate = {
     /**
      * Condition of the item (0-based index)
      */
-    condition: number | null;
+    condition: null | number;
     /**
      * Age of the item (0-based index)
      */
-    age: number | null;
+    age: null | number;
     /**
      * Delivery methods for the listing
      */
-    delivery?: Array<tListingDeliveryEnum> | null;
+    delivery?: null | Array<tListingDeliveryEnum>;
     /**
      * Warranty type for the listing
      */
-    warranty?: tListingWarrantyEnum | null;
+    warranty?: null | tListingWarrantyEnum;
     restriction: tListingRestrictionEnum & unknown;
     /**
      * ID of the draft
@@ -914,19 +914,30 @@ export type tListingCreate = {
     /**
      * Description of the item
      */
-    description?: string | null;
+    description?: null | string;
     /**
      * Pros of the item
      */
-    pros?: tProsCons | null;
+    pros?: null | tProsCons;
     /**
      * Cons of the item
      */
-    cons?: tProsCons | null;
+    cons?: null | tProsCons;
     /**
      * IDs of the uploads; order of uploads defines order in the gallery
      */
     uploadIds: Array<string>;
+};
+
+/**
+ * Collection of transactions
+ */
+export type tTransactionItemSchema = {
+    data: Array<tTransactionItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
 };
 
 /**
@@ -944,34 +955,14 @@ export type tTransactionItem = {
 };
 
 /**
- * Collection of transactions
+ * Query object for transaction collection
  */
-export type tTransactionItemSchema = {
-    data: Array<tTransactionItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
+export type tTransactionQuery = {
+    cursor?: tCursor;
+    filter?: tTransactionFilter;
+    where?: tTransactionWhere;
+    sort?: Array<tTransactionSort>;
 };
-
-/**
- * This filter matches the current status of the transaction
- */
-export const tTransactionStatusEnum = {
-    pending: 'pending',
-    open: 'open',
-    resolved: 'resolved',
-    dispute: 'dispute',
-    rejected: 'rejected',
-    expired: 'expired',
-    success: 'success',
-    closed: 'closed'
-} as const;
-
-/**
- * This filter matches the current status of the transaction
- */
-export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
 
 /**
  * Filter object for transaction collection
@@ -1005,6 +996,25 @@ export type tTransactionFilter = {
 };
 
 /**
+ * This filter matches the current status of the transaction
+ */
+export const tTransactionStatusEnum = {
+    pending: 'pending',
+    open: 'open',
+    resolved: 'resolved',
+    dispute: 'dispute',
+    rejected: 'rejected',
+    expired: 'expired',
+    success: 'success',
+    closed: 'closed'
+} as const;
+
+/**
+ * This filter matches the current status of the transaction
+ */
+export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
+
+/**
  * App-based filters
  */
 export type tTransactionWhere = {
@@ -1036,6 +1046,14 @@ export type tTransactionWhere = {
 };
 
 /**
+ * Sort object for transaction collection
+ */
+export type tTransactionSort = {
+    field: tTransactionSortField;
+    order: tOrderEnum;
+};
+
+/**
  * Field of the transaction sort
  */
 export const tTransactionSortField = {
@@ -1049,24 +1067,6 @@ export const tTransactionSortField = {
  * Field of the transaction sort
  */
 export type tTransactionSortField = typeof tTransactionSortField[keyof typeof tTransactionSortField];
-
-/**
- * Sort object for transaction collection
- */
-export type tTransactionSort = {
-    field: tTransactionSortField;
-    order: tOrderEnum;
-};
-
-/**
- * Query object for transaction collection
- */
-export type tTransactionQuery = {
-    cursor?: tCursor;
-    filter?: tTransactionFilter;
-    where?: tTransactionWhere;
-    sort?: Array<tTransactionSort>;
-};
 
 /**
  * Transaction data
@@ -1112,6 +1112,17 @@ export type tTransaction = {
 };
 
 /**
+ * Collection of listings that have transactions
+ */
+export type tTransactionListingItemSchema = {
+    data: Array<tTransactionListingItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
  * Transaction listing collection item
  */
 export type tTransactionListingItem = {
@@ -1130,14 +1141,13 @@ export type tTransactionListingItem = {
 };
 
 /**
- * Collection of listings that have transactions
+ * Query object for transaction-listing collection
  */
-export type tTransactionListingItemSchema = {
-    data: Array<tTransactionListingItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
+export type tTransactionListingQuery = {
+    cursor?: tCursor;
+    filter?: tTransactionListingFilter;
+    where?: tTransactionListingWhere;
+    sort?: Array<tTransactionListingSort>;
 };
 
 /**
@@ -1185,16 +1195,6 @@ export type tTransactionListingWhere = {
 };
 
 /**
- * Field of the transaction-listing sort
- */
-export const tTransactionListingSortField = { createdAt: 'createdAt' } as const;
-
-/**
- * Field of the transaction-listing sort
- */
-export type tTransactionListingSortField = typeof tTransactionListingSortField[keyof typeof tTransactionListingSortField];
-
-/**
  * Sort object for transaction-listing collection
  */
 export type tTransactionListingSort = {
@@ -1203,30 +1203,14 @@ export type tTransactionListingSort = {
 };
 
 /**
- * Query object for transaction-listing collection
+ * Field of the transaction-listing sort
  */
-export type tTransactionListingQuery = {
-    cursor?: tCursor;
-    filter?: tTransactionListingFilter;
-    where?: tTransactionListingWhere;
-    sort?: Array<tTransactionListingSort>;
-};
+export const tTransactionListingSortField = { createdAt: 'createdAt' } as const;
 
 /**
- * Who initiated or affected the transaction change
+ * Field of the transaction-listing sort
  */
-export const tTransactionSideEnum = {
-    seller: 'seller',
-    buyer: 'buyer',
-    transaction: 'transaction',
-    system: 'system',
-    unknown: 'unknown'
-} as const;
-
-/**
- * Who initiated or affected the transaction change
- */
-export type tTransactionSideEnum = typeof tTransactionSideEnum[keyof typeof tTransactionSideEnum];
+export type tTransactionListingSortField = typeof tTransactionListingSortField[keyof typeof tTransactionListingSortField];
 
 /**
  * Listing transaction status entry
@@ -1251,6 +1235,22 @@ export type tTransactionStatus = {
      */
     createdAt: string;
 };
+
+/**
+ * Who initiated or affected the transaction change
+ */
+export const tTransactionSideEnum = {
+    seller: 'seller',
+    buyer: 'buyer',
+    transaction: 'transaction',
+    system: 'system',
+    unknown: 'unknown'
+} as const;
+
+/**
+ * Who initiated or affected the transaction change
+ */
+export type tTransactionSideEnum = typeof tTransactionSideEnum[keyof typeof tTransactionSideEnum];
 
 /**
  * Request to accept a listing transaction

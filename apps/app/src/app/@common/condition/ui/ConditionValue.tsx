@@ -1,4 +1,3 @@
-import { EditIcon, Icon } from "@use-pico/client/icon";
 import { LabelValue } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
@@ -15,19 +14,6 @@ export const ConditionValue: FC<ConditionValue.Props> = ({ condition, ...props }
 	return (
 		<LabelValue
 			data-ui={"ConditionValue[LabelValue]"}
-			wrapperProps={{
-				ui: {
-					tone: hasCondition ? "neutral" : "secondary",
-				},
-			}}
-			action={
-				<Icon
-					icon={EditIcon}
-					ui={{
-						text: "xl",
-					}}
-				/>
-			}
 			textLabel={translator.text("Listing condition (label)")}
 			textHint={translator.text("Listing condition (hint)")}
 			textValue={hasCondition ? <ConditionIcon condition={condition} /> : null}

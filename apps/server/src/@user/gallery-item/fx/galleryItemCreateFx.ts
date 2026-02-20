@@ -1,12 +1,7 @@
-import { DateContextFx } from "@use-pico/common/date";
-import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import { galleryItemFetchFx } from "~/@user/gallery-item/fx/galleryItemFetchFx";
+import { galleryItemInsertFx } from "~/@user/gallery-item/fx/galleryItemInsertFx";
 import type { GalleryItemCreateSchema } from "~/@user/gallery-item/schema/GalleryItemCreateSchema";
-import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { tryDbFx } from "~/database/fx/tryDbFx";
-import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace galleryItemCreateFx {
 	export interface Props extends GalleryItemCreateSchema.Type {
@@ -14,49 +9,10 @@ export namespace galleryItemCreateFx {
 	}
 }
 
-export const galleryItemCreateFx = Effect.fn("galleryItemCreateFx")(function* ({
-	userId,
-	galleryId,
-	...data
-}: galleryItemCreateFx.Props) {
-	yield* withTraceFx({
-		fx: "galleryItemCreateFx",
-		input: {
-			userId,
-			galleryId,
-			...data,
-		},
-	});
-
-	const { kysely } = yield* KyselyContextFx;
-	const dateContext = yield* DateContextFx;
-
-	const now = dateContext.now();
-	const id = genId();
-
-	/**
-	 * Just ensures the gallery exists with the correct user
-	 */
-	yield* galleryFetchFx({
-		where: {
-			id: galleryId,
-		},
-		scope: {
-			userId,
-		},
-	});
-
-	yield* tryDbFx(async () =>
-		kysely
-			.insertInto("gallery_item")
-			.values({
-				...data,
-				id,
-				galleryId,
-				createdAt: now.toJSDate(),
-			})
-			.execute(),
-	);
+export const galleryItemCreateFx = Effect.fn("galleryItemCreateFx")(function* (
+	data: galleryItemCreateFx.Props,
+) {
+	const { id } = yield* galleryItemInsertFx(data);
 
 	return yield* galleryItemFetchFx({
 		where: {

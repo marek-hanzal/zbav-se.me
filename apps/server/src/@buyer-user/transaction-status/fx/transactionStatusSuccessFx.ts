@@ -46,6 +46,17 @@ export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx"
 					message: "Seller cannot mark a transaction as successful",
 				});
 			}
+			if (transaction.status !== "resolved" && transaction.status !== "dispute") {
+				yield* withTraceFx({
+					fx: "transactionStatusSuccessFx",
+					error: {
+						message: `Transaction must be resolved or dispute before success, got ${transaction.status}`,
+					},
+				});
+				return yield* new InvalidRequestErrorFx({
+					message: "Transaction must be resolved or dispute before success",
+				});
+			}
 
 			yield* transactionPatchFx({
 				userId,

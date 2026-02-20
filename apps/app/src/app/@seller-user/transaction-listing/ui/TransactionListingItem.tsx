@@ -48,7 +48,7 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 			{...props}
 		>
 			<LinkTo
-				to={"/$locale/ui/seller/message/$listingId/list"}
+				to={"/$locale/flow/seller/message/$listingId/list"}
 				params={{
 					locale,
 					listingId: transactionListingItem.listingId,
@@ -84,7 +84,6 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 					}
 				>
 					{({ data: listing }) => {
-						// biome-ignore lint/correctness/useHookAtTopLevel: Ssst
 						const hero = useHeroUpload(listing.gallery.items);
 
 						return (

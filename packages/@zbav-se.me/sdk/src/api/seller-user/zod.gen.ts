@@ -321,31 +321,31 @@ export const zLocation = z.object({
         description: 'Country code'
     }),
     county: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     municipality: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     state: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     address: z.string().register(z.globalRegistry, {
         description: 'Full address preview of a location'
     }),
     city: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     street: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     zip: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     confidence: z.number().register(z.globalRegistry, {
         description: 'Confidence score of the location (based on query)'
@@ -456,47 +456,47 @@ export const zDraft = z.object({
         description: 'ID of the draft'
     }),
     price: z.union([
+        z.null(),
         z.union([
             z.number(),
             z.null()
-        ]),
-        z.null()
+        ])
     ]),
     priceType: z.union([
-        zListingPriceEnum,
-        z.null()
+        z.null(),
+        zListingPriceEnum
     ]),
     currency: z.union([
-        zCurrencyEnum,
-        z.null()
+        z.null(),
+        zCurrencyEnum
     ]),
     condition: z.union([
-        z.number(),
-        z.null()
+        z.null(),
+        z.number()
     ]),
     age: z.union([
-        z.number(),
-        z.null()
+        z.null(),
+        z.number()
     ]),
     delivery: z.union([
-        z.array(zListingDeliveryEnum),
-        z.null()
+        z.null(),
+        z.array(zListingDeliveryEnum)
     ]),
     warranty: z.union([
-        zListingWarrantyEnum,
-        z.null()
+        z.null(),
+        zListingWarrantyEnum
     ]),
     restriction: z.union([
-        zListingRestrictionEnum,
-        z.null()
+        z.null(),
+        zListingRestrictionEnum
     ]),
     locationId: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     categoryId: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     galleryId: z.string().register(z.globalRegistry, {
         description: 'ID of the gallery'
@@ -506,20 +506,20 @@ export const zDraft = z.object({
         zListingExpireEnum
     ]),
     title: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     description: z.union([
-        z.string().max(2048),
-        z.null()
+        z.null(),
+        z.string().max(2048)
     ]),
     pros: z.union([
-        zProsCons,
-        z.null()
+        z.null(),
+        zProsCons
     ]),
     cons: z.union([
-        zProsCons,
-        z.null()
+        z.null(),
+        zProsCons
     ]),
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
@@ -529,18 +529,15 @@ export const zDraft = z.object({
     }),
     usedAt: z.union([
         z.null(),
-        z.union([
-            z.iso.date(),
-            z.null()
-        ])
+        z.string()
     ]),
     location: z.union([
-        zLocation,
-        z.null()
+        z.null(),
+        zLocation
     ]),
     category: z.union([
-        zCategory,
-        z.null()
+        z.null(),
+        zCategory
     ]),
     gallery: zGallery
 }).register(z.globalRegistry, {
@@ -566,12 +563,12 @@ export const zDraftCreate = z.object({
         description: 'Age of the item (0-based index)'
     })),
     warranty: z.optional(z.union([
-        zListingWarrantyEnum,
-        z.null()
+        z.null(),
+        zListingWarrantyEnum
     ])),
     restriction: z.optional(z.union([
-        zListingRestrictionEnum,
-        z.null()
+        z.null(),
+        zListingRestrictionEnum
     ])),
     locationId: z.optional(z.string().register(z.globalRegistry, {
         description: 'ID of the location'
@@ -587,12 +584,12 @@ export const zDraftCreate = z.object({
         description: 'Description of the item'
     })),
     pros: z.optional(z.union([
-        zProsCons,
-        z.null()
+        z.null(),
+        zProsCons
     ])),
     cons: z.optional(z.union([
-        zProsCons,
-        z.null()
+        z.null(),
+        zProsCons
     ])),
     uploadIds: z.optional(z.array(z.string()).register(z.globalRegistry, {
         description: 'IDs of the uploads; order of uploads defines order in the gallery'
@@ -608,43 +605,43 @@ export type zDraftCreate = z.infer<typeof zDraftCreate>;
  */
 export const zDraftPatchData = z.object({
     price: z.optional(z.union([
+        z.null(),
         z.union([
             z.number(),
             z.null()
-        ]),
-        z.null()
+        ])
     ])),
     priceType: z.optional(z.union([
-        zListingPriceEnum,
-        z.null()
+        z.null(),
+        zListingPriceEnum
     ])),
     condition: z.optional(z.union([
-        z.number(),
-        z.null()
+        z.null(),
+        z.number()
     ])),
     age: z.optional(z.union([
-        z.number(),
-        z.null()
+        z.null(),
+        z.number()
     ])),
     delivery: z.optional(z.union([
-        z.array(zListingDeliveryEnum),
-        z.null()
+        z.null(),
+        z.array(zListingDeliveryEnum)
     ])),
     warranty: z.optional(z.union([
-        zListingWarrantyEnum,
-        z.null()
+        z.null(),
+        zListingWarrantyEnum
     ])),
     restriction: z.optional(z.union([
-        zListingRestrictionEnum,
-        z.null()
+        z.null(),
+        zListingRestrictionEnum
     ])),
     locationId: z.optional(z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ])),
     categoryId: z.optional(z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ])),
     galleryId: z.optional(z.string().register(z.globalRegistry, {
         description: 'ID of the gallery'
@@ -654,27 +651,24 @@ export const zDraftPatchData = z.object({
         zListingExpireEnum
     ])),
     title: z.optional(z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ])),
     description: z.optional(z.union([
-        z.string().max(2048),
-        z.null()
+        z.null(),
+        z.string().max(2048)
     ])),
     pros: z.optional(z.union([
-        zProsCons,
-        z.null()
+        z.null(),
+        zProsCons
     ])),
     cons: z.optional(z.union([
-        zProsCons,
-        z.null()
+        z.null(),
+        zProsCons
     ])),
     usedAt: z.optional(z.union([
         z.null(),
-        z.union([
-            z.iso.date(),
-            z.null()
-        ])
+        z.string()
     ]))
 }).register(z.globalRegistry, {
     description: 'Fields to update (all optional)'
@@ -813,7 +807,7 @@ export type zListingSort = z.infer<typeof zListingSort>;
  * Query object for listing collection
  */
 export const zListingQuery = z.object({
-    cursor: z.optional(zCursor.and(z.unknown().default({ page: 0, size: 256 }))),
+    cursor: z.optional(zCursor),
     filter: z.optional(zListingFilter),
     where: z.optional(zListingWhere),
     sort: z.optional(z.array(zListingSort))
@@ -853,20 +847,20 @@ export const zListing = z.object({
     priceType: zListingPriceEnum,
     currency: zCurrencyEnum,
     condition: z.union([
-        z.number(),
-        z.null()
+        z.null(),
+        z.number()
     ]),
     age: z.union([
-        z.number(),
-        z.null()
+        z.null(),
+        z.number()
     ]),
     delivery: z.union([
-        z.array(zListingDeliveryEnum),
-        z.null()
+        z.null(),
+        z.array(zListingDeliveryEnum)
     ]),
     warranty: z.union([
-        zListingWarrantyEnum,
-        z.null()
+        z.null(),
+        zListingWarrantyEnum
     ]),
     restriction: zListingRestrictionEnum,
     locationId: z.string().register(z.globalRegistry, {
@@ -879,8 +873,8 @@ export const zListing = z.object({
         description: 'ID of the gallery'
     }),
     draftId: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     expiresAt: z.string().register(z.globalRegistry, {
         description: 'Expiration timestamp'
@@ -889,16 +883,16 @@ export const zListing = z.object({
         description: 'Title of the item'
     }),
     description: z.union([
-        z.string(),
-        z.null()
+        z.null(),
+        z.string()
     ]),
     pros: z.union([
-        zProsCons,
-        z.null()
+        z.null(),
+        zProsCons
     ]),
     cons: z.union([
-        zProsCons,
-        z.null()
+        z.null(),
+        zProsCons
     ]),
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
@@ -926,20 +920,20 @@ export const zListingCreate = z.object({
     }),
     priceType: zListingPriceEnum,
     condition: z.union([
-        z.number(),
-        z.null()
+        z.null(),
+        z.number()
     ]),
     age: z.union([
-        z.number(),
-        z.null()
+        z.null(),
+        z.number()
     ]),
     delivery: z.optional(z.union([
-        z.array(zListingDeliveryEnum),
-        z.null()
+        z.null(),
+        z.array(zListingDeliveryEnum)
     ])),
     warranty: z.optional(z.union([
-        zListingWarrantyEnum,
-        z.null()
+        z.null(),
+        zListingWarrantyEnum
     ])),
     restriction: zListingRestrictionEnum.and(z.unknown().register(z.globalRegistry, {
         description: 'Content restriction level of the listing (required)'
@@ -958,16 +952,16 @@ export const zListingCreate = z.object({
         description: 'Title of the item'
     }),
     description: z.optional(z.union([
-        z.string().max(2048),
-        z.null()
+        z.null(),
+        z.string().max(2048)
     ])),
     pros: z.optional(z.union([
-        zProsCons,
-        z.null()
+        z.null(),
+        zProsCons
     ])),
     cons: z.optional(z.union([
-        zProsCons,
-        z.null()
+        z.null(),
+        zProsCons
     ])),
     uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
         description: 'IDs of the uploads; order of uploads defines order in the gallery'

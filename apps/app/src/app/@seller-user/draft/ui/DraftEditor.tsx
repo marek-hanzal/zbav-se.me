@@ -1,6 +1,7 @@
 import { useLocale } from "@use-pico/client/hook";
-import { EditIcon, Icon, SaveIcon } from "@use-pico/client/icon";
+import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
+import { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { View } from "@use-pico/client/ui/view";
@@ -40,6 +41,7 @@ import { ProsPatch } from "~/app/@seller-user/draft/ui/patch/ProsPatch";
 import { RestrictionPatch } from "~/app/@seller-user/draft/ui/patch/RestrictionPatch";
 import { TitlePatch } from "~/app/@seller-user/draft/ui/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/@seller-user/draft/ui/patch/WarrantyPatch";
+import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
 export namespace DraftEditor {
 	export type View =
@@ -80,7 +82,10 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 			views={{
 				default: {
 					children: (
-						<TitleContainer textTitle={"Draft edit (title)"}>
+						<TitleContainer
+							textTitle={"Draft edit (title)"}
+							right={<HomeMenuButton />}
+						>
 							<Container
 								data-ui={"DraftEditor-[Container.content]"}
 								ui={{
@@ -90,11 +95,13 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 									gap: "lg",
 								}}
 							>
-								<GalleryValue
-									uploads={draft.gallery.items.map((item) => item.upload)}
-									label={translator.text("Listing photo gallery (label)")}
-									onClick={() => setView("gallery")}
-								/>
+								<Group>
+									<GalleryValue
+										uploads={draft.gallery.items.map((item) => item.upload)}
+										label={translator.text("Listing photo gallery (label)")}
+										onClick={() => setView("gallery")}
+									/>
+								</Group>
 
 								<Tx
 									label={"Draft - bunch of required (title)"}
@@ -108,96 +115,137 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 									className={"text-center"}
 								/>
 
-								<TitleValue
-									title={draft.title}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									onClick={() => {
-										setView("title");
-									}}
-								/>
+								<Group>
+									<TitleValue
+										title={draft.title}
+										textLabel={translator.text("Listing title (label)")}
+										textEmpty={translator.text("Listing title not filled")}
+										action={
+											<Icon
+												icon={ChevronRightIcon}
+												ui={{
+													text: "xl",
+												}}
+											/>
+										}
+										onClick={() => {
+											setView("title");
+										}}
+										wrapperProps={{
+											ui: {
+												tone: draft.title ? "neutral" : "primary",
+											},
+										}}
+									/>
 
-								<CategoryValue
-									category={draft.category}
-									onClick={() => {
-										setView("category");
-									}}
-								/>
+									<CategoryValue
+										category={draft.category}
+										action={
+											<Icon
+												icon={ChevronRightIcon}
+												ui={{
+													text: "xl",
+												}}
+											/>
+										}
+										onClick={() => {
+											setView("category");
+										}}
+										wrapperProps={{
+											ui: {
+												tone: draft.categoryId ? "neutral" : "primary",
+											},
+										}}
+									/>
 
-								<LocationValue
-									locationId={draft.locationId}
-									textLabel={translator.text("Listing location (label)")}
-									textEmpty={translator.text("Listing location not selected")}
-									textHint={translator.text("Listing location (hint)")}
-									wrapperProps={{
-										ui: {
-											tone: draft.locationId ? "neutral" : "primary",
-										},
-									}}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									onClick={() => {
-										setView("location");
-									}}
-								/>
+									<LocationValue
+										locationId={draft.locationId}
+										textLabel={translator.text("Listing location (label)")}
+										textEmpty={translator.text("Listing location not selected")}
+										textHint={translator.text("Listing location (hint)")}
+										wrapperProps={{
+											ui: {
+												tone: draft.locationId ? "neutral" : "primary",
+											},
+										}}
+										action={
+											<Icon
+												icon={ChevronRightIcon}
+												ui={{
+													text: "xl",
+												}}
+											/>
+										}
+										onClick={() => {
+											setView("location");
+										}}
+									/>
+								</Group>
 
-								<PriceValue
-									price={draft.price}
-									currency={draft.currency}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									onClick={() => {
-										setView("price");
-									}}
-								/>
+								<Group>
+									<PriceValue
+										price={draft.price}
+										currency={draft.currency}
+										action={
+											<Icon
+												icon={ChevronRightIcon}
+												ui={{
+													text: "xl",
+												}}
+											/>
+										}
+										onClick={() => {
+											setView("price");
+										}}
+										wrapperProps={{
+											ui: {
+												tone: draft.price !== null ? "neutral" : "primary",
+											},
+										}}
+									/>
 
-								<PriceTypeValue
-									priceType={draft.priceType}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									onClick={() => {
-										setView("priceType");
-									}}
-								/>
+									<PriceTypeValue
+										priceType={draft.priceType}
+										action={
+											<Icon
+												icon={ChevronRightIcon}
+												ui={{
+													text: "xl",
+												}}
+											/>
+										}
+										onClick={() => {
+											setView("priceType");
+										}}
+										wrapperProps={{
+											ui: {
+												tone: draft.priceType ? "neutral" : "primary",
+											},
+										}}
+									/>
+								</Group>
 
-								<ExpireAtValue
-									expiresAt={draft.expiresAt}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									onClick={() => {
-										setView("expireAt");
-									}}
-								/>
+								<Group>
+									<ExpireAtValue
+										expiresAt={draft.expiresAt}
+										action={
+											<Icon
+												icon={ChevronRightIcon}
+												ui={{
+													text: "xl",
+												}}
+											/>
+										}
+										onClick={() => {
+											setView("expireAt");
+										}}
+										wrapperProps={{
+											ui: {
+												tone: draft.expiresAt ? "neutral" : "primary",
+											},
+										}}
+									/>
+								</Group>
 
 								<Tx
 									label={"Draft - those others (title)"}
@@ -211,114 +259,186 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 									className={"text-center"}
 								/>
 
-								<DescriptionValue
-									description={draft.description}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									onClick={() => {
-										setView("description");
-									}}
-								/>
+								<Group>
+									<DescriptionValue
+										description={draft.description}
+										action={
+											<Icon
+												icon={ChevronRightIcon}
+												ui={{
+													text: "xl",
+												}}
+											/>
+										}
+										onClick={() => {
+											setView("description");
+										}}
+										wrapperProps={{
+											ui: {
+												tone: draft.description ? "neutral" : "secondary",
+											},
+										}}
+									/>
+								</Group>
 
-								<ProsValueList
-									pros={draft.pros ?? []}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									onClick={() => {
-										setView("pros");
-									}}
-								/>
+								<Group>
+									<ProsValueList
+										pros={draft.pros ?? []}
+										action={
+											<Icon
+												icon={ChevronRightIcon}
+												ui={{
+													text: "xl",
+												}}
+											/>
+										}
+										onClick={() => {
+											setView("pros");
+										}}
+										wrapperProps={{
+											ui: {
+												tone:
+													(draft.pros ?? []).length > 0
+														? "neutral"
+														: "secondary",
+											},
+										}}
+									/>
 
-								<ConsValueList
-									cons={draft.cons ?? []}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									onClick={() => {
-										setView("cons");
-									}}
-								/>
+									<ConsValueList
+										cons={draft.cons ?? []}
+										action={
+											<Icon
+												icon={ChevronRightIcon}
+												ui={{
+													text: "xl",
+												}}
+											/>
+										}
+										onClick={() => {
+											setView("cons");
+										}}
+										wrapperProps={{
+											ui: {
+												tone:
+													(draft.cons ?? []).length > 0
+														? "neutral"
+														: "secondary",
+											},
+										}}
+									/>
+								</Group>
 
-								<DeliveryValueList
-									deliveryIn={draft.delivery ?? []}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-								/>
+								<Group>
+									<DeliveryValueList
+										deliveryIn={draft.delivery ?? []}
+										action={
+											<Icon
+												icon={ChevronRightIcon}
+												ui={{
+													text: "xl",
+												}}
+											/>
+										}
+										wrapperProps={{
+											ui: {
+												tone:
+													(draft.delivery ?? []).length > 0
+														? "neutral"
+														: "secondary",
+											},
+										}}
+									/>
+								</Group>
 
-								<WarrantyValue
-									warranty={draft.warranty}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									onClick={() => {
-										setView("warranty");
-									}}
-								/>
+								<Group>
+									<WarrantyValue
+										warranty={draft.warranty}
+										action={
+											<Icon
+												icon={ChevronRightIcon}
+												ui={{
+													text: "xl",
+												}}
+											/>
+										}
+										onClick={() => {
+											setView("warranty");
+										}}
+										wrapperProps={{
+											ui: {
+												tone: draft.warranty ? "neutral" : "secondary",
+											},
+										}}
+									/>
+								</Group>
 
-								<RestrictionValue
-									restriction={draft.restriction}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									onClick={() => {
-										setView("restriction");
-									}}
-								/>
+								<Group>
+									<ConditionValue
+										condition={draft.condition}
+										action={
+											<Icon
+												icon={ChevronRightIcon}
+												ui={{
+													text: "xl",
+												}}
+											/>
+										}
+										onClick={() => {
+											setView("condition");
+										}}
+										wrapperProps={{
+											ui: {
+												tone:
+													draft.condition !== null
+														? "neutral"
+														: "secondary",
+											},
+										}}
+									/>
 
-								<ConditionValue
-									condition={draft.condition}
-									onClick={() => {
-										setView("condition");
-									}}
-								/>
+									<AgeValue
+										age={draft.age}
+										action={
+											<Icon
+												icon={ChevronRightIcon}
+												ui={{
+													text: "xl",
+												}}
+											/>
+										}
+										onClick={() => {
+											setView("age");
+										}}
+										wrapperProps={{
+											ui: {
+												tone: draft.age !== null ? "neutral" : "secondary",
+											},
+										}}
+									/>
+								</Group>
 
-								<AgeValue
-									age={draft.age}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									onClick={() => {
-										setView("age");
-									}}
-								/>
+								<Group>
+									<RestrictionValue
+										restriction={draft.restriction}
+										action={
+											<Icon
+												icon={ChevronRightIcon}
+												ui={{
+													text: "xl",
+												}}
+											/>
+										}
+										onClick={() => {
+											setView("restriction");
+										}}
+										wrapperProps={{
+											ui: {
+												tone: draft.restriction ? "neutral" : "secondary",
+											},
+										}}
+									/>
+								</Group>
 
 								<Tx
 									label={"Draft - action section (title)"}
@@ -332,54 +452,76 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 									className={"text-center"}
 								/>
 
-								<CreateListingButton
-									draft={draft}
-									onListing={onListing}
-								/>
-
-								<LinkTo
-									to={"/$locale/flow/home"}
-									params={{
-										locale,
-									}}
-									icon={SaveIcon}
-									iconProps={{
-										ui: {
-											text: "2xl",
-										},
-									}}
-									ui={{
-										tone: "neutral",
-										theme: "light",
-										size: "default",
-										background: "default",
-										round: "default",
-										border: true,
-										shadow: true,
-									}}
-								>
-									<Container
+								<Group>
+									<CreateListingButton
+										draft={draft}
+										onListing={onListing}
 										ui={{
-											flow: "vertical",
-											height: "full",
+											round: undefined,
+											shadow: false,
+											inner: "lg",
+										}}
+									/>
+
+									<LinkTo
+										to={"/$locale/flow/home"}
+										params={{
+											locale,
+										}}
+										icon={"icon-[solar--alarm-linear]"}
+										iconProps={{
+											ui: {
+												text: "2xl",
+											},
+										}}
+										ui={{
+											tone: "neutral",
+											theme: "light",
+											inner: "lg",
+											background: "default",
+											border: false,
+											shadow: false,
 										}}
 									>
-										<Tx label="Close draft (button)" />
-
-										<Tx
-											label="Close draft (hint)"
+										<Container
 											ui={{
-												text: "xs",
-												color: "icon",
+												flow: "vertical",
+												height: "full",
 											}}
-										/>
-									</Container>
-								</LinkTo>
+										>
+											<Tx label="Close draft (button)" />
 
-								<DeleteButton
-									draft={draft}
-									onDelete={onDelete}
-								/>
+											<Tx
+												label="Close draft (hint)"
+												ui={{
+													text: "xs",
+													color: "icon",
+												}}
+											/>
+										</Container>
+									</LinkTo>
+
+									<DeleteButton
+										draft={draft}
+										onDelete={onDelete}
+										buttonProps={{
+											ui: {
+												round: undefined,
+												border: false,
+												shadow: false,
+												inner: "lg",
+											},
+										}}
+										confirmProps={{
+											ui: {
+												round: undefined,
+												shadow: false,
+												border: false,
+												inner: "lg",
+											},
+										}}
+									/>
+								</Group>
 							</Container>
 						</TitleContainer>
 					),

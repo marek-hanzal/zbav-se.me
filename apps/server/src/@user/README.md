@@ -50,6 +50,7 @@ This domain handles all operations on user-owned, private data. Everything in th
 ### Transaction Status
 - User-level transaction status operations
 - Cross-domain transaction state management
+- Transaction status resolution reads latest rows by timestamp and uses deterministic ordering for tied timestamps.
 
 ### Upload Management
 - **Collection** - List user's uploads

@@ -7,13 +7,21 @@ import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
 export namespace DeleteButton {
-	export interface Props {
+	export interface Props extends ConfirmButton.Props {
 		draft: tDraft;
 		onDelete(): Promise<any>;
 	}
 }
 
-export const DeleteButton: FC<DeleteButton.Props> = ({ draft, onDelete }) => {
+export const DeleteButton: FC<DeleteButton.Props> = ({
+	draft,
+	onDelete,
+	buttonProps,
+	confirmProps,
+	ui,
+	className,
+	...props
+}) => {
 	const deleteMutation = withDraftDeleteMutation.useMutation({
 		onSuccess: onDelete,
 	});
@@ -30,17 +38,21 @@ export const DeleteButton: FC<DeleteButton.Props> = ({ draft, onDelete }) => {
 			disabled={deleteMutation.isPending}
 			loading={deleteMutation.isPending}
 			buttonProps={{
+				...buttonProps,
 				ui: {
 					justify: "start",
 					items: "center",
+					...buttonProps?.ui,
 				},
 			}}
 			confirmProps={{
+				...confirmProps,
 				ui: {
 					tone: "danger",
 					theme: "light",
 					justify: "start",
 					items: "center",
+					...confirmProps?.ui,
 				},
 				label: translator.text("Delete draft - confirm (button)"),
 				onClick() {
@@ -54,9 +66,11 @@ export const DeleteButton: FC<DeleteButton.Props> = ({ draft, onDelete }) => {
 			{...uiSaveButton({
 				ui: {
 					tone: "neutral",
+					...ui,
 				},
-				className: [],
+				className,
 			})}
+			{...props}
 		/>
 	);
 };

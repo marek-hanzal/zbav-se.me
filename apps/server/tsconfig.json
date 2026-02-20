@@ -3,7 +3,8 @@
 	"compilerOptions": {
 		"types": [
 			"@types/bun",
-			"node"
+			"node",
+			"terminal-kit"
 		],
 		"plugins": [
 			{

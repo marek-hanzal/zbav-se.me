@@ -67,7 +67,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/buyer/feed/default"
+						to="/$locale/flow/buyer/feed/default"
 						params={{
 							locale,
 						}}
@@ -95,10 +95,17 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/buyer/feed/default"
+						to="/$locale/flow/buyer/feed/default"
 						params={{
 							locale,
 						}}
+						activeProps={uiMenuButton({
+							ui: {
+								tone: "link",
+								theme: "light",
+							},
+							className: [],
+						})}
 					>
 						<TypoIcon
 							flip
@@ -140,10 +147,17 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 										...icon,
 									},
 								}}
-								to="/$locale/ui/seller/draft/resolve"
+								to="/$locale/flow/seller/draft/resolve"
 								params={{
 									locale,
 								}}
+								activeProps={uiMenuButton({
+									ui: {
+										tone: "link",
+										theme: "light",
+									},
+									className: [],
+								})}
 							>
 								<Tx label={"Loading... (label)"} />
 							</LinkTo>
@@ -165,10 +179,17 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 											...icon,
 										},
 									}}
-									to="/$locale/ui/seller/draft/resolve"
+									to="/$locale/flow/seller/draft/resolve"
 									params={{
 										locale,
 									}}
+									activeProps={uiMenuButton({
+										ui: {
+											tone: "link",
+											theme: "light",
+										},
+										className: [],
+									})}
 								>
 									<TypoIcon
 										flip
@@ -204,10 +225,17 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/ui/seller/message/list"
+						to="/$locale/flow/seller/message/list"
 						params={{
 							locale,
 						}}
+						activeProps={uiMenuButton({
+							ui: {
+								tone: "link",
+								theme: "light",
+							},
+							className: [],
+						})}
 					>
 						<TypoIcon
 							flip
@@ -234,10 +262,17 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/ui/seller/listing/my"
+						to="/$locale/flow/seller/listing/my"
 						params={{
 							locale,
 						}}
+						activeProps={uiMenuButton({
+							ui: {
+								tone: "link",
+								theme: "light",
+							},
+							className: [],
+						})}
 					>
 						<TypoIcon
 							flip
@@ -262,10 +297,17 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/ui/seller/draft/list"
+						to="/$locale/flow/seller/draft/list"
 						params={{
 							locale,
 						}}
+						activeProps={uiMenuButton({
+							ui: {
+								tone: "link",
+								theme: "light",
+							},
+							className: [],
+						})}
 					>
 						<TypoIcon
 							flip
@@ -292,10 +334,17 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/ui/buyer/feed/select"
+						to="/$locale/flow/buyer/feed/select"
 						params={{
 							locale,
 						}}
+						activeProps={uiMenuButton({
+							ui: {
+								tone: "link",
+								theme: "light",
+							},
+							className: [],
+						})}
 					>
 						<TypoIcon
 							flip
@@ -320,10 +369,17 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/ui/buyer/favourite/list"
+						to="/$locale/flow/buyer/favourite/list"
 						params={{
 							locale,
 						}}
+						activeProps={uiMenuButton({
+							ui: {
+								tone: "link",
+								theme: "light",
+							},
+							className: [],
+						})}
 					>
 						<TypoIcon
 							flip
@@ -350,10 +406,17 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/ui/user"
+						to="/$locale/flow/user"
 						params={{
 							locale,
 						}}
+						activeProps={uiMenuButton({
+							ui: {
+								tone: "link",
+								theme: "light",
+							},
+							className: [],
+						})}
 					>
 						<TypoIcon
 							flip

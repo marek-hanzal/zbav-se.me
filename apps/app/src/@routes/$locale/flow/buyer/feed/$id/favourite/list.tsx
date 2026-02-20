@@ -28,7 +28,7 @@ export const EmptyFavourite: FC<EmptyFavourite.Props> = ({ ...props }) => {
 			action={
 				<>
 					<LinkTo
-						to={"/$locale/buyer/feed/default"}
+						to={"/$locale/flow/buyer/feed/default"}
 						icon={ChevronRightIcon}
 						iconPosition={"right"}
 						params={{
@@ -107,7 +107,7 @@ export const EmptyFeed: FC<EmptyFeed.Props> = ({ ...props }) => {
 						<LinkTo
 							icon={ChevronRightIcon}
 							iconPosition={"right"}
-							to={"/$locale/buyer/feed/default"}
+							to={"/$locale/flow/buyer/feed/default"}
 							params={{
 								locale,
 							}}
@@ -128,7 +128,7 @@ export const EmptyFeed: FC<EmptyFeed.Props> = ({ ...props }) => {
 
 						<LinkTo
 							icon={ChevronLeftIcon}
-							to={"/$locale/ui/buyer/favourite/list"}
+							to={"/$locale/flow/buyer/favourite/list"}
 							params={{
 								locale,
 							}}
@@ -194,7 +194,7 @@ export const Appendix: FC<Appendix.Props> = ({ ...props }) => {
 						<LinkTo
 							icon={ChevronRightIcon}
 							iconPosition={"right"}
-							to={"/$locale/buyer/feed/default"}
+							to={"/$locale/flow/buyer/feed/default"}
 							params={{
 								locale,
 							}}
@@ -215,7 +215,7 @@ export const Appendix: FC<Appendix.Props> = ({ ...props }) => {
 
 						<LinkTo
 							icon={ChevronLeftIcon}
-							to={"/$locale/ui/buyer/favourite/list"}
+							to={"/$locale/flow/buyer/favourite/list"}
 							params={{
 								locale,
 							}}
@@ -269,7 +269,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/lis
 							className: [],
 						})}
 						icon={ChevronLeftIcon}
-						to={"/$locale/ui/buyer/favourite/list"}
+						to={"/$locale/flow/buyer/favourite/list"}
 						params={{
 							locale,
 						}}

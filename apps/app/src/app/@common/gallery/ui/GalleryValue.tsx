@@ -13,21 +13,28 @@ export namespace GalleryValue {
 	}
 }
 
-export const GalleryValue: FC<GalleryValue.Props> = ({ uploads, label, statusProps, ...props }) => {
+export const GalleryValue: FC<GalleryValue.Props> = ({
+	uploads,
+	label,
+	statusProps,
+	ui,
+	...props
+}) => {
 	return (
 		<Container
 			data-ui={"GalleryValue[Container]"}
 			ui={{
 				tone: "neutral",
 				theme: "light",
-				round: "md",
+				round: undefined,
 				width: "full",
 				flow: "horizontal",
 				items: "center",
 				justify: "center",
 				background: "default",
-				shadow: true,
-				border: true,
+				shadow: false,
+				border: false,
+				...ui,
 			}}
 			className="h-42"
 			{...props}
@@ -58,7 +65,7 @@ export const GalleryValue: FC<GalleryValue.Props> = ({ uploads, label, statusPro
 						},
 					}}
 					ui={{
-						tone: uploads.length > 0 ? "neutral" : "primary",
+						tone: "neutral",
 						theme: "light",
 						text: "default",
 					}}

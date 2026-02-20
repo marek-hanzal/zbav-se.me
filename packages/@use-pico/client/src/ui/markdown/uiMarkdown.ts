@@ -8,6 +8,8 @@ export namespace uiMarkdown {
 		//
 		color?: CoolUi.Color;
 		text?: CoolUi.Text;
+		inner?: CoolUi.Inner;
+		background?: CoolUi.Background;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;

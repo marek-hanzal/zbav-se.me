@@ -14,11 +14,6 @@ export const WarrantyValue: FC<WarrantyValue.Props> = ({ warranty, ...props }) =
 	return (
 		<LabelValue
 			data-ui={"WarrantyValue[LabelValue]"}
-			wrapperProps={{
-				ui: {
-					tone: warranty ? "neutral" : "secondary",
-				},
-			}}
 			textLabel={translator.text("Listing warranty (label)")}
 			textValue={warranty ? <Tx label={`Listing warranty - ${warranty}`} /> : null}
 			textEmpty={translator.text("Warranty not selected")}

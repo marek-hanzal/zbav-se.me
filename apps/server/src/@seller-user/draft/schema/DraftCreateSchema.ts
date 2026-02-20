@@ -22,17 +22,17 @@ export const DraftCreateSchema = z
 		}),
 		warranty: z
 			.union([
-				ListingWarrantyEnumSchema,
 				z.null(),
+				ListingWarrantyEnumSchema,
 			])
 			.optional()
 			.openapi({
 				description: "Warranty type for the draft",
 			}),
 		restriction: z
-			.xor([
-				ListingRestrictionEnumSchema,
+			.union([
 				z.null(),
+				ListingRestrictionEnumSchema,
 			])
 			.optional()
 			.openapi({
@@ -53,8 +53,8 @@ export const DraftCreateSchema = z
 		}),
 		pros: z
 			.union([
-				ProsConsSchema,
 				z.null(),
+				ProsConsSchema,
 			])
 			.optional()
 			.openapi({
@@ -62,8 +62,8 @@ export const DraftCreateSchema = z
 			}),
 		cons: z
 			.union([
-				ProsConsSchema,
 				z.null(),
+				ProsConsSchema,
 			])
 			.optional()
 			.openapi({

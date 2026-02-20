@@ -28,8 +28,8 @@ export const ListingTableSchema = z
 		//
 		condition: z
 			.union([
-				z.number(),
 				z.null(),
+				z.number(),
 			])
 			.openapi({
 				description: "Condition of the item (0-based index)",
@@ -37,8 +37,8 @@ export const ListingTableSchema = z
 		//
 		age: z
 			.union([
-				z.number(),
 				z.null(),
+				z.number(),
 			])
 			.openapi({
 				description: "Age of the item (0-based index)",
@@ -46,8 +46,8 @@ export const ListingTableSchema = z
 		//
 		delivery: z
 			.union([
-				z.array(ListingDeliveryEnumSchema),
 				z.null(),
+				z.array(ListingDeliveryEnumSchema),
 			])
 			.openapi({
 				description: "Delivery methods for the listing",
@@ -55,8 +55,8 @@ export const ListingTableSchema = z
 		//
 		warranty: z
 			.union([
-				ListingWarrantyEnumSchema,
 				z.null(),
+				ListingWarrantyEnumSchema,
 			])
 			.openapi({
 				description: "Warranty type for the listing",
@@ -77,8 +77,8 @@ export const ListingTableSchema = z
 		}),
 		draftId: z
 			.union([
-				z.string(),
 				z.null(),
+				z.string(),
 			])
 			.openapi({
 				description: "ID of the draft this listing was created from",
@@ -97,8 +97,8 @@ export const ListingTableSchema = z
 		//
 		description: z
 			.union([
-				z.string(),
 				z.null(),
+				z.string(),
 			])
 			.openapi({
 				description: "Description of the item",
@@ -106,16 +106,16 @@ export const ListingTableSchema = z
 		//
 		pros: z
 			.union([
-				ProsConsSchema,
 				z.null(),
+				ProsConsSchema,
 			])
 			.openapi({
 				description: "Pros of the item",
 			}),
 		cons: z
 			.union([
-				ProsConsSchema,
 				z.null(),
+				ProsConsSchema,
 			])
 			.openapi({
 				description: "Cons of the item",

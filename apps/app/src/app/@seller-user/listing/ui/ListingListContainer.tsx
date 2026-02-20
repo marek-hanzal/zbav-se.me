@@ -63,7 +63,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({ query, ..
 										<LinkTo
 											icon={ChevronRightIcon}
 											iconPosition={"right"}
-											to={"/$locale/ui/seller/draft/resolve"}
+											to={"/$locale/flow/seller/draft/resolve"}
 											params={{
 												locale,
 											}}

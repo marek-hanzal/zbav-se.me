@@ -33,6 +33,7 @@ export default {
 	],
 	versionGroups: [
 		{
+			label: "Workspace",
 			packages: [
 				"**",
 			],
@@ -44,6 +45,7 @@ export default {
 	],
 	semverGroups: [
 		{
+			label: "Current Version",
 			range: "",
 		},
 	],

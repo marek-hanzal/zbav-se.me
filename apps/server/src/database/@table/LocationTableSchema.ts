@@ -16,24 +16,24 @@ export const LocationTableSchema = z.object({
 	}),
 	county: z
 		.union([
-			z.string(),
 			z.null(),
+			z.string(),
 		])
 		.openapi({
 			description: "The county that the location is in",
 		}),
 	municipality: z
 		.union([
-			z.string(),
 			z.null(),
+			z.string(),
 		])
 		.openapi({
 			description: "The municipality that the location is in",
 		}),
 	state: z
 		.union([
-			z.string(),
 			z.null(),
+			z.string(),
 		])
 		.openapi({
 			description: "The state that the location is in",
@@ -43,24 +43,24 @@ export const LocationTableSchema = z.object({
 	}),
 	city: z
 		.union([
-			z.string(),
 			z.null(),
+			z.string(),
 		])
 		.openapi({
 			description: "The city that the location is in",
 		}),
 	street: z
 		.union([
-			z.string(),
 			z.null(),
+			z.string(),
 		])
 		.openapi({
 			description: "The street that the location is on",
 		}),
 	zip: z
 		.union([
-			z.string(),
 			z.null(),
+			z.string(),
 		])
 		.openapi({
 			description: "The postal/zip code of the location",

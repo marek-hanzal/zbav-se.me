@@ -46,6 +46,17 @@ export const transactionStatusCloseFx = Effect.fn("transactionStatusCloseFx")(fu
 					message: "Seller cannot close a transaction",
 				});
 			}
+			if (transaction.status !== "resolved" && transaction.status !== "dispute") {
+				yield* withTraceFx({
+					fx: "transactionStatusCloseFx",
+					error: {
+						message: `Transaction must be resolved or dispute before close, got ${transaction.status}`,
+					},
+				});
+				return yield* new InvalidRequestErrorFx({
+					message: "Transaction must be resolved or dispute before close",
+				});
+			}
 
 			yield* transactionPatchFx({
 				userId,
