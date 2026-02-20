@@ -1,7 +1,7 @@
 import { rangedom, sample } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
-import { galleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
-import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
+import { galleryInsertFx } from "~/@user/gallery/fx/galleryInsertFx";
+import { galleryItemInsertFx } from "~/@user/gallery-item/fx/galleryItemInsertFx";
 import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
 import { withSeedConcurrency } from "~/seed/fx/core/seedConcurrency";
 
@@ -60,7 +60,7 @@ export const seedCoreGalleryFx = Effect.fn("seedCoreGalleryFx")(function* ({
 		}).map((_, i) => i),
 		(i) =>
 			Effect.gen(function* () {
-				const gallery = yield* galleryCreateFx({
+				const gallery = yield* galleryInsertFx({
 					userId,
 				});
 
@@ -71,11 +71,12 @@ export const seedCoreGalleryFx = Effect.fn("seedCoreGalleryFx")(function* ({
 				let sort = 0;
 				let localCreated = 0;
 				for (const uploadId of uploads) {
-					yield* galleryItemCreateFx({
+					yield* galleryItemInsertFx({
 						userId,
 						galleryId: gallery.id,
 						uploadId,
 						sort,
+						check: false,
 					});
 					sort += 1;
 					localCreated += 1;

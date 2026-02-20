@@ -1,8 +1,8 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { TransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
-import { galleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
-import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
+import { galleryInsertFx } from "~/@user/gallery/fx/galleryInsertFx";
+import { galleryItemInsertFx } from "~/@user/gallery-item/fx/galleryItemInsertFx";
 import { messageGalleryCreateFx } from "~/@user/message-gallery/fx/messageGalleryCreateFx";
 import type { TransactionMessageGalleryCreateSchema } from "~/@user/transaction-message-gallery/schema/TransactionMessageGalleryCreateSchema";
 import { transactionStatusGateFx } from "~/@user/transaction-status/fx/transactionStatusGateFx";
@@ -74,7 +74,7 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 						.executeTakeFirst(),
 				);
 
-				const gallery = yield* galleryCreateFx({
+				const gallery = yield* galleryInsertFx({
 					userId,
 				});
 
@@ -84,11 +84,12 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 
 				let sort = 0;
 				for (const uploadId of uploadIds) {
-					yield* galleryItemCreateFx({
+					yield* galleryItemInsertFx({
 						galleryId: gallery.id,
 						uploadId,
 						sort,
 						userId,
+						check: false,
 					});
 					sort++;
 				}

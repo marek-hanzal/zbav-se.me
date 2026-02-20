@@ -3,8 +3,8 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { draftFetchFx } from "~/@seller-user/draft/fx/draftFetchFx";
 import type { DraftCreateSchema } from "~/@seller-user/draft/schema/DraftCreateSchema";
-import { galleryCreateFx as coolGalleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
-import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
+import { galleryInsertFx } from "~/@user/gallery/fx/galleryInsertFx";
+import { galleryItemInsertFx } from "~/@user/gallery-item/fx/galleryItemInsertFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
@@ -38,18 +38,19 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 			const id = genId();
 			const now = dateContext.now();
 
-			const gallery = yield* coolGalleryCreateFx({
+			const gallery = yield* galleryInsertFx({
 				userId,
 			});
 
 			if (uploadIds && uploadIds.length > 0) {
 				let sort = 0;
 				for (const uploadId of uploadIds) {
-					yield* galleryItemCreateFx({
+					yield* galleryItemInsertFx({
 						galleryId: gallery.id,
 						uploadId,
 						sort,
 						userId,
+						check: false,
 					});
 					sort++;
 				}

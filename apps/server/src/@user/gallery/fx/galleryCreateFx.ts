@@ -1,11 +1,7 @@
-import { DateContextFx } from "@use-pico/common/date";
-import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
+import { galleryInsertFx } from "~/@user/gallery/fx/galleryInsertFx";
 import type { GalleryCreateSchema } from "~/@user/gallery/schema/GalleryCreateSchema";
-import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { tryDbFx } from "~/database/fx/tryDbFx";
-import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace galleryCreateFx {
 	export interface Props extends GalleryCreateSchema.Type {
@@ -14,44 +10,17 @@ export namespace galleryCreateFx {
 	}
 }
 
-export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* ({
-	userId,
-	id,
-	...props
-}: galleryCreateFx.Props) {
-	yield* withTraceFx({
-		fx: "galleryCreateFx",
-		input: {
-			userId,
-			id,
-			...props,
-		},
-	});
-
-	const { kysely } = yield* KyselyContextFx;
-	const dateContext = yield* DateContextFx;
-
-	const galleryId = id ?? genId();
-
-	yield* tryDbFx(async () =>
-		kysely
-			.insertInto("gallery")
-			.values({
-				...props,
-				id: galleryId,
-				userId,
-				createdAt: dateContext.now().toJSDate(),
-			})
-			.onConflict((eb) => eb.doNothing())
-			.execute(),
-	);
+export const galleryCreateFx = Effect.fn("galleryCreateFx")(function* (
+	data: galleryCreateFx.Props,
+) {
+	const { id } = yield* galleryInsertFx(data);
 
 	return yield* galleryFetchFx({
 		where: {
-			id: galleryId,
+			id,
 		},
 		scope: {
-			userId,
+			userId: data.userId,
 		},
 	});
 });

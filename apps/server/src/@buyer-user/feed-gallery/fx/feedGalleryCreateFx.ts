@@ -4,7 +4,7 @@ import { feedResolveFx } from "~/@buyer-user/feed/fx/feedResolveFx";
 import type { FeedGalleryCreateSchema } from "~/@buyer-user/feed-gallery/schema/FeedGalleryCreateSchema";
 import { galleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
-import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
+import { galleryItemInsertFx } from "~/@user/gallery-item/fx/galleryItemInsertFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
@@ -66,11 +66,12 @@ export const feedGalleryCreateFx = Effect.fn("feedGalleryCreateFx")(function* ({
 
 			let sort = 0;
 			for (const uploadId of uploadIds) {
-				yield* galleryItemCreateFx({
+				yield* galleryItemInsertFx({
 					galleryId: gallery.id,
 					uploadId,
 					sort,
 					userId,
+					check: false,
 				});
 				sort++;
 			}

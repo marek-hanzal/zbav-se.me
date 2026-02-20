@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { draftResolveFx } from "~/@seller-user/draft/fx/draftResolveFx";
 import type { DraftGalleryCreateSchema } from "~/@seller-user/draft-gallery/schema/DraftGalleryCreateSchema";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
-import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
+import { galleryItemInsertFx } from "~/@user/gallery-item/fx/galleryItemInsertFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
@@ -51,11 +51,12 @@ export const draftGalleryCreateFx = Effect.fn("draftGalleryCreateFx")(function* 
 
 			let sort = 0;
 			for (const uploadId of uploadIds) {
-				yield* galleryItemCreateFx({
+				yield* galleryItemInsertFx({
 					userId,
 					galleryId: draft.galleryId,
 					uploadId,
 					sort,
+					check: false,
 				});
 				sort++;
 			}
