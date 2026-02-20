@@ -70,34 +70,35 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 		toChunks(LISTING_TX_CHUNK_SIZE)(draftDeficit),
 		(chunk) =>
 			withTransactionFx(
-				Effect.forEach(chunk, () =>
-					Effect.gen(function* () {
-						const categoryId = list(categoryIds);
-						const locationId = list(locationIds);
+				Effect.gen(function* () {
+					yield* Effect.forEach(chunk, () =>
+						Effect.gen(function* () {
+							const categoryId = list(categoryIds);
+							const locationId = list(locationIds);
 
-						yield* seedDraftInsertFx({
-							...withProsCons(),
-							userId,
-							title: Titles.length > 0 ? list(Titles) : "Item",
-							description: Descriptions.length > 0 ? list(Descriptions) : "",
-							categoryId,
-							locationId,
-							expiresAt: list([
-								"7-days",
-								"14-days",
-								"1-month",
-							]),
-							uploadIds: sample(
-								uploadIds,
-								rangedom(1, Math.min(4, uploadIds.length)),
-							),
-						});
-
-						yield* progress.advance({
-							delta: 1,
-						});
-					}),
-				),
+							yield* seedDraftInsertFx({
+								...withProsCons(),
+								userId,
+								title: Titles.length > 0 ? list(Titles) : "Item",
+								description: Descriptions.length > 0 ? list(Descriptions) : "",
+								categoryId,
+								locationId,
+								expiresAt: list([
+									"7-days",
+									"14-days",
+									"1-month",
+								]),
+								uploadIds: sample(
+									uploadIds,
+									rangedom(1, Math.min(4, uploadIds.length)),
+								),
+							});
+						}),
+					);
+					yield* progress.advance({
+						delta: chunk.length,
+					});
+				}),
 			),
 		{
 			concurrency: LISTING_SEED_CONCURRENCY,
@@ -108,46 +109,47 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 		toChunks(LISTING_TX_CHUNK_SIZE)(listingDeficit),
 		(chunk) =>
 			withTransactionFx(
-				Effect.forEach(chunk, (i) =>
-					Effect.gen(function* () {
-						const categoryId = list(categoryIds);
-						const locationId = list(locationIds);
+				Effect.gen(function* () {
+					yield* Effect.forEach(chunk, () =>
+						Effect.gen(function* () {
+							const categoryId = list(categoryIds);
+							const locationId = list(locationIds);
 
-						yield* seedListingInsertFx({
-							...withProsCons(),
-							userId,
-							title: `${Titles.length > 0 ? list(Titles) : "Item"} #${i + 1}`,
-							description: Descriptions.length > 0 ? list(Descriptions) : null,
-							categoryId,
-							locationId,
-							age: rangedom(0, 5),
-							condition: rangedom(0, 5),
-							price: rangedom(1, 100_000),
-							priceType: list([
-								"closed",
-								"open",
-							]),
-							restriction: "none",
-							delivery: [
-								"personal",
-							],
-							warranty: null,
-							expiresAt: list([
-								"7-days",
-								"14-days",
-								"1-month",
-							]),
-							uploadIds: sample(
-								uploadIds,
-								rangedom(1, Math.min(6, uploadIds.length)),
-							),
-						});
-
-						yield* progress.advance({
-							delta: 1,
-						});
-					}),
-				),
+							yield* seedListingInsertFx({
+								...withProsCons(),
+								userId,
+								title: Titles.length > 0 ? list(Titles) : "Item",
+								description: Descriptions.length > 0 ? list(Descriptions) : null,
+								categoryId,
+								locationId,
+								age: rangedom(0, 5),
+								condition: rangedom(0, 5),
+								price: rangedom(1, 100_000),
+								priceType: list([
+									"closed",
+									"open",
+								]),
+								restriction: "none",
+								delivery: [
+									"personal",
+								],
+								warranty: null,
+								expiresAt: list([
+									"7-days",
+									"14-days",
+									"1-month",
+								]),
+								uploadIds: sample(
+									uploadIds,
+									rangedom(1, Math.min(6, uploadIds.length)),
+								),
+							});
+						}),
+					);
+					yield* progress.advance({
+						delta: chunk.length,
+					});
+				}),
 			),
 		{
 			concurrency: LISTING_SEED_CONCURRENCY,

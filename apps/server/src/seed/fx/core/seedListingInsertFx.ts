@@ -11,6 +11,22 @@ import { tryDbFx } from "~/database/fx/tryDbFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 import { seedGalleryItemBulkInsertFx } from "~/seed/fx/core/seedGalleryItemBulkInsertFx";
 
+const titleVecCache = new Map<string, string>();
+
+const withCachedTitleVec = (title: string) => {
+	const cached = titleVecCache.get(title);
+	if (cached) {
+		return cached;
+	}
+	const next = pgvector.toSql(
+		embedMinHash({
+			value: title,
+		}),
+	);
+	titleVecCache.set(title, next);
+	return next;
+};
+
 export namespace seedListingInsertFx {
 	export interface Props extends ListingCreateSchema.Type {
 		userId: string;
@@ -55,11 +71,7 @@ export const seedListingInsertFx = Effect.fn("seedListingInsertFx")(function* ({
 				updatedAt: nowDate,
 				currency: "CZK",
 				...data,
-				titleVec: pgvector.toSql(
-					embedMinHash({
-						value: data.title,
-					}),
-				),
+				titleVec: withCachedTitleVec(data.title),
 				expiresAt: match(data.expiresAt)
 					.with("7-days", () =>
 						now

@@ -15,3 +15,15 @@
 {"stamp":"2026-02-20T13:18:01.238Z","kind":"core","count":500,"totalCount":280453,"runtimePerItemMs":9.238}
 {"stamp":"2026-02-20T13:18:14.609Z","kind":"core","count":500,"totalCount":287458,"runtimePerItemMs":8.206}
 {"stamp":"2026-02-20T13:18:19.236Z","kind":"core","count":500,"totalCount":294431,"runtimePerItemMs":8.4}
+{"stamp":"2026-02-20T13:20:30.290Z","kind":"core","count":2500,"totalCount":329574,"runtimePerItemMs":7.134}
+{"stamp":"2026-02-20T13:21:17.388Z","kind":"core","count":5000,"totalCount":399455,"runtimePerItemMs":6.62}
+{"stamp":"2026-02-20T13:23:52.331Z","kind":"core","count":15000,"totalCount":609368,"runtimePerItemMs":9.768}
+{"stamp":"2026-02-20T13:26:33.700Z","kind":"core","count":500,"totalCount":778375,"runtimePerItemMs":10.404}
+{"stamp":"2026-02-20T13:26:38.707Z","kind":"core","count":500,"totalCount":785337,"runtimePerItemMs":9.094}
+{"stamp":"2026-02-20T13:26:43.680Z","kind":"core","count":500,"totalCount":792398,"runtimePerItemMs":9.064}
+{"stamp":"2026-02-20T13:27:31.973Z","kind":"core","count":500,"totalCount":799476,"runtimePerItemMs":8.096}
+{"stamp":"2026-02-20T13:27:36.457Z","kind":"core","count":500,"totalCount":806502,"runtimePerItemMs":8.074}
+{"stamp":"2026-02-20T13:27:40.962Z","kind":"core","count":500,"totalCount":813557,"runtimePerItemMs":8.152}
+{"stamp":"2026-02-20T13:27:45.484Z","kind":"core","count":500,"totalCount":820511,"runtimePerItemMs":8.21}
+{"stamp":"2026-02-20T13:30:07.581Z","kind":"core","count":1000,"totalCount":834487,"runtimePerItemMs":7.649}
+{"stamp":"2026-02-20T13:30:28.418Z","kind":"core","count":1000,"totalCount":848514,"runtimePerItemMs":7.686}

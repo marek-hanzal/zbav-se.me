@@ -31,27 +31,11 @@ export const seedCoreGalleryFx = Effect.fn("seedCoreGalleryFx")(function* ({
 	}).map(() => 0);
 
 	if (galleryItemDeficit > 0 && maxItemsPerGallery > 0) {
-		let remaining = galleryItemDeficit;
-		let index = 0;
-		while (remaining > 0) {
-			if (index >= galleryItemPlan.length) {
-				index = 0;
-			}
-			if (galleryItemPlan[index] === undefined) {
-				break;
-			}
-			const current = galleryItemPlan[index];
-			if (current === undefined) {
-				break;
-			}
-			if (current < maxItemsPerGallery) {
-				galleryItemPlan[index] = current + 1;
-				remaining -= 1;
-			}
-			index += 1;
-			if (galleryItemPlan.every((item) => item >= maxItemsPerGallery)) {
-				break;
-			}
+		const plannedTotal = Math.min(galleryItemDeficit, galleryDeficit * maxItemsPerGallery);
+		const base = Math.floor(plannedTotal / galleryDeficit);
+		const remainder = plannedTotal % galleryDeficit;
+		for (let i = 0; i < galleryDeficit; i++) {
+			galleryItemPlan[i] = base + (i < remainder ? 1 : 0);
 		}
 	}
 
@@ -68,37 +52,38 @@ export const seedCoreGalleryFx = Effect.fn("seedCoreGalleryFx")(function* ({
 		chunks,
 		(chunk) =>
 			withTransactionFx(
-				Effect.forEach(chunk, (i) =>
-					Effect.gen(function* () {
-						const gallery = yield* galleryInsertFx({
-							userId,
-						});
+				Effect.gen(function* () {
+					const counts = yield* Effect.forEach(chunk, (i) =>
+						Effect.gen(function* () {
+							const gallery = yield* galleryInsertFx({
+								userId,
+							});
 
-						const planned = galleryItemPlan[i] ?? 0;
-						const requested =
-							galleryItemDeficit > 0
-								? planned
-								: rangedom(1, Math.min(6, uploadIds.length));
-						const uploads = sample(uploadIds, requested);
-						const localCreated = yield* seedGalleryItemBulkInsertFx({
-							galleryId: gallery.id,
-							uploadIds: uploads,
-						});
-
-						yield* progress.advance({
-							delta: 1,
-						});
-
-						return localCreated;
-					}),
-				),
+							const planned = galleryItemPlan[i] ?? 0;
+							const requested =
+								galleryItemDeficit > 0
+									? planned
+									: rangedom(1, Math.min(6, uploadIds.length));
+							const uploads = sample(uploadIds, requested);
+							const localCreated = yield* seedGalleryItemBulkInsertFx({
+								galleryId: gallery.id,
+								uploadIds: uploads,
+							});
+							return localCreated;
+						}),
+					);
+					yield* progress.advance({
+						delta: chunk.length,
+					});
+					return counts.reduce((acc, value) => acc + value, 0);
+				}),
 			),
 		{
 			concurrency: GALLERY_SEED_CONCURRENCY,
 		},
 	).pipe(
 		Effect.map((counts) => {
-			createdItems = counts.flat().reduce((acc, value) => acc + value, 0);
+			createdItems = counts.reduce((acc, value) => acc + value, 0);
 			return counts;
 		}),
 	);

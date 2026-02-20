@@ -44,20 +44,22 @@ export const seedCoreFeedFx = Effect.fn("seedCoreFeedFx")(function* ({
 		chunks,
 		(chunk) =>
 			withTransactionFx(
-				Effect.forEach(chunk, (i) =>
-					Effect.gen(function* () {
-						const location = locations[i % Math.max(1, locations.length)];
-						yield* seedFeedInsertFx({
-							userId,
-							name: `seed-${genId()}-${i}`,
-							locationId: location?.id ?? null,
-							query: {},
-						});
-						yield* progress.advance({
-							delta: 1,
-						});
-					}),
-				),
+				Effect.gen(function* () {
+					yield* Effect.forEach(chunk, (i) =>
+						Effect.gen(function* () {
+							const location = locations[i % Math.max(1, locations.length)];
+							yield* seedFeedInsertFx({
+								userId,
+								name: `seed-${genId()}-${i}`,
+								locationId: location?.id ?? null,
+								query: {},
+							});
+						}),
+					);
+					yield* progress.advance({
+						delta: chunk.length,
+					});
+				}),
 			),
 		{
 			concurrency: FEED_SEED_CONCURRENCY,
