@@ -20,6 +20,6 @@ export const withListingCollectionQuery = withQuery<
 		return apiListingCollection({
 			body,
 			throwOnError: true,
-		}).then((res: { data: tApiListingCollectionResponse[200] }) => res.data);
+		}).then((res) => res.data);
 	},
 });

@@ -14,6 +14,6 @@ export const withUploadFetchQuery = withQuery<tUploadQuery, tApiUploadFetchRespo
 		return apiUploadFetch({
 			body,
 			throwOnError: true,
-		}).then((res: { data: tApiUploadFetchResponse[200] }) => res.data);
+		}).then((res) => res.data);
 	},
 });
