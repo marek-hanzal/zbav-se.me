@@ -48,7 +48,6 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 				}
 			>
 				{({ data: transaction }) => {
-					// biome-ignore lint/correctness/useHookAtTopLevel: Ssst
 					const hero = useHeroUpload(transaction.gallery.items);
 
 					return (

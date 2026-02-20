@@ -55,6 +55,9 @@
 			"style": {
 				"useComponentExportOnlyModules": "off"
 			},
+			"correctness": {
+				"useHookAtTopLevel": "off"
+			},
 			"complexity": {
 				"noBannedTypes": "off"
 			}

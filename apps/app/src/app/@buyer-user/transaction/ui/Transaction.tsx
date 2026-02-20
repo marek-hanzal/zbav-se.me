@@ -44,9 +44,7 @@ export const Transaction: FC<Transaction.Props> = ({ transactionId, refresh, ...
 				fallback={null}
 			>
 				{({ data: transaction }) => {
-					// biome-ignore lint/correctness/useHookAtTopLevel: Ssst
 					const [detail, setDetail] = useState(false);
-					// biome-ignore lint/correctness/useHookAtTopLevel: Ssst 2.0
 					const hero = useHeroUpload(transaction.gallery.items);
 
 					return (
