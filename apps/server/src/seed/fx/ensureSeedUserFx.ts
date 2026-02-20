@@ -5,6 +5,8 @@ import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
 
+const SEED_USER_PASSWORD = "12345678";
+
 export namespace ensureSeedUserFx {
 	export interface Props {
 		email: string;
@@ -32,7 +34,7 @@ export const ensureSeedUserFx = Effect.fn("ensureSeedUserFx")(function* ({
 				body: {
 					email,
 					name: `seed-${genId().slice(0, 8)}`,
-					password: `Seed!${genId()}A1`,
+					password: SEED_USER_PASSWORD,
 				},
 			});
 		},
