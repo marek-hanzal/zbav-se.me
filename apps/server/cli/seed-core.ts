@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
-import { printSeedBenchmarkJsonl, printSeedCoreReport } from "~/seed/fx/report/seedReportConsole";
+import { appendSeedBenchmarkJsonl, printSeedCoreReport } from "~/seed/fx/report/seedReportConsole";
 import { seedCoreFx } from "~/seed/fx/seedCoreFx";
 import { withSeedRuntimeFx } from "~/seed/fx/withSeedRuntimeFx";
 import { parseSeedArgsFx } from "~/seed/schema/SeedArgsSchema";
@@ -32,7 +32,7 @@ const { report, runtimeMs } = await program.pipe(
 );
 
 printSeedCoreReport(report);
-printSeedBenchmarkJsonl({
+appendSeedBenchmarkJsonl({
 	kind: "core",
 	count: report.count,
 	totals: report.totals,

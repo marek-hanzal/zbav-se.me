@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import {
-	printSeedBenchmarkJsonl,
+	appendSeedBenchmarkJsonl,
 	printSeedInteractionReport,
 } from "~/seed/fx/report/seedReportConsole";
 import { seedInteractionFx } from "~/seed/fx/seedInteractionFx";
@@ -32,7 +32,7 @@ const { report, runtimeMs } = await program.pipe(
 );
 
 printSeedInteractionReport(report);
-printSeedBenchmarkJsonl({
+appendSeedBenchmarkJsonl({
 	kind: "interaction",
 	count: report.count,
 	totals: report.totals,
