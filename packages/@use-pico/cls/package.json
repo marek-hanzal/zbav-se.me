@@ -33,7 +33,7 @@
 		"npm-run-all2": "8.0.4",
 		"rollup": "4.57.1",
 		"rollup-plugin-dts": "6.3.0",
-		"typescript": "5.9.3",
+		"typescript": "beta",
 		"vitest": "4.0.18"
 	},
 	"main": "src/index.ts",

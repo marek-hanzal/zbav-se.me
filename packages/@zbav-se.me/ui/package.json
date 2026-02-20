@@ -21,7 +21,7 @@
 		"@types/react-dom": "19.2.3",
 		"@typescript/native-preview": "7.0.0-dev.20260219.1",
 		"@use-pico/tsconfig": "5.0.0",
-		"typescript": "5.9.3"
+		"typescript": "beta"
 	},
 	"exports": {
 		"./ui.css": "./src/ui.css",

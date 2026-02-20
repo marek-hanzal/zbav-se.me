@@ -45,7 +45,7 @@
 		"effect": "3.19.18",
 		"rollup": "4.57.1",
 		"rollup-plugin-dts": "6.3.0",
-		"typescript": "5.9.3",
+		"typescript": "beta",
 		"vitest": "4.0.18"
 	},
 	"files": [

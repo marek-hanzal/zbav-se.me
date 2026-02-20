@@ -28,7 +28,7 @@
 		"npm-run-all2": "8.0.4",
 		"syncpack": "14.0.0",
 		"turbo": "2.8.10",
-		"typescript": "5.9.3"
+		"typescript": "beta"
 	},
 	"license": "MIT",
 	"repository": "marek-hanzal/zbav-se.me.git",

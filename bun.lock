@@ -10,7 +10,7 @@
         "npm-run-all2": "8.0.4",
         "syncpack": "14.0.0",
         "turbo": "2.8.10",
-        "typescript": "5.9.3",
+        "typescript": "beta",
       },
     },
     "apps/app": {
@@ -61,7 +61,7 @@
         "nitro": "3.0.1-alpha.2",
         "npm-run-all2": "8.0.4",
         "tailwindcss": "4.2.0",
-        "typescript": "5.9.3",
+        "typescript": "beta",
         "vercel": "50.20.0",
         "vite": "8.0.0-beta.15",
       },
@@ -87,7 +87,7 @@
         "autoprefixer": "10.4.24",
         "postcss": "8.5.6",
         "tailwindcss": "4.2.0",
-        "typescript": "5.9.3",
+        "typescript": "beta",
       },
     },
     "apps/server": {
@@ -126,7 +126,7 @@
         "knip": "5.84.1",
         "nitro": "3.0.1-alpha.2",
         "rolldown": "1.0.0-rc.5",
-        "typescript": "5.9.3",
+        "typescript": "beta",
         "vitest": "4.0.18",
       },
     },
@@ -171,7 +171,7 @@
         "knip": "5.84.1",
         "nitro": "3.0.1-alpha.2",
         "tailwindcss": "4.2.0",
-        "typescript": "5.9.3",
+        "typescript": "beta",
         "vite": "8.0.0-beta.15",
       },
     },
@@ -210,7 +210,7 @@
         "@use-pico/tsconfig": "5.0.0",
         "rollup": "4.57.1",
         "rollup-plugin-dts": "6.3.0",
-        "typescript": "5.9.3",
+        "typescript": "beta",
       },
     },
     "packages/@use-pico/cls": {
@@ -237,7 +237,7 @@
         "npm-run-all2": "8.0.4",
         "rollup": "4.57.1",
         "rollup-plugin-dts": "6.3.0",
-        "typescript": "5.9.3",
+        "typescript": "beta",
         "vitest": "4.0.18",
       },
     },
@@ -276,7 +276,7 @@
         "effect": "3.19.18",
         "rollup": "4.57.1",
         "rollup-plugin-dts": "6.3.0",
-        "typescript": "5.9.3",
+        "typescript": "beta",
         "vitest": "4.0.18",
       },
       "peerDependencies": {
@@ -306,7 +306,7 @@
         "react": "19.2.4",
         "rollup": "4.57.1",
         "rollup-plugin-dts": "6.3.0",
-        "typescript": "5.9.3",
+        "typescript": "beta",
         "vitest": "4.0.18",
       },
     },
@@ -324,7 +324,7 @@
         "@types/node": "25.3.0",
         "@typescript/native-preview": "7.0.0-dev.20260219.1",
         "@use-pico/tsconfig": "5.0.0",
-        "typescript": "5.9.3",
+        "typescript": "beta",
         "vite": "8.0.0-beta.15",
       },
     },
@@ -345,7 +345,7 @@
         "@types/react-dom": "19.2.3",
         "@typescript/native-preview": "7.0.0-dev.20260219.1",
         "@use-pico/tsconfig": "5.0.0",
-        "typescript": "5.9.3",
+        "typescript": "beta",
       },
     },
   },
@@ -3822,7 +3822,7 @@
 
     "typedarray-to-buffer": ["typedarray-to-buffer@3.1.5", "", { "dependencies": { "is-typedarray": "^1.0.0" } }, "sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q=="],
 
-    "typescript": ["typescript@5.9.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="],
+    "typescript": ["typescript@6.0.0-beta", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-CldZdztDpQRLM1HC6WDQjQkQN5Ub5zRau737a1diGh3lPmb9oRsaWHk1y5iqK0o7+1bNJ0oXfEGRkAogFZBL+Q=="],
 
     "ufo": ["ufo@1.6.1", "", {}, "sha512-9a4/uxlTWJ4+a5i0ooc1rU7C7YOw3wT+UGqdeNNHWnOF9qcMBgLRS+4IYUqbczewFx4mLEig6gawh7X6mFlEkA=="],
 
@@ -4451,6 +4451,8 @@
     "@vercel/node/path-to-regexp": ["path-to-regexp@6.1.0", "", {}, "sha512-h9DqehX3zZZDCEm+xbfU0ZmwCGFCAAraPJWMXJ4+v32NjZJilVg3k1TcKsRgIb8IQ/izZSaydDc1OhJCZvs2Dw=="],
 
     "@vercel/node/tsx": ["tsx@4.21.0", "", { "dependencies": { "esbuild": "~0.27.0", "get-tsconfig": "^4.7.5" }, "optionalDependencies": { "fsevents": "~2.3.3" }, "bin": { "tsx": "dist/cli.mjs" } }, "sha512-5C1sg4USs1lfG0GFb2RLXsdpXqBSEhAaA/0kPL01wxzpMqLILNxIxIOKiILz+cdg/pLnOUxFYOR5yhHU666wbw=="],
+
+    "@vercel/node/typescript": ["typescript@5.9.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="],
 
     "@vercel/node/undici": ["undici@5.28.4", "", { "dependencies": { "@fastify/busboy": "^2.0.0" } }, "sha512-72RFADWFqKmUb2hmmvNODKL3p9hcB6Gt2DOQMis1SEBaV6a4MH8soBvzg+95CYhCKPFedut2JY9bMfrDl9D23g=="],
 

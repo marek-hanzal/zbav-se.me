@@ -42,7 +42,7 @@
 		"@use-pico/tsconfig": "5.0.0",
 		"rollup": "4.57.1",
 		"rollup-plugin-dts": "6.3.0",
-		"typescript": "5.9.3"
+		"typescript": "beta"
 	},
 	"files": [
 		"src"
