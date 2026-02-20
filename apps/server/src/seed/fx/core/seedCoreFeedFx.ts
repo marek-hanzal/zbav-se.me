@@ -1,11 +1,11 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { feedCreateFx } from "~/@buyer-user/feed/fx/feedCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
 import { withSeedConcurrency } from "~/seed/fx/core/seedConcurrency";
+import { seedFeedInsertFx } from "~/seed/fx/core/seedFeedInsertFx";
 
 const FEED_SEED_CONCURRENCY = withSeedConcurrency("SEED_FEED_CONCURRENCY");
 const FEED_TX_CHUNK_SIZE = 25;
@@ -47,7 +47,7 @@ export const seedCoreFeedFx = Effect.fn("seedCoreFeedFx")(function* ({
 				Effect.forEach(chunk, (i) =>
 					Effect.gen(function* () {
 						const location = locations[i % Math.max(1, locations.length)];
-						yield* feedCreateFx({
+						yield* seedFeedInsertFx({
 							userId,
 							name: `seed-${genId()}-${i}`,
 							locationId: location?.id ?? null,

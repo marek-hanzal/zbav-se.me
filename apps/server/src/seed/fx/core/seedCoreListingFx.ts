@@ -1,7 +1,5 @@
 import { list, rangedom, sample } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
-import { draftCreateFx } from "~/@seller-user/draft/fx/draftCreateFx";
-import { listingCreateFx } from "~/@seller-user/listing/fx/listingCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
@@ -11,6 +9,8 @@ import Descriptions from "~/seed/data/listing-description.json";
 import Pros from "~/seed/data/listing-pros.json";
 import Titles from "~/seed/data/listing-title.json";
 import { withSeedConcurrency } from "~/seed/fx/core/seedConcurrency";
+import { seedDraftInsertFx } from "~/seed/fx/core/seedDraftInsertFx";
+import { seedListingInsertFx } from "~/seed/fx/core/seedListingInsertFx";
 
 const LISTING_SEED_CONCURRENCY = withSeedConcurrency("SEED_LISTING_CONCURRENCY");
 const LISTING_TX_CHUNK_SIZE = 25;
@@ -75,7 +75,7 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 						const categoryId = list(categoryIds);
 						const locationId = list(locationIds);
 
-						yield* draftCreateFx({
+						yield* seedDraftInsertFx({
 							...withProsCons(),
 							userId,
 							title: Titles.length > 0 ? list(Titles) : "Item",
@@ -87,7 +87,10 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 								"14-days",
 								"1-month",
 							]),
-							uploadIds: sample(uploadIds, rangedom(1, Math.min(4, uploadIds.length))),
+							uploadIds: sample(
+								uploadIds,
+								rangedom(1, Math.min(4, uploadIds.length)),
+							),
 						});
 
 						yield* progress.advance({
@@ -110,7 +113,7 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 						const categoryId = list(categoryIds);
 						const locationId = list(locationIds);
 
-						yield* listingCreateFx({
+						yield* seedListingInsertFx({
 							...withProsCons(),
 							userId,
 							title: `${Titles.length > 0 ? list(Titles) : "Item"} #${i + 1}`,
@@ -134,7 +137,10 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 								"14-days",
 								"1-month",
 							]),
-							uploadIds: sample(uploadIds, rangedom(1, Math.min(6, uploadIds.length))),
+							uploadIds: sample(
+								uploadIds,
+								rangedom(1, Math.min(6, uploadIds.length)),
+							),
 						});
 
 						yield* progress.advance({

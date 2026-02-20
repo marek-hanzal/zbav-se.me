@@ -1,10 +1,10 @@
 import { rangedom, sample } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { galleryInsertFx } from "~/@user/gallery/fx/galleryInsertFx";
-import { galleryItemInsertFx } from "~/@user/gallery-item/fx/galleryItemInsertFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
 import { withSeedConcurrency } from "~/seed/fx/core/seedConcurrency";
+import { seedGalleryItemBulkInsertFx } from "~/seed/fx/core/seedGalleryItemBulkInsertFx";
 
 const GALLERY_SEED_CONCURRENCY = withSeedConcurrency("SEED_GALLERY_CONCURRENCY");
 const GALLERY_TX_CHUNK_SIZE = 25;
@@ -76,21 +76,14 @@ export const seedCoreGalleryFx = Effect.fn("seedCoreGalleryFx")(function* ({
 
 						const planned = galleryItemPlan[i] ?? 0;
 						const requested =
-							galleryItemDeficit > 0 ? planned : rangedom(1, Math.min(6, uploadIds.length));
+							galleryItemDeficit > 0
+								? planned
+								: rangedom(1, Math.min(6, uploadIds.length));
 						const uploads = sample(uploadIds, requested);
-						let sort = 0;
-						let localCreated = 0;
-						for (const uploadId of uploads) {
-							yield* galleryItemInsertFx({
-								userId,
-								galleryId: gallery.id,
-								uploadId,
-								sort,
-								check: false,
-							});
-							sort += 1;
-							localCreated += 1;
-						}
+						const localCreated = yield* seedGalleryItemBulkInsertFx({
+							galleryId: gallery.id,
+							uploadIds: uploads,
+						});
 
 						yield* progress.advance({
 							delta: 1,

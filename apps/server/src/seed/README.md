@@ -29,6 +29,7 @@ Location warmup queries are loaded from `src/seed/data/location.json` (copied fr
 - `data/` - seed datasets (`location`, listing titles, listing descriptions, listing pros, listing cons)
 - `context/` - shared Effect contexts (progress/TUI)
 - `fx/core/` - core seed units (locations, uploads, listings, feeds)
+  plus seed-only high-throughput insert helpers (`seed*InsertFx`, bulk gallery item inserts)
 - `fx/interaction/` - interaction seed units (transactions, messages, reactions)
 - `fx/progress/` - progress/TUI helpers
 - `fx/report/` - typed report schemas and count snapshots
@@ -38,6 +39,9 @@ Location warmup queries are loaded from `src/seed/data/location.json` (copied fr
 - Seed logic must stay Effect-first (`Effect.fn`, `Effect.gen`)
 - External side effects use `Effect.promise`/`Effect.tryPromise`
 - Existing production Fx must be preferred over direct SQL for business actions
+- Seed core hot paths are allowed to use internal seed-only insert Fx
+  (no public API exposure) when this is required for benchmark throughput.
+  Those insert Fx must stay in `src/seed` and must not leak into API handlers.
 - CLI progress rendering is implemented with `terminal-kit` behind `SeedProgressContextFx`
 - Console output uses colored progress and formatted final reports (no raw JSON dump)
 - Core report shows generated deltas for the current run

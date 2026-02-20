@@ -12,3 +12,6 @@
 {"stamp":"2026-02-20T13:10:00.918Z","kind":"core","count":500,"totalCount":224543,"runtimePerItemMs":31.666}
 {"stamp":"2026-02-20T13:13:17.660Z","kind":"core","count":1000,"totalCount":238555,"runtimePerItemMs":14.446}
 {"stamp":"2026-02-20T13:14:24.692Z","kind":"core","count":2500,"totalCount":273572,"runtimePerItemMs":15.612}
+{"stamp":"2026-02-20T13:18:01.238Z","kind":"core","count":500,"totalCount":280453,"runtimePerItemMs":9.238}
+{"stamp":"2026-02-20T13:18:14.609Z","kind":"core","count":500,"totalCount":287458,"runtimePerItemMs":8.206}
+{"stamp":"2026-02-20T13:18:19.236Z","kind":"core","count":500,"totalCount":294431,"runtimePerItemMs":8.4}
