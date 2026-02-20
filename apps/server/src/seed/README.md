@@ -46,3 +46,8 @@ Location warmup queries are loaded from `src/seed/data/location.json` (copied fr
 - Both CLI scripts append one benchmark JSONL line into `benchmark.jsonl`
   (current working directory) with:
   `stamp`, `count`, `totalCount`, and normalized `runtimePerItemMs`
+- Core seed write-heavy loops use bounded Effect concurrency (instead of full serial writes)
+  to reduce runtime while keeping database pressure controlled
+- Concurrency defaults to `7` and can be tuned using:
+  - `SEED_CORE_CONCURRENCY` (shared override)
+  - `SEED_FEED_CONCURRENCY`, `SEED_GALLERY_CONCURRENCY`, `SEED_LISTING_CONCURRENCY`

@@ -4,6 +4,9 @@ import { feedCreateFx } from "~/@buyer-user/feed/fx/feedCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
+import { withSeedConcurrency } from "~/seed/fx/core/seedConcurrency";
+
+const FEED_SEED_CONCURRENCY = withSeedConcurrency("SEED_FEED_CONCURRENCY");
 
 export const seedCoreFeedFx = Effect.fn("seedCoreFeedFx")(function* ({
 	userId,
@@ -27,18 +30,27 @@ export const seedCoreFeedFx = Effect.fn("seedCoreFeedFx")(function* ({
 			.execute(),
 	);
 
-	for (let i = 0; i < deficit; i++) {
-		const location = locations[i % Math.max(1, locations.length)];
-		yield* feedCreateFx({
-			userId,
-			name: `seed-${genId()}-${i}`,
-			locationId: location?.id ?? null,
-			query: {},
-		});
-		yield* progress.advance({
-			delta: 1,
-		});
-	}
+	yield* Effect.forEach(
+		Array.from({
+			length: deficit,
+		}).map((_, i) => i),
+		(i) =>
+			Effect.gen(function* () {
+				const location = locations[i % Math.max(1, locations.length)];
+				yield* feedCreateFx({
+					userId,
+					name: `seed-${genId()}-${i}`,
+					locationId: location?.id ?? null,
+					query: {},
+				});
+				yield* progress.advance({
+					delta: 1,
+				});
+			}),
+		{
+			concurrency: FEED_SEED_CONCURRENCY,
+		},
+	);
 
 	yield* progress.log({
 		message: `Feed generation done (${deficit})`,
