@@ -1,12 +1,12 @@
 import { Effect } from "effect";
 import { userExPatchFx } from "~/@user/user-ex/fx/userExPatchFx";
 import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
+import LocationQueries from "~/seed/data/location.json";
 import { seedCoreFeedFx } from "~/seed/fx/core/seedCoreFeedFx";
 import { seedCoreGalleryFx } from "~/seed/fx/core/seedCoreGalleryFx";
 import { seedCoreListingFx } from "~/seed/fx/core/seedCoreListingFx";
 import { seedCoreLocationFx } from "~/seed/fx/core/seedCoreLocationFx";
 import { seedCoreUploadFx } from "~/seed/fx/core/seedCoreUploadFx";
-import LocationQueries from "~/seed/data/location.json";
 import { ensureSeedUserFx } from "~/seed/fx/ensureSeedUserFx";
 import { SeedCoreReportSchema } from "~/seed/fx/report/SeedCoreReportSchema";
 import { withInlineCounts } from "~/seed/fx/report/seedReportConsole";
@@ -29,7 +29,7 @@ export const seedCoreFx = Effect.fn("seedCoreFx")(function* ({
 	user,
 	cdn,
 }: seedCoreFx.Props) {
-const progress = yield* SeedProgressContextFx;
+	const progress = yield* SeedProgressContextFx;
 	const current = yield* ensureSeedUserFx({
 		email: user,
 	});

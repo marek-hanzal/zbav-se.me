@@ -1,6 +1,6 @@
 import { list } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
+import type { DateTime } from "luxon";
 import { favouriteToggleFx } from "~/@buyer-user/favourite/fx/favouriteToggleFx";
 import { flagToggleFx } from "~/@buyer-user/flag/fx/flagToggleFx";
 import { ignoreToggleFx } from "~/@buyer-user/ignore/fx/ignoreToggleFx";
@@ -21,7 +21,7 @@ import MessagePackage from "~/seed/data/message-package.json";
 import MessagePersonal from "~/seed/data/message-personal.json";
 import BuyerText from "~/seed/data/message-text-buyer.json";
 import SellerText from "~/seed/data/message-text-seller.json";
-import { withRandomInt, type InteractionTimeline } from "~/seed/fx/time/seedTime";
+import { type InteractionTimeline, withRandomInt } from "~/seed/fx/time/seedTime";
 import { withSeedNowFx } from "~/seed/fx/time/withSeedNowFx";
 
 type InteractionVariant =
