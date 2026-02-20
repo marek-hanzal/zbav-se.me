@@ -21,10 +21,12 @@ Both scripts require exactly two arguments:
 
 `count` means how many records should be generated in the current run (append mode), not a final target state.
 Exception: `location` is cache-like and best-effort (warmup cycles), so it is not expected to match `count`.
+Location warmup queries are loaded from `src/seed/data/location.json` (copied from app dev dataset), not hardcoded inline.
 
 ## Structure
 
 - `schema/` - CLI argument schemas
+- `data/` - seed datasets (`location`, listing titles, listing descriptions)
 - `context/` - shared Effect contexts (progress/TUI)
 - `fx/core/` - core seed units (locations, uploads, listings, feeds)
 - `fx/interaction/` - interaction seed units (transactions, messages, reactions)

@@ -1,6 +1,5 @@
 import { Context, Effect, Layer } from "effect";
 import { terminal as term } from "terminal-kit";
-import { seedConsoleStyle } from "~/seed/fx/progress/seedConsoleStyle";
 
 type PhaseState = {
 	name: string;
@@ -23,6 +22,22 @@ export class SeedProgressContextFx extends Context.Tag("SeedProgressContextFx")<
 >() {
 	//
 }
+
+const withMarkup = (markup: string) => (value: string) => {
+	if (!process.stdout.isTTY || process.env.NO_COLOR) {
+		return value;
+	}
+
+	return String(term.str(`${markup}${value}^:`));
+};
+
+const style = {
+	bold: withMarkup("^+"),
+	green: withMarkup("^g"),
+	blue: withMarkup("^b"),
+	magenta: withMarkup("^m"),
+	cyan: withMarkup("^c"),
+};
 
 const withProgressRenderer = (): SeedProgress => {
 	let phase: PhaseState | null = null;
@@ -54,7 +69,7 @@ const withProgressRenderer = (): SeedProgress => {
 		}
 
 		progressBar = term.progressBar({
-			title: seedConsoleStyle.magenta(`${phase.name}: `),
+			title: style.magenta(`${phase.name}: `),
 			width: withBarWidth(),
 			eta: true,
 			percent: true,
@@ -88,9 +103,7 @@ const withProgressRenderer = (): SeedProgress => {
 					done: 0,
 					startedAt: Date.now(),
 				};
-				console.log(
-					`\n${seedConsoleStyle.bold(seedConsoleStyle.blue("[STEP]"))} Phase started: ${name}`,
-				);
+				console.log(`\n${style.bold(style.blue("[STEP]"))} Phase started: ${name}`);
 				updateBar();
 			});
 		},
@@ -109,7 +122,7 @@ const withProgressRenderer = (): SeedProgress => {
 				if (hasPhase) {
 					stopBar();
 				}
-				console.log(`${seedConsoleStyle.bold(seedConsoleStyle.cyan("[INFO]"))} ${message}`);
+				console.log(`${style.bold(style.cyan("[INFO]"))} ${message}`);
 			});
 		},
 		finishPhase() {
@@ -121,18 +134,14 @@ const withProgressRenderer = (): SeedProgress => {
 				updateBar();
 				stopBar();
 				const elapsed = ((Date.now() - phase.startedAt) / 1000).toFixed(1);
-				console.log(
-					`${seedConsoleStyle.bold(seedConsoleStyle.green("[DONE]"))} Phase finished: ${phase.name} (${elapsed}s)`,
-				);
+				console.log(`${style.bold(style.green("[DONE]"))} Phase finished: ${phase.name} (${elapsed}s)`);
 			});
 		},
 		finishAll() {
 			return Effect.sync(() => {
 				stopBar();
 				const total = ((Date.now() - startedAt) / 1000).toFixed(1);
-				console.log(
-					`\n${seedConsoleStyle.bold(seedConsoleStyle.green("[SEED]"))} Completed in ${total}s`,
-				);
+				console.log(`\n${style.bold(style.green("[SEED]"))} Completed in ${total}s`);
 			});
 		},
 	};

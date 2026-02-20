@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompleteFx";
+import Queries from "~/seed/data/location.json";
 import { seedProgressAdvanceFx, seedProgressLogFx } from "~/seed/fx/progress/seedProgressFx";
-import Queries from "~/seed/schema/location.json";
 
 export const seedCoreLocationFx = Effect.fn("seedCoreLocationFx")(function* ({
 	deficit,
