@@ -6,8 +6,12 @@ import { flagToggleFx } from "~/@buyer-user/flag/fx/flagToggleFx";
 import { ignoreToggleFx } from "~/@buyer-user/ignore/fx/ignoreToggleFx";
 import { transactionCreateFx } from "~/@buyer-user/transaction/fx/transactionCreateFx";
 import { transactionStatusCloseFx } from "~/@buyer-user/transaction-status/fx/transactionStatusCloseFx";
+import { transactionStatusDisputeFx as buyerDisputeFx } from "~/@buyer-user/transaction-status/fx/transactionStatusDisputeFx";
+import { transactionStatusRejectFx as buyerRejectFx } from "~/@buyer-user/transaction-status/fx/transactionStatusRejectFx";
 import { transactionStatusSuccessFx } from "~/@buyer-user/transaction-status/fx/transactionStatusSuccessFx";
 import { transactionStatusAcceptFx } from "~/@seller-user/transaction-status/fx/transactionStatusAcceptFx";
+import { transactionStatusDisputeFx as sellerDisputeFx } from "~/@seller-user/transaction-status/fx/transactionStatusDisputeFx";
+import { transactionStatusRejectFx as sellerRejectFx } from "~/@seller-user/transaction-status/fx/transactionStatusRejectFx";
 import { transactionStatusResolveFx } from "~/@seller-user/transaction-status/fx/transactionStatusResolveFx";
 import { transactionMessageLocationCreateFx } from "~/@user/transaction-message-location/fx/transactionMessageLocationCreateFx";
 import { transactionMessagePackageCreateFx } from "~/@user/transaction-message-package/fx/transactionMessagePackageCreateFx";
@@ -19,6 +23,33 @@ import BuyerText from "~/seed/data/message-text-buyer.json";
 import SellerText from "~/seed/data/message-text-seller.json";
 import { withRandomInt, type InteractionTimeline } from "~/seed/fx/time/seedTime";
 import { withSeedNowFx } from "~/seed/fx/time/withSeedNowFx";
+
+type InteractionVariant =
+	| "seller_reject_pending"
+	| "buyer_reject_pending"
+	| "accept_then_seller_reject"
+	| "accept_then_buyer_reject"
+	| "accept_resolve_success"
+	| "accept_resolve_close"
+	| "accept_resolve_buyer_dispute_success"
+	| "accept_resolve_buyer_dispute_close"
+	| "accept_resolve_seller_dispute_success"
+	| "accept_resolve_seller_dispute_close";
+
+const InteractionVariantPool: InteractionVariant[] = [
+	"seller_reject_pending",
+	"buyer_reject_pending",
+	"accept_then_seller_reject",
+	"accept_then_buyer_reject",
+	"accept_resolve_success",
+	"accept_resolve_success",
+	"accept_resolve_close",
+	"accept_resolve_close",
+	"accept_resolve_buyer_dispute_success",
+	"accept_resolve_buyer_dispute_close",
+	"accept_resolve_seller_dispute_success",
+	"accept_resolve_seller_dispute_close",
+];
 
 export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(function* ({
 	actorUserId,
@@ -35,6 +66,7 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 	feedId: string;
 	timeline: InteractionTimeline;
 }) {
+	const variant = list(InteractionVariantPool);
 	let metaCursor = timeline.metadataAt;
 	const withMetaAt = () => {
 		const at = metaCursor;
@@ -49,11 +81,35 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 		});
 		return target.toMillis() <= earliest.toMillis() ? earliest : target;
 	};
+	const withStepAfter = (after: DateTime, min = 3, max = 45) =>
+		withAtLeastGap(
+			after.plus({
+				minutes: withRandomInt(min, max),
+			}),
+			after,
+			min,
+		);
 
 	const transaction = yield* transactionCreateFx({
 		userId: actorUserId,
 		listingId,
 	}).pipe(withSeedNowFx(timeline.createAt));
+
+	if (variant === "seller_reject_pending") {
+		yield* sellerRejectFx({
+			userId: sellerId,
+			transactionId: transaction.id,
+		}).pipe(withSeedNowFx(withStepAfter(timeline.createAt)));
+		return transaction.id;
+	}
+
+	if (variant === "buyer_reject_pending") {
+		yield* buyerRejectFx({
+			userId: actorUserId,
+			transactionId: transaction.id,
+		}).pipe(withSeedNowFx(withStepAfter(timeline.createAt)));
+		return transaction.id;
+	}
 
 	yield* transactionStatusAcceptFx({
 		userId: sellerId,
@@ -121,25 +177,70 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 		toggle: Math.random() < 0.1,
 	}).pipe(withSeedNowFx(withMetaAt()), Effect.ignore);
 
+	if (variant === "accept_then_seller_reject") {
+		yield* sellerRejectFx({
+			userId: sellerId,
+			transactionId: transaction.id,
+		}).pipe(withSeedNowFx(withStepAfter(metaCursor)));
+		return transaction.id;
+	}
+
+	if (variant === "accept_then_buyer_reject") {
+		yield* buyerRejectFx({
+			userId: actorUserId,
+			transactionId: transaction.id,
+		}).pipe(withSeedNowFx(withStepAfter(metaCursor)));
+		return transaction.id;
+	}
+
 	const resolveAt = withAtLeastGap(timeline.resolveAt, metaCursor, 3);
-	const finalAt = withAtLeastGap(timeline.finalAt, resolveAt, 3);
+	let finalAt = withAtLeastGap(timeline.finalAt, resolveAt, 3);
 
 	yield* transactionStatusResolveFx({
 		userId: sellerId,
 		transactionId: transaction.id,
 	}).pipe(withSeedNowFx(resolveAt));
 
-	if (Math.random() < 0.7) {
+	if (
+		variant === "accept_resolve_buyer_dispute_success" ||
+		variant === "accept_resolve_buyer_dispute_close"
+	) {
+		const disputeAt = withStepAfter(resolveAt, 3, 45);
+		yield* buyerDisputeFx({
+			userId: actorUserId,
+			transactionId: transaction.id,
+		}).pipe(withSeedNowFx(disputeAt));
+		finalAt = withAtLeastGap(finalAt, disputeAt, 3);
+	}
+
+	if (
+		variant === "accept_resolve_seller_dispute_success" ||
+		variant === "accept_resolve_seller_dispute_close"
+	) {
+		const disputeAt = withStepAfter(resolveAt, 3, 45);
+		yield* sellerDisputeFx({
+			userId: sellerId,
+			transactionId: transaction.id,
+		}).pipe(withSeedNowFx(disputeAt));
+		finalAt = withAtLeastGap(finalAt, disputeAt, 3);
+	}
+
+	if (
+		variant === "accept_resolve_success" ||
+		variant === "accept_resolve_buyer_dispute_success" ||
+		variant === "accept_resolve_seller_dispute_success"
+	) {
 		yield* transactionStatusSuccessFx({
 			userId: actorUserId,
 			transactionId: transaction.id,
 		}).pipe(withSeedNowFx(finalAt));
-	} else {
-		yield* transactionStatusCloseFx({
-			userId: actorUserId,
-			transactionId: transaction.id,
-		}).pipe(withSeedNowFx(finalAt));
+		return transaction.id;
 	}
+
+	yield* transactionStatusCloseFx({
+		userId: actorUserId,
+		transactionId: transaction.id,
+	}).pipe(withSeedNowFx(finalAt));
 
 	return transaction.id;
 });

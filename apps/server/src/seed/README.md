@@ -74,3 +74,12 @@ Location warmup queries are loaded from `src/seed/data/location.json` (copied fr
   - optional "ghost" gaps are inserted between selected message/status steps
   - generated scenario timestamps are clamped to the past (never in the future)
   - metadata and status actions use minute-scale spacing to avoid overlapping timestamps
+- Interaction status variants are mixed per run to produce realistic legal flows:
+  - `pending -> seller rejected`
+  - `pending -> buyer rejected`
+  - `pending -> open -> seller rejected`
+  - `pending -> open -> buyer rejected`
+  - `pending -> open -> resolved -> success`
+  - `pending -> open -> resolved -> closed`
+  - `pending -> open -> resolved -> buyer dispute -> success|closed`
+  - `pending -> open -> resolved -> seller dispute -> success|closed`
