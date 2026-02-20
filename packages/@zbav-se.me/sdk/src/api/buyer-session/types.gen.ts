@@ -5,6 +5,37 @@ export type clientOptions = {
 };
 
 /**
+ * Seller info for the listing
+ */
+export type tSellerInfo = {
+    /**
+     * Registration date
+     */
+    registered: string;
+    /**
+     * Number of listings
+     */
+    listings: number;
+    /**
+     * Seller info may not be available if we don't have enough data
+     */
+    events: null | tUserEventSeller;
+};
+
+/**
+ * Seller info for the user event
+ */
+export type tUserEventSeller = {
+    reaction: tUserEventSellerReaction;
+    rejected: tUserEventSellerRejected;
+    resolved: tUserEventSellerResolved;
+    expired: tUserEventSellerExpired;
+    load: tUserEventSellerLoad;
+    activity: tUserEventSellerActivity;
+    score: tUserEventSellerScore;
+};
+
+/**
  * Initial reaction by seller on transaction created by buyer.
  */
 export type tUserEventSellerReaction = {
@@ -109,6 +140,13 @@ export type tUserEventSellerExpired = {
 };
 
 /**
+ * Masks number of transactions of the seller, basically it tells, how busy seller is.
+ */
+export type tUserEventSellerLoad = {
+    bucket: tLoadEnum;
+};
+
+/**
  * Load type of the seller
  */
 export const tLoadEnum = {
@@ -123,10 +161,10 @@ export const tLoadEnum = {
 export type tLoadEnum = typeof tLoadEnum[keyof typeof tLoadEnum];
 
 /**
- * Masks number of transactions of the seller, basically it tells, how busy seller is.
+ * This metric describes the approx activity of the user
  */
-export type tUserEventSellerLoad = {
-    bucket: tLoadEnum;
+export type tUserEventSellerActivity = {
+    bucket: tActivityEnum;
 };
 
 /**
@@ -144,13 +182,6 @@ export const tActivityEnum = {
 export type tActivityEnum = typeof tActivityEnum[keyof typeof tActivityEnum];
 
 /**
- * This metric describes the approx activity of the user
- */
-export type tUserEventSellerActivity = {
-    bucket: tActivityEnum;
-};
-
-/**
  * This metric describes the score of the user
  */
 export type tUserEventSellerScore = {
@@ -165,34 +196,14 @@ export type tUserEventSellerScore = {
 };
 
 /**
- * Seller info for the user event
+ * Just a note sent from various reasons, usually when something is fucked up.
  */
-export type tUserEventSeller = {
-    reaction: tUserEventSellerReaction;
-    rejected: tUserEventSellerRejected;
-    resolved: tUserEventSellerResolved;
-    expired: tUserEventSellerExpired;
-    load: tUserEventSellerLoad;
-    activity: tUserEventSellerActivity;
-    score: tUserEventSellerScore;
-};
-
-/**
- * Seller info for the listing
- */
-export type tSellerInfo = {
+export type tNotice = {
     /**
-     * Registration date
+     * Message
      */
-    registered: string;
-    /**
-     * Number of listings
-     */
-    listings: number;
-    /**
-     * Seller info may not be available if we don't have enough data
-     */
-    events: null | tUserEventSeller;
+    message: string;
+    type: tNoticeTypeEnum;
 };
 
 /**
@@ -210,14 +221,22 @@ export const tNoticeTypeEnum = {
 export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
 
 /**
- * Just a note sent from various reasons, usually when something is fucked up.
+ * Listing event data
  */
-export type tNotice = {
+export type tListingEvent = {
     /**
-     * Message
+     * ID of the event
      */
-    message: string;
-    type: tNoticeTypeEnum;
+    id: string;
+    /**
+     * ID of the listing
+     */
+    listingId: string;
+    event: tListingEventEnum;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
 };
 
 /**
@@ -241,25 +260,6 @@ export const tListingEventEnum = {
  * Type of listing event
  */
 export type tListingEventEnum = typeof tListingEventEnum[keyof typeof tListingEventEnum];
-
-/**
- * Listing event data
- */
-export type tListingEvent = {
-    /**
-     * ID of the event
-     */
-    id: string;
-    /**
-     * ID of the listing
-     */
-    listingId: string;
-    event: tListingEventEnum;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-};
 
 /**
  * Data for creating a new listing event

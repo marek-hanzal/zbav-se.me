@@ -5,6 +5,17 @@ export type clientOptions = {
 };
 
 /**
+ * Collection of favourite items
+ */
+export type tFavouriteItemSchema = {
+    data: Array<tFavouriteItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
  * Favourite collection item
  */
 export type tFavouriteItem = {
@@ -15,14 +26,14 @@ export type tFavouriteItem = {
 };
 
 /**
- * Collection of favourite items
+ * Just a note sent from various reasons, usually when something is fucked up.
  */
-export type tFavouriteItemSchema = {
-    data: Array<tFavouriteItem>;
+export type tNotice = {
     /**
-     * Whether there are more items to fetch
+     * Message
      */
-    more: boolean;
+    message: string;
+    type: tNoticeTypeEnum;
 };
 
 /**
@@ -40,14 +51,13 @@ export const tNoticeTypeEnum = {
 export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
 
 /**
- * Just a note sent from various reasons, usually when something is fucked up.
+ * Query object for favourite collection
  */
-export type tNotice = {
-    /**
-     * Message
-     */
-    message: string;
-    type: tNoticeTypeEnum;
+export type tFavouriteQuery = {
+    cursor?: tCursor;
+    filter?: tFavouriteFilter;
+    where?: tFavouriteWhere;
+    sort?: Array<tFavouriteSort>;
 };
 
 /**
@@ -117,6 +127,14 @@ export type tFavouriteWhere = {
 };
 
 /**
+ * Sort object for favourite collection
+ */
+export type tFavouriteSort = {
+    field: tFavouriteSortField;
+    order: tOrderEnum;
+};
+
+/**
  * Field of the favourite sort
  */
 export const tFavouriteSortField = { createdAt: 'createdAt' } as const;
@@ -135,24 +153,6 @@ export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
  * Order
  */
 export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
-
-/**
- * Sort object for favourite collection
- */
-export type tFavouriteSort = {
-    field: tFavouriteSortField;
-    order: tOrderEnum;
-};
-
-/**
- * Query object for favourite collection
- */
-export type tFavouriteQuery = {
-    cursor?: tCursor;
-    filter?: tFavouriteFilter;
-    where?: tFavouriteWhere;
-    sort?: Array<tFavouriteSort>;
-};
 
 /**
  * Count data
@@ -179,6 +179,110 @@ export type tFavouriteCountQuery = {
     filter?: tFavouriteFilter;
     where?: tFavouriteWhere;
     count?: Array<'total' | 'filter' | 'where'>;
+};
+
+/**
+ * Listing data
+ */
+export type tListing = {
+    /**
+     * ID of the listing
+     */
+    id: string;
+    /**
+     * Price of the listing
+     */
+    price: number;
+    priceType: tListingPriceEnum;
+    currency: tCurrencyEnum;
+    /**
+     * Condition of the item (0-based index)
+     */
+    condition: null | number;
+    /**
+     * Age of the item (0-based index)
+     */
+    age: null | number;
+    /**
+     * Delivery methods for the listing
+     */
+    delivery: null | Array<tListingDeliveryEnum>;
+    /**
+     * Warranty type for the listing
+     */
+    warranty: null | tListingWarrantyEnum;
+    restriction: tListingRestrictionEnum;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+    /**
+     * ID of the category
+     */
+    categoryId: string;
+    /**
+     * ID of the gallery
+     */
+    galleryId: string;
+    /**
+     * ID of the draft this listing was created from
+     */
+    draftId: null | string;
+    /**
+     * Expiration timestamp
+     */
+    expiresAt: string;
+    /**
+     * Title of the item
+     */
+    title: string;
+    /**
+     * Description of the item
+     */
+    description: null | string;
+    /**
+     * Pros of the item
+     */
+    pros: null | tProsCons;
+    /**
+     * Cons of the item
+     */
+    cons: null | tProsCons;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    /**
+     * Last update timestamp
+     */
+    updatedAt: string;
+    location: tLocation;
+    category: tCategory;
+    /**
+     * Distance from the input location to the listing (in km; meta lat/lon must be provided)
+     */
+    distance: number | null;
+    gallery: tGallery;
+    /**
+     * Whether the user has this listing in favourites
+     */
+    isFavourite: boolean;
+    /**
+     * Whether the user ignored this listing
+     */
+    isIgnored: boolean;
+    /**
+     * Whether the user flagged this listing
+     */
+    hasFlag: boolean;
+    /**
+     * Whether the user has a transaction with this listing
+     */
+    transactionId: null | string;
+    /**
+     * Thumb type provided by the user (like/dislike) or null if not present
+     */
+    thumb: null | tThumbEnum;
 };
 
 /**
@@ -356,17 +460,17 @@ export type tCategory = {
 };
 
 /**
- * Upload file metadata
+ * Listing gallery images
  */
-export type tUpload = {
+export type tGallery = {
     /**
-     * ID of the upload
+     * ID of the gallery
      */
     id: string;
     /**
-     * Public URL to the uploaded file
+     * Gallery items sorted by sort order
      */
-    url: string;
+    items: Array<tGalleryItem>;
 };
 
 /**
@@ -393,17 +497,17 @@ export type tGalleryItem = {
 };
 
 /**
- * Listing gallery images
+ * Upload file metadata
  */
-export type tGallery = {
+export type tUpload = {
     /**
-     * ID of the gallery
+     * ID of the upload
      */
     id: string;
     /**
-     * Gallery items sorted by sort order
+     * Public URL to the uploaded file
      */
-    items: Array<tGalleryItem>;
+    url: string;
 };
 
 /**
@@ -415,110 +519,6 @@ export const tThumbEnum = { like: 'like', dislike: 'dislike' } as const;
  * Type of thumb
  */
 export type tThumbEnum = typeof tThumbEnum[keyof typeof tThumbEnum];
-
-/**
- * Listing data
- */
-export type tListing = {
-    /**
-     * ID of the listing
-     */
-    id: string;
-    /**
-     * Price of the listing
-     */
-    price: number;
-    priceType: tListingPriceEnum;
-    currency: tCurrencyEnum;
-    /**
-     * Condition of the item (0-based index)
-     */
-    condition: null | number;
-    /**
-     * Age of the item (0-based index)
-     */
-    age: null | number;
-    /**
-     * Delivery methods for the listing
-     */
-    delivery: null | Array<tListingDeliveryEnum>;
-    /**
-     * Warranty type for the listing
-     */
-    warranty: null | tListingWarrantyEnum;
-    restriction: tListingRestrictionEnum;
-    /**
-     * ID of the location
-     */
-    locationId: string;
-    /**
-     * ID of the category
-     */
-    categoryId: string;
-    /**
-     * ID of the gallery
-     */
-    galleryId: string;
-    /**
-     * ID of the draft this listing was created from
-     */
-    draftId: null | string;
-    /**
-     * Expiration timestamp
-     */
-    expiresAt: string;
-    /**
-     * Title of the item
-     */
-    title: string;
-    /**
-     * Description of the item
-     */
-    description: null | string;
-    /**
-     * Pros of the item
-     */
-    pros: null | tProsCons;
-    /**
-     * Cons of the item
-     */
-    cons: null | tProsCons;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    /**
-     * Last update timestamp
-     */
-    updatedAt: string;
-    location: tLocation;
-    category: tCategory;
-    /**
-     * Distance from the input location to the listing (in km; meta lat/lon must be provided)
-     */
-    distance: number | null;
-    gallery: tGallery;
-    /**
-     * Whether the user has this listing in favourites
-     */
-    isFavourite: boolean;
-    /**
-     * Whether the user ignored this listing
-     */
-    isIgnored: boolean;
-    /**
-     * Whether the user flagged this listing
-     */
-    hasFlag: boolean;
-    /**
-     * Whether the user has a transaction with this listing
-     */
-    transactionId: null | string;
-    /**
-     * Thumb type provided by the user (like/dislike) or null if not present
-     */
-    thumb: null | tThumbEnum;
-};
 
 /**
  * Data for toggling a listing in favourites
@@ -539,49 +539,42 @@ export type tFavouriteToggle = {
 };
 
 /**
- * Sets the minimum price for the listings
+ * Feed data
  */
-export type tPriceMin = number;
+export type tFeed = {
+    /**
+     * ID of the feed
+     */
+    id: string;
+    /**
+     * ID of the location associated with the feed
+     */
+    locationId: null | string;
+    /**
+     * Hero image for this feed (usually selected from the listings in the feed)
+     */
+    uploadId: null | string;
+    /**
+     * Name of the feed
+     */
+    name: string;
+    query: tListingQuery;
+    /**
+     * Hero banner for this feed
+     */
+    upload: null | tUpload;
+};
 
 /**
- * Sets the maximum price for the listings
+ * Query object for listing collection
  */
-export type tPriceMax = number;
-
-/**
- * This filter matches listings with delivery methods overlapping the provided array
- */
-export type tDeliveryIn = Array<tListingDeliveryEnum>;
-
-/**
- * This filter matches listings with warranty types in the provided array
- */
-export type tWarrantyIn = Array<tListingWarrantyEnum>;
-
-/**
- * ID of the category
- */
-export type tCategoryId = string;
-
-/**
- * Filter listings based on the provided category IDs
- */
-export type tCategoryIdIn = Array<string>;
-
-/**
- * This filter matches listings with currency codes in the provided array
- */
-export type tCurrencyIn = Array<tCurrencyEnum>;
-
-/**
- * ID of the feed
- */
-export type tFeedId = string;
-
-/**
- * Filter listings based on the provided feed IDs
- */
-export type tFeedIdIn = Array<string>;
+export type tListingQuery = {
+    cursor?: tCursor;
+    filter?: tListingFilter;
+    where?: tListingWhere;
+    sort?: Array<tListingSort>;
+    meta?: tListingMeta;
+};
 
 /**
  * User-land filters
@@ -676,6 +669,51 @@ export type tListingFilter = {
 };
 
 /**
+ * Sets the minimum price for the listings
+ */
+export type tPriceMin = number;
+
+/**
+ * Sets the maximum price for the listings
+ */
+export type tPriceMax = number;
+
+/**
+ * This filter matches listings with delivery methods overlapping the provided array
+ */
+export type tDeliveryIn = Array<tListingDeliveryEnum>;
+
+/**
+ * This filter matches listings with warranty types in the provided array
+ */
+export type tWarrantyIn = Array<tListingWarrantyEnum>;
+
+/**
+ * ID of the category
+ */
+export type tCategoryId = string;
+
+/**
+ * Filter listings based on the provided category IDs
+ */
+export type tCategoryIdIn = Array<string>;
+
+/**
+ * This filter matches listings with currency codes in the provided array
+ */
+export type tCurrencyIn = Array<tCurrencyEnum>;
+
+/**
+ * ID of the feed
+ */
+export type tFeedId = string;
+
+/**
+ * Filter listings based on the provided feed IDs
+ */
+export type tFeedIdIn = Array<string>;
+
+/**
  * App-based filters
  */
 export type tListingWhere = {
@@ -768,6 +806,14 @@ export type tListingWhere = {
 };
 
 /**
+ * Sort object for listing collection
+ */
+export type tListingSort = {
+    field: tListingSortField;
+    order: tOrderEnum;
+};
+
+/**
  * Field of the listing sort
  */
 export const tListingSortField = {
@@ -786,11 +832,11 @@ export const tListingSortField = {
 export type tListingSortField = typeof tListingSortField[keyof typeof tListingSortField];
 
 /**
- * Sort object for listing collection
+ * Meta data for listing collection
  */
-export type tListingSort = {
-    field: tListingSortField;
-    order: tOrderEnum;
+export type tListingMeta = {
+    latLon?: tLatLon;
+    feedId?: tFeedId & unknown;
 };
 
 /**
@@ -808,52 +854,6 @@ export type tLatLon = {
 };
 
 /**
- * Meta data for listing collection
- */
-export type tListingMeta = {
-    latLon?: tLatLon;
-    feedId?: tFeedId & unknown;
-};
-
-/**
- * Query object for listing collection
- */
-export type tListingQuery = {
-    cursor?: tCursor & unknown;
-    filter?: tListingFilter;
-    where?: tListingWhere;
-    sort?: Array<tListingSort>;
-    meta?: tListingMeta;
-};
-
-/**
- * Feed data
- */
-export type tFeed = {
-    /**
-     * ID of the feed
-     */
-    id: string;
-    /**
-     * ID of the location associated with the feed
-     */
-    locationId: null | string;
-    /**
-     * Hero image for this feed (usually selected from the listings in the feed)
-     */
-    uploadId: null | string;
-    /**
-     * Name of the feed
-     */
-    name: string;
-    query: tListingQuery;
-    /**
-     * Hero banner for this feed
-     */
-    upload: null | tUpload;
-};
-
-/**
  * Data for creating a new feed
  */
 export type tFeedCreate = {
@@ -866,6 +866,45 @@ export type tFeedCreate = {
      */
     locationId?: null | string;
     query: tListingQuery;
+};
+
+/**
+ * Data for updating an existing feed
+ */
+export type tFeedPatch = {
+    /**
+     * Fields to update (all optional)
+     */
+    patch: {
+        /**
+         * ID of the feed
+         */
+        id?: string;
+        /**
+         * ID of the location associated with the feed
+         */
+        locationId?: null | string;
+        /**
+         * Hero image for this feed (usually selected from the listings in the feed)
+         */
+        uploadId?: null | string;
+        /**
+         * Name of the feed
+         */
+        name?: string;
+        query?: tListingQuery;
+    };
+    query: tFeedQuery;
+};
+
+/**
+ * Query object for feed collection
+ */
+export type tFeedQuery = {
+    cursor?: tCursor;
+    filter?: tFeedFilter;
+    where?: tFeedWhere;
+    sort?: Array<tFeedSort>;
 };
 
 /**
@@ -913,16 +952,6 @@ export type tFeedWhere = {
 };
 
 /**
- * Field of the feed sort
- */
-export const tFeedSortField = { createdAt: 'createdAt', updatedAt: 'updatedAt' } as const;
-
-/**
- * Field of the feed sort
- */
-export type tFeedSortField = typeof tFeedSortField[keyof typeof tFeedSortField];
-
-/**
  * Sort object for feed collection
  */
 export type tFeedSort = {
@@ -931,53 +960,14 @@ export type tFeedSort = {
 };
 
 /**
- * Query object for feed collection
+ * Field of the feed sort
  */
-export type tFeedQuery = {
-    cursor?: tCursor;
-    filter?: tFeedFilter;
-    where?: tFeedWhere;
-    sort?: Array<tFeedSort>;
-};
+export const tFeedSortField = { createdAt: 'createdAt', updatedAt: 'updatedAt' } as const;
 
 /**
- * Data for updating an existing feed
+ * Field of the feed sort
  */
-export type tFeedPatch = {
-    /**
-     * Fields to update (all optional)
-     */
-    patch: {
-        /**
-         * ID of the feed
-         */
-        id?: string;
-        /**
-         * ID of the location associated with the feed
-         */
-        locationId?: null | string;
-        /**
-         * Hero image for this feed (usually selected from the listings in the feed)
-         */
-        uploadId?: null | string;
-        /**
-         * Name of the feed
-         */
-        name?: string;
-        query?: tListingQuery;
-    };
-    query: tFeedQuery;
-};
-
-/**
- * Feed collection item
- */
-export type tFeedItem = {
-    /**
-     * ID of the feed
-     */
-    id: string;
-};
+export type tFeedSortField = typeof tFeedSortField[keyof typeof tFeedSortField];
 
 /**
  * Collection of feed items
@@ -991,12 +981,33 @@ export type tFeedItemSchema = {
 };
 
 /**
+ * Feed collection item
+ */
+export type tFeedItem = {
+    /**
+     * ID of the feed
+     */
+    id: string;
+};
+
+/**
  * Query object for feed count
  */
 export type tFeedCountQuery = {
     filter?: tFeedFilter;
     where?: tFeedWhere;
     count?: Array<'total' | 'filter' | 'where'>;
+};
+
+/**
+ * Collection of feed items from favourites
+ */
+export type tFeedFavouriteItemSchema = {
+    data: Array<tFeedFavouriteItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
 };
 
 /**
@@ -1031,17 +1042,6 @@ export type tFeedFavouriteItem = {
 };
 
 /**
- * Collection of feed items from favourites
- */
-export type tFeedFavouriteItemSchema = {
-    data: Array<tFeedFavouriteItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
  * Request to create or update a feed gallery
  */
 export type tFeedGalleryCreate = {
@@ -1056,16 +1056,6 @@ export type tFeedGalleryCreate = {
 };
 
 /**
- * Flag collection item
- */
-export type tFlagItem = {
-    /**
-     * ID of the flag
-     */
-    id: string;
-};
-
-/**
  * Collection of flag items
  */
 export type tFlagItemSchema = {
@@ -1077,43 +1067,13 @@ export type tFlagItemSchema = {
 };
 
 /**
- * App-based filters
+ * Flag collection item
  */
-export type tFlagWhere = {
+export type tFlagItem = {
     /**
-     * This filter matches the exact id
+     * ID of the flag
      */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Field of the flag sort
- */
-export const tFlagSortField = { createdAt: 'createdAt' } as const;
-
-/**
- * Field of the flag sort
- */
-export type tFlagSortField = typeof tFlagSortField[keyof typeof tFlagSortField];
-
-/**
- * Sort object for flag collection
- */
-export type tFlagSort = {
-    field: tFlagSortField;
-    order: tOrderEnum;
+    id: string;
 };
 
 /**
@@ -1146,7 +1106,7 @@ export type tFlagQuery = {
 /**
  * App-based filters
  */
-export type tFlagCountWhere = {
+export type tFlagWhere = {
     /**
      * This filter matches the exact id
      */
@@ -1164,6 +1124,24 @@ export type tFlagCountWhere = {
      */
     listingId?: string;
 };
+
+/**
+ * Sort object for flag collection
+ */
+export type tFlagSort = {
+    field: tFlagSortField;
+    order: tOrderEnum;
+};
+
+/**
+ * Field of the flag sort
+ */
+export const tFlagSortField = { createdAt: 'createdAt' } as const;
+
+/**
+ * Field of the flag sort
+ */
+export type tFlagSortField = typeof tFlagSortField[keyof typeof tFlagSortField];
 
 /**
  * Query object for flag count
@@ -1192,6 +1170,28 @@ export type tFlagCountQuery = {
 };
 
 /**
+ * App-based filters
+ */
+export type tFlagCountWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+};
+
+/**
  * Data for toggling a flag on a listing
  */
 export type tFlagToggle = {
@@ -1206,6 +1206,17 @@ export type tFlagToggle = {
 };
 
 /**
+ * Collection of ignore items
+ */
+export type tIgnoreItemSchema = {
+    data: Array<tIgnoreItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
  * Ignore collection item
  */
 export type tIgnoreItem = {
@@ -1216,14 +1227,13 @@ export type tIgnoreItem = {
 };
 
 /**
- * Collection of ignore items
+ * Query object for ignore collection
  */
-export type tIgnoreItemSchema = {
-    data: Array<tIgnoreItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
+export type tIgnoreQuery = {
+    cursor?: tCursor;
+    filter?: tIgnoreFilter;
+    where?: tIgnoreWhere;
+    sort?: Array<tIgnoreSort>;
 };
 
 /**
@@ -1279,16 +1289,6 @@ export type tIgnoreWhere = {
 };
 
 /**
- * Field of the ignore sort
- */
-export const tIgnoreSortField = { createdAt: 'createdAt' } as const;
-
-/**
- * Field of the ignore sort
- */
-export type tIgnoreSortField = typeof tIgnoreSortField[keyof typeof tIgnoreSortField];
-
-/**
  * Sort object for ignore collection
  */
 export type tIgnoreSort = {
@@ -1297,14 +1297,14 @@ export type tIgnoreSort = {
 };
 
 /**
- * Query object for ignore collection
+ * Field of the ignore sort
  */
-export type tIgnoreQuery = {
-    cursor?: tCursor;
-    filter?: tIgnoreFilter;
-    where?: tIgnoreWhere;
-    sort?: Array<tIgnoreSort>;
-};
+export const tIgnoreSortField = { createdAt: 'createdAt' } as const;
+
+/**
+ * Field of the ignore sort
+ */
+export type tIgnoreSortField = typeof tIgnoreSortField[keyof typeof tIgnoreSortField];
 
 /**
  * Query object for ignore count
@@ -1330,16 +1330,6 @@ export type tIgnoreToggle = {
 };
 
 /**
- * Listing collection item
- */
-export type tListingItem = {
-    /**
-     * ID of the listing
-     */
-    id: string;
-};
-
-/**
  * Collection of listings
  */
 export type tListingItemSchema = {
@@ -1348,6 +1338,16 @@ export type tListingItemSchema = {
      * Whether there are more items to fetch
      */
     more: boolean;
+};
+
+/**
+ * Listing collection item
+ */
+export type tListingItem = {
+    /**
+     * ID of the listing
+     */
+    id: string;
 };
 
 /**
@@ -1372,6 +1372,17 @@ export type tThumbCreate = {
 };
 
 /**
+ * Collection of transactions
+ */
+export type tTransactionItemSchema = {
+    data: Array<tTransactionItem>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
  * Transaction collection item with last message timestamp
  */
 export type tTransactionItem = {
@@ -1386,34 +1397,14 @@ export type tTransactionItem = {
 };
 
 /**
- * Collection of transactions
+ * Query object for transaction collection
  */
-export type tTransactionItemSchema = {
-    data: Array<tTransactionItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
+export type tTransactionQuery = {
+    cursor?: tCursor;
+    filter?: tTransactionFilter;
+    where?: tTransactionWhere;
+    sort?: Array<tTransactionSort>;
 };
-
-/**
- * This filter matches the current status of the transaction
- */
-export const tTransactionStatusEnum = {
-    pending: 'pending',
-    open: 'open',
-    resolved: 'resolved',
-    dispute: 'dispute',
-    rejected: 'rejected',
-    expired: 'expired',
-    success: 'success',
-    closed: 'closed'
-} as const;
-
-/**
- * This filter matches the current status of the transaction
- */
-export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
 
 /**
  * Filter object for transaction collection
@@ -1447,6 +1438,25 @@ export type tTransactionFilter = {
 };
 
 /**
+ * This filter matches the current status of the transaction
+ */
+export const tTransactionStatusEnum = {
+    pending: 'pending',
+    open: 'open',
+    resolved: 'resolved',
+    dispute: 'dispute',
+    rejected: 'rejected',
+    expired: 'expired',
+    success: 'success',
+    closed: 'closed'
+} as const;
+
+/**
+ * This filter matches the current status of the transaction
+ */
+export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
+
+/**
  * App-based filters
  */
 export type tTransactionWhere = {
@@ -1478,6 +1488,14 @@ export type tTransactionWhere = {
 };
 
 /**
+ * Sort object for transaction collection
+ */
+export type tTransactionSort = {
+    field: tTransactionSortField;
+    order: tOrderEnum;
+};
+
+/**
  * Field of the transaction sort
  */
 export const tTransactionSortField = {
@@ -1491,24 +1509,6 @@ export const tTransactionSortField = {
  * Field of the transaction sort
  */
 export type tTransactionSortField = typeof tTransactionSortField[keyof typeof tTransactionSortField];
-
-/**
- * Sort object for transaction collection
- */
-export type tTransactionSort = {
-    field: tTransactionSortField;
-    order: tOrderEnum;
-};
-
-/**
- * Query object for transaction collection
- */
-export type tTransactionQuery = {
-    cursor?: tCursor;
-    filter?: tTransactionFilter;
-    where?: tTransactionWhere;
-    sort?: Array<tTransactionSort>;
-};
 
 /**
  * Transaction data
@@ -1564,22 +1564,6 @@ export type tTransactionCreate = {
 };
 
 /**
- * Who initiated or affected the transaction change
- */
-export const tTransactionSideEnum = {
-    seller: 'seller',
-    buyer: 'buyer',
-    transaction: 'transaction',
-    system: 'system',
-    unknown: 'unknown'
-} as const;
-
-/**
- * Who initiated or affected the transaction change
- */
-export type tTransactionSideEnum = typeof tTransactionSideEnum[keyof typeof tTransactionSideEnum];
-
-/**
  * Listing transaction status entry
  */
 export type tTransactionStatus = {
@@ -1602,6 +1586,22 @@ export type tTransactionStatus = {
      */
     createdAt: string;
 };
+
+/**
+ * Who initiated or affected the transaction change
+ */
+export const tTransactionSideEnum = {
+    seller: 'seller',
+    buyer: 'buyer',
+    transaction: 'transaction',
+    system: 'system',
+    unknown: 'unknown'
+} as const;
+
+/**
+ * Who initiated or affected the transaction change
+ */
+export type tTransactionSideEnum = typeof tTransactionSideEnum[keyof typeof tTransactionSideEnum];
 
 /**
  * Request to close a listing transaction

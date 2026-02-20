@@ -5,6 +5,33 @@ export type clientOptions = {
 };
 
 /**
+ * Buyer info for the transaction
+ */
+export type tTransactionBuyerInfo = {
+    /**
+     * Registration date
+     */
+    registered: string;
+    /**
+     * Buyer info may not be available if we don't have enough data
+     */
+    events: null | tUserEventBuyer;
+};
+
+/**
+ * Buyer info for the user event
+ */
+export type tUserEventBuyer = {
+    reaction: tUserEventBuyerReaction;
+    closer: tUserEventBuyerCloser;
+    decision: tUserEventBuyerDecision;
+    expired: tUserEventBuyerExpired;
+    load: tUserEventBuyerLoad;
+    activity: tUserEventBuyerActivity;
+    score: tUserEventBuyerScore;
+};
+
+/**
  * Initial reaction on opened transaction by seller.
  */
 export type tUserEventBuyerReaction = {
@@ -101,6 +128,13 @@ export type tUserEventBuyerExpired = {
 };
 
 /**
+ * Masks number of transactions of the buyer, basically it tells, how busy buyer is.
+ */
+export type tUserEventBuyerLoad = {
+    bucket: tLoadEnum;
+};
+
+/**
  * Load type of the buyer
  */
 export const tLoadEnum = {
@@ -115,10 +149,10 @@ export const tLoadEnum = {
 export type tLoadEnum = typeof tLoadEnum[keyof typeof tLoadEnum];
 
 /**
- * Masks number of transactions of the buyer, basically it tells, how busy buyer is.
+ * This metric describes the approx activity of the user
  */
-export type tUserEventBuyerLoad = {
-    bucket: tLoadEnum;
+export type tUserEventBuyerActivity = {
+    bucket: tActivityEnum;
 };
 
 /**
@@ -136,13 +170,6 @@ export const tActivityEnum = {
 export type tActivityEnum = typeof tActivityEnum[keyof typeof tActivityEnum];
 
 /**
- * This metric describes the approx activity of the user
- */
-export type tUserEventBuyerActivity = {
-    bucket: tActivityEnum;
-};
-
-/**
  * This metric describes the score of the user
  */
 export type tUserEventBuyerScore = {
@@ -157,30 +184,14 @@ export type tUserEventBuyerScore = {
 };
 
 /**
- * Buyer info for the user event
+ * Just a note sent from various reasons, usually when something is fucked up.
  */
-export type tUserEventBuyer = {
-    reaction: tUserEventBuyerReaction;
-    closer: tUserEventBuyerCloser;
-    decision: tUserEventBuyerDecision;
-    expired: tUserEventBuyerExpired;
-    load: tUserEventBuyerLoad;
-    activity: tUserEventBuyerActivity;
-    score: tUserEventBuyerScore;
-};
-
-/**
- * Buyer info for the transaction
- */
-export type tTransactionBuyerInfo = {
+export type tNotice = {
     /**
-     * Registration date
+     * Message
      */
-    registered: string;
-    /**
-     * Buyer info may not be available if we don't have enough data
-     */
-    events: null | tUserEventBuyer;
+    message: string;
+    type: tNoticeTypeEnum;
 };
 
 /**
@@ -198,14 +209,13 @@ export const tNoticeTypeEnum = {
 export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
 
 /**
- * Just a note sent from various reasons, usually when something is fucked up.
+ * Query object for transaction collection
  */
-export type tNotice = {
-    /**
-     * Message
-     */
-    message: string;
-    type: tNoticeTypeEnum;
+export type tTransactionQuery = {
+    cursor?: tCursor;
+    filter?: tTransactionFilter;
+    where?: tTransactionWhere;
+    sort?: Array<tTransactionSort>;
 };
 
 /**
@@ -221,25 +231,6 @@ export type tCursor = {
      */
     size: number;
 };
-
-/**
- * This filter matches the current status of the transaction
- */
-export const tTransactionStatusEnum = {
-    pending: 'pending',
-    open: 'open',
-    resolved: 'resolved',
-    dispute: 'dispute',
-    rejected: 'rejected',
-    expired: 'expired',
-    success: 'success',
-    closed: 'closed'
-} as const;
-
-/**
- * This filter matches the current status of the transaction
- */
-export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
 
 /**
  * Filter object for transaction collection
@@ -273,6 +264,25 @@ export type tTransactionFilter = {
 };
 
 /**
+ * This filter matches the current status of the transaction
+ */
+export const tTransactionStatusEnum = {
+    pending: 'pending',
+    open: 'open',
+    resolved: 'resolved',
+    dispute: 'dispute',
+    rejected: 'rejected',
+    expired: 'expired',
+    success: 'success',
+    closed: 'closed'
+} as const;
+
+/**
+ * This filter matches the current status of the transaction
+ */
+export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
+
+/**
  * App-based filters
  */
 export type tTransactionWhere = {
@@ -304,6 +314,14 @@ export type tTransactionWhere = {
 };
 
 /**
+ * Sort object for transaction collection
+ */
+export type tTransactionSort = {
+    field: tTransactionSortField;
+    order: tOrderEnum;
+};
+
+/**
  * Field of the transaction sort
  */
 export const tTransactionSortField = {
@@ -327,24 +345,6 @@ export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
  * Order
  */
 export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
-
-/**
- * Sort object for transaction collection
- */
-export type tTransactionSort = {
-    field: tTransactionSortField;
-    order: tOrderEnum;
-};
-
-/**
- * Query object for transaction collection
- */
-export type tTransactionQuery = {
-    cursor?: tCursor;
-    filter?: tTransactionFilter;
-    where?: tTransactionWhere;
-    sort?: Array<tTransactionSort>;
-};
 
 export type tApiTransactionBuyerInfoRequest = {
     /**

@@ -192,11 +192,7 @@ export type zGalleryQuery = z.infer<typeof zGalleryQuery>;
  * Collection of gallery items
  */
 export const zGalleryItemSchema = z.object({
-    data: z.array(zGalleryItem.and(z.object({
-        id: z.string().register(z.globalRegistry, {
-            description: 'ID of the gallery'
-        })
-    }).register(z.globalRegistry, {
+    data: z.array(zGalleryItem.and(z.unknown().register(z.globalRegistry, {
         description: 'Gallery collection item'
     }))),
     more: z.boolean().register(z.globalRegistry, {

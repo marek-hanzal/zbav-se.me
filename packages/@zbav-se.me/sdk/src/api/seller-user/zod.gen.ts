@@ -807,7 +807,7 @@ export type zListingSort = z.infer<typeof zListingSort>;
  * Query object for listing collection
  */
 export const zListingQuery = z.object({
-    cursor: z.optional(zCursor.and(z.unknown().default({ page: 0, size: 256 }))),
+    cursor: z.optional(zCursor),
     filter: z.optional(zListingFilter),
     where: z.optional(zListingWhere),
     sort: z.optional(z.array(zListingSort))
