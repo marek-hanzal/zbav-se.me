@@ -5,7 +5,10 @@ import { withSeedRuntimeFx } from "~/seed/fx/withSeedRuntimeFx";
 import { parseSeedArgsFx } from "~/seed/schema/SeedArgsSchema";
 
 const program = Effect.gen(function* () {
-	const args = yield* parseSeedArgsFx(process.argv.slice(2));
+	const args = yield* parseSeedArgsFx({
+		name: "seed-interaction",
+		args: process.argv.slice(2),
+	});
 	const report = yield* seedInteractionFx({
 		count: args.count,
 		user: args.user,

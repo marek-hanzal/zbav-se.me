@@ -18,6 +18,7 @@ export namespace draftCreateFx {
 
 export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 	userId,
+	uploadIds,
 	...data
 }: draftCreateFx.Props) {
 	yield* withTraceFx({
@@ -25,6 +26,7 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 		input: {
 			userId,
 			...data,
+			uploadIds,
 		},
 	});
 
@@ -40,9 +42,9 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 				userId,
 			});
 
-			if (data.uploadIds && data.uploadIds.length > 0) {
+			if (uploadIds && uploadIds.length > 0) {
 				let sort = 0;
-				for (const uploadId of data.uploadIds) {
+				for (const uploadId of uploadIds) {
 					yield* galleryItemCreateFx({
 						galleryId: gallery.id,
 						uploadId,

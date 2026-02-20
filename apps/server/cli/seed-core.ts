@@ -6,7 +6,10 @@ import { parseSeedArgsFx } from "~/seed/schema/SeedArgsSchema";
 import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
 
 const program = Effect.gen(function* () {
-	const args = yield* parseSeedArgsFx(process.argv.slice(2));
+	const args = yield* parseSeedArgsFx({
+		name: "seed-core",
+		args: process.argv.slice(2),
+	});
 	const cdnConfig = ServerCdnSchema.parse(process.env);
 	const report = yield* seedCoreFx({
 		count: args.count,
