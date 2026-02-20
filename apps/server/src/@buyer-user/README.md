@@ -55,6 +55,7 @@ This domain handles all buyer-specific operations that require access to the use
 ### Transaction Status
 - Buyer-side transaction status operations
 - Status writes enforce monotonic `createdAt` per transaction (`+1ms` when needed) so latest-status reads stay deterministic even when multiple actions happen in the same millisecond.
+- Status transitions are explicitly guarded (`success`/`close` require `resolved` or `dispute`).
 
 ### User Events
 - **Buyer Info** - Calculate buyer metrics (activity, closer rate, decision rate, reaction time, score, etc.)

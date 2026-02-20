@@ -33,10 +33,21 @@ export interface InteractionTimeline {
 	finalAt: DateTime;
 }
 
-export const withInteractionTimeline = ({ from }: { from: DateTime }): InteractionTimeline => {
+export const withInteractionTimeline = ({
+	from,
+	offsetMinutes = 0,
+}: {
+	from: DateTime;
+	offsetMinutes?: number;
+}): InteractionTimeline => {
 	const now = DateTime.now();
+	const latestStart = now.minus({
+		days: 3,
+		minutes: offsetMinutes,
+	});
+	const clampedFrom = from.toMillis() > latestStart.toMillis() ? latestStart : from;
 	const baseline =
-		from.toMillis() <
+		clampedFrom.toMillis() <
 		now
 			.minus({
 				years: 2,
@@ -45,20 +56,15 @@ export const withInteractionTimeline = ({ from }: { from: DateTime }): Interacti
 			? now.minus({
 					years: 2,
 				})
-			: from;
-	const start = withRandomDateBetween(
-		baseline,
-		now.minus({
-			days: 3,
-		}),
-	);
+			: clampedFrom;
+	const start = withRandomDateBetween(baseline, latestStart);
 	const ghostHours = Math.random() < 0.35 ? withRandomInt(6, 18) : 0;
 	const totalMinutes = withRandomInt(24 * 60, 72 * 60);
 	const baseGaps = [
 		withRandomInt(5, 180),
-		withRandomInt(1, 45),
+		withRandomInt(3, 45),
 		withRandomInt(5, 180),
-		ghostHours * 60 + withRandomInt(5, 120),
+		ghostHours * 60 + withRandomInt(6, 120),
 		withRandomInt(2 * 60, 24 * 60),
 		withRandomInt(1 * 60, 24 * 60),
 	];
@@ -90,8 +96,11 @@ export const withInteractionTimeline = ({ from }: { from: DateTime }): Interacti
 		minutes: finalGap,
 	});
 
+	const maxNow = now.minus({
+		minutes: 1,
+	});
 	const boundedFinalAt =
-		finalAt.toMillis() >= now.toMillis()
+		finalAt.toMillis() >= maxNow.toMillis()
 			? now.minus({
 					minutes: 1,
 				})
@@ -99,7 +108,7 @@ export const withInteractionTimeline = ({ from }: { from: DateTime }): Interacti
 	const boundedResolveAt =
 		resolveAt.toMillis() >= boundedFinalAt.toMillis()
 			? boundedFinalAt.minus({
-					minutes: 1,
+					minutes: 3,
 				})
 			: resolveAt;
 
@@ -112,7 +121,7 @@ export const withInteractionTimeline = ({ from }: { from: DateTime }): Interacti
 		resolveAt:
 			boundedResolveAt.toMillis() <= metadataAt.toMillis()
 				? metadataAt.plus({
-						minutes: 1,
+						minutes: 3,
 					})
 				: boundedResolveAt,
 		finalAt: boundedFinalAt,

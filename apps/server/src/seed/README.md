@@ -64,6 +64,7 @@ Location warmup queries are loaded from `src/seed/data/location.json` (copied fr
 - Interaction seed executes unique listing candidates in bounded parallel batches and can be tuned using:
   - `SEED_INTERACTION_CONCURRENCY` (default `6`)
   - `SEED_INTERACTION_BATCH_SIZE` (default `25`)
+  - `SEED_INTERACTION_SCENARIO_GAP_MINUTES` (default `3`)
 - Interaction seed contains an explicit thumb batch phase (`none|like|dislike`) and can be tuned using:
   - `SEED_INTERACTION_THUMB_BATCH_SIZE` (default `100`)
   - `SEED_INTERACTION_THUMB_CONCURRENCY` (default `12`)
@@ -71,3 +72,5 @@ Location warmup queries are loaded from `src/seed/data/location.json` (copied fr
   - each scenario starts at a random point within the last 2 years
   - scenario actions stay grouped in a 1-3 day window
   - optional "ghost" gaps are inserted between selected message/status steps
+  - generated scenario timestamps are clamped to the past (never in the future)
+  - metadata and status actions use minute-scale spacing to avoid overlapping timestamps

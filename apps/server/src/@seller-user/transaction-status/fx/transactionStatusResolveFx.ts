@@ -46,6 +46,17 @@ export const transactionStatusResolveFx = Effect.fn("transactionStatusResolveFx"
 					message: "Buyer cannot resolve a transaction",
 				});
 			}
+			if (transaction.status !== "open" && transaction.status !== "dispute") {
+				yield* withTraceFx({
+					fx: "transactionStatusResolveFx",
+					error: {
+						message: `Transaction must be open or dispute before resolve, got ${transaction.status}`,
+					},
+				});
+				return yield* new InvalidRequestErrorFx({
+					message: "Transaction must be open or dispute before resolve",
+				});
+			}
 
 			yield* transactionPatchFx({
 				userId,

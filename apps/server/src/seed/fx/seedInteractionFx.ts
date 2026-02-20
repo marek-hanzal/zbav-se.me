@@ -21,6 +21,9 @@ import { withInteractionTimeline } from "~/seed/fx/time/seedTime";
 
 const INTERACTION_SEED_CONCURRENCY = Number(process.env.SEED_INTERACTION_CONCURRENCY ?? 6);
 const INTERACTION_BATCH_SIZE = Number(process.env.SEED_INTERACTION_BATCH_SIZE ?? 25);
+const INTERACTION_SCENARIO_GAP_MINUTES = Number(
+	process.env.SEED_INTERACTION_SCENARIO_GAP_MINUTES ?? 3,
+);
 
 export namespace seedInteractionFx {
 	export interface Props {
@@ -158,6 +161,7 @@ export const seedInteractionFx = Effect.fn("seedInteractionFx")(function* ({
 
 	let executed = 0;
 	let cursor = 0;
+	let planned = 0;
 
 	while (executed < count && cursor < shuffled.length) {
 		const remaining = count - executed;
@@ -171,7 +175,7 @@ export const seedInteractionFx = Effect.fn("seedInteractionFx")(function* ({
 
 		const batchResults = yield* Effect.forEach(
 			batch,
-			(listing) =>
+			(listing, index) =>
 				seedInteractionScenarioFx({
 					actorUserId: current.id,
 					listingId: listing.id,
@@ -180,12 +184,15 @@ export const seedInteractionFx = Effect.fn("seedInteractionFx")(function* ({
 					feedId,
 					timeline: withInteractionTimeline({
 						from: DateTime.fromJSDate(listing.createdAt),
+						offsetMinutes:
+							(planned + index) * Math.max(1, INTERACTION_SCENARIO_GAP_MINUTES),
 					}),
 				}).pipe(Effect.either),
 			{
 				concurrency: INTERACTION_SEED_CONCURRENCY,
 			},
 		);
+		planned += batch.length;
 
 		const successCount = batchResults.reduce(
 			(acc, item) => acc + (item._tag === "Right" ? 1 : 0),

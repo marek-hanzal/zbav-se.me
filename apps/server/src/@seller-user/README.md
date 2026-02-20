@@ -39,6 +39,7 @@ This domain handles all seller-specific operations that require access to the us
 - **Resolve** - Mark transaction as resolved (listing → sold)
 - Seller-side transaction state management
 - Status writes enforce monotonic `createdAt` per transaction (`+1ms` when needed) so latest-status reads remain stable.
+- Status transitions are explicitly guarded (`accept` requires `pending`, `resolve` requires `open` or `dispute`).
 
 ### User Events
 - **Seller Info** - Calculate seller metrics (activity, reaction time, rejection rate, resolved rate, load, score, etc.)

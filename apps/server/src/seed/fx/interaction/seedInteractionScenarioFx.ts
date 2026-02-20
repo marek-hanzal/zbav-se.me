@@ -1,5 +1,6 @@
 import { list } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
+import { DateTime } from "luxon";
 import { favouriteToggleFx } from "~/@buyer-user/favourite/fx/favouriteToggleFx";
 import { flagToggleFx } from "~/@buyer-user/flag/fx/flagToggleFx";
 import { ignoreToggleFx } from "~/@buyer-user/ignore/fx/ignoreToggleFx";
@@ -16,7 +17,7 @@ import MessagePackage from "~/seed/data/message-package.json";
 import MessagePersonal from "~/seed/data/message-personal.json";
 import BuyerText from "~/seed/data/message-text-buyer.json";
 import SellerText from "~/seed/data/message-text-seller.json";
-import type { InteractionTimeline } from "~/seed/fx/time/seedTime";
+import { withRandomInt, type InteractionTimeline } from "~/seed/fx/time/seedTime";
 import { withSeedNowFx } from "~/seed/fx/time/withSeedNowFx";
 
 export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(function* ({
@@ -34,6 +35,21 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 	feedId: string;
 	timeline: InteractionTimeline;
 }) {
+	let metaCursor = timeline.metadataAt;
+	const withMetaAt = () => {
+		const at = metaCursor;
+		metaCursor = metaCursor.plus({
+			minutes: withRandomInt(3, 8),
+		});
+		return at;
+	};
+	const withAtLeastGap = (target: DateTime, after: DateTime, minutes: number) => {
+		const earliest = after.plus({
+			minutes,
+		});
+		return target.toMillis() <= earliest.toMillis() ? earliest : target;
+	};
+
 	const transaction = yield* transactionCreateFx({
 		userId: actorUserId,
 		listingId,
@@ -61,7 +77,7 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 			userId: sellerId,
 			transactionId: transaction.id,
 			locationId,
-		}).pipe(withSeedNowFx(timeline.metadataAt), Effect.ignore);
+		}).pipe(withSeedNowFx(withMetaAt()), Effect.ignore);
 	}
 
 	if (Math.random() < 0.4 && MessagePersonal.length > 0) {
@@ -73,7 +89,7 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 			phone: personal.phone,
 			email: personal.email,
 			locationId,
-		}).pipe(withSeedNowFx(timeline.metadataAt), Effect.ignore);
+		}).pipe(withSeedNowFx(withMetaAt()), Effect.ignore);
 	}
 
 	if (Math.random() < 0.3 && MessagePackage.length > 0) {
@@ -83,7 +99,7 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 			transactionId: transaction.id,
 			link: pack.link,
 			number: pack.number,
-		}).pipe(withSeedNowFx(timeline.metadataAt), Effect.ignore);
+		}).pipe(withSeedNowFx(withMetaAt()), Effect.ignore);
 	}
 
 	yield* favouriteToggleFx({
@@ -91,35 +107,38 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 		feedId,
 		listingId,
 		toggle: true,
-	}).pipe(withSeedNowFx(timeline.metadataAt), Effect.ignore);
+	}).pipe(withSeedNowFx(withMetaAt()), Effect.ignore);
 
 	yield* ignoreToggleFx({
 		userId: actorUserId,
 		listingId,
 		toggle: Math.random() < 0.2,
-	}).pipe(withSeedNowFx(timeline.metadataAt), Effect.ignore);
+	}).pipe(withSeedNowFx(withMetaAt()), Effect.ignore);
 
 	yield* flagToggleFx({
 		userId: actorUserId,
 		listingId,
 		toggle: Math.random() < 0.1,
-	}).pipe(withSeedNowFx(timeline.metadataAt), Effect.ignore);
+	}).pipe(withSeedNowFx(withMetaAt()), Effect.ignore);
+
+	const resolveAt = withAtLeastGap(timeline.resolveAt, metaCursor, 3);
+	const finalAt = withAtLeastGap(timeline.finalAt, resolveAt, 3);
 
 	yield* transactionStatusResolveFx({
 		userId: sellerId,
 		transactionId: transaction.id,
-	}).pipe(withSeedNowFx(timeline.resolveAt));
+	}).pipe(withSeedNowFx(resolveAt));
 
 	if (Math.random() < 0.7) {
 		yield* transactionStatusSuccessFx({
 			userId: actorUserId,
 			transactionId: transaction.id,
-		}).pipe(withSeedNowFx(timeline.finalAt));
+		}).pipe(withSeedNowFx(finalAt));
 	} else {
 		yield* transactionStatusCloseFx({
 			userId: actorUserId,
 			transactionId: transaction.id,
-		}).pipe(withSeedNowFx(timeline.finalAt));
+		}).pipe(withSeedNowFx(finalAt));
 	}
 
 	return transaction.id;
