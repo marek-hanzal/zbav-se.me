@@ -14,7 +14,7 @@ export namespace withCollectionQuery {
 		collectionQuery: withQuery.Api<TCollectionData, TResult[]>;
 		fetchQuery: withQuery.Api<TFetchData, TResult>;
 		patchMutation: withMutation.Api<TPatchValues, TResult, any>;
-		toFetchKey(item: TResult): TFetchData;
+		toIdKey(id: string): TFetchData;
 	}
 }
 
@@ -28,10 +28,10 @@ export const withCollectionQuery = <
 	collectionQuery,
 	fetchQuery,
 	patchMutation,
-	toFetchKey,
+	toIdKey,
 }: withCollectionQuery.Props<TCollectionData, TResult, TFetchData, TPatchValues>) => {
 	return {
-		useSuspenseQuery(data: TCollectionData) {
+		useCollectionQuery(data: TCollectionData) {
 			const set = fetchQuery.useSet();
 
 			return useSuspenseQuery({
@@ -39,18 +39,24 @@ export const withCollectionQuery = <
 				async queryFn() {
 					const response = await collectionQuery.query(data);
 					response.forEach((item) => {
-						set(() => item, toFetchKey(item));
+						set(() => item, toIdKey(item.id));
 					});
-					return response;
+					return response.map(({ id }) => id);
 				},
 			});
+		},
+		useQuery(id: string, opts?: withQuery.QueryOptions<TResult> | undefined) {
+			return fetchQuery.useSuspenseQuery(toIdKey(id), opts);
+		},
+		useFetchQuery(data: TFetchData, opts?: withQuery.QueryOptions<TResult> | undefined) {
+			return fetchQuery.useSuspenseQuery(data, opts);
 		},
 		useMutation() {
 			const set = fetchQuery.useSet();
 
 			const mutation = patchMutation.useMutation({
 				async onPostMutation({ result }) {
-					set(() => result, toFetchKey(result));
+					set(() => result, toIdKey(result.id));
 				},
 			});
 

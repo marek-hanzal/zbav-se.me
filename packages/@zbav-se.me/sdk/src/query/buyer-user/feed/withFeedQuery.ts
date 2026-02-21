@@ -11,9 +11,9 @@ export const withFeedQuery = withCollectionQuery({
 	collectionQuery: withFeedCollectionQuery,
 	fetchQuery: withFeedFetchQuery,
 	patchMutation: withFeedPatchMutation,
-	toFetchKey: (item) => ({
+	toIdKey: (id) => ({
 		where: {
-			id: item.id,
+			id,
 		},
 	}),
 });
