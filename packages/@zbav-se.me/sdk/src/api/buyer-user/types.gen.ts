@@ -966,6 +966,23 @@ export type tFeedItem = {
      * ID of the feed
      */
     id: string;
+    /**
+     * ID of the location associated with the feed
+     */
+    locationId: null | string;
+    /**
+     * Hero image for this feed (usually selected from the listings in the feed)
+     */
+    uploadId: null | string;
+    /**
+     * Name of the feed
+     */
+    name: string;
+    query: tListingQuery;
+    /**
+     * Hero banner for this feed
+     */
+    upload: null | tUpload;
 };
 
 /**

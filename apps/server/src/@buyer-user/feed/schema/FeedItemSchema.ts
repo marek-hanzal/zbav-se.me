@@ -1,10 +1,9 @@
 import { z } from "@hono/zod-openapi";
+import { FeedSchema } from "~/@buyer-user/feed/schema/FeedSchema";
 
 export const FeedItemSchema = z
 	.looseObject({
-		id: z.string().openapi({
-			description: "ID of the feed",
-		}),
+		...FeedSchema.shape,
 	})
 	.strip()
 	.openapi("FeedItem", {

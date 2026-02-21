@@ -1292,10 +1292,51 @@ export const sFeedItem = {
     properties: {
         id: {
             type: 'string'
+        },
+        locationId: {
+            anyOf: [
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'string'
+                }
+            ]
+        },
+        uploadId: {
+            anyOf: [
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'string'
+                }
+            ]
+        },
+        name: {
+            type: 'string'
+        },
+        query: {
+            $ref: '#/components/schemas/ListingQuery'
+        },
+        upload: {
+            anyOf: [
+                {
+                    type: 'null'
+                },
+                {
+                    $ref: '#/components/schemas/Upload'
+                }
+            ]
         }
     },
     required: [
-        'id'
+        'id',
+        'locationId',
+        'uploadId',
+        'name',
+        'query',
+        'upload'
     ]
 } as const;
 

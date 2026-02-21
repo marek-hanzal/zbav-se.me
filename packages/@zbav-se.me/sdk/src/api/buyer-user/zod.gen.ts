@@ -1004,7 +1004,23 @@ export type zFeedPatch = z.infer<typeof zFeedPatch>;
 export const zFeedItem = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the feed'
-    })
+    }),
+    locationId: z.union([
+        z.null(),
+        z.string()
+    ]),
+    uploadId: z.union([
+        z.null(),
+        z.string()
+    ]),
+    name: z.string().register(z.globalRegistry, {
+        description: 'Name of the feed'
+    }),
+    query: zListingQuery,
+    upload: z.union([
+        z.null(),
+        zUpload
+    ])
 }).register(z.globalRegistry, {
     description: 'Feed collection item'
 });
