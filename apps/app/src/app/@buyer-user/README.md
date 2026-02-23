@@ -73,3 +73,13 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `FeedEditorFields.tsx`
   - `FeedEditorDeleteButton.tsx`
   - types are owned by `FeedEditor` namespace
+- Buyer feed list route decomposition:
+  - `@routes/$locale/flow/buyer/feed/$id/list.tsx` keeps loader + route composition.
+  - `@buyer-user/feed/ui/list-route/BuyerFeedListPage.tsx` owns page UI/state composition.
+- Feed editor fields split by UI sections in `@buyer-user/feed/ui/feed-editor/`:
+  - `IdentitySection.tsx`
+  - `CategorySection.tsx`
+  - `LocationSection.tsx`
+  - `SortSection.tsx`
+  - `FilterSection.tsx`
+  - `TitleSection.tsx`

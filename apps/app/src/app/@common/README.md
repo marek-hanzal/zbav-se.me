@@ -80,3 +80,11 @@ When adding to `@common`:
 ## Recent updates
 
 - Added `@common/transaction/ui/TransactionListContainer.tsx` as a shared list shell for buyer/seller transaction lists (empty state, polling, layout) to reduce duplicated UI logic.
+- Message rendering was split into focused parts:
+  - `@common/message/MessageList.tsx` now handles data/container composition.
+  - `@common/message/MessageRenderItem.tsx` now owns message-type dispatch (`text/system/gallery/location/personal/package`).
+- Photo upload UI was split into focused pieces:
+  - `@common/photo/hook/usePhotoUploadController.ts` owns upload/input/pending orchestration.
+  - `@common/photo/ui/photo-upload/PhotoUploadPending.tsx`
+  - `@common/photo/ui/photo-upload/PhotoUploadPlaceholder.tsx`
+  - `@common/photo/ui/photo-upload/PhotoUploadPreview.tsx`

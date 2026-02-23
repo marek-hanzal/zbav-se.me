@@ -49,3 +49,10 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 - `@session` – categories, location, transaction-status.
 - `@buyer-user` – uses this domain for listing/events.
 - `@public` – unauthenticated listing access.
+
+## Recent updates
+
+- Seller info UI for listing detail was split into focused components:
+  - `@buyer-session/listing/ui/SellerInfo.tsx` keeps query/loading composition.
+  - `@buyer-session/listing/ui/seller-info/SellerInfoHeader.tsx` renders registered/listings labels.
+  - `@buyer-session/listing/ui/seller-info/SellerInfoScore.tsx` renders score/rank presentation.

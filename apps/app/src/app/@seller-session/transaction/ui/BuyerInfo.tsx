@@ -1,18 +1,13 @@
 import { useLocale } from "@use-pico/client/hook";
-import { Icon } from "@use-pico/client/icon";
 import { Container, LabelValue, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
-import { Tx } from "@use-pico/client/ui/tx";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
 import { withTransactionBuyerInfoQuery } from "@zbav-se.me/sdk/query/seller-session/transaction";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
-import { RatingToIcon } from "@zbav-se.me/ui/rating";
-import { DateTime } from "luxon";
 import type { FC } from "react";
-import { toBuyerScoreHint } from "~/app/@seller-session/transaction/ui/toBuyerScoreHint";
-
-const percentLabel = (value: number) => `${Math.round(value)}%`;
+import { BuyerInfoEvents } from "~/app/@seller-session/transaction/ui/buyer-info/BuyerInfoEvents";
+import { BuyerInfoScore } from "~/app/@seller-session/transaction/ui/buyer-info/BuyerInfoScore";
 
 export namespace BuyerInfo {
 	export interface Props extends Container.Props {
@@ -55,133 +50,11 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 
 						{events ? (
 							<>
-								<Container
-									ui={{
-										flow: "vertical",
-										inner: "default",
-										gap: "default",
-									}}
-									className={"px-0"}
-								>
-									<LabelValue
-										textLabel={translator.text("Reaction rate (label)")}
-										textHint={translator.text("Reaction rate (hint)")}
-										textValue={percentLabel(events.reaction.percent)}
-									/>
-
-									<LabelValue
-										textLabel={translator.text("Reaction p90 (label)")}
-										textHint={translator.text("Reaction p90 (hint)")}
-										textValue={toTimeDiff({
-											locale,
-											time: DateTime.now()
-												.minus({
-													milliseconds: events.reaction.p90Ms,
-												})
-												.toISO(),
-											type: "human",
-										})}
-									/>
-								</Container>
-
-								<Container
-									ui={{
-										flow: "vertical",
-										inner: "default",
-										gap: "default",
-									}}
-									className={"px-0"}
-								>
-									<LabelValue
-										textLabel={translator.text("Closer rate (label)")}
-										textHint={translator.text("Closer rate (hint)")}
-										textValue={percentLabel(events.closer.percent)}
-									/>
-
-									<LabelValue
-										textLabel={translator.text("Closer p90 (label)")}
-										textHint={translator.text("Closer p90 (hint)")}
-										textValue={toTimeDiff({
-											locale,
-											time: DateTime.now()
-												.minus({
-													milliseconds: events.closer.p90Ms,
-												})
-												.toISO(),
-											type: "human",
-										})}
-									/>
-								</Container>
-
-								<LabelValue
-									textLabel={translator.text("Decision rate (label)")}
-									textHint={translator.text("Decision rate (hint)")}
-									textValue={percentLabel(events.decision.percent)}
+								<BuyerInfoEvents
+									locale={locale}
+									events={events}
 								/>
-
-								<LabelValue
-									textLabel={translator.text("Expired rate (label)")}
-									textHint={translator.text("Expired rate (hint)")}
-									textValue={percentLabel(events.expired.percent)}
-								/>
-
-								<Container
-									ui={{
-										flow: "vertical",
-										inner: "default",
-										gap: "default",
-									}}
-									className={"px-0"}
-								>
-									<LabelValue
-										textLabel={translator.text("Buyer load (label)")}
-										textHint={translator.text("Buyer load (hint)")}
-										textValue={translator.text(
-											`Buyer load ${events.load.bucket}`,
-										)}
-									/>
-
-									<LabelValue
-										textLabel={translator.text("Buyer activity (label)")}
-										textHint={translator.text("Buyer activity (hint)")}
-										textValue={translator.text(
-											`Buyer activity ${events.activity.bucket}`,
-										)}
-									/>
-								</Container>
-
-								<LabelValue
-									textLabel={translator.text("User score (label)")}
-									textHint={translator.text("User score (hint)")}
-									textValue={
-										<Container
-											ui={{
-												flow: "horizontal",
-												items: "center",
-												justify: "space-between",
-												gap: "default",
-											}}
-										>
-											<Icon
-												icon={
-													RatingToIcon[
-														events.score.rank as RatingToIcon.Value
-													]
-												}
-												ui={{
-													text: "2xl",
-												}}
-											/>
-
-											<Tx
-												label={toBuyerScoreHint(events.score.rank)}
-												ui={{
-													wrap: "wrap",
-												}}
-											/>
-										</Container>
-									}
-								/>
+								<BuyerInfoScore rank={events.score.rank} />
 							</>
 						) : (
 							<Status
