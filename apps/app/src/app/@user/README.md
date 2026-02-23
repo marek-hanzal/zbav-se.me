@@ -58,3 +58,7 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 - `@buyer-user` / `@seller-user` – may use this domain.
 - `@buyer-session` / `@seller-session` – cannot use this domain.
 - `@user` is the foundation for all user-private data.
+
+## Recent updates
+
+- Home menu keeps its original inline implementation in `@user/home/HomeMenu.tsx` until we define a type-safe split strategy for TanStack Router links.

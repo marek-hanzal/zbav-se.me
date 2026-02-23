@@ -31,6 +31,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 		text: "2xl",
 	};
 
+	// Keep this component in its original inline form until we define a type-safe split for TanStack Router links.
 	return (
 		<Container
 			data-ui="HomeMenu[Container]"

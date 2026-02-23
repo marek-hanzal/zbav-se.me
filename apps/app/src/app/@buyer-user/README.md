@@ -60,3 +60,16 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 ## Recent updates
 
 - Buyer feed route UI has route-level helpers in `@buyer-user/feed/ui/list-route/` (setup button, editor sheet, empty/appendix/first-listing statuses) to keep route files smaller and easier to read.
+- Favourite feed list route extracted reusable statuses into `@buyer-user/feed-favourite/ui/`:
+  - `EmptyFavouriteStatus.tsx`
+  - `EmptyFeedStatus.tsx`
+  - `FavouriteListAppendix.tsx`
+- Listing detail was split into focused parts in `@buyer-user/listing/ui/listing-detail/`:
+  - `ListingHeroSection.tsx`
+  - `ListingInfoSection.tsx`
+  - `ListingSellerInfo.tsx`
+  - `ListingDestructiveActions.tsx`
+- Feed editor decomposition in `@buyer-user/feed/ui/feed-editor/`:
+  - `FeedEditorFields.tsx`
+  - `FeedEditorDeleteButton.tsx`
+  - types are owned by `FeedEditor` namespace

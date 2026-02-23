@@ -11,3 +11,6 @@ Flow route `data-ui` selectors must follow the bracketed contract:
 - Root: `Component[Element]`
 - Child: `Component-[Element]`
 - Qualifier: `Component[Element.state]` or `Component-[Element.state]`
+
+Recent split example:
+- `buyer/feed/$id/favourite/list.tsx` keeps route orchestration only, while empty/appendix status UI lives in `apps/app/src/app/@buyer-user/feed-favourite/ui/*`.

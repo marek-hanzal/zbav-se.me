@@ -5,10 +5,25 @@ import type { FC } from "react";
 import { useMemo, useState } from "react";
 import { createDraftEditorViews } from "~/app/@seller-user/draft/ui/draft-editor/createDraftEditorViews";
 import { DraftEditorDefaultView } from "~/app/@seller-user/draft/ui/draft-editor/DraftEditorDefaultView";
-import type { DraftEditorView } from "~/app/@seller-user/draft/ui/draft-editor/type";
 
 export namespace DraftEditor {
-	export type View = DraftEditorView;
+	export type View =
+		| "default"
+		| "title"
+		| "location"
+		| "price"
+		| "priceType"
+		| "category"
+		| "condition"
+		| "age"
+		| "delivery"
+		| "warranty"
+		| "restriction"
+		| "gallery"
+		| "expireAt"
+		| "description"
+		| "pros"
+		| "cons";
 
 	export interface Props {
 		draft: tDraft;
@@ -18,7 +33,7 @@ export namespace DraftEditor {
 }
 
 export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete }) => {
-	const [view, setView] = useState<DraftEditorView>("default");
+	const [view, setView] = useState<DraftEditor.View>("default");
 
 	const views = useMemo(() => {
 		return {
@@ -44,7 +59,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 	]);
 
 	return (
-		<View<DraftEditorView, TitleContainer.Props>
+		<View<DraftEditor.View, TitleContainer.Props>
 			state={{
 				value: view,
 				set: setView,

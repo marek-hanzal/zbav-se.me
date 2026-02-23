@@ -29,7 +29,9 @@ export const EmptyFeedStatus: FC<EmptyFeedStatus.Props> = ({ ...props }) => {
 			<Status
 				icon={DeadEndIcon}
 				textTitle={translator.text("No listings in this favourites feed (title)")}
-				textMessage={translator.text("Try changing your feed or open all listings (message)")}
+				textMessage={translator.text(
+					"Try changing your feed or open all listings (message)",
+				)}
 				action={
 					<Container
 						ui={{

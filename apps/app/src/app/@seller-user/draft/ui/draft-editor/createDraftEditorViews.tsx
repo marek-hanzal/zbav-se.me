@@ -1,5 +1,6 @@
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { ReactElement } from "react";
+import type { DraftEditor } from "~/app/@seller-user/draft/ui/DraftEditor";
 import { AgePatch } from "~/app/@seller-user/draft/ui/patch/AgePatch";
 import { CategoryPatch } from "~/app/@seller-user/draft/ui/patch/CategoryPatch";
 import { ConditionPatch } from "~/app/@seller-user/draft/ui/patch/ConditionPatch";
@@ -15,22 +16,23 @@ import { ProsPatch } from "~/app/@seller-user/draft/ui/patch/ProsPatch";
 import { RestrictionPatch } from "~/app/@seller-user/draft/ui/patch/RestrictionPatch";
 import { TitlePatch } from "~/app/@seller-user/draft/ui/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/@seller-user/draft/ui/patch/WarrantyPatch";
-import type { DraftEditorView } from "./type";
 
-type DraftEditorPatchView = Exclude<DraftEditorView, "default">;
+export namespace createDraftEditorViews {
+	export type PatchView = Exclude<DraftEditor.View, "default">;
+	export interface View {
+		children: ReactElement;
+	}
+	export type Return = Record<PatchView, View>;
+	export interface Props {
+		draft: tDraft;
+		onDone(): void;
+	}
+}
 
 export const createDraftEditorViews = ({
 	draft,
 	onDone,
-}: {
-	draft: tDraft;
-	onDone: () => void;
-}): Record<
-	DraftEditorPatchView,
-	{
-		children: ReactElement;
-	}
-> => ({
+}: createDraftEditorViews.Props): createDraftEditorViews.Return => ({
 	title: {
 		children: (
 			<TitlePatch

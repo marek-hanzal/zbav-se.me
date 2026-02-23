@@ -1,51 +1,40 @@
-# AGENTS.md - apps/app
+# AGENTS.md (apps/app)
 
 ## Scope
-Rules for `apps/app` (main PWA).
-Also follow root `/AGENTS.md` for shared rules.
+- Applies to `apps/app`.
+- Also follow `/AGENTS.md`.
 
-## Architecture and Boundaries
-- Keep UI and logic inside matching app domains (`@buyer-user`, `@buyer-session`, `@seller-user`, `@seller-session`, `@session`, `@user`, `@public`, `@common`).
-- Do not mix buyer and seller domain logic.
-- Use SDK surfaces matching folder/domain boundaries.
+## Domain boundaries (hard)
+- Keep code in correct app domain folder (`@public/@session/@user/@buyer-session/@buyer-user/@seller-session/@seller-user/@common`).
+- No buyer<->seller cross-domain leakage.
+- Use only SDK surfaces allowed by domain README rules.
 
-## Component Authoring Pattern
-- Keep exactly one React component per file.
-- If you encounter multiple components in one file, split helper/render components into separate files.
+## Component policy (hard)
+1. Exactly one React component per file.
+2. If file has multiple components, split into separate files.
+3. No ad-hoc type holder files (`foo-props.ts`, `types.ts`, `type.ts`).
+4. No inline complex types; create named alias in local namespace.
+5. Namespace lettercase must match symbol lettercase.
+
+## Component style (default)
 - Prefer:
   - `export namespace ComponentName { export interface Props ... }`
   - `export const ComponentName: FC<ComponentName.Props>`
-- Extend base UI props where appropriate (`Container.Props`, `Button.Props`, ...).
-- Destructure `ui` and `...props`, merge defaults with `...ui` last.
-- Keep wrappers pass-through friendly (`...props`).
-- Use small `hooks` prop objects for grouped callbacks when a component has multiple actions.
+- Extend base UI props when applicable (`Container.Props`, `Button.Props`, ...).
+- Merge `ui` defaults with `...ui` last.
+- Keep wrappers pass-through (`...props`).
+- Use grouped `hooks` prop for multi-callback components.
 
-## `data-ui` Naming Contract
-Use bracketed semantic labels:
-- Root/primary node: `Component[Element]`
-- Nested/child node: `Component-[Element]`
-- Optional qualifier: `Component[Element.qualifier]` or `Component-[Element.qualifier]`
-- Dynamic variant (controlled values only): ``Component-[Button.${value}]``
+## data-ui contract
+- Root: `Component[Element]`
+- Child: `Component-[Element]`
+- State: `Component[Element.state]` or `Component-[Element.state]`
+- Dynamic variant: ``Component-[Button.${value}]``
+- Naming: `Component/Element` PascalCase, `state` lowercase, semantic/stable only.
+- If touching legacy free-form labels, normalize to bracket format.
 
-Conventions:
-- `Component` and `Element` in PascalCase.
-- Qualifier in lowercase (`empty`, `spinner`, `content`, ...).
-- Keep names semantic and stable; do not encode position/order.
-- If you touch older free-form names, normalize them to bracketed form in the same change.
-
-## Data and State
-- Prefer SDK query wrappers and existing Suspense patterns where already used.
-- Reuse existing hooks and UI abstractions from `@use-pico/client` and `@zbav-se.me/*` packages.
-- Use `translator.text(key, fallback?)` for translatable labels; key collection is automatic.
-
-## App Route and File Placement
-- Routes are file-based under `src/@routes`.
-- Keep domain components under `src/app/<domain>/...`.
-- Put shared app-only building blocks under `src/app/@common` (only if truly cross-domain).
-
-## Checklist for app changes
-1. Correct domain folder and SDK surface.
-2. Component matches local authoring style.
-3. `data-ui` markers follow contract.
-4. Translation keys added via `translator.text` where needed.
-5. Relevant checks run.
+## Data/i18n/routes
+- Reuse existing SDK wrappers + Suspense patterns where present.
+- Use `translator.text(...)` for translatable labels.
+- Routes live in `src/@routes`; domain UI in `src/app/<domain>`.
+- `@common` only for truly cross-domain app-level shared code.

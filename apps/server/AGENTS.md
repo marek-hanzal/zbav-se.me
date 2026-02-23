@@ -1,75 +1,51 @@
-# AGENTS.md - apps/server
+# AGENTS.md (apps/server)
 
 ## Scope
-Rules for `apps/server` (Hono + Effect + Kysely API).
-Also follow root `/AGENTS.md` for shared rules.
+- Applies to `apps/server`.
+- Also follow `/AGENTS.md`.
 
-## Domain Routing Model
-- Public: `/api/public/*`
-- Authenticated session: `/api/session/*`
-- Private user: `/api/user/*`
-- Buyer: `/api/buyer-user/*`, `/api/buyer-session/*`
-- Seller: `/api/seller-user/*`, `/api/seller-session/*`
+## API domains
+- `/api/public/*`
+- `/api/session/*`
+- `/api/user/*`
+- `/api/buyer-user/*`, `/api/buyer-session/*`
+- `/api/seller-user/*`, `/api/seller-session/*`
 
-Each top-level domain uses:
-- `with*ApiFx.ts` as domain aggregator/registration
-- `with*Hono.ts` for typed Hono instance
-- Feature modules (`fx/`, `db/`, `schema/`, endpoint files)
+## Architecture contract
+- Per domain: `with*ApiFx.ts` (aggregator), `with*Hono.ts` (typed hono), feature modules (`fx/db/schema/endpoint`).
+- Public/root hono: `user | null`.
+- Session/user/buyer/seller hono: authenticated `user`; keep runtime guards aligned.
 
-Typing note:
-- `withPublicHono`/root Hono allow `user: auth.User | null`.
-- Session/user/buyer/seller domain Hono types assume authenticated `user: auth.User`; keep matching runtime guards in domain aggregators.
+## Domain aggregator pattern (`with*ApiFx.ts`)
+1. Get `{ root, domainHono }` from `RoutesContextFx` and `kysely` from `KyselyContextFx`.
+2. `domainHono.use(...)` sets `kysely`.
+3. Auth domains add guard on `root.use('/api/<domain>/*', ...)` -> `401 { type:'error', message:'Shooooo! Shooo!' }`.
+4. Register features (usually `Effect.all([...])`).
+5. Mount `root.route('/api/<domain>', domainHono)`.
 
-## Domain Aggregator Pattern (`with*ApiFx.ts`)
-Follow existing pattern:
-1. Read `{ root, domainHono }` from `RoutesContextFx`.
-2. Read Kysely from `KyselyContextFx`.
-3. Attach `kysely` via `domainHono.use(...)`.
-4. For authenticated domains, add `root.use('/api/<domain>/*', auth guard)` returning 401 `{ type: 'error', message: 'Shooooo! Shooo!' }`.
-5. Register feature APIs (usually `Effect.all([...])`).
-6. Mount with `root.route('/api/<domain>', domainHono)`.
+## Endpoint blueprint
+1. `withXxxApiFx = Effect.fn(...)(function*(){...})`
+2. `domainHono.openapi(createRoute(...), async (c) => ...)`
+3. Zod request/response schemas (`NoticeSchema` for errors).
+4. Handler uses `Effect.gen`:
+- parse env (`ServerAxiomSchema` + feature env)
+- read `c.get('user')` when needed
+- `Effect.annotateLogsScoped({ endpoint, userId, ... })`
+- `zodGuardFx` around domain fx
+- `c.json(..., status)`
+5. Pipe order:
+- `withLoggingFx`
+- `withKyselyFx`
+- optional infra layers (`withDateFx`, `withLocationFx`, ...)
+- `withCatchFx`
+- `Effect.runPromise`
 
-## Endpoint Blueprint (operation file)
-Typical endpoint file shape:
-1. `export const withXxxApiFx = Effect.fn('withXxxApiFx')(function* () { ... })`
-2. Register route via `domainHono.openapi(createRoute({...}), async (c) => { ... })`
-3. Use domain Zod schemas for request and responses (`NoticeSchema` for errors)
-4. In handler:
-   - parse env (`ServerAxiomSchema` + any feature env)
-   - `Effect.gen` body
-   - read `user` from `c.get('user')` when relevant
-   - call `Effect.annotateLogsScoped({ endpoint, userId, ... })`
-   - run domain fx via `zodGuardFx`
-   - return `c.json(..., status)`
-5. Pipe with:
-   - `withLoggingFx(...)`
-   - `withKyselyFx(c.get('kysely'))`
-   - optional infra layers (`withDateFx`, `withLocationFx`, ...)
-   - `withCatchFx({ ...mapped errors... })`
-   - `Effect.runPromise`
+## Logging/errors/OpenAPI
+- Stable `endpoint` and `operationId` (`api*`).
+- Error mapping uses `noticeError`, `noticeZodError`, `NotFoundNotice` as appropriate.
+- New tag names must be added to `apps/server/src/@public/open-api/open-api.ts` tag registry.
 
-## Logging and Error Conventions
-- Always annotate logs in handler scope with stable `endpoint` name.
-- Ensure successful completion is logged according to `withLoggingFx` flow.
-- Map domain errors in `withCatchFx` to API responses using existing notice helpers:
-  - `noticeError`
-  - `noticeZodError`
-  - `NotFoundNotice` where applicable
-
-## OpenAPI Conventions
-- Keep `operationId` stable and `api*` prefixed.
-- Include clear `summary`, `description`, `tags`, and typed response schema per status.
-- If you introduce new tag names, update tag metadata registry in `apps/server/src/@public/open-api/open-api.ts`.
-
-## Data Access and Validation
-- Use Kysely query builders from domain `db/` folders.
-- Apply scope-aware queries when user context is required.
-- Validate boundaries with Zod at API edges.
-
-## Checklist for server changes
-1. Domain and route prefix are correct.
-2. Aggregator pattern (`with*ApiFx`) preserved.
-3. Endpoint follows Effect + logging + catch pipeline.
-4. Error mapping uses existing notice conventions.
-5. OpenAPI metadata is complete and consistent.
-6. Relevant checks/tests run.
+## Data rules
+- Use domain `db/` query builders.
+- Apply user scope where required.
+- Validate boundaries at API edge with Zod.

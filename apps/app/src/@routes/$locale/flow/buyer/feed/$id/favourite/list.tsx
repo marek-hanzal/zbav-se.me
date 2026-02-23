@@ -7,10 +7,10 @@ import { withFavouriteCountQuery } from "@zbav-se.me/sdk/query/buyer-user/favour
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { useRef } from "react";
-import { ListingListContainer } from "~/app/@buyer-user/listing/ui/ListingListContainer";
 import { EmptyFavouriteStatus } from "~/app/@buyer-user/feed-favourite/ui/EmptyFavouriteStatus";
 import { EmptyFeedStatus } from "~/app/@buyer-user/feed-favourite/ui/EmptyFeedStatus";
 import { FavouriteListAppendix } from "~/app/@buyer-user/feed-favourite/ui/FavouriteListAppendix";
+import { ListingListContainer } from "~/app/@buyer-user/listing/ui/ListingListContainer";
 
 export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/list")({
 	component() {

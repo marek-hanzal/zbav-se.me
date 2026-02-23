@@ -1,39 +1,29 @@
-# AGENTS.md - apps/web
+# AGENTS.md (apps/web)
 
 ## Scope
-Rules for `apps/web` (public marketing/auth website).
-Also follow root `/AGENTS.md` for shared rules.
+- Applies to `apps/web`.
+- Also follow `/AGENTS.md`.
 
-## Primary Intent
-- `apps/web` is public-facing and content-oriented.
-- Keep it lightweight: public routes, auth entry points, legal/content pages, and simple session-aware UX.
+## Intent
+- Public marketing/auth/legal site.
+- Keep minimal and content-first.
 
 ## Boundaries
-- `apps/web` depends on UI/common infra and public/session-facing flows only.
-- Do not introduce buyer/seller private app-domain logic here.
+- No buyer/seller private app-domain logic.
+- Reuse shared UI + existing public/session-facing flows.
 
-## Route and Page Patterns
-- File-based routes under `src/@routes`.
-- Route files should stay thin; move reusable blocks to `src/app/*`.
-- Keep redirect/index route behavior explicit (for example locale redirects).
+## Route/page pattern
+- File routes in `src/@routes`.
+- Keep route files thin; move reusable logic/UI to `src/app/*`.
+- Keep redirect/index behavior explicit.
 
-## Data and Auth Patterns
-- For backend data on public pages, prefer SDK public query wrappers.
-- For auth operations, use the existing auth client + mutation wrappers in `src/app/auth/*`.
-- For lightweight session reads, follow existing query wrapper pattern in `src/app/session/useSession.ts`.
+## Data/auth pattern
+- Public backend data: prefer SDK public query wrappers.
+- Auth flows: use existing `src/app/auth/*` client+mutation wrappers.
+- Session read pattern: follow `src/app/session/useSession.ts`.
 
-## Content and i18n
-- Use `translator.text(...)` for UI strings.
-- Keep translated markdown/content under `src/@md/*` and route wiring in `src/@routes/*`.
-
-## UI Consistency
-- Reuse shared UI primitives from `@use-pico/client` and `@zbav-se.me/ui`.
-- Keep exactly one React component per file; if a file has multiple components, split them into separate files.
-- Keep `data-ui` markers stable when adding significant interactive/structured blocks.
-
-## Checklist for web changes
-1. Change belongs to public web scope.
-2. Route/component split stays clean.
-3. Data/auth flow reuses existing query/mutation patterns.
-4. Strings are translatable.
-5. Relevant checks run.
+## UI/content policy
+- Use `translator.text(...)` for strings.
+- Content markdown under `src/@md/*`, wiring under `src/@routes/*`.
+- Exactly one React component per file; split when violated.
+- Keep `data-ui` stable for key interactive/structured nodes.

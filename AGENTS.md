@@ -1,35 +1,27 @@
-# AGENTS.md - Shared Operating Rules
+# AGENTS.md (shared)
 
-## Purpose
-This file contains shared rules for the whole monorepo.
-For product/domain business logic, always use `MASTER.md` as the single source of truth.
+## Source of truth
+- Product/domain logic: `MASTER.md`.
+- This file: shared implementation policy.
+- App-specific rules:
+  - `apps/app/AGENTS.md`
+  - `apps/web/AGENTS.md`
+  - `apps/server/AGENTS.md`
 
-## Language Rule
-All file outputs must be in English (code, comments, docs, commit messages), regardless of user language.
-
-## Scope Split
-Use this file for shared rules, then load the app-specific guide:
-- `apps/app/AGENTS.md` for PWA (`apps/app`)
-- `apps/web/AGENTS.md` for public site (`apps/web`)
-- `apps/server/AGENTS.md` for API (`apps/server`)
-
-## Shared P0 Rules
-1. Read `MASTER.md` before implementing business logic.
-2. Respect domain boundaries (buyer/seller/session/user/public).
-3. Do not bypass gates (sensitivity, bans, limits, lifecycle rules).
+## Global rules (hard)
+1. Output language in files: English.
+2. Respect domain boundaries (`public/session/user/buyer/seller`).
+3. Do not bypass gates (sensitivity, bans, lifecycle, limits).
 4. Preserve type safety (Kysely + Zod + generated SDK types).
-5. If a `README.md` exists in the touched directory, update it.
-6. Run relevant checks before finishing.
-7. If a task becomes a longer side activity unrelated to the current Linear task, ask whether to create a new Linear issue before continuing.
+5. No ad-hoc local type files (`foo-props.ts`, `types.ts`, `type.ts`).
+6. No inline complex types in signatures/vars (for example `Record<string, {...}>`).
+7. Define named aliases in local namespace of consumer (component/function/module).
+8. Namespace lettercase must match symbol lettercase (`foo -> namespace foo`, `Bar -> namespace Bar`).
+9. If touched directory has `README.md`, update it.
+10. Run relevant checks.
+11. If work drifts into long side-task outside current Linear task, ask to open a new Linear issue.
 
-## Monorepo Map
-- `apps/app`: Main PWA (React 19, TanStack Router/Start)
-- `apps/web`: Public website
-- `apps/server`: API (Hono, Nitro, PostgreSQL, Kysely, Better Auth, Redis, S3)
-- `packages/@zbav-se.me/*`: `sdk`, `ui`, `common`, `buyer`, `seller`
-- `packages/@use-pico/*`: Internal framework (`client`, `common`, `server`)
-
-## Dependency Boundaries (Must Keep)
+## Monorepo dependency boundaries (hard)
 ```txt
 apps/app -> buyer, seller, common, sdk, ui
 apps/web -> ui
@@ -39,45 +31,25 @@ common -> sdk, ui
 sdk, ui -> no @zbav-se.me dependencies
 ```
 
-## SDK Rules (Shared)
-- Treat `packages/@zbav-se.me/sdk/src/api/*` and `*.gen.ts` as generated; do not hand-edit generated files.
-- Add manual wrappers under `packages/@zbav-se.me/sdk/src/query/<domain>/<feature>/withXxxQuery.ts`.
-- Standard wrapper pattern:
-  1. `withQuery<RequestType, ResponseType[200]>({...})`
-  2. `keys(data)` returns stable semantic keys (`["entity", "operation", data]`)
-  3. `queryFn(...)` calls generated API with `throwOnError: true` and returns `res.data`
-- For collection resources (collection + fetch + count + patch), use `withCollectionQuery` from `packages/@use-pico/client/src/query/withCollectionQuery.ts` and expose aggregate `withXxxQuery` (example: `withFeedQuery.ts`).
-- In `withCollectionQuery` aggregate files, keep this shape: `key`, `collectionQuery`, `fetchQuery`, `countQuery`, `patchMutation`, `toIdKey`.
-- Export from local `index.ts` and re-export through parent domain `index.ts`.
-- If API contracts change, regenerate from repo root with `bun run sdk`.
+## SDK policy (shared)
+- `packages/@zbav-se.me/sdk/src/api/*` and `*.gen.ts` are generated-only.
+- Custom wrappers go to `src/query/*` and `src/mutation/*`.
+- Query wrapper: `withQuery<Req, Res[200]>`, stable keys, return `res.data`.
+- Collection resources: use `withCollectionQuery` (`key`, `collectionQuery`, `fetchQuery`, `countQuery`, `patchMutation`, `toIdKey`).
+- Export chain must be complete via local/parent `index.ts`.
+- Contract changes -> run `bun run sdk` from repo root.
 
-## Domain Safety Invariants (Do Not Break)
-Keep these enforced; details live in `MASTER.md`:
-- No pay-to-win for trust/reputation signals.
-- Sensitivity and admin bans are hard gates (404 behavior as specified in `MASTER.md`).
+## Domain invariants (hard, see MASTER.md)
+- No pay-to-win for trust/reputation.
+- Sensitivity/admin-ban are hard gates (404 behavior).
 - Terminal transaction states are read-only.
-- Automatic expiration behavior must remain intact.
-- Minimal PII approach remains intact.
+- Automatic expiration must stay intact.
+- Minimal PII model must stay intact.
 
-## Tooling & Commands (Repo Root)
-- Package manager: `bun` (single root `bun.lock`)
-- Install: `bun install`
-- Dev: `bun run dev`
-- Build: `bun run build`
-- Preview: `bun run preview`
-- Format: `bun run format`
-- Lint: `bun run lint`
-- Typecheck: `bun run typecheck`
-- Test: `bun run test`
-- SDK generation: `bun run sdk`
-- CI-like gate: `bun run workflow:check`
+## Root commands
+- `bun install`
+- `bun run dev|build|preview`
+- `bun run format|lint|typecheck|test|sdk|workflow:check`
 
-Biome baseline:
-- Tabs for indentation
-- Line width 100
-
-## Final Checklist
-1. Business logic aligned with `MASTER.md`.
-2. Domain/dependency boundaries respected.
-3. App-specific AGENTS rules were followed.
-4. Relevant checks passed (or clearly reported if not run).
+## Formatting baseline
+- Biome: tabs, line width 100.

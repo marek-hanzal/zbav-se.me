@@ -58,6 +58,11 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 ## Recent updates
 
 - Draft editor was split into focused modules in `@seller-user/draft/ui/draft-editor/`:
-  - `DraftEditorDefaultView.tsx` for the main draft page UI
+  - `DraftEditorDefaultView.tsx` as top-level orchestrator
+  - `RequiredFieldsSection.tsx`
+  - `OptionalFieldsSection.tsx`
+  - `ActionSection.tsx`
+  - `ChevronAction.tsx`
   - `createDraftEditorViews.tsx` for patch view mapping
-  - `type.ts` for shared view union type
+  - each section owns its own namespaced `Props`
+  - `DraftEditor.View` namespace type as source of truth for editor views
