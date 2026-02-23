@@ -10,6 +10,7 @@ Versioned project-specific Codex skills.
 - `zbav-readme-sync`
 - `zbav-openapi-tag-sync`
 - `zbav-smart-checks`
+- `zbav-sdk-domain-leak-guard`
 
 ## Usage note
 Codex discovers active skills from `$CODEX_HOME/skills`.
