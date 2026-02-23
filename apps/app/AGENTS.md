@@ -10,6 +10,8 @@ Also follow root `/AGENTS.md` for shared rules.
 - Use SDK surfaces matching folder/domain boundaries.
 
 ## Component Authoring Pattern
+- Keep exactly one React component per file.
+- If you encounter multiple components in one file, split helper/render components into separate files.
 - Prefer:
   - `export namespace ComponentName { export interface Props ... }`
   - `export const ComponentName: FC<ComponentName.Props>`

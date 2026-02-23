@@ -28,6 +28,7 @@ Also follow root `/AGENTS.md` for shared rules.
 
 ## UI Consistency
 - Reuse shared UI primitives from `@use-pico/client` and `@zbav-se.me/ui`.
+- Keep exactly one React component per file; if a file has multiple components, split them into separate files.
 - Keep `data-ui` markers stable when adding significant interactive/structured blocks.
 
 ## Checklist for web changes
