@@ -136,7 +136,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 				}}
 			>
 				<LabelValue
-					textLabel={"Listing category (label)"}
+					textLabel={translator.text("Listing category (label)")}
 					textValue={
 						<CategoryInline
 							category={listing.category}
@@ -150,7 +150,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 
 				{listing.description ? (
 					<LabelValue
-						textLabel={"Listing description (label)"}
+						textLabel={translator.text("Listing description (label)")}
 						textValue={<Markdown>{listing.description}</Markdown>}
 					/>
 				) : null}
@@ -203,14 +203,14 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 
 				{listing.condition !== null ? (
 					<LabelValue
-						textLabel={"Listing condition (label)"}
+						textLabel={translator.text("Listing condition (label)")}
 						textValue={<ConditionIcon condition={listing.condition} />}
 					/>
 				) : null}
 
 				{listing.age !== null ? (
 					<LabelValue
-						textLabel={"Listing age (label)"}
+						textLabel={translator.text("Listing age (label)")}
 						textValue={`Condition - Age [${listing.age}] (hint)`}
 					/>
 				) : null}
@@ -221,7 +221,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					}}
 					fallback={
 						<LabelValue
-							textLabel={"Listing seller hint (label)"}
+							textLabel={translator.text("Listing seller hint (label)")}
 							textValue={null}
 							action={<Icon icon={ShowIcon} />}
 							onClick={hooks.onSellerInfo}
@@ -231,7 +231,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					{({ data: sellerInfo }) => {
 						return (
 							<LabelValue
-								textLabel={"Listing seller hint (label)"}
+								textLabel={translator.text("Listing seller hint (label)")}
 								textValue={
 									sellerInfo.events ? (
 										<ScoreIcon score={sellerInfo.events.score.rank} />

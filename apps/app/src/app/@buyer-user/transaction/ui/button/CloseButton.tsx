@@ -1,3 +1,4 @@
+import { translator } from "@use-pico/common/translator";
 import { useQueryClient } from "@tanstack/react-query";
 import { CheckIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
@@ -20,7 +21,7 @@ export const CloseButton: FC<CloseButton.Props> = ({ transaction, ...props }) =>
 	return (
 		<Button
 			data-ui="CloseButton[Button]"
-			label={"Close transaction (button)"}
+			label={translator.text("Close transaction (button)")}
 			iconEnabled={CheckIcon}
 			onClick={() => {
 				mutation.mutate(

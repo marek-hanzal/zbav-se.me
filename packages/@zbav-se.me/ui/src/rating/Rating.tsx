@@ -1,3 +1,4 @@
+import { translator } from "@use-pico/common/translator";
 import type { useSelection } from "@use-pico/client/hook";
 import { TrashIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
@@ -100,7 +101,7 @@ export const Rating: FC<Rating.Props> = ({
 			{allowClear ? (
 				<Button
 					iconEnabled={TrashIcon}
-					label={"Clear all (button)"}
+					label={translator.text("Clear all (button)")}
 					iconProps={{
 						ui: {
 							text: "xl",

@@ -1,3 +1,4 @@
+import { translator } from "@use-pico/common/translator";
 import { TrashIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -114,7 +115,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 
 			<Button
 				iconEnabled={TrashIcon}
-				label={"Clear all sorts (button)"}
+				label={translator.text("Clear all sorts (button)")}
 				onClick={() => {
 					state.set([]);
 				}}

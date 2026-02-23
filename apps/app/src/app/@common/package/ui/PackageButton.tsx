@@ -1,3 +1,4 @@
+import { translator } from "@use-pico/common/translator";
 import { useQueryClient } from "@tanstack/react-query";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
@@ -28,7 +29,7 @@ export const PackageButton: FC<PackageButton.Props> = ({
 		<>
 			<Button
 				data-ui="PackageButton[Button]"
-				label={"Share package (button)"}
+				label={translator.text("Share package (button)")}
 				iconEnabled={SendPackageIcon}
 				onClick={() => {
 					setIsOpen(true);

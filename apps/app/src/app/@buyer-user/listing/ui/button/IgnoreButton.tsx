@@ -42,7 +42,7 @@ export const IgnoreButton: FC<IgnoreButton.Props> = ({
 			}}
 			fallback={
 				<ConfirmButton
-					label={"Loading... (button)"}
+					label={translator.text("Loading... (button)")}
 					loading
 					{...props}
 				/>

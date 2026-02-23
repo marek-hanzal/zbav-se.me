@@ -5,6 +5,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
+import { translator } from "@use-pico/common/translator";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import {
 	withListingCollectionQuery,
@@ -92,7 +93,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 								data-ui={"ListingListContainer-[Status-empty]"}
 								key={"no-listings"}
 								icon={"icon-[streamline--sad-face-remix]"}
-								textTitle={"No listings (title)"}
+								textTitle={translator.text("No listings (title)")}
 								action={
 									<LinkTo
 										to={"/$locale/flow/home"}
@@ -102,7 +103,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 									>
 										<Button
 											iconEnabled={ChevronLeftIcon}
-											label={"Back to home (link)"}
+											label={translator.text("Back to home (link)")}
 											ui={{
 												tone: "secondary",
 											}}

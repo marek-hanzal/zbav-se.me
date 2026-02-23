@@ -34,7 +34,7 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 					text: "2xl",
 				},
 			}}
-			label={"Delete draft (button)"}
+			label={translator.text("Delete draft (button)")}
 			disabled={deleteMutation.isPending}
 			loading={deleteMutation.isPending}
 			buttonProps={{

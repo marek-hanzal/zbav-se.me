@@ -1,3 +1,4 @@
+import { translator } from "@use-pico/common/translator";
 import { Button } from "@use-pico/client/ui/button";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
@@ -20,7 +21,7 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 	if (listing.transactionId) {
 		return (
 			<Button
-				label={"View transactions (button)"}
+				label={translator.text("View transactions (button)")}
 				iconEnabled={TransactionIcon}
 				iconProps={{
 					ui: {

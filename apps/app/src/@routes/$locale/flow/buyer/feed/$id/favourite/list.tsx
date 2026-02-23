@@ -6,6 +6,7 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
+import { translator } from "@use-pico/common/translator";
 import { withFavouriteCountQuery } from "@zbav-se.me/sdk/query/buyer-user/favourite";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon } from "@zbav-se.me/ui/icon";
@@ -24,7 +25,7 @@ export const EmptyFavourite: FC<EmptyFavourite.Props> = ({ ...props }) => {
 	return (
 		<Status
 			icon={DeadEndIcon}
-			textTitle={"Empty favourite - category and favourite (title)"}
+			textTitle={translator.text("Empty favourite - category and favourite (title)")}
 			action={
 				<>
 					<LinkTo
@@ -93,8 +94,8 @@ export const EmptyFeed: FC<EmptyFeed.Props> = ({ ...props }) => {
 		>
 			<Status
 				icon={DeadEndIcon}
-				textTitle={"Empty favourite feed (title)"}
-				textMessage={"Empty favourite feed (message)"}
+				textTitle={translator.text("Empty favourite feed (title)")}
+				textMessage={translator.text("Empty favourite feed (message)")}
 				action={
 					<Container
 						ui={{
@@ -180,8 +181,8 @@ export const Appendix: FC<Appendix.Props> = ({ ...props }) => {
 		>
 			<Status
 				icon={DeadEndIcon}
-				textTitle={"That's all for now - favourite (title)"}
-				textMessage={"No more listings to show - favourite (message)"}
+				textTitle={translator.text("That's all for now - favourite (title)")}
+				textMessage={translator.text("No more listings to show - favourite (message)")}
 				action={
 					<Container
 						ui={{

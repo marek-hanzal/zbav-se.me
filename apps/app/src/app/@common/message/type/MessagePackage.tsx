@@ -93,7 +93,7 @@ export const MessagePackage: FC<MessagePackage.Props> = ({ message, ...props }) 
 			/>
 
 			<LabelValue
-				textLabel={"Tracking number (label)"}
+				textLabel={translator.text("Tracking number (label)")}
 				textValue={message.number}
 				textEmpty={translator.text("Tracking number not filled")}
 				action={

@@ -5,6 +5,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
+import { translator } from "@use-pico/common/translator";
 import { FavouriteIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
@@ -27,8 +28,8 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({ ...props }) => {
 			<Status
 				data-ui={"EmptyStatus-[Status]"}
 				icon={FavouriteIcon}
-				textTitle={"No items in favourites (title)"}
-				textMessage={"No items in favourites (message)"}
+				textTitle={translator.text("No items in favourites (title)")}
+				textMessage={translator.text("No items in favourites (message)")}
 				ui={{
 					tone: "brand",
 					theme: "light",

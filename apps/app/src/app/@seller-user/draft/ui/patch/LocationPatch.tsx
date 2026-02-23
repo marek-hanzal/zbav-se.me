@@ -27,7 +27,7 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 	return (
 		<TitleContainer
 			data-ui={"Setup-[TitleContainer.location]"}
-			textTitle={"Location (title)"}
+			textTitle={translator.text("Location (title)")}
 			{...props}
 		>
 			<LocationSelectContainer

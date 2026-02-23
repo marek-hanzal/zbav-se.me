@@ -88,8 +88,8 @@ export const Appendix: FC<Appendix.Props> = ({ feed, containerRef, state, ui, ..
 		>
 			<Status
 				icon={DeadEndIcon}
-				textTitle={"That's all for now (title)"}
-				textMessage={"That's all for now (message)"}
+				textTitle={translator.text("That's all for now (title)")}
+				textMessage={translator.text("That's all for now (message)")}
 				action={
 					<>
 						<SetupButton
@@ -182,8 +182,8 @@ export const FeedEmpty: FC<FeedEmpty.Props> = ({ feed, containerRef, state, ui, 
 		>
 			<Status
 				icon={DeadEndIcon}
-				textTitle={"No listings in feed (title)"}
-				textMessage={"No listings in feed (message)"}
+				textTitle={translator.text("No listings in feed (title)")}
+				textMessage={translator.text("No listings in feed (message)")}
 				action={
 					<>
 						<SetupButton
@@ -281,7 +281,7 @@ export const FeedEditorSheet: FC<FeedEditorSheet.Props> = ({ feedId, state, onRe
 						text: "xl",
 					},
 				}}
-				label={"Refresh feed (button)"}
+				label={translator.text("Refresh feed (button)")}
 				ui={{
 					tone: "neutral",
 					theme: "light",
@@ -469,8 +469,8 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 									text: "4xl",
 								},
 							}}
-							textTitle={"First listing (title)"}
-							textMessage={"First listing (message)"}
+							textTitle={translator.text("First listing (title)")}
+							textMessage={translator.text("First listing (message)")}
 							messageProps={{
 								className: "text-center",
 							}}

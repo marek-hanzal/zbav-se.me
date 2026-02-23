@@ -45,7 +45,7 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 						{...props}
 					>
 						<LabelValue
-							textLabel={"User registered (label)"}
+							textLabel={translator.text("User registered (label)")}
 							textValue={toTimeDiff({
 								locale,
 								time: data.registered,
@@ -64,13 +64,13 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 									className={"px-0"}
 								>
 									<LabelValue
-										textLabel={"Reaction rate (label)"}
+										textLabel={translator.text("Reaction rate (label)")}
 										textHint={translator.text("Reaction rate (hint)")}
 										textValue={percentLabel(events.reaction.percent)}
 									/>
 
 									<LabelValue
-										textLabel={"Reaction p90 (label)"}
+										textLabel={translator.text("Reaction p90 (label)")}
 										textHint={translator.text("Reaction p90 (hint)")}
 										textValue={toTimeDiff({
 											locale,
@@ -93,13 +93,13 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 									className={"px-0"}
 								>
 									<LabelValue
-										textLabel={"Closer rate (label)"}
+										textLabel={translator.text("Closer rate (label)")}
 										textHint={translator.text("Closer rate (hint)")}
 										textValue={percentLabel(events.closer.percent)}
 									/>
 
 									<LabelValue
-										textLabel={"Closer p90 (label)"}
+										textLabel={translator.text("Closer p90 (label)")}
 										textHint={translator.text("Closer p90 (hint)")}
 										textValue={toTimeDiff({
 											locale,
@@ -114,13 +114,13 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 								</Container>
 
 								<LabelValue
-									textLabel={"Decision rate (label)"}
+									textLabel={translator.text("Decision rate (label)")}
 									textHint={translator.text("Decision rate (hint)")}
 									textValue={percentLabel(events.decision.percent)}
 								/>
 
 								<LabelValue
-									textLabel={"Expired rate (label)"}
+									textLabel={translator.text("Expired rate (label)")}
 									textHint={translator.text("Expired rate (hint)")}
 									textValue={percentLabel(events.expired.percent)}
 								/>
@@ -134,7 +134,7 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 									className={"px-0"}
 								>
 									<LabelValue
-										textLabel={"Buyer load (label)"}
+										textLabel={translator.text("Buyer load (label)")}
 										textHint={translator.text("Buyer load (hint)")}
 										textValue={translator.text(
 											`Buyer load ${events.load.bucket}`,
@@ -142,7 +142,7 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 									/>
 
 									<LabelValue
-										textLabel={"Buyer activity (label)"}
+										textLabel={translator.text("Buyer activity (label)")}
 										textHint={translator.text("Buyer activity (hint)")}
 										textValue={translator.text(
 											`Buyer activity ${events.activity.bucket}`,
@@ -151,7 +151,7 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 								</Container>
 
 								<LabelValue
-									textLabel={"User score (label)"}
+									textLabel={translator.text("User score (label)")}
 									textHint={translator.text("User score (hint)")}
 									textValue={
 										<Container

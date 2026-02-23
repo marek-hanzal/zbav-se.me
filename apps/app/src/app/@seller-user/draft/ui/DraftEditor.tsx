@@ -83,7 +83,7 @@ export const DraftEditor: FC<DraftEditor.Props> = ({ draft, onListing, onDelete 
 				default: {
 					children: (
 						<TitleContainer
-							textTitle={"Draft edit (title)"}
+							textTitle={translator.text("Draft edit (title)")}
 							right={<HomeMenuButton />}
 						>
 							<Container

@@ -111,7 +111,7 @@ export const EditorSheet: FC<EditorSheet.Props> = ({
 							}}
 						>
 							<Button
-								label={"Close (button)"}
+								label={translator.text("Close (button)")}
 								onClick={() => state.set(false)}
 								iconEnabled={CloseIcon}
 								iconProps={{

@@ -4,6 +4,7 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
+import { translator } from "@use-pico/common/translator";
 import type { tTransactionQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { withTransactionCollectionQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
 import { MessageIcon } from "@zbav-se.me/ui/icon";
@@ -46,8 +47,10 @@ export const TransactionList: FC<TransactionList.Props> = ({ query, ui, ...props
 							>
 								<Status
 									icon={MessageIcon}
-									textTitle={"No transactions as seller (title)"}
-									textMessage={"No transactions as seller (message)"}
+									textTitle={translator.text("No transactions as seller (title)")}
+									textMessage={translator.text(
+										"No transactions as seller (message)",
+									)}
 									action={
 										<LinkTo
 											icon={ChevronRightIcon}

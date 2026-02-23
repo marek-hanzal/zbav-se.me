@@ -4,6 +4,7 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
+import { translator } from "@use-pico/common/translator";
 import type { tTransactionListingQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { withTransactionListingCollectionQuery } from "@zbav-se.me/sdk/query/seller-user/transaction-listing";
 import { MessageIcon } from "@zbav-se.me/ui/icon";
@@ -50,8 +51,12 @@ export const TransactionListingList: FC<TransactionListingList.Props> = ({
 							>
 								<Status
 									icon={MessageIcon}
-									textTitle={"No listings with transactions (title)"}
-									textMessage={"No listings with transactions (message)"}
+									textTitle={translator.text(
+										"No listings with transactions (title)",
+									)}
+									textMessage={translator.text(
+										"No listings with transactions (message)",
+									)}
 									action={
 										<LinkTo
 											icon={ChevronRightIcon}

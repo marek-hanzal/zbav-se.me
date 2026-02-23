@@ -1,4 +1,5 @@
 import { LabelValue } from "@use-pico/client/ui/container";
+import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 
 export namespace NameValue {
@@ -11,7 +12,7 @@ export const NameValue: FC<NameValue.Props> = ({ name, ...props }) => {
 	return (
 		<LabelValue
 			data-ui={"NameValue[LabelValue]"}
-			textLabel={"Feed name (label)"}
+			textLabel={translator.text("Feed name (label)")}
 			textValue={name}
 			wrapperProps={{
 				ui: name

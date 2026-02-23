@@ -1,3 +1,4 @@
+import { translator } from "@use-pico/common/translator";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@use-pico/client/ui/button";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller-user";
@@ -20,7 +21,7 @@ export const ResolveButton: FC<ResolveButton.Props> = ({ transaction, ...props }
 	return (
 		<Button
 			data-ui="ResolveButton[Button]"
-			label={"Resolve transaction (button)"}
+			label={translator.text("Resolve transaction (button)")}
 			iconEnabled={CheckIcon}
 			onClick={() => {
 				mutation.mutate(

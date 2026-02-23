@@ -2,6 +2,7 @@ import { SpinnerIcon } from "@use-pico/client/icon";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Progress } from "@use-pico/client/ui/progress";
 import { Status } from "@use-pico/client/ui/status";
+import { translator } from "@use-pico/common/translator";
 import { withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withUploadFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
@@ -137,7 +138,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 					<Status
 						data-ui={"PhotoUpload-[Status.spinner]"}
 						icon={SpinnerIcon}
-						textTitle={"Uploading photo (title)"}
+						textTitle={translator.text("Uploading photo (title)")}
 						action={
 							<Progress
 								value={progress * 100}
@@ -168,8 +169,8 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 					<Status
 						data-ui={"PhotoUpload-[Status.placeholder]"}
 						icon={PhotoIcon}
-						textTitle={"Photo upload placeholder (title)"}
-						textMessage={"Photo upload placeholder (message)"}
+						textTitle={translator.text("Photo upload placeholder (title)")}
+						textMessage={translator.text("Photo upload placeholder (message)")}
 						ui={{
 							tone: ui?.disabled ? "neutral" : "primary",
 							theme: "light",

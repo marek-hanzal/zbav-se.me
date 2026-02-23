@@ -5,6 +5,7 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
+import { translator } from "@use-pico/common/translator";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/seller-user/listing";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
@@ -57,8 +58,8 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({ query, ..
 								<Status
 									data-ui={"MyListing-[Status-empty]"}
 									icon={SearchIcon}
-									textTitle={"No my listings (title)"}
-									textMessage={"No my listings (message)"}
+									textTitle={translator.text("No my listings (title)")}
+									textMessage={translator.text("No my listings (message)")}
 									action={
 										<LinkTo
 											icon={ChevronRightIcon}

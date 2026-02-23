@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { translator } from "@use-pico/common/translator";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { feedCreateDefault } from "~/app/@buyer-user/feed/service/feedCreateDefault";
@@ -27,7 +28,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/select")({
 		return (
 			<TitleContainer
 				data-ui={"FeedSelect"}
-				textTitle={"Feed select (title)"}
+				textTitle={translator.text("Feed select (title)")}
 				ui={{
 					layout: "vertical-header-content",
 				}}

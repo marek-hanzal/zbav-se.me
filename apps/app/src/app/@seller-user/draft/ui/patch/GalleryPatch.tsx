@@ -1,5 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import type { Container } from "@use-pico/client/ui/container";
+import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { withDraftGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
@@ -29,7 +30,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 	return (
 		<TitleContainer
 			data-ui={"GalleryPatch-[TitleContainer]"}
-			textTitle={"Listing gallery (title)"}
+			textTitle={translator.text("Listing gallery (title)")}
 			ui={{
 				layout: "vertical-header-content",
 				height: "full",

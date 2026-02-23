@@ -1,3 +1,4 @@
+import { translator } from "@use-pico/common/translator";
 import { useQueryClient } from "@tanstack/react-query";
 import { FavouriteIcon, FavouriteOffIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
@@ -39,7 +40,7 @@ export const FavouriteButton: FC<FavouriteButton.Props> = ({ feedId, listingId, 
 			}}
 			fallback={
 				<Button
-					label={"Loading... (button)"}
+					label={translator.text("Loading... (button)")}
 					disabled
 					loading
 					ui={{

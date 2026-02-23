@@ -36,6 +36,7 @@ export const FavouriteListContainer: FC<FavouriteListContainer.Props> = ({
 				gap: "default",
 				inner: "default",
 				height: "full",
+				...ui,
 			}}
 			{...props}
 		>

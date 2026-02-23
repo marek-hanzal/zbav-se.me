@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { TransactionList } from "~/app/@buyer-user/transaction/ui/TransactionList";
 import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
@@ -7,7 +8,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/message/list")({
 	component() {
 		return (
 			<TitleContainer
-				textTitle={"Messages (title)"}
+				textTitle={translator.text("Messages (title)")}
 				right={<HomeMenuButton />}
 			>
 				<TransactionList

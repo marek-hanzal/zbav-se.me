@@ -45,7 +45,7 @@ export const FlagButton: FC<FlagButton.Props> = ({
 			}}
 			fallback={
 				<ConfirmButton
-					label={"Loading... (button)"}
+					label={translator.text("Loading... (button)")}
 					disabled
 					loading
 					ui={{

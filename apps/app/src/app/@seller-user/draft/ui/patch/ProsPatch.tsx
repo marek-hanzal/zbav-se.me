@@ -2,6 +2,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
 import { TextInput } from "@use-pico/client/ui/text-input";
 import { Tx } from "@use-pico/client/ui/tx";
+import { translator } from "@use-pico/common/translator";
 import { sProsCons, type tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
@@ -50,7 +51,7 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...
 	return (
 		<TitleContainer
 			data-ui={"Setup-[TitleContainer.pros]"}
-			textTitle={"Listing - Pros (title)"}
+			textTitle={translator.text("Listing - Pros (title)")}
 			{...props}
 		>
 			<Container

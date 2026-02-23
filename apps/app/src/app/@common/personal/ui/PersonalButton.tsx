@@ -1,3 +1,4 @@
+import { translator } from "@use-pico/common/translator";
 import { useQueryClient } from "@tanstack/react-query";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
@@ -28,7 +29,7 @@ export const PersonalButton: FC<PersonalButton.Props> = ({
 		<>
 			<Button
 				data-ui="PersonalButton[Button]"
-				label={"Share contact info (button)"}
+				label={translator.text("Share contact info (button)")}
 				iconEnabled={EmailIcon}
 				onClick={() => {
 					setIsOpen(true);

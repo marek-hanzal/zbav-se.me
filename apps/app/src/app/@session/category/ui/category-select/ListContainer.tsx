@@ -4,6 +4,7 @@ import { Container } from "@use-pico/client/ui/container";
 import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import { Status } from "@use-pico/client/ui/status";
 import type { EntitySchema } from "@use-pico/common/schema";
+import { translator } from "@use-pico/common/translator";
 import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
 import { uiWarningStatus } from "@zbav-se.me/ui/ui";
@@ -75,8 +76,8 @@ export const ListContainer: FC<ListContainer.Props> = ({
 			>
 				<Status
 					icon={SearchIcon}
-					textTitle={"No categories found (title)"}
-					textMessage={"No categories found (message)"}
+					textTitle={translator.text("No categories found (title)")}
+					textMessage={translator.text("No categories found (message)")}
 					{...uiWarningStatus({
 						className: [],
 					})}

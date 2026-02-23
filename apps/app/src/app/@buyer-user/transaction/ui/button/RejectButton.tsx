@@ -21,7 +21,7 @@ export const RejectButton: FC<RejectButton.Props> = ({ transaction, ...props }) 
 	return (
 		<ConfirmButton
 			data-ui="RejectButton[ConfirmButton]"
-			label={"Reject transaction (button)"}
+			label={translator.text("Reject transaction (button)")}
 			iconEnabled={CancelIcon}
 			confirmProps={{
 				ui: {

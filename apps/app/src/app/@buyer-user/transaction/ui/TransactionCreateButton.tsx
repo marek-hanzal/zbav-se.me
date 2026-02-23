@@ -1,3 +1,4 @@
+import { translator } from "@use-pico/common/translator";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@use-pico/client/ui/button";
 import { withTransactionCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/transaction";
@@ -29,7 +30,7 @@ export const TransactionCreateButton: FC<TransactionCreateButton.Props> = ({
 
 	return (
 		<Button
-			label={"Create transaction (button)"}
+			label={translator.text("Create transaction (button)")}
 			iconEnabled={TransactionIcon}
 			iconProps={{
 				ui: {

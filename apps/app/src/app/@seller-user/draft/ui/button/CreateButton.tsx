@@ -2,6 +2,7 @@ import { PlusIcon, SpinnerIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
+import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { withDraftCreateMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
 import type { FC } from "react";
@@ -56,7 +57,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ onSuccess, ui, ...props }
 			>
 				<Status
 					icon={draftCreateMutation.isPending ? SpinnerIcon : PlusIcon}
-					textTitle="Create new draft (title)"
+					textTitle={translator.text("Create new draft (title)")}
 				/>
 			</Container>
 		</Button>

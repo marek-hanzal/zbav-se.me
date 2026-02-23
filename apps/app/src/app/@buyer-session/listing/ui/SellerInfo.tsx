@@ -40,7 +40,7 @@ export const SellerInfo: FC<SellerInfo.Props> = ({ listingId, ui, ...props }) =>
 						{...props}
 					>
 						<LabelValue
-							textLabel={"User registered (label)"}
+							textLabel={translator.text("User registered (label)")}
 							textValue={toTimeDiff({
 								locale,
 								time: data.registered,
@@ -49,7 +49,7 @@ export const SellerInfo: FC<SellerInfo.Props> = ({ listingId, ui, ...props }) =>
 						/>
 
 						<LabelValue
-							textLabel={"Seller - listings (label)"}
+							textLabel={translator.text("Seller - listings (label)")}
 							textValue={toLocaleNumber({
 								locale,
 								number: data.listings,
@@ -58,7 +58,7 @@ export const SellerInfo: FC<SellerInfo.Props> = ({ listingId, ui, ...props }) =>
 
 						{data.events ? (
 							<LabelValue
-								textLabel={"User score (label)"}
+								textLabel={translator.text("User score (label)")}
 								textHint={translator.text("User score (hint)")}
 								textValue={
 									<Container

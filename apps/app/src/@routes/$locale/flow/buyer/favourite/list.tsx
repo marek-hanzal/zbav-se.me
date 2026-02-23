@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { FavouriteListContainer } from "~/app/@buyer-user/feed-favourite/ui/FavouriteListContainer";
 import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
@@ -10,7 +11,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/favourite/list")({
 
 		return (
 			<TitleContainer
-				textTitle={"Your favourites (title)"}
+				textTitle={translator.text("Your favourites (title)")}
 				right={<HomeMenuButton />}
 			>
 				<FavouriteListContainer

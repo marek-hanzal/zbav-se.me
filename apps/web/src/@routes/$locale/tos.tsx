@@ -1,14 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
+import { translator } from "@use-pico/common/translator";
 
 export const Route = createFileRoute("/$locale/tos")({
 	component() {
 		return (
 			<Container>
 				<Status
-					textTitle={"ToS not available in this language (title)"}
-					textMessage={"ToS not available in this language (description)"}
+					textTitle={translator.text("ToS not available in this language (title)")}
+					textMessage={translator.text(
+						"ToS not available in this language (description)",
+					)}
 				/>
 			</Container>
 		);

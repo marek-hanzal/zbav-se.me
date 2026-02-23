@@ -20,7 +20,7 @@ export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({ transactionId, ...p
 			<Button
 				data-ui="BuyerInfoButton[Button]"
 				iconEnabled={BuyerIcon}
-				label={"Buyer info (button)"}
+				label={translator.text("Buyer info (button)")}
 				onClick={() => {
 					setIsOpen(true);
 				}}

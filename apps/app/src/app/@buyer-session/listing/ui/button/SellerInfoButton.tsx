@@ -20,7 +20,7 @@ export const SellerInfoButton: FC<SellerInfoButton.Props> = ({ listingId, ...pro
 			<Button
 				data-ui="SellerInfoButton[Button]"
 				iconEnabled={SellerIcon}
-				label={"Seller info (button)"}
+				label={translator.text("Seller info (button)")}
 				onClick={() => {
 					setIsOpen(true);
 				}}

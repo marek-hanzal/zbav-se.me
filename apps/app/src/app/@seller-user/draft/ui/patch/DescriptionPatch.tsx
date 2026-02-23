@@ -43,7 +43,7 @@ export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 	return (
 		<TitleContainer
 			data-ui={"Setup-[TitleContainer.description]"}
-			textTitle={"Description (title)"}
+			textTitle={translator.text("Description (title)")}
 			{...props}
 		>
 			<Container
@@ -61,8 +61,8 @@ export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 					}}
 				>
 					<Status
-						textTitle={"Description (title)"}
-						textMessage={"Description (message)"}
+						textTitle={translator.text("Description (title)")}
+						textMessage={translator.text("Description (message)")}
 					>
 						<FormField>
 							{({ className, ...props }) => (

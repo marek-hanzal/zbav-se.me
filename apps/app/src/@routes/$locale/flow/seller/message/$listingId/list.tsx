@@ -4,6 +4,7 @@ import { ChevronLeftIcon } from "@use-pico/client/icon";
 import { createNoopVisibilityStore } from "@use-pico/client/store";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { translator } from "@use-pico/common/translator";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/seller-user/listing";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { HeroImage } from "@zbav-se.me/ui/img";
@@ -20,7 +21,7 @@ export const Route = createFileRoute("/$locale/flow/seller/message/$listingId/li
 		return (
 			<TitleContainer
 				data-ui="/seller/message/list[TitleContainer]"
-				textTitle={"Messages (title)"}
+				textTitle={translator.text("Messages (title)")}
 				left={
 					<LinkTo
 						icon={ChevronLeftIcon}
@@ -50,7 +51,7 @@ export const Route = createFileRoute("/$locale/flow/seller/message/$listingId/li
 		return (
 			<TitleContainer
 				data-ui="/seller/message/list[TitleContainer]"
-				textTitle={"Messages (title)"}
+				textTitle={translator.text("Messages (title)")}
 				textSubtitle={listing.title}
 				left={
 					<LinkTo

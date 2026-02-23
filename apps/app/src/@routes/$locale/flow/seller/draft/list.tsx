@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
+import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { DraftList } from "~/app/@seller-user/draft/ui/DraftList";
 import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
@@ -11,7 +12,7 @@ export const Route = createFileRoute("/$locale/flow/seller/draft/list")({
 
 		return (
 			<TitleContainer
-				textTitle={"Draft list (title)"}
+				textTitle={translator.text("Draft list (title)")}
 				right={<HomeMenuButton />}
 			>
 				<DraftList

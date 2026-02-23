@@ -38,7 +38,7 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onSettled, .
 	return (
 		<TitleContainer
 			data-ui={"Setup-[TitleContainer.price]"}
-			textTitle={"Price (title)"}
+			textTitle={translator.text("Price (title)")}
 			{...props}
 		>
 			<Container

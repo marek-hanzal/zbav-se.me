@@ -29,7 +29,7 @@ export const LocationButton: FC<LocationButton.Props> = ({
 		<>
 			<Button
 				data-ui="LocationButton[Button]"
-				label={"Share location (button)"}
+				label={translator.text("Share location (button)")}
 				iconEnabled={LocationIcon}
 				onClick={() => {
 					setIsOpen(true);
