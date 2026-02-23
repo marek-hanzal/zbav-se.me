@@ -3,7 +3,7 @@ import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import z from "zod";
-import { BuyerFeedListPage } from "~/app/@buyer-user/feed/ui/list-route/BuyerFeedListPage";
+import { FeedListPage } from "~/app/@buyer-user/feed/page/FeedListPage";
 
 export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 	validateSearch: z.object({
@@ -45,7 +45,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 		const { feed } = Route.useLoaderData();
 
 		return (
-			<BuyerFeedListPage
+			<FeedListPage
 				locale={locale}
 				feed={feed}
 				scrollToId={scrollToId}

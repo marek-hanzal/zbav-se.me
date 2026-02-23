@@ -13,7 +13,7 @@ import { FeedSetupButton } from "~/app/@buyer-user/feed/ui/list-route/FeedSetupB
 import { FirstListingStatus } from "~/app/@buyer-user/feed/ui/list-route/FirstListingStatus";
 import { ListingListContainer } from "~/app/@buyer-user/listing/ui/ListingListContainer";
 
-export namespace BuyerFeedListPage {
+export namespace FeedListPage {
 	export interface Props {
 		locale: string;
 		feed: tFeed;
@@ -21,7 +21,7 @@ export namespace BuyerFeedListPage {
 	}
 }
 
-export const BuyerFeedListPage: FC<BuyerFeedListPage.Props> = ({ locale, feed, scrollToId }) => {
+export const FeedListPage: FC<FeedListPage.Props> = ({ locale, feed, scrollToId }) => {
 	const router = useRouter();
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [isFeedSettings, setIsFeedSettings] = useState(false);

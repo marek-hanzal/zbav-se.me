@@ -1,12 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useLocale } from "@use-pico/client/hook";
-import { LinkTo } from "@use-pico/client/ui/link-to";
-import { translator } from "@use-pico/common/translator";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
-import { TitleContainer } from "@zbav-se.me/ui/container";
+import { FeedSelectPage } from "~/app/@buyer-user/feed/page/FeedSelectPage";
 import { feedCreateDefault } from "~/app/@buyer-user/feed/service/feedCreateDefault";
-import { FeedListContainer } from "~/app/@buyer-user/feed/ui/FeedListContainer";
-import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
 export const Route = createFileRoute("/$locale/flow/buyer/feed/select")({
 	async loader({ context: { queryClient } }) {
@@ -21,57 +16,8 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/select")({
 		}
 	},
 	component() {
-		const locale = useLocale();
+		const { locale } = Route.useParams();
 
-		const feedCountLimit = 3;
-
-		return (
-			<TitleContainer
-				data-ui={"FeedSelect[TitleContainer]"}
-				textTitle={translator.text("Feed select (title)")}
-				ui={{
-					layout: "vertical-header-content",
-				}}
-				right={<HomeMenuButton />}
-			>
-				<FeedListContainer
-					data-ui={"FeedSelect-[FeedListContainer]"}
-					query={{
-						cursor: {
-							page: 0,
-							size: feedCountLimit,
-						},
-						sort: [
-							{
-								field: "createdAt",
-								order: "desc",
-							},
-						],
-					}}
-					limit={feedCountLimit}
-					tools={[
-						"setup",
-					]}
-					linkTo={{
-						header: ({ feedId, children }) => (
-							<LinkTo
-								data-ui={"FeedSelect-[LinkTo.header]"}
-								to={"/$locale/flow/buyer/feed/$id/list"}
-								params={{
-									locale,
-									id: feedId,
-								}}
-								ui={{
-									display: "block",
-									height: "full",
-								}}
-							>
-								{children}
-							</LinkTo>
-						),
-					}}
-				/>
-			</TitleContainer>
-		);
+		return <FeedSelectPage locale={locale} />;
 	},
 });

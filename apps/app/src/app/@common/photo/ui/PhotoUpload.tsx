@@ -60,7 +60,9 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 
 			{controller.isPending ? <PhotoUploadPending progress={controller.progress} /> : null}
 
-			{!value && !controller.isPending ? <PhotoUploadPlaceholder disabled={ui?.disabled} /> : null}
+			{!value && !controller.isPending ? (
+				<PhotoUploadPlaceholder disabled={ui?.disabled} />
+			) : null}
 
 			{value && !controller.isPending ? <PhotoUploadPreview value={value} /> : null}
 		</Container>

@@ -16,6 +16,9 @@
 - File routes in `src/@routes`.
 - Keep route files thin; move reusable logic/UI to `src/app/*`.
 - Keep redirect/index behavior explicit.
+- Every route must have its own `*Page` component in the matching domain UI folder.
+- Route files may contain only route-specific hooks (`Route.useParams`, `Route.useSearch`, `Route.useLoaderData`, ...), then pass mapped data into the `*Page` component.
+- `*Page` components must never import or call Route APIs directly; all route-derived data must be injected from outside.
 
 ## Data and auth pattern
 - Public backend data: prefer SDK public query wrappers.

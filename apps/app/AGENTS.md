@@ -32,3 +32,6 @@
 - Reuse existing SDK wrappers and Suspense patterns where present.
 - Use `translator.text(...)` for translatable labels.
 - Routes live in `src/@routes`; domain UI in `src/app/<domain>`.
+- Every route must have its own `*Page` component in its domain UI folder.
+- Route files may contain only route-specific hooks (`Route.useParams`, `Route.useSearch`, `Route.useLoaderData`, ...), then pass mapped data into the `*Page` component.
+- `*Page` components must never import or call Route APIs directly; all route-derived data must be injected from outside.
