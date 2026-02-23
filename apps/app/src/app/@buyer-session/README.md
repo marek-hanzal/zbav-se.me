@@ -56,3 +56,4 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `@buyer-session/listing/ui/SellerInfo.tsx` keeps query/loading composition.
   - `@buyer-session/listing/ui/seller-info/SellerInfoHeader.tsx` renders registered/listings labels.
   - `@buyer-session/listing/ui/seller-info/SellerInfoScore.tsx` renders score/rank presentation.
+- Listing seller info components now resolve locale via `useLocale()` instead of accepting `locale` props.

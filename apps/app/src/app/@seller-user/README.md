@@ -66,3 +66,4 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `createDraftEditorViews.tsx` for patch view mapping
   - each section owns its own namespaced `Props`
   - `DraftEditor.View` namespace type as source of truth for editor views
+- Seller listing list components now resolve locale via `useLocale()` instead of accepting `locale` props.

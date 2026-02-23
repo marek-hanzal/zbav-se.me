@@ -15,3 +15,6 @@ Flow route `data-ui` selectors must follow the bracketed contract:
 Recent split example:
 - `buyer/feed/$id/favourite/list.tsx` keeps route orchestration only, while empty/appendix status UI lives in `apps/app/src/app/@buyer-user/feed-favourite/ui/*`.
 - `buyer/feed/$id/list.tsx` keeps loader/navigation only, while page composition moved to `apps/app/src/app/@buyer-user/feed/page/FeedListPage.tsx`.
+
+Locale handling guideline:
+- Prefer `useLocale()` inside page/components. Keep `$locale` in routes for params/redirects/navigation wiring only.

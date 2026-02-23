@@ -53,3 +53,4 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `@seller-session/transaction/ui/BuyerInfo.tsx` keeps query/loading composition.
   - `@seller-session/transaction/ui/buyer-info/BuyerInfoEvents.tsx` renders behavior metrics.
   - `@seller-session/transaction/ui/buyer-info/BuyerInfoScore.tsx` renders score/rank presentation.
+- Buyer info metrics components now resolve locale via `useLocale()` instead of accepting `locale` props.
