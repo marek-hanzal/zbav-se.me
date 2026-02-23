@@ -15,12 +15,12 @@ import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
-import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon, FirstIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { type FC, type RefObject, useRef, useState } from "react";
+import { type FC, type RefObject, Suspense, useRef, useState } from "react";
 import z from "zod";
 import { EditorSheet } from "~/app/@buyer-user/feed/ui/EditorSheet";
 import { ListingListContainer } from "~/app/@buyer-user/listing/ui/ListingListContainer";
@@ -255,6 +255,50 @@ export const FeedEmpty: FC<FeedEmpty.Props> = ({ feed, containerRef, state, ui, 
 	);
 };
 
+export namespace FeedEditorSheet {
+	export interface Props {
+		feedId: string;
+		state: StateType.State<boolean>;
+		onRefresh(): void;
+	}
+}
+
+export const FeedEditorSheet: FC<FeedEditorSheet.Props> = ({ feedId, state, onRefresh }) => {
+	const feedQuery = withFeedQuery.useQuery(feedId);
+
+	return (
+		<EditorSheet
+			data-ui={"/buyer/feed/$id/list-[FeedEditorSheet]"}
+			feed={feedQuery.data}
+			state={state}
+			noDelete
+		>
+			<Button
+				onClick={onRefresh}
+				iconEnabled={RefreshIcon}
+				iconProps={{
+					ui: {
+						text: "xl",
+					},
+				}}
+				label={"Refresh feed (button)"}
+				ui={{
+					tone: "neutral",
+					theme: "light",
+					size: "default",
+					justify: "start",
+					items: "center",
+					background: "default",
+					round: undefined,
+					shadow: false,
+					border: false,
+					width: "full",
+				}}
+			/>
+		</EditorSheet>
+	);
+};
+
 export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 	validateSearch: z.object({
 		/**
@@ -481,54 +525,19 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 					</Container>
 				)}
 
-				<withFeedFetchQuery.Suspense
-					data={{
-						where: {
-							id: feed.id,
-						},
-					}}
-					fallback={null}
-				>
-					{({ data: feed }) => {
-						return (
-							<EditorSheet
-								data-ui={"/buyer/feed/$id/list-[FeedEditorSheet]"}
-								feed={feed}
-								state={{
-									value: isFeedSettings,
-									set: setIsFeedSettings,
-								}}
-								noDelete
-							>
-								<Button
-									onClick={() => {
-										setIsFeedSettings(false);
-										setTimeout(() => router.invalidate(), 200);
-									}}
-									iconEnabled={RefreshIcon}
-									iconProps={{
-										ui: {
-											text: "xl",
-										},
-									}}
-									label={"Refresh feed (button)"}
-									ui={{
-										tone: "neutral",
-										theme: "light",
-										size: "default",
-										justify: "start",
-										items: "center",
-										background: "default",
-										round: undefined,
-										shadow: false,
-										border: false,
-										width: "full",
-									}}
-								/>
-							</EditorSheet>
-						);
-					}}
-				</withFeedFetchQuery.Suspense>
+				<Suspense fallback={null}>
+					<FeedEditorSheet
+						feedId={feed.id}
+						state={{
+							value: isFeedSettings,
+							set: setIsFeedSettings,
+						}}
+						onRefresh={() => {
+							setIsFeedSettings(false);
+							setTimeout(() => router.invalidate(), 200);
+						}}
+					/>
+				</Suspense>
 			</FlowContainer>
 		);
 	},

@@ -2,9 +2,10 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer-user";
-import { withFeedCollectionQuery, withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
-import { type FC, useState } from "react";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import { type FC, Suspense, useState } from "react";
 import { CreateButton } from "~/app/@buyer-user/feed/ui/button/CreateButton";
+import { ContentItem } from "./ContentItem";
 import { Item } from "./Item";
 
 export namespace Content {
@@ -27,7 +28,7 @@ export const Content: FC<Content.Props> = ({
 	/**
 	 * This is intentional to trigger parent suspense
 	 */
-	const feedCollectionQuery = withFeedCollectionQuery.useSuspenseQuery(query);
+	const feedCollectionQuery = withFeedQuery.useCollectionQuery(query);
 	/**
 	 * We're keeping locale state just for "after creation" open state
 	 */
@@ -46,15 +47,10 @@ export const Content: FC<Content.Props> = ({
 			}}
 			{...props}
 		>
-			{feedCollectionQuery.data.map(({ id: feedId }) => {
+			{feedCollectionQuery.data.map((feedId) => {
 				return (
-					<withFeedFetchQuery.Suspense
+					<Suspense
 						key={feedId}
-						data={{
-							where: {
-								id: feedId,
-							},
-						}}
 						fallback={
 							<Item
 								feed={{
@@ -71,17 +67,13 @@ export const Content: FC<Content.Props> = ({
 							/>
 						}
 					>
-						{({ data: feed }) => {
-							return (
-								<Item
-									feed={feed}
-									defaultOpen={defaultOpenId === feedId}
-									tools={tools}
-									linkTo={linkTo}
-								/>
-							);
-						}}
-					</withFeedFetchQuery.Suspense>
+						<ContentItem
+							feedId={feedId}
+							defaultOpen={defaultOpenId === feedId}
+							tools={tools}
+							linkTo={linkTo}
+						/>
+					</Suspense>
 				);
 			})}
 

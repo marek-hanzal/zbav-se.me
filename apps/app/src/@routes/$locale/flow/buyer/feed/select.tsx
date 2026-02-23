@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { feedCreateDefault } from "~/app/@buyer-user/feed/service/feedCreateDefault";
 import { FeedListContainer } from "~/app/@buyer-user/feed/ui/FeedListContainer";
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/select")({
 		/**
 		 * Dummy catch is intentional - we don't care about results here (not found throws an error).
 		 */
-		const feed = await withFeedFetchQuery.query({}).catch(() => undefined);
+		const feed = await withFeedQuery.fetch({}).catch(() => undefined);
 		if (!feed) {
 			await feedCreateDefault({
 				queryClient,
