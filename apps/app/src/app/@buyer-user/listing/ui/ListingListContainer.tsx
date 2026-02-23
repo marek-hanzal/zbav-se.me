@@ -1,4 +1,4 @@
-import { useElementVisibility, useLocale, useMergeRefs, useScrollTo } from "@use-pico/client/hook";
+import { useElementVisibility, useMergeRefs, useScrollTo } from "@use-pico/client/hook";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { type FC, type ReactNode, Suspense, useEffect, useRef } from "react";
@@ -28,8 +28,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	withScore,
 	...props
 }) => {
-	const locale = useLocale();
-
 	const containerRef = useRef<HTMLDivElement>(null);
 	const mergedRef = useMergeRefs([
 		containerRef,
@@ -79,7 +77,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 					appendix={appendix}
 					feedId={feedId}
 					withScore={withScore}
-					locale={locale}
 					visibility={visibility}
 				/>
 			</Suspense>

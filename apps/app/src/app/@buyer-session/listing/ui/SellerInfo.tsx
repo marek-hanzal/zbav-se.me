@@ -1,4 +1,3 @@
-import { useLocale } from "@use-pico/client/hook";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
@@ -15,8 +14,6 @@ export namespace SellerInfo {
 }
 
 export const SellerInfo: FC<SellerInfo.Props> = ({ listingId, ui, ...props }) => {
-	const locale = useLocale();
-
 	return (
 		<withListingSellerInfoQuery.Suspense
 			data={{
@@ -36,7 +33,6 @@ export const SellerInfo: FC<SellerInfo.Props> = ({ listingId, ui, ...props }) =>
 						{...props}
 					>
 						<SellerInfoHeader
-							locale={locale}
 							registered={data.registered}
 							listings={data.listings}
 						/>

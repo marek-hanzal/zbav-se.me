@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { Container, LabelValue } from "@use-pico/client/ui/container";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
@@ -9,12 +10,13 @@ const percentLabel = (value: number) => `${Math.round(value)}%`;
 
 export namespace BuyerInfoEvents {
 	export interface Props {
-		locale: string;
 		events: tUserEventBuyer;
 	}
 }
 
-export const BuyerInfoEvents: FC<BuyerInfoEvents.Props> = ({ locale, events }) => {
+export const BuyerInfoEvents: FC<BuyerInfoEvents.Props> = ({ events }) => {
+	const locale = useLocale();
+
 	return (
 		<>
 			<Container

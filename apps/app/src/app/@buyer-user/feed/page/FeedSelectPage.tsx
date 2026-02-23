@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
@@ -6,12 +7,11 @@ import { FeedListContainer } from "~/app/@buyer-user/feed/ui/FeedListContainer";
 import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
 export namespace FeedSelectPage {
-	export interface Props {
-		locale: string;
-	}
+	export type Props = {};
 }
 
-export const FeedSelectPage: FC<FeedSelectPage.Props> = ({ locale }) => {
+export const FeedSelectPage: FC<FeedSelectPage.Props> = () => {
+	const locale = useLocale();
 	const feedCountLimit = 3;
 
 	return (

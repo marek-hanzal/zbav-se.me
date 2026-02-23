@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { LabelValue } from "@use-pico/client/ui/container";
 import { toTimeDiff } from "@use-pico/common/time";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
@@ -6,13 +7,14 @@ import type { FC } from "react";
 
 export namespace SellerInfoHeader {
 	export interface Props {
-		locale: string;
 		registered: string;
 		listings: number;
 	}
 }
 
-export const SellerInfoHeader: FC<SellerInfoHeader.Props> = ({ locale, registered, listings }) => {
+export const SellerInfoHeader: FC<SellerInfoHeader.Props> = ({ registered, listings }) => {
+	const locale = useLocale();
+
 	return (
 		<>
 			<LabelValue

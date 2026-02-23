@@ -3,13 +3,8 @@ import { FeedFavouriteListPage } from "~/app/@buyer-user/feed/page/FeedFavourite
 
 export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/list")({
 	component() {
-		const { id, locale } = Route.useParams();
+		const { id } = Route.useParams();
 
-		return (
-			<FeedFavouriteListPage
-				locale={locale}
-				feedId={id}
-			/>
-		);
+		return <FeedFavouriteListPage feedId={id} />;
 	},
 });

@@ -1,5 +1,5 @@
 import { useRouter } from "@tanstack/react-router";
-import { useSentinel } from "@use-pico/client/hook";
+import { useLocale, useSentinel } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
@@ -15,13 +15,13 @@ import { ListingListContainer } from "~/app/@buyer-user/listing/ui/ListingListCo
 
 export namespace FeedListPage {
 	export interface Props {
-		locale: string;
 		feed: tFeed;
 		scrollToId: string | undefined;
 	}
 }
 
-export const FeedListPage: FC<FeedListPage.Props> = ({ locale, feed, scrollToId }) => {
+export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId }) => {
+	const locale = useLocale();
 	const router = useRouter();
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [isFeedSettings, setIsFeedSettings] = useState(false);

@@ -16,8 +16,6 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/select")({
 		}
 	},
 	component() {
-		const { locale } = Route.useParams();
-
-		return <FeedSelectPage locale={locale} />;
+		return <FeedSelectPage />;
 	},
 });

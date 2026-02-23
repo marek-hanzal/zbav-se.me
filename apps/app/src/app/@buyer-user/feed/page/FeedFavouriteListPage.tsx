@@ -1,4 +1,4 @@
-import { useSentinel } from "@use-pico/client/hook";
+import { useLocale, useSentinel } from "@use-pico/client/hook";
 import { ChevronLeftIcon } from "@use-pico/client/icon";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -13,12 +13,12 @@ import { ListingListContainer } from "~/app/@buyer-user/listing/ui/ListingListCo
 
 export namespace FeedFavouriteListPage {
 	export interface Props {
-		locale: string;
 		feedId: string;
 	}
 }
 
-export const FeedFavouriteListPage: FC<FeedFavouriteListPage.Props> = ({ locale, feedId }) => {
+export const FeedFavouriteListPage: FC<FeedFavouriteListPage.Props> = ({ feedId }) => {
+	const locale = useLocale();
 	const containerRef = useRef<HTMLDivElement>(null);
 	const { sentinelRef, inView: isLast } = useSentinel<HTMLDivElement>({
 		containerRef,

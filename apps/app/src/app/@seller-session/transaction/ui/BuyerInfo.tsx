@@ -50,10 +50,7 @@ export const BuyerInfo: FC<BuyerInfo.Props> = ({ transactionId, ui, ...props }) 
 
 						{events ? (
 							<>
-								<BuyerInfoEvents
-									locale={locale}
-									events={events}
-								/>
+								<BuyerInfoEvents events={events} />
 								<BuyerInfoScore rank={events.score.rank} />
 							</>
 						) : (

@@ -1,4 +1,4 @@
-import { useElementVisibility, useLocale } from "@use-pico/client/hook";
+import { useElementVisibility } from "@use-pico/client/hook";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { type FC, Suspense, useRef } from "react";
@@ -11,7 +11,6 @@ export namespace ListingListContainer {
 }
 
 export const ListingListContainer: FC<ListingListContainer.Props> = ({ query, ...props }) => {
-	const locale = useLocale();
 	const scrollerRef = useRef<HTMLDivElement>(null);
 
 	const visibility = useElementVisibility({
@@ -37,7 +36,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({ query, ..
 			<Suspense fallback={<SpinnerContainer />}>
 				<ListingListContent
 					query={query}
-					locale={locale}
 					visibility={visibility}
 				/>
 			</Suspense>

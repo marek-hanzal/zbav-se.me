@@ -1,3 +1,4 @@
+import { useLocale } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -6,12 +7,12 @@ import { uiBackButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
 export namespace FeedDefaultPendingPage {
-	export interface Props {
-		locale: string;
-	}
+	export type Props = {};
 }
 
-export const FeedDefaultPendingPage: FC<FeedDefaultPendingPage.Props> = ({ locale }) => {
+export const FeedDefaultPendingPage: FC<FeedDefaultPendingPage.Props> = () => {
+	const locale = useLocale();
+
 	return (
 		<FlowContainer
 			left={

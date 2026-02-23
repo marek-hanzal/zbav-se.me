@@ -1,5 +1,5 @@
 import { VisibilityProvider } from "@use-pico/client/context";
-import type { useElementVisibility } from "@use-pico/client/hook";
+import { type useElementVisibility, useLocale } from "@use-pico/client/hook";
 import { ChevronRightIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -15,12 +15,12 @@ import { Content } from "./Content";
 export namespace ListingListContent {
 	export interface Props {
 		query: tListingQuery;
-		locale: string;
 		visibility: ReturnType<typeof useElementVisibility>;
 	}
 }
 
-export const ListingListContent: FC<ListingListContent.Props> = ({ query, locale, visibility }) => {
+export const ListingListContent: FC<ListingListContent.Props> = ({ query, visibility }) => {
+	const locale = useLocale();
 	const listingCollectionQuery = withListingQuery.useCollectionQuery(query);
 
 	if (listingCollectionQuery.data.length === 0) {

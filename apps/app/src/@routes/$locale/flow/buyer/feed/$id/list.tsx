@@ -40,13 +40,11 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 		);
 	},
 	component() {
-		const { locale } = Route.useParams();
 		const { scrollToId } = Route.useSearch();
 		const { feed } = Route.useLoaderData();
 
 		return (
 			<FeedListPage
-				locale={locale}
 				feed={feed}
 				scrollToId={scrollToId}
 			/>

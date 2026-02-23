@@ -1,5 +1,5 @@
 import { VisibilityProvider } from "@use-pico/client/context";
-import type { useElementVisibility } from "@use-pico/client/hook";
+import { type useElementVisibility, useLocale } from "@use-pico/client/hook";
 import { ChevronLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
@@ -19,7 +19,6 @@ export namespace ListingListContent {
 		appendix?: ReactNode;
 		feedId: string;
 		withScore: boolean;
-		locale: string;
 		visibility: ReturnType<typeof useElementVisibility>;
 	}
 }
@@ -30,9 +29,9 @@ export const ListingListContent: FC<ListingListContent.Props> = ({
 	appendix,
 	feedId,
 	withScore,
-	locale,
 	visibility,
 }) => {
+	const locale = useLocale();
 	const listingCollectionQuery = withListingQuery.useCollectionQuery(query);
 
 	if (listingCollectionQuery.data.length === 0) {
