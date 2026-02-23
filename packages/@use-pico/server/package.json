@@ -19,17 +19,17 @@
 		"yaml": "2.8.2"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.4.2",
+		"@biomejs/biome": "2.4.4",
 		"@rollup/plugin-commonjs": "29.0.0",
 		"@rollup/plugin-node-resolve": "16.0.3",
 		"@rollup/plugin-typescript": "12.3.0",
 		"@types/node": "25.3.0",
 		"@types/react": "19.2.14",
-		"@typescript/native-preview": "7.0.0-dev.20260219.1",
+		"@typescript/native-preview": "7.0.0-dev.20260223.1",
 		"@use-pico/tsconfig": "5.0.0",
 		"npm-run-all2": "8.0.4",
 		"react": "19.2.4",
-		"rollup": "4.57.1",
+		"rollup": "4.59.0",
 		"rollup-plugin-dts": "6.3.0",
 		"typescript": "beta",
 		"vitest": "4.0.18"
