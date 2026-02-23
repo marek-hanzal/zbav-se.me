@@ -1012,132 +1012,6 @@ export const sDraftGalleryCreate = {
     ]
 } as const;
 
-export const sListingItem = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        }
-    },
-    required: [
-        'id'
-    ]
-} as const;
-
-export const sListingQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
-        },
-        filter: {
-            $ref: '#/components/schemas/ListingFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingSort'
-            }
-        }
-    }
-} as const;
-
-export const sListingFilter = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sListingWhere = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sListingSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/ListingSortField'
-        },
-        order: {
-            $ref: '#/components/schemas/OrderEnum'
-        }
-    },
-    required: [
-        'field',
-        'order'
-    ]
-} as const;
-
-export const sListingSortField = {
-    type: 'string',
-    enum: [
-        'price',
-        'condition',
-        'age',
-        'createdAt',
-        'updatedAt',
-        'expiresAt'
-    ]
-} as const;
-
-export const sListingCountQuery = {
-    type: 'object',
-    properties: {
-        filter: {
-            $ref: '#/components/schemas/ListingFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingWhere'
-        },
-        count: {
-            type: 'array',
-            items: {
-                type: 'string',
-                enum: [
-                    'total',
-                    'filter',
-                    'where'
-                ]
-            }
-        }
-    }
-} as const;
-
 export const sListing = {
     type: 'object',
     properties: {
@@ -1300,6 +1174,120 @@ export const sListing = {
         'category',
         'gallery'
     ]
+} as const;
+
+export const sListingQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/ListingFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/ListingWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/ListingSort'
+            }
+        }
+    }
+} as const;
+
+export const sListingFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sListingWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sListingSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/ListingSortField'
+        },
+        order: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'order'
+    ]
+} as const;
+
+export const sListingSortField = {
+    type: 'string',
+    enum: [
+        'price',
+        'condition',
+        'age',
+        'createdAt',
+        'updatedAt',
+        'expiresAt'
+    ]
+} as const;
+
+export const sListingCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            $ref: '#/components/schemas/ListingFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/ListingWhere'
+        },
+        count: {
+            type: 'array',
+            items: {
+                type: 'string',
+                enum: [
+                    'total',
+                    'filter',
+                    'where'
+                ]
+            }
+        }
+    }
 } as const;
 
 export const sListingCreate = {

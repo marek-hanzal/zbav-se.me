@@ -4,15 +4,15 @@ import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { listingCollectionFx } from "~/@seller-user/listing/fx/listingCollectionFx";
-import { ListingItemSchema } from "~/@seller-user/listing/schema/ListingItemSchema";
 import { ListingQuerySchema } from "~/@seller-user/listing/schema/ListingQuerySchema";
+import { ListingSchema } from "~/@seller-user/listing/schema/ListingSchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
-const CollectionSchema = z.array(ListingItemSchema);
+const CollectionSchema = z.array(ListingSchema);
 
 export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* () {
 	const { sellerUserHono } = yield* RoutesContextFx;

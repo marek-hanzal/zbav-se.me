@@ -4,7 +4,7 @@ import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
-import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { Suspense, useRef, useState } from "react";
@@ -62,7 +62,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 		 *
 		 * Using collection, because "fetch" throws error on 4o4.
 		 */
-		const { data: listing } = withListingCollectionQuery.useSuspenseQuery({
+		const listingQuery = withListingQuery.useCollectionQuery({
 			cursor: {
 				page: 0,
 				size: 1,
@@ -95,7 +95,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 					/>
 				}
 			>
-				{listing.length > 0 ? (
+				{listingQuery.data.length > 0 ? (
 					<>
 						<FeedSetupButton
 							state={{
@@ -164,7 +164,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 					</>
 				) : null}
 
-				{listing.length > 0 ? null : <FirstListingStatus />}
+				{listingQuery.data.length > 0 ? null : <FirstListingStatus />}
 
 				<Suspense fallback={null}>
 					<FeedEditorSheet

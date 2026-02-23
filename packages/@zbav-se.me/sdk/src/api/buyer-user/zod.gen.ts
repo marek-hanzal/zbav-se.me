@@ -1375,19 +1375,6 @@ export const zIgnoreToggle = z.object({
 export type zIgnoreToggle = z.infer<typeof zIgnoreToggle>;
 
 /**
- * Listing collection item
- */
-export const zListingItem = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing'
-    })
-}).register(z.globalRegistry, {
-    description: 'Listing collection item'
-});
-
-export type zListingItem = z.infer<typeof zListingItem>;
-
-/**
  * Query object for listing count
  */
 export const zListingCountQuery = z.object({
@@ -1982,7 +1969,7 @@ export type zapiListingCollectionRequest = z.infer<typeof zApiListingCollectionD
 /**
  * Access collection of listings based on provided query
  */
-export const zApiListingCollectionResponse = z.array(zListingItem).register(z.globalRegistry, {
+export const zApiListingCollectionResponse = z.array(zListing).register(z.globalRegistry, {
     description: 'Access collection of listings based on provided query'
 });
 

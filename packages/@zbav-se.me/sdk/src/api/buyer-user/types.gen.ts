@@ -1292,16 +1292,6 @@ export type tIgnoreToggle = {
 };
 
 /**
- * Listing collection item
- */
-export type tListingItem = {
-    /**
-     * ID of the listing
-     */
-    id: string;
-};
-
-/**
  * Query object for listing count
  */
 export type tListingCountQuery = {
@@ -2095,7 +2085,7 @@ export type tApiListingCollectionResponse = {
     /**
      * Access collection of listings based on provided query
      */
-    200: Array<tListingItem>;
+    200: Array<tListing>;
 };
 
 export type apiListingCollectionResponse = tApiListingCollectionResponse[keyof tApiListingCollectionResponse];

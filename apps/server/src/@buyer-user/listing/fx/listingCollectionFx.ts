@@ -37,6 +37,7 @@ export const listingCollectionFx = Effect.fn("listingCollectionFx")(function* ({
 
 	return yield* withCollectionFx({
 		selectFx: withListingCollectionSelectFx({
+			userId,
 			sort,
 			meta,
 		}),

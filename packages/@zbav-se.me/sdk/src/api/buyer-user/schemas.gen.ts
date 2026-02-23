@@ -1754,18 +1754,6 @@ export const sIgnoreToggle = {
     ]
 } as const;
 
-export const sListingItem = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        }
-    },
-    required: [
-        'id'
-    ]
-} as const;
-
 export const sListingCountQuery = {
     type: 'object',
     properties: {

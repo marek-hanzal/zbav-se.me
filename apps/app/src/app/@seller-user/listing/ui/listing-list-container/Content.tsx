@@ -2,36 +2,23 @@ import { useNavigate } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
-import type { tListingQuery } from "@zbav-se.me/sdk/api/seller-user";
-import {
-	withListingCollectionQuery,
-	withListingFetchQuery,
-} from "@zbav-se.me/sdk/query/seller-user/listing";
-import type { FC } from "react";
+import { type FC, Suspense } from "react";
 import { CreateButton } from "~/app/@seller-user/draft/ui/button/CreateButton";
-import { Hero } from "~/app/@seller-user/listing/ui/Hero";
+import { ContentItem } from "./ContentItem";
 
 export namespace Content {
 	export interface Props extends MarkSuspense.Props {
-		query: tListingQuery;
+		listingIds: string[];
 	}
 }
 
-export const Content: FC<Content.Props> = ({ _suspense, query }) => {
+export const Content: FC<Content.Props> = ({ _suspense, listingIds }) => {
 	const navigate = useNavigate();
 	const locale = useLocale();
-	/**
-	 * This is intentional to trigger parent suspense
-	 */
-	const listingCollectionQuery = withListingCollectionQuery.useSuspenseQuery(query);
-
-	if (listingCollectionQuery.data.length === 0) {
-		return null;
-	}
 
 	return (
 		<>
-			{listingCollectionQuery.data.map(({ id: listingId }) => {
+			{listingIds.map((listingId) => {
 				return (
 					<VisibleContainer
 						key={listingId}
@@ -47,32 +34,15 @@ export const Content: FC<Content.Props> = ({ _suspense, query }) => {
 							round: "default",
 						}}
 					>
-						<withListingFetchQuery.Suspense
-							data={{
-								where: {
-									id: listingId,
-								},
-							}}
+						<Suspense
 							fallback={
 								<SpinnerContainer
 									data-ui={"MyListing-[SpinnerContainer.listing-fetch]"}
 								/>
 							}
 						>
-							{({ data: listing }) => {
-								return (
-									<Hero
-										data-ui={"MyListing-[Hero]"}
-										listing={listing}
-										heroImageProps={{
-											ui: {
-												round: "default",
-											},
-										}}
-									/>
-								);
-							}}
-						</withListingFetchQuery.Suspense>
+							<ContentItem listingId={listingId} />
+						</Suspense>
 					</VisibleContainer>
 				);
 			})}

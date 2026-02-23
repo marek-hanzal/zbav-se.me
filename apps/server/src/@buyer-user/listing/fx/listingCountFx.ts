@@ -33,6 +33,7 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 
 	return yield* withCountFx({
 		selectFx: withListingCollectionSelectFx({
+			userId,
 			meta,
 		}),
 		filter,

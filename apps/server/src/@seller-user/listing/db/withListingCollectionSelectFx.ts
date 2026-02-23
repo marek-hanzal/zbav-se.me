@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { withListingSourceSelectFx } from "~/@seller-user/listing/db/withListingSourceSelectFx";
+import { withListingSelectFx } from "~/@seller-user/listing/db/withListingSelectFx";
 
 export namespace withListingCollectionSelectFx {
-	export interface Props extends withListingSourceSelectFx.Props {}
+	export interface Props extends withListingSelectFx.Props {}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withListingCollectionSelectFx>>;
 }
@@ -10,9 +10,7 @@ export namespace withListingCollectionSelectFx {
 export const withListingCollectionSelectFx = Effect.fn("withListingCollectionSelectFx")(function* ({
 	sort,
 }: withListingCollectionSelectFx.Props) {
-	const sourceSelect = yield* withListingSourceSelectFx({
+	return yield* withListingSelectFx({
 		sort,
 	});
-
-	return sourceSelect.select("l.id");
 });

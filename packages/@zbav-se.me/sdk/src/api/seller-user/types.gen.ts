@@ -669,13 +669,83 @@ export type tDraftGalleryCreate = {
 };
 
 /**
- * Listing collection item
+ * Listing data
  */
-export type tListingItem = {
+export type tListing = {
     /**
      * ID of the listing
      */
     id: string;
+    /**
+     * Price of the listing
+     */
+    price: number;
+    priceType: tListingPriceEnum;
+    currency: tCurrencyEnum;
+    /**
+     * Condition of the item (0-based index)
+     */
+    condition: null | number;
+    /**
+     * Age of the item (0-based index)
+     */
+    age: null | number;
+    /**
+     * Delivery methods for the listing
+     */
+    delivery: null | Array<tListingDeliveryEnum>;
+    /**
+     * Warranty type for the listing
+     */
+    warranty: null | tListingWarrantyEnum;
+    restriction: tListingRestrictionEnum;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+    /**
+     * ID of the category
+     */
+    categoryId: string;
+    /**
+     * ID of the gallery
+     */
+    galleryId: string;
+    /**
+     * ID of the draft this listing was created from
+     */
+    draftId: null | string;
+    /**
+     * Expiration timestamp
+     */
+    expiresAt: string;
+    /**
+     * Title of the item
+     */
+    title: string;
+    /**
+     * Description of the item
+     */
+    description: null | string;
+    /**
+     * Pros of the item
+     */
+    pros: null | tProsCons;
+    /**
+     * Cons of the item
+     */
+    cons: null | tProsCons;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    /**
+     * Last update timestamp
+     */
+    updatedAt: string;
+    location: tLocation;
+    category: tCategory;
+    gallery: tGallery & unknown;
 };
 
 /**
@@ -764,86 +834,6 @@ export type tListingCountQuery = {
     filter?: tListingFilter;
     where?: tListingWhere;
     count?: Array<'total' | 'filter' | 'where'>;
-};
-
-/**
- * Listing data
- */
-export type tListing = {
-    /**
-     * ID of the listing
-     */
-    id: string;
-    /**
-     * Price of the listing
-     */
-    price: number;
-    priceType: tListingPriceEnum;
-    currency: tCurrencyEnum;
-    /**
-     * Condition of the item (0-based index)
-     */
-    condition: null | number;
-    /**
-     * Age of the item (0-based index)
-     */
-    age: null | number;
-    /**
-     * Delivery methods for the listing
-     */
-    delivery: null | Array<tListingDeliveryEnum>;
-    /**
-     * Warranty type for the listing
-     */
-    warranty: null | tListingWarrantyEnum;
-    restriction: tListingRestrictionEnum;
-    /**
-     * ID of the location
-     */
-    locationId: string;
-    /**
-     * ID of the category
-     */
-    categoryId: string;
-    /**
-     * ID of the gallery
-     */
-    galleryId: string;
-    /**
-     * ID of the draft this listing was created from
-     */
-    draftId: null | string;
-    /**
-     * Expiration timestamp
-     */
-    expiresAt: string;
-    /**
-     * Title of the item
-     */
-    title: string;
-    /**
-     * Description of the item
-     */
-    description: null | string;
-    /**
-     * Pros of the item
-     */
-    pros: null | tProsCons;
-    /**
-     * Cons of the item
-     */
-    cons: null | tProsCons;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    /**
-     * Last update timestamp
-     */
-    updatedAt: string;
-    location: tLocation;
-    category: tCategory;
-    gallery: tGallery & unknown;
 };
 
 /**
@@ -1490,7 +1480,7 @@ export type tApiListingCollectionResponse = {
     /**
      * Access collection of listings based on provided query
      */
-    200: Array<tListingItem>;
+    200: Array<tListing>;
 };
 
 export type apiListingCollectionResponse = tApiListingCollectionResponse[keyof tApiListingCollectionResponse];

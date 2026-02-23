@@ -691,17 +691,81 @@ export const zDraftGalleryCreate = z.object({
 export type zDraftGalleryCreate = z.infer<typeof zDraftGalleryCreate>;
 
 /**
- * Listing collection item
+ * Listing data
  */
-export const zListingItem = z.object({
+export const zListing = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the listing'
-    })
+    }),
+    price: z.number().register(z.globalRegistry, {
+        description: 'Price of the listing'
+    }),
+    priceType: zListingPriceEnum,
+    currency: zCurrencyEnum,
+    condition: z.union([
+        z.null(),
+        z.number()
+    ]),
+    age: z.union([
+        z.null(),
+        z.number()
+    ]),
+    delivery: z.union([
+        z.null(),
+        z.array(zListingDeliveryEnum)
+    ]),
+    warranty: z.union([
+        z.null(),
+        zListingWarrantyEnum
+    ]),
+    restriction: zListingRestrictionEnum,
+    locationId: z.string().register(z.globalRegistry, {
+        description: 'ID of the location'
+    }),
+    categoryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the category'
+    }),
+    galleryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery'
+    }),
+    draftId: z.union([
+        z.null(),
+        z.string()
+    ]),
+    expiresAt: z.string().register(z.globalRegistry, {
+        description: 'Expiration timestamp'
+    }),
+    title: z.string().register(z.globalRegistry, {
+        description: 'Title of the item'
+    }),
+    description: z.union([
+        z.null(),
+        z.string()
+    ]),
+    pros: z.union([
+        z.null(),
+        zProsCons
+    ]),
+    cons: z.union([
+        z.null(),
+        zProsCons
+    ]),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    updatedAt: z.string().register(z.globalRegistry, {
+        description: 'Last update timestamp'
+    }),
+    location: zLocation,
+    category: zCategory,
+    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
+        description: 'Listing gallery images'
+    }))
 }).register(z.globalRegistry, {
-    description: 'Listing collection item'
+    description: 'Listing data'
 });
 
-export type zListingItem = z.infer<typeof zListingItem>;
+export type zListing = z.infer<typeof zListing>;
 
 /**
  * User-land filters
@@ -805,83 +869,6 @@ export const zListingCountQuery = z.object({
 });
 
 export type zListingCountQuery = z.infer<typeof zListingCountQuery>;
-
-/**
- * Listing data
- */
-export const zListing = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing'
-    }),
-    price: z.number().register(z.globalRegistry, {
-        description: 'Price of the listing'
-    }),
-    priceType: zListingPriceEnum,
-    currency: zCurrencyEnum,
-    condition: z.union([
-        z.null(),
-        z.number()
-    ]),
-    age: z.union([
-        z.null(),
-        z.number()
-    ]),
-    delivery: z.union([
-        z.null(),
-        z.array(zListingDeliveryEnum)
-    ]),
-    warranty: z.union([
-        z.null(),
-        zListingWarrantyEnum
-    ]),
-    restriction: zListingRestrictionEnum,
-    locationId: z.string().register(z.globalRegistry, {
-        description: 'ID of the location'
-    }),
-    categoryId: z.string().register(z.globalRegistry, {
-        description: 'ID of the category'
-    }),
-    galleryId: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery'
-    }),
-    draftId: z.union([
-        z.null(),
-        z.string()
-    ]),
-    expiresAt: z.string().register(z.globalRegistry, {
-        description: 'Expiration timestamp'
-    }),
-    title: z.string().register(z.globalRegistry, {
-        description: 'Title of the item'
-    }),
-    description: z.union([
-        z.null(),
-        z.string()
-    ]),
-    pros: z.union([
-        z.null(),
-        zProsCons
-    ]),
-    cons: z.union([
-        z.null(),
-        zProsCons
-    ]),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    updatedAt: z.string().register(z.globalRegistry, {
-        description: 'Last update timestamp'
-    }),
-    location: zLocation,
-    category: zCategory,
-    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
-        description: 'Listing gallery images'
-    }))
-}).register(z.globalRegistry, {
-    description: 'Listing data'
-});
-
-export type zListing = z.infer<typeof zListing>;
 
 /**
  * Data for creating a new listing
@@ -1435,7 +1422,7 @@ export type zapiListingCollectionRequest = z.infer<typeof zApiListingCollectionD
 /**
  * Access collection of listings based on provided query
  */
-export const zApiListingCollectionResponse = z.array(zListingItem).register(z.globalRegistry, {
+export const zApiListingCollectionResponse = z.array(zListing).register(z.globalRegistry, {
     description: 'Access collection of listings based on provided query'
 });
 
