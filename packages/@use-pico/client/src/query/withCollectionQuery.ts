@@ -1,37 +1,46 @@
 import { type QueryKey, useSuspenseQuery } from "@tanstack/react-query";
-import type { EntitySchema } from "@use-pico/common/schema";
+import type { CountSchema, EntitySchema } from "@use-pico/common/schema";
 import type { withMutation } from "../mutation";
 import type { withQuery } from "./withQuery";
 
 export namespace withCollectionQuery {
 	export interface Props<
-		TCollectionData,
 		TResult extends EntitySchema.Type,
-		TFetchData,
-		TPatchValues,
+		TCollectionRequest,
+		TFetchRequest,
+		TCountRequest,
+		TPatchRequest,
 	> {
-		key(data: TCollectionData): QueryKey;
-		collectionQuery: withQuery.Api<TCollectionData, TResult[]>;
-		fetchQuery: withQuery.Api<TFetchData, TResult>;
-		patchMutation: withMutation.Api<TPatchValues, TResult, any>;
-		toIdKey(id: string): TFetchData;
+		key(data: TCollectionRequest): QueryKey;
+		collectionQuery: withQuery.Api<TCollectionRequest, TResult[]>;
+		fetchQuery: withQuery.Api<TFetchRequest, TResult>;
+		countQuery: withQuery.Api<TCountRequest, CountSchema.Type>;
+		patchMutation: withMutation.Api<TPatchRequest, TResult, any>;
+		toIdKey(id: string): TFetchRequest;
 	}
 }
 
 export const withCollectionQuery = <
-	TCollectionData,
 	TResult extends EntitySchema.Type,
-	TFetchData,
-	TPatchValues,
+	TCollectionRequest,
+	TFetchRequest,
+	TCountRequest,
+	TPatchRequest,
 >({
 	key,
 	collectionQuery,
 	fetchQuery,
 	patchMutation,
 	toIdKey,
-}: withCollectionQuery.Props<TCollectionData, TResult, TFetchData, TPatchValues>) => {
+}: withCollectionQuery.Props<
+	TResult,
+	TCollectionRequest,
+	TFetchRequest,
+	TCountRequest,
+	TPatchRequest
+>) => {
 	return {
-		useCollectionQuery(data: TCollectionData) {
+		useCollectionQuery(data: TCollectionRequest) {
 			const set = fetchQuery.useSet();
 
 			return useSuspenseQuery({
@@ -48,7 +57,7 @@ export const withCollectionQuery = <
 		useQuery(id: string, opts?: withQuery.QueryOptions<TResult> | undefined) {
 			return fetchQuery.useSuspenseQuery(toIdKey(id), opts);
 		},
-		useFetchQuery(data: TFetchData, opts?: withQuery.QueryOptions<TResult> | undefined) {
+		useFetchQuery(data: TFetchRequest, opts?: withQuery.QueryOptions<TResult> | undefined) {
 			return fetchQuery.useSuspenseQuery(data, opts);
 		},
 		useMutation() {
