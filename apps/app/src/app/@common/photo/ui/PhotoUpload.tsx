@@ -116,7 +116,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 			{...props}
 		>
 			<input
-				data-ui="PhotoUpload-Input"
+				data-ui="PhotoUpload-[Input]"
 				ref={inputRef}
 				type="file"
 				accept="image/*"

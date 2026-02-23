@@ -40,7 +40,7 @@ export const ListingListContent: FC<ListingListContent.Props> = ({
 			renderEmptyFn()
 		) : (
 			<Status
-				data-ui={"ListingListContainer-[Status-empty]"}
+				data-ui={"ListingListContainer-[Status.empty]"}
 				key={"no-listings"}
 				icon={"icon-[streamline--sad-face-remix]"}
 				textTitle={translator.text("No listings (title)")}

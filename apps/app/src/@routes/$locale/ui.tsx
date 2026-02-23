@@ -6,7 +6,7 @@ export const Route = createFileRoute("/$locale/ui")({
 	component() {
 		return (
 			<Container
-				data-ui="/ui[Container]"
+				data-ui="Ui[Container]"
 				ui={{
 					layout: "vertical-content-footer",
 					height: "full",

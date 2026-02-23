@@ -45,7 +45,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 			<Fade scrollableRef={containerRef} />
 
 			<Container
-				data-ui={"HomeMenu-Content[Container]"}
+				data-ui={"HomeMenu-[Content]"}
 				ref={containerRef}
 				ui={{
 					layout: "vertical-flex",

@@ -15,7 +15,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/favourite/list")({
 				right={<HomeMenuButton />}
 			>
 				<FavouriteListContainer
-					data-ui={"/buyer/favourite/list[FeedFavouriteList]"}
+					data-ui={"BuyerFavouriteList[FeedFavouriteList]"}
 					query={{
 						sort: [
 							{
@@ -27,9 +27,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/favourite/list")({
 					linkTo={{
 						header: ({ feedId, children }) => (
 							<LinkTo
-								data-ui={
-									"/buyer/favourite/list-[FeedFavouriteList]-[LinkTo.header]"
-								}
+								data-ui={"BuyerFavouriteList-[LinkTo.header]"}
 								to={"/$locale/flow/buyer/feed/$id/favourite/list"}
 								params={{
 									locale,

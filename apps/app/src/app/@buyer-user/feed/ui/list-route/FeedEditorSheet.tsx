@@ -19,7 +19,7 @@ export const FeedEditorSheet: FC<FeedEditorSheet.Props> = ({ feedId, state, onRe
 
 	return (
 		<EditorSheet
-			data-ui={"/buyer/feed/$id/list-[FeedEditorSheet]"}
+			data-ui={"FeedEditorSheet[EditorSheet]"}
 			feed={feedQuery.data}
 			state={state}
 			noDelete

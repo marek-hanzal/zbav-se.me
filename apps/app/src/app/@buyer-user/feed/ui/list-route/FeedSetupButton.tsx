@@ -13,7 +13,7 @@ export namespace FeedSetupButton {
 export const FeedSetupButton: FC<FeedSetupButton.Props> = ({ state, label, ui, ...props }) => {
 	return (
 		<SheetButton
-			data-ui={"/buyer/feed/$id/list-[FeedSetupButton]"}
+			data-ui={"FeedSetupButton[SheetButton]"}
 			label={label ?? translator.text("Adjust feed (button)")}
 			state={state}
 			defaultOpen={false}

@@ -22,7 +22,7 @@ export const CategorySelect: FC<CategorySelect.Props> = ({
 
 	return (
 		<Container
-			data-ui={"CategorySelectionContainer"}
+			data-ui={"CategorySelect[Container]"}
 			ui={{
 				layout: "vertical-header-content",
 				height: "full",

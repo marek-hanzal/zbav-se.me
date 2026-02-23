@@ -32,7 +32,7 @@ export const ListingListContent: FC<ListingListContent.Props> = ({ query, locale
 				}}
 			>
 				<Status
-					data-ui={"MyListing-[Status-empty]"}
+					data-ui={"MyListing-[Status.empty]"}
 					icon={SearchIcon}
 					textTitle={translator.text("No my listings (title)")}
 					textMessage={translator.text("No my listings (message)")}

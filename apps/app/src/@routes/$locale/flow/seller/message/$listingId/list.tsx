@@ -20,7 +20,7 @@ export const Route = createFileRoute("/$locale/flow/seller/message/$listingId/li
 
 		return (
 			<TitleContainer
-				data-ui="/seller/message/list[TitleContainer]"
+				data-ui="SellerMessageList[TitleContainer]"
 				textTitle={translator.text("Messages (title)")}
 				left={
 					<LinkTo
@@ -50,7 +50,7 @@ export const Route = createFileRoute("/$locale/flow/seller/message/$listingId/li
 
 		return (
 			<TitleContainer
-				data-ui="/seller/message/list[TitleContainer]"
+				data-ui="SellerMessageList[TitleContainer]"
 				textTitle={translator.text("Messages (title)")}
 				textSubtitle={listing.title}
 				left={

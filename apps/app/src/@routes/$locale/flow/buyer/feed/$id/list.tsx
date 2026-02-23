@@ -76,7 +76,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 
 		return (
 			<FlowContainer
-				data-ui={"/buyer/feed/$id/list[FlowContainer]"}
+				data-ui={"BuyerFeedList[FlowContainer]"}
 				left={
 					<LinkTo
 						{...uiBackButton({
@@ -85,7 +85,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 							},
 							className: [],
 						})}
-						data-ui={"/buyer/feed/$id/list-[LinkTo.left]"}
+						data-ui={"BuyerFeedList-[LinkTo.left]"}
 						icon={ArrowLeftIcon}
 						to={"/$locale/flow/home"}
 						params={{
@@ -109,7 +109,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 						/>
 
 						<ListingListContainer
-							data-ui={"/buyer/feed/$id/list-[ListingListContainer]"}
+							data-ui={"BuyerFeedList-[ListingListContainer]"}
 							ref={containerRef}
 							feedId={feed.id}
 							/**

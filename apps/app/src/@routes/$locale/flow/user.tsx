@@ -12,7 +12,7 @@ export const Route = createFileRoute("/$locale/flow/user")({
 	pendingComponent() {
 		return (
 			<TitleContainer
-				data-ui={"User"}
+				data-ui={"User[TitleContainer]"}
 				textTitle={translator.text("User profile (title)")}
 				ui={{
 					layout: "vertical-header-content",
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/$locale/flow/user")({
 
 		return (
 			<TitleContainer
-				data-ui={"User"}
+				data-ui={"User[TitleContainer]"}
 				textTitle={translator.text("User profile (title)")}
 				ui={{
 					layout: "vertical-header-content",

@@ -8,7 +8,7 @@ export const Route = createFileRoute("/$locale/flow/seller/message/list")({
 	component() {
 		return (
 			<TitleContainer
-				data-ui="/seller/message/list[TitleContainer]"
+				data-ui="SellerMessageList[TitleContainer]"
 				textTitle={translator.text("Messages (title)")}
 				right={<HomeMenuButton />}
 			>

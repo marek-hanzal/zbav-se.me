@@ -31,7 +31,7 @@ export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({
 	return (
 		<PatchContainer
 			title={translator.text("Expire (title)")}
-			data-ui={"Setup-[TitleContainer.expireAt]"}
+			data-ui={"Setup-[TitleContainer.expire-at]"}
 			onCancel={onCancel}
 			onSave={() =>
 				expiresAt &&

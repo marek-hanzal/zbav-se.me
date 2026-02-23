@@ -27,7 +27,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/select")({
 
 		return (
 			<TitleContainer
-				data-ui={"FeedSelect"}
+				data-ui={"FeedSelect[TitleContainer]"}
 				textTitle={translator.text("Feed select (title)")}
 				ui={{
 					layout: "vertical-header-content",
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/select")({
 				right={<HomeMenuButton />}
 			>
 				<FeedListContainer
-					data-ui={"/buyer/feed/select[FeedListContainer]"}
+					data-ui={"FeedSelect-[FeedListContainer]"}
 					query={{
 						cursor: {
 							page: 0,
@@ -55,7 +55,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/select")({
 					linkTo={{
 						header: ({ feedId, children }) => (
 							<LinkTo
-								data-ui={"/buyer/feed/select-[FeedListContainer]-[LinkTo.header]"}
+								data-ui={"FeedSelect-[LinkTo.header]"}
 								to={"/$locale/flow/buyer/feed/$id/list"}
 								params={{
 									locale,

@@ -43,7 +43,7 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
 	return (
 		<PatchContainer
 			title={translator.text("Price type (title)")}
-			data-ui={"Setup-[TitleContainer.priceType]"}
+			data-ui={"Setup-[TitleContainer.price-type]"}
 			onCancel={onCancel}
 			onSave={() =>
 				patch({
