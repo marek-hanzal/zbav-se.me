@@ -12,12 +12,16 @@ import { FavouriteListAppendix } from "~/app/@buyer-user/feed-favourite/ui/Favou
 import { ListingListContainer } from "~/app/@buyer-user/listing/ui/ListingListContainer";
 
 export namespace FeedFavouriteListPage {
-	export interface Props {
+	export interface Props extends FlowContainer.Props {
 		feedId: string;
 	}
 }
 
-export const FeedFavouriteListPage: FC<FeedFavouriteListPage.Props> = ({ feedId }) => {
+export const FeedFavouriteListPage: FC<FeedFavouriteListPage.Props> = ({
+	feedId,
+	children,
+	...props
+}) => {
 	const locale = useLocale();
 	const containerRef = useRef<HTMLDivElement>(null);
 	const { sentinelRef, inView: isLast } = useSentinel<HTMLDivElement>({
@@ -43,6 +47,7 @@ export const FeedFavouriteListPage: FC<FeedFavouriteListPage.Props> = ({ feedId 
 					className={"transition-all"}
 				/>
 			}
+			{...props}
 		>
 			<ListingListContainer
 				ref={containerRef}
@@ -90,6 +95,8 @@ export const FeedFavouriteListPage: FC<FeedFavouriteListPage.Props> = ({ feedId 
 				}}
 				appendix={<FavouriteListAppendix ref={sentinelRef} />}
 			/>
+
+			{children}
 		</FlowContainer>
 	);
 };

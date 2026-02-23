@@ -14,13 +14,13 @@ import { FirstListingStatus } from "~/app/@buyer-user/feed/ui/list-route/FirstLi
 import { ListingListContainer } from "~/app/@buyer-user/listing/ui/ListingListContainer";
 
 export namespace FeedListPage {
-	export interface Props {
+	export interface Props extends FlowContainer.Props {
 		feed: tFeed;
 		scrollToId: string | undefined;
 	}
 }
 
-export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId }) => {
+export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, children, ...props }) => {
 	const locale = useLocale();
 	const router = useRouter();
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -63,6 +63,7 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId }) => {
 					className={"transition-all"}
 				/>
 			}
+			{...props}
 		>
 			{listingQuery.data.length > 0 ? (
 				<>
@@ -148,6 +149,8 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId }) => {
 					}}
 				/>
 			</Suspense>
+
+			{children}
 		</FlowContainer>
 	);
 };

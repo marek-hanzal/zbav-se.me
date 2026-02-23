@@ -7,10 +7,10 @@ import { FeedListContainer } from "~/app/@buyer-user/feed/ui/FeedListContainer";
 import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
 export namespace FeedSelectPage {
-	export type Props = {};
+	export interface Props extends TitleContainer.Props {}
 }
 
-export const FeedSelectPage: FC<FeedSelectPage.Props> = () => {
+export const FeedSelectPage: FC<FeedSelectPage.Props> = ({ children, ui, ...props }) => {
 	const locale = useLocale();
 	const feedCountLimit = 3;
 
@@ -20,8 +20,10 @@ export const FeedSelectPage: FC<FeedSelectPage.Props> = () => {
 			textTitle={translator.text("Feed select (title)")}
 			ui={{
 				layout: "vertical-header-content",
+				...ui,
 			}}
 			right={<HomeMenuButton />}
+			{...props}
 		>
 			<FeedListContainer
 				data-ui={"FeedSelect-[FeedListContainer]"}
@@ -60,6 +62,8 @@ export const FeedSelectPage: FC<FeedSelectPage.Props> = () => {
 					),
 				}}
 			/>
+
+			{children}
 		</TitleContainer>
 	);
 };

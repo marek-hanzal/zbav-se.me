@@ -7,10 +7,13 @@ import { uiBackButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
 export namespace FeedDefaultPendingPage {
-	export type Props = {};
+	export interface Props extends FlowContainer.Props {}
 }
 
-export const FeedDefaultPendingPage: FC<FeedDefaultPendingPage.Props> = () => {
+export const FeedDefaultPendingPage: FC<FeedDefaultPendingPage.Props> = ({
+	children,
+	...props
+}) => {
 	const locale = useLocale();
 
 	return (
@@ -27,8 +30,11 @@ export const FeedDefaultPendingPage: FC<FeedDefaultPendingPage.Props> = () => {
 					}}
 				/>
 			}
+			{...props}
 		>
 			<SpinnerContainer />
+
+			{children}
 		</FlowContainer>
 	);
 };
