@@ -2,8 +2,8 @@ import { useSelection } from "@use-pico/client/hook";
 import type { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
-import { useFeedPatch } from "~/app/@buyer-user/feed/hook/useFeedPatch";
 import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
 import { CategorySelect } from "~/app/@session/category/ui/CategorySelect";
 
@@ -15,11 +15,8 @@ export namespace CategoryPatch {
 	}
 }
 
-export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
-	const { patch, isPending } = useFeedPatch({
-		feed,
-		onSettled,
-	});
+export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, ...props }) => {
+	const patchMutation = withFeedQuery.useMutation();
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
 		initial: feed.query?.filter?.categoryIdIn?.map((id) => ({
@@ -32,19 +29,30 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, onCanc
 	return (
 		<PatchContainer
 			data-ui={"CategoryPatch[Container]"}
-			onCancel={onCancel}
 			onSave={() => {
-				patch({
-					query: {
-						...feed.query,
-						filter: {
-							...feed.query?.filter,
-							categoryIdIn: selection.optional.multiId(),
+				patchMutation.mutate(
+					{
+						query: {
+							where: {
+								id: feed.id,
+							},
+						},
+						patch: {
+							query: {
+								...feed.query,
+								filter: {
+									...feed.query?.filter,
+									categoryIdIn: selection.optional.multiId(),
+								},
+							},
 						},
 					},
-				});
+					{
+						onSettled,
+					},
+				);
 			}}
-			loading={isPending}
+			loading={patchMutation.isPending}
 			disabled={false}
 			{...props}
 		>

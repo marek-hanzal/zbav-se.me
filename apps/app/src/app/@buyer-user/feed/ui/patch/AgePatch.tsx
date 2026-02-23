@@ -1,9 +1,9 @@
 import { useSelection } from "@use-pico/client/hook";
 import type { Container } from "@use-pico/client/ui/container";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
-import { useFeedPatch } from "~/app/@buyer-user/feed/hook/useFeedPatch";
 import { AgeSelection } from "~/app/@common/age/ui/AgeSelection";
 import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
 
@@ -15,11 +15,8 @@ export namespace AgePatch {
 	}
 }
 
-export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
-	const { patch, isPending } = useFeedPatch({
-		feed,
-		onSettled,
-	});
+export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettled, ...props }) => {
+	const patchMutation = withFeedQuery.useMutation();
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "multi",
 		initial: feed.query?.filter?.ageIn?.map((item) => ({
@@ -30,21 +27,32 @@ export const AgePatch: FC<AgePatch.Props> = ({ feed, onSettled, onCancel, ...pro
 	return (
 		<PatchContainer
 			data-ui={"AgePatch[Container]"}
-			onCancel={onCancel}
 			onSave={() => {
-				patch({
-					query: {
-						...feed.query,
-						filter: {
-							...feed.query?.filter,
-							ageIn: selection.optional
-								.multiId()
-								.map((id) => Number.parseInt(id, 10)),
+				patchMutation.mutate(
+					{
+						query: {
+							where: {
+								id: feed.id,
+							},
+						},
+						patch: {
+							query: {
+								...feed.query,
+								filter: {
+									...feed.query?.filter,
+									ageIn: selection.optional
+										.multiId()
+										.map((id) => Number.parseInt(id, 10)),
+								},
+							},
 						},
 					},
-				});
+					{
+						onSettled,
+					},
+				);
 			}}
-			loading={isPending}
+			loading={patchMutation.isPending}
 			disabled={false}
 			{...props}
 		>

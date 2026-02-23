@@ -2,9 +2,9 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";
-import { useFeedPatch } from "~/app/@buyer-user/feed/hook/useFeedPatch";
 import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
 
 export namespace RangePatch {
@@ -16,10 +16,7 @@ export namespace RangePatch {
 }
 
 export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
-	const { patch, isPending } = useFeedPatch({
-		feed,
-		onSettled,
-	});
+	const patchMutation = withFeedQuery.useMutation();
 	const currentRange = feed.query?.filter?.range;
 	const [rangeValue, setRangeValue] = useState<string | undefined>(
 		currentRange !== undefined ? String(currentRange) : undefined,
@@ -27,15 +24,27 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 
 	const handleSave = () => {
 		const range = rangeValue ? parseFloat(rangeValue) : undefined;
-		patch({
-			query: {
-				...feed.query,
-				filter: {
-					...feed.query?.filter,
-					range: range !== undefined && !Number.isNaN(range) ? range : undefined,
+		patchMutation.mutate(
+			{
+				query: {
+					where: {
+						id: feed.id,
+					},
+				},
+				patch: {
+					query: {
+						...feed.query,
+						filter: {
+							...feed.query?.filter,
+							range: range !== undefined && !Number.isNaN(range) ? range : undefined,
+						},
+					},
 				},
 			},
-		});
+			{
+				onSettled,
+			},
+		);
 	};
 
 	return (
@@ -43,7 +52,7 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 			data-ui={"RangePatch[Container]"}
 			onCancel={onCancel}
 			onSave={handleSave}
-			loading={isPending}
+			loading={patchMutation.isPending}
 			disabled={false}
 			{...props}
 		>
