@@ -265,3 +265,12 @@ bun run build
 # Generate API SDK from OpenAPI spec
 cd packages/@zbav-se.me/sdk && bun run sdk
 ```
+
+## Contribution Guardrails
+
+- Shared implementation rules: `AGENTS.md`
+- App overlays:
+  - `apps/app/AGENTS.md`
+  - `apps/web/AGENTS.md`
+  - `apps/server/AGENTS.md`
+- Product and domain invariants source of truth: `MASTER.md`
