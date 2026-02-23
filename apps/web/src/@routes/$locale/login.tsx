@@ -273,7 +273,7 @@ export const Route = createFileRoute("/$locale/login")({
 										theme: "light",
 										text: "lg",
 									}}
-									label={"Login with passkey"}
+									label={translator.text("Login with passkey")}
 								/>
 							}
 							ui={{

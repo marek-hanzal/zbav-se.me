@@ -1,7 +1,7 @@
-import { translator } from "@use-pico/common/translator";
 import { useQueryClient } from "@tanstack/react-query";
 import { FavouriteIcon, FavouriteOffIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
+import { translator } from "@use-pico/common/translator";
 import { withFavouriteToggleMutation } from "@zbav-se.me/sdk/mutation/buyer-user/favourite";
 import { withFeedFavouriteCollectionQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
@@ -57,11 +57,11 @@ export const FavouriteButton: FC<FavouriteButton.Props> = ({ feedId, listingId, 
 			{({ data: listing }) => {
 				return (
 					<Button
-						label={
+						label={translator.text(
 							listing.isFavourite
 								? "Remove from favourite (button)"
-								: "Add to favourite (button)"
-						}
+								: "Add to favourite (button)",
+						)}
 						iconEnabled={listing.isFavourite ? FavouriteIcon : FavouriteOffIcon}
 						disabled={favouriteToggle.isPending}
 						loading={favouriteToggle.isPending}

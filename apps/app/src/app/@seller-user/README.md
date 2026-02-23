@@ -54,3 +54,10 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 - `@session` – categories, location, transaction-status, upload/S3.
 - `@seller-session` – seller info, user events (seller).
 - `@user` – gallery, messages, uploads.
+
+## Recent updates
+
+- Draft editor was split into focused modules in `@seller-user/draft/ui/draft-editor/`:
+  - `DraftEditorDefaultView.tsx` for the main draft page UI
+  - `createDraftEditorViews.tsx` for patch view mapping
+  - `type.ts` for shared view union type

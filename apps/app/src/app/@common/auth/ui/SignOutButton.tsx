@@ -2,6 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { Button } from "@use-pico/client/ui/button";
 import { linkTo } from "@use-pico/common/link-to";
+import { translator } from "@use-pico/common/translator";
 import { LockIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { withSignOutMutation } from "~/app/@common/auth/mutation/withSignOutMutation";
@@ -33,7 +34,7 @@ export const SignOutButton: FC<SignOutButton.Props> = ({ ui, ...props }) => {
 			onClick={() => signOutMutation.mutate({})}
 			disabled={signOutMutation.isPending}
 			loading={signOutMutation.isPending}
-			label={"Sign out"}
+			label={translator.text("Sign out")}
 			ui={{
 				tone: "secondary",
 				theme: "light",

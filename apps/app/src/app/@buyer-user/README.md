@@ -56,3 +56,7 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 - `@session` – general session operations (categories, location, transaction-status).
 - `@buyer-session` – browsing listings, listing events.
 - `@user` – gallery, messages, uploads.
+
+## Recent updates
+
+- Buyer feed route UI has route-level helpers in `@buyer-user/feed/ui/list-route/` (setup button, editor sheet, empty/appendix/first-listing statuses) to keep route files smaller and easier to read.

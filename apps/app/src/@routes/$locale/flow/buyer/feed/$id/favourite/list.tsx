@@ -25,7 +25,7 @@ export const EmptyFavourite: FC<EmptyFavourite.Props> = ({ ...props }) => {
 	return (
 		<Status
 			icon={DeadEndIcon}
-			textTitle={translator.text("Empty favourite - category and favourite (title)")}
+			textTitle={translator.text("No favourites yet (title)")}
 			action={
 				<>
 					<LinkTo
@@ -94,8 +94,10 @@ export const EmptyFeed: FC<EmptyFeed.Props> = ({ ...props }) => {
 		>
 			<Status
 				icon={DeadEndIcon}
-				textTitle={translator.text("Empty favourite feed (title)")}
-				textMessage={translator.text("Empty favourite feed (message)")}
+				textTitle={translator.text("No listings in this favourites feed (title)")}
+				textMessage={translator.text(
+					"Try changing your feed or open all listings (message)",
+				)}
 				action={
 					<Container
 						ui={{
@@ -181,8 +183,8 @@ export const Appendix: FC<Appendix.Props> = ({ ...props }) => {
 		>
 			<Status
 				icon={DeadEndIcon}
-				textTitle={translator.text("That's all for now - favourite (title)")}
-				textMessage={translator.text("No more listings to show - favourite (message)")}
+				textTitle={translator.text("That's all for now (title)")}
+				textMessage={translator.text("No more listings to show (message)")}
 				action={
 					<Container
 						ui={{

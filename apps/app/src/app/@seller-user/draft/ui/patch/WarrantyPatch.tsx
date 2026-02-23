@@ -1,5 +1,6 @@
 import { useSelection } from "@use-pico/client/hook";
 import type { EntitySchema } from "@use-pico/common/schema";
+import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListingWarrantyEnum } from "@zbav-se.me/sdk/api/seller-user";
 import type { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
@@ -41,7 +42,7 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({
 
 	return (
 		<PatchContainer
-			title="Warranty (title)"
+			title={translator.text("Warranty (title)")}
 			data-ui={"Setup-[TitleContainer.warranty]"}
 			onCancel={onCancel}
 			onSave={() =>

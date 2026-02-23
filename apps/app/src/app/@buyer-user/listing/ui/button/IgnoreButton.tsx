@@ -59,11 +59,11 @@ export const IgnoreButton: FC<IgnoreButton.Props> = ({
 						}}
 						loading={ignoreToggleMutation.isPending}
 						disabled={listing.isFavourite || disabled}
-						label={
+						label={translator.text(
 							listing.isIgnored
 								? "Unignore listing (button)"
-								: "Ignore listing (button)"
-						}
+								: "Ignore listing (button)",
+						)}
 						confirmProps={{
 							ui: {
 								tone: "warning",

@@ -71,11 +71,11 @@ export const FlagButton: FC<FlagButton.Props> = ({
 							}}
 							loading={flagToggleMutation.isPending}
 							disabled={listing.isFavourite || listing.isIgnored || disabled}
-							label={
+							label={translator.text(
 								listing.hasFlag
 									? "Unflag listing (button)"
-									: "Flag listing (button)"
-							}
+									: "Flag listing (button)",
+							)}
 							buttonProps={{
 								onClick(event) {
 									setIsConfirm(true);

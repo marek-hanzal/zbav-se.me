@@ -1,0 +1,17 @@
+export type DraftEditorView =
+	| "default"
+	| "title"
+	| "location"
+	| "price"
+	| "priceType"
+	| "category"
+	| "condition"
+	| "age"
+	| "delivery"
+	| "warranty"
+	| "restriction"
+	| "gallery"
+	| "expireAt"
+	| "description"
+	| "pros"
+	| "cons";

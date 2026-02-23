@@ -1,4 +1,5 @@
 import { useSelection } from "@use-pico/client/hook";
+import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
@@ -36,7 +37,7 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSettled, ...pr
 
 	return (
 		<PatchContainer
-			title="Age (title)"
+			title={translator.text("Age (title)")}
 			data-ui={"Setup-[TitleContainer.age]"}
 			onCancel={onCancel}
 			onSave={() =>

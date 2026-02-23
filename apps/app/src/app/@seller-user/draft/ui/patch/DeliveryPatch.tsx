@@ -1,5 +1,6 @@
 import { useSelection } from "@use-pico/client/hook";
 import type { EntitySchema } from "@use-pico/common/schema";
+import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListingDeliveryEnum } from "@zbav-se.me/sdk/api/seller-user";
 import type { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
@@ -37,7 +38,7 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({
 
 	return (
 		<PatchContainer
-			title="Delivery (title)"
+			title={translator.text("Delivery (title)")}
 			data-ui={"Setup-[TitleContainer.delivery]"}
 			onCancel={onCancel}
 			onSave={() =>

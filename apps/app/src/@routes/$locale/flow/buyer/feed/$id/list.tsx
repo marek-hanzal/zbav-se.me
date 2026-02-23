@@ -1,308 +1,24 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { useLocale, useSentinel } from "@use-pico/client/hook";
-import {
-	ArrowLeftIcon,
-	ChevronLeftIcon,
-	ChevronRightIcon,
-	RefreshIcon,
-} from "@use-pico/client/icon";
-import { Button, uiButton } from "@use-pico/client/ui/button";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { useSentinel } from "@use-pico/client/hook";
+import { ArrowLeftIcon } from "@use-pico/client/icon";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Status } from "@use-pico/client/ui/status";
-import { Tx } from "@use-pico/client/ui/tx";
-import { translator } from "@use-pico/common/translator";
-import type { StateType } from "@use-pico/common/type";
-import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { FlowContainer } from "@zbav-se.me/ui/container";
-import { DeadEndIcon, FirstIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { type FC, type RefObject, Suspense, useRef, useState } from "react";
+import { Suspense, useRef, useState } from "react";
 import z from "zod";
-import { EditorSheet } from "~/app/@buyer-user/feed/ui/EditorSheet";
+import { FeedEditorSheet } from "~/app/@buyer-user/feed/ui/list-route/FeedEditorSheet";
+import { FeedListStatus } from "~/app/@buyer-user/feed/ui/list-route/FeedListStatus";
+import { FeedSetupButton } from "~/app/@buyer-user/feed/ui/list-route/FeedSetupButton";
+import { FirstListingStatus } from "~/app/@buyer-user/feed/ui/list-route/FirstListingStatus";
 import { ListingListContainer } from "~/app/@buyer-user/listing/ui/ListingListContainer";
-import { SheetButton } from "~/app/@common/sheet/ui/SheetButton";
-
-export namespace SetupButton {
-	export interface Props extends Partial<SheetButton.Props> {
-		feed: tFeed;
-		containerRef: RefObject<HTMLDivElement | null>;
-		state: StateType.State<boolean>;
-	}
-}
-
-export const SetupButton: FC<SetupButton.Props> = ({
-	feed,
-	containerRef,
-	state,
-	label,
-	ui,
-	...props
-}) => {
-	return (
-		<SheetButton
-			data-ui={"/buyer/feed/$id/list-[FeedSetupButton]"}
-			label={label ?? null}
-			state={state}
-			defaultOpen={false}
-			ui={{
-				tone: "secondary",
-				theme: "light",
-				justify: "center",
-				items: "center",
-				square: "default",
-				zIndex: true,
-				round: "full",
-				snapTo: "top-right",
-				text: "xl",
-				opacity: "low",
-				...ui,
-			}}
-			{...props}
-		/>
-	);
-};
-
-export namespace Appendix {
-	export interface Props extends Container.Props {
-		feed: tFeed;
-		containerRef: RefObject<HTMLDivElement | null>;
-		state: StateType.State<boolean>;
-	}
-}
-
-export const Appendix: FC<Appendix.Props> = ({ feed, containerRef, state, ui, ...props }) => {
-	const locale = useLocale();
-
-	return (
-		<Container
-			ui={{
-				layout: "vertical-centered",
-				height: "full",
-				...ui,
-			}}
-			{...props}
-		>
-			<Status
-				icon={DeadEndIcon}
-				textTitle={translator.text("That's all for now (title)")}
-				textMessage={translator.text("That's all for now (message)")}
-				action={
-					<>
-						<SetupButton
-							feed={feed}
-							containerRef={containerRef}
-							state={state}
-							label={translator.text("Adjust feed (button)")}
-							iconProps={{
-								ui: {
-									text: "xl",
-								},
-							}}
-							ui={{
-								tone: "secondary",
-								theme: "light",
-								snapTo: undefined,
-								justify: "center",
-								round: "default",
-								text: "default",
-								size: "default",
-								width: "full",
-								font: "semibold",
-								square: undefined,
-							}}
-						/>
-
-						<LinkTo
-							icon={ChevronRightIcon}
-							iconPosition={"right"}
-							iconProps={{
-								ui: {
-									text: "xl",
-								},
-							}}
-							to={"/$locale/flow/home"}
-							params={{
-								locale,
-							}}
-							{...uiButton({
-								ui: {
-									tone: "link",
-									theme: "light",
-									text: "default",
-									size: "default",
-									justify: "center",
-									width: "full",
-									background: undefined,
-									border: false,
-									shadow: false,
-								},
-								className: [],
-							})}
-						>
-							<Tx label="Back to home (link)" />
-						</LinkTo>
-					</>
-				}
-				ui={{
-					tone: "brand",
-					theme: "light",
-					color: "lead",
-					inner: "4xl",
-				}}
-				className={[
-					"text-center",
-				]}
-			/>
-		</Container>
-	);
-};
-
-export namespace FeedEmpty {
-	export interface Props extends Container.Props {
-		feed: tFeed;
-		containerRef: RefObject<HTMLDivElement | null>;
-		state: StateType.State<boolean>;
-	}
-}
-
-export const FeedEmpty: FC<FeedEmpty.Props> = ({ feed, containerRef, state, ui, ...props }) => {
-	const locale = useLocale();
-	return (
-		<Container
-			ui={{
-				layout: "vertical-centered",
-				height: "full",
-				...ui,
-			}}
-			{...props}
-		>
-			<Status
-				icon={DeadEndIcon}
-				textTitle={translator.text("No listings in feed (title)")}
-				textMessage={translator.text("No listings in feed (message)")}
-				action={
-					<>
-						<SetupButton
-							feed={feed}
-							containerRef={containerRef}
-							state={state}
-							label={translator.text("Adjust feed (button)")}
-							iconProps={{
-								ui: {
-									text: "xl",
-								},
-							}}
-							ui={{
-								tone: "secondary",
-								theme: "light",
-								snapTo: undefined,
-								justify: "center",
-								round: "default",
-								text: "default",
-								size: "default",
-								width: "full",
-								font: "semibold",
-								square: undefined,
-							}}
-						/>
-
-						<LinkTo
-							icon={ChevronLeftIcon}
-							iconPosition={"left"}
-							iconProps={{
-								ui: {
-									text: "xl",
-								},
-							}}
-							to={"/$locale/flow/home"}
-							params={{
-								locale,
-							}}
-							{...uiButton({
-								ui: {
-									tone: "link",
-									theme: "light",
-									text: "default",
-									size: "default",
-									justify: "center",
-									width: "full",
-									background: undefined,
-									border: false,
-									shadow: false,
-								},
-								className: [],
-							})}
-						>
-							<Tx label="Back to home (link)" />
-						</LinkTo>
-					</>
-				}
-				ui={{
-					tone: "brand",
-					theme: "light",
-					color: "lead",
-					inner: "4xl",
-				}}
-				className={[
-					"text-center",
-				]}
-			/>
-		</Container>
-	);
-};
-
-export namespace FeedEditorSheet {
-	export interface Props {
-		feedId: string;
-		state: StateType.State<boolean>;
-		onRefresh(): void;
-	}
-}
-
-export const FeedEditorSheet: FC<FeedEditorSheet.Props> = ({ feedId, state, onRefresh }) => {
-	const feedQuery = withFeedQuery.useQuery(feedId);
-
-	return (
-		<EditorSheet
-			data-ui={"/buyer/feed/$id/list-[FeedEditorSheet]"}
-			feed={feedQuery.data}
-			state={state}
-			noDelete
-		>
-			<Button
-				onClick={onRefresh}
-				iconEnabled={RefreshIcon}
-				iconProps={{
-					ui: {
-						text: "xl",
-					},
-				}}
-				label={translator.text("Refresh feed (button)")}
-				ui={{
-					tone: "neutral",
-					theme: "light",
-					size: "default",
-					justify: "start",
-					items: "center",
-					background: "default",
-					round: undefined,
-					shadow: false,
-					border: false,
-					width: "full",
-				}}
-			/>
-		</EditorSheet>
-	);
-};
 
 export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 	validateSearch: z.object({
 		/**
-		 * If needed, we can restore scroll position to a particular listing
+		 * If needed, we can restore scroll position to a particular listing.
 		 */
 		scrollToId: z.string().optional(),
 	}),
@@ -381,9 +97,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 			>
 				{listing.length > 0 ? (
 					<>
-						<SetupButton
-							feed={feed}
-							containerRef={containerRef}
+						<FeedSetupButton
 							state={{
 								value: isFeedSettings,
 								set: setIsFeedSettings,
@@ -399,7 +113,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 							ref={containerRef}
 							feedId={feed.id}
 							/**
-							 * Listings in feed should be scored
+							 * Listings in feed should be scored.
 							 */
 							withScore
 							query={{
@@ -427,10 +141,9 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 							}}
 							scrollToId={scrollToId}
 							renderEmptyFn={() => (
-								<FeedEmpty
+								<FeedListStatus
 									ref={sentinelRef}
-									feed={feed}
-									containerRef={containerRef}
+									mode={"empty"}
 									state={{
 										value: isFeedSettings,
 										set: setIsFeedSettings,
@@ -438,10 +151,9 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 								/>
 							)}
 							appendix={
-								<Appendix
+								<FeedListStatus
 									ref={sentinelRef}
-									feed={feed}
-									containerRef={containerRef}
+									mode={"appendix"}
 									state={{
 										value: isFeedSettings,
 										set: setIsFeedSettings,
@@ -452,78 +164,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 					</>
 				) : null}
 
-				{listing.length > 0 ? null : (
-					<Container
-						ui={{
-							layout: "vertical-centered",
-							height: "full",
-							tone: "brand",
-							theme: "light",
-							inner: "4xl",
-						}}
-					>
-						<Status
-							icon={FirstIcon}
-							iconProps={{
-								ui: {
-									text: "4xl",
-								},
-							}}
-							textTitle={translator.text("First listing (title)")}
-							textMessage={translator.text("First listing (message)")}
-							messageProps={{
-								className: "text-center",
-							}}
-							action={
-								<>
-									<LinkTo
-										icon={ChevronRightIcon}
-										iconPosition={"right"}
-										to={"/$locale/flow/seller/draft/resolve"}
-										params={{
-											locale,
-										}}
-										{...uiButton({
-											ui: {
-												tone: "brand",
-												theme: "light",
-												text: "lg",
-												size: "default",
-												font: "bold",
-											},
-											className: [],
-										})}
-									>
-										<Tx label="Create first listing (button)" />
-									</LinkTo>
-
-									<LinkTo
-										icon={ChevronRightIcon}
-										iconPosition={"right"}
-										to={"/$locale/flow/home"}
-										params={{
-											locale,
-										}}
-										{...uiButton({
-											ui: {
-												tone: "link",
-												theme: "light",
-												text: "sm",
-												size: "sm",
-												background: undefined,
-												border: false,
-												shadow: false,
-											},
-											className: [],
-										})}
-									>
-										<Tx label="First listing - go home (button)" />
-									</LinkTo>
-								</>
-							}
-						/>
-					</Container>
-				)}
+				{listing.length > 0 ? null : <FirstListingStatus />}
 
 				<Suspense fallback={null}>
 					<FeedEditorSheet

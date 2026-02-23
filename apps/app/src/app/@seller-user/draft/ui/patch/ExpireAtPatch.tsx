@@ -1,3 +1,4 @@
+import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListingExpireEnum } from "@zbav-se.me/sdk/api/seller-user";
 import type { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
@@ -29,7 +30,7 @@ export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({
 
 	return (
 		<PatchContainer
-			title="Expire (title)"
+			title={translator.text("Expire (title)")}
 			data-ui={"Setup-[TitleContainer.expireAt]"}
 			onCancel={onCancel}
 			onSave={() =>

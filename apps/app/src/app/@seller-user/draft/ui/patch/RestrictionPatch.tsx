@@ -1,5 +1,6 @@
 import { useSelection } from "@use-pico/client/hook";
 import type { EntitySchema } from "@use-pico/common/schema";
+import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListingRestrictionEnum } from "@zbav-se.me/sdk/api/seller-user";
 import type { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
@@ -42,7 +43,7 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 
 	return (
 		<PatchContainer
-			title="Listing restriction (title)"
+			title={translator.text("Listing restriction (title)")}
 			data-ui={"Setup-[TitleContainer.restriction]"}
 			onCancel={onCancel}
 			onSave={() => {

@@ -76,3 +76,7 @@ When adding to `@common`:
 2. Avoid domain-specific logic – keep it generic.
 3. Document the resource in this README.
 4. Consider whether it should live in a domain package (`@zbav-se.me/buyer`, `@zbav-se.me/seller`, …) instead.
+
+## Recent updates
+
+- Added `@common/transaction/ui/TransactionListContainer.tsx` as a shared list shell for buyer/seller transaction lists (empty state, polling, layout) to reduce duplicated UI logic.
