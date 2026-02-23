@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
+import { withListingFetchQuery } from "@zbav-se.me/sdk/query/seller-user/listing";
 
 export const Route = createFileRoute("/$locale/seller/listing/$id/view")({
 	component() {

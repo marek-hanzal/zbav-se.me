@@ -75,6 +75,60 @@ Without the final log, the event is not shipped.
   - Pure UI: `@zbav-se.me/ui`
 - i18n: use `translator.text(key, fallback?)`; keys are collected automatically.
 
+## Direct Hints From Current Codebase
+Use these patterns by default unless the surrounding code clearly does something else.
+
+### Component Style (apps/app)
+- Co-locate UI by domain and feature (`.../ui/...`), keep role/session boundaries intact.
+- Prefer `export namespace ComponentName { export interface Props ... }` + `export const ComponentName: FC<ComponentName.Props>`.
+- Extend base UI props when relevant (often `Container.Props` or `Button.Props`).
+- Destructure `ui` and `...props`, then merge defaults with `...ui` (consumer override last).
+- Keep wrappers pass-through friendly (`...props`) and expose small `hooks` objects for callbacks when a component has multiple actions.
+- Add stable `data-ui` markers for important nodes using the naming contract below.
+- Use SDK query wrappers in Suspense style where already used (`<withXxxQuery.Suspense data={...}>`).
+
+#### `data-ui` Naming Contract
+Based on current codebase scan (189 markers), use this format for new code:
+
+- Root or primary node: `Component[Element]`
+  - Examples: `ListingDetail[Container]`, `SaveContainer[Container]`, `PriceValue[LabelValue]`
+- Nested/child node: `Component-[Element]`
+  - Examples: `ListingDetail-[HeroImage]`, `Transaction-[MessageListContainer]`
+- Optional qualifier/state: `Component[Element.qualifier]` or `Component-[Element.qualifier]`
+  - Examples: `ListContainer[Container.empty]`, `PhotoUpload-[Status.spinner]`
+- Dynamic variant: only for controlled item variants, usually button/value options
+  - Example: ``WarrantySelect-[Button.${warranty}]``
+
+Conventions:
+- Use `Component` and `Element` in PascalCase.
+- Use lowercase for qualifier/state (`empty`, `spinner`, `content`, ...).
+- Keep names semantic and stable; do not encode visual position/order (`left`, `first`, `col2`).
+- Prefer bracketed form over free-form strings.
+- Existing non-bracket legacy forms (`CategorySelectionContainer`, `ListingSortSelect`, `ListingLocation-root`, `PhotoUpload-Input`) may remain, but do not use them as pattern for new code.
+
+### SDK Style (packages/@zbav-se.me/sdk)
+- Treat `src/api/*` and `*.gen.ts` as generated; do not hand-edit generated files.
+- Add manual query wrappers under `src/query/<domain>/<feature>/withXxxQuery.ts`.
+- For new collection-style resources (collection + fetch + count + patch), use `withCollectionQuery` from `packages/@use-pico/client/src/query/withCollectionQuery.ts` and expose an aggregate `withXxxQuery` (example: `withFeedQuery.ts`).
+- Query wrapper pattern:
+  1. `withQuery<RequestType, ResponseType[200]>({...})`
+  2. `keys(data)` returns `["entity", "operation", data]`
+  3. `queryFn(body|path)` calls `apiXxx({ body|path, throwOnError: true }).then((res) => res.data)`
+- In `withCollectionQuery` aggregate files, keep this shape: `key`, `collectionQuery`, `fetchQuery`, `countQuery`, `patchMutation`, `toIdKey`.
+- Export wrappers from local `index.ts`, then re-export from parent domain `index.ts`.
+- If API contract changes, regenerate SDK from repo root with `bun run sdk`.
+
+### Server Endpoint Style (apps/server)
+- One endpoint file per operation (for example `create.ts`, `fetch.ts`, `seller-info.ts`) and a domain `with*ApiFx.ts` aggregator.
+- Endpoint function pattern:
+  1. `export const withXxxApiFx = Effect.fn("withXxxApiFx")(function* () { ... })`
+  2. Register route with `createRoute(...)` + stable `operationId` (`api...`)
+  3. Use Zod schemas from domain `schema/` in request/response
+  4. In handler: parse env (`ServerAxiomSchema` + any needed env), then `Effect.gen(...)`
+  5. Inside effect: get user (`c.get("user")`), annotate logs (`Effect.annotateLogsScoped`), run domain fx through `zodGuardFx`, return `c.json(..., status)`
+  6. Pipe with `withLoggingFx`, `withKyselyFx`, optional infra layers (`withDateFx`, `withLocationFx`, ...), `withCatchFx`, `Effect.runPromise`
+- Use domain errors in `withCatchFx` and map them to `NoticeSchema` responses with existing status code conventions.
+
 ## Domain Safety Invariants (Do Not Break)
 Keep these enforced; details live in `MASTER.md`:
 - No pay-to-win for trust/reputation signals.
