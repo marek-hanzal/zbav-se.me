@@ -30,6 +30,7 @@ export const withCollectionQuery = <
 	key,
 	collectionQuery,
 	fetchQuery,
+	countQuery,
 	patchMutation,
 	toIdKey,
 }: withCollectionQuery.Props<
@@ -56,6 +57,9 @@ export const withCollectionQuery = <
 		},
 		useQuery(id: string, opts?: withQuery.QueryOptions<TResult> | undefined) {
 			return fetchQuery.useSuspenseQuery(toIdKey(id), opts);
+		},
+		useCount(data: TCountRequest, opts?: withQuery.QueryOptions<CountSchema.Type> | undefined) {
+			return countQuery.useSuspenseQuery(data, opts);
 		},
 		useFetchQuery(data: TFetchRequest, opts?: withQuery.QueryOptions<TResult> | undefined) {
 			return fetchQuery.useSuspenseQuery(data, opts);
