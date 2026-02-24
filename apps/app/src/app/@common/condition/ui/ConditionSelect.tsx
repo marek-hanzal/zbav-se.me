@@ -8,7 +8,7 @@ export namespace ConditionSelect {
 	}
 }
 
-export const ConditionSelect: FC<ConditionSelect.Props> = ({ ...props }) => {
+export const ConditionSelect: FC<ConditionSelect.Props> = (props) => {
 	return (
 		<Rating
 			data-ui="ConditionSelect[Rating]"

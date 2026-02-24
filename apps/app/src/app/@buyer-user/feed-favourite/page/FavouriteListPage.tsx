@@ -10,14 +10,13 @@ export namespace FavouriteListPage {
 	export interface Props extends TitleContainer.Props {}
 }
 
-export const FavouriteListPage: FC<FavouriteListPage.Props> = ({ children, ui, ...props }) => {
+export const FavouriteListPage: FC<FavouriteListPage.Props> = (props) => {
 	const locale = useLocale();
 
 	return (
 		<TitleContainer
 			textTitle={translator.text("Your favourites (title)")}
 			right={<HomeMenuButton />}
-			ui={ui}
 			{...props}
 		>
 			<FavouriteListContainer
@@ -52,8 +51,6 @@ export const FavouriteListPage: FC<FavouriteListPage.Props> = ({ children, ui, .
 					inner: "default",
 				}}
 			/>
-
-			{children}
 		</TitleContainer>
 	);
 };

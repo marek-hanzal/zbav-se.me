@@ -7,16 +7,14 @@ export namespace ShopPage {
 	export interface Props extends TitleContainer.Props {}
 }
 
-export const ShopPage: FC<ShopPage.Props> = ({ children, ui, ...props }) => {
+export const ShopPage: FC<ShopPage.Props> = (props) => {
 	return (
 		<TitleContainer
 			textTitle={translator.text("Shop (title)")}
 			right={<HomeMenuButton />}
-			ui={ui}
 			{...props}
 		>
 			Shop
-			{children}
 		</TitleContainer>
 	);
 };

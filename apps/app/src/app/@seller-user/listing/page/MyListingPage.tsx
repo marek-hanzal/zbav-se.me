@@ -8,12 +8,11 @@ export namespace MyListingPage {
 	export interface Props extends TitleContainer.Props {}
 }
 
-export const MyListingPage: FC<MyListingPage.Props> = ({ children, ui, ...props }) => {
+export const MyListingPage: FC<MyListingPage.Props> = (props) => {
 	return (
 		<TitleContainer
 			textTitle={translator.text("My listings (title)")}
 			right={<HomeMenuButton />}
-			ui={ui}
 			{...props}
 		>
 			<ListingListContainer
@@ -26,8 +25,6 @@ export const MyListingPage: FC<MyListingPage.Props> = ({ children, ui, ...props 
 					],
 				}}
 			/>
-
-			{children}
 		</TitleContainer>
 	);
 };

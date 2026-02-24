@@ -14,7 +14,7 @@ export namespace EmptyFavouriteStatus {
 	}
 }
 
-export const EmptyFavouriteStatus: FC<EmptyFavouriteStatus.Props> = ({ ...props }) => {
+export const EmptyFavouriteStatus: FC<EmptyFavouriteStatus.Props> = (props) => {
 	const locale = useLocale();
 
 	return (

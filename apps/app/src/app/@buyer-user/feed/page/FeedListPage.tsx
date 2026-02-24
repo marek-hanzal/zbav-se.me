@@ -20,7 +20,7 @@ export namespace FeedListPage {
 	}
 }
 
-export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, children, ...props }) => {
+export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...props }) => {
 	const locale = useLocale();
 	const router = useRouter();
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -149,8 +149,6 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, childre
 					}}
 				/>
 			</Suspense>
-
-			{children}
 		</FlowContainer>
 	);
 };

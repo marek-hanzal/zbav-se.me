@@ -10,11 +10,7 @@ export namespace ListingMessageListPendingPage {
 	export interface Props extends TitleContainer.Props {}
 }
 
-export const ListingMessageListPendingPage: FC<ListingMessageListPendingPage.Props> = ({
-	children,
-	ui,
-	...props
-}) => {
+export const ListingMessageListPendingPage: FC<ListingMessageListPendingPage.Props> = (props) => {
 	const locale = useLocale();
 
 	return (
@@ -30,12 +26,9 @@ export const ListingMessageListPendingPage: FC<ListingMessageListPendingPage.Pro
 					}}
 				/>
 			}
-			ui={ui}
 			{...props}
 		>
 			<SpinnerContainer />
-
-			{children}
 		</TitleContainer>
 	);
 };

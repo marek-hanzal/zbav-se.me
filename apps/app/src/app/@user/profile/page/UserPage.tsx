@@ -12,7 +12,7 @@ export namespace UserPage {
 	export interface Props extends TitleContainer.Props {}
 }
 
-export const UserPage: FC<UserPage.Props> = ({ children, ui, ...props }) => {
+export const UserPage: FC<UserPage.Props> = ({ ui, ...props }) => {
 	const user = useUser();
 
 	return (
@@ -45,8 +45,6 @@ export const UserPage: FC<UserPage.Props> = ({ children, ui, ...props }) => {
 					}}
 				/>
 			</Container>
-
-			{children}
 		</TitleContainer>
 	);
 };

@@ -22,8 +22,6 @@ export namespace ListingMessageListPage {
 
 export const ListingMessageListPage: FC<ListingMessageListPage.Props> = ({
 	listingId,
-	children,
-	ui,
 	...props
 }) => {
 	const locale = useLocale();
@@ -51,7 +49,6 @@ export const ListingMessageListPage: FC<ListingMessageListPage.Props> = ({
 				/>
 			}
 			right={<HomeMenuButton />}
-			ui={ui}
 			{...props}
 		>
 			<Container>
@@ -101,8 +98,6 @@ export const ListingMessageListPage: FC<ListingMessageListPage.Props> = ({
 					}}
 				/>
 			</VisibilityProvider>
-
-			{children}
 		</TitleContainer>
 	);
 };

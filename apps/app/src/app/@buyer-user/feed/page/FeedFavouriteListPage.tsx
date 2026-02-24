@@ -17,11 +17,7 @@ export namespace FeedFavouriteListPage {
 	}
 }
 
-export const FeedFavouriteListPage: FC<FeedFavouriteListPage.Props> = ({
-	feedId,
-	children,
-	...props
-}) => {
+export const FeedFavouriteListPage: FC<FeedFavouriteListPage.Props> = ({ feedId, ...props }) => {
 	const locale = useLocale();
 	const containerRef = useRef<HTMLDivElement>(null);
 	const { sentinelRef, inView: isLast } = useSentinel<HTMLDivElement>({
@@ -95,8 +91,6 @@ export const FeedFavouriteListPage: FC<FeedFavouriteListPage.Props> = ({
 				}}
 				appendix={<FavouriteListAppendix ref={sentinelRef} />}
 			/>
-
-			{children}
 		</FlowContainer>
 	);
 };

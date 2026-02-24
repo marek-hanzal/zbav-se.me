@@ -10,7 +10,7 @@ export namespace DraftListPage {
 	export interface Props extends TitleContainer.Props {}
 }
 
-export const DraftListPage: FC<DraftListPage.Props> = ({ children, ui, ...props }) => {
+export const DraftListPage: FC<DraftListPage.Props> = (props) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
 
@@ -18,7 +18,6 @@ export const DraftListPage: FC<DraftListPage.Props> = ({ children, ui, ...props 
 		<TitleContainer
 			textTitle={translator.text("Draft list (title)")}
 			right={<HomeMenuButton />}
-			ui={ui}
 			{...props}
 		>
 			<DraftList
@@ -43,8 +42,6 @@ export const DraftListPage: FC<DraftListPage.Props> = ({ children, ui, ...props 
 					inner: "default",
 				}}
 			/>
-
-			{children}
 		</TitleContainer>
 	);
 };

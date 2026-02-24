@@ -8,7 +8,7 @@ export namespace UserPendingPage {
 	export interface Props extends TitleContainer.Props {}
 }
 
-export const UserPendingPage: FC<UserPendingPage.Props> = ({ children, ui, ...props }) => {
+export const UserPendingPage: FC<UserPendingPage.Props> = ({ ui, ...props }) => {
 	return (
 		<TitleContainer
 			data-ui={"User[TitleContainer]"}
@@ -21,8 +21,6 @@ export const UserPendingPage: FC<UserPendingPage.Props> = ({ children, ui, ...pr
 			{...props}
 		>
 			<SpinnerContainer />
-
-			{children}
 		</TitleContainer>
 	);
 };

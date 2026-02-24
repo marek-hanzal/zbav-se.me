@@ -7,16 +7,13 @@ export namespace HomePage {
 	export interface Props extends TitleContainer.Props {}
 }
 
-export const HomePage: FC<HomePage.Props> = ({ children, ui, ...props }) => {
+export const HomePage: FC<HomePage.Props> = (props) => {
 	return (
 		<TitleContainer
 			textTitle={translator.text("zbav-se.me")}
-			ui={ui}
 			{...props}
 		>
 			<HomeMenu />
-
-			{children}
 		</TitleContainer>
 	);
 };

@@ -15,7 +15,7 @@ export namespace EmptyStatus {
 	}
 }
 
-export const EmptyStatus: FC<EmptyStatus.Props> = ({ ...props }) => {
+export const EmptyStatus: FC<EmptyStatus.Props> = (props) => {
 	const locale = useLocale();
 	return (
 		<Container

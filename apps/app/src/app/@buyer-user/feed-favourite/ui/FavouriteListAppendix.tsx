@@ -15,7 +15,7 @@ export namespace FavouriteListAppendix {
 	}
 }
 
-export const FavouriteListAppendix: FC<FavouriteListAppendix.Props> = ({ ...props }) => {
+export const FavouriteListAppendix: FC<FavouriteListAppendix.Props> = (props) => {
 	const locale = useLocale();
 
 	return (

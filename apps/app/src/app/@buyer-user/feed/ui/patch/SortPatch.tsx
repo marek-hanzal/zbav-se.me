@@ -13,7 +13,7 @@ export namespace SortPatch {
 	}
 }
 
-export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ui, ...props }) => {
+export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
 	const patchMutation = withFeedQuery.useMutation();
 	const [sort, setSort] = useState<tListingSort[]>(feed.query?.sort ?? []);
 	const withGeo = !!feed.query?.meta?.latLon;
@@ -21,7 +21,6 @@ export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ui, 
 	return (
 		<PatchContainer
 			data-ui={"SortPatch[Container]"}
-			ui={ui}
 			onCancel={onCancel}
 			onSave={() => {
 				patchMutation.mutate(

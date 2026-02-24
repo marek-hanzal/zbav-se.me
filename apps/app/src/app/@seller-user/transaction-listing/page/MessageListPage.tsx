@@ -8,13 +8,12 @@ export namespace MessageListPage {
 	export interface Props extends TitleContainer.Props {}
 }
 
-export const MessageListPage: FC<MessageListPage.Props> = ({ children, ui, ...props }) => {
+export const MessageListPage: FC<MessageListPage.Props> = (props) => {
 	return (
 		<TitleContainer
 			data-ui="SellerMessageList[TitleContainer]"
 			textTitle={translator.text("Messages (title)")}
 			right={<HomeMenuButton />}
-			ui={ui}
 			{...props}
 		>
 			<TransactionListingList
@@ -30,8 +29,6 @@ export const MessageListPage: FC<MessageListPage.Props> = ({ children, ui, ...pr
 					inner: "default",
 				}}
 			/>
-
-			{children}
 		</TitleContainer>
 	);
 };

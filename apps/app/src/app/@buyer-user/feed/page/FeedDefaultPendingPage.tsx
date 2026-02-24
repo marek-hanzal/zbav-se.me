@@ -10,10 +10,7 @@ export namespace FeedDefaultPendingPage {
 	export interface Props extends FlowContainer.Props {}
 }
 
-export const FeedDefaultPendingPage: FC<FeedDefaultPendingPage.Props> = ({
-	children,
-	...props
-}) => {
+export const FeedDefaultPendingPage: FC<FeedDefaultPendingPage.Props> = (props) => {
 	const locale = useLocale();
 
 	return (
@@ -33,8 +30,6 @@ export const FeedDefaultPendingPage: FC<FeedDefaultPendingPage.Props> = ({
 			{...props}
 		>
 			<SpinnerContainer />
-
-			{children}
 		</FlowContainer>
 	);
 };

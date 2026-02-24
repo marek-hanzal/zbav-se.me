@@ -10,7 +10,7 @@ export namespace FeedSelectPage {
 	export interface Props extends TitleContainer.Props {}
 }
 
-export const FeedSelectPage: FC<FeedSelectPage.Props> = ({ children, ui, ...props }) => {
+export const FeedSelectPage: FC<FeedSelectPage.Props> = ({ ui, ...props }) => {
 	const locale = useLocale();
 	const feedCountLimit = 3;
 
@@ -62,8 +62,6 @@ export const FeedSelectPage: FC<FeedSelectPage.Props> = ({ children, ui, ...prop
 					),
 				}}
 			/>
-
-			{children}
 		</TitleContainer>
 	);
 };

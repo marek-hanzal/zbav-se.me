@@ -13,7 +13,7 @@ export namespace WelcomePage {
 	export interface Props extends Container.Props {}
 }
 
-export const WelcomePage: FC<WelcomePage.Props> = ({ children, ui, ...props }) => {
+export const WelcomePage: FC<WelcomePage.Props> = ({ ui, ...props }) => {
 	const locale = useLocale();
 
 	return (
@@ -63,8 +63,6 @@ export const WelcomePage: FC<WelcomePage.Props> = ({ children, ui, ...props }) =
 					"text-center",
 				]}
 			/>
-
-			{children}
 		</Container>
 	);
 };
