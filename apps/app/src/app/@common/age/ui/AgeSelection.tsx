@@ -8,7 +8,7 @@ export namespace AgeSelection {
 	}
 }
 
-export const AgeSelection: FC<AgeSelection.Props> = ({ ...props }) => {
+export const AgeSelection: FC<AgeSelection.Props> = (props) => {
 	return (
 		<Rating
 			data-ui="AgeSelection[Rating]"

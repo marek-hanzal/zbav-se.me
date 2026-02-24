@@ -9,7 +9,7 @@ import type { FC } from "react";
 import { CategoryInline } from "~/app/@common/category/ui/CategoryInline";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
 import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
-import { ListingOverlay } from "~/app/@seller-user/listing/ui/ListingOverlay";
+import { ListingOverlay } from "./ListingOverlay";
 
 export namespace ListingDetail {
 	export interface Hooks {
@@ -67,7 +67,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({ listing, ui, hooks, ...
 				}}
 			>
 				<LabelValue
-					textLabel={"Listing category (label)"}
+					textLabel={translator.text("Listing category (label)")}
 					textValue={
 						<CategoryInline
 							category={listing.category}
@@ -81,7 +81,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({ listing, ui, hooks, ...
 
 				{listing.description ? (
 					<LabelValue
-						textLabel={"Listing description (label)"}
+						textLabel={translator.text("Listing description (label)")}
 						textValue={<Markdown>{listing.description}</Markdown>}
 					/>
 				) : null}
@@ -134,14 +134,14 @@ export const ListingDetail: FC<ListingDetail.Props> = ({ listing, ui, hooks, ...
 
 				{listing.condition !== null ? (
 					<LabelValue
-						textLabel={"Listing condition (label)"}
+						textLabel={translator.text("Listing condition (label)")}
 						textValue={<ConditionIcon condition={listing.condition} />}
 					/>
 				) : null}
 
 				{listing.age !== null ? (
 					<LabelValue
-						textLabel={"Listing age (label)"}
+						textLabel={translator.text("Listing age (label)")}
 						textValue={`Condition - Age [${listing.age}] (hint)`}
 					/>
 				) : null}

@@ -177,17 +177,6 @@ export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
 export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
 
 /**
- * Collection of gallery items
- */
-export type tGalleryItemSchema = {
-    data: Array<tGalleryItem & unknown>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
  * Count data
  */
 export type tCount = {
@@ -203,6 +192,14 @@ export type tCount = {
      * Total count of items (no filters applied).
      */
     total: number;
+    /**
+     * True when total count is empty.
+     */
+    isEmpty: boolean;
+    /**
+     * True when filter count is empty while total count has data.
+     */
+    isFilterEmpty: boolean;
 };
 
 /**
@@ -211,18 +208,6 @@ export type tCount = {
 export type tGalleryCountQuery = {
     filter?: tGalleryFilter;
     where?: tGalleryWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
-};
-
-/**
- * Collection of messages
- */
-export type tMessageItemSchema = {
-    data: Array<tMessageItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
 };
 
 /**
@@ -569,6 +554,14 @@ export const tMessageSortField = { id: 'id', createdAt: 'createdAt' } as const;
 export type tMessageSortField = typeof tMessageSortField[keyof typeof tMessageSortField];
 
 /**
+ * Query object for message count
+ */
+export type tMessageCountQuery = {
+    filter?: tMessageFilter;
+    where?: tMessageWhere;
+};
+
+/**
  * Allowed extensions
  */
 export const tAllowedExtensionsEnum = {
@@ -856,7 +849,7 @@ export type tApiGalleryCollectionResponse = {
     /**
      * Access collection of galleries based on provided query
      */
-    200: tGalleryItemSchema;
+    200: Array<tGalleryItem & unknown>;
 };
 
 export type apiGalleryCollectionResponse = tApiGalleryCollectionResponse[keyof tApiGalleryCollectionResponse];
@@ -915,10 +908,73 @@ export type tApiMessageThreadMessageCollectionResponse = {
     /**
      * Access collection of messages based on provided query
      */
-    200: tMessageItemSchema;
+    200: Array<tMessageItem>;
 };
 
 export type apiMessageThreadMessageCollectionResponse = tApiMessageThreadMessageCollectionResponse[keyof tApiMessageThreadMessageCollectionResponse];
+
+export type tApiMessageThreadMessageFetchRequest = {
+    body?: tMessageQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/message-thread/message/fetch';
+};
+
+export type apiMessageThreadMessageFetchErrors = {
+    /**
+     * Message not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiMessageThreadMessageFetchError = apiMessageThreadMessageFetchErrors[keyof apiMessageThreadMessageFetchErrors];
+
+export type tApiMessageThreadMessageFetchResponse = {
+    /**
+     * Access message based on provided query
+     */
+    200: tMessageItem;
+};
+
+export type apiMessageThreadMessageFetchResponse = tApiMessageThreadMessageFetchResponse[keyof tApiMessageThreadMessageFetchResponse];
+
+export type tApiMessageThreadMessageCountRequest = {
+    body?: tMessageCountQuery;
+    path: {
+        /**
+         * Message thread identifier
+         */
+        messageThreadId: string;
+    };
+    query?: never;
+    url: '/api/user/message-thread/{messageThreadId}/message/count';
+};
+
+export type apiMessageThreadMessageCountErrors = {
+    /**
+     * Message thread not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiMessageThreadMessageCountError = apiMessageThreadMessageCountErrors[keyof apiMessageThreadMessageCountErrors];
+
+export type tApiMessageThreadMessageCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiMessageThreadMessageCountResponse = tApiMessageThreadMessageCountResponse[keyof tApiMessageThreadMessageCountResponse];
 
 export type tApiS3PresignRequest = {
     body: {

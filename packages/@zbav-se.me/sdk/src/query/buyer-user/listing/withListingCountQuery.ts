@@ -17,6 +17,6 @@ export const withListingCountQuery = withQuery<tListingCountQuery, tApiListingCo
 		return apiListingCount({
 			body,
 			throwOnError: true,
-		}).then((res: { data: tApiListingCountResponse[200] }) => res.data);
+		}).then((res) => res.data);
 	},
 });

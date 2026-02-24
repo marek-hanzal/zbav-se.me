@@ -1,8 +1,8 @@
 import type { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
-import { useFeedPatch } from "~/app/@buyer-user/feed/hook/useFeedPatch";
 import { TextInputContainer } from "~/app/@common/input/ui/TextInputContainer";
 
 export namespace TitlePatch {
@@ -14,10 +14,7 @@ export namespace TitlePatch {
 }
 
 export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, ...props }) => {
-	const { patch, isPending } = useFeedPatch({
-		feed,
-		onSettled,
-	});
+	const patchMutation = withFeedQuery.useMutation();
 
 	return (
 		<TextInputContainer
@@ -26,17 +23,29 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, ...props }) 
 			placeholder={translator.text("Feed title (placeholder)")}
 			hint={translator.text("Feed title (hint)")}
 			defaultValue={feed.query?.filter?.title ?? ""}
-			loading={isPending}
+			loading={patchMutation.isPending}
 			onSave={(title) => {
-				patch({
-					query: {
-						...feed.query,
-						filter: {
-							...feed.query?.filter,
-							title,
+				patchMutation.mutate(
+					{
+						query: {
+							where: {
+								id: feed.id,
+							},
+						},
+						patch: {
+							query: {
+								...feed.query,
+								filter: {
+									...feed.query?.filter,
+									title,
+								},
+							},
 						},
 					},
-				});
+					{
+						onSettled,
+					},
+				);
 			}}
 			{...props}
 		/>

@@ -4,7 +4,7 @@ import { translator } from "@use-pico/common/translator";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { BuyerIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
-import { BuyerInfo } from "~/app/@seller-session/transaction/ui/BuyerInfo";
+import { BuyerInfoSuspense } from "./BuyerInfoSuspense";
 
 export namespace BuyerInfoButton {
 	export interface Props extends Button.Props {
@@ -20,7 +20,7 @@ export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({ transactionId, ...p
 			<Button
 				data-ui="BuyerInfoButton[Button]"
 				iconEnabled={BuyerIcon}
-				label={"Buyer info (button)"}
+				label={translator.text("Buyer info (button)")}
 				onClick={() => {
 					setIsOpen(true);
 				}}
@@ -38,7 +38,7 @@ export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({ transactionId, ...p
 					right: <CloseButton onClick={close} />,
 				})}
 			>
-				<BuyerInfo
+				<BuyerInfoSuspense
 					transactionId={transactionId}
 					ui={{
 						inner: "default",

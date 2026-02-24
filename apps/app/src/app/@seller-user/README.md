@@ -54,3 +54,29 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 - `@session` – categories, location, transaction-status, upload/S3.
 - `@seller-session` – seller info, user events (seller).
 - `@user` – gallery, messages, uploads.
+
+## Recent updates
+
+- Draft editor was split into focused modules in `@seller-user/draft/ui/DraftEditor/`:
+  - `DraftEditorDefaultView.tsx` as top-level orchestrator
+  - `RequiredFieldsSection.tsx`
+  - `OptionalFieldsSection.tsx`
+  - `ActionSection.tsx`
+  - `ChevronAction.tsx`
+  - `createDraftEditorViews.tsx` for patch view mapping
+  - each section owns its own namespaced `Props`
+  - `DraftEditor.View` namespace type as source of truth for editor views
+- Seller listing list components now resolve locale via `useLocale()` instead of accepting `locale` props.
+- Seller flow routes now use page components:
+  - `@seller-user/draft/page/DraftListPage.tsx`
+  - `@seller-user/draft/page/DraftEditPage.tsx`
+  - `@seller-user/listing/page/MyListingPage.tsx`
+  - `@seller-user/listing/page/ListingViewPage.tsx`
+  - `@seller-user/transaction-listing/page/MessageListPage.tsx`
+  - `@seller-user/transaction-listing/page/ListingMessageListPage.tsx`
+  - `@seller-user/transaction-listing/page/ListingMessageListPendingPage.tsx`
+- Seller transaction list now uses domain-local container/pending components in `@seller-user/transaction/ui/` (no shared `@common` transaction list abstraction).
+- Seller feature call-sites increasingly use local `*Suspense` wrappers (for `Pending` + data composition) to keep suspense boundaries close to feature roots (`draft`, `listing`, `transaction`, `transaction-listing`).
+- Seller draft list now uses `withDraftQuery` collection hydration (`useCollectionQuery` + per-item `useQuery`) and keeps `data-ui` labels aligned with the bracketed contract.
+- Seller transaction list now uses `withTransactionQuery` collection hydration with configurable collection `refetchInterval`.
+- Seller transaction-listing list now uses `withTransactionListingQuery` cache hydration and renders card data from transaction-listing payload (no per-item listing fetch).

@@ -15,14 +15,12 @@ export const galleryItemCountFx = Effect.fn("galleryItemCountFx")(function* ({
 	filter,
 	where,
 	scope,
-	count,
 }: galleryItemCountFx.Props) {
 	return yield* withCountFx({
 		selectFx: withGalleryItemCollectionSelectFx({}),
 		filter,
 		where,
 		scope,
-		count,
 		queryFx: withGalleryItemQueryBuilderFx,
 	});
 });

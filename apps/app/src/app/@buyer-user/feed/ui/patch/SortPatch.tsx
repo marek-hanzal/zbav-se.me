@@ -1,7 +1,7 @@
 import type { Container } from "@use-pico/client/ui/container";
 import type { tFeed, tListingSort } from "@zbav-se.me/sdk/api/buyer-user";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { type FC, useState } from "react";
-import { useFeedPatch } from "~/app/@buyer-user/feed/hook/useFeedPatch";
 import { ListingSortSelect } from "~/app/@buyer-user/listing/ui/ListingSortSelect";
 import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
 
@@ -13,28 +13,36 @@ export namespace SortPatch {
 	}
 }
 
-export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ui, ...props }) => {
-	const { patch, isPending } = useFeedPatch({
-		feed,
-		onSettled,
-	});
+export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+	const patchMutation = withFeedQuery.useMutation();
 	const [sort, setSort] = useState<tListingSort[]>(feed.query?.sort ?? []);
 	const withGeo = !!feed.query?.meta?.latLon;
 
 	return (
 		<PatchContainer
 			data-ui={"SortPatch[Container]"}
-			ui={ui}
 			onCancel={onCancel}
 			onSave={() => {
-				patch({
-					query: {
-						...feed.query,
-						sort,
+				patchMutation.mutate(
+					{
+						query: {
+							where: {
+								id: feed.id,
+							},
+						},
+						patch: {
+							query: {
+								...feed.query,
+								sort,
+							},
+						},
 					},
-				});
+					{
+						onSettled,
+					},
+				);
 			}}
-			loading={isPending}
+			loading={patchMutation.isPending}
 			disabled={false}
 			{...props}
 		>

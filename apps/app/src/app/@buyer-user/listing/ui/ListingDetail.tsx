@@ -1,27 +1,12 @@
-import { Icon, ShowIcon } from "@use-pico/client/icon";
-import { Container, LabelValue, ValueList } from "@use-pico/client/ui/container";
-import { Group } from "@use-pico/client/ui/group";
-import { Markdown } from "@use-pico/client/ui/markdown";
-import { Tx } from "@use-pico/client/ui/tx";
-import { Typo } from "@use-pico/client/ui/typo";
-import { translator } from "@use-pico/common/translator";
+import { Container } from "@use-pico/client/ui/container";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
-import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/buyer-session/listing";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
-import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { useListingEvent } from "~/app/@buyer-session/listing/hook/useListingEvent";
-import { FavouriteButton } from "~/app/@buyer-user/listing/ui/button/FavouriteButton";
-import { FlagButton } from "~/app/@buyer-user/listing/ui/button/FlagButton";
-import { IgnoreButton } from "~/app/@buyer-user/listing/ui/button/IgnoreButton";
-import { ThumbDislikeButton } from "~/app/@buyer-user/listing/ui/button/ThumbDislikeButton";
-import { ThumbLikeButton } from "~/app/@buyer-user/listing/ui/button/ThumbLikeButton";
-import { TransactionButton } from "~/app/@buyer-user/listing/ui/button/TransactionButton";
-import { ListingOverlay } from "~/app/@buyer-user/listing/ui/ListingOverlay";
-import { CategoryInline } from "~/app/@common/category/ui/CategoryInline";
-import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
-import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
-import { ScoreIcon } from "~/app/@common/score/ui/ScoreIcon";
+import { ThumbDislikeButton } from "./button/ThumbDislikeButton";
+import { ThumbLikeButton } from "./button/ThumbLikeButton";
+import { ListingDestructiveActionsSuspense } from "./ListingDetail/ListingDestructiveActionsSuspense";
+import { ListingHeroSection } from "./ListingDetail/ListingHeroSection";
+import { ListingInfoSection } from "./ListingDetail/ListingInfoSection";
 
 export namespace ListingDetail {
 	export type Tools = "destructive" | "hero" | "thumb";
@@ -53,8 +38,6 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 	hooks,
 	...props
 }) => {
-	const hero = useHeroUpload(listing.gallery.items);
-
 	useListingEvent({
 		enabled: withScore,
 		listingId: listing.id,
@@ -73,180 +56,18 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 			{...props}
 		>
 			{tools.includes("hero") ? (
-				<>
-					<Container
-						data-ui={"ListingDetail-[Container.hero]"}
-						ui={{
-							position: "relative",
-						}}
-					>
-						<ListingOverlay
-							data-ui={"ListingDetail-[ListingOverlay]"}
-							listing={listing}
-						/>
-
-						{feedId ? (
-							<FavouriteButton
-								feedId={feedId}
-								listingId={listing.id}
-								label={null}
-								iconProps={{
-									ui: {
-										text: "xl",
-									},
-								}}
-								ui={{
-									tone: "secondary",
-									theme: "light",
-									round: "full",
-									square: "md",
-									justify: "center",
-									items: "center",
-									size: undefined,
-									inner: undefined,
-									snapTo: "top-right",
-								}}
-							/>
-						) : null}
-
-						<HeroImage
-							data-ui={"ListingDetail-[HeroImage]"}
-							src={hero.url}
-							alt={`Hero image for listing ${listing.id}`}
-							onClick={hooks.onGallery}
-							ui={{
-								round: "default",
-							}}
-							className={"h-64"}
-						/>
-					</Container>
-
-					<TransactionButton
-						listing={listing}
-						onTransaction={hooks.onTransaction}
-					/>
-				</>
+				<ListingHeroSection
+					feedId={feedId}
+					listing={listing}
+					onGallery={hooks.onGallery}
+					onTransaction={hooks.onTransaction}
+				/>
 			) : null}
 
-			<Container
-				data-ui={"ListingDetail-[Container.info]"}
-				ui={{
-					layout: "vertical-flex",
-					gap: "default",
-				}}
-			>
-				<LabelValue
-					textLabel={"Listing category (label)"}
-					textValue={
-						<CategoryInline
-							category={listing.category}
-							ui={{
-								tone: "secondary",
-								theme: "light",
-							}}
-						/>
-					}
-				/>
-
-				{listing.description ? (
-					<LabelValue
-						textLabel={"Listing description (label)"}
-						textValue={<Markdown>{listing.description}</Markdown>}
-					/>
-				) : null}
-
-				{listing.pros?.length ? (
-					<ValueList
-						data-ui={"ListingDetail[ProsValue]"}
-						textLabel={translator.text("Listing - Pros (label)")}
-						textEmpty={translator.text("Listing - Pros not filled")}
-						items={listing.pros.map((pro, index) => ({
-							id: String(index),
-							pro,
-						}))}
-						renderFn={(item) => <Typo label={item.pro} />}
-					/>
-				) : null}
-
-				{listing.cons?.length ? (
-					<ValueList
-						data-ui={"ListingDetail[ConsValue]"}
-						textLabel={translator.text("Listing - Cons (label)")}
-						textEmpty={translator.text("Listing - Cons not filled")}
-						items={listing.cons.map((con, index) => ({
-							id: String(index),
-							con,
-						}))}
-						renderFn={(item) => <Typo label={item.con} />}
-					/>
-				) : null}
-
-				{listing.delivery?.length ? (
-					<ValueList
-						data-ui={"ListingDetail[DeliveryValue]"}
-						textLabel={translator.text("Listing delivery (label)")}
-						textEmpty={translator.text("Delivery not selected")}
-						items={(listing.delivery ?? []).map((delivery) => ({
-							id: delivery,
-							delivery,
-						}))}
-						renderFn={(item) => <Tx label={`Listing delivery - ${item.delivery}`} />}
-					/>
-				) : null}
-
-				{listing.warranty !== null ? (
-					<LabelValue
-						textLabel={translator.text("Listing warranty (label)")}
-						textValue={<Tx label={`Listing warranty - ${listing.warranty}`} />}
-					/>
-				) : null}
-
-				{listing.condition !== null ? (
-					<LabelValue
-						textLabel={"Listing condition (label)"}
-						textValue={<ConditionIcon condition={listing.condition} />}
-					/>
-				) : null}
-
-				{listing.age !== null ? (
-					<LabelValue
-						textLabel={"Listing age (label)"}
-						textValue={`Condition - Age [${listing.age}] (hint)`}
-					/>
-				) : null}
-
-				<withListingSellerInfoQuery.Suspense
-					data={{
-						listingId: listing.id,
-					}}
-					fallback={
-						<LabelValue
-							textLabel={"Listing seller hint (label)"}
-							textValue={null}
-							action={<Icon icon={ShowIcon} />}
-							onClick={hooks.onSellerInfo}
-						/>
-					}
-				>
-					{({ data: sellerInfo }) => {
-						return (
-							<LabelValue
-								textLabel={"Listing seller hint (label)"}
-								textValue={
-									sellerInfo.events ? (
-										<ScoreIcon score={sellerInfo.events.score.rank} />
-									) : null
-								}
-								textEmpty={translator.text(
-									"Listing seller info not available (empty)",
-								)}
-								action={<Icon icon={ShowIcon} />}
-								onClick={hooks.onSellerInfo}
-							/>
-						);
-					}}
-				</withListingSellerInfoQuery.Suspense>
-			</Container>
+			<ListingInfoSection
+				listing={listing}
+				onSellerInfo={hooks.onSellerInfo}
+			/>
 
 			{tools.includes("thumb") ? (
 				<Container
@@ -258,50 +79,12 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					}}
 				>
 					<ThumbLikeButton listing={listing} />
-
 					<ThumbDislikeButton listing={listing} />
 				</Container>
 			) : null}
 
 			{tools.includes("destructive") ? (
-				<withListingFetchQuery.Suspense
-					data={{
-						where: {
-							id: listing.id,
-						},
-					}}
-					fallback={null}
-				>
-					{({ data: listing }) => {
-						if (listing.isFavourite) {
-							return null;
-						}
-
-						return (
-							<Group>
-								<IgnoreButton
-									listingId={listing.id}
-									ui={{
-										round: undefined,
-										border: false,
-										shadow: false,
-										width: "full",
-									}}
-								/>
-
-								<FlagButton
-									listingId={listing.id}
-									ui={{
-										round: undefined,
-										border: false,
-										shadow: false,
-										width: "full",
-									}}
-								/>
-							</Group>
-						);
-					}}
-				</withListingFetchQuery.Suspense>
+				<ListingDestructiveActionsSuspense listingId={listing.id} />
 			) : null}
 		</Container>
 	);

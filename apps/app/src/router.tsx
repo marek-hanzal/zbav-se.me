@@ -5,7 +5,7 @@ import { createRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { Container } from "@use-pico/client/ui/container";
 import { Logo } from "@zbav-se.me/ui/logo";
-import { routeTree } from "~/_route";
+import { routeTree } from "./_route";
 
 export async function getRouter() {
 	const staleTime = 5 * 60 * 1_000;

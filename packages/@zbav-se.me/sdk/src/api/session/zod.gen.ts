@@ -218,20 +218,6 @@ export const zCategoryItem = z.object({
 export type zCategoryItem = z.infer<typeof zCategoryItem>;
 
 /**
- * Collection of categories
- */
-export const zCategoryItemSchema = z.object({
-    data: z.array(zCategoryItem),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of categories'
-});
-
-export type zCategoryItemSchema = z.infer<typeof zCategoryItemSchema>;
-
-/**
  * Count data
  */
 export const zCount = z.object({
@@ -243,6 +229,12 @@ export const zCount = z.object({
     }),
     total: z.number().register(z.globalRegistry, {
         description: 'Total count of items (no filters applied).'
+    }),
+    isEmpty: z.boolean().register(z.globalRegistry, {
+        description: 'True when total count is empty.'
+    }),
+    isFilterEmpty: z.boolean().register(z.globalRegistry, {
+        description: 'True when filter count is empty while total count has data.'
     })
 }).register(z.globalRegistry, {
     description: 'Count data'
@@ -255,12 +247,7 @@ export type zCount = z.infer<typeof zCount>;
  */
 export const zCategoryCountQuery = z.object({
     filter: z.optional(zCategoryFilter),
-    where: z.optional(zCategoryWhere),
-    count: z.optional(z.array(z.enum([
-        'total',
-        'filter',
-        'where'
-    ])))
+    where: z.optional(zCategoryWhere)
 }).register(z.globalRegistry, {
     description: 'Query object for category count'
 });
@@ -479,7 +466,9 @@ export type zapiCategoryCollectionRequest = z.infer<typeof zApiCategoryCollectio
 /**
  * Access collection of categories based on provided query
  */
-export const zApiCategoryCollectionResponse = zCategoryItemSchema;
+export const zApiCategoryCollectionResponse = z.array(zCategoryItem).register(z.globalRegistry, {
+    description: 'Access collection of categories based on provided query'
+});
 
 export type zapiCategoryCollectionResponse = z.infer<typeof zApiCategoryCollectionResponse>;
 

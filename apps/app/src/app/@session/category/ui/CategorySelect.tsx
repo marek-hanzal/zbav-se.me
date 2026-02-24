@@ -1,9 +1,10 @@
 import type { useSelection } from "@use-pico/client/hook";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Container } from "@use-pico/client/ui/container";
 import { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { type FC, Suspense, useState } from "react";
-import { ListContainer } from "./category-select/ListContainer";
+import { ListContainer } from "./CategorySelect/ListContainer";
+import { ListContainerPending } from "./CategorySelect/ListContainerPending";
 
 export namespace CategorySelect {
 	export interface Props extends Container.Props {
@@ -22,7 +23,7 @@ export const CategorySelect: FC<CategorySelect.Props> = ({
 
 	return (
 		<Container
-			data-ui={"CategorySelectionContainer"}
+			data-ui={"CategorySelect[Container]"}
 			ui={{
 				layout: "vertical-header-content",
 				height: "full",
@@ -39,7 +40,7 @@ export const CategorySelect: FC<CategorySelect.Props> = ({
 				}}
 			/>
 
-			<Suspense fallback={<SpinnerContainer />}>
+			<Suspense fallback={<ListContainerPending />}>
 				<ListContainer
 					_suspense={"I know"}
 					fulltext={fulltext}

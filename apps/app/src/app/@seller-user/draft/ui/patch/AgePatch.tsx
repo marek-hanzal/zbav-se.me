@@ -1,11 +1,12 @@
 import { useSelection } from "@use-pico/client/hook";
+import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 import { AgeSelection } from "~/app/@common/age/ui/AgeSelection";
 import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
-import { useDraftPatch } from "~/app/@seller-user/draft/hook/useDraftPatch";
 
 export namespace AgePatch {
 	export interface Props extends TitleContainer.Props {
@@ -16,8 +17,7 @@ export namespace AgePatch {
 }
 
 export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
-	const { patch, isPending } = useDraftPatch({
-		draft,
+	const mutation = withDraftQuery.useMutation({
 		onSettled,
 	});
 	const selection = useSelection<Rating.RatingItem>({
@@ -36,15 +36,22 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSettled, ...pr
 
 	return (
 		<PatchContainer
-			title="Age (title)"
+			title={translator.text("Age (title)")}
 			data-ui={"Setup-[TitleContainer.age]"}
 			onCancel={onCancel}
-			onSave={() =>
-				patch({
-					age,
-				})
-			}
-			loading={isPending}
+			onSave={() => {
+				mutation.mutate({
+					patch: {
+						age,
+					},
+					query: {
+						where: {
+							id: draft.id,
+						},
+					},
+				});
+			}}
+			loading={mutation.isPending}
 			disabled={age === null}
 			{...props}
 		>

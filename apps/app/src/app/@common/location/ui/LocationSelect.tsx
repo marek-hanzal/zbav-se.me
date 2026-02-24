@@ -1,9 +1,10 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { Status } from "@use-pico/client/ui/status";
+import { translator } from "@use-pico/common/translator";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { type FC, useState } from "react";
-import { ListContainer } from "./location-select/ListContainer";
+import { ListContainer } from "./LocationSelect/ListContainer";
 
 export namespace LocationSelect {
 	export interface Props extends Omit<Container.Props, "onChange"> {
@@ -42,7 +43,7 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 					value: search,
 					set: setSearch,
 				}}
-				textPlaceholder={"Location search (placeholder)"}
+				textPlaceholder={translator.text("Location search (placeholder)")}
 			/>
 
 			<ListContainer

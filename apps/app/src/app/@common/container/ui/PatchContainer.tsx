@@ -1,7 +1,7 @@
 import { Container } from "@use-pico/client/ui/container";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import type { FC, ReactNode } from "react";
-import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import type { FC, PropsWithChildren } from "react";
+import { SaveContainer } from "./SaveContainer";
 
 const innerUi = {
 	layout: "vertical-content-footer",
@@ -12,8 +12,7 @@ const innerUi = {
 } as const;
 
 export namespace PatchContainer {
-	export interface Props extends Container.Props {
-		children: ReactNode;
+	export interface Props extends Container.Props, PropsWithChildren {
 		onCancel(): void;
 		onSave(): void;
 		loading: boolean;
@@ -25,7 +24,7 @@ export namespace PatchContainer {
 
 /**
  * Shared layout for patch screens: content area + SaveContainer footer.
- * Use with useFeedPatch (feed) or useDraftPatch (draft). Pass title for draft-style header.
+ * Use with direct domain query mutations (e.g. withFeedQuery/withDraftQuery). Pass title for draft-style header.
  */
 export const PatchContainer: FC<PatchContainer.Props> = ({
 	children,

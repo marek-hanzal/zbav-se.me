@@ -1,23 +1,18 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { transactionListingCollectionFx } from "~/@seller-user/transaction-listing/fx/transactionListingCollectionFx";
-import { TransactionListingItemSchema } from "~/@seller-user/transaction-listing/schema/TransactionListingItemSchema";
 import { TransactionListingQuerySchema } from "~/@seller-user/transaction-listing/schema/TransactionListingQuerySchema";
+import { TransactionListingSchema } from "~/@seller-user/transaction-listing/schema/TransactionListingSchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
-const CollectionSchema = withCollectionSchema({
-	schema: TransactionListingItemSchema,
-	type: "TransactionListingItemSchema",
-	description: "Collection of listings that have transactions",
-});
+const CollectionSchema = z.array(TransactionListingSchema);
 
 export const withCollectionApiFx = Effect.fn("withTransactionListingCollectionApiFx")(function* () {
 	const { sellerUserHono } = yield* RoutesContextFx;

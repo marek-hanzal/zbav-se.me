@@ -19,9 +19,14 @@ export const withTransactionListingSourceSelectFx = Effect.fn(
 	const { kysely } = yield* KyselyContextFx;
 
 	let query = kysely
-		.selectFrom("transaction as lt")
-		.innerJoin("listing as l", "lt.listingId", "l.id")
-		.groupBy("l.id");
+		.selectFrom("listing as l")
+		.where(({ exists, selectFrom }) =>
+			exists(
+				selectFrom("transaction as lt")
+					.select("lt.id")
+					.whereRef("lt.listingId", "=", "l.id"),
+			),
+		);
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

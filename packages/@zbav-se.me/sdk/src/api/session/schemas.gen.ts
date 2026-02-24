@@ -202,25 +202,6 @@ export const sOrderEnum = {
     ]
 } as const;
 
-export const sCategoryItemSchema = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/CategoryItem'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
 export const sCategoryItem = {
     type: 'object',
     properties: {
@@ -264,12 +245,20 @@ export const sCount = {
         },
         total: {
             type: 'number'
+        },
+        isEmpty: {
+            type: 'boolean'
+        },
+        isFilterEmpty: {
+            type: 'boolean'
         }
     },
     required: [
         'where',
         'filter',
-        'total'
+        'total',
+        'isEmpty',
+        'isFilterEmpty'
     ]
 } as const;
 
@@ -281,17 +270,6 @@ export const sCategoryCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/CategoryWhere'
-        },
-        count: {
-            type: 'array',
-            items: {
-                type: 'string',
-                enum: [
-                    'total',
-                    'filter',
-                    'where'
-                ]
-            }
         }
     }
 } as const;

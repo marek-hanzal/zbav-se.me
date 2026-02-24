@@ -5,8 +5,8 @@ import type { StateType } from "@use-pico/common/type";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
-import { SellerInfo } from "~/app/@buyer-session/listing/ui/SellerInfo";
-import { ListingDetail } from "~/app/@buyer-user/listing/ui/ListingDetail";
+import { SellerInfoSuspense } from "~/app/@buyer-session/listing/ui/SellerInfoSuspense";
+import { ListingDetail } from "./ListingDetail";
 import { Transaction } from "~/app/@buyer-user/transaction/ui/Transaction";
 import { GalleryContent } from "~/app/@common/gallery/ui/GalleryContent";
 
@@ -95,6 +95,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				messages: {
 					children: listing.transactionId ? (
 						<Transaction
+							_suspense={"I know"}
 							transactionId={listing.transactionId}
 							refresh={2_500}
 						/>
@@ -106,7 +107,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				},
 				"seller-info": {
 					children: (
-						<SellerInfo
+						<SellerInfoSuspense
 							listingId={listing.id}
 							ui={{
 								inner: "default",

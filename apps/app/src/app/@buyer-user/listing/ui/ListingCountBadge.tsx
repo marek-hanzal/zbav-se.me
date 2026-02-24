@@ -1,12 +1,12 @@
 import { useLocale } from "@use-pico/client/hook";
-import { Icon, SpinnerIcon } from "@use-pico/client/icon";
+import { Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-user";
-import { withListingCountQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { ListingIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import { ListingCountBadgeValueSuspense } from "./ListingCountBadgeValueSuspense";
 
 export namespace ListingCountBadge {
 	export interface Props extends Badge.Props {
@@ -48,17 +48,7 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({ count, query, u
 							number: count,
 						})
 					) : (
-						<withListingCountQuery.Suspense
-							data={query}
-							fallback={<Icon icon={SpinnerIcon} />}
-						>
-							{({ data }) => {
-								return `${toLocaleNumber({
-									locale,
-									number: data.filter,
-								})}`;
-							}}
-						</withListingCountQuery.Suspense>
+						<ListingCountBadgeValueSuspense query={query} />
 					)
 				}
 				ui={{

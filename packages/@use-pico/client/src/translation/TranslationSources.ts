@@ -10,44 +10,6 @@ export const TranslationSources: TranslationSource.Sources = {
 			name: "Mx",
 			attr: "label",
 		},
-		//
-		{
-			name: "Button",
-			attr: "label",
-		},
-		//
-		{
-			name: "ModalFooter",
-			attr: "cancelText",
-		},
-		{
-			name: "ModalFooter",
-			attr: "confirmText",
-		},
-		//
-		{
-			name: "Status",
-			attr: "textTitle",
-		},
-		{
-			name: "Status",
-			attr: "textMessage",
-		},
-		//
-		{
-			name: "Fulltext",
-			attr: "textPlaceholder",
-		},
-		//
-		{
-			name: "TextInput",
-			attr: "placeholder",
-		},
-		//
-		{
-			name: "ConfirmButton",
-			attr: "label",
-		},
 	],
 	functions: [],
 	objects: [

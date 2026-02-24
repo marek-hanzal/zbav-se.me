@@ -76,3 +76,20 @@ When adding to `@common`:
 2. Avoid domain-specific logic – keep it generic.
 3. Document the resource in this README.
 4. Consider whether it should live in a domain package (`@zbav-se.me/buyer`, `@zbav-se.me/seller`, …) instead.
+
+## Recent updates
+
+- Transaction list container abstraction was removed from `@common/transaction/ui/`; buyer/seller now keep their own domain-specific list containers to avoid cross-domain generic query wrappers.
+- Message rendering was split into focused parts:
+  - `@common/message/MessageListSuspense/MessageList.tsx` now handles data/container composition.
+  - `@common/message/MessageListSuspense.tsx` now composes local suspense fallback (`MessageListPending`) for feature call-sites.
+  - `@common/message/MessageRenderItem.tsx` now owns message-type dispatch (`text/system/gallery/location/personal/package`).
+- Photo upload UI was split into focused pieces:
+  - `@common/photo/hook/usePhotoUploadController.ts` owns upload/input/pending orchestration.
+  - `@common/photo/ui/PhotoUpload/PhotoUploadPending.tsx`
+  - `@common/photo/ui/PhotoUpload/PhotoUploadPlaceholder.tsx`
+  - `@common/photo/ui/PhotoUpload/PhotoUploadPreview.tsx`
+  - `@common/photo/ui/PhotoUpload/PhotoUploadPreviewImageSuspense.tsx` composes local suspense fallback (`PhotoUploadPreviewImagePending`).
+- Route shell pages were extracted into shared components:
+  - `@common/locale/page/LocalePage.tsx`
+  - `@common/nav/page/UiPage.tsx`

@@ -69,8 +69,8 @@ export const PersonalControl: FC<PersonalControl.Props> = ({
 			>
 				<Status
 					icon={WarningIcon}
-					textTitle={"Personal - Warning (title)"}
-					textMessage={"Personal - Warning (message)"}
+					textTitle={translator.text("Personal - Warning (title)")}
+					textMessage={translator.text("Personal - Warning (message)")}
 					{...uiWarningStatus({
 						className: [
 							"text-left",

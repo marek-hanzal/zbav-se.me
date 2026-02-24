@@ -253,8 +253,8 @@ export const Route = createFileRoute("/$locale/login")({
 					>
 						<Status
 							icon={PassKeyIcon}
-							textTitle={"Login with passkey (title)"}
-							textMessage={"Login with passkey (message)"}
+							textTitle={translator.text("Login with passkey (title)")}
+							textMessage={translator.text("Login with passkey (message)")}
 							action={
 								<Button
 									iconEnabled={UnlockIcon}
@@ -273,7 +273,7 @@ export const Route = createFileRoute("/$locale/login")({
 										theme: "light",
 										text: "lg",
 									}}
-									label={"Login with passkey"}
+									label={translator.text("Login with passkey")}
 								/>
 							}
 							ui={{

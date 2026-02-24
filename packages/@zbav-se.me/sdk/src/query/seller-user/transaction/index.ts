@@ -1,2 +1,1 @@
-export { withTransactionCollectionQuery } from "./withTransactionCollectionQuery";
-export { withTransactionFetchQuery } from "./withTransactionFetchQuery";
+export { withTransactionQuery } from "./withTransactionQuery";

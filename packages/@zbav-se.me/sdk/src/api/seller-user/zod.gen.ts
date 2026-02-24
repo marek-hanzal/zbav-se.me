@@ -3,218 +3,6 @@
 import * as z from 'zod';
 
 /**
- * Draft collection item
- */
-export const zDraftItem = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the draft'
-    })
-}).register(z.globalRegistry, {
-    description: 'Draft collection item'
-});
-
-export type zDraftItem = z.infer<typeof zDraftItem>;
-
-/**
- * Collection of drafts
- */
-export const zDraftItemSchema = z.object({
-    data: z.array(zDraftItem),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of drafts'
-});
-
-export type zDraftItemSchema = z.infer<typeof zDraftItemSchema>;
-
-/**
- * Type of notice
- */
-export const zNoticeTypeEnum = z.enum([
-    'info',
-    'warning',
-    'error'
-]).register(z.globalRegistry, {
-    description: 'Type of notice'
-});
-
-export type zNoticeTypeEnum = z.infer<typeof zNoticeTypeEnum>;
-
-/**
- * Just a note sent from various reasons, usually when something is fucked up.
- */
-export const zNotice = z.object({
-    message: z.string().register(z.globalRegistry, {
-        description: 'Message'
-    }),
-    type: zNoticeTypeEnum
-}).register(z.globalRegistry, {
-    description: 'Just a note sent from various reasons, usually when something is fucked up.'
-});
-
-export type zNotice = z.infer<typeof zNotice>;
-
-/**
- * Cursor for pagination
- */
-export const zCursor = z.object({
-    page: z.number().gte(0).register(z.globalRegistry, {
-        description: 'Page number (0-indexed)'
-    }),
-    size: z.number().gte(1).lte(1000).register(z.globalRegistry, {
-        description: 'Page size'
-    })
-}).register(z.globalRegistry, {
-    description: 'Cursor for pagination'
-});
-
-export type zCursor = z.infer<typeof zCursor>;
-
-/**
- * User-land filters
- */
-export const zDraftFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches drafts with the exact userId'
-    })),
-    updatedAtGte: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches drafts with updatedAt greater than or equal to the provided date'
-    })),
-    updatedAtLte: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches drafts with updatedAt less than or equal to the provided date'
-    })),
-    usedAtIsNull: z.optional(z.boolean().register(z.globalRegistry, {
-        description: 'This filter matches drafts where usedAt is null (true) or not null (false)'
-    }))
-}).register(z.globalRegistry, {
-    description: 'User-land filters'
-});
-
-export type zDraftFilter = z.infer<typeof zDraftFilter>;
-
-/**
- * App-based filters
- */
-export const zDraftWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches drafts with the exact userId'
-    })),
-    updatedAtGte: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches drafts with updatedAt greater than or equal to the provided date'
-    })),
-    updatedAtLte: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches drafts with updatedAt less than or equal to the provided date'
-    })),
-    usedAtIsNull: z.optional(z.boolean().register(z.globalRegistry, {
-        description: 'This filter matches drafts where usedAt is null (true) or not null (false)'
-    }))
-}).register(z.globalRegistry, {
-    description: 'App-based filters'
-});
-
-export type zDraftWhere = z.infer<typeof zDraftWhere>;
-
-/**
- * Field of the draft sort
- */
-export const zDraftSortField = z.enum(['createdAt', 'updatedAt']).register(z.globalRegistry, {
-    description: 'Field of the draft sort'
-});
-
-export type zDraftSortField = z.infer<typeof zDraftSortField>;
-
-/**
- * Order
- */
-export const zOrderEnum = z.enum(['asc', 'desc']).register(z.globalRegistry, {
-    description: 'Order'
-});
-
-export type zOrderEnum = z.infer<typeof zOrderEnum>;
-
-/**
- * Sort object for draft collection
- */
-export const zDraftSort = z.object({
-    field: zDraftSortField,
-    order: zOrderEnum
-}).register(z.globalRegistry, {
-    description: 'Sort object for draft collection'
-});
-
-export type zDraftSort = z.infer<typeof zDraftSort>;
-
-/**
- * Query object for draft collection
- */
-export const zDraftQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zDraftFilter),
-    where: z.optional(zDraftWhere),
-    sort: z.optional(z.array(zDraftSort))
-}).register(z.globalRegistry, {
-    description: 'Query object for draft collection'
-});
-
-export type zDraftQuery = z.infer<typeof zDraftQuery>;
-
-/**
- * Count data
- */
-export const zCount = z.object({
-    where: z.number().register(z.globalRegistry, {
-        description: 'Count of items based on provided where query.'
-    }),
-    filter: z.number().register(z.globalRegistry, {
-        description: 'Count of items based on provided filter query.'
-    }),
-    total: z.number().register(z.globalRegistry, {
-        description: 'Total count of items (no filters applied).'
-    })
-}).register(z.globalRegistry, {
-    description: 'Count data'
-});
-
-export type zCount = z.infer<typeof zCount>;
-
-/**
- * Query object for draft count
- */
-export const zDraftCountQuery = z.object({
-    filter: z.optional(zDraftFilter),
-    where: z.optional(zDraftWhere),
-    count: z.optional(z.array(z.enum([
-        'total',
-        'filter',
-        'where'
-    ])))
-}).register(z.globalRegistry, {
-    description: 'Query object for draft count'
-});
-
-export type zDraftCountQuery = z.infer<typeof zDraftCountQuery>;
-
-/**
  * Price type of the listing
  */
 export const zListingPriceEnum = z.enum(['closed', 'open']).register(z.globalRegistry, {
@@ -547,6 +335,192 @@ export const zDraft = z.object({
 export type zDraft = z.infer<typeof zDraft>;
 
 /**
+ * Type of notice
+ */
+export const zNoticeTypeEnum = z.enum([
+    'info',
+    'warning',
+    'error'
+]).register(z.globalRegistry, {
+    description: 'Type of notice'
+});
+
+export type zNoticeTypeEnum = z.infer<typeof zNoticeTypeEnum>;
+
+/**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export const zNotice = z.object({
+    message: z.string().register(z.globalRegistry, {
+        description: 'Message'
+    }),
+    type: zNoticeTypeEnum
+}).register(z.globalRegistry, {
+    description: 'Just a note sent from various reasons, usually when something is fucked up.'
+});
+
+export type zNotice = z.infer<typeof zNotice>;
+
+/**
+ * Cursor for pagination
+ */
+export const zCursor = z.object({
+    page: z.number().gte(0).register(z.globalRegistry, {
+        description: 'Page number (0-indexed)'
+    }),
+    size: z.number().gte(1).lte(1000).register(z.globalRegistry, {
+        description: 'Page size'
+    })
+}).register(z.globalRegistry, {
+    description: 'Cursor for pagination'
+});
+
+export type zCursor = z.infer<typeof zCursor>;
+
+/**
+ * User-land filters
+ */
+export const zDraftFilter = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches drafts with the exact userId'
+    })),
+    updatedAtGte: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches drafts with updatedAt greater than or equal to the provided date'
+    })),
+    updatedAtLte: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches drafts with updatedAt less than or equal to the provided date'
+    })),
+    usedAtIsNull: z.optional(z.boolean().register(z.globalRegistry, {
+        description: 'This filter matches drafts where usedAt is null (true) or not null (false)'
+    }))
+}).register(z.globalRegistry, {
+    description: 'User-land filters'
+});
+
+export type zDraftFilter = z.infer<typeof zDraftFilter>;
+
+/**
+ * App-based filters
+ */
+export const zDraftWhere = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches drafts with the exact userId'
+    })),
+    updatedAtGte: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches drafts with updatedAt greater than or equal to the provided date'
+    })),
+    updatedAtLte: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches drafts with updatedAt less than or equal to the provided date'
+    })),
+    usedAtIsNull: z.optional(z.boolean().register(z.globalRegistry, {
+        description: 'This filter matches drafts where usedAt is null (true) or not null (false)'
+    }))
+}).register(z.globalRegistry, {
+    description: 'App-based filters'
+});
+
+export type zDraftWhere = z.infer<typeof zDraftWhere>;
+
+/**
+ * Field of the draft sort
+ */
+export const zDraftSortField = z.enum(['createdAt', 'updatedAt']).register(z.globalRegistry, {
+    description: 'Field of the draft sort'
+});
+
+export type zDraftSortField = z.infer<typeof zDraftSortField>;
+
+/**
+ * Order
+ */
+export const zOrderEnum = z.enum(['asc', 'desc']).register(z.globalRegistry, {
+    description: 'Order'
+});
+
+export type zOrderEnum = z.infer<typeof zOrderEnum>;
+
+/**
+ * Sort object for draft collection
+ */
+export const zDraftSort = z.object({
+    field: zDraftSortField,
+    order: zOrderEnum
+}).register(z.globalRegistry, {
+    description: 'Sort object for draft collection'
+});
+
+export type zDraftSort = z.infer<typeof zDraftSort>;
+
+/**
+ * Query object for draft collection
+ */
+export const zDraftQuery = z.object({
+    cursor: z.optional(zCursor),
+    filter: z.optional(zDraftFilter),
+    where: z.optional(zDraftWhere),
+    sort: z.optional(z.array(zDraftSort))
+}).register(z.globalRegistry, {
+    description: 'Query object for draft collection'
+});
+
+export type zDraftQuery = z.infer<typeof zDraftQuery>;
+
+/**
+ * Count data
+ */
+export const zCount = z.object({
+    where: z.number().register(z.globalRegistry, {
+        description: 'Count of items based on provided where query.'
+    }),
+    filter: z.number().register(z.globalRegistry, {
+        description: 'Count of items based on provided filter query.'
+    }),
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total count of items (no filters applied).'
+    }),
+    isEmpty: z.boolean().register(z.globalRegistry, {
+        description: 'True when total count is empty.'
+    }),
+    isFilterEmpty: z.boolean().register(z.globalRegistry, {
+        description: 'True when filter count is empty while total count has data.'
+    })
+}).register(z.globalRegistry, {
+    description: 'Count data'
+});
+
+export type zCount = z.infer<typeof zCount>;
+
+/**
+ * Query object for draft count
+ */
+export const zDraftCountQuery = z.object({
+    filter: z.optional(zDraftFilter),
+    where: z.optional(zDraftWhere)
+}).register(z.globalRegistry, {
+    description: 'Query object for draft count'
+});
+
+export type zDraftCountQuery = z.infer<typeof zDraftCountQuery>;
+
+/**
  * Data for creating a new draft
  */
 export const zDraftCreate = z.object({
@@ -705,31 +679,81 @@ export const zDraftGalleryCreate = z.object({
 export type zDraftGalleryCreate = z.infer<typeof zDraftGalleryCreate>;
 
 /**
- * Listing collection item
+ * Listing data
  */
-export const zListingItem = z.object({
+export const zListing = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the listing'
-    })
+    }),
+    price: z.number().register(z.globalRegistry, {
+        description: 'Price of the listing'
+    }),
+    priceType: zListingPriceEnum,
+    currency: zCurrencyEnum,
+    condition: z.union([
+        z.null(),
+        z.number()
+    ]),
+    age: z.union([
+        z.null(),
+        z.number()
+    ]),
+    delivery: z.union([
+        z.null(),
+        z.array(zListingDeliveryEnum)
+    ]),
+    warranty: z.union([
+        z.null(),
+        zListingWarrantyEnum
+    ]),
+    restriction: zListingRestrictionEnum,
+    locationId: z.string().register(z.globalRegistry, {
+        description: 'ID of the location'
+    }),
+    categoryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the category'
+    }),
+    galleryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery'
+    }),
+    draftId: z.union([
+        z.null(),
+        z.string()
+    ]),
+    expiresAt: z.string().register(z.globalRegistry, {
+        description: 'Expiration timestamp'
+    }),
+    title: z.string().register(z.globalRegistry, {
+        description: 'Title of the item'
+    }),
+    description: z.union([
+        z.null(),
+        z.string()
+    ]),
+    pros: z.union([
+        z.null(),
+        zProsCons
+    ]),
+    cons: z.union([
+        z.null(),
+        zProsCons
+    ]),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    updatedAt: z.string().register(z.globalRegistry, {
+        description: 'Last update timestamp'
+    }),
+    location: zLocation,
+    category: zCategory,
+    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
+        description: 'Listing gallery images'
+    }))
 }).register(z.globalRegistry, {
-    description: 'Listing collection item'
+    description: 'Listing data'
 });
 
-export type zListingItem = z.infer<typeof zListingItem>;
-
-/**
- * Collection of listings
- */
-export const zListingItemSchema = z.object({
-    data: z.array(zListingItem),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of listings'
-});
-
-export type zListingItemSchema = z.infer<typeof zListingItemSchema>;
+export type zListing = z.infer<typeof zListing>;
 
 /**
  * User-land filters
@@ -822,94 +846,12 @@ export type zListingQuery = z.infer<typeof zListingQuery>;
  */
 export const zListingCountQuery = z.object({
     filter: z.optional(zListingFilter),
-    where: z.optional(zListingWhere),
-    count: z.optional(z.array(z.enum([
-        'total',
-        'filter',
-        'where'
-    ])))
+    where: z.optional(zListingWhere)
 }).register(z.globalRegistry, {
     description: 'Query object for listing count'
 });
 
 export type zListingCountQuery = z.infer<typeof zListingCountQuery>;
-
-/**
- * Listing data
- */
-export const zListing = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing'
-    }),
-    price: z.number().register(z.globalRegistry, {
-        description: 'Price of the listing'
-    }),
-    priceType: zListingPriceEnum,
-    currency: zCurrencyEnum,
-    condition: z.union([
-        z.null(),
-        z.number()
-    ]),
-    age: z.union([
-        z.null(),
-        z.number()
-    ]),
-    delivery: z.union([
-        z.null(),
-        z.array(zListingDeliveryEnum)
-    ]),
-    warranty: z.union([
-        z.null(),
-        zListingWarrantyEnum
-    ]),
-    restriction: zListingRestrictionEnum,
-    locationId: z.string().register(z.globalRegistry, {
-        description: 'ID of the location'
-    }),
-    categoryId: z.string().register(z.globalRegistry, {
-        description: 'ID of the category'
-    }),
-    galleryId: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery'
-    }),
-    draftId: z.union([
-        z.null(),
-        z.string()
-    ]),
-    expiresAt: z.string().register(z.globalRegistry, {
-        description: 'Expiration timestamp'
-    }),
-    title: z.string().register(z.globalRegistry, {
-        description: 'Title of the item'
-    }),
-    description: z.union([
-        z.null(),
-        z.string()
-    ]),
-    pros: z.union([
-        z.null(),
-        zProsCons
-    ]),
-    cons: z.union([
-        z.null(),
-        zProsCons
-    ]),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    updatedAt: z.string().register(z.globalRegistry, {
-        description: 'Last update timestamp'
-    }),
-    location: zLocation,
-    category: zCategory,
-    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
-        description: 'Listing gallery images'
-    }))
-}).register(z.globalRegistry, {
-    description: 'Listing data'
-});
-
-export type zListing = z.infer<typeof zListing>;
 
 /**
  * Data for creating a new listing
@@ -973,37 +915,7 @@ export const zListingCreate = z.object({
 export type zListingCreate = z.infer<typeof zListingCreate>;
 
 /**
- * Transaction collection item with last message timestamp
- */
-export const zTransactionItem = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the transaction'
-    }),
-    lastAt: z.string().register(z.globalRegistry, {
-        description: 'Timestamp of the last message in the transaction'
-    })
-}).register(z.globalRegistry, {
-    description: 'Transaction collection item with last message timestamp'
-});
-
-export type zTransactionItem = z.infer<typeof zTransactionItem>;
-
-/**
- * Collection of transactions
- */
-export const zTransactionItemSchema = z.object({
-    data: z.array(zTransactionItem),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of transactions'
-});
-
-export type zTransactionItemSchema = z.infer<typeof zTransactionItemSchema>;
-
-/**
- * This filter matches the current status of the transaction
+ * Current status of the listing transaction
  */
 export const zTransactionStatusEnum = z.enum([
     'pending',
@@ -1015,10 +927,51 @@ export const zTransactionStatusEnum = z.enum([
     'success',
     'closed'
 ]).register(z.globalRegistry, {
-    description: 'This filter matches the current status of the transaction'
+    description: 'Current status of the listing transaction'
 });
 
 export type zTransactionStatusEnum = z.infer<typeof zTransactionStatusEnum>;
+
+/**
+ * Transaction data
+ */
+export const zTransaction = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the related listing'
+    }),
+    messageThreadId: z.string().register(z.globalRegistry, {
+        description: 'ID of the message thread associated with the transaction'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    updatedAt: z.string().register(z.globalRegistry, {
+        description: 'Last update timestamp'
+    }),
+    expiresAt: z.string().register(z.globalRegistry, {
+        description: 'Expiration timestamp'
+    }),
+    title: z.string().register(z.globalRegistry, {
+        description: 'Transaction title'
+    }),
+    status: zTransactionStatusEnum,
+    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
+        description: 'Gallery data with items'
+    })),
+    price: z.number().register(z.globalRegistry, {
+        description: 'Price of the listing'
+    }),
+    priceType: zListingPriceEnum,
+    currency: zCurrencyEnum,
+    location: zLocation
+}).register(z.globalRegistry, {
+    description: 'Transaction data'
+});
+
+export type zTransaction = z.infer<typeof zTransaction>;
 
 /**
  * Filter object for transaction collection
@@ -1039,10 +992,10 @@ export const zTransactionFilter = z.object({
     listingId: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
     })),
-    status: z.optional(zTransactionStatusEnum),
-    statusIn: z.optional(z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
-        description: 'Current status of the listing transaction'
-    }))).register(z.globalRegistry, {
+    status: z.optional(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'This filter matches the current status of the transaction'
+    }))),
+    statusIn: z.optional(z.array(zTransactionStatusEnum).register(z.globalRegistry, {
         description: 'This filter matches any of the provided statuses for the current status of the transaction'
     }))
 }).register(z.globalRegistry, {
@@ -1070,10 +1023,10 @@ export const zTransactionWhere = z.object({
     listingId: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
     })),
-    status: z.optional(zTransactionStatusEnum),
-    statusIn: z.optional(z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
-        description: 'Current status of the listing transaction'
-    }))).register(z.globalRegistry, {
+    status: z.optional(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'This filter matches the current status of the transaction'
+    }))),
+    statusIn: z.optional(z.array(zTransactionStatusEnum).register(z.globalRegistry, {
         description: 'This filter matches any of the provided statuses for the current status of the transaction'
     }))
 }).register(z.globalRegistry, {
@@ -1123,81 +1076,45 @@ export const zTransactionQuery = z.object({
 export type zTransactionQuery = z.infer<typeof zTransactionQuery>;
 
 /**
- * Transaction data
+ * Query object for transaction count
  */
-export const zTransaction = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the transaction'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the related listing'
-    }),
-    messageThreadId: z.string().register(z.globalRegistry, {
-        description: 'ID of the message thread associated with the transaction'
-    }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    updatedAt: z.string().register(z.globalRegistry, {
-        description: 'Last update timestamp'
-    }),
-    expiresAt: z.string().register(z.globalRegistry, {
-        description: 'Expiration timestamp'
-    }),
-    title: z.string().register(z.globalRegistry, {
-        description: 'Transaction title'
-    }),
-    status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
-        description: 'Current status of the listing transaction'
-    })),
-    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
-        description: 'Gallery data with items'
-    })),
-    price: z.number().register(z.globalRegistry, {
-        description: 'Price of the listing'
-    }),
-    priceType: zListingPriceEnum,
-    currency: zCurrencyEnum,
-    location: zLocation
+export const zTransactionCountQuery = z.object({
+    filter: z.optional(zTransactionFilter),
+    where: z.optional(zTransactionWhere)
 }).register(z.globalRegistry, {
-    description: 'Transaction data'
+    description: 'Query object for transaction count'
 });
 
-export type zTransaction = z.infer<typeof zTransaction>;
+export type zTransactionCountQuery = z.infer<typeof zTransactionCountQuery>;
 
 /**
- * Transaction listing collection item
+ * Aggregated transaction information per listing
  */
-export const zTransactionListingItem = z.object({
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing'
+export const zTransactionListing = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing that has at least one transaction'
     }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing that has at least one transaction'
+    }),
+    title: z.string().register(z.globalRegistry, {
+        description: 'Title of the listing'
+    }),
+    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
+        description: 'Listing gallery images'
+    })),
     count: z.union([
-        z.number(),
+        z.int().gte(0),
         z.null()
     ]),
     lastAt: z.string().register(z.globalRegistry, {
-        description: 'Timestamp of the last transaction update'
+        description: 'Timestamp of the most recent activity in any transaction under this listing'
     })
 }).register(z.globalRegistry, {
-    description: 'Transaction listing collection item'
+    description: 'Aggregated transaction information per listing'
 });
 
-export type zTransactionListingItem = z.infer<typeof zTransactionListingItem>;
-
-/**
- * Collection of listings that have transactions
- */
-export const zTransactionListingItemSchema = z.object({
-    data: z.array(zTransactionListingItem),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of listings that have transactions'
-});
-
-export type zTransactionListingItemSchema = z.infer<typeof zTransactionListingItemSchema>;
+export type zTransactionListing = z.infer<typeof zTransactionListing>;
 
 /**
  * Filter object for transaction-listing collection
@@ -1279,6 +1196,18 @@ export const zTransactionListingQuery = z.object({
 export type zTransactionListingQuery = z.infer<typeof zTransactionListingQuery>;
 
 /**
+ * Query object for transaction-listing count
+ */
+export const zTransactionListingCountQuery = z.object({
+    filter: z.optional(zTransactionListingFilter),
+    where: z.optional(zTransactionListingWhere)
+}).register(z.globalRegistry, {
+    description: 'Query object for transaction-listing count'
+});
+
+export type zTransactionListingCountQuery = z.infer<typeof zTransactionListingCountQuery>;
+
+/**
  * Who initiated or affected the transaction change
  */
 export const zTransactionSideEnum = z.enum([
@@ -1307,9 +1236,7 @@ export const zTransactionStatus = z.object({
         description: 'ID of the listing referenced by the status'
     }),
     side: zTransactionSideEnum,
-    status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
-        description: 'Current status of the listing transaction'
-    })),
+    status: zTransactionStatusEnum,
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     })
@@ -1382,7 +1309,9 @@ export type zapiDraftCollectionRequest = z.infer<typeof zApiDraftCollectionData>
 /**
  * Access collection of drafts based on provided query
  */
-export const zApiDraftCollectionResponse = zDraftItemSchema;
+export const zApiDraftCollectionResponse = z.array(zDraft).register(z.globalRegistry, {
+    description: 'Access collection of drafts based on provided query'
+});
 
 export type zapiDraftCollectionResponse = z.infer<typeof zApiDraftCollectionResponse>;
 
@@ -1489,7 +1418,9 @@ export type zapiListingCollectionRequest = z.infer<typeof zApiListingCollectionD
 /**
  * Access collection of listings based on provided query
  */
-export const zApiListingCollectionResponse = zListingItemSchema;
+export const zApiListingCollectionResponse = z.array(zListing).register(z.globalRegistry, {
+    description: 'Access collection of listings based on provided query'
+});
 
 export type zapiListingCollectionResponse = z.infer<typeof zApiListingCollectionResponse>;
 
@@ -1549,9 +1480,26 @@ export type zapiTransactionCollectionRequest = z.infer<typeof zApiTransactionCol
 /**
  * Access collection of transactions based on provided query
  */
-export const zApiTransactionCollectionResponse = zTransactionItemSchema;
+export const zApiTransactionCollectionResponse = z.array(zTransaction).register(z.globalRegistry, {
+    description: 'Access collection of transactions based on provided query'
+});
 
 export type zapiTransactionCollectionResponse = z.infer<typeof zApiTransactionCollectionResponse>;
+
+export const zApiTransactionCountData = z.object({
+    body: z.optional(zTransactionCountQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionCountRequest = z.infer<typeof zApiTransactionCountData>;
+
+/**
+ * Return counts based on provided query
+ */
+export const zApiTransactionCountResponse = zCount;
+
+export type zapiTransactionCountResponse = z.infer<typeof zApiTransactionCountResponse>;
 
 export const zApiTransactionFetchData = z.object({
     body: z.optional(zTransactionQuery),
@@ -1579,9 +1527,41 @@ export type zapiTransactionListingCollectionRequest = z.infer<typeof zApiTransac
 /**
  * Access collection of listings that have transactions based on provided query
  */
-export const zApiTransactionListingCollectionResponse = zTransactionListingItemSchema;
+export const zApiTransactionListingCollectionResponse = z.array(zTransactionListing).register(z.globalRegistry, {
+    description: 'Access collection of listings that have transactions based on provided query'
+});
 
 export type zapiTransactionListingCollectionResponse = z.infer<typeof zApiTransactionListingCollectionResponse>;
+
+export const zApiTransactionListingCountData = z.object({
+    body: z.optional(zTransactionListingCountQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionListingCountRequest = z.infer<typeof zApiTransactionListingCountData>;
+
+/**
+ * Return counts based on provided query
+ */
+export const zApiTransactionListingCountResponse = zCount;
+
+export type zapiTransactionListingCountResponse = z.infer<typeof zApiTransactionListingCountResponse>;
+
+export const zApiTransactionListingFetchData = z.object({
+    body: z.optional(zTransactionListingQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionListingFetchRequest = z.infer<typeof zApiTransactionListingFetchData>;
+
+/**
+ * Transaction-listing aggregate matching provided query
+ */
+export const zApiTransactionListingFetchResponse = zTransactionListing;
+
+export type zapiTransactionListingFetchResponse = z.infer<typeof zApiTransactionListingFetchResponse>;
 
 export const zApiTransactionStatusAcceptData = z.object({
     body: z.optional(zTransactionStatusAccept),

@@ -34,10 +34,7 @@ export namespace ValueList {
 		wrapperProps?: Container.Props;
 	}
 
-	export type PropsEx<TItem extends EntitySchema.Type> = Omit<
-		Props<TItem>,
-		"textLabel" | "textEmpty"
-	>;
+	export type PropsEx<TItem extends EntitySchema.Type> = Partial<Props<TItem>>;
 }
 
 export const ValueList = <TItem extends EntitySchema.Type>({

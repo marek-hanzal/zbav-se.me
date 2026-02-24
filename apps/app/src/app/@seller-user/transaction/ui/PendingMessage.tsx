@@ -3,8 +3,8 @@ import type { tTransaction } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
 import { MessageButtonUi } from "~/app/@common/transaction/ui/MessageButtonUi";
 import { BuyerInfoButton } from "~/app/@seller-session/transaction/ui/BuyerInfoButton";
-import { AcceptButton } from "~/app/@seller-user/transaction/ui/button/AcceptButton";
-import { RejectButton } from "~/app/@seller-user/transaction/ui/button/RejectButton";
+import { AcceptButton } from "./button/AcceptButton";
+import { RejectButton } from "./button/RejectButton";
 
 export namespace PendingMessage {
 	export interface Props extends Container.Props {

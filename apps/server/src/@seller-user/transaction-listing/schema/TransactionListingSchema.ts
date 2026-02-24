@@ -1,9 +1,19 @@
 import { z } from "@hono/zod-openapi";
+import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 
 export const TransactionListingSchema = z
 	.object({
+		id: z.string().openapi({
+			description: "ID of the listing that has at least one transaction",
+		}),
 		listingId: z.string().openapi({
 			description: "ID of the listing that has at least one transaction",
+		}),
+		title: z.string().openapi({
+			description: "Title of the listing",
+		}),
+		gallery: GallerySchema.openapi({
+			description: "Listing gallery images",
 		}),
 		count: z.coerce.number().int().nonnegative().openapi({
 			description: "Total number of transactions for this listing (within the current scope)",

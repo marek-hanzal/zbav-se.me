@@ -14,7 +14,6 @@ import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
 const ParamsSchema = z
 	.object({
@@ -26,11 +25,7 @@ const ParamsSchema = z
 		description: "Parameters for message collection within a message thread",
 	});
 
-const CollectionSchema = withCollectionSchema({
-	schema: MessageItemSchema,
-	type: "MessageItemSchema",
-	description: "Collection of messages",
-});
+const CollectionSchema = z.array(MessageItemSchema);
 
 export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx")(function* () {
 	const { userHono } = yield* RoutesContextFx;

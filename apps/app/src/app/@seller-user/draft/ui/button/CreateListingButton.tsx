@@ -1,4 +1,5 @@
 import { Button } from "@use-pico/client/ui/button";
+import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { zListingCreate } from "@zbav-se.me/sdk/api/seller-user";
 import { withListingCreateMutation } from "@zbav-se.me/sdk/mutation/seller-user/listing";
@@ -37,7 +38,7 @@ export const CreateListingButton: FC<CreateListingButton.Props> = ({
 					text: "2xl",
 				},
 			}}
-			label={"Submit listing (button)"}
+			label={translator.text("Submit listing (button)")}
 			disabled={!listing.success || listingCreateMutation.isPending}
 			loading={listingCreateMutation.isPending}
 			onClick={() => {

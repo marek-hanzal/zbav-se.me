@@ -1,5 +1,6 @@
 import { Container, SpinnerContainer, uiContainer } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
+import { translator } from "@use-pico/common/translator";
 import {
 	type ComponentProps,
 	type FC,
@@ -108,7 +109,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 				>
 					<Status
 						icon={"icon-[ph--image-broken-duotone]"}
-						textTitle={"Image not available anymore"}
+						textTitle={translator.text("Image not available anymore")}
 						{...errorStatusProps}
 					/>
 				</Container>

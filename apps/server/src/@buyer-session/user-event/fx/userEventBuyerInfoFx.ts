@@ -496,7 +496,7 @@ export const userEventBuyerInfoFx = Effect.fn("userEventBuyerInfoFx")(function* 
 
 	const cutoff = 90;
 
-	const { data: source } = yield* userEventCollectionFx({
+	const source = yield* userEventCollectionFx({
 		cursor: {
 			page: 0,
 			size: 1000,

@@ -1,8 +1,8 @@
 import { Container } from "@use-pico/client/ui/container";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
-import { SellerInfoButton } from "~/app/@buyer-session/listing/ui/button/SellerInfoButton";
-import { RejectButton } from "~/app/@buyer-user/transaction/ui/button/RejectButton";
+import { SellerInfoButton } from "~/app/@buyer-session/listing/ui/SellerInfoButton";
+import { RejectButton } from "./button/RejectButton";
 import { MessageButtonUi } from "~/app/@common/transaction/ui/MessageButtonUi";
 
 export namespace PendingMessage {

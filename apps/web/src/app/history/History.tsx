@@ -1,4 +1,5 @@
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import type { MarkSuspense } from "@use-pico/client/type";
+import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withGithubHistoryQuery } from "@zbav-se.me/sdk/query/public";
 import { type FC, useId } from "react";
@@ -71,76 +72,68 @@ const DEFAULT_PALETTE = [
 ] as const;
 
 export namespace History {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		//
 	}
 }
 
-export const History: FC<History.Props> = ({ ui, className, ...props }) => {
+export const History: FC<History.Props> = ({ _suspense, ui, className, ...props }) => {
 	const historyRootId = useId();
 	const threshold = 4;
 	const weeks = 8;
+	const { data } = withGithubHistoryQuery.useSuspenseQuery({
+		weeks,
+	});
 
 	return (
-		<withGithubHistoryQuery.Suspense
-			data={{
-				weeks,
+		<Container
+			ui={{
+				layout: "vertical-centered",
+				height: "full",
+				gap: "default",
+				...ui,
 			}}
-			fallback={<SpinnerContainer />}
+			className={className}
+			{...props}
 		>
-			{({ data }) => {
-				return (
-					<Container
-						ui={{
-							layout: "vertical-centered",
-							height: "full",
-							gap: "default",
-							...ui,
-						}}
-						className={className}
-						{...props}
-					>
-						<Container
-							data-ui="History[Container]"
-							className={[
-								"grid grid-flow-row grid-cols-7",
-								// Sizing and spacing
-								"gap-1",
-								// Optional: keep it from stretching weirdly
-								"w-fit",
-								"h-fit",
-							]}
-						>
-							{[
-								/**
-								 * We're reversing, so we've to prevent mutation of the original data source.
-								 */
-								...data,
-							]
-								.reverse()
-								.map((item) => (
-									<HistoryItem
-										key={`${historyRootId}-${item.date}`}
-										item={item}
-										palette={DEFAULT_PALETTE}
-										threshold={threshold}
-									/>
-								))}
-						</Container>
-
-						<Tx
-							label={"History activity (hint)"}
-							ui={{
-								text: "sm",
-								color: "icon",
-								opacity: "medium",
-								inner: "2xl",
-							}}
-							className={"text-center"}
+			<Container
+				data-ui="History[Container]"
+				className={[
+					"grid grid-flow-row grid-cols-7",
+					// Sizing and spacing
+					"gap-1",
+					// Optional: keep it from stretching weirdly
+					"w-fit",
+					"h-fit",
+				]}
+			>
+				{[
+					/**
+					 * We're reversing, so we've to prevent mutation of the original data source.
+					 */
+					...data,
+				]
+					.reverse()
+					.map((item) => (
+						<HistoryItem
+							key={`${historyRootId}-${item.date}`}
+							item={item}
+							palette={DEFAULT_PALETTE}
+							threshold={threshold}
 						/>
-					</Container>
-				);
-			}}
-		</withGithubHistoryQuery.Suspense>
+					))}
+			</Container>
+
+			<Tx
+				label={"History activity (hint)"}
+				ui={{
+					text: "sm",
+					color: "icon",
+					opacity: "medium",
+					inner: "2xl",
+				}}
+				className={"text-center"}
+			/>
+		</Container>
 	);
 };

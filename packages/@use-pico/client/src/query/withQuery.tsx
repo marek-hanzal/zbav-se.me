@@ -11,42 +11,7 @@ import {
 	useSuspenseQuery,
 } from "@tanstack/react-query";
 import { cleanOf } from "@use-pico/common/clean-of";
-import { type ReactNode, Suspense } from "react";
 import type { withInvalidator } from "../invalidator/withInvalidator";
-
-// biome-ignore lint/correctness/noUnusedVariables: Private
-namespace Sleeper {
-	export namespace Children {
-		export interface Props<TResult> {
-			data: TResult;
-		}
-
-		export type RenderFn<TResult> = (props: Props<TResult>) => ReactNode;
-	}
-
-	export interface Props<TData, TResult> {
-		data: TData;
-		options?: withQuery.QueryOptions<TResult>;
-		useSuspenseQuery(
-			data: TData,
-			options?: withQuery.QueryOptions<TResult>,
-		): UseSuspenseQueryResult<TResult, Error>;
-		children: Children.RenderFn<TResult>;
-	}
-}
-
-const Sleeper = <TData, TResult>({
-	data,
-	options,
-	useSuspenseQuery,
-	children,
-}: Sleeper.Props<TData, TResult>) => {
-	const query = useSuspenseQuery(data, options);
-
-	return children({
-		data: query.data,
-	});
-};
 
 export namespace withQuery {
 	/**
@@ -81,15 +46,6 @@ export namespace withQuery {
 		UseQueryOptions<TResult, Error>,
 		"queryKey" | "queryFn"
 	>;
-
-	export namespace Suspense {
-		export interface Props<TData, TResult> {
-			data: TData;
-			options?: QueryOptions<TResult>;
-			fallback: ReactNode;
-			children: Sleeper.Children.RenderFn<TResult>;
-		}
-	}
 
 	/**
 	 * Typed public facing API for query operations.
@@ -312,19 +268,6 @@ export function withQuery<TData, TResult>({ queryFn, keys }: withQuery.Props<TDa
 			) => {
 				queryClient.setQueryData($keys(data), value);
 			};
-		},
-		/**
-		 * Suspense component used to execute this query and return the result.
-		 */
-		Suspense({ fallback, ...prop }: withQuery.Suspense.Props<TData, TResult>) {
-			return (
-				<Suspense fallback={fallback}>
-					<Sleeper
-						useSuspenseQuery={useSuspenseQuery$}
-						{...prop}
-					/>
-				</Suspense>
-			);
 		},
 	} as const;
 }

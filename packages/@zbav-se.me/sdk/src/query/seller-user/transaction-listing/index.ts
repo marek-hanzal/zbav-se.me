@@ -1,1 +1,1 @@
-export { withTransactionListingCollectionQuery } from "./withTransactionListingCollectionQuery";
+export { withTransactionListingQuery } from "./withTransactionListingQuery";

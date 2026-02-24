@@ -1,23 +1,18 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { draftCollectionFx } from "~/@seller-user/draft/fx/draftCollectionFx";
-import { DraftItemSchema } from "~/@seller-user/draft/schema/DraftItemSchema";
 import { DraftQuerySchema } from "~/@seller-user/draft/schema/DraftQuerySchema";
+import { DraftSchema } from "~/@seller-user/draft/schema/DraftSchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
-const CollectionSchema = withCollectionSchema({
-	schema: DraftItemSchema,
-	type: "DraftItemSchema",
-	description: "Collection of drafts",
-});
+const CollectionSchema = z.array(DraftSchema);
 
 export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* () {
 	const { sellerUserHono } = yield* RoutesContextFx;

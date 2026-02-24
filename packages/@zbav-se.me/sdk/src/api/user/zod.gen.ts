@@ -189,22 +189,6 @@ export const zGalleryQuery = z.object({
 export type zGalleryQuery = z.infer<typeof zGalleryQuery>;
 
 /**
- * Collection of gallery items
- */
-export const zGalleryItemSchema = z.object({
-    data: z.array(zGalleryItem.and(z.unknown().register(z.globalRegistry, {
-        description: 'Gallery collection item'
-    }))),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of gallery items'
-});
-
-export type zGalleryItemSchema = z.infer<typeof zGalleryItemSchema>;
-
-/**
  * Count data
  */
 export const zCount = z.object({
@@ -216,6 +200,12 @@ export const zCount = z.object({
     }),
     total: z.number().register(z.globalRegistry, {
         description: 'Total count of items (no filters applied).'
+    }),
+    isEmpty: z.boolean().register(z.globalRegistry, {
+        description: 'True when total count is empty.'
+    }),
+    isFilterEmpty: z.boolean().register(z.globalRegistry, {
+        description: 'True when filter count is empty while total count has data.'
     })
 }).register(z.globalRegistry, {
     description: 'Count data'
@@ -228,12 +218,7 @@ export type zCount = z.infer<typeof zCount>;
  */
 export const zGalleryCountQuery = z.object({
     filter: z.optional(zGalleryFilter),
-    where: z.optional(zGalleryWhere),
-    count: z.optional(z.array(z.enum([
-        'total',
-        'filter',
-        'where'
-    ])))
+    where: z.optional(zGalleryWhere)
 }).register(z.globalRegistry, {
     description: 'Query object for gallery count'
 });
@@ -504,20 +489,6 @@ export const zMessageItem = z.object({
 export type zMessageItem = z.infer<typeof zMessageItem>;
 
 /**
- * Collection of messages
- */
-export const zMessageItemSchema = z.object({
-    data: z.array(zMessageItem),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of messages'
-});
-
-export type zMessageItemSchema = z.infer<typeof zMessageItemSchema>;
-
-/**
  * Filter object for message collection
  */
 export const zMessageFilter = z.object({
@@ -607,6 +578,18 @@ export const zMessageQuery = z.object({
 });
 
 export type zMessageQuery = z.infer<typeof zMessageQuery>;
+
+/**
+ * Query object for message count
+ */
+export const zMessageCountQuery = z.object({
+    filter: z.optional(zMessageFilter),
+    where: z.optional(zMessageWhere)
+}).register(z.globalRegistry, {
+    description: 'Query object for message count'
+});
+
+export type zMessageCountQuery = z.infer<typeof zMessageCountQuery>;
 
 /**
  * Allowed extensions
@@ -898,7 +881,11 @@ export type zapiGalleryCollectionRequest = z.infer<typeof zApiGalleryCollectionD
 /**
  * Access collection of galleries based on provided query
  */
-export const zApiGalleryCollectionResponse = zGalleryItemSchema;
+export const zApiGalleryCollectionResponse = z.array(zGalleryItem.and(z.unknown().register(z.globalRegistry, {
+    description: 'Gallery collection item'
+}))).register(z.globalRegistry, {
+    description: 'Access collection of galleries based on provided query'
+});
 
 export type zapiGalleryCollectionResponse = z.infer<typeof zApiGalleryCollectionResponse>;
 
@@ -932,9 +919,45 @@ export type zapiMessageThreadMessageCollectionRequest = z.infer<typeof zApiMessa
 /**
  * Access collection of messages based on provided query
  */
-export const zApiMessageThreadMessageCollectionResponse = zMessageItemSchema;
+export const zApiMessageThreadMessageCollectionResponse = z.array(zMessageItem).register(z.globalRegistry, {
+    description: 'Access collection of messages based on provided query'
+});
 
 export type zapiMessageThreadMessageCollectionResponse = z.infer<typeof zApiMessageThreadMessageCollectionResponse>;
+
+export const zApiMessageThreadMessageFetchData = z.object({
+    body: z.optional(zMessageQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiMessageThreadMessageFetchRequest = z.infer<typeof zApiMessageThreadMessageFetchData>;
+
+/**
+ * Access message based on provided query
+ */
+export const zApiMessageThreadMessageFetchResponse = zMessageItem;
+
+export type zapiMessageThreadMessageFetchResponse = z.infer<typeof zApiMessageThreadMessageFetchResponse>;
+
+export const zApiMessageThreadMessageCountData = z.object({
+    body: z.optional(zMessageCountQuery),
+    path: z.object({
+        messageThreadId: z.string().register(z.globalRegistry, {
+            description: 'Message thread identifier'
+        })
+    }),
+    query: z.optional(z.never())
+});
+
+export type zapiMessageThreadMessageCountRequest = z.infer<typeof zApiMessageThreadMessageCountData>;
+
+/**
+ * Return counts based on provided query
+ */
+export const zApiMessageThreadMessageCountResponse = zCount;
+
+export type zapiMessageThreadMessageCountResponse = z.infer<typeof zApiMessageThreadMessageCountResponse>;
 
 export const zApiS3PresignData = z.object({
     body: z.object({

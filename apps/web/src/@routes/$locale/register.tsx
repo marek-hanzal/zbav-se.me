@@ -110,7 +110,7 @@ export const Route = createFileRoute("/$locale/register")({
 								<Logo />
 							</LinkTo>
 						}
-						textTitle={"Register (title)"}
+						textTitle={translator.text("Register (title)")}
 						ui={{
 							inner: "xl",
 						}}

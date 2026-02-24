@@ -1,9 +1,8 @@
 import { Effect } from "effect";
-import { sql } from "kysely";
-import { withTransactionListingSourceSelectFx } from "~/@seller-user/transaction-listing/db/withTransactionListingSourceSelectFx";
+import { withTransactionListingSelectFx } from "~/@seller-user/transaction-listing/db/withTransactionListingSelectFx";
 
 export namespace withTransactionListingCollectionSelectFx {
-	export interface Props extends withTransactionListingSourceSelectFx.Props {}
+	export interface Props extends withTransactionListingSelectFx.Props {}
 
 	export type Select = Effect.Effect.Success<
 		ReturnType<typeof withTransactionListingCollectionSelectFx>
@@ -13,13 +12,9 @@ export namespace withTransactionListingCollectionSelectFx {
 export const withTransactionListingCollectionSelectFx = Effect.fn(
 	"withTransactionListingCollectionSelectFx",
 )(function* ({ sort }: withTransactionListingCollectionSelectFx.Props) {
-	const sourceSelect = yield* withTransactionListingSourceSelectFx({
+	const sourceSelect = yield* withTransactionListingSelectFx({
 		sort,
 	});
 
-	return sourceSelect.select((eb) => [
-		eb.ref("l.id").as("listingId"),
-		sql<number>`count(${eb.ref("lt.id")})`.as("count"),
-		sql<Date>`max(${eb.ref("lt.updatedAt")})`.as("lastAt"),
-	]);
+	return sourceSelect;
 });

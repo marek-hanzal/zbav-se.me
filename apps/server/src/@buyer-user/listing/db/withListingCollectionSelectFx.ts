@@ -1,20 +1,20 @@
 import { Effect } from "effect";
-import { withListingSourceSelectFx } from "~/@buyer-user/listing/db/withListingSourceSelectFx";
+import { withListingSelectFx } from "~/@buyer-user/listing/db/withListingSelectFx";
 
 export namespace withListingCollectionSelectFx {
-	export interface Props extends withListingSourceSelectFx.Props {}
+	export interface Props extends withListingSelectFx.Props {}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withListingCollectionSelectFx>>;
 }
 
 export const withListingCollectionSelectFx = Effect.fn("withListingCollectionSelectFx")(function* ({
+	userId,
 	sort,
 	meta,
 }: withListingCollectionSelectFx.Props) {
-	const sourceSelect = yield* withListingSourceSelectFx({
+	return yield* withListingSelectFx({
+		userId,
 		sort,
 		meta,
 	});
-
-	return sourceSelect.select("l.id");
 });

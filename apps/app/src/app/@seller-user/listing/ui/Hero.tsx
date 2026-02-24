@@ -3,8 +3,8 @@ import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
-import { ListingOverlay } from "~/app/@seller-user/listing/ui/ListingOverlay";
-import { ListingSheet } from "~/app/@seller-user/listing/ui/ListingSheet";
+import { ListingOverlay } from "./ListingOverlay";
+import { ListingSheet } from "./ListingSheet";
 
 export namespace Hero {
 	/**

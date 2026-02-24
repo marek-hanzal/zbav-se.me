@@ -1,7 +1,7 @@
 import type { withMutation } from "@use-pico/client/mutation";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import type { StateType } from "@use-pico/common/type";
-import { GalleryUploadContainer } from "~/app/@common/gallery/ui/GalleryUploadContainer";
+import { GalleryUploadContainer } from "./GalleryUploadContainer";
 
 export namespace GalleryUploadSheet {
 	export interface Uploads {

@@ -6,7 +6,7 @@ import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
 import { GalleryContent } from "~/app/@common/gallery/ui/GalleryContent";
-import { ListingDetail } from "~/app/@seller-user/listing/ui/ListingDetail";
+import { ListingDetail } from "./ListingDetail";
 
 export namespace ListingSheet {
 	export type View = "detail" | "gallery";

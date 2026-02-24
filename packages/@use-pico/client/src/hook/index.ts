@@ -1,3 +1,4 @@
+export { useAutoScroll } from "./useAutoScroll";
 export { useDocumentVisibility } from "./useDocumentVisibility";
 export { useDoubleTap } from "./useDoubleTap";
 export { useElementVisibility } from "./useElementVisibility";

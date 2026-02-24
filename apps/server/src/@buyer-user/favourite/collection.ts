@@ -1,4 +1,4 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { favouriteCollectionFx } from "~/@buyer-user/favourite/fx/favouriteCollectionFx";
@@ -11,13 +11,8 @@ import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
-const CollectionSchema = withCollectionSchema({
-	schema: FavouriteItemSchema,
-	type: "FavouriteItemSchema",
-	description: "Collection of favourite items",
-});
+const CollectionSchema = z.array(FavouriteItemSchema);
 
 export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* () {
 	const { buyerUserHono } = yield* RoutesContextFx;

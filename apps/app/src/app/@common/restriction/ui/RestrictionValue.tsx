@@ -1,7 +1,7 @@
 import { LabelValue } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tListingRestrictionEnum } from "@zbav-se.me/sdk/api/seller-user";
+import type { tListingRestrictionEnum } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
 
 export namespace RestrictionValue {

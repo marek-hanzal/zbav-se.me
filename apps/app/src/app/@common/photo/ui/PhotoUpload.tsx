@@ -1,19 +1,9 @@
-import { SpinnerIcon } from "@use-pico/client/icon";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import { Progress } from "@use-pico/client/ui/progress";
-import { Status } from "@use-pico/client/ui/status";
-import { withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withUploadFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { PhotoIcon } from "@zbav-se.me/ui/icon";
-import { HeroImage } from "@zbav-se.me/ui/img";
-import {
-	type ChangeEvent,
-	type FC,
-	type KeyboardEvent,
-	useCallback,
-	useRef,
-	useState,
-} from "react";
+import { Container } from "@use-pico/client/ui/container";
+import type { FC } from "react";
+import { usePhotoUploadController } from "~/app/@common/photo/hook/usePhotoUploadController";
+import { PhotoUploadPending } from "./PhotoUpload/PhotoUploadPending";
+import { PhotoUploadPlaceholder } from "./PhotoUpload/PhotoUploadPlaceholder";
+import { PhotoUploadPreview } from "./PhotoUpload/PhotoUploadPreview";
 
 export namespace PhotoUpload {
 	export type Value = string | undefined;
@@ -33,66 +23,10 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	ui,
 	...props
 }) => {
-	const inputRef = useRef<HTMLInputElement>(null);
-	const [progress, setProgress] = useState(0);
-
-	const setUpload = withUploadFetchQuery.useSet();
-
-	const pick = useCallback(() => {
-		inputRef.current?.click();
-	}, []);
-
-	const onKeyDown = useCallback((e: KeyboardEvent) => {
-		if (e.key === "Enter" || e.key === " ") {
-			e.preventDefault();
-			inputRef.current?.click();
-		}
-	}, []);
-
-	const uploadMutation = withUploadMutation.useMutation({
-		async onPreMutation() {
-			setProgress(0);
-
-			setUpload(
-				() => {
-					return undefined;
-				},
-				{
-					where: {
-						id: value,
-					},
-				},
-			);
-		},
-		async onPostMutation({ result }) {
-			setUpload(() => result, {
-				where: {
-					id: result.id,
-				},
-			});
-			onChange(result.id);
-		},
+	const controller = usePhotoUploadController({
+		value,
+		onChange,
 	});
-
-	const onUpload = useCallback(
-		async (e: ChangeEvent<HTMLInputElement>) => {
-			const file = e.target.files?.[0];
-			if (!file) {
-				return;
-			}
-
-			uploadMutation.mutate({
-				blob: file,
-				name: file.name,
-				onProgress: setProgress,
-			});
-
-			e.target.value = "";
-		},
-		[
-			uploadMutation,
-		],
-	);
 
 	return (
 		<Container
@@ -105,104 +39,32 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				border: true,
 				shadow: true,
 				position: "relative",
-				disabled: (ui?.disabled || uploadMutation.isPending) ?? undefined,
+				disabled: (ui?.disabled || controller.isPending) ?? undefined,
 				width: "full",
 				height: "full",
 				...ui,
 			}}
-			onClick={pick}
-			onKeyDown={onKeyDown}
+			onClick={controller.pick}
+			onKeyDown={controller.onKeyDown}
 			{...props}
 		>
 			<input
-				data-ui="PhotoUpload-Input"
-				ref={inputRef}
+				data-ui="PhotoUpload-[Input]"
+				ref={controller.inputRef}
 				type="file"
 				accept="image/*"
 				capture={camera ? "environment" : undefined}
 				className="sr-only"
-				onChange={onUpload}
+				onChange={controller.onUpload}
 			/>
 
-			{uploadMutation.isPending ? (
-				<Container
-					data-ui={"PhotoUpload-[Container.spinner]"}
-					ui={{
-						flow: "vertical",
-						height: "full",
-						items: "center",
-						justify: "center",
-					}}
-				>
-					<Status
-						data-ui={"PhotoUpload-[Status.spinner]"}
-						icon={SpinnerIcon}
-						textTitle={"Uploading photo (title)"}
-						action={
-							<Progress
-								value={progress * 100}
-								size={"lg"}
-								tone={"primary"}
-								theme={"dark"}
-							/>
-						}
-						ui={{
-							tone: "primary",
-							theme: "light",
-						}}
-					/>
-				</Container>
+			{controller.isPending ? <PhotoUploadPending progress={controller.progress} /> : null}
+
+			{!value && !controller.isPending ? (
+				<PhotoUploadPlaceholder disabled={ui?.disabled} />
 			) : null}
 
-			{!value && !uploadMutation.isPending ? (
-				<Container
-					data-ui={"PhotoUpload-[Container.placeholder]"}
-					ui={{
-						flow: "vertical",
-						height: "full",
-						items: "center",
-						justify: "center",
-						round: "default",
-					}}
-				>
-					<Status
-						data-ui={"PhotoUpload-[Status.placeholder]"}
-						icon={PhotoIcon}
-						textTitle={"Photo upload placeholder (title)"}
-						textMessage={"Photo upload placeholder (message)"}
-						ui={{
-							tone: ui?.disabled ? "neutral" : "primary",
-							theme: "light",
-							inner: "4xl",
-						}}
-						className={"text-center"}
-					/>
-				</Container>
-			) : null}
-
-			{value && !uploadMutation.isPending ? (
-				<withUploadFetchQuery.Suspense
-					data={{
-						where: {
-							id: value,
-						},
-					}}
-					fallback={<SpinnerContainer />}
-				>
-					{({ data }) => {
-						return (
-							<HeroImage
-								src={data.url}
-								alt={data.id}
-								visible
-								ui={{
-									round: "default",
-								}}
-							/>
-						);
-					}}
-				</withUploadFetchQuery.Suspense>
-			) : null}
+			{value && !controller.isPending ? <PhotoUploadPreview value={value} /> : null}
 		</Container>
 	);
 };

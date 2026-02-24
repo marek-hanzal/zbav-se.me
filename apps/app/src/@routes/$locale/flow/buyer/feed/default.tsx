@@ -1,10 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { ArrowLeftIcon } from "@use-pico/client/icon";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
-import { LinkTo } from "@use-pico/client/ui/link-to";
-import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
-import { FlowContainer } from "@zbav-se.me/ui/container";
-import { uiBackButton } from "@zbav-se.me/ui/ui";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import { FeedDefaultPendingPage } from "~/app/@buyer-user/feed/page/FeedDefaultPendingPage";
 import { feedCreateDefault } from "~/app/@buyer-user/feed/service/feedCreateDefault";
 
 export const Route = createFileRoute("/$locale/flow/buyer/feed/default")({
@@ -17,8 +13,8 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/default")({
 	 * The idea is to _ensure_ we've a feed a user _can_ customize
 	 */
 	async loader({ context: { queryClient }, params: { locale } }) {
-		let feed = await withFeedFetchQuery
-			.query({
+		let feed = await withFeedQuery
+			.fetch({
 				sort: [
 					{
 						field: "updatedAt",
@@ -48,26 +44,5 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/default")({
 			},
 		});
 	},
-	pendingComponent() {
-		const { locale } = Route.useParams();
-
-		return (
-			<FlowContainer
-				left={
-					<LinkTo
-						{...uiBackButton({
-							className: [],
-						})}
-						icon={ArrowLeftIcon}
-						to={"/$locale/flow/home"}
-						params={{
-							locale,
-						}}
-					/>
-				}
-			>
-				<SpinnerContainer />
-			</FlowContainer>
-		);
-	},
+	pendingComponent: FeedDefaultPendingPage,
 });

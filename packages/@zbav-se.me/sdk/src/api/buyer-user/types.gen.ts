@@ -5,17 +5,6 @@ export type clientOptions = {
 };
 
 /**
- * Collection of favourite items
- */
-export type tFavouriteItemSchema = {
-    data: Array<tFavouriteItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
  * Favourite collection item
  */
 export type tFavouriteItem = {
@@ -170,6 +159,14 @@ export type tCount = {
      * Total count of items (no filters applied).
      */
     total: number;
+    /**
+     * True when total count is empty.
+     */
+    isEmpty: boolean;
+    /**
+     * True when filter count is empty while total count has data.
+     */
+    isFilterEmpty: boolean;
 };
 
 /**
@@ -178,7 +175,6 @@ export type tCount = {
 export type tFavouriteCountQuery = {
     filter?: tFavouriteFilter;
     where?: tFavouriteWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -970,17 +966,6 @@ export const tFeedSortField = { createdAt: 'createdAt', updatedAt: 'updatedAt' }
 export type tFeedSortField = typeof tFeedSortField[keyof typeof tFeedSortField];
 
 /**
- * Collection of feed items
- */
-export type tFeedItemSchema = {
-    data: Array<tFeedItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
  * Feed collection item
  */
 export type tFeedItem = {
@@ -988,6 +973,23 @@ export type tFeedItem = {
      * ID of the feed
      */
     id: string;
+    /**
+     * ID of the location associated with the feed
+     */
+    locationId: null | string;
+    /**
+     * Hero image for this feed (usually selected from the listings in the feed)
+     */
+    uploadId: null | string;
+    /**
+     * Name of the feed
+     */
+    name: string;
+    query: tListingQuery;
+    /**
+     * Hero banner for this feed
+     */
+    upload: null | tUpload;
 };
 
 /**
@@ -996,18 +998,6 @@ export type tFeedItem = {
 export type tFeedCountQuery = {
     filter?: tFeedFilter;
     where?: tFeedWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
-};
-
-/**
- * Collection of feed items from favourites
- */
-export type tFeedFavouriteItemSchema = {
-    data: Array<tFeedFavouriteItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
 };
 
 /**
@@ -1042,6 +1032,45 @@ export type tFeedFavouriteItem = {
 };
 
 /**
+ * Feed data from favourites
+ */
+export type tFeedFavourite = {
+    /**
+     * ID of the feed
+     */
+    id: string;
+    /**
+     * ID of the location associated with the feed
+     */
+    locationId: null | string;
+    /**
+     * Hero image for this feed (usually selected from the listings in the feed)
+     */
+    uploadId: null | string;
+    /**
+     * Name of the feed
+     */
+    name: string;
+    query: tListingQuery;
+    /**
+     * Hero banner for this feed
+     */
+    upload: null | tUpload;
+    /**
+     * Number of items in favourites for this feed
+     */
+    count: number;
+};
+
+/**
+ * Query object for feed favourite count
+ */
+export type tFeedFavouriteCountQuery = {
+    filter?: tFeedFilter;
+    where?: tFeedWhere;
+};
+
+/**
  * Request to create or update a feed gallery
  */
 export type tFeedGalleryCreate = {
@@ -1053,17 +1082,6 @@ export type tFeedGalleryCreate = {
      * IDs of the uploads; order of uploads defines order in the gallery
      */
     uploadIds: Array<string>;
-};
-
-/**
- * Collection of flag items
- */
-export type tFlagItemSchema = {
-    data: Array<tFlagItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
 };
 
 /**
@@ -1166,7 +1184,6 @@ export type tFlagCountQuery = {
         listingId?: string;
     };
     where?: tFlagCountWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -1203,17 +1220,6 @@ export type tFlagToggle = {
      * ID of the listing to toggle
      */
     listingId: string;
-};
-
-/**
- * Collection of ignore items
- */
-export type tIgnoreItemSchema = {
-    data: Array<tIgnoreItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
 };
 
 /**
@@ -1312,7 +1318,6 @@ export type tIgnoreSortField = typeof tIgnoreSortField[keyof typeof tIgnoreSortF
 export type tIgnoreCountQuery = {
     filter?: tIgnoreFilter;
     where?: tIgnoreWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -1330,34 +1335,12 @@ export type tIgnoreToggle = {
 };
 
 /**
- * Collection of listings
- */
-export type tListingItemSchema = {
-    data: Array<tListingItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Listing collection item
- */
-export type tListingItem = {
-    /**
-     * ID of the listing
-     */
-    id: string;
-};
-
-/**
  * Query object for listing count
  */
 export type tListingCountQuery = {
     filter?: tListingFilter;
     where?: tListingWhere;
     meta?: tListingMeta;
-    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -1372,29 +1355,66 @@ export type tThumbCreate = {
 };
 
 /**
- * Collection of transactions
+ * Transaction data
  */
-export type tTransactionItemSchema = {
-    data: Array<tTransactionItem>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Transaction collection item with last message timestamp
- */
-export type tTransactionItem = {
+export type tTransaction = {
     /**
      * ID of the transaction
      */
     id: string;
     /**
-     * Timestamp of the last message in the transaction
+     * ID of the related listing
      */
-    lastAt: string;
+    listingId: string;
+    /**
+     * ID of the message thread associated with the transaction
+     */
+    messageThreadId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    /**
+     * Last update timestamp
+     */
+    updatedAt: string;
+    /**
+     * Expiration timestamp
+     */
+    expiresAt: string;
+    /**
+     * Transaction title
+     */
+    title: string;
+    status: tTransactionStatusEnum;
+    gallery: tGallery & unknown;
+    /**
+     * Price of the listing
+     */
+    price: number;
+    priceType: tListingPriceEnum;
+    currency: tCurrencyEnum;
+    location: tLocation;
 };
+
+/**
+ * Current status of the listing transaction
+ */
+export const tTransactionStatusEnum = {
+    pending: 'pending',
+    open: 'open',
+    resolved: 'resolved',
+    dispute: 'dispute',
+    rejected: 'rejected',
+    expired: 'expired',
+    success: 'success',
+    closed: 'closed'
+} as const;
+
+/**
+ * Current status of the listing transaction
+ */
+export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
 
 /**
  * Query object for transaction collection
@@ -1430,31 +1450,12 @@ export type tTransactionFilter = {
      * This filter matches the exact listingId
      */
     listingId?: string;
-    status?: tTransactionStatusEnum;
+    status?: tTransactionStatusEnum & unknown;
     /**
      * This filter matches any of the provided statuses for the current status of the transaction
      */
-    statusIn?: Array<tTransactionStatusEnum & unknown>;
+    statusIn?: Array<tTransactionStatusEnum>;
 };
-
-/**
- * This filter matches the current status of the transaction
- */
-export const tTransactionStatusEnum = {
-    pending: 'pending',
-    open: 'open',
-    resolved: 'resolved',
-    dispute: 'dispute',
-    rejected: 'rejected',
-    expired: 'expired',
-    success: 'success',
-    closed: 'closed'
-} as const;
-
-/**
- * This filter matches the current status of the transaction
- */
-export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
 
 /**
  * App-based filters
@@ -1480,11 +1481,11 @@ export type tTransactionWhere = {
      * This filter matches the exact listingId
      */
     listingId?: string;
-    status?: tTransactionStatusEnum;
+    status?: tTransactionStatusEnum & unknown;
     /**
      * This filter matches any of the provided statuses for the current status of the transaction
      */
-    statusIn?: Array<tTransactionStatusEnum & unknown>;
+    statusIn?: Array<tTransactionStatusEnum>;
 };
 
 /**
@@ -1511,46 +1512,11 @@ export const tTransactionSortField = {
 export type tTransactionSortField = typeof tTransactionSortField[keyof typeof tTransactionSortField];
 
 /**
- * Transaction data
+ * Query object for transaction count
  */
-export type tTransaction = {
-    /**
-     * ID of the transaction
-     */
-    id: string;
-    /**
-     * ID of the related listing
-     */
-    listingId: string;
-    /**
-     * ID of the message thread associated with the transaction
-     */
-    messageThreadId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    /**
-     * Last update timestamp
-     */
-    updatedAt: string;
-    /**
-     * Expiration timestamp
-     */
-    expiresAt: string;
-    /**
-     * Transaction title
-     */
-    title: string;
-    status: tTransactionStatusEnum & unknown;
-    gallery: tGallery & unknown;
-    /**
-     * Price of the listing
-     */
-    price: number;
-    priceType: tListingPriceEnum;
-    currency: tCurrencyEnum;
-    location: tLocation;
+export type tTransactionCountQuery = {
+    filter?: tTransactionFilter;
+    where?: tTransactionWhere;
 };
 
 /**
@@ -1580,7 +1546,7 @@ export type tTransactionStatus = {
      */
     listingId: string;
     side: tTransactionSideEnum;
-    status: tTransactionStatusEnum & unknown;
+    status: tTransactionStatusEnum;
     /**
      * Creation timestamp
      */
@@ -1663,7 +1629,7 @@ export type tApiFavouriteCollectionResponse = {
     /**
      * Access collection of favourite items based on provided query
      */
-    200: tFavouriteItemSchema;
+    200: Array<tFavouriteItem>;
 };
 
 export type apiFavouriteCollectionResponse = tApiFavouriteCollectionResponse[keyof tApiFavouriteCollectionResponse];
@@ -1846,7 +1812,7 @@ export type tApiFeedCollectionResponse = {
     /**
      * Access collection of feed items based on provided query
      */
-    200: tFeedItemSchema;
+    200: Array<tFeedItem>;
 };
 
 export type apiFeedCollectionResponse = tApiFeedCollectionResponse[keyof tApiFeedCollectionResponse];
@@ -1928,10 +1894,67 @@ export type tApiFeedFavouriteCollectionResponse = {
     /**
      * Access collection of feed items from favourites based on provided query
      */
-    200: tFeedFavouriteItemSchema;
+    200: Array<tFeedFavouriteItem>;
 };
 
 export type apiFeedFavouriteCollectionResponse = tApiFeedFavouriteCollectionResponse[keyof tApiFeedFavouriteCollectionResponse];
+
+export type tApiFeedFavouriteFetchRequest = {
+    /**
+     * Query object for feed favourite fetch
+     */
+    body?: tFeedQuery;
+    path?: never;
+    query?: never;
+    url: '/api/buyer-user/feed-favourite/fetch';
+};
+
+export type apiFeedFavouriteFetchErrors = {
+    /**
+     * Feed favourite not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiFeedFavouriteFetchError = apiFeedFavouriteFetchErrors[keyof apiFeedFavouriteFetchErrors];
+
+export type tApiFeedFavouriteFetchResponse = {
+    /**
+     * Return a feed favourite based on the provided query
+     */
+    200: tFeedFavourite;
+};
+
+export type apiFeedFavouriteFetchResponse = tApiFeedFavouriteFetchResponse[keyof tApiFeedFavouriteFetchResponse];
+
+export type tApiFeedFavouriteCountRequest = {
+    body?: tFeedFavouriteCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/buyer-user/feed-favourite/count';
+};
+
+export type apiFeedFavouriteCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiFeedFavouriteCountError = apiFeedFavouriteCountErrors[keyof apiFeedFavouriteCountErrors];
+
+export type tApiFeedFavouriteCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiFeedFavouriteCountResponse = tApiFeedFavouriteCountResponse[keyof tApiFeedFavouriteCountResponse];
 
 export type tApiFeedGalleryCreateRequest = {
     /**
@@ -1989,7 +2012,7 @@ export type tApiFlagCollectionResponse = {
     /**
      * Access collection of flag items based on provided query
      */
-    200: tFlagItemSchema;
+    200: Array<tFlagItem>;
 };
 
 export type apiFlagCollectionResponse = tApiFlagCollectionResponse[keyof tApiFlagCollectionResponse];
@@ -2072,7 +2095,7 @@ export type tApiIgnoreCollectionResponse = {
     /**
      * Access collection of ignore items based on provided query
      */
-    200: tIgnoreItemSchema;
+    200: Array<tIgnoreItem>;
 };
 
 export type apiIgnoreCollectionResponse = tApiIgnoreCollectionResponse[keyof tApiIgnoreCollectionResponse];
@@ -2155,7 +2178,7 @@ export type tApiListingCollectionResponse = {
     /**
      * Access collection of listings based on provided query
      */
-    200: tListingItemSchema;
+    200: Array<tListing>;
 };
 
 export type apiListingCollectionResponse = tApiListingCollectionResponse[keyof tApiListingCollectionResponse];
@@ -2273,10 +2296,35 @@ export type tApiTransactionCollectionResponse = {
     /**
      * Access collection of transactions based on provided query
      */
-    200: tTransactionItemSchema;
+    200: Array<tTransaction>;
 };
 
 export type apiTransactionCollectionResponse = tApiTransactionCollectionResponse[keyof tApiTransactionCollectionResponse];
+
+export type tApiTransactionCountRequest = {
+    body?: tTransactionCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/buyer-user/transaction/count';
+};
+
+export type apiTransactionCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionCountError = apiTransactionCountErrors[keyof apiTransactionCountErrors];
+
+export type tApiTransactionCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiTransactionCountResponse = tApiTransactionCountResponse[keyof tApiTransactionCountResponse];
 
 export type tApiTransactionCreateRequest = {
     /**

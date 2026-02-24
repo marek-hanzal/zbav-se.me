@@ -1,12 +1,13 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
+import { translator } from "@use-pico/common/translator";
 import { withTransactionMessagePackageCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useState } from "react";
-import { PackageControl } from "~/app/@common/package/ui/PackageControl";
+import { PackageControl } from "./PackageControl";
 
 export namespace PackageButton {
 	export interface Props extends Button.Props {
@@ -28,7 +29,7 @@ export const PackageButton: FC<PackageButton.Props> = ({
 		<>
 			<Button
 				data-ui="PackageButton[Button]"
-				label={"Share package (button)"}
+				label={translator.text("Share package (button)")}
 				iconEnabled={SendPackageIcon}
 				onClick={() => {
 					setIsOpen(true);

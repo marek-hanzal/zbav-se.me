@@ -46,3 +46,12 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 - `@session` – general session operations.
 - `@seller-user` – uses this domain for seller info.
 - `@public` – unauthenticated access.
+
+## Recent updates
+
+- Buyer info UI in transaction detail was split into focused components:
+  - `@seller-session/transaction/ui/BuyerInfoSuspense/BuyerInfo.tsx` keeps query/loading composition.
+  - `@seller-session/transaction/ui/BuyerInfoSuspense.tsx` composes local suspense fallback (`BuyerInfoPending`) for call-sites.
+  - `@seller-session/transaction/ui/buyer-info/BuyerInfoEvents.tsx` renders behavior metrics.
+  - `@seller-session/transaction/ui/buyer-info/BuyerInfoScore.tsx` renders score/rank presentation.
+- Buyer info metrics components now resolve locale via `useLocale()` instead of accepting `locale` props.

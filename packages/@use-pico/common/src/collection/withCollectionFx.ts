@@ -7,11 +7,6 @@ import type { FilterSchema } from "../schema/FilterSchema";
 export namespace withCollectionFx {
 	export type Output<TOutputSchema extends z.ZodSchema> = Simplify<z.infer<TOutputSchema>>;
 
-	export interface Result<TOutput> {
-		data: TOutput[];
-		more: boolean;
-	}
-
 	export namespace Query {
 		export interface Props<
 			TSelect extends SelectQueryBuilder<any, any, any>,
@@ -89,15 +84,10 @@ export const withCollectionFx = Effect.fn("withCollectionFx")(function* <
 		});
 	}
 
-	const results = yield* Effect.promise(async () => {
+	return yield* Effect.promise(async () => {
 		return qb
-			.limit(cursor.size + 1)
+			.limit(cursor.size)
 			.offset(cursor.page * cursor.size)
 			.execute();
 	});
-
-	return {
-		data: results.slice(0, cursor.size),
-		more: results.length > cursor.size,
-	};
 });

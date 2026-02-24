@@ -1,5 +1,6 @@
 import { Effect } from "effect";
-import { withFeedSourceSelectFx } from "~/@buyer-user/feed/db/withFeedSourceSelectFx";
+import { withFeedSelectFx } from "~/@buyer-user/feed/db/withFeedSelectFx";
+import type { withFeedSourceSelectFx } from "~/@buyer-user/feed/db/withFeedSourceSelectFx";
 
 export namespace withFeedCollectionSelectFx {
 	export interface Props extends withFeedSourceSelectFx.Props {}
@@ -10,9 +11,7 @@ export namespace withFeedCollectionSelectFx {
 export const withFeedCollectionSelectFx = Effect.fn("withFeedCollectionSelectFx")(function* ({
 	sort,
 }: withFeedCollectionSelectFx.Props) {
-	const sourceSelect = yield* withFeedSourceSelectFx({
+	return yield* withFeedSelectFx({
 		sort,
 	});
-
-	return sourceSelect.select("f.id");
 });

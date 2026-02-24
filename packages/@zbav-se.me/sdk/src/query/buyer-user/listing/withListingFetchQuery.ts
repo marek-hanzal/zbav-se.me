@@ -14,6 +14,6 @@ export const withListingFetchQuery = withQuery<tListingQuery, tApiListingFetchRe
 		return apiListingFetch({
 			body,
 			throwOnError: true,
-		}).then((res: { data: tApiListingFetchResponse[200] }) => res.data);
+		}).then((res) => res.data);
 	},
 });

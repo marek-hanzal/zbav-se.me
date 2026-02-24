@@ -1,9 +1,10 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { CheckIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
+import { translator } from "@use-pico/common/translator";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
 import { withTransactionStatusCloseMutation } from "@zbav-se.me/sdk/mutation/buyer-user/transaction";
-import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
+import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import type { FC } from "react";
 
@@ -20,7 +21,7 @@ export const CloseButton: FC<CloseButton.Props> = ({ transaction, ...props }) =>
 	return (
 		<Button
 			data-ui="CloseButton[Button]"
-			label={"Close transaction (button)"}
+			label={translator.text("Close transaction (button)")}
 			iconEnabled={CheckIcon}
 			onClick={() => {
 				mutation.mutate(
@@ -29,11 +30,7 @@ export const CloseButton: FC<CloseButton.Props> = ({ transaction, ...props }) =>
 					},
 					{
 						onSuccess() {
-							withTransactionFetchQuery.invalidate(queryClient, {
-								where: {
-									id: transaction.id,
-								},
-							});
+							withTransactionQuery.invalidateQuery(queryClient, transaction.id);
 							withMessageThreadMessageCollectionQuery.invalidate(queryClient, {
 								path: {
 									messageThreadId: transaction.messageThreadId,

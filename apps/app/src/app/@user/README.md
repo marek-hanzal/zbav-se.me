@@ -58,3 +58,15 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 - `@buyer-user` / `@seller-user` – may use this domain.
 - `@buyer-session` / `@seller-session` – cannot use this domain.
 - `@user` is the foundation for all user-private data.
+
+## Recent updates
+
+- Home menu keeps its original inline implementation in `@user/home/HomeMenu.tsx` until we define a type-safe split strategy for TanStack Router links.
+- Home menu uses local suspense for the draft CTA (`HomeMenuDraftLink`) with in-place fallback (`HomeMenuDraftLinkPending`) to preserve stable menu layout.
+- Home draft CTA suspense is now encapsulated in `@user/home/HomeMenuDraftLinkSuspense.tsx` so menu call-sites avoid inline suspense wiring.
+- User-facing flow/shell routes now use page components:
+  - `@user/home/page/HomePage.tsx`
+  - `@user/profile/page/UserPage.tsx`
+  - `@user/profile/page/UserPendingPage.tsx`
+  - `@user/shop/page/ShopPage.tsx`
+  - `@user/welcome/page/WelcomePage.tsx`

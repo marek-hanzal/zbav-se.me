@@ -5,9 +5,12 @@ import { Container } from "@use-pico/client/ui/container";
 import { LinkTo, uiLinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
+import { translator } from "@use-pico/common/translator";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { Logo } from "@zbav-se.me/ui/logo";
+import { Suspense } from "react";
 import { History } from "~/app/history/History";
+import { HistoryPending } from "~/app/history/HistoryPending";
 import face from "~/assets/face.webp";
 
 export const Route = createFileRoute("/$locale/landing")({
@@ -49,7 +52,7 @@ export const Route = createFileRoute("/$locale/landing")({
 
 					<Status
 						data-ui="/landing-[Status]"
-						textTitle={"Landing - Hero (title)"}
+						textTitle={translator.text("Landing - Hero (title)")}
 						messageProps={{
 							className: "text-center",
 						}}
@@ -151,8 +154,8 @@ export const Route = createFileRoute("/$locale/landing")({
 								fetchPriority={"low"}
 							/>
 						}
-						textTitle={"About me (title)"}
-						textMessage={"About me (message)"}
+						textTitle={translator.text("About me (title)")}
+						textMessage={translator.text("About me (message)")}
 						messageProps={{
 							ui: {
 								color: "text",
@@ -189,7 +192,9 @@ export const Route = createFileRoute("/$locale/landing")({
 						inner: "xl",
 					}}
 				>
-					<History />
+					<Suspense fallback={<HistoryPending />}>
+						<History _suspense={"I know"} />
+					</Suspense>
 				</Container>
 			</Container>
 		);

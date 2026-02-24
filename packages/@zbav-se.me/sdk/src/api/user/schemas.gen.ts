@@ -202,30 +202,6 @@ export const sOrderEnum = {
     ]
 } as const;
 
-export const sGalleryItemSchema = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                allOf: [
-                    {
-                        $ref: '#/components/schemas/GalleryItem'
-                    },
-                    {}
-                ]
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
 export const sCount = {
     type: 'object',
     properties: {
@@ -237,12 +213,20 @@ export const sCount = {
         },
         total: {
             type: 'number'
+        },
+        isEmpty: {
+            type: 'boolean'
+        },
+        isFilterEmpty: {
+            type: 'boolean'
         }
     },
     required: [
         'where',
         'filter',
-        'total'
+        'total',
+        'isEmpty',
+        'isFilterEmpty'
     ]
 } as const;
 
@@ -254,38 +238,8 @@ export const sGalleryCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/GalleryWhere'
-        },
-        count: {
-            type: 'array',
-            items: {
-                type: 'string',
-                enum: [
-                    'total',
-                    'filter',
-                    'where'
-                ]
-            }
         }
     }
-} as const;
-
-export const sMessageItemSchema = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/MessageItem'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
 } as const;
 
 export const sMessageItem = {
@@ -765,6 +719,18 @@ export const sMessageSortField = {
         'id',
         'createdAt'
     ]
+} as const;
+
+export const sMessageCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            $ref: '#/components/schemas/MessageFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/MessageWhere'
+        }
+    }
 } as const;
 
 export const sAllowedExtensionsEnum = {

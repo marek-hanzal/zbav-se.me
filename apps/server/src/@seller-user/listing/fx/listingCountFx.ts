@@ -16,7 +16,6 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	filter,
 	where,
 	scope,
-	count,
 }: listingCountFx.Props) {
 	yield* withTraceFx({
 		fx: "listingCountFx",
@@ -24,7 +23,6 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 			filter,
 			where,
 			scope,
-			count,
 		},
 	});
 
@@ -33,7 +31,6 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 		filter,
 		where,
 		scope,
-		count,
 		queryFx: withListingQueryBuilderFx,
 	});
 });
