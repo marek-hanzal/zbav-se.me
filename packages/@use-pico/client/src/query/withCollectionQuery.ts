@@ -30,7 +30,7 @@ export namespace withCollectionQuery {
 		 * Keep this aligned with `collectionQuery.keys(...)` semantics to avoid
 		 * duplicate caches for logically identical collection requests.
 		 */
-		keys(data: TCollectionRequest): QueryKey;
+		keys(data?: TCollectionRequest): QueryKey;
 		/**
 		 * Query API for loading the collection payload from backend.
 		 *
@@ -136,8 +136,8 @@ export const withCollectionQuery = <
 	TPatchRequest,
 	TPatchError
 >) => {
-	const $keys = (data: TCollectionRequest | undefined) => {
-		return cleanOf(keys(data as TCollectionRequest)) as QueryKey;
+	const $keys = (data?: TCollectionRequest) => {
+		return cleanOf(keys(data)) as QueryKey;
 	};
 
 	return {

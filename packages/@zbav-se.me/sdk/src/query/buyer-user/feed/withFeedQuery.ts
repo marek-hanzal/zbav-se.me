@@ -5,7 +5,7 @@ import { withFeedCountQuery } from "./withFeedCountQuery";
 import { withFeedFetchQuery } from "./withFeedFetchQuery";
 
 export const withFeedQuery = withCollectionQuery({
-	key: (data) => [
+	keys: (data) => [
 		"feed",
 		data,
 	],

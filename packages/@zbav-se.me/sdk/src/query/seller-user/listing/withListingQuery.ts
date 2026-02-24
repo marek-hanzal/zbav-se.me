@@ -4,7 +4,7 @@ import { withListingCountQuery } from "./withListingCountQuery";
 import { withListingFetchQuery } from "./withListingFetchQuery";
 
 export const withListingQuery = withCollectionQuery({
-	key: (data) => [
+	keys: (data) => [
 		"listing",
 		"collection",
 		data,
