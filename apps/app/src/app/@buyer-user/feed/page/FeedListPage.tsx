@@ -11,7 +11,7 @@ import { FeedEditorSheetSuspense } from "~/app/@buyer-user/feed/ui/list-route/Fe
 import { FeedListStatus } from "~/app/@buyer-user/feed/ui/list-route/FeedListStatus";
 import { FeedSetupButton } from "~/app/@buyer-user/feed/ui/list-route/FeedSetupButton";
 import { FirstListingStatus } from "~/app/@buyer-user/feed/ui/list-route/FirstListingStatus";
-import { ListingListContainer } from "~/app/@buyer-user/listing/ui/ListingListContainer";
+import { ListingListContainerSuspense } from "~/app/@buyer-user/listing/ui/ListingListContainerSuspense";
 
 export namespace FeedListPage {
 	export interface Props extends FlowContainer.Props {
@@ -78,7 +78,7 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...prop
 						className={"transition-all"}
 					/>
 
-					<ListingListContainer
+					<ListingListContainerSuspense
 						data-ui={"BuyerFeedList-[ListingListContainer]"}
 						ref={containerRef}
 						feedId={feed.id}

@@ -6,7 +6,7 @@ import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, useRef } from "react";
 import { EmptySuspense } from "~/app/@buyer-user/feed/page/feed-favourite-list-page/EmptySuspense";
 import { FavouriteListAppendix } from "~/app/@buyer-user/feed-favourite/ui/FavouriteListAppendix";
-import { ListingListContainer } from "~/app/@buyer-user/listing/ui/ListingListContainer";
+import { ListingListContainerSuspense } from "~/app/@buyer-user/listing/ui/ListingListContainerSuspense";
 
 export namespace FeedFavouriteListPage {
 	export interface Props extends FlowContainer.Props {
@@ -42,7 +42,7 @@ export const FeedFavouriteListPage: FC<FeedFavouriteListPage.Props> = ({ feedId,
 			}
 			{...props}
 		>
-			<ListingListContainer
+			<ListingListContainerSuspense
 				ref={containerRef}
 				feedId={feedId}
 				/**

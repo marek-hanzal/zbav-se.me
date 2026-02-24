@@ -9,13 +9,13 @@ import { translator } from "@use-pico/common/translator";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import type { FC, ReactNode } from "react";
-import type { ListingListContainer } from "../ListingListContainer";
+import type { ListingListContainerSuspense } from "../ListingListContainerSuspense";
 import { ListingItemSuspense } from "./ListingItemSuspense";
 
-export namespace ListingListContent {
+export namespace Data {
 	export interface Props {
 		query: tListingQuery;
-		renderEmptyFn?: ListingListContainer.Props["renderEmptyFn"];
+		renderEmptyFn?: ListingListContainerSuspense.Props["renderEmptyFn"];
 		appendix?: ReactNode;
 		feedId: string;
 		withScore: boolean;
@@ -23,7 +23,7 @@ export namespace ListingListContent {
 	}
 }
 
-export const ListingListContent: FC<ListingListContent.Props> = ({
+export const Data: FC<Data.Props> = ({
 	query,
 	renderEmptyFn,
 	appendix,

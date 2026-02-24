@@ -2,16 +2,16 @@ import { useElementVisibility } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { type FC, Suspense, useRef } from "react";
-import { ListingListContent } from "./listing-list-container/ListingListContent";
-import { ListingListContentPending } from "./listing-list-container/ListingListContentPending";
+import { Data } from "./listing-list-container-suspense/Data";
+import { Pending } from "./listing-list-container-suspense/Pending";
 
-export namespace ListingListContainer {
+export namespace ListingListContainerSuspense {
 	export interface Props extends Container.Props {
 		query: tListingQuery;
 	}
 }
 
-export const ListingListContainer: FC<ListingListContainer.Props> = ({ query, ...props }) => {
+export const ListingListContainerSuspense: FC<ListingListContainerSuspense.Props> = ({ query, ...props }) => {
 	const scrollerRef = useRef<HTMLDivElement>(null);
 
 	const visibility = useElementVisibility({
@@ -34,8 +34,8 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({ query, ..
 			}}
 			{...props}
 		>
-			<Suspense fallback={<ListingListContentPending />}>
-				<ListingListContent
+			<Suspense fallback={<Pending />}>
+				<Data
 					query={query}
 					visibility={visibility}
 				/>

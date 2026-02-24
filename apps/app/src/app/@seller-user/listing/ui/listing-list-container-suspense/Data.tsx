@@ -12,14 +12,14 @@ import { SearchIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { Content } from "./Content";
 
-export namespace ListingListContent {
+export namespace Data {
 	export interface Props {
 		query: tListingQuery;
 		visibility: ReturnType<typeof useElementVisibility>;
 	}
 }
 
-export const ListingListContent: FC<ListingListContent.Props> = ({ query, visibility }) => {
+export const Data: FC<Data.Props> = ({ query, visibility }) => {
 	const locale = useLocale();
 	const listingCollectionQuery = withListingQuery.useCollectionQuery(query);
 
