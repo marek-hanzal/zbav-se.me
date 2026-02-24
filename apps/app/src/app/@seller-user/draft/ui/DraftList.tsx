@@ -1,5 +1,5 @@
-import { Container } from "@use-pico/client/ui/container";
 import type { MarkSuspense } from "@use-pico/client/type";
+import { Container } from "@use-pico/client/ui/container";
 import type { tDraft, tDraftQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { withDraftCollectionQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { FC } from "react";
@@ -13,13 +13,7 @@ export namespace DraftList {
 	}
 }
 
-export const DraftList: FC<DraftList.Props> = ({
-	_suspense,
-	query,
-	onSuccess,
-	ui,
-	...props
-}) => {
+export const DraftList: FC<DraftList.Props> = ({ _suspense, query, onSuccess, ui, ...props }) => {
 	const { data } = withDraftCollectionQuery.useSuspenseQuery(query);
 
 	return (

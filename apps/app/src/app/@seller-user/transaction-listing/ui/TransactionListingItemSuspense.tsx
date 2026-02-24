@@ -8,9 +8,7 @@ export namespace TransactionListingItemSuspense {
 	}
 }
 
-export const TransactionListingItemSuspense: FC<TransactionListingItemSuspense.Props> = (
-	props,
-) => {
+export const TransactionListingItemSuspense: FC<TransactionListingItemSuspense.Props> = (props) => {
 	return (
 		<Suspense fallback={<Pending />}>
 			<Data

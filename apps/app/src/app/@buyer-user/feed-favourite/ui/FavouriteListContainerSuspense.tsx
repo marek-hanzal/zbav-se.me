@@ -8,9 +8,7 @@ export namespace FavouriteListContainerSuspense {
 	}
 }
 
-export const FavouriteListContainerSuspense: FC<FavouriteListContainerSuspense.Props> = (
-	props,
-) => {
+export const FavouriteListContainerSuspense: FC<FavouriteListContainerSuspense.Props> = (props) => {
 	return (
 		<Suspense fallback={<Pending />}>
 			<Data

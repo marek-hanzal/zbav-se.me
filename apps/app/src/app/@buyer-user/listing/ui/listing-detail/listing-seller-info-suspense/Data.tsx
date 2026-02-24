@@ -13,11 +13,7 @@ export namespace Data {
 	}
 }
 
-export const Data: FC<Data.Props> = ({
-	_suspense,
-	listingId,
-	onSellerInfo,
-}) => {
+export const Data: FC<Data.Props> = ({ _suspense, listingId, onSellerInfo }) => {
 	const { data: sellerInfo } = withListingSellerInfoQuery.useSuspenseQuery({
 		listingId,
 	});

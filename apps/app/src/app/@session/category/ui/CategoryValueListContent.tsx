@@ -1,5 +1,5 @@
-import { ValueList } from "@use-pico/client/ui/container";
 import type { MarkSuspense } from "@use-pico/client/type";
+import { ValueList } from "@use-pico/client/ui/container";
 import type { tCategoryItem } from "@zbav-se.me/sdk/api/session";
 import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";

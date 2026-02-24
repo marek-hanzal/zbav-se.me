@@ -1,5 +1,5 @@
-import { LabelValue } from "@use-pico/client/ui/container";
 import type { MarkSuspense } from "@use-pico/client/type";
+import { LabelValue } from "@use-pico/client/ui/container";
 import { withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
 

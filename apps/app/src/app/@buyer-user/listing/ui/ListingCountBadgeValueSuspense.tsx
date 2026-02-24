@@ -8,9 +8,7 @@ export namespace ListingCountBadgeValueSuspense {
 	}
 }
 
-export const ListingCountBadgeValueSuspense: FC<ListingCountBadgeValueSuspense.Props> = (
-	props,
-) => {
+export const ListingCountBadgeValueSuspense: FC<ListingCountBadgeValueSuspense.Props> = (props) => {
 	return (
 		<Suspense fallback={<Pending />}>
 			<Data

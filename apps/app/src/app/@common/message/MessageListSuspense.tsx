@@ -8,10 +8,7 @@ export namespace MessageListSuspense {
 	}
 }
 
-export const MessageListSuspense: FC<MessageListSuspense.Props> = ({
-	children,
-	...props
-}) => {
+export const MessageListSuspense: FC<MessageListSuspense.Props> = ({ children, ...props }) => {
 	return (
 		<Suspense fallback={<Pending />}>
 			<Data

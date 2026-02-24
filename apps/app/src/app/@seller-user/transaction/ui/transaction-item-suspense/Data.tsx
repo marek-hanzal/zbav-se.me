@@ -1,5 +1,5 @@
-import { Container } from "@use-pico/client/ui/container";
 import type { MarkSuspense } from "@use-pico/client/type";
+import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
 import { type FC, useState } from "react";
@@ -12,13 +12,7 @@ export namespace Data {
 	}
 }
 
-export const Data: FC<Data.Props> = ({
-	_suspense,
-	transactionId,
-	ui,
-	className,
-	...props
-}) => {
+export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, className, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const { data: transaction } = withTransactionFetchQuery.useSuspenseQuery({
 		where: {

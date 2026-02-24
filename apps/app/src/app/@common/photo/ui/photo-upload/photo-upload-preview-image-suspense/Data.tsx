@@ -9,10 +9,7 @@ export namespace Data {
 	}
 }
 
-export const Data: FC<Data.Props> = ({
-	_suspense,
-	uploadId,
-}) => {
+export const Data: FC<Data.Props> = ({ _suspense, uploadId }) => {
 	const { data } = withUploadFetchQuery.useSuspenseQuery({
 		where: {
 			id: uploadId,

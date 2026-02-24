@@ -15,13 +15,7 @@ export namespace Data {
 	}
 }
 
-export const Data: FC<Data.Props> = ({
-	_suspense,
-	feedId,
-	listingId,
-	ui,
-	...props
-}) => {
+export const Data: FC<Data.Props> = ({ _suspense, feedId, listingId, ui, ...props }) => {
 	const queryClient = useQueryClient();
 	const patch = withListingFetchQuery.useSet();
 	const { data: listing } = withListingFetchQuery.useSuspenseQuery({

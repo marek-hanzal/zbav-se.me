@@ -71,9 +71,7 @@ export const FeedFavouriteListPage: FC<FeedFavouriteListPage.Props> = ({ feedId,
 					],
 				}}
 				renderEmptyFn={() => {
-					return (
-						<EmptySuspense sentinelRef={sentinelRef} />
-					);
+					return <EmptySuspense sentinelRef={sentinelRef} />;
 				}}
 				appendix={<FavouriteListAppendix ref={sentinelRef} />}
 			/>

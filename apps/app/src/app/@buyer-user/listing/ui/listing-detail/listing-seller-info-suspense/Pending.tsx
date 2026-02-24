@@ -9,10 +9,7 @@ export namespace Pending {
 	}
 }
 
-export const Pending: FC<Pending.Props> = ({
-	onSellerInfo,
-	...props
-}) => {
+export const Pending: FC<Pending.Props> = ({ onSellerInfo, ...props }) => {
 	return (
 		<LabelValue
 			textLabel={translator.text("Listing seller hint (label)")}

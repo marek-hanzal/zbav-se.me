@@ -7,8 +7,6 @@ export namespace Pending {
 	}
 }
 
-export const Pending: FC<Pending.Props> = (
-	props,
-) => {
+export const Pending: FC<Pending.Props> = (props) => {
 	return <SpinnerContainer {...props} />;
 };

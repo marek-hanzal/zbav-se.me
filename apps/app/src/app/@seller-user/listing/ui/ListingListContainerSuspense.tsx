@@ -11,7 +11,10 @@ export namespace ListingListContainerSuspense {
 	}
 }
 
-export const ListingListContainerSuspense: FC<ListingListContainerSuspense.Props> = ({ query, ...props }) => {
+export const ListingListContainerSuspense: FC<ListingListContainerSuspense.Props> = ({
+	query,
+	...props
+}) => {
 	const scrollerRef = useRef<HTMLDivElement>(null);
 
 	const visibility = useElementVisibility({

@@ -12,11 +12,7 @@ export namespace ListingViewPage {
 	}
 }
 
-export const ListingViewPage: FC<ListingViewPage.Props> = ({
-	_suspense,
-	listingId,
-	...props
-}) => {
+export const ListingViewPage: FC<ListingViewPage.Props> = ({ _suspense, listingId, ...props }) => {
 	const locale = useLocale();
 	const listingQuery = withListingFetchQuery.useSuspenseQuery({
 		where: {

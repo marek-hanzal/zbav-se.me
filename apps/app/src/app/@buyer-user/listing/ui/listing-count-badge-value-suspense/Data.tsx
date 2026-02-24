@@ -11,10 +11,7 @@ export namespace Data {
 	}
 }
 
-export const Data: FC<Data.Props> = ({
-	_suspense,
-	query,
-}) => {
+export const Data: FC<Data.Props> = ({ _suspense, query }) => {
 	const locale = useLocale();
 	const { data } = withListingCountQuery.useSuspenseQuery(query);
 
