@@ -1,4 +1,5 @@
 import { type QueryKey, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { cleanOf } from "@use-pico/common/clean-of";
 import type { CountSchema, EntitySchema } from "@use-pico/common/schema";
 import type { withMutation } from "../mutation";
 import type { withQuery } from "./withQuery";
@@ -29,7 +30,7 @@ export namespace withCollectionQuery {
 		 * Keep this aligned with `collectionQuery.keys(...)` semantics to avoid
 		 * duplicate caches for logically identical collection requests.
 		 */
-		key(data: TCollectionRequest): QueryKey;
+		keys(data: TCollectionRequest): QueryKey;
 		/**
 		 * Query API for loading the collection payload from backend.
 		 *
@@ -121,7 +122,7 @@ export const withCollectionQuery = <
 	TPatchRequest,
 	TPatchError,
 >({
-	key,
+	keys,
 	collectionQuery,
 	fetchQuery,
 	countQuery,
@@ -135,12 +136,17 @@ export const withCollectionQuery = <
 	TPatchRequest,
 	TPatchError
 >) => {
+	const $keys = (data: TCollectionRequest | undefined) => {
+		return cleanOf(keys(data as TCollectionRequest)) as QueryKey;
+	};
+
 	return {
+		keys: $keys,
 		useCollectionQuery(data: TCollectionRequest) {
 			const set = fetchQuery.useSet();
 
 			return useSuspenseQuery({
-				queryKey: key(data),
+				queryKey: $keys(data),
 				async queryFn() {
 					const response = await collectionQuery.query(data);
 					response.forEach((item) => {
@@ -179,6 +185,18 @@ export const withCollectionQuery = <
 						countQuery.invalidate(queryClient),
 					];
 					if (invalidateCollection) {
+						/**
+						 * Invalidate the same cache key-space as `useCollectionQuery`.
+						 *
+						 * We intentionally pass `undefined` casted to collection request
+						 * type to generate a prefix key (same strategy as `withQuery.invalidate`).
+						 */
+						invalidation.push(
+							queryClient.invalidateQueries({
+								queryKey: $keys(undefined),
+								refetchType: "all",
+							}),
+						);
 						invalidation.push(collectionQuery.invalidate(queryClient));
 					}
 					await Promise.all(invalidation);
