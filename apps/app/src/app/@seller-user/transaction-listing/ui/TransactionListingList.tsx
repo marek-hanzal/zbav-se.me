@@ -30,6 +30,7 @@ export const TransactionListingList: FC<TransactionListingList.Props> = ({
 	const { data } = withTransactionListingQuery.useCollectionQuery(query, {
 		refetchInterval,
 	});
+	const { data: transactionListingCount } = withTransactionListingQuery.useCount(query);
 
 	return (
 		<Container
@@ -40,7 +41,7 @@ export const TransactionListingList: FC<TransactionListingList.Props> = ({
 			}}
 			{...props}
 		>
-			{data.length === 0 ? (
+			{transactionListingCount.isEmpty ? (
 				<Container
 					ui={{
 						layout: "vertical-centered",
@@ -70,6 +71,25 @@ export const TransactionListingList: FC<TransactionListingList.Props> = ({
 								<Tx label={"Go to my listings (button)"} />
 							</LinkTo>
 						}
+						ui={{
+							tone: "brand",
+							theme: "light",
+							inner: "4xl",
+						}}
+						className="text-center"
+					/>
+				</Container>
+			) : transactionListingCount.isFilterEmpty ? (
+				<Container
+					ui={{
+						layout: "vertical-centered",
+						height: "full",
+					}}
+				>
+					<Status
+						icon={MessageIcon}
+						textTitle={translator.text("No listings for current filter (title)")}
+						textMessage={translator.text("No listings for current filter (message)")}
 						ui={{
 							tone: "brand",
 							theme: "light",

@@ -4,7 +4,7 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
 import { withFavouriteToggleMutation } from "@zbav-se.me/sdk/mutation/buyer-user/favourite";
-import { withFeedFavouriteCollectionQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import { withFeedFavouriteQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import type { FC } from "react";
 
@@ -30,7 +30,7 @@ export const Data: FC<Data.Props> = ({ _suspense, feedId, listingId, ui, ...prop
 					id: listingId,
 				},
 			});
-			withFeedFavouriteCollectionQuery.invalidate(queryClient);
+			withFeedFavouriteQuery.invalidateCollection(queryClient);
 		},
 		meta: {
 			mutationId: listingId,

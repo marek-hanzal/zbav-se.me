@@ -31,6 +31,7 @@ export const TransactionListContainer: FC<TransactionListContainer.Props> = ({
 	const { data } = withTransactionQuery.useCollectionQuery(query, {
 		refetchInterval,
 	});
+	const { data: transactionCount } = withTransactionQuery.useCount(query);
 
 	return (
 		<Container
@@ -41,7 +42,7 @@ export const TransactionListContainer: FC<TransactionListContainer.Props> = ({
 			}}
 			{...props}
 		>
-			{data.length === 0 ? (
+			{transactionCount.isEmpty ? (
 				<Container
 					ui={{
 						layout: "vertical-centered",
@@ -71,6 +72,25 @@ export const TransactionListContainer: FC<TransactionListContainer.Props> = ({
 								<Tx label={translator.text("Go to my feed (button)")} />
 							</LinkTo>
 						}
+						ui={{
+							tone: "brand",
+							theme: "light",
+							inner: "4xl",
+						}}
+						className={"text-center"}
+					/>
+				</Container>
+			) : transactionCount.isFilterEmpty ? (
+				<Container
+					ui={{
+						layout: "vertical-centered",
+						height: "full",
+					}}
+				>
+					<Status
+						icon={MessageIcon}
+						textTitle={translator.text("No transactions for current filter (title)")}
+						textMessage={translator.text("No transactions for current filter (message)")}
 						ui={{
 							tone: "brand",
 							theme: "light",

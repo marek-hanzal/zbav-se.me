@@ -247,12 +247,7 @@ export type zCount = z.infer<typeof zCount>;
  */
 export const zCategoryCountQuery = z.object({
     filter: z.optional(zCategoryFilter),
-    where: z.optional(zCategoryWhere),
-    count: z.optional(z.array(z.enum([
-        'total',
-        'filter',
-        'where'
-    ])))
+    where: z.optional(zCategoryWhere)
 }).register(z.globalRegistry, {
     description: 'Query object for category count'
 });

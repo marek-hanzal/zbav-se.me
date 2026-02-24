@@ -238,17 +238,6 @@ export const sGalleryCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/GalleryWhere'
-        },
-        count: {
-            type: 'array',
-            items: {
-                type: 'string',
-                enum: [
-                    'total',
-                    'filter',
-                    'where'
-                ]
-            }
         }
     }
 } as const;
@@ -730,6 +719,18 @@ export const sMessageSortField = {
         'id',
         'createdAt'
     ]
+} as const;
+
+export const sMessageCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            $ref: '#/components/schemas/MessageFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/MessageWhere'
+        }
+    }
 } as const;
 
 export const sAllowedExtensionsEnum = {

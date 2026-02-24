@@ -513,12 +513,7 @@ export type zCount = z.infer<typeof zCount>;
  */
 export const zDraftCountQuery = z.object({
     filter: z.optional(zDraftFilter),
-    where: z.optional(zDraftWhere),
-    count: z.optional(z.array(z.enum([
-        'total',
-        'filter',
-        'where'
-    ])))
+    where: z.optional(zDraftWhere)
 }).register(z.globalRegistry, {
     description: 'Query object for draft count'
 });
@@ -851,12 +846,7 @@ export type zListingQuery = z.infer<typeof zListingQuery>;
  */
 export const zListingCountQuery = z.object({
     filter: z.optional(zListingFilter),
-    where: z.optional(zListingWhere),
-    count: z.optional(z.array(z.enum([
-        'total',
-        'filter',
-        'where'
-    ])))
+    where: z.optional(zListingWhere)
 }).register(z.globalRegistry, {
     description: 'Query object for listing count'
 });
@@ -1090,12 +1080,7 @@ export type zTransactionQuery = z.infer<typeof zTransactionQuery>;
  */
 export const zTransactionCountQuery = z.object({
     filter: z.optional(zTransactionFilter),
-    where: z.optional(zTransactionWhere),
-    count: z.optional(z.array(z.enum([
-        'total',
-        'filter',
-        'where'
-    ])))
+    where: z.optional(zTransactionWhere)
 }).register(z.globalRegistry, {
     description: 'Query object for transaction count'
 });
@@ -1215,12 +1200,7 @@ export type zTransactionListingQuery = z.infer<typeof zTransactionListingQuery>;
  */
 export const zTransactionListingCountQuery = z.object({
     filter: z.optional(zTransactionListingFilter),
-    where: z.optional(zTransactionListingWhere),
-    count: z.optional(z.array(z.enum([
-        'total',
-        'filter',
-        'where'
-    ])))
+    where: z.optional(zTransactionListingWhere)
 }).register(z.globalRegistry, {
     description: 'Query object for transaction-listing count'
 });

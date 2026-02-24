@@ -175,7 +175,6 @@ export type tCount = {
 export type tFavouriteCountQuery = {
     filter?: tFavouriteFilter;
     where?: tFavouriteWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -999,7 +998,6 @@ export type tFeedItem = {
 export type tFeedCountQuery = {
     filter?: tFeedFilter;
     where?: tFeedWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -1031,6 +1029,45 @@ export type tFeedFavouriteItem = {
      * Number of items in favourites for this feed
      */
     count: number;
+};
+
+/**
+ * Feed data from favourites
+ */
+export type tFeedFavourite = {
+    /**
+     * ID of the feed
+     */
+    id: string;
+    /**
+     * ID of the location associated with the feed
+     */
+    locationId: null | string;
+    /**
+     * Hero image for this feed (usually selected from the listings in the feed)
+     */
+    uploadId: null | string;
+    /**
+     * Name of the feed
+     */
+    name: string;
+    query: tListingQuery;
+    /**
+     * Hero banner for this feed
+     */
+    upload: null | tUpload;
+    /**
+     * Number of items in favourites for this feed
+     */
+    count: number;
+};
+
+/**
+ * Query object for feed favourite count
+ */
+export type tFeedFavouriteCountQuery = {
+    filter?: tFeedFilter;
+    where?: tFeedWhere;
 };
 
 /**
@@ -1147,7 +1184,6 @@ export type tFlagCountQuery = {
         listingId?: string;
     };
     where?: tFlagCountWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -1282,7 +1318,6 @@ export type tIgnoreSortField = typeof tIgnoreSortField[keyof typeof tIgnoreSortF
 export type tIgnoreCountQuery = {
     filter?: tIgnoreFilter;
     where?: tIgnoreWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -1306,7 +1341,6 @@ export type tListingCountQuery = {
     filter?: tListingFilter;
     where?: tListingWhere;
     meta?: tListingMeta;
-    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -1483,7 +1517,6 @@ export type tTransactionSortField = typeof tTransactionSortField[keyof typeof tT
 export type tTransactionCountQuery = {
     filter?: tTransactionFilter;
     where?: tTransactionWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -1865,6 +1898,63 @@ export type tApiFeedFavouriteCollectionResponse = {
 };
 
 export type apiFeedFavouriteCollectionResponse = tApiFeedFavouriteCollectionResponse[keyof tApiFeedFavouriteCollectionResponse];
+
+export type tApiFeedFavouriteFetchRequest = {
+    /**
+     * Query object for feed favourite fetch
+     */
+    body?: tFeedQuery;
+    path?: never;
+    query?: never;
+    url: '/api/buyer-user/feed-favourite/fetch';
+};
+
+export type apiFeedFavouriteFetchErrors = {
+    /**
+     * Feed favourite not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiFeedFavouriteFetchError = apiFeedFavouriteFetchErrors[keyof apiFeedFavouriteFetchErrors];
+
+export type tApiFeedFavouriteFetchResponse = {
+    /**
+     * Return a feed favourite based on the provided query
+     */
+    200: tFeedFavourite;
+};
+
+export type apiFeedFavouriteFetchResponse = tApiFeedFavouriteFetchResponse[keyof tApiFeedFavouriteFetchResponse];
+
+export type tApiFeedFavouriteCountRequest = {
+    body?: tFeedFavouriteCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/buyer-user/feed-favourite/count';
+};
+
+export type apiFeedFavouriteCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiFeedFavouriteCountError = apiFeedFavouriteCountErrors[keyof apiFeedFavouriteCountErrors];
+
+export type tApiFeedFavouriteCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiFeedFavouriteCountResponse = tApiFeedFavouriteCountResponse[keyof tApiFeedFavouriteCountResponse];
 
 export type tApiFeedGalleryCreateRequest = {
     /**

@@ -182,12 +182,7 @@ export type zCount = z.infer<typeof zCount>;
  */
 export const zFavouriteCountQuery = z.object({
     filter: z.optional(zFavouriteFilter),
-    where: z.optional(zFavouriteWhere),
-    count: z.optional(z.array(z.enum([
-        'total',
-        'filter',
-        'where'
-    ])))
+    where: z.optional(zFavouriteWhere)
 }).register(z.globalRegistry, {
     description: 'Query object for favourite count'
 });
@@ -1038,12 +1033,7 @@ export type zFeedItem = z.infer<typeof zFeedItem>;
  */
 export const zFeedCountQuery = z.object({
     filter: z.optional(zFeedFilter),
-    where: z.optional(zFeedWhere),
-    count: z.optional(z.array(z.enum([
-        'total',
-        'filter',
-        'where'
-    ])))
+    where: z.optional(zFeedWhere)
 }).register(z.globalRegistry, {
     description: 'Query object for feed count'
 });
@@ -1081,6 +1071,50 @@ export const zFeedFavouriteItem = z.object({
 });
 
 export type zFeedFavouriteItem = z.infer<typeof zFeedFavouriteItem>;
+
+/**
+ * Feed data from favourites
+ */
+export const zFeedFavourite = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the feed'
+    }),
+    locationId: z.union([
+        z.null(),
+        z.string()
+    ]),
+    uploadId: z.union([
+        z.null(),
+        z.string()
+    ]),
+    name: z.string().register(z.globalRegistry, {
+        description: 'Name of the feed'
+    }),
+    query: zListingQuery,
+    upload: z.union([
+        z.null(),
+        zUpload
+    ]),
+    count: z.number().register(z.globalRegistry, {
+        description: 'Number of items in favourites for this feed'
+    })
+}).register(z.globalRegistry, {
+    description: 'Feed data from favourites'
+});
+
+export type zFeedFavourite = z.infer<typeof zFeedFavourite>;
+
+/**
+ * Query object for feed favourite count
+ */
+export const zFeedFavouriteCountQuery = z.object({
+    filter: z.optional(zFeedFilter),
+    where: z.optional(zFeedWhere)
+}).register(z.globalRegistry, {
+    description: 'Query object for feed favourite count'
+});
+
+export type zFeedFavouriteCountQuery = z.infer<typeof zFeedFavouriteCountQuery>;
 
 /**
  * Request to create or update a feed gallery
@@ -1221,12 +1255,7 @@ export const zFlagCountQuery = z.object({
             description: 'This filter matches the exact listingId'
         }))
     })),
-    where: z.optional(zFlagCountWhere),
-    count: z.optional(z.array(z.enum([
-        'total',
-        'filter',
-        'where'
-    ])))
+    where: z.optional(zFlagCountWhere)
 }).register(z.globalRegistry, {
     description: 'Query object for flag count'
 });
@@ -1352,12 +1381,7 @@ export type zIgnoreQuery = z.infer<typeof zIgnoreQuery>;
  */
 export const zIgnoreCountQuery = z.object({
     filter: z.optional(zIgnoreFilter),
-    where: z.optional(zIgnoreWhere),
-    count: z.optional(z.array(z.enum([
-        'total',
-        'filter',
-        'where'
-    ])))
+    where: z.optional(zIgnoreWhere)
 }).register(z.globalRegistry, {
     description: 'Query object for ignore count'
 });
@@ -1386,12 +1410,7 @@ export type zIgnoreToggle = z.infer<typeof zIgnoreToggle>;
 export const zListingCountQuery = z.object({
     filter: z.optional(zListingFilter),
     where: z.optional(zListingWhere),
-    meta: z.optional(zListingMeta),
-    count: z.optional(z.array(z.enum([
-        'total',
-        'filter',
-        'where'
-    ])))
+    meta: z.optional(zListingMeta)
 }).register(z.globalRegistry, {
     description: 'Query object for listing count'
 });
@@ -1578,12 +1597,7 @@ export type zTransactionQuery = z.infer<typeof zTransactionQuery>;
  */
 export const zTransactionCountQuery = z.object({
     filter: z.optional(zTransactionFilter),
-    where: z.optional(zTransactionWhere),
-    count: z.optional(z.array(z.enum([
-        'total',
-        'filter',
-        'where'
-    ])))
+    where: z.optional(zTransactionWhere)
 }).register(z.globalRegistry, {
     description: 'Query object for transaction count'
 });
@@ -1849,6 +1863,36 @@ export const zApiFeedFavouriteCollectionResponse = z.array(zFeedFavouriteItem).r
 });
 
 export type zapiFeedFavouriteCollectionResponse = z.infer<typeof zApiFeedFavouriteCollectionResponse>;
+
+export const zApiFeedFavouriteFetchData = z.object({
+    body: z.optional(zFeedQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiFeedFavouriteFetchRequest = z.infer<typeof zApiFeedFavouriteFetchData>;
+
+/**
+ * Return a feed favourite based on the provided query
+ */
+export const zApiFeedFavouriteFetchResponse = zFeedFavourite;
+
+export type zapiFeedFavouriteFetchResponse = z.infer<typeof zApiFeedFavouriteFetchResponse>;
+
+export const zApiFeedFavouriteCountData = z.object({
+    body: z.optional(zFeedFavouriteCountQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiFeedFavouriteCountRequest = z.infer<typeof zApiFeedFavouriteCountData>;
+
+/**
+ * Return counts based on provided query
+ */
+export const zApiFeedFavouriteCountResponse = zCount;
+
+export type zapiFeedFavouriteCountResponse = z.infer<typeof zApiFeedFavouriteCountResponse>;
 
 export const zApiFeedGalleryCreateData = z.object({
     body: z.optional(zFeedGalleryCreate),

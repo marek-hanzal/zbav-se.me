@@ -253,7 +253,6 @@ export type tCount = {
 export type tCategoryCountQuery = {
     filter?: tCategoryFilter;
     where?: tCategoryWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**

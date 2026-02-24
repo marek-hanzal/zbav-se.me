@@ -218,12 +218,7 @@ export type zCount = z.infer<typeof zCount>;
  */
 export const zGalleryCountQuery = z.object({
     filter: z.optional(zGalleryFilter),
-    where: z.optional(zGalleryWhere),
-    count: z.optional(z.array(z.enum([
-        'total',
-        'filter',
-        'where'
-    ])))
+    where: z.optional(zGalleryWhere)
 }).register(z.globalRegistry, {
     description: 'Query object for gallery count'
 });
@@ -585,6 +580,18 @@ export const zMessageQuery = z.object({
 export type zMessageQuery = z.infer<typeof zMessageQuery>;
 
 /**
+ * Query object for message count
+ */
+export const zMessageCountQuery = z.object({
+    filter: z.optional(zMessageFilter),
+    where: z.optional(zMessageWhere)
+}).register(z.globalRegistry, {
+    description: 'Query object for message count'
+});
+
+export type zMessageCountQuery = z.infer<typeof zMessageCountQuery>;
+
+/**
  * Allowed extensions
  */
 export const zAllowedExtensionsEnum = z.enum([
@@ -917,6 +924,40 @@ export const zApiMessageThreadMessageCollectionResponse = z.array(zMessageItem).
 });
 
 export type zapiMessageThreadMessageCollectionResponse = z.infer<typeof zApiMessageThreadMessageCollectionResponse>;
+
+export const zApiMessageThreadMessageFetchData = z.object({
+    body: z.optional(zMessageQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiMessageThreadMessageFetchRequest = z.infer<typeof zApiMessageThreadMessageFetchData>;
+
+/**
+ * Access message based on provided query
+ */
+export const zApiMessageThreadMessageFetchResponse = zMessageItem;
+
+export type zapiMessageThreadMessageFetchResponse = z.infer<typeof zApiMessageThreadMessageFetchResponse>;
+
+export const zApiMessageThreadMessageCountData = z.object({
+    body: z.optional(zMessageCountQuery),
+    path: z.object({
+        messageThreadId: z.string().register(z.globalRegistry, {
+            description: 'Message thread identifier'
+        })
+    }),
+    query: z.optional(z.never())
+});
+
+export type zapiMessageThreadMessageCountRequest = z.infer<typeof zApiMessageThreadMessageCountData>;
+
+/**
+ * Return counts based on provided query
+ */
+export const zApiMessageThreadMessageCountResponse = zCount;
+
+export type zapiMessageThreadMessageCountResponse = z.infer<typeof zApiMessageThreadMessageCountResponse>;
 
 export const zApiS3PresignData = z.object({
     body: z.object({

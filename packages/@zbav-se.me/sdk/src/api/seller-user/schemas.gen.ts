@@ -704,17 +704,6 @@ export const sDraftCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/DraftWhere'
-        },
-        count: {
-            type: 'array',
-            items: {
-                type: 'string',
-                enum: [
-                    'total',
-                    'filter',
-                    'where'
-                ]
-            }
         }
     }
 } as const;
@@ -1271,17 +1260,6 @@ export const sListingCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/ListingWhere'
-        },
-        count: {
-            type: 'array',
-            items: {
-                type: 'string',
-                enum: [
-                    'total',
-                    'filter',
-                    'where'
-                ]
-            }
         }
     }
 } as const;
@@ -1626,17 +1604,6 @@ export const sTransactionCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/TransactionWhere'
-        },
-        count: {
-            type: 'array',
-            items: {
-                type: 'string',
-                enum: [
-                    'total',
-                    'filter',
-                    'where'
-                ]
-            }
         }
     }
 } as const;
@@ -1776,17 +1743,6 @@ export const sTransactionListingCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/TransactionListingWhere'
-        },
-        count: {
-            type: 'array',
-            items: {
-                type: 'string',
-                enum: [
-                    'total',
-                    'filter',
-                    'where'
-                ]
-            }
         }
     }
 } as const;

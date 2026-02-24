@@ -29,12 +29,13 @@ export const Content: FC<Content.Props> = ({
 	 * This is intentional to trigger parent suspense
 	 */
 	const feedCollectionQuery = withFeedQuery.useCollectionQuery(query);
+	const { data: feedCount } = withFeedQuery.useCount(query);
 	/**
 	 * We're keeping locale state just for "after creation" open state
 	 */
 	const [defaultOpenId, setDefaultOpenId] = useState<string | undefined>(undefined);
 
-	if (feedCollectionQuery.data.length === 0) {
+	if (feedCount.isEmpty || feedCount.isFilterEmpty) {
 		return null;
 	}
 

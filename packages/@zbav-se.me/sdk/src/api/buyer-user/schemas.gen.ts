@@ -192,17 +192,6 @@ export const sFavouriteCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/FavouriteWhere'
-        },
-        count: {
-            type: 'array',
-            items: {
-                type: 'string',
-                enum: [
-                    'total',
-                    'filter',
-                    'where'
-                ]
-            }
         }
     }
 } as const;
@@ -1356,17 +1345,6 @@ export const sFeedCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/FeedWhere'
-        },
-        count: {
-            type: 'array',
-            items: {
-                type: 'string',
-                enum: [
-                    'total',
-                    'filter',
-                    'where'
-                ]
-            }
         }
     }
 } as const;
@@ -1426,6 +1404,75 @@ export const sFeedFavouriteItem = {
         'upload',
         'count'
     ]
+} as const;
+
+export const sFeedFavourite = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        locationId: {
+            anyOf: [
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'string'
+                }
+            ]
+        },
+        uploadId: {
+            anyOf: [
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'string'
+                }
+            ]
+        },
+        name: {
+            type: 'string'
+        },
+        query: {
+            $ref: '#/components/schemas/ListingQuery'
+        },
+        upload: {
+            anyOf: [
+                {
+                    type: 'null'
+                },
+                {
+                    $ref: '#/components/schemas/Upload'
+                }
+            ]
+        },
+        count: {
+            type: 'number'
+        }
+    },
+    required: [
+        'id',
+        'locationId',
+        'uploadId',
+        'name',
+        'query',
+        'upload',
+        'count'
+    ]
+} as const;
+
+export const sFeedFavouriteCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            $ref: '#/components/schemas/FeedFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/FeedWhere'
+        }
+    }
 } as const;
 
 export const sFeedGalleryCreate = {
@@ -1567,17 +1614,6 @@ export const sFlagCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/FlagCountWhere'
-        },
-        count: {
-            type: 'array',
-            items: {
-                type: 'string',
-                enum: [
-                    'total',
-                    'filter',
-                    'where'
-                ]
-            }
         }
     }
 } as const;
@@ -1731,17 +1767,6 @@ export const sIgnoreCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/IgnoreWhere'
-        },
-        count: {
-            type: 'array',
-            items: {
-                type: 'string',
-                enum: [
-                    'total',
-                    'filter',
-                    'where'
-                ]
-            }
         }
     }
 } as const;
@@ -1773,17 +1798,6 @@ export const sListingCountQuery = {
         },
         meta: {
             $ref: '#/components/schemas/ListingMeta'
-        },
-        count: {
-            type: 'array',
-            items: {
-                type: 'string',
-                enum: [
-                    'total',
-                    'filter',
-                    'where'
-                ]
-            }
         }
     }
 } as const;
@@ -2014,17 +2028,6 @@ export const sTransactionCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/TransactionWhere'
-        },
-        count: {
-            type: 'array',
-            items: {
-                type: 'string',
-                enum: [
-                    'total',
-                    'filter',
-                    'where'
-                ]
-            }
         }
     }
 } as const;

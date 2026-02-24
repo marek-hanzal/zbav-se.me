@@ -1,2 +1,2 @@
-export { withFeedFavouriteCollectionQuery } from "./withFeedFavouriteCollectionQuery";
+export { withFeedFavouriteQuery } from "./withFeedFavouriteQuery";
 export { withFeedQuery } from "./withFeedQuery";

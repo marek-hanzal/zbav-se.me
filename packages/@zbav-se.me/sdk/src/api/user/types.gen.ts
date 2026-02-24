@@ -208,7 +208,6 @@ export type tCount = {
 export type tGalleryCountQuery = {
     filter?: tGalleryFilter;
     where?: tGalleryWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -553,6 +552,14 @@ export const tMessageSortField = { id: 'id', createdAt: 'createdAt' } as const;
  * Available sort fields for message collection
  */
 export type tMessageSortField = typeof tMessageSortField[keyof typeof tMessageSortField];
+
+/**
+ * Query object for message count
+ */
+export type tMessageCountQuery = {
+    filter?: tMessageFilter;
+    where?: tMessageWhere;
+};
 
 /**
  * Allowed extensions
@@ -905,6 +912,69 @@ export type tApiMessageThreadMessageCollectionResponse = {
 };
 
 export type apiMessageThreadMessageCollectionResponse = tApiMessageThreadMessageCollectionResponse[keyof tApiMessageThreadMessageCollectionResponse];
+
+export type tApiMessageThreadMessageFetchRequest = {
+    body?: tMessageQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/message-thread/message/fetch';
+};
+
+export type apiMessageThreadMessageFetchErrors = {
+    /**
+     * Message not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiMessageThreadMessageFetchError = apiMessageThreadMessageFetchErrors[keyof apiMessageThreadMessageFetchErrors];
+
+export type tApiMessageThreadMessageFetchResponse = {
+    /**
+     * Access message based on provided query
+     */
+    200: tMessageItem;
+};
+
+export type apiMessageThreadMessageFetchResponse = tApiMessageThreadMessageFetchResponse[keyof tApiMessageThreadMessageFetchResponse];
+
+export type tApiMessageThreadMessageCountRequest = {
+    body?: tMessageCountQuery;
+    path: {
+        /**
+         * Message thread identifier
+         */
+        messageThreadId: string;
+    };
+    query?: never;
+    url: '/api/user/message-thread/{messageThreadId}/message/count';
+};
+
+export type apiMessageThreadMessageCountErrors = {
+    /**
+     * Message thread not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiMessageThreadMessageCountError = apiMessageThreadMessageCountErrors[keyof apiMessageThreadMessageCountErrors];
+
+export type tApiMessageThreadMessageCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiMessageThreadMessageCountResponse = tApiMessageThreadMessageCountResponse[keyof tApiMessageThreadMessageCountResponse];
 
 export type tApiS3PresignRequest = {
     body: {

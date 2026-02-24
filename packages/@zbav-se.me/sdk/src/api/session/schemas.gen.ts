@@ -270,17 +270,6 @@ export const sCategoryCountQuery = {
         },
         where: {
             $ref: '#/components/schemas/CategoryWhere'
-        },
-        count: {
-            type: 'array',
-            items: {
-                type: 'string',
-                enum: [
-                    'total',
-                    'filter',
-                    'where'
-                ]
-            }
         }
     }
 } as const;

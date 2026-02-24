@@ -5,11 +5,11 @@ import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import { Status } from "@use-pico/client/ui/status";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
-import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query/session";
+import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
 import { uiWarningStatus } from "@zbav-se.me/ui/ui";
 import { type FC, useEffect, useRef } from "react";
-import { CategoryItem } from "./CategoryItem";
+import { CategoryItemSuspense } from "./CategoryItemSuspense";
 
 export namespace ListContainer {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -28,7 +28,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 	...props
 }) => {
 	const locale = useLocale();
-	const categoryQuery = withCategoryCollectionQuery.useSuspenseQuery({
+	const { data: categoryIds } = withCategoryQuery.useCollectionQuery({
 		filter: {
 			locale,
 			fulltext,
@@ -43,6 +43,12 @@ export const ListContainer: FC<ListContainer.Props> = ({
 				order: "asc",
 			},
 		],
+	});
+	const { data: categoryCount } = withCategoryQuery.useCount({
+		filter: {
+			locale,
+			fulltext,
+		},
 	});
 
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -62,10 +68,10 @@ export const ListContainer: FC<ListContainer.Props> = ({
 	}, [
 		categoryId,
 		scrollTo,
-		categoryQuery.data,
+		categoryIds,
 	]);
 
-	if (categoryQuery.data.length === 0) {
+	if (categoryCount.isEmpty || categoryCount.isFilterEmpty) {
 		return (
 			<Container
 				data-ui="ListContainer[Container.empty]"
@@ -87,7 +93,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 		);
 	}
 
-	return categoryQuery.data.length > 0 ? (
+	return categoryIds.length > 0 ? (
 		<Container
 			data-ui="ListContainer[Container.content]"
 			ref={mergedRef}
@@ -98,12 +104,12 @@ export const ListContainer: FC<ListContainer.Props> = ({
 			}}
 			{...props}
 		>
-			{categoryQuery.data.map((item) => {
+			{categoryIds.map((categoryId) => {
 				return (
-					<CategoryItem
-						key={item.id}
+					<CategoryItemSuspense
+						key={categoryId}
+						categoryId={categoryId}
 						selection={selection}
-						item={item}
 					/>
 				);
 			})}

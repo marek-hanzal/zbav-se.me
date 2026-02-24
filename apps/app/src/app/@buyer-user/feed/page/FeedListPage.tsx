@@ -26,17 +26,7 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...prop
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [isFeedSettings, setIsFeedSettings] = useState(false);
 
-	/**
-	 * The trick - fetch _any_ listing, so we know, if the app is empty.
-	 *
-	 * Using collection, because "fetch" throws error on 4o4.
-	 */
-	const listingQuery = withListingQuery.useCollectionQuery({
-		cursor: {
-			page: 0,
-			size: 1,
-		},
-	});
+	const { data: listingCount } = withListingQuery.useCount({});
 
 	const { sentinelRef, inView: isLast } = useSentinel<HTMLDivElement>({
 		containerRef,
@@ -65,7 +55,7 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...prop
 			}
 			{...props}
 		>
-			{listingQuery.data.length > 0 ? (
+			{listingCount.isEmpty ? null : (
 				<>
 					<FeedSetupButton
 						state={{
@@ -132,9 +122,9 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...prop
 						}
 					/>
 				</>
-			) : null}
+				)}
 
-			{listingQuery.data.length > 0 ? null : <FirstListingStatus />}
+			{listingCount.isEmpty ? <FirstListingStatus /> : null}
 
 			<FeedEditorSheetSuspense
 				feedId={feed.id}

@@ -1,10 +1,11 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer-user";
-import { withFeedFavouriteCollectionQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import { withFeedFavouriteQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
 import { Item } from "~/app/@buyer-user/feed/ui/FeedListContainer/Item";
 import { EmptyStatus } from "~/app/@buyer-user/feed-favourite/ui/FavouriteListContainerSuspense/EmptyStatus";
+import { ItemSuspense } from "~/app/@buyer-user/feed-favourite/ui/FavouriteListContainerSuspense/ItemSuspense";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -23,7 +24,8 @@ export namespace Data {
  * @see {@link Item} - The component used to render individual feed items
  */
 export const Data: FC<Data.Props> = ({ _suspense, query, linkTo, ui, ...props }) => {
-	const { data } = withFeedFavouriteCollectionQuery.useSuspenseQuery(query);
+	const { data: feedIds } = withFeedFavouriteQuery.useCollectionQuery(query);
+	const { data: feedCount } = withFeedFavouriteQuery.useCount(query);
 
 	return (
 		<Container
@@ -38,7 +40,7 @@ export const Data: FC<Data.Props> = ({ _suspense, query, linkTo, ui, ...props })
 			}}
 			{...props}
 		>
-			{data.length === 0 ? (
+			{feedCount.isEmpty || feedCount.isFilterEmpty ? (
 				<EmptyStatus />
 			) : (
 				<Container
@@ -48,14 +50,10 @@ export const Data: FC<Data.Props> = ({ _suspense, query, linkTo, ui, ...props })
 						gap: "default",
 					}}
 				>
-					{data.map((feed) => (
-						<Item
-							data-ui={"FavouriteListContainer-[Item]"}
-							key={feed.id}
-							feed={feed}
-							defaultOpen={false}
-							count={feed.count}
-							tools={[]}
+					{feedIds.map((feedId) => (
+						<ItemSuspense
+							key={feedId}
+							feedId={feedId}
 							linkTo={linkTo}
 						/>
 					))}

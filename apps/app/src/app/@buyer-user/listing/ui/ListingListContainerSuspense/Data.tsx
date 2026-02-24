@@ -33,11 +33,10 @@ export const Data: FC<Data.Props> = ({
 }) => {
 	const locale = useLocale();
 	const listingCollectionQuery = withListingQuery.useCollectionQuery(query);
+	const { data: listingCount } = withListingQuery.useCount(query);
 
-	if (listingCollectionQuery.data.length === 0) {
-		return renderEmptyFn ? (
-			renderEmptyFn()
-		) : (
+	if (listingCount.isEmpty) {
+		return (
 			<Status
 				data-ui={"ListingListContainer-[Status.empty]"}
 				key={"no-listings"}
@@ -59,6 +58,20 @@ export const Data: FC<Data.Props> = ({
 						/>
 					</LinkTo>
 				}
+			/>
+		);
+	}
+
+	if (listingCount.isFilterEmpty) {
+		return renderEmptyFn ? (
+			renderEmptyFn()
+		) : (
+			<Status
+				data-ui={"ListingListContainer-[Status.filter-empty]"}
+				key={"no-listings-for-current-filter"}
+				icon={"icon-[streamline--sad-face-remix]"}
+				textTitle={translator.text("No listings for current filter (title)")}
+				textMessage={translator.text("No listings for current filter (message)")}
 			/>
 		);
 	}

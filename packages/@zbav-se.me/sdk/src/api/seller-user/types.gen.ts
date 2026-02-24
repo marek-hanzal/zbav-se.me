@@ -515,7 +515,6 @@ export type tCount = {
 export type tDraftCountQuery = {
     filter?: tDraftFilter;
     where?: tDraftWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -831,7 +830,6 @@ export type tListingSortField = typeof tListingSortField[keyof typeof tListingSo
 export type tListingCountQuery = {
     filter?: tListingFilter;
     where?: tListingWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -1058,7 +1056,6 @@ export type tTransactionSortField = typeof tTransactionSortField[keyof typeof tT
 export type tTransactionCountQuery = {
     filter?: tTransactionFilter;
     where?: tTransactionWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -1166,7 +1163,6 @@ export type tTransactionListingSortField = typeof tTransactionListingSortField[k
 export type tTransactionListingCountQuery = {
     filter?: tTransactionListingFilter;
     where?: tTransactionListingWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**

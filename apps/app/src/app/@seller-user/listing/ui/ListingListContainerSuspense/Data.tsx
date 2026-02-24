@@ -22,8 +22,9 @@ export namespace Data {
 export const Data: FC<Data.Props> = ({ query, visibility }) => {
 	const locale = useLocale();
 	const listingCollectionQuery = withListingQuery.useCollectionQuery(query);
+	const { data: listingCount } = withListingQuery.useCount(query);
 
-	if (listingCollectionQuery.data.length === 0) {
+	if (listingCount.isEmpty) {
 		return (
 			<Container
 				ui={{
@@ -55,6 +56,31 @@ export const Data: FC<Data.Props> = ({ query, visibility }) => {
 							<Tx label={"Create listing (label)"} />
 						</LinkTo>
 					}
+					ui={{
+						tone: "brand",
+						theme: "light",
+						color: "lead",
+						inner: "4xl",
+					}}
+					className="text-center"
+				/>
+			</Container>
+		);
+	}
+
+	if (listingCount.isFilterEmpty) {
+		return (
+			<Container
+				ui={{
+					layout: "vertical-centered",
+					height: "full",
+				}}
+			>
+				<Status
+					data-ui={"MyListing-[Status.filter-empty]"}
+					icon={SearchIcon}
+					textTitle={translator.text("No listings for current filter (title)")}
+					textMessage={translator.text("No listings for current filter (message)")}
 					ui={{
 						tone: "brand",
 						theme: "light",
