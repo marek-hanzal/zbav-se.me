@@ -16,7 +16,6 @@ export const categoryCountFx = Effect.fn("categoryCountFx")(function* ({
 	filter,
 	where,
 	scope,
-	count,
 }: categoryCountFx.Props) {
 	yield* withTraceFx({
 		fx: "categoryCountFx",
@@ -24,7 +23,6 @@ export const categoryCountFx = Effect.fn("categoryCountFx")(function* ({
 			filter,
 			where,
 			scope,
-			count,
 		},
 	});
 
@@ -33,7 +31,6 @@ export const categoryCountFx = Effect.fn("categoryCountFx")(function* ({
 		filter,
 		where,
 		scope,
-		count,
 		queryFx: withCategoryQueryBuilderFx,
 	});
 });

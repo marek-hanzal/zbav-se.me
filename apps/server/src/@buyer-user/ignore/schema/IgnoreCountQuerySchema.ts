@@ -1,5 +1,4 @@
 import { z } from "@hono/zod-openapi";
-import { CountEnumSchema } from "@use-pico/common/schema";
 import { IgnoreQuerySchema } from "~/@buyer-user/ignore/schema/IgnoreQuerySchema";
 
 export const IgnoreCountQuerySchema = z
@@ -8,7 +7,6 @@ export const IgnoreCountQuerySchema = z
 			filter: true,
 			where: true,
 		}).shape,
-		count: CountEnumSchema.array().optional(),
 	})
 	.strip()
 	.openapi("IgnoreCountQuery", {

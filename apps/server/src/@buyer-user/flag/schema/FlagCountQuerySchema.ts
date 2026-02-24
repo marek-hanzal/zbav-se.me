@@ -1,5 +1,4 @@
 import { z } from "@hono/zod-openapi";
-import { CountEnumSchema } from "@use-pico/common/schema";
 import { FlagCountWhereSchema } from "~/@buyer-user/flag/schema/FlagCountWhereSchema";
 import { FlagFilterSchema } from "~/@buyer-user/flag/schema/FlagFilterSchema";
 
@@ -9,7 +8,6 @@ export const FlagCountQuerySchema = z
 			userId: true,
 		}).optional(),
 		where: FlagCountWhereSchema.optional(),
-		count: CountEnumSchema.array().optional(),
 	})
 	.strip()
 	.openapi("FlagCountQuery", {

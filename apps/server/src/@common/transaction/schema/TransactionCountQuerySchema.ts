@@ -1,5 +1,4 @@
 import { z } from "@hono/zod-openapi";
-import { CountEnumSchema } from "@use-pico/common/schema";
 import { TransactionQuerySchema } from "~/@common/transaction/schema/TransactionQuerySchema";
 
 export const TransactionCountQuerySchema = z
@@ -8,7 +7,6 @@ export const TransactionCountQuerySchema = z
 			filter: true,
 			where: true,
 		}).shape,
-		count: CountEnumSchema.array().optional(),
 	})
 	.strip()
 	.openapi("TransactionCountQuery", {

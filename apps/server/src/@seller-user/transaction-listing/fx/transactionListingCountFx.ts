@@ -15,14 +15,12 @@ export const transactionListingCountFx = Effect.fn("transactionListingCountFx")(
 	filter,
 	where,
 	scope,
-	count,
 }: transactionListingCountFx.Props) {
 	return yield* withCountFx({
 		selectFx: withTransactionListingSourceSelectFx({}),
 		filter,
 		where,
 		scope,
-		count,
 		queryFx: withTransactionListingQueryBuilderFx,
 	});
 });

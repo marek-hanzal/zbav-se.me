@@ -1,5 +1,4 @@
 import { z } from "@hono/zod-openapi";
-import { CountEnumSchema } from "@use-pico/common/schema";
 import { FavouriteQuerySchema } from "~/@buyer-user/favourite/schema/FavouriteQuerySchema";
 
 export const FavouriteCountQuerySchema = z
@@ -8,7 +7,6 @@ export const FavouriteCountQuerySchema = z
 			filter: true,
 			where: true,
 		}).shape,
-		count: CountEnumSchema.array().optional(),
 	})
 	.strip()
 	.openapi("FavouriteCountQuery", {

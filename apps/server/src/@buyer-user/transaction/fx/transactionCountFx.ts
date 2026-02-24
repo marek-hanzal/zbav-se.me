@@ -16,7 +16,6 @@ export const transactionCountFx = Effect.fn("transactionCountFx")(function* ({
 	filter,
 	where,
 	scope,
-	count,
 }: transactionCountFx.Props) {
 	yield* withTraceFx({
 		fx: "transactionCountFx",
@@ -24,7 +23,6 @@ export const transactionCountFx = Effect.fn("transactionCountFx")(function* ({
 			filter,
 			where,
 			scope,
-			count,
 		},
 	});
 
@@ -33,7 +31,6 @@ export const transactionCountFx = Effect.fn("transactionCountFx")(function* ({
 		filter,
 		where,
 		scope,
-		count,
 		queryFx: withTransactionQueryBuilderFx,
 	});
 });

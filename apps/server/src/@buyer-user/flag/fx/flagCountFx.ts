@@ -15,14 +15,12 @@ export const flagCountFx = Effect.fn("flagCountFx")(function* ({
 	filter,
 	where,
 	scope,
-	count,
 }: flagCountFx.Props) {
 	return yield* withCountFx({
 		selectFx: withFlagCollectionSelectFx({}),
 		filter,
 		where,
 		scope,
-		count,
 		queryFx: withFlagQueryBuilderFx,
 	});
 });

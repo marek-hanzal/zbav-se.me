@@ -1,5 +1,4 @@
 import { z } from "@hono/zod-openapi";
-import { CountEnumSchema } from "@use-pico/common/schema";
 import { DraftQuerySchema } from "~/@seller-user/draft/schema/DraftQuerySchema";
 
 export const DraftCountQuerySchema = z
@@ -8,7 +7,6 @@ export const DraftCountQuerySchema = z
 			filter: true,
 			where: true,
 		}).shape,
-		count: CountEnumSchema.array().optional(),
 	})
 	.strip()
 	.openapi("DraftCountQuery", {

@@ -15,14 +15,12 @@ export const draftCountFx = Effect.fn("draftCountFx")(function* ({
 	filter,
 	where,
 	scope,
-	count,
 }: draftCountFx.Props) {
 	return yield* withCountFx({
 		selectFx: withDraftCollectionSelectFx({}),
 		filter,
 		where,
 		scope,
-		count,
 		queryFx: withDraftQueryBuilderFx,
 	});
 });
