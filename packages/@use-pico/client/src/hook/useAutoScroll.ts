@@ -41,7 +41,6 @@ export function useAutoScroll({
 		},
 	);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: Refs are intentionally tracked by .current value
 	useLayoutEffect(() => {
 		if (!enabled || !containerRef.current || !contentRef.current) {
 			return;
@@ -56,7 +55,6 @@ export function useAutoScroll({
 		initialBehavior,
 	]);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: Refs are intentionally tracked by .current value
 	useLayoutEffect(() => {
 		if (!enabled || !contentRef.current || !containerRef.current) {
 			return;
