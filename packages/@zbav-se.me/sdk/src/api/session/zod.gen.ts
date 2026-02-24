@@ -229,6 +229,12 @@ export const zCount = z.object({
     }),
     total: z.number().register(z.globalRegistry, {
         description: 'Total count of items (no filters applied).'
+    }),
+    isEmpty: z.boolean().register(z.globalRegistry, {
+        description: 'True when total count is empty.'
+    }),
+    isFilterEmpty: z.boolean().register(z.globalRegistry, {
+        description: 'True when filter count is empty while total count has data.'
     })
 }).register(z.globalRegistry, {
     description: 'Count data'
