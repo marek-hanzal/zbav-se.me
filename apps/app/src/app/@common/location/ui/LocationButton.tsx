@@ -7,7 +7,7 @@ import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/u
 import { LocationIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useState } from "react";
-import { LocationSelectContainer } from "~/app/@common/location/ui/LocationSelectContainer";
+import { LocationSelectContainer } from "./LocationSelectContainer";
 
 export namespace LocationButton {
 	export interface Props extends Button.Props {

@@ -5,8 +5,8 @@ import { translator } from "@use-pico/common/translator";
 import type { tDraft, tDraftQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { FC } from "react";
-import { CreateButton } from "~/app/@seller-user/draft/ui/button/CreateButton";
-import { DraftListItemSuspense } from "~/app/@seller-user/draft/ui/DraftListItemSuspense";
+import { CreateButton } from "./button/CreateButton";
+import { DraftListItemSuspense } from "./DraftListItemSuspense";
 
 export namespace DraftList {
 	export interface Props extends Container.Props, MarkSuspense.Props {

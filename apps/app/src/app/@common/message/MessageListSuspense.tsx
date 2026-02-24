@@ -1,6 +1,6 @@
 import { type FC, Suspense } from "react";
-import { Data } from "~/app/@common/message/MessageListSuspense/Data";
-import { Pending } from "~/app/@common/message/MessageListSuspense/Pending";
+import { Data } from "./MessageListSuspense/Data";
+import { Pending } from "./MessageListSuspense/Pending";
 
 export namespace MessageListSuspense {
 	export interface Props extends Omit<Data.Props, "_suspense"> {

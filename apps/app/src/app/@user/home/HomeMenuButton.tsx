@@ -2,7 +2,7 @@ import { MenuIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import type { FC } from "react";
 import { useState } from "react";
-import { HomeMenuSheet } from "~/app/@user/home/HomeMenuSheet";
+import { HomeMenuSheet } from "./HomeMenuSheet";
 
 export namespace HomeMenuButton {
 	export interface Props extends Button.Props {

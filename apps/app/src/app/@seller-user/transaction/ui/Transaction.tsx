@@ -4,9 +4,9 @@ import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
 import { type FC, useRef } from "react";
 import { MessageListSuspense } from "~/app/@common/message/MessageListSuspense";
-import { TransactionChat } from "~/app/@seller-user/transaction/ui/TransactionChat";
-import { TransactionMessage } from "~/app/@seller-user/transaction/ui/TransactionMessage";
-import { TransactionToolbar } from "~/app/@seller-user/transaction/ui/TransactionToolbar";
+import { TransactionChat } from "./TransactionChat";
+import { TransactionMessage } from "./TransactionMessage";
+import { TransactionToolbar } from "./TransactionToolbar";
 
 export namespace Transaction {
 	export interface Props extends Container.Props, MarkSuspense.Props {

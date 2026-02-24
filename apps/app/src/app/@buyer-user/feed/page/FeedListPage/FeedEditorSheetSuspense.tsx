@@ -1,6 +1,6 @@
 import { type FC, Suspense } from "react";
-import { Data } from "~/app/@buyer-user/feed/page/FeedListPage/FeedEditorSheetSuspense/Data";
-import { Pending } from "~/app/@buyer-user/feed/page/FeedListPage/FeedEditorSheetSuspense/Pending";
+import { Data } from "./FeedEditorSheetSuspense/Data";
+import { Pending } from "./FeedEditorSheetSuspense/Pending";
 
 export namespace FeedEditorSheetSuspense {
 	export interface Props extends Data.Props {

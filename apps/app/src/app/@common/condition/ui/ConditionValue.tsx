@@ -1,7 +1,7 @@
 import { LabelValue } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
-import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
+import { ConditionIcon } from "./ConditionIcon";
 
 export namespace ConditionValue {
 	export interface Props extends Omit<LabelValue.Props, "textValue"> {

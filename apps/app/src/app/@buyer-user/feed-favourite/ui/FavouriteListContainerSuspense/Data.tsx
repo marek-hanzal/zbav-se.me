@@ -4,8 +4,8 @@ import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedFavouriteQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
 import { Item } from "~/app/@buyer-user/feed/ui/FeedListContainer/Item";
-import { EmptyStatus } from "~/app/@buyer-user/feed-favourite/ui/FavouriteListContainerSuspense/EmptyStatus";
-import { ItemSuspense } from "~/app/@buyer-user/feed-favourite/ui/FavouriteListContainerSuspense/ItemSuspense";
+import { EmptyStatus } from "./EmptyStatus";
+import { ItemSuspense } from "./ItemSuspense";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {

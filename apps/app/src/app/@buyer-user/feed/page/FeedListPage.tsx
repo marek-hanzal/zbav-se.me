@@ -7,10 +7,10 @@ import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, useRef, useState } from "react";
-import { FeedEditorSheetSuspense } from "~/app/@buyer-user/feed/page/FeedListPage/FeedEditorSheetSuspense";
-import { FeedListStatus } from "~/app/@buyer-user/feed/page/FeedListPage/FeedListStatus";
-import { FeedSetupButton } from "~/app/@buyer-user/feed/page/FeedListPage/FeedSetupButton";
-import { FirstListingStatus } from "~/app/@buyer-user/feed/page/FeedListPage/FirstListingStatus";
+import { FeedEditorSheetSuspense } from "./FeedListPage/FeedEditorSheetSuspense";
+import { FeedListStatus } from "./FeedListPage/FeedListStatus";
+import { FeedSetupButton } from "./FeedListPage/FeedSetupButton";
+import { FirstListingStatus } from "./FeedListPage/FirstListingStatus";
 import { ListingListContainerSuspense } from "~/app/@buyer-user/listing/ui/ListingListContainerSuspense";
 
 export namespace FeedListPage {

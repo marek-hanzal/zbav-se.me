@@ -10,11 +10,11 @@ import {
 } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { MessageGallery } from "~/app/@common/message/type/MessageGallery";
-import { MessageLocation } from "~/app/@common/message/type/MessageLocation";
-import { MessagePackage } from "~/app/@common/message/type/MessagePackage";
-import { MessagePersonal } from "~/app/@common/message/type/MessagePersonal";
-import { MessageText } from "~/app/@common/message/type/MessageText";
+import { MessageGallery } from "./type/MessageGallery";
+import { MessageLocation } from "./type/MessageLocation";
+import { MessagePackage } from "./type/MessagePackage";
+import { MessagePersonal } from "./type/MessagePersonal";
+import { MessageText } from "./type/MessageText";
 
 export namespace MessageRenderItem {
 	export interface Props {

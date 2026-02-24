@@ -4,7 +4,7 @@ import type { EntitySchema } from "@use-pico/common/schema";
 import type { tCategoryItem, tCategoryQuery } from "@zbav-se.me/sdk/api/session";
 import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
-import { CategoryInlineSuspense } from "~/app/@session/category/ui/CategoryValueListContent/CategoryInlineSuspense";
+import { CategoryInlineSuspense } from "./CategoryValueListContent/CategoryInlineSuspense";
 
 export namespace CategoryValueListContent {
 	export interface Props

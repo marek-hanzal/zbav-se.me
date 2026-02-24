@@ -6,7 +6,7 @@ import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
 import { SellerInfoSuspense } from "~/app/@buyer-session/listing/ui/SellerInfoSuspense";
-import { ListingDetail } from "~/app/@buyer-user/listing/ui/ListingDetail";
+import { ListingDetail } from "./ListingDetail";
 import { Transaction } from "~/app/@buyer-user/transaction/ui/Transaction";
 import { GalleryContent } from "~/app/@common/gallery/ui/GalleryContent";
 

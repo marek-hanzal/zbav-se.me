@@ -1,11 +1,11 @@
 import type { FC } from "react";
 import type { FeedEditor } from "~/app/@buyer-user/feed/ui/FeedEditor";
-import { CategorySection } from "~/app/@buyer-user/feed/ui/FeedEditor/CategorySection";
-import { FilterSection } from "~/app/@buyer-user/feed/ui/FeedEditor/FilterSection";
-import { IdentitySection } from "~/app/@buyer-user/feed/ui/FeedEditor/IdentitySection";
-import { LocationSection } from "~/app/@buyer-user/feed/ui/FeedEditor/LocationSection";
-import { SortSection } from "~/app/@buyer-user/feed/ui/FeedEditor/SortSection";
-import { TitleSection } from "~/app/@buyer-user/feed/ui/FeedEditor/TitleSection";
+import { CategorySection } from "./CategorySection";
+import { FilterSection } from "./FilterSection";
+import { IdentitySection } from "./IdentitySection";
+import { LocationSection } from "./LocationSection";
+import { SortSection } from "./SortSection";
+import { TitleSection } from "./TitleSection";
 
 export namespace FeedEditorFields {
 	export interface Props extends Pick<FeedEditor.Props, "feed" | "values"> {}

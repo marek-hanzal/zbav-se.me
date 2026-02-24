@@ -1,9 +1,9 @@
 import { Container } from "@use-pico/client/ui/container";
 import type { FC } from "react";
 import { usePhotoUploadController } from "~/app/@common/photo/hook/usePhotoUploadController";
-import { PhotoUploadPending } from "~/app/@common/photo/ui/PhotoUpload/PhotoUploadPending";
-import { PhotoUploadPlaceholder } from "~/app/@common/photo/ui/PhotoUpload/PhotoUploadPlaceholder";
-import { PhotoUploadPreview } from "~/app/@common/photo/ui/PhotoUpload/PhotoUploadPreview";
+import { PhotoUploadPending } from "./PhotoUpload/PhotoUploadPending";
+import { PhotoUploadPlaceholder } from "./PhotoUpload/PhotoUploadPlaceholder";
+import { PhotoUploadPreview } from "./PhotoUpload/PhotoUploadPreview";
 
 export namespace PhotoUpload {
 	export type Value = string | undefined;

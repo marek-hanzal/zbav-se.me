@@ -1,5 +1,5 @@
 import type { tGalleryItem, tUpload } from "@zbav-se.me/sdk/api/user";
-import { useMaybeHeroUpload } from "~/app/@common/gallery/hook/useMaybeHeroUpload";
+import { useMaybeHeroUpload } from "./useMaybeHeroUpload";
 
 export const useHeroUpload = (items: tGalleryItem[]): tUpload => {
 	const hero = useMaybeHeroUpload(items);

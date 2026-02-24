@@ -9,9 +9,9 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef, useState } from "react";
 import { ListingOverlay } from "~/app/@buyer-user/listing/ui/ListingOverlay";
 import { ListingSheet } from "~/app/@buyer-user/listing/ui/ListingSheet";
-import { TransactionChat } from "~/app/@buyer-user/transaction/ui/TransactionChat";
-import { TransactionMessage } from "~/app/@buyer-user/transaction/ui/TransactionMessage";
-import { TransactionToolbar } from "~/app/@buyer-user/transaction/ui/TransactionToolbar";
+import { TransactionChat } from "./TransactionChat";
+import { TransactionMessage } from "./TransactionMessage";
+import { TransactionToolbar } from "./TransactionToolbar";
 import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
 import { MessageListSuspense } from "~/app/@common/message/MessageListSuspense";
 

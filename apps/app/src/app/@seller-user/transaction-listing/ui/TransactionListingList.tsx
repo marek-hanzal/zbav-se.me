@@ -10,7 +10,7 @@ import type { tTransactionListingQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller-user/transaction-listing";
 import { MessageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { TransactionListingItemSuspense } from "~/app/@seller-user/transaction-listing/ui/TransactionListingItemSuspense";
+import { TransactionListingItemSuspense } from "./TransactionListingItemSuspense";
 
 export namespace TransactionListingList {
 	export interface Props extends Container.Props, MarkSuspense.Props {

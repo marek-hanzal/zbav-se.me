@@ -6,8 +6,8 @@ import { Status } from "@use-pico/client/ui/status";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { uiWarningStatus } from "@zbav-se.me/ui/ui";
 import { type FC, Suspense } from "react";
-import { ListContainerContent } from "~/app/@common/location/ui/LocationSelect/ListContainerContent";
-import { ListContainerContentPending } from "~/app/@common/location/ui/LocationSelect/ListContainerContentPending";
+import { ListContainerContent } from "./ListContainerContent";
+import { ListContainerContentPending } from "./ListContainerContentPending";
 
 export namespace ListContainer {
 	export interface Props extends Omit<Container.Props, "onChange"> {

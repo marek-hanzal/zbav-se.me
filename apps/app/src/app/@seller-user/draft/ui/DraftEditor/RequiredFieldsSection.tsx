@@ -13,7 +13,7 @@ import { PriceValue } from "~/app/@common/price/ui/PriceValue";
 import { PriceTypeValue } from "~/app/@common/price-type/ui/PriceTypeValue";
 import { TitleValue } from "~/app/@common/title/ui/TitleValue";
 import type { DraftEditor } from "~/app/@seller-user/draft/ui/DraftEditor";
-import { ChevronAction } from "~/app/@seller-user/draft/ui/DraftEditor/ChevronAction";
+import { ChevronAction } from "./ChevronAction";
 
 export namespace RequiredFieldsSection {
 	export interface Props {

@@ -1,9 +1,9 @@
 import type { Container } from "@use-pico/client/ui/container";
 import type { tTransactionQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { type FC, Suspense } from "react";
-import { TransactionItemSuspense } from "~/app/@seller-user/transaction/ui/TransactionItemSuspense";
-import { TransactionListContainer } from "~/app/@seller-user/transaction/ui/TransactionListContainer";
-import { TransactionListContainerPending } from "~/app/@seller-user/transaction/ui/TransactionListContainerPending";
+import { TransactionItemSuspense } from "./TransactionItemSuspense";
+import { TransactionListContainer } from "./TransactionListContainer";
+import { TransactionListContainerPending } from "./TransactionListContainerPending";
 
 export namespace TransactionList {
 	export interface Props extends Container.Props {

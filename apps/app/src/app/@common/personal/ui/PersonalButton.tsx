@@ -7,7 +7,7 @@ import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/u
 import { EmailIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useState } from "react";
-import { PersonalControl } from "~/app/@common/personal/ui/PersonalControl";
+import { PersonalControl } from "./PersonalControl";
 
 export namespace PersonalButton {
 	export interface Props extends Button.Props {

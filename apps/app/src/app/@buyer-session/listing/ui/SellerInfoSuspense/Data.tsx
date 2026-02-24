@@ -5,8 +5,8 @@ import { translator } from "@use-pico/common/translator";
 import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/buyer-session/listing";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { Header } from "~/app/@buyer-session/listing/ui/SellerInfoSuspense/Header";
-import { Score } from "~/app/@buyer-session/listing/ui/SellerInfoSuspense/Score";
+import { Header } from "./Header";
+import { Score } from "./Score";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {

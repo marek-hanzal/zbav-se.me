@@ -6,7 +6,7 @@ import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { ListingIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { ListingCountBadgeValueSuspense } from "~/app/@buyer-user/listing/ui/ListingCountBadgeValueSuspense";
+import { ListingCountBadgeValueSuspense } from "./ListingCountBadgeValueSuspense";
 
 export namespace ListingCountBadge {
 	export interface Props extends Badge.Props {

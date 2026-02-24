@@ -9,7 +9,7 @@ import type { FC } from "react";
 import { CategoryInline } from "~/app/@common/category/ui/CategoryInline";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
 import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
-import { ListingOverlay } from "~/app/@seller-user/listing/ui/ListingOverlay";
+import { ListingOverlay } from "./ListingOverlay";
 
 export namespace ListingDetail {
 	export interface Hooks {

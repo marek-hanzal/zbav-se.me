@@ -4,8 +4,8 @@ import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
 import { DeadEndIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { FeedStatusContainerUi } from "~/app/@buyer-user/feed/page/FeedListPage/FeedSetupButton";
-import { FeedStatusAction } from "~/app/@buyer-user/feed/page/FeedListPage/FeedStatusAction";
+import { FeedStatusContainerUi } from "./FeedSetupButton";
+import { FeedStatusAction } from "./FeedStatusAction";
 
 export namespace FeedListStatus {
 	export interface Props extends Container.Props {

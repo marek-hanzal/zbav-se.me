@@ -2,7 +2,7 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import type { tUpload } from "@zbav-se.me/sdk/api/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import type { FC } from "react";
-import { GalleryContent } from "~/app/@common/gallery/ui/GalleryContent";
+import { GalleryContent } from "./GalleryContent";
 
 export namespace GallerySheet {
 	export interface Props extends BottomSheet.Props {

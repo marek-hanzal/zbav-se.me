@@ -1,6 +1,6 @@
 import { type FC, Suspense } from "react";
-import { Data } from "~/app/@buyer-user/listing/ui/ListingListContainerSuspense/ListingItemSuspense/Data";
-import { Pending } from "~/app/@buyer-user/listing/ui/ListingListContainerSuspense/ListingItemSuspense/Pending";
+import { Data } from "./ListingItemSuspense/Data";
+import { Pending } from "./ListingItemSuspense/Pending";
 
 export namespace ListingItemSuspense {
 	export interface Props extends Data.Props {

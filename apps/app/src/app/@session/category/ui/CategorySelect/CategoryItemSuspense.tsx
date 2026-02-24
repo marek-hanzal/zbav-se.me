@@ -1,6 +1,6 @@
 import { type FC, Suspense } from "react";
-import { Data } from "~/app/@session/category/ui/CategorySelect/CategoryItemSuspense/Data";
-import { Pending } from "~/app/@session/category/ui/CategorySelect/CategoryItemSuspense/Pending";
+import { Data } from "./CategoryItemSuspense/Data";
+import { Pending } from "./CategoryItemSuspense/Pending";
 
 export namespace CategoryItemSuspense {
 	export interface Props extends Omit<Data.Props, "_suspense"> {}

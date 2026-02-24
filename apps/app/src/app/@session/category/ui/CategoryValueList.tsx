@@ -1,8 +1,8 @@
 import { ValueList } from "@use-pico/client/ui/container";
 import type { tCategoryItem } from "@zbav-se.me/sdk/api/session";
 import { type FC, Suspense } from "react";
-import { CategoryValueListContent } from "~/app/@session/category/ui/CategoryValueListContent";
-import { CategoryValueListContentPending } from "~/app/@session/category/ui/CategoryValueListContentPending";
+import { CategoryValueListContent } from "./CategoryValueListContent";
+import { CategoryValueListContentPending } from "./CategoryValueListContentPending";
 
 export namespace CategoryValueList {
 	export interface Props extends Omit<ValueList.Props<tCategoryItem>, "items" | "renderFn"> {

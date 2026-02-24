@@ -1,6 +1,6 @@
 import { type FC, Suspense } from "react";
-import { Data } from "~/app/@buyer-user/listing/ui/button/IgnoreButtonSuspense/Data";
-import { Pending } from "~/app/@buyer-user/listing/ui/button/IgnoreButtonSuspense/Pending";
+import { Data } from "./IgnoreButtonSuspense/Data";
+import { Pending } from "./IgnoreButtonSuspense/Pending";
 
 export namespace IgnoreButtonSuspense {
 	export interface Props extends Omit<Data.Props, "_suspense"> {

@@ -3,7 +3,7 @@ import { SheetView } from "@use-pico/client/ui/sheet-view";
 import type { StateType } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { type FC, useState } from "react";
-import { createEditorSheetViews } from "~/app/@buyer-user/feed/ui/EditorSheet/createEditorSheetViews";
+import { createEditorSheetViews } from "./EditorSheet/createEditorSheetViews";
 
 export namespace EditorSheet {
 	export type Views =

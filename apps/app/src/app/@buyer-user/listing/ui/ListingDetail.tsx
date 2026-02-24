@@ -2,11 +2,11 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
 import { useListingEvent } from "~/app/@buyer-session/listing/hook/useListingEvent";
-import { ThumbDislikeButton } from "~/app/@buyer-user/listing/ui/button/ThumbDislikeButton";
-import { ThumbLikeButton } from "~/app/@buyer-user/listing/ui/button/ThumbLikeButton";
-import { ListingDestructiveActionsSuspense } from "~/app/@buyer-user/listing/ui/ListingDetail/ListingDestructiveActionsSuspense";
-import { ListingHeroSection } from "~/app/@buyer-user/listing/ui/ListingDetail/ListingHeroSection";
-import { ListingInfoSection } from "~/app/@buyer-user/listing/ui/ListingDetail/ListingInfoSection";
+import { ThumbDislikeButton } from "./button/ThumbDislikeButton";
+import { ThumbLikeButton } from "./button/ThumbLikeButton";
+import { ListingDestructiveActionsSuspense } from "./ListingDetail/ListingDestructiveActionsSuspense";
+import { ListingHeroSection } from "./ListingDetail/ListingHeroSection";
+import { ListingInfoSection } from "./ListingDetail/ListingInfoSection";
 
 export namespace ListingDetail {
 	export type Tools = "destructive" | "hero" | "thumb";

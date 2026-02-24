@@ -1,7 +1,7 @@
 import { Button } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
-import { GalleryUploadSheet } from "~/app/@common/gallery/ui/GalleryUploadSheet";
+import { GalleryUploadSheet } from "./GalleryUploadSheet";
 
 export namespace GalleryUploadButton {
 	export interface Props<TData extends GalleryUploadSheet.Uploads>
