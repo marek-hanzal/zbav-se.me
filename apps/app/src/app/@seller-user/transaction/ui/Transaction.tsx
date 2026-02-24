@@ -1,22 +1,38 @@
 import { Container } from "@use-pico/client/ui/container";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
-import type { FC } from "react";
-import { useRef } from "react";
+import { type FC, Suspense, useRef } from "react";
 import { MessageList } from "~/app/@common/message/MessageList";
+import { MessageListPending } from "~/app/@common/message/MessageListPending";
 import { TransactionChat } from "~/app/@seller-user/transaction/ui/TransactionChat";
 import { TransactionMessage } from "~/app/@seller-user/transaction/ui/TransactionMessage";
 import { TransactionToolbar } from "~/app/@seller-user/transaction/ui/TransactionToolbar";
 
 export namespace Transaction {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		transactionId: string;
 		refresh: number;
 	}
 }
 
-export const Transaction: FC<Transaction.Props> = ({ transactionId, refresh, ...props }) => {
+export const Transaction: FC<Transaction.Props> = ({
+	_suspense,
+	transactionId,
+	refresh,
+	...props
+}) => {
 	const containerRef = useRef<HTMLDivElement>(null);
+	const { data: transaction } = withTransactionFetchQuery.useSuspenseQuery(
+		{
+			where: {
+				id: transactionId,
+			},
+		},
+		{
+			refetchInterval: refresh,
+		},
+	);
 
 	return (
 		<Container
@@ -25,54 +41,40 @@ export const Transaction: FC<Transaction.Props> = ({ transactionId, refresh, ...
 			}}
 			{...props}
 		>
-			<withTransactionFetchQuery.Suspense
-				data={{
-					where: {
-						id: transactionId,
-					},
+			<Container
+				data-ui={"TransactionSheet-[Container]"}
+				ui={{
+					layout: "vertical-content-footer",
+					height: "full",
+					gap: "xs",
+					inner: "default",
 				}}
-				options={{
-					refetchInterval: refresh,
-				}}
-				fallback={null}
 			>
-				{({ data: transaction }) => {
-					return (
-						<Container
-							data-ui={"TransactionSheet-[Container]"}
-							ui={{
-								layout: "vertical-content-footer",
-								height: "full",
-								gap: "xs",
-								inner: "default",
-							}}
+				<Container
+					data-ui="Transaction-[MessageListContainer]"
+					ref={containerRef}
+					ui={{
+						layout: "vertical",
+						height: "full",
+						scroll: "vertical",
+					}}
+				>
+					<Suspense fallback={<MessageListPending />}>
+						<MessageList
+							_suspense={"I know"}
+							side={tUserSideEnum.seller}
+							containerRef={containerRef}
+							messageThreadId={transaction.messageThreadId}
+							refresh={refresh}
 						>
-							<Container
-								data-ui="Transaction-[MessageListContainer]"
-								ref={containerRef}
-								ui={{
-									layout: "vertical",
-									height: "full",
-									scroll: "vertical",
-								}}
-							>
-								<MessageList
-									side={tUserSideEnum.seller}
-									containerRef={containerRef}
-									messageThreadId={transaction.messageThreadId}
-									refresh={refresh}
-								>
-									<TransactionMessage transaction={transaction} />
+							<TransactionMessage transaction={transaction} />
+							<TransactionToolbar transaction={transaction} />
+						</MessageList>
+					</Suspense>
+				</Container>
 
-									<TransactionToolbar transaction={transaction} />
-								</MessageList>
-							</Container>
-
-							<TransactionChat transaction={transaction} />
-						</Container>
-					);
-				}}
-			</withTransactionFetchQuery.Suspense>
+				<TransactionChat transaction={transaction} />
+			</Container>
 		</Container>
 	);
 };

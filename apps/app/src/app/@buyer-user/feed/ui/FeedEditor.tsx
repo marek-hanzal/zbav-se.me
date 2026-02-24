@@ -22,7 +22,7 @@ export namespace FeedEditor {
 		gallery?: Partial<GalleryValue.Props>;
 		name?: Partial<NameValue.Props>;
 		category?: Partial<CategoryValueList.Props>;
-		location?: Partial<LabelValue.PropsEx>;
+		location?: LabelValue.PropsEx;
 		range?: Partial<RangeValue.Props>;
 		sort?: Partial<SortValue.Props>;
 		condition?: Partial<ConditionValueList.Props>;

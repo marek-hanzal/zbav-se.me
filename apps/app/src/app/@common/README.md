@@ -79,7 +79,7 @@ When adding to `@common`:
 
 ## Recent updates
 
-- Added `@common/transaction/ui/TransactionListContainer.tsx` as a shared list shell for buyer/seller transaction lists (empty state, polling, layout) to reduce duplicated UI logic.
+- Transaction list container abstraction was removed from `@common/transaction/ui/`; buyer/seller now keep their own domain-specific list containers to avoid cross-domain generic query wrappers.
 - Message rendering was split into focused parts:
   - `@common/message/MessageList.tsx` now handles data/container composition.
   - `@common/message/MessageRenderItem.tsx` now owns message-type dispatch (`text/system/gallery/location/personal/package`).

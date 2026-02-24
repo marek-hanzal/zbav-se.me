@@ -5,7 +5,6 @@ import { Fade } from "@use-pico/client/ui/fade";
 import { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import { withDraftCollectionQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import {
 	DraftIcon,
 	FavouriteIcon,
@@ -15,7 +14,9 @@ import {
 } from "@zbav-se.me/ui/icon";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
-import { useRef } from "react";
+import { Suspense, useRef } from "react";
+import { HomeMenuDraftLink } from "~/app/@user/home/HomeMenuDraftLink";
+import { HomeMenuDraftLinkPending } from "~/app/@user/home/HomeMenuDraftLinkPending";
 
 export namespace HomeMenu {
 	export interface Props extends Container.Props {
@@ -121,98 +122,12 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 						</TypoIcon>
 					</LinkTo>
 
-					<withDraftCollectionQuery.Suspense
-						data={{
-							where: {
-								usedAtIsNull: true,
-							},
-							cursor: {
-								page: 0,
-								size: 1,
-							},
-							sort: [
-								{
-									field: "updatedAt",
-									order: "desc",
-								},
-							],
-						}}
-						fallback={
-							<LinkTo
-								{...uiMenuButton({
-									className: [],
-								})}
-								icon={DraftIcon}
-								iconProps={{
-									ui: {
-										...icon,
-									},
-								}}
-								to="/$locale/flow/seller/draft/resolve"
-								params={{
-									locale,
-								}}
-								activeProps={uiMenuButton({
-									ui: {
-										tone: "link",
-										theme: "light",
-									},
-									className: [],
-								})}
-							>
-								<Tx label={"Loading... (label)"} />
-							</LinkTo>
-						}
-					>
-						{({ data }) => {
-							return (
-								<LinkTo
-									{...uiMenuButton({
-										className: [],
-									})}
-									icon={
-										data.length > 0
-											? "icon-[solar--bill-check-linear]"
-											: "icon-[solar--bill-list-linear]"
-									}
-									iconProps={{
-										ui: {
-											...icon,
-										},
-									}}
-									to="/$locale/flow/seller/draft/resolve"
-									params={{
-										locale,
-									}}
-									activeProps={uiMenuButton({
-										ui: {
-											tone: "link",
-											theme: "light",
-										},
-										className: [],
-									})}
-								>
-									<TypoIcon
-										flip
-										icon={ChevronRightIcon}
-										iconProps={{
-											ui: {
-												opacity: "xl",
-											},
-										}}
-									>
-										<Tx
-											label={
-												data.length > 0
-													? "Continue listing (label)"
-													: "Create listing (label)"
-											}
-										/>
-									</TypoIcon>
-								</LinkTo>
-							);
-						}}
-					</withDraftCollectionQuery.Suspense>
+					<Suspense fallback={<HomeMenuDraftLinkPending iconUi={icon} />}>
+						<HomeMenuDraftLink
+							_suspense={"I know"}
+							icon={icon}
+						/>
+					</Suspense>
 				</Group>
 
 				<Group>

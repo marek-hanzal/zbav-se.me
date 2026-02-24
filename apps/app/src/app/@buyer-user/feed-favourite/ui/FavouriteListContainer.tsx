@@ -1,4 +1,5 @@
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Container } from "@use-pico/client/ui/container";
+import type { MarkSuspense } from "@use-pico/client/type";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedFavouriteCollectionQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
@@ -6,7 +7,7 @@ import { Item } from "~/app/@buyer-user/feed/ui/feed-list-container/Item";
 import { EmptyStatus } from "~/app/@buyer-user/feed-favourite/ui/favourite-list-container/EmptyStatus";
 
 export namespace FavouriteListContainer {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		query: tFeedQuery;
 		linkTo: Item.LinkTo;
 	}
@@ -22,11 +23,14 @@ export namespace FavouriteListContainer {
  * @see {@link Item} - The component used to render individual feed items
  */
 export const FavouriteListContainer: FC<FavouriteListContainer.Props> = ({
+	_suspense,
 	query,
 	linkTo,
 	ui,
 	...props
 }) => {
+	const { data } = withFeedFavouriteCollectionQuery.useSuspenseQuery(query);
+
 	return (
 		<Container
 			data-ui={"FavouriteListContainer[Container]"}
@@ -40,38 +44,29 @@ export const FavouriteListContainer: FC<FavouriteListContainer.Props> = ({
 			}}
 			{...props}
 		>
-			<withFeedFavouriteCollectionQuery.Suspense
-				data={query}
-				fallback={<SpinnerContainer />}
-			>
-				{({ data }) => {
-					if (data.length === 0) {
-						return <EmptyStatus />;
-					}
-
-					return (
-						<Container
-							data-ui={"FavouriteListContainer-[Container.content]"}
-							ui={{
-								layout: "vertical-flex",
-								gap: "default",
-							}}
-						>
-							{data.map((feed) => (
-								<Item
-									data-ui={"FavouriteListContainer-[Item]"}
-									key={feed.id}
-									feed={feed}
-									defaultOpen={false}
-									count={feed.count}
-									tools={[]}
-									linkTo={linkTo}
-								/>
-							))}
-						</Container>
-					);
-				}}
-			</withFeedFavouriteCollectionQuery.Suspense>
+			{data.length === 0 ? (
+				<EmptyStatus />
+			) : (
+				<Container
+					data-ui={"FavouriteListContainer-[Container.content]"}
+					ui={{
+						layout: "vertical-flex",
+						gap: "default",
+					}}
+				>
+					{data.map((feed) => (
+						<Item
+							data-ui={"FavouriteListContainer-[Item]"}
+							key={feed.id}
+							feed={feed}
+							defaultOpen={false}
+							count={feed.count}
+							tools={[]}
+							linkTo={linkTo}
+						/>
+					))}
+				</Container>
+			)}
 		</Container>
 	);
 };

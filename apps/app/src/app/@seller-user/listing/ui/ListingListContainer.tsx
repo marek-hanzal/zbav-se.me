@@ -1,8 +1,9 @@
 import { useElementVisibility } from "@use-pico/client/hook";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Container } from "@use-pico/client/ui/container";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { type FC, Suspense, useRef } from "react";
 import { ListingListContent } from "./listing-list-container/ListingListContent";
+import { ListingListContentPending } from "./listing-list-container/ListingListContentPending";
 
 export namespace ListingListContainer {
 	export interface Props extends Container.Props {
@@ -33,7 +34,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({ query, ..
 			}}
 			{...props}
 		>
-			<Suspense fallback={<SpinnerContainer />}>
+			<Suspense fallback={<ListingListContentPending />}>
 				<ListingListContent
 					query={query}
 					visibility={visibility}

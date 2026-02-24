@@ -1,5 +1,6 @@
 import { useLocale } from "@use-pico/client/hook";
 import { Icon } from "@use-pico/client/icon";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -16,18 +17,25 @@ import type { FC } from "react";
 import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
 
 export namespace TransactionListingItem {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		transactionListingItem: tTransactionListingItem;
 	}
 }
 
 export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
+	_suspense,
 	transactionListingItem,
 	ui,
 	className,
 	...props
 }) => {
 	const locale = useLocale();
+	const { data: listing } = withListingFetchQuery.useSuspenseQuery({
+		where: {
+			id: transactionListingItem.listingId,
+		},
+	});
+	const hero = useHeroUpload(listing.gallery.items);
 
 	return (
 		<Container
@@ -58,144 +66,110 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 					width: "full",
 				}}
 			>
-				<withListingFetchQuery.Suspense
-					data={{
-						where: {
-							id: transactionListingItem.listingId,
-						},
-					}}
-					fallback={
+				<HeroImage
+					data-uri="TransactionListingItem-[HeroImage]"
+					src={hero.url}
+					alt={`Hero image for listing ${listing.id}`}
+					visible
+					invisible={
 						<SpinnerContainer
+							data-ui="TransactionListingItem-[SpinnerImage]"
 							type={"icon"}
 							ui={{
 								tone: "neutral",
 								theme: "light",
 								background: "default",
-								border: true,
-								width: "full",
-								height: "full",
-								shadow: true,
 								round: "lg",
 							}}
 							className={[
-								"h-42 md:h-92",
+								"w-full",
+								"h-full",
 							]}
 						/>
 					}
-				>
-					{({ data: listing }) => {
-						const hero = useHeroUpload(listing.gallery.items);
-
-						return (
-							<>
-								<HeroImage
-									data-uri="TransactionListingItem-[HeroImage]"
-									src={hero.url}
-									alt={`Hero image for listing ${listing.id}`}
-									visible
-									invisible={
-										<SpinnerContainer
-											data-ui="TransactionListingItem-[SpinnerImage]"
-											type={"icon"}
-											ui={{
-												tone: "neutral",
-												theme: "light",
-												background: "default",
-												round: "lg",
-											}}
-											className={[
-												"w-full",
-												"h-full",
-											]}
-										/>
-									}
-									ui={{
-										round: "lg",
-										width: "full",
-									}}
-								/>
-
-								<Badge
-									ui={{
-										tone: "neutral",
-										theme: "light",
-										flow: "horizontal",
-										gap: "default",
-										items: "center",
-										justify: "center",
-										inner: "default",
-										snapTo: "top-left",
-										size: undefined,
-									}}
-								>
-									<Typo
-										label={`x${toLocaleNumber({
-											locale,
-											number: transactionListingItem.count,
-										})}`}
-										ui={{
-											font: "bold",
-										}}
-									/>
-
-									<Icon
-										icon={TransactionIcon}
-										ui={{
-											text: "lg",
-										}}
-									/>
-								</Badge>
-
-								<Badge
-									ui={{
-										tone: "neutral",
-										theme: "light",
-										inner: "default",
-										snapTo: "top-right",
-										size: undefined,
-									}}
-								>
-									<Typo
-										label={toTimeDiff({
-											locale,
-											time: transactionListingItem.lastAt,
-										})}
-										ui={{
-											font: "bold",
-										}}
-									/>
-								</Badge>
-
-								<Container
-									ui={{
-										tone: "neutral",
-										theme: "light",
-										color: "lead",
-										flow: "vertical",
-										background: "default",
-										border: true,
-										shadow: true,
-										inner: "default",
-										round: "md",
-										snapTo: "bottom",
-									}}
-									className={"text-center"}
-								>
-									<Tx
-										label={listing.title}
-										ui={{
-											tone: "brand",
-											theme: "light",
-											color: "lead",
-											font: "bold",
-											truncate: true,
-										}}
-									/>
-								</Container>
-							</>
-						);
+					ui={{
+						round: "lg",
+						width: "full",
 					}}
-				</withListingFetchQuery.Suspense>
+				/>
+
+				<Badge
+					ui={{
+						tone: "neutral",
+						theme: "light",
+						flow: "horizontal",
+						gap: "default",
+						items: "center",
+						justify: "center",
+						inner: "default",
+						snapTo: "top-left",
+						size: undefined,
+					}}
+				>
+					<Typo
+						label={`x${toLocaleNumber({
+							locale,
+							number: transactionListingItem.count,
+						})}`}
+						ui={{
+							font: "bold",
+						}}
+					/>
+
+					<Icon
+						icon={TransactionIcon}
+						ui={{
+							text: "lg",
+						}}
+					/>
+				</Badge>
+
+				<Badge
+					ui={{
+						tone: "neutral",
+						theme: "light",
+						inner: "default",
+						snapTo: "top-right",
+						size: undefined,
+					}}
+				>
+					<Typo
+						label={toTimeDiff({
+							locale,
+							time: transactionListingItem.lastAt,
+						})}
+						ui={{
+							font: "bold",
+						}}
+					/>
+				</Badge>
+
+				<Container
+					ui={{
+						tone: "neutral",
+						theme: "light",
+						color: "lead",
+						flow: "vertical",
+						background: "default",
+						border: true,
+						shadow: true,
+						inner: "default",
+						round: "md",
+						snapTo: "bottom",
+					}}
+					className={"text-center"}
+				>
+					<Tx
+						label={listing.title}
+						ui={{
+							tone: "brand",
+							theme: "light",
+							color: "lead",
+							font: "bold",
+							truncate: true,
+						}}
+					/>
+				</Container>
 			</LinkTo>
 		</Container>
 	);

@@ -3,8 +3,9 @@ import { Button } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { BuyerIcon } from "@zbav-se.me/ui/icon";
-import { type FC, useState } from "react";
+import { type FC, Suspense, useState } from "react";
 import { BuyerInfo } from "~/app/@seller-session/transaction/ui/BuyerInfo";
+import { BuyerInfoPending } from "~/app/@seller-session/transaction/ui/BuyerInfoPending";
 
 export namespace BuyerInfoButton {
 	export interface Props extends Button.Props {
@@ -38,12 +39,15 @@ export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({ transactionId, ...p
 					right: <CloseButton onClick={close} />,
 				})}
 			>
-				<BuyerInfo
-					transactionId={transactionId}
-					ui={{
-						inner: "default",
-					}}
-				/>
+				<Suspense fallback={<BuyerInfoPending />}>
+					<BuyerInfo
+						_suspense={"I know"}
+						transactionId={transactionId}
+						ui={{
+							inner: "default",
+						}}
+					/>
+				</Suspense>
 			</BottomSheet>
 		</>
 	);

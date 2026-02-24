@@ -8,6 +8,7 @@ import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, Suspense, useRef, useState } from "react";
 import { FeedEditorSheet } from "~/app/@buyer-user/feed/ui/list-route/FeedEditorSheet";
+import { FeedEditorSheetPending } from "~/app/@buyer-user/feed/ui/list-route/FeedEditorSheetPending";
 import { FeedListStatus } from "~/app/@buyer-user/feed/ui/list-route/FeedListStatus";
 import { FeedSetupButton } from "~/app/@buyer-user/feed/ui/list-route/FeedSetupButton";
 import { FirstListingStatus } from "~/app/@buyer-user/feed/ui/list-route/FirstListingStatus";
@@ -136,7 +137,7 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...prop
 
 			{listingQuery.data.length > 0 ? null : <FirstListingStatus />}
 
-			<Suspense fallback={null}>
+			<Suspense fallback={<FeedEditorSheetPending />}>
 				<FeedEditorSheet
 					feedId={feed.id}
 					state={{

@@ -1,12 +1,12 @@
 import { VisibilityContext } from "@use-pico/client/context";
 import { createNoopVisibilityStore } from "@use-pico/client/store";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import type { FC } from "react";
-import { useRef, useState } from "react";
+import { type FC, Suspense, useRef, useState } from "react";
 import { ListingOverlay } from "~/app/@buyer-user/listing/ui/ListingOverlay";
 import { ListingSheet } from "~/app/@buyer-user/listing/ui/ListingSheet";
 import { TransactionChat } from "~/app/@buyer-user/transaction/ui/TransactionChat";
@@ -14,16 +14,39 @@ import { TransactionMessage } from "~/app/@buyer-user/transaction/ui/Transaction
 import { TransactionToolbar } from "~/app/@buyer-user/transaction/ui/TransactionToolbar";
 import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
 import { MessageList } from "~/app/@common/message/MessageList";
+import { MessageListPending } from "~/app/@common/message/MessageListPending";
 
 export namespace Transaction {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		transactionId: string;
 		refresh: number;
 	}
 }
 
-export const Transaction: FC<Transaction.Props> = ({ transactionId, refresh, ...props }) => {
+export const Transaction: FC<Transaction.Props> = ({
+	_suspense,
+	transactionId,
+	refresh,
+	...props
+}) => {
 	const containerRef = useRef<HTMLDivElement>(null);
+	const { data: transaction } = withTransactionFetchQuery.useSuspenseQuery(
+		{
+			where: {
+				id: transactionId,
+			},
+		},
+		{
+			refetchInterval: refresh,
+		},
+	);
+	const { data: listing } = withListingFetchQuery.useSuspenseQuery({
+		where: {
+			id: transaction.listingId,
+		},
+	});
+	const [detail, setDetail] = useState(false);
+	const hero = useHeroUpload(transaction.gallery.items);
 
 	return (
 		<Container
@@ -32,105 +55,75 @@ export const Transaction: FC<Transaction.Props> = ({ transactionId, refresh, ...
 			}}
 			{...props}
 		>
-			<withTransactionFetchQuery.Suspense
-				data={{
-					where: {
-						id: transactionId,
-					},
+			<Container
+				data-ui={"TransactionSheet-[Container]"}
+				ui={{
+					layout: "vertical-content-footer",
+					height: "full",
+					gap: "xs",
+					inner: "default",
 				}}
-				options={{
-					refetchInterval: refresh,
-				}}
-				fallback={null}
 			>
-				{({ data: transaction }) => {
-					const [detail, setDetail] = useState(false);
-					const hero = useHeroUpload(transaction.gallery.items);
+				<Container
+					data-ui="Transaction-[MessageListContainer]"
+					ref={containerRef}
+					ui={{
+						layout: "vertical-header-content",
+						height: "full",
+						scroll: "vertical",
+					}}
+				>
+					<Container
+						data-ui="Transaction-[HeroContainer]"
+						ui={{
+							position: "relative",
+							height: "content",
+						}}
+						onClick={() => setDetail((prev) => !prev)}
+					>
+						<HeroImage
+							src={hero.url}
+							alt={`Hero image for transaction ${transaction.id}`}
+							className={"h-42"}
+						/>
 
-					return (
-						<Container
-							data-ui={"TransactionSheet-[Container]"}
-							ui={{
-								layout: "vertical-content-footer",
-								height: "full",
-								gap: "xs",
-								inner: "default",
+						<ListingOverlay
+							listing={{
+								...transaction,
+								distance: null,
 							}}
+						/>
+					</Container>
+
+					<Suspense fallback={<MessageListPending />}>
+						<MessageList
+							_suspense={"I know"}
+							side={tUserSideEnum.buyer}
+							containerRef={containerRef}
+							messageThreadId={transaction.messageThreadId}
+							refresh={refresh}
 						>
-							<Container
-								data-ui="Transaction-[MessageListContainer]"
-								ref={containerRef}
-								ui={{
-									layout: "vertical-header-content",
-									height: "full",
-									scroll: "vertical",
-								}}
-							>
-								<Container
-									data-ui="Transaction-[HeroContainer]"
-									ui={{
-										position: "relative",
-										height: "content",
-									}}
-									onClick={() => setDetail((prev) => !prev)}
-								>
-									<HeroImage
-										src={hero.url}
-										alt={`Hero image for transaction ${transaction.id}`}
-										className={"h-42"}
-									/>
+							<TransactionMessage transaction={transaction} />
+							<TransactionToolbar transaction={transaction} />
+						</MessageList>
+					</Suspense>
 
-									<ListingOverlay
-										listing={{
-											...transaction,
-											distance: null,
-										}}
-									/>
-								</Container>
+					<VisibilityContext value={createNoopVisibilityStore()}>
+						<ListingSheet
+							listing={listing}
+							state={{
+								value: detail,
+								set: setDetail,
+							}}
+							withScore={false}
+							feedId={undefined}
+							tools={[]}
+						/>
+					</VisibilityContext>
+				</Container>
 
-								<MessageList
-									side={tUserSideEnum.buyer}
-									containerRef={containerRef}
-									messageThreadId={transaction.messageThreadId}
-									refresh={refresh}
-								>
-									<TransactionMessage transaction={transaction} />
-
-									<TransactionToolbar transaction={transaction} />
-								</MessageList>
-
-								<withListingFetchQuery.Suspense
-									data={{
-										where: {
-											id: transaction.listingId,
-										},
-									}}
-									fallback={null}
-								>
-									{({ data: listing }) => {
-										return (
-											<VisibilityContext value={createNoopVisibilityStore()}>
-												<ListingSheet
-													listing={listing}
-													state={{
-														value: detail,
-														set: setDetail,
-													}}
-													withScore={false}
-													feedId={undefined}
-													tools={[]}
-												/>
-											</VisibilityContext>
-										);
-									}}
-								</withListingFetchQuery.Suspense>
-							</Container>
-
-							<TransactionChat transaction={transaction} />
-						</Container>
-					);
-				}}
-			</withTransactionFetchQuery.Suspense>
+				<TransactionChat transaction={transaction} />
+			</Container>
 		</Container>
 	);
 };

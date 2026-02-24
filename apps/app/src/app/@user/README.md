@@ -62,6 +62,7 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 ## Recent updates
 
 - Home menu keeps its original inline implementation in `@user/home/HomeMenu.tsx` until we define a type-safe split strategy for TanStack Router links.
+- Home menu uses local suspense for the draft CTA (`HomeMenuDraftLink`) with in-place fallback (`HomeMenuDraftLinkPending`) to preserve stable menu layout.
 - User-facing flow/shell routes now use page components:
   - `@user/home/page/HomePage.tsx`
   - `@user/profile/page/UserPage.tsx`

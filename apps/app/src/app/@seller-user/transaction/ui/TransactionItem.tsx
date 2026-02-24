@@ -1,4 +1,5 @@
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Container } from "@use-pico/client/ui/container";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
 import { type FC, useState } from "react";
@@ -6,114 +7,91 @@ import { match } from "ts-pattern";
 import { TransactionSheet } from "~/app/@seller-user/transaction/ui/TransactionSheet";
 
 export namespace TransactionItem {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		transactionId: string;
 	}
 }
 
 export const TransactionItem: FC<TransactionItem.Props> = ({
+	_suspense,
 	transactionId,
 	ui,
 	className,
 	...props
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
+	const { data: transaction } = withTransactionFetchQuery.useSuspenseQuery({
+		where: {
+			id: transactionId,
+		},
+	});
 
 	return (
 		<>
-			<withTransactionFetchQuery.Suspense
-				data={{
-					where: {
-						id: transactionId,
-					},
+			<Container
+				ui={{
+					tone: "neutral",
+					theme: "light",
+					background: "default",
+					border: true,
+					shadow: true,
+					position: "relative",
+					round: "default",
+					...ui,
 				}}
-				fallback={
-					<SpinnerContainer
-						type={"icon"}
-						ui={{
-							tone: "neutral",
-							theme: "light",
-							background: "default",
-							border: true,
-							shadow: true,
-							round: "default",
-						}}
-						className={[
-							"h-48 md:h-92",
-						]}
-						onClick={() => setIsOpen((prev) => !prev)}
-					/>
-				}
+				className={[
+					"h-48 md:h-92",
+					className,
+				]}
+				onClick={() => setIsOpen((prev) => !prev)}
+				{...props}
 			>
-				{({ data: transaction }) => {
-					return (
-						<Container
-							ui={{
-								tone: "neutral",
-								theme: "light",
-								background: "default",
-								border: true,
-								shadow: true,
-								position: "relative",
-								round: "default",
-								...ui,
-							}}
-							className={[
-								"h-48 md:h-92",
-								className,
-							]}
-							onClick={() => setIsOpen((prev) => !prev)}
-							{...props}
-						>
-							{match(transaction.status)
-								.with("rejected", "expired", "success", "closed", () => {
-									return (
-										<Container
-											data-ui="TransactionItem-[Overlay]"
-											ui={{
-												tone: "neutral",
-												theme: "light",
-												background: "default",
-												opacity: "low",
-											}}
-											className={[
-												"absolute",
-												"inset-0",
-											]}
-										/>
-									);
-								})
-								.with("open", "pending", "resolved", "dispute", () => {
-									return null;
-								})
-								.exhaustive()}
-
+				{match(transaction.status)
+					.with("rejected", "expired", "success", "closed", () => {
+						return (
 							<Container
+								data-ui="TransactionItem-[Overlay]"
 								ui={{
-									tone: "secondary",
+									tone: "neutral",
 									theme: "light",
-									color: "lead",
-									flow: "vertical",
 									background: "default",
-									border: true,
-									shadow: true,
-									inner: "default",
-									round: "default",
-									snapTo: "bottom",
+									opacity: "low",
 								}}
-								className={"text-center"}
-							>
-								<Tx
-									label={transaction.title}
-									ui={{
-										font: "bold",
-									}}
-								/>
-							</Container>
-						</Container>
-					);
-				}}
-			</withTransactionFetchQuery.Suspense>
+								className={[
+									"absolute",
+									"inset-0",
+								]}
+							/>
+						);
+					})
+					.with("open", "pending", "resolved", "dispute", () => {
+						return null;
+					})
+					.exhaustive()}
+
+				<Container
+					ui={{
+						tone: "secondary",
+						theme: "light",
+						color: "lead",
+						flow: "vertical",
+						background: "default",
+						border: true,
+						shadow: true,
+						inner: "default",
+						round: "default",
+						snapTo: "bottom",
+					}}
+					className={"text-center"}
+				>
+					<Tx
+						label={transaction.title}
+						ui={{
+							font: "bold",
+						}}
+					/>
+				</Container>
+			</Container>
 
 			<TransactionSheet
 				transactionId={transactionId}

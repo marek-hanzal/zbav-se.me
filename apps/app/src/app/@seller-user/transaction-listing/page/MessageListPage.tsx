@@ -1,7 +1,8 @@
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import type { FC } from "react";
+import { type FC, Suspense } from "react";
 import { TransactionListingList } from "~/app/@seller-user/transaction-listing/ui/TransactionListingList";
+import { TransactionListingListPending } from "~/app/@seller-user/transaction-listing/ui/TransactionListingListPending";
 import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
 export namespace MessageListPage {
@@ -16,19 +17,22 @@ export const MessageListPage: FC<MessageListPage.Props> = (props) => {
 			right={<HomeMenuButton />}
 			{...props}
 		>
-			<TransactionListingList
-				query={{
-					sort: [
-						{
-							field: "createdAt",
-							order: "desc",
-						},
-					],
-				}}
-				ui={{
-					inner: "default",
-				}}
-			/>
+			<Suspense fallback={<TransactionListingListPending />}>
+				<TransactionListingList
+					_suspense={"I know"}
+					query={{
+						sort: [
+							{
+								field: "createdAt",
+								order: "desc",
+							},
+						],
+					}}
+					ui={{
+						inner: "default",
+					}}
+				/>
+			</Suspense>
 		</TitleContainer>
 	);
 };

@@ -54,3 +54,7 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 - `@buyer-user` / `@seller-user` – may use this domain.
 - `@user` – may use this domain.
 - `@public` – no access (no session).
+
+## Recent updates
+
+- Category pending content now aligns with shared `ValueList.PropsEx` contract, allowing parent-provided labels/hints to override defaults without local prop reshaping.

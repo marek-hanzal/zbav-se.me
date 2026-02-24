@@ -1,12 +1,13 @@
 import { useAutoScroll } from "@use-pico/client/hook";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import type { MarkSuspense } from "@use-pico/client/type";
+import { Container } from "@use-pico/client/ui/container";
 import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { type FC, type RefObject, useRef } from "react";
 import { MessageRenderItem } from "~/app/@common/message/MessageRenderItem";
 
 export namespace MessageList {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		side: tUserSideEnum;
 		containerRef: RefObject<HTMLDivElement | null>;
 		messageThreadId: string;
@@ -15,6 +16,7 @@ export namespace MessageList {
 }
 
 export const MessageList: FC<MessageList.Props> = ({
+	_suspense,
 	side,
 	messageThreadId,
 	containerRef,
@@ -28,6 +30,24 @@ export const MessageList: FC<MessageList.Props> = ({
 		containerRef,
 		contentRef,
 	});
+	const { data } = withMessageThreadMessageCollectionQuery.useSuspenseQuery(
+		{
+			path: {
+				messageThreadId,
+			},
+			body: {
+				sort: [
+					{
+						field: "createdAt",
+						order: "asc",
+					},
+				],
+			},
+		},
+		{
+			refetchInterval: refresh,
+		},
+	);
 
 	return (
 		<Container
@@ -41,43 +61,17 @@ export const MessageList: FC<MessageList.Props> = ({
 			className={"py-1"}
 			{...props}
 		>
-			<withMessageThreadMessageCollectionQuery.Suspense
-				data={{
-					path: {
-						messageThreadId,
-					},
-					body: {
-						sort: [
-							{
-								field: "createdAt",
-								order: "asc",
-							},
-						],
-					},
-				}}
-				options={{
-					refetchInterval: refresh,
-				}}
-				fallback={<SpinnerContainer />}
-			>
-				{({ data }) => {
-					return (
-						<>
-							{data.map((message) => {
-								return (
-									<MessageRenderItem
-										key={message.id}
-										side={side}
-										message={message}
-									/>
-								);
-							})}
+			{data.map((message) => {
+				return (
+					<MessageRenderItem
+						key={message.id}
+						side={side}
+						message={message}
+					/>
+				);
+			})}
 
-							{children}
-						</>
-					);
-				}}
-			</withMessageThreadMessageCollectionQuery.Suspense>
+			{children}
 		</Container>
 	);
 };

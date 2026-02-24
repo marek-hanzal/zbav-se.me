@@ -4,8 +4,9 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
-import type { FC } from "react";
+import { type FC, Suspense } from "react";
 import { ListingSellerInfo } from "~/app/@buyer-user/listing/ui/listing-detail/ListingSellerInfo";
+import { ListingSellerInfoPending } from "~/app/@buyer-user/listing/ui/listing-detail/ListingSellerInfoPending";
 import { CategoryInline } from "~/app/@common/category/ui/CategoryInline";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
 
@@ -105,10 +106,13 @@ export const ListingInfoSection: FC<ListingInfoSection.Props> = ({ listing, onSe
 				/>
 			) : null}
 
-			<ListingSellerInfo
-				listingId={listing.id}
-				onSellerInfo={onSellerInfo}
-			/>
+			<Suspense fallback={<ListingSellerInfoPending onSellerInfo={onSellerInfo} />}>
+				<ListingSellerInfo
+					_suspense={"I know"}
+					listingId={listing.id}
+					onSellerInfo={onSellerInfo}
+				/>
+			</Suspense>
 		</Container>
 	);
 };

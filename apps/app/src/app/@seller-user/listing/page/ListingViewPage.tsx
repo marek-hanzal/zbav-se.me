@@ -1,4 +1,5 @@
 import { useLocale } from "@use-pico/client/hook";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
@@ -6,12 +7,16 @@ import { withListingFetchQuery } from "@zbav-se.me/sdk/query/seller-user/listing
 import type { FC } from "react";
 
 export namespace ListingViewPage {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		listingId: string;
 	}
 }
 
-export const ListingViewPage: FC<ListingViewPage.Props> = ({ listingId, ...props }) => {
+export const ListingViewPage: FC<ListingViewPage.Props> = ({
+	_suspense,
+	listingId,
+	...props
+}) => {
 	const locale = useLocale();
 	const listingQuery = withListingFetchQuery.useSuspenseQuery({
 		where: {

@@ -1,8 +1,9 @@
 import { Container } from "@use-pico/client/ui/container";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import type { FC } from "react";
+import { type FC, Suspense } from "react";
 import { FavouriteButton } from "~/app/@buyer-user/listing/ui/button/FavouriteButton";
+import { FavouriteButtonPending } from "~/app/@buyer-user/listing/ui/button/FavouriteButtonPending";
 import { TransactionButton } from "~/app/@buyer-user/listing/ui/button/TransactionButton";
 import { ListingOverlay } from "~/app/@buyer-user/listing/ui/ListingOverlay";
 import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
@@ -38,27 +39,30 @@ export const ListingHeroSection: FC<ListingHeroSection.Props> = ({
 				/>
 
 				{feedId ? (
-					<FavouriteButton
-						feedId={feedId}
-						listingId={listing.id}
-						label={null}
-						iconProps={{
-							ui: {
-								text: "xl",
-							},
-						}}
-						ui={{
-							tone: "secondary",
-							theme: "light",
-							round: "full",
-							square: "md",
-							justify: "center",
-							items: "center",
-							size: undefined,
-							inner: undefined,
-							snapTo: "top-right",
-						}}
-					/>
+					<Suspense fallback={<FavouriteButtonPending />}>
+						<FavouriteButton
+							_suspense={"I know"}
+							feedId={feedId}
+							listingId={listing.id}
+							label={null}
+							iconProps={{
+								ui: {
+									text: "xl",
+								},
+							}}
+							ui={{
+								tone: "secondary",
+								theme: "light",
+								round: "full",
+								square: "md",
+								justify: "center",
+								items: "center",
+								size: undefined,
+								inner: undefined,
+								snapTo: "top-right",
+							}}
+						/>
+					</Suspense>
 				) : null}
 
 				<HeroImage

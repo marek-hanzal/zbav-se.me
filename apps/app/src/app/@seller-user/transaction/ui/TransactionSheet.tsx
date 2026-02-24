@@ -1,8 +1,9 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { translator } from "@use-pico/common/translator";
 import { CloseButton } from "@zbav-se.me/ui/button";
-import type { FC } from "react";
+import { type FC, Suspense } from "react";
 import { Transaction } from "~/app/@seller-user/transaction/ui/Transaction";
+import { TransactionPending } from "~/app/@seller-user/transaction/ui/TransactionPending";
 
 export namespace TransactionSheet {
 	export interface Props extends BottomSheet.Props {
@@ -30,10 +31,13 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({
 			detent={"full"}
 			{...props}
 		>
-			<Transaction
-				transactionId={transactionId}
-				refresh={refresh}
-			/>
+			<Suspense fallback={<TransactionPending />}>
+				<Transaction
+					_suspense={"I know"}
+					transactionId={transactionId}
+					refresh={refresh}
+				/>
+			</Suspense>
 		</BottomSheet>
 	);
 };

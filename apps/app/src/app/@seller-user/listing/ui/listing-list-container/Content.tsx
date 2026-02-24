@@ -5,6 +5,7 @@ import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/
 import { type FC, Suspense } from "react";
 import { CreateButton } from "~/app/@seller-user/draft/ui/button/CreateButton";
 import { ContentItem } from "./ContentItem";
+import { ContentItemPending } from "./ContentItemPending";
 
 export namespace Content {
 	export interface Props extends MarkSuspense.Props {
@@ -34,13 +35,7 @@ export const Content: FC<Content.Props> = ({ _suspense, listingIds }) => {
 							round: "default",
 						}}
 					>
-						<Suspense
-							fallback={
-								<SpinnerContainer
-									data-ui={"MyListing-[SpinnerContainer.listing-fetch]"}
-								/>
-							}
-						>
+						<Suspense fallback={<ContentItemPending />}>
 							<ContentItem listingId={listingId} />
 						</Suspense>
 					</VisibleContainer>

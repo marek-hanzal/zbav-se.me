@@ -8,7 +8,9 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { Logo } from "@zbav-se.me/ui/logo";
+import { Suspense } from "react";
 import { History } from "~/app/history/History";
+import { HistoryPending } from "~/app/history/HistoryPending";
 import face from "~/assets/face.webp";
 
 export const Route = createFileRoute("/$locale/landing")({
@@ -190,7 +192,9 @@ export const Route = createFileRoute("/$locale/landing")({
 						inner: "xl",
 					}}
 				>
-					<History />
+					<Suspense fallback={<HistoryPending />}>
+						<History _suspense={"I know"} />
+					</Suspense>
 				</Container>
 			</Container>
 		);

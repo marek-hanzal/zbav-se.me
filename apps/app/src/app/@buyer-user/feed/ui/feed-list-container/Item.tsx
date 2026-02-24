@@ -38,6 +38,8 @@ export namespace Item {
 		count?: number;
 		linkTo: LinkTo;
 	}
+
+	export type PropsEx = Omit<Props, "feed">;
 }
 
 export const Item: FC<Item.Props> = ({

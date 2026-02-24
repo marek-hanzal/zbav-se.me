@@ -7,6 +7,11 @@ export const Route = createFileRoute("/$locale/flow/seller/message/$listingId/li
 	component() {
 		const { listingId } = Route.useParams();
 
-		return <ListingMessageListPage listingId={listingId} />;
+		return (
+			<ListingMessageListPage
+				_suspense={"I know"}
+				listingId={listingId}
+			/>
+		);
 	},
 });

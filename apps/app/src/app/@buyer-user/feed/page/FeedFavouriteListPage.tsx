@@ -1,13 +1,11 @@
 import { useLocale, useSentinel } from "@use-pico/client/hook";
 import { ChevronLeftIcon } from "@use-pico/client/icon";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { withFavouriteCountQuery } from "@zbav-se.me/sdk/query/buyer-user/favourite";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { type FC, useRef } from "react";
-import { EmptyFavouriteStatus } from "~/app/@buyer-user/feed-favourite/ui/EmptyFavouriteStatus";
-import { EmptyFeedStatus } from "~/app/@buyer-user/feed-favourite/ui/EmptyFeedStatus";
+import { type FC, Suspense, useRef } from "react";
+import { Empty } from "~/app/@buyer-user/feed/page/feed-favourite-list-page/Empty";
+import { EmptyPending } from "~/app/@buyer-user/feed/page/feed-favourite-list-page/EmptyPending";
 import { FavouriteListAppendix } from "~/app/@buyer-user/feed-favourite/ui/FavouriteListAppendix";
 import { ListingListContainer } from "~/app/@buyer-user/listing/ui/ListingListContainer";
 
@@ -75,18 +73,12 @@ export const FeedFavouriteListPage: FC<FeedFavouriteListPage.Props> = ({ feedId,
 				}}
 				renderEmptyFn={() => {
 					return (
-						<withFavouriteCountQuery.Suspense
-							data={{}}
-							fallback={<SpinnerContainer />}
-						>
-							{({ data }) => {
-								if (data.filter === 0) {
-									return <EmptyFavouriteStatus ref={sentinelRef} />;
-								}
-
-								return <EmptyFeedStatus ref={sentinelRef} />;
-							}}
-						</withFavouriteCountQuery.Suspense>
+						<Suspense fallback={<EmptyPending />}>
+							<Empty
+								_suspense={"I know"}
+								sentinelRef={sentinelRef}
+							/>
+						</Suspense>
 					);
 				}}
 				appendix={<FavouriteListAppendix ref={sentinelRef} />}

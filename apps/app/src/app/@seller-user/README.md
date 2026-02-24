@@ -75,3 +75,4 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `@seller-user/transaction-listing/page/MessageListPage.tsx`
   - `@seller-user/transaction-listing/page/ListingMessageListPage.tsx`
   - `@seller-user/transaction-listing/page/ListingMessageListPendingPage.tsx`
+- Seller transaction list now uses domain-local container/pending components in `@seller-user/transaction/ui/` (no shared `@common` transaction list abstraction).

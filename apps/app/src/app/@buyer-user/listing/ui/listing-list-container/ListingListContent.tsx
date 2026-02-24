@@ -11,6 +11,7 @@ import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { type FC, type ReactNode, Suspense } from "react";
 import type { ListingListContainer } from "../ListingListContainer";
 import { ListingItem } from "./ListingItem";
+import { ListingItemPending } from "./ListingItemPending";
 
 export namespace ListingListContent {
 	export interface Props {
@@ -81,13 +82,7 @@ export const ListingListContent: FC<ListingListContent.Props> = ({
 						width: "full",
 					}}
 				>
-					<Suspense
-						fallback={
-							<SpinnerContainer
-								data-ui={"ListingListContainer-[SpinnerContainer.listing-fetch]"}
-							/>
-						}
-					>
+					<Suspense fallback={<ListingItemPending />}>
 						<ListingItem
 							listingId={listingId}
 							feedId={feedId}

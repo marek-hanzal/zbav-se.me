@@ -85,6 +85,7 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 - Buyer favourite/message flow routes now use page components:
   - `@buyer-user/feed-favourite/page/FavouriteListPage.tsx`
   - `@buyer-user/transaction/page/MessageListPage.tsx`
+- Buyer transaction list now uses domain-local container/pending components in `@buyer-user/transaction/ui/` (no shared `@common` transaction list abstraction).
 - Feed editor fields split by UI sections in `@buyer-user/feed/ui/feed-editor/`:
   - `IdentitySection.tsx`
   - `CategorySection.tsx`

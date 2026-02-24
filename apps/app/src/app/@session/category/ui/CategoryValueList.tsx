@@ -1,8 +1,8 @@
 import { ValueList } from "@use-pico/client/ui/container";
 import type { tCategoryItem } from "@zbav-se.me/sdk/api/session";
-import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query/session";
-import type { FC } from "react";
-import { CategoryInline } from "~/app/@common/category/ui/CategoryInline";
+import { type FC, Suspense } from "react";
+import { CategoryValueListContent } from "~/app/@session/category/ui/CategoryValueListContent";
+import { CategoryValueListContentPending } from "~/app/@session/category/ui/CategoryValueListContentPending";
 
 export namespace CategoryValueList {
 	export interface Props extends Omit<ValueList.Props<tCategoryItem>, "items" | "renderFn"> {
@@ -22,36 +22,12 @@ export const CategoryValueList: FC<CategoryValueList.Props> = ({ categoryIdIn, .
 	}
 
 	return (
-		<withCategoryCollectionQuery.Suspense
-			data={{
-				where: {
-					idIn: categoryIdIn,
-				},
-			}}
-			fallback={
-				<ValueList<tCategoryItem>
-					renderFn={() => null}
-					items={[]}
-					loading={true}
-					{...props}
-				/>
-			}
-		>
-			{({ data }) => {
-				return (
-					<ValueList<tCategoryItem>
-						renderFn={(category) => <CategoryInline category={category} />}
-						items={data}
-						wrapperProps={{
-							ui: {
-								tone: "neutral",
-								theme: "light",
-							},
-						}}
-						{...props}
-					/>
-				);
-			}}
-		</withCategoryCollectionQuery.Suspense>
+		<Suspense fallback={<CategoryValueListContentPending {...props} />}>
+			<CategoryValueListContent
+				_suspense={"I know"}
+				categoryIdIn={categoryIdIn}
+				{...props}
+			/>
+		</Suspense>
 	);
 };

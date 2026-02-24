@@ -2,6 +2,7 @@ import { VisibilityProvider } from "@use-pico/client/context";
 import { useLocale } from "@use-pico/client/hook";
 import { ChevronLeftIcon } from "@use-pico/client/icon";
 import { createNoopVisibilityStore } from "@use-pico/client/store";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { translator } from "@use-pico/common/translator";
@@ -15,12 +16,13 @@ import { TransactionList } from "~/app/@seller-user/transaction/ui/TransactionLi
 import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
 export namespace ListingMessageListPage {
-	export interface Props extends TitleContainer.Props {
+	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
 		listingId: string;
 	}
 }
 
 export const ListingMessageListPage: FC<ListingMessageListPage.Props> = ({
+	_suspense,
 	listingId,
 	...props
 }) => {

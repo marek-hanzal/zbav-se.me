@@ -1,8 +1,9 @@
 import { useElementVisibility, useMergeRefs, useScrollTo } from "@use-pico/client/hook";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Container } from "@use-pico/client/ui/container";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { type FC, type ReactNode, Suspense, useEffect, useRef } from "react";
 import { ListingListContent } from "~/app/@buyer-user/listing/ui/listing-list-container/ListingListContent";
+import { ListingListContentPending } from "~/app/@buyer-user/listing/ui/listing-list-container/ListingListContentPending";
 
 export namespace ListingListContainer {
 	export interface Props extends Container.Props {
@@ -68,9 +69,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 			}}
 			{...props}
 		>
-			<Suspense
-				fallback={<SpinnerContainer data-ui={"ListingListContainer-[SpinnerContainer]"} />}
-			>
+			<Suspense fallback={<ListingListContentPending />}>
 				<ListingListContent
 					query={query}
 					renderEmptyFn={renderEmptyFn}

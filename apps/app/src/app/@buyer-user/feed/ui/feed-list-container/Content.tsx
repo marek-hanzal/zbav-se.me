@@ -1,12 +1,12 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
-import { translator } from "@use-pico/common/translator";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { type FC, Suspense, useState } from "react";
 import { CreateButton } from "~/app/@buyer-user/feed/ui/button/CreateButton";
 import { ContentItem } from "./ContentItem";
-import { Item } from "./Item";
+import { ContentItemPending } from "./ContentItemPending";
+import type { Item } from "./Item";
 
 export namespace Content {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -52,15 +52,8 @@ export const Content: FC<Content.Props> = ({
 					<Suspense
 						key={feedId}
 						fallback={
-							<Item
-								feed={{
-									id: feedId,
-									locationId: null,
-									name: translator.text("Loading... (label)"),
-									query: {},
-									upload: null,
-									uploadId: null,
-								}}
+							<ContentItemPending
+								feedId={feedId}
 								defaultOpen={defaultOpenId === feedId}
 								tools={tools}
 								linkTo={linkTo}
