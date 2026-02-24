@@ -1,5 +1,4 @@
 import { z } from "@hono/zod-openapi";
-import { CountEnumSchema } from "@use-pico/common/schema";
 import { CategoryQuerySchema } from "~/@session/category/schema/CategoryQuerySchema";
 
 export const CategoryCountQuerySchema = z
@@ -8,7 +7,6 @@ export const CategoryCountQuerySchema = z
 			filter: true,
 			where: true,
 		}).shape,
-		count: CountEnumSchema.array().optional(),
 	})
 	.strip()
 	.openapi("CategoryCountQuery", {

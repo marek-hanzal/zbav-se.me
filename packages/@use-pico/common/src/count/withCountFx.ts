@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import type { SelectQueryBuilder } from "kysely";
-import type { CountEnumSchema } from "../schema/CountEnumSchema";
 import type { FilterSchema } from "../schema/FilterSchema";
 
 export namespace withCountFx {
@@ -30,8 +29,6 @@ export namespace withCountFx {
 		filter?: TFilter;
 		where?: TFilter;
 		scope?: TFilter;
-		//
-		count?: CountEnumSchema.Type[];
 	}
 }
 
@@ -48,11 +45,6 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 	filter,
 	where,
 	scope,
-	count = [
-		"total",
-		"filter",
-		"where",
-	],
 }: withCountFx.Props<TSelect, TFilter, TSelectError, TSelectContext, TQueryError, TQueryContext>) {
 	const select = yield* selectFx;
 
@@ -80,36 +72,30 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 		where: scope,
 	});
 
-	const countTotal = count.includes("total")
-		? yield* Effect.promise(async () => {
-				return scopeSelect
-					.clearSelect()
-					.select((eb) => eb.fn.countAll<number>().as("count"))
-					.executeTakeFirstOrThrow();
-			})
-		: undefined;
+	const countTotal = yield* Effect.promise(async () => {
+		return scopeSelect
+			.clearSelect()
+			.select((eb) => eb.fn.countAll<number>().as("count"))
+			.executeTakeFirstOrThrow();
+	});
 
-	const countFilter = count.includes("filter")
-		? yield* Effect.promise(async () => {
-				return filterSelect
-					.clearSelect()
-					.select((eb) => eb.fn.countAll<number>().as("count"))
-					.executeTakeFirstOrThrow();
-			})
-		: undefined;
+	const countFilter = yield* Effect.promise(async () => {
+		return filterSelect
+			.clearSelect()
+			.select((eb) => eb.fn.countAll<number>().as("count"))
+			.executeTakeFirstOrThrow();
+	});
 
-	const countWhere = count.includes("where")
-		? yield* Effect.promise(async () => {
-				return whereSelect
-					.clearSelect()
-					.select((eb) => eb.fn.countAll<number>().as("count"))
-					.executeTakeFirstOrThrow();
-			})
-		: undefined;
+	const countWhere = yield* Effect.promise(async () => {
+		return whereSelect
+			.clearSelect()
+			.select((eb) => eb.fn.countAll<number>().as("count"))
+			.executeTakeFirstOrThrow();
+	});
 
-	const total = countTotal?.count ?? 0;
-	const filterCount = countFilter?.count ?? 0;
-	const whereCount = countWhere?.count ?? 0;
+	const total = countTotal.count;
+	const filterCount = countFilter.count;
+	const whereCount = countWhere.count;
 
 	return {
 		total,

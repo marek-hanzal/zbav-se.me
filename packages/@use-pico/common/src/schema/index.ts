@@ -1,4 +1,3 @@
-export { CountEnumSchema } from "./CountEnumSchema";
 export { CountSchema } from "./CountSchema";
 export { CursorSchema } from "./CursorSchema";
 export { EntitySchema } from "./EntitySchema";

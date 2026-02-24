@@ -1,5 +1,4 @@
 import { z } from "@hono/zod-openapi";
-import { CountEnumSchema } from "@use-pico/common/schema";
 import { ListingQuerySchema } from "~/@buyer-user/listing/schema/ListingQuerySchema";
 
 export const ListingCountQuerySchema = z
@@ -9,7 +8,6 @@ export const ListingCountQuerySchema = z
 			where: true,
 			meta: true,
 		}).shape,
-		count: CountEnumSchema.array().optional(),
 	})
 	.strip()
 	.openapi("ListingCountQuery", {

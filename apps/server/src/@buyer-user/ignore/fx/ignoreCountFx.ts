@@ -15,14 +15,12 @@ export const ignoreCountFx = Effect.fn("ignoreCountFx")(function* ({
 	filter,
 	where,
 	scope,
-	count,
 }: ignoreCountFx.Props) {
 	return yield* withCountFx({
 		selectFx: withIgnoreCollectionSelectFx({}),
 		filter,
 		where,
 		scope,
-		count,
 		queryFx: withIgnoreQueryBuilderFx,
 	});
 });

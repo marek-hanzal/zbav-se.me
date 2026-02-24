@@ -15,14 +15,12 @@ export const feedCountFx = Effect.fn("feedCountFx")(function* ({
 	filter,
 	where,
 	scope,
-	count,
 }: feedCountFx.Props) {
 	return yield* withCountFx({
 		selectFx: withFeedCollectionSelectFx({}),
 		filter,
 		where,
 		scope,
-		count,
 		queryFx: withFeedQueryBuilderFx,
 	});
 });
