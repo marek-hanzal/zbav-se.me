@@ -1,8 +1,8 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { withFavouriteCountQuery } from "@zbav-se.me/sdk/query/buyer-user/favourite";
 import type { FC, RefObject } from "react";
-import { EmptyFavouriteStatus } from "~/app/@buyer-user/feed-favourite/ui/EmptyFavouriteStatus";
-import { EmptyFeedStatus } from "~/app/@buyer-user/feed-favourite/ui/EmptyFeedStatus";
+import { EmptyFavouriteStatus } from "~/app/@buyer-user/feed/page/FeedFavouriteListPage/EmptyFavouriteStatus";
+import { EmptyFeedStatus } from "~/app/@buyer-user/feed/page/FeedFavouriteListPage/EmptyFeedStatus";
 
 export namespace Data {
 	export interface Props extends MarkSuspense.Props {
