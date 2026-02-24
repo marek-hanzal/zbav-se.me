@@ -10,7 +10,7 @@ import { ProsValueList } from "~/app/@common/pros/ui/ProsValueList";
 import { RestrictionValue } from "~/app/@common/restriction/ui/RestrictionValue";
 import { WarrantyValue } from "~/app/@common/warranty/ui/WarrantyValue";
 import type { DraftEditor } from "~/app/@seller-user/draft/ui/DraftEditor";
-import { ChevronAction } from "~/app/@seller-user/draft/ui/draft-editor/ChevronAction";
+import { ChevronAction } from "~/app/@seller-user/draft/ui/DraftEditor/ChevronAction";
 
 export namespace OptionalFieldsSection {
 	export interface Props {

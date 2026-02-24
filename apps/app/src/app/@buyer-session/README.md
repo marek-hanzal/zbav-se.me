@@ -53,7 +53,7 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 ## Recent updates
 
 - Seller info UI for listing detail was split into focused components:
-  - `@buyer-session/listing/ui/seller-info-suspense/SellerInfo.tsx` keeps query/loading composition.
+  - `@buyer-session/listing/ui/SellerInfoSuspense/SellerInfo.tsx` keeps query/loading composition.
   - `@buyer-session/listing/ui/SellerInfoSuspense.tsx` composes local suspense fallback (`SellerInfoPending`) for call-sites.
   - `@buyer-session/listing/ui/seller-info/SellerInfoHeader.tsx` renders registered/listings labels.
   - `@buyer-session/listing/ui/seller-info/SellerInfoScore.tsx` renders score/rank presentation.

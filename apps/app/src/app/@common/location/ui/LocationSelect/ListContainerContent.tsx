@@ -8,7 +8,7 @@ import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { withLocationAutocompleteQuery } from "@zbav-se.me/sdk/query/session";
 import { uiSelectButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
-import type { ListContainer } from "~/app/@common/location/ui/location-select/ListContainer";
+import type { ListContainer } from "~/app/@common/location/ui/LocationSelect/ListContainer";
 
 export namespace ListContainerContent {
 	export interface Props

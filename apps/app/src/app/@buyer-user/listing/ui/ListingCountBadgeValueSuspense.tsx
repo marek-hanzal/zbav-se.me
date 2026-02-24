@@ -1,6 +1,6 @@
 import { type FC, Suspense } from "react";
-import { Data } from "~/app/@buyer-user/listing/ui/listing-count-badge-value-suspense/Data";
-import { Pending } from "~/app/@buyer-user/listing/ui/listing-count-badge-value-suspense/Pending";
+import { Data } from "~/app/@buyer-user/listing/ui/ListingCountBadgeValueSuspense/Data";
+import { Pending } from "~/app/@buyer-user/listing/ui/ListingCountBadgeValueSuspense/Pending";
 
 export namespace ListingCountBadgeValueSuspense {
 	export interface Props extends Omit<Data.Props, "_suspense"> {

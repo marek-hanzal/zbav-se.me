@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import type { PhotoUpload } from "~/app/@common/photo/ui/PhotoUpload";
-import { PhotoUploadPreviewImageSuspense } from "~/app/@common/photo/ui/photo-upload/PhotoUploadPreviewImageSuspense";
+import { PhotoUploadPreviewImageSuspense } from "~/app/@common/photo/ui/PhotoUpload/PhotoUploadPreviewImageSuspense";
 
 export namespace PhotoUploadPreview {
 	export interface Props {

@@ -2,8 +2,8 @@ import { useElementVisibility, useMergeRefs, useScrollTo } from "@use-pico/clien
 import { Container } from "@use-pico/client/ui/container";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { type FC, type ReactNode, Suspense, useEffect, useRef } from "react";
-import { Data } from "~/app/@buyer-user/listing/ui/listing-list-container-suspense/Data";
-import { Pending } from "~/app/@buyer-user/listing/ui/listing-list-container-suspense/Pending";
+import { Data } from "~/app/@buyer-user/listing/ui/ListingListContainerSuspense/Data";
+import { Pending } from "~/app/@buyer-user/listing/ui/ListingListContainerSuspense/Pending";
 
 export namespace ListingListContainerSuspense {
 	export interface Props extends Container.Props {

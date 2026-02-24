@@ -4,7 +4,7 @@ import type { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { type FC, useState } from "react";
-import { ListContainer } from "./location-select/ListContainer";
+import { ListContainer } from "./LocationSelect/ListContainer";
 
 export namespace LocationSelect {
 	export interface Props extends Omit<Container.Props, "onChange"> {

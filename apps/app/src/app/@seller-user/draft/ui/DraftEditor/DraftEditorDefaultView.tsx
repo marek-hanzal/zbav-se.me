@@ -4,9 +4,9 @@ import type { tDraft, tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import type { DraftEditor } from "~/app/@seller-user/draft/ui/DraftEditor";
-import { ActionSection } from "~/app/@seller-user/draft/ui/draft-editor/ActionSection";
-import { OptionalFieldsSection } from "~/app/@seller-user/draft/ui/draft-editor/OptionalFieldsSection";
-import { RequiredFieldsSection } from "~/app/@seller-user/draft/ui/draft-editor/RequiredFieldsSection";
+import { ActionSection } from "~/app/@seller-user/draft/ui/DraftEditor/ActionSection";
+import { OptionalFieldsSection } from "~/app/@seller-user/draft/ui/DraftEditor/OptionalFieldsSection";
+import { RequiredFieldsSection } from "~/app/@seller-user/draft/ui/DraftEditor/RequiredFieldsSection";
 import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
 export namespace DraftEditorDefaultView {

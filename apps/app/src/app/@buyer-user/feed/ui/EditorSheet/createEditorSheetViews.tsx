@@ -6,7 +6,7 @@ import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import type { PropsWithChildren } from "react";
 import type { EditorSheet } from "~/app/@buyer-user/feed/ui/EditorSheet";
-import { toDetailHandlers } from "~/app/@buyer-user/feed/ui/editor-sheet/toDetailHandlers";
+import { toDetailHandlers } from "~/app/@buyer-user/feed/ui/EditorSheet/toDetailHandlers";
 import { FeedEditor } from "~/app/@buyer-user/feed/ui/FeedEditor";
 import { AgePatch } from "~/app/@buyer-user/feed/ui/patch/AgePatch";
 import { CategoryPatch } from "~/app/@buyer-user/feed/ui/patch/CategoryPatch";

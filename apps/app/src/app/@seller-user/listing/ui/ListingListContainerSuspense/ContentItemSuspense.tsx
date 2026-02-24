@@ -1,6 +1,6 @@
 import { type FC, Suspense } from "react";
-import { Data } from "./content-item-suspense/Data";
-import { Pending } from "./content-item-suspense/Pending";
+import { Data } from "./ContentItemSuspense/Data";
+import { Pending } from "./ContentItemSuspense/Pending";
 
 export namespace ContentItemSuspense {
 	export interface Props extends Data.Props {

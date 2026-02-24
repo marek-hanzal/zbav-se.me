@@ -4,7 +4,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, useRef } from "react";
-import { EmptySuspense } from "~/app/@buyer-user/feed/page/feed-favourite-list-page/EmptySuspense";
+import { EmptySuspense } from "~/app/@buyer-user/feed/page/FeedFavouriteListPage/EmptySuspense";
 import { FavouriteListAppendix } from "~/app/@buyer-user/feed-favourite/ui/FavouriteListAppendix";
 import { ListingListContainerSuspense } from "~/app/@buyer-user/listing/ui/ListingListContainerSuspense";
 

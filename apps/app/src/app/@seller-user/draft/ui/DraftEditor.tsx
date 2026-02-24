@@ -3,8 +3,8 @@ import type { tDraft, tListing } from "@zbav-se.me/sdk/api/seller-user";
 import type { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { useMemo, useState } from "react";
-import { createDraftEditorViews } from "~/app/@seller-user/draft/ui/draft-editor/createDraftEditorViews";
-import { DraftEditorDefaultView } from "~/app/@seller-user/draft/ui/draft-editor/DraftEditorDefaultView";
+import { createDraftEditorViews } from "~/app/@seller-user/draft/ui/DraftEditor/createDraftEditorViews";
+import { DraftEditorDefaultView } from "~/app/@seller-user/draft/ui/DraftEditor/DraftEditorDefaultView";
 
 export namespace DraftEditor {
 	export type View =

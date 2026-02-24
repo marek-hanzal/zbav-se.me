@@ -4,7 +4,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import { RatingToIcon } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
-import { toSellerScoreHint } from "~/app/@buyer-session/listing/ui/seller-info-suspense/toSellerScoreHint";
+import { toSellerScoreHint } from "~/app/@buyer-session/listing/ui/SellerInfoSuspense/toSellerScoreHint";
 
 export namespace Score {
 	export interface Props {

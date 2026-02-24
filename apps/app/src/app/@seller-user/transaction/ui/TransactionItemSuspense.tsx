@@ -1,6 +1,6 @@
 import { type FC, Suspense } from "react";
-import { Data } from "~/app/@seller-user/transaction/ui/transaction-item-suspense/Data";
-import { Pending } from "~/app/@seller-user/transaction/ui/transaction-item-suspense/Pending";
+import { Data } from "~/app/@seller-user/transaction/ui/TransactionItemSuspense/Data";
+import { Pending } from "~/app/@seller-user/transaction/ui/TransactionItemSuspense/Pending";
 
 export namespace TransactionItemSuspense {
 	export interface Props extends Omit<Data.Props, "_suspense"> {

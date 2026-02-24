@@ -1,9 +1,9 @@
 import type { Container } from "@use-pico/client/ui/container";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { type FC, Suspense } from "react";
-import { FeedListContainerContent } from "./feed-list-container/FeedListContainerContent";
-import { FeedListContainerContentPending } from "./feed-list-container/FeedListContainerContentPending";
-import type { Item } from "./feed-list-container/Item";
+import { FeedListContainerContent } from "./FeedListContainer/FeedListContainerContent";
+import { FeedListContainerContentPending } from "./FeedListContainer/FeedListContainerContentPending";
+import type { Item } from "./FeedListContainer/Item";
 
 export namespace FeedListContainer {
 	export interface Props extends Container.Props {

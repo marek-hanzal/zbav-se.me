@@ -81,15 +81,15 @@ When adding to `@common`:
 
 - Transaction list container abstraction was removed from `@common/transaction/ui/`; buyer/seller now keep their own domain-specific list containers to avoid cross-domain generic query wrappers.
 - Message rendering was split into focused parts:
-  - `@common/message/message-list-suspense/MessageList.tsx` now handles data/container composition.
+  - `@common/message/MessageListSuspense/MessageList.tsx` now handles data/container composition.
   - `@common/message/MessageListSuspense.tsx` now composes local suspense fallback (`MessageListPending`) for feature call-sites.
   - `@common/message/MessageRenderItem.tsx` now owns message-type dispatch (`text/system/gallery/location/personal/package`).
 - Photo upload UI was split into focused pieces:
   - `@common/photo/hook/usePhotoUploadController.ts` owns upload/input/pending orchestration.
-  - `@common/photo/ui/photo-upload/PhotoUploadPending.tsx`
-  - `@common/photo/ui/photo-upload/PhotoUploadPlaceholder.tsx`
-  - `@common/photo/ui/photo-upload/PhotoUploadPreview.tsx`
-  - `@common/photo/ui/photo-upload/PhotoUploadPreviewImageSuspense.tsx` composes local suspense fallback (`PhotoUploadPreviewImagePending`).
+  - `@common/photo/ui/PhotoUpload/PhotoUploadPending.tsx`
+  - `@common/photo/ui/PhotoUpload/PhotoUploadPlaceholder.tsx`
+  - `@common/photo/ui/PhotoUpload/PhotoUploadPreview.tsx`
+  - `@common/photo/ui/PhotoUpload/PhotoUploadPreviewImageSuspense.tsx` composes local suspense fallback (`PhotoUploadPreviewImagePending`).
 - Route shell pages were extracted into shared components:
   - `@common/locale/page/LocalePage.tsx`
   - `@common/nav/page/UiPage.tsx`

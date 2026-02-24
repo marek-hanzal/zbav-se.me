@@ -1,6 +1,6 @@
 import { type FC, Suspense } from "react";
-import { Data } from "~/app/@buyer-user/feed-favourite/ui/favourite-list-container-suspense/Data";
-import { Pending } from "~/app/@buyer-user/feed-favourite/ui/favourite-list-container-suspense/Pending";
+import { Data } from "~/app/@buyer-user/feed-favourite/ui/FavouriteListContainerSuspense/Data";
+import { Pending } from "~/app/@buyer-user/feed-favourite/ui/FavouriteListContainerSuspense/Pending";
 
 export namespace FavouriteListContainerSuspense {
 	export interface Props extends Omit<Data.Props, "_suspense"> {

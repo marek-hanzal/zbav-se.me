@@ -57,7 +57,7 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 
 ## Recent updates
 
-- Draft editor was split into focused modules in `@seller-user/draft/ui/draft-editor/`:
+- Draft editor was split into focused modules in `@seller-user/draft/ui/DraftEditor/`:
   - `DraftEditorDefaultView.tsx` as top-level orchestrator
   - `RequiredFieldsSection.tsx`
   - `OptionalFieldsSection.tsx`

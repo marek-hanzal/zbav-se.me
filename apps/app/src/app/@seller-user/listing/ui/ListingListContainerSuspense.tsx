@@ -2,8 +2,8 @@ import { useElementVisibility } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { type FC, Suspense, useRef } from "react";
-import { Data } from "./listing-list-container-suspense/Data";
-import { Pending } from "./listing-list-container-suspense/Pending";
+import { Data } from "./ListingListContainerSuspense/Data";
+import { Pending } from "./ListingListContainerSuspense/Pending";
 
 export namespace ListingListContainerSuspense {
 	export interface Props extends Container.Props {

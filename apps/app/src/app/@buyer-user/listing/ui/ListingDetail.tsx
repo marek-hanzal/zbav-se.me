@@ -4,9 +4,9 @@ import type { FC } from "react";
 import { useListingEvent } from "~/app/@buyer-session/listing/hook/useListingEvent";
 import { ThumbDislikeButton } from "~/app/@buyer-user/listing/ui/button/ThumbDislikeButton";
 import { ThumbLikeButton } from "~/app/@buyer-user/listing/ui/button/ThumbLikeButton";
-import { ListingDestructiveActionsSuspense } from "~/app/@buyer-user/listing/ui/listing-detail/ListingDestructiveActionsSuspense";
-import { ListingHeroSection } from "~/app/@buyer-user/listing/ui/listing-detail/ListingHeroSection";
-import { ListingInfoSection } from "~/app/@buyer-user/listing/ui/listing-detail/ListingInfoSection";
+import { ListingDestructiveActionsSuspense } from "~/app/@buyer-user/listing/ui/ListingDetail/ListingDestructiveActionsSuspense";
+import { ListingHeroSection } from "~/app/@buyer-user/listing/ui/ListingDetail/ListingHeroSection";
+import { ListingInfoSection } from "~/app/@buyer-user/listing/ui/ListingDetail/ListingInfoSection";
 
 export namespace ListingDetail {
 	export type Tools = "destructive" | "hero" | "thumb";
