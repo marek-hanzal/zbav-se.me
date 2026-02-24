@@ -2,7 +2,7 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { transactionCollectionFx } from "~/@buyer-user/transaction/fx/transactionCollectionFx";
-import { TransactionItemSchema } from "~/@buyer-user/transaction/schema/TransactionItemSchema";
+import { TransactionSchema } from "~/@buyer-user/transaction/schema/TransactionSchema";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { TransactionQuerySchema } from "~/@common/transaction/schema/TransactionQuerySchema";
@@ -12,7 +12,7 @@ import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
-const CollectionSchema = z.array(TransactionItemSchema);
+const CollectionSchema = z.array(TransactionSchema);
 
 export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* () {
 	const { buyerUserHono } = yield* RoutesContextFx;

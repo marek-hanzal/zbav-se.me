@@ -45,12 +45,14 @@ This domain handles all buyer-specific operations that require access to the use
 
 ### Transaction Management
 - **Collection** - List buyer's transactions
+- **Count** - Count buyer transactions (total/where/filter)
 - **Create** - Start new transaction (express interest in listing)
 - **Fetch** - Get transaction details
 - **Patch** - Update transaction
 - **Resolve** - Resolve transaction context
 - **Status Gate** - Check transaction status permissions
 - Query performance: transaction status filters are resolved from the latest status lateral join (`status.latestStatus`) to avoid repeated correlated `EXISTS` subqueries per transaction row.
+- Collection responses now return full transaction payloads (same shape as fetch) so list UIs can hydrate per-item cache without N+1 fetches.
 
 ### Transaction Status
 - Buyer-side transaction status operations

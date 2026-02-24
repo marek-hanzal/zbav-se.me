@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { withTransactionSourceSelectFx } from "~/@seller-user/transaction/db/withTransactionSourceSelectFx";
+import { withTransactionSelectFx } from "~/@seller-user/transaction/db/withTransactionSelectFx";
 
 export namespace withTransactionCollectionSelectFx {
-	export interface Props extends withTransactionSourceSelectFx.Props {}
+	export interface Props extends withTransactionSelectFx.Props {}
 
 	export type Select = Effect.Effect.Success<
 		ReturnType<typeof withTransactionCollectionSelectFx>
@@ -11,13 +11,10 @@ export namespace withTransactionCollectionSelectFx {
 
 export const withTransactionCollectionSelectFx = Effect.fn("withTransactionCollectionSelectFx")(
 	function* ({ sort }: withTransactionCollectionSelectFx.Props) {
-		const sourceSelect = yield* withTransactionSourceSelectFx({
+		const sourceSelect = yield* withTransactionSelectFx({
 			sort,
 		});
 
-		return sourceSelect.select([
-			"lt.id",
-			"lt.updatedAt as lastAt",
-		]);
+		return sourceSelect;
 	},
 );

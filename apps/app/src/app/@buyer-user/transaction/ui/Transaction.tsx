@@ -4,7 +4,7 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
-import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
+import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef, useState } from "react";
 import { ListingOverlay } from "~/app/@buyer-user/listing/ui/ListingOverlay";
@@ -29,16 +29,9 @@ export const Transaction: FC<Transaction.Props> = ({
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
-	const { data: transaction } = withTransactionFetchQuery.useSuspenseQuery(
-		{
-			where: {
-				id: transactionId,
-			},
-		},
-		{
-			refetchInterval: refresh,
-		},
-	);
+	const { data: transaction } = withTransactionQuery.useQuery(transactionId, {
+		refetchInterval: refresh,
+	});
 	const { data: listing } = withListingFetchQuery.useSuspenseQuery({
 		where: {
 			id: transaction.listingId,

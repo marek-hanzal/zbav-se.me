@@ -6,10 +6,10 @@ import { TextInput } from "@use-pico/client/ui/text-input";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { sListingCreate } from "@zbav-se.me/sdk/api/seller-user";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { useDraftPatch } from "~/app/@seller-user/draft/hook/useDraftPatch";
 
 export namespace TitlePatch {
 	export interface Props extends TitleContainer.Props {
@@ -20,8 +20,7 @@ export namespace TitlePatch {
 }
 
 export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
-	const { patch, isPending } = useDraftPatch({
-		draft,
+	const mutation = withDraftQuery.useMutation({
 		onSettled,
 	});
 	const [title, setTitle] = useState(draft.title ?? "");
@@ -76,12 +75,19 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSettled, .
 
 				<SaveContainer
 					onCancel={onCancel}
-					onSave={() =>
-						patch({
-							title,
-						})
-					}
-					loading={isPending}
+					onSave={() => {
+						mutation.mutate({
+							patch: {
+								title,
+							},
+							query: {
+								where: {
+									id: draft.id,
+								},
+							},
+						});
+					}}
+					loading={mutation.isPending}
 					disabled={!title}
 				/>
 			</Container>

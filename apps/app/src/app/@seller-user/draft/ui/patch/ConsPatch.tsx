@@ -4,8 +4,7 @@ import { TextInput } from "@use-pico/client/ui/text-input";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import { sProsCons, type tDraft } from "@zbav-se.me/sdk/api/seller-user";
-import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
-import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
@@ -19,7 +18,6 @@ export namespace ConsPatch {
 }
 
 export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
-	const patch = withDraftFetchQuery.useSet();
 	const initialCons = draft.cons ?? [];
 	const paddedCons = [
 		...initialCons,
@@ -27,14 +25,7 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onSettled, ...
 	].slice(0, sProsCons.maxItems);
 	const [items, setItems] = useState<string[]>(paddedCons);
 
-	const mutation = withDraftPatchMutation.useMutation({
-		onSuccess(draft) {
-			patch(() => draft, {
-				where: {
-					id: draft.id,
-				},
-			});
-		},
+	const mutation = withDraftQuery.useMutation({
 		onSettled() {
 			onSettled?.();
 		},

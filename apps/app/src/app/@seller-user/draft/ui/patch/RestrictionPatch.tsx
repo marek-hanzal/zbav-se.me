@@ -2,11 +2,11 @@ import { useSelection } from "@use-pico/client/hook";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListingRestrictionEnum } from "@zbav-se.me/sdk/api/seller-user";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
 import { RestrictionSelect } from "~/app/@common/restriction/ui/RestrictionSelect";
-import { useDraftPatch } from "~/app/@seller-user/draft/hook/useDraftPatch";
 
 export namespace RestrictionPatch {
 	export interface Props extends TitleContainer.Props {
@@ -22,8 +22,7 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 	onSettled,
 	...props
 }) => {
-	const { patch, isPending } = useDraftPatch({
-		draft,
+	const mutation = withDraftQuery.useMutation({
 		onSettled,
 	});
 	const selection = useSelection<EntitySchema.Type>({
@@ -51,11 +50,18 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 					return;
 				}
 
-				patch({
-					restriction,
+				mutation.mutate({
+					patch: {
+						restriction,
+					},
+					query: {
+						where: {
+							id: draft.id,
+						},
+					},
 				});
 			}}
-			loading={isPending}
+			loading={mutation.isPending}
 			disabled={restriction === null}
 			{...props}
 		>

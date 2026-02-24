@@ -7,7 +7,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tTransactionListingQuery } from "@zbav-se.me/sdk/api/seller-user";
-import { withTransactionListingCollectionQuery } from "@zbav-se.me/sdk/query/seller-user/transaction-listing";
+import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller-user/transaction-listing";
 import { MessageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { TransactionListingItemSuspense } from "~/app/@seller-user/transaction-listing/ui/TransactionListingItemSuspense";
@@ -15,18 +15,20 @@ import { TransactionListingItemSuspense } from "~/app/@seller-user/transaction-l
 export namespace TransactionListingList {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		query: tTransactionListingQuery;
+		refetchInterval?: number;
 	}
 }
 
 export const TransactionListingList: FC<TransactionListingList.Props> = ({
 	_suspense,
 	query,
+	refetchInterval = 5_000,
 	ui,
 	...props
 }) => {
 	const locale = useLocale();
-	const { data } = withTransactionListingCollectionQuery.useSuspenseQuery(query, {
-		refetchInterval: 5_000,
+	const { data } = withTransactionListingQuery.useCollectionQuery(query, {
+		refetchInterval,
 	});
 
 	return (
@@ -83,11 +85,11 @@ export const TransactionListingList: FC<TransactionListingList.Props> = ({
 						gap: "default",
 					}}
 				>
-					{data.map((item) => (
+					{data.map((transactionListingId) => (
 						<TransactionListingItemSuspense
-							key={item.listingId}
-							data-id={item.listingId}
-							transactionListingItem={item}
+							key={transactionListingId}
+							data-id={transactionListingId}
+							transactionListingId={transactionListingId}
 						/>
 					))}
 				</Container>

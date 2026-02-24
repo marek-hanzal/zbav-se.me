@@ -17,11 +17,11 @@ export const TransactionList: FC<TransactionList.Props> = ({ query, ...props }) 
 			<TransactionListContainer
 				_suspense={"I know"}
 				query={query}
-				renderItem={(item) => (
+				renderItem={(transactionId) => (
 					<TransactionItemSuspense
-						key={item.id}
-						data-id={item.id}
-						transactionId={item.id}
+						key={transactionId}
+						data-id={transactionId}
+						transactionId={transactionId}
 					/>
 				)}
 				{...props}

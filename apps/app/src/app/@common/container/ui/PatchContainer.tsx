@@ -24,7 +24,7 @@ export namespace PatchContainer {
 
 /**
  * Shared layout for patch screens: content area + SaveContainer footer.
- * Use with useFeedPatch (feed) or useDraftPatch (draft). Pass title for draft-style header.
+ * Use with direct domain query mutations (e.g. withFeedQuery/withDraftQuery). Pass title for draft-style header.
  */
 export const PatchContainer: FC<PatchContainer.Props> = ({
 	children,

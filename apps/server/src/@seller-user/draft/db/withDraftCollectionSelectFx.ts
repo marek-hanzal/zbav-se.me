@@ -1,8 +1,8 @@
 import { Effect } from "effect";
-import { withDraftSourceSelectFx } from "~/@seller-user/draft/db/withDraftSourceSelectFx";
+import { withDraftSelectFx } from "~/@seller-user/draft/db/withDraftSelectFx";
 
 export namespace withDraftCollectionSelectFx {
-	export interface Props extends withDraftSourceSelectFx.Props {}
+	export interface Props extends withDraftSelectFx.Props {}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withDraftCollectionSelectFx>>;
 }
@@ -10,9 +10,9 @@ export namespace withDraftCollectionSelectFx {
 export const withDraftCollectionSelectFx = Effect.fn("withDraftCollectionSelectFx")(function* ({
 	sort,
 }: withDraftCollectionSelectFx.Props) {
-	const sourceSelect = yield* withDraftSourceSelectFx({
+	const sourceSelect = yield* withDraftSelectFx({
 		sort,
 	});
 
-	return sourceSelect.select("d.id");
+	return sourceSelect;
 });

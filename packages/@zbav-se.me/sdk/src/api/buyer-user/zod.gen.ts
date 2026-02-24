@@ -1407,23 +1407,7 @@ export const zThumbCreate = z.object({
 export type zThumbCreate = z.infer<typeof zThumbCreate>;
 
 /**
- * Transaction collection item with last message timestamp
- */
-export const zTransactionItem = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the transaction'
-    }),
-    lastAt: z.string().register(z.globalRegistry, {
-        description: 'Timestamp of the last message in the transaction'
-    })
-}).register(z.globalRegistry, {
-    description: 'Transaction collection item with last message timestamp'
-});
-
-export type zTransactionItem = z.infer<typeof zTransactionItem>;
-
-/**
- * This filter matches the current status of the transaction
+ * Current status of the listing transaction
  */
 export const zTransactionStatusEnum = z.enum([
     'pending',
@@ -1435,10 +1419,51 @@ export const zTransactionStatusEnum = z.enum([
     'success',
     'closed'
 ]).register(z.globalRegistry, {
-    description: 'This filter matches the current status of the transaction'
+    description: 'Current status of the listing transaction'
 });
 
 export type zTransactionStatusEnum = z.infer<typeof zTransactionStatusEnum>;
+
+/**
+ * Transaction data
+ */
+export const zTransaction = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the related listing'
+    }),
+    messageThreadId: z.string().register(z.globalRegistry, {
+        description: 'ID of the message thread associated with the transaction'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    updatedAt: z.string().register(z.globalRegistry, {
+        description: 'Last update timestamp'
+    }),
+    expiresAt: z.string().register(z.globalRegistry, {
+        description: 'Expiration timestamp'
+    }),
+    title: z.string().register(z.globalRegistry, {
+        description: 'Transaction title'
+    }),
+    status: zTransactionStatusEnum,
+    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
+        description: 'Gallery data with items'
+    })),
+    price: z.number().register(z.globalRegistry, {
+        description: 'Price of the listing'
+    }),
+    priceType: zListingPriceEnum,
+    currency: zCurrencyEnum,
+    location: zLocation
+}).register(z.globalRegistry, {
+    description: 'Transaction data'
+});
+
+export type zTransaction = z.infer<typeof zTransaction>;
 
 /**
  * Filter object for transaction collection
@@ -1459,10 +1484,10 @@ export const zTransactionFilter = z.object({
     listingId: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
     })),
-    status: z.optional(zTransactionStatusEnum),
-    statusIn: z.optional(z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
-        description: 'Current status of the listing transaction'
-    }))).register(z.globalRegistry, {
+    status: z.optional(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'This filter matches the current status of the transaction'
+    }))),
+    statusIn: z.optional(z.array(zTransactionStatusEnum).register(z.globalRegistry, {
         description: 'This filter matches any of the provided statuses for the current status of the transaction'
     }))
 }).register(z.globalRegistry, {
@@ -1490,10 +1515,10 @@ export const zTransactionWhere = z.object({
     listingId: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
     })),
-    status: z.optional(zTransactionStatusEnum),
-    statusIn: z.optional(z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
-        description: 'Current status of the listing transaction'
-    }))).register(z.globalRegistry, {
+    status: z.optional(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'This filter matches the current status of the transaction'
+    }))),
+    statusIn: z.optional(z.array(zTransactionStatusEnum).register(z.globalRegistry, {
         description: 'This filter matches any of the provided statuses for the current status of the transaction'
     }))
 }).register(z.globalRegistry, {
@@ -1543,47 +1568,21 @@ export const zTransactionQuery = z.object({
 export type zTransactionQuery = z.infer<typeof zTransactionQuery>;
 
 /**
- * Transaction data
+ * Query object for transaction count
  */
-export const zTransaction = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the transaction'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the related listing'
-    }),
-    messageThreadId: z.string().register(z.globalRegistry, {
-        description: 'ID of the message thread associated with the transaction'
-    }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    updatedAt: z.string().register(z.globalRegistry, {
-        description: 'Last update timestamp'
-    }),
-    expiresAt: z.string().register(z.globalRegistry, {
-        description: 'Expiration timestamp'
-    }),
-    title: z.string().register(z.globalRegistry, {
-        description: 'Transaction title'
-    }),
-    status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
-        description: 'Current status of the listing transaction'
-    })),
-    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
-        description: 'Gallery data with items'
-    })),
-    price: z.number().register(z.globalRegistry, {
-        description: 'Price of the listing'
-    }),
-    priceType: zListingPriceEnum,
-    currency: zCurrencyEnum,
-    location: zLocation
+export const zTransactionCountQuery = z.object({
+    filter: z.optional(zTransactionFilter),
+    where: z.optional(zTransactionWhere),
+    count: z.optional(z.array(z.enum([
+        'total',
+        'filter',
+        'where'
+    ])))
 }).register(z.globalRegistry, {
-    description: 'Transaction data'
+    description: 'Query object for transaction count'
 });
 
-export type zTransaction = z.infer<typeof zTransaction>;
+export type zTransactionCountQuery = z.infer<typeof zTransactionCountQuery>;
 
 /**
  * Data for creating a new transaction
@@ -1627,9 +1626,7 @@ export const zTransactionStatus = z.object({
         description: 'ID of the listing referenced by the status'
     }),
     side: zTransactionSideEnum,
-    status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
-        description: 'Current status of the listing transaction'
-    })),
+    status: zTransactionStatusEnum,
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     })
@@ -2031,11 +2028,26 @@ export type zapiTransactionCollectionRequest = z.infer<typeof zApiTransactionCol
 /**
  * Access collection of transactions based on provided query
  */
-export const zApiTransactionCollectionResponse = z.array(zTransactionItem).register(z.globalRegistry, {
+export const zApiTransactionCollectionResponse = z.array(zTransaction).register(z.globalRegistry, {
     description: 'Access collection of transactions based on provided query'
 });
 
 export type zapiTransactionCollectionResponse = z.infer<typeof zApiTransactionCollectionResponse>;
+
+export const zApiTransactionCountData = z.object({
+    body: z.optional(zTransactionCountQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiTransactionCountRequest = z.infer<typeof zApiTransactionCountData>;
+
+/**
+ * Return counts based on provided query
+ */
+export const zApiTransactionCountResponse = zCount;
+
+export type zapiTransactionCountResponse = z.infer<typeof zApiTransactionCountResponse>;
 
 export const zApiTransactionCreateData = z.object({
     body: z.optional(zTransactionCreate),

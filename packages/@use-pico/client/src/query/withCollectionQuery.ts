@@ -1,4 +1,9 @@
-import { type QueryKey, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import {
+	type QueryClient,
+	type QueryKey,
+	useQueryClient,
+	useSuspenseQuery,
+} from "@tanstack/react-query";
 import { cleanOf } from "@use-pico/common/clean-of";
 import type { CountSchema, EntitySchema } from "@use-pico/common/schema";
 import type { withMutation } from "../mutation";
@@ -140,9 +145,24 @@ export const withCollectionQuery = <
 		return cleanOf(keys(data)) as QueryKey;
 	};
 
+	const invalidateCollection = (queryClient: QueryClient, data?: TCollectionRequest) => {
+		return queryClient.invalidateQueries({
+			queryKey: $keys(data),
+			refetchType: "all",
+		});
+	};
+
+	const invalidateQuery = (queryClient: QueryClient, id: string) => {
+		return fetchQuery.invalidate(queryClient, toIdKey(id));
+	};
+
+	const invalidateCount = (queryClient: QueryClient, data?: TCountRequest) => {
+		return countQuery.invalidate(queryClient, data);
+	};
+
 	return {
 		keys: $keys,
-		useCollectionQuery(data: TCollectionRequest) {
+		useCollectionQuery(data: TCollectionRequest, opts?: withQuery.QueryOptions<string[]>) {
 			const set = fetchQuery.useSet();
 
 			return useSuspenseQuery({
@@ -154,10 +174,18 @@ export const withCollectionQuery = <
 					});
 					return response.map(({ id }) => id);
 				},
+				...opts,
 			});
 		},
 		useQuery(id: string, opts?: withQuery.QueryOptions<TResult> | undefined) {
 			return fetchQuery.useSuspenseQuery(toIdKey(id), opts);
+		},
+		useSet() {
+			const set = fetchQuery.useSet();
+
+			return (value: (value: TResult | undefined) => TResult | undefined, id: string) => {
+				set(value, toIdKey(id));
+			};
 		},
 		useCount(data: TCountRequest, opts?: withQuery.QueryOptions<CountSchema.Type> | undefined) {
 			return countQuery.useSuspenseQuery(data, opts);
@@ -175,29 +203,21 @@ export const withCollectionQuery = <
 		) {
 			const queryClient = useQueryClient();
 			const set = fetchQuery.useSet();
-			const { invalidateCollection = false, onPostMutation, ...$options } = options ?? {};
+			const {
+				invalidateCollection: doInvalidateCollection = false,
+				onPostMutation,
+				...$options
+			} = options ?? {};
 
 			const mutation = patchMutation.useMutation<TContext>({
 				...$options,
 				async onPostMutation({ result, variables }) {
 					set(() => result, toIdKey(result.id));
 					const invalidation = [
-						countQuery.invalidate(queryClient),
+						invalidateCount(queryClient),
 					];
-					if (invalidateCollection) {
-						/**
-						 * Invalidate the same cache key-space as `useCollectionQuery`.
-						 *
-						 * We intentionally pass `undefined` casted to collection request
-						 * type to generate a prefix key (same strategy as `withQuery.invalidate`).
-						 */
-						invalidation.push(
-							queryClient.invalidateQueries({
-								queryKey: $keys(undefined),
-								refetchType: "all",
-							}),
-						);
-						invalidation.push(collectionQuery.invalidate(queryClient));
+					if (doInvalidateCollection) {
+						invalidation.push(invalidateCollection(queryClient));
 					}
 					await Promise.all(invalidation);
 					await onPostMutation?.({
@@ -218,5 +238,8 @@ export const withCollectionQuery = <
 		count(data: TCountRequest) {
 			return countQuery.query(data);
 		},
+		invalidateQuery,
+		invalidateCollection,
+		invalidateCount,
 	};
 };

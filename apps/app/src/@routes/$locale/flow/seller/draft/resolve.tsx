@@ -1,16 +1,13 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withDraftCreateMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
-import {
-	withDraftCollectionQuery,
-	withDraftFetchQuery,
-} from "@zbav-se.me/sdk/query/seller-user/draft";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { DateTime } from "luxon";
 
 export const Route = createFileRoute("/$locale/flow/seller/draft/resolve")({
 	async loader({ context: { queryClient }, params: { locale } }) {
-		const current = await withDraftFetchQuery
-			.query({
+		const current = await withDraftQuery
+			.fetch({
 				where: {
 					updatedAtGte: DateTime.now()
 						.minus({
@@ -33,7 +30,7 @@ export const Route = createFileRoute("/$locale/flow/seller/draft/resolve")({
 		}
 
 		const draft = await withDraftCreateMutation.mutate(queryClient, {});
-		await withDraftCollectionQuery.invalidate(queryClient);
+		await withDraftQuery.invalidateCollection(queryClient);
 
 		throw redirect({
 			to: "/$locale/flow/seller/draft/$id/edit",

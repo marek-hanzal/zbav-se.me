@@ -1,5 +1,5 @@
 import type { MarkSuspense } from "@use-pico/client/type";
-import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { FC } from "react";
 import { DraftItem } from "~/app/@seller-user/draft/ui/DraftItem";
 
@@ -10,11 +10,7 @@ export namespace Data {
 }
 
 export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
-	const { data: draft } = withDraftFetchQuery.useSuspenseQuery({
-		where: {
-			id: draftId,
-		},
-	});
+	const { data: draft } = withDraftQuery.useQuery(draftId);
 
 	return <DraftItem draft={draft} />;
 };

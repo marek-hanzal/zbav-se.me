@@ -5,188 +5,6 @@ export type clientOptions = {
 };
 
 /**
- * Draft collection item
- */
-export type tDraftItem = {
-    /**
-     * ID of the draft
-     */
-    id: string;
-};
-
-/**
- * Just a note sent from various reasons, usually when something is fucked up.
- */
-export type tNotice = {
-    /**
-     * Message
-     */
-    message: string;
-    type: tNoticeTypeEnum;
-};
-
-/**
- * Type of notice
- */
-export const tNoticeTypeEnum = {
-    info: 'info',
-    warning: 'warning',
-    error: 'error'
-} as const;
-
-/**
- * Type of notice
- */
-export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
-
-/**
- * Query object for draft collection
- */
-export type tDraftQuery = {
-    cursor?: tCursor;
-    filter?: tDraftFilter;
-    where?: tDraftWhere;
-    sort?: Array<tDraftSort>;
-};
-
-/**
- * Cursor for pagination
- */
-export type tCursor = {
-    /**
-     * Page number (0-indexed)
-     */
-    page: number;
-    /**
-     * Page size
-     */
-    size: number;
-};
-
-/**
- * User-land filters
- */
-export type tDraftFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches drafts with the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches drafts with updatedAt greater than or equal to the provided date
-     */
-    updatedAtGte?: string;
-    /**
-     * This filter matches drafts with updatedAt less than or equal to the provided date
-     */
-    updatedAtLte?: string;
-    /**
-     * This filter matches drafts where usedAt is null (true) or not null (false)
-     */
-    usedAtIsNull?: boolean;
-};
-
-/**
- * App-based filters
- */
-export type tDraftWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches drafts with the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches drafts with updatedAt greater than or equal to the provided date
-     */
-    updatedAtGte?: string;
-    /**
-     * This filter matches drafts with updatedAt less than or equal to the provided date
-     */
-    updatedAtLte?: string;
-    /**
-     * This filter matches drafts where usedAt is null (true) or not null (false)
-     */
-    usedAtIsNull?: boolean;
-};
-
-/**
- * Sort object for draft collection
- */
-export type tDraftSort = {
-    field: tDraftSortField;
-    order: tOrderEnum;
-};
-
-/**
- * Field of the draft sort
- */
-export const tDraftSortField = { createdAt: 'createdAt', updatedAt: 'updatedAt' } as const;
-
-/**
- * Field of the draft sort
- */
-export type tDraftSortField = typeof tDraftSortField[keyof typeof tDraftSortField];
-
-/**
- * Order
- */
-export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
-
-/**
- * Order
- */
-export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
-
-/**
- * Count data
- */
-export type tCount = {
-    /**
-     * Count of items based on provided where query.
-     */
-    where: number;
-    /**
-     * Count of items based on provided filter query.
-     */
-    filter: number;
-    /**
-     * Total count of items (no filters applied).
-     */
-    total: number;
-};
-
-/**
- * Query object for draft count
- */
-export type tDraftCountQuery = {
-    filter?: tDraftFilter;
-    where?: tDraftWhere;
-    count?: Array<'total' | 'filter' | 'where'>;
-};
-
-/**
  * Draft data
  */
 export type tDraft = {
@@ -518,6 +336,178 @@ export type tUpload = {
      * Public URL to the uploaded file
      */
     url: string;
+};
+
+/**
+ * Just a note sent from various reasons, usually when something is fucked up.
+ */
+export type tNotice = {
+    /**
+     * Message
+     */
+    message: string;
+    type: tNoticeTypeEnum;
+};
+
+/**
+ * Type of notice
+ */
+export const tNoticeTypeEnum = {
+    info: 'info',
+    warning: 'warning',
+    error: 'error'
+} as const;
+
+/**
+ * Type of notice
+ */
+export type tNoticeTypeEnum = typeof tNoticeTypeEnum[keyof typeof tNoticeTypeEnum];
+
+/**
+ * Query object for draft collection
+ */
+export type tDraftQuery = {
+    cursor?: tCursor;
+    filter?: tDraftFilter;
+    where?: tDraftWhere;
+    sort?: Array<tDraftSort>;
+};
+
+/**
+ * Cursor for pagination
+ */
+export type tCursor = {
+    /**
+     * Page number (0-indexed)
+     */
+    page: number;
+    /**
+     * Page size
+     */
+    size: number;
+};
+
+/**
+ * User-land filters
+ */
+export type tDraftFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches drafts with the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches drafts with updatedAt greater than or equal to the provided date
+     */
+    updatedAtGte?: string;
+    /**
+     * This filter matches drafts with updatedAt less than or equal to the provided date
+     */
+    updatedAtLte?: string;
+    /**
+     * This filter matches drafts where usedAt is null (true) or not null (false)
+     */
+    usedAtIsNull?: boolean;
+};
+
+/**
+ * App-based filters
+ */
+export type tDraftWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches drafts with the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches drafts with updatedAt greater than or equal to the provided date
+     */
+    updatedAtGte?: string;
+    /**
+     * This filter matches drafts with updatedAt less than or equal to the provided date
+     */
+    updatedAtLte?: string;
+    /**
+     * This filter matches drafts where usedAt is null (true) or not null (false)
+     */
+    usedAtIsNull?: boolean;
+};
+
+/**
+ * Sort object for draft collection
+ */
+export type tDraftSort = {
+    field: tDraftSortField;
+    order: tOrderEnum;
+};
+
+/**
+ * Field of the draft sort
+ */
+export const tDraftSortField = { createdAt: 'createdAt', updatedAt: 'updatedAt' } as const;
+
+/**
+ * Field of the draft sort
+ */
+export type tDraftSortField = typeof tDraftSortField[keyof typeof tDraftSortField];
+
+/**
+ * Order
+ */
+export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
+
+/**
+ * Order
+ */
+export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
+
+/**
+ * Count data
+ */
+export type tCount = {
+    /**
+     * Count of items based on provided where query.
+     */
+    where: number;
+    /**
+     * Count of items based on provided filter query.
+     */
+    filter: number;
+    /**
+     * Total count of items (no filters applied).
+     */
+    total: number;
+};
+
+/**
+ * Query object for draft count
+ */
+export type tDraftCountQuery = {
+    filter?: tDraftFilter;
+    where?: tDraftWhere;
+    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
@@ -898,18 +888,66 @@ export type tListingCreate = {
 };
 
 /**
- * Transaction collection item with last message timestamp
+ * Transaction data
  */
-export type tTransactionItem = {
+export type tTransaction = {
     /**
      * ID of the transaction
      */
     id: string;
     /**
-     * Timestamp of the last message in the transaction
+     * ID of the related listing
      */
-    lastAt: string;
+    listingId: string;
+    /**
+     * ID of the message thread associated with the transaction
+     */
+    messageThreadId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    /**
+     * Last update timestamp
+     */
+    updatedAt: string;
+    /**
+     * Expiration timestamp
+     */
+    expiresAt: string;
+    /**
+     * Transaction title
+     */
+    title: string;
+    status: tTransactionStatusEnum;
+    gallery: tGallery & unknown;
+    /**
+     * Price of the listing
+     */
+    price: number;
+    priceType: tListingPriceEnum;
+    currency: tCurrencyEnum;
+    location: tLocation;
 };
+
+/**
+ * Current status of the listing transaction
+ */
+export const tTransactionStatusEnum = {
+    pending: 'pending',
+    open: 'open',
+    resolved: 'resolved',
+    dispute: 'dispute',
+    rejected: 'rejected',
+    expired: 'expired',
+    success: 'success',
+    closed: 'closed'
+} as const;
+
+/**
+ * Current status of the listing transaction
+ */
+export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
 
 /**
  * Query object for transaction collection
@@ -945,31 +983,12 @@ export type tTransactionFilter = {
      * This filter matches the exact listingId
      */
     listingId?: string;
-    status?: tTransactionStatusEnum;
+    status?: tTransactionStatusEnum & unknown;
     /**
      * This filter matches any of the provided statuses for the current status of the transaction
      */
-    statusIn?: Array<tTransactionStatusEnum & unknown>;
+    statusIn?: Array<tTransactionStatusEnum>;
 };
-
-/**
- * This filter matches the current status of the transaction
- */
-export const tTransactionStatusEnum = {
-    pending: 'pending',
-    open: 'open',
-    resolved: 'resolved',
-    dispute: 'dispute',
-    rejected: 'rejected',
-    expired: 'expired',
-    success: 'success',
-    closed: 'closed'
-} as const;
-
-/**
- * This filter matches the current status of the transaction
- */
-export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
 
 /**
  * App-based filters
@@ -995,11 +1014,11 @@ export type tTransactionWhere = {
      * This filter matches the exact listingId
      */
     listingId?: string;
-    status?: tTransactionStatusEnum;
+    status?: tTransactionStatusEnum & unknown;
     /**
      * This filter matches any of the provided statuses for the current status of the transaction
      */
-    statusIn?: Array<tTransactionStatusEnum & unknown>;
+    statusIn?: Array<tTransactionStatusEnum>;
 };
 
 /**
@@ -1026,62 +1045,37 @@ export const tTransactionSortField = {
 export type tTransactionSortField = typeof tTransactionSortField[keyof typeof tTransactionSortField];
 
 /**
- * Transaction data
+ * Query object for transaction count
  */
-export type tTransaction = {
-    /**
-     * ID of the transaction
-     */
-    id: string;
-    /**
-     * ID of the related listing
-     */
-    listingId: string;
-    /**
-     * ID of the message thread associated with the transaction
-     */
-    messageThreadId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    /**
-     * Last update timestamp
-     */
-    updatedAt: string;
-    /**
-     * Expiration timestamp
-     */
-    expiresAt: string;
-    /**
-     * Transaction title
-     */
-    title: string;
-    status: tTransactionStatusEnum & unknown;
-    gallery: tGallery & unknown;
-    /**
-     * Price of the listing
-     */
-    price: number;
-    priceType: tListingPriceEnum;
-    currency: tCurrencyEnum;
-    location: tLocation;
+export type tTransactionCountQuery = {
+    filter?: tTransactionFilter;
+    where?: tTransactionWhere;
+    count?: Array<'total' | 'filter' | 'where'>;
 };
 
 /**
- * Transaction listing collection item
+ * Aggregated transaction information per listing
  */
-export type tTransactionListingItem = {
+export type tTransactionListing = {
     /**
-     * ID of the listing
+     * ID of the listing that has at least one transaction
+     */
+    id: string;
+    /**
+     * ID of the listing that has at least one transaction
      */
     listingId: string;
     /**
-     * Number of transactions for this listing
+     * Title of the listing
+     */
+    title: string;
+    gallery: tGallery & unknown;
+    /**
+     * Total number of transactions for this listing (within the current scope)
      */
     count: number | null;
     /**
-     * Timestamp of the last transaction update
+     * Timestamp of the most recent activity in any transaction under this listing
      */
     lastAt: string;
 };
@@ -1159,6 +1153,15 @@ export const tTransactionListingSortField = { createdAt: 'createdAt' } as const;
 export type tTransactionListingSortField = typeof tTransactionListingSortField[keyof typeof tTransactionListingSortField];
 
 /**
+ * Query object for transaction-listing count
+ */
+export type tTransactionListingCountQuery = {
+    filter?: tTransactionListingFilter;
+    where?: tTransactionListingWhere;
+    count?: Array<'total' | 'filter' | 'where'>;
+};
+
+/**
  * Listing transaction status entry
  */
 export type tTransactionStatus = {
@@ -1175,7 +1178,7 @@ export type tTransactionStatus = {
      */
     listingId: string;
     side: tTransactionSideEnum;
-    status: tTransactionStatusEnum & unknown;
+    status: tTransactionStatusEnum;
     /**
      * Creation timestamp
      */
@@ -1258,7 +1261,7 @@ export type tApiDraftCollectionResponse = {
     /**
      * Access collection of drafts based on provided query
      */
-    200: Array<tDraftItem>;
+    200: Array<tDraft>;
 };
 
 export type apiDraftCollectionResponse = tApiDraftCollectionResponse[keyof tApiDraftCollectionResponse];
@@ -1598,10 +1601,35 @@ export type tApiTransactionCollectionResponse = {
     /**
      * Access collection of transactions based on provided query
      */
-    200: Array<tTransactionItem>;
+    200: Array<tTransaction>;
 };
 
 export type apiTransactionCollectionResponse = tApiTransactionCollectionResponse[keyof tApiTransactionCollectionResponse];
+
+export type tApiTransactionCountRequest = {
+    body?: tTransactionCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/seller-user/transaction/count';
+};
+
+export type apiTransactionCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionCountError = apiTransactionCountErrors[keyof apiTransactionCountErrors];
+
+export type tApiTransactionCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiTransactionCountResponse = tApiTransactionCountResponse[keyof tApiTransactionCountResponse];
 
 export type tApiTransactionFetchRequest = {
     /**
@@ -1655,10 +1683,67 @@ export type tApiTransactionListingCollectionResponse = {
     /**
      * Access collection of listings that have transactions based on provided query
      */
-    200: Array<tTransactionListingItem>;
+    200: Array<tTransactionListing>;
 };
 
 export type apiTransactionListingCollectionResponse = tApiTransactionListingCollectionResponse[keyof tApiTransactionListingCollectionResponse];
+
+export type tApiTransactionListingCountRequest = {
+    body?: tTransactionListingCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/seller-user/transaction-listing/count';
+};
+
+export type apiTransactionListingCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionListingCountError = apiTransactionListingCountErrors[keyof apiTransactionListingCountErrors];
+
+export type tApiTransactionListingCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiTransactionListingCountResponse = tApiTransactionListingCountResponse[keyof tApiTransactionListingCountResponse];
+
+export type tApiTransactionListingFetchRequest = {
+    /**
+     * Query object for transaction-listing fetch
+     */
+    body?: tTransactionListingQuery;
+    path?: never;
+    query?: never;
+    url: '/api/seller-user/transaction-listing/fetch';
+};
+
+export type apiTransactionListingFetchErrors = {
+    /**
+     * Transaction-listing aggregate not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionListingFetchError = apiTransactionListingFetchErrors[keyof apiTransactionListingFetchErrors];
+
+export type tApiTransactionListingFetchResponse = {
+    /**
+     * Transaction-listing aggregate matching provided query
+     */
+    200: tTransactionListing;
+};
+
+export type apiTransactionListingFetchResponse = tApiTransactionListingFetchResponse[keyof tApiTransactionListingFetchResponse];
 
 export type tApiTransactionStatusAcceptRequest = {
     /**

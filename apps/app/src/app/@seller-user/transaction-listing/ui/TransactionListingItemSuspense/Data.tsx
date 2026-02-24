@@ -9,8 +9,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { tvc } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import type { tTransactionListingItem } from "@zbav-se.me/sdk/api/seller-user";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/seller-user/listing";
+import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller-user/transaction-listing";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
@@ -18,29 +17,25 @@ import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
-		transactionListingItem: tTransactionListingItem;
+		transactionListingId: string;
 	}
 }
 
 export const Data: FC<Data.Props> = ({
 	_suspense,
-	transactionListingItem,
+	transactionListingId,
 	ui,
 	className,
 	...props
 }) => {
 	const locale = useLocale();
-	const { data: listing } = withListingFetchQuery.useSuspenseQuery({
-		where: {
-			id: transactionListingItem.listingId,
-		},
-	});
-	const hero = useHeroUpload(listing.gallery.items);
+	const { data: transactionListing } = withTransactionListingQuery.useQuery(transactionListingId);
+	const hero = useHeroUpload(transactionListing.gallery.items);
 
 	return (
 		<Container
 			data-ui={"TransactionListingItem[Container]"}
-			data-id={transactionListingItem.listingId}
+			data-id={transactionListing.id}
 			className={tvc([
 				"h-42 md:h-92",
 				className,
@@ -59,7 +54,7 @@ export const Data: FC<Data.Props> = ({
 				to={"/$locale/flow/seller/message/$listingId/list"}
 				params={{
 					locale,
-					listingId: transactionListingItem.listingId,
+					listingId: transactionListing.id,
 				}}
 				ui={{
 					height: "full",
@@ -67,9 +62,9 @@ export const Data: FC<Data.Props> = ({
 				}}
 			>
 				<HeroImage
-					data-uri="TransactionListingItem-[HeroImage]"
+					data-ui="TransactionListingItem-[HeroImage]"
 					src={hero.url}
-					alt={`Hero image for listing ${listing.id}`}
+					alt={`Hero image for listing ${transactionListing.id}`}
 					visible
 					invisible={
 						<SpinnerContainer
@@ -109,7 +104,7 @@ export const Data: FC<Data.Props> = ({
 					<Typo
 						label={`x${toLocaleNumber({
 							locale,
-							number: transactionListingItem.count,
+							number: transactionListing.count,
 						})}`}
 						ui={{
 							font: "bold",
@@ -136,7 +131,7 @@ export const Data: FC<Data.Props> = ({
 					<Typo
 						label={toTimeDiff({
 							locale,
-							time: transactionListingItem.lastAt,
+							time: transactionListing.lastAt,
 						})}
 						ui={{
 							font: "bold",
@@ -160,7 +155,7 @@ export const Data: FC<Data.Props> = ({
 					className={"text-center"}
 				>
 					<Tx
-						label={listing.title}
+						label={transactionListing.title}
 						ui={{
 							tone: "brand",
 							theme: "light",

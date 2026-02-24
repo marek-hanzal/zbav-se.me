@@ -94,3 +94,5 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `SortSection.tsx`
   - `FilterSection.tsx`
   - `TitleSection.tsx`
+- Feed list page now resolves absolute empty state via listing `count.total` (global no-data) while keeping feed-filter empty in the list-level empty renderer.
+- Buyer transaction list now runs on `withTransactionQuery` collection cache hydration (`useCollectionQuery` + per-item `useQuery`) with configurable collection `refetchInterval`.

@@ -6,15 +6,15 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tTransactionItem, tTransactionQuery } from "@zbav-se.me/sdk/api/buyer-user";
-import { withTransactionCollectionQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
+import type { tTransactionQuery } from "@zbav-se.me/sdk/api/buyer-user";
+import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
 import { MessageIcon } from "@zbav-se.me/ui/icon";
 import type { FC, ReactNode } from "react";
 
 export namespace TransactionListContainer {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		query: tTransactionQuery;
-		renderItem(item: tTransactionItem): ReactNode;
+		renderItem(transactionId: string): ReactNode;
 		refetchInterval?: number;
 	}
 }
@@ -28,7 +28,7 @@ export const TransactionListContainer: FC<TransactionListContainer.Props> = ({
 	...props
 }) => {
 	const locale = useLocale();
-	const { data } = withTransactionCollectionQuery.useSuspenseQuery(query, {
+	const { data } = withTransactionQuery.useCollectionQuery(query, {
 		refetchInterval,
 	});
 
@@ -86,7 +86,7 @@ export const TransactionListContainer: FC<TransactionListContainer.Props> = ({
 						gap: "default",
 					}}
 				>
-					{data.map((item) => renderItem(item))}
+					{data.map((transactionId) => renderItem(transactionId))}
 				</Container>
 			)}
 		</Container>

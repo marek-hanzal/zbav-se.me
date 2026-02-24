@@ -1,7 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
-import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { FC } from "react";
 import { DraftEditor } from "~/app/@seller-user/draft/ui/DraftEditor";
 
@@ -14,11 +14,7 @@ export namespace DraftEditPage {
 export const DraftEditPage: FC<DraftEditPage.Props> = ({ _suspense, draftId }) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
-	const { data } = withDraftFetchQuery.useSuspenseQuery({
-		where: {
-			id: draftId,
-		},
-	});
+	const { data } = withDraftQuery.useQuery(draftId);
 
 	return (
 		<DraftEditor

@@ -2,11 +2,11 @@ import { useSelection } from "@use-pico/client/hook";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListingPriceEnum } from "@zbav-se.me/sdk/api/seller-user";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { PatchContainer } from "~/app/@common/container/ui/PatchContainer";
 import { PriceTypeSelect } from "~/app/@common/price-type/ui/PriceTypeSelect";
-import { useDraftPatch } from "~/app/@seller-user/draft/hook/useDraftPatch";
 
 export namespace PriceTypePatch {
 	export interface Props extends TitleContainer.Props {
@@ -22,8 +22,7 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
 	onSettled,
 	...props
 }) => {
-	const { patch, isPending } = useDraftPatch({
-		draft,
+	const mutation = withDraftQuery.useMutation({
 		onSettled,
 	});
 	const selection = useSelection<EntitySchema.Type>({
@@ -45,12 +44,19 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
 			title={translator.text("Price type (title)")}
 			data-ui={"Setup-[TitleContainer.price-type]"}
 			onCancel={onCancel}
-			onSave={() =>
-				patch({
-					priceType,
-				})
-			}
-			loading={isPending}
+			onSave={() => {
+				mutation.mutate({
+					patch: {
+						priceType,
+					},
+					query: {
+						where: {
+							id: draft.id,
+						},
+					},
+				});
+			}}
+			loading={mutation.isPending}
 			disabled={priceType === null}
 			{...props}
 		>

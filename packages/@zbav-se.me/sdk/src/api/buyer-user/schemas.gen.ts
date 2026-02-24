@@ -1796,19 +1796,82 @@ export const sThumbCreate = {
     ]
 } as const;
 
-export const sTransactionItem = {
+export const sTransaction = {
     type: 'object',
     properties: {
         id: {
             type: 'string'
         },
-        lastAt: {
+        listingId: {
             type: 'string'
+        },
+        messageThreadId: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string'
+        },
+        updatedAt: {
+            type: 'string'
+        },
+        expiresAt: {
+            type: 'string'
+        },
+        title: {
+            type: 'string'
+        },
+        status: {
+            $ref: '#/components/schemas/TransactionStatusEnum'
+        },
+        gallery: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/Gallery'
+                },
+                {}
+            ]
+        },
+        price: {
+            type: 'number'
+        },
+        priceType: {
+            $ref: '#/components/schemas/ListingPriceEnum'
+        },
+        currency: {
+            $ref: '#/components/schemas/CurrencyEnum'
+        },
+        location: {
+            $ref: '#/components/schemas/Location'
         }
     },
     required: [
         'id',
-        'lastAt'
+        'listingId',
+        'messageThreadId',
+        'createdAt',
+        'updatedAt',
+        'expiresAt',
+        'title',
+        'status',
+        'gallery',
+        'price',
+        'priceType',
+        'currency',
+        'location'
+    ]
+} as const;
+
+export const sTransactionStatusEnum = {
+    type: 'string',
+    enum: [
+        'pending',
+        'open',
+        'resolved',
+        'dispute',
+        'rejected',
+        'expired',
+        'success',
+        'closed'
     ]
 } as const;
 
@@ -1855,34 +1918,20 @@ export const sTransactionFilter = {
             type: 'string'
         },
         status: {
-            $ref: '#/components/schemas/TransactionStatusEnum'
+            allOf: [
+                {
+                    $ref: '#/components/schemas/TransactionStatusEnum'
+                },
+                {}
+            ]
         },
         statusIn: {
             type: 'array',
             items: {
-                allOf: [
-                    {
-                        $ref: '#/components/schemas/TransactionStatusEnum'
-                    },
-                    {}
-                ]
+                $ref: '#/components/schemas/TransactionStatusEnum'
             }
         }
     }
-} as const;
-
-export const sTransactionStatusEnum = {
-    type: 'string',
-    enum: [
-        'pending',
-        'open',
-        'resolved',
-        'dispute',
-        'rejected',
-        'expired',
-        'success',
-        'closed'
-    ]
 } as const;
 
 export const sTransactionWhere = {
@@ -1907,17 +1956,17 @@ export const sTransactionWhere = {
             type: 'string'
         },
         status: {
-            $ref: '#/components/schemas/TransactionStatusEnum'
+            allOf: [
+                {
+                    $ref: '#/components/schemas/TransactionStatusEnum'
+                },
+                {}
+            ]
         },
         statusIn: {
             type: 'array',
             items: {
-                allOf: [
-                    {
-                        $ref: '#/components/schemas/TransactionStatusEnum'
-                    },
-                    {}
-                ]
+                $ref: '#/components/schemas/TransactionStatusEnum'
             }
         }
     }
@@ -1949,74 +1998,27 @@ export const sTransactionSortField = {
     ]
 } as const;
 
-export const sTransaction = {
+export const sTransactionCountQuery = {
     type: 'object',
     properties: {
-        id: {
-            type: 'string'
+        filter: {
+            $ref: '#/components/schemas/TransactionFilter'
         },
-        listingId: {
-            type: 'string'
+        where: {
+            $ref: '#/components/schemas/TransactionWhere'
         },
-        messageThreadId: {
-            type: 'string'
-        },
-        createdAt: {
-            type: 'string'
-        },
-        updatedAt: {
-            type: 'string'
-        },
-        expiresAt: {
-            type: 'string'
-        },
-        title: {
-            type: 'string'
-        },
-        status: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/TransactionStatusEnum'
-                },
-                {}
-            ]
-        },
-        gallery: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/Gallery'
-                },
-                {}
-            ]
-        },
-        price: {
-            type: 'number'
-        },
-        priceType: {
-            $ref: '#/components/schemas/ListingPriceEnum'
-        },
-        currency: {
-            $ref: '#/components/schemas/CurrencyEnum'
-        },
-        location: {
-            $ref: '#/components/schemas/Location'
+        count: {
+            type: 'array',
+            items: {
+                type: 'string',
+                enum: [
+                    'total',
+                    'filter',
+                    'where'
+                ]
+            }
         }
-    },
-    required: [
-        'id',
-        'listingId',
-        'messageThreadId',
-        'createdAt',
-        'updatedAt',
-        'expiresAt',
-        'title',
-        'status',
-        'gallery',
-        'price',
-        'priceType',
-        'currency',
-        'location'
-    ]
+    }
 } as const;
 
 export const sTransactionCreate = {
@@ -2047,12 +2049,7 @@ export const sTransactionStatus = {
             $ref: '#/components/schemas/TransactionSideEnum'
         },
         status: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/TransactionStatusEnum'
-                },
-                {}
-            ]
+            $ref: '#/components/schemas/TransactionStatusEnum'
         },
         createdAt: {
             type: 'string'

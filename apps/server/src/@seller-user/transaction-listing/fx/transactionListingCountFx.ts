@@ -1,0 +1,30 @@
+import { withCountFx } from "@use-pico/common/count";
+import { Effect } from "effect";
+import { withTransactionListingQueryBuilderFx } from "~/@seller-user/transaction-listing/db/withTransactionListingQueryBuilderFx";
+import { withTransactionListingSourceSelectFx } from "~/@seller-user/transaction-listing/db/withTransactionListingSourceSelectFx";
+import type { TransactionListingCountQuerySchema } from "~/@seller-user/transaction-listing/schema/TransactionListingCountQuerySchema";
+import type { TransactionListingFilterSchema } from "~/@seller-user/transaction-listing/schema/TransactionListingFilterSchema";
+
+export namespace transactionListingCountFx {
+	export interface Props extends TransactionListingCountQuerySchema.Type {
+		scope?: TransactionListingFilterSchema.Type;
+	}
+}
+
+export const transactionListingCountFx = Effect.fn("transactionListingCountFx")(function* ({
+	filter,
+	where,
+	scope,
+	count,
+}: transactionListingCountFx.Props) {
+	return yield* withCountFx({
+		selectFx: withTransactionListingSourceSelectFx({}),
+		filter,
+		where,
+		scope,
+		count,
+		queryFx: withTransactionListingQueryBuilderFx,
+	});
+});
+
+export type transactionListingCountFx = ReturnType<typeof transactionListingCountFx>;

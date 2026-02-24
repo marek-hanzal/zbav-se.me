@@ -1,7 +1,7 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
-import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
+import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
 import { type FC, useRef } from "react";
 import { MessageListSuspense } from "~/app/@common/message/MessageListSuspense";
 import { TransactionChat } from "~/app/@seller-user/transaction/ui/TransactionChat";
@@ -22,16 +22,9 @@ export const Transaction: FC<Transaction.Props> = ({
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
-	const { data: transaction } = withTransactionFetchQuery.useSuspenseQuery(
-		{
-			where: {
-				id: transactionId,
-			},
-		},
-		{
-			refetchInterval: refresh,
-		},
-	);
+	const { data: transaction } = withTransactionQuery.useQuery(transactionId, {
+		refetchInterval: refresh,
+	});
 
 	return (
 		<Container

@@ -10,6 +10,7 @@ This domain handles all seller-specific operations that require access to the us
 
 ### Draft Management
 - **Collection** - List user's drafts (work-in-progress listings)
+- Collection responses return full draft payloads (same shape as fetch) for list cache hydration.
 - **Create** - Create new draft
 - **Fetch** - Get single draft details
 - **Patch** - Update draft (autosave)
@@ -26,13 +27,18 @@ This domain handles all seller-specific operations that require access to the us
 
 ### Transaction Management
 - **Collection** - List seller's transactions (incoming buyer requests)
+- **Count** - Count seller transactions (total/where/filter)
 - **Fetch** - Get transaction details
 - Seller-side view of transactions on their listings
 - Query performance: seller transaction filtering uses the joined listing owner (`l.userId`) and latest status lateral join (`status.latestStatus`) instead of nested `EXISTS` subqueries.
+- Collection responses now return full transaction payloads (same shape as fetch) for cache hydration in list UIs.
 
 ### Transaction Listing
 - **Collection** - Get listings associated with transactions
+- **Count** - Count listings associated with transactions
+- **Fetch** - Fetch one listing aggregate associated with transactions
 - Links transactions to their source listings
+- Collection/fetch payload now includes listing card data (`id`, `title`, `gallery`, `count`, `lastAt`) to avoid per-item listing fetches in app lists.
 
 ### Transaction Status
 - **Accept** - Accept buyer's interest (pending → open)

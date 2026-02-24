@@ -3,7 +3,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
 import { withTransactionStatusSuccessMutation } from "@zbav-se.me/sdk/mutation/buyer-user/transaction";
-import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
+import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
@@ -30,11 +30,7 @@ export const SuccessButton: FC<SuccessButton.Props> = ({ transaction, ...props }
 					},
 					{
 						onSuccess() {
-							withTransactionFetchQuery.invalidate(queryClient, {
-								where: {
-									id: transaction.id,
-								},
-							});
+							withTransactionQuery.invalidateQuery(queryClient, transaction.id);
 							withMessageThreadMessageCollectionQuery.invalidate(queryClient, {
 								path: {
 									messageThreadId: transaction.messageThreadId,
