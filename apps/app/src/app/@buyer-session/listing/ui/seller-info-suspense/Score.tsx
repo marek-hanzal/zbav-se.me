@@ -4,15 +4,15 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import { RatingToIcon } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
-import { toSellerScoreHint } from "~/app/@buyer-session/listing/ui/toSellerScoreHint";
+import { toSellerScoreHint } from "~/app/@buyer-session/listing/ui/seller-info-suspense/toSellerScoreHint";
 
-export namespace SellerInfoScore {
+export namespace Score {
 	export interface Props {
 		rank: number;
 	}
 }
 
-export const SellerInfoScore: FC<SellerInfoScore.Props> = ({ rank }) => {
+export const Score: FC<Score.Props> = ({ rank }) => {
 	return (
 		<LabelValue
 			textLabel={translator.text("User score (label)")}
