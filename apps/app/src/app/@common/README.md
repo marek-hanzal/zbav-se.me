@@ -88,3 +88,6 @@ When adding to `@common`:
   - `@common/photo/ui/photo-upload/PhotoUploadPending.tsx`
   - `@common/photo/ui/photo-upload/PhotoUploadPlaceholder.tsx`
   - `@common/photo/ui/photo-upload/PhotoUploadPreview.tsx`
+- Route shell pages were extracted into shared components:
+  - `@common/locale/page/LocalePage.tsx`
+  - `@common/nav/page/UiPage.tsx`

@@ -4,7 +4,7 @@ import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
-import type { ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 import type { EditorSheet } from "~/app/@buyer-user/feed/ui/EditorSheet";
 import { toDetailHandlers } from "~/app/@buyer-user/feed/ui/editor-sheet/toDetailHandlers";
 import { FeedEditor } from "~/app/@buyer-user/feed/ui/FeedEditor";
@@ -21,10 +21,9 @@ import { WarrantyPatch } from "~/app/@buyer-user/feed/ui/patch/WarrantyPatch";
 import { GalleryUploadContainer } from "~/app/@common/gallery/ui/GalleryUploadContainer";
 
 export namespace createEditorSheetViews {
-	export interface Props {
+	export interface Props extends PropsWithChildren {
 		feed: tFeed;
 		noDelete: boolean;
-		children: ReactNode;
 		state: StateType.State<boolean>;
 		setView: (view: EditorSheet.Views) => void;
 	}

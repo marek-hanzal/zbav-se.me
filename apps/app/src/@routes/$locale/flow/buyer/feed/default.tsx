@@ -44,7 +44,5 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/default")({
 			},
 		});
 	},
-	pendingComponent() {
-		return <FeedDefaultPendingPage />;
-	},
+	pendingComponent: FeedDefaultPendingPage,
 });

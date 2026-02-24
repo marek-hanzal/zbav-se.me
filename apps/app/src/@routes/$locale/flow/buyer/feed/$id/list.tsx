@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
-import { FlowContainer } from "@zbav-se.me/ui/container";
 import z from "zod";
 import { FeedListPage } from "~/app/@buyer-user/feed/page/FeedListPage";
 
@@ -32,13 +31,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 	/**
 	 * We've loader, so we also need pending component.
 	 */
-	pendingComponent() {
-		return (
-			<FlowContainer>
-				<SpinnerContainer />
-			</FlowContainer>
-		);
-	},
+	pendingComponent: SpinnerContainer,
 	component() {
 		const { scrollToId } = Route.useSearch();
 		const { feed } = Route.useLoaderData();

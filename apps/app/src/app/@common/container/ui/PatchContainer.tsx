@@ -1,6 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import type { FC, ReactNode } from "react";
+import type { FC, PropsWithChildren } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 const innerUi = {
@@ -12,8 +12,7 @@ const innerUi = {
 } as const;
 
 export namespace PatchContainer {
-	export interface Props extends Container.Props {
-		children: ReactNode;
+	export interface Props extends Container.Props, PropsWithChildren {
 		onCancel(): void;
 		onSave(): void;
 		loading: boolean;

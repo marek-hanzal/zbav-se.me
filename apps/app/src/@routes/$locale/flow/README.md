@@ -6,6 +6,8 @@ what you place here as the user _may be_ confused with navigation being hidden.
 ## Note
 
 When flow route files become large, prefer moving reusable UI/state pieces into `apps/app/src/app/*` domain components and keep route files focused on loader/navigation composition.
+Every flow route should render a dedicated `*Page` component from its owning domain.
+If the route defines `pendingComponent`, use a dedicated `*PendingPage.tsx`.
 
 Flow route `data-ui` selectors must follow the bracketed contract:
 - Root: `Component[Element]`

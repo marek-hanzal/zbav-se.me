@@ -43,5 +43,5 @@ export const Route = createFileRoute("/$locale/flow/seller/draft/resolve")({
 			},
 		});
 	},
-	pendingComponent: () => <SpinnerContainer />,
+	pendingComponent: SpinnerContainer,
 });

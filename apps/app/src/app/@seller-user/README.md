@@ -67,3 +67,11 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - each section owns its own namespaced `Props`
   - `DraftEditor.View` namespace type as source of truth for editor views
 - Seller listing list components now resolve locale via `useLocale()` instead of accepting `locale` props.
+- Seller flow routes now use page components:
+  - `@seller-user/draft/page/DraftListPage.tsx`
+  - `@seller-user/draft/page/DraftEditPage.tsx`
+  - `@seller-user/listing/page/MyListingPage.tsx`
+  - `@seller-user/listing/page/ListingViewPage.tsx`
+  - `@seller-user/transaction-listing/page/MessageListPage.tsx`
+  - `@seller-user/transaction-listing/page/ListingMessageListPage.tsx`
+  - `@seller-user/transaction-listing/page/ListingMessageListPendingPage.tsx`
