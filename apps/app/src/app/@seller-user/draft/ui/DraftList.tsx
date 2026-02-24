@@ -2,10 +2,9 @@ import { Container } from "@use-pico/client/ui/container";
 import type { MarkSuspense } from "@use-pico/client/type";
 import type { tDraft, tDraftQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { withDraftCollectionQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
-import { type FC, Suspense } from "react";
+import type { FC } from "react";
 import { CreateButton } from "~/app/@seller-user/draft/ui/button/CreateButton";
-import { DraftListItem } from "~/app/@seller-user/draft/ui/DraftListItem";
-import { DraftListItemPending } from "~/app/@seller-user/draft/ui/DraftListItemPending";
+import { DraftListItemSuspense } from "~/app/@seller-user/draft/ui/DraftListItemSuspense";
 
 export namespace DraftList {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -41,15 +40,10 @@ export const DraftList: FC<DraftList.Props> = ({
 			>
 				{data.map(({ id: draftId }) => {
 					return (
-						<Suspense
+						<DraftListItemSuspense
 							key={draftId}
-							fallback={<DraftListItemPending />}
-						>
-							<DraftListItem
-								_suspense={"I know"}
-								draftId={draftId}
-							/>
-						</Suspense>
+							draftId={draftId}
+						/>
 					);
 				})}
 

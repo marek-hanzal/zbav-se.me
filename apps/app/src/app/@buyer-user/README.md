@@ -67,8 +67,8 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 - Listing detail was split into focused parts in `@buyer-user/listing/ui/listing-detail/`:
   - `ListingHeroSection.tsx`
   - `ListingInfoSection.tsx`
-  - `ListingSellerInfo.tsx`
-  - `ListingDestructiveActions.tsx`
+  - `listing-seller-info-suspense/ListingSellerInfo.tsx`
+  - `listing-destructive-actions-suspense/ListingDestructiveActions.tsx`
 - Feed editor decomposition in `@buyer-user/feed/ui/feed-editor/`:
   - `FeedEditorFields.tsx`
   - `FeedEditorDeleteButton.tsx`
@@ -86,6 +86,7 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `@buyer-user/feed-favourite/page/FavouriteListPage.tsx`
   - `@buyer-user/transaction/page/MessageListPage.tsx`
 - Buyer transaction list now uses domain-local container/pending components in `@buyer-user/transaction/ui/` (no shared `@common` transaction list abstraction).
+- Buyer feature call-sites increasingly use local `*Suspense` wrappers (for `Pending` + data composition) to keep suspense boundaries close to feature roots (`feed`, `listing`, `transaction`, `feed-favourite`).
 - Feed editor fields split by UI sections in `@buyer-user/feed/ui/feed-editor/`:
   - `IdentitySection.tsx`
   - `CategorySection.tsx`

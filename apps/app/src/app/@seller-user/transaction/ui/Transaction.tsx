@@ -2,9 +2,8 @@ import { Container } from "@use-pico/client/ui/container";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
-import { type FC, Suspense, useRef } from "react";
-import { MessageList } from "~/app/@common/message/MessageList";
-import { MessageListPending } from "~/app/@common/message/MessageListPending";
+import { type FC, useRef } from "react";
+import { MessageListSuspense } from "~/app/@common/message/MessageListSuspense";
 import { TransactionChat } from "~/app/@seller-user/transaction/ui/TransactionChat";
 import { TransactionMessage } from "~/app/@seller-user/transaction/ui/TransactionMessage";
 import { TransactionToolbar } from "~/app/@seller-user/transaction/ui/TransactionToolbar";
@@ -59,18 +58,15 @@ export const Transaction: FC<Transaction.Props> = ({
 						scroll: "vertical",
 					}}
 				>
-					<Suspense fallback={<MessageListPending />}>
-						<MessageList
-							_suspense={"I know"}
-							side={tUserSideEnum.seller}
-							containerRef={containerRef}
-							messageThreadId={transaction.messageThreadId}
-							refresh={refresh}
-						>
-							<TransactionMessage transaction={transaction} />
-							<TransactionToolbar transaction={transaction} />
-						</MessageList>
-					</Suspense>
+					<MessageListSuspense
+						side={tUserSideEnum.seller}
+						containerRef={containerRef}
+						messageThreadId={transaction.messageThreadId}
+						refresh={refresh}
+					>
+						<TransactionMessage transaction={transaction} />
+						<TransactionToolbar transaction={transaction} />
+					</MessageListSuspense>
 				</Container>
 
 				<TransactionChat transaction={transaction} />

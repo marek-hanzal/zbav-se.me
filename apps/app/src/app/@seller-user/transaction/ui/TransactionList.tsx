@@ -1,10 +1,9 @@
 import type { Container } from "@use-pico/client/ui/container";
 import type { tTransactionQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { type FC, Suspense } from "react";
-import { TransactionItem } from "~/app/@seller-user/transaction/ui/TransactionItem";
-import { TransactionItemPending } from "~/app/@seller-user/transaction/ui/TransactionItemPending";
 import { TransactionListContainer } from "~/app/@seller-user/transaction/ui/TransactionListContainer";
 import { TransactionListContainerPending } from "~/app/@seller-user/transaction/ui/TransactionListContainerPending";
+import { TransactionItemSuspense } from "~/app/@seller-user/transaction/ui/TransactionItemSuspense";
 
 export namespace TransactionList {
 	export interface Props extends Container.Props {
@@ -19,16 +18,11 @@ export const TransactionList: FC<TransactionList.Props> = ({ query, ...props }) 
 				_suspense={"I know"}
 				query={query}
 				renderItem={(item) => (
-					<Suspense
+					<TransactionItemSuspense
 						key={item.id}
-						fallback={<TransactionItemPending />}
-					>
-						<TransactionItem
-							_suspense={"I know"}
-							data-id={item.id}
-							transactionId={item.id}
-						/>
-					</Suspense>
+						data-id={item.id}
+						transactionId={item.id}
+					/>
 				)}
 				{...props}
 			/>

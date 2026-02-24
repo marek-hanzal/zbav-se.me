@@ -3,9 +3,8 @@ import { Button } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { SellerIcon } from "@zbav-se.me/ui/icon";
-import { type FC, Suspense, useState } from "react";
-import { SellerInfo } from "~/app/@buyer-session/listing/ui/SellerInfo";
-import { SellerInfoPending } from "~/app/@buyer-session/listing/ui/SellerInfoPending";
+import { type FC, useState } from "react";
+import { SellerInfoSuspense } from "~/app/@buyer-session/listing/ui/SellerInfoSuspense";
 
 export namespace SellerInfoButton {
 	export interface Props extends Button.Props {
@@ -39,15 +38,12 @@ export const SellerInfoButton: FC<SellerInfoButton.Props> = ({ listingId, ...pro
 					right: <CloseButton onClick={close} />,
 				})}
 			>
-				<Suspense fallback={<SellerInfoPending />}>
-					<SellerInfo
-						_suspense={"I know"}
-						listingId={listingId}
-						ui={{
-							inner: "default",
-						}}
-					/>
-				</Suspense>
+				<SellerInfoSuspense
+					listingId={listingId}
+					ui={{
+						inner: "default",
+					}}
+				/>
 			</BottomSheet>
 		</>
 	);

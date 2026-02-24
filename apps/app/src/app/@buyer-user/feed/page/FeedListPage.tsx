@@ -6,9 +6,8 @@ import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { type FC, Suspense, useRef, useState } from "react";
-import { FeedEditorSheet } from "~/app/@buyer-user/feed/ui/list-route/FeedEditorSheet";
-import { FeedEditorSheetPending } from "~/app/@buyer-user/feed/ui/list-route/FeedEditorSheetPending";
+import { type FC, useRef, useState } from "react";
+import { FeedEditorSheetSuspense } from "~/app/@buyer-user/feed/ui/list-route/FeedEditorSheetSuspense";
 import { FeedListStatus } from "~/app/@buyer-user/feed/ui/list-route/FeedListStatus";
 import { FeedSetupButton } from "~/app/@buyer-user/feed/ui/list-route/FeedSetupButton";
 import { FirstListingStatus } from "~/app/@buyer-user/feed/ui/list-route/FirstListingStatus";
@@ -137,19 +136,17 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...prop
 
 			{listingQuery.data.length > 0 ? null : <FirstListingStatus />}
 
-			<Suspense fallback={<FeedEditorSheetPending />}>
-				<FeedEditorSheet
-					feedId={feed.id}
-					state={{
-						value: isFeedSettings,
-						set: setIsFeedSettings,
-					}}
-					onRefresh={() => {
-						setIsFeedSettings(false);
-						setTimeout(() => router.invalidate(), 200);
-					}}
-				/>
-			</Suspense>
+			<FeedEditorSheetSuspense
+				feedId={feed.id}
+				state={{
+					value: isFeedSettings,
+					set: setIsFeedSettings,
+				}}
+				onRefresh={() => {
+					setIsFeedSettings(false);
+					setTimeout(() => router.invalidate(), 200);
+				}}
+			/>
 		</FlowContainer>
 	);
 };

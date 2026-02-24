@@ -3,9 +3,8 @@ import { ChevronLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { type FC, Suspense, useRef } from "react";
-import { Empty } from "~/app/@buyer-user/feed/page/feed-favourite-list-page/Empty";
-import { EmptyPending } from "~/app/@buyer-user/feed/page/feed-favourite-list-page/EmptyPending";
+import { type FC, useRef } from "react";
+import { EmptySuspense } from "~/app/@buyer-user/feed/page/feed-favourite-list-page/EmptySuspense";
 import { FavouriteListAppendix } from "~/app/@buyer-user/feed-favourite/ui/FavouriteListAppendix";
 import { ListingListContainer } from "~/app/@buyer-user/listing/ui/ListingListContainer";
 
@@ -73,12 +72,7 @@ export const FeedFavouriteListPage: FC<FeedFavouriteListPage.Props> = ({ feedId,
 				}}
 				renderEmptyFn={() => {
 					return (
-						<Suspense fallback={<EmptyPending />}>
-							<Empty
-								_suspense={"I know"}
-								sentinelRef={sentinelRef}
-							/>
-						</Suspense>
+						<EmptySuspense sentinelRef={sentinelRef} />
 					);
 				}}
 				appendix={<FavouriteListAppendix ref={sentinelRef} />}

@@ -6,15 +6,14 @@ import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, Suspense, useRef, useState } from "react";
+import { type FC, useRef, useState } from "react";
 import { ListingOverlay } from "~/app/@buyer-user/listing/ui/ListingOverlay";
 import { ListingSheet } from "~/app/@buyer-user/listing/ui/ListingSheet";
 import { TransactionChat } from "~/app/@buyer-user/transaction/ui/TransactionChat";
 import { TransactionMessage } from "~/app/@buyer-user/transaction/ui/TransactionMessage";
 import { TransactionToolbar } from "~/app/@buyer-user/transaction/ui/TransactionToolbar";
 import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
-import { MessageList } from "~/app/@common/message/MessageList";
-import { MessageListPending } from "~/app/@common/message/MessageListPending";
+import { MessageListSuspense } from "~/app/@common/message/MessageListSuspense";
 
 export namespace Transaction {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -95,18 +94,15 @@ export const Transaction: FC<Transaction.Props> = ({
 						/>
 					</Container>
 
-					<Suspense fallback={<MessageListPending />}>
-						<MessageList
-							_suspense={"I know"}
-							side={tUserSideEnum.buyer}
-							containerRef={containerRef}
-							messageThreadId={transaction.messageThreadId}
-							refresh={refresh}
-						>
-							<TransactionMessage transaction={transaction} />
-							<TransactionToolbar transaction={transaction} />
-						</MessageList>
-					</Suspense>
+					<MessageListSuspense
+						side={tUserSideEnum.buyer}
+						containerRef={containerRef}
+						messageThreadId={transaction.messageThreadId}
+						refresh={refresh}
+					>
+						<TransactionMessage transaction={transaction} />
+						<TransactionToolbar transaction={transaction} />
+					</MessageListSuspense>
 
 					<VisibilityContext value={createNoopVisibilityStore()}>
 						<ListingSheet

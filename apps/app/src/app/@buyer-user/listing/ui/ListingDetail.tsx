@@ -1,11 +1,10 @@
 import { Container } from "@use-pico/client/ui/container";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
-import { type FC, Suspense } from "react";
+import type { FC } from "react";
 import { useListingEvent } from "~/app/@buyer-session/listing/hook/useListingEvent";
 import { ThumbDislikeButton } from "~/app/@buyer-user/listing/ui/button/ThumbDislikeButton";
 import { ThumbLikeButton } from "~/app/@buyer-user/listing/ui/button/ThumbLikeButton";
-import { ListingDestructiveActions } from "~/app/@buyer-user/listing/ui/listing-detail/ListingDestructiveActions";
-import { ListingDestructiveActionsPending } from "~/app/@buyer-user/listing/ui/listing-detail/ListingDestructiveActionsPending";
+import { ListingDestructiveActionsSuspense } from "~/app/@buyer-user/listing/ui/listing-detail/ListingDestructiveActionsSuspense";
 import { ListingHeroSection } from "~/app/@buyer-user/listing/ui/listing-detail/ListingHeroSection";
 import { ListingInfoSection } from "~/app/@buyer-user/listing/ui/listing-detail/ListingInfoSection";
 
@@ -85,12 +84,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 			) : null}
 
 			{tools.includes("destructive") ? (
-				<Suspense fallback={<ListingDestructiveActionsPending />}>
-					<ListingDestructiveActions
-						_suspense={"I know"}
-						listingId={listing.id}
-					/>
-				</Suspense>
+				<ListingDestructiveActionsSuspense listingId={listing.id} />
 			) : null}
 		</Container>
 	);

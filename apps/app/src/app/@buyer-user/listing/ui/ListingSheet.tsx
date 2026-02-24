@@ -4,9 +4,8 @@ import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import { CloseButton } from "@zbav-se.me/ui/button";
-import { type FC, Suspense, useState } from "react";
-import { SellerInfo } from "~/app/@buyer-session/listing/ui/SellerInfo";
-import { SellerInfoPending } from "~/app/@buyer-session/listing/ui/SellerInfoPending";
+import { type FC, useState } from "react";
+import { SellerInfoSuspense } from "~/app/@buyer-session/listing/ui/SellerInfoSuspense";
 import { ListingDetail } from "~/app/@buyer-user/listing/ui/ListingDetail";
 import { Transaction } from "~/app/@buyer-user/transaction/ui/Transaction";
 import { GalleryContent } from "~/app/@common/gallery/ui/GalleryContent";
@@ -108,15 +107,12 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				},
 				"seller-info": {
 					children: (
-						<Suspense fallback={<SellerInfoPending />}>
-							<SellerInfo
-								_suspense={"I know"}
-								listingId={listing.id}
-								ui={{
-									inner: "default",
-								}}
-							/>
-						</Suspense>
+						<SellerInfoSuspense
+							listingId={listing.id}
+							ui={{
+								inner: "default",
+							}}
+						/>
 					),
 					header: () => ({
 						title: translator.text("Seller info (title)"),

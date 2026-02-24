@@ -9,9 +9,8 @@ import { translator } from "@use-pico/common/translator";
 import type { tTransactionListingQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { withTransactionListingCollectionQuery } from "@zbav-se.me/sdk/query/seller-user/transaction-listing";
 import { MessageIcon } from "@zbav-se.me/ui/icon";
-import { type FC, Suspense } from "react";
-import { TransactionListingItem } from "~/app/@seller-user/transaction-listing/ui/TransactionListingItem";
-import { TransactionListingItemPending } from "~/app/@seller-user/transaction-listing/ui/TransactionListingItemPending";
+import type { FC } from "react";
+import { TransactionListingItemSuspense } from "~/app/@seller-user/transaction-listing/ui/TransactionListingItemSuspense";
 
 export namespace TransactionListingList {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -85,16 +84,11 @@ export const TransactionListingList: FC<TransactionListingList.Props> = ({
 					}}
 				>
 					{data.map((item) => (
-						<Suspense
+						<TransactionListingItemSuspense
 							key={item.listingId}
-							fallback={<TransactionListingItemPending />}
-						>
-							<TransactionListingItem
-								_suspense={"I know"}
-								data-id={item.listingId}
-								transactionListingItem={item}
-							/>
-						</Suspense>
+							data-id={item.listingId}
+							transactionListingItem={item}
+						/>
 					))}
 				</Container>
 			)}

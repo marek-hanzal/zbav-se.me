@@ -14,9 +14,8 @@ import {
 } from "@zbav-se.me/ui/icon";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
-import { Suspense, useRef } from "react";
-import { HomeMenuDraftLink } from "~/app/@user/home/HomeMenuDraftLink";
-import { HomeMenuDraftLinkPending } from "~/app/@user/home/HomeMenuDraftLinkPending";
+import { useRef } from "react";
+import { HomeMenuDraftLinkSuspense } from "~/app/@user/home/HomeMenuDraftLinkSuspense";
 
 export namespace HomeMenu {
 	export interface Props extends Container.Props {
@@ -122,12 +121,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 						</TypoIcon>
 					</LinkTo>
 
-					<Suspense fallback={<HomeMenuDraftLinkPending iconUi={icon} />}>
-						<HomeMenuDraftLink
-							_suspense={"I know"}
-							icon={icon}
-						/>
-					</Suspense>
+					<HomeMenuDraftLinkSuspense icon={icon} />
 				</Group>
 
 				<Group>

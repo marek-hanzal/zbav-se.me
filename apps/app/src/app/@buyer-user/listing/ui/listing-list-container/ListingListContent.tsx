@@ -8,10 +8,9 @@ import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
-import { type FC, type ReactNode, Suspense } from "react";
+import type { FC, ReactNode } from "react";
 import type { ListingListContainer } from "../ListingListContainer";
-import { ListingItem } from "./ListingItem";
-import { ListingItemPending } from "./ListingItemPending";
+import { ListingItemSuspense } from "./ListingItemSuspense";
 
 export namespace ListingListContent {
 	export interface Props {
@@ -82,13 +81,11 @@ export const ListingListContent: FC<ListingListContent.Props> = ({
 						width: "full",
 					}}
 				>
-					<Suspense fallback={<ListingItemPending />}>
-						<ListingItem
-							listingId={listingId}
-							feedId={feedId}
-							withScore={withScore}
-						/>
-					</Suspense>
+					<ListingItemSuspense
+						listingId={listingId}
+						feedId={feedId}
+						withScore={withScore}
+					/>
 				</VisibleContainer>
 			))}
 
