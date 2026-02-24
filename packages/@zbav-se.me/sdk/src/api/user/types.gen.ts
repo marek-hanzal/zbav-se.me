@@ -192,6 +192,14 @@ export type tCount = {
      * Total count of items (no filters applied).
      */
     total: number;
+    /**
+     * True when total count is empty.
+     */
+    isEmpty: boolean;
+    /**
+     * True when filter count is empty while total count has data.
+     */
+    isFilterEmpty: boolean;
 };
 
 /**

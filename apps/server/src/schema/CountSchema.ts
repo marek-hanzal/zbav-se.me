@@ -14,6 +14,14 @@ export const CountSchema = z
 			description: "Total count of items (no filters applied).",
 			type: "number",
 		}),
+		isEmpty: z.boolean().openapi({
+			description: "True when total count is empty.",
+			type: "boolean",
+		}),
+		isFilterEmpty: z.boolean().openapi({
+			description: "True when filter count is empty while total count has data.",
+			type: "boolean",
+		}),
 	})
 	.openapi("Count", {
 		description: "Count data",

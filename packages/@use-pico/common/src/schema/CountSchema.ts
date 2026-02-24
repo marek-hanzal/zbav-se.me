@@ -5,6 +5,8 @@ export const CountSchema = z
 		where: z.coerce.number(),
 		filter: z.coerce.number(),
 		total: z.coerce.number(),
+		isEmpty: z.boolean(),
+		isFilterEmpty: z.boolean(),
 	})
 	.strip();
 

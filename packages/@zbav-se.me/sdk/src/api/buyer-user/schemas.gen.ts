@@ -167,12 +167,20 @@ export const sCount = {
         },
         total: {
             type: 'number'
+        },
+        isEmpty: {
+            type: 'boolean'
+        },
+        isFilterEmpty: {
+            type: 'boolean'
         }
     },
     required: [
         'where',
         'filter',
-        'total'
+        'total',
+        'isEmpty',
+        'isFilterEmpty'
     ]
 } as const;
 

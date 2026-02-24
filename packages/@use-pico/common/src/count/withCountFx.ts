@@ -107,9 +107,15 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 			})
 		: undefined;
 
+	const total = countTotal?.count ?? 0;
+	const filterCount = countFilter?.count ?? 0;
+	const whereCount = countWhere?.count ?? 0;
+
 	return {
-		total: countTotal?.count ?? 0,
-		filter: countFilter?.count ?? 0,
-		where: countWhere?.count ?? 0,
+		total,
+		filter: filterCount,
+		where: whereCount,
+		isEmpty: total === 0,
+		isFilterEmpty: filterCount === 0 && total > 0,
 	};
 });
