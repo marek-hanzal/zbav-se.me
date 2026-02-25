@@ -11,6 +11,7 @@ export { ChevronDownIcon } from "./ChevronDownIcon";
 export { ChevronLeftIcon } from "./ChevronLeftIcon";
 export { ChevronRightIcon } from "./ChevronRightIcon";
 export { ChevronUpIcon } from "./ChevronUpIcon";
+export { CloseDrawerIcon } from "./CloseDrawerIcon";
 export { CloseIcon } from "./CloseIcon";
 export { ConfirmIcon } from "./ConfirmIcon";
 export { DescIcon } from "./DescIcon";

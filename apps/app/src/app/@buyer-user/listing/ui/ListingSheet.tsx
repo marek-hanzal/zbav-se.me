@@ -43,7 +43,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				value: view,
 				set: setView,
 			}}
-			detent={"full"}
+			detent={"default"}
 			views={{
 				detail: {
 					children: (
