@@ -27,7 +27,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 	const locale = useLocale();
 	const containerRef = useRef<HTMLDivElement>(null);
 	const icon: uiIcon.Ui = {
-		color: "icon",
+		color: "lead",
 		text: "2xl",
 	};
 
