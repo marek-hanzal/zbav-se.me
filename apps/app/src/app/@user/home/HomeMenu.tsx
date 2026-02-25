@@ -103,7 +103,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 						}}
 						activeProps={uiMenuButton({
 							ui: {
-								tone: "link",
+								tone: "primary",
 								theme: "light",
 							},
 							className: [],
@@ -142,7 +142,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 						}}
 						activeProps={uiMenuButton({
 							ui: {
-								tone: "link",
+								tone: "primary",
 								theme: "light",
 							},
 							className: [],
@@ -179,7 +179,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 						}}
 						activeProps={uiMenuButton({
 							ui: {
-								tone: "link",
+								tone: "primary",
 								theme: "light",
 							},
 							className: [],
@@ -214,7 +214,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 						}}
 						activeProps={uiMenuButton({
 							ui: {
-								tone: "link",
+								tone: "primary",
 								theme: "light",
 							},
 							className: [],
@@ -251,7 +251,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 						}}
 						activeProps={uiMenuButton({
 							ui: {
-								tone: "link",
+								tone: "primary",
 								theme: "light",
 							},
 							className: [],
@@ -286,7 +286,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 						}}
 						activeProps={uiMenuButton({
 							ui: {
-								tone: "link",
+								tone: "primary",
 								theme: "light",
 							},
 							className: [],
@@ -323,7 +323,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 						}}
 						activeProps={uiMenuButton({
 							ui: {
-								tone: "link",
+								tone: "primary",
 								theme: "light",
 							},
 							className: [],
