@@ -6,10 +6,10 @@ import { feedCreateDefault } from "~/app/@buyer-user/feed/service/feedCreateDefa
 export const Route = createFileRoute("/$locale/flow/buyer/feed/select")({
 	async loader({ context: { queryClient } }) {
 		/**
-		 * Dummy catch is intentional - we don't care about results here (not found throws an error).
+		 * Use count for existence check. It's cheaper than loading a full feed object.
 		 */
-		const feed = await withFeedQuery.fetch({}).catch(() => undefined);
-		if (!feed) {
+		const feedCount = await withFeedQuery.count({});
+		if (feedCount.total === 0) {
 			await feedCreateDefault({
 				queryClient,
 			});
