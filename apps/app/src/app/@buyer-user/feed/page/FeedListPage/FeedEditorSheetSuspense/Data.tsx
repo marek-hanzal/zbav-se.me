@@ -15,12 +15,12 @@ export namespace Data {
 }
 
 export const Data: FC<Data.Props> = ({ feedId, state, onRefresh }) => {
-	const feedQuery = withFeedQuery.useQuery(feedId);
+	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 
 	return (
 		<EditorSheet
 			data-ui={"FeedEditorSheet[EditorSheet]"}
-			feed={feedQuery.data}
+			feed={feed}
 			state={state}
 			noDelete
 		>

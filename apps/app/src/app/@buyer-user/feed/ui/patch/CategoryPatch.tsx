@@ -16,7 +16,7 @@ export namespace CategoryPatch {
 }
 
 export const CategoryPatch: FC<CategoryPatch.Props> = ({ feed, onSettled, ...props }) => {
-	const patchMutation = withFeedQuery.useMutation();
+	const patchMutation = withFeedQuery.usePatchMutation();
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
 		initial: feed.query?.filter?.categoryIdIn?.map((id) => ({

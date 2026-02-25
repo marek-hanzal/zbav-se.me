@@ -5,9 +5,9 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
-import { ListingSellerInfoSuspense } from "./ListingSellerInfoSuspense";
 import { CategoryInline } from "~/app/@common/category/ui/CategoryInline";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
+import { ListingSellerInfoSuspense } from "./ListingSellerInfoSuspense";
 
 export namespace ListingInfoSection {
 	export interface Props {

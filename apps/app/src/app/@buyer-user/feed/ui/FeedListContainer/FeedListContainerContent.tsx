@@ -11,7 +11,7 @@ export const FeedListContainerContent: FC<FeedListContainer.Props> = ({
 	linkTo,
 	...props
 }) => {
-	const { data: feedCount } = withFeedQuery.useCount({});
+	const { data: feedCount } = withFeedQuery.useCountQuery({});
 	const isLimitReached = feedCount.filter >= limit;
 
 	return (

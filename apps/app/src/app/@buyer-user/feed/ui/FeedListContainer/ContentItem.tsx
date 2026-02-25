@@ -12,7 +12,7 @@ export namespace ContentItem {
 }
 
 export const ContentItem: FC<ContentItem.Props> = ({ feedId, defaultOpen, tools, linkTo }) => {
-	const feedQuery = withFeedQuery.useQuery(feedId);
+	const feedQuery = withFeedQuery.useFetchQuery(feedId);
 
 	return (
 		<Item

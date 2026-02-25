@@ -14,7 +14,7 @@ export namespace LocationPatch {
 }
 
 export const LocationPatch: FC<LocationPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
-	const patchMutation = withFeedQuery.useMutation();
+	const patchMutation = withFeedQuery.usePatchMutation();
 
 	return (
 		<LocationSelectContainer

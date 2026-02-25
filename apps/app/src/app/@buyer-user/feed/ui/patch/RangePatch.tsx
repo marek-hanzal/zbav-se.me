@@ -16,7 +16,7 @@ export namespace RangePatch {
 }
 
 export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
-	const patchMutation = withFeedQuery.useMutation();
+	const patchMutation = withFeedQuery.usePatchMutation();
 	const currentRange = feed.query?.filter?.range;
 	const [rangeValue, setRangeValue] = useState<string | undefined>(
 		currentRange !== undefined ? String(currentRange) : undefined,

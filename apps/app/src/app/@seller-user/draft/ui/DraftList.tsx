@@ -19,53 +19,53 @@ export const DraftList: FC<DraftList.Props> = ({ _suspense, query, onSuccess, ui
 	const { data } = withDraftQuery.useCollectionQuery(query);
 	const { data: draftCount } = withDraftQuery.useCount(query);
 
-		return (
-			<Container
+	return (
+		<Container
 			data-ui="DraftList[Container]"
 			ui={{
 				scroll: "vertical",
 				height: "full",
 				...ui,
+			}}
+			{...props}
+		>
+			<Container
+				ui={{
+					layout: "vertical-flex",
+					gap: "default",
 				}}
-				{...props}
 			>
-				<Container
-					ui={{
-						layout: "vertical-flex",
-						gap: "default",
-					}}
-				>
-					{draftCount.isEmpty ? (
-						<Status
-							data-ui="DraftList-[Status.empty]"
-							icon={"icon-[streamline--sad-face-remix]"}
-							textTitle={translator.text("No drafts (title)")}
-							textMessage={translator.text("No drafts (message)")}
-						/>
-					) : draftCount.isFilterEmpty ? (
-						<Status
-							data-ui="DraftList-[Status.filter-empty]"
-							icon={"icon-[streamline--sad-face-remix]"}
-							textTitle={translator.text("No drafts for current filter (title)")}
-							textMessage={translator.text("No drafts for current filter (message)")}
-						/>
-					) : (
-						data.map((draftId) => {
-							return (
-								<DraftListItemSuspense
-									key={draftId}
-									draftId={draftId}
-								/>
-							);
-						})
-					)}
-
-					<CreateButton
-						onSuccess={(draft) => {
-							onSuccess?.(draft);
-						}}
+				{draftCount.isEmpty ? (
+					<Status
+						data-ui="DraftList-[Status.empty]"
+						icon={"icon-[streamline--sad-face-remix]"}
+						textTitle={translator.text("No drafts (title)")}
+						textMessage={translator.text("No drafts (message)")}
 					/>
-				</Container>
+				) : draftCount.isFilterEmpty ? (
+					<Status
+						data-ui="DraftList-[Status.filter-empty]"
+						icon={"icon-[streamline--sad-face-remix]"}
+						textTitle={translator.text("No drafts for current filter (title)")}
+						textMessage={translator.text("No drafts for current filter (message)")}
+					/>
+				) : (
+					data.map((draftId) => {
+						return (
+							<DraftListItemSuspense
+								key={draftId}
+								draftId={draftId}
+							/>
+						);
+					})
+				)}
+
+				<CreateButton
+					onSuccess={(draft) => {
+						onSuccess?.(draft);
+					}}
+				/>
 			</Container>
-		);
-	};
+		</Container>
+	);
+};

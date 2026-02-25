@@ -16,7 +16,7 @@ export namespace DeliveryPatch {
 }
 
 export const DeliveryPatch: FC<DeliveryPatch.Props> = ({ feed, onSettled, ...props }) => {
-	const patchMutation = withFeedQuery.useMutation();
+	const patchMutation = withFeedQuery.usePatchMutation();
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
 		initial: (feed.query?.filter?.deliveryIn ?? []).map((delivery) => ({

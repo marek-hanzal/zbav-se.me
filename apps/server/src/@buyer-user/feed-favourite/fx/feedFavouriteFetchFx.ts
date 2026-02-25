@@ -2,8 +2,8 @@ import { withFetchFx } from "@use-pico/common/fetch";
 import { Effect } from "effect";
 import { withFeedQueryBuilderFx } from "~/@buyer-user/feed/db/withFeedQueryBuilderFx";
 import type { FeedFilterSchema } from "~/@buyer-user/feed/schema/FeedFilterSchema";
-import { withFeedFavouriteSelectFx } from "~/@buyer-user/feed-favourite/db/withFeedFavouriteSelectFx";
 import type { FeedQuerySchema } from "~/@buyer-user/feed/schema/FeedQuerySchema";
+import { withFeedFavouriteSelectFx } from "~/@buyer-user/feed-favourite/db/withFeedFavouriteSelectFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
 export namespace feedFavouriteFetchFx {

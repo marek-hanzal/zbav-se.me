@@ -25,7 +25,9 @@ export const CategoryValueListContent: FC<CategoryValueListContent.Props> = ({
 		},
 	};
 	const { data: categoryIds } = withCategoryQuery.useCollectionQuery(query);
-	const items: EntitySchema.Type[] = categoryIds.map((id) => ({ id }));
+	const items: EntitySchema.Type[] = categoryIds.map((id) => ({
+		id,
+	}));
 
 	return (
 		<ValueList<EntitySchema.Type>

@@ -2,8 +2,8 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
 import { SellerInfoButton } from "~/app/@buyer-session/listing/ui/SellerInfoButton";
-import { RejectButton } from "./button/RejectButton";
 import { MessageButtonUi } from "~/app/@common/transaction/ui/MessageButtonUi";
+import { RejectButton } from "./button/RejectButton";
 
 export namespace PendingMessage {
 	export interface Props extends Container.Props {

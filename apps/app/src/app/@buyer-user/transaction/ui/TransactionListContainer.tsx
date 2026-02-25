@@ -90,7 +90,9 @@ export const TransactionListContainer: FC<TransactionListContainer.Props> = ({
 					<Status
 						icon={MessageIcon}
 						textTitle={translator.text("No transactions for current filter (title)")}
-						textMessage={translator.text("No transactions for current filter (message)")}
+						textMessage={translator.text(
+							"No transactions for current filter (message)",
+						)}
 						ui={{
 							tone: "brand",
 							theme: "light",

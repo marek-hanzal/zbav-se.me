@@ -29,7 +29,7 @@ export const Content: FC<Content.Props> = ({
 	 * This is intentional to trigger parent suspense
 	 */
 	const feedCollectionQuery = withFeedQuery.useCollectionQuery(query);
-	const { data: feedCount } = withFeedQuery.useCount(query);
+	const { data: feedCount } = withFeedQuery.useCountQuery(query);
 	/**
 	 * We're keeping locale state just for "after creation" open state
 	 */

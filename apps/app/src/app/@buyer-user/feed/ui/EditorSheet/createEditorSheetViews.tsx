@@ -6,7 +6,6 @@ import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import type { PropsWithChildren } from "react";
 import type { EditorSheet } from "~/app/@buyer-user/feed/ui/EditorSheet";
-import { toDetailHandlers } from "./toDetailHandlers";
 import { FeedEditor } from "~/app/@buyer-user/feed/ui/FeedEditor";
 import { AgePatch } from "~/app/@buyer-user/feed/ui/patch/AgePatch";
 import { CategoryPatch } from "~/app/@buyer-user/feed/ui/patch/CategoryPatch";
@@ -19,6 +18,7 @@ import { SortPatch } from "~/app/@buyer-user/feed/ui/patch/SortPatch";
 import { TitlePatch } from "~/app/@buyer-user/feed/ui/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/@buyer-user/feed/ui/patch/WarrantyPatch";
 import { GalleryUploadContainer } from "~/app/@common/gallery/ui/GalleryUploadContainer";
+import { toDetailHandlers } from "./toDetailHandlers";
 
 export namespace createEditorSheetViews {
 	export interface Props extends PropsWithChildren {

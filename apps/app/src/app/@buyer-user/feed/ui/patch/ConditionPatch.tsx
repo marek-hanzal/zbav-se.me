@@ -16,7 +16,7 @@ export namespace ConditionPatch {
 }
 
 export const ConditionPatch: FC<ConditionPatch.Props> = ({ feed, onSettled, ...props }) => {
-	const patchMutation = withFeedQuery.useMutation();
+	const patchMutation = withFeedQuery.usePatchMutation();
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "multi",
 		initial: feed.query?.filter?.conditionIn?.map((item) => ({

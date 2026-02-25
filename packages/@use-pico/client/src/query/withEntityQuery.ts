@@ -10,7 +10,7 @@ import {
 	useSuspenseQuery,
 } from "@tanstack/react-query";
 import { cleanOf } from "@use-pico/common/clean-of";
-import type { EntitySchema } from "@use-pico/common/schema";
+import type { CountSchema, EntitySchema } from "@use-pico/common/schema";
 
 export namespace withEntityQuery {
 	export namespace Invalidator {
@@ -47,6 +47,7 @@ export namespace withEntityQuery {
 		TEntity extends EntitySchema.Type,
 		TFetchRequest,
 		TCollectionRequest,
+		TCountRequest,
 		TPatchRequest,
 	> {
 		/**
@@ -65,6 +66,7 @@ export namespace withEntityQuery {
 		 * Loads a collection of entities.
 		 */
 		collection(data: TCollectionRequest): Promise<TEntity[]>;
+		count(data: TCountRequest): Promise<CountSchema.Type>;
 		/**
 		 * Patches an entity and returns server-updated entity payload.
 		 */
@@ -121,14 +123,22 @@ export const withEntityQuery = <
 	TEntity extends EntitySchema.Type,
 	TFetchRequest,
 	TCollectionRequest,
+	TCountRequest,
 	TPatchRequest,
 >({
 	keys,
 	toIdKey,
 	fetch,
 	collection,
+	count,
 	patch,
-}: withEntityQuery.Props<TEntity, TFetchRequest, TCollectionRequest, TPatchRequest>) => {
+}: withEntityQuery.Props<
+	TEntity,
+	TFetchRequest,
+	TCollectionRequest,
+	TCountRequest,
+	TPatchRequest
+>) => {
 	/**
 	 * Internal key builder.
 	 *
@@ -242,6 +252,19 @@ export const withEntityQuery = <
 		});
 	}
 
+	function useCountQuery(
+		data: TCountRequest,
+		opts?: withEntityQuery.QueryOptions<CountSchema.Type>,
+	) {
+		return useSuspenseQuery({
+			queryKey: $keys("count", data),
+			async queryFn() {
+				return count(data);
+			},
+			...opts,
+		});
+	}
+
 	/**
 	 * Primary synchronization mutation for entity updates.
 	 *
@@ -291,8 +314,12 @@ export const withEntityQuery = <
 	}
 
 	return {
+		fetch,
+		collection,
+		count,
 		useFetchQuery,
 		useCollectionQuery,
+		useCountQuery,
 		usePatchMutation,
 		useInvalidator,
 	} as const;

@@ -4,10 +4,10 @@ import type { tDraft, tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import type { DraftEditor } from "~/app/@seller-user/draft/ui/DraftEditor";
+import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 import { ActionSection } from "./ActionSection";
 import { OptionalFieldsSection } from "./OptionalFieldsSection";
 import { RequiredFieldsSection } from "./RequiredFieldsSection";
-import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
 export namespace DraftEditorDefaultView {
 	export interface Props {

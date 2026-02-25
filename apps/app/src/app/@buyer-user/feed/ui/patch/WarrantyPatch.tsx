@@ -16,7 +16,7 @@ export namespace WarrantyPatch {
 }
 
 export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ feed, onSettled, ...props }) => {
-	const patchMutation = withFeedQuery.useMutation();
+	const patchMutation = withFeedQuery.usePatchMutation();
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
 		initial: (feed.query?.filter?.warrantyIn ?? []).map((warranty) => ({

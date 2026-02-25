@@ -1,6 +1,6 @@
 import { withCountFx } from "@use-pico/common/count";
 import { Effect } from "effect";
-import { TransactionCountQuerySchema } from "~/@common/transaction/schema/TransactionCountQuerySchema";
+import type { TransactionCountQuerySchema } from "~/@common/transaction/schema/TransactionCountQuerySchema";
 import type { TransactionFilterSchema } from "~/@common/transaction/schema/TransactionFilterSchema";
 import { withTransactionCollectionSelectFx } from "~/@seller-user/transaction/db/withTransactionCollectionSelectFx";
 import { withTransactionQueryBuilderFx } from "~/@seller-user/transaction/db/withTransactionQueryBuilderFx";

@@ -9,11 +9,11 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef, useState } from "react";
 import { ListingOverlay } from "~/app/@buyer-user/listing/ui/ListingOverlay";
 import { ListingSheet } from "~/app/@buyer-user/listing/ui/ListingSheet";
+import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
+import { MessageListSuspense } from "~/app/@common/message/MessageListSuspense";
 import { TransactionChat } from "./TransactionChat";
 import { TransactionMessage } from "./TransactionMessage";
 import { TransactionToolbar } from "./TransactionToolbar";
-import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
-import { MessageListSuspense } from "~/app/@common/message/MessageListSuspense";
 
 export namespace Transaction {
 	export interface Props extends Container.Props, MarkSuspense.Props {

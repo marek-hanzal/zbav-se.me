@@ -14,7 +14,7 @@ export namespace NamePatch {
 }
 
 export const NamePatch: FC<NamePatch.Props> = ({ feed, onSettled, ...props }) => {
-	const patchMutation = withFeedQuery.useMutation();
+	const patchMutation = withFeedQuery.usePatchMutation();
 
 	return (
 		<TextInputContainer
