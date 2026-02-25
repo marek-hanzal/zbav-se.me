@@ -64,6 +64,11 @@ export const FeedMigration: Migration = {
 			ON "feed" ("userId", "updatedAt" DESC);
 		`.execute(db);
 
+		await sql`
+			CREATE INDEX "feed_[userId-createdAt]_idx"
+			ON "feed" ("userId", "createdAt" DESC);
+		`.execute(db);
+
 		await db.schema
 			.createIndex("feed_[locationId]_idx")
 			.on("feed")
