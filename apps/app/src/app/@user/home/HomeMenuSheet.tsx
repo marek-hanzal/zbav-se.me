@@ -14,7 +14,7 @@ export const HomeMenuSheet: FC<HomeMenuSheet.Props> = (props) => {
 	return (
 		<BottomSheet
 			data-ui={"HomeMenuSheet[BottomSheet]"}
-			detent={"full"}
+			detent={"default"}
 			header={({ close }) => ({
 				title: translator.text("zbav-se.me"),
 				right: (

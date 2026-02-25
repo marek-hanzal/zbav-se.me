@@ -44,7 +44,7 @@ export const EditorSheet: FC<EditorSheet.Props> = ({
 				state.set(false);
 				setView("detail");
 			}}
-			detent={"full"}
+			detent={"default"}
 			state={{
 				value: view,
 				set: setView,
