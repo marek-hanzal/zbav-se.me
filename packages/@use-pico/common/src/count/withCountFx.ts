@@ -101,9 +101,9 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 					.executeTakeFirstOrThrow();
 			});
 
-	const total = countTotal.count;
-	const filterCount = countFilter.count;
-	const whereCount = countWhere.count;
+	const total = Number(countTotal.count);
+	const filterCount = Number(countFilter.count);
+	const whereCount = Number(countWhere.count);
 
 	return {
 		total,
