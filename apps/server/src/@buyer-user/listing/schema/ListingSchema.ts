@@ -17,6 +17,9 @@ export const ListingSchema = z
 		gallery: GallerySchema.openapi({
 			description: "Listing gallery images",
 		}),
+		my: z.boolean().openapi({
+			description: "Whether the listing belongs to the current user",
+		}),
 		isFavourite: z.boolean().openapi({
 			description: "Whether the user has this listing in favourites",
 		}),

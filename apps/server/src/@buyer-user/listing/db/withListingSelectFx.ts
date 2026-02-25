@@ -62,6 +62,8 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 			.$notNull()
 			.as("gallery"),
 
+		sql<boolean>`${eb.ref("l.userId")} = ${eb.val(userId)}`.as("my"),
+
 		eb
 			.exists(
 				eb

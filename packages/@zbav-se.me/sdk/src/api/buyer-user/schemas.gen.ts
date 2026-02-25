@@ -333,6 +333,9 @@ export const sListing = {
         gallery: {
             $ref: '#/components/schemas/Gallery'
         },
+        my: {
+            type: 'boolean'
+        },
         isFavourite: {
             type: 'boolean'
         },
@@ -388,6 +391,7 @@ export const sListing = {
         'category',
         'distance',
         'gallery',
+        'my',
         'isFavourite',
         'isIgnored',
         'hasFlag',

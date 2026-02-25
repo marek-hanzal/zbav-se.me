@@ -492,6 +492,9 @@ export const zListing = z.object({
         z.null()
     ]),
     gallery: zGallery,
+    my: z.boolean().register(z.globalRegistry, {
+        description: 'Whether the listing belongs to the current user'
+    }),
     isFavourite: z.boolean().register(z.globalRegistry, {
         description: 'Whether the user has this listing in favourites'
     }),

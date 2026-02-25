@@ -260,6 +260,10 @@ export type tListing = {
     distance: number | null;
     gallery: tGallery;
     /**
+     * Whether the listing belongs to the current user
+     */
+    my: boolean;
+    /**
      * Whether the user has this listing in favourites
      */
     isFavourite: boolean;
