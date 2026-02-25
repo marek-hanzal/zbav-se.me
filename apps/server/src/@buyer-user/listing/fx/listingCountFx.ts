@@ -50,11 +50,13 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 				.executeTakeFirstOrThrow();
 		});
 
+		const total = Number(count);
+
 		return {
-			total: count,
-			filter: count,
-			where: count,
-			isEmpty: count === 0,
+			total,
+			filter: total,
+			where: total,
+			isEmpty: total === 0,
 			isFilterEmpty: false,
 		};
 	}
