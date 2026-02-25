@@ -90,7 +90,7 @@ export const withFetchFx = Effect.fn("withFetchFx")(function* <
 	}
 
 	const result = yield* Effect.promise(async () => {
-		return qb.executeTakeFirst();
+		return qb.limit(1).executeTakeFirst();
 	});
 
 	if (!result) {
