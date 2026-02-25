@@ -48,6 +48,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 			<Container
 				data-ui={"HomeMenu-[Content]"}
 				ref={containerRef}
+				className={"min-h-0"}
 				ui={{
 					layout: "vertical-flex",
 					scroll: "vertical",

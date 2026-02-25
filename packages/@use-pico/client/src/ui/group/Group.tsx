@@ -18,7 +18,12 @@ export const Group: FC<Group.Props> = ({ children, ui, className, ...props }) =>
 				...ui,
 			}}
 			className={[
+				/**
+				 * Keep class name "Group" here - it's used by styles
+				 */
 				"Group",
+				"min-h-fit",
+				"shrink-0",
 				className,
 			]}
 			{...props}
