@@ -2,14 +2,11 @@ import { useLocale, useMergeRefs, useScrollTo, type useSelection } from "@use-pi
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import type { Fulltext } from "@use-pico/client/ui/fulltext";
-import { Status } from "@use-pico/client/ui/status";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { translator } from "@use-pico/common/translator";
 import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
-import { SearchIcon } from "@zbav-se.me/ui/icon";
-import { uiWarningStatus } from "@zbav-se.me/ui/ui";
 import { type FC, useEffect, useRef } from "react";
 import { CategoryItemSuspense } from "~/app/v0/@session/category/ui/CategorySelect/CategoryItemSuspense";
+import { Empty } from "./Empty";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -75,25 +72,7 @@ export const Data: FC<Data.Props> = ({
 	]);
 
 	if (categoryCount.length === 0) {
-		return (
-			<Container
-				data-ui="ListContainer[Container.empty]"
-				ui={{
-					layout: "vertical-centered",
-					height: "full",
-				}}
-			>
-				<Status
-					icon={SearchIcon}
-					textTitle={translator.text("No categories found (title)")}
-					textMessage={translator.text("No categories found (message)")}
-					{...uiWarningStatus({
-						className: [],
-					})}
-					data-ui="ListContainer-[Status.empty]"
-				/>
-			</Container>
-		);
+		return <Empty />;
 	}
 
 	return (
