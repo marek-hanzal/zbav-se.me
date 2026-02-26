@@ -5,7 +5,7 @@ import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { LocationSelect } from "~/app/v0/@common/location/ui/LocationSelect";
+import { LocationSelect } from "~/app/@common/location/ui/LocationSelect";
 
 export namespace LocationPatch {
 	export interface Props extends Container.Props {

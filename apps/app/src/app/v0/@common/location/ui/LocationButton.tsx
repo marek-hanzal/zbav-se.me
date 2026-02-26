@@ -11,7 +11,7 @@ import { LocationIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { LocationSelect } from "./LocationSelect";
+import { LocationSelect } from "~/app/@common/location/ui/LocationSelect";
 
 export namespace LocationButton {
 	export interface Props extends Button.Props {
