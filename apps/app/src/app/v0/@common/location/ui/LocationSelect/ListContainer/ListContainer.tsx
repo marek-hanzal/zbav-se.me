@@ -1,19 +1,14 @@
-import type { Container } from "@use-pico/client/ui/container";
 import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { Status } from "@use-pico/client/ui/status";
-import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { type FC, Suspense } from "react";
 import { Data } from "./Data";
 import { Default } from "./Default";
 import { Pending } from "./Pending";
 
 export namespace ListContainer {
-	export interface Props extends Omit<Container.Props, "onChange"> {
+	export interface Props extends Omit<Data.Props, "_suspense" | "text"> {
 		textHint: string;
 		search: Fulltext.Value;
-		value: string | undefined | null;
-		onChange(value: string): void;
-		onLocation?(value: tLocation): void;
 		warningStatusProps?: Status.Props;
 	}
 }
