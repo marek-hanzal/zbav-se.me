@@ -2,6 +2,7 @@ import { Group } from "@use-pico/client/ui/group";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
+import { ChevronAction } from "~/app/@seller-user/draft/ui/DraftEditor/ChevronAction";
 import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
 import { ConsValueList } from "~/app/v0/@common/cons/ui/ConsValueList";
 import { DeliveryValueList } from "~/app/v0/@common/delivery/ui/DeliveryValueList";
@@ -9,16 +10,15 @@ import { DescriptionValue } from "~/app/v0/@common/description/ui/DescriptionVal
 import { ProsValueList } from "~/app/v0/@common/pros/ui/ProsValueList";
 import { RestrictionValue } from "~/app/v0/@common/restriction/ui/RestrictionValue";
 import { WarrantyValue } from "~/app/v0/@common/warranty/ui/WarrantyValue";
-import { ChevronAction } from "~/app/@seller-user/draft/ui/DraftEditor/ChevronAction";
 
-export namespace OptionalFieldsSection {
+export namespace OptionalSection {
 	export interface Props {
 		draft: tDraft;
 		onView(view: Data.View): void;
 	}
 }
 
-export const OptionalFieldsSection: FC<OptionalFieldsSection.Props> = ({ draft, onView }) => {
+export const OptionalSection: FC<OptionalSection.Props> = ({ draft, onView }) => {
 	return (
 		<>
 			<Tx

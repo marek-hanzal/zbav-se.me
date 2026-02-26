@@ -3,6 +3,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
+import { ChevronAction } from "~/app/@seller-user/draft/ui/DraftEditor/ChevronAction";
 import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
 import { AgeValue } from "~/app/v0/@common/age/ui/AgeValue";
 import { CategoryValue } from "~/app/v0/@common/category/ui/CategoryValue";
@@ -13,16 +14,15 @@ import { LocationValue } from "~/app/v0/@common/location/ui/LocationValue";
 import { PriceValue } from "~/app/v0/@common/price/ui/PriceValue";
 import { PriceTypeValue } from "~/app/v0/@common/price-type/ui/PriceTypeValue";
 import { TitleValue } from "~/app/v0/@common/title/ui/TitleValue";
-import { ChevronAction } from "~/app/@seller-user/draft/ui/DraftEditor/ChevronAction";
 
-export namespace RequiredFieldsSection {
+export namespace RequiredSection {
 	export interface Props {
 		draft: tDraft;
 		onView(view: Data.View): void;
 	}
 }
 
-export const RequiredFieldsSection: FC<RequiredFieldsSection.Props> = ({ draft, onView }) => {
+export const RequiredSection: FC<RequiredSection.Props> = ({ draft, onView }) => {
 	return (
 		<>
 			<Group>
