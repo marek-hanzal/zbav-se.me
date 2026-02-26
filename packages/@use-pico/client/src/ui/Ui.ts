@@ -100,17 +100,16 @@ export namespace Ui {
 	 * Opacity level scale.
 	 */
 	export type Opacity =
-		| "xs"
-		| "sm"
-		| "md"
-		| "lg"
-		| "xl"
-		| "2xl"
-		| "3xl"
-		| "4xl"
-		| "low"
-		| "medium"
-		| "high"
+		| "0"
+		| "1"
+		| "2"
+		| "3"
+		| "4"
+		| "5"
+		| "6"
+		| "7"
+		| "8"
+		| "9"
 		| "full"
 		| "none";
 	/**
