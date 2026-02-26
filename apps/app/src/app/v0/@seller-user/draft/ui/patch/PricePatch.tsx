@@ -53,7 +53,10 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onSettled, .
 				/>
 
 				<SaveContainer
-					onCancel={onCancel}
+					onCancel={() => {
+						onCancel();
+						setPrice(draft.price ? String(draft.price) : undefined);
+					}}
 					onSave={() => {
 						mutation.mutate({
 							patch: {

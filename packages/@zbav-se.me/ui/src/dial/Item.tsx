@@ -21,7 +21,7 @@ export const Item: FC<Item.Props> = ({ icon, ui, ...props }) => {
 				},
 			}}
 			ui={{
-				tone: "neutral",
+				tone: "subtle",
 				theme: "light",
 				size: "xl",
 				items: "center",
