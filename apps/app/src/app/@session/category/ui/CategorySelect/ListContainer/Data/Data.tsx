@@ -5,7 +5,7 @@ import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 import { type FC, useEffect, useRef } from "react";
-import { CategoryItem } from "~/app/v0/@session/category/ui/CategorySelect/CategoryItem";
+import { CategoryItem } from "~/app/@session/category/ui/CategorySelect/CategoryItem";
 import { Empty } from "./Empty";
 
 export namespace Data {

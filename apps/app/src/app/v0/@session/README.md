@@ -59,3 +59,4 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 
 - Category pending content now aligns with shared `ValueList.PropsEx` contract, allowing parent-provided labels/hints to override defaults without local prop reshaping.
 - `CategorySelect` component moved to active scope at `@session/category/ui/CategorySelect/CategorySelect.tsx`; `v0` now re-exports it while retaining existing `v0` internals (`ListContainer`, pending states).
+- `CategoryItem` suspense wrapper and internals moved fully to active scope at `@session/category/ui/CategorySelect/CategoryItem/` (`CategoryItem.tsx`, `Data.tsx`, `Pending.tsx`, `index.ts`).
