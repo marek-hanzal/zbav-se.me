@@ -107,6 +107,8 @@ When adding to `@common`:
   - `@common/expire-at/ui/ExpireAtSelect/ExpireAtSelect.tsx`
   - `@common/expire-at/ui/ExpireAtSelect/ExpireAtItem.tsx`
 - Restriction select options now render two-line static labels (`value` + `hint`) for all restriction enum variants, including `adult-relaxed`.
-- `RestrictionSelect` was split into folder-local parts:
+- `RestrictionSelect` was extracted to active scope:
   - `@common/restriction/ui/RestrictionSelect/RestrictionSelect.tsx`
   - `@common/restriction/ui/RestrictionSelect/Item.tsx`
+- `RestrictionValue` was extracted to active scope:
+  - `@common/restriction/ui/RestrictionValue.tsx`

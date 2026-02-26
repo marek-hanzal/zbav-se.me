@@ -7,7 +7,7 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { RestrictionSelect } from "~/app/v0/@common/restriction/ui/RestrictionSelect";
+import { RestrictionSelect } from "~/app/@common/restriction/ui/RestrictionSelect";
 
 export namespace RestrictionPatch {
 	export interface Props extends TitleContainer.Props {
