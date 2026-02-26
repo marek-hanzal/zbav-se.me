@@ -18,6 +18,7 @@ import { Route as LocaleWelcomeRouteImport } from './@routes/$locale/welcome'
 import { Route as LocaleUserRouteImport } from './@routes/$locale/user'
 import { Route as LocaleShopRouteImport } from './@routes/$locale/shop'
 import { Route as LocaleHomeRouteImport } from './@routes/$locale/home'
+import { Route as LocaleBuyerSearchRouteImport } from './@routes/$locale/buyer/search'
 import { Route as LocaleSellerMessageListRouteImport } from './@routes/$locale/seller/message/list'
 import { Route as LocaleSellerListingMyRouteImport } from './@routes/$locale/seller/listing/my'
 import { Route as LocaleSellerDraftResolveRouteImport } from './@routes/$locale/seller/draft/resolve'
@@ -75,6 +76,11 @@ const LocaleShopRoute = LocaleShopRouteImport.update({
 const LocaleHomeRoute = LocaleHomeRouteImport.update({
   id: '/home',
   path: '/home',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleBuyerSearchRoute = LocaleBuyerSearchRouteImport.update({
+  id: '/buyer/search',
+  path: '/buyer/search',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleSellerMessageListRoute = LocaleSellerMessageListRouteImport.update({
@@ -158,6 +164,7 @@ export interface FileRoutesByFullPath {
   '/redirect/home': typeof RedirectHomeRoute
   '/redirect/welcome': typeof RedirectWelcomeRoute
   '/$locale/': typeof LocaleIndexRoute
+  '/$locale/buyer/search': typeof LocaleBuyerSearchRoute
   '/$locale/buyer/favourite/list': typeof LocaleBuyerFavouriteListRoute
   '/$locale/buyer/feed/default': typeof LocaleBuyerFeedDefaultRoute
   '/$locale/buyer/feed/select': typeof LocaleBuyerFeedSelectRoute
@@ -181,6 +188,7 @@ export interface FileRoutesByTo {
   '/redirect/home': typeof RedirectHomeRoute
   '/redirect/welcome': typeof RedirectWelcomeRoute
   '/$locale': typeof LocaleIndexRoute
+  '/$locale/buyer/search': typeof LocaleBuyerSearchRoute
   '/$locale/buyer/favourite/list': typeof LocaleBuyerFavouriteListRoute
   '/$locale/buyer/feed/default': typeof LocaleBuyerFeedDefaultRoute
   '/$locale/buyer/feed/select': typeof LocaleBuyerFeedSelectRoute
@@ -206,6 +214,7 @@ export interface FileRoutesById {
   '/redirect/home': typeof RedirectHomeRoute
   '/redirect/welcome': typeof RedirectWelcomeRoute
   '/$locale/': typeof LocaleIndexRoute
+  '/$locale/buyer/search': typeof LocaleBuyerSearchRoute
   '/$locale/buyer/favourite/list': typeof LocaleBuyerFavouriteListRoute
   '/$locale/buyer/feed/default': typeof LocaleBuyerFeedDefaultRoute
   '/$locale/buyer/feed/select': typeof LocaleBuyerFeedSelectRoute
@@ -232,6 +241,7 @@ export interface FileRouteTypes {
     | '/redirect/home'
     | '/redirect/welcome'
     | '/$locale/'
+    | '/$locale/buyer/search'
     | '/$locale/buyer/favourite/list'
     | '/$locale/buyer/feed/default'
     | '/$locale/buyer/feed/select'
@@ -255,6 +265,7 @@ export interface FileRouteTypes {
     | '/redirect/home'
     | '/redirect/welcome'
     | '/$locale'
+    | '/$locale/buyer/search'
     | '/$locale/buyer/favourite/list'
     | '/$locale/buyer/feed/default'
     | '/$locale/buyer/feed/select'
@@ -279,6 +290,7 @@ export interface FileRouteTypes {
     | '/redirect/home'
     | '/redirect/welcome'
     | '/$locale/'
+    | '/$locale/buyer/search'
     | '/$locale/buyer/favourite/list'
     | '/$locale/buyer/feed/default'
     | '/$locale/buyer/feed/select'
@@ -364,6 +376,13 @@ declare module '@tanstack/react-router' {
       path: '/home'
       fullPath: '/$locale/home'
       preLoaderRoute: typeof LocaleHomeRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/buyer/search': {
+      id: '/$locale/buyer/search'
+      path: '/buyer/search'
+      fullPath: '/$locale/buyer/search'
+      preLoaderRoute: typeof LocaleBuyerSearchRouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/seller/message/list': {
@@ -466,6 +485,7 @@ interface LocaleRouteChildren {
   LocaleUserRoute: typeof LocaleUserRoute
   LocaleWelcomeRoute: typeof LocaleWelcomeRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
+  LocaleBuyerSearchRoute: typeof LocaleBuyerSearchRoute
   LocaleBuyerFavouriteListRoute: typeof LocaleBuyerFavouriteListRoute
   LocaleBuyerFeedDefaultRoute: typeof LocaleBuyerFeedDefaultRoute
   LocaleBuyerFeedSelectRoute: typeof LocaleBuyerFeedSelectRoute
@@ -487,6 +507,7 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleUserRoute: LocaleUserRoute,
   LocaleWelcomeRoute: LocaleWelcomeRoute,
   LocaleIndexRoute: LocaleIndexRoute,
+  LocaleBuyerSearchRoute: LocaleBuyerSearchRoute,
   LocaleBuyerFavouriteListRoute: LocaleBuyerFavouriteListRoute,
   LocaleBuyerFeedDefaultRoute: LocaleBuyerFeedDefaultRoute,
   LocaleBuyerFeedSelectRoute: LocaleBuyerFeedSelectRoute,

@@ -4,11 +4,28 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { useMemo, useState } from "react";
-import type { DraftEditor } from "~/app/v0/@seller-user/draft/ui/DraftEditor/DraftEditor";
 import { createDraftEditorViews } from "./createDraftEditorViews";
 import { DraftEditorDefaultView } from "./DraftEditorDefaultView";
 
 export namespace Data {
+	export type View =
+		| "default"
+		| "title"
+		| "location"
+		| "price"
+		| "priceType"
+		| "category"
+		| "condition"
+		| "age"
+		| "delivery"
+		| "warranty"
+		| "restriction"
+		| "gallery"
+		| "expireAt"
+		| "description"
+		| "pros"
+		| "cons";
+
 	export interface Props extends MarkSuspense.Props {
 		draftId: string;
 	}
@@ -16,7 +33,7 @@ export namespace Data {
 
 export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 	const { data: draft } = withDraftQuery.useFetchQuery(draftId);
-	const [view, setView] = useState<DraftEditor.View>("default");
+	const [view, setView] = useState<Data.View>("default");
 
 	const views = useMemo(() => {
 		return {
@@ -38,7 +55,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 	]);
 
 	return (
-		<View<DraftEditor.View, TitleContainer.Props>
+		<View<Data.View, TitleContainer.Props>
 			state={{
 				value: view,
 				set: setView,

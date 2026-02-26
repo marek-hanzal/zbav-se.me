@@ -1,6 +1,6 @@
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { ReactElement } from "react";
-import type { DraftEditor } from "~/app/v0/@seller-user/draft/ui/DraftEditor/DraftEditor";
+import type { Data } from "~/app/v0/@seller-user/draft/ui/DraftEditor/Data";
 import { AgePatch } from "~/app/v0/@seller-user/draft/ui/patch/AgePatch";
 import { CategoryPatch } from "~/app/v0/@seller-user/draft/ui/patch/CategoryPatch";
 import { ConditionPatch } from "~/app/v0/@seller-user/draft/ui/patch/ConditionPatch";
@@ -18,7 +18,7 @@ import { TitlePatch } from "~/app/v0/@seller-user/draft/ui/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/v0/@seller-user/draft/ui/patch/WarrantyPatch";
 
 export namespace createDraftEditorViews {
-	export type PatchView = Exclude<DraftEditor.View, "default">;
+	export type PatchView = Exclude<Data.View, "default">;
 	export interface View {
 		children: ReactElement;
 	}
