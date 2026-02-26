@@ -1,3 +1,4 @@
+import { useMatchRoute } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { ChevronRightIcon, type uiIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
@@ -16,6 +17,7 @@ export namespace Data {
 
 export const Data: FC<Data.Props> = ({ _suspense, icon }) => {
 	const locale = useLocale();
+	const matchRoute = useMatchRoute();
 	const { data } = withDraftQuery.useCollectionQuery({
 		where: {
 			usedAtIsNull: true,
@@ -51,13 +53,17 @@ export const Data: FC<Data.Props> = ({ _suspense, icon }) => {
 			params={{
 				locale,
 			}}
-			activeProps={uiMenuButton({
-				ui: {
-					tone: "link",
-					theme: "light",
-				},
-				className: [],
-			})}
+			{...(matchRoute({
+				to: "/$locale/seller/draft/$id/edit",
+			})
+				? uiMenuButton({
+						ui: {
+							tone: "primary",
+							theme: "light",
+						},
+						className: [],
+					})
+				: {})}
 		>
 			<TypoIcon
 				flip

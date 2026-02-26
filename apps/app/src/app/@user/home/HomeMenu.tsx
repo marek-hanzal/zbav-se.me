@@ -1,3 +1,4 @@
+import { useMatchRoute } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { CartIcon, ChevronRightIcon, UserIcon, type uiIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
@@ -25,6 +26,7 @@ export namespace HomeMenu {
 
 export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 	const locale = useLocale();
+	const matchRoute = useMatchRoute();
 	const containerRef = useRef<HTMLDivElement>(null);
 	const icon: uiIcon.Ui = {
 		color: "lead",
