@@ -1,5 +1,6 @@
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
@@ -7,6 +8,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { EditAction } from "~/app/@seller-user/draft/ui/DraftEditor/EditAction";
 import { ConditionSelect } from "~/app/v0/@common/condition/ui/ConditionSelect";
 
 export namespace ConditionPatch {
@@ -45,6 +47,7 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 		<TitleContainer
 			textTitle={translator.text("Condition (title)")}
 			data-ui={"Setup-[TitleContainer.condition]"}
+			left={<EditAction />}
 			{...props}
 		>
 			<Container
@@ -74,6 +77,7 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 					}}
 					loading={mutation.isPending}
 					disabled={condition === null}
+					textCancel={<Tx label={"Back (label)"} />}
 				/>
 			</Container>
 		</TitleContainer>

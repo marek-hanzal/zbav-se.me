@@ -1,5 +1,6 @@
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
@@ -7,6 +8,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { EditAction } from "~/app/@seller-user/draft/ui/DraftEditor/EditAction";
 import { AgeSelection } from "~/app/v0/@common/age/ui/AgeSelection";
 
 export namespace AgePatch {
@@ -39,6 +41,7 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSettled, ...pr
 		<TitleContainer
 			textTitle={translator.text("Age (title)")}
 			data-ui={"Setup-[TitleContainer.age]"}
+			left={<EditAction />}
 			{...props}
 		>
 			<Container
@@ -68,6 +71,7 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSettled, ...pr
 					}}
 					loading={mutation.isPending}
 					disabled={age === null}
+					textCancel={<Tx label={"Back (label)"} />}
 				/>
 			</Container>
 		</TitleContainer>

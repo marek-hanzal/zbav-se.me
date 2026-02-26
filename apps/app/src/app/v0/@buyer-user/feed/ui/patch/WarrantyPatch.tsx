@@ -5,7 +5,7 @@ import type { tFeed, tListingWarrantyEnum } from "@zbav-se.me/sdk/api/buyer-user
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { WarrantySelect } from "~/app/v0/@common/warranty/ui/WarrantySelect";
+import { WarrantySelect } from "~/app/@common/warranty/ui/WarrantySelect";
 
 export namespace WarrantyPatch {
 	export interface Props extends Container.Props {

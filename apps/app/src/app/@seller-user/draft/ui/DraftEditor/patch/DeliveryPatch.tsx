@@ -1,5 +1,6 @@
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListingDeliveryEnum } from "@zbav-se.me/sdk/api/seller-user";
@@ -7,7 +8,8 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { DeliverySelect } from "~/app/v0/@common/delivery/ui/DeliverySelect";
+import { DeliverySelect } from "~/app/@common/delivery/ui/DeliverySelect";
+import { EditAction } from "~/app/@seller-user/draft/ui/DraftEditor/EditAction";
 
 export namespace DeliveryPatch {
 	export interface Props extends TitleContainer.Props {
@@ -40,6 +42,7 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({
 		<TitleContainer
 			textTitle={translator.text("Delivery (title)")}
 			data-ui={"Setup-[TitleContainer.delivery]"}
+			left={<EditAction />}
 			{...props}
 		>
 			<Container
@@ -69,6 +72,7 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({
 					}}
 					loading={mutation.isPending}
 					disabled={false}
+					textCancel={<Tx label={"Back (label)"} />}
 				/>
 			</Container>
 		</TitleContainer>

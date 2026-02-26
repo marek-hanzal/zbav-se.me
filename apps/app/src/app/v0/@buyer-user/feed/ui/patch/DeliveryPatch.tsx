@@ -5,7 +5,7 @@ import type { tFeed, tListingDeliveryEnum } from "@zbav-se.me/sdk/api/buyer-user
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { DeliverySelect } from "~/app/v0/@common/delivery/ui/DeliverySelect";
+import { DeliverySelect } from "~/app/@common/delivery/ui/DeliverySelect";
 
 export namespace DeliveryPatch {
 	export interface Props extends Container.Props {

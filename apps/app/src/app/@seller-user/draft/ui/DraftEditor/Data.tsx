@@ -7,18 +7,18 @@ import { Editor } from "~/app/@seller-user/draft/ui/DraftEditor/Editor";
 import { CategoryPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/CategoryPatch";
 import { ConsPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/ConsPatch";
 import { DescriptionPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/DescriptionPatch";
+import { DeliveryPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/DeliveryPatch";
 import { ExpireAtPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/ExpireAtPatch";
 import { LocationPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/LocationPatch";
 import { PricePatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/PricePatch";
 import { ProsPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/ProsPatch";
 import { TitlePatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/TitlePatch";
+import { WarrantyPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/WarrantyPatch";
 import { AgePatch } from "~/app/v0/@seller-user/draft/ui/patch/AgePatch";
 import { ConditionPatch } from "~/app/v0/@seller-user/draft/ui/patch/ConditionPatch";
-import { DeliveryPatch } from "~/app/v0/@seller-user/draft/ui/patch/DeliveryPatch";
 import { GalleryPatch } from "~/app/v0/@seller-user/draft/ui/patch/GalleryPatch";
 import { PriceTypePatch } from "~/app/v0/@seller-user/draft/ui/patch/PriceTypePatch";
 import { RestrictionPatch } from "~/app/v0/@seller-user/draft/ui/patch/RestrictionPatch";
-import { WarrantyPatch } from "~/app/v0/@seller-user/draft/ui/patch/WarrantyPatch";
 
 export namespace Data {
 	export type View =

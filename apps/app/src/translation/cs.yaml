@@ -71,7 +71,7 @@
     value: Inzeráty
 0e6cf0e3ce32e8ff03c1c483fa275fb0f2baa4ec9e5e3dcc47b5442f:
     ref: Delivery (title)
-    value: Delivery (title)
+    value: Možnost předání
 0f44d510d8a8cf53325df192dfac3d02f4299c2d9a4a5dbe2dad9a6f:
     ref: Price type not set
     value: Typ ceny nemáš nastavený
@@ -110,7 +110,7 @@
         stará auta).
 14c26d2816c7d80dbb0d3d6314d8229e7c3eb85ea3089c55c570051a:
     ref: Condition (title)
-    value: Condition (title)
+    value: Nastavení stavu
 15edabc6931564b26e9e7c4e83be79266953662d2a96c4544f5988e5:
     ref: Price type (title)
     value: Typ ceny
@@ -217,7 +217,7 @@
     value: Poměr dokončených zpráv
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
     ref: Age (title)
-    value: Age (title)
+    value: Odhad věku
 3136e34a81ab39a2fb1e4198edccbf10acf6244b0543a98136311b44:
     ref: Listing warranty (hint)
     value: |

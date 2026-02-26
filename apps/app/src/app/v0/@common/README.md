@@ -112,3 +112,7 @@ When adding to `@common`:
   - `@common/restriction/ui/RestrictionSelect/Item.tsx`
 - `RestrictionValue` was extracted to active scope:
   - `@common/restriction/ui/RestrictionValue.tsx`
+- `DeliverySelect` was extracted to active scope:
+  - `@common/delivery/ui/DeliverySelect.tsx`
+- `WarrantySelect` was extracted to active scope:
+  - `@common/warranty/ui/WarrantySelect.tsx`
