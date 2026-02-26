@@ -69,12 +69,12 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 - Seller listing list components now resolve locale via `useLocale()` instead of accepting `locale` props.
 - Seller flow routes now use page components:
   - `@seller-user/draft/page/DraftListPage.tsx`
-  - `@seller-user/draft/page/DraftEditPage.tsx`
   - `@seller-user/listing/page/MyListingPage.tsx`
   - `@seller-user/listing/page/ListingViewPage.tsx`
   - `@seller-user/transaction-listing/page/MessageListPage.tsx`
   - `@seller-user/transaction-listing/page/ListingMessageListPage.tsx`
   - `@seller-user/transaction-listing/page/ListingMessageListPendingPage.tsx`
+- Draft edit page was extracted from `v0` to active scope at `@seller-user/draft/page/DraftEditPage.tsx`.
 - Seller transaction list now uses domain-local container/pending components in `@seller-user/transaction/ui/` (no shared `@common` transaction list abstraction).
 - Seller feature call-sites increasingly use local `*Suspense` wrappers (for `Pending` + data composition) to keep suspense boundaries close to feature roots (`draft`, `listing`, `transaction`, `transaction-listing`).
 - Seller draft list now uses `withDraftQuery` collection hydration (`useCollectionQuery` + per-item `useQuery`) and keeps `data-ui` labels aligned with the bracketed contract.
