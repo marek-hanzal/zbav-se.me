@@ -772,6 +772,36 @@ Listing price - open:
 Listing price - open (hint):
     static: true
     value: Pokud jsi nakloněn smlouvání, vyber tuto volbu.
+Listing restriction - adult:
+    static: true
+    value: Pouze pro dospělé (18+)
+Listing restriction - adult (hint):
+    static: true
+    value: Obsah jen pro dospělé; není možné obejít.
+Listing restriction - adult-relaxed:
+    static: true
+    value: Pouze pro dospělé (18+) - s potvrzením
+Listing restriction - adult-relaxed (hint):
+    static: true
+    value: Tento obsah je možné zobrazit po odkliknutí hlášky, nicméně sem patří "lehké" věci, např. vape.
+Listing restriction - none:
+    static: true
+    value: Bez omezení
+Listing restriction - none (hint):
+    static: true
+    value: Běžný obsah bez jakéhokoli omezení (pro všechny, vč. mládeže).
+Listing restriction - restricted:
+    static: true
+    value: Omezené
+Listing restriction - restricted (hint):
+    static: true
+    value: Věci tvrdě omezené zákonem - nabídka tohoto typu zboží podlého zvláštním pravidlům.
+Listing restriction - sensitive:
+    static: true
+    value: Citlivé
+Listing restriction - sensitive (hint):
+    static: true
+    value: Citlivý obsah, který nemusí být vhodný pro mladé dospělé nebo jinak citlivé osoby (např. repliky zbraní nebo airsoftové zbraně, nože a pod).
 Listing warranty - custom:
     static: true
     value: Vlastní

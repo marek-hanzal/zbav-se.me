@@ -30,11 +30,14 @@ export const Item: FC<Item.Props> = ({ restriction, selection }) => {
 					items: "start",
 					gap: "xs",
 				},
-				className: [],
+				className: [
+					"text-left",
+				],
 			})}
 			data-ui={`RestrictionSelect-[Button.${restriction}]`}
 		>
 			<Tx label={`Listing restriction - ${restriction}`} />
+
 			<Tx
 				label={`Listing restriction - ${restriction} (hint)`}
 				ui={{
