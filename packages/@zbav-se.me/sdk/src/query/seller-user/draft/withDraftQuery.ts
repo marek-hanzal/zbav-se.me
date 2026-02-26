@@ -1,22 +1,57 @@
-import { withCollectionQuery } from "@use-pico/client/query";
-import { withDraftPatchMutation } from "../../../mutation/seller-user/draft";
-import { withDraftCollectionQuery } from "./withDraftCollectionQuery";
-import { withDraftCountQuery } from "./withDraftCountQuery";
-import { withDraftFetchQuery } from "./withDraftFetchQuery";
+import { withEntityQuery } from "@use-pico/client/query";
+import { withApi } from "@use-pico/common/api";
+import {
+	apiDraftCollection,
+	apiDraftCount,
+	apiDraftFetch,
+	apiDraftPatch,
+	type tDraft,
+	type tDraftCountQuery,
+	type tDraftPatch,
+	type tDraftQuery,
+} from "../../../api/seller-user";
 
-export const withDraftQuery = withCollectionQuery({
-	keys: (data) => [
+export const withDraftQuery = withEntityQuery<
+	tDraft,
+	tDraftQuery,
+	tDraftQuery,
+	tDraftCountQuery,
+	tDraftPatch
+>({
+	keys: () => [
 		"draft",
-		"collection",
-		data,
 	],
-	collectionQuery: withDraftCollectionQuery,
-	fetchQuery: withDraftFetchQuery,
-	countQuery: withDraftCountQuery,
-	patchMutation: withDraftPatchMutation,
 	toIdKey: (id) => ({
 		where: {
 			id,
 		},
 	}),
+	async fetch(data) {
+		return withApi(
+			apiDraftFetch({
+				body: data,
+			}),
+		);
+	},
+	async collection(data) {
+		return withApi(
+			apiDraftCollection({
+				body: data,
+			}),
+		);
+	},
+	async count(data) {
+		return withApi(
+			apiDraftCount({
+				body: data,
+			}),
+		);
+	},
+	async patch(data) {
+		return withApi(
+			apiDraftPatch({
+				body: data,
+			}),
+		);
+	},
 });
