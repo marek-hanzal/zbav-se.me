@@ -96,3 +96,4 @@ When adding to `@common`:
 - Save action footer container was extracted to active scope:
   - `@common/container/ui/SaveContainer.tsx`
 - PatchContainer abstraction was removed; patch views now compose `TitleContainer`/`Container` + `SaveContainer` inline at call-sites.
+- `LocationSelectContainer` abstraction was removed; call-sites now embed `LocationSelect` + `SaveContainer` inline.
