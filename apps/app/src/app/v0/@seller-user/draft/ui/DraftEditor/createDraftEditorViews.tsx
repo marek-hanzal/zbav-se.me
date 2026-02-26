@@ -1,6 +1,6 @@
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { ReactElement } from "react";
-import type { DraftEditor } from "~/app/v0/@seller-user/draft/ui/DraftEditor";
+import type { DraftEditor } from "~/app/v0/@seller-user/draft/ui/DraftEditor/DraftEditor";
 import { AgePatch } from "~/app/v0/@seller-user/draft/ui/patch/AgePatch";
 import { CategoryPatch } from "~/app/v0/@seller-user/draft/ui/patch/CategoryPatch";
 import { ConditionPatch } from "~/app/v0/@seller-user/draft/ui/patch/ConditionPatch";

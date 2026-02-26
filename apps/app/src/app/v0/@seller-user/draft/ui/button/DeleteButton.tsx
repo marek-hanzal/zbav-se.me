@@ -1,3 +1,5 @@
+import { useNavigate } from "@tanstack/react-router";
+import { useLocale } from "@use-pico/client/hook";
 import { TrashIcon } from "@use-pico/client/icon";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
@@ -9,21 +11,28 @@ import type { FC } from "react";
 export namespace DeleteButton {
 	export interface Props extends ConfirmButton.Props {
 		draft: tDraft;
-		onDelete(): Promise<any>;
 	}
 }
 
 export const DeleteButton: FC<DeleteButton.Props> = ({
 	draft,
-	onDelete,
 	buttonProps,
 	confirmProps,
 	ui,
 	className,
 	...props
 }) => {
+	const navigate = useNavigate();
+	const locale = useLocale();
 	const deleteMutation = withDraftDeleteMutation.useMutation({
-		onSuccess: onDelete,
+		async onPostMutation() {
+			await navigate({
+				to: "/$locale/home",
+				params: {
+					locale,
+				},
+			});
+		},
 	});
 
 	return (

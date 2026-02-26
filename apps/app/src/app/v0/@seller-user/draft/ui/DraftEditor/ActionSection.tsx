@@ -4,7 +4,7 @@ import { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft, tListing } from "@zbav-se.me/sdk/api/seller-user";
+import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
 import { CreateListingButton } from "~/app/v0/@seller-user/draft/ui/button/CreateListingButton";
 import { DeleteButton } from "~/app/v0/@seller-user/draft/ui/button/DeleteButton";
@@ -12,12 +12,10 @@ import { DeleteButton } from "~/app/v0/@seller-user/draft/ui/button/DeleteButton
 export namespace ActionSection {
 	export interface Props {
 		draft: tDraft;
-		onListing(listing: tListing): Promise<any>;
-		onDelete(): Promise<any>;
 	}
 }
 
-export const ActionSection: FC<ActionSection.Props> = ({ draft, onListing, onDelete }) => {
+export const ActionSection: FC<ActionSection.Props> = ({ draft }) => {
 	const locale = useLocale();
 
 	return (
@@ -37,7 +35,6 @@ export const ActionSection: FC<ActionSection.Props> = ({ draft, onListing, onDel
 			<Group>
 				<CreateListingButton
 					draft={draft}
-					onListing={onListing}
 					ui={{
 						round: undefined,
 						shadow: false,
@@ -85,7 +82,6 @@ export const ActionSection: FC<ActionSection.Props> = ({ draft, onListing, onDel
 
 				<DeleteButton
 					draft={draft}
-					onDelete={onDelete}
 					buttonProps={{
 						ui: {
 							round: undefined,

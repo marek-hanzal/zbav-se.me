@@ -83,6 +83,37 @@ export namespace withEntityQuery {
 		//
 	}
 
+	export namespace MutationOptions {
+		export interface Meta {
+			mutationId?: string;
+		}
+
+		export namespace PreMutation {
+			export interface Props<TVariables> {
+				variables: TVariables;
+			}
+
+			/**
+			 * Result of the callback is unused
+			 */
+			export type Fn<TVariables> = (props: Props<TVariables>) => Promise<any>;
+		}
+
+		export namespace PostMutation {
+			export interface Props<TVariables, TResult> {
+				variables: TVariables;
+				result: TResult;
+			}
+
+			/**
+			 * Result of the callback is unused
+			 */
+			export type Fn<TVariables, TResult> = (
+				props: Props<TVariables, TResult>,
+			) => Promise<any>;
+		}
+	}
+
 	/**
 	 * Mutation options passed through to TanStack Query mutation API.
 	 *
@@ -92,7 +123,7 @@ export namespace withEntityQuery {
 	export interface MutationOptions<TRequest, TResult, TError, TContext = unknown>
 		extends Omit<
 			UseMutationOptions<TResult, TError, TRequest, TContext>,
-			"mutationFn" | "mutationKey"
+			"mutationFn" | "mutationKey" | "meta"
 		> {
 		/**
 		 * Additional invalidation strategy to run after patch result is written to cache.
@@ -101,6 +132,17 @@ export namespace withEntityQuery {
 		 * the returned entity into canonical fetch cache.
 		 */
 		invalidate?: Invalidator.Type[];
+		meta?: MutationOptions.Meta;
+		/**
+		 * Optional callback called right _before_ mutationFn - this blocking the mutation itself
+		 *
+		 * Fails the mutation if an error is thrown.
+		 */
+		onPreMutation?: MutationOptions.PreMutation.Fn<TRequest>;
+		/**
+		 * Optional callback called right _after_ mutationFn - this blocking the mutation itself (it's not a onSuccess callback)
+		 */
+		onPostMutation?: MutationOptions.PostMutation.Fn<TRequest, TResult>;
 	}
 }
 
@@ -277,10 +319,14 @@ export const withEntityQuery = <
 		opts?: withEntityQuery.MutationOptions<TPatchRequest, TEntity, Error, TContext>,
 	) {
 		const queryClient = useQueryClient();
-		const { invalidate, ...$opts } = opts || {};
+		const { invalidate, onPreMutation, onPostMutation, meta, ...$opts } = opts || {};
 
 		return useMutation({
 			async mutationFn(request) {
+				await onPreMutation?.({
+					variables: request,
+				});
+
 				const result = await patch(request);
 				const key = toIdKey(result.id);
 
@@ -290,8 +336,14 @@ export const withEntityQuery = <
 					fetch: key,
 				});
 
+				await onPostMutation?.({
+					variables: request,
+					result,
+				});
+
 				return result;
 			},
+			meta: meta as Record<string, unknown>,
 			...$opts,
 		});
 	}

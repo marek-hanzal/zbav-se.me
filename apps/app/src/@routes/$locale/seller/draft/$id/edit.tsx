@@ -7,11 +7,6 @@ export const Route = createFileRoute("/$locale/seller/draft/$id/edit")({
 	component() {
 		const { id } = Route.useParams();
 
-		return (
-			<DraftEditPage
-				_suspense={"I know"}
-				draftId={id}
-			/>
-		);
+		return <DraftEditPage draftId={id} />;
 	},
 });
