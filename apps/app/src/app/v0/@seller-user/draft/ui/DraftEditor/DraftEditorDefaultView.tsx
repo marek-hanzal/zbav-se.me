@@ -35,10 +35,12 @@ export const DraftEditorDefaultView: FC<DraftEditorDefaultView.Props> = ({ draft
 					draft={draft}
 					onView={onView}
 				/>
+
 				<OptionalFieldsSection
 					draft={draft}
 					onView={onView}
 				/>
+
 				<ActionSection draft={draft} />
 			</Container>
 		</TitleContainer>
