@@ -1,16 +1,14 @@
 import { entriesOf } from "@use-pico/common/entries-of";
 import type { StateType } from "@use-pico/common/type";
-import { type PropsWithChildren, type ReactNode, useId } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 import { Container } from "../container";
 
 export namespace View {
-	export type View<TProps> = PropsWithChildren<
-		TProps & {
-			scroller?: "vertical" | "horizontal" | false;
-		}
-	>;
+	export interface View extends PropsWithChildren {
+		scroller?: "vertical" | "horizontal" | false;
+	}
 
-	export type Views<TView extends string, TProps> = Record<TView, View<TProps>>;
+	export type Views<TView extends string> = Record<TView, View>;
 
 	export namespace Children {
 		export interface Props {
@@ -20,25 +18,23 @@ export namespace View {
 		export type RenderFn = (props: Props) => ReactNode;
 	}
 
-	export interface Props<TView extends string, TProps> {
+	export interface Props<TView extends string> {
 		state: StateType.State<TView>;
-		views: Views<TView, TProps>;
-		children: Children.RenderFn;
+		views: Views<TView>;
+		children?: Children.RenderFn;
 	}
 }
 
-export const View = <TView extends string, TProps>({
+export const View = <TView extends string>({
 	state,
 	views,
-	children,
-}: View.Props<TView, TProps>) => {
-	const viewId = useId();
-
+	children = ({ content }) => content,
+}: View.Props<TView>) => {
 	return children({
 		content: entriesOf(views).map(([key, { scroller = "vertical", children }]) => {
 			return (
 				<Container
-					key={`${viewId}-${key}`}
+					key={key}
 					ui={{
 						scroll: scroller === false ? undefined : scroller,
 						height: "full",

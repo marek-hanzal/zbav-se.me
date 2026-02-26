@@ -1,7 +1,6 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { View } from "@use-pico/client/ui/view";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
-import type { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { useCallback, useMemo, useState } from "react";
 import { AgePatch } from "~/app/v0/@seller-user/draft/ui/patch/AgePatch";
@@ -53,7 +52,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 		setView("default");
 	}, []);
 
-	const views = useMemo(() => {
+	const views = useMemo<View.Views<Data.View>>(() => {
 		return {
 			default: {
 				children: (
@@ -206,16 +205,12 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 	]);
 
 	return (
-		<View<Data.View, TitleContainer.Props>
+		<View<Data.View>
 			state={{
 				value: view,
 				set: setView,
 			}}
 			views={views}
-		>
-			{({ content }) => {
-				return content;
-			}}
-		</View>
+		/>
 	);
 };
