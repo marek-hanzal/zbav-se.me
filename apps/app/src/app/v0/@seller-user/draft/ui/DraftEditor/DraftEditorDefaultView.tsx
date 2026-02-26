@@ -26,6 +26,7 @@ export const DraftEditorDefaultView: FC<DraftEditorDefaultView.Props> = ({ draft
 				data-ui={"DraftEditor-[Container.content]"}
 				ui={{
 					flow: "vertical",
+					scroll: "vertical",
 					inner: "default",
 					width: "full",
 					gap: "lg",
