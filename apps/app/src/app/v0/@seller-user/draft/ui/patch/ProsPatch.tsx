@@ -44,7 +44,7 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...
 		<TitleContainer
 			data-ui={"Setup-[TitleContainer.pros]"}
 			textTitle={translator.text("Listing - Pros (title)")}
-            left={<EditAction/>}
+			left={<EditAction />}
 			{...props}
 		>
 			<Container
@@ -55,16 +55,6 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...
 					inner: "default",
 				}}
 			>
-				<Tx
-					label={"Listing - Pros (message)"}
-					ui={{
-						text: "lg",
-						opacity: "8",
-						color: "text",
-					}}
-					className={"text-center"}
-				/>
-
 				<Container
 					ui={{
 						flow: "vertical",
@@ -74,7 +64,7 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...
 					{Array.from({
 						length: sProsCons.maxItems,
 					}).map((_, index) => (
-						// biome-ignore lint/suspicious/noArrayIndexKey: Static array of 5 fields
+						// biome-ignore lint/suspicious/noArrayIndexKey: Static array of fields
 						<FormField key={`pros-field-${index}`}>
 							{(props) => (
 								<TextInput
@@ -84,12 +74,23 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...
 										updateItem(index, e.target.value);
 									}}
 									maxLength={sProsCons.items.maxLength}
+									placeholder={translator.text(`Pros ${index} (placeholder)`)}
 									{...props}
 								/>
 							)}
 						</FormField>
 					))}
 				</Container>
+
+				<Tx
+					label={"Listing - Pros (message)"}
+					ui={{
+						text: "md",
+						opacity: "6",
+						color: "text",
+					}}
+					className={"text-center"}
+				/>
 
 				<SaveContainer
 					onCancel={onCancel}
@@ -107,7 +108,7 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...
 					}}
 					loading={mutation.isPending}
 					disabled={false}
-                    textCancel={<Tx label={"Back (label)"} />}
+					textCancel={<Tx label={"Back (label)"} />}
 				/>
 			</Container>
 		</TitleContainer>

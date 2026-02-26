@@ -55,16 +55,6 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onSettled, ...
 					inner: "default",
 				}}
 			>
-				<Tx
-					label={"Listing - Cons (message)"}
-					ui={{
-						text: "lg",
-						opacity: "8",
-						color: "text",
-					}}
-					className={"text-center"}
-				/>
-
 				<Container
 					ui={{
 						flow: "vertical",
@@ -74,7 +64,7 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onSettled, ...
 					{Array.from({
 						length: sProsCons.maxItems,
 					}).map((_, index) => (
-						// biome-ignore lint/suspicious/noArrayIndexKey: Static array of 5 fields
+						// biome-ignore lint/suspicious/noArrayIndexKey: Static array of fields
 						<FormField key={`cons-field-${index}`}>
 							{(props) => (
 								<TextInput
@@ -84,12 +74,23 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onSettled, ...
 										updateItem(index, e.target.value);
 									}}
 									maxLength={sProsCons.items.maxLength}
+									placeholder={translator.text(`Cons ${index} (placeholder)`)}
 									{...props}
 								/>
 							)}
 						</FormField>
 					))}
 				</Container>
+
+				<Tx
+					label={"Listing - Cons (message)"}
+					ui={{
+						text: "md",
+						opacity: "6",
+						color: "text",
+					}}
+					className={"text-center"}
+				/>
 
 				<SaveContainer
 					onCancel={onCancel}
