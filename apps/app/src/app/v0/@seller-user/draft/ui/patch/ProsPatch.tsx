@@ -8,6 +8,7 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { EditAction } from "~/app/@seller-user/draft/ui/DraftEditor/EditAction";
 
 export namespace ProsPatch {
 	export interface Props extends TitleContainer.Props {
@@ -43,6 +44,7 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...
 		<TitleContainer
 			data-ui={"Setup-[TitleContainer.pros]"}
 			textTitle={translator.text("Listing - Pros (title)")}
+            left={<EditAction/>}
 			{...props}
 		>
 			<Container
@@ -105,6 +107,7 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...
 					}}
 					loading={mutation.isPending}
 					disabled={false}
+                    textCancel={<Tx label={"Back (label)"} />}
 				/>
 			</Container>
 		</TitleContainer>
