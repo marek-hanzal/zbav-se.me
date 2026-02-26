@@ -938,6 +938,9 @@ buyer - Transaction successful (message):
 
         Dál už tu nic není.
     static: true
+c25e8a6359df6fbcc11434b2d0bcaf641237490f399adfa91cd8702b:
+    ref: Home (label)
+    value: Domů
 c360a8542e6f85f8f1c9cacccc525cb1fcdf6b743584428ee6111e55:
     ref: Shop (title)
     value: Obchod

@@ -10,6 +10,7 @@ import {
 	DraftIcon,
 	FavouriteIcon,
 	FindListingsIcon,
+	HomeIcon,
 	MessageIcon,
 	MyListingsIcon,
 } from "@zbav-se.me/ui/icon";
@@ -60,6 +61,40 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 					gap: "md",
 				}}
 			>
+				{matchRoute({
+					to: "/$locale/home",
+				}) ? null : (
+					<Group>
+						<LinkTo
+							{...uiMenuButton({
+								className: [],
+							})}
+							icon={HomeIcon}
+							iconProps={{
+								ui: {
+									...icon,
+								},
+							}}
+							to="/$locale/home"
+							params={{
+								locale,
+							}}
+						>
+							<TypoIcon
+								flip
+								icon={ChevronRightIcon}
+								iconProps={{
+									ui: {
+										opacity: "xl",
+									},
+								}}
+							>
+								<Tx label="Home (label)" />
+							</TypoIcon>
+						</LinkTo>
+					</Group>
+				)}
+
 				<Group>
 					<LinkTo
 						{...uiMenuButton({
