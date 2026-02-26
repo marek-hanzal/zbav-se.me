@@ -9,7 +9,7 @@ import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
 import { uiWarningStatus } from "@zbav-se.me/ui/ui";
 import { type FC, useEffect, useRef } from "react";
-import { CategoryItemSuspense } from "./CategoryItemSuspense";
+import { CategoryItem } from "./CategoryItem";
 
 export namespace ListContainer {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -106,7 +106,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 		>
 			{categoryIds.map((categoryId) => {
 				return (
-					<CategoryItemSuspense
+					<CategoryItem
 						key={categoryId}
 						categoryId={categoryId}
 						selection={selection}

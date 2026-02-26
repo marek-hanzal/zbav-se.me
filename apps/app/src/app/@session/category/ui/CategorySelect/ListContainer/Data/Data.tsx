@@ -5,7 +5,7 @@ import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 import { type FC, useEffect, useRef } from "react";
-import { CategoryItemSuspense } from "~/app/v0/@session/category/ui/CategorySelect/CategoryItemSuspense";
+import { CategoryItem } from "~/app/v0/@session/category/ui/CategorySelect/CategoryItem";
 import { Empty } from "./Empty";
 
 export namespace Data {
@@ -77,24 +77,30 @@ export const Data: FC<Data.Props> = ({
 
 	return (
 		<Container
-			data-ui="ListContainer[Container.content]"
-			ref={mergedRef}
 			ui={{
-				layout: "vertical-flex",
 				scroll: "vertical",
-				gap: "default",
+				height: "full",
 			}}
-			{...props}
 		>
-			{categoryIds.map((categoryId) => {
-				return (
-					<CategoryItemSuspense
-						key={categoryId}
-						categoryId={categoryId}
-						selection={selection}
-					/>
-				);
-			})}
+			<Container
+				data-ui="ListContainer[Container.content]"
+				ref={mergedRef}
+				ui={{
+					flow: "vertical",
+					gap: "default",
+				}}
+				{...props}
+			>
+				{categoryIds.map((categoryId) => {
+					return (
+						<CategoryItem
+							key={categoryId}
+							categoryId={categoryId}
+							selection={selection}
+						/>
+					);
+				})}
+			</Container>
 		</Container>
 	);
 };

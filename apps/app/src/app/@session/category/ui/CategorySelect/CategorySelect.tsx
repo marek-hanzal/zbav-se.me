@@ -26,7 +26,6 @@ export const CategorySelect: FC<CategorySelect.Props> = ({
 			ui={{
 				layout: "vertical-header-content",
 				height: "full",
-				scroll: "vertical",
 				gap: "default",
 				...ui,
 			}}
