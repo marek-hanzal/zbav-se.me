@@ -9,10 +9,7 @@ export namespace HomeMenuDraftLink {
 	}
 }
 
-export const HomeMenuDraftLink: FC<HomeMenuDraftLink.Props> = ({
-	icon,
-	...props
-}) => {
+export const HomeMenuDraftLink: FC<HomeMenuDraftLink.Props> = ({ icon, ...props }) => {
 	return (
 		<Suspense fallback={<Pending iconUi={icon} />}>
 			<Data

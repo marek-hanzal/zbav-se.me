@@ -12,13 +12,13 @@ import { LocationValue } from "~/app/v0/@common/location/ui/LocationValue";
 import { PriceValue } from "~/app/v0/@common/price/ui/PriceValue";
 import { PriceTypeValue } from "~/app/v0/@common/price-type/ui/PriceTypeValue";
 import { TitleValue } from "~/app/v0/@common/title/ui/TitleValue";
-import type { DraftEditor } from "~/app/v0/@seller-user/draft/ui/DraftEditor/DraftEditor";
+import type { Data } from "~/app/v0/@seller-user/draft/ui/DraftEditor/Data";
 import { ChevronAction } from "./ChevronAction";
 
 export namespace RequiredFieldsSection {
 	export interface Props {
 		draft: tDraft;
-		onView(view: DraftEditor.View): void;
+		onView(view: Data.View): void;
 	}
 }
 
