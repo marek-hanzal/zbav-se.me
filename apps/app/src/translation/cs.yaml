@@ -792,7 +792,7 @@ Listing restriction - none (hint):
     value: Běžný obsah bez jakéhokoli omezení (pro všechny, vč. mládeže).
 Listing restriction - restricted:
     static: true
-    value: Omezené
+    value: Zákonem regulované
 Listing restriction - restricted (hint):
     static: true
     value: Věci tvrdě omezené zákonem - nabídka tohoto typu zboží podlého zvláštním pravidlům.
