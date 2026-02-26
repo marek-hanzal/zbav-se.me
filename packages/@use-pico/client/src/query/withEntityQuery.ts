@@ -100,7 +100,7 @@ export namespace withEntityQuery {
 		 * Prefer keeping this narrow. Most updates are already propagated by writing
 		 * the returned entity into canonical fetch cache.
 		 */
-		invalidate: Invalidator.Type[];
+		invalidate?: Invalidator.Type[];
 	}
 }
 
