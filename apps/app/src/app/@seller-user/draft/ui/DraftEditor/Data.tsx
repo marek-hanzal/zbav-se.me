@@ -10,7 +10,7 @@ import { CategoryPatch } from "~/app/v0/@seller-user/draft/ui/patch/CategoryPatc
 import { ConditionPatch } from "~/app/v0/@seller-user/draft/ui/patch/ConditionPatch";
 import { ConsPatch } from "~/app/v0/@seller-user/draft/ui/patch/ConsPatch";
 import { DeliveryPatch } from "~/app/v0/@seller-user/draft/ui/patch/DeliveryPatch";
-import { DescriptionPatch } from "~/app/v0/@seller-user/draft/ui/patch/DescriptionPatch";
+import { DescriptionPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/DescriptionPatch";
 import { ExpireAtPatch } from "~/app/v0/@seller-user/draft/ui/patch/ExpireAtPatch";
 import { GalleryPatch } from "~/app/v0/@seller-user/draft/ui/patch/GalleryPatch";
 import { LocationPatch } from "~/app/v0/@seller-user/draft/ui/patch/LocationPatch";

@@ -1,6 +1,8 @@
 import { Container } from "@use-pico/client/ui/container";
 import { FormField, uiInput } from "@use-pico/client/ui/form";
+import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
+import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { sDraftCreate } from "@zbav-se.me/sdk/api/seller-user";
@@ -8,6 +10,7 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { EditAction } from "~/app/@seller-user/draft/ui/DraftEditor/EditAction";
 
 export namespace DescriptionPatch {
 	export interface Props extends TitleContainer.Props {
@@ -35,6 +38,7 @@ export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 		<TitleContainer
 			data-ui={"Setup-[TitleContainer.description]"}
 			textTitle={translator.text("Description (title)")}
+			left={<EditAction />}
 			{...props}
 		>
 			<Container
@@ -45,16 +49,8 @@ export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 					inner: "default",
 				}}
 			>
-				<Container
-					ui={{
-						layout: "vertical-centered",
-						height: "full",
-					}}
-				>
-					<Status
-						textTitle={translator.text("Description (title)")}
-						textMessage={translator.text("Description (message)")}
-					>
+				<Status
+					action={
 						<FormField>
 							{({ className, ...props }) => (
 								<textarea
@@ -80,8 +76,16 @@ export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 								/>
 							)}
 						</FormField>
-					</Status>
-				</Container>
+					}
+				>
+					<Mx
+						label={"Listing description (hint)"}
+						ui={{
+							tone: "secondary",
+							theme: "light",
+						}}
+					/>
+				</Status>
 
 				<SaveContainer
 					onCancel={onCancel}
@@ -99,6 +103,7 @@ export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 					}}
 					loading={mutation.isPending}
 					disabled={false}
+					textCancel={<Tx label={"Back (label)"} />}
 				/>
 			</Container>
 		</TitleContainer>

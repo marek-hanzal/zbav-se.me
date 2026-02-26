@@ -1,4 +1,3 @@
-import { EditIcon, Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
 import { Mx } from "@use-pico/client/ui/mx";
@@ -12,6 +11,7 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { EditAction } from "~/app/@seller-user/draft/ui/DraftEditor/EditAction";
 
 export namespace TitlePatch {
 	export interface Props extends TitleContainer.Props {
@@ -31,7 +31,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSettled, .
 		<TitleContainer
 			data-ui={"Setup-[TitleContainer.title]"}
 			textTitle={translator.text("Listing title (title)")}
-			left={<Icon icon={EditIcon} />}
+			left={<EditAction />}
 			{...props}
 		>
 			<Container

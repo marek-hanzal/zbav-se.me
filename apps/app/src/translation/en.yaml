@@ -367,6 +367,9 @@
 6497eaff1f9488a6d56e36cb92e86be36eac35a43ee18669931093eb:
   ref: Closer rate (label)
   value: Closer rate (label)
+64b012aba980dc949c73673c6027f83c13b38bd1c1965dba3133a3de:
+  ref: Listing description (hint)
+  value: Listing description (hint)
 6526401dc54716accd5e7f420d3f70d39b06beff9a4a9bf64dcd15d0:
   ref: Share contact info (button)
   value: Share contact info (button)
@@ -496,9 +499,6 @@
 8df15cc86b6018c3f7f2cf9dd1799775eb374add9037534d7354766c:
   ref: No transactions as seller (title)
   value: No transactions as seller (title)
-8e2fc55a3696f2163e1e926bfcecab6b1eedd38aefc5d37abb4ebc0c:
-  ref: Description (message)
-  value: Description (message)
 92f8ed3e921515bd08034e9707119cb1472e34759a88f45647289475:
   ref: resolved
   value: resolved
