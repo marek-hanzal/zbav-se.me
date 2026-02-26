@@ -27,7 +27,7 @@ export const RequiredSection: FC<RequiredSection.Props> = ({ draft, onView }) =>
 			<Group>
 				<GalleryValue
 					uploads={draft.gallery.items.map((item) => item.upload)}
-					label="Listing photo gallery (label)"
+					label={translator.text("Listing photo gallery (label)")}
 					onClick={() => onView("gallery")}
 				/>
 			</Group>

@@ -399,6 +399,9 @@
 5ed9b024fb2638630326495ab7b573814766a680c0bdc1a02eba157e:
     ref: Feed name (placeholder)
     value: Např. nářadí
+5f8d3eb16bf7b5c857416890f7e4c3ff3d02dfa73a7d621f9a603e9f:
+    ref: Listing photo gallery (label)
+    value: Nahraj fotky
 5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
     ref: Really delete feed (button)
     value: Opravdu?
@@ -691,6 +694,21 @@ Condition - Age [5] (hint):
 Condition - Age [6] (hint):
     static: true
     value: Čerstvá novinka
+Cons 0 (placeholder):
+    static: true
+    value: Bez dokladu
+Cons 1 (placeholder):
+    static: true
+    value: Baterie je slabší
+Cons 2 (placeholder):
+    static: true
+    value: Omlácené rohy
+Cons 3 (placeholder):
+    static: true
+    value: Chybí část balení
+Cons 4 (placeholder):
+    static: true
+    value: Drobné kosmetické vady
 Expire in 1-month:
     static: true
     value: Za měsíc
@@ -760,48 +778,61 @@ Listing delivery - personal:
 Listing delivery - post:
     static: true
     value: Pošta
-Listing price - closed:
-    static: true
-    value: Pevná cena
 Listing price - closed (hint):
     static: true
     value: Nastav si, pokud nehodláš o ceně smlouvat.
-Listing price - open:
+Listing price - closed:
     static: true
-    value: K vyjednávání
+    value: Pevná cena
 Listing price - open (hint):
     static: true
     value: Pokud jsi nakloněn smlouvání, vyber tuto volbu.
-Listing restriction - adult:
+Listing price - open:
     static: true
-    value: Pouze pro dospělé (18+)
+    value: K vyjednávání
 Listing restriction - adult (hint):
     static: true
     value: Obsah jen pro dospělé; není možné obejít.
+Listing restriction - adult:
+    static: true
+    value: Pouze pro dospělé (18+)
+Listing restriction - adult-relaxed (hint):
+    static: true
+    value: Tento obsah je možné zobrazit po odkliknutí hlášky, nicméně sem patří
+        "lehké" věci, např. vape.
 Listing restriction - adult-relaxed:
     static: true
     value: Pouze pro dospělé (18+) - s potvrzením
-Listing restriction - adult-relaxed (hint):
-    static: true
-    value: Tento obsah je možné zobrazit po odkliknutí hlášky, nicméně sem patří "lehké" věci, např. vape.
-Listing restriction - none:
-    static: true
-    value: Bez omezení
 Listing restriction - none (hint):
     static: true
     value: Běžný obsah bez jakéhokoli omezení (pro všechny, vč. mládeže).
+Listing restriction - none:
+    static: true
+    value: Bez omezení
+Listing restriction - restricted (hint):
+    static: true
+    value:
+        Věci tvrdě omezené zákonem - nabídka tohoto typu zboží podléhá zvláštním
+        pravidlům.
 Listing restriction - restricted:
     static: true
     value: Zákonem regulované
-Listing restriction - restricted (hint):
+Listing restriction - sensitive (hint):
     static: true
-    value: Věci tvrdě omezené zákonem - nabídka tohoto typu zboží podléhá zvláštním pravidlům.
+    value: Citlivý obsah, který nemusí být vhodný pro mladé dospělé nebo jinak
+        citlivé osoby (např. repliky zbraní nebo airsoftové zbraně, nože a pod).
 Listing restriction - sensitive:
     static: true
     value: Citlivé
-Listing restriction - sensitive (hint):
+Listing warranty - custom:
     static: true
-    value: Citlivý obsah, který nemusí být vhodný pro mladé dospělé nebo jinak citlivé osoby (např. repliky zbraní nebo airsoftové zbraně, nože a pod).
+    value: Vlastní
+Listing warranty - no-warranty:
+    static: true
+    value: Bez záruky
+Listing warranty - warranty:
+    static: true
+    value: Se zárukou
 Pros 0 (placeholder):
     static: true
     value: Plně funkční
@@ -817,30 +848,6 @@ Pros 3 (placeholder):
 Pros 4 (placeholder):
     static: true
     value: Přidám příslušenství
-Cons 0 (placeholder):
-    static: true
-    value: Bez dokladu
-Cons 1 (placeholder):
-    static: true
-    value: Baterie je slabší
-Cons 2 (placeholder):
-    static: true
-    value: Omlácené rohy
-Cons 3 (placeholder):
-    static: true
-    value: Chybí část balení
-Cons 4 (placeholder):
-    static: true
-    value: Drobné kosmetické vady
-Listing warranty - custom:
-    static: true
-    value: Vlastní
-Listing warranty - no-warranty:
-    static: true
-    value: Bez záruky
-Listing warranty - warranty:
-    static: true
-    value: Se zárukou
 Seller score 1:
     static: true
     value: Vysoké riziko

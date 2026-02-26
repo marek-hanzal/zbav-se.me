@@ -346,6 +346,9 @@
 5ed9b024fb2638630326495ab7b573814766a680c0bdc1a02eba157e:
   ref: Feed name (placeholder)
   value: Feed name (placeholder)
+5f8d3eb16bf7b5c857416890f7e4c3ff3d02dfa73a7d621f9a603e9f:
+  ref: Listing photo gallery (label)
+  value: Listing photo gallery (label)
 5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
   ref: Really delete feed (button)
   value: Really delete feed (button)
