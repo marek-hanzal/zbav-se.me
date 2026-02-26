@@ -15,7 +15,7 @@ export namespace Data {
 }
 
 export const Data: FC<Data.Props> = ({ _suspense, categoryId, selection }) => {
-	const { data: item } = withCategoryQuery.useQuery(categoryId);
+	const { data: item } = withCategoryQuery.useFetchQuery(categoryId);
 	const isSelected = selection.isSelected(item.id);
 
 	return (

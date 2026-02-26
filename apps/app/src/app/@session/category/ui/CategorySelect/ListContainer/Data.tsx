@@ -19,7 +19,14 @@ export namespace Data {
 	}
 }
 
-export const Data: FC<Data.Props> = ({ _suspense, ref, fulltext, selection, categoryId, ...props }) => {
+export const Data: FC<Data.Props> = ({
+	_suspense,
+	ref,
+	fulltext,
+	selection,
+	categoryId,
+	...props
+}) => {
 	const locale = useLocale();
 	const { data: categoryIds } = withCategoryQuery.useCollectionQuery({
 		filter: {
@@ -37,10 +44,13 @@ export const Data: FC<Data.Props> = ({ _suspense, ref, fulltext, selection, cate
 			},
 		],
 	});
-	const { data: categoryCount } = withCategoryQuery.useCount({
-		filter: {
-			locale,
-			fulltext,
+	/**
+	 * Category count is a bit fake, but it's much cheaper to ask single entity that running count server-side
+	 */
+	const { data: categoryCount } = withCategoryQuery.useCollectionQuery({
+		cursor: {
+			page: 0,
+			size: 1,
 		},
 	});
 
@@ -64,7 +74,7 @@ export const Data: FC<Data.Props> = ({ _suspense, ref, fulltext, selection, cate
 		categoryIds,
 	]);
 
-	if (categoryCount.isEmpty || categoryCount.isFilterEmpty) {
+	if (categoryCount.length === 0) {
 		return (
 			<Container
 				data-ui="ListContainer[Container.empty]"
@@ -86,7 +96,7 @@ export const Data: FC<Data.Props> = ({ _suspense, ref, fulltext, selection, cate
 		);
 	}
 
-	return categoryIds.length > 0 ? (
+	return (
 		<Container
 			data-ui="ListContainer[Container.content]"
 			ref={mergedRef}
@@ -107,5 +117,5 @@ export const Data: FC<Data.Props> = ({ _suspense, ref, fulltext, selection, cate
 				);
 			})}
 		</Container>
-	) : null;
+	);
 };

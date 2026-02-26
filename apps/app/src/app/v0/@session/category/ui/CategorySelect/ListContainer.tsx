@@ -44,7 +44,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 			},
 		],
 	});
-	const { data: categoryCount } = withCategoryQuery.useCount({
+	const { data: categoryCount } = withCategoryQuery.useCountQuery({
 		filter: {
 			locale,
 			fulltext,

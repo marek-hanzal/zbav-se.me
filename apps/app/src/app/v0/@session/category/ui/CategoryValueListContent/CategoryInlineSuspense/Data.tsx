@@ -9,7 +9,7 @@ export namespace Data {
 }
 
 export const Data: FC<Data.Props> = ({ categoryId }) => {
-	const { data: category } = withCategoryQuery.useQuery(categoryId);
+	const { data: category } = withCategoryQuery.useFetchQuery(categoryId);
 
 	return <CategoryInline category={category} />;
 };
