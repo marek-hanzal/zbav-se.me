@@ -17,7 +17,7 @@ import {
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import { useRef } from "react";
-import { HomeMenuDraftLinkSuspense } from "./HomeMenu/HomeMenuDraftLinkSuspense";
+import { HomeMenuDraftLink } from "./HomeMenuDraftLink";
 
 export namespace HomeMenu {
 	export interface Props extends Container.Props {
@@ -159,7 +159,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 						</TypoIcon>
 					</LinkTo>
 
-					<HomeMenuDraftLinkSuspense icon={icon} />
+					<HomeMenuDraftLink icon={icon} />
 				</Group>
 
 				<Group>

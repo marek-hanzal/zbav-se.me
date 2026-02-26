@@ -3,13 +3,13 @@ import { Suspense } from "react";
 import { Data } from "./Data";
 import { Pending } from "./Pending";
 
-export namespace HomeMenuDraftLinkSuspense {
+export namespace HomeMenuDraftLink {
 	export interface Props extends Omit<Data.Props, "_suspense"> {
 		//
 	}
 }
 
-export const HomeMenuDraftLinkSuspense: FC<HomeMenuDraftLinkSuspense.Props> = ({
+export const HomeMenuDraftLink: FC<HomeMenuDraftLink.Props> = ({
 	icon,
 	...props
 }) => {
