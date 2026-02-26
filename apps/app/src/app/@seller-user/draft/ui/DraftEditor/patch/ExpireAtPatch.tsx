@@ -6,8 +6,8 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { ExpireAtSelect } from "~/app/@common/expire-at/ui/ExpireAtSelect";
 import { EditAction } from "~/app/@seller-user/draft/ui/DraftEditor/EditAction";
-import { ExpireAtSelect } from "~/app/v0/@common/expire-at/ui/ExpireAtSelect";
 
 export namespace ExpireAtPatch {
 	export interface Props extends TitleContainer.Props {

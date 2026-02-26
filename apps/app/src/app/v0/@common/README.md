@@ -103,3 +103,6 @@ When adding to `@common`:
 - `PriceTypeSelect` was split into folder-local parts:
   - `@common/price-type/ui/PriceTypeSelect/PriceTypeSelect.tsx`
   - `@common/price-type/ui/PriceTypeSelect/PriceTypeItem.tsx`
+- `ExpireAtSelect` was extracted to active scope and split into folder-local parts:
+  - `@common/expire-at/ui/ExpireAtSelect/ExpireAtSelect.tsx`
+  - `@common/expire-at/ui/ExpireAtSelect/ExpireAtItem.tsx`
