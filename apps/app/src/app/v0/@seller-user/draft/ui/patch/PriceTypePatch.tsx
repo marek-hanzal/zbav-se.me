@@ -1,5 +1,6 @@
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListingPriceEnum } from "@zbav-se.me/sdk/api/seller-user";
@@ -7,6 +8,7 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { EditAction } from "~/app/@seller-user/draft/ui/DraftEditor/EditAction";
 import { PriceTypeSelect } from "~/app/v0/@common/price-type/ui/PriceTypeSelect";
 
 export namespace PriceTypePatch {
@@ -44,6 +46,7 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
 		<TitleContainer
 			textTitle={translator.text("Price type (title)")}
 			data-ui={"Setup-[TitleContainer.price-type]"}
+			left={<EditAction />}
 			{...props}
 		>
 			<Container
@@ -73,6 +76,7 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
 					}}
 					loading={mutation.isPending}
 					disabled={priceType === null}
+					textCancel={<Tx label={"Back (label)"} />}
 				/>
 			</Container>
 		</TitleContainer>

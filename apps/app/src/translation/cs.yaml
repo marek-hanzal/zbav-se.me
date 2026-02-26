@@ -763,9 +763,15 @@ Listing delivery - post:
 Listing price - closed:
     static: true
     value: Pevná cena
+Listing price - closed (hint):
+    static: true
+    value: Nastav si, pokud nehodláš o ceně smlouvat.
 Listing price - open:
     static: true
     value: K vyjednávání
+Listing price - open (hint):
+    static: true
+    value: Pokud jsi nakloněn smlouvání, vyber tuto volbu.
 Listing warranty - custom:
     static: true
     value: Vlastní
