@@ -1,15 +1,14 @@
 import type { Fulltext } from "@use-pico/client/ui/fulltext";
-import type { Status } from "@use-pico/client/ui/status";
 import { type FC, Suspense } from "react";
 import { Data } from "./Data";
 import { Default } from "./Default";
 import { Pending } from "./Pending";
 
 export namespace ListContainer {
-	export interface Props extends Omit<Data.Props, "_suspense" | "text"> {
-		textHint: string;
+	export interface Props
+		extends Omit<Data.Props, "_suspense" | "text">,
+			Pick<Default.Props, "textHint" | "warningStatusProps"> {
 		search: Fulltext.Value;
-		warningStatusProps?: Status.Props;
 	}
 }
 

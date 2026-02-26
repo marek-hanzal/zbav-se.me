@@ -1,14 +1,16 @@
 import { WarningIcon } from "@use-pico/client/icon";
+import type { Container as ContainerUi } from "@use-pico/client/ui/container";
 import { Container } from "@use-pico/client/ui/container";
 import { Mx } from "@use-pico/client/ui/mx";
+import type { Status as StatusUi } from "@use-pico/client/ui/status";
 import { Status } from "@use-pico/client/ui/status";
 import { uiWarningStatus } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
-import type { ListContainer } from "./ListContainer";
 
 export namespace Default {
-	export interface Props extends Pick<ListContainer.Props, "textHint" | "warningStatusProps" | "ui"> {
-		//
+	export interface Props extends Pick<ContainerUi.Props, "ui"> {
+		textHint: string;
+		warningStatusProps?: StatusUi.Props;
 	}
 }
 
