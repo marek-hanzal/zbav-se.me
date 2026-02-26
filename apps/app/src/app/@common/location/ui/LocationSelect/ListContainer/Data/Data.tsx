@@ -65,7 +65,9 @@ export const Data: FC<Data.Props> = ({
 							{...uiSelectButton({
 								isSelected: value === item.id,
 								ui,
-								className: [],
+								className: [
+									"text-left",
+								],
 							})}
 							data-ui="ListContainer-[Button]"
 						>
