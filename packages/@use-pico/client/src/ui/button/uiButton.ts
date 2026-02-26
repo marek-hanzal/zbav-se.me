@@ -61,9 +61,9 @@ export const uiButton = ({ ui, className }: uiButton.Props) => {
 			...ui,
 		},
 		className: [
-			className,
 			"border-t-transparent",
 			"border-x-transparent",
+			className,
 		],
 	});
 };

@@ -13,6 +13,9 @@
 032bf5ced2d92548bee53096a31662b5527c60c21a75a711303d95de:
   ref: Age - from oldest (label)
   value: Age - from oldest (label)
+0353a7e7a341b6b63f3e182605fd6627a8e0e1c6897b7bf639ff5d89:
+  ref: Back (label)
+  value: Back (label)
 035b4a691d02ff22e504324450fa9d11678d834249e37ad92b5a3545:
   ref: Dispute transaction (button)
   value: Dispute transaction (button)
@@ -343,9 +346,6 @@
 5ed9b024fb2638630326495ab7b573814766a680c0bdc1a02eba157e:
   ref: Feed name (placeholder)
   value: Feed name (placeholder)
-5f8d3eb16bf7b5c857416890f7e4c3ff3d02dfa73a7d621f9a603e9f:
-  ref: Listing photo gallery (label)
-  value: Listing photo gallery (label)
 5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
   ref: Really delete feed (button)
   value: Really delete feed (button)
@@ -589,6 +589,9 @@ aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
 acca87272a911bd673bc0f526d8ddaf4bedf8c4d04a375401d80df47:
   ref: Restriction not selected
   value: Restriction not selected
+ace3cb7fde09a6de2d13e87440ee5f21a920cd7dff6ac1dc2ee6ba48:
+  ref: Search (title)
+  value: Search (title)
 acf5cd0bee4e6bd74eea745c51c41f0b3a17a1de314afd2d76eb056c:
   ref: Personal - Warning (title)
   value: Personal - Warning (title)

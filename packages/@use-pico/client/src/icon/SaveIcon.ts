@@ -1,1 +1,1 @@
-export const SaveIcon = "icon-[material-symbols-light--save-outline-sharp]";
+export const SaveIcon = "icon-[proicons--save-multiple]";
