@@ -46,7 +46,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSettled, .
 					}}
 				>
 					<Status
-						textTitle={translator.text("Listing title (title)")}
+						textTitle={translator.text("Listing title (label)")}
 						action={
 							<FormField>
 								{(fieldProps) => (
