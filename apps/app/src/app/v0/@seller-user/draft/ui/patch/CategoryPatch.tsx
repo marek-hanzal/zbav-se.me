@@ -22,7 +22,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 	onSettled,
 	...props
 }) => {
-	const mutation = withDraftQuery.useMutation({
+	const mutation = withDraftQuery.usePatchMutation({
 		onSettled,
 	});
 	const selection = useSelection<EntitySchema.Type>({

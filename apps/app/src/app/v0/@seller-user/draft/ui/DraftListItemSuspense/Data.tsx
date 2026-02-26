@@ -10,7 +10,7 @@ export namespace Data {
 }
 
 export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
-	const { data: draft } = withDraftQuery.useQuery(draftId);
+	const { data: draft } = withDraftQuery.useFetchQuery(draftId);
 
 	return <DraftItem draft={draft} />;
 };

@@ -25,7 +25,7 @@ export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 }) => {
 	const [description, setDescription] = useState(draft.description ?? "");
 
-	const mutation = withDraftQuery.useMutation({
+	const mutation = withDraftQuery.usePatchMutation({
 		onSettled() {
 			onSettled?.();
 		},

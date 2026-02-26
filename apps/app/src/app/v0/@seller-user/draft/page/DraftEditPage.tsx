@@ -14,11 +14,11 @@ export namespace DraftEditPage {
 export const DraftEditPage: FC<DraftEditPage.Props> = ({ _suspense, draftId }) => {
 	const locale = useLocale();
 	const navigate = useNavigate();
-	const { data } = withDraftQuery.useQuery(draftId);
+	const { data: draft } = withDraftQuery.useFetchQuery(draftId);
 
 	return (
 		<DraftEditor
-			draft={data}
+			draft={draft}
 			onListing={async () => {
 				await navigate({
 					to: "/$locale/seller/listing/my",

@@ -30,7 +30,9 @@ export const Route = createFileRoute("/$locale/seller/draft/resolve")({
 		}
 
 		const draft = await withDraftCreateMutation.mutate(queryClient, {});
-		await withDraftQuery.invalidateCollection(queryClient);
+		await withDraftQuery.invalidator(queryClient, [
+			"collection",
+		]);
 
 		throw redirect({
 			to: "/$locale/seller/draft/$id/edit",

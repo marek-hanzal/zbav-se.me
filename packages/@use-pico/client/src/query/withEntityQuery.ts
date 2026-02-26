@@ -317,6 +317,8 @@ export const withEntityQuery = <
 		fetch,
 		collection,
 		count,
+		invalidator,
+		//
 		useFetchQuery,
 		useCollectionQuery,
 		useCountQuery,

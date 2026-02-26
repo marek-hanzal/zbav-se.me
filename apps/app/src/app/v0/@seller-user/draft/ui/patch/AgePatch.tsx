@@ -17,7 +17,7 @@ export namespace AgePatch {
 }
 
 export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
-	const mutation = withDraftQuery.useMutation({
+	const mutation = withDraftQuery.usePatchMutation({
 		onSettled,
 	});
 	const selection = useSelection<Rating.RatingItem>({

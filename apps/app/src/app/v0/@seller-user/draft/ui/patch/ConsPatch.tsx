@@ -25,7 +25,7 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onSettled, ...
 	].slice(0, sProsCons.maxItems);
 	const [items, setItems] = useState<string[]>(paddedCons);
 
-	const mutation = withDraftQuery.useMutation({
+	const mutation = withDraftQuery.usePatchMutation({
 		onSettled() {
 			onSettled?.();
 		},

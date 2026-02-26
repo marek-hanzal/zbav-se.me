@@ -17,7 +17,7 @@ export namespace DraftList {
 
 export const DraftList: FC<DraftList.Props> = ({ _suspense, query, onSuccess, ui, ...props }) => {
 	const { data } = withDraftQuery.useCollectionQuery(query);
-	const { data: draftCount } = withDraftQuery.useCount(query);
+	const { data: draftCount } = withDraftQuery.useCountQuery(query);
 
 	return (
 		<Container

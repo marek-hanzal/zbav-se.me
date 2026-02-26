@@ -20,7 +20,7 @@ export namespace TitlePatch {
 }
 
 export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
-	const mutation = withDraftQuery.useMutation({
+	const mutation = withDraftQuery.usePatchMutation({
 		onSettled,
 	});
 	const [title, setTitle] = useState(draft.title ?? "");

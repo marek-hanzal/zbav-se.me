@@ -20,7 +20,7 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onSettled, .
 		draft.price ? String(draft.price) : undefined,
 	);
 
-	const mutation = withDraftQuery.useMutation({
+	const mutation = withDraftQuery.usePatchMutation({
 		onSettled() {
 			onSettled?.();
 		},

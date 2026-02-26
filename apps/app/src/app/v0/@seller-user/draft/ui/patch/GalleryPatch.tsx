@@ -47,7 +47,18 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 				defaultUploadIds={defaultUploadIds}
 				onCancel={onCancel}
 				onSuccess={() => {
-					withDraftQuery.invalidateQuery(queryClient, draft.id);
+					queryClient.invalidateQueries({
+						queryKey: [
+							"draft",
+							"fetch",
+							{
+								where: {
+									id: draft.id,
+								},
+							},
+						],
+						refetchType: "all",
+					});
 					onSuccess();
 				}}
 				limit={10}

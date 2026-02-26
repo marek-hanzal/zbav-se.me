@@ -19,7 +19,7 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 	onSettled,
 	...props
 }) => {
-	const mutation = withDraftQuery.useMutation({
+	const mutation = withDraftQuery.usePatchMutation({
 		onSettled,
 	});
 

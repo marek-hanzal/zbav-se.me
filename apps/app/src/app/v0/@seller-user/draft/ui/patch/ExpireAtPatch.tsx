@@ -20,7 +20,7 @@ export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({
 	onSettled,
 	...props
 }) => {
-	const mutation = withDraftQuery.useMutation({
+	const mutation = withDraftQuery.usePatchMutation({
 		onSettled,
 	});
 	const [expiresAt, setExpiresAt] = useState<tListingExpireEnum | undefined>(
