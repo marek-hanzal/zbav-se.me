@@ -3,6 +3,7 @@ import { View } from "@use-pico/client/ui/view";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { FC } from "react";
 import { useCallback, useMemo, useState } from "react";
+import { Editor } from "~/app/v0/@seller-user/draft/ui/DraftEditor/Editor";
 import { AgePatch } from "~/app/v0/@seller-user/draft/ui/patch/AgePatch";
 import { CategoryPatch } from "~/app/v0/@seller-user/draft/ui/patch/CategoryPatch";
 import { ConditionPatch } from "~/app/v0/@seller-user/draft/ui/patch/ConditionPatch";
@@ -18,7 +19,6 @@ import { ProsPatch } from "~/app/v0/@seller-user/draft/ui/patch/ProsPatch";
 import { RestrictionPatch } from "~/app/v0/@seller-user/draft/ui/patch/RestrictionPatch";
 import { TitlePatch } from "~/app/v0/@seller-user/draft/ui/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/v0/@seller-user/draft/ui/patch/WarrantyPatch";
-import { Editor } from "./Editor";
 
 export namespace Data {
 	export type View =

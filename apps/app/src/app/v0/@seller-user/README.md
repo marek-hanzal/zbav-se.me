@@ -78,6 +78,9 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 - Seller transaction list now uses domain-local container/pending components in `@seller-user/transaction/ui/` (no shared `@common` transaction list abstraction).
 - Seller feature call-sites increasingly use local `*Suspense` wrappers (for `Pending` + data composition) to keep suspense boundaries close to feature roots (`draft`, `listing`, `transaction`, `transaction-listing`).
 - Draft editor now follows local suspense composition: `DraftEditor.tsx` is a suspense wrapper, `DraftEditor/Data.tsx` owns draft fetch by `draftId`, and `DraftEditor/Pending.tsx` uses `SpinnerContainer`.
+- Draft editor suspense internals were extracted to active scope:
+  - `@seller-user/draft/ui/DraftEditor/Data.tsx`
+  - `@seller-user/draft/ui/DraftEditor/Pending.tsx`
 - Seller draft list now uses `withDraftQuery` collection hydration (`useCollectionQuery` + per-item `useQuery`) and keeps `data-ui` labels aligned with the bracketed contract.
 - Seller transaction list now uses `withTransactionQuery` collection hydration with configurable collection `refetchInterval`.
 - Seller transaction-listing list now uses `withTransactionListingQuery` cache hydration and renders card data from transaction-listing payload (no per-item listing fetch).
