@@ -1,5 +1,6 @@
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListingRestrictionEnum } from "@zbav-se.me/sdk/api/seller-user";
@@ -8,6 +9,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { RestrictionSelect } from "~/app/@common/restriction/ui/RestrictionSelect";
+import { EditAction } from "~/app/@seller-user/draft/ui/DraftEditor/EditAction";
 
 export namespace RestrictionPatch {
 	export interface Props extends TitleContainer.Props {
@@ -45,6 +47,7 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 		<TitleContainer
 			textTitle={translator.text("Listing restriction (title)")}
 			data-ui={"Setup-[TitleContainer.restriction]"}
+			left={<EditAction />}
 			{...props}
 		>
 			<Container
@@ -78,6 +81,7 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 					}}
 					loading={mutation.isPending}
 					disabled={restriction === null}
+					textCancel={<Tx label={"Back (label)"} />}
 				/>
 			</Container>
 		</TitleContainer>
