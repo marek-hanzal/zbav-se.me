@@ -628,6 +628,9 @@
 9ec0c5126167d5163918eaad873d557770c9bf65cd72b2ee8bd27c29:
     ref: Share package (button)
     value: Trasování balíčku
+9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
+    ref: Fulltext (placeholder)
+    value: Najít
 Buyer activity high:
     static: true
     value: Vysoká aktivita

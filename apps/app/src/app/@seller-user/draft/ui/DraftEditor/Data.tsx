@@ -6,7 +6,7 @@ import { useCallback, useMemo, useState } from "react";
 import { Editor } from "~/app/@seller-user/draft/ui/DraftEditor/Editor";
 import { TitlePatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/TitlePatch";
 import { AgePatch } from "~/app/v0/@seller-user/draft/ui/patch/AgePatch";
-import { CategoryPatch } from "~/app/v0/@seller-user/draft/ui/patch/CategoryPatch";
+import { CategoryPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/CategoryPatch";
 import { ConditionPatch } from "~/app/v0/@seller-user/draft/ui/patch/ConditionPatch";
 import { ConsPatch } from "~/app/v0/@seller-user/draft/ui/patch/ConsPatch";
 import { DeliveryPatch } from "~/app/v0/@seller-user/draft/ui/patch/DeliveryPatch";

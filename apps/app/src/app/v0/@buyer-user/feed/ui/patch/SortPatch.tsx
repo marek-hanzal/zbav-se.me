@@ -1,9 +1,9 @@
-import type { Container } from "@use-pico/client/ui/container";
+import { Container } from "@use-pico/client/ui/container";
 import type { tFeed, tListingSort } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { type FC, useState } from "react";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { ListingSortSelect } from "~/app/v0/@buyer-user/listing/ui/ListingSortSelect";
-import { PatchContainer } from "~/app/v0/@common/container/ui/PatchContainer";
 
 export namespace SortPatch {
 	export interface Props extends Container.Props {
@@ -13,37 +13,22 @@ export namespace SortPatch {
 	}
 }
 
-export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ui, ...props }) => {
 	const patchMutation = withFeedQuery.usePatchMutation();
 	const [sort, setSort] = useState<tListingSort[]>(feed.query?.sort ?? []);
 	const withGeo = !!feed.query?.meta?.latLon;
 
 	return (
-		<PatchContainer
+		<Container
 			data-ui={"SortPatch[Container]"}
-			onCancel={onCancel}
-			onSave={() => {
-				patchMutation.mutate(
-					{
-						query: {
-							where: {
-								id: feed.id,
-							},
-						},
-						patch: {
-							query: {
-								...feed.query,
-								sort,
-							},
-						},
-					},
-					{
-						onSettled,
-					},
-				);
+			ui={{
+				layout: "vertical-content-footer",
+				height: "full",
+				width: "full",
+				inner: "default",
+				gap: "default",
+				...ui,
 			}}
-			loading={patchMutation.isPending}
-			disabled={false}
 			{...props}
 		>
 			<ListingSortSelect
@@ -53,6 +38,32 @@ export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ...p
 					set: setSort,
 				}}
 			/>
-		</PatchContainer>
+
+			<SaveContainer
+				onCancel={onCancel}
+				onSave={() => {
+					patchMutation.mutate(
+						{
+							query: {
+								where: {
+									id: feed.id,
+								},
+							},
+							patch: {
+								query: {
+									...feed.query,
+									sort,
+								},
+							},
+						},
+						{
+							onSettled,
+						},
+					);
+				}}
+				loading={patchMutation.isPending}
+				disabled={false}
+			/>
+		</Container>
 	);
 };

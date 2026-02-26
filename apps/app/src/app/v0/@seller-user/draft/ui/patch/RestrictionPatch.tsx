@@ -3,9 +3,10 @@ import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListingRestrictionEnum } from "@zbav-se.me/sdk/api/seller-user";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
-import type { TitleContainer } from "@zbav-se.me/ui/container";
+import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { PatchContainer } from "~/app/v0/@common/container/ui/PatchContainer";
+import { Container } from "@use-pico/client/ui/container";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { RestrictionSelect } from "~/app/v0/@common/restriction/ui/RestrictionSelect";
 
 export namespace RestrictionPatch {
@@ -41,31 +42,44 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 		(restrictionId as tListingRestrictionEnum | undefined) ?? null;
 
 	return (
-		<PatchContainer
-			title={translator.text("Listing restriction (title)")}
+		<TitleContainer
+			textTitle={translator.text("Listing restriction (title)")}
 			data-ui={"Setup-[TitleContainer.restriction]"}
-			onCancel={onCancel}
-			onSave={() => {
-				if (restriction === null) {
-					return;
-				}
-
-				mutation.mutate({
-					patch: {
-						restriction,
-					},
-					query: {
-						where: {
-							id: draft.id,
-						},
-					},
-				});
-			}}
-			loading={mutation.isPending}
-			disabled={restriction === null}
 			{...props}
 		>
-			<RestrictionSelect selection={selection} />
-		</PatchContainer>
+			<Container
+				ui={{
+					layout: "vertical-content-footer",
+					height: "full",
+					width: "full",
+					inner: "default",
+					gap: "default",
+				}}
+			>
+				<RestrictionSelect selection={selection} />
+
+				<SaveContainer
+					onCancel={onCancel}
+					onSave={() => {
+						if (restriction === null) {
+							return;
+						}
+
+						mutation.mutate({
+							patch: {
+								restriction,
+							},
+							query: {
+								where: {
+									id: draft.id,
+								},
+							},
+						});
+					}}
+					loading={mutation.isPending}
+					disabled={restriction === null}
+				/>
+			</Container>
+		</TitleContainer>
 	);
 };

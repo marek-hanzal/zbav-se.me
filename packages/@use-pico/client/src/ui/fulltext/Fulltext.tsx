@@ -29,7 +29,7 @@ export namespace Fulltext {
 export const Fulltext: FC<Fulltext.Props> = ({
 	ref,
 	state: { value = "", set },
-	textPlaceholder = "Fulltext (placeholder)",
+	textPlaceholder,
 	withSubmit = false,
 	limit = 3,
 	ui,
@@ -81,7 +81,7 @@ export const Fulltext: FC<Fulltext.Props> = ({
 				ref={mergeRef}
 				value={search}
 				type={"text"}
-				placeholder={translator.text(textPlaceholder)}
+				placeholder={textPlaceholder ?? translator.text("Fulltext (placeholder)")}
 				onChange={(event) => {
 					setSearch(event.target.value);
 					if (event.target.value === "") {

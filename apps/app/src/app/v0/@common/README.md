@@ -95,3 +95,4 @@ When adding to `@common`:
   - `@common/nav/page/UiPage.tsx`
 - Save action footer container was extracted to active scope:
   - `@common/container/ui/SaveContainer.tsx`
+- PatchContainer abstraction was removed; patch views now compose `TitleContainer`/`Container` + `SaveContainer` inline at call-sites.

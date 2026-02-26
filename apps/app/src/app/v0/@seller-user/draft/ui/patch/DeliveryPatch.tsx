@@ -3,9 +3,10 @@ import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListingDeliveryEnum } from "@zbav-se.me/sdk/api/seller-user";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
-import type { TitleContainer } from "@zbav-se.me/ui/container";
+import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { PatchContainer } from "~/app/v0/@common/container/ui/PatchContainer";
+import { Container } from "@use-pico/client/ui/container";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { DeliverySelect } from "~/app/v0/@common/delivery/ui/DeliverySelect";
 
 export namespace DeliveryPatch {
@@ -36,27 +37,40 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({
 	const delivery = deliveryIds.length > 0 ? (deliveryIds as tListingDeliveryEnum[]) : null;
 
 	return (
-		<PatchContainer
-			title={translator.text("Delivery (title)")}
+		<TitleContainer
+			textTitle={translator.text("Delivery (title)")}
 			data-ui={"Setup-[TitleContainer.delivery]"}
-			onCancel={onCancel}
-			onSave={() => {
-				mutation.mutate({
-					patch: {
-						delivery,
-					},
-					query: {
-						where: {
-							id: draft.id,
-						},
-					},
-				});
-			}}
-			loading={mutation.isPending}
-			disabled={false}
 			{...props}
 		>
-			<DeliverySelect selection={selection} />
-		</PatchContainer>
+			<Container
+				ui={{
+					layout: "vertical-content-footer",
+					height: "full",
+					width: "full",
+					inner: "default",
+					gap: "default",
+				}}
+			>
+				<DeliverySelect selection={selection} />
+
+				<SaveContainer
+					onCancel={onCancel}
+					onSave={() => {
+						mutation.mutate({
+							patch: {
+								delivery,
+							},
+							query: {
+								where: {
+									id: draft.id,
+								},
+							},
+						});
+					}}
+					loading={mutation.isPending}
+					disabled={false}
+				/>
+			</Container>
+		</TitleContainer>
 	);
 };

@@ -5,7 +5,7 @@ import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";
-import { PatchContainer } from "~/app/v0/@common/container/ui/PatchContainer";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 export namespace RangePatch {
 	export interface Props extends Container.Props {
@@ -15,7 +15,13 @@ export namespace RangePatch {
 	}
 }
 
-export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
+export const RangePatch: FC<RangePatch.Props> = ({
+	feed,
+	onSettled,
+	onCancel,
+	ui,
+	...props
+}) => {
 	const patchMutation = withFeedQuery.usePatchMutation();
 	const currentRange = feed.query?.filter?.range;
 	const [rangeValue, setRangeValue] = useState<string | undefined>(
@@ -48,12 +54,16 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 	};
 
 	return (
-		<PatchContainer
+		<Container
 			data-ui={"RangePatch[Container]"}
-			onCancel={onCancel}
-			onSave={handleSave}
-			loading={patchMutation.isPending}
-			disabled={false}
+			ui={{
+				layout: "vertical-content-footer",
+				height: "full",
+				width: "full",
+				inner: "default",
+				gap: "default",
+				...ui,
+			}}
 			{...props}
 		>
 			<Container
@@ -78,6 +88,13 @@ export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ..
 					}}
 				/>
 			</Container>
-		</PatchContainer>
+
+			<SaveContainer
+				onCancel={onCancel}
+				onSave={handleSave}
+				loading={patchMutation.isPending}
+				disabled={false}
+			/>
+		</Container>
 	);
 };

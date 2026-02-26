@@ -1,11 +1,11 @@
 import { useSelection } from "@use-pico/client/hook";
-import type { Container } from "@use-pico/client/ui/container";
+import { Container } from "@use-pico/client/ui/container";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { ConditionSelect } from "~/app/v0/@common/condition/ui/ConditionSelect";
-import { PatchContainer } from "~/app/v0/@common/container/ui/PatchContainer";
 
 export namespace ConditionPatch {
 	export interface Props extends Container.Props {
@@ -15,7 +15,13 @@ export namespace ConditionPatch {
 	}
 }
 
-export const ConditionPatch: FC<ConditionPatch.Props> = ({ feed, onSettled, ...props }) => {
+export const ConditionPatch: FC<ConditionPatch.Props> = ({
+	feed,
+	onSettled,
+	onCancel,
+	ui,
+	...props
+}) => {
 	const patchMutation = withFeedQuery.usePatchMutation();
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "multi",
@@ -25,41 +31,53 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({ feed, onSettled, ...p
 	});
 
 	return (
-		<PatchContainer
+		<Container
 			data-ui={"ConditionPatch[Container]"}
-			onSave={() => {
-				patchMutation.mutate(
-					{
-						query: {
-							where: {
-								id: feed.id,
-							},
-						},
-						patch: {
-							query: {
-								...feed.query,
-								filter: {
-									...feed.query?.filter,
-									conditionIn: selection.optional
-										.multiId()
-										.map((id) => Number.parseInt(id, 10)),
-								},
-							},
-						},
-					},
-					{
-						onSettled,
-					},
-				);
+			ui={{
+				layout: "vertical-content-footer",
+				height: "full",
+				width: "full",
+				inner: "default",
+				gap: "default",
+				...ui,
 			}}
-			loading={patchMutation.isPending}
-			disabled={false}
 			{...props}
 		>
 			<ConditionSelect
 				selection={selection}
 				allowClear
 			/>
-		</PatchContainer>
+
+			<SaveContainer
+				onCancel={onCancel}
+				onSave={() => {
+					patchMutation.mutate(
+						{
+							query: {
+								where: {
+									id: feed.id,
+								},
+							},
+							patch: {
+								query: {
+									...feed.query,
+									filter: {
+										...feed.query?.filter,
+										conditionIn: selection.optional
+											.multiId()
+											.map((id) => Number.parseInt(id, 10)),
+									},
+								},
+							},
+						},
+						{
+							onSettled,
+						},
+					);
+				}}
+				loading={patchMutation.isPending}
+				disabled={false}
+			/>
+		</Container>
 	);
 };
