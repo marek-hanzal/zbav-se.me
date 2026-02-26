@@ -6,7 +6,7 @@ import { zTransactionMessagePackageCreate } from "@zbav-se.me/sdk/api/user";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import type { z } from "zod";
-import { SaveContainer } from "~/app/v0/@common/container/ui/SaveContainer";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 // biome-ignore lint/correctness/noUnusedVariables: Ssst
 const PackageSchema = zTransactionMessagePackageCreate.omit({

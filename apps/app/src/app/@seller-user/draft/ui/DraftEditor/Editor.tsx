@@ -5,8 +5,8 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
 import { ActionSection } from "~/app/@seller-user/draft/ui/DraftEditor/section/ActionSection";
-import { OptionalFieldsSection } from "~/app/@seller-user/draft/ui/DraftEditor/OptionalFieldsSection";
-import { RequiredFieldsSection } from "~/app/@seller-user/draft/ui/DraftEditor/RequiredFieldsSection";
+import { OptionalSection } from "~/app/@seller-user/draft/ui/DraftEditor/section/OptionalSection";
+import { RequiredSection } from "~/app/@seller-user/draft/ui/DraftEditor/section/RequiredSection";
 import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
 export namespace Editor {
@@ -32,12 +32,12 @@ export const Editor: FC<Editor.Props> = ({ draft, onView }) => {
 					gap: "lg",
 				}}
 			>
-				<RequiredFieldsSection
+				<RequiredSection
 					draft={draft}
 					onView={onView}
 				/>
 
-				<OptionalFieldsSection
+				<OptionalSection
 					draft={draft}
 					onView={onView}
 				/>

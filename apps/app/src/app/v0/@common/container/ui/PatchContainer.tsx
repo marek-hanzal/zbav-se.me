@@ -1,7 +1,7 @@
 import { Container } from "@use-pico/client/ui/container";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC, PropsWithChildren } from "react";
-import { SaveContainer } from "./SaveContainer";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 const innerUi = {
 	layout: "vertical-content-footer",

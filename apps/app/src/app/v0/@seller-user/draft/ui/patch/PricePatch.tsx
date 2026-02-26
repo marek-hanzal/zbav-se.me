@@ -5,7 +5,7 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";
-import { SaveContainer } from "~/app/v0/@common/container/ui/SaveContainer";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 export namespace PricePatch {
 	export interface Props extends TitleContainer.Props {

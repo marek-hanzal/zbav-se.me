@@ -59,8 +59,8 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 
 - Draft editor was split into focused modules in `@seller-user/draft/ui/DraftEditor/`:
   - `DraftEditorDefaultView.tsx` as top-level orchestrator
-  - `RequiredFieldsSection.tsx`
-  - `OptionalFieldsSection.tsx`
+  - `RequiredSection.tsx`
+  - `OptionalSection.tsx`
   - `ActionSection.tsx`
   - `ChevronAction.tsx`
   - `createDraftEditorViews.tsx` for patch view mapping
@@ -92,11 +92,13 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 - Draft editor action section was extracted to active scope:
   - `@seller-user/draft/ui/DraftEditor/ActionSection.tsx`
 - Draft editor required fields section was extracted to active scope:
-  - `@seller-user/draft/ui/DraftEditor/RequiredFieldsSection.tsx`
+  - `@seller-user/draft/ui/DraftEditor/section/RequiredSection.tsx`
 - Draft editor optional fields section was extracted to active scope:
-  - `@seller-user/draft/ui/DraftEditor/OptionalFieldsSection.tsx`
+  - `@seller-user/draft/ui/DraftEditor/section/OptionalSection.tsx`
 - Draft editor chevron action was extracted to active scope:
   - `@seller-user/draft/ui/DraftEditor/ChevronAction.tsx`
+- Draft editor title patch was extracted to active scope:
+  - `@seller-user/draft/ui/patch/TitlePatch.tsx`
 - Seller draft list now uses `withDraftQuery` collection hydration (`useCollectionQuery` + per-item `useQuery`) and keeps `data-ui` labels aligned with the bracketed contract.
 - Seller transaction list now uses `withTransactionQuery` collection hydration with configurable collection `refetchInterval`.
 - Seller transaction-listing list now uses `withTransactionListingQuery` cache hydration and renders card data from transaction-listing payload (no per-item listing fetch).

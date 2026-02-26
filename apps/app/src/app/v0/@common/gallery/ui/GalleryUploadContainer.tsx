@@ -1,7 +1,7 @@
 import type { withMutation } from "@use-pico/client/mutation";
 import { Container } from "@use-pico/client/ui/container";
 import { useState } from "react";
-import { SaveContainer } from "~/app/v0/@common/container/ui/SaveContainer";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { GalleryUpload } from "./GalleryUpload";
 
 export namespace GalleryUploadContainer {

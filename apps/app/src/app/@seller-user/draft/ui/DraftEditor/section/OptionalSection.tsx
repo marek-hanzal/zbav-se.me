@@ -4,11 +4,12 @@ import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
 import { ChevronAction } from "~/app/@seller-user/draft/ui/DraftEditor/ChevronAction";
 import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
+import { AgeValue } from "~/app/v0/@common/age/ui/AgeValue";
+import { ConditionValue } from "~/app/v0/@common/condition/ui/ConditionValue";
 import { ConsValueList } from "~/app/v0/@common/cons/ui/ConsValueList";
 import { DeliveryValueList } from "~/app/v0/@common/delivery/ui/DeliveryValueList";
 import { DescriptionValue } from "~/app/v0/@common/description/ui/DescriptionValue";
 import { ProsValueList } from "~/app/v0/@common/pros/ui/ProsValueList";
-import { RestrictionValue } from "~/app/v0/@common/restriction/ui/RestrictionValue";
 import { WarrantyValue } from "~/app/v0/@common/warranty/ui/WarrantyValue";
 
 export namespace OptionalSection {
@@ -97,13 +98,24 @@ export const OptionalSection: FC<OptionalSection.Props> = ({ draft, onView }) =>
 			</Group>
 
 			<Group>
-				<RestrictionValue
-					restriction={draft.restriction}
+				<ConditionValue
+					condition={draft.condition}
 					action={<ChevronAction />}
-					onClick={() => onView("restriction")}
+					onClick={() => onView("condition")}
 					wrapperProps={{
 						ui: {
-							tone: draft.restriction ? "neutral" : "secondary",
+							tone: draft.condition !== null ? "neutral" : "secondary",
+						},
+					}}
+				/>
+
+				<AgeValue
+					age={draft.age}
+					action={<ChevronAction />}
+					onClick={() => onView("age")}
+					wrapperProps={{
+						ui: {
+							tone: draft.age !== null ? "neutral" : "secondary",
 						},
 					}}
 				/>

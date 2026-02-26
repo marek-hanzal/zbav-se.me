@@ -4,7 +4,7 @@ import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
 import { type FC, useState } from "react";
-import { SaveContainer } from "~/app/v0/@common/container/ui/SaveContainer";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 export namespace TextInputContainer {
 	export interface Props extends Omit<Container.Props, "onSubmit" | "onChange"> {

@@ -93,3 +93,5 @@ When adding to `@common`:
 - Route shell pages were extracted into shared components:
   - `@common/locale/page/LocalePage.tsx`
   - `@common/nav/page/UiPage.tsx`
+- Save action footer container was extracted to active scope:
+  - `@common/container/ui/SaveContainer.tsx`

@@ -1,7 +1,7 @@
 import { Container } from "@use-pico/client/ui/container";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { type FC, useState } from "react";
-import { SaveContainer } from "~/app/v0/@common/container/ui/SaveContainer";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { LocationSelect } from "./LocationSelect";
 
 export namespace LocationSelectContainer {
