@@ -273,8 +273,9 @@ export const Route = createFileRoute("/$locale/login")({
 										theme: "light",
 										text: "lg",
 									}}
-									label={translator.text("Login with passkey")}
-								/>
+								>
+									<Tx label={"Login with passkey"} />
+								</Button>
 							}
 							ui={{
 								inner: "4xl",

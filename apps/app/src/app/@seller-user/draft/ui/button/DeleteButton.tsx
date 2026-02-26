@@ -2,6 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { TrashIcon } from "@use-pico/client/icon";
 import { ConfirmButton } from "@use-pico/client/ui/button";
+import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { withDraftDeleteMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
@@ -43,7 +44,6 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 					text: "2xl",
 				},
 			}}
-			label={translator.text("Delete draft (button)")}
 			disabled={deleteMutation.isPending}
 			loading={deleteMutation.isPending}
 			buttonProps={{
@@ -63,7 +63,6 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 					items: "center",
 					...confirmProps?.ui,
 				},
-				label: translator.text("Delete draft - confirm (button)"),
 				onClick() {
 					deleteMutation.mutate({
 						where: {
@@ -71,6 +70,7 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 						},
 					});
 				},
+				children: translator.text("Delete draft - confirm (button)"),
 			}}
 			{...uiSaveButton({
 				ui: {
@@ -80,6 +80,8 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 				className,
 			})}
 			{...props}
-		/>
+		>
+			<Tx label={"Delete draft (button)"} />
+		</ConfirmButton>
 	);
 };

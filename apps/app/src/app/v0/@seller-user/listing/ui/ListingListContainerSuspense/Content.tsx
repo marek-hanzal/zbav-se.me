@@ -3,7 +3,7 @@ import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
 import type { FC } from "react";
-import { CreateButton } from "~/app/v0/@seller-user/draft/ui/button/CreateButton";
+import { CreateButton } from "~/app/@seller-user/draft/ui/button/CreateButton";
 import { ContentItemSuspense } from "./ContentItemSuspense";
 
 export namespace Content {

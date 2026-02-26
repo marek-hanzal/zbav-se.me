@@ -15,9 +15,7 @@ export namespace CreateButton {
 
 export const CreateButton: FC<CreateButton.Props> = ({ onSuccess, ui, ...props }) => {
 	const draftCreateMutation = withDraftCreateMutation.useMutation({
-		onSuccess(data) {
-			onSuccess?.(data);
-		},
+		onSuccess,
 	});
 
 	return (

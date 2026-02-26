@@ -3,6 +3,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
+import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
 import { AgeValue } from "~/app/v0/@common/age/ui/AgeValue";
 import { CategoryValue } from "~/app/v0/@common/category/ui/CategoryValue";
 import { ConditionValue } from "~/app/v0/@common/condition/ui/ConditionValue";
@@ -12,7 +13,6 @@ import { LocationValue } from "~/app/v0/@common/location/ui/LocationValue";
 import { PriceValue } from "~/app/v0/@common/price/ui/PriceValue";
 import { PriceTypeValue } from "~/app/v0/@common/price-type/ui/PriceTypeValue";
 import { TitleValue } from "~/app/v0/@common/title/ui/TitleValue";
-import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
 import { ChevronAction } from "./ChevronAction";
 
 export namespace RequiredFieldsSection {

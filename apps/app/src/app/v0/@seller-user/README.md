@@ -81,6 +81,14 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 - Draft editor suspense internals were extracted to active scope:
   - `@seller-user/draft/ui/DraftEditor/Data.tsx`
   - `@seller-user/draft/ui/DraftEditor/Pending.tsx`
+- Draft editor default view component was extracted to active scope:
+  - `@seller-user/draft/ui/DraftEditor/Editor.tsx`
+- Draft editor suspense wrapper was extracted to active scope:
+  - `@seller-user/draft/ui/DraftEditor/DraftEditor.tsx`
+- Draft create CTA was extracted to active scope:
+  - `@seller-user/draft/ui/button/CreateButton.tsx`
+- Draft delete CTA was extracted to active scope:
+  - `@seller-user/draft/ui/button/DeleteButton.tsx`
 - Seller draft list now uses `withDraftQuery` collection hydration (`useCollectionQuery` + per-item `useQuery`) and keeps `data-ui` labels aligned with the bracketed contract.
 - Seller transaction list now uses `withTransactionQuery` collection hydration with configurable collection `refetchInterval`.
 - Seller transaction-listing list now uses `withTransactionListingQuery` cache hydration and renders card data from transaction-listing payload (no per-item listing fetch).

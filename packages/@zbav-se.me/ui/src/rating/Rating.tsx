@@ -2,8 +2,8 @@ import type { useSelection } from "@use-pico/client/hook";
 import { TrashIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { translator } from "@use-pico/common/translator";
 import { type FC, type ReactNode, useMemo } from "react";
 import { uiSelectButton } from "../ui";
 import { RatingToIcon } from "./RatingToIcon";
@@ -101,7 +101,6 @@ export const Rating: FC<Rating.Props> = ({
 			{allowClear ? (
 				<Button
 					iconEnabled={TrashIcon}
-					label={translator.text("Clear all (button)")}
 					iconProps={{
 						ui: {
 							text: "xl",
@@ -115,7 +114,9 @@ export const Rating: FC<Rating.Props> = ({
 						theme: "light",
 						size: "default",
 					}}
-				/>
+				>
+					<Tx label={"Clear all (button)"} />
+				</Button>
 			) : null}
 		</Container>
 	);

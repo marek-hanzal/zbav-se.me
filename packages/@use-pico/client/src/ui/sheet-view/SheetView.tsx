@@ -6,7 +6,7 @@ import { View } from "../view";
 export namespace SheetView {
 	export interface Props<TView extends string> extends Omit<BottomSheet.Props, "children"> {
 		state: StateType.State<TView>;
-		views: View.Views<TView, View.View<Partial<BottomSheet.Props>>>;
+		views: View.Views<TView>;
 	}
 }
 
@@ -38,7 +38,6 @@ export const SheetView = <TView extends string>({
 						contentProps={{
 							disableScroll: true,
 							...contentProps,
-							...rest.contentProps,
 						}}
 					>
 						{content}
