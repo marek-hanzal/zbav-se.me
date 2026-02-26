@@ -70,7 +70,7 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSettled, ...pr
 						});
 					}}
 					loading={mutation.isPending}
-					disabled={age === null}
+					disabled={false}
 					textCancel={<Tx label={"Back (label)"} />}
 				/>
 			</Container>

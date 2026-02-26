@@ -76,7 +76,7 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 						});
 					}}
 					loading={mutation.isPending}
-					disabled={condition === null}
+					disabled={false}
 					textCancel={<Tx label={"Back (label)"} />}
 				/>
 			</Container>
