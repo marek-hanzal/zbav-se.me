@@ -52,7 +52,7 @@ export const ListContainerContent: FC<ListContainerContent.Props> = ({
 						theme: "light",
 					}}
 				>
-					<Tx label={"Location not found (badge)"} />
+					<Tx label="Location not found (badge)" />
 				</Badge>
 			</Container>
 		);
@@ -83,14 +83,15 @@ export const ListContainerContent: FC<ListContainerContent.Props> = ({
 								onLocation?.(item);
 							}}
 							truncate
-							label={item.address}
 							{...uiSelectButton({
 								isSelected: value === item.id,
 								ui,
 								className: [],
 							})}
 							data-ui="ListContainer-[Button]"
-						/>
+						>
+							{item.address}
+						</Button>
 					);
 				})}
 			</Container>

@@ -1,7 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
-import { translator } from "@use-pico/common/translator";
+import { Tx } from "@use-pico/client/ui/tx";
 import { withTransactionMessagePackageCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
@@ -29,13 +29,14 @@ export const PackageButton: FC<PackageButton.Props> = ({
 		<>
 			<Button
 				data-ui="PackageButton[Button]"
-				label={translator.text("Share package (button)")}
 				iconEnabled={SendPackageIcon}
 				onClick={() => {
 					setIsOpen(true);
 				}}
 				{...props}
-			/>
+			>
+				<Tx label="Share package (button)" />
+			</Button>
 
 			<BottomSheet
 				isOpen={isOpen}

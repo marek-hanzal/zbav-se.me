@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { ConfirmButton } from "@use-pico/client/ui/button";
-import { translator } from "@use-pico/common/translator";
+import { Tx } from "@use-pico/client/ui/tx";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
 import { withTransactionStatusRejectMutation } from "@zbav-se.me/sdk/mutation/buyer-user/transaction";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
@@ -21,13 +21,12 @@ export const RejectButton: FC<RejectButton.Props> = ({ transaction, ...props }) 
 	return (
 		<ConfirmButton
 			data-ui="RejectButton[ConfirmButton]"
-			label={translator.text("Reject transaction (button)")}
 			iconEnabled={CancelIcon}
 			confirmProps={{
 				ui: {
 					tone: "danger",
 				},
-				label: translator.text("Reject transaction - confirm (button)"),
+				children: <Tx label="Reject transaction - confirm (button)" />,
 				onClick() {
 					mutation.mutate(
 						{
@@ -49,6 +48,8 @@ export const RejectButton: FC<RejectButton.Props> = ({ transaction, ...props }) 
 			loading={mutation.isPending}
 			disabled={mutation.isPending}
 			{...props}
-		/>
+		>
+			<Tx label="Reject transaction (button)" />
+		</ConfirmButton>
 	);
 };

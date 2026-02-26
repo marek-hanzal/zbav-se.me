@@ -1,6 +1,6 @@
 import { TrashIcon } from "@use-pico/client/icon";
 import { ConfirmButton } from "@use-pico/client/ui/button";
-import { translator } from "@use-pico/common/translator";
+import { Tx } from "@use-pico/client/ui/tx";
 import type { FC } from "react";
 
 export namespace FeedEditorDeleteButton {
@@ -20,7 +20,7 @@ export const FeedEditorDeleteButton: FC<FeedEditorDeleteButton.Props> = ({ loadi
 				},
 			}}
 			buttonProps={{
-				label: translator.text("Delete feed (button)"),
+				children: <Tx label="Delete feed (button)" />,
 			}}
 			confirmProps={{
 				iconEnabled: TrashIcon,
@@ -28,7 +28,7 @@ export const FeedEditorDeleteButton: FC<FeedEditorDeleteButton.Props> = ({ loadi
 					tone: "danger",
 					theme: "light",
 				},
-				label: translator.text("Really delete feed (button)"),
+				children: <Tx label="Really delete feed (button)" />,
 				onClick() {
 					onDelete();
 				},

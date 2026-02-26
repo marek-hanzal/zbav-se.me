@@ -1,5 +1,5 @@
 import { Button } from "@use-pico/client/ui/button";
-import { translator } from "@use-pico/common/translator";
+import { Tx } from "@use-pico/client/ui/tx";
 import type { FC } from "react";
 
 export namespace Pending {
@@ -11,7 +11,6 @@ export namespace Pending {
 export const Pending: FC<Pending.Props> = ({ ui, ...props }) => {
 	return (
 		<Button
-			label={translator.text("Loading... (button)")}
 			disabled
 			loading
 			ui={{
@@ -27,6 +26,8 @@ export const Pending: FC<Pending.Props> = ({ ui, ...props }) => {
 				...ui,
 			}}
 			{...props}
-		/>
+		>
+			<Tx label="Loading... (button)" />
+		</Button>
 	);
 };

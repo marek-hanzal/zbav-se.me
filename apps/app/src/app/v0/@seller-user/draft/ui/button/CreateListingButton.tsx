@@ -1,7 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { Button } from "@use-pico/client/ui/button";
-import { translator } from "@use-pico/common/translator";
+import { Tx } from "@use-pico/client/ui/tx";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { zListingCreate } from "@zbav-se.me/sdk/api/seller-user";
 import { withListingCreateMutation } from "@zbav-se.me/sdk/mutation/seller-user/listing";
@@ -47,7 +47,6 @@ export const CreateListingButton: FC<CreateListingButton.Props> = ({
 					text: "2xl",
 				},
 			}}
-			label={translator.text("Submit listing (button)")}
 			disabled={!listing.success || listingCreateMutation.isPending}
 			loading={listingCreateMutation.isPending}
 			onClick={() => {
@@ -64,6 +63,8 @@ export const CreateListingButton: FC<CreateListingButton.Props> = ({
 				className,
 			})}
 			{...props}
-		/>
+		>
+			<Tx label="Submit listing (button)" />
+		</Button>
 	);
 };

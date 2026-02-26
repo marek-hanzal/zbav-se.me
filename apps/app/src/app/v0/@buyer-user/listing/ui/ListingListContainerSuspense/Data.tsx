@@ -5,6 +5,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
+import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
@@ -51,11 +52,12 @@ export const Data: FC<Data.Props> = ({
 					>
 						<Button
 							iconEnabled={ChevronLeftIcon}
-							label={translator.text("Back to home (link)")}
 							ui={{
 								tone: "secondary",
 							}}
-						/>
+						>
+							<Tx label="Back to home (link)" />
+						</Button>
 					</LinkTo>
 				}
 			/>

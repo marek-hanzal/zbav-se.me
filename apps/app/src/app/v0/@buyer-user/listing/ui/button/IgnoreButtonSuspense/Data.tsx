@@ -1,7 +1,7 @@
 import { TrashIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { ConfirmButton } from "@use-pico/client/ui/button";
-import { translator } from "@use-pico/common/translator";
+import { Tx } from "@use-pico/client/ui/tx";
 import { withIgnoreToggleMutation } from "@zbav-se.me/sdk/mutation/buyer-user/ignore";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import type { FC } from "react";
@@ -50,15 +50,12 @@ export const Data: FC<Data.Props> = ({
 			}}
 			loading={ignoreToggleMutation.isPending}
 			disabled={listing.isFavourite || disabled}
-			label={translator.text(
-				listing.isIgnored ? "Unignore listing (button)" : "Ignore listing (button)",
-			)}
 			confirmProps={{
 				ui: {
 					tone: "warning",
 					theme: "light",
 				},
-				label: translator.text("Ignore listing - confirm (button)"),
+				children: <Tx label="Ignore listing - confirm (button)" />,
 				...confirmProps,
 				onClick(e) {
 					ignoreToggleMutation.mutate({
@@ -77,6 +74,10 @@ export const Data: FC<Data.Props> = ({
 				...ui,
 			}}
 			{...props}
-		/>
+		>
+			<Tx
+				label={listing.isIgnored ? "Unignore listing (button)" : "Ignore listing (button)"}
+			/>
+		</ConfirmButton>
 	);
 };

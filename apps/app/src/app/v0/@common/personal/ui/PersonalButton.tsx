@@ -1,7 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
-import { translator } from "@use-pico/common/translator";
+import { Tx } from "@use-pico/client/ui/tx";
 import { withTransactionMessagePersonalCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { EmailIcon } from "@zbav-se.me/ui/icon";
@@ -29,13 +29,14 @@ export const PersonalButton: FC<PersonalButton.Props> = ({
 		<>
 			<Button
 				data-ui="PersonalButton[Button]"
-				label={translator.text("Share contact info (button)")}
 				iconEnabled={EmailIcon}
 				onClick={() => {
 					setIsOpen(true);
 				}}
 				{...props}
-			/>
+			>
+				<Tx label="Share contact info (button)" />
+			</Button>
 
 			<BottomSheet
 				isOpen={isOpen}

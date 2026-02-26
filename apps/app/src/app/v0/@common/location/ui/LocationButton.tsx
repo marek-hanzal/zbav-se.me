@@ -1,6 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
+import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import { withTransactionMessageLocationCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
@@ -29,13 +30,14 @@ export const LocationButton: FC<LocationButton.Props> = ({
 		<>
 			<Button
 				data-ui="LocationButton[Button]"
-				label={translator.text("Share location (button)")}
 				iconEnabled={LocationIcon}
 				onClick={() => {
 					setIsOpen(true);
 				}}
 				{...props}
-			/>
+			>
+				<Tx label="Share location (button)" />
+			</Button>
 
 			<BottomSheet
 				isOpen={isOpen}

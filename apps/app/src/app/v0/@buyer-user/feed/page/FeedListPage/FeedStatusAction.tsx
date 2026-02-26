@@ -3,7 +3,6 @@ import { ChevronLeftIcon, type ChevronRightIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { FeedSetupButton } from "./FeedSetupButton";
 

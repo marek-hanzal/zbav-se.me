@@ -1,7 +1,7 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Mx } from "@use-pico/client/ui/mx";
-import { translator } from "@use-pico/common/translator";
+import { Tx } from "@use-pico/client/ui/tx";
 import { withFlagToggleMutation } from "@zbav-se.me/sdk/mutation/buyer-user/flag";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { FlagIcon } from "@zbav-se.me/ui/icon";
@@ -54,9 +54,6 @@ export const Data: FC<Data.Props> = ({
 				}}
 				loading={flagToggleMutation.isPending}
 				disabled={listing.isFavourite || listing.isIgnored || disabled}
-				label={translator.text(
-					listing.hasFlag ? "Unflag listing (button)" : "Flag listing (button)",
-				)}
 				buttonProps={{
 					onClick(event) {
 						setIsConfirm(true);
@@ -69,7 +66,7 @@ export const Data: FC<Data.Props> = ({
 						tone: "danger",
 						theme: "light",
 					},
-					label: translator.text("Flag listing - confirm (button)"),
+					children: <Tx label="Flag listing - confirm (button)" />,
 					...confirmProps,
 					onClick(e) {
 						flagToggleMutation.mutate({
@@ -91,7 +88,9 @@ export const Data: FC<Data.Props> = ({
 					...ui,
 				}}
 				{...props}
-			/>
+			>
+				<Tx label={listing.hasFlag ? "Unflag listing (button)" : "Flag listing (button)"} />
+			</ConfirmButton>
 
 			{listing.hasFlag ? null : (
 				<Mx

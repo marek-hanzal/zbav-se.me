@@ -1,5 +1,6 @@
 import { CloseIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
+import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
@@ -85,7 +86,6 @@ export const createEditorSheetViews = ({
 					}}
 				>
 					<Button
-						label={translator.text("Close (button)")}
 						onClick={() => state.set(false)}
 						iconEnabled={CloseIcon}
 						iconProps={{
@@ -105,7 +105,9 @@ export const createEditorSheetViews = ({
 							shadow: false,
 							border: false,
 						}}
-					/>
+					>
+						<Tx label="Close (button)" />
+					</Button>
 
 					{children}
 				</FeedEditor>

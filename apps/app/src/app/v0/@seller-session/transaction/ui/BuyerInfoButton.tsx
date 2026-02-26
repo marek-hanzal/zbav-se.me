@@ -1,5 +1,6 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
+import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { BuyerIcon } from "@zbav-se.me/ui/icon";
@@ -20,12 +21,13 @@ export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({ transactionId, ...p
 			<Button
 				data-ui="BuyerInfoButton[Button]"
 				iconEnabled={BuyerIcon}
-				label={translator.text("Buyer info (button)")}
 				onClick={() => {
 					setIsOpen(true);
 				}}
 				{...props}
-			/>
+			>
+				<Tx label="Buyer info (button)" />
+			</Button>
 
 			<BottomSheet
 				data-ui="BuyerInfoButton[BottomSheet]"

@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@use-pico/client/ui/button";
-import { translator } from "@use-pico/common/translator";
+import { Tx } from "@use-pico/client/ui/tx";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
 import { withTransactionStatusSuccessMutation } from "@zbav-se.me/sdk/mutation/buyer-user/transaction";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
@@ -21,7 +21,6 @@ export const SuccessButton: FC<SuccessButton.Props> = ({ transaction, ...props }
 	return (
 		<Button
 			data-ui="SuccessButton[Button]"
-			label={translator.text("Mark transaction as successful (button)")}
 			iconEnabled={CheckIcon}
 			onClick={() => {
 				mutation.mutate(
@@ -43,6 +42,8 @@ export const SuccessButton: FC<SuccessButton.Props> = ({ transaction, ...props }
 			loading={mutation.isPending}
 			disabled={mutation.isPending}
 			{...props}
-		/>
+		>
+			<Tx label="Mark transaction as successful (button)" />
+		</Button>
 	);
 };

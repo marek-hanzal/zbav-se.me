@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { ConfirmButton } from "@use-pico/client/ui/button";
-import { translator } from "@use-pico/common/translator";
+import { Tx } from "@use-pico/client/ui/tx";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller-user";
 import { withTransactionStatusDisputeMutation } from "@zbav-se.me/sdk/mutation/seller-user/transaction-status";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
@@ -21,13 +21,12 @@ export const DisputeButton: FC<DisputeButton.Props> = ({ transaction, ...props }
 	return (
 		<ConfirmButton
 			data-ui="DisputeButton[Button]"
-			label={translator.text("Dispute transaction (button)")}
 			iconEnabled={FlagIcon}
 			confirmProps={{
 				ui: {
 					tone: "danger",
 				},
-				label: translator.text("Dispute transaction - confirm (button)"),
+				children: <Tx label="Dispute transaction - confirm (button)" />,
 				onClick() {
 					mutation.mutate(
 						{
@@ -49,6 +48,8 @@ export const DisputeButton: FC<DisputeButton.Props> = ({ transaction, ...props }
 			loading={mutation.isPending}
 			disabled={mutation.isPending}
 			{...props}
-		/>
+		>
+			<Tx label="Dispute transaction (button)" />
+		</ConfirmButton>
 	);
 };

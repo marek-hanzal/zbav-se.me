@@ -140,7 +140,6 @@ export const Item: FC<Item.Props> = ({
 				<>
 					<SheetButton
 						data-ui={"Item-[FeedSetupButton]"}
-						label={null}
 						iconProps={{
 							ui: {
 								text: "2xl",

@@ -1,5 +1,5 @@
 import type { Container } from "@use-pico/client/ui/container";
-import { translator } from "@use-pico/common/translator";
+import { Tx } from "@use-pico/client/ui/tx";
 import type { StateType } from "@use-pico/common/type";
 import type { FC } from "react";
 import { SheetButton } from "~/app/v0/@common/sheet/ui/SheetButton";
@@ -7,6 +7,7 @@ import { SheetButton } from "~/app/v0/@common/sheet/ui/SheetButton";
 export namespace FeedSetupButton {
 	export interface Props extends Partial<SheetButton.Props> {
 		state: StateType.State<boolean>;
+		label?: string;
 	}
 }
 
@@ -14,7 +15,6 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({ state, label, ui, .
 	return (
 		<SheetButton
 			data-ui={"FeedSetupButton[SheetButton]"}
-			label={label ?? translator.text("Adjust feed (button)")}
 			state={state}
 			defaultOpen={false}
 			ui={{
@@ -31,7 +31,9 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({ state, label, ui, .
 				...ui,
 			}}
 			{...props}
-		/>
+		>
+			<Tx label={label ?? "Adjust feed (button)"} />
+		</SheetButton>
 	);
 };
 

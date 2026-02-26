@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@use-pico/client/ui/button";
-import { translator } from "@use-pico/common/translator";
+import { Tx } from "@use-pico/client/ui/tx";
 import { withTransactionCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/transaction";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
@@ -30,7 +30,6 @@ export const TransactionCreateButton: FC<TransactionCreateButton.Props> = ({
 
 	return (
 		<Button
-			label={translator.text("Create transaction (button)")}
 			iconEnabled={TransactionIcon}
 			iconProps={{
 				ui: {
@@ -52,6 +51,8 @@ export const TransactionCreateButton: FC<TransactionCreateButton.Props> = ({
 				...ui,
 			}}
 			{...props}
-		/>
+		>
+			<Tx label="Create transaction (button)" />
+		</Button>
 	);
 };

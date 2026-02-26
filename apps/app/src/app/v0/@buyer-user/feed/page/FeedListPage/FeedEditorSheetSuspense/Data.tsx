@@ -1,6 +1,6 @@
 import { RefreshIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
-import { translator } from "@use-pico/common/translator";
+import { Tx } from "@use-pico/client/ui/tx";
 import type { StateType } from "@use-pico/common/type";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
@@ -32,7 +32,6 @@ export const Data: FC<Data.Props> = ({ feedId, state, onRefresh }) => {
 						text: "xl",
 					},
 				}}
-				label={translator.text("Refresh feed (button)")}
 				ui={{
 					tone: "neutral",
 					theme: "light",
@@ -45,7 +44,9 @@ export const Data: FC<Data.Props> = ({ feedId, state, onRefresh }) => {
 					border: false,
 					width: "full",
 				}}
-			/>
+			>
+				<Tx label="Refresh feed (button)" />
+			</Button>
 		</EditorSheet>
 	);
 };

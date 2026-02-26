@@ -41,7 +41,6 @@ export const ListingHeroSection: FC<ListingHeroSection.Props> = ({
 					<FavouriteButtonSuspense
 						feedId={feedId}
 						listingId={listing.id}
-						label={null}
 						iconProps={{
 							ui: {
 								text: "xl",

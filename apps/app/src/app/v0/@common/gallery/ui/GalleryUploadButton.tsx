@@ -1,5 +1,5 @@
 import { Button } from "@use-pico/client/ui/button";
-import { translator } from "@use-pico/common/translator";
+import { Tx } from "@use-pico/client/ui/tx";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { GalleryUploadSheet } from "./GalleryUploadSheet";
 
@@ -28,7 +28,6 @@ export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads>({
 		<>
 			<Button
 				iconEnabled={PhotoIcon}
-				label={translator.text("Upload photos (button)")}
 				onClick={() => state.set((prev) => !prev)}
 				ui={{
 					tone: "primary",
@@ -38,7 +37,9 @@ export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads>({
 					...ui,
 				}}
 				{...props}
-			/>
+			>
+				<Tx label="Upload photos (button)" />
+			</Button>
 
 			<GalleryUploadSheet
 				withMutation={withMutation}

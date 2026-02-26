@@ -2,7 +2,6 @@ import { TrashIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import type { tListingSort, tListingSortField } from "@zbav-se.me/sdk/api/buyer-user";
 import { uiSelectButton } from "@zbav-se.me/ui/ui";
@@ -115,7 +114,6 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 
 			<Button
 				iconEnabled={TrashIcon}
-				label={translator.text("Clear all sorts (button)")}
 				onClick={() => {
 					state.set([]);
 				}}
@@ -124,7 +122,9 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 					theme: "light",
 					size: "default",
 				}}
-			/>
+			>
+				<Tx label="Clear all sorts (button)" />
+			</Button>
 		</Container>
 	);
 };
