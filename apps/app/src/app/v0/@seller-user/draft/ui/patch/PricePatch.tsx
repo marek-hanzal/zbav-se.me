@@ -1,4 +1,5 @@
 import { Container } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
@@ -6,6 +7,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { EditAction } from "~/app/@seller-user/draft/ui/DraftEditor/EditAction";
 
 export namespace PricePatch {
 	export interface Props extends TitleContainer.Props {
@@ -19,7 +21,6 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onSettled, .
 	const [price, setPrice] = useState<string | undefined>(
 		draft.price ? String(draft.price) : undefined,
 	);
-
 	const mutation = withDraftQuery.usePatchMutation({
 		onSettled() {
 			onSettled?.();
@@ -30,6 +31,7 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onSettled, .
 		<TitleContainer
 			data-ui={"Setup-[TitleContainer.price]"}
 			textTitle={translator.text("Price (title)")}
+			left={<EditAction />}
 			{...props}
 		>
 			<Container
@@ -66,6 +68,7 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onSettled, .
 					}}
 					loading={mutation.isPending}
 					disabled={!price}
+					textCancel={<Tx label={"Back (label)"} />}
 				/>
 			</Container>
 		</TitleContainer>

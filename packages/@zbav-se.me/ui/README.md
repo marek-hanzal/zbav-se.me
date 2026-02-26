@@ -68,6 +68,10 @@ Rating display and interaction:
 Sheet/drawer components:
 - `Sheet` - Bottom sheet/drawer component
 
+### 🔢 Dial (`dial/`)
+Numeric dial input components:
+- `Dial` - Numeric keypad with editable value/placeholder display
+
 ### 📰 Typography (`title/`, `typo/`)
 Text and typography components:
 - `Title` - Section title component

@@ -7,10 +7,14 @@ export namespace EditAction {
 	}
 }
 
-export const EditAction: FC<EditAction.Props> = (props) => {
+export const EditAction: FC<EditAction.Props> = ({ ui, ...props }) => {
 	return (
 		<Icon
 			icon={EditIcon}
+			ui={{
+				text: "xl",
+				...ui,
+			}}
 			{...props}
 		/>
 	);
