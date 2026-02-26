@@ -4,10 +4,10 @@ import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
+import { ActionSection } from "~/app/@seller-user/draft/ui/DraftEditor/ActionSection";
+import { OptionalFieldsSection } from "~/app/@seller-user/draft/ui/DraftEditor/OptionalFieldsSection";
+import { RequiredFieldsSection } from "~/app/@seller-user/draft/ui/DraftEditor/RequiredFieldsSection";
 import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
-import { ActionSection } from "~/app/v0/@seller-user/draft/ui/DraftEditor/ActionSection";
-import { OptionalFieldsSection } from "~/app/v0/@seller-user/draft/ui/DraftEditor/OptionalFieldsSection";
-import { RequiredFieldsSection } from "~/app/v0/@seller-user/draft/ui/DraftEditor/RequiredFieldsSection";
 
 export namespace Editor {
 	export interface Props {

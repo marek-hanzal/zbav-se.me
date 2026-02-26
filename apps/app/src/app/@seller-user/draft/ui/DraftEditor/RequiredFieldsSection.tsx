@@ -13,7 +13,7 @@ import { LocationValue } from "~/app/v0/@common/location/ui/LocationValue";
 import { PriceValue } from "~/app/v0/@common/price/ui/PriceValue";
 import { PriceTypeValue } from "~/app/v0/@common/price-type/ui/PriceTypeValue";
 import { TitleValue } from "~/app/v0/@common/title/ui/TitleValue";
-import { ChevronAction } from "./ChevronAction";
+import { ChevronAction } from "~/app/@seller-user/draft/ui/DraftEditor/ChevronAction";
 
 export namespace RequiredFieldsSection {
 	export interface Props {
