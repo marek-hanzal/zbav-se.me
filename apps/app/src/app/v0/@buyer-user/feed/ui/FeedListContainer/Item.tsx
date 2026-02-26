@@ -106,7 +106,7 @@ export const Item: FC<Item.Props> = ({
 							ui={{
 								text: "3xl",
 								color: "text",
-								opacity: "medium",
+								opacity: "6",
 								snapTo: "right-center",
 							}}
 						/>
@@ -159,7 +159,7 @@ export const Item: FC<Item.Props> = ({
 							color: "icon",
 							round: "full",
 							square: "default",
-							opacity: "low",
+							opacity: "8",
 						}}
 					/>
 

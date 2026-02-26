@@ -35,7 +35,7 @@ export const CategoryInline: FC<CategoryInline.Props> = ({
 					tone: "secondary",
 					theme: "light",
 					text: "default",
-					opacity: "xl",
+					opacity: "6",
 				}}
 				{...textGroupProps}
 			/>

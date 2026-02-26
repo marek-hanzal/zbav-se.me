@@ -79,7 +79,7 @@ export const LabelValue: FC<LabelValue.Props> = ({
 					label={textLabel}
 					preset={"label"}
 					ui={{
-						font: "normal",
+						font: "semibold",
 						color: "lead",
 					}}
 					{...textLabelProps}
@@ -122,7 +122,7 @@ export const LabelValue: FC<LabelValue.Props> = ({
 					ui={{
 						tone: "neutral",
 						theme: "light",
-						opacity: "medium",
+						opacity: "6",
 					}}
 				/>
 			) : null}

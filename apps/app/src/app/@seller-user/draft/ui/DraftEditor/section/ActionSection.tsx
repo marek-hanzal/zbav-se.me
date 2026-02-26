@@ -26,7 +26,7 @@ export const ActionSection: FC<ActionSection.Props> = ({ draft }) => {
 					theme: "light",
 					text: "md",
 					color: "lead",
-					opacity: "low",
+					opacity: "8",
 				}}
 				className={"text-center"}
 			/>

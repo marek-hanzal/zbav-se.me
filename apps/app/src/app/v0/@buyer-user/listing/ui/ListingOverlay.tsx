@@ -19,7 +19,7 @@ export const ListingOverlay: FC<ListingOverlay.Props> = ({ listing }) => {
 				currency={listing.currency}
 				ui={{
 					snapTo: "top-center",
-					opacity: "low",
+					opacity: "8",
 					zIndex: true,
 				}}
 			/>
@@ -30,7 +30,7 @@ export const ListingOverlay: FC<ListingOverlay.Props> = ({ listing }) => {
 				distance={listing.distance}
 				ui={{
 					snapTo: "bottom",
-					opacity: "low",
+					opacity: "8",
 					zIndex: true,
 				}}
 			/>

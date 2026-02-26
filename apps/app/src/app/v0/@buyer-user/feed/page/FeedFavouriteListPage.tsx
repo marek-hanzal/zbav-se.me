@@ -28,7 +28,7 @@ export const FeedFavouriteListPage: FC<FeedFavouriteListPage.Props> = ({ feedId,
 				<LinkTo
 					{...uiBackButton({
 						ui: {
-							opacity: isLast ? "full" : "low",
+							opacity: isLast ? "none" : "8",
 						},
 						className: [],
 					})}

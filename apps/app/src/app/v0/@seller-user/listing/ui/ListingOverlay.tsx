@@ -17,7 +17,7 @@ export const ListingOverlay: FC<ListingOverlay.Props> = ({ listing }) => {
 			currency={listing.currency}
 			ui={{
 				snapTo: "top-center",
-				opacity: "low",
+				opacity: "8",
 				zIndex: true,
 			}}
 		/>

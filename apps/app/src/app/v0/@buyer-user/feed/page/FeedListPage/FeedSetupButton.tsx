@@ -27,7 +27,7 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({ state, label, ui, .
 				round: "full",
 				snapTo: "top-right",
 				text: "xl",
-				opacity: "low",
+				opacity: "8",
 				...ui,
 			}}
 			{...props}

@@ -57,7 +57,7 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onSettled, ...
 					label={"Listing - Cons (message)"}
 					ui={{
 						text: "lg",
-						opacity: "low",
+						opacity: "8",
 						color: "text",
 					}}
 					className={"text-center"}

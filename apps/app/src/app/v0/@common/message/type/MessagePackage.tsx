@@ -117,7 +117,7 @@ export const MessagePackage: FC<MessagePackage.Props> = ({ message, ...props }) 
 				})}
 				ui={{
 					text: "sm",
-					opacity: "medium",
+					opacity: "6",
 				}}
 			/>
 		</Container>

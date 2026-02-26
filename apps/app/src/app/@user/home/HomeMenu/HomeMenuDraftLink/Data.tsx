@@ -70,7 +70,7 @@ export const Data: FC<Data.Props> = ({ _suspense, icon }) => {
 				icon={ChevronRightIcon}
 				iconProps={{
 					ui: {
-						opacity: "xl",
+						opacity: "5",
 					},
 				}}
 			>

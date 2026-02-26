@@ -85,7 +85,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								icon={ChevronRightIcon}
 								iconProps={{
 									ui: {
-										opacity: "xl",
+										opacity: "5",
 									},
 								}}
 							>
@@ -116,7 +116,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 							icon={ChevronRightIcon}
 							iconProps={{
 								ui: {
-									opacity: "xl",
+									opacity: "5",
 								},
 							}}
 						>
@@ -151,7 +151,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 							icon={ChevronRightIcon}
 							iconProps={{
 								ui: {
-									opacity: "xl",
+									opacity: "5",
 								},
 							}}
 						>
@@ -190,7 +190,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 							icon={ChevronRightIcon}
 							iconProps={{
 								ui: {
-									opacity: "xl",
+									opacity: "5",
 								},
 							}}
 						>
@@ -227,7 +227,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 							icon={ChevronRightIcon}
 							iconProps={{
 								ui: {
-									opacity: "xl",
+									opacity: "5",
 								},
 							}}
 						>
@@ -262,7 +262,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 							icon={ChevronRightIcon}
 							iconProps={{
 								ui: {
-									opacity: "xl",
+									opacity: "5",
 								},
 							}}
 						>
@@ -299,7 +299,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 							icon={ChevronRightIcon}
 							iconProps={{
 								ui: {
-									opacity: "xl",
+									opacity: "5",
 								},
 							}}
 						>
@@ -334,7 +334,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 							icon={ChevronRightIcon}
 							iconProps={{
 								ui: {
-									opacity: "xl",
+									opacity: "5",
 								},
 							}}
 						>
@@ -371,7 +371,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 							icon={ChevronRightIcon}
 							iconProps={{
 								ui: {
-									opacity: "xl",
+									opacity: "5",
 								},
 							}}
 						>

@@ -80,7 +80,7 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 							ui={{
 								text: "3xl",
 								color: "text",
-								opacity: "medium",
+								opacity: "6",
 								snapTo: "right-center",
 							}}
 						/>

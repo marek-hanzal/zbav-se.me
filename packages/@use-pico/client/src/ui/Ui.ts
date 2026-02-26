@@ -98,6 +98,7 @@ export namespace Ui {
 	export type Width = "full" | "auto" | "content" | "viewport";
 	/**
 	 * Opacity level scale.
+	 * Source of truth for allowed `data-ui-opacity` tokens. Keep CSS mapping in sync.
 	 */
 	export type Opacity =
 		| "0"

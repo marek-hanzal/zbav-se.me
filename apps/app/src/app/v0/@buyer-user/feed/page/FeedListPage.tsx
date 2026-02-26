@@ -40,7 +40,7 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...prop
 				<LinkTo
 					{...uiBackButton({
 						ui: {
-							opacity: isLast ? "full" : "low",
+							opacity: isLast ? "none" : "8",
 						},
 						className: [],
 					})}
@@ -63,7 +63,7 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...prop
 							set: setIsFeedSettings,
 						}}
 						ui={{
-							opacity: isLast ? "full" : "low",
+							opacity: isLast ? "none" : "8",
 						}}
 						className={"transition-all"}
 					/>

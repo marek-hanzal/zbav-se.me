@@ -66,7 +66,7 @@ export const CreateButton: FC<CreateButton.Props> = ({
 						justify: "center",
 						background: "default",
 						position: "relative",
-						opacity: "medium",
+						opacity: "6",
 					}}
 				>
 					<Status

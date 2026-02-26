@@ -50,7 +50,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ onSuccess, ui, ...props }
 					justify: "center",
 					background: "default",
 					position: "relative",
-					opacity: "medium",
+					opacity: "6",
 				}}
 			>
 				<Status

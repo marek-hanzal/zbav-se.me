@@ -84,7 +84,7 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 					label={textLabel}
 					preset={"label"}
 					ui={{
-						font: "normal",
+						font: "semibold",
 						display: "block",
 						color: "lead",
 					}}
@@ -150,7 +150,7 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 						ui={{
 							tone: "neutral",
 							theme: "light",
-							opacity: "medium",
+							opacity: "6",
 						}}
 					/>
 				)}

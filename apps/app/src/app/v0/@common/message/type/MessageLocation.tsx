@@ -75,7 +75,7 @@ export const MessageLocation: FC<MessageLocation.Props> = ({ message, ...props }
 				})}
 				ui={{
 					text: "sm",
-					opacity: "medium",
+					opacity: "6",
 				}}
 			/>
 		</Container>

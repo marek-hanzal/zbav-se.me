@@ -57,7 +57,7 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...
 					label={"Listing - Pros (message)"}
 					ui={{
 						text: "lg",
-						opacity: "low",
+						opacity: "8",
 						color: "text",
 					}}
 					className={"text-center"}

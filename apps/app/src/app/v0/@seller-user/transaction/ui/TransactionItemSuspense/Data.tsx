@@ -45,7 +45,7 @@ export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, className, 
 									tone: "neutral",
 									theme: "light",
 									background: "default",
-									opacity: "low",
+									opacity: "8",
 								}}
 								className={[
 									"absolute",

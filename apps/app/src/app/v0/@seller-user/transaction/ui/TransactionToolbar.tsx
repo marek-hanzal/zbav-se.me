@@ -32,7 +32,7 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({ transaction, 
 		<Container
 			ui={{
 				flow: "vertical",
-				opacity: "low",
+				opacity: "8",
 				justify: "center",
 				items: "center",
 				gap: "default",

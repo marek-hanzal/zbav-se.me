@@ -69,7 +69,7 @@ export const HistoryItem: FC<HistoryItem.Props> = ({
 				label={item.count > 0 ? item.count : "-"}
 				ui={{
 					text: "sm",
-					opacity: "medium",
+					opacity: "6",
 					font: "bold",
 				}}
 			/>

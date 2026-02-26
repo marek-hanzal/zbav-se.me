@@ -66,7 +66,7 @@ export const MessageGallery: FC<MessageGallery.Props> = ({ message, ...props }) 
 					text: "sm",
 					round: "default",
 					inner: "default",
-					opacity: "low",
+					opacity: "8",
 					snapTo: "bottom-left",
 				}}
 			/>

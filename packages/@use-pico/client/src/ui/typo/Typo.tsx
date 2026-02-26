@@ -14,7 +14,7 @@ const presets: Record<Typo.Preset, uiTypo.Ui> = {
 		color: "lead",
 		font: "bold",
 		display: "block",
-		opacity: "low",
+		opacity: "8",
 	},
 	subheader: {
 		text: "lg",

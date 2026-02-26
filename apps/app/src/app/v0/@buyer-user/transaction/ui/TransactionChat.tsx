@@ -99,7 +99,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 							ui={{
 								width: "full",
 								text: "sm",
-								opacity: "medium",
+								opacity: "6",
 							}}
 							className="text-center"
 						/>
@@ -143,7 +143,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 							ui={{
 								width: "full",
 								text: "sm",
-								opacity: "medium",
+								opacity: "6",
 							}}
 							className="text-center"
 						/>

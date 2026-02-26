@@ -60,7 +60,7 @@ export const ListingPrice: FC<ListingPrice.Props> = ({
 									label={`Listing price - ${priceType}`}
 									ui={{
 										text: "sm",
-										opacity: "2xl",
+										opacity: "6",
 									}}
 								/>
 							);

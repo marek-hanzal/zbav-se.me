@@ -45,7 +45,7 @@ export const Data: FC<Data.Props> = ({ _suspense, listingId, ui, ...props }) => 
 						tone: "brand",
 						theme: "light",
 						inner: "2xl",
-						opacity: "medium",
+						opacity: "6",
 					}}
 					className={"text-center"}
 				/>

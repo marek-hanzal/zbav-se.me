@@ -76,7 +76,7 @@ export const MessageText: FC<MessageText.Props> = ({ side, message, ...props }) 
 				})}
 				ui={{
 					text: "sm",
-					opacity: "medium",
+					opacity: "6",
 				}}
 			/>
 		</Container>
