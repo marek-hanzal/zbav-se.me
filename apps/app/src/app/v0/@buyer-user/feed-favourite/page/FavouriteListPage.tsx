@@ -4,7 +4,7 @@ import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { FavouriteListContainerSuspense } from "~/app/v0/@buyer-user/feed-favourite/ui/FavouriteListContainerSuspense";
-import { HomeMenuButton } from "~/app/v0/@user/home/HomeMenuButton";
+import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
 export namespace FavouriteListPage {
 	export interface Props extends TitleContainer.Props {}

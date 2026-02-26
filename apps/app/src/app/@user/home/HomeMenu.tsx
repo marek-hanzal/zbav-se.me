@@ -17,7 +17,7 @@ import {
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import { useRef } from "react";
-import { HomeMenuDraftLinkSuspense } from "./HomeMenuDraftLinkSuspense";
+import { HomeMenuDraftLinkSuspense } from "./HomeMenu/HomeMenuDraftLinkSuspense";
 
 export namespace HomeMenu {
 	export interface Props extends Container.Props {

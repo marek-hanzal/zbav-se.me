@@ -61,9 +61,10 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 
 ## Recent updates
 
+- Home menu module (`@user/home/*`) was promoted from `@user/v0` to active app scope (`src/app/@user/home/*`) as the first extracted reference block.
 - Home menu keeps its original inline implementation in `@user/home/HomeMenu.tsx` until we define a type-safe split strategy for TanStack Router links.
 - Home menu uses local suspense for the draft CTA (`HomeMenuDraftLink`) with in-place fallback (`HomeMenuDraftLinkPending`) to preserve stable menu layout.
-- Home draft CTA suspense is now encapsulated in `@user/home/HomeMenuDraftLinkSuspense.tsx` so menu call-sites avoid inline suspense wiring.
+- Home draft CTA suspense is now encapsulated in `@user/home/HomeMenu/HomeMenuDraftLinkSuspense.tsx` so menu call-sites avoid inline suspense wiring.
 - User-facing flow/shell routes now use page components:
   - `@user/home/page/HomePage.tsx`
   - `@user/profile/page/UserPage.tsx`

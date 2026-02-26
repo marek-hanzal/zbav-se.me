@@ -4,7 +4,7 @@ import type { tDraft, tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import type { DraftEditor } from "~/app/v0/@seller-user/draft/ui/DraftEditor";
-import { HomeMenuButton } from "~/app/v0/@user/home/HomeMenuButton";
+import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 import { ActionSection } from "./ActionSection";
 import { OptionalFieldsSection } from "./OptionalFieldsSection";
 import { RequiredFieldsSection } from "./RequiredFieldsSection";
