@@ -1,0 +1,17 @@
+import type { FC } from "react";
+import type { PhotoUpload } from "~/app/v0/@common/photo/ui/PhotoUpload";
+import { PhotoUploadPreviewImageSuspense } from "./PhotoUploadPreviewImageSuspense";
+
+export namespace PhotoUploadPreview {
+	export interface Props {
+		value: PhotoUpload.Value;
+	}
+}
+
+export const PhotoUploadPreview: FC<PhotoUploadPreview.Props> = ({ value }) => {
+	if (!value) {
+		return null;
+	}
+
+	return <PhotoUploadPreviewImageSuspense uploadId={value} />;
+};

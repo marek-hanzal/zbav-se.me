@@ -1,0 +1,61 @@
+import { useSelection } from "@use-pico/client/hook";
+import type { Container } from "@use-pico/client/ui/container";
+import type { EntitySchema } from "@use-pico/common/schema";
+import type { tFeed, tListingWarrantyEnum } from "@zbav-se.me/sdk/api/buyer-user";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import type { FC } from "react";
+import { PatchContainer } from "~/app/v0/@common/container/ui/PatchContainer";
+import { WarrantySelect } from "~/app/v0/@common/warranty/ui/WarrantySelect";
+
+export namespace WarrantyPatch {
+	export interface Props extends Container.Props {
+		feed: tFeed;
+		onCancel(): void;
+		onSettled?(): void;
+	}
+}
+
+export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ feed, onSettled, ...props }) => {
+	const patchMutation = withFeedQuery.usePatchMutation();
+	const selection = useSelection<EntitySchema.Type>({
+		mode: "multi",
+		initial: (feed.query?.filter?.warrantyIn ?? []).map((warranty) => ({
+			id: warranty,
+		})),
+	});
+
+	return (
+		<PatchContainer
+			data-ui={"WarrantyPatch[Container]"}
+			onSave={() => {
+				patchMutation.mutate(
+					{
+						query: {
+							where: {
+								id: feed.id,
+							},
+						},
+						patch: {
+							query: {
+								...feed.query,
+								filter: {
+									...feed.query?.filter,
+									warrantyIn:
+										selection.optional.multiId() as tListingWarrantyEnum[],
+								},
+							},
+						},
+					},
+					{
+						onSettled,
+					},
+				);
+			}}
+			loading={patchMutation.isPending}
+			disabled={false}
+			{...props}
+		>
+			<WarrantySelect selection={selection} />
+		</PatchContainer>
+	);
+};

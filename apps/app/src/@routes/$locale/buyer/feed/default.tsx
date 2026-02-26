@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
-import { FeedDefaultPendingPage } from "~/app/@buyer-user/feed/page/FeedDefaultPendingPage";
-import { feedCreateDefault } from "~/app/@buyer-user/feed/service/feedCreateDefault";
+import { FeedDefaultPendingPage } from "~/app/v0/@buyer-user/feed/page/FeedDefaultPendingPage";
+import { feedCreateDefault } from "~/app/v0/@buyer-user/feed/service/feedCreateDefault";
 
 export const Route = createFileRoute("/$locale/buyer/feed/default")({
 	/**
