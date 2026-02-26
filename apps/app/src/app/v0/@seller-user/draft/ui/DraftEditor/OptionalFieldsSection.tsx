@@ -1,15 +1,14 @@
 import { Group } from "@use-pico/client/ui/group";
 import { Tx } from "@use-pico/client/ui/tx";
-import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
+import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
 import { ConsValueList } from "~/app/v0/@common/cons/ui/ConsValueList";
 import { DeliveryValueList } from "~/app/v0/@common/delivery/ui/DeliveryValueList";
 import { DescriptionValue } from "~/app/v0/@common/description/ui/DescriptionValue";
 import { ProsValueList } from "~/app/v0/@common/pros/ui/ProsValueList";
 import { RestrictionValue } from "~/app/v0/@common/restriction/ui/RestrictionValue";
 import { WarrantyValue } from "~/app/v0/@common/warranty/ui/WarrantyValue";
-import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
 import { ChevronAction } from "./ChevronAction";
 
 export namespace OptionalFieldsSection {
