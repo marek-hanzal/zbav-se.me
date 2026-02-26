@@ -103,6 +103,8 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `@seller-user/draft/ui/DraftEditor/patch/DescriptionPatch.tsx`
 - Draft editor category patch was extracted to active scope:
   - `@seller-user/draft/ui/DraftEditor/patch/CategoryPatch.tsx`
+- Draft editor location patch was extracted to active scope:
+  - `@seller-user/draft/ui/DraftEditor/patch/LocationPatch.tsx`
 - Seller draft list now uses `withDraftQuery` collection hydration (`useCollectionQuery` + per-item `useQuery`) and keeps `data-ui` labels aligned with the bracketed contract.
 - Seller transaction list now uses `withTransactionQuery` collection hydration with configurable collection `refetchInterval`.
 - Seller transaction-listing list now uses `withTransactionListingQuery` cache hydration and renders card data from transaction-listing payload (no per-item listing fetch).

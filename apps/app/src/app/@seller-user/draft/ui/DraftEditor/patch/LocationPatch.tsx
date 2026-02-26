@@ -48,7 +48,7 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 				value={draft.locationId}
 				ui={{
 					inner: "default",
-				}}
+				}}                
 			/>
 		</TitleContainer>
 	);
