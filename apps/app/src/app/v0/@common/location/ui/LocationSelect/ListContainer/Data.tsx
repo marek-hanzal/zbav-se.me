@@ -10,7 +10,7 @@ import { uiSelectButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 import type { ListContainer } from "./ListContainer";
 
-export namespace ListContainerContent {
+export namespace Data {
 	export interface Props
 		extends Omit<ListContainer.Props, "search" | "textHint" | "warningStatusProps">,
 			MarkSuspense.Props {
@@ -19,7 +19,7 @@ export namespace ListContainerContent {
 	}
 }
 
-export const ListContainerContent: FC<ListContainerContent.Props> = ({
+export const Data: FC<Data.Props> = ({L
 	_suspense,
 	text,
 	value,

@@ -3,9 +3,9 @@ import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { Status } from "@use-pico/client/ui/status";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { type FC, Suspense } from "react";
-import { ListContainerContent } from "../ListContainerContent";
-import { ListContainerContentPending } from "../ListContainerContentPending";
+import { Data } from "./Data";
 import { Default } from "./Default";
+import { Pending } from "./Pending";
 
 export namespace ListContainer {
 	export interface Props extends Omit<Container.Props, "onChange"> {
@@ -39,8 +39,8 @@ export const ListContainer: FC<ListContainer.Props> = ({
 	}
 
 	return (
-		<Suspense fallback={<ListContainerContentPending />}>
-			<ListContainerContent
+		<Suspense fallback={<Pending />}>
+			<Data
 				_suspense={"I know"}
 				text={text}
 				value={value}
