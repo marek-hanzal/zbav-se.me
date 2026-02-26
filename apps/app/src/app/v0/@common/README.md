@@ -97,5 +97,6 @@ When adding to `@common`:
   - `@common/container/ui/SaveContainer.tsx`
 - `LocationSelect` component was extracted to active scope:
   - `@common/location/ui/LocationSelect.tsx`
+  - `@common/location/ui/LocationSelect/ListContainer/*`
 - PatchContainer abstraction was removed; patch views now compose `TitleContainer`/`Container` + `SaveContainer` inline at call-sites.
 - `LocationSelectContainer` abstraction was removed; call-sites now embed `LocationSelect` + `SaveContainer` inline.
