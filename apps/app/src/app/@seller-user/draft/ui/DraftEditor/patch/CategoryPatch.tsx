@@ -39,7 +39,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 			: [],
 	});
 
-	const categoryId = selection.optional.singleId() ?? null;
+	const categoryId = selection.optional.singleId();
 
 	return (
 		<TitleContainer
@@ -59,7 +59,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 			>
 				<CategorySelect
 					selection={selection}
-					categoryId={categoryId ?? undefined}
+					categoryId={categoryId}
 				/>
 
 				<SaveContainer
