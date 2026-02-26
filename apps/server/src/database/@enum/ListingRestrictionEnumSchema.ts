@@ -3,8 +3,8 @@ import { z } from "@hono/zod-openapi";
 export const ListingRestrictionEnumSchema = z
 	.enum([
 		"none",
-		"adult",
 		"adult-relaxed",
+		"adult",
 		"sensitive",
 		"restricted",
 	])

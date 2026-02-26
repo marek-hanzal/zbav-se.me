@@ -277,8 +277,8 @@ export const sListingRestrictionEnum = {
     type: 'string',
     enum: [
         'none',
-        'adult',
         'adult-relaxed',
+        'adult',
         'sensitive',
         'restricted'
     ]

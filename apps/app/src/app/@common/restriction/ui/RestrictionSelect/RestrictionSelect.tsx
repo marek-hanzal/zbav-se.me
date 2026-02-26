@@ -17,8 +17,9 @@ export const RestrictionSelect: FC<RestrictionSelect.Props> = ({ selection, ui, 
 			data-ui="RestrictionSelect[Container]"
 			ui={{
 				layout: "vertical-flex",
-				height: "auto",
+				height: "full",
 				width: "full",
+				scroll: "vertical",
 				gap: "lg",
 				...ui,
 			}}

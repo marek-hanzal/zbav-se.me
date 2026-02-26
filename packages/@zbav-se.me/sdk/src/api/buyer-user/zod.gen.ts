@@ -247,8 +247,8 @@ export type zListingWarrantyEnum = z.infer<typeof zListingWarrantyEnum>;
  */
 export const zListingRestrictionEnum = z.enum([
     'none',
-    'adult',
     'adult-relaxed',
+    'adult',
     'sensitive',
     'restricted'
 ]).register(z.globalRegistry, {

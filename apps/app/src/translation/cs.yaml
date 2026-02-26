@@ -795,7 +795,7 @@ Listing restriction - restricted:
     value: Zákonem regulované
 Listing restriction - restricted (hint):
     static: true
-    value: Věci tvrdě omezené zákonem - nabídka tohoto typu zboží podlého zvláštním pravidlům.
+    value: Věci tvrdě omezené zákonem - nabídka tohoto typu zboží podléhá zvláštním pravidlům.
 Listing restriction - sensitive:
     static: true
     value: Citlivé

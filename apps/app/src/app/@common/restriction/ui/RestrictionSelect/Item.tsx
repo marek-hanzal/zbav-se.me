@@ -32,6 +32,7 @@ export const Item: FC<Item.Props> = ({ restriction, selection }) => {
 				},
 				className: [
 					"text-left",
+					"shrink-0",
 				],
 			})}
 			data-ui={`RestrictionSelect-[Button.${restriction}]`}
