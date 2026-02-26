@@ -3,8 +3,8 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { FavouriteListContainerSuspense } from "~/app/v0/@buyer-user/feed-favourite/ui/FavouriteListContainerSuspense";
 import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
+import { FavouriteListContainerSuspense } from "~/app/v0/@buyer-user/feed-favourite/ui/FavouriteListContainerSuspense";
 
 export namespace FavouriteListPage {
 	export interface Props extends TitleContainer.Props {}

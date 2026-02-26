@@ -32,7 +32,7 @@ export const Pending: FC<Pending.Props> = ({ iconUi }) => {
 			}}
 			activeProps={uiMenuButton({
 				ui: {
-					tone: "link",
+					tone: "primary",
 					theme: "light",
 				},
 				className: [],

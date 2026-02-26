@@ -1,8 +1,8 @@
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { TransactionList } from "~/app/v0/@buyer-user/transaction/ui/TransactionList";
 import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
+import { TransactionList } from "~/app/v0/@buyer-user/transaction/ui/TransactionList";
 
 export namespace MessageListPage {
 	export interface Props extends TitleContainer.Props {}

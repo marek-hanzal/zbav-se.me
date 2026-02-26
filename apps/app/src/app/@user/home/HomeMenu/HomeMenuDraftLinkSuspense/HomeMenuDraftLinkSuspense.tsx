@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { Suspense } from "react";
-import { Data } from "./HomeMenuDraftLinkSuspense/Data";
-import { Pending } from "./HomeMenuDraftLinkSuspense/Pending";
+import { Data } from "./Data";
+import { Pending } from "./Pending";
 
 export namespace HomeMenuDraftLinkSuspense {
 	export interface Props extends Omit<Data.Props, "_suspense"> {

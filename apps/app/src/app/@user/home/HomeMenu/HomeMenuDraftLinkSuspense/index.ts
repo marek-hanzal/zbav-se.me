@@ -1,0 +1,1 @@
+export { HomeMenuDraftLinkSuspense } from "./HomeMenuDraftLinkSuspense";

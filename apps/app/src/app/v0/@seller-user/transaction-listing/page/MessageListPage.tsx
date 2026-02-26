@@ -1,9 +1,9 @@
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, Suspense } from "react";
+import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 import { TransactionListingList } from "~/app/v0/@seller-user/transaction-listing/ui/TransactionListingList";
 import { TransactionListingListPending } from "~/app/v0/@seller-user/transaction-listing/ui/TransactionListingListPending";
-import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
 export namespace MessageListPage {
 	export interface Props extends TitleContainer.Props {}
