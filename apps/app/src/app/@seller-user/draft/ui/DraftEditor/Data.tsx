@@ -4,7 +4,7 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { FC } from "react";
 import { useCallback, useMemo, useState } from "react";
 import { Editor } from "~/app/@seller-user/draft/ui/DraftEditor/Editor";
-import { TitlePatch } from "~/app/@seller-user/draft/ui/patch/TitlePatch";
+import { TitlePatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/TitlePatch";
 import { AgePatch } from "~/app/v0/@seller-user/draft/ui/patch/AgePatch";
 import { CategoryPatch } from "~/app/v0/@seller-user/draft/ui/patch/CategoryPatch";
 import { ConditionPatch } from "~/app/v0/@seller-user/draft/ui/patch/ConditionPatch";
