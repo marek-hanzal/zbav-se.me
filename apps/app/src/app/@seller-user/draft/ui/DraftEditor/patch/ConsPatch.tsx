@@ -10,7 +10,7 @@ import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { EditAction } from "~/app/@seller-user/draft/ui/DraftEditor/EditAction";
 
-export namespace ProsPatch {
+export namespace ConsPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
@@ -18,18 +18,16 @@ export namespace ProsPatch {
 	}
 }
 
-export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
-	const initialPros = draft.pros ?? [];
-	const paddedPros = [
-		...initialPros,
-		...Array(sProsCons.maxItems - initialPros.length).fill(""),
+export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
+	const initialCons = draft.cons ?? [];
+	const paddedCons = [
+		...initialCons,
+		...Array(sProsCons.maxItems - initialCons.length).fill(""),
 	].slice(0, sProsCons.maxItems);
-	const [items, setItems] = useState<string[]>(paddedPros);
+	const [items, setItems] = useState<string[]>(paddedCons);
 
 	const mutation = withDraftQuery.usePatchMutation({
-		onSettled() {
-			onSettled?.();
-		},
+		onSettled,
 	});
 
 	const updateItem = (index: number, value: string) => {
@@ -42,8 +40,8 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...
 
 	return (
 		<TitleContainer
-			data-ui={"Setup-[TitleContainer.pros]"}
-			textTitle={translator.text("Listing - Pros (title)")}
+			data-ui={"Setup-[TitleContainer.cons]"}
+			textTitle={translator.text("Listing - Cons (title)")}
 			left={<EditAction />}
 			{...props}
 		>
@@ -65,7 +63,7 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...
 						length: sProsCons.maxItems,
 					}).map((_, index) => (
 						// biome-ignore lint/suspicious/noArrayIndexKey: Static array of fields
-						<FormField key={`pros-field-${index}`}>
+						<FormField key={`cons-field-${index}`}>
 							{(props) => (
 								<TextInput
 									type="text"
@@ -74,7 +72,7 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...
 										updateItem(index, e.target.value);
 									}}
 									maxLength={sProsCons.items.maxLength}
-									placeholder={translator.text(`Pros ${index} (placeholder)`)}
+									placeholder={translator.text(`Cons ${index} (placeholder)`)}
 									{...props}
 								/>
 							)}
@@ -83,7 +81,7 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...
 				</Container>
 
 				<Tx
-					label={"Listing - Pros (message)"}
+					label={"Listing - Cons (message)"}
 					ui={{
 						text: "md",
 						opacity: "6",
@@ -97,7 +95,7 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...
 					onSave={() => {
 						mutation.mutate({
 							patch: {
-								pros: items.filter((item) => item.trim().length > 0),
+								cons: items.filter((item) => item.trim().length > 0),
 							},
 							query: {
 								where: {

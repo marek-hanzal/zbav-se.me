@@ -109,6 +109,10 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `@seller-user/draft/ui/DraftEditor/patch/PricePatch.tsx`
 - Draft editor expire-at patch was extracted to active scope:
   - `@seller-user/draft/ui/DraftEditor/patch/ExpireAtPatch.tsx`
+- Draft editor pros patch was extracted to active scope:
+  - `@seller-user/draft/ui/DraftEditor/patch/ProsPatch.tsx`
+- Draft editor cons patch was extracted to active scope:
+  - `@seller-user/draft/ui/DraftEditor/patch/ConsPatch.tsx`
 - Draft restriction patch now uses active-scope restriction selector:
   - `@common/restriction/ui/RestrictionSelect/*`
 - Seller draft list now uses `withDraftQuery` collection hydration (`useCollectionQuery` + per-item `useQuery`) and keeps `data-ui` labels aligned with the bracketed contract.
