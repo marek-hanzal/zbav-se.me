@@ -70,7 +70,7 @@ export const FeedStatusAction: FC<FeedStatusAction.Props> = ({ state, backIcon }
 					className: [],
 				})}
 			>
-				<Tx label={translator.text("Back to home (link)")} />
+				<Tx label="Back to home (link)" />
 			</LinkTo>
 		</>
 	);

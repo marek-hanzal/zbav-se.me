@@ -61,7 +61,7 @@ export const FirstListingStatus: FC<FirstListingStatus.Props> = (props) => {
 								className: [],
 							})}
 						>
-							<Tx label={translator.text("Create first listing (button)")} />
+							<Tx label="Create first listing (button)" />
 						</LinkTo>
 
 						<LinkTo
@@ -84,7 +84,7 @@ export const FirstListingStatus: FC<FirstListingStatus.Props> = (props) => {
 								className: [],
 							})}
 						>
-							<Tx label={translator.text("Back to home (link)")} />
+							<Tx label="Back to home (link)" />
 						</LinkTo>
 					</>
 				}

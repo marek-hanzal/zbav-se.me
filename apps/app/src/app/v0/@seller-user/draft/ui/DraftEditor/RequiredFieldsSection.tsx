@@ -28,13 +28,13 @@ export const RequiredFieldsSection: FC<RequiredFieldsSection.Props> = ({ draft, 
 			<Group>
 				<GalleryValue
 					uploads={draft.gallery.items.map((item) => item.upload)}
-					label={translator.text("Listing photo gallery (label)")}
+					label="Listing photo gallery (label)"
 					onClick={() => onView("gallery")}
 				/>
 			</Group>
 
 			<Tx
-				label={translator.text("Draft - bunch of required (title)")}
+				label="Draft - bunch of required (title)"
 				ui={{
 					tone: "brand",
 					theme: "light",

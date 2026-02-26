@@ -23,7 +23,7 @@ export const OptionalFieldsSection: FC<OptionalFieldsSection.Props> = ({ draft, 
 	return (
 		<>
 			<Tx
-				label={translator.text("Draft - those others (title)")}
+				label="Draft - those others (title)"
 				ui={{
 					tone: "secondary",
 					theme: "light",

@@ -69,7 +69,7 @@ export const TransactionListContainer: FC<TransactionListContainer.Props> = ({
 									size: "default",
 								}}
 							>
-								<Tx label={translator.text("Go to my listings (button)")} />
+								<Tx label="Go to my listings (button)" />
 							</LinkTo>
 						}
 						ui={{

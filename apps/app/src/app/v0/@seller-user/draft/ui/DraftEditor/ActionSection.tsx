@@ -21,7 +21,7 @@ export const ActionSection: FC<ActionSection.Props> = ({ draft }) => {
 	return (
 		<>
 			<Tx
-				label={translator.text("Draft - action section (title)")}
+				label="Draft - action section (title)"
 				ui={{
 					tone: "neutral",
 					theme: "light",
@@ -68,10 +68,10 @@ export const ActionSection: FC<ActionSection.Props> = ({ draft }) => {
 							height: "full",
 						}}
 					>
-						<Tx label={translator.text("Close draft (button)")} />
+						<Tx label="Close draft (button)" />
 
 						<Tx
-							label={translator.text("Close draft (hint)")}
+							label="Close draft (hint)"
 							ui={{
 								text: "xs",
 								color: "icon",
