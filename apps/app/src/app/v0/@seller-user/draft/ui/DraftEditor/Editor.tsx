@@ -9,14 +9,14 @@ import { ActionSection } from "./ActionSection";
 import { OptionalFieldsSection } from "./OptionalFieldsSection";
 import { RequiredFieldsSection } from "./RequiredFieldsSection";
 
-export namespace DraftEditorDefaultView {
+export namespace Editor {
 	export interface Props {
 		draft: tDraft;
 		onView(view: Data.View): void;
 	}
 }
 
-export const DraftEditorDefaultView: FC<DraftEditorDefaultView.Props> = ({ draft, onView }) => {
+export const Editor: FC<Editor.Props> = ({ draft, onView }) => {
 	return (
 		<TitleContainer
 			textTitle={translator.text("Draft edit (title)")}

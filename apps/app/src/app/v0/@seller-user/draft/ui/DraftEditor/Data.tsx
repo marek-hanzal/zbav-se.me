@@ -19,7 +19,7 @@ import { ProsPatch } from "~/app/v0/@seller-user/draft/ui/patch/ProsPatch";
 import { RestrictionPatch } from "~/app/v0/@seller-user/draft/ui/patch/RestrictionPatch";
 import { TitlePatch } from "~/app/v0/@seller-user/draft/ui/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/v0/@seller-user/draft/ui/patch/WarrantyPatch";
-import { DraftEditorDefaultView } from "./DraftEditorDefaultView";
+import { Editor } from "./Editor";
 
 export namespace Data {
 	export type View =
@@ -57,7 +57,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 		return {
 			default: {
 				children: (
-					<DraftEditorDefaultView
+					<Editor
 						draft={draft}
 						onView={setView}
 					/>
