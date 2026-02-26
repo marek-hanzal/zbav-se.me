@@ -15,13 +15,7 @@ export namespace RangePatch {
 	}
 }
 
-export const RangePatch: FC<RangePatch.Props> = ({
-	feed,
-	onSettled,
-	onCancel,
-	ui,
-	...props
-}) => {
+export const RangePatch: FC<RangePatch.Props> = ({ feed, onSettled, onCancel, ui, ...props }) => {
 	const patchMutation = withFeedQuery.usePatchMutation();
 	const currentRange = feed.query?.filter?.range;
 	const [rangeValue, setRangeValue] = useState<string | undefined>(

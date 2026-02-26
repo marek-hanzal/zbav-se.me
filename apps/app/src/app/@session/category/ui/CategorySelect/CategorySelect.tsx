@@ -3,8 +3,8 @@ import { Container } from "@use-pico/client/ui/container";
 import { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { type FC, Suspense, useState } from "react";
-import { ListContainer } from "./ListContainer";
-import { ListContainerPending } from "./ListContainerPending";
+import { ListContainer } from "~/app/v0/@session/category/ui/CategorySelect/ListContainer";
+import { ListContainerPending } from "~/app/v0/@session/category/ui/CategorySelect/ListContainerPending";
 
 export namespace CategorySelect {
 	export interface Props extends Container.Props {
