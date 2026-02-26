@@ -802,6 +802,36 @@ Listing restriction - sensitive:
 Listing restriction - sensitive (hint):
     static: true
     value: Citlivý obsah, který nemusí být vhodný pro mladé dospělé nebo jinak citlivé osoby (např. repliky zbraní nebo airsoftové zbraně, nože a pod).
+Pros 0 (placeholder):
+    static: true
+    value: Plně funkční
+Pros 1 (placeholder):
+    static: true
+    value: Bez škrábanců
+Pros 2 (placeholder):
+    static: true
+    value: Originální balení
+Pros 3 (placeholder):
+    static: true
+    value: Málo používané
+Pros 4 (placeholder):
+    static: true
+    value: Přidám příslušenství
+Cons 0 (placeholder):
+    static: true
+    value: Bez dokladu
+Cons 1 (placeholder):
+    static: true
+    value: Baterie je slabší
+Cons 2 (placeholder):
+    static: true
+    value: Omlácené rohy
+Cons 3 (placeholder):
+    static: true
+    value: Chybí část balení
+Cons 4 (placeholder):
+    static: true
+    value: Drobné kosmetické vady
 Listing warranty - custom:
     static: true
     value: Vlastní
