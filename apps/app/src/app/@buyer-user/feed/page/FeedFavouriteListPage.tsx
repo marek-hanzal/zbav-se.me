@@ -33,7 +33,7 @@ export const FeedFavouriteListPage: FC<FeedFavouriteListPage.Props> = ({ feedId,
 						className: [],
 					})}
 					icon={ChevronLeftIcon}
-					to={"/$locale/flow/buyer/favourite/list"}
+					to={"/$locale/buyer/favourite/list"}
 					params={{
 						locale,
 					}}

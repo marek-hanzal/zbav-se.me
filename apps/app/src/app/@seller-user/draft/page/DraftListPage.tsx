@@ -34,7 +34,7 @@ export const DraftListPage: FC<DraftListPage.Props> = (props) => {
 					}}
 					onSuccess={(draft) => {
 						navigate({
-							to: "/$locale/flow/seller/draft/$id/edit",
+							to: "/$locale/seller/draft/$id/edit",
 							params: {
 								locale,
 								id: draft.id,

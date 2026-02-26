@@ -20,7 +20,7 @@ export const ListingMessageListPendingPage: FC<ListingMessageListPendingPage.Pro
 			left={
 				<LinkTo
 					icon={ChevronLeftIcon}
-					to="/$locale/flow/seller/message/list"
+					to="/$locale/seller/message/list"
 					params={{
 						locale,
 					}}

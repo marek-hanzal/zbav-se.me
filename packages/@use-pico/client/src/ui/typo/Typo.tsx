@@ -17,8 +17,8 @@ const presets: Record<Typo.Preset, uiTypo.Ui> = {
 		opacity: "low",
 	},
 	subheader: {
-		text: "xl",
-		font: "bold",
+		text: "lg",
+		font: "semibold",
 		display: "block",
 	},
 	blockquote: {},

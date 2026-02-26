@@ -47,7 +47,7 @@ export const FeedSelectPage: FC<FeedSelectPage.Props> = ({ ui, ...props }) => {
 					header: ({ feedId, children }) => (
 						<LinkTo
 							data-ui={"FeedSelect-[LinkTo.header]"}
-							to={"/$locale/flow/buyer/feed/$id/list"}
+							to={"/$locale/buyer/feed/$id/list"}
 							params={{
 								locale,
 								id: feedId,

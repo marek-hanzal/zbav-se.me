@@ -55,7 +55,7 @@ export const EmptyStatus: FC<EmptyStatus.Props> = (props) => {
 						})}
 						icon={ChevronRightIcon}
 						iconPosition={"right"}
-						to={"/$locale/flow/buyer/feed/default"}
+						to={"/$locale/buyer/feed/default"}
 						params={{
 							locale,
 						}}

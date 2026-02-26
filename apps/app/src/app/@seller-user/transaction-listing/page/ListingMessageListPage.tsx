@@ -44,7 +44,7 @@ export const ListingMessageListPage: FC<ListingMessageListPage.Props> = ({
 			left={
 				<LinkTo
 					icon={ChevronLeftIcon}
-					to="/$locale/flow/seller/message/list"
+					to="/$locale/seller/message/list"
 					params={{
 						locale,
 					}}

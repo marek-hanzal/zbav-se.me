@@ -46,7 +46,7 @@ export const ActionSection: FC<ActionSection.Props> = ({ draft, onListing, onDel
 				/>
 
 				<LinkTo
-					to={"/$locale/flow/home"}
+					to={"/$locale/home"}
 					params={{
 						locale,
 					}}

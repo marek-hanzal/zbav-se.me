@@ -21,7 +21,7 @@ export const FeedDefaultPendingPage: FC<FeedDefaultPendingPage.Props> = (props) 
 						className: [],
 					})}
 					icon={ArrowLeftIcon}
-					to={"/$locale/flow/home"}
+					to={"/$locale/home"}
 					params={{
 						locale,
 					}}

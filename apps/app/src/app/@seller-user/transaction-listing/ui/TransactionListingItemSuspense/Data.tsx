@@ -51,7 +51,7 @@ export const Data: FC<Data.Props> = ({
 			{...props}
 		>
 			<LinkTo
-				to={"/$locale/flow/seller/message/$listingId/list"}
+				to={"/$locale/seller/message/$listingId/list"}
 				params={{
 					locale,
 					listingId: transactionListing.id,

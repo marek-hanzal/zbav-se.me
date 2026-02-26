@@ -19,7 +19,7 @@ export const SignOutButton: FC<SignOutButton.Props> = ({ ui, ...props }) => {
 			return navigate({
 				href: linkTo({
 					base: import.meta.env.VITE_WEB_ORIGIN,
-					href: "/:locale/landing",
+					href: "/redirect/landing",
 					query: {
 						locale,
 					},

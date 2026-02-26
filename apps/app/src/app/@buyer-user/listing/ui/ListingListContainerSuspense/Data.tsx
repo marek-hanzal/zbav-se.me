@@ -44,7 +44,7 @@ export const Data: FC<Data.Props> = ({
 				textTitle={translator.text("No listings (title)")}
 				action={
 					<LinkTo
-						to={"/$locale/flow/home"}
+						to={"/$locale/home"}
 						params={{
 							locale,
 						}}

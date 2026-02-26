@@ -40,7 +40,7 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 			{...props}
 		>
 			<LinkTo
-				to={"/$locale/flow/seller/draft/$id/edit"}
+				to={"/$locale/seller/draft/$id/edit"}
 				params={{
 					locale,
 					id: draft.id,

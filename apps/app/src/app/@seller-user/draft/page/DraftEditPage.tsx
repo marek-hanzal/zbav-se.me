@@ -21,7 +21,7 @@ export const DraftEditPage: FC<DraftEditPage.Props> = ({ _suspense, draftId }) =
 			draft={data}
 			onListing={async () => {
 				await navigate({
-					to: "/$locale/flow/seller/listing/my",
+					to: "/$locale/seller/listing/my",
 					params: {
 						locale,
 					},
@@ -29,7 +29,7 @@ export const DraftEditPage: FC<DraftEditPage.Props> = ({ _suspense, draftId }) =
 			}}
 			onDelete={async () => {
 				await navigate({
-					to: "/$locale/flow/home",
+					to: "/$locale/home",
 					params: {
 						locale,
 					},

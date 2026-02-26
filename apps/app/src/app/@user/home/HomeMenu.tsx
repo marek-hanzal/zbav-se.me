@@ -69,7 +69,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/flow/buyer/feed/default"
+						to="/$locale/buyer/feed/default"
 						params={{
 							locale,
 						}}
@@ -97,7 +97,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/flow/buyer/feed/default"
+						to="/$locale/buyer/feed/default"
 						params={{
 							locale,
 						}}
@@ -136,7 +136,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/flow/seller/message/list"
+						to="/$locale/seller/message/list"
 						params={{
 							locale,
 						}}
@@ -173,7 +173,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/flow/seller/listing/my"
+						to="/$locale/seller/listing/my"
 						params={{
 							locale,
 						}}
@@ -208,7 +208,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/flow/seller/draft/list"
+						to="/$locale/seller/draft/list"
 						params={{
 							locale,
 						}}
@@ -245,7 +245,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/flow/buyer/feed/select"
+						to="/$locale/buyer/feed/select"
 						params={{
 							locale,
 						}}
@@ -280,7 +280,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/flow/buyer/favourite/list"
+						to="/$locale/buyer/favourite/list"
 						params={{
 							locale,
 						}}
@@ -317,7 +317,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/flow/user"
+						to="/$locale/user"
 						params={{
 							locale,
 						}}

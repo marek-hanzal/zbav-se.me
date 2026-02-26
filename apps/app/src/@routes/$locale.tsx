@@ -16,7 +16,7 @@ export const Route = createFileRoute("/$locale")({
 			throw redirect({
 				href: linkTo({
 					base: import.meta.env.VITE_WEB_ORIGIN,
-					href: "/:locale/login",
+					href: "/redirect/login",
 					query: {
 						locale,
 					},

@@ -46,7 +46,7 @@ export const FirstListingStatus: FC<FirstListingStatus.Props> = (props) => {
 						<LinkTo
 							icon={ChevronRightIcon}
 							iconPosition={"right"}
-							to={"/$locale/flow/seller/draft/resolve"}
+							to={"/$locale/seller/draft/resolve"}
 							params={{
 								locale,
 							}}
@@ -67,7 +67,7 @@ export const FirstListingStatus: FC<FirstListingStatus.Props> = (props) => {
 						<LinkTo
 							icon={ChevronRightIcon}
 							iconPosition={"right"}
-							to={"/$locale/flow/home"}
+							to={"/$locale/home"}
 							params={{
 								locale,
 							}}

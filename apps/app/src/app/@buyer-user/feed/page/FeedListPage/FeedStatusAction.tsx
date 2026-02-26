@@ -51,7 +51,7 @@ export const FeedStatusAction: FC<FeedStatusAction.Props> = ({ state, backIcon }
 						text: "xl",
 					},
 				}}
-				to={"/$locale/flow/home"}
+				to={"/$locale/home"}
 				params={{
 					locale,
 				}}

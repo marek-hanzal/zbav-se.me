@@ -26,7 +26,7 @@ export const Pending: FC<Pending.Props> = ({ iconUi }) => {
 					...iconUi,
 				},
 			}}
-			to="/$locale/flow/seller/draft/resolve"
+			to="/$locale/seller/draft/resolve"
 			params={{
 				locale,
 			}}

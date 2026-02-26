@@ -24,7 +24,7 @@ export const EmptyFavouriteStatus: FC<EmptyFavouriteStatus.Props> = (props) => {
 			action={
 				<>
 					<LinkTo
-						to={"/$locale/flow/buyer/feed/default"}
+						to={"/$locale/buyer/feed/default"}
 						icon={ChevronRightIcon}
 						iconPosition={"right"}
 						params={{
@@ -44,7 +44,7 @@ export const EmptyFavouriteStatus: FC<EmptyFavouriteStatus.Props> = (props) => {
 					<LinkTo
 						icon={ChevronRightIcon}
 						iconPosition={"right"}
-						to={"/$locale/flow/home"}
+						to={"/$locale/home"}
 						params={{
 							locale,
 						}}

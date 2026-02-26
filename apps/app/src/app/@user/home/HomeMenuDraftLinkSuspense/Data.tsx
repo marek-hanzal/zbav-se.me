@@ -47,7 +47,7 @@ export const Data: FC<Data.Props> = ({ _suspense, icon }) => {
 					...icon,
 				},
 			}}
-			to="/$locale/flow/seller/draft/resolve"
+			to="/$locale/seller/draft/resolve"
 			params={{
 				locale,
 			}}

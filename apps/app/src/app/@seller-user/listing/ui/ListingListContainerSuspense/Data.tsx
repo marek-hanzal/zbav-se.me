@@ -41,7 +41,7 @@ export const Data: FC<Data.Props> = ({ query, visibility }) => {
 						<LinkTo
 							icon={ChevronRightIcon}
 							iconPosition={"right"}
-							to={"/$locale/flow/seller/draft/resolve"}
+							to={"/$locale/seller/draft/resolve"}
 							params={{
 								locale,
 							}}

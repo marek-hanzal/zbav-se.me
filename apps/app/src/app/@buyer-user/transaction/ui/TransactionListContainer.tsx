@@ -57,7 +57,7 @@ export const TransactionListContainer: FC<TransactionListContainer.Props> = ({
 							<LinkTo
 								icon={ChevronRightIcon}
 								iconPosition={"right"}
-								to="/$locale/flow/buyer/feed/default"
+								to="/$locale/buyer/feed/default"
 								params={{
 									locale,
 								}}

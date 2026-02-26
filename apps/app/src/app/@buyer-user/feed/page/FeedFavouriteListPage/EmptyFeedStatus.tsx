@@ -44,7 +44,7 @@ export const EmptyFeedStatus: FC<EmptyFeedStatus.Props> = (props) => {
 						<LinkTo
 							icon={ChevronRightIcon}
 							iconPosition={"right"}
-							to={"/$locale/flow/buyer/feed/default"}
+							to={"/$locale/buyer/feed/default"}
 							params={{
 								locale,
 							}}
@@ -65,7 +65,7 @@ export const EmptyFeedStatus: FC<EmptyFeedStatus.Props> = (props) => {
 
 						<LinkTo
 							icon={ChevronLeftIcon}
-							to={"/$locale/flow/buyer/favourite/list"}
+							to={"/$locale/buyer/favourite/list"}
 							params={{
 								locale,
 							}}

@@ -33,7 +33,7 @@ export const FavouriteListPage: FC<FavouriteListPage.Props> = (props) => {
 					header: ({ feedId, children }) => (
 						<LinkTo
 							data-ui={"BuyerFavouriteList-[LinkTo.header]"}
-							to={"/$locale/flow/buyer/feed/$id/favourite/list"}
+							to={"/$locale/buyer/feed/$id/favourite/list"}
 							params={{
 								locale,
 								id: feedId,

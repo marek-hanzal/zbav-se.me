@@ -46,7 +46,7 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...prop
 					})}
 					data-ui={"BuyerFeedList-[LinkTo.left]"}
 					icon={ArrowLeftIcon}
-					to={"/$locale/flow/home"}
+					to={"/$locale/home"}
 					params={{
 						locale,
 					}}

@@ -33,7 +33,7 @@ export const ListingViewPage: FC<ListingViewPage.Props> = ({ _suspense, listingI
 				{listingQuery.data.location.address}
 
 				<LinkTo
-					to={"/$locale/flow/home"}
+					to={"/$locale/home"}
 					params={{
 						locale,
 					}}

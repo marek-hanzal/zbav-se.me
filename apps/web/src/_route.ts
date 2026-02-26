@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './@routes/__root'
 import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
+import { Route as RedirectLoginRouteImport } from './@routes/redirect/login'
+import { Route as RedirectLandingRouteImport } from './@routes/redirect/landing'
 import { Route as CsTosRouteImport } from './@routes/cs/tos'
 import { Route as CsPrivacyRouteImport } from './@routes/cs/privacy'
 import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
@@ -34,6 +36,16 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LocaleRoute,
+} as any)
+const RedirectLoginRoute = RedirectLoginRouteImport.update({
+  id: '/redirect/login',
+  path: '/redirect/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RedirectLandingRoute = RedirectLandingRouteImport.update({
+  id: '/redirect/landing',
+  path: '/redirect/landing',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const CsTosRoute = CsTosRouteImport.update({
   id: '/cs/tos',
@@ -81,6 +93,8 @@ export interface FileRoutesByFullPath {
   '/$locale/tos': typeof LocaleTosRoute
   '/cs/privacy': typeof CsPrivacyRoute
   '/cs/tos': typeof CsTosRoute
+  '/redirect/landing': typeof RedirectLandingRoute
+  '/redirect/login': typeof RedirectLoginRoute
   '/$locale/': typeof LocaleIndexRoute
 }
 export interface FileRoutesByTo {
@@ -92,6 +106,8 @@ export interface FileRoutesByTo {
   '/$locale/tos': typeof LocaleTosRoute
   '/cs/privacy': typeof CsPrivacyRoute
   '/cs/tos': typeof CsTosRoute
+  '/redirect/landing': typeof RedirectLandingRoute
+  '/redirect/login': typeof RedirectLoginRoute
   '/$locale': typeof LocaleIndexRoute
 }
 export interface FileRoutesById {
@@ -105,6 +121,8 @@ export interface FileRoutesById {
   '/$locale/tos': typeof LocaleTosRoute
   '/cs/privacy': typeof CsPrivacyRoute
   '/cs/tos': typeof CsTosRoute
+  '/redirect/landing': typeof RedirectLandingRoute
+  '/redirect/login': typeof RedirectLoginRoute
   '/$locale/': typeof LocaleIndexRoute
 }
 export interface FileRouteTypes {
@@ -119,6 +137,8 @@ export interface FileRouteTypes {
     | '/$locale/tos'
     | '/cs/privacy'
     | '/cs/tos'
+    | '/redirect/landing'
+    | '/redirect/login'
     | '/$locale/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -130,6 +150,8 @@ export interface FileRouteTypes {
     | '/$locale/tos'
     | '/cs/privacy'
     | '/cs/tos'
+    | '/redirect/landing'
+    | '/redirect/login'
     | '/$locale'
   id:
     | '__root__'
@@ -142,6 +164,8 @@ export interface FileRouteTypes {
     | '/$locale/tos'
     | '/cs/privacy'
     | '/cs/tos'
+    | '/redirect/landing'
+    | '/redirect/login'
     | '/$locale/'
   fileRoutesById: FileRoutesById
 }
@@ -150,6 +174,8 @@ export interface RootRouteChildren {
   LocaleRoute: typeof LocaleRouteWithChildren
   CsPrivacyRoute: typeof CsPrivacyRoute
   CsTosRoute: typeof CsTosRoute
+  RedirectLandingRoute: typeof RedirectLandingRoute
+  RedirectLoginRoute: typeof RedirectLoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -174,6 +200,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/'
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRoute
+    }
+    '/redirect/login': {
+      id: '/redirect/login'
+      path: '/redirect/login'
+      fullPath: '/redirect/login'
+      preLoaderRoute: typeof RedirectLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/redirect/landing': {
+      id: '/redirect/landing'
+      path: '/redirect/landing'
+      fullPath: '/redirect/landing'
+      preLoaderRoute: typeof RedirectLandingRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/cs/tos': {
       id: '/cs/tos'
@@ -253,6 +293,8 @@ const rootRouteChildren: RootRouteChildren = {
   LocaleRoute: LocaleRouteWithChildren,
   CsPrivacyRoute: CsPrivacyRoute,
   CsTosRoute: CsTosRoute,
+  RedirectLandingRoute: RedirectLandingRoute,
+  RedirectLoginRoute: RedirectLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
