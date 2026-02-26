@@ -61,6 +61,7 @@ export type zListingWarrantyEnum = z.infer<typeof zListingWarrantyEnum>;
 export const zListingRestrictionEnum = z.enum([
     'none',
     'adult',
+    'adult-relaxed',
     'sensitive',
     'restricted'
 ]).register(z.globalRegistry, {
@@ -108,33 +109,15 @@ export const zLocation = z.object({
     code: z.string().register(z.globalRegistry, {
         description: 'Country code'
     }),
-    county: z.union([
-        z.null(),
-        z.string()
-    ]),
-    municipality: z.union([
-        z.null(),
-        z.string()
-    ]),
-    state: z.union([
-        z.null(),
-        z.string()
-    ]),
+    county: z.string().nullable(),
+    municipality: z.string().nullable(),
+    state: z.string().nullable(),
     address: z.string().register(z.globalRegistry, {
         description: 'Full address preview of a location'
     }),
-    city: z.union([
-        z.null(),
-        z.string()
-    ]),
-    street: z.union([
-        z.null(),
-        z.string()
-    ]),
-    zip: z.union([
-        z.null(),
-        z.string()
-    ]),
+    city: z.string().nullable(),
+    street: z.string().nullable(),
+    zip: z.string().nullable(),
     confidence: z.number().register(z.globalRegistry, {
         description: 'Confidence score of the location (based on query)'
     }),
@@ -243,90 +226,33 @@ export const zDraft = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the draft'
     }),
-    price: z.union([
-        z.null(),
-        z.union([
-            z.number(),
-            z.null()
-        ])
-    ]),
-    priceType: z.union([
-        z.null(),
-        zListingPriceEnum
-    ]),
-    currency: z.union([
-        z.null(),
-        zCurrencyEnum
-    ]),
-    condition: z.union([
-        z.null(),
-        z.number()
-    ]),
-    age: z.union([
-        z.null(),
-        z.number()
-    ]),
-    delivery: z.union([
-        z.null(),
-        z.array(zListingDeliveryEnum)
-    ]),
-    warranty: z.union([
-        z.null(),
-        zListingWarrantyEnum
-    ]),
-    restriction: z.union([
-        z.null(),
-        zListingRestrictionEnum
-    ]),
-    locationId: z.union([
-        z.null(),
-        z.string()
-    ]),
-    categoryId: z.union([
-        z.null(),
-        z.string()
-    ]),
+    price: z.number().nullable(),
+    priceType: zListingPriceEnum.nullable(),
+    currency: zCurrencyEnum.nullable(),
+    condition: z.number().nullable(),
+    age: z.number().nullable(),
+    delivery: z.array(zListingDeliveryEnum).nullable(),
+    warranty: zListingWarrantyEnum.nullable(),
+    restriction: zListingRestrictionEnum.nullable(),
+    locationId: z.string().nullable(),
+    categoryId: z.string().nullable(),
     galleryId: z.string().register(z.globalRegistry, {
         description: 'ID of the gallery'
     }),
-    expiresAt: z.union([
-        z.null(),
-        zListingExpireEnum
-    ]),
-    title: z.union([
-        z.null(),
-        z.string()
-    ]),
-    description: z.union([
-        z.null(),
-        z.string().max(2048)
-    ]),
-    pros: z.union([
-        z.null(),
-        zProsCons
-    ]),
-    cons: z.union([
-        z.null(),
-        zProsCons
-    ]),
+    expiresAt: zListingExpireEnum.nullable(),
+    title: z.string().nullable(),
+    description: z.string().max(2048).nullable(),
+    pros: zProsCons.nullable(),
+    cons: zProsCons.nullable(),
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
     updatedAt: z.string().register(z.globalRegistry, {
         description: 'Last update timestamp'
     }),
-    usedAt: z.union([
-        z.null(),
-        z.string()
-    ]),
-    location: z.union([
-        z.null(),
-        zLocation
-    ]),
-    category: z.union([
-        z.null(),
-        zCategory
-    ]),
+    usedAt: z.string().nullable(),
+    location: zLocation.nullable(),
+    category: zCategory.nullable(),
     gallery: zGallery
 }).register(z.globalRegistry, {
     description: 'Draft data'
@@ -381,27 +307,27 @@ export type zCursor = z.infer<typeof zCursor>;
  * User-land filters
  */
 export const zDraftFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    userId: z.string().register(z.globalRegistry, {
         description: 'This filter matches drafts with the exact userId'
-    })),
-    updatedAtGte: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    updatedAtGte: z.string().register(z.globalRegistry, {
         description: 'This filter matches drafts with updatedAt greater than or equal to the provided date'
-    })),
-    updatedAtLte: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    updatedAtLte: z.string().register(z.globalRegistry, {
         description: 'This filter matches drafts with updatedAt less than or equal to the provided date'
-    })),
-    usedAtIsNull: z.optional(z.boolean().register(z.globalRegistry, {
+    }).optional(),
+    usedAtIsNull: z.boolean().register(z.globalRegistry, {
         description: 'This filter matches drafts where usedAt is null (true) or not null (false)'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'User-land filters'
 });
@@ -412,27 +338,27 @@ export type zDraftFilter = z.infer<typeof zDraftFilter>;
  * App-based filters
  */
 export const zDraftWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    userId: z.string().register(z.globalRegistry, {
         description: 'This filter matches drafts with the exact userId'
-    })),
-    updatedAtGte: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    updatedAtGte: z.string().register(z.globalRegistry, {
         description: 'This filter matches drafts with updatedAt greater than or equal to the provided date'
-    })),
-    updatedAtLte: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    updatedAtLte: z.string().register(z.globalRegistry, {
         description: 'This filter matches drafts with updatedAt less than or equal to the provided date'
-    })),
-    usedAtIsNull: z.optional(z.boolean().register(z.globalRegistry, {
+    }).optional(),
+    usedAtIsNull: z.boolean().register(z.globalRegistry, {
         description: 'This filter matches drafts where usedAt is null (true) or not null (false)'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
@@ -473,10 +399,10 @@ export type zDraftSort = z.infer<typeof zDraftSort>;
  * Query object for draft collection
  */
 export const zDraftQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zDraftFilter),
-    where: z.optional(zDraftWhere),
-    sort: z.optional(z.array(zDraftSort))
+    cursor: zCursor.optional(),
+    filter: zDraftFilter.optional(),
+    where: zDraftWhere.optional(),
+    sort: z.array(zDraftSort).optional()
 }).register(z.globalRegistry, {
     description: 'Query object for draft collection'
 });
@@ -512,8 +438,8 @@ export type zCount = z.infer<typeof zCount>;
  * Query object for draft count
  */
 export const zDraftCountQuery = z.object({
-    filter: z.optional(zDraftFilter),
-    where: z.optional(zDraftWhere)
+    filter: zDraftFilter.optional(),
+    where: zDraftWhere.optional()
 }).register(z.globalRegistry, {
     description: 'Query object for draft count'
 });
@@ -524,50 +450,38 @@ export type zDraftCountQuery = z.infer<typeof zDraftCountQuery>;
  * Data for creating a new draft
  */
 export const zDraftCreate = z.object({
-    price: z.optional(z.number().register(z.globalRegistry, {
+    price: z.number().register(z.globalRegistry, {
         description: 'Price of the draft'
-    })),
-    priceType: z.optional(zListingPriceEnum.and(z.unknown().register(z.globalRegistry, {
+    }).optional(),
+    priceType: zListingPriceEnum.and(z.unknown().register(z.globalRegistry, {
         description: 'Price type of the draft'
-    }))),
-    condition: z.optional(z.number().register(z.globalRegistry, {
+    })).optional(),
+    condition: z.number().register(z.globalRegistry, {
         description: 'Condition of the item (0-based index)'
-    })),
-    age: z.optional(z.number().register(z.globalRegistry, {
+    }).optional(),
+    age: z.number().register(z.globalRegistry, {
         description: 'Age of the item (0-based index)'
-    })),
-    warranty: z.optional(z.union([
-        z.null(),
-        zListingWarrantyEnum
-    ])),
-    restriction: z.optional(z.union([
-        z.null(),
-        zListingRestrictionEnum
-    ])),
-    locationId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    warranty: zListingWarrantyEnum.nullish(),
+    restriction: zListingRestrictionEnum.nullish(),
+    locationId: z.string().register(z.globalRegistry, {
         description: 'ID of the location'
-    })),
-    categoryId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    categoryId: z.string().register(z.globalRegistry, {
         description: 'ID of the category'
-    })),
-    expiresAt: z.optional(zListingExpireEnum),
-    title: z.optional(z.string().min(5).max(72).register(z.globalRegistry, {
+    }).optional(),
+    expiresAt: zListingExpireEnum.optional(),
+    title: z.string().min(5).max(72).register(z.globalRegistry, {
         description: 'Title of the item'
-    })),
-    description: z.optional(z.string().max(2048).register(z.globalRegistry, {
+    }).optional(),
+    description: z.string().max(2048).register(z.globalRegistry, {
         description: 'Description of the item'
-    })),
-    pros: z.optional(z.union([
-        z.null(),
-        zProsCons
-    ])),
-    cons: z.optional(z.union([
-        z.null(),
-        zProsCons
-    ])),
-    uploadIds: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    pros: zProsCons.nullish(),
+    cons: zProsCons.nullish(),
+    uploadIds: z.array(z.string()).register(z.globalRegistry, {
         description: 'IDs of the uploads; order of uploads defines order in the gallery'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'Data for creating a new draft'
 });
@@ -578,72 +492,24 @@ export type zDraftCreate = z.infer<typeof zDraftCreate>;
  * Fields to update (all optional)
  */
 export const zDraftPatchData = z.object({
-    price: z.optional(z.union([
-        z.null(),
-        z.union([
-            z.number(),
-            z.null()
-        ])
-    ])),
-    priceType: z.optional(z.union([
-        z.null(),
-        zListingPriceEnum
-    ])),
-    condition: z.optional(z.union([
-        z.null(),
-        z.number()
-    ])),
-    age: z.optional(z.union([
-        z.null(),
-        z.number()
-    ])),
-    delivery: z.optional(z.union([
-        z.null(),
-        z.array(zListingDeliveryEnum)
-    ])),
-    warranty: z.optional(z.union([
-        z.null(),
-        zListingWarrantyEnum
-    ])),
-    restriction: z.optional(z.union([
-        z.null(),
-        zListingRestrictionEnum
-    ])),
-    locationId: z.optional(z.union([
-        z.null(),
-        z.string()
-    ])),
-    categoryId: z.optional(z.union([
-        z.null(),
-        z.string()
-    ])),
-    galleryId: z.optional(z.string().register(z.globalRegistry, {
+    price: z.number().nullish(),
+    priceType: zListingPriceEnum.nullish(),
+    condition: z.number().nullish(),
+    age: z.number().nullish(),
+    delivery: z.array(zListingDeliveryEnum).nullish(),
+    warranty: zListingWarrantyEnum.nullish(),
+    restriction: zListingRestrictionEnum.nullish(),
+    locationId: z.string().nullish(),
+    categoryId: z.string().nullish(),
+    galleryId: z.string().register(z.globalRegistry, {
         description: 'ID of the gallery'
-    })),
-    expiresAt: z.optional(z.union([
-        z.null(),
-        zListingExpireEnum
-    ])),
-    title: z.optional(z.union([
-        z.null(),
-        z.string()
-    ])),
-    description: z.optional(z.union([
-        z.null(),
-        z.string().max(2048)
-    ])),
-    pros: z.optional(z.union([
-        z.null(),
-        zProsCons
-    ])),
-    cons: z.optional(z.union([
-        z.null(),
-        zProsCons
-    ])),
-    usedAt: z.optional(z.union([
-        z.null(),
-        z.string()
-    ]))
+    }).optional(),
+    expiresAt: zListingExpireEnum.nullish(),
+    title: z.string().nullish(),
+    description: z.string().max(2048).nullish(),
+    pros: zProsCons.nullish(),
+    cons: zProsCons.nullish(),
+    usedAt: z.string().nullish()
 }).register(z.globalRegistry, {
     description: 'Fields to update (all optional)'
 });
@@ -690,22 +556,10 @@ export const zListing = z.object({
     }),
     priceType: zListingPriceEnum,
     currency: zCurrencyEnum,
-    condition: z.union([
-        z.null(),
-        z.number()
-    ]),
-    age: z.union([
-        z.null(),
-        z.number()
-    ]),
-    delivery: z.union([
-        z.null(),
-        z.array(zListingDeliveryEnum)
-    ]),
-    warranty: z.union([
-        z.null(),
-        zListingWarrantyEnum
-    ]),
+    condition: z.number().nullable(),
+    age: z.number().nullable(),
+    delivery: z.array(zListingDeliveryEnum).nullable(),
+    warranty: zListingWarrantyEnum.nullable(),
     restriction: zListingRestrictionEnum,
     locationId: z.string().register(z.globalRegistry, {
         description: 'ID of the location'
@@ -716,28 +570,16 @@ export const zListing = z.object({
     galleryId: z.string().register(z.globalRegistry, {
         description: 'ID of the gallery'
     }),
-    draftId: z.union([
-        z.null(),
-        z.string()
-    ]),
+    draftId: z.string().nullable(),
     expiresAt: z.string().register(z.globalRegistry, {
         description: 'Expiration timestamp'
     }),
     title: z.string().register(z.globalRegistry, {
         description: 'Title of the item'
     }),
-    description: z.union([
-        z.null(),
-        z.string()
-    ]),
-    pros: z.union([
-        z.null(),
-        zProsCons
-    ]),
-    cons: z.union([
-        z.null(),
-        zProsCons
-    ]),
+    description: z.string().nullable(),
+    pros: zProsCons.nullable(),
+    cons: zProsCons.nullable(),
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
@@ -759,18 +601,18 @@ export type zListing = z.infer<typeof zListing>;
  * User-land filters
  */
 export const zListingFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    userId: z.string().register(z.globalRegistry, {
         description: 'ID of the user; does not have an effect on API endpoints'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'User-land filters'
 });
@@ -781,18 +623,18 @@ export type zListingFilter = z.infer<typeof zListingFilter>;
  * App-based filters
  */
 export const zListingWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    userId: z.string().register(z.globalRegistry, {
         description: 'ID of the user; does not have an effect on API endpoints'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
@@ -831,10 +673,10 @@ export type zListingSort = z.infer<typeof zListingSort>;
  * Query object for listing collection
  */
 export const zListingQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zListingFilter),
-    where: z.optional(zListingWhere),
-    sort: z.optional(z.array(zListingSort))
+    cursor: zCursor.optional(),
+    filter: zListingFilter.optional(),
+    where: zListingWhere.optional(),
+    sort: z.array(zListingSort).optional()
 }).register(z.globalRegistry, {
     description: 'Query object for listing collection'
 });
@@ -845,8 +687,8 @@ export type zListingQuery = z.infer<typeof zListingQuery>;
  * Query object for listing count
  */
 export const zListingCountQuery = z.object({
-    filter: z.optional(zListingFilter),
-    where: z.optional(zListingWhere)
+    filter: zListingFilter.optional(),
+    where: zListingWhere.optional()
 }).register(z.globalRegistry, {
     description: 'Query object for listing count'
 });
@@ -861,28 +703,16 @@ export const zListingCreate = z.object({
         description: 'Price of the listing'
     }),
     priceType: zListingPriceEnum,
-    condition: z.union([
-        z.null(),
-        z.number()
-    ]),
-    age: z.union([
-        z.null(),
-        z.number()
-    ]),
-    delivery: z.optional(z.union([
-        z.null(),
-        z.array(zListingDeliveryEnum)
-    ])),
-    warranty: z.optional(z.union([
-        z.null(),
-        zListingWarrantyEnum
-    ])),
+    condition: z.number().nullable(),
+    age: z.number().nullable(),
+    delivery: z.array(zListingDeliveryEnum).nullish(),
+    warranty: zListingWarrantyEnum.nullish(),
     restriction: zListingRestrictionEnum.and(z.unknown().register(z.globalRegistry, {
         description: 'Content restriction level of the listing (required)'
     })),
-    draftId: z.optional(z.string().register(z.globalRegistry, {
+    draftId: z.string().register(z.globalRegistry, {
         description: 'ID of the draft'
-    })),
+    }).optional(),
     locationId: z.string().register(z.globalRegistry, {
         description: 'ID of the location'
     }),
@@ -893,18 +723,9 @@ export const zListingCreate = z.object({
     title: z.string().min(5).max(72).register(z.globalRegistry, {
         description: 'Title of the item'
     }),
-    description: z.optional(z.union([
-        z.null(),
-        z.string().max(2048)
-    ])),
-    pros: z.optional(z.union([
-        z.null(),
-        zProsCons
-    ])),
-    cons: z.optional(z.union([
-        z.null(),
-        zProsCons
-    ])),
+    description: z.string().max(2048).nullish(),
+    pros: zProsCons.nullish(),
+    cons: zProsCons.nullish(),
     uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
         description: 'IDs of the uploads; order of uploads defines order in the gallery'
     })
@@ -977,27 +798,27 @@ export type zTransaction = z.infer<typeof zTransaction>;
  * Filter object for transaction collection
  */
 export const zTransactionFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    userId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact userId'
-    })),
-    listingId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    listingId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
-    })),
-    status: z.optional(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+    }).optional(),
+    status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
         description: 'This filter matches the current status of the transaction'
-    }))),
-    statusIn: z.optional(z.array(zTransactionStatusEnum).register(z.globalRegistry, {
+    })).optional(),
+    statusIn: z.array(zTransactionStatusEnum).register(z.globalRegistry, {
         description: 'This filter matches any of the provided statuses for the current status of the transaction'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'Filter object for transaction collection'
 });
@@ -1008,27 +829,27 @@ export type zTransactionFilter = z.infer<typeof zTransactionFilter>;
  * App-based filters
  */
 export const zTransactionWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    userId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact userId'
-    })),
-    listingId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    listingId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
-    })),
-    status: z.optional(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+    }).optional(),
+    status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
         description: 'This filter matches the current status of the transaction'
-    }))),
-    statusIn: z.optional(z.array(zTransactionStatusEnum).register(z.globalRegistry, {
+    })).optional(),
+    statusIn: z.array(zTransactionStatusEnum).register(z.globalRegistry, {
         description: 'This filter matches any of the provided statuses for the current status of the transaction'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
@@ -1065,10 +886,10 @@ export type zTransactionSort = z.infer<typeof zTransactionSort>;
  * Query object for transaction collection
  */
 export const zTransactionQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zTransactionFilter),
-    where: z.optional(zTransactionWhere),
-    sort: z.optional(z.array(zTransactionSort))
+    cursor: zCursor.optional(),
+    filter: zTransactionFilter.optional(),
+    where: zTransactionWhere.optional(),
+    sort: z.array(zTransactionSort).optional()
 }).register(z.globalRegistry, {
     description: 'Query object for transaction collection'
 });
@@ -1079,8 +900,8 @@ export type zTransactionQuery = z.infer<typeof zTransactionQuery>;
  * Query object for transaction count
  */
 export const zTransactionCountQuery = z.object({
-    filter: z.optional(zTransactionFilter),
-    where: z.optional(zTransactionWhere)
+    filter: zTransactionFilter.optional(),
+    where: zTransactionWhere.optional()
 }).register(z.globalRegistry, {
     description: 'Query object for transaction count'
 });
@@ -1103,10 +924,7 @@ export const zTransactionListing = z.object({
     gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
         description: 'Listing gallery images'
     })),
-    count: z.union([
-        z.int().gte(0),
-        z.null()
-    ]),
+    count: z.int().gte(0).nullable(),
     lastAt: z.string().register(z.globalRegistry, {
         description: 'Timestamp of the most recent activity in any transaction under this listing'
     })
@@ -1120,18 +938,18 @@ export type zTransactionListing = z.infer<typeof zTransactionListing>;
  * Filter object for transaction-listing collection
  */
 export const zTransactionListingFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    userId: z.string().register(z.globalRegistry, {
         description: 'This filter matches listings of a specific seller (by userId)'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'Filter object for transaction-listing collection'
 });
@@ -1142,18 +960,18 @@ export type zTransactionListingFilter = z.infer<typeof zTransactionListingFilter
  * App-based filters for transaction-listing
  */
 export const zTransactionListingWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    userId: z.string().register(z.globalRegistry, {
         description: 'This filter matches listings of a specific seller (by userId)'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'App-based filters for transaction-listing'
 });
@@ -1185,10 +1003,10 @@ export type zTransactionListingSort = z.infer<typeof zTransactionListingSort>;
  * Query object for transaction-listing collection
  */
 export const zTransactionListingQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zTransactionListingFilter),
-    where: z.optional(zTransactionListingWhere),
-    sort: z.optional(z.array(zTransactionListingSort))
+    cursor: zCursor.optional(),
+    filter: zTransactionListingFilter.optional(),
+    where: zTransactionListingWhere.optional(),
+    sort: z.array(zTransactionListingSort).optional()
 }).register(z.globalRegistry, {
     description: 'Query object for transaction-listing collection'
 });
@@ -1199,8 +1017,8 @@ export type zTransactionListingQuery = z.infer<typeof zTransactionListingQuery>;
  * Query object for transaction-listing count
  */
 export const zTransactionListingCountQuery = z.object({
-    filter: z.optional(zTransactionListingFilter),
-    where: z.optional(zTransactionListingWhere)
+    filter: zTransactionListingFilter.optional(),
+    where: zTransactionListingWhere.optional()
 }).register(z.globalRegistry, {
     description: 'Query object for transaction-listing count'
 });
@@ -1299,9 +1117,9 @@ export const zTransactionStatusResolve = z.object({
 export type zTransactionStatusResolve = z.infer<typeof zTransactionStatusResolve>;
 
 export const zApiDraftCollectionData = z.object({
-    body: z.optional(zDraftQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zDraftQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiDraftCollectionRequest = z.infer<typeof zApiDraftCollectionData>;
@@ -1316,9 +1134,9 @@ export const zApiDraftCollectionResponse = z.array(zDraft).register(z.globalRegi
 export type zapiDraftCollectionResponse = z.infer<typeof zApiDraftCollectionResponse>;
 
 export const zApiDraftCountData = z.object({
-    body: z.optional(zDraftCountQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zDraftCountQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiDraftCountRequest = z.infer<typeof zApiDraftCountData>;
@@ -1331,9 +1149,9 @@ export const zApiDraftCountResponse = zCount;
 export type zapiDraftCountResponse = z.infer<typeof zApiDraftCountResponse>;
 
 export const zApiDraftCreateData = z.object({
-    body: z.optional(zDraftCreate),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zDraftCreate.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiDraftCreateRequest = z.infer<typeof zApiDraftCreateData>;
@@ -1346,9 +1164,9 @@ export const zApiDraftCreateResponse = zDraft;
 export type zapiDraftCreateResponse = z.infer<typeof zApiDraftCreateResponse>;
 
 export const zApiDraftDeleteData = z.object({
-    body: z.optional(zDraftQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zDraftQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiDraftDeleteRequest = z.infer<typeof zApiDraftDeleteData>;
@@ -1361,9 +1179,9 @@ export const zApiDraftDeleteResponse = zDraft;
 export type zapiDraftDeleteResponse = z.infer<typeof zApiDraftDeleteResponse>;
 
 export const zApiDraftFetchData = z.object({
-    body: z.optional(zDraftQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zDraftQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiDraftFetchRequest = z.infer<typeof zApiDraftFetchData>;
@@ -1376,9 +1194,9 @@ export const zApiDraftFetchResponse = zDraft;
 export type zapiDraftFetchResponse = z.infer<typeof zApiDraftFetchResponse>;
 
 export const zApiDraftPatchData = z.object({
-    body: z.optional(zDraftPatch),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zDraftPatch.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiDraftPatchRequest = z.infer<typeof zApiDraftPatchData>;
@@ -1391,9 +1209,9 @@ export const zApiDraftPatchResponse = zDraft;
 export type zapiDraftPatchResponse = z.infer<typeof zApiDraftPatchResponse>;
 
 export const zApiDraftGalleryCreateData = z.object({
-    body: z.optional(zDraftGalleryCreate),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zDraftGalleryCreate.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiDraftGalleryCreateRequest = z.infer<typeof zApiDraftGalleryCreateData>;
@@ -1408,9 +1226,9 @@ export const zApiDraftGalleryCreateResponse = zGallery.and(z.unknown().register(
 export type zapiDraftGalleryCreateResponse = z.infer<typeof zApiDraftGalleryCreateResponse>;
 
 export const zApiListingCollectionData = z.object({
-    body: z.optional(zListingQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zListingQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiListingCollectionRequest = z.infer<typeof zApiListingCollectionData>;
@@ -1425,9 +1243,9 @@ export const zApiListingCollectionResponse = z.array(zListing).register(z.global
 export type zapiListingCollectionResponse = z.infer<typeof zApiListingCollectionResponse>;
 
 export const zApiListingCountData = z.object({
-    body: z.optional(zListingCountQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zListingCountQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiListingCountRequest = z.infer<typeof zApiListingCountData>;
@@ -1440,9 +1258,9 @@ export const zApiListingCountResponse = zCount;
 export type zapiListingCountResponse = z.infer<typeof zApiListingCountResponse>;
 
 export const zApiListingCreateData = z.object({
-    body: z.optional(zListingCreate),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zListingCreate.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiListingCreateRequest = z.infer<typeof zApiListingCreateData>;
@@ -1455,9 +1273,9 @@ export const zApiListingCreateResponse = zListing;
 export type zapiListingCreateResponse = z.infer<typeof zApiListingCreateResponse>;
 
 export const zApiListingFetchData = z.object({
-    body: z.optional(zListingQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zListingQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiListingFetchRequest = z.infer<typeof zApiListingFetchData>;
@@ -1470,9 +1288,9 @@ export const zApiListingFetchResponse = zListing;
 export type zapiListingFetchResponse = z.infer<typeof zApiListingFetchResponse>;
 
 export const zApiTransactionCollectionData = z.object({
-    body: z.optional(zTransactionQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zTransactionQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiTransactionCollectionRequest = z.infer<typeof zApiTransactionCollectionData>;
@@ -1487,9 +1305,9 @@ export const zApiTransactionCollectionResponse = z.array(zTransaction).register(
 export type zapiTransactionCollectionResponse = z.infer<typeof zApiTransactionCollectionResponse>;
 
 export const zApiTransactionCountData = z.object({
-    body: z.optional(zTransactionCountQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zTransactionCountQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiTransactionCountRequest = z.infer<typeof zApiTransactionCountData>;
@@ -1502,9 +1320,9 @@ export const zApiTransactionCountResponse = zCount;
 export type zapiTransactionCountResponse = z.infer<typeof zApiTransactionCountResponse>;
 
 export const zApiTransactionFetchData = z.object({
-    body: z.optional(zTransactionQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zTransactionQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiTransactionFetchRequest = z.infer<typeof zApiTransactionFetchData>;
@@ -1517,9 +1335,9 @@ export const zApiTransactionFetchResponse = zTransaction;
 export type zapiTransactionFetchResponse = z.infer<typeof zApiTransactionFetchResponse>;
 
 export const zApiTransactionListingCollectionData = z.object({
-    body: z.optional(zTransactionListingQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zTransactionListingQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiTransactionListingCollectionRequest = z.infer<typeof zApiTransactionListingCollectionData>;
@@ -1534,9 +1352,9 @@ export const zApiTransactionListingCollectionResponse = z.array(zTransactionList
 export type zapiTransactionListingCollectionResponse = z.infer<typeof zApiTransactionListingCollectionResponse>;
 
 export const zApiTransactionListingCountData = z.object({
-    body: z.optional(zTransactionListingCountQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zTransactionListingCountQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiTransactionListingCountRequest = z.infer<typeof zApiTransactionListingCountData>;
@@ -1549,9 +1367,9 @@ export const zApiTransactionListingCountResponse = zCount;
 export type zapiTransactionListingCountResponse = z.infer<typeof zApiTransactionListingCountResponse>;
 
 export const zApiTransactionListingFetchData = z.object({
-    body: z.optional(zTransactionListingQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zTransactionListingQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiTransactionListingFetchRequest = z.infer<typeof zApiTransactionListingFetchData>;
@@ -1564,9 +1382,9 @@ export const zApiTransactionListingFetchResponse = zTransactionListing;
 export type zapiTransactionListingFetchResponse = z.infer<typeof zApiTransactionListingFetchResponse>;
 
 export const zApiTransactionStatusAcceptData = z.object({
-    body: z.optional(zTransactionStatusAccept),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zTransactionStatusAccept.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiTransactionStatusAcceptRequest = z.infer<typeof zApiTransactionStatusAcceptData>;
@@ -1579,9 +1397,9 @@ export const zApiTransactionStatusAcceptResponse = zTransactionStatus;
 export type zapiTransactionStatusAcceptResponse = z.infer<typeof zApiTransactionStatusAcceptResponse>;
 
 export const zApiTransactionStatusDisputeData = z.object({
-    body: z.optional(zTransactionStatusDispute),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zTransactionStatusDispute.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiTransactionStatusDisputeRequest = z.infer<typeof zApiTransactionStatusDisputeData>;
@@ -1594,9 +1412,9 @@ export const zApiTransactionStatusDisputeResponse = zTransactionStatus;
 export type zapiTransactionStatusDisputeResponse = z.infer<typeof zApiTransactionStatusDisputeResponse>;
 
 export const zApiTransactionStatusRejectData = z.object({
-    body: z.optional(zTransactionStatusReject),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zTransactionStatusReject.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiTransactionStatusRejectRequest = z.infer<typeof zApiTransactionStatusRejectData>;
@@ -1609,9 +1427,9 @@ export const zApiTransactionStatusRejectResponse = zTransactionStatus;
 export type zapiTransactionStatusRejectResponse = z.infer<typeof zApiTransactionStatusRejectResponse>;
 
 export const zApiTransactionStatusResolveData = z.object({
-    body: z.optional(zTransactionStatusResolve),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zTransactionStatusResolve.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiTransactionStatusResolveRequest = z.infer<typeof zApiTransactionStatusResolveData>;

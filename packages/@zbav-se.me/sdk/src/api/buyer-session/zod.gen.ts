@@ -193,10 +193,7 @@ export const zSellerInfo = z.object({
     listings: z.number().register(z.globalRegistry, {
         description: 'Number of listings'
     }),
-    events: z.union([
-        z.null(),
-        zUserEventSeller
-    ])
+    events: zUserEventSeller.nullable()
 }).register(z.globalRegistry, {
     description: 'Seller info for the listing'
 });
@@ -286,13 +283,13 @@ export const zListingEventCreate = z.object({
 export type zListingEventCreate = z.infer<typeof zListingEventCreate>;
 
 export const zApiListingSellerInfoData = z.object({
-    body: z.optional(z.never()),
+    body: z.never().optional(),
     path: z.object({
         listingId: z.string().register(z.globalRegistry, {
             description: 'ID of the listing'
         })
     }),
-    query: z.optional(z.never())
+    query: z.never().optional()
 });
 
 export type zapiListingSellerInfoRequest = z.infer<typeof zApiListingSellerInfoData>;
@@ -305,9 +302,9 @@ export const zApiListingSellerInfoResponse = zSellerInfo;
 export type zapiListingSellerInfoResponse = z.infer<typeof zApiListingSellerInfoResponse>;
 
 export const zApiListingEventCreateData = z.object({
-    body: z.optional(zListingEventCreate),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zListingEventCreate.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiListingEventCreateRequest = z.infer<typeof zApiListingEventCreateData>;

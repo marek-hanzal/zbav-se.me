@@ -77,30 +77,30 @@ export type zCursor = z.infer<typeof zCursor>;
  * Filter object for category collection
  */
 export const zCategoryFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    group: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    group: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact group of the category'
-    })),
-    category: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    category: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact category name'
-    })),
-    locale: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    locale: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact locale of the category'
-    })),
-    localeIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    localeIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches categories with locales in the provided array'
-    })),
-    slug: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    slug: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact slug of the category'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'Filter object for category collection'
 });
@@ -111,30 +111,30 @@ export type zCategoryFilter = z.infer<typeof zCategoryFilter>;
  * App-based filters
  */
 export const zCategoryWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    group: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    group: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact group of the category'
-    })),
-    category: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    category: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact category name'
-    })),
-    locale: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    locale: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact locale of the category'
-    })),
-    localeIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    localeIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches categories with locales in the provided array'
-    })),
-    slug: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    slug: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact slug of the category'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
@@ -179,10 +179,10 @@ export type zCategorySort = z.infer<typeof zCategorySort>;
  * Category query parameters
  */
 export const zCategoryQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zCategoryFilter),
-    where: z.optional(zCategoryWhere),
-    sort: z.optional(z.array(zCategorySort))
+    cursor: zCursor.optional(),
+    filter: zCategoryFilter.optional(),
+    where: zCategoryWhere.optional(),
+    sort: z.array(zCategorySort).optional()
 }).register(z.globalRegistry, {
     description: 'Category query parameters'
 });
@@ -246,8 +246,8 @@ export type zCount = z.infer<typeof zCount>;
  * Query object for category count
  */
 export const zCategoryCountQuery = z.object({
-    filter: z.optional(zCategoryFilter),
-    where: z.optional(zCategoryWhere)
+    filter: zCategoryFilter.optional(),
+    where: zCategoryWhere.optional()
 }).register(z.globalRegistry, {
     description: 'Query object for category count'
 });
@@ -271,33 +271,15 @@ export const zLocation = z.object({
     code: z.string().register(z.globalRegistry, {
         description: 'Country code'
     }),
-    county: z.union([
-        z.null(),
-        z.string()
-    ]),
-    municipality: z.union([
-        z.null(),
-        z.string()
-    ]),
-    state: z.union([
-        z.null(),
-        z.string()
-    ]),
+    county: z.string().nullable(),
+    municipality: z.string().nullable(),
+    state: z.string().nullable(),
     address: z.string().register(z.globalRegistry, {
         description: 'Full address preview of a location'
     }),
-    city: z.union([
-        z.null(),
-        z.string()
-    ]),
-    street: z.union([
-        z.null(),
-        z.string()
-    ]),
-    zip: z.union([
-        z.null(),
-        z.string()
-    ]),
+    city: z.string().nullable(),
+    street: z.string().nullable(),
+    zip: z.string().nullable(),
     confidence: z.number().register(z.globalRegistry, {
         description: 'Confidence score of the location (based on query)'
     }),
@@ -336,30 +318,30 @@ export type zLocationAutocomplete = z.infer<typeof zLocationAutocomplete>;
  * Data for location filter
  */
 export const zLocationFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    query: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    query: z.string().register(z.globalRegistry, {
         description: 'This filter matches locations where id equals the value OR query ilike the value (useful for autocomplete)'
-    })),
-    lang: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    lang: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact language that was used to get the location'
-    })),
-    country: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    country: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact country of the location'
-    })),
-    code: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    code: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact country code of the location'
-    })),
-    confidenceMin: z.optional(z.number().register(z.globalRegistry, {
+    }).optional(),
+    confidenceMin: z.number().register(z.globalRegistry, {
         description: 'This filter matches locations with confidence greater than or equal to the provided value'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'Data for location filter'
 });
@@ -370,30 +352,30 @@ export type zLocationFilter = z.infer<typeof zLocationFilter>;
  * App-based filters
  */
 export const zLocationWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    query: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    query: z.string().register(z.globalRegistry, {
         description: 'This filter matches locations where id equals the value OR query ilike the value (useful for autocomplete)'
-    })),
-    lang: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    lang: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact language that was used to get the location'
-    })),
-    country: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    country: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact country of the location'
-    })),
-    code: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    code: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact country code of the location'
-    })),
-    confidenceMin: z.optional(z.number().register(z.globalRegistry, {
+    }).optional(),
+    confidenceMin: z.number().register(z.globalRegistry, {
         description: 'This filter matches locations with confidence greater than or equal to the provided value'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
@@ -430,10 +412,10 @@ export type zLocationSort = z.infer<typeof zLocationSort>;
  * Data for location query
  */
 export const zLocationQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zLocationFilter),
-    where: z.optional(zLocationWhere),
-    sort: z.optional(z.array(zLocationSort))
+    cursor: zCursor.optional(),
+    filter: zLocationFilter.optional(),
+    where: zLocationWhere.optional(),
+    sort: z.array(zLocationSort).optional()
 }).register(z.globalRegistry, {
     description: 'Data for location query'
 });
@@ -441,9 +423,9 @@ export const zLocationQuery = z.object({
 export type zLocationQuery = z.infer<typeof zLocationQuery>;
 
 export const zApiCategoryFetchData = z.object({
-    body: z.optional(zCategoryQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zCategoryQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiCategoryFetchRequest = z.infer<typeof zApiCategoryFetchData>;
@@ -456,9 +438,9 @@ export const zApiCategoryFetchResponse = zCategory;
 export type zapiCategoryFetchResponse = z.infer<typeof zApiCategoryFetchResponse>;
 
 export const zApiCategoryCollectionData = z.object({
-    body: z.optional(zCategoryQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zCategoryQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiCategoryCollectionRequest = z.infer<typeof zApiCategoryCollectionData>;
@@ -473,9 +455,9 @@ export const zApiCategoryCollectionResponse = z.array(zCategoryItem).register(z.
 export type zapiCategoryCollectionResponse = z.infer<typeof zApiCategoryCollectionResponse>;
 
 export const zApiCategoryCountData = z.object({
-    body: z.optional(zCategoryCountQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zCategoryCountQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiCategoryCountRequest = z.infer<typeof zApiCategoryCountData>;
@@ -488,9 +470,9 @@ export const zApiCategoryCountResponse = zCount;
 export type zapiCategoryCountResponse = z.infer<typeof zApiCategoryCountResponse>;
 
 export const zApiLocationAutocompleteData = z.object({
-    body: z.optional(zLocationAutocomplete),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zLocationAutocomplete.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiLocationAutocompleteRequest = z.infer<typeof zApiLocationAutocompleteData>;
@@ -505,9 +487,9 @@ export const zApiLocationAutocompleteResponse = z.array(zLocation).register(z.gl
 export type zapiLocationAutocompleteResponse = z.infer<typeof zApiLocationAutocompleteResponse>;
 
 export const zApiLocationFetchData = z.object({
-    body: z.optional(zLocationQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zLocationQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiLocationFetchRequest = z.infer<typeof zApiLocationFetchData>;

@@ -184,10 +184,7 @@ export const zTransactionBuyerInfo = z.object({
     registered: z.string().register(z.globalRegistry, {
         description: 'Registration date'
     }),
-    events: z.union([
-        z.null(),
-        zUserEventBuyer
-    ])
+    events: zUserEventBuyer.nullable()
 }).register(z.globalRegistry, {
     description: 'Buyer info for the transaction'
 });
@@ -259,27 +256,27 @@ export type zTransactionStatusEnum = z.infer<typeof zTransactionStatusEnum>;
  * Filter object for transaction collection
  */
 export const zTransactionFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    userId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact userId'
-    })),
-    listingId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    listingId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
-    })),
-    status: z.optional(zTransactionStatusEnum),
-    statusIn: z.optional(z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+    }).optional(),
+    status: zTransactionStatusEnum.optional(),
+    statusIn: z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
         description: 'Current status of the listing transaction'
     }))).register(z.globalRegistry, {
         description: 'This filter matches any of the provided statuses for the current status of the transaction'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'Filter object for transaction collection'
 });
@@ -290,27 +287,27 @@ export type zTransactionFilter = z.infer<typeof zTransactionFilter>;
  * App-based filters
  */
 export const zTransactionWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    userId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact userId'
-    })),
-    listingId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    listingId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
-    })),
-    status: z.optional(zTransactionStatusEnum),
-    statusIn: z.optional(z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+    }).optional(),
+    status: zTransactionStatusEnum.optional(),
+    statusIn: z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
         description: 'Current status of the listing transaction'
     }))).register(z.globalRegistry, {
         description: 'This filter matches any of the provided statuses for the current status of the transaction'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
@@ -356,10 +353,10 @@ export type zTransactionSort = z.infer<typeof zTransactionSort>;
  * Query object for transaction collection
  */
 export const zTransactionQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zTransactionFilter),
-    where: z.optional(zTransactionWhere),
-    sort: z.optional(z.array(zTransactionSort))
+    cursor: zCursor.optional(),
+    filter: zTransactionFilter.optional(),
+    where: zTransactionWhere.optional(),
+    sort: z.array(zTransactionSort).optional()
 }).register(z.globalRegistry, {
     description: 'Query object for transaction collection'
 });
@@ -367,9 +364,9 @@ export const zTransactionQuery = z.object({
 export type zTransactionQuery = z.infer<typeof zTransactionQuery>;
 
 export const zApiTransactionBuyerInfoData = z.object({
-    body: z.optional(zTransactionQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zTransactionQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiTransactionBuyerInfoRequest = z.infer<typeof zApiTransactionBuyerInfoData>;

@@ -4,6 +4,7 @@ export const ListingRestrictionEnumSchema = z
 	.enum([
 		"none",
 		"adult",
+		"adult-relaxed",
 		"sensitive",
 		"restricted",
 	])

@@ -37,6 +37,7 @@ export const DraftMigration: Migration = {
 			.asEnum([
 				"none",
 				"adult",
+				"adult-relaxed",
 				"sensitive",
 				"restricted",
 			])
