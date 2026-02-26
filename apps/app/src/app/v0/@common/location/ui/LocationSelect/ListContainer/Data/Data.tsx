@@ -1,14 +1,13 @@
 import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
-import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import type { Container as ContainerUi } from "@use-pico/client/ui/container";
 import { Container } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { withLocationAutocompleteQuery } from "@zbav-se.me/sdk/query/session";
 import { uiSelectButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
+import { Empty } from "./Empty";
 
 export namespace Data {
 	export interface Props extends Omit<ContainerUi.Props, "onChange">, MarkSuspense.Props {
@@ -35,27 +34,7 @@ export const Data: FC<Data.Props> = ({
 	});
 
 	if (data.length === 0) {
-		return (
-			<Container
-				data-ui="ListContainer[Container.empty]"
-				ui={{
-					layout: "vertical-centered",
-					height: "full",
-					...ui,
-				}}
-			>
-				<Badge
-					className="text-center mx-auto"
-					ui={{
-						size: "lg",
-						tone: "danger",
-						theme: "light",
-					}}
-				>
-					<Tx label="Location not found (badge)" />
-				</Badge>
-			</Container>
-		);
+		return <Empty ui={ui} />;
 	}
 
 	return (
