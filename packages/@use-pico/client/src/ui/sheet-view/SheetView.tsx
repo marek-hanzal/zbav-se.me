@@ -3,9 +3,11 @@ import { BottomSheet } from "../bottom-sheet";
 import { View } from "../view";
 
 export namespace SheetView {
+	export type Views<TView extends string> = View.Views<TView, BottomSheet.PropsEx>;
+
 	export interface Props<TView extends string> extends Omit<BottomSheet.Props, "children"> {
 		state: StateType.State<TView>;
-		views: View.Views<TView>;
+		views: Views<TView>;
 	}
 }
 

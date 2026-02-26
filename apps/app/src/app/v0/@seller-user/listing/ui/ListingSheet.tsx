@@ -4,7 +4,7 @@ import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { CloseButton } from "@zbav-se.me/ui/button";
-import { type FC, useState } from "react";
+import { type FC, useMemo, useState } from "react";
 import { GalleryContent } from "~/app/v0/@common/gallery/ui/GalleryContent";
 import { ListingDetail } from "./ListingDetail";
 
@@ -20,6 +20,44 @@ export namespace ListingSheet {
 export const ListingSheet: FC<ListingSheet.Props> = ({ listing, state, ...props }) => {
 	const [view, setView] = useState<ListingSheet.View>("detail");
 
+	const views = useMemo<SheetView.Views<ListingSheet.View>>(() => {
+		return {
+			detail: {
+				children: (
+					<ListingDetail
+						data-ui={"ListingSheet-[ListingDetailContainer]"}
+						listing={listing}
+						ui={{
+							inner: "default",
+						}}
+						hooks={{
+							onGallery: () => setView("gallery"),
+						}}
+					/>
+				),
+				header: ({ close }) => ({
+					title: listing.title,
+					right: <CloseButton onClick={close} />,
+				}),
+			},
+			gallery: {
+				children: (
+					<GalleryContent uploads={listing.gallery.items.map((item) => item.upload)} />
+				),
+				header: () => ({
+					title: translator.text("Listing gallery (title)"),
+					right: <CloseButton onClick={() => setView("detail")} />,
+				}),
+				contentProps: {
+					disableScroll: true,
+				},
+				scroller: false,
+			},
+		};
+	}, [
+		listing,
+	]);
+
 	return (
 		<SheetView<ListingSheet.View>
 			isOpen={state.value}
@@ -32,41 +70,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ listing, state, ...props 
 				set: setView,
 			}}
 			detent={"full"}
-			views={{
-				detail: {
-					children: (
-						<ListingDetail
-							data-ui={"ListingSheet-[ListingDetailContainer]"}
-							listing={listing}
-							ui={{
-								inner: "default",
-							}}
-							hooks={{
-								onGallery: () => setView("gallery"),
-							}}
-						/>
-					),
-					header: ({ close }) => ({
-						title: listing.title,
-						right: <CloseButton onClick={close} />,
-					}),
-				},
-				gallery: {
-					children: (
-						<GalleryContent
-							uploads={listing.gallery.items.map((item) => item.upload)}
-						/>
-					),
-					header: () => ({
-						title: translator.text("Listing gallery (title)"),
-						right: <CloseButton onClick={() => setView("detail")} />,
-					}),
-					contentProps: {
-						disableScroll: true,
-					},
-					scroller: false,
-				},
-			}}
+			views={views}
 			{...props}
 		/>
 	);

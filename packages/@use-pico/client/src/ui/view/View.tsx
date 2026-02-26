@@ -4,11 +4,11 @@ import type { PropsWithChildren, ReactNode } from "react";
 import { Container } from "../container";
 
 export namespace View {
-	export interface View extends PropsWithChildren {
+	export type View<TProps = {}> = PropsWithChildren<TProps> & {
 		scroller?: "vertical" | "horizontal" | false;
-	}
+	};
 
-	export type Views<TView extends string> = Record<TView, View>;
+	export type Views<TView extends string, TProps = {}> = Record<TView, View<TProps>>;
 
 	export namespace Children {
 		export interface Props {
@@ -18,18 +18,18 @@ export namespace View {
 		export type RenderFn = (props: Props) => ReactNode;
 	}
 
-	export interface Props<TView extends string> {
+	export interface Props<TView extends string, TProps = {}> {
 		state: StateType.State<TView>;
-		views: Views<TView>;
+		views: Views<TView, TProps>;
 		children?: Children.RenderFn;
 	}
 }
 
-export const View = <TView extends string>({
+export const View = <TView extends string, TProps = {}>({
 	state,
 	views,
 	children = ({ content }) => content,
-}: View.Props<TView>) => {
+}: View.Props<TView, TProps>) => {
 	return children({
 		content: entriesOf(views).map(([key, { scroller = "vertical", children }]) => {
 			return (
