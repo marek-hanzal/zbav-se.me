@@ -1,18 +1,15 @@
 import { ValueList } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tListingWarrantyEnum } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
 
 export namespace WarrantyValueList {
-	export interface Props
-		extends Omit<
-			ValueList.PropsEx<{
-				id: string;
-				warranty: string;
-			}>,
-			"items" | "renderFn"
-		> {
+	export interface Item {
+		id: string;
+		warranty: string;
+	}
+
+	export interface Props extends ValueList.PropsEx<Item> {
 		warrantyIn: tListingWarrantyEnum[];
 	}
 }
@@ -27,7 +24,7 @@ export const WarrantyValueList: FC<WarrantyValueList.Props> = ({ warrantyIn, ...
 				id: item,
 				warranty: item,
 			}))}
-			renderFn={(item) => <Tx label={`Listing warranty - ${item.warranty}`} />}
+			renderFn={(item) => translator.text(`Listing warranty - ${item.warranty}`)}
 			wrapperProps={{
 				ui:
 					warrantyIn.length > 0

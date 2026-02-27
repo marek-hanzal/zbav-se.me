@@ -6,13 +6,13 @@ import type { FC } from "react";
 import { RestrictionValue } from "~/app/@common/restriction/ui/RestrictionValue";
 import { ChevronAction } from "~/app/@seller-user/draft/ui/DraftEditor/ChevronAction";
 import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
-import { CategoryValue } from "~/app/v0/@common/category/ui/CategoryValue";
-import { ExpireAtValue } from "~/app/v0/@common/expire-at/ui/ExpireAtValue";
+import { CategoryValue } from "~/app/@common/category/ui/CategoryValue";
+import { ExpireAtValue } from "~/app/@common/expire-at/ui/ExpireAtValue";
 import { GalleryValue } from "~/app/v0/@common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/app/v0/@common/location/ui/LocationValue";
-import { PriceValue } from "~/app/v0/@common/price/ui/PriceValue";
-import { PriceTypeValue } from "~/app/v0/@common/price-type/ui/PriceTypeValue";
-import { TitleValue } from "~/app/v0/@common/title/ui/TitleValue";
+import { PriceValue } from "~/app/@common/price/ui/PriceValue";
+import { PriceTypeValue } from "~/app/@common/price-type/ui/PriceTypeValue";
+import { TitleValue } from "~/app/@common/title/ui/TitleValue";
 
 export namespace RequiredSection {
 	export interface Props {

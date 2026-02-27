@@ -84,6 +84,13 @@ When adding to `@common`:
   - `@common/message/MessageListSuspense/MessageList.tsx` now handles data/container composition.
   - `@common/message/MessageListSuspense.tsx` now composes local suspense fallback (`MessageListPending`) for feature call-sites.
   - `@common/message/MessageRenderItem.tsx` now owns message-type dispatch (`text/system/gallery/location/personal/package`).
+- Auth utilities were extracted to active scope:
+  - `@common/auth/authClient.ts`
+  - `@common/auth/getSessionFn.ts`
+  - `@common/auth/query/withSessionQuery.ts`
+  - `@common/auth/hook/useUser.ts`
+  - `@common/auth/mutation/withSignOutMutation.ts`
+  - `@common/auth/ui/SignOutButton.tsx`
 - Photo upload UI was extracted to active scope and split into focused pieces:
   - `@common/photo/ui/PhotoUpload/PhotoUpload.tsx` is the local root component (`index.ts` exports `PhotoUpload` only).
   - `@common/photo/ui/PhotoUpload/useController.ts` owns upload/input/pending orchestration.
@@ -121,4 +128,8 @@ When adding to `@common`:
   - `@common/age/ui/AgeSelection.tsx`
 - `ConditionSelect` was extracted to active scope:
   - `@common/condition/ui/ConditionSelect.tsx`
+- Remaining condition UI parts were extracted to active scope:
+  - `@common/condition/ui/ConditionIcon.tsx`
+  - `@common/condition/ui/ConditionValue.tsx`
+  - `@common/condition/ui/ConditionValueList.tsx`
 - `GalleryUploadContainer` abstraction was removed; gallery upload flow is now embedded directly at call-sites.

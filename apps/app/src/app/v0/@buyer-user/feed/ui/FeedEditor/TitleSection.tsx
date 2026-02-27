@@ -3,7 +3,7 @@ import { Group } from "@use-pico/client/ui/group";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import type { FeedEditor } from "~/app/v0/@buyer-user/feed/ui/FeedEditor";
-import { TitleValue } from "~/app/v0/@common/title/ui/TitleValue";
+import { TitleValue } from "~/app/@common/title/ui/TitleValue";
 
 export namespace TitleSection {
 	export interface Props extends Pick<FeedEditor.Props, "feed" | "values"> {}

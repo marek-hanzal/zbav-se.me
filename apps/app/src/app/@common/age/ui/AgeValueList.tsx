@@ -1,5 +1,4 @@
 import { ValueList } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 
@@ -27,7 +26,7 @@ export const AgeValueList: FC<AgeValueList.Props> = ({ ageIn, ...props }) => {
 				id: String(item),
 				age: String(item),
 			}))}
-			renderFn={(item) => <Tx label={`Condition - Age [${item.age}] (hint)`} />}
+			renderFn={(item) => translator.text(`Age ${item} (label)`)}
 			wrapperProps={{
 				ui:
 					ageIn.length > 0

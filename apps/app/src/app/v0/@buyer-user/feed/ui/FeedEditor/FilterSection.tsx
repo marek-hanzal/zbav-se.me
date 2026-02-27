@@ -1,11 +1,11 @@
 import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
 import { Group } from "@use-pico/client/ui/group";
 import type { FC } from "react";
+import { AgeValueList } from "~/app/@common/age/ui/AgeValueList";
 import type { FeedEditor } from "~/app/v0/@buyer-user/feed/ui/FeedEditor";
-import { AgeValueList } from "~/app/v0/@common/age/ui/AgeValueList";
-import { ConditionValueList } from "~/app/v0/@common/condition/ui/ConditionValueList";
-import { DeliveryValueList } from "~/app/v0/@common/delivery/ui/DeliveryValueList";
-import { WarrantyValueList } from "~/app/v0/@common/warranty/ui/WarrantyValueList";
+import { ConditionValueList } from "~/app/@common/condition/ui/ConditionValueList";
+import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
+import { WarrantyValueList } from "~/app/@common/warranty/ui/WarrantyValueList";
 
 export namespace FilterSection {
 	export interface Props extends Pick<FeedEditor.Props, "feed" | "values"> {}

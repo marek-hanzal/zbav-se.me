@@ -6,8 +6,8 @@ import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
-import { CategoryInline } from "~/app/v0/@common/category/ui/CategoryInline";
-import { ConditionIcon } from "~/app/v0/@common/condition/ui/ConditionIcon";
+import { CategoryInline } from "~/app/@common/category/ui/CategoryInline";
+import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
 import { useHeroUpload } from "~/app/v0/@common/gallery/hook/useHeroUpload";
 import { ListingOverlay } from "./ListingOverlay";
 

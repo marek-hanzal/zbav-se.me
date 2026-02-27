@@ -6,7 +6,7 @@ import type { tCurrencyEnum } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
 
 export namespace PriceValue {
-	export interface Props extends Omit<LabelValue.Props, "textValue"> {
+	export interface Props extends LabelValue.PropsEx {
 		price: number | null | undefined;
 		currency: tCurrencyEnum | null | undefined;
 	}

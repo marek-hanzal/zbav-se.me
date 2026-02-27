@@ -1,5 +1,4 @@
 import { ValueList } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 
@@ -28,7 +27,7 @@ export const DeliveryValueList: FC<DeliveryValueList.Props> = ({ deliveryIn, ...
 			textLabel={translator.text("Feed delivery (label)")}
 			textEmpty={translator.text("Feed delivery not selected")}
 			items={items}
-			renderFn={(item) => <Tx label={`Listing delivery - ${item.delivery}`} />}
+			renderFn={(item) => translator.text(`Listing delivery - ${item.delivery}`)}
 			{...props}
 		/>
 	);

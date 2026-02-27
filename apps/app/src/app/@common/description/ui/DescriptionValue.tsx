@@ -3,7 +3,7 @@ import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 
 export namespace DescriptionValue {
-	export interface Props extends Omit<LabelValue.Props, "textValue"> {
+	export interface Props extends LabelValue.PropsEx {
 		description: string | null | undefined;
 	}
 }

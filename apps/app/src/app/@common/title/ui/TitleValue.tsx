@@ -2,7 +2,7 @@ import { LabelValue } from "@use-pico/client/ui/container";
 import type { FC } from "react";
 
 export namespace TitleValue {
-	export interface Props extends Omit<LabelValue.PropsEx, "textValue" | "title"> {
+	export interface Props extends Omit<LabelValue.PropsEx, "title"> {
 		title: string | null;
 	}
 }

@@ -2,15 +2,15 @@ import { Group } from "@use-pico/client/ui/group";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
+import { AgeValue } from "~/app/@common/age/ui/AgeValue";
+import { ConsValueList } from "~/app/@common/cons/ui/ConsValueList";
 import { ChevronAction } from "~/app/@seller-user/draft/ui/DraftEditor/ChevronAction";
 import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
-import { AgeValue } from "~/app/v0/@common/age/ui/AgeValue";
-import { ConditionValue } from "~/app/v0/@common/condition/ui/ConditionValue";
-import { ConsValueList } from "~/app/v0/@common/cons/ui/ConsValueList";
-import { DeliveryValueList } from "~/app/v0/@common/delivery/ui/DeliveryValueList";
-import { DescriptionValue } from "~/app/v0/@common/description/ui/DescriptionValue";
-import { ProsValueList } from "~/app/v0/@common/pros/ui/ProsValueList";
-import { WarrantyValue } from "~/app/v0/@common/warranty/ui/WarrantyValue";
+import { ConditionValue } from "~/app/@common/condition/ui/ConditionValue";
+import { ProsValueList } from "~/app/@common/pros/ui/ProsValueList";
+import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
+import { DescriptionValue } from "~/app/@common/description/ui/DescriptionValue";
+import { WarrantyValue } from "~/app/@common/warranty/ui/WarrantyValue";
 
 export namespace OptionalSection {
 	export interface Props {
