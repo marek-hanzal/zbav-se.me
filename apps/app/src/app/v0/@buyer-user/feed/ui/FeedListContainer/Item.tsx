@@ -41,15 +41,7 @@ export namespace Item {
 	export type PropsEx = Omit<Props, "feed">;
 }
 
-export const Item: FC<Item.Props> = ({
-	feed,
-	tools,
-	count,
-	linkTo,
-	ui,
-	className,
-	...props
-}) => {
+export const Item: FC<Item.Props> = ({ feed, tools, count, linkTo, ui, className, ...props }) => {
 	const [isFeedSettings, setIsFeedSettings] = useState(false);
 
 	return (

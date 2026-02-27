@@ -7,13 +7,13 @@ import type { FC } from "react";
 import type { AgeValueList } from "~/app/@common/age/ui/AgeValueList";
 import type { ConditionValueList } from "~/app/@common/condition/ui/ConditionValueList";
 import type { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
+import type { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 import type { RangeValue } from "~/app/@common/location/ui/RangeValue";
 import type { NameValue } from "~/app/@common/name/ui/NameValue";
 import type { SortValue } from "~/app/@common/sort/ui/SortValue";
 import type { TitleValue } from "~/app/@common/title/ui/TitleValue";
 import type { WarrantyValueList } from "~/app/@common/warranty/ui/WarrantyValueList";
 import type { CategoryValueList } from "~/app/@session/category/ui/CategoryValueList";
-import type { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 import { FeedEditorDeleteButton } from "./FeedEditor/FeedEditorDeleteButton";
 import { FeedEditorFields } from "./FeedEditor/FeedEditorFields";
 

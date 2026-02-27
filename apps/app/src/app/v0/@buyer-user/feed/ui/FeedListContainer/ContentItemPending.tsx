@@ -8,11 +8,7 @@ export namespace ContentItemPending {
 	}
 }
 
-export const ContentItemPending: FC<ContentItemPending.Props> = ({
-	feedId,
-	tools,
-	linkTo,
-}) => {
+export const ContentItemPending: FC<ContentItemPending.Props> = ({ feedId, tools, linkTo }) => {
 	return (
 		<Item
 			feed={{
