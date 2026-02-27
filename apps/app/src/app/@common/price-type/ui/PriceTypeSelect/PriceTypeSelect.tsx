@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { tListingPriceEnum } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
-import { PriceTypeItem } from "./PriceTypeItem";
+import { Item } from "./Item";
 
 export namespace PriceTypeSelect {
 	export interface Props extends Container.Props {
@@ -26,7 +26,7 @@ export const PriceTypeSelect: FC<PriceTypeSelect.Props> = ({ selection, ui, ...p
 		>
 			{Object.values(tListingPriceEnum).map((priceType) => {
 				return (
-					<PriceTypeItem
+					<Item
 						key={priceType}
 						priceType={priceType}
 						selection={selection}

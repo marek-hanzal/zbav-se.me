@@ -6,14 +6,14 @@ import type { EntitySchema } from "@use-pico/common/schema";
 import { uiSelectButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
-export namespace PriceTypeItem {
+export namespace Item {
 	export interface Props {
 		priceType: string;
 		selection: useSelection.Selection<EntitySchema.Type>;
 	}
 }
 
-export const PriceTypeItem: FC<PriceTypeItem.Props> = ({ priceType, selection }) => {
+export const Item: FC<Item.Props> = ({ priceType, selection }) => {
 	const item = {
 		id: priceType,
 	};
