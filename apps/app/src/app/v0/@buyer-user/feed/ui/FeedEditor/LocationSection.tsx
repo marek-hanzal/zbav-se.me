@@ -4,7 +4,7 @@ import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import type { FeedEditor } from "~/app/v0/@buyer-user/feed/ui/FeedEditor";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";
-import { RangeValue } from "~/app/v0/@common/location/ui/RangeValue";
+import { RangeValue } from "~/app/@common/location/ui/RangeValue";
 
 export namespace LocationSection {
 	export interface Props extends Pick<FeedEditor.Props, "feed" | "values"> {}

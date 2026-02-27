@@ -1,5 +1,4 @@
 import type { Container } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
 import type { StateType } from "@use-pico/common/type";
 import type { FC } from "react";
 import { SheetButton } from "~/app/v0/@common/sheet/ui/SheetButton";
@@ -31,9 +30,7 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({ state, label, ui, .
 				...ui,
 			}}
 			{...props}
-		>
-			<Tx label={label ?? "Adjust feed (button)"} />
-		</SheetButton>
+		/>
 	);
 };
 
