@@ -25,12 +25,11 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 			data-ui={"DraftItem[Container]"}
 			data-id={draft.id}
 			className={tvc([
-				"h-48 md:h-92",
+				"h-24 md:h-28",
 				className,
 			])}
 			ui={{
 				tone: "secondary",
-				position: "relative",
 				round: "lg",
 				width: "full",
 				size: undefined,
@@ -46,82 +45,115 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 					id: draft.id,
 				}}
 				ui={{
+					flow: "horizontal",
+					items: "start",
+					gap: "md",
+					width: "full",
 					height: "full",
+					inner: "sm",
 				}}
 			>
-				{hero ? (
-					<HeroImage
-						data-ui={"DraftItem-[HeroImage]"}
-						src={hero.url}
-						alt={`Hero image for draft ${draft.id}`}
-						visible
-						ui={{
-							round: "lg",
-							width: "full",
-						}}
-					/>
-				) : (
-					<Container
-						ui={{
-							tone: "subtle",
-							theme: "light",
-							width: "full",
-							height: "full",
-							round: "lg",
-							flow: "horizontal",
-							items: "center",
-							justify: "center",
-							background: "default",
-							position: "relative",
-						}}
-					>
-						<Icon
-							icon={ChevronRightIcon}
+				<Container
+					className={"aspect-square h-full shrink-0 overflow-hidden"}
+					ui={{
+						round: "md",
+					}}
+				>
+					{hero ? (
+						<HeroImage
+							data-ui={"DraftItem-[HeroImage]"}
+							src={hero.url}
+							alt={`Hero image for draft ${draft.id}`}
+							visible
 							ui={{
-								text: "3xl",
-								color: "text",
-								opacity: "6",
-								snapTo: "right-center",
+								width: "full",
+								height: "full",
 							}}
 						/>
-					</Container>
-				)}
-			</LinkTo>
+					) : (
+						<Container
+							ui={{
+								tone: "subtle",
+								theme: "light",
+								width: "full",
+								height: "full",
+								flow: "horizontal",
+								items: "center",
+								justify: "center",
+								background: "default",
+							}}
+						>
+							<Icon
+								icon={ChevronRightIcon}
+								ui={{
+									text: "2xl",
+									color: "text",
+									opacity: "6",
+								}}
+							/>
+						</Container>
+					)}
+				</Container>
 
-			<Badge
-				ui={{
-					tone: "neutral",
-					theme: "light",
-					inner: "default",
-					snapTo: "bottom",
-					round: "md",
-				}}
-				className={"h-fit text-center"}
-			>
-				{draft.title ? (
-					<Tx
-						label={draft.title}
-						ui={{
-							tone: "brand",
-							theme: "light",
-							color: "lead",
-							font: "bold",
-							truncate: true,
-						}}
-					/>
-				) : (
-					<Tx
-						label="Draft (label)"
+				<Container
+					className={"min-w-0 flex-1"}
+					ui={{
+						layout: "vertical-flex",
+						items: "start",
+						justify: "start",
+					}}
+				>
+					<Badge
 						ui={{
 							tone: "neutral",
 							theme: "light",
-							color: "lead",
-							font: "bold",
-							truncate: true,
+							inner: "sm",
+							round: "md",
 						}}
-					/>
-				)}
-			</Badge>
+						className={"h-fit max-w-full min-w-0 overflow-hidden"}
+					>
+						{draft.title ? (
+							<Tx
+								label={draft.title}
+								ui={{
+									tone: "brand",
+									theme: "light",
+									color: "lead",
+									font: "bold",
+									display: "block",
+									width: "full",
+									truncate: true,
+								}}
+								className={[
+									"block",
+									"w-full",
+									"max-w-full",
+									"min-w-0",
+								]}
+							/>
+						) : (
+							<Tx
+								label="Draft (label)"
+								ui={{
+									tone: "neutral",
+									theme: "light",
+									color: "lead",
+									font: "bold",
+									display: "block",
+									width: "full",
+									truncate: true,
+								}}
+								className={[
+									"block",
+									"w-full",
+									"max-w-full",
+									"min-w-0",
+								]}
+							/>
+						)}
+					</Badge>
+				</Container>
+			</LinkTo>
 		</Container>
 	);
 };
