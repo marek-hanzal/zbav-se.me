@@ -1,7 +1,7 @@
 import { useLocale } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
+import { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { tvc } from "@use-pico/cls";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
 import { useMaybeUpload } from "~/app/@common/gallery/hook/useMaybeUpload";
@@ -19,18 +19,20 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 	const hero = useMaybeUpload(draft.gallery.items);
 
 	return (
-		<Container
+		<Group
 			data-ui={"DraftItem[Container]"}
 			data-id={draft.id}
-			className={tvc([
-				"h-24 md:h-28",
+			className={[
+				"min-h-24",
+				"h-24",
+				"md:h-28",
 				className,
-			])}
+			]}
 			ui={{
-				tone: "secondary",
-				round: "lg",
+				tone: "neutral",
+				theme: "light",
 				width: "full",
-				shadow: true,
+				background: "default",
 				...ui,
 			}}
 			{...props}
@@ -44,10 +46,8 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 				ui={{
 					flow: "horizontal",
 					items: "start",
-					gap: "md",
 					width: "full",
 					height: "full",
-					inner: "sm",
 				}}
 			>
 				<Image
@@ -61,11 +61,12 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 						layout: "vertical-flex",
 						items: "start",
 						justify: "start",
+						inner: "xs",
 					}}
 				>
 					<Title title={draft.title} />
 				</Container>
 			</LinkTo>
-		</Container>
+		</Group>
 	);
 };
