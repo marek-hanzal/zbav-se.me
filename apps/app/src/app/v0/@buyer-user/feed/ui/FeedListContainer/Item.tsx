@@ -122,7 +122,7 @@ export const Item: FC<Item.Props> = ({
 					snapTo: "bottom",
 					round: "md",
 				}}
-				className={"h-fit text-center"}
+				className={"h-fit max-w-full min-w-0 overflow-hidden text-center"}
 			>
 				<Tx
 					label={feed.name}
@@ -131,8 +131,16 @@ export const Item: FC<Item.Props> = ({
 						theme: "light",
 						color: "lead",
 						font: "bold",
+						display: "block",
+						width: "full",
 						truncate: true,
 					}}
+					className={[
+						"block",
+						"w-full",
+						"max-w-full",
+						"min-w-0",
+					]}
 				/>
 			</Badge>
 
