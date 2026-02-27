@@ -9,11 +9,11 @@ export namespace ScoreIcon {
 }
 
 export const ScoreIcon: FC<ScoreIcon.Props> = ({ score, ui, ...props }) => {
-	const scoreNumber = Number(score);
+	const value = Number(score);
 
 	return (
 		<Icon
-			icon={RatingToIcon[scoreNumber as RatingToIcon.Value]}
+			icon={RatingToIcon[value as RatingToIcon.Value]}
 			ui={{
 				text: "2xl",
 				...ui,

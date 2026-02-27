@@ -4,6 +4,7 @@ import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
 import { ExpireAtValue } from "~/app/@common/expire-at/ui/ExpireAtValue";
+import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { PriceValue } from "~/app/@common/price/ui/PriceValue";
 import { PriceTypeValue } from "~/app/@common/price-type/ui/PriceTypeValue";
 import { RestrictionValue } from "~/app/@common/restriction/ui/RestrictionValue";
@@ -12,7 +13,6 @@ import { ChevronAction } from "~/app/@seller-user/draft/ui/DraftEditor/ChevronAc
 import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
 import { CategoryValue } from "~/app/@session/category/ui/CategoryValue";
 import { GalleryValue } from "~/app/v0/@common/gallery/ui/GalleryValue";
-import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 
 export namespace RequiredSection {
 	export interface Props {

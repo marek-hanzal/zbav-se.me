@@ -1,276 +1,83 @@
 # Zbav se mě!
 
-A marketplace application for buying and selling items, built with React, TanStack, and Effect.
+A modern C2C marketplace monorepo.
 
-## Why this repository is public (but not Open Source)
+This repo stays public for transparency and learning, but it is **not open source for commercial reuse**. Please read [LICENSE.md](./LICENSE.md) before using any part of the code.
 
-This repository is intentionally **public**, but it is **not Open Source**.
+## What is here
 
-The source code is available to provide transparency, enable security and quality audits, and allow others to study how the system works.  
-You are welcome to read the code, review it, learn from it, and point out problems or improvements.
+- `apps/app` - main marketplace app (buyer + seller flows)
+- `apps/web` - public website and legal pages
+- `apps/server` - API backend
+- `apps/blog` - product/dev blog
+- `packages/@zbav-se.me/*` - shared domain/UI/SDK packages
+- `packages/@use-pico/*` - internal framework utilities
 
-However, this project represents an active, living product.  
-The code alone is not the product, but it is still protected.
+## Local development
 
-Commercial use, hosting, redistribution, or operating a competing service based on this code is **not permitted** without explicit permission.  
-Please read the license carefully before using any part of this repository.
+### Requirements
 
-In short:
-You can **look**, **learn**, and **help**.  
-You cannot **repackage**, **deploy**, or **profit** from it.
+- Bun `1.3.0+`
+- Node.js `22.6.0+` (needed for Syncpack/CI tooling)
+- Docker (recommended for local infra)
 
-This approach allows openness without pretending that “free code” automatically means “free business”.
-
-
-## Development Ports
-
-Each application runs on its own port in development mode:
-
-| Port | App | Description |
-|------|-----|-------------|
-| **3030** | `apps/web` | Public marketing website (about, privacy policy, landing pages) |
-| **3031** | `apps/app` | Main marketplace application (PWA for buyers and sellers) |
-| **3032** | `apps/server` | Backend API server (REST API, authentication, database) |
-| **4090** | `apps/blog` | Development blog (Docusaurus) |
-
-Access the applications at:
-- Web: http://localhost:3030
-- App: http://localhost:3031
-- Server API: http://localhost:3032
-- OpenAPI docs: http://localhost:3032/docs
-- Blog: http://localhost:4090
-
-## Project Structure
-
-This is a monorepo managed by Bun workspaces, containing:
-
-### Applications (`apps/`)
-
-- **`app`** - Main user-facing marketplace application (mobile/PWA)
-  - Built with TanStack Router, React 19, and Vite
-  - Supports both buyer and seller functionality
-  - Server-side rendering with TanStack Start
-  
-- **`web`** - Public marketing website
-  - Built with TanStack Router and React 19
-  - Static pages (about, privacy policy)
-  - Minimal dependencies, optimized for SEO
-  
-- **`blog`** - Development blog
-  - Built with Docusaurus 3
-  - Blog-only setup (no docs or pages)
-  - RSS and Atom feeds
-  - Czech language support
-  - Tailwind CSS styling
-  
-- **`server`** - Backend API server
-  - Built with Hono and Nitro
-  - PostgreSQL database with Kysely ORM
-  - Better Auth for authentication
-  - Redis for caching and rate limiting
-  - S3 for file storage
-  - OpenAPI documentation with Scalar
-
-### Packages (`packages/@zbav-se.me/`)
-
-- **`sdk`** - API client SDK
-  - Generated from OpenAPI specification
-  - Type-safe API queries and mutations
-  - Used by frontend applications
-
-- **`ui`** - Common UI component library
-  - Reusable React components
-  - Tailwind CSS styling
-  - No domain-specific logic
-
-- **`common`** - Shared domain components
-  - Domain-specific UI components (age, category, condition, location, etc.)
-  - Shared business logic
-  - Common utilities
-
-- **`buyer`** - Buyer domain package
-  - Buyer-specific components and logic
-  - Listing transactions, favourites
-
-- **`seller`** - Seller domain package
-  - Seller-specific components and logic
-  - Listing management
-
-### Use-Pico Framework (`packages/@use-pico/`)
-
-Internal framework packages providing core functionality:
-- **`client`** - Client-side utilities, hooks, and components
-- **`common`** - Shared utilities and types
-- **`server`** - Server-side utilities and middleware
-
-## Package Dependency Graph
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         APPLICATION LAYER                            │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                       │
-│  ┌─────────────┐      ┌─────────────┐      ┌─────────────┐         │
-│  │  apps/app   │      │  apps/web   │      │ apps/server │         │
-│  │             │      │             │      │             │         │
-│  │  (mobile)   │      │  (website)  │      │  (backend)  │         │
-│  └──────┬──────┘      └──────┬──────┘      └──────┬──────┘         │
-│         │                    │                    │                 │
-│         └────────────────────┼────────────────────┘                 │
-│                              │                                       │
-└──────────────────────────────┼───────────────────────────────────────┘
-                               │
-┌──────────────────────────────┼───────────────────────────────────────┐
-│                         DOMAIN LAYER                                 │
-├──────────────────────────────┼───────────────────────────────────────┤
-│                              │                                       │
-│              ┌───────────────┴───────────────┐                      │
-│              │                               │                      │
-│         ┌────▼────┐                    ┌─────▼─────┐               │
-│         │  buyer  │                    │  seller   │               │
-│         └────┬────┘                    └─────┬─────┘               │
-│              │                               │                      │
-│              └───────────────┬───────────────┘                      │
-│                              │                                       │
-│                         ┌────▼────┐                                 │
-│                         │ common  │                                 │
-│                         └────┬────┘                                 │
-│                              │                                       │
-└──────────────────────────────┼───────────────────────────────────────┘
-                               │
-┌──────────────────────────────┼───────────────────────────────────────┐
-│                       FOUNDATION LAYER                               │
-├──────────────────────────────┼───────────────────────────────────────┤
-│                              │                                       │
-│                    ┌─────────┴──────────┐                           │
-│                    │                    │                           │
-│               ┌────▼────┐          ┌────▼────┐                      │
-│               │   sdk   │          │   ui    │                      │
-│               │         │          │         │                      │
-│               │  (API)  │          │  (UI)   │                      │
-│               └─────────┘          └─────────┘                      │
-│                                                                      │
-└──────────────────────────────────────────────────────────────────────┘
-
-DEPENDENCY RULES:
-├─ sdk, ui: No @zbav-se.me dependencies (foundation packages)
-├─ common: May import from sdk, ui
-├─ buyer, seller: May import from common, sdk, ui
-├─ apps/app: May import from buyer, seller, common, sdk, ui
-├─ apps/web: May import from ui only
-└─ apps/server: May import from common only
-
-Legend:
-  ┌─────┐
-  │ pkg │  = Package/Application
-  └──┬──┘
-     ▼     = Dependency direction (depends on)
-```
-
-## Technology Stack
-
-### Frontend
-- **React 19** - UI framework
-- **TanStack Router** - Type-safe routing
-- **TanStack Query** - Data fetching and caching
-- **TanStack Form** - Form management
-- **Tailwind CSS 4** - Styling
-- **Vite** - Build tool
-- **Docusaurus 3** - Blog platform
-
-### Backend
-- **Hono** - Web framework
-- **Nitro** - Server engine
-- **Kysely** - SQL query builder
-- **PostgreSQL** - Database
-- **Redis (Upstash)** - Caching and rate limiting
-- **Better Auth** - Authentication
-- **MinIO** - S3-compatible object storage
-- **Effect** - Functional programming utilities
-
-### DevOps
-- **Bun** - Package manager and runtime
-- **TypeScript** - Type safety
-- **Biome** - Linting and formatting
-- **Turbo** - Monorepo task runner
-
-## Tooling Notes
-
-- The repository is Bun-first, but Syncpack with `.syncpackrc.ts` still requires Node.js in CI for TypeScript config loading.
-- GitHub Actions must provide Node.js `22.6.0` or newer so `bun x syncpack ...` can read `.syncpackrc.ts`.
-
-## Environment Variables
-
-### Server (`apps/server/`)
-
-Server-side environment variables used by the backend API:
-
-- `SERVER_DATABASE_URL` - PostgreSQL connection string
-- `SERVER_BETTER_AUTH_SECRET` - Better Auth secret key
-- `SERVER_JWT_SECRET` - JWT token signing secret
-- `SERVER_GEOAPIFY_TOKEN` - Geoapify API key for location services
-- `SERVER_AXIOM_TOKEN` - Axiom API token for log ingestion
-- `SERVER_AXIOM_DATASET` - Axiom dataset name for log ingestion
-- `SERVER_S3_API` - S3 API endpoint URL
-- `SERVER_S3_KEY` - S3 access key
-- `SERVER_S3_SECRET` - S3 secret key
-- `SERVER_S3_BUCKET` - S3 bucket name
-- `SERVER_UPSTASH_REDIS_URL` - Upstash Redis REST URL
-- `SERVER_UPSTASH_REDIS_TOKEN` - Upstash Redis REST token
-- `SERVER_CONTENT_CDN` - CDN base URL for static assets
-- `VITE_DOMAIN` - Domain configuration
-- `VITE_SERVER_API` - Server API endpoint URL (for server-side requests)
-- `VITE_WEB_ORIGIN` - Web application origin URL (for CORS)
-- `VITE_APP_ORIGIN` - App application origin URL (for CORS)
-
-### Web App (`apps/web/`)
-
-Client-side environment variables for the public website:
-
-- `VITE_WEB_ASSETS` - Web asset base URL for build
-- `VITE_WEB_ORIGIN` - Web application origin URL
-- `VITE_SERVER_API` - Server API endpoint URL
-- `VITE_DOMAIN` - Domain configuration
-
-### App (`apps/app/`)
-
-Client-side environment variables for the main marketplace application:
-
-- `VITE_APP_ASSETS` - App asset base URL for build
-- `VITE_APP_ORIGIN` - App application origin URL
-- `VITE_SERVER_API` - Server API endpoint URL
-- `VITE_DOMAIN` - Domain configuration
-
-## Development
+### Setup
 
 ```bash
-# Install dependencies
 bun install
-
-# Run all applications in dev mode
-bun dev
-
-# Run specific app
-cd apps/app && bun dev    # Port 3031
-cd apps/web && bun dev    # Port 3030
-cd apps/server && bun dev # Port 3032
-cd apps/blog && bun dev   # Port 4090
-
-# Type checking
-bun run typecheck
-
-# Build all packages
-bun run build
-
-# Generate API SDK from OpenAPI spec
-cd packages/@zbav-se.me/sdk && bun run sdk
+cp .env.example .env.local
 ```
 
-## Contribution Guardrails
+### Run everything
 
-- Shared implementation rules: `AGENTS.md`
-- App overlays:
-  - `apps/app/AGENTS.md`
-  - `apps/web/AGENTS.md`
-  - `apps/server/AGENTS.md`
-- Product and domain invariants source of truth: `MASTER.md`
+```bash
+bun run dev
+```
+
+### Useful root commands
+
+```bash
+bun run dev
+bun run build
+bun run preview
+bun run sdk
+bun run lint
+bun run typecheck
+bun run test
+bun run workflow:check
+```
+
+## Dev URLs
+
+- Web: <http://localhost:3030>
+- App: <http://localhost:3031>
+- API: <http://localhost:3032>
+- OpenAPI docs: <http://localhost:3032/docs>
+- Blog: <http://localhost:4090>
+
+## Architecture at a glance
+
+Dependency boundaries are strict:
+
+```txt
+apps/app -> buyer, seller, common, sdk, ui
+apps/web -> ui
+apps/server -> common only
+buyer, seller -> common, sdk, ui
+common -> sdk, ui
+sdk, ui -> no @zbav-se.me dependencies
+```
+
+Core domain/product invariants live in [MASTER.md](./MASTER.md).
+Team implementation rules live in [AGENTS.md](./AGENTS.md).
+
+## Contributing
+
+Issues and PRs are welcome for bug reports, quality improvements, and architecture feedback.
+
+Before handoff, run at least:
+
+```bash
+bun run lint
+bun run typecheck
+```

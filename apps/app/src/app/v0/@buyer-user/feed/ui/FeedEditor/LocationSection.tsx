@@ -2,9 +2,9 @@ import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
 import { Group } from "@use-pico/client/ui/group";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
-import type { FeedEditor } from "~/app/v0/@buyer-user/feed/ui/FeedEditor";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { RangeValue } from "~/app/@common/location/ui/RangeValue";
+import type { FeedEditor } from "~/app/v0/@buyer-user/feed/ui/FeedEditor";
 
 export namespace LocationSection {
 	export interface Props extends Pick<FeedEditor.Props, "feed" | "values"> {}

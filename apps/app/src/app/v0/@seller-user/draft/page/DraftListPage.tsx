@@ -9,8 +9,8 @@ import { DraftListPending } from "~/app/v0/@seller-user/draft/ui/DraftListPendin
 
 export namespace DraftListPage {
 	export interface Props extends TitleContainer.Props {
-        //
-    }
+		//
+	}
 }
 
 export const DraftListPage: FC<DraftListPage.Props> = (props) => {
