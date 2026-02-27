@@ -1,24 +1,22 @@
 import { LabelValue, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { FC } from "react";
 
-export namespace LocationValueContentPending {
+export namespace Pending {
 	export interface Props extends LabelValue.PropsEx {
 		//
 	}
 }
 
-export const LocationValueContentPending: FC<LocationValueContentPending.Props> = ({
-	...props
-}) => {
+export const Pending: FC<Pending.Props> = ({ ...props }) => {
 	return (
 		<LabelValue
-			{...props}
 			textValue={
 				<SpinnerContainer
 					type="icon"
 					size="md"
 				/>
 			}
+			{...props}
 		/>
 	);
 };

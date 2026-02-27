@@ -3,7 +3,7 @@ import { Group } from "@use-pico/client/ui/group";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import type { FeedEditor } from "~/app/v0/@buyer-user/feed/ui/FeedEditor";
-import { LocationValue } from "~/app/v0/@common/location/ui/LocationValue";
+import { LocationValue } from "~/app/@common/location/ui/LocationValue";
 import { RangeValue } from "~/app/v0/@common/location/ui/RangeValue";
 
 export namespace LocationSection {

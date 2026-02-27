@@ -1,7 +1,7 @@
 import { LabelValue } from "@use-pico/client/ui/container";
 import { type FC, Suspense } from "react";
-import { LocationValueContent } from "./LocationValueContent";
-import { LocationValueContentPending } from "./LocationValueContentPending";
+import { Data } from "./Data";
+import { Pending } from "./Pending";
 
 export namespace LocationValue {
 	export interface Props extends LabelValue.PropsEx {
@@ -21,8 +21,8 @@ export const LocationValue: FC<LocationValue.Props> = ({ locationId, ...props })
 	}
 
 	return (
-		<Suspense fallback={<LocationValueContentPending {...props} />}>
-			<LocationValueContent
+		<Suspense fallback={<Pending {...props} />}>
+			<Data
 				_suspense={"I know"}
 				locationId={locationId}
 				{...props}
