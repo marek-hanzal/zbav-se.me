@@ -281,7 +281,7 @@
     value: Oblíbené
 43c97e37d539928f112ef93039df9510299f8c68dc170da7c864a3ba:
     ref: Draft list (label)
-    value: Šablony
+    value: Rozpracované inzeráty
 44730392630376ff51d9117fa4de944bb7209b64056ee497a9b10308:
     ref: Listing messages (title)
     value: Zprávy
@@ -404,7 +404,7 @@
     value: Opravdu?
 61324250f05e5b53c0994000ad235a587fa6c894a2414d561a434548:
     ref: Draft list (title)
-    value: Seznam šablon
+    value: Rozpracované inzeráty
 6311813e1e6c15a1177e1bf2fcc765faef3e9c9aea1851a72163366a:
     ref: View transactions (button)
     value: Zprávy
