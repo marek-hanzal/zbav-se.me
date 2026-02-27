@@ -1,23 +1,25 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
-import type { tCategory } from "@zbav-se.me/sdk/api/session";
+import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
 
-export namespace CategoryInline {
+export namespace Data {
 	export interface Props extends Container.Props {
-		category: Pick<tCategory, "group" | "category">;
+		categoryId: string;
 		textGroupProps?: Typo.PropsEx;
 		textCategoryProps?: Typo.PropsEx;
 	}
 }
 
-export const CategoryInline: FC<CategoryInline.Props> = ({
-	category,
+export const Data: FC<Data.Props> = ({
+	ui,
+	categoryId,
 	textGroupProps,
 	textCategoryProps,
-	ui,
 	...props
 }) => {
+	const { data: category } = withCategoryQuery.useFetchQuery(categoryId);
+
 	return (
 		<Container
 			data-ui="CategoryInline[Container]"

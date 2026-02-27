@@ -11,6 +11,7 @@ import { ConsPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/ConsPat
 import { DeliveryPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/DeliveryPatch";
 import { DescriptionPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/DescriptionPatch";
 import { ExpireAtPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/ExpireAtPatch";
+import { GalleryPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/GalleryPatch";
 import { LocationPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/LocationPatch";
 import { PricePatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/PricePatch";
 import { PriceTypePatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/PriceTypePatch";
@@ -18,7 +19,6 @@ import { ProsPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/ProsPat
 import { RestrictionPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/RestrictionPatch";
 import { TitlePatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/WarrantyPatch";
-import { GalleryPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/GalleryPatch";
 
 export namespace Data {
 	export type View =

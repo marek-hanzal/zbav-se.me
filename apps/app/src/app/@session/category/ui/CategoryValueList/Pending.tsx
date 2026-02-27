@@ -3,15 +3,13 @@ import { translator } from "@use-pico/common/translator";
 import type { tCategoryItem } from "@zbav-se.me/sdk/api/session";
 import type { FC } from "react";
 
-export namespace CategoryValueListContentPending {
+export namespace Pending {
 	export interface Props extends ValueList.PropsEx<tCategoryItem> {
 		//
 	}
 }
 
-export const CategoryValueListContentPending: FC<CategoryValueListContentPending.Props> = ({
-	...props
-}) => {
+export const Pending: FC<Pending.Props> = ({ ...props }) => {
 	return (
 		<ValueList<tCategoryItem>
 			textLabel={translator.text("Loading... (label)")}

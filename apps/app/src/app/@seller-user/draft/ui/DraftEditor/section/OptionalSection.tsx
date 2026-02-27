@@ -3,14 +3,14 @@ import { Tx } from "@use-pico/client/ui/tx";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
 import { AgeValue } from "~/app/@common/age/ui/AgeValue";
-import { ConsValueList } from "~/app/@common/cons/ui/ConsValueList";
-import { ChevronAction } from "~/app/@seller-user/draft/ui/DraftEditor/ChevronAction";
-import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
 import { ConditionValue } from "~/app/@common/condition/ui/ConditionValue";
-import { ProsValueList } from "~/app/@common/pros/ui/ProsValueList";
+import { ConsValueList } from "~/app/@common/cons/ui/ConsValueList";
 import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
 import { DescriptionValue } from "~/app/@common/description/ui/DescriptionValue";
+import { ProsValueList } from "~/app/@common/pros/ui/ProsValueList";
 import { WarrantyValue } from "~/app/@common/warranty/ui/WarrantyValue";
+import { ChevronAction } from "~/app/@seller-user/draft/ui/DraftEditor/ChevronAction";
+import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
 
 export namespace OptionalSection {
 	export interface Props {

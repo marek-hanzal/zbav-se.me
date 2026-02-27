@@ -5,8 +5,8 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
-import { CategoryInline } from "~/app/@common/category/ui/CategoryInline";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
+import { CategoryInline } from "~/app/@session/category/ui/CategoryInline";
 import { ListingSellerInfoSuspense } from "./ListingSellerInfoSuspense";
 
 export namespace ListingInfoSection {
@@ -29,7 +29,7 @@ export const ListingInfoSection: FC<ListingInfoSection.Props> = ({ listing, onSe
 				textLabel={translator.text("Listing category (label)")}
 				textValue={
 					<CategoryInline
-						category={listing.category}
+						categoryId={listing.category.id}
 						ui={{
 							tone: "secondary",
 							theme: "light",

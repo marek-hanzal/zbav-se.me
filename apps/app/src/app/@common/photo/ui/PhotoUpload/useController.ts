@@ -26,10 +26,7 @@ export namespace useController {
 	}
 }
 
-export function useController({
-	value,
-	onChange,
-}: useController.Props): useController.Result {
+export function useController({ value, onChange }: useController.Props): useController.Result {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [progress, setProgress] = useState(0);
 	const setUpload = withUploadFetchQuery.useSet();

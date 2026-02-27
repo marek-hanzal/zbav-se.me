@@ -3,7 +3,9 @@ import { Data } from "./Data";
 import { Pending } from "./Pending";
 
 export namespace CategoryInline {
-	export interface Props extends Data.Props {}
+	export interface Props extends Data.Props {
+		//
+	}
 }
 
 export const CategoryInline: FC<CategoryInline.Props> = (props) => {

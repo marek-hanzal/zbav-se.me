@@ -2,10 +2,10 @@ import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
 import { Group } from "@use-pico/client/ui/group";
 import type { FC } from "react";
 import { AgeValueList } from "~/app/@common/age/ui/AgeValueList";
-import type { FeedEditor } from "~/app/v0/@buyer-user/feed/ui/FeedEditor";
 import { ConditionValueList } from "~/app/@common/condition/ui/ConditionValueList";
 import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
 import { WarrantyValueList } from "~/app/@common/warranty/ui/WarrantyValueList";
+import type { FeedEditor } from "~/app/v0/@buyer-user/feed/ui/FeedEditor";
 
 export namespace FilterSection {
 	export interface Props extends Pick<FeedEditor.Props, "feed" | "values"> {}

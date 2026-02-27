@@ -4,7 +4,7 @@ import { LocationValueContent } from "./LocationValueContent";
 import { LocationValueContentPending } from "./LocationValueContentPending";
 
 export namespace LocationValue {
-	export interface Props extends Omit<LabelValue.Props, "textValue"> {
+	export interface Props extends LabelValue.PropsEx {
 		locationId: string | undefined | null;
 	}
 }

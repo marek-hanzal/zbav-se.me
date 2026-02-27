@@ -1,8 +1,8 @@
 import { ValueList } from "@use-pico/client/ui/container";
 import type { tCategoryItem } from "@zbav-se.me/sdk/api/session";
 import { type FC, Suspense } from "react";
-import { CategoryValueListContent } from "~/app/v0/@session/category/ui/CategoryValueListContent";
-import { CategoryValueListContentPending } from "~/app/v0/@session/category/ui/CategoryValueListContentPending";
+import { Data } from "./Data";
+import { Pending } from "./Pending";
 
 export namespace CategoryValueList {
 	export interface Props extends Omit<ValueList.Props<tCategoryItem>, "items" | "renderFn"> {
@@ -22,8 +22,8 @@ export const CategoryValueList: FC<CategoryValueList.Props> = ({ categoryIdIn, .
 	}
 
 	return (
-		<Suspense fallback={<CategoryValueListContentPending {...props} />}>
-			<CategoryValueListContent
+		<Suspense fallback={<Pending {...props} />}>
+			<Data
 				_suspense={"I know"}
 				categoryIdIn={categoryIdIn}
 				{...props}

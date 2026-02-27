@@ -1,8 +1,8 @@
 import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
 import { Group } from "@use-pico/client/ui/group";
 import type { FC } from "react";
-import type { FeedEditor } from "~/app/v0/@buyer-user/feed/ui/FeedEditor";
 import { SortValue } from "~/app/@common/sort/ui/SortValue";
+import type { FeedEditor } from "~/app/v0/@buyer-user/feed/ui/FeedEditor";
 
 export namespace SortSection {
 	export interface Props extends Pick<FeedEditor.Props, "feed" | "values"> {}

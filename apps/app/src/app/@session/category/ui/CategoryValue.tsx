@@ -1,24 +1,23 @@
 import { LabelValue } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import type { tCategory } from "@zbav-se.me/sdk/api/session";
 import type { FC } from "react";
 import { CategoryInline } from "./CategoryInline";
 
 export namespace CategoryValue {
 	export interface Props extends LabelValue.PropsEx {
-		category: tCategory | null;
+		categoryId: string | undefined | null;
 	}
 }
 
-export const CategoryValue: FC<CategoryValue.Props> = ({ category, ...props }) => {
+export const CategoryValue: FC<CategoryValue.Props> = ({ categoryId, ...props }) => {
 	return (
 		<LabelValue
 			data-ui={"CategoryValue[LabelValue]"}
 			textLabel={translator.text("Listing category (label)")}
 			textValue={
-				category ? (
+				categoryId ? (
 					<CategoryInline
-						category={category}
+						categoryId={categoryId}
 						ui={{
 							tone: "secondary",
 							theme: "light",

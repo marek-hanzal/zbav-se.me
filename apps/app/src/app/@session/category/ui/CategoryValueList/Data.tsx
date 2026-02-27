@@ -4,9 +4,9 @@ import type { EntitySchema } from "@use-pico/common/schema";
 import type { tCategoryItem } from "@zbav-se.me/sdk/api/session";
 import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
-import { CategoryInline } from "./CategoryValueListContent/CategoryInline";
+import { CategoryInline } from "~/app/@session/category/ui/CategoryInline";
 
-export namespace CategoryValueListContent {
+export namespace Data {
 	export interface Props
 		extends Omit<ValueList.Props<tCategoryItem>, "items" | "renderFn">,
 			MarkSuspense.Props {
@@ -14,11 +14,7 @@ export namespace CategoryValueListContent {
 	}
 }
 
-export const CategoryValueListContent: FC<CategoryValueListContent.Props> = ({
-	_suspense,
-	categoryIdIn,
-	...props
-}) => {
+export const Data: FC<Data.Props> = ({ _suspense, categoryIdIn, ...props }) => {
 	const { data: categoryIds } = withCategoryQuery.useCollectionQuery({
 		where: {
 			idIn: categoryIdIn,
