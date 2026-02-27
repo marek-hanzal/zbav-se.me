@@ -30,14 +30,13 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 	});
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "single",
-		initial:
-			draft.condition !== null && draft.condition !== undefined
-				? [
-						{
-							id: String(draft.condition),
-						},
-					]
-				: [],
+		initial: draft.condition
+			? [
+					{
+						id: String(draft.condition),
+					},
+				]
+			: [],
 	});
 
 	const itemId = selection.optional.singleId();

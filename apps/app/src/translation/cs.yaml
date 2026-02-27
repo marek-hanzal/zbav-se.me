@@ -103,11 +103,8 @@
 14663fea507627f6c98c1360a9aa3c6d275ed885e44051e7d88af28a:
     ref: Feed age (hint)
     value: >
-        Jedná se o stáří nabízeného předmětu - orientační hodnota, podle které můžeš
-        odhadnout,
-
-        zda jde o úplně novou věc (moderní) nebo třeba historický kousek (např.
-        stará auta).
+        Jedná se o odhad životnosti nabízeného předmětu - orientační hodnota, podle které můžeš
+        odhadnout, jak starý daný předmět cca je.
 14c26d2816c7d80dbb0d3d6314d8229e7c3eb85ea3089c55c570051a:
     ref: Condition (title)
     value: Nastavení stavu
@@ -217,7 +214,7 @@
     value: Poměr dokončených zpráv
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
     ref: Age (title)
-    value: Odhad věku
+    value: Odhad životnosti
 3136e34a81ab39a2fb1e4198edccbf10acf6244b0543a98136311b44:
     ref: Listing warranty (hint)
     value: |
@@ -395,7 +392,7 @@
     value: Nutné pro zveřejnění
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
     ref: Listing age (label)
-    value: Stáří
+    value: Životnost
 5ed9b024fb2638630326495ab7b573814766a680c0bdc1a02eba157e:
     ref: Feed name (placeholder)
     value: Např. nářadí
@@ -676,24 +673,78 @@ Buyer score 6:
 "Buyer: Transaction request created (message)":
     value: Nový zájemce!
     static: true
-Condition - Age [1] (hint):
+Condition 1 (label):
     static: true
-    value: Velmi staré/zastaralé
-Condition - Age [2] (hint):
+    value: F — Kritické
+Condition 1 (hint):
     static: true
-    value: Staré
-Condition - Age [3] (hint):
+    value: Jen pro zkušené, „záchranný“ stav.
+Condition 2 (label):
     static: true
-    value: Průměrný věk/životnost
-Condition - Age [4] (hint):
+    value: E — Špatné
+Condition 2 (hint):
     static: true
-    value: Zánovní
-Condition - Age [5] (hint):
+    value: Výrazné problémy, počítej se zásahem.
+Condition 3 (label):
     static: true
-    value: Jako nové
-Condition - Age [6] (hint):
+    value: D — Použité
+Condition 3 (hint):
     static: true
-    value: Čerstvá novinka
+    value: Viditelné nedostatky, bude chtít péči / údržbu.
+Condition 4 (label):
+    static: true
+    value: C — Dobré
+Condition 4 (hint):
+    static: true
+    value: Běžné známky používání, pořád v pohodě.
+Condition 5 (label):
+    static: true
+    value: B — Skvělé
+Condition 5 (hint):
+    static: true
+    value: Drobné nedostatky, nic zásadního.
+Condition 6 (label):
+    static: true
+    value: A — Perfektní
+Condition 6 (hint):
+    static: true
+    value: Bez vad, bez problémů.
+Age 1 (label):
+    static: true
+    value: F — Na dožití
+Age 1 (hint):
+    static: true
+    value: Na konci životnosti. Spíš na dojetí / záchranu / pro někoho, kdo ví, do čeho jde.
+Age 2 (label):
+    static: true
+    value: E — Pozdní roky
+Age 2 (hint):
+    static: true
+    value: Životnost se krátí. Častěji bude chtít péči / servis, může mít mouchy.
+Age 3 (label):
+    static: true
+    value: D — Střed života
+Age 3 (hint):
+    static: true
+    value: Známky času jdou vidět, ale pořád funguje / drží se. Zhruba “půlka až za půlkou”.
+Age 4 (label):
+    static: true
+    value: C — V nejlepších letech
+Age 4 (hint):
+    static: true
+    value: Běžně používané, ale v kondici. Ještě dlouho poslouží / bude ok.
+Age 5 (label):
+    static: true
+    value: B — Mladé
+Age 5 (hint):
+    static: true
+    value: Krátce používané / mladý kus. Stále bez známek stáří.
+Age 6 (label):
+    static: true
+    value: A — Na startu
+Age 6 (hint):
+    static: true
+    value: Úplný začátek. Prakticky nové, má toho hodně před sebou.
 Cons 0 (placeholder):
     static: true
     value: Bez dokladu

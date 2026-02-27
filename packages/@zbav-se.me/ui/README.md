@@ -60,7 +60,8 @@ Brand identity components:
 
 ### ⭐ Rating (`rating/`)
 Rating display and interaction:
-- `Rating` - Star rating component
+- `Rating` - Rating picker with icon + label/hint render functions (`textRatingFn`, `textHintFn`)
+  - Prefix/suffix render callbacks were removed from the public API.
 - `RatingCls` - Rating styling classes
 - `RatingToIcon` - Rating value to icon mapper
 

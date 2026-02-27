@@ -4,7 +4,9 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { FC } from "react";
 import { useCallback, useMemo, useState } from "react";
 import { Editor } from "~/app/@seller-user/draft/ui/DraftEditor/Editor";
+import { AgePatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/AgePatch";
 import { CategoryPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/CategoryPatch";
+import { ConditionPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/ConditionPatch";
 import { ConsPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/ConsPatch";
 import { DescriptionPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/DescriptionPatch";
 import { DeliveryPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/DeliveryPatch";
@@ -14,8 +16,6 @@ import { PricePatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/PriceP
 import { ProsPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/ProsPatch";
 import { TitlePatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/WarrantyPatch";
-import { AgePatch } from "~/app/v0/@seller-user/draft/ui/patch/AgePatch";
-import { ConditionPatch } from "~/app/v0/@seller-user/draft/ui/patch/ConditionPatch";
 import { GalleryPatch } from "~/app/v0/@seller-user/draft/ui/patch/GalleryPatch";
 import { PriceTypePatch } from "~/app/v0/@seller-user/draft/ui/patch/PriceTypePatch";
 import { RestrictionPatch } from "~/app/v0/@seller-user/draft/ui/patch/RestrictionPatch";

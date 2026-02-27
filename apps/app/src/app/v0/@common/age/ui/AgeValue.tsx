@@ -14,7 +14,7 @@ export const AgeValue: FC<AgeValue.Props> = ({ age, ...props }) => {
 		<LabelValue
 			data-ui={"AgeValue[LabelValue]"}
 			textLabel={translator.text("Listing age (label)")}
-			textValue={hasAge ? translator.text(`Condition - Age [${age}] (hint)`) : null}
+			textValue={hasAge ? translator.text(`Age ${age} (label)`) : null}
 			textEmpty={translator.text("Age not selected")}
 			textHint={translator.text("Listing age (hint)")}
 			{...props}

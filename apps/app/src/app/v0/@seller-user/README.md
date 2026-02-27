@@ -113,6 +113,10 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `@seller-user/draft/ui/DraftEditor/patch/ProsPatch.tsx`
 - Draft editor cons patch was extracted to active scope:
   - `@seller-user/draft/ui/DraftEditor/patch/ConsPatch.tsx`
+- Draft editor age patch was extracted to active scope:
+  - `@seller-user/draft/ui/DraftEditor/patch/AgePatch.tsx`
+- Draft editor condition patch was extracted to active scope:
+  - `@seller-user/draft/ui/DraftEditor/patch/ConditionPatch.tsx`
 - Draft editor delivery patch was extracted to active scope:
   - `@seller-user/draft/ui/DraftEditor/patch/DeliveryPatch.tsx`
 - Draft editor warranty patch was extracted to active scope:
