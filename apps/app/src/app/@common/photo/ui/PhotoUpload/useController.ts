@@ -8,9 +8,9 @@ import {
 	useRef,
 	useState,
 } from "react";
-import type { PhotoUpload } from "~/app/v0/@common/photo/ui/PhotoUpload";
+import type { PhotoUpload } from "~/app/@common/photo/ui/PhotoUpload";
 
-export namespace usePhotoUploadController {
+export namespace useController {
 	export interface Props {
 		value: PhotoUpload.Value;
 		onChange: PhotoUpload.OnChangeFn;
@@ -26,10 +26,10 @@ export namespace usePhotoUploadController {
 	}
 }
 
-export function usePhotoUploadController({
+export function useController({
 	value,
 	onChange,
-}: usePhotoUploadController.Props): usePhotoUploadController.Result {
+}: useController.Props): useController.Result {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [progress, setProgress] = useState(0);
 	const setUpload = withUploadFetchQuery.useSet();

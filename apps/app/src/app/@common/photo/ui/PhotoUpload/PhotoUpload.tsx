@@ -1,9 +1,9 @@
 import { Container } from "@use-pico/client/ui/container";
 import type { FC } from "react";
-import { usePhotoUploadController } from "~/app/v0/@common/photo/hook/usePhotoUploadController";
-import { PhotoUploadPending } from "./PhotoUpload/PhotoUploadPending";
-import { PhotoUploadPlaceholder } from "./PhotoUpload/PhotoUploadPlaceholder";
-import { PhotoUploadPreview } from "./PhotoUpload/PhotoUploadPreview";
+import { Pending } from "./Pending";
+import { Placeholder } from "./Placeholder";
+import { Preview } from "./Preview";
+import { useController } from "./useController";
 
 export namespace PhotoUpload {
 	export type Value = string | undefined;
@@ -23,7 +23,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	ui,
 	...props
 }) => {
-	const controller = usePhotoUploadController({
+	const controller = useController({
 		value,
 		onChange,
 	});
@@ -39,7 +39,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				border: true,
 				shadow: true,
 				position: "relative",
-				disabled: (ui?.disabled || controller.isPending) ?? undefined,
+				disabled: controller.isPending ?? undefined,
 				width: "full",
 				height: "full",
 				...ui,
@@ -58,13 +58,13 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				onChange={controller.onUpload}
 			/>
 
-			{controller.isPending ? <PhotoUploadPending progress={controller.progress} /> : null}
+			{controller.isPending ? <Pending progress={controller.progress} /> : null}
 
 			{!value && !controller.isPending ? (
-				<PhotoUploadPlaceholder disabled={ui?.disabled} />
+				<Placeholder disabled={ui?.disabled} />
 			) : null}
 
-			{value && !controller.isPending ? <PhotoUploadPreview value={value} /> : null}
+			{value && !controller.isPending ? <Preview uploadId={value} /> : null}
 		</Container>
 	);
 };

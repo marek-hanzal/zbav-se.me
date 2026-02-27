@@ -121,6 +121,13 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `@seller-user/draft/ui/DraftEditor/patch/DeliveryPatch.tsx`
 - Draft editor warranty patch was extracted to active scope:
   - `@seller-user/draft/ui/DraftEditor/patch/WarrantyPatch.tsx`
+- Draft editor price-type patch was extracted to active scope:
+  - `@seller-user/draft/ui/DraftEditor/patch/PriceTypePatch.tsx`
+- Draft editor restriction patch was extracted to active scope:
+  - `@seller-user/draft/ui/DraftEditor/patch/RestrictionPatch.tsx`
+- Draft editor gallery patch was extracted to active scope:
+  - `@seller-user/draft/ui/DraftEditor/patch/GalleryPatch.tsx`
+- Draft gallery patch now embeds gallery upload flow directly (no shared gallery-upload-container abstraction in seller patch).
 - Draft restriction patch now uses active-scope restriction selector:
   - `@common/restriction/ui/RestrictionSelect/*`
 - Draft delivery patch now uses active-scope delivery selector:

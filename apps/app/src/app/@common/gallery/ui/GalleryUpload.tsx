@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { SnapperNav } from "@use-pico/client/ui/snapper-nav";
 import type { StateType } from "@use-pico/common/type";
 import { type FC, useRef } from "react";
-import { PhotoUpload } from "~/app/v0/@common/photo/ui/PhotoUpload";
+import { PhotoUpload } from "~/app/@common/photo/ui/PhotoUpload";
 
 export namespace GalleryUpload {
 	export interface Props extends Container.Props {
@@ -14,7 +14,6 @@ export namespace GalleryUpload {
 
 export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props }) => {
 	const snapperRef = useRef<HTMLDivElement>(null);
-
 	const snapperNav = useSnapperNav({
 		containerRef: snapperRef,
 		orientation: "horizontal",

@@ -84,11 +84,12 @@ When adding to `@common`:
   - `@common/message/MessageListSuspense/MessageList.tsx` now handles data/container composition.
   - `@common/message/MessageListSuspense.tsx` now composes local suspense fallback (`MessageListPending`) for feature call-sites.
   - `@common/message/MessageRenderItem.tsx` now owns message-type dispatch (`text/system/gallery/location/personal/package`).
-- Photo upload UI was split into focused pieces:
-  - `@common/photo/hook/usePhotoUploadController.ts` owns upload/input/pending orchestration.
-  - `@common/photo/ui/PhotoUpload/PhotoUploadPending.tsx`
-  - `@common/photo/ui/PhotoUpload/PhotoUploadPlaceholder.tsx`
-  - `@common/photo/ui/PhotoUpload/PhotoUploadPreview.tsx`
+- Photo upload UI was extracted to active scope and split into focused pieces:
+  - `@common/photo/ui/PhotoUpload/PhotoUpload.tsx` is the local root component (`index.ts` exports `PhotoUpload` only).
+  - `@common/photo/ui/PhotoUpload/useController.ts` owns upload/input/pending orchestration.
+  - `@common/photo/ui/PhotoUpload/Pending.tsx`
+  - `@common/photo/ui/PhotoUpload/Placeholder.tsx`
+  - `@common/photo/ui/PhotoUpload/Preview.tsx`
   - `@common/photo/ui/PhotoUpload/PhotoUploadPreviewImageSuspense.tsx` composes local suspense fallback (`PhotoUploadPreviewImagePending`).
 - Route shell pages were extracted into shared components:
   - `@common/locale/page/LocalePage.tsx`
@@ -100,9 +101,9 @@ When adding to `@common`:
   - `@common/location/ui/LocationSelect/ListContainer/*`
 - PatchContainer abstraction was removed; patch views now compose `TitleContainer`/`Container` + `SaveContainer` inline at call-sites.
 - `LocationSelectContainer` abstraction was removed; call-sites now embed `LocationSelect` + `SaveContainer` inline.
-- `PriceTypeSelect` was split into folder-local parts:
+- `PriceTypeSelect` was extracted to active scope:
   - `@common/price-type/ui/PriceTypeSelect/PriceTypeSelect.tsx`
-  - `@common/price-type/ui/PriceTypeSelect/PriceTypeItem.tsx`
+  - `@common/price-type/ui/PriceTypeSelect/Item.tsx`
 - `ExpireAtSelect` was extracted to active scope and split into folder-local parts:
   - `@common/expire-at/ui/ExpireAtSelect/ExpireAtSelect.tsx`
   - `@common/expire-at/ui/ExpireAtSelect/ExpireAtItem.tsx`
@@ -120,3 +121,4 @@ When adding to `@common`:
   - `@common/age/ui/AgeSelection.tsx`
 - `ConditionSelect` was extracted to active scope:
   - `@common/condition/ui/ConditionSelect.tsx`
+- `GalleryUploadContainer` abstraction was removed; gallery upload flow is now embedded directly at call-sites.

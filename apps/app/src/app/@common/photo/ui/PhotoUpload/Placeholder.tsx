@@ -4,13 +4,13 @@ import { translator } from "@use-pico/common/translator";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
-export namespace PhotoUploadPlaceholder {
+export namespace Placeholder {
 	export interface Props {
 		disabled?: boolean;
 	}
 }
 
-export const PhotoUploadPlaceholder: FC<PhotoUploadPlaceholder.Props> = ({ disabled }) => {
+export const Placeholder: FC<Placeholder.Props> = ({ disabled }) => {
 	return (
 		<Container
 			data-ui={"PhotoUpload-[Container.placeholder]"}

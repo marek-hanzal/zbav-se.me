@@ -104,3 +104,4 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `@common/age/ui/AgeSelection.tsx`
 - Buyer feed condition patch now uses active-scope condition selector:
   - `@common/condition/ui/ConditionSelect.tsx`
+- Buyer feed gallery editor now embeds gallery upload flow directly (no shared gallery-upload-container abstraction).

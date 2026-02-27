@@ -5,13 +5,13 @@ import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 
-export namespace PhotoUploadPending {
+export namespace Pending {
 	export interface Props {
 		progress: number;
 	}
 }
 
-export const PhotoUploadPending: FC<PhotoUploadPending.Props> = ({ progress }) => {
+export const Pending: FC<Pending.Props> = ({ progress }) => {
 	return (
 		<Container
 			data-ui={"PhotoUpload-[Container.spinner]"}

@@ -1,11 +1,14 @@
 import { CloseIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
+import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
-import type { PropsWithChildren } from "react";
+import { type FC, type PropsWithChildren, useState } from "react";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { GalleryUpload } from "~/app/@common/gallery/ui/GalleryUpload";
 import type { EditorSheet } from "~/app/v0/@buyer-user/feed/ui/EditorSheet";
 import { FeedEditor } from "~/app/v0/@buyer-user/feed/ui/FeedEditor";
 import { AgePatch } from "~/app/v0/@buyer-user/feed/ui/patch/AgePatch";
@@ -18,8 +21,71 @@ import { RangePatch } from "~/app/v0/@buyer-user/feed/ui/patch/RangePatch";
 import { SortPatch } from "~/app/v0/@buyer-user/feed/ui/patch/SortPatch";
 import { TitlePatch } from "~/app/v0/@buyer-user/feed/ui/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/v0/@buyer-user/feed/ui/patch/WarrantyPatch";
-import { GalleryUploadContainer } from "~/app/v0/@common/gallery/ui/GalleryUploadContainer";
 import { toDetailHandlers } from "./toDetailHandlers";
+
+export namespace GalleryEditor {
+	export interface Props {
+		feed: tFeed;
+		onSuccess(): void;
+		onCancel(): void;
+	}
+}
+
+const GalleryEditor: FC<GalleryEditor.Props> = ({ feed, onSuccess, onCancel }) => {
+	const [uploadIds, setUploadIds] = useState<string[]>(
+		feed.uploadId
+			? [
+					feed.uploadId,
+				]
+			: [],
+	);
+	const mutation = withFeedGalleryCreateMutation.useMutation({
+		async onPostMutation() {
+			onSuccess();
+		},
+	});
+
+	return (
+		<Container
+			data-ui={"FeedDetailContainer-[GalleryUploadSheet]"}
+			ui={{
+				layout: "vertical-content-footer",
+				height: "full",
+				gap: "default",
+				inner: "default",
+			}}
+		>
+			<GalleryUpload
+				state={{
+					value: uploadIds,
+					set: setUploadIds,
+				}}
+				limit={1}
+			/>
+
+			<SaveContainer
+				onCancel={() => {
+					setUploadIds(
+						feed.uploadId
+							? [
+									feed.uploadId,
+								]
+							: [],
+					);
+					onCancel();
+				}}
+				onSave={() => {
+					mutation.mutate({
+						feedId: feed.id,
+						uploadIds,
+					});
+				}}
+				loading={mutation.isPending}
+				disabled={uploadIds.length === 0}
+			/>
+		</Container>
+	);
+};
 
 export namespace createEditorSheetViews {
 	export interface Props extends PropsWithChildren {
@@ -118,28 +184,13 @@ export const createEditorSheetViews = ({
 		},
 		gallery: {
 			children: (
-				<GalleryUploadContainer
-					data-ui={"FeedDetailContainer-[GalleryUploadSheet]"}
-					withMutation={withFeedGalleryCreateMutation}
-					defaultUploadIds={
-						feed.uploadId
-							? [
-									feed.uploadId,
-								]
-							: []
-					}
-					toMutation={(uploadIds) => ({
-						feedId: feed.id,
-						uploadIds,
-					})}
+				<GalleryEditor
+					feed={feed}
 					onSuccess={() => {
 						setView("detail");
 					}}
 					onCancel={() => {
 						setView("detail");
-					}}
-					ui={{
-						inner: "default",
 					}}
 				/>
 			),

@@ -18,7 +18,7 @@ import { ProsPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/ProsPat
 import { RestrictionPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/RestrictionPatch";
 import { TitlePatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/WarrantyPatch";
-import { GalleryPatch } from "~/app/v0/@seller-user/draft/ui/patch/GalleryPatch";
+import { GalleryPatch } from "~/app/@seller-user/draft/ui/DraftEditor/patch/GalleryPatch";
 
 export namespace Data {
 	export type View =
