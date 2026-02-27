@@ -13,7 +13,7 @@ import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller-user/t
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
-import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
+import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -30,7 +30,7 @@ export const Data: FC<Data.Props> = ({
 }) => {
 	const locale = useLocale();
 	const { data: transactionListing } = withTransactionListingQuery.useQuery(transactionListingId);
-	const hero = useHeroUpload(transactionListing.gallery.items);
+	const hero = useUpload(transactionListing.gallery.items);
 
 	return (
 		<Container

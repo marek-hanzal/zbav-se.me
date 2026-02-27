@@ -7,7 +7,7 @@ import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
 import { SellerInfoSuspense } from "~/app/v0/@buyer-session/listing/ui/SellerInfoSuspense";
 import { Transaction } from "~/app/v0/@buyer-user/transaction/ui/Transaction";
-import { GalleryContent } from "~/app/v0/@common/gallery/ui/GalleryContent";
+import { GalleryPreview } from "~/app/@common/gallery/ui/GalleryPreview";
 import { ListingDetail } from "./ListingDetail";
 
 export namespace ListingSheet {
@@ -79,7 +79,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				},
 				gallery: {
 					children: (
-						<GalleryContent
+						<GalleryPreview
 							uploads={listing.gallery.items.map((item) => item.upload)}
 						/>
 					),

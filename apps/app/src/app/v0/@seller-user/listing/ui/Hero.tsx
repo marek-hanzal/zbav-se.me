@@ -2,7 +2,7 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
-import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
+import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingOverlay } from "./ListingOverlay";
 import { ListingSheet } from "./ListingSheet";
 
@@ -25,7 +25,7 @@ export namespace Hero {
  * @param props Component props extending `Container.Props`.
  */
 export const Hero: FC<Hero.Props> = ({ ref, listing, heroImageProps, ...props }) => {
-	const hero = useHeroUpload(listing.gallery.items);
+	const hero = useUpload(listing.gallery.items);
 
 	const [detail, setDetail] = useState<boolean>(false);
 

@@ -5,7 +5,7 @@ import { toTimeDiff } from "@use-pico/common/time";
 import type { tMessageGallery } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
-import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
+import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { GallerySheet } from "~/app/v0/@common/gallery/ui/GallerySheet";
 
 export namespace MessageGallery {
@@ -16,7 +16,7 @@ export namespace MessageGallery {
 
 export const MessageGallery: FC<MessageGallery.Props> = ({ message, ...props }) => {
 	const locale = useLocale();
-	const hero = useHeroUpload(message.gallery.items);
+	const hero = useUpload(message.gallery.items);
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (

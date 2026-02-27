@@ -5,7 +5,7 @@ import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer-user/transacti
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { match } from "ts-pattern";
-import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
+import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { TransactionSheet } from "~/app/v0/@buyer-user/transaction/ui/TransactionSheet";
 
 export namespace Data {
@@ -17,7 +17,7 @@ export namespace Data {
 export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, className, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const { data: transaction } = withTransactionQuery.useQuery(transactionId);
-	const hero = useHeroUpload(transaction.gallery.items);
+	const hero = useUpload(transaction.gallery.items);
 
 	return (
 		<>

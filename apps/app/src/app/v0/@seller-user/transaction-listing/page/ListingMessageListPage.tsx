@@ -10,7 +10,7 @@ import { withListingFetchQuery } from "@zbav-se.me/sdk/query/seller-user/listing
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
-import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
+import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 import { ListingSheet } from "~/app/v0/@seller-user/listing/ui/ListingSheet";
 import { TransactionList } from "~/app/v0/@seller-user/transaction/ui/TransactionList";
@@ -34,7 +34,7 @@ export const ListingMessageListPage: FC<ListingMessageListPage.Props> = ({
 	});
 
 	const [detail, setDetail] = useState(false);
-	const hero = useHeroUpload(listing.gallery.items);
+	const hero = useUpload(listing.gallery.items);
 
 	return (
 		<TitleContainer

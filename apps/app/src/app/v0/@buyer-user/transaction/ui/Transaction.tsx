@@ -7,7 +7,7 @@ import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing"
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef, useState } from "react";
-import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
+import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingOverlay } from "~/app/v0/@buyer-user/listing/ui/ListingOverlay";
 import { ListingSheet } from "~/app/v0/@buyer-user/listing/ui/ListingSheet";
 import { MessageListSuspense } from "~/app/v0/@common/message/MessageListSuspense";
@@ -38,7 +38,7 @@ export const Transaction: FC<Transaction.Props> = ({
 		},
 	});
 	const [detail, setDetail] = useState(false);
-	const hero = useHeroUpload(transaction.gallery.items);
+	const hero = useUpload(transaction.gallery.items);
 
 	return (
 		<Container

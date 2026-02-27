@@ -2,7 +2,7 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
-import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
+import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { FavouriteButtonSuspense } from "~/app/v0/@buyer-user/listing/ui/button/FavouriteButtonSuspense";
 import { TransactionButton } from "~/app/v0/@buyer-user/listing/ui/button/TransactionButton";
 import { ListingOverlay } from "~/app/v0/@buyer-user/listing/ui/ListingOverlay";
@@ -22,7 +22,7 @@ export const ListingHeroSection: FC<ListingHeroSection.Props> = ({
 	onGallery,
 	onTransaction,
 }) => {
-	const hero = useHeroUpload(listing.gallery.items);
+	const hero = useUpload(listing.gallery.items);
 
 	return (
 		<>

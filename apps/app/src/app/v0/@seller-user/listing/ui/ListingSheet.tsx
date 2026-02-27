@@ -5,7 +5,7 @@ import type { StateType } from "@use-pico/common/type";
 import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useMemo, useState } from "react";
-import { GalleryContent } from "~/app/v0/@common/gallery/ui/GalleryContent";
+import { GalleryPreview } from "~/app/@common/gallery/ui/GalleryPreview";
 import { ListingDetail } from "./ListingDetail";
 
 export namespace ListingSheet {
@@ -42,7 +42,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ listing, state, ...props 
 			},
 			gallery: {
 				children: (
-					<GalleryContent uploads={listing.gallery.items.map((item) => item.upload)} />
+					<GalleryPreview uploads={listing.gallery.items.map((item) => item.upload)} />
 				),
 				header: () => ({
 					title: translator.text("Listing gallery (title)"),

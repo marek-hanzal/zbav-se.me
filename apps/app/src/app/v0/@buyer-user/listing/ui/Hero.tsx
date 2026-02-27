@@ -3,7 +3,7 @@ import { Overlay } from "@use-pico/client/ui/overlay";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
-import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
+import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { useListingEvent } from "~/app/v0/@buyer-session/listing/hook/useListingEvent";
 import type { ListingDetail } from "./ListingDetail";
 import { ListingOverlay } from "./ListingOverlay";
@@ -39,7 +39,7 @@ export const Hero: FC<Hero.Props> = ({
 	heroImageProps,
 	...props
 }) => {
-	const hero = useHeroUpload(listing.gallery.items);
+	const hero = useUpload(listing.gallery.items);
 
 	const [detail, setDetail] = useState<boolean>(false);
 

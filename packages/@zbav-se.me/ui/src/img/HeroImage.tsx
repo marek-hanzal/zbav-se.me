@@ -11,14 +11,56 @@ import {
 	useState,
 } from "react";
 
+/**
+ * Shared hero-image primitives.
+ */
 export namespace HeroImage {
+	/**
+	 * Props for {@link HeroImage}.
+	 *
+	 * Extends native `<img>` props plus UI-system container props (`ui`, `className`)
+	 * so the image can be styled consistently across app surfaces.
+	 */
 	export interface Props extends uiContainer.Component<ComponentProps<"img">> {
+		/**
+		 * Controls whether the component should render at all.
+		 *
+		 * When `false`, the component returns `invisible` instead of rendering the image/loading/error states.
+		 * Default: `true`.
+		 */
 		visible?: boolean;
+
+		/**
+		 * Optional overrides for the built-in error status.
+		 *
+		 * Used when image loading fails (`onError`) or when the image is complete but invalid.
+		 */
 		errorStatusProps?: Status.Props;
+
+		/**
+		 * Fallback node rendered when `visible` is `false`.
+		 */
 		invisible?: ReactNode;
 	}
 }
 
+/**
+ * Progressive hero image with built-in loading/error UX.
+ *
+ * What this component is for:
+ * - rendering high-priority "main" gallery/detail images
+ * - centralizing loading and failure behavior so pages stay consistent
+ *
+ * Features:
+ * - local load-state management (`loading` -> `loaded` -> `error`)
+ * - auto-reset to loading when `src` changes
+ * - immediate complete-image check on mount/layout pass
+ * - fade-in transition when image becomes loaded
+ * - spinner overlay while loading
+ * - status fallback when image fails
+ * - visibility gate (`visible`) with custom hidden fallback (`invisible`)
+ * - passes through native `<img>` handlers/attributes while still controlling core behavior
+ */
 export const HeroImage: FC<HeroImage.Props> = ({
 	visible = true,
 	errorStatusProps,

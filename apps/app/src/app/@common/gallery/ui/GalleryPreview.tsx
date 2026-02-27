@@ -4,13 +4,13 @@ import type { tUpload } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef } from "react";
 
-export namespace GalleryContent {
+export namespace GalleryPreview {
 	export interface Props extends Container.Props {
 		uploads: tUpload[];
 	}
 }
 
-export const GalleryContent: FC<GalleryContent.Props> = ({ uploads, ui, ...props }) => {
+export const GalleryPreview: FC<GalleryPreview.Props> = ({ uploads, ui, ...props }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	return (
