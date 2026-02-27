@@ -7,9 +7,9 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
+import { AgeSelection } from "~/app/@common/age/ui/AgeSelection";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { EditAction } from "~/app/@seller-user/draft/ui/DraftEditor/EditAction";
-import { AgeSelection } from "~/app/v0/@common/age/ui/AgeSelection";
 
 export namespace AgePatch {
 	export interface Props extends TitleContainer.Props {

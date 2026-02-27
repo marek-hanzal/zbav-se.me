@@ -7,9 +7,9 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
+import { ConditionSelect } from "~/app/@common/condition/ui/ConditionSelect";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { EditAction } from "~/app/@seller-user/draft/ui/DraftEditor/EditAction";
-import { ConditionSelect } from "~/app/v0/@common/condition/ui/ConditionSelect";
 
 export namespace ConditionPatch {
 	export interface Props extends TitleContainer.Props {
