@@ -2,12 +2,15 @@ import { CloseIcon, PlusIcon } from "@use-pico/client/icon";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { FormField } from "@use-pico/client/ui/form";
+import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
+import { TextInput } from "@use-pico/client/ui/text-input";
 import { translator } from "@use-pico/common/translator";
 import { sFeedCreate, type tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import { type FC, useState } from "react";
-import { TextInputContainer } from "~/app/v0/@common/input/ui/TextInputContainer";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 export namespace CreateButton {
 	export interface Props extends Button.Props {
@@ -24,6 +27,7 @@ export const CreateButton: FC<CreateButton.Props> = ({
 	...props
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
+	const [name, setName] = useState("");
 
 	const feedCreateMutation = withFeedCreateMutation.useMutation({
 		onSuccess(data) {
@@ -33,6 +37,8 @@ export const CreateButton: FC<CreateButton.Props> = ({
 			setIsOpen(false);
 		},
 	});
+
+	const invalid = !name || name.length < sFeedCreate.properties.name.minLength;
 
 	return (
 		<>
@@ -86,48 +92,92 @@ export const CreateButton: FC<CreateButton.Props> = ({
 					title: "Create new feed (title)",
 				})}
 			>
-				<TextInputContainer
+				<Container
 					data-ui={"CreateButton[TextInputContainer]"}
-					textTitle={translator.text("Feed name (title)")}
-					placeholder={translator.text("Feed name (placeholder)")}
-					hint={translator.text("Feed name (required)")}
-					minLength={sFeedCreate.properties.name.minLength}
-					onSave={(name) => {
-						if (!feedCreateMutation.isPending) {
-							feedCreateMutation.mutate({
-								name,
-								query: {
-									where: {
-										withIgnored: false,
+					ui={{
+						layout: "vertical-content-footer",
+						height: "full",
+						width: "full",
+						inner: "default",
+					}}
+				>
+					<Container
+						ui={{
+							layout: "vertical-centered",
+							height: "full",
+						}}
+					>
+						<Status
+							textTitle={translator.text("Feed name (title)")}
+							action={
+								<FormField>
+									{(fieldProps) => (
+										<TextInput
+											value={name}
+											onChange={(e) => {
+												setName(e.target.value);
+											}}
+											placeholder={translator.text("Feed name (placeholder)")}
+											autoFocus
+											minLength={sFeedCreate.properties.name.minLength}
+											{...fieldProps}
+										/>
+									)}
+								</FormField>
+							}
+							ui={{
+								text: "md",
+								inner: "4xl",
+							}}
+						>
+							<Mx
+								label={translator.text("Feed name (required)")}
+								ui={{
+									tone: "neutral",
+									theme: "light",
+								}}
+							/>
+						</Status>
+					</Container>
+
+					<SaveContainer
+						onCancel={() => {
+							setIsOpen(false);
+						}}
+						onSave={() => {
+							if (!feedCreateMutation.isPending) {
+								feedCreateMutation.mutate({
+									name,
+									query: {
+										where: {
+											withIgnored: false,
+										},
+										sort: [
+											{
+												field: "createdAt",
+												order: "desc",
+											},
+											{
+												field: "price",
+												order: "asc",
+											},
+											{
+												field: "condition",
+												order: "desc",
+											},
+											{
+												field: "age",
+												order: "desc",
+											},
+										],
 									},
-									sort: [
-										{
-											field: "createdAt",
-											order: "desc",
-										},
-										{
-											field: "price",
-											order: "asc",
-										},
-										{
-											field: "condition",
-											order: "desc",
-										},
-										{
-											field: "age",
-											order: "desc",
-										},
-									],
-								},
-							});
-						}
-					}}
-					defaultValue={""}
-					onCancel={() => {
-						setIsOpen(false);
-					}}
-					loading={feedCreateMutation.isPending}
-				/>
+								});
+							}
+						}}
+						loading={feedCreateMutation.isPending}
+						disabled={invalid}
+					/>
+				</Container>
 			</BottomSheet>
 		</>
 	);

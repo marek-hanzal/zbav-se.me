@@ -1,9 +1,13 @@
-import type { Container } from "@use-pico/client/ui/container";
+import { Container } from "@use-pico/client/ui/container";
+import { FormField } from "@use-pico/client/ui/form";
+import { Mx } from "@use-pico/client/ui/mx";
+import { Status } from "@use-pico/client/ui/status";
+import { TextInput } from "@use-pico/client/ui/text-input";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
-import type { FC } from "react";
-import { TextInputContainer } from "~/app/v0/@common/input/ui/TextInputContainer";
+import { type FC, useState } from "react";
+import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
 export namespace TitlePatch {
 	export interface Props extends Omit<Container.Props, "defaultValue"> {
@@ -13,41 +17,88 @@ export namespace TitlePatch {
 	}
 }
 
-export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, ...props }) => {
+export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, onCancel, ui, ...props }) => {
 	const patchMutation = withFeedQuery.usePatchMutation();
+	const [title, setTitle] = useState(feed.query?.filter?.title ?? "");
 
 	return (
-		<TextInputContainer
+		<Container
 			data-ui={"TitlePatch[TextInputContainer]"}
-			textTitle={translator.text("Feed title (title)")}
-			placeholder={translator.text("Feed title (placeholder)")}
-			hint={translator.text("Feed title (hint)")}
-			defaultValue={feed.query?.filter?.title ?? ""}
-			loading={patchMutation.isPending}
-			onSave={(title) => {
-				patchMutation.mutate(
-					{
-						query: {
-							where: {
-								id: feed.id,
-							},
-						},
-						patch: {
+			ui={{
+				layout: "vertical-content-footer",
+				height: "full",
+				width: "full",
+				inner: "default",
+				...ui,
+			}}
+			{...props}
+		>
+			<Container
+				ui={{
+					layout: "vertical-centered",
+					height: "full",
+				}}
+			>
+				<Status
+					textTitle={translator.text("Feed title (title)")}
+					action={
+						<FormField>
+							{(fieldProps) => (
+								<TextInput
+									value={title}
+									onChange={(e) => {
+										setTitle(e.target.value);
+									}}
+									placeholder={translator.text("Feed title (placeholder)")}
+									autoFocus
+									{...fieldProps}
+								/>
+							)}
+						</FormField>
+					}
+					ui={{
+						text: "md",
+						inner: "4xl",
+					}}
+				>
+					<Mx
+						label={translator.text("Feed title (hint)")}
+						ui={{
+							tone: "neutral",
+							theme: "light",
+						}}
+					/>
+				</Status>
+			</Container>
+
+			<SaveContainer
+				onCancel={onCancel}
+				onSave={() => {
+					patchMutation.mutate(
+						{
 							query: {
-								...feed.query,
-								filter: {
-									...feed.query?.filter,
-									title,
+								where: {
+									id: feed.id,
+								},
+							},
+							patch: {
+								query: {
+									...feed.query,
+									filter: {
+										...feed.query?.filter,
+										title,
+									},
 								},
 							},
 						},
-					},
-					{
-						onSettled,
-					},
-				);
-			}}
-			{...props}
-		/>
+						{
+							onSettled,
+						},
+					);
+				}}
+				loading={patchMutation.isPending}
+				disabled={false}
+			/>
+		</Container>
 	);
 };
