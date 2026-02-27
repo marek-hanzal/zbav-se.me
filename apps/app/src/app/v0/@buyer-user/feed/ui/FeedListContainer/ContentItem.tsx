@@ -5,19 +5,17 @@ import { Item } from "./Item";
 export namespace ContentItem {
 	export interface Props {
 		feedId: string;
-		defaultOpen: boolean;
 		tools: Item.Tools[];
 		linkTo: Item.LinkTo;
 	}
 }
 
-export const ContentItem: FC<ContentItem.Props> = ({ feedId, defaultOpen, tools, linkTo }) => {
+export const ContentItem: FC<ContentItem.Props> = ({ feedId, tools, linkTo }) => {
 	const feedQuery = withFeedQuery.useFetchQuery(feedId);
 
 	return (
 		<Item
 			feed={feedQuery.data}
-			defaultOpen={defaultOpen}
 			tools={tools}
 			linkTo={linkTo}
 		/>

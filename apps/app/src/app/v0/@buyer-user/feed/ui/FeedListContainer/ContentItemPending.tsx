@@ -10,7 +10,6 @@ export namespace ContentItemPending {
 
 export const ContentItemPending: FC<ContentItemPending.Props> = ({
 	feedId,
-	defaultOpen = false,
 	tools,
 	linkTo,
 }) => {
@@ -24,7 +23,6 @@ export const ContentItemPending: FC<ContentItemPending.Props> = ({
 				upload: null,
 				uploadId: null,
 			}}
-			defaultOpen={defaultOpen}
 			tools={tools}
 			linkTo={linkTo}
 		/>

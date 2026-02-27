@@ -16,7 +16,6 @@ export const Data: FC<Data.Props> = ({ feedId, linkTo }) => {
 		<Item
 			data-ui={"FavouriteListContainer-[Item]"}
 			feed={feed}
-			defaultOpen={false}
 			count={feed.count}
 			tools={[]}
 			linkTo={linkTo}

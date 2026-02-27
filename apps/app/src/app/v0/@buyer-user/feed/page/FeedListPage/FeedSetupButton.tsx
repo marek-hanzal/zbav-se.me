@@ -1,10 +1,11 @@
+import { SettingsIcon } from "@use-pico/client/icon";
+import { Button } from "@use-pico/client/ui/button";
 import type { Container } from "@use-pico/client/ui/container";
 import type { StateType } from "@use-pico/common/type";
 import type { FC } from "react";
-import { SheetButton } from "~/app/v0/@common/sheet/ui/SheetButton";
 
 export namespace FeedSetupButton {
-	export interface Props extends Partial<SheetButton.Props> {
+	export interface Props extends Partial<Button.Props> {
 		state: StateType.State<boolean>;
 		label?: string;
 	}
@@ -12,13 +13,14 @@ export namespace FeedSetupButton {
 
 export const FeedSetupButton: FC<FeedSetupButton.Props> = ({ state, label, ui, ...props }) => {
 	return (
-		<SheetButton
+		<Button
 			data-ui={"FeedSetupButton[SheetButton]"}
-			state={state}
-			defaultOpen={false}
+			iconEnabled={SettingsIcon}
+			onClick={() => state.set((prev) => !prev)}
 			ui={{
 				tone: "secondary",
 				theme: "light",
+				background: "default",
 				justify: "center",
 				items: "center",
 				square: "default",

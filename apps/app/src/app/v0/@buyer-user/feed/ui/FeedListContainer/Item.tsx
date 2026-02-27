@@ -1,5 +1,6 @@
-import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
+import { ChevronRightIcon, Icon, SettingsIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
+import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { tvc } from "@use-pico/cls";
@@ -8,7 +9,6 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type PropsWithChildren, type ReactNode, useState } from "react";
 import { EditorSheet } from "~/app/v0/@buyer-user/feed/ui/EditorSheet";
 import { ListingCountBadge } from "~/app/v0/@buyer-user/listing/ui/ListingCountBadge";
-import { SheetButton } from "~/app/v0/@common/sheet/ui/SheetButton";
 
 export namespace Item {
 	export type Tools = "setup";
@@ -33,7 +33,6 @@ export namespace Item {
 
 	export interface Props extends Omit<Badge.Props, "children"> {
 		feed: tFeed;
-		defaultOpen: boolean;
 		tools: Tools[];
 		count?: number;
 		linkTo: LinkTo;
@@ -44,7 +43,6 @@ export namespace Item {
 
 export const Item: FC<Item.Props> = ({
 	feed,
-	defaultOpen,
 	tools,
 	count,
 	linkTo,
@@ -146,19 +144,18 @@ export const Item: FC<Item.Props> = ({
 
 			{tools.includes("setup") ? (
 				<>
-					<SheetButton
+					<Button
 						data-ui={"Item-[FeedSetupButton]"}
+						iconEnabled={SettingsIcon}
 						iconProps={{
 							ui: {
 								text: "2xl",
 							},
 						}}
-						state={{
-							value: isFeedSettings,
-							set: setIsFeedSettings,
-						}}
-						defaultOpen={defaultOpen}
+						onClick={() => setIsFeedSettings((prev) => !prev)}
 						ui={{
+							theme: "light",
+							background: "default",
 							tone: "secondary",
 							size: "sm",
 							snapTo: "top-right",
