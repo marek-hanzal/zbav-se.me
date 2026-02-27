@@ -2,7 +2,7 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
-import { useHeroUpload } from "~/app/v0/@common/gallery/hook/useHeroUpload";
+import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
 import { ListingOverlay } from "./ListingOverlay";
 import { ListingSheet } from "./ListingSheet";
 

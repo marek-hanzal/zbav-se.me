@@ -11,7 +11,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
-import { useHeroUpload } from "~/app/v0/@common/gallery/hook/useHeroUpload";
+import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
 import { ListingSheet } from "~/app/v0/@seller-user/listing/ui/ListingSheet";
 import { TransactionList } from "~/app/v0/@seller-user/transaction/ui/TransactionList";
 

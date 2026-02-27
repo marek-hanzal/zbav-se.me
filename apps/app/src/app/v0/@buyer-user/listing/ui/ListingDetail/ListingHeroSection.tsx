@@ -5,7 +5,7 @@ import type { FC } from "react";
 import { FavouriteButtonSuspense } from "~/app/v0/@buyer-user/listing/ui/button/FavouriteButtonSuspense";
 import { TransactionButton } from "~/app/v0/@buyer-user/listing/ui/button/TransactionButton";
 import { ListingOverlay } from "~/app/v0/@buyer-user/listing/ui/ListingOverlay";
-import { useHeroUpload } from "~/app/v0/@common/gallery/hook/useHeroUpload";
+import { useHeroUpload } from "~/app/@common/gallery/hook/useHeroUpload";
 
 export namespace ListingHeroSection {
 	export interface Props {
