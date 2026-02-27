@@ -1,10 +1,8 @@
-import { Icon } from "@use-pico/client/icon";
 import { Container, LabelValue } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { RatingToIcon } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
-import { toBuyerScoreHint } from "~/app/v0/@seller-session/transaction/ui/toBuyerScoreHint";
+import { RatingIcon } from "~/app/@common/score/ui/RatingIcon";
 
 export namespace BuyerInfoScore {
 	export interface Props {
@@ -26,15 +24,10 @@ export const BuyerInfoScore: FC<BuyerInfoScore.Props> = ({ rank }) => {
 						gap: "default",
 					}}
 				>
-					<Icon
-						icon={RatingToIcon[rank as RatingToIcon.Value]}
-						ui={{
-							text: "2xl",
-						}}
-					/>
+					<RatingIcon rating={rank} />
 
 					<Tx
-						label={toBuyerScoreHint(rank)}
+						label={translator.text(`Buyer score ${rank}`)}
 						ui={{
 							wrap: "wrap",
 						}}

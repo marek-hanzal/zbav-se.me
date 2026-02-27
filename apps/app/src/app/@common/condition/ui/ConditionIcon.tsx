@@ -1,22 +1,12 @@
-import { Icon } from "@use-pico/client/icon";
-import { RatingToIcon } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
+import { RatingIcon } from "~/app/@common/score/ui/RatingIcon";
 
 export namespace ConditionIcon {
-	export interface Props extends Icon.PropsEx {
+	export interface Props extends Omit<RatingIcon.Props, "rating"> {
 		condition: number | string;
 	}
 }
 
 export const ConditionIcon: FC<ConditionIcon.Props> = ({ condition, ui, ...props }) => {
-	return (
-		<Icon
-			icon={RatingToIcon[Number(condition) as RatingToIcon.Value]}
-			ui={{
-				text: "2xl",
-				...ui,
-			}}
-			{...props}
-		/>
-	);
+	return <RatingIcon rating={condition} ui={ui} {...props} />;
 };

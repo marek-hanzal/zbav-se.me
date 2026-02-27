@@ -1,1 +1,1 @@
-// export { LocationButton } from "./LocationButton";
+export { LocationButton } from "./LocationButton";

@@ -2,14 +2,14 @@ import { Icon } from "@use-pico/client/icon";
 import { RatingToIcon } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 
-export namespace ScoreIcon {
+export namespace RatingIcon {
 	export interface Props extends Icon.PropsEx {
-		score: number | string;
+		rating: number | string;
 	}
 }
 
-export const ScoreIcon: FC<ScoreIcon.Props> = ({ score, ui, ...props }) => {
-	const value = Number(score);
+export const RatingIcon: FC<RatingIcon.Props> = ({ rating, ui, ...props }) => {
+	const value = Number(rating);
 
 	return (
 		<Icon
