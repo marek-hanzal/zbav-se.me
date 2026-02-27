@@ -100,3 +100,7 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `@common/delivery/ui/DeliverySelect.tsx`
 - Buyer feed warranty patch now uses active-scope warranty selector:
   - `@common/warranty/ui/WarrantySelect.tsx`
+- Buyer feed age patch now uses active-scope age selector:
+  - `@common/age/ui/AgeSelection.tsx`
+- Buyer feed condition patch now uses active-scope condition selector:
+  - `@common/condition/ui/ConditionSelect.tsx`

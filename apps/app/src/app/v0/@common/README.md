@@ -116,3 +116,7 @@ When adding to `@common`:
   - `@common/delivery/ui/DeliverySelect.tsx`
 - `WarrantySelect` was extracted to active scope:
   - `@common/warranty/ui/WarrantySelect.tsx`
+- `AgeSelection` was extracted to active scope:
+  - `@common/age/ui/AgeSelection.tsx`
+- `ConditionSelect` was extracted to active scope:
+  - `@common/condition/ui/ConditionSelect.tsx`

@@ -125,6 +125,10 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `@common/restriction/ui/RestrictionSelect/*`
 - Draft delivery patch now uses active-scope delivery selector:
   - `@common/delivery/ui/DeliverySelect.tsx`
+- Draft age patch now uses active-scope age selector:
+  - `@common/age/ui/AgeSelection.tsx`
+- Draft condition patch now uses active-scope condition selector:
+  - `@common/condition/ui/ConditionSelect.tsx`
 - Seller draft list now uses `withDraftQuery` collection hydration (`useCollectionQuery` + per-item `useQuery`) and keeps `data-ui` labels aligned with the bracketed contract.
 - Seller transaction list now uses `withTransactionQuery` collection hydration with configurable collection `refetchInterval`.
 - Seller transaction-listing list now uses `withTransactionListingQuery` cache hydration and renders card data from transaction-listing payload (no per-item listing fetch).
