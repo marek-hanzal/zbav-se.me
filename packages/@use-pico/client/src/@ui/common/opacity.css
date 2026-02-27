@@ -44,6 +44,6 @@
 	}
 
 	[data-ui-opacity="none"] {
-		opacity: 0;
+		opacity: 1;
 	}
 }

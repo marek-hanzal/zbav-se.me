@@ -1,8 +1,10 @@
 import { useLocale } from "@use-pico/client/hook";
+import { ArrowRightIcon, EditIcon, Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
+import { type tDraft, zListingCreate } from "@zbav-se.me/sdk/api/seller-user";
+import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useMaybeUpload } from "~/app/@common/gallery/hook/useMaybeUpload";
 import { Image } from "./Image";
@@ -17,6 +19,12 @@ export namespace DraftItem {
 export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props }) => {
 	const locale = useLocale();
 	const hero = useMaybeUpload(draft.gallery.items);
+
+	const pass = zListingCreate.safeParse({
+		...draft,
+		uploadIds: draft.gallery.items.map((item) => item.uploadId),
+		draftId: draft.id,
+	});
 
 	return (
 		<Group
@@ -48,6 +56,7 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 					items: "start",
 					width: "full",
 					height: "full",
+					position: "relative",
 				}}
 			>
 				<Image
@@ -65,6 +74,47 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 					}}
 				>
 					<Title title={draft.title} />
+				</Container>
+
+				<Icon
+					icon={ArrowRightIcon}
+					ui={{
+						tone: pass.success ? "primary" : "neutral",
+						theme: "light",
+						snapTo: "right-center",
+						text: "xl",
+						color: "lead",
+					}}
+				/>
+
+				<Container
+					ui={{
+						tone: pass.success ? "primary" : "secondary",
+						theme: "light",
+						round: "full",
+						background: "default",
+						snapTo: "bottom-left",
+						flow: "vertical",
+						items: "center",
+						justify: "center",
+						opacity: pass.success ? "none" : "7",
+						shadow: true,
+						border: true,
+					}}
+					className={[
+						"h-7",
+						"w-7",
+					]}
+				>
+					<Icon
+						icon={pass.success ? CheckIcon : EditIcon}
+						ui={{
+							tone: pass.success ? "primary" : "secondary",
+							theme: "light",
+							text: "lg",
+							color: "lead",
+						}}
+					/>
 				</Container>
 			</LinkTo>
 		</Group>

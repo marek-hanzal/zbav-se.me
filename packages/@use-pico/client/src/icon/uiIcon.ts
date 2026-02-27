@@ -15,6 +15,7 @@ export namespace uiIcon {
 		opacity?: CoolUi.Opacity;
 		//
 		snapTo?: CoolUi.SnapTo;
+		background?: CoolUi.Background;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;

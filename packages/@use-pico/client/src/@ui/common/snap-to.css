@@ -68,7 +68,7 @@
 	}
 
 	[data-ui-snap-to="right-center"] {
-		@apply right-2;
+		@apply right-2 top-1/2 -translate-y-1/2;
 		position: absolute;
 		width: auto;
 	}
