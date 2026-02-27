@@ -4,8 +4,8 @@ import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
+import { ConditionSelect } from "~/app/@common/condition/ui/ConditionSelect";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { ConditionSelect } from "~/app/v0/@common/condition/ui/ConditionSelect";
 
 export namespace ConditionPatch {
 	export interface Props extends Container.Props {

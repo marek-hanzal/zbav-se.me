@@ -4,8 +4,8 @@ import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
+import { AgeSelection } from "~/app/@common/age/ui/AgeSelection";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { AgeSelection } from "~/app/v0/@common/age/ui/AgeSelection";
 
 export namespace AgePatch {
 	export interface Props extends Container.Props {
