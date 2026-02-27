@@ -3,7 +3,7 @@ import { Group } from "@use-pico/client/ui/group";
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import type { FeedEditor } from "~/app/v0/@buyer-user/feed/ui/FeedEditor";
-import { CategoryValueList } from "~/app/v0/@session/category/ui/CategoryValueList";
+import { CategoryValueList } from "~/app/@session/category/ui/CategoryValueList";
 
 export namespace CategorySection {
 	export interface Props extends Pick<FeedEditor.Props, "feed" | "values"> {}

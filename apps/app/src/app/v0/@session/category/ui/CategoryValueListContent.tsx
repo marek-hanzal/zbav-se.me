@@ -1,10 +1,10 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { ValueList } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
-import type { tCategoryItem, tCategoryQuery } from "@zbav-se.me/sdk/api/session";
+import type { tCategoryItem } from "@zbav-se.me/sdk/api/session";
 import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
-import { CategoryInlineSuspense } from "./CategoryValueListContent/CategoryInlineSuspense";
+import { CategoryInline } from "./CategoryValueListContent/CategoryInline";
 
 export namespace CategoryValueListContent {
 	export interface Props
@@ -19,20 +19,18 @@ export const CategoryValueListContent: FC<CategoryValueListContent.Props> = ({
 	categoryIdIn,
 	...props
 }) => {
-	const query: tCategoryQuery = {
+	const { data: categoryIds } = withCategoryQuery.useCollectionQuery({
 		where: {
 			idIn: categoryIdIn,
 		},
-	};
-	const { data: categoryIds } = withCategoryQuery.useCollectionQuery(query);
-	const items: EntitySchema.Type[] = categoryIds.map((id) => ({
-		id,
-	}));
+	});
 
 	return (
 		<ValueList<EntitySchema.Type>
-			renderFn={(item) => <CategoryInlineSuspense categoryId={item.id} />}
-			items={items}
+			renderFn={(item) => <CategoryInline categoryId={item.id} />}
+			items={categoryIds.map((id) => ({
+				id,
+			}))}
 			wrapperProps={{
 				ui: {
 					tone: "neutral",
