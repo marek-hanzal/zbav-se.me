@@ -10,7 +10,7 @@ export namespace SheetButton {
 	}
 }
 
-export const SheetButton: FC<SheetButton.Props> = ({ defaultOpen, state, ...props }) => {
+export const SheetButton: FC<SheetButton.Props> = ({ defaultOpen, state, ui, ...props }) => {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: One-time-effect
 	useEffect(() => {
 		const id = setTimeout(() => {
@@ -26,6 +26,12 @@ export const SheetButton: FC<SheetButton.Props> = ({ defaultOpen, state, ...prop
 		<Button
 			iconEnabled={SettingsIcon}
 			onClick={() => state.set((prev) => !prev)}
+			ui={{
+				tone: "primary",
+				theme: "light",
+				background: "default",
+				...ui,
+			}}
 			{...props}
 		/>
 	);
