@@ -43,6 +43,7 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 					height: "full",
 					width: "full",
 					inner: "default",
+					gap: "default",
 				}}
 			>
 				<LocationSelect
