@@ -1,7 +1,7 @@
 import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
-import { ListingPrice } from "~/app/v0/@common/listing-price/ui/ListingPrice";
-import { ListingLocation } from "~/app/v0/@common/location/ui/ListingLocation";
+import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
+import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
 
 export namespace ListingOverlay {
 	export interface Props {
@@ -24,8 +24,8 @@ export const ListingOverlay: FC<ListingOverlay.Props> = ({ listing }) => {
 				}}
 			/>
 
-			<ListingLocation
-				data-ui={"ListingOverlay-[ListingLocation]"}
+			<LocationBadge
+				data-ui={"ListingOverlay-[LocationBadge]"}
 				location={listing.location}
 				distance={listing.distance}
 				ui={{

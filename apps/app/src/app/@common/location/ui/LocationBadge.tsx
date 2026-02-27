@@ -5,14 +5,14 @@ import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tLocation } from "@zbav-se.me/sdk/api/public";
 import type { FC } from "react";
 
-export namespace ListingLocation {
+export namespace LocationBadge {
 	export interface Props extends Badge.Props {
 		location: tLocation;
 		distance: number | null | undefined;
 	}
 }
 
-export const ListingLocation: FC<ListingLocation.Props> = ({
+export const LocationBadge: FC<LocationBadge.Props> = ({
 	location,
 	distance,
 	children,
@@ -24,7 +24,7 @@ export const ListingLocation: FC<ListingLocation.Props> = ({
 
 	return (
 		<Badge
-			data-ui={"ListingLocation[Root]"}
+			data-ui={"LocationBadge[Root]"}
 			className={[
 				"flex flex-col h-fit py-2 gap-0",
 				className,
