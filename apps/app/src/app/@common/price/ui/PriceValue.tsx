@@ -12,6 +12,12 @@ export namespace PriceValue {
 	}
 }
 
+/**
+ * Renders a read-only price value with consistent formatting and empty-state handling.
+ * Use it in detail cards, summaries, and previews where editable controls are not needed.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const PriceValue: FC<PriceValue.Props> = ({ price, currency, ...props }) => {
 	const locale = useLocale();
 	const hasPrice = price != null && currency != null;

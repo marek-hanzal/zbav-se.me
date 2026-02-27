@@ -7,6 +7,12 @@ export namespace ShopPage {
 	export interface Props extends TitleContainer.Props {}
 }
 
+/**
+ * Composes the route-level shop screen and arranges the main page structure for this flow.
+ * Use it from route definitions as the primary UI boundary for the shop journey.
+ *
+ * @see apps/app/src/@routes
+ */
 export const ShopPage: FC<ShopPage.Props> = (props) => {
 	return (
 		<TitleContainer

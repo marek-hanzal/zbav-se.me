@@ -4,7 +4,7 @@ import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { NameValue } from "~/app/@common/name/ui/NameValue";
 import type { FeedEditor } from "~/app/v0/@buyer-user/feed/ui/FeedEditor";
-import { GalleryValue } from "~/app/v0/@common/gallery/ui/GalleryValue";
+import { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 
 export namespace IdentitySection {
 	export interface Props extends Pick<FeedEditor.Props, "feed" | "values"> {}

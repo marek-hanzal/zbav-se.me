@@ -10,6 +10,12 @@ export namespace CategoryValueList {
 	}
 }
 
+/**
+ * Renders a read-only list of category values in a consistent label/value style.
+ * Use it in detail or preview views when you need to show multiple category entries clearly.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/patch/CategoryPatch.tsx
+ */
 export const CategoryValueList: FC<CategoryValueList.Props> = ({ categoryIdIn, ...props }) => {
 	if (!categoryIdIn || categoryIdIn.length === 0) {
 		return (

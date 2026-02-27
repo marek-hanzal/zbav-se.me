@@ -7,6 +7,12 @@ export namespace SearchPage {
 	export interface Props extends TitleContainer.Props {}
 }
 
+/**
+ * Composes the route-level search screen and arranges the main page structure for this flow.
+ * Use it from route definitions as the primary UI boundary for the search journey.
+ *
+ * @see apps/app/src/@routes
+ */
 export const SearchPage: FC<SearchPage.Props> = (props) => {
 	return (
 		<TitleContainer

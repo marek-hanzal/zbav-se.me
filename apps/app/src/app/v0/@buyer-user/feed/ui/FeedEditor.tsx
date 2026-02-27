@@ -13,7 +13,7 @@ import type { SortValue } from "~/app/@common/sort/ui/SortValue";
 import type { TitleValue } from "~/app/@common/title/ui/TitleValue";
 import type { WarrantyValueList } from "~/app/@common/warranty/ui/WarrantyValueList";
 import type { CategoryValueList } from "~/app/@session/category/ui/CategoryValueList";
-import type { GalleryValue } from "~/app/v0/@common/gallery/ui/GalleryValue";
+import type { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 import { FeedEditorDeleteButton } from "./FeedEditor/FeedEditorDeleteButton";
 import { FeedEditorFields } from "./FeedEditor/FeedEditorFields";
 

@@ -22,6 +22,12 @@ export namespace SortValue {
 	}
 }
 
+/**
+ * Renders a read-only sort value with consistent formatting and empty-state handling.
+ * Use it in detail cards, summaries, and previews where editable controls are not needed.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const SortValue: FC<SortValue.Props> = ({ sort, ...props }) => {
 	return (
 		<ValueList

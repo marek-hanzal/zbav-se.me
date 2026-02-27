@@ -12,6 +12,12 @@ export namespace UserPage {
 	export interface Props extends TitleContainer.Props {}
 }
 
+/**
+ * Composes the route-level user screen and arranges the main page structure for this flow.
+ * Use it from route definitions as the primary UI boundary for the user journey.
+ *
+ * @see apps/app/src/@routes
+ */
 export const UserPage: FC<UserPage.Props> = ({ ui, ...props }) => {
 	const user = useUser();
 

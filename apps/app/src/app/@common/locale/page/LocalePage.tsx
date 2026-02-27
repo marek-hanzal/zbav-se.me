@@ -10,6 +10,12 @@ export namespace LocalePage {
 	}
 }
 
+/**
+ * Composes the route-level locale screen and arranges the main page structure for this flow.
+ * Use it from route definitions as the primary UI boundary for the locale journey.
+ *
+ * @see apps/app/src/@routes
+ */
 export const LocalePage: FC<LocalePage.Props> = ({ locale, translations, children }) => {
 	/**
 	 * Ugly as hell, but for now I don't have better solution how to do this

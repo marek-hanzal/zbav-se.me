@@ -10,6 +10,12 @@ export namespace HomeMenuButton {
 	}
 }
 
+/**
+ * Encapsulates a focused home menu action behind shared app styling and behavior.
+ * Use it when the home menu action should stay consistent across screens.
+ *
+ * @see apps/app/src/app/@user/home/page/HomePage.tsx
+ */
 export const HomeMenuButton: FC<HomeMenuButton.Props> = ({ ui, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 

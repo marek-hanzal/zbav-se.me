@@ -8,6 +8,12 @@ export namespace DraftEditor {
 	}
 }
 
+/**
+ * Orchestrates editing sections and suspense states for the draft workflow.
+ * Use it as the top-level editor body for this domain flow.
+ *
+ * @see apps/app/src/app/@seller-user/draft/page/DraftEditPage.tsx
+ */
 export const DraftEditor: FC<DraftEditor.Props> = (props) => {
 	return (
 		<Suspense fallback={<Pending />}>

@@ -7,6 +7,18 @@ export namespace ConditionIcon {
 	}
 }
 
+/**
+ * Maps condition input data to a visual icon variant used across the app.
+ * Use it anywhere you need compact visual signaling for condition state or quality.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const ConditionIcon: FC<ConditionIcon.Props> = ({ condition, ui, ...props }) => {
-	return <RatingIcon rating={condition} ui={ui} {...props} />;
+	return (
+		<RatingIcon
+			rating={condition}
+			ui={ui}
+			{...props}
+		/>
+	);
 };

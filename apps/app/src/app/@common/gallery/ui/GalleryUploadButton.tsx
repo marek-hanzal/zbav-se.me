@@ -1,7 +1,7 @@
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
-import { GalleryUploadSheet } from "./GalleryUploadSheet";
+import { GalleryUploadSheet } from "~/app/@common/gallery/ui/GalleryUploadSheet";
 
 export namespace GalleryUploadButton {
 	export interface Props<TData extends GalleryUploadSheet.Uploads>
@@ -14,6 +14,12 @@ export namespace GalleryUploadButton {
 	}
 }
 
+/**
+ * Renders a single action button that toggles the gallery upload sheet and wires upload callbacks through.
+ * Use it in editors where photo upload should start from a clear CTA while keeping upload flow encapsulated.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/patch/GalleryPatch.tsx
+ */
 export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads>({
 	withMutation,
 	toMutation,

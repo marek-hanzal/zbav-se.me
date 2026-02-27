@@ -9,6 +9,12 @@ export namespace PriceTypeValue {
 	}
 }
 
+/**
+ * Renders a read-only price type value with consistent formatting and empty-state handling.
+ * Use it in detail cards, summaries, and previews where editable controls are not needed.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const PriceTypeValue: FC<PriceTypeValue.Props> = ({ priceType, ...props }) => {
 	const hasPriceType = priceType != null;
 	return (

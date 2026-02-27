@@ -4,13 +4,19 @@ import { CloseButton } from "@zbav-se.me/ui/button";
 import type { FC } from "react";
 import { GalleryPreview } from "~/app/@common/gallery/ui/GalleryPreview";
 
-export namespace GallerySheet {
+export namespace GalleryPreviewSheet {
 	export interface Props extends BottomSheet.Props {
 		uploads: tUpload[];
 	}
 }
 
-export const GallerySheet: FC<GallerySheet.Props> = ({ uploads, ...props }) => {
+/**
+ * Opens uploaded photos in a full-height bottom sheet so users can review gallery content in detail.
+ * Use it after photo selection when users need a dedicated preview step before confirming changes.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/patch/GalleryPatch.tsx
+ */
+export const GalleryPreviewSheet: FC<GalleryPreviewSheet.Props> = ({ uploads, ...props }) => {
 	return (
 		<BottomSheet
 			data-ui={"GalleryButton[BottomSheet]"}

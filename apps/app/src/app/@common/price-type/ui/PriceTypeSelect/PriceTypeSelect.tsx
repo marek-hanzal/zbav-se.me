@@ -11,6 +11,12 @@ export namespace PriceTypeSelect {
 	}
 }
 
+/**
+ * Provides an interactive control for selecting price type values in forms.
+ * Use it in editors where users need to choose or update price type before saving.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const PriceTypeSelect: FC<PriceTypeSelect.Props> = ({ selection, ui, ...props }) => {
 	return (
 		<Container

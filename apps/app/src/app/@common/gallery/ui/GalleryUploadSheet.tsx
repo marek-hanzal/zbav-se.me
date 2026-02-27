@@ -24,6 +24,12 @@ export namespace GalleryUploadSheet {
 	}
 }
 
+/**
+ * Coordinates the gallery upload flow in a bottom sheet, including local state, mutation submit, and cancel reset.
+ * Use it when photo changes should be edited in an isolated overlay and persisted only after explicit save.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/patch/GalleryPatch.tsx
+ */
 export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 	withMutation,
 	toMutation,

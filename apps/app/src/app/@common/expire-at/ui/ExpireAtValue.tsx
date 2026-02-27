@@ -8,6 +8,12 @@ export namespace ExpireAtValue {
 	}
 }
 
+/**
+ * Renders a read-only expire at value with consistent formatting and empty-state handling.
+ * Use it in detail cards, summaries, and previews where editable controls are not needed.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const ExpireAtValue: FC<ExpireAtValue.Props> = ({ expiresAt, ...props }) => {
 	const hasExpiresAt = expiresAt != null;
 	return (

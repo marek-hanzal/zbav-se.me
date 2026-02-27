@@ -7,6 +7,12 @@ export namespace DraftEditPage {
 	}
 }
 
+/**
+ * Composes the route-level draft edit screen and arranges the main page structure for this flow.
+ * Use it from route definitions as the primary UI boundary for the draft edit journey.
+ *
+ * @see apps/app/src/app/@seller-user/draft/page/DraftEditPage.tsx
+ */
 export const DraftEditPage: FC<DraftEditPage.Props> = ({ draftId }) => {
 	return <DraftEditor draftId={draftId} />;
 };

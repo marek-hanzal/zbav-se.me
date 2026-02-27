@@ -8,6 +8,12 @@ export namespace UserPendingPage {
 	export interface Props extends TitleContainer.Props {}
 }
 
+/**
+ * Composes the route-level user pending screen and arranges the main page structure for this flow.
+ * Use it from route definitions as the primary UI boundary for the user pending journey.
+ *
+ * @see apps/app/src/@routes
+ */
 export const UserPendingPage: FC<UserPendingPage.Props> = ({ ui, ...props }) => {
 	return (
 		<TitleContainer

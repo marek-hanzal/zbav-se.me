@@ -12,6 +12,12 @@ export namespace CategorySelect {
 	}
 }
 
+/**
+ * Provides an interactive control for selecting category values in forms.
+ * Use it in editors where users need to choose or update category before saving.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/patch/CategoryPatch.tsx
+ */
 export const CategorySelect: FC<CategorySelect.Props> = ({
 	selection,
 	categoryId,

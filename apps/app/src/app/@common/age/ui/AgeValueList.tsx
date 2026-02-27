@@ -15,6 +15,12 @@ export namespace AgeValueList {
 	}
 }
 
+/**
+ * Renders a read-only list of age values in a consistent label/value style.
+ * Use it in detail or preview views when you need to show multiple age entries clearly.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const AgeValueList: FC<AgeValueList.Props> = ({ ageIn, ...props }) => {
 	return (
 		<ValueList

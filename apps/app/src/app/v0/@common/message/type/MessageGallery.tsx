@@ -6,7 +6,7 @@ import type { tMessageGallery } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
-import { GallerySheet } from "~/app/v0/@common/gallery/ui/GallerySheet";
+import { GalleryPreviewSheet } from "~/app/@common/gallery/ui/GalleryPreviewSheet";
 
 export namespace MessageGallery {
 	export interface Props extends Container.Props {
@@ -71,7 +71,7 @@ export const MessageGallery: FC<MessageGallery.Props> = ({ message, ...props }) 
 				}}
 			/>
 
-			<GallerySheet
+			<GalleryPreviewSheet
 				uploads={message.gallery.items.map((item) => item.upload)}
 				isOpen={isGalleryOpen}
 				onClose={() => setIsGalleryOpen(false)}

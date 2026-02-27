@@ -10,6 +10,12 @@ export namespace ExpireAtSelect {
 	}
 }
 
+/**
+ * Provides an interactive control for selecting expire at values in forms.
+ * Use it in editors where users need to choose or update expire at before saving.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const ExpireAtSelect: FC<ExpireAtSelect.Props> = ({ value, onChange, ui, ...props }) => {
 	return (
 		<Container

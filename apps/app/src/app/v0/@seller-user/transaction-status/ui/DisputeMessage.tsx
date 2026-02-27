@@ -4,7 +4,7 @@ import type { tTransaction } from "@zbav-se.me/sdk/api/seller-user";
 import { withTransactionMessageGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { type FC, useState } from "react";
-import { GalleryUploadButton } from "~/app/v0/@common/gallery/ui/GalleryUploadButton";
+import { GalleryUploadButton } from "~/app/@common/gallery/ui/GalleryUploadButton";
 import { LocationButton } from "~/app/v0/@common/location/ui/LocationButton";
 import { PackageButton } from "~/app/v0/@common/package/ui/PackageButton";
 import { PersonalButton } from "~/app/v0/@common/personal/ui/PersonalButton";

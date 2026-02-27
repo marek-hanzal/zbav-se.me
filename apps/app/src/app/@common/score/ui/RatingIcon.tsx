@@ -8,6 +8,12 @@ export namespace RatingIcon {
 	}
 }
 
+/**
+ * Maps rating input data to a visual icon variant used across the app.
+ * Use it anywhere you need compact visual signaling for rating state or quality.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const RatingIcon: FC<RatingIcon.Props> = ({ rating, ui, ...props }) => {
 	const value = Number(rating);
 

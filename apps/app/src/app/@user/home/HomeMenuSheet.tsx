@@ -10,6 +10,12 @@ export namespace HomeMenuSheet {
 	}
 }
 
+/**
+ * Wraps home menu content inside a sheet-style container with app-specific defaults.
+ * Use it for secondary flows that should open in an overlay instead of a full page.
+ *
+ * @see apps/app/src/app/@user/home/page/HomePage.tsx
+ */
 export const HomeMenuSheet: FC<HomeMenuSheet.Props> = (props) => {
 	return (
 		<BottomSheet

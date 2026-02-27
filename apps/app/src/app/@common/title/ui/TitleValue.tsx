@@ -7,6 +7,12 @@ export namespace TitleValue {
 	}
 }
 
+/**
+ * Renders a read-only title value with consistent formatting and empty-state handling.
+ * Use it in detail cards, summaries, and previews where editable controls are not needed.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const TitleValue: FC<TitleValue.Props> = ({ title, ...props }) => {
 	const hasTitle = title != null && title !== "";
 	return (

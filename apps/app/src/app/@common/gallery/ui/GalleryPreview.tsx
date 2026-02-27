@@ -10,6 +10,12 @@ export namespace GalleryPreview {
 	}
 }
 
+/**
+ * Shows a visual preview of gallery content, including loading-aware rendering.
+ * Use it to confirm selected media before the final submit action.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const GalleryPreview: FC<GalleryPreview.Props> = ({ uploads, ui, ...props }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 

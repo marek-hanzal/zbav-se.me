@@ -12,7 +12,7 @@ import { TitleValue } from "~/app/@common/title/ui/TitleValue";
 import { ChevronAction } from "~/app/@seller-user/draft/ui/DraftEditor/ChevronAction";
 import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
 import { CategoryValue } from "~/app/@session/category/ui/CategoryValue";
-import { GalleryValue } from "~/app/v0/@common/gallery/ui/GalleryValue";
+import { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 
 export namespace RequiredSection {
 	export interface Props {

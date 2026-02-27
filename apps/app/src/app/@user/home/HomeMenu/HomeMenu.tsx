@@ -25,6 +25,12 @@ export namespace HomeMenu {
 	}
 }
 
+/**
+ * Builds the home navigation surface with links to key app destinations.
+ * Use it as the main navigation entry inside user-facing hub screens.
+ *
+ * @see apps/app/src/app/@user/home/page/HomePage.tsx
+ */
 export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 	const locale = useLocale();
 	const matchRoute = useMatchRoute();

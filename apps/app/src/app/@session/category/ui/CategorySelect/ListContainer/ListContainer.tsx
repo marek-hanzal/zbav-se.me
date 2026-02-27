@@ -14,6 +14,12 @@ export namespace ListContainer {
 	}
 }
 
+/**
+ * Coordinates category result rendering across loading, empty, and resolved query states.
+ * Use it in category pickers that combine fulltext input with async category fetching.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/patch/CategoryPatch.tsx
+ */
 export const ListContainer: FC<ListContainer.Props> = (props) => {
 	return (
 		<Suspense fallback={<Pending />}>

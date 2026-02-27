@@ -13,6 +13,12 @@ export namespace WelcomePage {
 	export interface Props extends Container.Props {}
 }
 
+/**
+ * Composes the route-level welcome screen and arranges the main page structure for this flow.
+ * Use it from route definitions as the primary UI boundary for the welcome journey.
+ *
+ * @see apps/app/src/@routes
+ */
 export const WelcomePage: FC<WelcomePage.Props> = ({ ui, ...props }) => {
 	const locale = useLocale();
 

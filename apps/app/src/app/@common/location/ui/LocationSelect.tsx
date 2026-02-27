@@ -16,6 +16,12 @@ export namespace LocationSelect {
 	}
 }
 
+/**
+ * Provides an interactive control for selecting location values in forms.
+ * Use it in editors where users need to choose or update location before saving.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const LocationSelect: FC<LocationSelect.Props> = ({
 	value,
 	onChange,

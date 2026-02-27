@@ -12,6 +12,12 @@ export namespace ListContainer {
 	}
 }
 
+/**
+ * Coordinates location suggestion rendering across loading, validation, and resolved query states.
+ * Use it in location search inputs where results should appear only after a meaningful text threshold.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const ListContainer: FC<ListContainer.Props> = ({
 	textHint,
 	search,

@@ -10,6 +10,12 @@ export namespace RangeValue {
 	}
 }
 
+/**
+ * Renders a read-only range value with consistent formatting and empty-state handling.
+ * Use it in detail cards, summaries, and previews where editable controls are not needed.
+ *
+ * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const RangeValue: FC<RangeValue.Props> = ({ range, ...props }) => {
 	const locale = useLocale();
 
