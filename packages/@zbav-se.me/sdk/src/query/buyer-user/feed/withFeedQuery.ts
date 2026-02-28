@@ -16,7 +16,9 @@ export const withFeedQuery = withEntityQuery<
 	tFeedQuery,
 	tFeedQuery,
 	tFeedCountQuery,
-	tFeedPatch
+	tFeedPatch,
+	never,
+	never
 >({
 	keys: () => [
 		"feed",
@@ -46,6 +48,12 @@ export const withFeedQuery = withEntityQuery<
 				body: data,
 			}),
 		);
+	},
+	async create(_data) {
+		throw new Error("Feed create is not supported by this query wrapper.");
+	},
+	async delete(_data) {
+		throw new Error("Feed delete is not supported by this query wrapper.");
 	},
 	async patch(data) {
 		return withApi(

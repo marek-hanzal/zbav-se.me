@@ -14,6 +14,8 @@ export const withCategoryQuery = withEntityQuery<
 	tCategoryQuery,
 	tCategoryQuery,
 	tCategoryCountQuery,
+	never,
+	never,
 	never
 >({
 	keys: () => [
@@ -44,6 +46,12 @@ export const withCategoryQuery = withEntityQuery<
 				body: data,
 			}),
 		);
+	},
+	async create(_data) {
+		throw new Error("Category create is not supported.");
+	},
+	async delete(_data) {
+		throw new Error("Category delete is not supported.");
 	},
 	async patch(_data) {
 		throw new Error("Category patch is not supported.");

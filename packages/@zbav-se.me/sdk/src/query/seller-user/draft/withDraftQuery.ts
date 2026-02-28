@@ -3,10 +3,13 @@ import { withApi } from "@use-pico/common/api";
 import {
 	apiDraftCollection,
 	apiDraftCount,
+	apiDraftCreate,
+	apiDraftDelete,
 	apiDraftFetch,
 	apiDraftPatch,
 	type tDraft,
 	type tDraftCountQuery,
+	type tDraftCreate,
 	type tDraftPatch,
 	type tDraftQuery,
 } from "../../../api/seller-user";
@@ -16,7 +19,9 @@ export const withDraftQuery = withEntityQuery<
 	tDraftQuery,
 	tDraftQuery,
 	tDraftCountQuery,
-	tDraftPatch
+	tDraftPatch,
+	tDraftCreate,
+	tDraftQuery
 >({
 	keys: () => [
 		"draft",
@@ -43,6 +48,20 @@ export const withDraftQuery = withEntityQuery<
 	async count(data) {
 		return withApi(
 			apiDraftCount({
+				body: data,
+			}),
+		);
+	},
+	async create(data) {
+		return withApi(
+			apiDraftCreate({
+				body: data,
+			}),
+		);
+	},
+	async delete(data) {
+		return withApi(
+			apiDraftDelete({
 				body: data,
 			}),
 		);

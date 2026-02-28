@@ -49,6 +49,8 @@ export namespace withEntityQuery {
 		TCollectionRequest,
 		TCountRequest,
 		TPatchRequest,
+		TCreateRequest,
+		TDeleteRequest,
 	> {
 		/**
 		 * Base query key prefix for this entity resource.
@@ -67,6 +69,14 @@ export namespace withEntityQuery {
 		 */
 		collection(data: TCollectionRequest): Promise<TEntity[]>;
 		count(data: TCountRequest): Promise<CountSchema.Type>;
+		/**
+		 * Create mutation.
+		 */
+		create(data: TCreateRequest): Promise<TEntity>;
+		/**
+		 * Delete mutation.
+		 */
+		delete(data: TDeleteRequest): Promise<TEntity>;
 		/**
 		 * Patches an entity and returns server-updated entity payload.
 		 */
@@ -167,19 +177,25 @@ export const withEntityQuery = <
 	TCollectionRequest,
 	TCountRequest,
 	TPatchRequest,
+	TCreateRequest,
+	TDeleteRequest,
 >({
 	keys,
 	toIdKey,
 	fetch,
 	collection,
 	count,
+	create,
+	delete: deleteEntity,
 	patch,
 }: withEntityQuery.Props<
 	TEntity,
 	TFetchRequest,
 	TCollectionRequest,
 	TCountRequest,
-	TPatchRequest
+	TPatchRequest,
+	TCreateRequest,
+	TDeleteRequest
 >) => {
 	/**
 	 * Internal key builder.
@@ -349,6 +365,91 @@ export const withEntityQuery = <
 	}
 
 	/**
+	 * Optional create mutation with the same lifecycle semantics as patch.
+	 *
+	 * - runs `onPreMutation` before API call
+	 * - writes returned entity into canonical fetch cache
+	 * - performs optional extra invalidation
+	 * - runs `onPostMutation` after cache sync
+	 */
+	function useCreateMutation<TContext = unknown>(
+		opts?: withEntityQuery.MutationOptions<TCreateRequest, TEntity, Error, TContext>,
+	) {
+		const queryClient = useQueryClient();
+		const { invalidate, onPreMutation, onPostMutation, meta, ...$opts } = opts || {};
+
+		return useMutation({
+			async mutationFn(request) {
+				await onPreMutation?.({
+					variables: request,
+				});
+
+				const result = await create(request);
+				const key = toIdKey(result.id);
+
+				queryClient.setQueryData($keys("fetch", key), result);
+
+				await invalidator(queryClient, invalidate, {
+					fetch: key,
+				});
+
+				await onPostMutation?.({
+					variables: request,
+					result,
+				});
+
+				return result;
+			},
+			meta: meta as Record<string, unknown>,
+			...$opts,
+		});
+	}
+
+	/**
+	 * Optional delete mutation with cache cleanup.
+	 *
+	 * - runs `onPreMutation` before API call
+	 * - removes canonical fetch cache for deleted entity id
+	 * - performs optional extra invalidation
+	 * - runs `onPostMutation` after cache sync
+	 */
+	function useDeleteMutation<TContext = unknown>(
+		opts?: withEntityQuery.MutationOptions<TDeleteRequest, TEntity, Error, TContext>,
+	) {
+		const queryClient = useQueryClient();
+		const { invalidate, onPreMutation, onPostMutation, meta, ...$opts } = opts || {};
+
+		return useMutation({
+			async mutationFn(request) {
+				await onPreMutation?.({
+					variables: request,
+				});
+
+				const result = await deleteEntity(request);
+				const key = toIdKey(result.id);
+
+				queryClient.removeQueries({
+					queryKey: $keys("fetch", key),
+					exact: true,
+				});
+
+				await invalidator(queryClient, invalidate, {
+					fetch: key,
+				});
+
+				await onPostMutation?.({
+					variables: request,
+					result,
+				});
+
+				return result;
+			},
+			meta: meta as Record<string, unknown>,
+			...$opts,
+		});
+	}
+
+	/**
 	 * Returns a low-level invalidation function.
 	 *
 	 * This is a brute-force fallback and should be used with caution. Prefer direct
@@ -369,12 +470,16 @@ export const withEntityQuery = <
 		fetch,
 		collection,
 		count,
+		create,
+		delete: deleteEntity,
 		invalidator,
 		//
 		useFetchQuery,
 		useCollectionQuery,
 		useCountQuery,
 		usePatchMutation,
+		useCreateMutation,
+		useDeleteMutation,
 		useInvalidator,
 	} as const;
 };
