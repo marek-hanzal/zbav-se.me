@@ -2,20 +2,19 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft, tDraftQuery } from "@zbav-se.me/sdk/api/seller-user";
+import type { tDraftQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { FC } from "react";
 import { CreateButton } from "~/app/@seller-user/draft/ui/button/CreateButton";
-import { DraftListItemSuspense } from "./DraftListItemSuspense";
+import { DraftListItemSuspense } from "../DraftListItemSuspense";
 
-export namespace DraftList {
+export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		query: tDraftQuery;
-		onSuccess?(draft: tDraft): void;
 	}
 }
 
-export const DraftList: FC<DraftList.Props> = ({ _suspense, query, onSuccess, ui, ...props }) => {
+export const Data: FC<Data.Props> = ({ _suspense, query, ui, ...props }) => {
 	const { data } = withDraftQuery.useCollectionQuery(query);
 	const { data: draftCount } = withDraftQuery.useCountQuery(query);
 

@@ -1,12 +1,12 @@
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import type { FC } from "react";
 
-export namespace DraftListPending {
+export namespace Pending {
 	export interface Props extends SpinnerContainer.Props {
 		//
 	}
 }
 
-export const DraftListPending: FC<DraftListPending.Props> = (props) => {
+export const Pending: FC<Pending.Props> = (props) => {
 	return <SpinnerContainer {...props} />;
 };

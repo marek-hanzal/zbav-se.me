@@ -1,5 +1,3 @@
-import { useNavigate } from "@tanstack/react-router";
-import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
 import type { FC } from "react";
@@ -13,9 +11,6 @@ export namespace Content {
 }
 
 export const Content: FC<Content.Props> = ({ _suspense, listingIds }) => {
-	const navigate = useNavigate();
-	const locale = useLocale();
-
 	return (
 		<>
 			{listingIds.map((listingId) => {
@@ -48,15 +43,6 @@ export const Content: FC<Content.Props> = ({ _suspense, listingIds }) => {
 				<CreateButton
 					ui={{
 						height: "full",
-					}}
-					onSuccess={(draft) => {
-						navigate({
-							to: "/$locale/seller/draft/$id/edit",
-							params: {
-								locale,
-								id: draft.id,
-							},
-						});
 					}}
 				/>
 			</Container>
