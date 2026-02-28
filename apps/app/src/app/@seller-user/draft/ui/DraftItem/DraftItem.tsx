@@ -43,88 +43,95 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 					className,
 				]}
 				ui={{
-					flow: "horizontal",
 					tone: "neutral",
 					theme: "light",
 					width: "full",
 					background: "default",
-					position: "relative",
 					...ui,
 				}}
 				{...props}
 			>
-				<Image
-					draftId={draft.id}
-					src={hero?.url}
-				/>
-
 				<Container
-					className={"min-w-0 flex-1"}
 					ui={{
-						flow: "vertical",
-						items: "end",
-						justify: "space-between",
-						inner: "xs",
+						flow: "horizontal",
+						position: "relative",
 						height: "full",
+						width: "full",
 					}}
 				>
-					<Title title={draft.title} />
-
-					<Typo
-						label={toTimeDiff({
-							locale,
-							time: draft.updatedAt,
-						})}
-						ui={{
-							tone: "neutral",
-							theme: "light",
-							text: "xs",
-							font: "normal",
-							color: "text",
-							opacity: "5",
-						}}
+					<Image
+						draftId={draft.id}
+						src={hero?.url}
 					/>
-				</Container>
 
-				<Icon
-					icon={ArrowRightIcon}
-					ui={{
-						tone: valid.isValid ? "primary" : "neutral",
-						theme: "light",
-						snapTo: "right-center",
-						text: "xl",
-						color: "lead",
-					}}
-				/>
-
-				<Container
-					ui={{
-						tone: valid.isValid ? "primary" : "secondary",
-						theme: "light",
-						round: "full",
-						background: "default",
-						snapTo: "bottom-left",
-						flow: "vertical",
-						items: "center",
-						justify: "center",
-						opacity: valid ? "none" : "7",
-						shadow: true,
-						border: true,
-					}}
-					className={[
-						"h-7",
-						"w-7",
-					]}
-				>
-					<Icon
-						icon={valid.isValid ? CheckIcon : EditIcon}
+					<Container
+						className={"min-w-0 flex-1"}
 						ui={{
-							tone: valid.isValid ? "primary" : "secondary",
+							flow: "vertical",
+							items: "start",
+							justify: "space-between",
+							height: "full",
+							inner: "xs",
+						}}
+					>
+						<Title title={draft.title} />
+
+						<Typo
+							label={toTimeDiff({
+								locale,
+								time: draft.updatedAt,
+							})}
+							ui={{
+								tone: "neutral",
+								theme: "light",
+								text: "xs",
+								font: "normal",
+								color: "text",
+								opacity: "5",
+							}}
+						/>
+					</Container>
+
+					<Icon
+						icon={ArrowRightIcon}
+						ui={{
+							tone: valid.isValid ? "primary" : "neutral",
 							theme: "light",
-							text: "lg",
+							snapTo: "right-center",
+							text: "xl",
 							color: "lead",
 						}}
 					/>
+
+					<Container
+						ui={{
+							tone: valid.isValid ? "primary" : "secondary",
+							theme: "light",
+							round: "full",
+							background: "default",
+							snapTo: "bottom-left",
+							flow: "vertical",
+							items: "center",
+							justify: "center",
+							opacity: valid ? "none" : "7",
+							shadow: true,
+							border: true,
+						}}
+						className={[
+							"h-7",
+							"w-7",
+						]}
+					>
+						<Icon
+							icon={valid.isValid ? CheckIcon : EditIcon}
+							ui={{
+								tone: valid.isValid ? "primary" : "secondary",
+								theme: "light",
+								text: "lg",
+								color: "lead",
+							}}
+						/>
+					</Container>
 				</Container>
 			</Group>
 		</LinkTo>

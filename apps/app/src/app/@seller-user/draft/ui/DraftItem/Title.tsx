@@ -12,11 +12,11 @@ export const Title: FC<Title.Props> = ({ title }) => {
 		<Tx
 			label={title ?? "Draft (label)"}
 			ui={{
-				tone: title ? "brand" : "neutral",
+				tone: title ? "primary" : "neutral",
 				theme: "light",
 				color: "lead",
 				font: "semibold",
-				text: "md",
+				text: "sm",
 				display: "block",
 				width: "full",
 				truncate: true,
