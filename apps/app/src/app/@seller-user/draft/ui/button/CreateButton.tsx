@@ -2,9 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { PlusIcon, SpinnerIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
-import { Status } from "@use-pico/client/ui/status";
-import { translator } from "@use-pico/common/translator";
+import { Tx } from "@use-pico/client/ui/tx";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { FC } from "react";
 
@@ -40,38 +38,27 @@ export const CreateButton: FC<CreateButton.Props> = ({ ui, ...props }) => {
 			}}
 			disabled={draftCreateMutation.isPending}
 			loading={draftCreateMutation.isPending}
-			iconLoading={null}
+			iconEnabled={PlusIcon}
+			iconLoading={SpinnerIcon}
+			iconProps={{
+				ui: {
+					text: "2xl",
+					opacity: "4",
+				},
+			}}
 			ui={{
 				tone: "neutral",
 				theme: "light",
-				round: "lg",
-				width: "full",
-				size: undefined,
-				shadow: true,
+				flow: "vertical",
+				items: "center",
+				inner: "default",
+				color: "lead",
+				text: "xl",
 				...ui,
 			}}
 			{...props}
 		>
-			<Container
-				ui={{
-					tone: "neutral",
-					theme: "light",
-					width: "full",
-					height: "full",
-					round: "lg",
-					flow: "horizontal",
-					items: "center",
-					justify: "center",
-					background: "default",
-					position: "relative",
-					opacity: "6",
-				}}
-			>
-				<Status
-					icon={draftCreateMutation.isPending ? SpinnerIcon : PlusIcon}
-					textTitle={translator.text("Create new draft (title)")}
-				/>
-			</Container>
+			<Tx label={"Create new draft (title)"} />
 		</Button>
 	);
 };
