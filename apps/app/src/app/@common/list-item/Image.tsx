@@ -5,12 +5,11 @@ import type { FC } from "react";
 
 export namespace Image {
 	export interface Props {
-		draftId: string;
 		src?: string;
 	}
 }
 
-export const Image: FC<Image.Props> = ({ draftId, src }) => {
+export const Image: FC<Image.Props> = ({ src }) => {
 	return (
 		<Container
 			className={"aspect-square h-full shrink-0 overflow-hidden"}
@@ -22,7 +21,7 @@ export const Image: FC<Image.Props> = ({ draftId, src }) => {
 				<HeroImage
 					data-ui={"DraftItem-[HeroImage]"}
 					src={src}
-					alt={`Hero image for draft ${draftId}`}
+					alt={`Hero image for draft`}
 					visible
 					ui={{
 						width: "full",
