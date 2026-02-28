@@ -5,7 +5,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
-import { withDraftCreateMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { FC } from "react";
 
 export namespace CreateButton {
@@ -17,7 +17,7 @@ export namespace CreateButton {
 export const CreateButton: FC<CreateButton.Props> = ({ ui, ...props }) => {
 	const navigate = useNavigate();
 	const locale = useLocale();
-	const draftCreateMutation = withDraftCreateMutation.useMutation({
+	const draftCreateMutation = withDraftQuery.useCreateMutation({
 		async onPostMutation({ result }) {
 			await navigate({
 				to: "/$locale/seller/draft/$id/edit",
@@ -27,6 +27,9 @@ export const CreateButton: FC<CreateButton.Props> = ({ ui, ...props }) => {
 				},
 			});
 		},
+		invalidate: [
+			"collection",
+		],
 	});
 
 	return (

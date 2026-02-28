@@ -5,7 +5,7 @@ import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
-import { withDraftDeleteMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
@@ -25,7 +25,7 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 }) => {
 	const navigate = useNavigate();
 	const locale = useLocale();
-	const deleteMutation = withDraftDeleteMutation.useMutation({
+	const deleteMutation = withDraftQuery.useDeleteMutation({
 		async onPostMutation() {
 			await navigate({
 				to: "/$locale/home",
@@ -34,6 +34,9 @@ export const DeleteButton: FC<DeleteButton.Props> = ({
 				},
 			});
 		},
+		invalidate: [
+			"collection",
+		],
 	});
 
 	return (
