@@ -1,6 +1,7 @@
 import { VisibilityProvider } from "@use-pico/client/context";
-import { type useElementVisibility, useLocale } from "@use-pico/client/hook";
+import { useLocale } from "@use-pico/client/hook";
 import { ChevronRightIcon } from "@use-pico/client/icon";
+import type { createVisibilityStore } from "@use-pico/client/store";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
@@ -15,7 +16,7 @@ import { Content } from "./Content";
 export namespace Data {
 	export interface Props {
 		query: tListingQuery;
-		visibility: ReturnType<typeof useElementVisibility>;
+		visibility: createVisibilityStore.Hook;
 	}
 }
 

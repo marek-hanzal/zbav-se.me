@@ -141,3 +141,4 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 - Draft list item is a local component set under `@seller-user/draft/ui/DraftList/Item/` (`Item.tsx` wrapper + `Data.tsx` + `Pending.tsx`).
 - Seller transaction list now uses `withTransactionQuery` collection hydration with configurable collection `refetchInterval`.
 - Seller transaction-listing list now uses `withTransactionListingQuery` cache hydration and renders card data from transaction-listing payload (no per-item listing fetch).
+- Seller listing list wrapper was normalized to `ListingListContainer` in `@seller-user/listing/ui/ListingListContainer/` with local `Data` + `Pending` internals.
