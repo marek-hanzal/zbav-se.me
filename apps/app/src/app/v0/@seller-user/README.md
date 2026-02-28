@@ -138,6 +138,6 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `@common/condition/ui/ConditionSelect.tsx`
 - Seller draft list now uses `withDraftQuery` collection hydration (`useCollectionQuery` + per-item `useQuery`) and keeps `data-ui` labels aligned with the bracketed contract.
 - Draft list now follows local suspense composition in `-user/draft/ui/DraftList/`: `DraftList.tsx` is the suspense wrapper, `Data.tsx` owns query + list content, and `Pending.tsx` handles spinner fallback.
-- Draft list item suspense was collapsed into a single local component at `-user/draft/ui/DraftListItem/DraftListItem.tsx` with in-place data/pending handling and barrel export via `-user/draft/ui/DraftListItem/index.ts`.
+- Draft list item now lives under the parent list as a local component set in `@seller-user/draft/ui/DraftList/Item/` (`Item.tsx` wrapper + `Data.tsx` + `Pending.tsx`).
 - Seller transaction list now uses `withTransactionQuery` collection hydration with configurable collection `refetchInterval`.
 - Seller transaction-listing list now uses `withTransactionListingQuery` cache hydration and renders card data from transaction-listing payload (no per-item listing fetch).

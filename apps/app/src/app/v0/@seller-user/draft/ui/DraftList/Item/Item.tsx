@@ -2,13 +2,13 @@ import { type FC, Suspense } from "react";
 import { Data } from "./Data";
 import { Pending } from "./Pending";
 
-export namespace DraftListItem {
+export namespace Item {
 	export interface Props extends Omit<Data.Props, "_suspense"> {
 		draftId: string;
 	}
 }
 
-export const DraftListItem: FC<DraftListItem.Props> = (props) => {
+export const Item: FC<Item.Props> = (props) => {
 	return (
 		<Suspense fallback={<Pending />}>
 			<Data

@@ -6,7 +6,7 @@ import type { tDraftQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { FC } from "react";
 import { CreateButton } from "~/app/@seller-user/draft/ui/button/CreateButton";
-import { DraftListItem } from "../DraftListItem";
+import { Item } from "./Item";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -49,14 +49,12 @@ export const Data: FC<Data.Props> = ({ _suspense, query, ui, ...props }) => {
 						textMessage={translator.text("No drafts for current filter (message)")}
 					/>
 				) : (
-					data.map((draftId) => {
-						return (
-							<DraftListItem
-								key={draftId}
-								draftId={draftId}
-							/>
-						);
-					})
+					data.map((draftId) => (
+						<Item
+							key={draftId}
+							draftId={draftId}
+						/>
+					))
 				)}
 
 				<CreateButton />
