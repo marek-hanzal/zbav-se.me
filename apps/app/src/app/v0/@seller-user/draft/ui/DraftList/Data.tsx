@@ -6,7 +6,7 @@ import type { tDraftQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { FC } from "react";
 import { CreateButton } from "~/app/@seller-user/draft/ui/button/CreateButton";
-import { DraftListItemSuspense } from "../DraftListItemSuspense";
+import { DraftListItem } from "../DraftListItem";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -51,7 +51,7 @@ export const Data: FC<Data.Props> = ({ _suspense, query, ui, ...props }) => {
 				) : (
 					data.map((draftId) => {
 						return (
-							<DraftListItemSuspense
+							<DraftListItem
 								key={draftId}
 								draftId={draftId}
 							/>
