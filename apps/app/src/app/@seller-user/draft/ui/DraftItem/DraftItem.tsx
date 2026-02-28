@@ -5,9 +5,10 @@ import { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import { type tDraft, zListingCreate } from "@zbav-se.me/sdk/api/seller-user";
+import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import { isValid } from "~/app/@common/draft/util/isValid";
 import { useMaybeUpload } from "~/app/@common/gallery/hook/useMaybeUpload";
 import { Image } from "./Image";
 import { Title } from "./Title";
@@ -22,11 +23,7 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 	const locale = useLocale();
 	const hero = useMaybeUpload(draft.gallery.items);
 
-	const pass = zListingCreate.safeParse({
-		...draft,
-		uploadIds: draft.gallery.items.map((item) => item.uploadId),
-		draftId: draft.id,
-	});
+	const valid = isValid(draft);
 
 	return (
 		<Group
@@ -97,7 +94,7 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 				<Icon
 					icon={ArrowRightIcon}
 					ui={{
-						tone: pass.success ? "primary" : "neutral",
+						tone: valid.isValid ? "primary" : "neutral",
 						theme: "light",
 						snapTo: "right-center",
 						text: "xl",
@@ -107,7 +104,7 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 
 				<Container
 					ui={{
-						tone: pass.success ? "primary" : "secondary",
+						tone: valid.isValid ? "primary" : "secondary",
 						theme: "light",
 						round: "full",
 						background: "default",
@@ -115,7 +112,7 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 						flow: "vertical",
 						items: "center",
 						justify: "center",
-						opacity: pass.success ? "none" : "7",
+						opacity: valid ? "none" : "7",
 						shadow: true,
 						border: true,
 					}}
@@ -125,9 +122,9 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 					]}
 				>
 					<Icon
-						icon={pass.success ? CheckIcon : EditIcon}
+						icon={valid.isValid ? CheckIcon : EditIcon}
 						ui={{
-							tone: pass.success ? "primary" : "secondary",
+							tone: valid.isValid ? "primary" : "secondary",
 							theme: "light",
 							text: "lg",
 							color: "lead",
