@@ -11,6 +11,8 @@ export namespace ListItem {
 		title: ReactNode;
 		bottom: ReactNode;
 	}
+
+	export type PropsEx = Partial<Props>;
 }
 
 export const ListItem: FC<ListItem.Props> = ({

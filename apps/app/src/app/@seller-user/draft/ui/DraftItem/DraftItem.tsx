@@ -1,7 +1,6 @@
 import { useLocale } from "@use-pico/client/hook";
 import { EditIcon, Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
-import type { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
@@ -14,7 +13,7 @@ import { useMaybeUpload } from "~/app/@common/gallery/hook/useMaybeUpload";
 import { ListItem } from "~/app/@common/list-item/ListItem";
 
 export namespace DraftItem {
-	export interface Props extends Group.Props {
+	export interface Props extends ListItem.PropsEx {
 		draft: tDraft;
 	}
 }
@@ -72,6 +71,7 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 						}}
 					/>
 				}
+				{...props}
 			>
 				<Container
 					ui={{
