@@ -53,7 +53,8 @@ export const CreateButton: FC<CreateButton.Props> = ({ ui, ...props }) => {
 				items: "center",
 				inner: "default",
 				color: "lead",
-				text: "xl",
+				font: "semibold",
+				text: "lg",
 				...ui,
 			}}
 			{...props}
