@@ -1,21 +1,32 @@
+import { useNavigate } from "@tanstack/react-router";
+import { useLocale } from "@use-pico/client/hook";
 import { PlusIcon, SpinnerIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { withDraftCreateMutation } from "@zbav-se.me/sdk/mutation/seller-user/draft";
 import type { FC } from "react";
 
 export namespace CreateButton {
 	export interface Props extends Button.Props {
-		onSuccess?(draft: tDraft): void;
+		//
 	}
 }
 
-export const CreateButton: FC<CreateButton.Props> = ({ onSuccess, ui, ...props }) => {
+export const CreateButton: FC<CreateButton.Props> = ({ ui, ...props }) => {
+	const navigate = useNavigate();
+	const locale = useLocale();
 	const draftCreateMutation = withDraftCreateMutation.useMutation({
-		onSuccess,
+		async onPostMutation({ result }) {
+			await navigate({
+				to: "/$locale/seller/draft/$id/edit",
+				params: {
+					locale,
+					id: result.id,
+				},
+			});
+		},
 	});
 
 	return (

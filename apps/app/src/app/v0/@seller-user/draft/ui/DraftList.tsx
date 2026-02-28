@@ -60,11 +60,7 @@ export const DraftList: FC<DraftList.Props> = ({ _suspense, query, onSuccess, ui
 					})
 				)}
 
-				<CreateButton
-					onSuccess={(draft) => {
-						onSuccess?.(draft);
-					}}
-				/>
+				<CreateButton />
 			</Container>
 		</Container>
 	);

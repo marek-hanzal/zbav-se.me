@@ -1,5 +1,3 @@
-import { useNavigate } from "@tanstack/react-router";
-import { useLocale } from "@use-pico/client/hook";
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, Suspense } from "react";
@@ -14,9 +12,6 @@ export namespace DraftListPage {
 }
 
 export const DraftListPage: FC<DraftListPage.Props> = (props) => {
-	const locale = useLocale();
-	const navigate = useNavigate();
-
 	return (
 		<TitleContainer
 			textTitle={translator.text("Draft list (title)")}
@@ -33,15 +28,6 @@ export const DraftListPage: FC<DraftListPage.Props> = (props) => {
 								order: "desc",
 							},
 						],
-					}}
-					onSuccess={(draft) => {
-						navigate({
-							to: "/$locale/seller/draft/$id/edit",
-							params: {
-								locale,
-								id: draft.id,
-							},
-						});
 					}}
 					ui={{
 						inner: "default",
