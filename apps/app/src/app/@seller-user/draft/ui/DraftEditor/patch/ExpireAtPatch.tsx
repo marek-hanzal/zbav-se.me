@@ -24,6 +24,9 @@ export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({
 	...props
 }) => {
 	const mutation = withDraftQuery.usePatchMutation({
+		invalidate: [
+			"collection",
+		],
 		onSettled,
 	});
 	const [expiresAt, setExpiresAt] = useState<tListingExpireEnum | undefined>(

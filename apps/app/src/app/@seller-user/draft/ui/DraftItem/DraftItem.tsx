@@ -14,7 +14,7 @@ import { Image } from "./Image";
 import { Title } from "./Title";
 
 export namespace DraftItem {
-	export interface Props extends Container.Props {
+	export interface Props extends Group.Props {
 		draft: tDraft;
 	}
 }
@@ -26,37 +26,32 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 	const valid = isValid(draft);
 
 	return (
-		<Group
-			data-ui={"DraftItem[Container]"}
-			data-id={draft.id}
-			className={[
-				"min-h-24",
-				"h-24",
-				"md:h-28",
-				className,
-			]}
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				width: "full",
-				background: "default",
-				...ui,
+		<LinkTo
+			to={"/$locale/seller/draft/$id/edit"}
+			params={{
+				locale,
+				id: draft.id,
 			}}
-			{...props}
 		>
-			<LinkTo
-				to={"/$locale/seller/draft/$id/edit"}
-				params={{
-					locale,
-					id: draft.id,
-				}}
+			<Group
+				data-ui={"DraftItem[Container]"}
+				data-id={draft.id}
+				className={[
+					"min-h-24",
+					"h-24",
+					"md:h-28",
+					className,
+				]}
 				ui={{
 					flow: "horizontal",
-					items: "start",
+					tone: "neutral",
+					theme: "light",
 					width: "full",
-					height: "full",
+					background: "default",
 					position: "relative",
+					...ui,
 				}}
+				{...props}
 			>
 				<Image
 					draftId={draft.id}
@@ -131,7 +126,7 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 						}}
 					/>
 				</Container>
-			</LinkTo>
-		</Group>
+			</Group>
+		</LinkTo>
 	);
 };

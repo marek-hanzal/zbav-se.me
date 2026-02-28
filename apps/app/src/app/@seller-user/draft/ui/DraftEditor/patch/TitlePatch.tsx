@@ -24,6 +24,9 @@ export namespace TitlePatch {
 export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
 	const mutation = withDraftQuery.usePatchMutation({
 		onSettled,
+		invalidate: [
+			"collection",
+		],
 	});
 	const [title, setTitle] = useState(draft.title ?? "");
 

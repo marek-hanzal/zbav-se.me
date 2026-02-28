@@ -27,6 +27,9 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onSettled, ...
 	const [items, setItems] = useState<string[]>(paddedCons);
 
 	const mutation = withDraftQuery.usePatchMutation({
+		invalidate: [
+			"collection",
+		],
 		onSettled,
 	});
 

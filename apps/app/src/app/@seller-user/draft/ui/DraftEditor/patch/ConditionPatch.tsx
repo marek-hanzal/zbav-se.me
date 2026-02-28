@@ -26,6 +26,9 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 	...props
 }) => {
 	const mutation = withDraftQuery.usePatchMutation({
+		invalidate: [
+			"collection",
+		],
 		onSettled,
 	});
 	const selection = useSelection<Rating.RatingItem>({
