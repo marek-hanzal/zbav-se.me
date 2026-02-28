@@ -26,10 +26,10 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 	...props
 }) => {
 	const mutation = withDraftQuery.usePatchMutation({
+		onSettled,
 		invalidate: [
 			"collection",
 		],
-		onSettled,
 	});
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "single",

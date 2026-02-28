@@ -27,10 +27,10 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...
 	const [items, setItems] = useState<string[]>(paddedPros);
 
 	const mutation = withDraftQuery.usePatchMutation({
+		onSettled,
 		invalidate: [
 			"collection",
 		],
-		onSettled,
 	});
 
 	const updateItem = (index: number, value: string) => {

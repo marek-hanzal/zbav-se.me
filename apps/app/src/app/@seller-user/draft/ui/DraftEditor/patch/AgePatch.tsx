@@ -21,10 +21,10 @@ export namespace AgePatch {
 
 export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
 	const mutation = withDraftQuery.usePatchMutation({
+		onSettled,
 		invalidate: [
 			"collection",
 		],
-		onSettled,
 	});
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "single",

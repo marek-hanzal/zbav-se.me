@@ -28,10 +28,10 @@ export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 }) => {
 	const [description, setDescription] = useState(draft.description ?? "");
 	const mutation = withDraftQuery.usePatchMutation({
+		onSettled,
 		invalidate: [
 			"collection",
 		],
-		onSettled,
 	});
 
 	return (

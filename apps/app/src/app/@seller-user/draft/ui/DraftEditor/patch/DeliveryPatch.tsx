@@ -26,10 +26,10 @@ export const DeliveryPatch: FC<DeliveryPatch.Props> = ({
 	...props
 }) => {
 	const mutation = withDraftQuery.usePatchMutation({
+		onSettled,
 		invalidate: [
 			"collection",
 		],
-		onSettled,
 	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",

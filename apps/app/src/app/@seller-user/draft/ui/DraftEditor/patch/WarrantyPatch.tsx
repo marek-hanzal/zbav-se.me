@@ -26,10 +26,10 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({
 	...props
 }) => {
 	const mutation = withDraftQuery.usePatchMutation({
+		onSettled,
 		invalidate: [
 			"collection",
 		],
-		onSettled,
 	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "single",

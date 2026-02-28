@@ -24,10 +24,10 @@ export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({
 	...props
 }) => {
 	const mutation = withDraftQuery.usePatchMutation({
+		onSettled,
 		invalidate: [
 			"collection",
 		],
-		onSettled,
 	});
 	const [expiresAt, setExpiresAt] = useState<tListingExpireEnum | undefined>(
 		draft.expiresAt as tListingExpireEnum,

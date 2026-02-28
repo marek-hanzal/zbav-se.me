@@ -27,10 +27,10 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 	const [locationId, setLocationId] = useState<string | undefined | null>(draft.locationId);
 	const [location, setLocation] = useState<tLocation | undefined>(undefined);
 	const mutation = withDraftQuery.usePatchMutation({
+		onSettled,
 		invalidate: [
 			"collection",
 		],
-		onSettled,
 	});
 
 	return (

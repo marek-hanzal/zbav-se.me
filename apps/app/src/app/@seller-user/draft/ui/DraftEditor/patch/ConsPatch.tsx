@@ -27,10 +27,10 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onSettled, ...
 	const [items, setItems] = useState<string[]>(paddedCons);
 
 	const mutation = withDraftQuery.usePatchMutation({
+		onSettled,
 		invalidate: [
 			"collection",
 		],
-		onSettled,
 	});
 
 	const updateItem = (index: number, value: string) => {

@@ -26,10 +26,10 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 	...props
 }) => {
 	const mutation = withDraftQuery.usePatchMutation({
+		onSettled,
 		invalidate: [
 			"collection",
 		],
-		onSettled,
 	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "single",
