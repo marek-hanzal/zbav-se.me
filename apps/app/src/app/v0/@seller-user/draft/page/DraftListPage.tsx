@@ -29,8 +29,8 @@ export const DraftListPage: FC<DraftListPage.Props> = (props) => {
 					query={{
 						sort: [
 							{
-								field: "createdAt",
-								order: "asc",
+								field: "updatedAt",
+								order: "desc",
 							},
 						],
 					}}

@@ -3,6 +3,8 @@ import { ArrowRightIcon, EditIcon, Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { Typo } from "@use-pico/client/ui/typo";
+import { toTimeDiff } from "@use-pico/common/time";
 import { type tDraft, zListingCreate } from "@zbav-se.me/sdk/api/seller-user";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
@@ -67,13 +69,29 @@ export const DraftItem: FC<DraftItem.Props> = ({ draft, ui, className, ...props 
 				<Container
 					className={"min-w-0 flex-1"}
 					ui={{
-						layout: "vertical-flex",
-						items: "start",
-						justify: "start",
+						flow: "vertical",
+						items: "end",
+						justify: "space-between",
 						inner: "xs",
+						height: "full",
 					}}
 				>
 					<Title title={draft.title} />
+
+					<Typo
+						label={toTimeDiff({
+							locale,
+							time: draft.updatedAt,
+						})}
+						ui={{
+							tone: "neutral",
+							theme: "light",
+							text: "xs",
+							font: "normal",
+							color: "text",
+							opacity: "5",
+						}}
+					/>
 				</Container>
 
 				<Icon

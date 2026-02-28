@@ -126,6 +126,11 @@ export const DraftMigration: Migration = {
 		`.execute(db);
 
 		await sql`
+			CREATE INDEX "draft_[userId-updatedAt]_idx"
+			ON "draft" ("userId", "updatedAt" ASC);
+		`.execute(db);
+
+		await sql`
 			CREATE INDEX "draft_[userId-updatedAt]_usedAt-null_idx"
 			ON "draft" ("userId", "updatedAt" DESC)
 			WHERE "usedAt" IS NULL;

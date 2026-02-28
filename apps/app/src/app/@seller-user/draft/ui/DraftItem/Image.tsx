@@ -1,4 +1,4 @@
-import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
+import { Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
@@ -43,11 +43,11 @@ export const Image: FC<Image.Props> = ({ draftId, src }) => {
 					}}
 				>
 					<Icon
-						icon={ChevronRightIcon}
+						icon={"icon-[solar--question-square-linear]"}
 						ui={{
 							text: "2xl",
 							color: "text",
-							opacity: "6",
+							opacity: "2",
 						}}
 					/>
 				</Container>
