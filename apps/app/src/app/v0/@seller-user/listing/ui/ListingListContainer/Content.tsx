@@ -1,8 +1,7 @@
 import type { MarkSuspense } from "@use-pico/client/type";
-import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
 import type { FC } from "react";
 import { CreateButton } from "~/app/@seller-user/draft/ui/button/CreateButton";
-import { ContentItemSuspense } from "./ContentItemSuspense";
+import { ListingItem } from "./ListingItem";
 
 export namespace Content {
 	export interface Props extends MarkSuspense.Props {
@@ -15,37 +14,19 @@ export const Content: FC<Content.Props> = ({ _suspense, listingIds }) => {
 		<>
 			{listingIds.map((listingId) => {
 				return (
-					<VisibleContainer
+					<ListingItem
 						key={listingId}
-						id={listingId}
-						data-ui="MyListing-[VisibleContainer]"
-						placeholder={() => {
-							return <SpinnerContainer />;
-						}}
-						ui={{
-							height: "full",
-							width: "full",
-							inner: "default",
-							round: "default",
-						}}
-					>
-						<ContentItemSuspense listingId={listingId} />
-					</VisibleContainer>
+						listingId={listingId}
+					/>
 				);
 			})}
 
-			<Container
+			<CreateButton
 				ui={{
-					inner: "default",
 					height: "full",
+					width: "full",
 				}}
-			>
-				<CreateButton
-					ui={{
-						height: "full",
-					}}
-				/>
-			</Container>
+			/>
 		</>
 	);
 };

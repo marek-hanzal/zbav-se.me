@@ -41,7 +41,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId, ...props }) => {
 					<Tx
 						label={draft.title ?? "Draft (label)"}
 						ui={{
-							tone: draft.title ? "primary" : "neutral",
+							tone: "neutral",
 							theme: "light",
 							color: "lead",
 							font: "semibold",

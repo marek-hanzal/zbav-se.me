@@ -31,6 +31,7 @@ export const ListItem: FC<ListItem.Props> = ({
 				"min-h-24",
 				"h-24",
 				"md:h-28",
+				"shrink-0",
 				className,
 			]}
 			ui={{

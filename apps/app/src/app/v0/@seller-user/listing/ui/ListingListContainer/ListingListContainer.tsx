@@ -11,10 +11,7 @@ export namespace ListingListContainer {
 	}
 }
 
-export const ListingListContainer: FC<ListingListContainer.Props> = ({
-	query,
-	...props
-}) => {
+export const ListingListContainer: FC<ListingListContainer.Props> = ({ query, ...props }) => {
 	const scrollerRef = useRef<HTMLDivElement>(null);
 
 	const visibility = useElementVisibility({
@@ -30,10 +27,11 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 			data-ui={"MyListing[Container]"}
 			ref={scrollerRef}
 			ui={{
-				layout: "vertical-full",
-				snap: "vertical",
-				snapAlign: "center",
+				flow: "vertical",
+				scroll: "vertical",
 				height: "full",
+				gap: "default",
+				inner: "default",
 			}}
 			{...props}
 		>
