@@ -2,8 +2,8 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { VisibleContainer } from "@use-pico/client/ui/container";
 import type { FC } from "react";
 import { CreateButton } from "~/app/@seller-user/draft/ui/button/CreateButton";
-import { Pending } from "./ListingItem/Pending";
 import { ListingItem } from "./ListingItem";
+import { Pending } from "./ListingItem/Pending";
 
 export namespace Content {
 	export interface Props extends MarkSuspense.Props {
