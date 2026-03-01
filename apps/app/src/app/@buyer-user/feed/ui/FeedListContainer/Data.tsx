@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
-import { CreateButton } from "~/app/v0/@buyer-user/feed/ui/button/CreateButton";
+import { CreateButton } from "./CreateButton";
 import { Item } from "./Item";
 
 export namespace Data {

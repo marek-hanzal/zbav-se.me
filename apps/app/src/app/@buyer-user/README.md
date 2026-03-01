@@ -83,6 +83,8 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `FeedDefaultPendingPage.tsx`
 - `FeedSelectPage.tsx` was extracted from `v0` to active scope:
   - `@buyer-user/feed/page/FeedSelectPage.tsx`
+- `FeedListContainer` was extracted from `v0` to active scope:
+  - `@buyer-user/feed/ui/FeedListContainer/`
 - Feed/listing components no longer accept `locale` as prop; locale is read via `useLocale()` inside the component.
 - Buyer favourite/message flow routes now use page components:
   - `@buyer-user/feed-favourite/page/FavouriteListPage.tsx`

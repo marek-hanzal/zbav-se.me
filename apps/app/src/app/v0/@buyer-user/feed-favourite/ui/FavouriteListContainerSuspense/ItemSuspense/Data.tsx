@@ -1,7 +1,7 @@
 import { withFeedFavouriteQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
-import type { Item } from "~/app/v0/@buyer-user/feed/ui/FeedListContainer/Item";
-import { View } from "~/app/v0/@buyer-user/feed/ui/FeedListContainer/Item/View";
+import type { Item } from "~/app/@buyer-user/feed/ui/FeedListContainer/Item";
+import { View } from "~/app/@buyer-user/feed/ui/FeedListContainer/Item/View";
 
 export namespace Data {
 	export interface Props {
