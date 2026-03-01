@@ -5,11 +5,12 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
+import { Typo } from "@use-pico/client/ui/typo";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { type FC, useState } from "react";
+import { ListingCount } from "~/app/@buyer-user/listing/ui/ListingCount";
 import { ListItem } from "~/app/@common/list-item/ListItem";
 import { EditorSheet } from "~/app/v0/@buyer-user/feed/ui/EditorSheet";
-import { ListingCountBadge } from "~/app/v0/@buyer-user/listing/ui/ListingCountBadge";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -69,13 +70,8 @@ export const Data: FC<Data.Props> = ({ feedId, ui, ...props }) => {
 						/>
 					}
 					bottom={
-						<ListingCountBadge
-							query={feed.query}
-							ui={{
-								tone: "neutral",
-								inner: "default",
-								size: undefined,
-							}}
+						<Typo
+							label={<ListingCount query={feed.query} />}
 							className={"max-w-1/3"}
 						/>
 					}

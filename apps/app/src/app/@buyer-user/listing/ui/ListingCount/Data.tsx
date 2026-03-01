@@ -8,15 +8,17 @@ import type { FC } from "react";
 export namespace Data {
 	export interface Props extends MarkSuspense.Props {
 		query: tListingQuery;
+		textEmpty: string;
 	}
 }
 
-export const Data: FC<Data.Props> = ({ _suspense, query }) => {
+export const Data: FC<Data.Props> = ({ _suspense, textEmpty, query }) => {
 	const locale = useLocale();
 	const { data } = withListingCountQuery.useSuspenseQuery(query);
 
-	return `${toLocaleNumber({
+	return toLocaleNumber({
 		locale,
 		number: data.filter,
-	})}`;
+		empty: textEmpty,
+	});
 };

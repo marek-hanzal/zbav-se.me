@@ -4,7 +4,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { ListingIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { ListingCountBadgeValueSuspense } from "./ListingCountBadgeValueSuspense";
+import { ListingCount } from "~/app/@buyer-user/listing/ui/ListingCount";
 
 export namespace ListingCountBadge {
 	export interface Props extends Badge.Props {
@@ -37,7 +37,7 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({ query, ui, ...p
 			/>
 
 			<Typo
-				label={<ListingCountBadgeValueSuspense query={query} />}
+				label={<ListingCount query={query} />}
 				ui={{
 					font: "bold",
 				}}
