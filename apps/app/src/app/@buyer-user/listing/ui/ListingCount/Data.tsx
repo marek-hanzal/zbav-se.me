@@ -17,9 +17,10 @@ export const Data: FC<Data.Props> = ({ _suspense, textEmpty, query }) => {
 	const locale = useLocale();
 	const { data } = withListingQuery.useCountQuery(query);
 
-	return toLocaleNumber({
-		locale,
-		number: data.filter,
-		empty: textEmpty ?? translator.text("No listings (label)"),
-	});
+	return data.filter > 0
+		? toLocaleNumber({
+				locale,
+				number: data.filter,
+			})
+		: (textEmpty ?? translator.text("No listings (label)"));
 };

@@ -60,7 +60,7 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 					className: [],
 				})}
 			>
-				{textCancel ?? <Tx label="Cancel (button)" />}
+				{textCancel ?? <Tx label="Back (label)" />}
 			</Button>
 
 			<Button
