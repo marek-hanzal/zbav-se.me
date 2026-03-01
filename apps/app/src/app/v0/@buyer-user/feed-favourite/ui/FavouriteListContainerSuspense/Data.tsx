@@ -10,7 +10,6 @@ import { ItemSuspense } from "./ItemSuspense";
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		query: tFeedQuery;
-		linkTo: Item.LinkTo;
 	}
 }
 
@@ -23,7 +22,7 @@ export namespace Data {
  *
  * @see {@link Item} - The component used to render individual feed items
  */
-export const Data: FC<Data.Props> = ({ _suspense, query, linkTo, ui, ...props }) => {
+export const Data: FC<Data.Props> = ({ _suspense, query, ui, ...props }) => {
 	const { data: feedIds } = withFeedFavouriteQuery.useCollectionQuery(query);
 	const { data: feedCount } = withFeedFavouriteQuery.useCount(query);
 
@@ -54,7 +53,6 @@ export const Data: FC<Data.Props> = ({ _suspense, query, linkTo, ui, ...props })
 						<ItemSuspense
 							key={feedId}
 							feedId={feedId}
-							linkTo={linkTo}
 						/>
 					))}
 				</Container>

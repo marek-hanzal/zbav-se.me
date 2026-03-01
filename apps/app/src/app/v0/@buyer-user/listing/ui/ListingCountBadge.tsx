@@ -1,8 +1,6 @@
-import { useLocale } from "@use-pico/client/hook";
 import { Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Typo } from "@use-pico/client/ui/typo";
-import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { ListingIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
@@ -10,13 +8,11 @@ import { ListingCountBadgeValueSuspense } from "./ListingCountBadgeValueSuspense
 
 export namespace ListingCountBadge {
 	export interface Props extends Badge.Props {
-		count?: number;
 		query: tListingQuery;
 	}
 }
 
-export const ListingCountBadge: FC<ListingCountBadge.Props> = ({ count, query, ui, ...props }) => {
-	const locale = useLocale();
+export const ListingCountBadge: FC<ListingCountBadge.Props> = ({ query, ui, ...props }) => {
 	return (
 		<Badge
 			ui={{
@@ -41,16 +37,7 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({ count, query, u
 			/>
 
 			<Typo
-				label={
-					count ? (
-						toLocaleNumber({
-							locale,
-							number: count,
-						})
-					) : (
-						<ListingCountBadgeValueSuspense query={query} />
-					)
-				}
+				label={<ListingCountBadgeValueSuspense query={query} />}
 				ui={{
 					font: "bold",
 				}}

@@ -1,5 +1,3 @@
-import { useLocale } from "@use-pico/client/hook";
-import { LinkTo } from "@use-pico/client/ui/link-to";
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
@@ -11,8 +9,6 @@ export namespace FavouriteListPage {
 }
 
 export const FavouriteListPage: FC<FavouriteListPage.Props> = (props) => {
-	const locale = useLocale();
-
 	return (
 		<TitleContainer
 			textTitle={translator.text("Your favourites (title)")}
@@ -28,24 +24,6 @@ export const FavouriteListPage: FC<FavouriteListPage.Props> = (props) => {
 							order: "desc",
 						},
 					],
-				}}
-				linkTo={{
-					header: ({ feedId, children }) => (
-						<LinkTo
-							data-ui={"BuyerFavouriteList-[LinkTo.header]"}
-							to={"/$locale/buyer/feed/$id/favourite/list"}
-							params={{
-								locale,
-								id: feedId,
-							}}
-							ui={{
-								display: "block",
-								height: "full",
-							}}
-						>
-							{children}
-						</LinkTo>
-					),
 				}}
 				ui={{
 					inner: "default",
