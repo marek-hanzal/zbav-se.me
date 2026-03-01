@@ -1,6 +1,7 @@
 import { withFeedFavouriteQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
-import { Item } from "~/app/v0/@buyer-user/feed/ui/FeedListContainer/Item";
+import type { Item } from "~/app/v0/@buyer-user/feed/ui/FeedListContainer/Item";
+import { View } from "~/app/v0/@buyer-user/feed/ui/FeedListContainer/Item/View";
 
 export namespace Data {
 	export interface Props {
@@ -13,7 +14,7 @@ export const Data: FC<Data.Props> = ({ feedId, linkTo }) => {
 	const { data: feed } = withFeedFavouriteQuery.useQuery(feedId);
 
 	return (
-		<Item
+		<View
 			data-ui={"FavouriteListContainer-[Item]"}
 			feed={feed}
 			count={feed.count}

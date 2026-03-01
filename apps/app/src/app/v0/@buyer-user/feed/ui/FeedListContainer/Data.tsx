@@ -3,8 +3,8 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
-import { Content } from "./Content";
-import type { Item } from "./Item";
+import { CreateButton } from "~/app/v0/@buyer-user/feed/ui/button/CreateButton";
+import { Item } from "./Item";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -15,16 +15,18 @@ export namespace Data {
 	}
 }
 
-export const Data: FC<Data.Props> = ({
-	_suspense,
-	query,
-	limit = 10,
-	tools,
-	linkTo,
-	...props
-}) => {
+export const Data: FC<Data.Props> = ({ _suspense, query, limit = 10, tools, linkTo, ...props }) => {
+	/**
+	 * This is intentional to trigger parent suspense
+	 */
+	const feedCollectionQuery = withFeedQuery.useCollectionQuery(query);
+	const { data: listingCount } = withFeedQuery.useCountQuery(query);
 	const { data: feedCount } = withFeedQuery.useCountQuery({});
 	const isLimitReached = feedCount.filter >= limit;
+
+	if (listingCount.isEmpty || listingCount.isFilterEmpty) {
+		return null;
+	}
 
 	return (
 		<Container
@@ -38,13 +40,29 @@ export const Data: FC<Data.Props> = ({
 			}}
 			{...props}
 		>
-			<Content
-				_suspense={"I know"}
-				query={query}
-				tools={tools}
-				linkTo={linkTo}
-				isLimitReached={isLimitReached}
-			/>
+			<Container
+				data-ui="FeedList-[Container.content]"
+				ui={{
+					layout: "vertical-flex",
+					gap: "default",
+				}}
+			>
+				{feedCollectionQuery.data.map((feedId) => {
+					return (
+						<Item
+							key={feedId}
+							feedId={feedId}
+							tools={tools}
+							linkTo={linkTo}
+						/>
+					);
+				})}
+
+				<CreateButton
+					disabled={isLimitReached}
+					isLimitReached={isLimitReached}
+				/>
+			</Container>
 		</Container>
 	);
 };

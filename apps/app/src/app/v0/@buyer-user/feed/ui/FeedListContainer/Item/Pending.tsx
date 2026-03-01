@@ -1,16 +1,17 @@
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
-import { Item } from "./Item";
+import type { Data } from "./Data";
+import { View } from "./View";
 
-export namespace ContentItemPending {
-	export interface Props extends Item.PropsEx {
-		feedId: string;
+export namespace Pending {
+	export interface Props extends Data.Props {
+		//
 	}
 }
 
-export const ContentItemPending: FC<ContentItemPending.Props> = ({ feedId, tools, linkTo }) => {
+export const Pending: FC<Pending.Props> = ({ feedId, tools, linkTo }) => {
 	return (
-		<Item
+		<View
 			feed={{
 				id: feedId,
 				locationId: null,

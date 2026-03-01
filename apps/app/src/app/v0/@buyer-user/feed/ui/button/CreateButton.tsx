@@ -11,6 +11,7 @@ import { sFeedCreate, type tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import { toFeedCreate } from "~/app/v0/@buyer-user/feed/service/feedCreateDefault";
 
 export namespace CreateButton {
 	export interface Props extends Button.Props {
@@ -146,32 +147,11 @@ export const CreateButton: FC<CreateButton.Props> = ({
 						}}
 						onSave={() => {
 							if (!feedCreateMutation.isPending) {
-								feedCreateMutation.mutate({
-									name,
-									query: {
-										where: {
-											withIgnored: false,
-										},
-										sort: [
-											{
-												field: "createdAt",
-												order: "desc",
-											},
-											{
-												field: "price",
-												order: "asc",
-											},
-											{
-												field: "condition",
-												order: "desc",
-											},
-											{
-												field: "age",
-												order: "desc",
-											},
-										],
-									},
-								});
+								feedCreateMutation.mutate(
+									toFeedCreate({
+										name,
+									}),
+								);
 							}
 						}}
 						loading={feedCreateMutation.isPending}

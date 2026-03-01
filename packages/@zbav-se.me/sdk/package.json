@@ -11,16 +11,16 @@
 		"@use-pico/client": "workspace:*",
 		"@use-pico/common": "workspace:*",
 		"@use-pico/server": "workspace:*",
-		"axios": "1.13.5",
+		"axios": "1.13.6",
 		"zod": "4.3.6"
 	},
 	"devDependencies": {
-		"@hey-api/openapi-ts": "0.93.0",
-		"@types/node": "25.3.1",
-		"@typescript/native-preview": "7.0.0-dev.20260226.1",
+		"@hey-api/openapi-ts": "0.93.1",
+		"@types/node": "25.3.3",
+		"@typescript/native-preview": "7.0.0-dev.20260301.1",
 		"@use-pico/tsconfig": "5.0.0",
 		"typescript": "beta",
-		"vite": "8.0.0-beta.15"
+		"vite": "8.0.0-beta.16"
 	},
 	"exports": {
 		"./api/*": {
