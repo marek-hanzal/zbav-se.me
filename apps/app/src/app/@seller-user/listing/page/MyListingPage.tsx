@@ -8,6 +8,12 @@ export namespace MyListingPage {
 	export interface Props extends TitleContainer.Props {}
 }
 
+/**
+ * Composes the seller listings page with heading chrome and default query for newest listings first.
+ * Use it as the route-level entry screen for managing a seller account listing portfolio.
+ *
+ * @see apps/app/src/@routes
+ */
 export const MyListingPage: FC<MyListingPage.Props> = (props) => {
 	return (
 		<TitleContainer

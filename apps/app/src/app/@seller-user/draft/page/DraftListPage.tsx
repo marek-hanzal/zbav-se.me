@@ -10,6 +10,12 @@ export namespace DraftListPage {
 	}
 }
 
+/**
+ * Composes the draft-list page with title framing and sorted draft collection rendering.
+ * Use it as the route-level screen for browsing and continuing seller draft edits.
+ *
+ * @see apps/app/src/@routes
+ */
 export const DraftListPage: FC<DraftListPage.Props> = (props) => {
 	return (
 		<TitleContainer

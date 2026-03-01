@@ -11,6 +11,12 @@ export namespace ListingList {
 	}
 }
 
+/**
+ * Builds the seller listing scroll container, wires visibility tracking, and loads data via suspense.
+ * Use it as the main list body for seller listings when visibility-aware rendering is required.
+ *
+ * @see apps/app/src/app/@seller-user/listing/page/MyListingPage.tsx
+ */
 export const ListingList: FC<ListingList.Props> = ({ query, ...props }) => {
 	const scrollerRef = useRef<HTMLDivElement>(null);
 

@@ -8,6 +8,12 @@ export namespace DraftList {
 	}
 }
 
+/**
+ * Coordinates draft list loading through suspense and renders resolved draft rows via the data layer.
+ * Use it in seller draft screens where async list fetching needs a dedicated pending fallback.
+ *
+ * @see apps/app/src/app/@seller-user/draft/page/DraftListPage.tsx
+ */
 export const DraftList: FC<DraftList.Props> = (props) => {
 	return (
 		<Suspense fallback={<Pending />}>

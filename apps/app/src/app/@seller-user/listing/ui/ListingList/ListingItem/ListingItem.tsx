@@ -8,6 +8,12 @@ export namespace ListingItem {
 	}
 }
 
+/**
+ * Wraps one seller listing row in suspense so item-level data can resolve with isolated fallback.
+ * Use it inside virtualized or incremental listing collections where each item may load independently.
+ *
+ * @see apps/app/src/app/@seller-user/listing/ui/ListingList/ListingList.tsx
+ */
 export const ListingItem: FC<ListingItem.Props> = (props) => {
 	return (
 		<Suspense fallback={<Pending />}>

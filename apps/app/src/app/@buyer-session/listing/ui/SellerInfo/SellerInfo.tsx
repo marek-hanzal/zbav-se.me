@@ -8,6 +8,12 @@ export namespace SellerInfo {
 	}
 }
 
+/**
+ * Wraps seller profile details in suspense so listing-level seller data can resolve asynchronously.
+ * Use it inside listing detail flows when buyer context needs seller metadata without blocking the surrounding UI.
+ *
+ * @see apps/app/src/app/@buyer-session/listing/ui/SellerInfoButton.tsx
+ */
 export const SellerInfo: FC<SellerInfo.Props> = (props) => {
 	return (
 		<Suspense fallback={<Pending />}>

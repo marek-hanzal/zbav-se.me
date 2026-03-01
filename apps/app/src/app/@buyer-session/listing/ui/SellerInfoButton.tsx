@@ -13,6 +13,12 @@ export namespace SellerInfoButton {
 	}
 }
 
+/**
+ * Renders an action button that opens seller information in a bottom sheet tied to a specific listing.
+ * Use it in listing cards or detail headers where buyer users need quick access to seller details.
+ *
+ * @see apps/app/src/app/@buyer-session/listing/ui/SellerInfo/SellerInfo.tsx
+ */
 export const SellerInfoButton: FC<SellerInfoButton.Props> = ({ listingId, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 

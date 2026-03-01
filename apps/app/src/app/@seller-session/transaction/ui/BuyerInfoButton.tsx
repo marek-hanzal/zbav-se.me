@@ -13,6 +13,12 @@ export namespace BuyerInfoButton {
 	}
 }
 
+/**
+ * Renders an action button that opens buyer information in a bottom sheet for a selected transaction.
+ * Use it in transaction toolbars where sellers need quick access to buyer details without route changes.
+ *
+ * @see apps/app/src/app/@seller-session/transaction/ui/BuyerInfo/BuyerInfo.tsx
+ */
 export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({ transactionId, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 

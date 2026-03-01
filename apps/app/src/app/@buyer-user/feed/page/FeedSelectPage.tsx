@@ -10,6 +10,12 @@ export namespace FeedSelectPage {
 	}
 }
 
+/**
+ * Composes the feed-selection page with title, navigation action, and feed list query defaults.
+ * Use it as the route-level screen for choosing and managing buyer feed presets.
+ *
+ * @see apps/app/src/@routes
+ */
 export const FeedSelectPage: FC<FeedSelectPage.Props> = ({ ui, ...props }) => {
 	const feedCountLimit = 3;
 

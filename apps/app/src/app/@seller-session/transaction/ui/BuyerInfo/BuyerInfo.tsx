@@ -8,6 +8,12 @@ export namespace BuyerInfo {
 	}
 }
 
+/**
+ * Wraps buyer transaction details in suspense so participant information can load independently.
+ * Use it in seller-side transaction flows when buyer profile context is shown on demand.
+ *
+ * @see apps/app/src/app/@seller-session/transaction/ui/BuyerInfoButton.tsx
+ */
 export const BuyerInfo: FC<BuyerInfo.Props> = (props) => {
 	return (
 		<Suspense fallback={<Pending />}>

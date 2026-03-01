@@ -2,7 +2,7 @@ import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-user";
-import { withListingCountQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import type { FC } from "react";
 
 export namespace Data {
@@ -14,7 +14,7 @@ export namespace Data {
 
 export const Data: FC<Data.Props> = ({ _suspense, textEmpty, query }) => {
 	const locale = useLocale();
-	const { data } = withListingCountQuery.useSuspenseQuery(query);
+	const { data } = withListingQuery.useCountQuery(query);
 
 	return toLocaleNumber({
 		locale,
