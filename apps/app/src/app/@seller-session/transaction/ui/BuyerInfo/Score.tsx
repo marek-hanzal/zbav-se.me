@@ -4,13 +4,13 @@ import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 import { RatingIcon } from "~/app/@common/score/ui/RatingIcon";
 
-export namespace BuyerInfoScore {
+export namespace Score {
 	export interface Props {
 		rank: number;
 	}
 }
 
-export const BuyerInfoScore: FC<BuyerInfoScore.Props> = ({ rank }) => {
+export const Score: FC<Score.Props> = ({ rank }) => {
 	return (
 		<LabelValue
 			textLabel={translator.text("User score (label)")}

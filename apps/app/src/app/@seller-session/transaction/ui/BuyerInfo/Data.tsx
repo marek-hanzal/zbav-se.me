@@ -7,8 +7,8 @@ import { translator } from "@use-pico/common/translator";
 import { withTransactionBuyerInfoQuery } from "@zbav-se.me/sdk/query/seller-session/transaction";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { BuyerInfoEvents } from "~/app/v0/@seller-session/transaction/ui/buyer-info/BuyerInfoEvents";
-import { BuyerInfoScore } from "~/app/v0/@seller-session/transaction/ui/buyer-info/BuyerInfoScore";
+import { Events } from "./Events";
+import { Score } from "./Score";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -45,8 +45,8 @@ export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, ...props })
 
 			{events ? (
 				<>
-					<BuyerInfoEvents events={events} />
-					<BuyerInfoScore rank={events.score.rank} />
+					<Events events={events} />
+					<Score rank={events.score.rank} />
 				</>
 			) : (
 				<Status

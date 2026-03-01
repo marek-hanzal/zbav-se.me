@@ -2,7 +2,7 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
 import { MessageButtonUi } from "~/app/v0/@common/transaction/ui/MessageButtonUi";
-import { BuyerInfoButton } from "~/app/v0/@seller-session/transaction/ui/BuyerInfoButton";
+import { BuyerInfoButton } from "~/app/@seller-session/transaction/ui/BuyerInfoButton";
 import { AcceptButton } from "./button/AcceptButton";
 import { RejectButton } from "./button/RejectButton";
 

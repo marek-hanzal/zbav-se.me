@@ -8,13 +8,13 @@ import type { FC } from "react";
 
 const percentLabel = (value: number) => `${Math.round(value)}%`;
 
-export namespace BuyerInfoEvents {
+export namespace Events {
 	export interface Props {
 		events: tUserEventBuyer;
 	}
 }
 
-export const BuyerInfoEvents: FC<BuyerInfoEvents.Props> = ({ events }) => {
+export const Events: FC<Events.Props> = ({ events }) => {
 	const locale = useLocale();
 
 	return (
