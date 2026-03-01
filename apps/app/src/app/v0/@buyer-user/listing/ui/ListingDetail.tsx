@@ -1,7 +1,7 @@
 import { Container } from "@use-pico/client/ui/container";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import type { FC } from "react";
-import { useListingEvent } from "~/app/v0/@buyer-session/listing/hook/useListingEvent";
+import { useListingEvent } from "~/app/@buyer-session/listing/hook/useListingEvent";
 import { ThumbDislikeButton } from "./button/ThumbDislikeButton";
 import { ThumbLikeButton } from "./button/ThumbLikeButton";
 import { ListingDestructiveActionsSuspense } from "./ListingDetail/ListingDestructiveActionsSuspense";

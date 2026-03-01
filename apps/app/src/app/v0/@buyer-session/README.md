@@ -52,9 +52,12 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 
 ## Recent updates
 
-- Seller info UI for listing detail was split into focused components:
-  - `@buyer-session/listing/ui/SellerInfoSuspense/SellerInfo.tsx` keeps query/loading composition.
-  - `@buyer-session/listing/ui/SellerInfoSuspense.tsx` composes local suspense fallback (`SellerInfoPending`) for call-sites.
-  - `@buyer-session/listing/ui/seller-info/SellerInfoHeader.tsx` renders registered/listings labels.
-  - `@buyer-session/listing/ui/seller-info/SellerInfoScore.tsx` renders score/rank presentation.
+- `useListingEvent` hook was extracted from `v0` to active scope:
+  - `@buyer-session/listing/hook/useListingEvent.ts`
+- Seller info UI components were extracted from `v0` to active scope:
+  - `@buyer-session/listing/ui/SellerInfoButton.tsx`
+  - `@buyer-session/listing/ui/SellerInfo/SellerInfo.tsx`
+  - `@buyer-session/listing/ui/SellerInfo/Data.tsx`
+  - `@buyer-session/listing/ui/SellerInfo/Header.tsx`
+  - `@buyer-session/listing/ui/SellerInfo/Score.tsx`
 - Listing seller info components now resolve locale via `useLocale()` instead of accepting `locale` props.

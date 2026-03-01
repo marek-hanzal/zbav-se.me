@@ -6,7 +6,7 @@ import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
 import { GalleryPreview } from "~/app/@common/gallery/ui/GalleryPreview";
-import { SellerInfoSuspense } from "~/app/v0/@buyer-session/listing/ui/SellerInfoSuspense";
+import { SellerInfo } from "~/app/@buyer-session/listing/ui/SellerInfo";
 import { Transaction } from "~/app/v0/@buyer-user/transaction/ui/Transaction";
 import { ListingDetail } from "./ListingDetail";
 
@@ -107,7 +107,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				},
 				"seller-info": {
 					children: (
-						<SellerInfoSuspense
+						<SellerInfo
 							listingId={listing.id}
 							ui={{
 								inner: "default",
