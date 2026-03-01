@@ -5,13 +5,13 @@ import { type FC, Suspense, useRef } from "react";
 import { Data } from "./Data";
 import { Pending } from "./Pending";
 
-export namespace ListingListContainer {
+export namespace ListingList {
 	export interface Props extends Container.Props {
 		query: tListingQuery;
 	}
 }
 
-export const ListingListContainer: FC<ListingListContainer.Props> = ({ query, ...props }) => {
+export const ListingList: FC<ListingList.Props> = ({ query, ...props }) => {
 	const scrollerRef = useRef<HTMLDivElement>(null);
 
 	const visibility = useElementVisibility({

@@ -2,7 +2,7 @@ import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
-import { ListingListContainer } from "~/app/v0/@seller-user/listing/ui/ListingListContainer";
+import { ListingList } from "~/app/@seller-user/listing/ui/ListingList";
 
 export namespace MyListingPage {
 	export interface Props extends TitleContainer.Props {}
@@ -15,7 +15,7 @@ export const MyListingPage: FC<MyListingPage.Props> = (props) => {
 			right={<HomeMenuButton />}
 			{...props}
 		>
-			<ListingListContainer
+			<ListingList
 				query={{
 					sort: [
 						{

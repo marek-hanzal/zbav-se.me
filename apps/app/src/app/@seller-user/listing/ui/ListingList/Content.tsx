@@ -2,7 +2,7 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { VisibleContainer } from "@use-pico/client/ui/container";
 import type { FC } from "react";
 import { CreateButton } from "~/app/@seller-user/draft/ui/button/CreateButton";
-import { Pending } from "~/app/v0/@seller-user/listing/ui/ListingListContainer/ListingItem/Pending";
+import { Pending } from "./ListingItem/Pending";
 import { ListingItem } from "./ListingItem";
 
 export namespace Content {
