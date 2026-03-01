@@ -8,21 +8,11 @@ export namespace FeedListContainer {
 	}
 }
 
-export const FeedListContainer: FC<FeedListContainer.Props> = ({
-	query,
-	limit = 10,
-	tools,
-	linkTo,
-	...props
-}) => {
+export const FeedListContainer: FC<FeedListContainer.Props> = (props) => {
 	return (
 		<Suspense fallback={<Pending />}>
 			<Data
 				_suspense={"I know"}
-				query={query}
-				limit={limit}
-				tools={tools}
-				linkTo={linkTo}
 				{...props}
 			/>
 		</Suspense>

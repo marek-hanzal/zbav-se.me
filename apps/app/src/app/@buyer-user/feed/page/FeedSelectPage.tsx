@@ -30,10 +30,6 @@ export const FeedSelectPage: FC<FeedSelectPage.Props> = ({ ui, ...props }) => {
 			<FeedListContainer
 				data-ui={"FeedSelect-[FeedListContainer]"}
 				query={{
-					cursor: {
-						page: 0,
-						size: feedCountLimit,
-					},
 					sort: [
 						{
 							field: "createdAt",

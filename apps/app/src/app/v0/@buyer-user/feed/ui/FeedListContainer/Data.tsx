@@ -8,31 +8,32 @@ import { Item } from "./Item";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
-		query: tFeedQuery;
-		limit?: number;
+		query: Omit<tFeedQuery, "cursor">;
+		limit: number;
 		tools: Item.Tools[];
 		linkTo: Item.LinkTo;
 	}
 }
 
-export const Data: FC<Data.Props> = ({ _suspense, query, limit = 10, tools, linkTo, ...props }) => {
+export const Data: FC<Data.Props> = ({ _suspense, query, limit, tools, linkTo, ...props }) => {
 	/**
 	 * This is intentional to trigger parent suspense
 	 */
-	const feedCollectionQuery = withFeedQuery.useCollectionQuery(query);
-	const { data: listingCount } = withFeedQuery.useCountQuery(query);
+	const { data: feedList } = withFeedQuery.useCollectionQuery({
+		...query,
+		cursor: {
+			page: 0,
+			size: limit,
+		},
+	});
 	const { data: feedCount } = withFeedQuery.useCountQuery({});
 	const isLimitReached = feedCount.filter >= limit;
-
-	if (listingCount.isEmpty || listingCount.isFilterEmpty) {
-		return null;
-	}
 
 	return (
 		<Container
 			data-ui={"FeedListContainer[Container]"}
 			ui={{
-				layout: "vertical-flex",
+				flow: "vertical",
 				scroll: "vertical",
 				gap: "default",
 				inner: "default",
@@ -40,29 +41,21 @@ export const Data: FC<Data.Props> = ({ _suspense, query, limit = 10, tools, link
 			}}
 			{...props}
 		>
-			<Container
-				data-ui="FeedList-[Container.content]"
-				ui={{
-					layout: "vertical-flex",
-					gap: "default",
-				}}
-			>
-				{feedCollectionQuery.data.map((feedId) => {
-					return (
-						<Item
-							key={feedId}
-							feedId={feedId}
-							tools={tools}
-							linkTo={linkTo}
-						/>
-					);
-				})}
+			{feedList.map((feedId) => {
+				return (
+					<Item
+						key={feedId}
+						feedId={feedId}
+						tools={tools}
+						linkTo={linkTo}
+					/>
+				);
+			})}
 
-				<CreateButton
-					disabled={isLimitReached}
-					isLimitReached={isLimitReached}
-				/>
-			</Container>
+			<CreateButton
+				disabled={isLimitReached}
+				isLimitReached={isLimitReached}
+			/>
 		</Container>
 	);
 };
