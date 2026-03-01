@@ -22,5 +22,5 @@ export const Data: FC<Data.Props> = ({ _suspense, textEmpty, query }) => {
 				locale,
 				number: data.filter,
 			})
-		: (textEmpty ?? translator.text("No listings (label)"));
+		: (textEmpty ?? translator.text("Listing count - empty (label)"));
 };

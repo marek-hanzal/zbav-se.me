@@ -1,5 +1,5 @@
 import { useLocale } from "@use-pico/client/hook";
-import { SettingsIcon } from "@use-pico/client/icon";
+import { EditIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -53,12 +53,13 @@ export const Data: FC<Data.Props> = ({ feedId, ui, ...props }) => {
 						<Tx
 							label={feed.name}
 							ui={{
-								tone: "brand",
+								tone: "neutral",
 								theme: "light",
 								color: "lead",
-								font: "bold",
+								font: "semibold",
 								display: "block",
 								width: "full",
+								text: "sm",
 								truncate: true,
 							}}
 							className={[
@@ -85,24 +86,25 @@ export const Data: FC<Data.Props> = ({ feedId, ui, ...props }) => {
 
 			<Button
 				data-ui={"Item-[FeedSetupButton]"}
-				iconEnabled={SettingsIcon}
+				iconEnabled={EditIcon}
 				iconProps={{
 					ui: {
-						text: "xl",
+						text: "lg",
 					},
 				}}
 				onClick={() => setIsFeedSettings((prev) => !prev)}
 				ui={{
 					tone: "secondary",
 					theme: "light",
-					background: undefined,
-					border: false,
-					shadow: false,
+					background: "default",
+					border: true,
+					shadow: true,
 					size: "sm",
-					snapTo: "bottom-right",
+					snapTo: "bottom-left",
 					items: "center",
 					justify: "center",
 					color: "lead",
+					round: "full",
 					square: "sm",
 					opacity: "8",
 				}}

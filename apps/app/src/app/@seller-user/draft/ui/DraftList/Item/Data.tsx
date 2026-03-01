@@ -1,5 +1,5 @@
 import { useLocale } from "@use-pico/client/hook";
-import { EditIcon, Icon } from "@use-pico/client/icon";
+import { Icon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -76,35 +76,37 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId, ...props }) => {
 				}
 				{...props}
 			>
-				<Container
-					ui={{
-						tone: valid.isValid ? "primary" : "secondary",
-						theme: "light",
-						round: "full",
-						background: "default",
-						snapTo: "bottom-left",
-						flow: "vertical",
-						items: "center",
-						justify: "center",
-						opacity: valid ? "none" : "7",
-						shadow: true,
-						border: true,
-					}}
-					className={[
-						"h-7",
-						"w-7",
-					]}
-				>
-					<Icon
-						icon={valid.isValid ? CheckIcon : EditIcon}
+				{valid.isValid ? (
+					<Container
 						ui={{
-							tone: valid.isValid ? "primary" : "secondary",
+							tone: "primary",
 							theme: "light",
-							text: "lg",
-							color: "lead",
+							round: "full",
+							background: "default",
+							snapTo: "bottom-left",
+							flow: "vertical",
+							items: "center",
+							justify: "center",
+							opacity: "8",
+							shadow: true,
+							border: true,
 						}}
-					/>
-				</Container>
+						className={[
+							"h-7",
+							"w-7",
+						]}
+					>
+						<Icon
+							icon={CheckIcon}
+							ui={{
+								tone: valid.isValid ? "primary" : "secondary",
+								theme: "light",
+								text: "lg",
+								color: "lead",
+							}}
+						/>
+					</Container>
+				) : null}
 			</ListItem>
 		</LinkTo>
 	);

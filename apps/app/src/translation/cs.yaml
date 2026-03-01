@@ -10,9 +10,6 @@
 02d821a7f6c8c860ddf14a10fa006f1668bf485d4832ffa830cf1a82:
     ref: Feed age (title)
     value: Věk, co tě zajímá
-032bf5ced2d92548bee53096a31662b5527c60c21a75a711303d95de:
-    ref: Age - from oldest (label)
-    value: Nejstarší
 0353a7e7a341b6b63f3e182605fd6627a8e0e1c6897b7bf639ff5d89:
     ref: Back (label)
     value: Zpět
@@ -103,17 +100,14 @@
 14663fea507627f6c98c1360a9aa3c6d275ed885e44051e7d88af28a:
     ref: Feed age (hint)
     value: >
-        Jedná se o odhad životnosti nabízeného předmětu - orientační hodnota, podle které můžeš
-        odhadnout, jak starý daný předmět cca je.
+        Jedná se o odhad životnosti nabízeného předmětu - orientační hodnota, podle
+        které můžeš odhadnout, jak starý daný předmět cca je.
 14c26d2816c7d80dbb0d3d6314d8229e7c3eb85ea3089c55c570051a:
     ref: Condition (title)
     value: Nastavení stavu
 15edabc6931564b26e9e7c4e83be79266953662d2a96c4544f5988e5:
     ref: Price type (title)
     value: Typ ceny
-16e1f53d97e50b6ca414cf36d052667d99adcf92c2076887e7567d01:
-    ref: Feed condition not selected
-    value: Cokoliv
 17d657e028b311247a42416aa1a3a6a7bbd603c9ad2640db1a845a89:
     ref: Feed location security (hint)
     value: >
@@ -156,6 +150,9 @@
 1e2825e05d0a8e168a812a6bb29ff8f7b5f58b3c0b29bbffd2c8dfa5:
     ref: Closer p90 (hint)
     value: Udává čas, za jak dlouho kupující obvykle zavře zprávu bez další interakce.
+1e2c52ff0279d0ad26557c2235b137106f4d5a45187461bba1242a01:
+    ref: Listing condition not selected
+    value: Listing condition not selected
 202839a5815da796fc7bf9523af6a1632740384024fad4cbbdf1ab3a:
     ref: No listings for current filter (message)
     value: No listings for current filter (message)
@@ -180,9 +177,6 @@
 27199be77960fa6b867fcd30bf00eb0f6d4ff1e4279ba9b3d99b82ca:
     ref: Create new draft (title)
     value: Nový inzerát
-2859860f0fbe866d9afaae1eb7cf9a5d30c144214a21772397315050:
-    ref: Condition - from worst (label)
-    value: Nejhorší
 29b5698dbd428037dfdf3d01534751de7b9bbdce4a6eeb4df2655548:
     ref: Price not set
     value: Cenu nemáš vyplněnou
@@ -220,9 +214,6 @@
     value: |
         Vyber, jestli jsi schopný poskytnout zákonnou záruku
         (máš fakturu nebo účtenku), případně vlastní nebo žádnou záruku.
-318a99c187d3d8f3a5362513928a7589e883e0a83ca13ac8136e9b4f:
-    ref: Age - from youngest (label)
-    value: Nejmladší
 339d9753b567b5672f79522f5fbd8264123ec49f0c6601c07043a408:
     ref: Feed range (description)
     value: Maximální vzdálenost
@@ -270,9 +261,6 @@
 4034c9134481a06e13f39b3d2b927ade85886fc9bbfb379d51f01153:
     ref: Photo upload placeholder (message)
     value: Ťuknutím vyfoť obrázek nebo si vyber z galerie.
-420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
-    ref: Cancel (button)
-    value: Zrušit
 42aa1874f3af8785eb64edf4e4d73e3d25f3c7afec890830b1654ab0:
     ref: Listing category (label)
     value: Kategorie
@@ -461,6 +449,9 @@
 770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
     ref: Listing location (label)
     value: Umístění
+79a7862454115c39814f1654d4e06bde698323ab23a0214e8df7111c:
+    ref: Create new feed (title)
+    value: Vytvořit nový seznam
 7a82926bb5336fd34c1755025654a057c7419b9e9e71e717eb89c249:
     ref: Feed range (hint)
     value:
@@ -534,6 +525,9 @@
 892fa1e47fe46e918f187198c917e00504737676df992315e0c40b8c:
     ref: Warranty not selected
     value: Bez garance záruky
+8934b7cd7560e4ff51988a56a295f330a17e5109dbdc4cb542b1f6cb:
+    ref: Limit reached (title)
+    value: Víc už toho bohužel nejde.
 8a1aa12fd03400172454828dba4c0e3bf755d16c69c73449f540cbb7:
     ref: No items in favourites (message)
     value: ...ale můžeš se podívat na inzeráty a nějaké si sem přidat!
@@ -607,9 +601,6 @@
 9be03a22c6dda814a581e5407a9d23f5a7660c55eb918e86f93d2951:
     ref: Listing seller info not available (title)
     value: Zatím nemám dost dat
-9c3fe974c3406ab797b01c788fe766c42ecec159dffdb93ffdbb2940:
-    ref: Condition - from best (label)
-    value: Nejlepší
 9c9daf461c6095205f5fde4031225d9f27b27b90b6b55aa197c67948:
     ref: No categories found (message)
     value: |
@@ -631,6 +622,46 @@
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
     ref: Fulltext (placeholder)
     value: Najít
+Age 1 (hint):
+    static: true
+    value:
+        Na konci životnosti. Spíš na dojetí / záchranu / pro někoho, kdo ví, do
+        čeho jde.
+Age 1 (label):
+    static: true
+    value: F — Na dožití
+Age 2 (hint):
+    static: true
+    value: Životnost se krátí. Častěji bude chtít péči / servis, může mít mouchy.
+Age 2 (label):
+    static: true
+    value: E — Pozdní roky
+Age 3 (hint):
+    static: true
+    value:
+        Známky času jdou vidět, ale pořád funguje / drží se. Zhruba “půlka až za
+        půlkou”.
+Age 3 (label):
+    static: true
+    value: D — Střed života
+Age 4 (hint):
+    static: true
+    value: Běžně používané, ale v kondici. Ještě dlouho poslouží / bude ok.
+Age 4 (label):
+    static: true
+    value: C — V nejlepších letech
+Age 5 (hint):
+    static: true
+    value: Krátce používané / mladý kus. Stále bez známek stáří.
+Age 5 (label):
+    static: true
+    value: B — Mladé
+Age 6 (hint):
+    static: true
+    value: Úplný začátek. Prakticky nové, má toho hodně před sebou.
+Age 6 (label):
+    static: true
+    value: A — Na startu
 Buyer activity high:
     static: true
     value: Vysoká aktivita
@@ -673,78 +704,42 @@ Buyer score 6:
 "Buyer: Transaction request created (message)":
     value: Nový zájemce!
     static: true
-Condition 1 (label):
-    static: true
-    value: F — Kritické
 Condition 1 (hint):
     static: true
     value: Jen pro zkušené, „záchranný“ stav.
-Condition 2 (label):
+Condition 1 (label):
     static: true
-    value: E — Špatné
+    value: F — Kritické
 Condition 2 (hint):
     static: true
     value: Výrazné problémy, počítej se zásahem.
-Condition 3 (label):
+Condition 2 (label):
     static: true
-    value: D — Použité
+    value: E — Špatné
 Condition 3 (hint):
     static: true
     value: Viditelné nedostatky, bude chtít péči / údržbu.
-Condition 4 (label):
+Condition 3 (label):
     static: true
-    value: C — Dobré
+    value: D — Použité
 Condition 4 (hint):
     static: true
     value: Běžné známky používání, pořád v pohodě.
-Condition 5 (label):
+Condition 4 (label):
     static: true
-    value: B — Skvělé
+    value: C — Dobré
 Condition 5 (hint):
     static: true
     value: Drobné nedostatky, nic zásadního.
-Condition 6 (label):
+Condition 5 (label):
     static: true
-    value: A — Perfektní
+    value: B — Skvělé
 Condition 6 (hint):
     static: true
     value: Bez vad, bez problémů.
-Age 1 (label):
+Condition 6 (label):
     static: true
-    value: F — Na dožití
-Age 1 (hint):
-    static: true
-    value: Na konci životnosti. Spíš na dojetí / záchranu / pro někoho, kdo ví, do čeho jde.
-Age 2 (label):
-    static: true
-    value: E — Pozdní roky
-Age 2 (hint):
-    static: true
-    value: Životnost se krátí. Častěji bude chtít péči / servis, může mít mouchy.
-Age 3 (label):
-    static: true
-    value: D — Střed života
-Age 3 (hint):
-    static: true
-    value: Známky času jdou vidět, ale pořád funguje / drží se. Zhruba “půlka až za půlkou”.
-Age 4 (label):
-    static: true
-    value: C — V nejlepších letech
-Age 4 (hint):
-    static: true
-    value: Běžně používané, ale v kondici. Ještě dlouho poslouží / bude ok.
-Age 5 (label):
-    static: true
-    value: B — Mladé
-Age 5 (hint):
-    static: true
-    value: Krátce používané / mladý kus. Stále bez známek stáří.
-Age 6 (label):
-    static: true
-    value: A — Na startu
-Age 6 (hint):
-    static: true
-    value: Úplný začátek. Prakticky nové, má toho hodně před sebou.
+    value: A — Perfektní
 Cons 0 (placeholder):
     static: true
     value: Bez dokladu
@@ -988,6 +983,9 @@ b6c76a2cd866bcc2fc175c7fb66093264226f4695f2dfe3c41d7056f:
 b8ff3ed6b71e3332fcbe61d56e37ad7a849b09934d4514084cc0b710:
     ref: No transactions as buyer (message)
     value: Podívej se na nějaké inzeráty, zda ti něco nepadne do oka.
+b9057abdfc2947ea0f0da7b26069769bbf9c40ca4d382aae15ddbd0a:
+    ref: Listing count - empty (label)
+    value: Kde nic, tu nic - uprav si nastavení
 b9280e542386de06015c0360e53e55cfccee8b1bf03cea7ef44c26c0:
     ref: Feed delivery (label)
     value: Možnosti předání
@@ -1145,9 +1143,6 @@ d95b6247e69f90b9f6f613b62be4396f37f5c45acb205f993f42dd18:
 da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
     ref: Feed sorting (title)
     value: Řazení
-db19de463c98378f66569f482fa6839883350859bf1fe5f4d577fd96:
-    ref: Adjust feed (button)
-    value: Uprav si seznam
 dbb55f0c704298dbeda11ddad88ff05b151057e984bf244f0d09c4d9:
     ref: No listings with transactions (title)
     value: No listings with transactions (title)
@@ -1237,9 +1232,6 @@ f9cf1337b7ea576370fd65ccd16343099c3d316564ea46381241d7a1:
 fa6165a1f31837973b2b0797274535b064db2f341bf26976563565aa:
     ref: Description (title)
     value: Popis
-fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
-    ref: Feed condition (label)
-    value: Vybrané stavy
 fa65ccecdeb5bdcf00a832c72eb27cdaca5a549ea59fc48ad7267ab9:
     ref: Delivery not selected
     value: Možnost předání nemáš vybranou

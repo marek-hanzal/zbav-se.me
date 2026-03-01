@@ -3,10 +3,13 @@ import { withApi } from "@use-pico/common/api";
 import {
 	apiFeedCollection,
 	apiFeedCount,
+	apiFeedCreate,
+	apiFeedDelete,
 	apiFeedFetch,
 	apiFeedPatch,
 	type tFeed,
 	type tFeedCountQuery,
+	type tFeedCreate,
 	type tFeedPatch,
 	type tFeedQuery,
 } from "../../../api/buyer-user";
@@ -17,8 +20,8 @@ export const withFeedQuery = withEntityQuery<
 	tFeedQuery,
 	tFeedCountQuery,
 	tFeedPatch,
-	never,
-	never
+	tFeedCreate,
+	tFeedQuery
 >({
 	keys: () => [
 		"feed",
@@ -49,11 +52,19 @@ export const withFeedQuery = withEntityQuery<
 			}),
 		);
 	},
-	async create(_data) {
-		throw new Error("Feed create is not supported by this query wrapper.");
+	async create(data) {
+		return withApi(
+			apiFeedCreate({
+				body: data,
+			}),
+		);
 	},
-	async delete(_data) {
-		throw new Error("Feed delete is not supported by this query wrapper.");
+	async delete(data) {
+		return withApi(
+			apiFeedDelete({
+				body: data,
+			}),
+		);
 	},
 	async patch(data) {
 		return withApi(

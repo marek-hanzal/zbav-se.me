@@ -78,9 +78,9 @@ export const CreateButton: FC<CreateButton.Props> = ({
 				>
 					<Status
 						icon={isLimitReached ? CloseIcon : PlusIcon}
-						textTitle={
-							isLimitReached ? "Limit reached (title)" : "Create new feed (title)"
-						}
+						textTitle={translator.text(
+							isLimitReached ? "Limit reached (title)" : "Create new feed (title)",
+						)}
 					/>
 				</Container>
 			</Button>

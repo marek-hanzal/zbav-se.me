@@ -1,4 +1,4 @@
-import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
+import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import type { tUpload } from "@zbav-se.me/sdk/api/user";
@@ -69,7 +69,7 @@ export const ListItem: FC<ListItem.Props> = ({
 				</Container>
 
 				<Icon
-					icon={ArrowRightIcon}
+					icon={ChevronRightIcon}
 					ui={{
 						tone: "neutral",
 						theme: "light",

@@ -10,9 +10,6 @@
 02d821a7f6c8c860ddf14a10fa006f1668bf485d4832ffa830cf1a82:
   ref: Feed age (title)
   value: Feed age (title)
-032bf5ced2d92548bee53096a31662b5527c60c21a75a711303d95de:
-  ref: Age - from oldest (label)
-  value: Age - from oldest (label)
 0353a7e7a341b6b63f3e182605fd6627a8e0e1c6897b7bf639ff5d89:
   ref: Back (label)
   value: Back (label)
@@ -91,9 +88,6 @@
 15edabc6931564b26e9e7c4e83be79266953662d2a96c4544f5988e5:
   ref: Price type (title)
   value: Price type (title)
-16e1f53d97e50b6ca414cf36d052667d99adcf92c2076887e7567d01:
-  ref: Feed condition not selected
-  value: Feed condition not selected
 17d657e028b311247a42416aa1a3a6a7bbd603c9ad2640db1a845a89:
   ref: Feed location security (hint)
   value: Feed location security (hint)
@@ -130,6 +124,9 @@
 1e2825e05d0a8e168a812a6bb29ff8f7b5f58b3c0b29bbffd2c8dfa5:
   ref: Closer p90 (hint)
   value: Closer p90 (hint)
+1e2c52ff0279d0ad26557c2235b137106f4d5a45187461bba1242a01:
+  ref: Listing condition not selected
+  value: Listing condition not selected
 202839a5815da796fc7bf9523af6a1632740384024fad4cbbdf1ab3a:
   ref: No listings for current filter (message)
   value: No listings for current filter (message)
@@ -154,9 +151,6 @@
 27199be77960fa6b867fcd30bf00eb0f6d4ff1e4279ba9b3d99b82ca:
   ref: Create new draft (title)
   value: Create new draft (title)
-2859860f0fbe866d9afaae1eb7cf9a5d30c144214a21772397315050:
-  ref: Condition - from worst (label)
-  value: Condition - from worst (label)
 29b5698dbd428037dfdf3d01534751de7b9bbdce4a6eeb4df2655548:
   ref: Price not set
   value: Price not set
@@ -190,9 +184,6 @@
 3136e34a81ab39a2fb1e4198edccbf10acf6244b0543a98136311b44:
   ref: Listing warranty (hint)
   value: Listing warranty (hint)
-318a99c187d3d8f3a5362513928a7589e883e0a83ca13ac8136e9b4f:
-  ref: Age - from youngest (label)
-  value: Age - from youngest (label)
 339d9753b567b5672f79522f5fbd8264123ec49f0c6601c07043a408:
   ref: Feed range (description)
   value: Feed range (description)
@@ -238,9 +229,6 @@
 4034c9134481a06e13f39b3d2b927ade85886fc9bbfb379d51f01153:
   ref: Photo upload placeholder (message)
   value: Photo upload placeholder (message)
-420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
-  ref: Cancel (button)
-  value: Cancel (button)
 42aa1874f3af8785eb64edf4e4d73e3d25f3c7afec890830b1654ab0:
   ref: Listing category (label)
   value: Listing category (label)
@@ -406,6 +394,9 @@
 770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
   ref: Listing location (label)
   value: Listing location (label)
+79a7862454115c39814f1654d4e06bde698323ab23a0214e8df7111c:
+  ref: Create new feed (title)
+  value: Create new feed (title)
 7a82926bb5336fd34c1755025654a057c7419b9e9e71e717eb89c249:
   ref: Feed range (hint)
   value: Feed range (hint)
@@ -469,6 +460,9 @@
 892fa1e47fe46e918f187198c917e00504737676df992315e0c40b8c:
   ref: Warranty not selected
   value: Warranty not selected
+8934b7cd7560e4ff51988a56a295f330a17e5109dbdc4cb542b1f6cb:
+  ref: Limit reached (title)
+  value: Limit reached (title)
 8a1aa12fd03400172454828dba4c0e3bf755d16c69c73449f540cbb7:
   ref: No items in favourites (message)
   value: No items in favourites (message)
@@ -535,9 +529,6 @@
 9be03a22c6dda814a581e5407a9d23f5a7660c55eb918e86f93d2951:
   ref: Listing seller info not available (title)
   value: Listing seller info not available (title)
-9c3fe974c3406ab797b01c788fe766c42ecec159dffdb93ffdbb2940:
-  ref: Condition - from best (label)
-  value: Condition - from best (label)
 9c9daf461c6095205f5fde4031225d9f27b27b90b6b55aa197c67948:
   ref: No categories found (message)
   value: No categories found (message)
@@ -634,6 +625,9 @@ b6c76a2cd866bcc2fc175c7fb66093264226f4695f2dfe3c41d7056f:
 b8ff3ed6b71e3332fcbe61d56e37ad7a849b09934d4514084cc0b710:
   ref: No transactions as buyer (message)
   value: No transactions as buyer (message)
+b9057abdfc2947ea0f0da7b26069769bbf9c40ca4d382aae15ddbd0a:
+  ref: Listing count - empty (label)
+  value: Listing count - empty (label)
 b9280e542386de06015c0360e53e55cfccee8b1bf03cea7ef44c26c0:
   ref: Feed delivery (label)
   value: Feed delivery (label)
@@ -729,9 +723,6 @@ d95b6247e69f90b9f6f613b62be4396f37f5c45acb205f993f42dd18:
 da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
   ref: Feed sorting (title)
   value: Feed sorting (title)
-db19de463c98378f66569f482fa6839883350859bf1fe5f4d577fd96:
-  ref: Adjust feed (button)
-  value: Adjust feed (button)
 dbb55f0c704298dbeda11ddad88ff05b151057e984bf244f0d09c4d9:
   ref: No listings with transactions (title)
   value: No listings with transactions (title)
@@ -816,9 +807,6 @@ f9cf1337b7ea576370fd65ccd16343099c3d316564ea46381241d7a1:
 fa6165a1f31837973b2b0797274535b064db2f341bf26976563565aa:
   ref: Description (title)
   value: Description (title)
-fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
-  ref: Feed condition (label)
-  value: Feed condition (label)
 fa65ccecdeb5bdcf00a832c72eb27cdaca5a549ea59fc48ad7267ab9:
   ref: Delivery not selected
   value: Delivery not selected
