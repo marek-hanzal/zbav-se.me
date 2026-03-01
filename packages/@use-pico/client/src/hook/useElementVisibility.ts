@@ -55,7 +55,7 @@ export function useElementVisibility({
 	scrollerRef,
 	visible,
 	proximity,
-	delayMs = 200,
+	delayMs = 250,
 	attribute = "data-visible-item",
 }: useElementVisibility.Props): createVisibilityStore.Hook {
 	const storeRef = useRef(createVisibilityStore());

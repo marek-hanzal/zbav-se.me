@@ -1,6 +1,8 @@
 import type { MarkSuspense } from "@use-pico/client/type";
+import { VisibleContainer } from "@use-pico/client/ui/container";
 import type { FC } from "react";
 import { CreateButton } from "~/app/@seller-user/draft/ui/button/CreateButton";
+import { Pending } from "~/app/v0/@seller-user/listing/ui/ListingListContainer/ListingItem/Pending";
 import { ListingItem } from "./ListingItem";
 
 export namespace Content {
@@ -14,10 +16,16 @@ export const Content: FC<Content.Props> = ({ _suspense, listingIds }) => {
 		<>
 			{listingIds.map((listingId) => {
 				return (
-					<ListingItem
+					<VisibleContainer
 						key={listingId}
-						listingId={listingId}
-					/>
+						id={listingId}
+						placeholder={() => <Pending />}
+					>
+						<ListingItem
+							key={listingId}
+							listingId={listingId}
+						/>
+					</VisibleContainer>
 				);
 			})}
 
