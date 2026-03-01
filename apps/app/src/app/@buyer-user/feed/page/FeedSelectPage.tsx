@@ -7,7 +7,9 @@ import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 import { FeedListContainer } from "~/app/v0/@buyer-user/feed/ui/FeedListContainer";
 
 export namespace FeedSelectPage {
-	export interface Props extends TitleContainer.Props {}
+	export interface Props extends TitleContainer.Props {
+		//
+	}
 }
 
 export const FeedSelectPage: FC<FeedSelectPage.Props> = ({ ui, ...props }) => {
