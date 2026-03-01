@@ -29,12 +29,7 @@ export const Content: FC<Content.Props> = ({ _suspense, listingIds }) => {
 				);
 			})}
 
-			<CreateButton
-				ui={{
-					height: "full",
-					width: "full",
-				}}
-			/>
+			<CreateButton />
 		</>
 	);
 };

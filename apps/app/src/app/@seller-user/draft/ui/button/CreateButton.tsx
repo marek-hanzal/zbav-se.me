@@ -12,7 +12,7 @@ export namespace CreateButton {
 	}
 }
 
-export const CreateButton: FC<CreateButton.Props> = ({ ui, ...props }) => {
+export const CreateButton: FC<CreateButton.Props> = ({ ui, className, ...props }) => {
 	const navigate = useNavigate();
 	const locale = useLocale();
 	const draftCreateMutation = withDraftQuery.useCreateMutation({
@@ -57,6 +57,10 @@ export const CreateButton: FC<CreateButton.Props> = ({ ui, ...props }) => {
 				text: "lg",
 				...ui,
 			}}
+			className={[
+				className,
+				"shrink-0",
+			]}
 			{...props}
 		>
 			<Tx label={"Create new draft (title)"} />
