@@ -11,7 +11,7 @@ export namespace Data {
 }
 
 export const Data: FC<Data.Props> = ({ listingId, feedId, withScore }) => {
-	const listingQuery = withListingQuery.useQuery(listingId);
+	const listingQuery = withListingQuery.useFetchQuery(listingId);
 
 	return (
 		<Hero

@@ -26,7 +26,7 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...prop
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [isFeedSettings, setIsFeedSettings] = useState(false);
 
-	const { data: listingCount } = withListingQuery.useCount({});
+	const { data: listingCount } = withListingQuery.useCountQuery({});
 
 	const { sentinelRef, inView: isLast } = useSentinel<HTMLDivElement>({
 		containerRef,

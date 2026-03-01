@@ -11,7 +11,7 @@ export namespace Data {
 }
 
 export const Data: FC<Data.Props> = ({ listingId }) => {
-	const { data: listing } = withListingQuery.useQuery(listingId);
+	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 	const hero = useUpload(listing.gallery.items);
 
 	return (

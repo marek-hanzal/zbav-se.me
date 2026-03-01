@@ -34,7 +34,7 @@ export const Data: FC<Data.Props> = ({
 }) => {
 	const locale = useLocale();
 	const listingCollectionQuery = withListingQuery.useCollectionQuery(query);
-	const { data: listingCount } = withListingQuery.useCount(query);
+	const { data: listingCount } = withListingQuery.useCountQuery(query);
 
 	if (listingCount.isEmpty) {
 		return (

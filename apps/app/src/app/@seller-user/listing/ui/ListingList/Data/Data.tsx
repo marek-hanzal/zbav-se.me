@@ -16,7 +16,7 @@ export namespace Data {
 
 export const Data: FC<Data.Props> = ({ query, visibility }) => {
 	const listingCollectionQuery = withListingQuery.useCollectionQuery(query);
-	const { data: listingCount } = withListingQuery.useCount(query);
+	const { data: listingCount } = withListingQuery.useCountQuery(query);
 
 	if (listingCount.isEmpty) {
 		return <Empty />;
