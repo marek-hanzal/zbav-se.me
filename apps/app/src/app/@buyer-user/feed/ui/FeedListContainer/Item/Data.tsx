@@ -72,12 +72,14 @@ export const Data: FC<Data.Props> = ({ feedId, ui, ...props }) => {
 					bottom={
 						<Typo
 							label={<ListingCount query={feed.query} />}
-							className={"max-w-1/3"}
+							ui={{
+								tone: "neutral",
+								theme: "light",
+								color: "lead",
+								text: "xs",
+							}}
 						/>
 					}
-					ui={{
-						tone: "secondary",
-					}}
 				/>
 			</LinkTo>
 
@@ -86,21 +88,22 @@ export const Data: FC<Data.Props> = ({ feedId, ui, ...props }) => {
 				iconEnabled={SettingsIcon}
 				iconProps={{
 					ui: {
-						text: "2xl",
+						text: "xl",
 					},
 				}}
 				onClick={() => setIsFeedSettings((prev) => !prev)}
 				ui={{
-					theme: "light",
-					background: "default",
 					tone: "secondary",
+					theme: "light",
+					background: undefined,
+					border: false,
+					shadow: false,
 					size: "sm",
 					snapTo: "bottom-right",
 					items: "center",
 					justify: "center",
-					color: "icon",
-					round: "full",
-					square: "default",
+					color: "lead",
+					square: "sm",
 					opacity: "8",
 				}}
 			/>
