@@ -1,27 +1,20 @@
 import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
-import type { Data } from "./Data";
-import { View } from "./View";
+import { ListItem } from "~/app/@common/list-item/ListItem";
 
 export namespace Pending {
-	export interface Props extends Data.Props {
+	export interface Props extends ListItem.PropsEx {
 		//
 	}
 }
 
-export const Pending: FC<Pending.Props> = ({ feedId, tools, linkTo }) => {
+export const Pending: FC<Pending.Props> = ({ ...props }) => {
 	return (
-		<View
-			feed={{
-				id: feedId,
-				locationId: null,
-				name: translator.text("Loading... (label)"),
-				query: {},
-				upload: null,
-				uploadId: null,
-			}}
-			tools={tools}
-			linkTo={linkTo}
+		<ListItem
+			hero={undefined}
+			title={translator.text("Loading... (label)")}
+			bottom={undefined}
+			{...props}
 		/>
 	);
 };

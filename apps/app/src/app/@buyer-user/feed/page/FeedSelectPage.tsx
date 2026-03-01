@@ -1,10 +1,8 @@
-import { useLocale } from "@use-pico/client/hook";
-import { LinkTo } from "@use-pico/client/ui/link-to";
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 import { FeedListContainer } from "~/app/@buyer-user/feed/ui/FeedListContainer";
+import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
 export namespace FeedSelectPage {
 	export interface Props extends TitleContainer.Props {
@@ -13,7 +11,6 @@ export namespace FeedSelectPage {
 }
 
 export const FeedSelectPage: FC<FeedSelectPage.Props> = ({ ui, ...props }) => {
-	const locale = useLocale();
 	const feedCountLimit = 3;
 
 	return (
@@ -38,27 +35,6 @@ export const FeedSelectPage: FC<FeedSelectPage.Props> = ({ ui, ...props }) => {
 					],
 				}}
 				limit={feedCountLimit}
-				tools={[
-					"setup",
-				]}
-				linkTo={{
-					header: ({ feedId, children }) => (
-						<LinkTo
-							data-ui={"FeedSelect-[LinkTo.header]"}
-							to={"/$locale/buyer/feed/$id/list"}
-							params={{
-								locale,
-								id: feedId,
-							}}
-							ui={{
-								display: "block",
-								height: "full",
-							}}
-						>
-							{children}
-						</LinkTo>
-					),
-				}}
 			/>
 		</TitleContainer>
 	);

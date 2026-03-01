@@ -10,12 +10,10 @@ export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		query: Omit<tFeedQuery, "cursor">;
 		limit: number;
-		tools: Item.Tools[];
-		linkTo: Item.LinkTo;
 	}
 }
 
-export const Data: FC<Data.Props> = ({ _suspense, query, limit, tools, linkTo, ...props }) => {
+export const Data: FC<Data.Props> = ({ _suspense, query, limit, ...props }) => {
 	/**
 	 * This is intentional to trigger parent suspense
 	 */
@@ -46,8 +44,6 @@ export const Data: FC<Data.Props> = ({ _suspense, query, limit, tools, linkTo, .
 					<Item
 						key={feedId}
 						feedId={feedId}
-						tools={tools}
-						linkTo={linkTo}
 					/>
 				);
 			})}
