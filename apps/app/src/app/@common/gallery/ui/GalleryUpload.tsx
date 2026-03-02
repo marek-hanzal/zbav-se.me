@@ -59,7 +59,10 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 
 					return (
 						<PhotoUpload
-							key={`${slot + 1}`}
+							key={`${
+								// biome-ignore lint/suspicious/noArrayIndexKey: We're ok here, bro
+								slot + 1
+							}`}
 							value={state.value[slot]}
 							onChange={(uploadId) => {
 								state.set((prev) => {

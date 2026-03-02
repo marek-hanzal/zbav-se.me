@@ -97,7 +97,10 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, ui, ...prop
 					length: 9,
 				}).map((_, index) => (
 					<Item
-						key={`price-${index + 1}`}
+						key={`price-${
+							// biome-ignore lint/suspicious/noArrayIndexKey: Ssst!
+							index + 1
+						}`}
 						icon={icons[(index + 1) as keyof typeof icons]}
 						onClick={() => {
 							onChange(digit(value || "", index + 1));

@@ -40,7 +40,7 @@
 		"zod": "4.3.6"
 	},
 	"devDependencies": {
-		"@iconify/json": "2.2.444",
+		"@iconify/json": "2.2.445",
 		"@iconify/tailwind4": "1.2.1",
 		"@modyfi/vite-plugin-yaml": "1.1.1",
 		"@tailwindcss/vite": "4.2.1",
@@ -58,7 +58,7 @@
 		"npm-run-all2": "8.0.4",
 		"tailwindcss": "4.2.1",
 		"typescript": "beta",
-		"vercel": "50.25.4",
+		"vercel": "50.25.6",
 		"vite": "8.0.0-beta.16"
 	},
 	"private": true
