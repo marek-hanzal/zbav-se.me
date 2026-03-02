@@ -6,16 +6,18 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import { type FC, type Ref, useState } from "react";
 import { FeedEditorSheet } from "../../FeedEditor/FeedEditorSheet";
+import { ListingList } from "../ListingList/ListingList";
 
 export namespace Data {
 	export interface Props extends MarkSuspense.Props {
 		feedId: string;
+		scrollToId: string | undefined;
 		sentinelRef: Ref<HTMLDivElement | null>;
 		isLast: boolean;
 	}
 }
 
-export const Data: FC<Data.Props> = ({ feedId, sentinelRef, isLast }) => {
+export const Data: FC<Data.Props> = ({ feedId, scrollToId, sentinelRef, isLast }) => {
 	const [isEditor, setIsEditor] = useState(false);
 	const invalidator = withListingQuery.useInvalidator();
 
@@ -41,7 +43,28 @@ export const Data: FC<Data.Props> = ({ feedId, sentinelRef, isLast }) => {
 				className={"transition-all"}
 			/>
 
-			<div>listing list or sthing</div>
+			<ListingList
+				feedId={feedId}
+				withScore
+				scrollToId={scrollToId}
+				query={{
+					where: {
+						feedId,
+						withIgnored: false,
+					},
+					cursor: {
+						page: 0,
+						size: 200,
+					},
+					sort: [
+						{
+							field: "expiresAt",
+							order: "desc",
+						},
+					],
+				}}
+				appendix={<div ref={sentinelRef} />}
+			/>
 
 			<FeedEditorSheet
 				feedId={feedId}

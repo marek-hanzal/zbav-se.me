@@ -36,3 +36,5 @@ Maps to server API: `/api/buyer/*`.
     - `RangeValue.tsx`
     - `SortValue.tsx`
     - `WarrantyValueList.tsx`
+- Listing list container for feed pages was moved out of `v0` and localized to feed listing page:
+  - `@buyer/feed/FeedListingPage/ListingList/ListingList.tsx`

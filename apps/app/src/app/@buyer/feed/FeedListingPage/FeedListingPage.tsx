@@ -46,6 +46,7 @@ export const FeedListingPage: FC<FeedListingPage.Props> = ({ feedId, scrollToId,
 		>
 			<Content
 				feedId={feedId}
+				scrollToId={scrollToId}
 				sentinelRef={sentinelRef}
 				isLast={isLast}
 			/>

@@ -4,7 +4,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, useRef } from "react";
-import { ListingListContainerSuspense } from "~/app/v0/@buyer/listing/ui/ListingListContainerSuspense";
+import { ListingList } from "~/app/@buyer/feed/FeedListingPage/ListingList/ListingList";
 import { EmptySuspense } from "./FeedFavouriteListPage/EmptySuspense";
 import { FavouriteListAppendix } from "./FeedFavouriteListPage/FavouriteListAppendix";
 
@@ -42,7 +42,7 @@ export const FeedFavouriteListPage: FC<FeedFavouriteListPage.Props> = ({ feedId,
 			}
 			{...props}
 		>
-			<ListingListContainerSuspense
+			<ListingList
 				ref={containerRef}
 				feedId={feedId}
 				/**

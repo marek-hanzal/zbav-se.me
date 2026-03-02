@@ -12,7 +12,6 @@ export namespace ListingList {
 		 * Listing ID to scroll to
 		 */
 		scrollToId: string | undefined;
-		renderEmptyFn?(): ReactNode;
 		appendix?: ReactNode;
 		feedId: string;
 		withScore: boolean;
@@ -23,7 +22,6 @@ export const ListingList: FC<ListingList.Props> = ({
 	ref,
 	query,
 	scrollToId,
-	renderEmptyFn,
 	appendix,
 	feedId,
 	withScore,
@@ -72,7 +70,6 @@ export const ListingList: FC<ListingList.Props> = ({
 			<Suspense fallback={<Pending />}>
 				<Data
 					query={query}
-					renderEmptyFn={renderEmptyFn}
 					appendix={appendix}
 					feedId={feedId}
 					withScore={withScore}

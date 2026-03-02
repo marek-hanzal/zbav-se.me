@@ -10,13 +10,11 @@ import { translator } from "@use-pico/common/translator";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import type { FC, ReactNode } from "react";
-import type { ListingListContainerSuspense } from "../ListingListContainerSuspense";
-import { ListingItemSuspense } from "./ListingItemSuspense";
+import { Item } from "./Item/Item";
 
 export namespace Data {
 	export interface Props {
 		query: tListingQuery;
-		renderEmptyFn?: ListingListContainerSuspense.Props["renderEmptyFn"];
 		appendix?: ReactNode;
 		feedId: string;
 		withScore: boolean;
@@ -24,14 +22,7 @@ export namespace Data {
 	}
 }
 
-export const Data: FC<Data.Props> = ({
-	query,
-	renderEmptyFn,
-	appendix,
-	feedId,
-	withScore,
-	visibility,
-}) => {
+export const Data: FC<Data.Props> = ({ query, appendix, feedId, withScore, visibility }) => {
 	const locale = useLocale();
 	const listingCollectionQuery = withListingQuery.useCollectionQuery(query);
 	const { data: listingCount } = withListingQuery.useCountQuery(query);
@@ -65,9 +56,7 @@ export const Data: FC<Data.Props> = ({
 	}
 
 	if (listingCount.isFilterEmpty) {
-		return renderEmptyFn ? (
-			renderEmptyFn()
-		) : (
+		return (
 			<Status
 				data-ui={"ListingListContainer-[Status.filter-empty]"}
 				key={"no-listings-for-current-filter"}
@@ -96,7 +85,7 @@ export const Data: FC<Data.Props> = ({
 						width: "full",
 					}}
 				>
-					<ListingItemSuspense
+					<Item
 						listingId={listingId}
 						feedId={feedId}
 						withScore={withScore}
