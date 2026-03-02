@@ -91,7 +91,7 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `@buyer-user/feed/~public/FeedSelectPage.ts`
   - `@buyer-user/feed/~public/FeedSelectPagePending.ts`
 - `FeedList` was extracted from `v0` to active scope:
-  - `@buyer-user/feed/ui/FeedList/`
+  - `@buyer-user/feed/FeedSelectPage/FeedList/`
 - `ListingCount` was extracted from `v0` to active scope:
   - `@buyer-user/listing/ui/ListingCount/`
 - Feed/listing components no longer accept `locale` as prop; locale is read via `useLocale()` inside the component.

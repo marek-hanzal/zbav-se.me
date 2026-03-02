@@ -1,7 +1,7 @@
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { ListingList } from "~/app/@seller-user/listing/ui/ListingList";
+import { ListingList } from "./ListingList";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 
 export namespace MyListingPage {

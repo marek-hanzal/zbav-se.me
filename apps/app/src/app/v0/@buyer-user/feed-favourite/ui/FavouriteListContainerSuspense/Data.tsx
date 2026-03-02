@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedFavouriteQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
-import type { Item } from "~/app/@buyer-user/feed/ui/FeedList/Item";
+import type { Item } from "~/app/@buyer-user/feed/FeedSelectPage/FeedList/Item";
 import { EmptyStatus } from "./EmptyStatus";
 import { ItemSuspense } from "./ItemSuspense";
 

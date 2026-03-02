@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Item } from "~/app/@buyer-user/feed/ui/FeedList/Item";
+import { Item } from "~/app/@buyer-user/feed/FeedSelectPage/FeedList/Item";
 
 export namespace Data {
 	export interface Props {
