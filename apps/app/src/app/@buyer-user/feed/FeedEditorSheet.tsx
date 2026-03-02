@@ -1,7 +1,7 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import type { StateType } from "@use-pico/common/type";
 import type { FC } from "react";
-import { FeedEditor } from "~/app/@buyer-user/feed/ui/FeedEditor";
+import { FeedEditor } from "./FeedEditor/FeedEditor";
 
 export namespace FeedEditorSheet {
 	export interface Props extends FeedEditor.Props {

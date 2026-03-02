@@ -4,7 +4,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, useRef } from "react";
-import { Content } from "./Content";
+import { Content } from "./Content/Content";
 
 export namespace FeedListingPage {
 	export interface Props extends FlowContainer.Props {

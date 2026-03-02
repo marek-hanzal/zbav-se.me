@@ -3,9 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { withFeedFavouriteQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
-import type { Item } from "~/app/@buyer-user/feed/FeedSelectPage/FeedList/Item";
 import { EmptyStatus } from "./EmptyStatus";
-import { ItemSuspense } from "./ItemSuspense";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -49,12 +47,7 @@ export const Data: FC<Data.Props> = ({ _suspense, query, ui, ...props }) => {
 						gap: "default",
 					}}
 				>
-					{feedIds.map((feedId) => (
-						<ItemSuspense
-							key={feedId}
-							feedId={feedId}
-						/>
-					))}
+					"rework favourite to use ListItem"
 				</Container>
 			)}
 		</Container>

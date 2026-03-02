@@ -2,7 +2,7 @@ import { SettingsIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
 import { type FC, type Ref, useState } from "react";
-import { FeedEditor } from "~/app/@buyer-user/feed/ui/FeedEditor";
+import { FeedEditor } from "../../FeedEditor/FeedEditor";
 
 export namespace Data {
 	export interface Props extends MarkSuspense.Props {
