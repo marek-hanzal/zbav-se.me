@@ -9,13 +9,13 @@ import { translator } from "@use-pico/common/translator";
 import { FirstIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
-export namespace FirstListingStatus {
+export namespace EmptyListing {
 	export interface Props extends Container.Props {
 		//
 	}
 }
 
-export const FirstListingStatus: FC<FirstListingStatus.Props> = (props) => {
+export const EmptyListing: FC<EmptyListing.Props> = (props) => {
 	const locale = useLocale();
 
 	return (

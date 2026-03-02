@@ -1,37 +1,25 @@
-import { useLocale, useSentinel } from "@use-pico/client/hook";
+import { useLocale } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { type FC, useRef } from "react";
-import { Content } from "./Content";
+import type { FC } from "react";
 
-export namespace FeedListPage {
+export namespace FeedListPagePending {
 	export interface Props extends FlowContainer.Props {
-		feed: tFeed;
-		scrollToId: string | undefined;
+		//
 	}
 }
 
-export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...props }) => {
+export const FeedListPagePending: FC<FeedListPagePending.Props> = (props) => {
 	const locale = useLocale();
-	const containerRef = useRef<HTMLDivElement>(null);
-
-	const { sentinelRef, inView: isLast } = useSentinel<HTMLDivElement>({
-		containerRef,
-		threshold: 0.25,
-	});
-
 	return (
 		<FlowContainer
 			data-ui={"BuyerFeedList[FlowContainer]"}
 			left={
 				<LinkTo
 					{...uiBackButton({
-						ui: {
-							opacity: isLast ? "none" : "8",
-						},
 						className: [],
 					})}
 					data-ui={"BuyerFeedList-[LinkTo.left]"}
@@ -45,7 +33,7 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...prop
 			}
 			{...props}
 		>
-			<Content sentinelRef={sentinelRef} isLast={isLast} />
+			<SpinnerContainer />
 		</FlowContainer>
 	);
 };
