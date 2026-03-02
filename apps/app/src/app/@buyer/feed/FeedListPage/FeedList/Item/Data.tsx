@@ -9,7 +9,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { type FC, useState } from "react";
 import { ListItem } from "~/app/@common/list-item/ListItem";
-import { EditorSheet } from "~/app/v0/@buyer/feed/ui/EditorSheet";
+import { FeedEditorSheet } from "../../../FeedEditorSheet";
 import { ListingCount } from "./ListingCount";
 
 export namespace Data {
@@ -109,7 +109,7 @@ export const Data: FC<Data.Props> = ({ feedId, ui, ...props }) => {
 				}}
 			/>
 
-			<EditorSheet
+			<FeedEditorSheet
 				data-ui={"Item-[FeedEditorSheet]"}
 				feedId={feed.id}
 				state={{

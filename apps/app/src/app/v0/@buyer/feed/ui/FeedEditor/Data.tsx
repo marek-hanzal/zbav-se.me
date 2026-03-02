@@ -8,18 +8,15 @@ import { CategoryPatch } from "~/app/v0/@buyer/feed/ui/patch/CategoryPatch";
 import { ConditionPatch } from "~/app/v0/@buyer/feed/ui/patch/ConditionPatch";
 import { DeliveryPatch } from "~/app/v0/@buyer/feed/ui/patch/DeliveryPatch";
 import { LocationPatch } from "~/app/v0/@buyer/feed/ui/patch/LocationPatch";
-import { NamePatch } from "~/app/v0/@buyer/feed/ui/patch/NamePatch";
 import { RangePatch } from "~/app/v0/@buyer/feed/ui/patch/RangePatch";
 import { SortPatch } from "~/app/v0/@buyer/feed/ui/patch/SortPatch";
 import { TitlePatch } from "~/app/v0/@buyer/feed/ui/patch/TitlePatch";
 import { WarrantyPatch } from "~/app/v0/@buyer/feed/ui/patch/WarrantyPatch";
 import { Editor } from "./Editor";
-import { GalleryPatch } from "./GalleryPatch";
 
 export namespace Data {
 	export type View =
 		| "default"
-		| "name"
 		| "category"
 		| "location"
 		| "range"
@@ -28,7 +25,6 @@ export namespace Data {
 		| "age"
 		| "delivery"
 		| "warranty"
-		| "gallery"
 		| "title";
 
 	export interface Props extends Omit<Editor.Props, "feed" | "values">, MarkSuspense.Props {
@@ -40,7 +36,6 @@ export const Data: FC<Data.Props> = ({ _suspense, feedId, ...props }) => {
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 	const [view, setView] = useState<Data.View>("default");
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: Later
 	const views = useMemo<View.Views<Data.View>>(() => {
 		return {
 			default: {
@@ -48,12 +43,6 @@ export const Data: FC<Data.Props> = ({ _suspense, feedId, ...props }) => {
 					<Editor
 						feed={feed}
 						values={{
-							gallery: {
-								onClick: () => setView("gallery"),
-							},
-							name: {
-								onClick: () => setView("name"),
-							},
 							category: {
 								onClick: () => setView("category"),
 							},
@@ -83,24 +72,6 @@ export const Data: FC<Data.Props> = ({ _suspense, feedId, ...props }) => {
 							},
 						}}
 						{...props}
-					/>
-				),
-			},
-			gallery: {
-				children: (
-					<GalleryPatch
-						feed={feed}
-						onCancel={() => setView("default")}
-						onSettled={() => setView("default")}
-					/>
-				),
-			},
-			name: {
-				children: (
-					<NamePatch
-						feed={feed}
-						onCancel={() => setView("default")}
-						onSettled={() => setView("default")}
 					/>
 				),
 			},

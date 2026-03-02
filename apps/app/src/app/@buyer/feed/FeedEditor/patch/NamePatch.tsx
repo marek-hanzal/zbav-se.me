@@ -93,7 +93,7 @@ export const NamePatch: FC<NamePatch.Props> = ({ feed, onSettled, onCancel, ui, 
 					);
 				}}
 				loading={patchMutation.isPending}
-				disabled={invalid}
+				disabled={invalid || patchMutation.isPending}
 			/>
 		</Container>
 	);

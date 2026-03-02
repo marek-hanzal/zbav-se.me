@@ -23,3 +23,8 @@ Maps to server API: `/api/buyer/*`.
 
 - May use: `buyer`, `session`, `user`.
 - Must not use: `seller`, `public`.
+
+## Recent updates
+
+- Feed editor gallery patch was moved to active scope:
+  - `@buyer/feed/FeedEditor/patch/GalleryPatch.tsx`
