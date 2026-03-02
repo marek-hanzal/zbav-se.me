@@ -1,1 +1,0 @@
-export { CategoryInline } from "./CategoryInline";

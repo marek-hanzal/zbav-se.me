@@ -6,7 +6,7 @@ import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
-import { CategoryInline } from "~/app/@session/category/ui/CategoryInline";
+import { CategoryInline } from "~/app/@session/category/ui/CategoryInline/CategoryInline";
 import { ListingSellerInfoSuspense } from "./ListingSellerInfoSuspense";
 
 export namespace ListingInfoSection {

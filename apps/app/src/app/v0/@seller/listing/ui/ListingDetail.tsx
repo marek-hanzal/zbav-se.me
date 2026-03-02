@@ -8,7 +8,7 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
-import { CategoryInline } from "~/app/@session/category/ui/CategoryInline";
+import { CategoryInline } from "~/app/@session/category/ui/CategoryInline/CategoryInline";
 import { ListingOverlay } from "./ListingOverlay";
 
 export namespace ListingDetail {

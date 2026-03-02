@@ -4,7 +4,7 @@ import type { EntitySchema } from "@use-pico/common/schema";
 import type { tCategoryItem } from "@zbav-se.me/sdk/api/session";
 import { withCategoryQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
-import { CategoryInline } from "~/app/@session/category/ui/CategoryInline";
+import { CategoryInline } from "~/app/@session/category/ui/CategoryInline/CategoryInline";
 
 export namespace Data {
 	export interface Props

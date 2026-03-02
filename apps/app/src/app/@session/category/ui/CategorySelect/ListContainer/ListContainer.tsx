@@ -3,7 +3,7 @@ import type { Container } from "@use-pico/client/ui/container";
 import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { type FC, Suspense } from "react";
-import { Data } from "./Data";
+import { Data } from "./Data/Data";
 import { Pending } from "./Pending";
 
 export namespace ListContainer {

@@ -5,7 +5,7 @@ import { translator } from "@use-pico/common/translator";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { BuyerIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
-import { BuyerInfo } from "./BuyerInfo";
+import { BuyerInfo } from "./BuyerInfo/BuyerInfo";
 
 export namespace BuyerInfoButton {
 	export interface Props extends Button.Props {

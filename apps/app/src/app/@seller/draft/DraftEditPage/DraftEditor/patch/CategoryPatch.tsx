@@ -8,7 +8,7 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { CategorySelect } from "~/app/@session/category/ui/CategorySelect";
+import { CategorySelect } from "~/app/@session/category/ui/CategorySelect/CategorySelect";
 import { EditAction } from "../EditAction";
 
 export namespace CategoryPatch {
