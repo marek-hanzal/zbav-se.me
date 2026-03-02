@@ -30,7 +30,6 @@ export const Editor: FC<Editor.Props> = ({ feed, onView, ui, ...props }) => {
 			data-ui={"FeedEditor-[Container.content]"}
 			ui={{
 				flow: "vertical",
-				scroll: "vertical",
 				inner: "default",
 				width: "full",
 				gap: "lg",

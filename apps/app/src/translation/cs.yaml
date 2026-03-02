@@ -7,9 +7,6 @@
 022cc5c29a7e44c9fd5d268e2abcc13f44f38fcabbe0552e3d6c0710:
     ref: Buyer info (button)
     value: Informace o kupujícím
-02d821a7f6c8c860ddf14a10fa006f1668bf485d4832ffa830cf1a82:
-    ref: Feed age (title)
-    value: Věk, co tě zajímá
 0353a7e7a341b6b63f3e182605fd6627a8e0e1c6897b7bf639ff5d89:
     ref: Back (label)
     value: Zpět
@@ -31,9 +28,6 @@
 069a14aec9bb4a553c78c2032f6e521d3b8dccbbb4cfac68e67fa1c1:
     ref: Listing - Pros (title)
     value: Co chci vyzdvihnout
-06daab7b2990f20995e68b97e1294770e4a81d9fe49bd931a2930d47:
-    ref: Feed delivery (title)
-    value: Možnosti předání
 0931bae674f385d4352f8bb5199e1d2390a7e0008f4c93551330702f:
     ref: No listings with transactions (message)
     value: No listings with transactions (message)
@@ -331,9 +325,6 @@
 4f04083c52884888c6258c7fe83a35ff1ce96d78ee8c600a0397392c:
     ref: Seller info (button)
     value: Informace o prodejci
-4f33d281913ab576aa19c5c0e77df9e293b7f6ddee93358784861015:
-    ref: Feed range (title)
-    value: Maximální vzdálenost
 5216a97ce804ea83d2142778cf1659ad70adc72c670ea7365e396fcb:
     ref: Go home (welcome)
     value: Jdeme na to!
@@ -349,9 +340,6 @@
 57cf1f27b485ad4ccfff9487dc973c5a5a9d3582b03670f822646bc0:
     ref: Transaction not accepted - seller (message)
     value: Zprávy můžeš psát až po přijetí transakce.
-58a92c1f41bf1041dacdc744234255b7bcbfda299f147f7ddbf60fe2:
-    ref: Feed category (title)
-    value: Kategorie
 591b812973b8193e4ba322d124037a7e66dfb4eedbbd74a82a527d6a:
     ref: Feed name (label)
     value: Název seznamu
@@ -1084,9 +1072,6 @@ c3cfe2aa73f2129c42c9fc884e58bbbbceff97836e48baabfa7675af:
 c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
     ref: Price (title)
     value: Nastav cenu
-c68690759b1f3a6cf13d49b52c69b6e23d6283ab1edc17681d363407:
-    ref: Feed gallery (title)
-    value: Nastav si obrázek
 c7011d532414a06429fe3823d5c970b1de99d6e19fd0f06ea309c7c3:
     ref: First listing (message)
     value: |
@@ -1095,9 +1080,6 @@ c7011d532414a06429fe3823d5c970b1de99d6e19fd0f06ea309c7c3:
 c7147aaa47c54e90b7023be8ee57d73010a71c259e352067aaad48e6:
     ref: Reject transaction (button)
     value: Odmítnout a zavřít
-cb8c6bb348b937ffa8d1caf9789deeba0ad9997b963f584fa58a535d:
-    ref: Feed location (title)
-    value: Tvoje lokalita
 cbac5f835956010c5b45bed61ee098674baef1e75ef17acc19462ac1:
     ref: Flag listing (button)
     value: Nahlásit inzerát
@@ -1113,6 +1095,9 @@ ceeb32aea866f45126224f7ff0fc5a65a8fa268c581d023ffe309e03:
 cf07f8ef398a12baec9f7ce95c03328d6fcaac83ea30fc0940302802:
     ref: Listing - Cons not filled
     value: Nechceš na něco upozornit?
+cf65b78e6d107ecd9f3fe11a78f193542a1d90d08b6451968b7b5a6d:
+    ref: Feed editor (title)
+    value: Editace seznamu
 d123af005af0e5af73b3d1a3f223b7cbc7a4457fbf74669fd87c5690:
     ref: Description not filled
     value: Bez popisu
@@ -1134,15 +1119,9 @@ d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
     ref: Feed title (hint)
     value: >
         Nastav si, jaké titulky inzerátů se mají zobrazovat (např. iPhone nebo Bosh).
-d93ae180759797f0ad3bc741552efefb4290ee7b7d2c19108209fd2b:
-    ref: Feed condition (title)
-    value: Stavy
 d95b6247e69f90b9f6f613b62be4396f37f5c45acb205f993f42dd18:
     ref: Reaction rate (label)
     value: Reakce na zprávy
-da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
-    ref: Feed sorting (title)
-    value: Řazení
 dbb55f0c704298dbeda11ddad88ff05b151057e984bf244f0d09c4d9:
     ref: No listings with transactions (title)
     value: No listings with transactions (title)
@@ -1184,9 +1163,6 @@ eb18c941e11fe2d241983a0df227512b3e3691c12cc66af2303bc987:
 ebff4121130dcb1e32bc8706a7005ec0c78e811db18e0ae28a6abb4c:
     ref: Close draft (hint)
     value: Později můžeš pokračovat, kde jsi skončil.
-efad125c4eaaacfc95cadc0edaef1e9a5220f1c5a643e9b2c7364f50:
-    ref: Feed setup - name (title)
-    value: Nastav si název
 f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
     ref: Submit listing (button)
     value: Zveřejnit inzerát
