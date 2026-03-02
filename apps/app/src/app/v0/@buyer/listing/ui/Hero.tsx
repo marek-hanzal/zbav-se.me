@@ -3,7 +3,7 @@ import { Overlay } from "@use-pico/client/ui/overlay";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
-import { useListingEvent } from "~/app/@buyer/listing/hook/useListingEvent";
+import { useListingEvent } from "~/app/@buyer/listing/~public/useListingEvent";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import type { ListingDetail } from "./ListingDetail";
 import { ListingOverlay } from "./ListingOverlay";
