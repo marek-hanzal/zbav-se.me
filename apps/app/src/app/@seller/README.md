@@ -23,3 +23,8 @@ Maps to server API: `/api/seller/*`.
 
 - May use: `seller`, `session`, `user`.
 - Must not use: `buyer`, `public`.
+
+## Recent updates
+
+- Draft required section localizes category read-only value component:
+  - `@seller/draft/DraftEditPage/DraftEditor/value/CategoryValue.tsx`

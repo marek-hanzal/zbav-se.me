@@ -10,9 +10,9 @@ import { PriceValue } from "~/app/@common/price/ui/PriceValue";
 import { PriceTypeValue } from "~/app/@common/price-type/ui/PriceTypeValue";
 import { RestrictionValue } from "~/app/@common/restriction/ui/RestrictionValue";
 import { TitleValue } from "~/app/@common/title/ui/TitleValue";
-import { CategoryValue } from "~/app/@session/category/ui/CategoryValue";
 import { ChevronAction } from "../ChevronAction";
 import type { Data } from "../Data";
+import { CategoryValue } from "../value/CategoryValue";
 
 export namespace RequiredSection {
 	export interface Props {
