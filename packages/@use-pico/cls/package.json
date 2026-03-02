@@ -26,7 +26,7 @@
 		"@types/react": "19.2.14",
 		"@types/react-dom": "19.2.3",
 		"@types/testing-library__jest-dom": "6.0.0",
-		"@typescript/native-preview": "7.0.0-dev.20260301.1",
+		"@typescript/native-preview": "7.0.0-dev.20260302.1",
 		"@use-pico/tsconfig": "5.0.0",
 		"@vitejs/plugin-react": "5.1.4",
 		"jsdom": "28.1.0",
