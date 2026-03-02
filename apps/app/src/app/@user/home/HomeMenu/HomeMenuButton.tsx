@@ -1,8 +1,11 @@
 import { MenuIcon } from "@use-pico/client/icon";
+import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
+import { translator } from "@use-pico/common/translator";
+import { CloseButton } from "@zbav-se.me/ui/button";
 import type { FC } from "react";
 import { useState } from "react";
-import { HomeMenuSheet } from "./HomeMenuSheet";
+import { HomeMenu } from "~/app/@user/home/HomeMenu";
 
 export namespace HomeMenuButton {
 	export interface Props extends Button.Props {
@@ -42,10 +45,32 @@ export const HomeMenuButton: FC<HomeMenuButton.Props> = ({ ui, ...props }) => {
 				{...props}
 			/>
 
-			<HomeMenuSheet
+			<BottomSheet
 				isOpen={isOpen}
-				onClose={() => setIsOpen(false)}
-			/>
+				onClose={() => {
+					setIsOpen(false);
+				}}
+				data-ui={"HomeMenuSheet[BottomSheet]"}
+				detent={"default"}
+				header={({ close }) => ({
+					title: translator.text("zbav-se.me"),
+					right: (
+						<CloseButton
+							onClick={close}
+							ui={{
+								background: undefined,
+								shadow: false,
+								border: false,
+							}}
+						/>
+					),
+				})}
+				contentProps={{
+					disableScroll: true,
+				}}
+			>
+				<HomeMenu />
+			</BottomSheet>
 		</>
 	);
 };

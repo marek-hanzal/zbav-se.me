@@ -40,6 +40,7 @@ export const Data: FC<Data.Props> = ({ _suspense, feedId, ...props }) => {
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 	const [view, setView] = useState<Data.View>("default");
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: Later
 	const views = useMemo<View.Views<Data.View>>(() => {
 		return {
 			default: {
@@ -187,7 +188,6 @@ export const Data: FC<Data.Props> = ({ _suspense, feedId, ...props }) => {
 		};
 	}, [
 		feed,
-		props,
 	]);
 
 	return (

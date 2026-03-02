@@ -7,7 +7,7 @@ import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
 import { ActionSection } from "~/app/@seller-user/draft/ui/DraftEditor/section/ActionSection";
 import { OptionalSection } from "~/app/@seller-user/draft/ui/DraftEditor/section/OptionalSection";
 import { RequiredSection } from "~/app/@seller-user/draft/ui/DraftEditor/section/RequiredSection";
-import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
+import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 
 export namespace Editor {
 	export interface Props {

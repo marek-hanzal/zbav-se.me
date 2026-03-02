@@ -4,7 +4,9 @@ import type { FC } from "react";
 import { HomeMenu } from "~/app/@user/home/HomeMenu/HomeMenu";
 
 export namespace HomePage {
-	export interface Props extends TitleContainer.Props {}
+	export interface Props extends TitleContainer.Props {
+		//
+	}
 }
 
 /**

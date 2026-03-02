@@ -1,7 +1,7 @@
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, Suspense } from "react";
-import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
+import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 import { TransactionListingList } from "~/app/v0/@seller-user/transaction-listing/ui/TransactionListingList";
 import { TransactionListingListPending } from "~/app/v0/@seller-user/transaction-listing/ui/TransactionListingListPending";
 
