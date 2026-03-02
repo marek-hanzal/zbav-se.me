@@ -1,6 +1,6 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Group } from "@use-pico/client/ui/group";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import type { FC } from "react";
 import { FlagButtonSuspense } from "~/app/v0/@buyer-user/listing/ui/button/FlagButtonSuspense";
 import { IgnoreButtonSuspense } from "~/app/v0/@buyer-user/listing/ui/button/IgnoreButtonSuspense";
@@ -12,11 +12,7 @@ export namespace Data {
 }
 
 export const Data: FC<Data.Props> = ({ _suspense, listingId }) => {
-	const { data: listing } = withListingFetchQuery.useSuspenseQuery({
-		where: {
-			id: listingId,
-		},
-	});
+	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 
 	if (listing.isFavourite) {
 		return null;

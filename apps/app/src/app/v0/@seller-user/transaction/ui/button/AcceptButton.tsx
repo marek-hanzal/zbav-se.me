@@ -29,7 +29,13 @@ export const AcceptButton: FC<AcceptButton.Props> = ({ transaction, ...props }) 
 					},
 					{
 						onSuccess() {
-							withTransactionQuery.invalidateQuery(queryClient, transaction.id);
+							withTransactionQuery.invalidator(queryClient, ["fetch"], {
+								fetch: {
+									where: {
+										id: transaction.id,
+									},
+								},
+							});
 							withMessageThreadMessageCollectionQuery.invalidate(queryClient, {
 								path: {
 									messageThreadId: transaction.messageThreadId,

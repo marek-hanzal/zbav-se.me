@@ -3,7 +3,7 @@ import { createNoopVisibilityStore } from "@use-pico/client/store";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef, useState } from "react";
@@ -29,14 +29,10 @@ export const Transaction: FC<Transaction.Props> = ({
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
-	const { data: transaction } = withTransactionQuery.useQuery(transactionId, {
+	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId, {
 		refetchInterval: refresh,
 	});
-	const { data: listing } = withListingFetchQuery.useSuspenseQuery({
-		where: {
-			id: transaction.listingId,
-		},
-	});
+	const { data: listing } = withListingQuery.useFetchQuery(transaction.listingId);
 	const [detail, setDetail] = useState(false);
 	const hero = useUpload(transaction.gallery.items);
 

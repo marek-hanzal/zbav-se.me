@@ -6,7 +6,7 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { translator } from "@use-pico/common/translator";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/seller-user/listing";
+import { withListingQuery } from "@zbav-se.me/sdk/query/seller-user/listing";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
@@ -27,11 +27,7 @@ export const ListingMessageListPage: FC<ListingMessageListPage.Props> = ({
 	...props
 }) => {
 	const locale = useLocale();
-	const { data: listing } = withListingFetchQuery.useSuspenseQuery({
-		where: {
-			id: listingId,
-		},
-	});
+	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 
 	const [detail, setDetail] = useState(false);
 	const hero = useUpload(listing.gallery.items);

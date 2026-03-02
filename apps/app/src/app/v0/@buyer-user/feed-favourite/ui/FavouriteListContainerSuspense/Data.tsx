@@ -24,7 +24,7 @@ export namespace Data {
  */
 export const Data: FC<Data.Props> = ({ _suspense, query, ui, ...props }) => {
 	const { data: feedIds } = withFeedFavouriteQuery.useCollectionQuery(query);
-	const { data: feedCount } = withFeedFavouriteQuery.useCount(query);
+	const { data: feedCount } = withFeedFavouriteQuery.useCountQuery(query);
 
 	return (
 		<Container

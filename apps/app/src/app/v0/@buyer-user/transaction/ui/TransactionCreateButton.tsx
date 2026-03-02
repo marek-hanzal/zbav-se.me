@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withTransactionCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/transaction";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
@@ -19,12 +19,20 @@ export const TransactionCreateButton: FC<TransactionCreateButton.Props> = ({
 }) => {
 	const queryClient = useQueryClient();
 	const transactionCreateMutation = withTransactionCreateMutation.useMutation({
-		onSuccess() {
-			withListingFetchQuery.invalidate(queryClient, {
-				where: {
-					id: listingId,
+		async onSuccess() {
+			await withListingQuery.invalidator(
+				queryClient,
+				[
+					"fetch",
+				],
+				{
+					fetch: {
+						where: {
+							id: listingId,
+						},
+					},
 				},
-			});
+			);
 		},
 	});
 

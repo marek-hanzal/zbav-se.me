@@ -3,7 +3,7 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withIgnoreToggleMutation } from "@zbav-se.me/sdk/mutation/buyer-user/ignore";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import type { FC } from "react";
 
 export namespace Data {
@@ -21,20 +21,10 @@ export const Data: FC<Data.Props> = ({
 	ui,
 	...props
 }) => {
-	const patch = withListingFetchQuery.useSet();
-	const { data: listing } = withListingFetchQuery.useSuspenseQuery({
-		where: {
-			id: listingId,
-		},
-	});
+	const update = withListingQuery.useUpdate();
+	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 	const ignoreToggleMutation = withIgnoreToggleMutation.useMutation({
-		onSuccess(listing) {
-			patch(() => listing, {
-				where: {
-					id: listingId,
-				},
-			});
-		},
+		onSuccess: update,
 		meta: {
 			mutationId: listingId,
 		},

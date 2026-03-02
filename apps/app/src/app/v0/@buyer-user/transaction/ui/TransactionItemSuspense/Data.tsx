@@ -16,7 +16,7 @@ export namespace Data {
 
 export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, className, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const { data: transaction } = withTransactionQuery.useQuery(transactionId);
+	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
 	const hero = useUpload(transaction.gallery.items);
 
 	return (

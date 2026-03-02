@@ -1,7 +1,8 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { translator } from "@use-pico/common/translator";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { FeedDefaultPendingPage } from "~/app/v0/@buyer-user/feed/page/FeedDefaultPendingPage";
-import { feedCreateDefault } from "~/app/v0/@buyer-user/feed/service/feedCreateDefault";
+import { getFeedDefaultCreate } from "~/app/v0/@buyer-user/feed/service/getFeedDefaultCreate";
 
 export const Route = createFileRoute("/$locale/buyer/feed/default")({
 	/**
@@ -13,28 +14,28 @@ export const Route = createFileRoute("/$locale/buyer/feed/default")({
 	 * The idea is to _ensure_ we've a feed a user _can_ customize
 	 */
 	async loader({ context: { queryClient }, params: { locale } }) {
-		let feed = await withFeedQuery
-			.fetchFn({
-				sort: [
-					{
-						field: "updatedAt",
-						order: "desc",
-					},
-				],
-			})
-			/**
-			 * We're getting 4o4, if the feed is not found
-			 */
-			.catch(() => undefined);
-
-		/**
-		 * No default? Ok, let's create default one
-		 */
-		if (!feed) {
-			feed = await feedCreateDefault({
+		const feed =
+			(await withFeedQuery
+				.fetchFn({
+					sort: [
+						{
+							field: "updatedAt",
+							order: "desc",
+						},
+					],
+				})
+				/**
+				 * We're getting 4o4, if the feed is not found
+				 */
+				.catch(() => undefined)) ??
+			(await withFeedQuery.createFn(
 				queryClient,
-			});
-		}
+				getFeedDefaultCreate(translator.text("Feed name (default)")),
+				[
+					"collection",
+					"count",
+				],
+			));
 
 		throw redirect({
 			to: "/$locale/buyer/feed/$id/list",

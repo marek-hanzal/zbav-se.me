@@ -30,7 +30,7 @@ export const TransactionListingList: FC<TransactionListingList.Props> = ({
 	const { data } = withTransactionListingQuery.useCollectionQuery(query, {
 		refetchInterval,
 	});
-	const { data: transactionListingCount } = withTransactionListingQuery.useCount(query);
+	const { data: transactionListingCount } = withTransactionListingQuery.useCountQuery(query);
 
 	return (
 		<Container

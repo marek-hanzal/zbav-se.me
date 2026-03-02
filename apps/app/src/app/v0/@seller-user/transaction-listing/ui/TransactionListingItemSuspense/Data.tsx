@@ -29,7 +29,7 @@ export const Data: FC<Data.Props> = ({
 	...props
 }) => {
 	const locale = useLocale();
-	const { data: transactionListing } = withTransactionListingQuery.useQuery(transactionListingId);
+	const { data: transactionListing } = withTransactionListingQuery.useFetchQuery(transactionListingId);
 	const hero = useUpload(transactionListing.gallery.items);
 
 	return (

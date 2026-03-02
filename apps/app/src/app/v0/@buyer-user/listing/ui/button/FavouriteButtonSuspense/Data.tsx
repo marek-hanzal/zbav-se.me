@@ -22,7 +22,10 @@ export const Data: FC<Data.Props> = ({ _suspense, feedId, listingId, ui, ...prop
 	const favouriteToggle = withFavouriteToggleMutation.useMutation({
 		onSuccess(listing) {
 			update(listing);
-			withFeedFavouriteQuery.invalidateCollection(queryClient);
+			withFeedFavouriteQuery.invalidator(queryClient, [
+				"collection",
+				"count",
+			]);
 		},
 		meta: {
 			mutationId: listingId,

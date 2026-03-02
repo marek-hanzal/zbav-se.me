@@ -22,7 +22,7 @@ export const Transaction: FC<Transaction.Props> = ({
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
-	const { data: transaction } = withTransactionQuery.useQuery(transactionId, {
+	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId, {
 		refetchInterval: refresh,
 	});
 

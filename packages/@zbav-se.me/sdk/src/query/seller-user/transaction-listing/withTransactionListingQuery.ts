@@ -1,21 +1,59 @@
-import { withCollectionQuery, withNoopMutation } from "@use-pico/client/query";
-import { withTransactionListingCollectionQuery } from "./withTransactionListingCollectionQuery";
-import { withTransactionListingCountQuery } from "./withTransactionListingCountQuery";
-import { withTransactionListingFetchQuery } from "./withTransactionListingFetchQuery";
+import { withEntityQuery } from "@use-pico/client/query";
+import { withApi } from "@use-pico/common/api";
+import {
+	apiTransactionListingCollection,
+	apiTransactionListingCount,
+	apiTransactionListingFetch,
+	type tTransactionListing,
+	type tTransactionListingCountQuery,
+	type tTransactionListingQuery,
+} from "../../../api/seller-user";
 
-export const withTransactionListingQuery = withCollectionQuery({
-	keys: (data) => [
+export const withTransactionListingQuery = withEntityQuery<
+	tTransactionListing,
+	tTransactionListingQuery,
+	tTransactionListingQuery,
+	tTransactionListingCountQuery,
+	never,
+	never,
+	never
+>({
+	keys: () => [
 		"transaction-listing",
-		"collection",
-		data,
 	],
-	collectionQuery: withTransactionListingCollectionQuery,
-	fetchQuery: withTransactionListingFetchQuery,
-	countQuery: withTransactionListingCountQuery,
-	patchMutation: withNoopMutation,
 	toIdKey: (id) => ({
 		where: {
 			id,
 		},
 	}),
+	async fetchFn(data) {
+		return withApi(
+			apiTransactionListingFetch({
+				body: data,
+			}),
+		);
+	},
+	async collectionFn(data) {
+		return withApi(
+			apiTransactionListingCollection({
+				body: data,
+			}),
+		);
+	},
+	async countFn(data) {
+		return withApi(
+			apiTransactionListingCount({
+				body: data,
+			}),
+		);
+	},
+	async createFn(_data) {
+		throw new Error("Transaction listing create is not supported.");
+	},
+	async deleteFn(_data) {
+		throw new Error("Transaction listing delete is not supported.");
+	},
+	async patchFn(_data) {
+		throw new Error("Transaction listing patch is not supported.");
+	},
 });
