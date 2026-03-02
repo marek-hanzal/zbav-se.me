@@ -2,10 +2,10 @@ import { useElementVisibility, useMergeRefs, useScrollTo } from "@use-pico/clien
 import { Container } from "@use-pico/client/ui/container";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer";
 import { type FC, type ReactNode, Suspense, useEffect, useRef } from "react";
-import { Data } from "./ListingListContainerSuspense/Data";
-import { Pending } from "./ListingListContainerSuspense/Pending";
+import { Data } from "./Data";
+import { Pending } from "./Pending";
 
-export namespace ListingListContainerSuspense {
+export namespace ListingList {
 	export interface Props extends Container.Props {
 		query: tListingQuery;
 		/**
@@ -19,7 +19,7 @@ export namespace ListingListContainerSuspense {
 	}
 }
 
-export const ListingListContainerSuspense: FC<ListingListContainerSuspense.Props> = ({
+export const ListingList: FC<ListingList.Props> = ({
 	ref,
 	query,
 	scrollToId,
