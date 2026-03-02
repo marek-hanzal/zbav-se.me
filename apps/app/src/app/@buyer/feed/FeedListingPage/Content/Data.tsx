@@ -3,6 +3,7 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
 import { Group } from "@use-pico/client/ui/group";
 import { Tx } from "@use-pico/client/ui/tx";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import { type FC, type Ref, useState } from "react";
 import { FeedEditorSheet } from "../../FeedEditor/FeedEditorSheet";
@@ -20,6 +21,7 @@ export namespace Data {
 export const Data: FC<Data.Props> = ({ feedId, scrollToId, sentinelRef, isLast }) => {
 	const [isEditor, setIsEditor] = useState(false);
 	const invalidator = withListingQuery.useInvalidator();
+	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 
 	return (
 		<>
@@ -48,20 +50,17 @@ export const Data: FC<Data.Props> = ({ feedId, scrollToId, sentinelRef, isLast }
 				withScore
 				scrollToId={scrollToId}
 				query={{
-					where: {
-						feedId,
-						withIgnored: false,
+					...feed.query,
+					meta: {
+						feedId: feed.id,
+						// latLon: {
+
+						// }
 					},
 					cursor: {
 						page: 0,
-						size: 200,
+						size: 256,
 					},
-					sort: [
-						{
-							field: "expiresAt",
-							order: "desc",
-						},
-					],
 				}}
 				appendix={<div ref={sentinelRef} />}
 			/>
