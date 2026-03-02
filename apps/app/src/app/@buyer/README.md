@@ -28,3 +28,11 @@ Maps to server API: `/api/buyer/*`.
 
 - Feed editor gallery patch was moved to active scope:
   - `@buyer/feed/FeedEditor/patch/GalleryPatch.tsx`
+- Feed editor value components with single usage were localized to feed editor:
+  - `@buyer/feed/FeedEditor/value/`
+    - `AgeValueList.tsx`
+    - `ConditionValueList.tsx`
+    - `NameValue.tsx`
+    - `RangeValue.tsx`
+    - `SortValue.tsx`
+    - `WarrantyValueList.tsx`

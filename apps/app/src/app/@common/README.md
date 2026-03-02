@@ -131,7 +131,6 @@ When adding to `@common`:
 - Remaining condition UI parts were extracted to active scope:
   - `@common/condition/ui/ConditionIcon.tsx`
   - `@common/condition/ui/ConditionValue.tsx`
-  - `@common/condition/ui/ConditionValueList.tsx`
 - `GalleryPreview` was extracted to active scope:
   - `@common/gallery/ui/GalleryPreview.tsx`
 - `GalleryUploadContainer` abstraction was removed; gallery upload flow is now embedded directly at call-sites.

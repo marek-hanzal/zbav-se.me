@@ -4,18 +4,18 @@ import { Group } from "@use-pico/client/ui/group";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
-import { AgeValueList } from "~/app/@common/age/ui/AgeValueList";
-import { ConditionValueList } from "~/app/@common/condition/ui/ConditionValueList";
 import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
 import { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";
 import { LocationValue } from "~/app/@common/location/ui/LocationValue";
-import { RangeValue } from "~/app/@common/location/ui/RangeValue";
-import { NameValue } from "~/app/@common/name/ui/NameValue";
-import { SortValue } from "~/app/@common/sort/ui/SortValue";
 import { TitleValue } from "~/app/@common/title/ui/TitleValue";
-import { WarrantyValueList } from "~/app/@common/warranty/ui/WarrantyValueList";
 import { CategoryValueList } from "~/app/@session/category/ui/CategoryValueList";
 import type { Data } from "./Data";
+import { AgeValueList } from "./value/AgeValueList";
+import { ConditionValueList } from "./value/ConditionValueList";
+import { NameValue } from "./value/NameValue";
+import { RangeValue } from "./value/RangeValue";
+import { SortValue } from "./value/SortValue";
+import { WarrantyValueList } from "./value/WarrantyValueList";
 
 export namespace Editor {
 	export interface Props extends Container.Props {
