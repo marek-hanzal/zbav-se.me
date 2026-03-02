@@ -2,7 +2,7 @@ import { SettingsIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
 import { type FC, type Ref, useState } from "react";
-import { FeedEditor } from "../../FeedEditor/FeedEditor";
+import { FeedEditorSheet } from "../../FeedEditor/FeedEditorSheet";
 
 export namespace Data {
 	export interface Props extends MarkSuspense.Props {
@@ -37,7 +37,13 @@ export const Data: FC<Data.Props> = ({ feedId, sentinelRef, isLast }) => {
 				className={"transition-all"}
 			/>
 
-			<FeedEditor feedId={feedId} />
+			<FeedEditorSheet
+				feedId={feedId}
+				state={{
+					value: isEditor,
+					set: setIsEditor,
+				}}
+			/>
 		</>
 	);
 };
