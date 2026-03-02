@@ -51,12 +51,6 @@ export const Data: FC<Data.Props> = ({ feedId, scrollToId, sentinelRef, isLast }
 				scrollToId={scrollToId}
 				query={{
 					...feed.query,
-					meta: {
-						feedId: feed.id,
-						// latLon: {
-
-						// }
-					},
 					cursor: {
 						page: 0,
 						size: 256,
