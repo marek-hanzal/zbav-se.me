@@ -34,13 +34,19 @@ export const RejectButton: FC<RejectButton.Props> = ({ transaction, ...props }) 
 						},
 						{
 							onSuccess() {
-								withTransactionQuery.invalidator(queryClient, ["fetch"], {
-								fetch: {
-									where: {
-										id: transaction.id,
+								withTransactionQuery.invalidator(
+									queryClient,
+									[
+										"fetch",
+									],
+									{
+										fetch: {
+											where: {
+												id: transaction.id,
+											},
+										},
 									},
-								},
-							});
+								);
 								withMessageThreadMessageCollectionQuery.invalidate(queryClient, {
 									path: {
 										messageThreadId: transaction.messageThreadId,
