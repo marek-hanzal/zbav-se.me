@@ -85,9 +85,6 @@
 17d657e028b311247a42416aa1a3a6a7bbd603c9ad2640db1a845a89:
   ref: Feed location security (hint)
   value: Feed location security (hint)
-1811df87a53f79aa1a04eecb5ca04f535da2826613b2ca23a131e2ba:
-  ref: Close (button)
-  value: Close (button)
 1943b1ef0623fcc6116ef391b30cce37b7fd75dcde851410b1d5f9d6:
   ref: Upload photos (button)
   value: Upload photos (button)
@@ -97,9 +94,6 @@
 1a42649744bb921f8df25fa685691c73b59d91161d88967e3519efa9:
   ref: Personal - Email (label)
   value: Personal - Email (label)
-1ab95d6fcbacebf206a0388ee4204fbc371b89b1ab3d74df245149fa:
-  ref: Feed setup (title)
-  value: Feed setup (title)
 1b2f63dad0a59127c719c92424917ab45f0be0f48e494174d2e36b69:
   ref: Logo motto (label)
   value: Logo motto (label)
@@ -442,6 +436,9 @@
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
   ref: With VAT
   value: With VAT
+883460559a0e6fabb28562556c7d790c58af1fae8a9ed309e37f7a4a:
+  ref: Refresh feed (label)
+  value: Refresh feed (label)
 886e7f1206862942937e7dc0ca0620af2e9bf5d3055337548bdba3d9:
   ref: Messages (label)
   value: Messages (label)

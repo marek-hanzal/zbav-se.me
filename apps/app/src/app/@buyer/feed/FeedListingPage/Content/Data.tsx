@@ -1,6 +1,9 @@
-import { SettingsIcon } from "@use-pico/client/icon";
+import { RefreshIcon, SettingsIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
+import { Group } from "@use-pico/client/ui/group";
+import { Tx } from "@use-pico/client/ui/tx";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import { type FC, type Ref, useState } from "react";
 import { FeedEditorSheet } from "../../FeedEditor/FeedEditorSheet";
 
@@ -14,6 +17,7 @@ export namespace Data {
 
 export const Data: FC<Data.Props> = ({ feedId, sentinelRef, isLast }) => {
 	const [isEditor, setIsEditor] = useState(false);
+	const invalidator = withListingQuery.useInvalidator();
 
 	return (
 		<>
@@ -43,7 +47,36 @@ export const Data: FC<Data.Props> = ({ feedId, sentinelRef, isLast }) => {
 					value: isEditor,
 					set: setIsEditor,
 				}}
-			/>
+			>
+				<Group>
+					<Button
+						iconEnabled={RefreshIcon}
+						ui={{
+							tone: "neutral",
+							theme: "light",
+							size: "default",
+							justify: "start",
+							items: "center",
+							background: "default",
+							round: undefined,
+							shadow: false,
+							border: false,
+							width: "full",
+						}}
+						onClick={() => {
+							invalidator(
+								[
+									"collection",
+								],
+								{},
+							);
+							setIsEditor(false);
+						}}
+					>
+						<Tx label={"Refresh feed (label)"} />
+					</Button>
+				</Group>
+			</FeedEditorSheet>
 		</>
 	);
 };
