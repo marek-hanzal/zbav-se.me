@@ -38,3 +38,6 @@ Maps to server API: `/api/buyer/*`.
     - `WarrantyValueList.tsx`
 - Listing list container for feed pages was moved out of `v0` and localized to feed listing page:
   - `@buyer/feed/FeedListingPage/ListingList/ListingList.tsx`
+- Favourite listings page is now active scope (`v0` no longer used by route):
+  - `@buyer/favourite/FavouriteListPage/FavouriteListPage.tsx`
+  - `@buyer/favourite/FavouriteListPage/FavouriteList/`

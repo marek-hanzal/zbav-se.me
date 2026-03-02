@@ -1,0 +1,34 @@
+import { translator } from "@use-pico/common/translator";
+import { TitleContainer } from "@zbav-se.me/ui/container";
+import type { FC } from "react";
+import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
+import { FavouriteList } from "./FavouriteList";
+
+export namespace FavouriteListPage {
+	export interface Props extends TitleContainer.Props {}
+}
+
+export const FavouriteListPage: FC<FavouriteListPage.Props> = (props) => {
+	return (
+		<TitleContainer
+			textTitle={translator.text("Your favourites (title)")}
+			right={<HomeMenuButton />}
+			{...props}
+		>
+			<FavouriteList
+				query={{
+					where: {
+						isFavourite: true,
+						withIgnored: false,
+					},
+					sort: [
+						{
+							field: "createdAt",
+							order: "desc",
+						},
+					],
+				}}
+			/>
+		</TitleContainer>
+	);
+};
