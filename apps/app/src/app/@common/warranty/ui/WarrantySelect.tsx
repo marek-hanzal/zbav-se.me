@@ -17,7 +17,7 @@ export namespace WarrantySelect {
  * Provides an interactive control for selecting warranty values in forms.
  * Use it in editors where users need to choose or update warranty before saving.
  *
- * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const WarrantySelect: FC<WarrantySelect.Props> = ({ selection, ui, ...props }) => {
 	return (

@@ -5,7 +5,7 @@
 - Inherits all rules from `/AGENTS.md`.
 
 ## Domain boundaries (hard)
-- Keep code in the correct app domain folder (`@public/@session/@user/@buyer-session/@buyer-user/@seller-session/@seller-user/@common`).
+- Keep code in the correct app domain folder (`@public/@session/@user/@buyer/@seller/@common`).
 - No buyer <-> seller cross-domain leakage.
 - Use only SDK surfaces allowed by domain README rules.
 - Keep `@common` only for truly cross-domain app-level shared code.

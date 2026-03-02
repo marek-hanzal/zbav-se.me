@@ -19,7 +19,7 @@ export namespace ConditionValueList {
  * Renders a read-only list of condition values in a consistent label/value style.
  * Use it in detail or preview views when you need to show multiple condition entries clearly.
  *
- * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const ConditionValueList: FC<ConditionValueList.Props> = ({ conditionIn, ...props }) => {
 	return (

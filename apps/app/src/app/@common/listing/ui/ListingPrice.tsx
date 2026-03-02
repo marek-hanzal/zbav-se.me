@@ -18,7 +18,7 @@ export namespace ListingPrice {
  * Formats and displays listing price with locale-aware currency rendering and price-type context.
  * Use it in listing cards and detail views that must show pricing consistently.
  *
- * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const ListingPrice: FC<ListingPrice.Props> = ({
 	price,

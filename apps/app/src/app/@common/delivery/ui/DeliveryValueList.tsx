@@ -19,7 +19,7 @@ export namespace DeliveryValueList {
  * Renders a read-only list of delivery values in a consistent label/value style.
  * Use it in detail or preview views when you need to show multiple delivery entries clearly.
  *
- * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const DeliveryValueList: FC<DeliveryValueList.Props> = ({ deliveryIn, ...props }) => {
 	const items = deliveryIn.map((item) => ({

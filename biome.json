@@ -60,15 +60,15 @@
 						"patterns": [
 							{
 								"group": [
-									"~/app/@seller-user/**",
-									"!~/app/@seller-user/**/~public/**"
+									"~/app/@seller/**",
+									"!~/app/@seller/**/~public/**"
 								],
 								"message": "Use public import"
 							},
 							{
 								"group": [
-									"~/app/@buyer-user/**",
-									"!~/app/@buyer-user/**/~public/**"
+									"~/app/@buyer/**",
+									"!~/app/@buyer/**/~public/**"
 								],
 								"message": "Use public import"
 							},

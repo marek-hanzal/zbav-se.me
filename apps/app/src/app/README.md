@@ -7,24 +7,21 @@ The app is split into domain folders that map to server/API access boundaries an
 - `/api/public/*` -> `@public`
 - `/api/session/*` -> `@session`
 - `/api/user/*` -> `@user`
-- `/api/buyer/*` -> buyer UI domains (`@buyer-session`, `@buyer-user`)
-- `/api/seller/*` -> seller UI domains (`@seller-session`, `@seller-user`)
+- `/api/buyer/*` -> `@buyer`
+- `/api/seller/*` -> `@seller`
 
 Buyer and seller remain hard-separated in code and routing. Endpoint suffixes and symbol names may be duplicated between roles.
 
 ## Folder map
 
-| App folder       | Server API       | Context              | Typical use |
-|------------------|------------------|----------------------|-------------|
-| `@public`        | `/api/public/*`  | No auth              | Login, register, public pages |
-| `@session`       | `/api/session/*` | Authenticated shared | Categories, locations, common lookups |
-| `@user`          | `/api/user/*`    | User-private         | Gallery, messages, uploads |
-| `@buyer-session` | `/api/buyer/*`   | Session buyer        | Listing browse, listing events, seller info |
-| `@buyer-user`    | `/api/buyer/*`   | User-private buyer   | Feeds, favourites, thumbs, ignore, flag, buyer transactions |
-| `@seller-session`| `/api/seller/*`  | Session seller       | Buyer info/metrics in seller views |
-| `@seller-user`   | `/api/seller/*`  | User-private seller  | Drafts, listings, seller transactions |
-| `@common`        | —                | No API               | Shared UI/types/hooks |
-| `@seller`        | —                | UI shell             | Seller route composition |
+| App folder | Server API | Context | Typical use |
+|------------|------------|---------|-------------|
+| `@public` | `/api/public/*` | No auth | Login, register, public pages |
+| `@session` | `/api/session/*` | Authenticated shared | Categories, locations, common lookups |
+| `@user` | `/api/user/*` | User-private shared | Gallery, messages, uploads |
+| `@buyer` | `/api/buyer/*` | Buyer domain | Buyer listing, feed, preference, transaction flows |
+| `@seller` | `/api/seller/*` | Seller domain | Seller draft, listing, transaction flows |
+| `@common` | — | No API | Shared UI/types/hooks |
 
 ## Dependency direction
 
@@ -32,9 +29,7 @@ Buyer and seller remain hard-separated in code and routing. Endpoint suffixes an
 - `@public`: `@common` only.
 - `@session`: `@common` only.
 - `@user`: `@common`, `@session`.
-- `@buyer-session`, `@seller-session`: `@common`, `@session`.
-- `@buyer-user`: `@common`, `@session`, `@buyer-session`, `@user`.
-- `@seller-user`: `@common`, `@session`, `@seller-session`, `@user`.
-- `@seller`: composition-only shell over seller domains.
+- `@buyer`: `@common`, `@session`, `@user`.
+- `@seller`: `@common`, `@session`, `@user`.
 
 No buyer <-> seller imports.

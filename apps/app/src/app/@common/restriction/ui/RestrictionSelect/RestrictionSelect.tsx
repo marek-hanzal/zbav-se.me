@@ -15,7 +15,7 @@ export namespace RestrictionSelect {
  * Provides an interactive control for selecting restriction values in forms.
  * Use it in editors where users need to choose or update restriction before saving.
  *
- * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const RestrictionSelect: FC<RestrictionSelect.Props> = ({ selection, ui, ...props }) => {
 	return (

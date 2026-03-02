@@ -16,7 +16,7 @@ export namespace GalleryUpload {
  * Coordinates gallery file input and upload-ready state for the parent form.
  * Use it in editors where users attach media before publishing or saving.
  *
- * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props }) => {
 	const snapperRef = useRef<HTMLDivElement>(null);

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ListingMessageListPage } from "~/app/v0/@seller-user/transaction-listing/page/ListingMessageListPage";
-import { ListingMessageListPendingPage } from "~/app/v0/@seller-user/transaction-listing/page/ListingMessageListPendingPage";
+import { ListingMessageListPage } from "~/app/v0/@seller/transaction-listing/page/ListingMessageListPage";
+import { ListingMessageListPendingPage } from "~/app/v0/@seller/transaction-listing/page/ListingMessageListPendingPage";
 
 export const Route = createFileRoute("/$locale/seller/message/$listingId/list")({
 	pendingComponent: ListingMessageListPendingPage,

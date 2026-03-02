@@ -18,7 +18,7 @@ export namespace WarrantyValueList {
  * Renders a read-only list of warranty values in a consistent label/value style.
  * Use it in detail or preview views when you need to show multiple warranty entries clearly.
  *
- * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const WarrantyValueList: FC<WarrantyValueList.Props> = ({ warrantyIn, ...props }) => {
 	return (

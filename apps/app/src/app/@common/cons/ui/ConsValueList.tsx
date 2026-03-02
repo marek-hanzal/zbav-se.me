@@ -20,7 +20,7 @@ export namespace ConsValueList {
  * Renders a read-only list of cons values in a consistent label/value style.
  * Use it in detail or preview views when you need to show multiple cons entries clearly.
  *
- * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const ConsValueList: FC<ConsValueList.Props> = ({ cons, ...props }) => {
 	const consItems = cons.map((con, index) => ({

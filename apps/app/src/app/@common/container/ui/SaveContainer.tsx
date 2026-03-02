@@ -23,7 +23,7 @@ export namespace SaveContainer {
  * Groups cancel/save actions into a single reusable toolbar with loading and disabled-state handling.
  * Use it in editable forms where primary save and secondary cancel actions should stay visually consistent.
  *
- * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const SaveContainer: FC<SaveContainer.Props> = ({
 	onCancel,

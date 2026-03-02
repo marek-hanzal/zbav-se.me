@@ -11,7 +11,7 @@ export namespace ConditionSelect {
  * Provides an interactive control for selecting condition values in forms.
  * Use it in editors where users need to choose or update condition before saving.
  *
- * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const ConditionSelect: FC<ConditionSelect.Props> = (props) => {
 	return (

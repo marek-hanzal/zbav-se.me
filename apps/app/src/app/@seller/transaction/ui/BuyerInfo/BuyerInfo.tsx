@@ -1,0 +1,26 @@
+import { type FC, Suspense } from "react";
+import { Data } from "./Data";
+import { Pending } from "./Pending";
+
+export namespace BuyerInfo {
+	export interface Props extends Omit<Data.Props, "_suspense"> {
+		//
+	}
+}
+
+/**
+ * Wraps buyer transaction details in suspense so participant information can load independently.
+ * Use it in seller-side transaction flows when buyer profile context is shown on demand.
+ *
+ * @see apps/app/src/app//transaction/ui/BuyerInfoButton.tsx
+ */
+export const BuyerInfo: FC<BuyerInfo.Props> = (props) => {
+	return (
+		<Suspense fallback={<Pending />}>
+			<Data
+				_suspense={"I know"}
+				{...props}
+			/>
+		</Suspense>
+	);
+};

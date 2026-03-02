@@ -17,7 +17,7 @@ export namespace DeliverySelect {
  * Provides an interactive control for selecting delivery values in forms.
  * Use it in editors where users need to choose or update delivery before saving.
  *
- * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const DeliverySelect: FC<DeliverySelect.Props> = ({ selection, ui, ...props }) => {
 	return (

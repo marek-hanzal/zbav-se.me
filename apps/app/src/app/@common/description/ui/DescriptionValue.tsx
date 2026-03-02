@@ -12,7 +12,7 @@ export namespace DescriptionValue {
  * Renders a read-only description value with consistent formatting and empty-state handling.
  * Use it in detail cards, summaries, and previews where editable controls are not needed.
  *
- * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const DescriptionValue: FC<DescriptionValue.Props> = ({ description, ...props }) => {
 	const hasDescription = description != null && description !== "";

@@ -12,7 +12,7 @@ export namespace Preview {
  * Shows a visual preview of preview content, including loading-aware rendering.
  * Use it to confirm selected media before the final submit action.
  *
- * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const Preview: FC<Preview.Props> = ({ uploadId, ...props }) => {
 	if (!uploadId) {

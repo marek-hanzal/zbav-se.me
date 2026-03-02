@@ -15,7 +15,7 @@ export namespace SignOutButton {
  * Encapsulates a focused sign out action behind shared app styling and behavior.
  * Use it when the sign out action should stay consistent across screens.
  *
- * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/DraftEditor.tsx
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
  */
 export const SignOutButton: FC<SignOutButton.Props> = ({ ui, ...props }) => {
 	const locale = useLocale();

@@ -36,7 +36,7 @@ Same dependency rules as server: domain boundaries and package usage must be res
 
 ### Imports from other app domains
 
-- **May import from**: none. Must not import from any other app domain (`@public`, `@session`, `@user`, `@buyer-session`, `@seller-session`, `@buyer-user`, `@seller-user`).
+- **May import from**: none. Must not import from any other app domain (`@public`, `@session`, `@user`, `@buyer`, `@seller`).
 - **Used by**: any domain may import from `@common`.
 
 ### SDK import rules
@@ -44,7 +44,7 @@ Same dependency rules as server: domain boundaries and package usage must be res
 SDK is organized by the same domains as the server (and UI). Same rules as domain imports above.
 
 - **May use SDK for**: none. `@common` must not call API (no domain surface in shared layer).
-- **Must not use SDK for**: any domain (buyer-user, buyer-session, seller-user, seller-session, session, user, public).
+- **Must not use SDK for**: any domain (buyer, seller, session, user, public).
 
 ### Context
 
@@ -65,7 +65,7 @@ Common resources are "open" in the sense that **any** domain may use them, inclu
 ## Related Domains
 
 - All domains may import from `@common`.
-- `@buyer-user` / `@seller-user` – use transaction context and shared types.
+- `@buyer` / `@seller` – use transaction context and shared types.
 - `@session` – may use common utilities.
 - `@public` – may use common utilities (with care for sensitive data).
 

@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import z from "zod";
-import { FeedListingPage } from "~/app/@buyer-user/feed/~public/FeedListingPage";
-import { FeedListingPagePending } from "~/app/@buyer-user/feed/~public/FeedListingPagePending";
+import { FeedListingPage } from "~/app/@buyer/feed/~public/FeedListingPage";
+import { FeedListingPagePending } from "~/app/@buyer/feed/~public/FeedListingPagePending";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 	validateSearch: z.object({

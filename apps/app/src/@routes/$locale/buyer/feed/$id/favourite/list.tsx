@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { FeedFavouriteListPage } from "~/app/v0/@buyer-user/feed/page/FeedFavouriteListPage";
+import { FeedFavouriteListPage } from "~/app/v0/@buyer/feed/page/FeedFavouriteListPage";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/favourite/list")({
 	component() {

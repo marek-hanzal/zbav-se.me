@@ -18,7 +18,7 @@ export namespace GalleryUploadButton {
  * Renders a single action button that toggles the gallery upload sheet and wires upload callbacks through.
  * Use it in editors where photo upload should start from a clear CTA while keeping upload flow encapsulated.
  *
- * @see apps/app/src/app/@seller-user/draft/ui/DraftEditor/patch/GalleryPatch.tsx
+ * @see apps/app/src/app//draft/ui/DraftEditor/patch/GalleryPatch.tsx
  */
 export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads>({
 	withMutation,
