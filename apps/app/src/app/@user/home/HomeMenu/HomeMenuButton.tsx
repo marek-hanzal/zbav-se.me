@@ -5,7 +5,7 @@ import { translator } from "@use-pico/common/translator";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import type { FC } from "react";
 import { useState } from "react";
-import { HomeMenu } from "~/app/@user/home/HomeMenu";
+import { HomeMenu } from "./HomeMenu";
 
 export namespace HomeMenuButton {
 	export interface Props extends Button.Props {

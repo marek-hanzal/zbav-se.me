@@ -71,6 +71,13 @@
 									"!~/app/@buyer-user/feed/~public/**"
 								],
 								"message": "Use public import"
+							},
+							{
+								"group": [
+									"~/app/@user/**",
+									"!~/app/@user/**/~public/**"
+								],
+								"message": "Use public import"
 							}
 						]
 					}
