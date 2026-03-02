@@ -7,6 +7,7 @@ import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, useRef, useState } from "react";
+import { getFeedDefaultCreate } from "~/app/v0/@buyer-user/feed/service/getFeedDefaultCreate";
 import { ListingListContainerSuspense } from "~/app/v0/@buyer-user/listing/ui/ListingListContainerSuspense";
 import { FeedEditorSheetSuspense } from "./FeedListPage/FeedEditorSheetSuspense";
 import { FeedListStatus } from "./FeedListPage/FeedListStatus";
@@ -80,12 +81,7 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...prop
 							...feed.query,
 							sort: feed.query.sort?.length
 								? feed.query.sort
-								: [
-										{
-											field: "createdAt",
-											order: "desc",
-										},
-									],
+								: getFeedDefaultCreate("default").query.sort,
 							meta: {
 								feedId: feed.id,
 								...feed.query.meta,
