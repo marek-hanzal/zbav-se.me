@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { DraftEditPage } from "~/app/@seller-user/draft/page/DraftEditPage";
+import { DraftEditPage } from "~/app/@seller-user/draft/~public/DraftEditPage";
 
 export const Route = createFileRoute("/$locale/seller/draft/$id/edit")({
 	component() {

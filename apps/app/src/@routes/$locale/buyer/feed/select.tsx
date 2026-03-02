@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { translator } from "@use-pico/common/translator";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
-import { FeedSelectPage } from "~/app/@buyer-user/feed/page/FeedSelectPage";
-import { FeedSelectPagePending } from "~/app/@buyer-user/feed/page/FeedSelectPagePending";
+import { FeedSelectPage } from "~/app/@buyer-user/feed/~public/FeedSelectPage";
+import { FeedSelectPagePending } from "~/app/@buyer-user/feed/~public/FeedSelectPagePending";
 import { getFeedDefaultCreate } from "~/app/v0/@buyer-user/feed/service/getFeedDefaultCreate";
 
 export const Route = createFileRoute("/$locale/buyer/feed/select")({
