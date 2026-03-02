@@ -3,17 +3,14 @@ import type { KnipConfig } from "knip";
 const config: KnipConfig = {
 	$schema: "https://unpkg.com/knip@5/schema.json",
 	entry: [
-		"src/_route.ts",
-		"src/@routes/**/*.{ts,tsx}",
-		"cli/**/*.ts",
-		"vite.config.ts",
-		"tailwind.config.ts",
+		"docusaurus.config.ts",
+		"src/**/*.{ts,tsx,js,jsx}",
 	],
 	project: [
-		"src/**/*.{ts,tsx}",
-		"cli/**/*.ts",
-		"vite.config.ts",
+		"docusaurus.config.ts",
+		"src/**/*.{ts,tsx,js,jsx}",
 		"tailwind.config.ts",
+		"postcss.config.js",
 	],
 	ignore: [
 		"**/node_modules/**",
@@ -23,12 +20,6 @@ const config: KnipConfig = {
 	],
 	ignoreDependencies: [
 		"@typescript/native-preview",
-		"@use-pico/*",
-		"@zbav-se.me/*",
-		"@iconify/json",
-		"@iconify/tailwind4",
-		"@tanstack/router-plugin",
-		"tailwindcss",
 	],
 };
 

@@ -9,7 +9,7 @@
 		"seed:interaction": "bun ./cli/seed-interaction.ts",
 		"typecheck": "tsc --noEmit",
 		"test": "bunx --bun vitest --run",
-		"knip": "knip"
+		"knip": "knip --include dependencies --no-config-hints"
 	},
 	"dependencies": {
 		"@axiomhq/js": "1.4.0",

@@ -130,7 +130,16 @@ When adding components to this package:
 ```bash
 # Type checking
 bun run typecheck
+
+# Dependency audit (local binary)
+bun run knip
 ```
+
+## Dependency Hygiene
+
+Knip is configured per workspace and executed from local `devDependencies` to avoid `bun x` drift.
+Monorepo-internal `@use-pico/*` imports are filtered in this package to reduce known false positives.
+Unused direct dependencies (`react-dom`, `ts-pattern`) and unused type package (`@types/react-dom`) were removed after source verification.
 
 ## Architecture
 

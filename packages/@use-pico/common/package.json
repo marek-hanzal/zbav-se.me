@@ -7,7 +7,8 @@
 	"scripts": {
 		"typecheck": "tsgo --noEmit",
 		"no:build": "bun x rollup -c",
-		"no:test": "vitest --run"
+		"no:test": "vitest --run",
+		"knip": "knip --include dependencies --no-config-hints"
 	},
 	"dependencies": {
 		"@paralleldrive/cuid2": "3.3.0",
@@ -35,6 +36,7 @@
 		"@typescript/native-preview": "7.0.0-dev.20260302.1",
 		"@use-pico/tsconfig": "5.0.0",
 		"effect": "3.19.19",
+		"knip": "5.85.0",
 		"rollup": "4.59.0",
 		"rollup-plugin-dts": "6.3.0",
 		"typescript": "beta",

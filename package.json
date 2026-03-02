@@ -10,7 +10,7 @@
 		"translations": "turbo run translations --parallel",
 		"format": "biome format --write .",
 		"lint": "biome check --write .",
-		"knip": "turbo run knip --parallel",
+		"knip": "turbo run knip --concurrency=1",
 		"typecheck": "turbo run typecheck --parallel",
 		"test": "dotenv -c development -- turbo run test --parallel",
 		"seed:core": "dotenv -c development -- bun --cwd ./apps/server ./cli/seed-core.ts",

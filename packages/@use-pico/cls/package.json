@@ -9,7 +9,8 @@
 		"build:bundle": "bun x rollup -c",
 		"no:build": "run-p build:*",
 		"no:test": "run-s test:*",
-		"test:code": "vitest --run"
+		"test:code": "vitest --run",
+		"knip": "knip --include dependencies --no-config-hints"
 	},
 	"dependencies": {
 		"react": "19.2.4",
@@ -28,6 +29,7 @@
 		"@use-pico/tsconfig": "5.0.0",
 		"@vitejs/plugin-react": "5.1.4",
 		"jsdom": "28.1.0",
+		"knip": "5.85.0",
 		"npm-run-all2": "8.0.4",
 		"rollup": "4.59.0",
 		"rollup-plugin-dts": "6.3.0",

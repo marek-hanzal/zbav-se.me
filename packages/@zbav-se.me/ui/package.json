@@ -4,23 +4,22 @@
 	"version": "workspace:*",
 	"type": "module",
 	"scripts": {
-		"typecheck": "tsgo --noEmit"
+		"typecheck": "tsgo --noEmit",
+		"knip": "knip --include dependencies --no-config-hints"
 	},
 	"dependencies": {
 		"@tanstack/react-form": "1.28.3",
 		"@use-pico/client": "workspace:*",
 		"@use-pico/cls": "workspace:*",
 		"@use-pico/common": "workspace:*",
-		"react": "19.2.4",
-		"react-dom": "19.2.4",
-		"ts-pattern": "5.9.0"
+		"react": "19.2.4"
 	},
 	"devDependencies": {
 		"@types/node": "25.3.3",
 		"@types/react": "19.2.14",
-		"@types/react-dom": "19.2.3",
 		"@typescript/native-preview": "7.0.0-dev.20260302.1",
 		"@use-pico/tsconfig": "5.0.0",
+		"knip": "5.85.0",
 		"typescript": "beta"
 	},
 	"exports": {

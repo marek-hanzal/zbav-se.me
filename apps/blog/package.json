@@ -10,7 +10,8 @@
 		"clear": "docusaurus clear",
 		"serve": "docusaurus serve",
 		"write-translations": "docusaurus write-translations",
-		"write-heading-ids": "docusaurus write-heading-ids"
+		"write-heading-ids": "docusaurus write-heading-ids",
+		"knip": "knip --include dependencies --no-config-hints"
 	},
 	"dependencies": {
 		"@docusaurus/core": "3.9.2",
@@ -28,6 +29,7 @@
 		"@types/react": "19.2.14",
 		"@typescript/native-preview": "7.0.0-dev.20260302.1",
 		"autoprefixer": "10.4.27",
+		"knip": "5.85.0",
 		"postcss": "8.5.6",
 		"tailwindcss": "4.2.1",
 		"typescript": "beta"
