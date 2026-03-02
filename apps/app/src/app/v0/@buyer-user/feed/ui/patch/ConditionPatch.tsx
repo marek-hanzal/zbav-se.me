@@ -1,7 +1,7 @@
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
-import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import type { tFeed } from "@zbav-se.me/sdk/api/buyer";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 import { ConditionSelect } from "~/app/@common/condition/ui/ConditionSelect";

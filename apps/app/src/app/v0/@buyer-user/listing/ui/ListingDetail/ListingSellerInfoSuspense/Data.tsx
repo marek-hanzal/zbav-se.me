@@ -2,7 +2,7 @@ import { Icon, ShowIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { LabelValue } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/buyer-session/listing";
+import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import type { FC } from "react";
 import { RatingIcon } from "~/app/@common/score/ui/RatingIcon";
 

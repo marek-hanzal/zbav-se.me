@@ -1,4 +1,4 @@
-import type { tTransaction } from "@zbav-se.me/sdk/api/seller-user";
+import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import type { FC } from "react";
 import { TransactionButtonUi } from "~/app/v0/@common/transaction/ui/TransactionButtonUi";
 import { ResolveButton } from "~/app/v0/@seller-user/transaction/ui/button/ResolveButton";

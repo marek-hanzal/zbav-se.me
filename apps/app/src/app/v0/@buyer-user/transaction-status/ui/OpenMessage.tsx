@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { Container } from "@use-pico/client/ui/container";
-import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
+import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import { withTransactionMessageGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { type FC, useState } from "react";

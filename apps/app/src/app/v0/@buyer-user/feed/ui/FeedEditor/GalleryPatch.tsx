@@ -1,6 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
-import { withFeedGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
+import type { tFeed } from "@zbav-se.me/sdk/api/buyer";
+import { withFeedGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/buyer/feed";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/app/@common/gallery/ui/GalleryUpload";

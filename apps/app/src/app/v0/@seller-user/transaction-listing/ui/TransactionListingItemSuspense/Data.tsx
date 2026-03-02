@@ -9,7 +9,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { tvc } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller-user/transaction-listing";
+import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller/transaction-listing";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";

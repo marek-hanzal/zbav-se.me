@@ -1,6 +1,6 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Overlay } from "@use-pico/client/ui/overlay";
-import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
+import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { useListingEvent } from "~/app/@buyer-session/listing/hook/useListingEvent";

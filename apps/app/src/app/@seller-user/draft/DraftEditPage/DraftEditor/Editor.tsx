@@ -1,6 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
+import type { tDraft } from "@zbav-se.me/sdk/api/seller";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";

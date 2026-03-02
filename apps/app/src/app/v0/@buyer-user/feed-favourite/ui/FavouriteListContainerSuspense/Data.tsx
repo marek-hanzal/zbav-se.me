@@ -1,7 +1,7 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
-import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer-user";
-import { withFeedFavouriteQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import type { tFeedQuery } from "@zbav-se.me/sdk/api/buyer";
+import { withFeedFavouriteQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import type { FC } from "react";
 import { EmptyStatus } from "./EmptyStatus";
 

@@ -6,7 +6,7 @@ Buyer User – private buyer operations requiring user context.
 
 This domain contains components and logic for buyer operations that work with **user-private data**: saved feeds, favourite categories, ignored listings, thumbs (like/dislike), and the buyer side of transactions.
 
-Maps to server API: `/api/buyer-user/*`.
+Maps to server API: `/api/buyer/*`.
 
 ## What's Here (scope)
 
@@ -33,8 +33,8 @@ Same dependency rules as server: domain boundaries and package usage must be res
 
 SDK is organized by the same domains as the server (and UI). Same rules as domain imports above.
 
-- **May use SDK for**: `buyer-user`, `session`, `buyer-session`, `user` (i.e. `/api/buyer-user/*`, `/api/session/*`, `/api/buyer-session/*`, `/api/user/*`).
-- **Must not use SDK for**: `seller-user`, `seller-session`, `public` (different or unauthenticated domain).
+- **May use SDK for**: `buyer`, `session`, `user` (i.e. `/api/buyer/*`, `/api/session/*`, `/api/user/*`).
+- **Must not use SDK for**: `seller`, `public` (different role or unauthenticated domain).
 
 ### Context
 

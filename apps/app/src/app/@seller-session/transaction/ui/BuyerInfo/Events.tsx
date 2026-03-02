@@ -2,7 +2,7 @@ import { useLocale } from "@use-pico/client/hook";
 import { Container, LabelValue } from "@use-pico/client/ui/container";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
-import type { tUserEventBuyer } from "@zbav-se.me/sdk/api/seller-session";
+import type { tUserEventBuyer } from "@zbav-se.me/sdk/api/seller";
 import { DateTime } from "luxon";
 import type { FC } from "react";
 

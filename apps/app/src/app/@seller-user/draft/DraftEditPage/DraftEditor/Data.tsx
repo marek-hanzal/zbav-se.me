@@ -1,6 +1,6 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { View } from "@use-pico/client/ui/view";
-import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import type { FC } from "react";
 import { useCallback, useMemo, useState } from "react";
 import { Editor } from "./Editor";

@@ -1,4 +1,4 @@
-import { type tDraft, zListingCreate } from "@zbav-se.me/sdk/api/seller-user";
+import { type tDraft, zListingCreate } from "@zbav-se.me/sdk/api/seller";
 
 export const isValid = (draft: tDraft) => {
 	const data = {

@@ -1,5 +1,5 @@
 import type { MarkSuspense } from "@use-pico/client/type";
-import { withFavouriteCountQuery } from "@zbav-se.me/sdk/query/buyer-user/favourite";
+import { withFavouriteCountQuery } from "@zbav-se.me/sdk/query/buyer/favourite";
 import type { FC, RefObject } from "react";
 import { EmptyFavouriteStatus } from "~/app/v0/@buyer-user/feed/page/FeedFavouriteListPage/EmptyFavouriteStatus";
 import { EmptyFeedStatus } from "~/app/v0/@buyer-user/feed/page/FeedFavouriteListPage/EmptyFeedStatus";

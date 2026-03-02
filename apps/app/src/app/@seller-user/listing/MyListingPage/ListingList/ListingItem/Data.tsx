@@ -1,5 +1,5 @@
 import { Typo } from "@use-pico/client/ui/typo";
-import { withListingQuery } from "@zbav-se.me/sdk/query/seller-user/listing";
+import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
 import type { FC } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListItem } from "~/app/@common/list-item/ListItem";

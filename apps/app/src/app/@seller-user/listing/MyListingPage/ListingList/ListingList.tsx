@@ -1,6 +1,6 @@
 import { useElementVisibility } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
-import type { tListingQuery } from "@zbav-se.me/sdk/api/seller-user";
+import type { tListingQuery } from "@zbav-se.me/sdk/api/seller";
 import { type FC, Suspense, useRef } from "react";
 import { Data } from "./Data";
 import { Pending } from "./Pending";

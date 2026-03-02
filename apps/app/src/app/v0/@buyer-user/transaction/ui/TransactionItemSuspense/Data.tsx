@@ -1,7 +1,7 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
+import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { match } from "ts-pattern";

@@ -1,8 +1,8 @@
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
-import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import type { tFeed } from "@zbav-se.me/sdk/api/buyer";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { CategorySelect } from "~/app/@session/category/ui/CategorySelect/CategorySelect";

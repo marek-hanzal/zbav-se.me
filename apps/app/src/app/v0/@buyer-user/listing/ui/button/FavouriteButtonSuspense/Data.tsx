@@ -3,9 +3,9 @@ import { FavouriteIcon, FavouriteOffIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import { withFavouriteToggleMutation } from "@zbav-se.me/sdk/mutation/buyer-user/favourite";
-import { withFeedFavouriteQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
-import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
+import { withFavouriteToggleMutation } from "@zbav-se.me/sdk/mutation/buyer/favourite";
+import { withFeedFavouriteQuery } from "@zbav-se.me/sdk/query/buyer/feed";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import type { FC } from "react";
 
 export namespace Data {

@@ -1,7 +1,7 @@
 import { VisibilityProvider } from "@use-pico/client/context";
 import type { createVisibilityStore } from "@use-pico/client/store";
-import type { tListingQuery } from "@zbav-se.me/sdk/api/seller-user";
-import { withListingQuery } from "@zbav-se.me/sdk/query/seller-user/listing";
+import type { tListingQuery } from "@zbav-se.me/sdk/api/seller";
+import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
 import type { FC } from "react";
 import { Content } from "../Content";
 import { Empty } from "./Empty";

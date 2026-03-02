@@ -1,7 +1,7 @@
 import { Group } from "@use-pico/client/ui/group";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
+import type { tDraft } from "@zbav-se.me/sdk/api/seller";
 import type { FC } from "react";
 import { ExpireAtValue } from "~/app/@common/expire-at/ui/ExpireAtValue";
 import { GalleryValue } from "~/app/@common/gallery/ui/GalleryValue";

@@ -1,5 +1,5 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
+import type { tListing } from "@zbav-se.me/sdk/api/seller";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";

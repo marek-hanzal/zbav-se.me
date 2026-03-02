@@ -1,6 +1,6 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { View } from "@use-pico/client/ui/view";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import type { FC } from "react";
 import { useMemo, useState } from "react";
 import { AgePatch } from "~/app/v0/@buyer-user/feed/ui/patch/AgePatch";

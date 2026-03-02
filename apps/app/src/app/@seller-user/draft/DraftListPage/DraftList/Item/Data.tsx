@@ -6,7 +6,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { isValid } from "~/app/@common/draft/util/isValid";

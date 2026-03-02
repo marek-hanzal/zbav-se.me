@@ -2,8 +2,8 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Tx } from "@use-pico/client/ui/tx";
-import { withFlagToggleMutation } from "@zbav-se.me/sdk/mutation/buyer-user/flag";
-import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
+import { withFlagToggleMutation } from "@zbav-se.me/sdk/mutation/buyer/flag";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import { FlagIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
 

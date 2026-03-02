@@ -1,8 +1,8 @@
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
-import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
+import type { tFeed } from "@zbav-se.me/sdk/api/buyer";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { LocationSelect } from "~/app/@common/location/ui/LocationSelect";

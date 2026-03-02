@@ -6,7 +6,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { type FC, useState } from "react";
 import { ListItem } from "~/app/@common/list-item/ListItem";
 import { EditorSheet } from "~/app/v0/@buyer-user/feed/ui/EditorSheet";

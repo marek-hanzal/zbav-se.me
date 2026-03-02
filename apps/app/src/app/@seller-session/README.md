@@ -6,7 +6,7 @@ Seller Session – seller operations requiring session, working with public (pro
 
 This domain contains components and logic for seller operations that **do not require user-private context**: displaying seller info on a listing, seller user events (metrics).
 
-Maps to server API: `/api/seller-session/*`.
+Maps to server API: `/api/seller/*`.
 
 ## What's Here (scope)
 
@@ -26,8 +26,8 @@ Same dependency rules as server: domain boundaries and package usage must be res
 
 SDK is organized by the same domains as the server (and UI). Same rules as domain imports above.
 
-- **May use SDK for**: `session`, `seller-session` (i.e. `/api/session/*`, `/api/seller-session/*`).
-- **Must not use SDK for**: `seller-user`, `user`, `buyer-user`, `buyer-session`, `public` (more specialized, different, or unauthenticated domain).
+- **May use SDK for**: `session`, `seller` (i.e. `/api/session/*`, `/api/seller/*`).
+- **Must not use SDK for**: `user`, `buyer`, `public` (more specialized, different role, or unauthenticated domain).
 
 ### Context
 

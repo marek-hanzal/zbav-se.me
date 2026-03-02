@@ -3,7 +3,7 @@ import { useLocale } from "@use-pico/client/hook";
 import { PlusIcon, SpinnerIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import type { FC } from "react";
 
 export namespace CreateButton {

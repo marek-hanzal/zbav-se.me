@@ -1,8 +1,8 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import type { tFeed } from "@zbav-se.me/sdk/api/buyer";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";

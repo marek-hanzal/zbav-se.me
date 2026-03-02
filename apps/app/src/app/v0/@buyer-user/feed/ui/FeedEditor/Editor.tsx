@@ -1,8 +1,8 @@
 import type { LabelValue } from "@use-pico/client/ui/container";
 import { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
-import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import type { tFeed } from "@zbav-se.me/sdk/api/buyer";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import type { FC } from "react";
 import type { AgeValueList } from "~/app/@common/age/ui/AgeValueList";
 import type { ConditionValueList } from "~/app/@common/condition/ui/ConditionValueList";

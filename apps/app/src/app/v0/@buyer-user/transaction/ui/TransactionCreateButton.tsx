@@ -1,8 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import { withTransactionCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/transaction";
-import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
+import { withTransactionCreateMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 

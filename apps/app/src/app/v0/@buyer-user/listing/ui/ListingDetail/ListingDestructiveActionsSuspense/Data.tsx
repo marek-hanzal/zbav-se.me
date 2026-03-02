@@ -1,6 +1,6 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Group } from "@use-pico/client/ui/group";
-import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import type { FC } from "react";
 import { FlagButtonSuspense } from "~/app/v0/@buyer-user/listing/ui/button/FlagButtonSuspense";
 import { IgnoreButtonSuspense } from "~/app/v0/@buyer-user/listing/ui/button/IgnoreButtonSuspense";

@@ -8,8 +8,8 @@
 - `/api/public/*`
 - `/api/session/*`
 - `/api/user/*`
-- `/api/buyer-user/*`, `/api/buyer-session/*`
-- `/api/seller-user/*`, `/api/seller-session/*`
+- `/api/buyer/*`
+- `/api/seller/*`
 
 ## Architecture contract (hard)
 - Per domain keep: `with*ApiFx.ts` (aggregator), `with*Hono.ts` (typed hono), feature modules (`fx/db/schema/endpoint`).

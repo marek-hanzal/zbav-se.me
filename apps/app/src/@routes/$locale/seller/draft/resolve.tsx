@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
-import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { DateTime } from "luxon";
 
 export const Route = createFileRoute("/$locale/seller/draft/resolve")({

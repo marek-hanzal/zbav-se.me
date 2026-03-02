@@ -1,9 +1,9 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
+import type { tDraft } from "@zbav-se.me/sdk/api/seller";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
-import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";

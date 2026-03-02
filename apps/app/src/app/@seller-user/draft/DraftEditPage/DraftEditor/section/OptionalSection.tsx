@@ -1,6 +1,6 @@
 import { Group } from "@use-pico/client/ui/group";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
+import type { tDraft } from "@zbav-se.me/sdk/api/seller";
 import type { FC } from "react";
 import { AgeValue } from "~/app/@common/age/ui/AgeValue";
 import { ConditionValue } from "~/app/@common/condition/ui/ConditionValue";

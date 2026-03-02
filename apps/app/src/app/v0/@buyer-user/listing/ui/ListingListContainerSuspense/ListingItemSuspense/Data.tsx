@@ -1,4 +1,4 @@
-import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import type { FC } from "react";
 import { Hero } from "~/app/v0/@buyer-user/listing/ui/Hero";
 

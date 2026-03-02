@@ -4,8 +4,8 @@ import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
 import { translator } from "@use-pico/common/translator";
-import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import type { tFeed } from "@zbav-se.me/sdk/api/buyer";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 

@@ -2,8 +2,8 @@ import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { translator } from "@use-pico/common/translator";
-import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-user";
-import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
+import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import type { FC } from "react";
 
 export namespace Data {

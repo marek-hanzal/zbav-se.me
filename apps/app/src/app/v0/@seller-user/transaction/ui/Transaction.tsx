@@ -1,7 +1,7 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
-import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller-user/transaction";
+import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import { type FC, useRef } from "react";
 import { MessageListSuspense } from "~/app/v0/@common/message/MessageListSuspense";
 import { TransactionChat } from "./TransactionChat";

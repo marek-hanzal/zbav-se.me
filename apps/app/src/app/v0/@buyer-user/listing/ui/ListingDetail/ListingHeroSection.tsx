@@ -1,5 +1,5 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { tListing } from "@zbav-se.me/sdk/api/buyer-user";
+import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";

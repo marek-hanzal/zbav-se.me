@@ -6,7 +6,7 @@ Buyer Session – buyer operations requiring session, working with public (prote
 
 This domain contains components and logic for buyer operations that **do not require user-private context**: browsing listings, recording listing events (views, impressions), and buyer info for a transaction (for seller view).
 
-Maps to server API: `/api/buyer-session/*`.
+Maps to server API: `/api/buyer/*`.
 
 ## What's Here (scope)
 
@@ -27,8 +27,8 @@ Same dependency rules as server: domain boundaries and package usage must be res
 
 SDK is organized by the same domains as the server (and UI). Same rules as domain imports above.
 
-- **May use SDK for**: `session`, `buyer-session` (i.e. `/api/session/*`, `/api/buyer-session/*`).
-- **Must not use SDK for**: `buyer-user`, `user`, `seller-user`, `seller-session`, `public` (more specialized, different, or unauthenticated domain).
+- **May use SDK for**: `session`, `buyer` (i.e. `/api/session/*`, `/api/buyer/*`).
+- **Must not use SDK for**: `user`, `seller`, `public` (more specialized, different role, or unauthenticated domain).
 
 ### Context
 

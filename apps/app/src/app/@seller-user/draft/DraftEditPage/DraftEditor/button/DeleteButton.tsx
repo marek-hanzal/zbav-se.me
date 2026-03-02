@@ -4,8 +4,8 @@ import { TrashIcon } from "@use-pico/client/icon";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
-import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
+import type { tDraft } from "@zbav-se.me/sdk/api/seller";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 

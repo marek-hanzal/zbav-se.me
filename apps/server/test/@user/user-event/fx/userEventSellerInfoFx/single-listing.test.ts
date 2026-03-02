@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { userEventSellerInfoFx } from "~/@buyer-session/user-event/fx/userEventSellerInfoFx";
+import { userEventSellerInfoFx } from "~/@buyer/user-event/fx/userEventSellerInfoFx";
 import { withUploadFx } from "~/@common/upload/context/withUploadFx";
-import { listingCreateFx } from "~/@seller-user/listing/fx/listingCreateFx";
+import { listingCreateFx } from "~/@seller/listing/fx/listingCreateFx";
 import { categoryFetchFx } from "~/@session/category/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompleteFx";
 import { withLocationFx } from "~/@session/location/fx/withLocationFx";

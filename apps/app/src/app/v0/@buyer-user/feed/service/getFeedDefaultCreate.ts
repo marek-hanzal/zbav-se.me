@@ -1,4 +1,4 @@
-import type { tFeedCreate } from "@zbav-se.me/sdk/api/buyer-user";
+import type { tFeedCreate } from "@zbav-se.me/sdk/api/buyer";
 
 export const getFeedDefaultCreate = (name: string) =>
 	({

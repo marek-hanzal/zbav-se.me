@@ -1,5 +1,5 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
+import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
 import { SellerInfoButton } from "~/app/@buyer-session/listing/ui/SellerInfoButton";
 import { MessageButtonUi } from "~/app/v0/@common/transaction/ui/MessageButtonUi";

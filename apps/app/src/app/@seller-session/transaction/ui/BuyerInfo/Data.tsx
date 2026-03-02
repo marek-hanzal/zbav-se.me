@@ -4,7 +4,7 @@ import { Container, LabelValue } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
-import { withTransactionBuyerInfoQuery } from "@zbav-se.me/sdk/query/seller-session/transaction";
+import { withTransactionBuyerInfoQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { Events } from "./Events";

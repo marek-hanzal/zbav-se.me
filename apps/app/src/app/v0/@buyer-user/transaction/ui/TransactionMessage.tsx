@@ -1,5 +1,5 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
+import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { DisputeMessage } from "~/app/v0/@buyer-user/transaction-status/ui/DisputeMessage";

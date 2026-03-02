@@ -6,7 +6,7 @@ Seller User – private seller operations requiring user context.
 
 This domain contains components and logic for seller operations that work with **user-private data**: drafts, listing creation, and the seller side of transactions.
 
-Maps to server API: `/api/seller-user/*`.
+Maps to server API: `/api/seller/*`.
 
 ## What's Here (scope)
 
@@ -31,8 +31,8 @@ Same dependency rules as server: domain boundaries and package usage must be res
 
 SDK is organized by the same domains as the server (and UI). Same rules as domain imports above.
 
-- **May use SDK for**: `seller-user`, `session`, `seller-session`, `user` (i.e. `/api/seller-user/*`, `/api/session/*`, `/api/seller-session/*`, `/api/user/*`).
-- **Must not use SDK for**: `buyer-user`, `buyer-session`, `public` (different or unauthenticated domain).
+- **May use SDK for**: `seller`, `session`, `user` (i.e. `/api/seller/*`, `/api/session/*`, `/api/user/*`).
+- **Must not use SDK for**: `buyer`, `public` (different role or unauthenticated domain).
 
 ### Context
 

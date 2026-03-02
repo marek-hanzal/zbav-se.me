@@ -1,9 +1,9 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tTransaction } from "@zbav-se.me/sdk/api/buyer-user";
-import { withTransactionStatusDisputeMutation } from "@zbav-se.me/sdk/mutation/buyer-user/transaction";
-import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer-user/transaction";
+import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
+import { withTransactionStatusDisputeMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
+import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { FlagIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";

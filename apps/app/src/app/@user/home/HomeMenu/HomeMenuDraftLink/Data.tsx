@@ -4,7 +4,7 @@ import { ChevronRightIcon, type uiIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";

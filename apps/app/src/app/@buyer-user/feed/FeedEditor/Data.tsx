@@ -1,5 +1,5 @@
 import type { MarkSuspense } from "@use-pico/client/type";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import type { FC } from "react";
 
 export namespace Data {

@@ -3,7 +3,7 @@ import { Markdown } from "@use-pico/client/ui/markdown";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
-import type { tListing } from "@zbav-se.me/sdk/api/seller-user";
+import type { tListing } from "@zbav-se.me/sdk/api/seller";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
