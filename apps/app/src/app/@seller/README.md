@@ -26,5 +26,15 @@ Maps to server API: `/api/seller/*`.
 
 ## Recent updates
 
-- Draft required section localizes category read-only value component:
+- Draft editor localizes single-use read-only value components:
   - `@seller/draft/DraftEditPage/DraftEditor/value/CategoryValue.tsx`
+  - `@seller/draft/DraftEditPage/DraftEditor/value/AgeValue.tsx`
+  - `@seller/draft/DraftEditPage/DraftEditor/value/ConditionValue.tsx`
+  - `@seller/draft/DraftEditPage/DraftEditor/value/ConsValueList.tsx`
+  - `@seller/draft/DraftEditPage/DraftEditor/value/DescriptionValue.tsx`
+  - `@seller/draft/DraftEditPage/DraftEditor/value/ExpireAtValue.tsx`
+  - `@seller/draft/DraftEditPage/DraftEditor/value/PriceTypeValue.tsx`
+  - `@seller/draft/DraftEditPage/DraftEditor/value/PriceValue.tsx`
+  - `@seller/draft/DraftEditPage/DraftEditor/value/ProsValueList.tsx`
+  - `@seller/draft/DraftEditPage/DraftEditor/value/RestrictionValue.tsx`
+  - `@seller/draft/DraftEditPage/DraftEditor/value/WarrantyValue.tsx`

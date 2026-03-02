@@ -118,8 +118,6 @@ When adding to `@common`:
 - `RestrictionSelect` was extracted to active scope:
   - `@common/restriction/ui/RestrictionSelect/RestrictionSelect.tsx`
   - `@common/restriction/ui/RestrictionSelect/Item.tsx`
-- `RestrictionValue` was extracted to active scope:
-  - `@common/restriction/ui/RestrictionValue.tsx`
 - `DeliverySelect` was extracted to active scope:
   - `@common/delivery/ui/DeliverySelect.tsx`
 - `WarrantySelect` was extracted to active scope:
@@ -130,7 +128,6 @@ When adding to `@common`:
   - `@common/condition/ui/ConditionSelect.tsx`
 - Remaining condition UI parts were extracted to active scope:
   - `@common/condition/ui/ConditionIcon.tsx`
-  - `@common/condition/ui/ConditionValue.tsx`
 - `GalleryPreview` was extracted to active scope:
   - `@common/gallery/ui/GalleryPreview.tsx`
 - `GalleryUploadContainer` abstraction was removed; gallery upload flow is now embedded directly at call-sites.
