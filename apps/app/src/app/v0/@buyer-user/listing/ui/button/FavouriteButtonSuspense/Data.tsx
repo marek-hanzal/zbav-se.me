@@ -5,7 +5,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withFavouriteToggleMutation } from "@zbav-se.me/sdk/mutation/buyer-user/favourite";
 import { withFeedFavouriteQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import type { FC } from "react";
 
 export namespace Data {
@@ -17,19 +17,11 @@ export namespace Data {
 
 export const Data: FC<Data.Props> = ({ _suspense, feedId, listingId, ui, ...props }) => {
 	const queryClient = useQueryClient();
-	const patch = withListingFetchQuery.useSet();
-	const { data: listing } = withListingFetchQuery.useSuspenseQuery({
-		where: {
-			id: listingId,
-		},
-	});
+	const update = withListingQuery.useUpdate();
+	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 	const favouriteToggle = withFavouriteToggleMutation.useMutation({
 		onSuccess(listing) {
-			patch(() => listing, {
-				where: {
-					id: listingId,
-				},
-			});
+			update(listing);
 			withFeedFavouriteQuery.invalidateCollection(queryClient);
 		},
 		meta: {

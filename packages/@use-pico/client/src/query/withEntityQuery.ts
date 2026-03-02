@@ -20,7 +20,7 @@ export namespace withEntityQuery {
 		 * - `collection`: invalidates collection queries
 		 * - `fetch`: invalidates single-entity fetch queries
 		 */
-		export type Type = "collection" | "fetch";
+		export type Type = "collection" | "fetch" | "count";
 
 		/**
 		 * Optional payload used to scope invalidation keys.
@@ -28,9 +28,10 @@ export namespace withEntityQuery {
 		 * Both properties are optional so callers can invalidate broadly or narrowly,
 		 * depending on how specific their cache keys are.
 		 */
-		export interface Data<TFetchRequest, TCollectionRequest> {
+		export interface Data<TFetchRequest, TCollectionRequest, TCountRequest> {
 			fetch?: TFetchRequest;
 			collection?: TCollectionRequest;
+			count?: TCountRequest;
 		}
 	}
 
@@ -94,11 +95,22 @@ export namespace withEntityQuery {
 	}
 
 	export namespace MutationOptions {
+		/**
+		 * Extra metadata propagated to TanStack mutation options.
+		 *
+		 * `mutationId` can be used by higher-level helpers/UI to distinguish
+		 * concurrently running mutations that share the same mutation key.
+		 */
 		export interface Meta {
 			mutationId?: string;
 		}
 
 		export namespace PreMutation {
+			/**
+			 * Lifecycle payload for pre-mutation hook.
+			 *
+			 * Contains validated mutation input right before `mutationFn` execution.
+			 */
 			export interface Props<TVariables> {
 				variables: TVariables;
 			}
@@ -110,6 +122,11 @@ export namespace withEntityQuery {
 		}
 
 		export namespace PostMutation {
+			/**
+			 * Lifecycle payload for post-mutation hook.
+			 *
+			 * Contains original input and resolved server entity after cache sync.
+			 */
 			export interface Props<TVariables, TResult> {
 				variables: TVariables;
 				result: TResult;
@@ -212,6 +229,31 @@ export const withEntityQuery = <
 	}
 
 	/**
+	 * Writes one entity into canonical fetch cache (`.../fetch/<id>`).
+	 *
+	 * This is the fundamental cache sync primitive used by collection hydration
+	 * and mutation pipelines. Keeping this centralized ensures all update paths
+	 * use the same key strategy.
+	 */
+	function $updateFn(queryClient: QueryClient, item: TEntity) {
+		queryClient.setQueryData($keys("fetch", toIdKey(item.id)), item);
+
+		return item;
+	}
+
+	/**
+	 * Hook form of {@link $updateFn} for component code paths.
+	 *
+	 * Useful when data already came from another source (WebSocket, local merge,
+	 * optimistic UI) and you want to normalize it into entity fetch cache.
+	 */
+	function useUpdate() {
+		const queryClient = useQueryClient();
+
+		return (item: TEntity) => $updateFn(queryClient, item);
+	}
+
+	/**
 	 * Internal invalidation utility.
 	 *
 	 * This is a force-refresh mechanism and should be used with care: broad invalidation
@@ -221,7 +263,7 @@ export const withEntityQuery = <
 	async function invalidator(
 		queryClient: QueryClient,
 		invalidate?: withEntityQuery.Invalidator.Type[],
-		data?: withEntityQuery.Invalidator.Data<TFetchRequest, TCollectionRequest>,
+		data?: withEntityQuery.Invalidator.Data<TFetchRequest, TCollectionRequest, TCountRequest>,
 	): Promise<unknown> {
 		if (!invalidate) {
 			return;
@@ -242,6 +284,15 @@ export const withEntityQuery = <
 			what.push(
 				queryClient.invalidateQueries({
 					queryKey: $keys("fetch", data?.fetch),
+					refetchType: "all",
+				}),
+			);
+		}
+
+		if (invalidate.includes("count")) {
+			what.push(
+				queryClient.invalidateQueries({
+					queryKey: $keys("count", data?.count),
 					refetchType: "all",
 				}),
 			);
@@ -301,8 +352,7 @@ export const withEntityQuery = <
 
 				return notifyManager.batch(() =>
 					result.map((item) => {
-						queryClient.setQueryData($keys("fetch", toIdKey(item.id)), item);
-						return item.id;
+						return $updateFn(queryClient, item).id;
 					}),
 				);
 			},
@@ -310,6 +360,12 @@ export const withEntityQuery = <
 		});
 	}
 
+	/**
+	 * Suspense count query for the entity resource.
+	 *
+	 * Use this when UI needs aggregate flags (`isEmpty`, `isFilterEmpty`, `total`, ...)
+	 * without hydrating full collection payload.
+	 */
 	function useCountQuery(
 		data: TCountRequest,
 		opts?: withEntityQuery.QueryOptions<CountSchema.Type>,
@@ -323,6 +379,14 @@ export const withEntityQuery = <
 		});
 	}
 
+	/**
+	 * Internal patch pipeline shared by hook and non-hook mutation entry points.
+	 *
+	 * Performs:
+	 * 1. server patch request
+	 * 2. canonical fetch cache update for returned entity
+	 * 3. optional scoped invalidation
+	 */
 	async function $patchFn(
 		queryClient: QueryClient,
 		request: TPatchRequest,
@@ -331,7 +395,7 @@ export const withEntityQuery = <
 		const result = await patchFn(request);
 		const key = toIdKey(result.id);
 
-		queryClient.setQueryData($keys("fetch", key), result);
+		$updateFn(queryClient, result);
 
 		await invalidator(queryClient, invalidate, {
 			fetch: key,
@@ -374,6 +438,12 @@ export const withEntityQuery = <
 		});
 	}
 
+	/**
+	 * Internal create pipeline shared by hook and non-hook mutation entry points.
+	 *
+	 * Newly created entity is normalized into canonical fetch cache so follow-up
+	 * screens can read it via `useFetchQuery` without an extra network roundtrip.
+	 */
 	async function $createFn(
 		queryClient: QueryClient,
 		request: TCreateRequest,
@@ -382,7 +452,7 @@ export const withEntityQuery = <
 		const result = await createFn(request);
 		const key = toIdKey(result.id);
 
-		queryClient.setQueryData($keys("fetch", key), result);
+		$updateFn(queryClient, result);
 
 		await invalidator(queryClient, invalidate, {
 			fetch: key,
@@ -425,6 +495,12 @@ export const withEntityQuery = <
 		});
 	}
 
+	/**
+	 * Internal delete pipeline shared by hook and non-hook mutation entry points.
+	 *
+	 * Removes canonical fetch cache for deleted entity and optionally invalidates
+	 * dependent query segments (usually collection).
+	 */
 	async function $deleteFn(
 		queryClient: QueryClient,
 		request: TDeleteRequest,
@@ -490,16 +566,29 @@ export const withEntityQuery = <
 
 		return (
 			invalidate: withEntityQuery.Invalidator.Type[],
-			data: withEntityQuery.Invalidator.Data<TFetchRequest, TCollectionRequest>,
+			data: withEntityQuery.Invalidator.Data<
+				TFetchRequest,
+				TCollectionRequest,
+				TCountRequest
+			>,
 		) => {
 			return invalidator(queryClient, invalidate, data);
 		};
 	}
 
+	/**
+	 * Public facade with:
+	 * - raw request fns (`fetchFn/collectionFn/countFn`)
+	 * - cache primitives (`updateFn`, `invalidator`)
+	 * - hook APIs for suspense queries and mutations
+	 * - non-hook mutation pipelines (`createFn/patchFn/deleteFn`) for external orchestration
+	 */
 	return {
 		fetchFn,
 		collectionFn,
 		countFn,
+		//
+		updateFn: $updateFn,
 		//
 		createFn: $createFn,
 		patchFn: $patchFn,
@@ -510,9 +599,13 @@ export const withEntityQuery = <
 		useFetchQuery,
 		useCollectionQuery,
 		useCountQuery,
+		//
 		usePatchMutation,
 		useCreateMutation,
 		useDeleteMutation,
+		//
+		useUpdate,
+		//
 		useInvalidator,
 	} as const;
 };

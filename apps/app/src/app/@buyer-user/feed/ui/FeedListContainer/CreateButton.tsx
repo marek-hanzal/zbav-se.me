@@ -8,10 +8,10 @@ import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
 import { translator } from "@use-pico/common/translator";
 import { sFeedCreate, type tFeed } from "@zbav-se.me/sdk/api/buyer-user";
-import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { toFeedCreate } from "~/app/v0/@buyer-user/feed/service/feedCreateDefault";
+import { getFeedDefaultCreate } from "~/app/v0/@buyer-user/feed/service/getFeedDefaultCreate";
 
 export namespace CreateButton {
 	export interface Props extends Button.Props {
@@ -30,10 +30,8 @@ export const CreateButton: FC<CreateButton.Props> = ({
 	const [isOpen, setIsOpen] = useState(false);
 	const [name, setName] = useState("");
 
-	const feedCreateMutation = withFeedCreateMutation.useMutation({
-		onSuccess(data) {
-			onCreate?.(data);
-		},
+	const feedCreateMutation = withFeedQuery.useCreateMutation({
+		onSuccess: onCreate,
 		onSettled() {
 			setIsOpen(false);
 		},
@@ -146,16 +144,10 @@ export const CreateButton: FC<CreateButton.Props> = ({
 							setIsOpen(false);
 						}}
 						onSave={() => {
-							if (!feedCreateMutation.isPending) {
-								feedCreateMutation.mutate(
-									toFeedCreate({
-										name,
-									}),
-								);
-							}
+							feedCreateMutation.mutate(getFeedDefaultCreate(name));
 						}}
 						loading={feedCreateMutation.isPending}
-						disabled={invalid}
+						disabled={invalid || feedCreateMutation.isPending}
 					/>
 				</Container>
 			</BottomSheet>

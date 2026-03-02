@@ -14,7 +14,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/default")({
 	 */
 	async loader({ context: { queryClient }, params: { locale } }) {
 		let feed = await withFeedQuery
-			.fetch({
+			.fetchFn({
 				sort: [
 					{
 						field: "updatedAt",

@@ -3,7 +3,7 @@ import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withFlagToggleMutation } from "@zbav-se.me/sdk/mutation/buyer-user/flag";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { FlagIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
 
@@ -23,20 +23,10 @@ export const Data: FC<Data.Props> = ({
 	ui,
 	...props
 }) => {
-	const patch = withListingFetchQuery.useSet();
-	const { data: listing } = withListingFetchQuery.useSuspenseQuery({
-		where: {
-			id: listingId,
-		},
-	});
+	const { data: listing } = withListingQuery.useFetchQuery(listingId);
+	const update = withListingQuery.useUpdate();
 	const flagToggleMutation = withFlagToggleMutation.useMutation({
-		onSuccess(listing) {
-			patch(() => listing, {
-				where: {
-					id: listingId,
-				},
-			});
-		},
+		onSuccess: update,
 		meta: {
 			mutationId: listingId,
 		},

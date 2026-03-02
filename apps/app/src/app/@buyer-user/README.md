@@ -80,6 +80,7 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `FeedListPage.tsx`
   - `FeedFavouriteListPage.tsx`
   - `FeedSelectPage.tsx`
+  - `FeedSelectPagePending.tsx`
   - `FeedDefaultPendingPage.tsx`
 - `FeedSelectPage.tsx` was extracted from `v0` to active scope:
   - `@buyer-user/feed/page/FeedSelectPage.tsx`

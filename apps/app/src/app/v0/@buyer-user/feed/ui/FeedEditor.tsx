@@ -2,7 +2,7 @@ import type { LabelValue } from "@use-pico/client/ui/container";
 import { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
-import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
 import type { AgeValueList } from "~/app/@common/age/ui/AgeValueList";
 import type { ConditionValueList } from "~/app/@common/condition/ui/ConditionValueList";
@@ -47,7 +47,12 @@ export const FeedEditor: FC<FeedEditor.Props> = ({
 	ui,
 	...props
 }) => {
-	const feedDeleteMutation = withFeedDeleteMutation.useMutation();
+	const feedDeleteMutation = withFeedQuery.useDeleteMutation({
+		invalidate: [
+			"collection",
+			"count",
+		],
+	});
 
 	return (
 		<Container

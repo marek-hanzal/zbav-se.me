@@ -11,11 +11,11 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 		 */
 		scrollToId: z.string().optional(),
 	}),
-	async loader({ params: { id } }) {
+	async loader({ context: { queryClient }, params: { id } }) {
 		/**
 		 * This will force update "updatedAt" field, so we'll mark "this" feed as the "last visited" one.
 		 */
-		const feed = await withFeedQuery.patch({
+		const feed = await withFeedQuery.patchFn(queryClient, {
 			patch: {},
 			query: {
 				where: {

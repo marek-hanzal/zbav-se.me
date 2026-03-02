@@ -6,7 +6,7 @@ import { DateTime } from "luxon";
 export const Route = createFileRoute("/$locale/seller/draft/resolve")({
 	async loader({ context: { queryClient }, params: { locale } }) {
 		const current = await withDraftQuery
-			.fetch({
+			.fetchFn({
 				where: {
 					updatedAtGte: DateTime.now()
 						.minus({
@@ -28,8 +28,7 @@ export const Route = createFileRoute("/$locale/seller/draft/resolve")({
 			});
 		}
 
-		const draft = await withDraftQuery.create({});
-		await withDraftQuery.invalidator(queryClient, [
+		const draft = await withDraftQuery.createFn(queryClient, {}, [
 			"collection",
 		]);
 
