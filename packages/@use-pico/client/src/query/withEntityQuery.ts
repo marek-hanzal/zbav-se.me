@@ -63,24 +63,24 @@ export namespace withEntityQuery {
 		/**
 		 * Loads a single entity by fetch request.
 		 */
-		fetch(data: TFetchRequest): Promise<TEntity>;
+		fetchFn(data: TFetchRequest): Promise<TEntity>;
 		/**
 		 * Loads a collection of entities.
 		 */
-		collection(data: TCollectionRequest): Promise<TEntity[]>;
-		count(data: TCountRequest): Promise<CountSchema.Type>;
+		collectionFn(data: TCollectionRequest): Promise<TEntity[]>;
+		countFn(data: TCountRequest): Promise<CountSchema.Type>;
 		/**
 		 * Create mutation.
 		 */
-		create(data: TCreateRequest): Promise<TEntity>;
-		/**
-		 * Delete mutation.
-		 */
-		delete(data: TDeleteRequest): Promise<TEntity>;
+		createFn(data: TCreateRequest): Promise<TEntity>;
 		/**
 		 * Patches an entity and returns server-updated entity payload.
 		 */
-		patch(data: TPatchRequest): Promise<TEntity>;
+		patchFn(data: TPatchRequest): Promise<TEntity>;
+		/**
+		 * Delete mutation.
+		 */
+		deleteFn(data: TDeleteRequest): Promise<TEntity>;
 	}
 
 	/**
@@ -182,12 +182,12 @@ export const withEntityQuery = <
 >({
 	keys,
 	toIdKey,
-	fetch,
-	collection,
-	count,
-	create,
-	delete: deleteEntity,
-	patch,
+	fetchFn,
+	collectionFn,
+	countFn,
+	createFn,
+	deleteFn,
+	patchFn,
 }: withEntityQuery.Props<
 	TEntity,
 	TFetchRequest,
@@ -257,7 +257,7 @@ export const withEntityQuery = <
 		return useSuspenseQuery({
 			queryKey: $keys("fetch", data),
 			queryFn() {
-				return fetch(data);
+				return fetchFn(data);
 			},
 			...opts,
 		});
@@ -297,7 +297,7 @@ export const withEntityQuery = <
 		return useSuspenseQuery({
 			queryKey: $keys("collection", data),
 			async queryFn() {
-				const result = await collection(data);
+				const result = await collectionFn(data);
 
 				return notifyManager.batch(() =>
 					result.map((item) => {
@@ -317,10 +317,27 @@ export const withEntityQuery = <
 		return useSuspenseQuery({
 			queryKey: $keys("count", data),
 			async queryFn() {
-				return count(data);
+				return countFn(data);
 			},
 			...opts,
 		});
+	}
+
+	async function $patchFn(
+		queryClient: QueryClient,
+		request: TPatchRequest,
+		invalidate?: withEntityQuery.Invalidator.Type[],
+	) {
+		const result = await patchFn(request);
+		const key = toIdKey(result.id);
+
+		queryClient.setQueryData($keys("fetch", key), result);
+
+		await invalidator(queryClient, invalidate, {
+			fetch: key,
+		});
+
+		return result;
 	}
 
 	/**
@@ -343,14 +360,7 @@ export const withEntityQuery = <
 					variables: request,
 				});
 
-				const result = await patch(request);
-				const key = toIdKey(result.id);
-
-				queryClient.setQueryData($keys("fetch", key), result);
-
-				await invalidator(queryClient, invalidate, {
-					fetch: key,
-				});
+				const result = await $patchFn(queryClient, request, invalidate);
 
 				await onPostMutation?.({
 					variables: request,
@@ -384,7 +394,7 @@ export const withEntityQuery = <
 					variables: request,
 				});
 
-				const result = await create(request);
+				const result = await createFn(request);
 				const key = toIdKey(result.id);
 
 				queryClient.setQueryData($keys("fetch", key), result);
@@ -425,7 +435,7 @@ export const withEntityQuery = <
 					variables: request,
 				});
 
-				const result = await deleteEntity(request);
+				const result = await deleteFn(request);
 				const key = toIdKey(result.id);
 
 				queryClient.removeQueries({
@@ -467,11 +477,13 @@ export const withEntityQuery = <
 	}
 
 	return {
-		fetch,
-		collection,
-		count,
-		create,
-		delete: deleteEntity,
+		fetchFn,
+		collectionFn,
+		countFn,
+		createFn,
+		patchFn: $patchFn,
+		deleteFn,
+		//
 		invalidator,
 		//
 		useFetchQuery,

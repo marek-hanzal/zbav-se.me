@@ -6,8 +6,6 @@ import type {
 	tApiDraftDeleteResponse,
 	tDraftQuery,
 } from "../../../api/seller-user/types.gen";
-import { withDraftCollectionQuery } from "../../../query/seller-user/draft/withDraftCollectionQuery";
-import { withDraftCountQuery } from "../../../query/seller-user/draft/withDraftCountQuery";
 
 export const withDraftDeleteMutation = withMutation<
 	tDraftQuery,
@@ -28,8 +26,4 @@ export const withDraftDeleteMutation = withMutation<
 			}),
 		);
 	},
-	invalidate: [
-		withDraftCollectionQuery,
-		withDraftCountQuery,
-	],
 });

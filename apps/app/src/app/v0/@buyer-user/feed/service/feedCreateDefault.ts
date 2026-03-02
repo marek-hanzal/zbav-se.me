@@ -1,7 +1,7 @@
 import type { QueryClient } from "@tanstack/react-query";
 import { translator } from "@use-pico/common/translator";
 import type { tFeedCreate } from "@zbav-se.me/sdk/api/buyer-user";
-import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/buyer-user/feed";
+import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 
 export namespace feedCreateDefault {
 	export interface Props {
@@ -54,8 +54,7 @@ export const toFeedCreate = ({ name }: feedCreateDefault.CreateProps): tFeedCrea
  * @returns Promise that resolves when the feed creation mutation completes
  */
 export const feedCreateDefault = async ({ queryClient }: feedCreateDefault.Props) => {
-	return withFeedCreateMutation.mutate(
-		queryClient,
+	return withFeedQuery.create(
 		toFeedCreate({
 			/**
 			 * Translated feed name

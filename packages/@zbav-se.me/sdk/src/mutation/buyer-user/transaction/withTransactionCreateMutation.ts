@@ -6,9 +6,6 @@ import type {
 	tApiTransactionCreateResponse,
 	tTransactionCreate,
 } from "../../../api/buyer-user/types.gen";
-import { withListingCollectionQuery } from "../../../query/buyer-user/listing/withListingCollectionQuery";
-import { withListingFetchQuery } from "../../../query/buyer-user/listing/withListingFetchQuery";
-import { withTransactionCollectionQuery } from "../../../query/buyer-user/transaction/withTransactionCollectionQuery";
 
 export const withTransactionCreateMutation = withMutation<
 	tTransactionCreate,
@@ -29,9 +26,4 @@ export const withTransactionCreateMutation = withMutation<
 			}),
 		);
 	},
-	invalidate: [
-		withListingCollectionQuery,
-		withListingFetchQuery,
-		withTransactionCollectionQuery,
-	],
 });

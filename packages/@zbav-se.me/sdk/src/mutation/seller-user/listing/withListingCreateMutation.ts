@@ -6,8 +6,6 @@ import type {
 	tApiListingCreateResponse,
 	tListingCreate,
 } from "../../../api/seller-user/types.gen";
-import { withListingCollectionQuery } from "../../../query/buyer-user/listing/withListingCollectionQuery";
-import { withListingCountQuery } from "../../../query/buyer-user/listing/withListingCountQuery";
 
 export const withListingCreateMutation = withMutation<
 	tListingCreate,
@@ -27,8 +25,4 @@ export const withListingCreateMutation = withMutation<
 			}),
 		);
 	},
-	invalidate: [
-		withListingCollectionQuery,
-		withListingCountQuery,
-	],
 });

@@ -6,9 +6,6 @@ import type {
 	tApiFeedGalleryCreateResponse,
 	tFeedGalleryCreate,
 } from "../../../api/buyer-user/types.gen";
-import { withFeedCollectionQuery } from "../../../query/buyer-user/feed/withFeedCollectionQuery";
-import { withFeedFetchQuery } from "../../../query/buyer-user/feed/withFeedFetchQuery";
-import { withGalleryFetchQuery } from "../../../query/user/gallery/withGalleryFetchQuery";
 
 export const withFeedGalleryCreateMutation = withMutation<
 	tFeedGalleryCreate,
@@ -29,9 +26,4 @@ export const withFeedGalleryCreateMutation = withMutation<
 			}),
 		);
 	},
-	invalidate: [
-		withFeedCollectionQuery,
-		withFeedFetchQuery,
-		withGalleryFetchQuery,
-	],
 });

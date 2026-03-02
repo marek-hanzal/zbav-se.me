@@ -31,42 +31,42 @@ export const withFeedQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetch(data) {
+	async fetchFn(data) {
 		return withApi(
 			apiFeedFetch({
 				body: data,
 			}),
 		);
 	},
-	async collection(data) {
+	async collectionFn(data) {
 		return withApi(
 			apiFeedCollection({
 				body: data,
 			}),
 		);
 	},
-	async count(data) {
+	async countFn(data) {
 		return withApi(
 			apiFeedCount({
 				body: data,
 			}),
 		);
 	},
-	async create(data) {
+	async createFn(data) {
 		return withApi(
 			apiFeedCreate({
 				body: data,
 			}),
 		);
 	},
-	async delete(data) {
+	async deleteFn(data) {
 		return withApi(
 			apiFeedDelete({
 				body: data,
 			}),
 		);
 	},
-	async patch(data) {
+	async patchFn(data) {
 		return withApi(
 			apiFeedPatch({
 				body: data,

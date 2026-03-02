@@ -26,34 +26,34 @@ export const withCategoryQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetch(data) {
+	async fetchFn(data) {
 		return withApi(
 			apiCategoryFetch({
 				body: data,
 			}),
 		);
 	},
-	async collection(data) {
+	async collectionFn(data) {
 		return withApi(
 			apiCategoryCollection({
 				body: data,
 			}),
 		);
 	},
-	async count(data) {
+	async countFn(data) {
 		return withApi(
 			apiCategoryCount({
 				body: data,
 			}),
 		);
 	},
-	async create(_data) {
+	async createFn(_data) {
 		throw new Error("Category create is not supported.");
 	},
-	async delete(_data) {
+	async deleteFn(_data) {
 		throw new Error("Category delete is not supported.");
 	},
-	async patch(_data) {
+	async patchFn(_data) {
 		throw new Error("Category patch is not supported.");
 	},
 });

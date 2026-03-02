@@ -28,38 +28,38 @@ export const withListingQuery = withEntityQuery<
 			id,
 		},
 	}),
-	async fetch(data) {
+	async fetchFn(data) {
 		return withApi(
 			apiListingFetch({
 				body: data,
 			}),
 		);
 	},
-	async collection(data) {
+	async collectionFn(data) {
 		return withApi(
 			apiListingCollection({
 				body: data,
 			}),
 		);
 	},
-	async count(data) {
+	async countFn(data) {
 		return withApi(
 			apiListingCount({
 				body: data,
 			}),
 		);
 	},
-	async create(data) {
+	async createFn(data) {
 		return withApi(
 			apiListingCreate({
 				body: data,
 			}),
 		);
 	},
-	async delete(_data) {
+	async deleteFn(_data) {
 		throw new Error("Listing delete is not supported by this query wrapper.");
 	},
-	async patch(_data) {
+	async patchFn(_data) {
 		throw new Error("Listing patch is not supported by this query wrapper.");
 	},
 });
