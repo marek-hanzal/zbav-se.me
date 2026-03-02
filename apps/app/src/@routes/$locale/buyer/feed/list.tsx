@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { translator } from "@use-pico/common/translator";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
-import { FeedSelectPage } from "~/app/@buyer-user/feed/~public/FeedSelectPage";
-import { FeedSelectPagePending } from "~/app/@buyer-user/feed/~public/FeedSelectPagePending";
+import { FeedListPage } from "~/app/@buyer-user/feed/~public/FeedListPage";
+import { FeedListPagePending } from "~/app/@buyer-user/feed/~public/FeedListPagePending";
 import { getFeedDefaultCreate } from "~/app/v0/@buyer-user/feed/service/getFeedDefaultCreate";
 
-export const Route = createFileRoute("/$locale/buyer/feed/select")({
+export const Route = createFileRoute("/$locale/buyer/feed/list")({
 	async loader({ context: { queryClient } }) {
 		/**
 		 * Use count for existence check. It's cheaper than loading a full feed object.
@@ -19,9 +19,9 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 					"collection",
 					"count",
 				],
-			);
+			)
 		}
 	},
-	component: FeedSelectPage,
-	pendingComponent: FeedSelectPagePending,
+	component: FeedListPage,
+	pendingComponent: FeedListPagePending,
 });

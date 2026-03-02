@@ -83,17 +83,17 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 - Feed flow routes now use page components in dedicated page folders under `@buyer-user/feed/`:
   - `FeedListingPage/FeedListingPage.tsx`
   - `FeedListingPagePending/FeedListingPagePending.tsx`
-  - `FeedSelectPage/FeedSelectPage.tsx`
-  - `FeedSelectPagePending/FeedSelectPagePending.tsx`
+  - `FeedListPage/FeedListPage.tsx`
+  - `FeedListPagePending/FeedListPagePending.tsx`
 - External imports use `~public` entrypoints:
   - `@buyer-user/feed/~public/FeedListingPage.ts`
   - `@buyer-user/feed/~public/FeedListingPagePending.ts`
-  - `@buyer-user/feed/~public/FeedSelectPage.ts`
-  - `@buyer-user/feed/~public/FeedSelectPagePending.ts`
+  - `@buyer-user/feed/~public/FeedListPage.ts`
+  - `@buyer-user/feed/~public/FeedListPagePending.ts`
 - `FeedList` was extracted from `v0` to active scope:
-  - `@buyer-user/feed/FeedSelectPage/FeedList/`
+  - `@buyer-user/feed/FeedListPage/FeedList/`
 - `ListingCount` is page-local for feed select item:
-  - `@buyer-user/feed/FeedSelectPage/FeedList/Item/ListingCount/`
+  - `@buyer-user/feed/FeedListPage/FeedList/Item/ListingCount/`
 - Feed/listing components no longer accept `locale` as prop; locale is read via `useLocale()` inside the component.
 - Buyer favourite/message flow routes now use page components:
   - `@buyer-user/feed-favourite/page/FavouriteListPage.tsx`

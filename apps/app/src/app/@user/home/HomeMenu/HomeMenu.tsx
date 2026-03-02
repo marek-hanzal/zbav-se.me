@@ -288,7 +288,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/buyer/feed/select"
+						to="/$locale/buyer/feed/list"
 						params={{
 							locale,
 						}}

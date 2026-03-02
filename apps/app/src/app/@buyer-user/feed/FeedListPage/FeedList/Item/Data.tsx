@@ -35,7 +35,7 @@ export const Data: FC<Data.Props> = ({ feedId, ui, ...props }) => {
 			{...props}
 		>
 			<LinkTo
-				data-ui={"FeedSelect-[LinkTo.header]"}
+				data-ui={"FeedList-[LinkTo.header]"}
 				to={"/$locale/buyer/feed/$id/list"}
 				params={{
 					locale,
