@@ -2,7 +2,7 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { translator } from "@use-pico/common/translator";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { FeedDefaultPendingPage } from "~/app/v0/@buyer/feed/page/FeedDefaultPendingPage";
-import { getFeedDefaultCreate } from "~/app/v0/@buyer/feed/service/getFeedDefaultCreate";
+import { getFeedDefaultCreate } from "~/app/@common/feed/service/getFeedDefaultCreate";
 
 export const Route = createFileRoute("/$locale/buyer/feed/default")({
 	/**

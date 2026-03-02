@@ -3,7 +3,7 @@ import { translator } from "@use-pico/common/translator";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { FeedListPage } from "~/app/@buyer/feed/~public/FeedListPage";
 import { FeedListPagePending } from "~/app/@buyer/feed/~public/FeedListPagePending";
-import { getFeedDefaultCreate } from "~/app/v0/@buyer/feed/service/getFeedDefaultCreate";
+import { getFeedDefaultCreate } from "~/app/@common/feed/service/getFeedDefaultCreate";
 
 export const Route = createFileRoute("/$locale/buyer/feed/list")({
 	async loader({ context: { queryClient } }) {

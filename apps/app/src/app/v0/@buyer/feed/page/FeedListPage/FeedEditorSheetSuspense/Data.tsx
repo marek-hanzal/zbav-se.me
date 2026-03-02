@@ -3,7 +3,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { StateType } from "@use-pico/common/type";
 import type { FC } from "react";
-import { EditorSheet } from "~/app/v0/@buyer/feed/ui/EditorSheet";
+import { FeedEditorSheet } from "~/app/@buyer/feed/FeedEditor/FeedEditorSheet";
 
 export namespace Data {
 	export interface Props {
@@ -15,11 +15,10 @@ export namespace Data {
 
 export const Data: FC<Data.Props> = ({ feedId, state, onRefresh }) => {
 	return (
-		<EditorSheet
+		<FeedEditorSheet
 			data-ui={"FeedEditorSheet[EditorSheet]"}
 			feedId={feedId}
 			state={state}
-			noDelete
 		>
 			<Button
 				onClick={onRefresh}
@@ -44,6 +43,6 @@ export const Data: FC<Data.Props> = ({ feedId, state, onRefresh }) => {
 			>
 				<Tx label="Refresh feed (button)" />
 			</Button>
-		</EditorSheet>
+		</FeedEditorSheet>
 	);
 };

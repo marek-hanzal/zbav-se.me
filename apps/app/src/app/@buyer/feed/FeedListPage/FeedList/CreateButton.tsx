@@ -11,7 +11,7 @@ import { sFeedCreate, type tFeed } from "@zbav-se.me/sdk/api/buyer";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { getFeedDefaultCreate } from "~/app/v0/@buyer/feed/service/getFeedDefaultCreate";
+import { getFeedDefaultCreate } from "~/app/@common/feed/service/getFeedDefaultCreate";
 
 export namespace CreateButton {
 	export interface Props extends Button.Props {
