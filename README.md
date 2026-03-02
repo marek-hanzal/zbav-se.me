@@ -81,3 +81,8 @@ Before handoff, run at least:
 bun run lint
 bun run typecheck
 ```
+
+## Dependency Hygiene
+
+- Dependency cleanup decisions in this repository are evidence-based from source usage.
+- `knip` is treated as a candidate signal, not as the source of truth.

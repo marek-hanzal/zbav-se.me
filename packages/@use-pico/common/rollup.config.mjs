@@ -15,8 +15,6 @@ export default [
 		},
 		treeshake: false,
 		external: [
-			"@apollo/client",
-			"@graphql-typed-document-node/core",
 			"@paralleldrive/cuid2",
 			"@tanstack/zod-adapter",
 			"axios-rate-limit",
@@ -26,9 +24,6 @@ export default [
 			"preferred-locale",
 			"build-url-ts",
 			"fast-clean",
-			"flattie",
-			"is-callable",
-			"is-empty",
 			"is-string",
 			"js-sha256",
 			"object-path",

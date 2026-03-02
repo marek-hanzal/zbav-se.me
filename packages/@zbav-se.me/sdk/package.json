@@ -10,7 +10,6 @@
 	"dependencies": {
 		"@use-pico/client": "workspace:*",
 		"@use-pico/common": "workspace:*",
-		"@use-pico/server": "workspace:*",
 		"axios": "1.13.6",
 		"zod": "4.3.6"
 	},

@@ -10,25 +10,19 @@
 		"no:build": "bun run build:bundle"
 	},
 	"dependencies": {
-		"@floating-ui/react": "0.27.18",
 		"@tanstack/react-query": "5.90.21",
 		"@tanstack/react-router": "1.163.3",
 		"@types/luxon": "3.7.1",
 		"@use-pico/cls": "workspace:*",
 		"@use-pico/common": "workspace:*",
-		"axios": "1.13.6",
-		"kysely": "0.28.11",
 		"luxon": "3.7.2",
 		"motion": "12.34.4",
 		"react": "19.2.4",
 		"react-dom": "19.2.4",
-		"react-dropzone": "15.0.0",
 		"react-markdown": "10.1.0",
 		"react-modal-sheet": "5.2.1",
 		"remark-gfm": "4.0.1",
-		"ts-pattern": "5.9.0",
 		"use-debounce": "10.1.0",
-		"zod": "4.3.6",
 		"zustand": "5.0.11"
 	},
 	"devDependencies": {
