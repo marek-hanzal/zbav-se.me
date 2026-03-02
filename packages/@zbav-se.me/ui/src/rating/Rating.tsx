@@ -2,9 +2,9 @@ import type { useSelection } from "@use-pico/client/hook";
 import { TrashIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { translator } from "@use-pico/common/translator";
-import { type FC, type ReactNode, useMemo } from "react";
+import { type FC, useMemo } from "react";
 import { uiSelectButton } from "../ui";
 import { RatingToIcon } from "./RatingToIcon";
 
@@ -26,16 +26,16 @@ export namespace Rating {
 	export interface RatingItem extends EntitySchema.Type {}
 
 	export interface Props extends Container.Props {
-		renderPrefix?(): ReactNode;
-		renderSuffix?(): ReactNode;
+		textRatingFn?(rating: RatingToIcon.Value): string;
+		textHintFn?(rating: RatingToIcon.Value): string;
 		selection: useSelection.Selection<RatingItem>;
 		allowClear?: boolean;
 	}
 }
 
 export const Rating: FC<Rating.Props> = ({
-	renderPrefix,
-	renderSuffix,
+	textRatingFn,
+	textHintFn,
 	selection,
 	allowClear = false,
 	ui,
@@ -57,11 +57,9 @@ export const Rating: FC<Rating.Props> = ({
 			}}
 			{...props}
 		>
-			{renderPrefix?.()}
-
 			{ratingItems.map((item) => {
-				const value = Number.parseInt(item.id, 10);
-				const icon = RatingToIcon[value as RatingToIcon.Value];
+				const value = Number.parseInt(item.id, 10) as RatingToIcon.Value;
+				const icon = RatingToIcon[value];
 				const selected = selection.isSelected(item.id);
 
 				if (!icon) {
@@ -77,31 +75,54 @@ export const Rating: FC<Rating.Props> = ({
 						iconEnabled={icon}
 						iconProps={{
 							ui: {
-								text: "3xl",
+								text: "2xl",
+								color: selected ? "lead" : "icon",
 							},
 						}}
 						{...uiSelectButton({
 							isSelected: selected,
 							ui: {
 								flow: "horizontal",
-								justify: "center",
+								justify: "start",
 								items: "center",
 								gap: "sm",
 								size: "default",
 								text: "lg",
 							},
-							className: [],
+							className: [
+								"text-left",
+								"shrink-0",
+							],
 						})}
-					/>
+					>
+						<Container
+							ui={{
+								flow: "vertical",
+								items: "start",
+							}}
+						>
+							<Tx
+								label={textRatingFn?.(value)}
+								ui={{
+									display: "block",
+								}}
+							/>
+							<Tx
+								label={textHintFn?.(value)}
+								ui={{
+									display: "block",
+									text: "sm",
+									opacity: "6",
+								}}
+							/>
+						</Container>
+					</Button>
 				);
 			})}
-
-			{renderSuffix?.()}
 
 			{allowClear ? (
 				<Button
 					iconEnabled={TrashIcon}
-					label={translator.text("Clear all (button)")}
 					iconProps={{
 						ui: {
 							text: "xl",
@@ -115,7 +136,9 @@ export const Rating: FC<Rating.Props> = ({
 						theme: "light",
 						size: "default",
 					}}
-				/>
+				>
+					<Tx label={"Clear all (button)"} />
+				</Button>
 			) : null}
 		</Container>
 	);

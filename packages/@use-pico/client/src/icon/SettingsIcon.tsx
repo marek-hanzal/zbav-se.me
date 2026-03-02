@@ -1,1 +1,1 @@
-export const SettingsIcon = "icon-[ph--gear-thin]";
+export const SettingsIcon = "icon-[solar--settings-linear]";

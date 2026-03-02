@@ -7,7 +7,7 @@ import { Container } from "./Container";
 export namespace SpinnerContainer {
 	export interface Props extends Container.Props {
 		statusProps?: Status.Props;
-		iconProps?: Icon.Props;
+		iconProps?: Icon.PropsEx;
 		size?: uiIcon.Size;
 		type?: "icon" | "status";
 	}

@@ -48,6 +48,10 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 }: withCountFx.Props<TSelect, TFilter, TSelectError, TSelectContext, TQueryError, TQueryContext>) {
 	const select = yield* selectFx;
 
+	const hasFilter = !!(filter && Object.keys(filter).length > 0);
+	const hasWhere = !!(where && Object.keys(where).length > 0);
+	const countAll = !hasFilter && !hasWhere;
+
 	const scopeSelect = yield* queryFx({
 		select,
 		where: scope,
@@ -79,23 +83,27 @@ export const withCountFx = Effect.fn("withCountFx")(function* <
 			.executeTakeFirstOrThrow();
 	});
 
-	const countFilter = yield* Effect.promise(async () => {
-		return filterSelect
-			.clearSelect()
-			.select((eb) => eb.fn.countAll<number>().as("count"))
-			.executeTakeFirstOrThrow();
-	});
+	const countFilter = countAll
+		? countTotal
+		: yield* Effect.promise(async () => {
+				return filterSelect
+					.clearSelect()
+					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.executeTakeFirstOrThrow();
+			});
 
-	const countWhere = yield* Effect.promise(async () => {
-		return whereSelect
-			.clearSelect()
-			.select((eb) => eb.fn.countAll<number>().as("count"))
-			.executeTakeFirstOrThrow();
-	});
+	const countWhere = countAll
+		? countTotal
+		: yield* Effect.promise(async () => {
+				return whereSelect
+					.clearSelect()
+					.select((eb) => eb.fn.countAll<number>().as("count"))
+					.executeTakeFirstOrThrow();
+			});
 
-	const total = countTotal.count;
-	const filterCount = countFilter.count;
-	const whereCount = countWhere.count;
+	const total = Number(countTotal.count);
+	const filterCount = Number(countFilter.count);
+	const whereCount = Number(countWhere.count);
 
 	return {
 		total,

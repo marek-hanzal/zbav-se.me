@@ -1,1 +1,0 @@
-export { withTransactionBuyerInfoQuery } from "./withTransactionBuyerInfoQuery";

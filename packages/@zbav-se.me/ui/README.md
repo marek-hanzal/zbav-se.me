@@ -60,13 +60,18 @@ Brand identity components:
 
 ### ⭐ Rating (`rating/`)
 Rating display and interaction:
-- `Rating` - Star rating component
+- `Rating` - Rating picker with icon + label/hint render functions (`textRatingFn`, `textHintFn`)
+  - Prefix/suffix render callbacks were removed from the public API.
 - `RatingCls` - Rating styling classes
 - `RatingToIcon` - Rating value to icon mapper
 
 ### 📄 Sheet (`sheet/`)
 Sheet/drawer components:
 - `Sheet` - Bottom sheet/drawer component
+
+### 🔢 Dial (`dial/`)
+Numeric dial input components:
+- `Dial` - Numeric keypad with editable value/placeholder display
 
 ### 📰 Typography (`title/`, `typo/`)
 Text and typography components:
@@ -125,7 +130,16 @@ When adding components to this package:
 ```bash
 # Type checking
 bun run typecheck
+
+# Dependency audit (local binary)
+bun run knip
 ```
+
+## Dependency Hygiene
+
+Knip is configured per workspace and executed from local `devDependencies` to avoid `bun x` drift.
+Monorepo-internal `@use-pico/*` imports are filtered in this package to reduce known false positives.
+Unused direct dependencies (`react-dom`, `ts-pattern`) and unused type package (`@types/react-dom`) were removed after source verification.
 
 ## Architecture
 

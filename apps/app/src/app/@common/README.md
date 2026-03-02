@@ -36,7 +36,7 @@ Same dependency rules as server: domain boundaries and package usage must be res
 
 ### Imports from other app domains
 
-- **May import from**: none. Must not import from any other app domain (`@public`, `@session`, `@user`, `@buyer-session`, `@seller-session`, `@buyer-user`, `@seller-user`).
+- **May import from**: none. Must not import from any other app domain (`@public`, `@session`, `@user`, `@buyer`, `@seller`).
 - **Used by**: any domain may import from `@common`.
 
 ### SDK import rules
@@ -44,7 +44,7 @@ Same dependency rules as server: domain boundaries and package usage must be res
 SDK is organized by the same domains as the server (and UI). Same rules as domain imports above.
 
 - **May use SDK for**: none. `@common` must not call API (no domain surface in shared layer).
-- **Must not use SDK for**: any domain (buyer-user, buyer-session, seller-user, seller-session, session, user, public).
+- **Must not use SDK for**: any domain (buyer, seller, session, user, public).
 
 ### Context
 
@@ -65,7 +65,7 @@ Common resources are "open" in the sense that **any** domain may use them, inclu
 ## Related Domains
 
 - All domains may import from `@common`.
-- `@buyer-user` / `@seller-user` – use transaction context and shared types.
+- `@buyer` / `@seller` – use transaction context and shared types.
 - `@session` – may use common utilities.
 - `@public` – may use common utilities (with care for sensitive data).
 
@@ -84,12 +84,52 @@ When adding to `@common`:
   - `@common/message/MessageListSuspense/MessageList.tsx` now handles data/container composition.
   - `@common/message/MessageListSuspense.tsx` now composes local suspense fallback (`MessageListPending`) for feature call-sites.
   - `@common/message/MessageRenderItem.tsx` now owns message-type dispatch (`text/system/gallery/location/personal/package`).
-- Photo upload UI was split into focused pieces:
-  - `@common/photo/hook/usePhotoUploadController.ts` owns upload/input/pending orchestration.
-  - `@common/photo/ui/PhotoUpload/PhotoUploadPending.tsx`
-  - `@common/photo/ui/PhotoUpload/PhotoUploadPlaceholder.tsx`
-  - `@common/photo/ui/PhotoUpload/PhotoUploadPreview.tsx`
+- Auth utilities were extracted to active scope:
+  - `@common/auth/authClient.ts`
+  - `@common/auth/getSessionFn.ts`
+  - `@common/auth/query/withSessionQuery.ts`
+  - `@common/auth/hook/useUser.ts`
+  - `@common/auth/mutation/withSignOutMutation.ts`
+  - `SignOutButton` is now page-local at `@user/profile/UserPage/SignOutButton.tsx`
+- Photo upload UI was extracted to active scope and split into focused pieces:
+  - `@common/photo/ui/PhotoUpload/PhotoUpload.tsx` is the local root component (`index.ts` exports `PhotoUpload` only).
+  - `@common/photo/ui/PhotoUpload/useController.ts` owns upload/input/pending orchestration.
+  - `@common/photo/ui/PhotoUpload/Pending.tsx`
+  - `@common/photo/ui/PhotoUpload/Placeholder.tsx`
+  - `@common/photo/ui/PhotoUpload/Preview.tsx`
   - `@common/photo/ui/PhotoUpload/PhotoUploadPreviewImageSuspense.tsx` composes local suspense fallback (`PhotoUploadPreviewImagePending`).
 - Route shell pages were extracted into shared components:
-  - `@common/locale/page/LocalePage.tsx`
+  - `@common/locale/LocalePage/LocalePage.tsx`
   - `@common/nav/page/UiPage.tsx`
+- Save action footer container was extracted to active scope:
+  - `@common/container/ui/SaveContainer.tsx`
+- `LocationSelect` component was extracted to active scope:
+  - `@common/location/ui/LocationSelect.tsx`
+  - `@common/location/ui/LocationSelect/ListContainer/*`
+- PatchContainer abstraction was removed; patch views now compose `TitleContainer`/`Container` + `SaveContainer` inline at call-sites.
+- `LocationSelectContainer` abstraction was removed; call-sites now embed `LocationSelect` + `SaveContainer` inline.
+- `PriceTypeSelect` was extracted to active scope:
+  - `@common/price-type/ui/PriceTypeSelect/PriceTypeSelect.tsx`
+  - `@common/price-type/ui/PriceTypeSelect/Item.tsx`
+- `ExpireAtSelect` was extracted to active scope and split into folder-local parts:
+  - `@common/expire-at/ui/ExpireAtSelect/ExpireAtSelect.tsx`
+  - `@common/expire-at/ui/ExpireAtSelect/ExpireAtItem.tsx`
+- Restriction select options now render two-line static labels (`value` + `hint`) for all restriction enum variants, including `adult-relaxed`.
+- `RestrictionSelect` was extracted to active scope:
+  - `@common/restriction/ui/RestrictionSelect/RestrictionSelect.tsx`
+  - `@common/restriction/ui/RestrictionSelect/Item.tsx`
+- `DeliverySelect` was extracted to active scope:
+  - `@common/delivery/ui/DeliverySelect.tsx`
+- `WarrantySelect` was extracted to active scope:
+  - `@common/warranty/ui/WarrantySelect.tsx`
+- `AgeSelection` was extracted to active scope:
+  - `@common/age/ui/AgeSelection.tsx`
+- `ConditionSelect` was extracted to active scope:
+  - `@common/condition/ui/ConditionSelect.tsx`
+- Remaining condition UI parts were extracted to active scope:
+  - `@common/condition/ui/ConditionIcon.tsx`
+- Shared feed default-create helper is now in common service:
+  - `@common/feed/service/getFeedDefaultCreate.ts`
+- `GalleryPreview` was extracted to active scope:
+  - `@common/gallery/ui/GalleryPreview.tsx`
+- `GalleryUploadContainer` abstraction was removed; gallery upload flow is now embedded directly at call-sites.

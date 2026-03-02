@@ -1,1 +1,1 @@
-export const BackIcon = "icon-[pajamas--go-back]";
+export const BackIcon = "icon-[proicons--arrow-reply]";

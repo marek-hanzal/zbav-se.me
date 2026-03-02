@@ -1,0 +1,1 @@
+export { withFeedGalleryCreateMutation } from "./withFeedGalleryCreateMutation";

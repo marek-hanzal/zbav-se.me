@@ -6,21 +6,19 @@ import { getLocaleFn } from "~/app/@common/locale/getLocaleFn";
 export const Route = createFileRoute("/")({
 	async loader() {
 		const { data: session } = await getSessionFn();
-		const locale = await getLocaleFn();
 
 		if (session) {
 			throw redirect({
-				to: "/$locale/flow/home",
-				params: {
-					locale,
-				},
+				to: "/redirect/home",
 			});
 		}
+
+		const locale = await getLocaleFn();
 
 		throw redirect({
 			href: linkTo({
 				base: import.meta.env.VITE_WEB_ORIGIN,
-				href: "/:locale/login",
+				href: "/redirect/login",
 				query: {
 					locale,
 				},

@@ -21,9 +21,6 @@ export default defineConfig({
 	cacheDir: "./node_modules/.vite",
 	test: {
 		environment: "jsdom",
-		setupFiles: [
-			"./test/setup.ts",
-		],
 		globals: true,
 		include: [
 			"test/**/*.test.ts",

@@ -1,21 +1,23 @@
-import { Icon } from "@use-pico/client/icon";
-import { RatingToIcon } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
+import { RatingIcon } from "~/app/@common/score/ui/RatingIcon";
 
 export namespace ConditionIcon {
-	export interface Props extends Icon.PropsEx {
+	export interface Props extends Omit<RatingIcon.Props, "rating"> {
 		condition: number | string;
 	}
 }
 
+/**
+ * Maps condition input data to a visual icon variant used across the app.
+ * Use it anywhere you need compact visual signaling for condition state or quality.
+ *
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const ConditionIcon: FC<ConditionIcon.Props> = ({ condition, ui, ...props }) => {
 	return (
-		<Icon
-			icon={RatingToIcon[Number(condition) as RatingToIcon.Value]}
-			ui={{
-				text: "2xl",
-				...ui,
-			}}
+		<RatingIcon
+			rating={condition}
+			ui={ui}
 			{...props}
 		/>
 	);

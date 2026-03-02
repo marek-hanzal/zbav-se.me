@@ -127,6 +127,7 @@ export type tListingWarrantyEnum = typeof tListingWarrantyEnum[keyof typeof tLis
  */
 export const tListingRestrictionEnum = {
     none: 'none',
+    'adult-relaxed': 'adult-relaxed',
     adult: 'adult',
     sensitive: 'sensitive',
     restricted: 'restricted'

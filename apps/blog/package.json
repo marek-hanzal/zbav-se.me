@@ -10,13 +10,13 @@
 		"clear": "docusaurus clear",
 		"serve": "docusaurus serve",
 		"write-translations": "docusaurus write-translations",
-		"write-heading-ids": "docusaurus write-heading-ids"
+		"write-heading-ids": "docusaurus write-heading-ids",
+		"knip": "knip --include dependencies --no-config-hints"
 	},
 	"dependencies": {
 		"@docusaurus/core": "3.9.2",
 		"@docusaurus/preset-classic": "3.9.2",
 		"@mdx-js/react": "3.1.1",
-		"clsx": "2.1.1",
 		"prism-react-renderer": "2.4.1",
 		"react": "19.2.4",
 		"react-dom": "19.2.4"
@@ -27,8 +27,9 @@
 		"@docusaurus/types": "3.9.2",
 		"@tailwindcss/postcss": "4.2.1",
 		"@types/react": "19.2.14",
-		"@typescript/native-preview": "7.0.0-dev.20260223.1",
-		"autoprefixer": "10.4.24",
+		"@typescript/native-preview": "7.0.0-dev.20260302.1",
+		"autoprefixer": "10.4.27",
+		"knip": "5.85.0",
 		"postcss": "8.5.6",
 		"tailwindcss": "4.2.1",
 		"typescript": "beta"

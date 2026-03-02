@@ -1,4 +1,4 @@
-import { getMigrations } from "better-auth/db";
+import { getMigrations } from "better-auth/db/migration";
 import type { Dialect } from "kysely";
 import { auth } from "~/auth/auth";
 

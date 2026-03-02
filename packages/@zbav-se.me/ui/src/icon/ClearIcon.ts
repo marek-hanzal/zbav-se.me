@@ -1,1 +1,1 @@
-export const ClearIcon = "icon-[icon-park-twotone--clear]";
+export const ClearIcon = "icon-[solar--trash-bin-minimalistic-linear]";

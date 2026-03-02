@@ -168,6 +168,11 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "24"
+
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
@@ -199,6 +204,11 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "24"
+
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
@@ -229,6 +239,11 @@ jobs:
         needs: [validate-common-env]
         steps:
             - uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "24"
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
@@ -272,6 +287,11 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "24"
+
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
@@ -312,6 +332,11 @@ jobs:
                   key: server-${{ github.run_id }}
                   fail-on-cache-miss: true
 
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "24"
+
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
@@ -337,6 +362,11 @@ jobs:
                   path: apps/web/.vercel/output
                   key: web-${{ github.run_id }}
                   fail-on-cache-miss: true
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "24"
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
@@ -367,6 +397,11 @@ jobs:
                   path: apps/app/.vercel/output
                   key: app-${{ github.run_id }}
                   fail-on-cache-miss: true
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "24"
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2

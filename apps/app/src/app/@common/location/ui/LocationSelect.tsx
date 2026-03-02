@@ -4,7 +4,7 @@ import type { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { type FC, useState } from "react";
-import { ListContainer } from "./LocationSelect/ListContainer";
+import { ListContainer } from "~/app/@common/location/ui/LocationSelect/ListContainer";
 
 export namespace LocationSelect {
 	export interface Props extends Omit<Container.Props, "onChange"> {
@@ -16,6 +16,12 @@ export namespace LocationSelect {
 	}
 }
 
+/**
+ * Provides an interactive control for selecting location values in forms.
+ * Use it in editors where users need to choose or update location before saving.
+ *
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const LocationSelect: FC<LocationSelect.Props> = ({
 	value,
 	onChange,

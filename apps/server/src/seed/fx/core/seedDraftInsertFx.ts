@@ -1,7 +1,7 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import type { DraftCreateSchema } from "~/@seller-user/draft/schema/DraftCreateSchema";
+import type { DraftCreateSchema } from "~/@seller/draft/schema/DraftCreateSchema";
 import { galleryInsertFx } from "~/@user/gallery/fx/galleryInsertFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";

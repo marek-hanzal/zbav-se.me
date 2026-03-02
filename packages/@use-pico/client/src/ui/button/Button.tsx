@@ -1,16 +1,10 @@
 import type { ComponentProps, FC } from "react";
 import { Icon } from "../../icon/Icon";
 import { SpinnerIcon } from "../../icon/SpinnerIcon";
-import { Tx } from "../tx/Tx";
 import { uiButton } from "./uiButton";
 
 export namespace Button {
 	export interface Props extends uiButton.Component<ComponentProps<"button">> {
-		/**
-		 * Goes through translation; in general buttons should _not_ have
-		 * any complex content, thus the "label" only.
-		 */
-		label?: string | null;
 		/**
 		 * Icon to display when the button is enabled and not loading.
 		 */
@@ -48,7 +42,6 @@ export namespace Button {
 }
 
 export const Button: FC<Button.Props> = ({
-	label,
 	iconEnabled,
 	iconDisabled,
 	iconLoading = SpinnerIcon,
@@ -96,17 +89,6 @@ export const Button: FC<Button.Props> = ({
 					data-ui={"Button-[Icon]"}
 					icon={icon}
 					{...iconProps}
-				/>
-			) : null}
-
-			{label ? (
-				<Tx
-					data-ui={"Button-[Tx.label]"}
-					label={label}
-					ui={{
-						display: "block",
-						truncate,
-					}}
 				/>
 			) : null}
 

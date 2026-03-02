@@ -1,4 +1,4 @@
-import type { Migration } from "kysely";
+import { type Migration, sql } from "kysely";
 
 export const FeedMigration: Migration = {
 	async up(db) {
@@ -58,6 +58,16 @@ export const FeedMigration: Migration = {
 			.on("feed")
 			.column("updatedAt")
 			.execute();
+
+		await sql`
+			CREATE INDEX "feed_[userId-updatedAt]_idx"
+			ON "feed" ("userId", "updatedAt" DESC);
+		`.execute(db);
+
+		await sql`
+			CREATE INDEX "feed_[userId-createdAt]_idx"
+			ON "feed" ("userId", "createdAt" DESC);
+		`.execute(db);
 
 		await db.schema
 			.createIndex("feed_[locationId]_idx")

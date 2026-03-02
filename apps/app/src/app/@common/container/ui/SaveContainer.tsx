@@ -1,8 +1,9 @@
+import { ArrowLeftIcon, SaveIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { uiCancelButton, uiSaveButton } from "@zbav-se.me/ui/ui";
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 
 export namespace SaveContainer {
 	export interface Props extends Container.Props {
@@ -10,14 +11,27 @@ export namespace SaveContainer {
 		onSave(): void;
 		loading: boolean;
 		disabled: boolean;
+		/**
+		 * Already translated text to replace default Cancel label
+		 */
+		textCancel?: ReactNode;
+		textSave?: ReactNode;
 	}
 }
 
+/**
+ * Groups cancel/save actions into a single reusable toolbar with loading and disabled-state handling.
+ * Use it in editable forms where primary save and secondary cancel actions should stay visually consistent.
+ *
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const SaveContainer: FC<SaveContainer.Props> = ({
 	onCancel,
 	onSave,
 	loading,
 	disabled,
+	textCancel,
+	textSave,
 	ui,
 	...props
 }) => {
@@ -36,22 +50,34 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 			<Button
 				onClick={onCancel}
 				disabled={loading}
+				iconEnabled={ArrowLeftIcon}
+				iconProps={{
+					ui: {
+						text: "xl",
+					},
+				}}
 				{...uiCancelButton({
 					className: [],
 				})}
 			>
-				<Tx label="Cancel (button)" />
+				{textCancel ?? <Tx label="Back (label)" />}
 			</Button>
 
 			<Button
 				onClick={onSave}
 				disabled={loading || disabled}
 				loading={loading}
+				iconEnabled={SaveIcon}
+				iconProps={{
+					ui: {
+						text: "xl",
+					},
+				}}
 				{...uiSaveButton({
 					className: [],
 				})}
 			>
-				<Tx label="Save (button)" />
+				{textSave ?? <Tx label="Save (button)" />}
 			</Button>
 		</Container>
 	);

@@ -1,5 +1,6 @@
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { ReactNode } from "react";
+import { Group } from "../group";
 import { Tx } from "../tx/Tx";
 import { Container } from "./Container";
 import { SpinnerContainer } from "./SpinnerContainer";
@@ -84,7 +85,7 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 					label={textLabel}
 					preset={"label"}
 					ui={{
-						font: "normal",
+						font: "semibold",
 						display: "block",
 						color: "lead",
 					}}
@@ -106,55 +107,47 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 				/>
 			) : null}
 
-			<Container
-				data-ui="ValueList-[Container.content]"
-				ui={{
-					tone: undefined,
-					theme: undefined,
-					layout: "vertical-flex",
-					gap: "xs",
-					height: "auto",
-				}}
-			>
-				{loading
-					? null
-					: items.map((item) => (
-							<Container
-								key={item.id}
-								data-ui="ValueList-[Container.item]"
-								ui={{
-									tone: "subtle",
-									theme: "light",
-									background: "default",
-									border: true,
-									round: "default",
-									inner: "default",
-								}}
-							>
-								{renderFn(item)}
-							</Container>
-						))}
+			{loading ? null : (
+				<Group data-ui="ValueList-[Container.content]">
+					{items.map((item) => (
+						<Container
+							key={item.id}
+							data-ui="ValueList-[Container.item]"
+							ui={{
+								tone: "subtle",
+								theme: "light",
+								background: "default",
+								border: false,
+								shadow: false,
+								round: "default",
+								inner: "default",
+							}}
+						>
+							{renderFn(item)}
+						</Container>
+					))}
+				</Group>
+			)}
 
-				{loading && (
-					<SpinnerContainer
-						size={"md"}
-						ui={{
-							height: "content",
-						}}
-					/>
-				)}
+			{loading && (
+				<SpinnerContainer
+					size={"md"}
+					ui={{
+						height: "content",
+					}}
+				/>
+			)}
 
-				{!loading && items.length === 0 && (
-					<Tx
-						label={textEmpty}
-						ui={{
-							tone: "neutral",
-							theme: "light",
-							opacity: "medium",
-						}}
-					/>
-				)}
-			</Container>
+			{!loading && items.length === 0 && (
+				<Tx
+					label={textEmpty}
+					ui={{
+						tone: "neutral",
+						theme: "light",
+						opacity: "6",
+					}}
+				/>
+			)}
 		</Container>
 	);
 };

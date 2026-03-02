@@ -24,6 +24,7 @@ export const uiSelectButton = ({ isSelected, ui, className }: uiSelectButton.Pro
 			size: "default",
 			font: isSelected ? "bold" : "normal",
 			width: "full",
+			height: "content",
 			...ui,
 		},
 		className,

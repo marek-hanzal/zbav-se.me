@@ -2,7 +2,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { list } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { feedCreateFx } from "~/@buyer-user/feed/fx/feedCreateFx";
+import { feedCreateFx } from "~/@buyer/feed/fx/feedCreateFx";
 import { userExPatchFx } from "~/@user/user-ex/fx/userExPatchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";

@@ -29,7 +29,7 @@ export namespace BottomSheet {
 		containerProps?: ComponentProps<typeof Sheet.Container>;
 		contentProps?: ComponentProps<typeof Sheet.Content>;
 		withHeader?: boolean;
-		header?: BottomSheet.Header.RenderFn;
+		header?: Header.RenderFn;
 	}
 
 	export type PropsEx = Omit<Props, "isOpen" | "onClose">;
@@ -98,7 +98,6 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 									ui={{
 										tone: "primary",
 										theme: "light",
-										text: "lg",
 										color: "lead",
 										truncate: true,
 									}}

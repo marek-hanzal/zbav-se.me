@@ -13,6 +13,12 @@ export namespace GalleryValue {
 	}
 }
 
+/**
+ * Displays a read-only gallery value with hero-image preview and a fallback status when no photos are present.
+ * Use it in summaries and detail cards where users need a quick visual check of current gallery state.
+ *
+ * @see apps/app/src/app//draft/ui/DraftEditor/patch/GalleryPatch.tsx
+ */
 export const GalleryValue: FC<GalleryValue.Props> = ({
 	uploads,
 	label,

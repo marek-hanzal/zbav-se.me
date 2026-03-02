@@ -1,12 +1,13 @@
 import type { StateType } from "@use-pico/common/type";
-import { useId } from "react";
 import { BottomSheet } from "../bottom-sheet";
 import { View } from "../view";
 
 export namespace SheetView {
+	export type Views<TView extends string> = View.Views<TView, BottomSheet.PropsEx>;
+
 	export interface Props<TView extends string> extends Omit<BottomSheet.Props, "children"> {
 		state: StateType.State<TView>;
-		views: View.Views<TView, View.View<Partial<BottomSheet.Props>>>;
+		views: Views<TView>;
 	}
 }
 
@@ -23,8 +24,6 @@ export const SheetView = <TView extends string>({
 		...current,
 	};
 
-	const sheetId = useId();
-
 	return (
 		<View
 			state={state}
@@ -33,12 +32,10 @@ export const SheetView = <TView extends string>({
 			{({ content }) => {
 				return (
 					<BottomSheet
-						key={sheetId}
 						{...rest}
 						contentProps={{
 							disableScroll: true,
 							...contentProps,
-							...rest.contentProps,
 						}}
 					>
 						{content}

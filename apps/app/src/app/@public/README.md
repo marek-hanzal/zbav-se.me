@@ -22,14 +22,14 @@ Same dependency rules as server: domain boundaries and package usage must be res
 ### Imports from other app domains
 
 - **May import from**: `@common` only.
-- **Must not import from**: `@session`, `@user`, `@buyer-session`, `@seller-session`, `@buyer-user`, `@seller-user`, `@public` (self).
+- **Must not import from**: `@session`, `@user`, `@buyer`, `@seller`, `@public` (self).
 
 ### SDK import rules
 
 SDK is organized by the same domains as the server (and UI). Same rules as domain imports above.
 
 - **May use SDK for**: `public` only (i.e. `/api/public/*` – auth, health, origin, …).
-- **Must not use SDK for**: `session`, `user`, `buyer-user`, `buyer-session`, `seller-user`, `seller-session` (authenticated domains).
+- **Must not use SDK for**: `session`, `user`, `buyer`, `seller` (authenticated domains).
 
 ### Context
 

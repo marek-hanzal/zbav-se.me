@@ -1,1 +1,1 @@
-export const BackspaceIcon = "icon-[mdi--clear-outline]";
+export const BackspaceIcon = "icon-[solar--backspace-linear]";

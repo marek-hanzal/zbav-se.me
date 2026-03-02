@@ -22,6 +22,7 @@ export namespace uiLinkTo {
 		background?: CoolUi.Background;
 		border?: CoolUi.Border;
 		shadow?: CoolUi.Shadow;
+		position?: CoolUi.Position;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;

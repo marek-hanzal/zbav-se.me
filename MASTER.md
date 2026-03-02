@@ -1124,14 +1124,15 @@ Related:
 
 Obsah není jen „co prodávám“. Obsah je i to, *jestli to můžeš vůbec vidět*. **Citlivost** je hard gate: chrání veřejnej prostor před obsahem, kterej určitá skupina lidí buď **nechce**, nebo ho **ani nesmí** vidět.
 
-Úrovně (stupňovaně): `common < adult < sensitive < restricted`.
+Úrovně (stupňovaně): `none < adult < adult-relaxed < sensitive < restricted`.
 
-| Úroveň      | Enum         | Poznámka                                              |
-| ----------- | ------------ | ----------------------------------------------------- |
-| Běžný       | `common`     | default                                               |
-| Pro dospělé | `adult`      | 18+ kontext                                           |
-| Citlivé     | `sensitive`  | věci „na hraně“, co nechci cpát všem                  |
-| Omezené     | `restricted` | zákonný omezení / oprávnění (systém ho **neověřuje**); nutná součást ochrany je také běžící cooldown 24h — tzn. člověk musí vědět, co dělá; tento cooldown se zapne pokaždé, když si člověk v profilu zapne "restricted" úroveň |
+| Úroveň             | Enum            | Poznámka                                                                                                                                                                                                                   |
+| ------------------ | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Běžný              | `none`          | default                                                                                                                                                                                                                    |
+| Pro dospělé        | `adult`         | 18+ kontext                                                                                                                                                                                                                |
+| Pro dospělé (soft) | `adult-relaxed` | adult lze odkliknout na základě varovné hlášky (jen pro 18+)                                                                                                                                                              |
+| Citlivé            | `sensitive`     | věci „na hraně“, co nechci cpát všem                                                                                                                                                                                       |
+| Omezené            | `restricted`    | zákonný omezení / oprávnění (systém ho **neověřuje**); nutná součást ochrany je také běžící cooldown 24h — tzn. člověk musí vědět, co dělá; tento cooldown se zapne pokaždé, když si člověk v profilu zapne "restricted" úroveň |
 
 Gating a viditelnost (dvoufázově, schválně):
 - **Profil** = nastavíš maximum (co *smíš / jsi ochotnej* vidět).

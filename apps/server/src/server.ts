@@ -2,16 +2,12 @@ import { DialectContextLayer } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
-import { withBuyerSessionApiFx } from "~/@buyer-session/withBuyerSessionApiFx";
-import { withBuyerSessionHono } from "~/@buyer-session/withBuyerSessionHono";
-import { withBuyerUserApiFx } from "~/@buyer-user/withBuyerUserApiFx";
-import { withBuyerUserHono } from "~/@buyer-user/withBuyerUserHono";
+import { withBuyerApiFx } from "~/@buyer/withBuyerApiFx";
+import { withBuyerHono } from "~/@buyer/withBuyerHono";
 import { withPublicApiFx } from "~/@public/withPublicApiFx";
 import { withPublicHono } from "~/@public/withPublicHono";
-import { withSellerSessionApiFx } from "~/@seller-session/withSellerSessionApiFx";
-import { withSellerSessionHono } from "~/@seller-session/withSellerSessionHono";
-import { withSellerUserApiFx } from "~/@seller-user/withSellerUserApiFx";
-import { withSellerUserHono } from "~/@seller-user/withSellerUserHono";
+import { withSellerApiFx } from "~/@seller/withSellerApiFx";
+import { withSellerHono } from "~/@seller/withSellerHono";
 import { withSessionApiFx } from "~/@session/withSessionApiFx";
 import { withSessionHono } from "~/@session/withSessionHono";
 import { withUserApiFx } from "~/@user/withUserApiFx";
@@ -62,10 +58,8 @@ const app = await Effect.gen(function* () {
 		withPublicApiFx(),
 		withSessionApiFx(),
 		withUserApiFx(),
-		withSellerUserApiFx(),
-		withSellerSessionApiFx(),
-		withBuyerUserApiFx(),
-		withBuyerSessionApiFx(),
+		withSellerApiFx(),
+		withBuyerApiFx(),
 	]).pipe(Effect.provide(kyselyContext));
 
 	return root;
@@ -76,10 +70,8 @@ const app = await Effect.gen(function* () {
 			publicHono: withPublicHono(),
 			sessionHono: withSessionHono(),
 			userHono: withUserHono(),
-			sellerUserHono: withSellerUserHono(),
-			sellerSessionHono: withSellerSessionHono(),
-			buyerUserHono: withBuyerUserHono(),
-			buyerSessionHono: withBuyerSessionHono(),
+			sellerHono: withSellerHono(),
+			buyerHono: withBuyerHono(),
 		}),
 	),
 	Effect.runPromise,

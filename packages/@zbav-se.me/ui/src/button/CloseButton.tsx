@@ -1,4 +1,4 @@
-import { CloseIcon } from "@use-pico/client/icon";
+import { CloseDrawerIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import type { FC } from "react";
 import { uiBackButton } from "../ui/uiBackButton";
@@ -12,7 +12,7 @@ export namespace CloseButton {
 export const CloseButton: FC<CloseButton.Props> = ({ ui, className, ...props }) => {
 	return (
 		<Button
-			iconEnabled={CloseIcon}
+			iconEnabled={CloseDrawerIcon}
 			onClick={close}
 			{...uiBackButton({
 				ui,

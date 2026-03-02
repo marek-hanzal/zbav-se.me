@@ -10,7 +10,7 @@
 		"translations": "turbo run translations --parallel",
 		"format": "biome format --write .",
 		"lint": "biome check --write .",
-		"knip": "turbo run knip --parallel",
+		"knip": "turbo run knip --concurrency=1",
 		"typecheck": "turbo run typecheck --parallel",
 		"test": "dotenv -c development -- turbo run test --parallel",
 		"seed:core": "dotenv -c development -- bun --cwd ./apps/server ./cli/seed-core.ts",
@@ -24,12 +24,12 @@
 		"workflow:update": "run-s sp:fix sp:update sp:fix sp:update workflow:format update workflow:check"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.4.4",
-		"@types/node": "25.3.0",
+		"@biomejs/biome": "2.4.5",
+		"@types/node": "25.3.3",
 		"dotenv-cli": "11.0.0",
 		"npm-run-all2": "8.0.4",
 		"syncpack": "14.0.0",
-		"turbo": "2.8.10",
+		"turbo": "2.8.12",
 		"typescript": "beta"
 	},
 	"license": "MIT",

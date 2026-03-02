@@ -104,18 +104,18 @@ export type zCursor = z.infer<typeof zCursor>;
  * Filter object for gallery collection
  */
 export const zGalleryFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    userId: z.string().register(z.globalRegistry, {
         description: 'Exact user id'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'Filter object for gallery collection'
 });
@@ -126,18 +126,18 @@ export type zGalleryFilter = z.infer<typeof zGalleryFilter>;
  * App-based filters
  */
 export const zGalleryWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    userId: z.string().register(z.globalRegistry, {
         description: 'Exact user id'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
@@ -178,10 +178,10 @@ export type zGallerySort = z.infer<typeof zGallerySort>;
  * Query object for gallery collection
  */
 export const zGalleryQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zGalleryFilter),
-    where: z.optional(zGalleryWhere),
-    sort: z.optional(z.array(zGallerySort))
+    cursor: zCursor.optional(),
+    filter: zGalleryFilter.optional(),
+    where: zGalleryWhere.optional(),
+    sort: z.array(zGallerySort).optional()
 }).register(z.globalRegistry, {
     description: 'Query object for gallery collection'
 });
@@ -217,8 +217,8 @@ export type zCount = z.infer<typeof zCount>;
  * Query object for gallery count
  */
 export const zGalleryCountQuery = z.object({
-    filter: z.optional(zGalleryFilter),
-    where: z.optional(zGalleryWhere)
+    filter: zGalleryFilter.optional(),
+    where: zGalleryWhere.optional()
 }).register(z.globalRegistry, {
     description: 'Query object for gallery count'
 });
@@ -315,33 +315,15 @@ export const zLocation = z.object({
     code: z.string().register(z.globalRegistry, {
         description: 'Country code'
     }),
-    county: z.union([
-        z.null(),
-        z.string()
-    ]),
-    municipality: z.union([
-        z.null(),
-        z.string()
-    ]),
-    state: z.union([
-        z.null(),
-        z.string()
-    ]),
+    county: z.string().nullable(),
+    municipality: z.string().nullable(),
+    state: z.string().nullable(),
     address: z.string().register(z.globalRegistry, {
         description: 'Full address preview of a location'
     }),
-    city: z.union([
-        z.null(),
-        z.string()
-    ]),
-    street: z.union([
-        z.null(),
-        z.string()
-    ]),
-    zip: z.union([
-        z.null(),
-        z.string()
-    ]),
+    city: z.string().nullable(),
+    street: z.string().nullable(),
+    zip: z.string().nullable(),
     confidence: z.number().register(z.globalRegistry, {
         description: 'Confidence score of the location (based on query)'
     }),
@@ -423,10 +405,7 @@ export const zMessagePackage = z.object({
     link: z.url().register(z.globalRegistry, {
         description: 'Package link'
     }),
-    number: z.union([
-        z.string(),
-        z.null()
-    ]),
+    number: z.string().nullable(),
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
@@ -492,24 +471,24 @@ export type zMessageItem = z.infer<typeof zMessageItem>;
  * Filter object for message collection
  */
 export const zMessageFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    messageThreadId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    messageThreadId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact messageThreadId'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    userId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact userId'
-    })),
-    transactionId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    transactionId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact transactionId'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'Filter object for message collection'
 });
@@ -520,24 +499,24 @@ export type zMessageFilter = z.infer<typeof zMessageFilter>;
  * App-based filters
  */
 export const zMessageWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    })),
-    messageThreadId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    messageThreadId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact messageThreadId'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    userId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact userId'
-    })),
-    transactionId: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    transactionId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact transactionId'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
@@ -569,10 +548,10 @@ export type zMessageSort = z.infer<typeof zMessageSort>;
  * Query object for message collection
  */
 export const zMessageQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zMessageFilter),
-    where: z.optional(zMessageWhere),
-    sort: z.optional(z.array(zMessageSort))
+    cursor: zCursor.optional(),
+    filter: zMessageFilter.optional(),
+    where: zMessageWhere.optional(),
+    sort: z.array(zMessageSort).optional()
 }).register(z.globalRegistry, {
     description: 'Query object for message collection'
 });
@@ -583,8 +562,8 @@ export type zMessageQuery = z.infer<typeof zMessageQuery>;
  * Query object for message count
  */
 export const zMessageCountQuery = z.object({
-    filter: z.optional(zMessageFilter),
-    where: z.optional(zMessageWhere)
+    filter: zMessageFilter.optional(),
+    where: zMessageWhere.optional()
 }).register(z.globalRegistry, {
     description: 'Query object for message count'
 });
@@ -666,10 +645,7 @@ export const zTransactionMessagePackageCreate = z.object({
     link: z.url().register(z.globalRegistry, {
         description: 'Package link'
     }),
-    number: z.union([
-        z.string(),
-        z.null()
-    ])
+    number: z.string().nullable()
 }).register(z.globalRegistry, {
     description: 'Request to create a transaction message package'
 });
@@ -734,15 +710,15 @@ export type zUploadCreate = z.infer<typeof zUploadCreate>;
  * Data for uploading a file
  */
 export const zUploadFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'Data for uploading a file'
 });
@@ -753,15 +729,15 @@ export type zUploadFilter = z.infer<typeof zUploadFilter>;
  * App-based filters
  */
 export const zUploadWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
+    id: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
         description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
-    }))
+    }).optional()
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
@@ -793,10 +769,10 @@ export type zUploadSort = z.infer<typeof zUploadSort>;
  * Data for uploading a file
  */
 export const zUploadQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zUploadFilter),
-    where: z.optional(zUploadWhere),
-    sort: z.optional(z.array(zUploadSort))
+    cursor: zCursor.optional(),
+    filter: zUploadFilter.optional(),
+    where: zUploadWhere.optional(),
+    sort: z.array(zUploadSort).optional()
 }).register(z.globalRegistry, {
     description: 'Data for uploading a file'
 });
@@ -819,14 +795,8 @@ export const zUserEx = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the user_ex record'
     }),
-    locationId: z.union([
-        z.null(),
-        z.string()
-    ]),
-    side: z.optional(z.union([
-        z.null(),
-        zUserSideEnum
-    ]))
+    locationId: z.string().nullable(),
+    side: zUserSideEnum.nullish()
 }).register(z.globalRegistry, {
     description: 'User extended information'
 });
@@ -838,14 +808,8 @@ export type zUserEx = z.infer<typeof zUserEx>;
  */
 export const zUserExPatch = z.object({
     patch: z.object({
-        locationId: z.optional(z.union([
-            z.null(),
-            z.string()
-        ])),
-        side: z.optional(z.union([
-            z.null(),
-            zUserSideEnum
-        ]))
+        locationId: z.string().nullish(),
+        side: zUserSideEnum.nullish()
     }).register(z.globalRegistry, {
         description: 'Fields to update (all optional)'
     })
@@ -856,9 +820,9 @@ export const zUserExPatch = z.object({
 export type zUserExPatch = z.infer<typeof zUserExPatch>;
 
 export const zApiGalleryFetchData = z.object({
-    body: z.optional(zGalleryQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zGalleryQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiGalleryFetchRequest = z.infer<typeof zApiGalleryFetchData>;
@@ -871,9 +835,9 @@ export const zApiGalleryFetchResponse = zGallery;
 export type zapiGalleryFetchResponse = z.infer<typeof zApiGalleryFetchResponse>;
 
 export const zApiGalleryCollectionData = z.object({
-    body: z.optional(zGalleryQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zGalleryQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiGalleryCollectionRequest = z.infer<typeof zApiGalleryCollectionData>;
@@ -890,9 +854,9 @@ export const zApiGalleryCollectionResponse = z.array(zGalleryItem.and(z.unknown(
 export type zapiGalleryCollectionResponse = z.infer<typeof zApiGalleryCollectionResponse>;
 
 export const zApiGalleryCountData = z.object({
-    body: z.optional(zGalleryCountQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zGalleryCountQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiGalleryCountRequest = z.infer<typeof zApiGalleryCountData>;
@@ -905,13 +869,13 @@ export const zApiGalleryCountResponse = zCount;
 export type zapiGalleryCountResponse = z.infer<typeof zApiGalleryCountResponse>;
 
 export const zApiMessageThreadMessageCollectionData = z.object({
-    body: z.optional(zMessageQuery),
+    body: zMessageQuery.optional(),
     path: z.object({
         messageThreadId: z.string().register(z.globalRegistry, {
             description: 'Message thread identifier'
         })
     }),
-    query: z.optional(z.never())
+    query: z.never().optional()
 });
 
 export type zapiMessageThreadMessageCollectionRequest = z.infer<typeof zApiMessageThreadMessageCollectionData>;
@@ -926,9 +890,9 @@ export const zApiMessageThreadMessageCollectionResponse = z.array(zMessageItem).
 export type zapiMessageThreadMessageCollectionResponse = z.infer<typeof zApiMessageThreadMessageCollectionResponse>;
 
 export const zApiMessageThreadMessageFetchData = z.object({
-    body: z.optional(zMessageQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zMessageQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiMessageThreadMessageFetchRequest = z.infer<typeof zApiMessageThreadMessageFetchData>;
@@ -941,13 +905,13 @@ export const zApiMessageThreadMessageFetchResponse = zMessageItem;
 export type zapiMessageThreadMessageFetchResponse = z.infer<typeof zApiMessageThreadMessageFetchResponse>;
 
 export const zApiMessageThreadMessageCountData = z.object({
-    body: z.optional(zMessageCountQuery),
+    body: zMessageCountQuery.optional(),
     path: z.object({
         messageThreadId: z.string().register(z.globalRegistry, {
             description: 'Message thread identifier'
         })
     }),
-    query: z.optional(z.never())
+    query: z.never().optional()
 });
 
 export type zapiMessageThreadMessageCountRequest = z.infer<typeof zApiMessageThreadMessageCountData>;
@@ -967,8 +931,8 @@ export const zApiS3PresignData = z.object({
         extension: zAllowedExtensionsEnum,
         contentType: zAllowedContentTypesEnum
     }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiS3PresignRequest = z.infer<typeof zApiS3PresignData>;
@@ -988,9 +952,9 @@ export const zApiS3PresignResponse = z.object({
 export type zapiS3PresignResponse = z.infer<typeof zApiS3PresignResponse>;
 
 export const zApiTransactionMessageGalleryCreateData = z.object({
-    body: z.optional(zTransactionMessageGalleryCreate),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zTransactionMessageGalleryCreate.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiTransactionMessageGalleryCreateRequest = z.infer<typeof zApiTransactionMessageGalleryCreateData>;
@@ -1003,9 +967,9 @@ export const zApiTransactionMessageGalleryCreateResponse = zMessageGallery;
 export type zapiTransactionMessageGalleryCreateResponse = z.infer<typeof zApiTransactionMessageGalleryCreateResponse>;
 
 export const zApiTransactionMessageLocationCreateData = z.object({
-    body: z.optional(zTransactionMessageLocationCreate),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zTransactionMessageLocationCreate.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiTransactionMessageLocationCreateRequest = z.infer<typeof zApiTransactionMessageLocationCreateData>;
@@ -1018,9 +982,9 @@ export const zApiTransactionMessageLocationCreateResponse = zMessageLocation;
 export type zapiTransactionMessageLocationCreateResponse = z.infer<typeof zApiTransactionMessageLocationCreateResponse>;
 
 export const zApiTransactionMessagePackageCreateData = z.object({
-    body: z.optional(zTransactionMessagePackageCreate),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zTransactionMessagePackageCreate.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiTransactionMessagePackageCreateRequest = z.infer<typeof zApiTransactionMessagePackageCreateData>;
@@ -1033,9 +997,9 @@ export const zApiTransactionMessagePackageCreateResponse = zMessagePackage;
 export type zapiTransactionMessagePackageCreateResponse = z.infer<typeof zApiTransactionMessagePackageCreateResponse>;
 
 export const zApiTransactionMessagePersonalCreateData = z.object({
-    body: z.optional(zTransactionMessagePersonalCreate),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zTransactionMessagePersonalCreate.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiTransactionMessagePersonalCreateRequest = z.infer<typeof zApiTransactionMessagePersonalCreateData>;
@@ -1048,9 +1012,9 @@ export const zApiTransactionMessagePersonalCreateResponse = zMessagePersonal;
 export type zapiTransactionMessagePersonalCreateResponse = z.infer<typeof zApiTransactionMessagePersonalCreateResponse>;
 
 export const zApiTransactionMessageTextCreateData = z.object({
-    body: z.optional(zTransactionMessageTextCreate),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zTransactionMessageTextCreate.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiTransactionMessageTextCreateRequest = z.infer<typeof zApiTransactionMessageTextCreateData>;
@@ -1063,9 +1027,9 @@ export const zApiTransactionMessageTextCreateResponse = zMessageText;
 export type zapiTransactionMessageTextCreateResponse = z.infer<typeof zApiTransactionMessageTextCreateResponse>;
 
 export const zApiUploadCreateData = z.object({
-    body: z.optional(zUploadCreate),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zUploadCreate.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiUploadCreateRequest = z.infer<typeof zApiUploadCreateData>;
@@ -1078,9 +1042,9 @@ export const zApiUploadCreateResponse = zUpload;
 export type zapiUploadCreateResponse = z.infer<typeof zApiUploadCreateResponse>;
 
 export const zApiUploadFetchData = z.object({
-    body: z.optional(zUploadQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zUploadQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiUploadFetchRequest = z.infer<typeof zApiUploadFetchData>;
@@ -1093,9 +1057,9 @@ export const zApiUploadFetchResponse = zUpload;
 export type zapiUploadFetchResponse = z.infer<typeof zApiUploadFetchResponse>;
 
 export const zApiUserExPatchData = z.object({
-    body: z.optional(zUserExPatch),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: zUserExPatch.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiUserExPatchRequest = z.infer<typeof zApiUserExPatchData>;

@@ -68,6 +68,15 @@ export const FavouriteMigration: Migration = {
 			.execute();
 
 		await db.schema
+			.createIndex("favourite_[userId-listingId]_idx")
+			.on("favourite")
+			.columns([
+				"userId",
+				"listingId",
+			])
+			.execute();
+
+		await db.schema
 			.createIndex("favourite_[createdAt]_idx")
 			.on("favourite")
 			.column("createdAt")

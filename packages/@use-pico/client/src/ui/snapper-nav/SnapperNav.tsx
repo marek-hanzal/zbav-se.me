@@ -271,7 +271,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 				background: "default",
 				zIndex: true,
 				color: "lead",
-				opacity: "2xl",
+				opacity: "6",
 				...ui,
 			}}
 			className={"transition-all tone-neutral-light-bg"}

@@ -4,7 +4,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import pgvector from "pgvector";
 import { match } from "ts-pattern";
-import type { ListingCreateSchema } from "~/@seller-user/listing/schema/ListingCreateSchema";
+import type { ListingCreateSchema } from "~/@seller/listing/schema/ListingCreateSchema";
 import { galleryInsertFx } from "~/@user/gallery/fx/galleryInsertFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";

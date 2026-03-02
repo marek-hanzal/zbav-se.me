@@ -121,6 +121,7 @@ export type zListingWarrantyEnum = z.infer<typeof zListingWarrantyEnum>;
  */
 export const zListingRestrictionEnum = z.enum([
     'none',
+    'adult-relaxed',
     'adult',
     'sensitive',
     'restricted'
@@ -363,33 +364,15 @@ export const zLocation = z.object({
     code: z.string().register(z.globalRegistry, {
         description: 'Country code'
     }),
-    county: z.union([
-        z.null(),
-        z.string()
-    ]),
-    municipality: z.union([
-        z.null(),
-        z.string()
-    ]),
-    state: z.union([
-        z.null(),
-        z.string()
-    ]),
+    county: z.string().nullable(),
+    municipality: z.string().nullable(),
+    state: z.string().nullable(),
     address: z.string().register(z.globalRegistry, {
         description: 'Full address preview of a location'
     }),
-    city: z.union([
-        z.null(),
-        z.string()
-    ]),
-    street: z.union([
-        z.null(),
-        z.string()
-    ]),
-    zip: z.union([
-        z.null(),
-        z.string()
-    ]),
+    city: z.string().nullable(),
+    street: z.string().nullable(),
+    zip: z.string().nullable(),
     confidence: z.number().register(z.globalRegistry, {
         description: 'Confidence score of the location (based on query)'
     }),
@@ -425,9 +408,9 @@ export const zGitHubHistory = z.object({
 export type zGitHubHistory = z.infer<typeof zGitHubHistory>;
 
 export const zApiCronHourlyData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiCronHourlyRequest = z.infer<typeof zApiCronHourlyData>;
@@ -447,9 +430,9 @@ export const zApiCronHourlyResponse = z.object({
 export type zapiCronHourlyResponse = z.infer<typeof zApiCronHourlyResponse>;
 
 export const zApiCronMonthlyData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiCronMonthlyRequest = z.infer<typeof zApiCronMonthlyData>;
@@ -469,9 +452,9 @@ export const zApiCronMonthlyResponse = z.object({
 export type zapiCronMonthlyResponse = z.infer<typeof zApiCronMonthlyResponse>;
 
 export const zApiCronDay0Data = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiCronDay0Request = z.infer<typeof zApiCronDay0Data>;
@@ -491,9 +474,9 @@ export const zApiCronDay0Response = z.object({
 export type zapiCronDay0Response = z.infer<typeof zApiCronDay0Response>;
 
 export const zApiCronDay4Data = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiCronDay4Request = z.infer<typeof zApiCronDay4Data>;
@@ -513,9 +496,9 @@ export const zApiCronDay4Response = z.object({
 export type zapiCronDay4Response = z.infer<typeof zApiCronDay4Response>;
 
 export const zApiCronDay8Data = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiCronDay8Request = z.infer<typeof zApiCronDay8Data>;
@@ -535,9 +518,9 @@ export const zApiCronDay8Response = z.object({
 export type zapiCronDay8Response = z.infer<typeof zApiCronDay8Response>;
 
 export const zApiCronDay12Data = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiCronDay12Request = z.infer<typeof zApiCronDay12Data>;
@@ -557,9 +540,9 @@ export const zApiCronDay12Response = z.object({
 export type zapiCronDay12Response = z.infer<typeof zApiCronDay12Response>;
 
 export const zApiCronDay16Data = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiCronDay16Request = z.infer<typeof zApiCronDay16Data>;
@@ -579,9 +562,9 @@ export const zApiCronDay16Response = z.object({
 export type zapiCronDay16Response = z.infer<typeof zApiCronDay16Response>;
 
 export const zApiCronDay20Data = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiCronDay20Request = z.infer<typeof zApiCronDay20Data>;
@@ -601,9 +584,9 @@ export const zApiCronDay20Response = z.object({
 export type zapiCronDay20Response = z.infer<typeof zApiCronDay20Response>;
 
 export const zApiPublicEnumCurrencyData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumCurrencyRequest = z.infer<typeof zApiPublicEnumCurrencyData>;
@@ -618,9 +601,9 @@ export const zApiPublicEnumCurrencyResponse = z.array(zCurrencyEnum).register(z.
 export type zapiPublicEnumCurrencyResponse = z.infer<typeof zApiPublicEnumCurrencyResponse>;
 
 export const zApiPublicEnumListingExpireData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumListingExpireRequest = z.infer<typeof zApiPublicEnumListingExpireData>;
@@ -635,9 +618,9 @@ export const zApiPublicEnumListingExpireResponse = z.array(zListingExpireEnum).r
 export type zapiPublicEnumListingExpireResponse = z.infer<typeof zApiPublicEnumListingExpireResponse>;
 
 export const zApiPublicEnumListingDeliveryData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumListingDeliveryRequest = z.infer<typeof zApiPublicEnumListingDeliveryData>;
@@ -652,9 +635,9 @@ export const zApiPublicEnumListingDeliveryResponse = z.array(zListingDeliveryEnu
 export type zapiPublicEnumListingDeliveryResponse = z.infer<typeof zApiPublicEnumListingDeliveryResponse>;
 
 export const zApiPublicEnumListingEventData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumListingEventRequest = z.infer<typeof zApiPublicEnumListingEventData>;
@@ -669,9 +652,9 @@ export const zApiPublicEnumListingEventResponse = z.array(zListingEventEnum).reg
 export type zapiPublicEnumListingEventResponse = z.infer<typeof zApiPublicEnumListingEventResponse>;
 
 export const zApiPublicEnumListingPriceData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumListingPriceRequest = z.infer<typeof zApiPublicEnumListingPriceData>;
@@ -686,9 +669,9 @@ export const zApiPublicEnumListingPriceResponse = z.array(zListingPriceEnum).reg
 export type zapiPublicEnumListingPriceResponse = z.infer<typeof zApiPublicEnumListingPriceResponse>;
 
 export const zApiPublicEnumListingWarrantyData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumListingWarrantyRequest = z.infer<typeof zApiPublicEnumListingWarrantyData>;
@@ -703,9 +686,9 @@ export const zApiPublicEnumListingWarrantyResponse = z.array(zListingWarrantyEnu
 export type zapiPublicEnumListingWarrantyResponse = z.infer<typeof zApiPublicEnumListingWarrantyResponse>;
 
 export const zApiPublicEnumListingRestrictionData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumListingRestrictionRequest = z.infer<typeof zApiPublicEnumListingRestrictionData>;
@@ -720,9 +703,9 @@ export const zApiPublicEnumListingRestrictionResponse = z.array(zListingRestrict
 export type zapiPublicEnumListingRestrictionResponse = z.infer<typeof zApiPublicEnumListingRestrictionResponse>;
 
 export const zApiPublicEnumThumbData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumThumbRequest = z.infer<typeof zApiPublicEnumThumbData>;
@@ -737,9 +720,9 @@ export const zApiPublicEnumThumbResponse = z.array(zThumbEnum).register(z.global
 export type zapiPublicEnumThumbResponse = z.infer<typeof zApiPublicEnumThumbResponse>;
 
 export const zApiPublicEnumTransactionSideData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumTransactionSideRequest = z.infer<typeof zApiPublicEnumTransactionSideData>;
@@ -754,9 +737,9 @@ export const zApiPublicEnumTransactionSideResponse = z.array(zTransactionSideEnu
 export type zapiPublicEnumTransactionSideResponse = z.infer<typeof zApiPublicEnumTransactionSideResponse>;
 
 export const zApiPublicEnumTransactionStatusData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumTransactionStatusRequest = z.infer<typeof zApiPublicEnumTransactionStatusData>;
@@ -771,9 +754,9 @@ export const zApiPublicEnumTransactionStatusResponse = z.array(zTransactionStatu
 export type zapiPublicEnumTransactionStatusResponse = z.infer<typeof zApiPublicEnumTransactionStatusResponse>;
 
 export const zApiPublicEnumUserEventScopeData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumUserEventScopeRequest = z.infer<typeof zApiPublicEnumUserEventScopeData>;
@@ -788,9 +771,9 @@ export const zApiPublicEnumUserEventScopeResponse = z.array(zUserEventScopeEnum)
 export type zapiPublicEnumUserEventScopeResponse = z.infer<typeof zApiPublicEnumUserEventScopeResponse>;
 
 export const zApiPublicEnumUserSideData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumUserSideRequest = z.infer<typeof zApiPublicEnumUserSideData>;
@@ -805,9 +788,9 @@ export const zApiPublicEnumUserSideResponse = z.array(zUserSideEnum).register(z.
 export type zapiPublicEnumUserSideResponse = z.infer<typeof zApiPublicEnumUserSideResponse>;
 
 export const zApiPublicEnumActivityData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumActivityRequest = z.infer<typeof zApiPublicEnumActivityData>;
@@ -822,9 +805,9 @@ export const zApiPublicEnumActivityResponse = z.array(zActivityEnum).register(z.
 export type zapiPublicEnumActivityResponse = z.infer<typeof zApiPublicEnumActivityResponse>;
 
 export const zApiPublicEnumLoadData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumLoadRequest = z.infer<typeof zApiPublicEnumLoadData>;
@@ -839,9 +822,9 @@ export const zApiPublicEnumLoadResponse = z.array(zLoadEnum).register(z.globalRe
 export type zapiPublicEnumLoadResponse = z.infer<typeof zApiPublicEnumLoadResponse>;
 
 export const zApiPublicEnumUserEventData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumUserEventRequest = z.infer<typeof zApiPublicEnumUserEventData>;
@@ -856,9 +839,9 @@ export const zApiPublicEnumUserEventResponse = z.array(zUserEventEnum).register(
 export type zapiPublicEnumUserEventResponse = z.infer<typeof zApiPublicEnumUserEventResponse>;
 
 export const zApiPublicEnumUserEventSourceData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumUserEventSourceRequest = z.infer<typeof zApiPublicEnumUserEventSourceData>;
@@ -873,9 +856,9 @@ export const zApiPublicEnumUserEventSourceResponse = z.array(zUserEventSourceEnu
 export type zapiPublicEnumUserEventSourceResponse = z.infer<typeof zApiPublicEnumUserEventSourceResponse>;
 
 export const zApiPublicEnumMessageDirectionData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumMessageDirectionRequest = z.infer<typeof zApiPublicEnumMessageDirectionData>;
@@ -890,9 +873,9 @@ export const zApiPublicEnumMessageDirectionResponse = z.array(zMessageDirectionE
 export type zapiPublicEnumMessageDirectionResponse = z.infer<typeof zApiPublicEnumMessageDirectionResponse>;
 
 export const zApiPublicEnumMessageTypeData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumMessageTypeRequest = z.infer<typeof zApiPublicEnumMessageTypeData>;
@@ -907,9 +890,9 @@ export const zApiPublicEnumMessageTypeResponse = z.array(zMessageTypeEnum).regis
 export type zapiPublicEnumMessageTypeResponse = z.infer<typeof zApiPublicEnumMessageTypeResponse>;
 
 export const zApiPublicEnumNoticeTypeData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumNoticeTypeRequest = z.infer<typeof zApiPublicEnumNoticeTypeData>;
@@ -924,9 +907,9 @@ export const zApiPublicEnumNoticeTypeResponse = z.array(zNoticeTypeEnum).registe
 export type zapiPublicEnumNoticeTypeResponse = z.infer<typeof zApiPublicEnumNoticeTypeResponse>;
 
 export const zApiPublicEnumOrderData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumOrderRequest = z.infer<typeof zApiPublicEnumOrderData>;
@@ -941,9 +924,9 @@ export const zApiPublicEnumOrderResponse = z.array(zOrderEnum).register(z.global
 export type zapiPublicEnumOrderResponse = z.infer<typeof zApiPublicEnumOrderResponse>;
 
 export const zApiPublicEnumAllowedContentTypesData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumAllowedContentTypesRequest = z.infer<typeof zApiPublicEnumAllowedContentTypesData>;
@@ -958,9 +941,9 @@ export const zApiPublicEnumAllowedContentTypesResponse = z.array(zAllowedContent
 export type zapiPublicEnumAllowedContentTypesResponse = z.infer<typeof zApiPublicEnumAllowedContentTypesResponse>;
 
 export const zApiPublicEnumAllowedExtensionsData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicEnumAllowedExtensionsRequest = z.infer<typeof zApiPublicEnumAllowedExtensionsData>;
@@ -975,9 +958,9 @@ export const zApiPublicEnumAllowedExtensionsResponse = z.array(zAllowedExtension
 export type zapiPublicEnumAllowedExtensionsResponse = z.infer<typeof zApiPublicEnumAllowedExtensionsResponse>;
 
 export const zApiPublicSchemaData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiPublicSchemaRequest = z.infer<typeof zApiPublicSchemaData>;
@@ -992,8 +975,8 @@ export const zApiPublicSchemaResponse = z.tuple([zCategory, zLocation]).register
 export type zapiPublicSchemaResponse = z.infer<typeof zApiPublicSchemaResponse>;
 
 export const zApiGithubHistoryData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
+    body: z.never().optional(),
+    path: z.never().optional(),
     query: z.object({
         weeks: z.int().gte(1).lte(104).register(z.globalRegistry, {
             description: 'How many weeks back (including the current week) to return'
@@ -1013,9 +996,9 @@ export const zApiGithubHistoryResponse = z.array(zGitHubHistory).register(z.glob
 export type zapiGithubHistoryResponse = z.infer<typeof zApiGithubHistoryResponse>;
 
 export const zApiHealthData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiHealthRequest = z.infer<typeof zApiHealthData>;
@@ -1034,9 +1017,9 @@ export const zApiHealthResponse = z.object({
 export type zapiHealthResponse = z.infer<typeof zApiHealthResponse>;
 
 export const zApiJanitorCleanupData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiJanitorCleanupRequest = z.infer<typeof zApiJanitorCleanupData>;
@@ -1061,9 +1044,9 @@ export const zApiJanitorCleanupResponse = z.array(z.object({
 export type zapiJanitorCleanupResponse = z.infer<typeof zApiJanitorCleanupResponse>;
 
 export const zApiMigrationRunData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
 });
 
 export type zapiMigrationRunRequest = z.infer<typeof zApiMigrationRunData>;

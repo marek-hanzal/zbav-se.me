@@ -129,7 +129,7 @@ export const History: FC<History.Props> = ({ _suspense, ui, className, ...props 
 				ui={{
 					text: "sm",
 					color: "icon",
-					opacity: "medium",
+					opacity: "6",
 					inner: "2xl",
 				}}
 				className={"text-center"}

@@ -1,4 +1,3 @@
-import { Tx } from "@use-pico/client/ui/tx";
 import { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 
@@ -8,28 +7,18 @@ export namespace AgeSelection {
 	}
 }
 
+/**
+ * Provides an interactive control for selecting age values in forms.
+ * Use it in editors where users need to choose or update age before saving.
+ *
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const AgeSelection: FC<AgeSelection.Props> = (props) => {
 	return (
 		<Rating
 			data-ui="AgeSelection[Rating]"
-			renderPrefix={() => (
-				<Tx
-					label="Age - from youngest (label)"
-					ui={{
-						color: "icon",
-					}}
-					className={"text-center"}
-				/>
-			)}
-			renderSuffix={() => (
-				<Tx
-					label="Age - from oldest (label)"
-					ui={{
-						color: "icon",
-					}}
-					className={"text-center"}
-				/>
-			)}
+			textRatingFn={(rating) => `Age ${rating} (label)`}
+			textHintFn={(rating) => `Age ${rating} (hint)`}
 			{...props}
 		/>
 	);

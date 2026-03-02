@@ -12,9 +12,14 @@ export namespace GalleryUpload {
 	}
 }
 
+/**
+ * Coordinates gallery file input and upload-ready state for the parent form.
+ * Use it in editors where users attach media before publishing or saving.
+ *
+ * @see apps/app/src/app//draft/ui/DraftEditor/DraftEditor.tsx
+ */
 export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props }) => {
 	const snapperRef = useRef<HTMLDivElement>(null);
-
 	const snapperNav = useSnapperNav({
 		containerRef: snapperRef,
 		orientation: "horizontal",
@@ -54,7 +59,10 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 
 					return (
 						<PhotoUpload
-							key={`${slot + 1}`}
+							key={`${
+								// biome-ignore lint/suspicious/noArrayIndexKey: We're ok here, bro
+								slot + 1
+							}`}
 							value={state.value[slot]}
 							onChange={(uploadId) => {
 								state.set((prev) => {

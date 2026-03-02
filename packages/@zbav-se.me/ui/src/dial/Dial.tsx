@@ -1,11 +1,11 @@
 import { Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
-import { Typo } from "@use-pico/client/ui/typo";
 import { tvc } from "@use-pico/cls";
 import type { FC } from "react";
 import { BackspaceIcon } from "../icon/BackspaceIcon";
 import { ClearIcon } from "../icon/ClearIcon";
 import { Item } from "./Item";
+import { Value } from "./Value";
 
 const digit = (current: string, digit: number | string, limit = 8): string => {
 	let value = `${current}${digit}`.replace(/^0+(?=\d)/, "");
@@ -63,28 +63,10 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, ui, ...prop
 					round: "default",
 				}}
 			>
-				{value ? (
-					<Typo
-						data-ui={"Dial-Typo-value"}
-						label={value}
-						ui={{
-							text: "xl",
-							font: "bold",
-							display: "block",
-						}}
-					/>
-				) : (
-					<Typo
-						data-ui={"Dial-Typo-value-placeholder"}
-						label={placeholder}
-						ui={{
-							text: "xl",
-							font: "bold",
-							display: "block",
-							color: "icon",
-						}}
-					/>
-				)}
+				<Value
+					value={value}
+					placeholder={placeholder}
+				/>
 
 				<Icon
 					data-ui={"Dial-Icon-backspace"}
@@ -115,7 +97,10 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, placeholder, ui, ...prop
 					length: 9,
 				}).map((_, index) => (
 					<Item
-						key={`price-${index + 1}`}
+						key={`price-${
+							// biome-ignore lint/suspicious/noArrayIndexKey: Ssst!
+							index + 1
+						}`}
 						icon={icons[(index + 1) as keyof typeof icons]}
 						onClick={() => {
 							onChange(digit(value || "", index + 1));
