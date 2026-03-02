@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { DraftEditor } from "~/app/@seller-user/draft/ui/DraftEditor/DraftEditor";
+import { DraftEditor } from "./DraftEditor";
 
 export namespace DraftEditPage {
 	export interface Props {

@@ -5,8 +5,8 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import type { FC } from "react";
-import { CreateListingButton } from "~/app/@seller-user/draft/ui/button/CreateListingButton";
-import { DeleteButton } from "~/app/@seller-user/draft/ui/button/DeleteButton";
+import { CreateListingButton } from "../button/CreateListingButton";
+import { DeleteButton } from "../button/DeleteButton";
 
 export namespace ActionSection {
 	export interface Props {

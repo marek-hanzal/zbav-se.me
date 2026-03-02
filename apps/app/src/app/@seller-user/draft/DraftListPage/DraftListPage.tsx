@@ -1,8 +1,8 @@
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { DraftList } from "~/app/@seller-user/draft/ui/DraftList";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
+import { DraftList } from "./DraftList";
 
 export namespace DraftListPage {
 	export interface Props extends TitleContainer.Props {
