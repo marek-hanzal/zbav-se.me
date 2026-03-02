@@ -374,6 +374,23 @@ export const withEntityQuery = <
 		});
 	}
 
+	async function $createFn(
+		queryClient: QueryClient,
+		request: TCreateRequest,
+		invalidate?: withEntityQuery.Invalidator.Type[],
+	) {
+		const result = await createFn(request);
+		const key = toIdKey(result.id);
+
+		queryClient.setQueryData($keys("fetch", key), result);
+
+		await invalidator(queryClient, invalidate, {
+			fetch: key,
+		});
+
+		return result;
+	}
+
 	/**
 	 * Optional create mutation with the same lifecycle semantics as patch.
 	 *
@@ -394,14 +411,7 @@ export const withEntityQuery = <
 					variables: request,
 				});
 
-				const result = await createFn(request);
-				const key = toIdKey(result.id);
-
-				queryClient.setQueryData($keys("fetch", key), result);
-
-				await invalidator(queryClient, invalidate, {
-					fetch: key,
-				});
+				const result = await $createFn(queryClient, request, invalidate);
 
 				await onPostMutation?.({
 					variables: request,
@@ -413,6 +423,26 @@ export const withEntityQuery = <
 			meta: meta as Record<string, unknown>,
 			...$opts,
 		});
+	}
+
+	async function $deleteFn(
+		queryClient: QueryClient,
+		request: TDeleteRequest,
+		invalidate?: withEntityQuery.Invalidator.Type[],
+	) {
+		const result = await deleteFn(request);
+		const key = toIdKey(result.id);
+
+		queryClient.removeQueries({
+			queryKey: $keys("fetch", key),
+			exact: true,
+		});
+
+		await invalidator(queryClient, invalidate, {
+			fetch: key,
+		});
+
+		return result;
 	}
 
 	/**
@@ -435,17 +465,7 @@ export const withEntityQuery = <
 					variables: request,
 				});
 
-				const result = await deleteFn(request);
-				const key = toIdKey(result.id);
-
-				queryClient.removeQueries({
-					queryKey: $keys("fetch", key),
-					exact: true,
-				});
-
-				await invalidator(queryClient, invalidate, {
-					fetch: key,
-				});
+				const result = await $deleteFn(queryClient, request, invalidate);
 
 				await onPostMutation?.({
 					variables: request,
@@ -480,9 +500,10 @@ export const withEntityQuery = <
 		fetchFn,
 		collectionFn,
 		countFn,
-		createFn,
+		//
+		createFn: $createFn,
 		patchFn: $patchFn,
-		deleteFn,
+		deleteFn: $deleteFn,
 		//
 		invalidator,
 		//
