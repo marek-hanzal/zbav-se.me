@@ -38,13 +38,22 @@ export const withListingSourceSelectFx = Effect.fn("withListingSourceSelectFx")(
 					return query;
 				}
 				const { lon, lat } = meta.latLon;
+				const isDesc = item.order === "desc";
+				const sortOrder = isDesc ? "asc" : item.order;
+				/**
+				 * KNN GiST over geo works for ASC nearest-neighbour ordering.
+				 * For DESC (farthest-first), order by distance to the antipode ASC,
+				 * which is equivalent and keeps index usage.
+				 */
+				const sortLon = isDesc ? (lon >= 0 ? lon - 180 : lon + 180) : lon;
+				const sortLat = isDesc ? -lat : lat;
 
 				return query.orderBy(
 					(eb) =>
 						sql`${eb.ref("loc.geo")} <-> ST_SetSRID(ST_MakePoint(${eb.val(
-							lon,
-						)}, ${eb.val(lat)}), 4326)`,
-					item.order,
+							sortLon,
+						)}, ${eb.val(sortLat)}), 4326)`,
+					sortOrder,
 				);
 			})
 			.exhaustive();

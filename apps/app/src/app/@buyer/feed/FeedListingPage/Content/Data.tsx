@@ -1,10 +1,7 @@
-import { RefreshIcon, SettingsIcon } from "@use-pico/client/icon";
+import { SettingsIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
-import { Group } from "@use-pico/client/ui/group";
-import { Tx } from "@use-pico/client/ui/tx";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
-import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import { type FC, type Ref, useState } from "react";
 import { FeedEditorSheet } from "../../FeedEditor/FeedEditorSheet";
 import { ListingList } from "../ListingList/ListingList";
@@ -20,7 +17,6 @@ export namespace Data {
 
 export const Data: FC<Data.Props> = ({ feedId, scrollToId, sentinelRef, isLast }) => {
 	const [isEditor, setIsEditor] = useState(false);
-	const invalidator = withListingQuery.useInvalidator();
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 
 	return (
@@ -65,36 +61,7 @@ export const Data: FC<Data.Props> = ({ feedId, scrollToId, sentinelRef, isLast }
 					value: isEditor,
 					set: setIsEditor,
 				}}
-			>
-				<Group>
-					<Button
-						iconEnabled={RefreshIcon}
-						ui={{
-							tone: "neutral",
-							theme: "light",
-							size: "default",
-							justify: "start",
-							items: "center",
-							background: "default",
-							round: undefined,
-							shadow: false,
-							border: false,
-							width: "full",
-						}}
-						onClick={() => {
-							invalidator(
-								[
-									"collection",
-								],
-								{},
-							);
-							setIsEditor(false);
-						}}
-					>
-						<Tx label={"Refresh feed (label)"} />
-					</Button>
-				</Group>
-			</FeedEditorSheet>
+			/>
 		</>
 	);
 };

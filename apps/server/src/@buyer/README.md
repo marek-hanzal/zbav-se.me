@@ -46,3 +46,7 @@ This domain unifies former buyer session and buyer user capabilities behind `/ap
 - `@session` - shared authenticated utilities.
 - `@user` - user-private shared primitives.
 - `@public` - unauthenticated public API.
+
+## Recent updates
+
+- Geo listing sort now optimizes `geo desc` by converting it to equivalent antipode `geo asc` ordering so PostGIS KNN (`location_[geo]_idx`) can be used.
