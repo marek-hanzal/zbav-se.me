@@ -24,7 +24,7 @@ export namespace Editor {
 	}
 }
 
-export const Editor: FC<Editor.Props> = ({ feed, onView, ui, ...props }) => {
+export const Editor: FC<Editor.Props> = ({ feed, onView, ui, children, ...props }) => {
 	return (
 		<Container
 			data-ui={"FeedEditor-[Container.content]"}
@@ -270,6 +270,8 @@ export const Editor: FC<Editor.Props> = ({ feed, onView, ui, ...props }) => {
 					onClick={() => onView("title")}
 				/>
 			</Group>
+
+			{children}
 		</Container>
 	);
 };

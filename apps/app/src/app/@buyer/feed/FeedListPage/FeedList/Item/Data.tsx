@@ -3,6 +3,7 @@ import { EditIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
@@ -10,6 +11,7 @@ import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { type FC, useState } from "react";
 import { ListItem } from "~/app/@common/list-item/ListItem";
 import { FeedEditorSheet } from "../../../FeedEditorSheet";
+import { DeleteButton } from "../DeleteButton";
 import { ListingCount } from "./ListingCount";
 
 export namespace Data {
@@ -20,7 +22,7 @@ export namespace Data {
 
 export const Data: FC<Data.Props> = ({ feedId, ui, ...props }) => {
 	const locale = useLocale();
-	const [isFeedSettings, setIsFeedSettings] = useState(false);
+	const [isEditor, setIsEditor] = useState(false);
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 
 	return (
@@ -91,7 +93,7 @@ export const Data: FC<Data.Props> = ({ feedId, ui, ...props }) => {
 						text: "lg",
 					},
 				}}
-				onClick={() => setIsFeedSettings((prev) => !prev)}
+				onClick={() => setIsEditor((prev) => !prev)}
 				ui={{
 					tone: "secondary",
 					theme: "light",
@@ -113,10 +115,19 @@ export const Data: FC<Data.Props> = ({ feedId, ui, ...props }) => {
 				data-ui={"Item-[FeedEditorSheet]"}
 				feedId={feed.id}
 				state={{
-					value: isFeedSettings,
-					set: setIsFeedSettings,
+					value: isEditor,
+					set: setIsEditor,
 				}}
-			/>
+			>
+				<Group>
+					<DeleteButton
+						feedId={feedId}
+						onDelete={async () => {
+							setIsEditor(false);
+						}}
+					/>
+				</Group>
+			</FeedEditorSheet>
 		</Container>
 	);
 };

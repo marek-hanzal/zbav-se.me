@@ -1,7 +1,7 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { View } from "@use-pico/client/ui/view";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
-import { type FC, useCallback, useMemo, useState } from "react";
+import { type FC, type PropsWithChildren, useCallback, useMemo, useState } from "react";
 import { Editor } from "./Editor";
 import { AgePatch } from "./patch/AgePatch";
 import { CategoryPatch } from "./patch/CategoryPatch";
@@ -30,12 +30,12 @@ export namespace Data {
 		| "gallery"
 		| "title";
 
-	export interface Props extends MarkSuspense.Props {
+	export interface Props extends PropsWithChildren, MarkSuspense.Props {
 		feedId: string;
 	}
 }
 
-export const Data: FC<Data.Props> = ({ _suspense, feedId }) => {
+export const Data: FC<Data.Props> = ({ _suspense, feedId, children }) => {
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 	const [view, setView] = useState<Data.View>("default");
 
@@ -49,7 +49,9 @@ export const Data: FC<Data.Props> = ({ _suspense, feedId }) => {
 				<Editor
 					feed={feed}
 					onView={setView}
-				/>
+				>
+					{children}
+				</Editor>
 			),
 		};
 
@@ -158,6 +160,7 @@ export const Data: FC<Data.Props> = ({ _suspense, feedId }) => {
 	}, [
 		feed,
 		onDone,
+		children,
 	]);
 
 	return (
