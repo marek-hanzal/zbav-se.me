@@ -2,7 +2,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import { FavouriteIcon, FavouriteOffIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
-import { Tx } from "@use-pico/client/ui/tx";
 import { withFavouriteToggleMutation } from "@zbav-se.me/sdk/mutation/buyer/favourite";
 import { withFeedFavouriteQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
@@ -52,14 +51,6 @@ export const Data: FC<Data.Props> = ({ _suspense, feedId, listingId, ui, ...prop
 				...ui,
 			}}
 			{...props}
-		>
-			<Tx
-				label={
-					listing.isFavourite
-						? "Remove from favourite (button)"
-						: "Add to favourite (button)"
-				}
-			/>
-		</Button>
+		/>
 	);
 };
