@@ -7,7 +7,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/app/@common/gallery/ui/GalleryUpload";
-import { EditAction } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/EditAction";
+import { EditAction } from "../EditAction";
 
 export namespace GalleryPatch {
 	export interface Props extends Container.Props {

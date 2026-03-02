@@ -90,7 +90,7 @@ When adding to `@common`:
   - `@common/auth/query/withSessionQuery.ts`
   - `@common/auth/hook/useUser.ts`
   - `@common/auth/mutation/withSignOutMutation.ts`
-  - `@common/auth/ui/SignOutButton.tsx`
+  - `SignOutButton` is now page-local at `@user/profile/UserPage/SignOutButton.tsx`
 - Photo upload UI was extracted to active scope and split into focused pieces:
   - `@common/photo/ui/PhotoUpload/PhotoUpload.tsx` is the local root component (`index.ts` exports `PhotoUpload` only).
   - `@common/photo/ui/PhotoUpload/useController.ts` owns upload/input/pending orchestration.
@@ -99,7 +99,7 @@ When adding to `@common`:
   - `@common/photo/ui/PhotoUpload/Preview.tsx`
   - `@common/photo/ui/PhotoUpload/PhotoUploadPreviewImageSuspense.tsx` composes local suspense fallback (`PhotoUploadPreviewImagePending`).
 - Route shell pages were extracted into shared components:
-  - `@common/locale/page/LocalePage/LocalePage.tsx`
+  - `@common/locale/LocalePage/LocalePage.tsx`
   - `@common/nav/page/UiPage.tsx`
 - Save action footer container was extracted to active scope:
   - `@common/container/ui/SaveContainer.tsx`

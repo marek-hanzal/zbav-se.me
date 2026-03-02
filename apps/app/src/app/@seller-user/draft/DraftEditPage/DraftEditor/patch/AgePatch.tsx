@@ -9,7 +9,7 @@ import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 import { AgeSelection } from "~/app/@common/age/ui/AgeSelection";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { EditAction } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/EditAction";
+import { EditAction } from "../EditAction";
 
 export namespace AgePatch {
 	export interface Props extends TitleContainer.Props {

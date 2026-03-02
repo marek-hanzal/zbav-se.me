@@ -8,9 +8,9 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import { type FC, useState } from "react";
-import { ListingCount } from "~/app/@buyer-user/listing/ui/ListingCount";
 import { ListItem } from "~/app/@common/list-item/ListItem";
 import { EditorSheet } from "~/app/v0/@buyer-user/feed/ui/EditorSheet";
+import { ListingCount } from "./ListingCount";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {

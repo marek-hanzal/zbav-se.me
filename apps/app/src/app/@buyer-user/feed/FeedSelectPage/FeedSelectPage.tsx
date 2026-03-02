@@ -1,8 +1,8 @@
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { FeedList } from "./FeedList";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
+import { FeedList } from "./FeedList";
 
 export namespace FeedSelectPage {
 	export interface Props extends TitleContainer.Props {

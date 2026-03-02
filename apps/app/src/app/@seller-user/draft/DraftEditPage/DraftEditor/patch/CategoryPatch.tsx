@@ -8,8 +8,8 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { EditAction } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/EditAction";
 import { CategorySelect } from "~/app/@session/category/ui/CategorySelect";
+import { EditAction } from "../EditAction";
 
 export namespace CategoryPatch {
 	export interface Props extends TitleContainer.Props {

@@ -1,6 +1,6 @@
 import { type FC, Suspense } from "react";
-import { Data } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/Data";
-import { Pending } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/Pending";
+import { Data } from "./Data";
+import { Pending } from "./Pending";
 
 export namespace DraftEditor {
 	export interface Props extends Omit<Data.Props, "_suspense"> {

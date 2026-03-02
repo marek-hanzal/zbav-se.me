@@ -5,7 +5,7 @@ import { translator } from "@use-pico/common/translator";
 import type { tDraftQuery } from "@zbav-se.me/sdk/api/seller-user";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { FC } from "react";
-import { CreateButton } from "~/app/@seller-user/draft/CreateButton";
+import { CreateButton } from "../../CreateButton";
 import { Item } from "./Item";
 
 export namespace Data {

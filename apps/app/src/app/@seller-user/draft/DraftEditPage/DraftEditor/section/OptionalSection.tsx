@@ -9,8 +9,8 @@ import { DeliveryValueList } from "~/app/@common/delivery/ui/DeliveryValueList";
 import { DescriptionValue } from "~/app/@common/description/ui/DescriptionValue";
 import { ProsValueList } from "~/app/@common/pros/ui/ProsValueList";
 import { WarrantyValue } from "~/app/@common/warranty/ui/WarrantyValue";
-import { ChevronAction } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/ChevronAction";
-import type { Data } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/Data";
+import { ChevronAction } from "../ChevronAction";
+import type { Data } from "../Data";
 
 export namespace OptionalSection {
 	export interface Props {

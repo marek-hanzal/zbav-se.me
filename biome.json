@@ -53,7 +53,21 @@
 				"noDangerouslySetInnerHtml": "off"
 			},
 			"style": {
-				"useComponentExportOnlyModules": "off"
+				"useComponentExportOnlyModules": "off",
+				"noRestrictedImports": {
+					"level": "error",
+					"options": {
+						"patterns": [
+							{
+								"group": [
+									"~/app/@seller-user/draft/**",
+									"!~/app/@seller-user/draft/~public/**"
+								],
+								"message": "Use public import"
+							}
+						]
+					}
+				}
 			},
 			"correctness": {
 				"useHookAtTopLevel": "off"

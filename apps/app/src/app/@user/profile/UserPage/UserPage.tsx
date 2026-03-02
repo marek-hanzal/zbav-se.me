@@ -5,8 +5,8 @@ import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { useUser } from "~/app/@common/auth/hook/useUser";
-import { SignOutButton } from "~/app/@common/auth/ui/SignOutButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
+import { SignOutButton } from "./SignOutButton";
 
 export namespace UserPage {
 	export interface Props extends TitleContainer.Props {}

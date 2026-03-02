@@ -4,7 +4,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/buyer-user";
 import { ListingIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { ListingCount } from "~/app/@buyer-user/listing/ui/ListingCount";
+import { ListingCount } from "~/app/@buyer-user/feed/FeedSelectPage/FeedList/Item/ListingCount";
 
 export namespace ListingCountBadge {
 	export interface Props extends Badge.Props {

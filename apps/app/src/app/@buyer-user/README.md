@@ -59,7 +59,7 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 
 ## Recent updates
 
-- Buyer feed route UI keeps route-local components colocated under `@buyer-user/feed/page/FeedListingPage/` (content + empty state).
+- Buyer feed route UI keeps route-local components colocated under `@buyer-user/feed/FeedListingPage/` (content + empty state).
 - Favourite feed list route keeps route-specific status/appendix components under `@buyer-user/feed/page/FeedFavouriteListPage/`:
   - `EmptyFavouriteStatus.tsx`
   - `EmptyFeedStatus.tsx`
@@ -79,8 +79,8 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - root `FeedEditor.tsx` is suspense wrapper (`Data + Pending`)
 - Buyer feed list route decomposition:
   - `@routes/$locale/buyer/feed/$id/list.tsx` keeps loader + route composition.
-  - `@buyer-user/feed/page/FeedListingPage/FeedListingPage.tsx` owns page UI/state composition.
-- Feed flow routes now use page components in dedicated page folders under `@buyer-user/feed/page/`:
+  - `@buyer-user/feed/FeedListingPage/FeedListingPage.tsx` owns page UI/state composition.
+- Feed flow routes now use page components in dedicated page folders under `@buyer-user/feed/`:
   - `FeedListingPage/FeedListingPage.tsx`
   - `FeedListingPagePending/FeedListingPagePending.tsx`
   - `FeedSelectPage/FeedSelectPage.tsx`
@@ -92,8 +92,8 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `@buyer-user/feed/~public/FeedSelectPagePending.ts`
 - `FeedList` was extracted from `v0` to active scope:
   - `@buyer-user/feed/FeedSelectPage/FeedList/`
-- `ListingCount` was extracted from `v0` to active scope:
-  - `@buyer-user/listing/ui/ListingCount/`
+- `ListingCount` is page-local for feed select item:
+  - `@buyer-user/feed/FeedSelectPage/FeedList/Item/ListingCount/`
 - Feed/listing components no longer accept `locale` as prop; locale is read via `useLocale()` inside the component.
 - Buyer favourite/message flow routes now use page components:
   - `@buyer-user/feed-favourite/page/FavouriteListPage.tsx`

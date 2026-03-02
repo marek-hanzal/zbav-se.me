@@ -3,22 +3,22 @@ import { View } from "@use-pico/client/ui/view";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller-user/draft";
 import type { FC } from "react";
 import { useCallback, useMemo, useState } from "react";
-import { Editor } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/Editor";
-import { AgePatch } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/patch/AgePatch";
-import { CategoryPatch } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/patch/CategoryPatch";
-import { ConditionPatch } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/patch/ConditionPatch";
-import { ConsPatch } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/patch/ConsPatch";
-import { DeliveryPatch } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/patch/DeliveryPatch";
-import { DescriptionPatch } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/patch/DescriptionPatch";
-import { ExpireAtPatch } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/patch/ExpireAtPatch";
-import { GalleryPatch } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/patch/GalleryPatch";
-import { LocationPatch } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/patch/LocationPatch";
-import { PricePatch } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/patch/PricePatch";
-import { PriceTypePatch } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/patch/PriceTypePatch";
-import { ProsPatch } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/patch/ProsPatch";
-import { RestrictionPatch } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/patch/RestrictionPatch";
-import { TitlePatch } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/patch/TitlePatch";
-import { WarrantyPatch } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/patch/WarrantyPatch";
+import { Editor } from "./Editor";
+import { AgePatch } from "./patch/AgePatch";
+import { CategoryPatch } from "./patch/CategoryPatch";
+import { ConditionPatch } from "./patch/ConditionPatch";
+import { ConsPatch } from "./patch/ConsPatch";
+import { DeliveryPatch } from "./patch/DeliveryPatch";
+import { DescriptionPatch } from "./patch/DescriptionPatch";
+import { ExpireAtPatch } from "./patch/ExpireAtPatch";
+import { GalleryPatch } from "./patch/GalleryPatch";
+import { LocationPatch } from "./patch/LocationPatch";
+import { PricePatch } from "./patch/PricePatch";
+import { PriceTypePatch } from "./patch/PriceTypePatch";
+import { ProsPatch } from "./patch/ProsPatch";
+import { RestrictionPatch } from "./patch/RestrictionPatch";
+import { TitlePatch } from "./patch/TitlePatch";
+import { WarrantyPatch } from "./patch/WarrantyPatch";
 
 export namespace Data {
 	export type View =
