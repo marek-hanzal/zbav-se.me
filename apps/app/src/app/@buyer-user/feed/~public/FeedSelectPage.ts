@@ -1,1 +1,1 @@
-export { FeedSelectPage } from "../page/FeedSelectPage";
+export { FeedSelectPage } from "../FeedSelectPage/FeedSelectPage";

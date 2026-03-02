@@ -7,7 +7,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { EditAction } from "~/app/@seller-user/draft/ui/DraftEditor/EditAction";
+import { EditAction } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/EditAction";
 
 export namespace PricePatch {
 	export interface Props extends TitleContainer.Props {

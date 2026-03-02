@@ -1,1 +1,1 @@
-export { FeedSelectPagePending } from "../page/FeedSelectPagePending";
+export { FeedSelectPagePending } from "../FeedSelectPagePending/FeedSelectPagePending";

@@ -99,7 +99,7 @@ When adding to `@common`:
   - `@common/photo/ui/PhotoUpload/Preview.tsx`
   - `@common/photo/ui/PhotoUpload/PhotoUploadPreviewImageSuspense.tsx` composes local suspense fallback (`PhotoUploadPreviewImagePending`).
 - Route shell pages were extracted into shared components:
-  - `@common/locale/page/LocalePage.tsx`
+  - `@common/locale/page/LocalePage/LocalePage.tsx`
   - `@common/nav/page/UiPage.tsx`
 - Save action footer container was extracted to active scope:
   - `@common/container/ui/SaveContainer.tsx`

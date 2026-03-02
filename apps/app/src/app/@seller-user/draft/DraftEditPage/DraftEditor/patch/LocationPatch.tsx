@@ -8,7 +8,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { LocationSelect } from "~/app/@common/location/ui/LocationSelect";
-import { EditAction } from "~/app/@seller-user/draft/ui/DraftEditor/EditAction";
+import { EditAction } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/EditAction";
 
 export namespace LocationPatch {
 	export interface Props extends TitleContainer.Props {

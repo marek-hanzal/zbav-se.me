@@ -68,13 +68,13 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `DraftEditor.View` namespace type as source of truth for editor views
 - Seller listing list components now resolve locale via `useLocale()` instead of accepting `locale` props.
 - Seller flow routes now use page components:
-  - `@seller-user/draft/page/DraftListPage.tsx`
-  - `@seller-user/listing/page/MyListingPage.tsx`
+  - `@seller-user/draft/DraftListPage/DraftListPage.tsx`
+  - `@seller-user/listing/page/MyListingPage/MyListingPage.tsx`
   - `@seller-user/listing/page/ListingViewPage.tsx`
   - `@seller-user/transaction-listing/page/MessageListPage.tsx`
   - `@seller-user/transaction-listing/page/ListingMessageListPage.tsx`
   - `@seller-user/transaction-listing/page/ListingMessageListPendingPage.tsx`
-- Draft edit page was extracted from `v0` to active scope at `@seller-user/draft/page/DraftEditPage.tsx`.
+- Draft pages expose public entrypoints from `@seller-user/draft/~public/*` and keep internals under page folders.
 - Seller transaction list now uses domain-local container/pending components in `@seller-user/transaction/ui/` (no shared `@common` transaction list abstraction).
 - Seller feature call-sites increasingly use local `*Suspense` wrappers (for `Pending` + data composition) to keep suspense boundaries close to feature roots (`draft`, `listing`, `transaction`, `transaction-listing`).
 - Draft editor now follows local suspense composition: `DraftEditor.tsx` is a suspense wrapper, `DraftEditor/Data.tsx` owns draft fetch by `draftId`, and `DraftEditor/Pending.tsx` uses `SpinnerContainer`.

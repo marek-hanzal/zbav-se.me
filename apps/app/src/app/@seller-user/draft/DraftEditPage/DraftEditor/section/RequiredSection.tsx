@@ -10,8 +10,8 @@ import { PriceValue } from "~/app/@common/price/ui/PriceValue";
 import { PriceTypeValue } from "~/app/@common/price-type/ui/PriceTypeValue";
 import { RestrictionValue } from "~/app/@common/restriction/ui/RestrictionValue";
 import { TitleValue } from "~/app/@common/title/ui/TitleValue";
-import { ChevronAction } from "~/app/@seller-user/draft/ui/DraftEditor/ChevronAction";
-import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
+import { ChevronAction } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/ChevronAction";
+import type { Data } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/Data";
 import { CategoryValue } from "~/app/@session/category/ui/CategoryValue";
 
 export namespace RequiredSection {

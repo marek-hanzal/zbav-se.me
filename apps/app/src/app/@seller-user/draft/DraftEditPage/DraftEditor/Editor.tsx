@@ -3,10 +3,10 @@ import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller-user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import type { Data } from "~/app/@seller-user/draft/ui/DraftEditor/Data";
-import { ActionSection } from "~/app/@seller-user/draft/ui/DraftEditor/section/ActionSection";
-import { OptionalSection } from "~/app/@seller-user/draft/ui/DraftEditor/section/OptionalSection";
-import { RequiredSection } from "~/app/@seller-user/draft/ui/DraftEditor/section/RequiredSection";
+import type { Data } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/Data";
+import { ActionSection } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/section/ActionSection";
+import { OptionalSection } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/section/OptionalSection";
+import { RequiredSection } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/section/RequiredSection";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 
 export namespace Editor {

@@ -9,7 +9,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { RestrictionSelect } from "~/app/@common/restriction/ui/RestrictionSelect";
-import { EditAction } from "~/app/@seller-user/draft/ui/DraftEditor/EditAction";
+import { EditAction } from "~/app/@seller-user/draft/DraftEditPage/DraftEditor/EditAction";
 
 export namespace RestrictionPatch {
 	export interface Props extends TitleContainer.Props {

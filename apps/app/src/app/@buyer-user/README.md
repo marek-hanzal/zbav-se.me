@@ -59,7 +59,7 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 
 ## Recent updates
 
-- Buyer feed route UI has route-level helpers colocated under `@buyer-user/feed/page/FeedListingPage/` (setup button, editor sheet, empty/appendix/first-listing statuses) to keep page files smaller and easier to read.
+- Buyer feed route UI keeps route-local components colocated under `@buyer-user/feed/page/FeedListingPage/` (content + empty state).
 - Favourite feed list route keeps route-specific status/appendix components under `@buyer-user/feed/page/FeedFavouriteListPage/`:
   - `EmptyFavouriteStatus.tsx`
   - `EmptyFeedStatus.tsx`
@@ -79,15 +79,17 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - root `FeedEditor.tsx` is suspense wrapper (`Data + Pending`)
 - Buyer feed list route decomposition:
   - `@routes/$locale/buyer/feed/$id/list.tsx` keeps loader + route composition.
-  - `@buyer-user/feed/page/FeedListingPage.tsx` owns page UI/state composition.
-- Feed flow routes now use page components in `@buyer-user/feed/page/`:
-  - `FeedListingPage.tsx`
-  - `FeedFavouriteListPage.tsx`
-  - `FeedSelectPage.tsx`
-  - `FeedSelectPagePending.tsx`
-  - `FeedDefaultPendingPage.tsx`
-- `FeedSelectPage.tsx` was extracted from `v0` to active scope:
-  - `@buyer-user/feed/page/FeedSelectPage.tsx`
+  - `@buyer-user/feed/page/FeedListingPage/FeedListingPage.tsx` owns page UI/state composition.
+- Feed flow routes now use page components in dedicated page folders under `@buyer-user/feed/page/`:
+  - `FeedListingPage/FeedListingPage.tsx`
+  - `FeedListingPagePending/FeedListingPagePending.tsx`
+  - `FeedSelectPage/FeedSelectPage.tsx`
+  - `FeedSelectPagePending/FeedSelectPagePending.tsx`
+- External imports use `~public` entrypoints:
+  - `@buyer-user/feed/~public/FeedListingPage.ts`
+  - `@buyer-user/feed/~public/FeedListingPagePending.ts`
+  - `@buyer-user/feed/~public/FeedSelectPage.ts`
+  - `@buyer-user/feed/~public/FeedSelectPagePending.ts`
 - `FeedList` was extracted from `v0` to active scope:
   - `@buyer-user/feed/ui/FeedList/`
 - `ListingCount` was extracted from `v0` to active scope:
