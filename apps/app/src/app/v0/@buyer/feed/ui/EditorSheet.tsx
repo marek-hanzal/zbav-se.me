@@ -5,7 +5,6 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import type { FC } from "react";
-import { FeedEditor } from "~/app/v0/@buyer/feed/ui/FeedEditor";
 
 export namespace EditorSheet {
 	export interface Props extends BottomSheet.PropsEx {
@@ -33,40 +32,29 @@ export const EditorSheet: FC<EditorSheet.Props> = ({
 			title={translator.text("Feed setup (title)")}
 			{...props}
 		>
-			<FeedEditor
-				data-ui={"FeedEditorSheet-[FeedDetailEditor]"}
-				feedId={feedId}
-				noDelete={noDelete}
+			<Button
+				onClick={() => state.set(false)}
+				iconEnabled={CloseIcon}
+				iconProps={{
+					ui: {
+						text: "xl",
+					},
+				}}
 				ui={{
-					inner: "default",
+					tone: "neutral",
+					theme: "light",
+					size: "default",
+					justify: "start",
+					items: "center",
+					background: "default",
+					width: "full",
+					round: undefined,
+					shadow: false,
+					border: false,
 				}}
 			>
-				<Button
-					onClick={() => state.set(false)}
-					iconEnabled={CloseIcon}
-					iconProps={{
-						ui: {
-							text: "xl",
-						},
-					}}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						size: "default",
-						justify: "start",
-						items: "center",
-						background: "default",
-						width: "full",
-						round: undefined,
-						shadow: false,
-						border: false,
-					}}
-				>
-					<Tx label="Close (button)" />
-				</Button>
-
-				{children}
-			</FeedEditor>
+				<Tx label="Close (button)" />
+			</Button>
 		</BottomSheet>
 	);
 };

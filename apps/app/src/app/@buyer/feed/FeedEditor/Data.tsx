@@ -2,18 +2,18 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { View } from "@use-pico/client/ui/view";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { type FC, useCallback, useMemo, useState } from "react";
-import { AgePatch } from "~/app/v0/@buyer/feed/ui/patch/AgePatch";
-import { CategoryPatch } from "~/app/v0/@buyer/feed/ui/patch/CategoryPatch";
-import { ConditionPatch } from "~/app/v0/@buyer/feed/ui/patch/ConditionPatch";
-import { DeliveryPatch } from "~/app/v0/@buyer/feed/ui/patch/DeliveryPatch";
-import { LocationPatch } from "~/app/v0/@buyer/feed/ui/patch/LocationPatch";
-import { NamePatch } from "./patch/NamePatch";
-import { RangePatch } from "~/app/v0/@buyer/feed/ui/patch/RangePatch";
-import { SortPatch } from "~/app/v0/@buyer/feed/ui/patch/SortPatch";
-import { TitlePatch } from "~/app/v0/@buyer/feed/ui/patch/TitlePatch";
-import { WarrantyPatch } from "~/app/v0/@buyer/feed/ui/patch/WarrantyPatch";
 import { Editor } from "./Editor";
+import { AgePatch } from "./patch/AgePatch";
+import { CategoryPatch } from "./patch/CategoryPatch";
+import { ConditionPatch } from "./patch/ConditionPatch";
+import { DeliveryPatch } from "./patch/DeliveryPatch";
 import { GalleryPatch } from "./patch/GalleryPatch";
+import { LocationPatch } from "./patch/LocationPatch";
+import { NamePatch } from "./patch/NamePatch";
+import { RangePatch } from "./patch/RangePatch";
+import { SortPatch } from "./patch/SortPatch";
+import { TitlePatch } from "./patch/TitlePatch";
+import { WarrantyPatch } from "./patch/WarrantyPatch";
 
 export namespace Data {
 	export type View =
