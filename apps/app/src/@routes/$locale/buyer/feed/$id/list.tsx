@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import z from "zod";
-import { FeedListPage } from "~/app/v0/@buyer-user/feed/page/FeedListPage";
+import { FeedListPage } from "~/app/@buyer-user/feed/page/FeedListPage";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 	validateSearch: z.object({

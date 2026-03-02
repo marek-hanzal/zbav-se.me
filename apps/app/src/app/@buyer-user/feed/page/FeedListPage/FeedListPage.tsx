@@ -7,12 +7,12 @@ import { withListingQuery } from "@zbav-se.me/sdk/query/buyer-user/listing";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, useRef, useState } from "react";
+import { FeedEditorSheetSuspense } from "~/app/v0/@buyer-user/feed/page/FeedListPage/FeedEditorSheetSuspense";
+import { FeedListStatus } from "~/app/v0/@buyer-user/feed/page/FeedListPage/FeedListStatus";
+import { FeedSetupButton } from "~/app/v0/@buyer-user/feed/page/FeedListPage/FeedSetupButton";
+import { FirstListingStatus } from "~/app/v0/@buyer-user/feed/page/FeedListPage/FirstListingStatus";
 import { getFeedDefaultCreate } from "~/app/v0/@buyer-user/feed/service/getFeedDefaultCreate";
 import { ListingListContainerSuspense } from "~/app/v0/@buyer-user/listing/ui/ListingListContainerSuspense";
-import { FeedEditorSheetSuspense } from "./FeedListPage/FeedEditorSheetSuspense";
-import { FeedListStatus } from "./FeedListPage/FeedListStatus";
-import { FeedSetupButton } from "./FeedListPage/FeedSetupButton";
-import { FirstListingStatus } from "./FeedListPage/FirstListingStatus";
 
 export namespace FeedListPage {
 	export interface Props extends FlowContainer.Props {
@@ -56,7 +56,9 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...prop
 			}
 			{...props}
 		>
-			{listingCount.isEmpty ? null : (
+			{listingCount.isEmpty ? (
+				<FirstListingStatus />
+			) : (
 				<>
 					<FeedSetupButton
 						state={{
@@ -119,8 +121,6 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...prop
 					/>
 				</>
 			)}
-
-			{listingCount.isEmpty ? <FirstListingStatus /> : null}
 
 			<FeedEditorSheetSuspense
 				feedId={feed.id}
