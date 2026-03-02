@@ -7,6 +7,12 @@ import react from "@vitejs/plugin-react";
 import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 
+const noExternalDependencies = [
+	/^react$/,
+	/^react-dom$/,
+	/^use-sync-external-store(?:\/.*)?$/,
+];
+
 export default defineConfig(({ isSsrBuild, mode }) => {
 	return {
 		clearScreen: false,
@@ -32,9 +38,13 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 			mode === "production"
 				? nitro({
 						preset: process.env.NITRO_PRESET || "vercel",
+						noExternals: noExternalDependencies,
 					})
 				: undefined,
 		],
+		ssr: {
+			noExternal: noExternalDependencies,
+		},
 		worker: {
 			format: "es",
 		},
