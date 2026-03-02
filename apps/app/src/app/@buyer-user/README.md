@@ -59,7 +59,7 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
 
 ## Recent updates
 
-- Buyer feed route UI has route-level helpers colocated under `@buyer-user/feed/page/FeedListPage/` (setup button, editor sheet, empty/appendix/first-listing statuses) to keep page files smaller and easier to read.
+- Buyer feed route UI has route-level helpers colocated under `@buyer-user/feed/page/FeedListingPage/` (setup button, editor sheet, empty/appendix/first-listing statuses) to keep page files smaller and easier to read.
 - Favourite feed list route keeps route-specific status/appendix components under `@buyer-user/feed/page/FeedFavouriteListPage/`:
   - `EmptyFavouriteStatus.tsx`
   - `EmptyFeedStatus.tsx`
@@ -70,22 +70,26 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `ListingSellerInfoSuspense/Data.tsx`
   - `ListingDestructiveActionsSuspense/Data.tsx`
 - Feed editor decomposition in `@buyer-user/feed/ui/FeedEditor/`:
+  - `Data.tsx` (view switching + patch composition)
+  - `Pending.tsx`
+  - `Editor.tsx`
   - `FeedEditorFields.tsx`
   - `FeedEditorDeleteButton.tsx`
-  - types are owned by `FeedEditor` namespace
+  - `GalleryPatch.tsx`
+  - root `FeedEditor.tsx` is suspense wrapper (`Data + Pending`)
 - Buyer feed list route decomposition:
   - `@routes/$locale/buyer/feed/$id/list.tsx` keeps loader + route composition.
-  - `@buyer-user/feed/page/FeedListPage.tsx` owns page UI/state composition.
+  - `@buyer-user/feed/page/FeedListingPage.tsx` owns page UI/state composition.
 - Feed flow routes now use page components in `@buyer-user/feed/page/`:
-  - `FeedListPage.tsx`
+  - `FeedListingPage.tsx`
   - `FeedFavouriteListPage.tsx`
   - `FeedSelectPage.tsx`
   - `FeedSelectPagePending.tsx`
   - `FeedDefaultPendingPage.tsx`
 - `FeedSelectPage.tsx` was extracted from `v0` to active scope:
   - `@buyer-user/feed/page/FeedSelectPage.tsx`
-- `FeedListContainer` was extracted from `v0` to active scope:
-  - `@buyer-user/feed/ui/FeedListContainer/`
+- `FeedList` was extracted from `v0` to active scope:
+  - `@buyer-user/feed/ui/FeedList/`
 - `ListingCount` was extracted from `v0` to active scope:
   - `@buyer-user/listing/ui/ListingCount/`
 - Feed/listing components no longer accept `locale` as prop; locale is read via `useLocale()` inside the component.
@@ -94,13 +98,7 @@ SDK is organized by the same domains as the server (and UI). Same rules as domai
   - `@buyer-user/transaction/page/MessageListPage.tsx`
 - Buyer transaction list now uses domain-local container/pending components in `@buyer-user/transaction/ui/` (no shared `@common` transaction list abstraction).
 - Buyer feature call-sites increasingly use local `*Suspense` wrappers (for `Pending` + data composition) to keep suspense boundaries close to feature roots (`feed`, `listing`, `transaction`, `feed-favourite`).
-- Feed editor fields split by UI sections in `@buyer-user/feed/ui/FeedEditor/`:
-  - `IdentitySection.tsx`
-  - `CategorySection.tsx`
-  - `LocationSection.tsx`
-  - `SortSection.tsx`
-  - `FilterSection.tsx`
-  - `TitleSection.tsx`
+- Feed editor field sections are embedded directly in `FeedEditorFields.tsx` (no extra section components).
 - Feed list page now resolves absolute empty state via listing `count.total` (global no-data) while keeping feed-filter empty in the list-level empty renderer.
 - Buyer transaction list now runs on `withTransactionQuery` collection cache hydration (`useCollectionQuery` + per-item `useQuery`) with configurable collection `refetchInterval`.
 - Buyer feed delivery patch now uses active-scope delivery selector:

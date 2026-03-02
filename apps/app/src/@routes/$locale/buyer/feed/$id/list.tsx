@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import z from "zod";
-import { FeedListPage } from "~/app/@buyer-user/feed/page/FeedListPage";
-import { FeedListPagePending } from "~/app/@buyer-user/feed/page/FeedListPagePending";
+import { FeedListingPage } from "~/app/@buyer-user/feed/page/FeedListingPage";
+import { FeedListingPagePending } from "~/app/@buyer-user/feed/page/FeedListingPagePending";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 	validateSearch: z.object({
@@ -15,7 +15,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 		/**
 		 * This will force update "updatedAt" field, so we'll mark "this" feed as the "last visited" one.
 		 */
-		const feed = await withFeedQuery.patchFn(queryClient, {
+		await withFeedQuery.patchFn(queryClient, {
 			patch: {},
 			query: {
 				where: {
@@ -23,19 +23,15 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 				},
 			},
 		});
-
-		return {
-			feed,
-		};
 	},
-	pendingComponent: FeedListPagePending,
+	pendingComponent: FeedListingPagePending,
 	component() {
 		const { scrollToId } = Route.useSearch();
-		const { feed } = Route.useLoaderData();
+		const { id } = Route.useParams();
 
 		return (
-			<FeedListPage
-				feed={feed}
+			<FeedListingPage
+				feedId={id}
 				scrollToId={scrollToId}
 			/>
 		);

@@ -3,15 +3,13 @@ import { ChevronLeftIcon, type ChevronRightIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
+import type { StateType } from "@use-pico/common/type";
 import type { FC } from "react";
 import { FeedSetupButton } from "./FeedSetupButton";
 
 export namespace FeedStatusAction {
 	export interface Props {
-		state: {
-			value: boolean;
-			set: (value: boolean | ((prev: boolean) => boolean)) => void;
-		};
+		state: StateType.Simple<boolean>;
 		backIcon: typeof ChevronLeftIcon | typeof ChevronRightIcon;
 	}
 }

@@ -1,20 +1,19 @@
 import { useLocale, useSentinel } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import type { tFeed } from "@zbav-se.me/sdk/api/buyer-user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, useRef } from "react";
 import { Content } from "./Content";
 
-export namespace FeedListPage {
+export namespace FeedListingPage {
 	export interface Props extends FlowContainer.Props {
-		feed: tFeed;
+		feedId: string;
 		scrollToId: string | undefined;
 	}
 }
 
-export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...props }) => {
+export const FeedListingPage: FC<FeedListingPage.Props> = ({ feedId, scrollToId, ...props }) => {
 	const locale = useLocale();
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -45,7 +44,11 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ feed, scrollToId, ...prop
 			}
 			{...props}
 		>
-			<Content sentinelRef={sentinelRef} isLast={isLast} />
+			<Content
+				feedId={feedId}
+				sentinelRef={sentinelRef}
+				isLast={isLast}
+			/>
 		</FlowContainer>
 	);
 };

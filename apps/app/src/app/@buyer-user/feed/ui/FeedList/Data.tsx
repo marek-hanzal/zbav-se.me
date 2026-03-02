@@ -29,7 +29,7 @@ export const Data: FC<Data.Props> = ({ _suspense, query, limit, ...props }) => {
 
 	return (
 		<Container
-			data-ui={"FeedListContainer[Container]"}
+			data-ui={"FeedList[Container]"}
 			ui={{
 				flow: "vertical",
 				scroll: "vertical",

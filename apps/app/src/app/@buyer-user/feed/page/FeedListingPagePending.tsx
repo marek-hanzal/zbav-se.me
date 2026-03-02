@@ -6,14 +6,15 @@ import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
-export namespace FeedListPagePending {
+export namespace FeedListingPagePending {
 	export interface Props extends FlowContainer.Props {
 		//
 	}
 }
 
-export const FeedListPagePending: FC<FeedListPagePending.Props> = (props) => {
+export const FeedListingPagePending: FC<FeedListingPagePending.Props> = (props) => {
 	const locale = useLocale();
+
 	return (
 		<FlowContainer
 			data-ui={"BuyerFeedList[FlowContainer]"}

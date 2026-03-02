@@ -4,7 +4,6 @@ import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
 import { DeadEndIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { FeedStatusContainerUi } from "./FeedSetupButton";
 import { FeedStatusAction } from "./FeedStatusAction";
 
 export namespace FeedListStatus {
@@ -22,10 +21,7 @@ export const FeedListStatus: FC<FeedListStatus.Props> = ({ state, mode, ui, ...p
 
 	return (
 		<Container
-			ui={{
-				...FeedStatusContainerUi,
-				...ui,
-			}}
+			ui={ui}
 			{...props}
 		>
 			<Status

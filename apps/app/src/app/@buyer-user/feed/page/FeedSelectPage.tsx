@@ -1,7 +1,7 @@
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
-import { FeedListContainer } from "~/app/@buyer-user/feed/ui/FeedListContainer";
+import { FeedList } from "~/app/@buyer-user/feed/ui/FeedList";
 import { HomeMenuButton } from "~/app/@user/home/HomeMenuButton";
 
 export namespace FeedSelectPage {
@@ -30,8 +30,8 @@ export const FeedSelectPage: FC<FeedSelectPage.Props> = ({ ui, ...props }) => {
 			right={<HomeMenuButton />}
 			{...props}
 		>
-			<FeedListContainer
-				data-ui={"FeedSelect-[FeedListContainer]"}
+			<FeedList
+				data-ui={"FeedSelect-[FeedList]"}
 				query={{
 					sort: [
 						{

@@ -21,8 +21,7 @@ export namespace Data {
 export const Data: FC<Data.Props> = ({ feedId, ui, ...props }) => {
 	const locale = useLocale();
 	const [isFeedSettings, setIsFeedSettings] = useState(false);
-	const feedQuery = withFeedQuery.useFetchQuery(feedId);
-	const feed = feedQuery.data;
+	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 
 	return (
 		<Container
@@ -112,7 +111,7 @@ export const Data: FC<Data.Props> = ({ feedId, ui, ...props }) => {
 
 			<EditorSheet
 				data-ui={"Item-[FeedEditorSheet]"}
-				feed={feed}
+				feedId={feed.id}
 				state={{
 					value: isFeedSettings,
 					set: setIsFeedSettings,

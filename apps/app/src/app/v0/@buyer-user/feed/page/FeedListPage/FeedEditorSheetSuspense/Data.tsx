@@ -2,7 +2,6 @@ import { RefreshIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { StateType } from "@use-pico/common/type";
-import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer-user/feed";
 import type { FC } from "react";
 import { EditorSheet } from "~/app/v0/@buyer-user/feed/ui/EditorSheet";
 
@@ -15,12 +14,10 @@ export namespace Data {
 }
 
 export const Data: FC<Data.Props> = ({ feedId, state, onRefresh }) => {
-	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
-
 	return (
 		<EditorSheet
 			data-ui={"FeedEditorSheet[EditorSheet]"}
-			feed={feed}
+			feedId={feedId}
 			state={state}
 			noDelete
 		>
