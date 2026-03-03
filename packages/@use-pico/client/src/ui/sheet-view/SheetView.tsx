@@ -9,6 +9,8 @@ export namespace SheetView {
 		state: StateType.State<TView>;
 		views: Views<TView>;
 	}
+
+	export type PropsEx<TView extends string> = Omit<Props<TView>, "views" | "state">;
 }
 
 export const SheetView = <TView extends string>({
