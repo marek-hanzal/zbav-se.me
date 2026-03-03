@@ -10,7 +10,7 @@ export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		feedId: string;
 		listingId: string;
-		onView(view: "gallery" | "transaction" | "seller-info"): void;
+		onView(view: "gallery" | "seller-info"): void;
 	}
 }
 

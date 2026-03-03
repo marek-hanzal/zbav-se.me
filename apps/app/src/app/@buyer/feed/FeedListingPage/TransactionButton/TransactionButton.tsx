@@ -1,5 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { Button } from "@use-pico/client/ui/button";
+import { useLocale } from "@use-pico/client/hook";
+import { ChevronRightIcon } from "@use-pico/client/icon";
+import { Button, uiButton } from "@use-pico/client/ui/button";
+import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import { withTransactionCreateMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
@@ -10,16 +13,11 @@ import type { FC } from "react";
 export namespace TransactionButton {
 	export interface Props extends Button.Props {
 		listing: tListing;
-		onView(view: "transaction"): void;
 	}
 }
 
-export const TransactionButton: FC<TransactionButton.Props> = ({
-	listing,
-	ui,
-	onView,
-	...props
-}) => {
+export const TransactionButton: FC<TransactionButton.Props> = ({ listing, ui, ...props }) => {
+	const locale = useLocale();
 	const queryClient = useQueryClient();
 	const transactionCreateMutation = withTransactionCreateMutation.useMutation({
 		async onSuccess() {
@@ -41,24 +39,31 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 
 	if (listing.transactionId) {
 		return (
-			<Button
-				iconEnabled={TransactionIcon}
+			<LinkTo
+				to={"/$locale/buyer/message/list"}
+				params={{
+					locale,
+				}}
+				icon={ChevronRightIcon}
+				iconPosition={"right"}
 				iconProps={{
 					ui: {
 						text: "xl",
 					},
 				}}
-				ui={{
-					tone: "neutral",
-					theme: "light",
-					size: "default",
-					...ui,
-				}}
-				onClick={() => onView("transaction")}
-				{...props}
+				{...uiButton({
+					ui: {
+						justify: "space-between",
+						tone: "neutral",
+						theme: "light",
+						size: "default",
+						text: "lg",
+					},
+					className: [],
+				})}
 			>
 				<Tx label="View transactions (button)" />
-			</Button>
+			</LinkTo>
 		);
 	}
 

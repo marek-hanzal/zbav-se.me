@@ -12,7 +12,7 @@ export namespace HeroSection {
 	export interface Props {
 		feedId: string;
 		listing: tListing;
-		onView(view: "gallery" | "transaction"): void;
+		onView(view: "gallery"): void;
 	}
 }
 
@@ -85,12 +85,7 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 				/>
 			</Container>
 
-			{listing.my ? null : (
-				<TransactionButton
-					listing={listing}
-					onView={onView}
-				/>
-			)}
+			{listing.my ? null : <TransactionButton listing={listing} />}
 		</>
 	);
 };
