@@ -28,7 +28,7 @@ export const TransactionSheet: FC<TransactionSheet.Props> = ({
 			contentProps={{
 				disableScroll: true,
 			}}
-			detent={"full"}
+			detent={"default"}
 			{...props}
 		>
 			<Suspense fallback={<TransactionPending />}>
