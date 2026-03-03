@@ -2,8 +2,8 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Group } from "@use-pico/client/ui/group";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import type { FC } from "react";
-import { FlagButtonSuspense } from "~/app/v0/@buyer/listing/ui/button/FlagButtonSuspense";
-import { IgnoreButtonSuspense } from "~/app/v0/@buyer/listing/ui/button/IgnoreButtonSuspense";
+import { FlagButton } from "~/app/@buyer/feed/FeedListingPage/FlagButton/FlagButton";
+import { IgnoreButton } from "~/app/@buyer/feed/FeedListingPage/IgnoreButton/IgnoreButton";
 
 export namespace Data {
 	export interface Props extends MarkSuspense.Props {
@@ -20,7 +20,7 @@ export const Data: FC<Data.Props> = ({ _suspense, listingId }) => {
 
 	return (
 		<Group>
-			<IgnoreButtonSuspense
+			<IgnoreButton
 				listingId={listing.id}
 				ui={{
 					round: undefined,
@@ -30,7 +30,7 @@ export const Data: FC<Data.Props> = ({ _suspense, listingId }) => {
 				}}
 			/>
 
-			<FlagButtonSuspense
+			<FlagButton
 				listingId={listing.id}
 				ui={{
 					round: undefined,

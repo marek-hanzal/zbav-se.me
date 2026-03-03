@@ -1,14 +1,14 @@
 import { type FC, Suspense } from "react";
-import { Data } from "./IgnoreButtonSuspense/Data";
-import { Pending } from "./IgnoreButtonSuspense/Pending";
+import { Data } from "./Data";
+import { Pending } from "./Pending";
 
-export namespace IgnoreButtonSuspense {
+export namespace FlagButton {
 	export interface Props extends Omit<Data.Props, "_suspense"> {
 		//
 	}
 }
 
-export const IgnoreButtonSuspense: FC<IgnoreButtonSuspense.Props> = (props) => {
+export const FlagButton: FC<FlagButton.Props> = (props) => {
 	return (
 		<Suspense fallback={<Pending />}>
 			<Data

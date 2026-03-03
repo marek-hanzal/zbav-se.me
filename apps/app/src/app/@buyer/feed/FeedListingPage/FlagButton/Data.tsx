@@ -75,6 +75,8 @@ export const Data: FC<Data.Props> = ({
 					theme: "light",
 					size: "default",
 					justify: "start",
+					round: undefined,
+					width: "full",
 					...ui,
 				}}
 				{...props}
