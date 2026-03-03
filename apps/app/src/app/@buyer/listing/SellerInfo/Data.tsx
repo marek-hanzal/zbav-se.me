@@ -1,5 +1,6 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
+import { Group } from "@use-pico/client/ui/group";
 import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
 import { withListingSellerInfoQuery } from "@zbav-se.me/sdk/query/buyer/listing";
@@ -15,7 +16,7 @@ export namespace Data {
 }
 
 export const Data: FC<Data.Props> = ({ _suspense, listingId, ui, ...props }) => {
-	const { data } = withListingSellerInfoQuery.useSuspenseQuery({
+	const { data: sellerInfo } = withListingSellerInfoQuery.useSuspenseQuery({
 		listingId,
 	});
 
@@ -29,13 +30,12 @@ export const Data: FC<Data.Props> = ({ _suspense, listingId, ui, ...props }) => 
 			}}
 			{...props}
 		>
-			<Header
-				registered={data.registered}
-				listings={data.listings}
-			/>
+			<Header sellerInfo={sellerInfo} />
 
-			{data.events ? (
-				<Score rank={data.events.score.rank} />
+			{sellerInfo.events ? (
+				<Group>
+					<Score rank={sellerInfo.events.score.rank} />
+				</Group>
 			) : (
 				<Status
 					icon={SearchIcon}

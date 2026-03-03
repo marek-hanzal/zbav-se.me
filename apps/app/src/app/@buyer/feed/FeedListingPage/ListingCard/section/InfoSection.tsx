@@ -121,10 +121,12 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, onView }) => {
 				</Group>
 			) : null}
 
-			<SellerInfo
-				listingId={listing.id}
-				onView={onView}
-			/>
+			<Group>
+				<SellerInfo
+					listingId={listing.id}
+					onView={onView}
+				/>
+			</Group>
 		</Container>
 	);
 };
