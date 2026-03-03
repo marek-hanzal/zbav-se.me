@@ -63,12 +63,10 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					onTransaction={hooks.onTransaction}
 				/>
 			) : null}
-
 			<ListingInfoSection
 				listing={listing}
 				onSellerInfo={hooks.onSellerInfo}
 			/>
-
 			{tools.includes("thumb") ? (
 				<Container
 					ui={{
@@ -82,7 +80,6 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					<ThumbDislikeButton listing={listing} />
 				</Container>
 			) : null}
-
 			{tools.includes("destructive") ? (
 				<ListingDestructiveActionsSuspense listingId={listing.id} />
 			) : null}
