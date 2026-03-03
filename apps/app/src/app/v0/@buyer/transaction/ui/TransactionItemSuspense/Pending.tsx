@@ -1,27 +1,19 @@
-import { SpinnerContainer } from "@use-pico/client/ui/container";
+import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
+import { ListItem } from "~/app/@common/list-item/ListItem";
 
 export namespace Pending {
-	export interface Props extends SpinnerContainer.Props {
+	export interface Props extends ListItem.PropsEx {
 		//
 	}
 }
 
 export const Pending: FC<Pending.Props> = (props) => {
 	return (
-		<SpinnerContainer
-			type={"icon"}
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				background: "default",
-				border: true,
-				shadow: true,
-				round: "default",
-			}}
-			className={[
-				"h-48 md:h-92",
-			]}
+		<ListItem
+			hero={undefined}
+			title={translator.text("Loading... (label)")}
+			bottom={undefined}
 			{...props}
 		/>
 	);
