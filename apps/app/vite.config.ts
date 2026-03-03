@@ -7,13 +7,9 @@ import react from "@vitejs/plugin-react";
 import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 
-const noExternalDependencies = [
-	/^react$/,
-	/^react-dom$/,
-	/^use-sync-external-store(?:\/.*)?$/,
-];
-
 export default defineConfig(({ isSsrBuild, mode }) => {
+	const isProduction = mode === "production";
+
 	return {
 		clearScreen: false,
 		base: process.env.VITE_APP_ASSETS,
@@ -35,16 +31,18 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 			assetSizePlugin({
 				ssr: !!isSsrBuild,
 			}),
-			mode === "production"
+			isProduction
 				? nitro({
 						preset: process.env.NITRO_PRESET || "vercel",
-						noExternals: noExternalDependencies,
+						noExternals: true,
 					})
 				: undefined,
 		],
-		ssr: {
-			noExternal: noExternalDependencies,
-		},
+		ssr: isProduction
+			? {
+					noExternal: true,
+				}
+			: undefined,
 		worker: {
 			format: "es",
 		},
