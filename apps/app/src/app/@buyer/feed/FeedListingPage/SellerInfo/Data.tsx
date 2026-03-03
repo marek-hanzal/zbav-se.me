@@ -9,11 +9,11 @@ import { RatingIcon } from "~/app/@common/score/ui/RatingIcon";
 export namespace Data {
 	export interface Props extends MarkSuspense.Props {
 		listingId: string;
-		onSellerInfo(): void;
+		onView(view: "seller-info"): void;
 	}
 }
 
-export const Data: FC<Data.Props> = ({ _suspense, listingId, onSellerInfo }) => {
+export const Data: FC<Data.Props> = ({ _suspense, listingId, onView }) => {
 	const { data: sellerInfo } = withListingSellerInfoQuery.useSuspenseQuery({
 		listingId,
 	});
@@ -26,7 +26,7 @@ export const Data: FC<Data.Props> = ({ _suspense, listingId, onSellerInfo }) => 
 			}
 			textEmpty={translator.text("Listing seller info not available (empty)")}
 			action={<Icon icon={ShowIcon} />}
-			onClick={onSellerInfo}
+			onClick={() => onView("seller-info")}
 		/>
 	);
 };

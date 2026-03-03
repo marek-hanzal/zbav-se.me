@@ -5,17 +5,16 @@ import type { FC } from "react";
 
 export namespace Pending {
 	export interface Props extends LabelValue.PropsEx {
-		onSellerInfo(): void;
+		//
 	}
 }
 
-export const Pending: FC<Pending.Props> = ({ onSellerInfo, ...props }) => {
+export const Pending: FC<Pending.Props> = (props) => {
 	return (
 		<LabelValue
 			textLabel={translator.text("Listing seller hint (label)")}
 			textValue={null}
 			action={<Icon icon={ShowIcon} />}
-			onClick={onSellerInfo}
 			{...props}
 		/>
 	);

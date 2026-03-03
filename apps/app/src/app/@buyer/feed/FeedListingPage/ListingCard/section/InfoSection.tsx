@@ -7,6 +7,7 @@ import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
 import { CategoryInline } from "~/app/@session/category/ui/CategoryInline/CategoryInline";
+import { SellerInfo } from "../../SellerInfo/SellerInfo";
 
 export namespace InfoSection {
 	export interface Props {
@@ -120,10 +121,10 @@ export const InfoSection: FC<InfoSection.Props> = ({ listing, onView }) => {
 				</Group>
 			) : null}
 
-			{/* <ListingSellerInfoSuspense
+			<SellerInfo
 				listingId={listing.id}
-				onSellerInfo={onSellerInfo}
-			/> */}
+				onView={onView}
+			/>
 		</Container>
 	);
 };
