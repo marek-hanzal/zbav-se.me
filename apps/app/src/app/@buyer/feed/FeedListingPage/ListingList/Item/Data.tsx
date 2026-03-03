@@ -85,7 +85,9 @@ export const Data: FC<Data.Props> = ({ listingId, feedId, withScore, ...props })
 				listing={listing}
 				isOpen={detail}
 				onClose={() => setDetail(false)}
-			/>
+			>
+				hej, pyco!
+			</ListingSheet>
 		</>
 	);
 };

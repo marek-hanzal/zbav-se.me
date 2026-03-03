@@ -14,7 +14,7 @@ export namespace Data {
 	}
 }
 
-export const Data: FC<Data.Props> = ({ feedId, listingId, onView, ui, ...props }) => {
+export const Data: FC<Data.Props> = ({ feedId, listingId, onView, ui, children, ...props }) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 
 	useListingEvent({
@@ -45,6 +45,8 @@ export const Data: FC<Data.Props> = ({ feedId, listingId, onView, ui, ...props }
 				listing={listing}
 				onView={onView}
 			/>
+
+			{children}
 		</Container>
 	);
 };
