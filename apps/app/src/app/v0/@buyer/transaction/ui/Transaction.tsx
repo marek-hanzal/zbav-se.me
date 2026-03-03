@@ -3,7 +3,6 @@ import { createNoopVisibilityStore } from "@use-pico/client/store";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
-import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef, useState } from "react";
@@ -32,8 +31,7 @@ export const Transaction: FC<Transaction.Props> = ({
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId, {
 		refetchInterval: refresh,
 	});
-	const { data: listing } = withListingQuery.useFetchQuery(transaction.listingId);
-	const [detail, setDetail] = useState(false);
+	const [, setDetail] = useState(false);
 	const hero = useUpload(transaction.gallery.items);
 
 	return (
@@ -111,16 +109,6 @@ export const Transaction: FC<Transaction.Props> = ({
 
 					<VisibilityContext value={createNoopVisibilityStore()}>
 						ListingSheet or sthing
-						{/* <ListingSheet
-							listing={listing}
-							state={{
-								value: detail,
-								set: setDetail,
-							}}
-							withScore={false}
-							feedId={undefined}
-							tools={[]}
-						/> */}
 					</VisibilityContext>
 				</Container>
 
