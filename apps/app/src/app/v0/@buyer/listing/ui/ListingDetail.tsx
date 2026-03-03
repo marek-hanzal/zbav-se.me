@@ -5,7 +5,6 @@ import { useListingEvent } from "~/app/@buyer/listing/~public/useListingEvent";
 import { ThumbDislikeButton } from "./button/ThumbDislikeButton";
 import { ThumbLikeButton } from "./button/ThumbLikeButton";
 import { ListingDestructiveActionsSuspense } from "./ListingDetail/ListingDestructiveActionsSuspense";
-import { ListingHeroSection } from "./ListingDetail/ListingHeroSection";
 import { ListingInfoSection } from "./ListingDetail/ListingInfoSection";
 
 export namespace ListingDetail {
@@ -55,14 +54,6 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 			}}
 			{...props}
 		>
-			{tools.includes("hero") ? (
-				<ListingHeroSection
-					feedId={feedId}
-					listing={listing}
-					onGallery={hooks.onGallery}
-					onTransaction={hooks.onTransaction}
-				/>
-			) : null}
 			<ListingInfoSection
 				listing={listing}
 				onSellerInfo={hooks.onSellerInfo}

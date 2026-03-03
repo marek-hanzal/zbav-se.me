@@ -5,8 +5,8 @@ import type { FC } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
-import { TransactionButton } from "~/app/v0/@buyer/listing/ui/button/TransactionButton";
 import { FavouriteButton } from "../../FavouriteButton/FavouriteButton";
+import { TransactionButton } from "../../TransactionButton/TransactionButton";
 
 export namespace HeroSection {
 	export interface Props {
