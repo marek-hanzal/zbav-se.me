@@ -1,17 +1,18 @@
-import { LikeIcon } from "@use-pico/client/icon";
+import { DislikeIcon } from "@use-pico/client/icon";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
-import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import { withThumbCreateMutation } from "@zbav-se.me/sdk/mutation/buyer/thumb";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import type { FC } from "react";
 
-export namespace ThumbLikeButton {
-	export interface Props extends Button.Props {
-		listing: tListing;
+export namespace Data {
+	export interface Props extends Button.Props, MarkSuspense.Props {
+		listingId: string;
 	}
 }
 
-export const ThumbLikeButton: FC<ThumbLikeButton.Props> = ({ listing, ui, ...props }) => {
+export const Data: FC<Data.Props> = ({ _suspense, listingId, ui, ...props }) => {
+	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 	const update = withListingQuery.useUpdate();
 	const thumbCreateMutation = withThumbCreateMutation.useMutation({
 		onSuccess: update,
@@ -24,11 +25,11 @@ export const ThumbLikeButton: FC<ThumbLikeButton.Props> = ({ listing, ui, ...pro
 	});
 
 	const hasThumb = listing.thumb !== null;
-	const isLiked = listing.thumb === "like";
+	const isDisliked = listing.thumb === "dislike";
 
 	return (
 		<Button
-			iconEnabled={LikeIcon}
+			iconEnabled={DislikeIcon}
 			iconProps={{
 				ui: {
 					text: "xl",
@@ -39,11 +40,11 @@ export const ThumbLikeButton: FC<ThumbLikeButton.Props> = ({ listing, ui, ...pro
 			onClick={() => {
 				thumbCreateMutation.mutate({
 					listingId: listing.id,
-					type: "like",
+					type: "dislike",
 				});
 			}}
 			ui={{
-				tone: isLiked ? "secondary" : "neutral",
+				tone: isDisliked ? "secondary" : "neutral",
 				theme: "light",
 				size: "default",
 				justify: "start",

@@ -3,7 +3,7 @@ import type { tFeed, tListingSort } from "@zbav-se.me/sdk/api/buyer";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
-import { ListingSortSelect } from "~/app/v0/@buyer/listing/ui/ListingSortSelect";
+import { ListingSortSelect } from "./ListingSortSelect";
 
 export namespace SortPatch {
 	export interface Props extends Container.Props {

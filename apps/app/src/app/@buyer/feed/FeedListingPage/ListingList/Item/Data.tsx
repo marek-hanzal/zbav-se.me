@@ -1,4 +1,5 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Group } from "@use-pico/client/ui/group";
 import { Overlay } from "@use-pico/client/ui/overlay";
 import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import { HeroImage } from "@zbav-se.me/ui/img";
@@ -7,7 +8,11 @@ import { useListingEvent } from "~/app/@buyer/listing/~public/useListingEvent";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
+import { FlagButton } from "../../FlagButton/FlagButton";
+import { IgnoreButton } from "../../IgnoreButton/IgnoreButton";
 import { ListingSheet } from "../../ListingSheet/ListingSheet";
+import { ThumbDislikeButton } from "../../ThumbDislikeButton/ThumbDislikeButton";
+import { ThumbLikeButton } from "../../ThumbLikeButton/ThumbLikeButton";
 
 export namespace Data {
 	export interface Props extends Container.Props {
@@ -85,7 +90,29 @@ export const Data: FC<Data.Props> = ({ listingId, feedId, withScore, ...props })
 				listing={listing}
 				isOpen={detail}
 				onClose={() => setDetail(false)}
-			/>
+			>
+				{listing.isIgnored || listing.hasFlag ? null : (
+					<Container
+						ui={{
+							layout: "horizontal-flex",
+							width: "full",
+							items: "center",
+							justify: "space-evenly",
+						}}
+					>
+						<ThumbLikeButton listingId={listingId} />
+						<ThumbDislikeButton listingId={listingId} />
+					</Container>
+				)}
+
+				{listing.isFavourite || listing.thumb === "like" ? null : (
+					<Group>
+						<IgnoreButton listingId={listingId} />
+
+						<FlagButton listingId={listingId} />
+					</Group>
+				)}
+			</ListingSheet>
 		</>
 	);
 };

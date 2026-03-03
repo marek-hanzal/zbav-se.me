@@ -63,6 +63,7 @@ export const Data: FC<Data.Props> = ({
 							toggle: !listing.hasFlag,
 							listingId: listing.id,
 						});
+						setIsConfirm(false);
 						confirmProps?.onClick?.(e);
 					},
 				}}
@@ -75,6 +76,8 @@ export const Data: FC<Data.Props> = ({
 					theme: "light",
 					size: "default",
 					justify: "start",
+					round: undefined,
+					width: "full",
 					...ui,
 				}}
 				{...props}
