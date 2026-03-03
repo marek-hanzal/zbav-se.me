@@ -5,8 +5,8 @@ import type { FC } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
-import { FavouriteButtonSuspense } from "~/app/v0/@buyer/listing/ui/button/FavouriteButtonSuspense";
 import { TransactionButton } from "~/app/v0/@buyer/listing/ui/button/TransactionButton";
+import { FavouriteButton } from "../../FavouriteButton/FavouriteButton";
 
 export namespace HeroSection {
 	export interface Props {
@@ -50,7 +50,7 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 					}}
 				/>
 
-				<FavouriteButtonSuspense
+				<FavouriteButton
 					feedId={feedId}
 					listingId={listing.id}
 					iconProps={{

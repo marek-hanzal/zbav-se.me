@@ -3,7 +3,6 @@ import type { tListing } from "@zbav-se.me/sdk/api/buyer";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
-import { FavouriteButtonSuspense } from "~/app/v0/@buyer/listing/ui/button/FavouriteButtonSuspense";
 import { TransactionButton } from "~/app/v0/@buyer/listing/ui/button/TransactionButton";
 import { ListingOverlay } from "~/app/v0/@buyer/listing/ui/ListingOverlay";
 
@@ -36,29 +35,6 @@ export const ListingHeroSection: FC<ListingHeroSection.Props> = ({
 					data-ui={"ListingDetail-[ListingOverlay]"}
 					listing={listing}
 				/>
-
-				{feedId ? (
-					<FavouriteButtonSuspense
-						feedId={feedId}
-						listingId={listing.id}
-						iconProps={{
-							ui: {
-								text: "xl",
-							},
-						}}
-						ui={{
-							tone: "secondary",
-							theme: "light",
-							round: "full",
-							square: "md",
-							justify: "center",
-							items: "center",
-							size: undefined,
-							inner: undefined,
-							snapTo: "top-right",
-						}}
-					/>
-				) : null}
 
 				<HeroImage
 					data-ui={"ListingDetail-[HeroImage]"}
