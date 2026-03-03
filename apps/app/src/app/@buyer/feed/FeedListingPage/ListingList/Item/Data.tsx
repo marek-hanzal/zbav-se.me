@@ -91,19 +91,21 @@ export const Data: FC<Data.Props> = ({ listingId, feedId, withScore, ...props })
 				isOpen={detail}
 				onClose={() => setDetail(false)}
 			>
-				<Container
-					ui={{
-						layout: "horizontal-flex",
-						width: "full",
-						items: "center",
-						justify: "space-evenly",
-					}}
-				>
-					<ThumbLikeButton listingId={listingId} />
-					<ThumbDislikeButton listingId={listingId} />
-				</Container>
+				{listing.isIgnored || listing.hasFlag ? null : (
+					<Container
+						ui={{
+							layout: "horizontal-flex",
+							width: "full",
+							items: "center",
+							justify: "space-evenly",
+						}}
+					>
+						<ThumbLikeButton listingId={listingId} />
+						<ThumbDislikeButton listingId={listingId} />
+					</Container>
+				)}
 
-				{listing.isFavourite ? null : (
+				{listing.isFavourite || listing.thumb === "like" ? null : (
 					<Group>
 						<IgnoreButton listingId={listingId} />
 

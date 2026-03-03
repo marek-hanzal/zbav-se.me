@@ -72,9 +72,7 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 				where: {
 					id: listingId,
 				},
-				scope: {
-					userId,
-				},
+				scope: {},
 			});
 		}),
 	);
