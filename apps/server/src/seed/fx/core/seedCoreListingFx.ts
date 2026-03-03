@@ -124,8 +124,8 @@ export const seedCoreListingFx = Effect.fn("seedCoreListingFx")(function* ({
 								description: Descriptions.length > 0 ? list(Descriptions) : null,
 								categoryId,
 								locationId,
-								age: rangedom(0, 5),
-								condition: rangedom(0, 5),
+								age: rangedom(1, 6),
+								condition: rangedom(1, 6),
 								price: rangedom(1, 100_000),
 								priceType: list([
 									"closed",

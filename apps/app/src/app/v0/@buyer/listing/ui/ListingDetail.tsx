@@ -5,36 +5,25 @@ import { useListingEvent } from "~/app/@buyer/listing/~public/useListingEvent";
 import { ThumbDislikeButton } from "./button/ThumbDislikeButton";
 import { ThumbLikeButton } from "./button/ThumbLikeButton";
 import { ListingDestructiveActionsSuspense } from "./ListingDetail/ListingDestructiveActionsSuspense";
-import { ListingInfoSection } from "./ListingDetail/ListingInfoSection";
 
 export namespace ListingDetail {
 	export type Tools = "destructive" | "hero" | "thumb";
 
-	export interface Hooks {
-		onGallery(): void;
-		onTransaction(): void;
-		onSellerInfo(): void;
-	}
-
 	export interface Props extends Container.Props {
-		feedId: string | undefined;
 		listing: tListing;
 		/**
 		 * Should the listing emit the score event?
 		 */
 		withScore: boolean;
 		tools: Tools[];
-		hooks: Hooks;
 	}
 }
 
 export const ListingDetail: FC<ListingDetail.Props> = ({
-	feedId,
 	listing,
 	withScore,
 	tools,
 	ui,
-	hooks,
 	...props
 }) => {
 	useListingEvent({
@@ -54,10 +43,6 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 			}}
 			{...props}
 		>
-			<ListingInfoSection
-				listing={listing}
-				onSellerInfo={hooks.onSellerInfo}
-			/>
 			{tools.includes("thumb") ? (
 				<Container
 					ui={{

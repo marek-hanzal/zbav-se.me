@@ -4,12 +4,13 @@ import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
 import type { FC } from "react";
 import { useListingEvent } from "~/app/@buyer/listing/~public/useListingEvent";
 import { HeroSection } from "./section/HeroSection";
+import { InfoSection } from "./section/InfoSection";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		feedId: string;
 		listingId: string;
-		onView(view: "gallery" | "transaction"): void;
+		onView(view: "gallery" | "transaction" | "seller-info"): void;
 	}
 }
 
@@ -36,6 +37,11 @@ export const Data: FC<Data.Props> = ({ feedId, listingId, onView, ui, ...props }
 		>
 			<HeroSection
 				feedId={feedId}
+				listing={listing}
+				onView={onView}
+			/>
+
+			<InfoSection
 				listing={listing}
 				onView={onView}
 			/>

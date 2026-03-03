@@ -26,7 +26,6 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 	listing,
 	state,
 	withScore,
-	feedId,
 	tools,
 	...props
 }) => {
@@ -51,15 +50,9 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 							data-ui={"ListingSheet-[ListingDetailContainer]"}
 							listing={listing}
 							withScore={withScore}
-							feedId={feedId}
 							tools={tools}
 							ui={{
 								inner: "default",
-							}}
-							hooks={{
-								onGallery: () => setView("gallery"),
-								onTransaction: () => setView("messages"),
-								onSellerInfo: () => setView("seller-info"),
 							}}
 						/>
 					),
