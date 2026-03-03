@@ -11,6 +11,8 @@ import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
 import { FlagButton } from "../../FlagButton/FlagButton";
 import { IgnoreButton } from "../../IgnoreButton/IgnoreButton";
 import { ListingSheet } from "../../ListingSheet/ListingSheet";
+import { ThumbDislikeButton } from "../../ThumbDislikeButton/ThumbDislikeButton";
+import { ThumbLikeButton } from "../../ThumbLikeButton/ThumbLikeButton";
 
 export namespace Data {
 	export interface Props extends Container.Props {
@@ -89,11 +91,25 @@ export const Data: FC<Data.Props> = ({ listingId, feedId, withScore, ...props })
 				isOpen={detail}
 				onClose={() => setDetail(false)}
 			>
-				<Group>
-					<IgnoreButton listingId={listingId} />
+				<Container
+					ui={{
+						layout: "horizontal-flex",
+						width: "full",
+						items: "center",
+						justify: "space-evenly",
+					}}
+				>
+					<ThumbLikeButton listingId={listingId} />
+					<ThumbDislikeButton listingId={listingId} />
+				</Container>
 
-					<FlagButton listingId={listingId} />
-				</Group>
+				{listing.isFavourite ? null : (
+					<Group>
+						<IgnoreButton listingId={listingId} />
+
+						<FlagButton listingId={listingId} />
+					</Group>
+				)}
 			</ListingSheet>
 		</>
 	);

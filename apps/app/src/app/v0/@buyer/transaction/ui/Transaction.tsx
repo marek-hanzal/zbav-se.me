@@ -8,8 +8,8 @@ import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
-import { ListingOverlay } from "~/app/v0/@buyer/listing/ui/ListingOverlay";
-import { ListingSheet } from "~/app/v0/@buyer/listing/ui/ListingSheet";
+import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
+import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
 import { MessageListSuspense } from "~/app/v0/@common/message/MessageListSuspense";
 import { TransactionChat } from "./TransactionChat";
 import { TransactionMessage } from "./TransactionMessage";
@@ -75,10 +75,26 @@ export const Transaction: FC<Transaction.Props> = ({
 							className={"h-42"}
 						/>
 
-						<ListingOverlay
-							listing={{
-								...transaction,
-								distance: null,
+						<ListingPrice
+							data-ui={"ListingOverlay-[ListingPrice]"}
+							price={transaction.price}
+							priceType={transaction.priceType}
+							currency={transaction.currency}
+							ui={{
+								snapTo: "top-center",
+								opacity: "8",
+								zIndex: true,
+							}}
+						/>
+
+						<LocationBadge
+							data-ui={"ListingOverlay-[LocationBadge]"}
+							location={transaction.location}
+							distance={null}
+							ui={{
+								snapTo: "bottom",
+								opacity: "8",
+								zIndex: true,
 							}}
 						/>
 					</Container>
@@ -94,7 +110,8 @@ export const Transaction: FC<Transaction.Props> = ({
 					</MessageListSuspense>
 
 					<VisibilityContext value={createNoopVisibilityStore()}>
-						<ListingSheet
+						ListingSheet or sthing
+						{/* <ListingSheet
 							listing={listing}
 							state={{
 								value: detail,
@@ -103,7 +120,7 @@ export const Transaction: FC<Transaction.Props> = ({
 							withScore={false}
 							feedId={undefined}
 							tools={[]}
-						/>
+						/> */}
 					</VisibilityContext>
 				</Container>
 
