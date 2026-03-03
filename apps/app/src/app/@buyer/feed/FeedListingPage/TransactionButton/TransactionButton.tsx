@@ -10,14 +10,14 @@ import type { FC } from "react";
 export namespace TransactionButton {
 	export interface Props extends Button.Props {
 		listing: tListing;
-		onTransaction(): void;
+		onView(view: "transaction"): void;
 	}
 }
 
 export const TransactionButton: FC<TransactionButton.Props> = ({
 	listing,
 	ui,
-	onTransaction,
+	onView,
 	...props
 }) => {
 	const queryClient = useQueryClient();
@@ -54,7 +54,7 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 					size: "default",
 					...ui,
 				}}
-				onClick={onTransaction}
+				onClick={() => onView("transaction")}
 				{...props}
 			>
 				<Tx label="View transactions (button)" />

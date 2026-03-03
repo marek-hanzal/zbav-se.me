@@ -85,7 +85,7 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 
 			<TransactionButton
 				listing={listing}
-				onTransaction={() => onView("transaction")}
+				onView={onView}
 			/>
 		</>
 	);

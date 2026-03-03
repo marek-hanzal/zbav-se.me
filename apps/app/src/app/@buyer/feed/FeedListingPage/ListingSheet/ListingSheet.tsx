@@ -1,3 +1,4 @@
+import { CloseIcon } from "@use-pico/client/icon";
 import { SheetView } from "@use-pico/client/ui/sheet-view";
 import { translator } from "@use-pico/common/translator";
 import type { tListing } from "@zbav-se.me/sdk/api/buyer";
@@ -36,16 +37,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ feedId, listing, onClose,
 				),
 				header: ({ close }) => ({
 					title: listing.title,
-					right: (
-						<CloseButton
-							onClick={close}
-							ui={{
-								background: undefined,
-								shadow: false,
-								border: false,
-							}}
-						/>
-					),
+					right: <CloseButton onClick={close} />,
 				}),
 			},
 			gallery: {
@@ -54,7 +46,12 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ feedId, listing, onClose,
 				),
 				header: () => ({
 					title: translator.text("Listing gallery (title)"),
-					right: <CloseButton onClick={$onClose} />,
+					right: (
+						<CloseButton
+							iconEnabled={CloseIcon}
+							onClick={$onClose}
+						/>
+					),
 				}),
 			},
 			transaction: {
@@ -67,7 +64,12 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ feedId, listing, onClose,
 				) : null,
 				header: () => ({
 					title: translator.text("Listing messages (title)"),
-					right: <CloseButton onClick={$onClose} />,
+					right: (
+						<CloseButton
+							iconEnabled={CloseIcon}
+							onClick={$onClose}
+						/>
+					),
 				}),
 			},
 			"seller-info": {
@@ -81,7 +83,12 @@ export const ListingSheet: FC<ListingSheet.Props> = ({ feedId, listing, onClose,
 				),
 				header: () => ({
 					title: translator.text("Seller info (title)"),
-					right: <CloseButton onClick={$onClose} />,
+					right: (
+						<CloseButton
+							iconEnabled={CloseIcon}
+							onClick={$onClose}
+						/>
+					),
 				}),
 			},
 		};

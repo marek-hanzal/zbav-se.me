@@ -1,1 +1,1 @@
-export const CloseDrawerIcon = "icon-[solar--double-alt-arrow-down-linear]";
+export const CloseDrawerIcon = "icon-[solar--alt-arrow-down-linear]";

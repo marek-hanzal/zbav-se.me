@@ -1,1 +1,1 @@
-export const CloseIcon = "icon-[solar--close-circle-linear]";
+export const CloseIcon = "icon-[proicons--cancel]";
