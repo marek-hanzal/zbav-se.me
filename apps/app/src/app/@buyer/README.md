@@ -41,3 +41,5 @@ Maps to server API: `/api/buyer/*`.
 - Favourite listings page is now active scope (`v0` no longer used by route):
   - `@buyer/favourite/FavouriteListPage/FavouriteListPage.tsx`
   - `@buyer/favourite/FavouriteListPage/FavouriteList/`
+- Favourite toggle button for feed listing card is localized to page scope:
+  - `@buyer/feed/FeedListingPage/FavouriteButton/`

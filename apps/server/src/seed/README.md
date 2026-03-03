@@ -48,6 +48,7 @@ Location warmup queries are loaded from `src/seed/data/location.json` (copied fr
 - Console output uses colored progress and formatted final reports (no raw JSON dump)
 - Core report shows generated deltas for the current run
 - Core seed records are backdated with randomized timestamps across the last 2 years
+- Seeded listing `condition` and `age` use the domain scale `1..6` (never `0`)
 - Location warmup uses shuffled location queries from `data/location.json` to avoid repeatedly seeding
   the same first subset on every run. You can override the warmup amount with:
   - `SEED_LOCATION_CYCLES`
