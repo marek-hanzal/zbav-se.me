@@ -91,7 +91,7 @@ export const Data: FC<Data.Props> = ({ listingId, feedId, withScore, ...props })
 				isOpen={detail}
 				onClose={() => setDetail(false)}
 			>
-				{listing.isIgnored || listing.hasFlag ? null : (
+				{listing.isIgnored || listing.hasFlag || listing.my ? null : (
 					<Container
 						ui={{
 							layout: "horizontal-flex",
@@ -105,7 +105,7 @@ export const Data: FC<Data.Props> = ({ listingId, feedId, withScore, ...props })
 					</Container>
 				)}
 
-				{listing.isFavourite || listing.thumb === "like" ? null : (
+				{listing.isFavourite || listing.thumb === "like" || listing.my ? null : (
 					<Group>
 						<IgnoreButton listingId={listingId} />
 
