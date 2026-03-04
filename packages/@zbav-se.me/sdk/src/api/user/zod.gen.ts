@@ -353,6 +353,75 @@ export const zInboxQuery = z.object({
 export type zInboxQuery = z.infer<typeof zInboxQuery>;
 
 /**
+ * Payload for seller message notifications
+ */
+export const zInboxSellerMessagePayload = z.object({
+    type: zInboxTypeEnum,
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'Related transaction identifier'
+    }),
+    messageThreadId: z.string().register(z.globalRegistry, {
+        description: 'Related message thread identifier'
+    })
+}).register(z.globalRegistry, {
+    description: 'Payload for seller message notifications'
+});
+
+export type zInboxSellerMessagePayload = z.infer<typeof zInboxSellerMessagePayload>;
+
+/**
+ * Payload for buyer message notifications
+ */
+export const zInboxBuyerMessagePayload = z.object({
+    type: zInboxTypeEnum,
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'Related transaction identifier'
+    }),
+    messageThreadId: z.string().register(z.globalRegistry, {
+        description: 'Related message thread identifier'
+    })
+}).register(z.globalRegistry, {
+    description: 'Payload for buyer message notifications'
+});
+
+export type zInboxBuyerMessagePayload = z.infer<typeof zInboxBuyerMessagePayload>;
+
+/**
+ * Type of thumb
+ */
+export const zThumbEnum = z.enum(['like', 'dislike']).register(z.globalRegistry, {
+    description: 'Type of thumb'
+});
+
+export type zThumbEnum = z.infer<typeof zThumbEnum>;
+
+/**
+ * Payload for thumb notifications
+ */
+export const zInboxThumbPayload = z.object({
+    type: zInboxTypeEnum,
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'Listing identifier'
+    }),
+    thumb: zThumbEnum
+}).register(z.globalRegistry, {
+    description: 'Payload for thumb notifications'
+});
+
+export type zInboxThumbPayload = z.infer<typeof zInboxThumbPayload>;
+
+/**
+ * Inbox payload per type
+ */
+export const zInboxPayload = z.union([
+    zInboxSellerMessagePayload,
+    zInboxBuyerMessagePayload,
+    zInboxThumbPayload
+]);
+
+export type zInboxPayload = z.infer<typeof zInboxPayload>;
+
+/**
  * Inbox item
  */
 export const zInbox = z.object({
@@ -366,9 +435,7 @@ export const zInbox = z.object({
         description: 'Inbox event timestamp'
     }),
     type: zInboxTypeEnum,
-    payload: z.record(z.string(), z.unknown()).register(z.globalRegistry, {
-        description: 'Inbox payload'
-    }),
+    payload: zInboxPayload,
     priority: zInboxPriorityEnum,
     archivedAt: z.string().register(z.globalRegistry, {
         description: 'Archive timestamp (null/undefined = active)'

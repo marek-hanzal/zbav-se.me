@@ -355,18 +355,70 @@ export type tInbox = {
      */
     timestamp: string;
     type: tInboxTypeEnum;
-    /**
-     * Inbox payload
-     */
-    payload: {
-        [key: string]: unknown;
-    };
+    payload: tInboxPayload;
     priority: tInboxPriorityEnum;
     /**
      * Archive timestamp (null/undefined = active)
      */
     archivedAt?: string;
 };
+
+/**
+ * Inbox payload per type
+ */
+export type tInboxPayload = tInboxSellerMessagePayload | tInboxBuyerMessagePayload | tInboxThumbPayload;
+
+/**
+ * Payload for seller message notifications
+ */
+export type tInboxSellerMessagePayload = {
+    type: tInboxTypeEnum;
+    /**
+     * Related transaction identifier
+     */
+    transactionId: string;
+    /**
+     * Related message thread identifier
+     */
+    messageThreadId: string;
+};
+
+/**
+ * Payload for buyer message notifications
+ */
+export type tInboxBuyerMessagePayload = {
+    type: tInboxTypeEnum;
+    /**
+     * Related transaction identifier
+     */
+    transactionId: string;
+    /**
+     * Related message thread identifier
+     */
+    messageThreadId: string;
+};
+
+/**
+ * Payload for thumb notifications
+ */
+export type tInboxThumbPayload = {
+    type: tInboxTypeEnum;
+    /**
+     * Listing identifier
+     */
+    listingId: string;
+    thumb: tThumbEnum;
+};
+
+/**
+ * Type of thumb
+ */
+export const tThumbEnum = { like: 'like', dislike: 'dislike' } as const;
+
+/**
+ * Type of thumb
+ */
+export type tThumbEnum = typeof tThumbEnum[keyof typeof tThumbEnum];
 
 /**
  * Query object for inbox count

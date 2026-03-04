@@ -393,9 +393,7 @@ export const sInbox = {
             $ref: '#/components/schemas/InboxTypeEnum'
         },
         payload: {
-            type: 'object',
-            properties: {},
-            additionalProperties: {}
+            $ref: '#/components/schemas/InboxPayload'
         },
         priority: {
             $ref: '#/components/schemas/InboxPriorityEnum'
@@ -411,6 +409,88 @@ export const sInbox = {
         'type',
         'payload',
         'priority'
+    ]
+} as const;
+
+export const sInboxPayload = {
+    anyOf: [
+        {
+            $ref: '#/components/schemas/InboxSellerMessagePayload'
+        },
+        {
+            $ref: '#/components/schemas/InboxBuyerMessagePayload'
+        },
+        {
+            $ref: '#/components/schemas/InboxThumbPayload'
+        }
+    ]
+} as const;
+
+export const sInboxSellerMessagePayload = {
+    type: 'object',
+    properties: {
+        type: {
+            $ref: '#/components/schemas/InboxTypeEnum'
+        },
+        transactionId: {
+            type: 'string'
+        },
+        messageThreadId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'type',
+        'transactionId',
+        'messageThreadId'
+    ]
+} as const;
+
+export const sInboxBuyerMessagePayload = {
+    type: 'object',
+    properties: {
+        type: {
+            $ref: '#/components/schemas/InboxTypeEnum'
+        },
+        transactionId: {
+            type: 'string'
+        },
+        messageThreadId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'type',
+        'transactionId',
+        'messageThreadId'
+    ]
+} as const;
+
+export const sInboxThumbPayload = {
+    type: 'object',
+    properties: {
+        type: {
+            $ref: '#/components/schemas/InboxTypeEnum'
+        },
+        listingId: {
+            type: 'string'
+        },
+        thumb: {
+            $ref: '#/components/schemas/ThumbEnum'
+        }
+    },
+    required: [
+        'type',
+        'listingId',
+        'thumb'
+    ]
+} as const;
+
+export const sThumbEnum = {
+    type: 'string',
+    enum: [
+        'like',
+        'dislike'
     ]
 } as const;
 
