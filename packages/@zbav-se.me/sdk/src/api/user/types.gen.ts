@@ -380,6 +380,10 @@ export type tInboxSellerMessagePayload = {
      */
     transactionId: string;
     /**
+     * Related listing identifier
+     */
+    listingId: string;
+    /**
      * Related message thread identifier
      */
     messageThreadId: string;
@@ -394,6 +398,10 @@ export type tInboxBuyerMessagePayload = {
      * Related transaction identifier
      */
     transactionId: string;
+    /**
+     * Related listing identifier
+     */
+    listingId: string;
     /**
      * Related message thread identifier
      */

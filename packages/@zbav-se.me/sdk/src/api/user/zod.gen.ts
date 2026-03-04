@@ -362,6 +362,9 @@ export const zInboxSellerMessagePayload = z.object({
     transactionId: z.string().register(z.globalRegistry, {
         description: 'Related transaction identifier'
     }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'Related listing identifier'
+    }),
     messageThreadId: z.string().register(z.globalRegistry, {
         description: 'Related message thread identifier'
     })
@@ -378,6 +381,9 @@ export const zInboxBuyerMessagePayload = z.object({
     type: zInboxTypeEnum,
     transactionId: z.string().register(z.globalRegistry, {
         description: 'Related transaction identifier'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'Related listing identifier'
     }),
     messageThreadId: z.string().register(z.globalRegistry, {
         description: 'Related message thread identifier'

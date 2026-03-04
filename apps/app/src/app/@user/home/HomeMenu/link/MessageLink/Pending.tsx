@@ -5,6 +5,7 @@ import { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
+import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
 export namespace Pending {
@@ -50,11 +51,27 @@ export const Pending: FC<Pending.Props> = ({ iconProps }) => {
 					params={{
 						locale,
 					}}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						text: "lg",
-					}}
+					activeProps={uiMenuButton({
+						ui: {
+							flow: "horizontal",
+							justify: "center",
+							items: "center",
+							tone: "primary",
+							theme: "light",
+						},
+						className: [],
+					})}
+					{...uiMenuButton({
+						ui: {
+							flow: "horizontal",
+							justify: "center",
+							items: "center",
+							tone: "neutral",
+							theme: "light",
+							text: "lg",
+						},
+						className: [],
+					})}
 				>
 					<Tx label={"Loading... (label)"} />
 				</LinkTo>
@@ -66,11 +83,27 @@ export const Pending: FC<Pending.Props> = ({ iconProps }) => {
 					params={{
 						locale,
 					}}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						text: "lg",
-					}}
+					activeProps={uiMenuButton({
+						ui: {
+							flow: "horizontal",
+							justify: "center",
+							items: "center",
+							tone: "primary",
+							theme: "light",
+						},
+						className: [],
+					})}
+					{...uiMenuButton({
+						ui: {
+							flow: "horizontal",
+							justify: "center",
+							items: "center",
+							tone: "neutral",
+							theme: "light",
+							text: "lg",
+						},
+						className: [],
+					})}
 				>
 					<Tx label={"Loading... (label)"} />
 				</LinkTo>

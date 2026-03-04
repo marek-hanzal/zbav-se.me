@@ -447,6 +447,9 @@ export const sInboxSellerMessagePayload = {
         transactionId: {
             type: 'string'
         },
+        listingId: {
+            type: 'string'
+        },
         messageThreadId: {
             type: 'string'
         }
@@ -454,6 +457,7 @@ export const sInboxSellerMessagePayload = {
     required: [
         'type',
         'transactionId',
+        'listingId',
         'messageThreadId'
     ]
 } as const;
@@ -467,6 +471,9 @@ export const sInboxBuyerMessagePayload = {
         transactionId: {
             type: 'string'
         },
+        listingId: {
+            type: 'string'
+        },
         messageThreadId: {
             type: 'string'
         }
@@ -474,6 +481,7 @@ export const sInboxBuyerMessagePayload = {
     required: [
         'type',
         'transactionId',
+        'listingId',
         'messageThreadId'
     ]
 } as const;

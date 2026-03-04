@@ -2,55 +2,90 @@ import { useLocale } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
+import { Typo } from "@use-pico/client/ui/typo";
+import { toTimeDiff } from "@use-pico/common/time";
 import type { tInbox, zInboxSellerMessagePayload } from "@zbav-se.me/sdk/api/user";
+import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
+import { withInboxQuery } from "@zbav-se.me/sdk/query/user/inbox";
 import type { FC } from "react";
+import { useUpload } from "~/app/@common/gallery/hook/useUpload";
+import { ListItem } from "~/app/@common/list-item/ListItem";
 
 export namespace InboxSellerMessageItem {
-	export interface Props extends Container.Props {
+	export interface Props {
 		item: tInbox;
 		payload: zInboxSellerMessagePayload;
 	}
 }
 
-export const InboxSellerMessageItem: FC<InboxSellerMessageItem.Props> = ({
-	item,
-	payload,
-	...props
-}) => {
+export const InboxSellerMessageItem: FC<InboxSellerMessageItem.Props> = ({ item, payload }) => {
 	const locale = useLocale();
+	const { data: listing } = withListingQuery.useFetchQuery(payload.listingId);
+	const hero = useUpload(listing.gallery.items);
+	const patchMutation = withInboxQuery.usePatchMutation({
+		invalidate: [],
+	});
 
 	return (
-		<Container
-			data-ui="InboxSellerMessageItem[Container]"
-			ui={{
-				border: true,
-				round: "md",
-				inner: "default",
-				flow: "vertical",
-				gap: "xs",
+		<LinkTo
+			to="/$locale/buyer/message/list"
+			params={{
+				locale,
 			}}
-			{...props}
+			onClick={() => {
+				if (item.archivedAt) {
+					return;
+				}
+				patchMutation.mutate({
+					patch: {
+						archivedAt: new Date().toISOString(),
+					},
+					query: {
+						where: {
+							id: item.id,
+						},
+					},
+				});
+			}}
 		>
-			<Tx label="Inbox seller message (title)" />
-			<Tx label={`#${payload.transactionId}`} />
-			<LinkTo
-				to="/$locale/buyer/message/list"
-				params={{
-					locale,
-				}}
-				ui={{
-					size: "xs",
-					border: true,
-					round: "sm",
-				}}
-			>
-				<Tx label="Open message thread (button)" />
-			</LinkTo>
-			<Tx
-				label={
-					item.priority === "high" ? "High priority (label)" : "Common priority (label)"
+			<ListItem
+				hero={hero}
+				title={
+					<Tx
+						label={"New seller message (label)"}
+						ui={{
+							tone: item.archivedAt ? "neutral" : "secondary",
+							theme: "light",
+							font: item.archivedAt ? "normal" : "bold",
+							color: "lead",
+						}}
+					/>
+				}
+				bottom={
+					<Container
+						ui={{
+							flow: "vertical",
+						}}
+					>
+						<Typo
+							label={listing.title}
+							ui={{
+								text: "sm",
+							}}
+						/>
+						<Typo
+							label={toTimeDiff({
+								locale,
+								time: item.timestamp,
+							})}
+							ui={{
+								text: "xs",
+								opacity: "7",
+							}}
+						/>
+					</Container>
 				}
 			/>
-		</Container>
+		</LinkTo>
 	);
 };

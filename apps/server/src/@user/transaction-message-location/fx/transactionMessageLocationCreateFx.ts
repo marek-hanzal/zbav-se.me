@@ -78,6 +78,7 @@ export const transactionMessageLocationCreateFx = Effect.fn("transactionMessageL
 								payload: {
 									type: "buyer-message",
 									transactionId: transaction.id,
+									listingId: transaction.listingId,
 									messageThreadId: transaction.messageThreadId,
 								},
 								priority: "high",
@@ -88,6 +89,7 @@ export const transactionMessageLocationCreateFx = Effect.fn("transactionMessageL
 								payload: {
 									type: "seller-message",
 									transactionId: transaction.id,
+									listingId: transaction.listingId,
 									messageThreadId: transaction.messageThreadId,
 								},
 								priority: "high",

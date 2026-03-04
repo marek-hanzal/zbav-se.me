@@ -136,6 +136,7 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 				payload: {
 					type: "buyer-message",
 					transactionId: id,
+					listingId,
 					messageThreadId: messageThread.id,
 				},
 				priority: "high",

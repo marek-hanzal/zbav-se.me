@@ -71,6 +71,7 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 					payload: {
 						type: "buyer-message",
 						transactionId: transaction.id,
+						listingId: transaction.listingId,
 						messageThreadId: transaction.messageThreadId,
 					},
 					priority: "high",
@@ -81,6 +82,7 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 					payload: {
 						type: "seller-message",
 						transactionId: transaction.id,
+						listingId: transaction.listingId,
 						messageThreadId: transaction.messageThreadId,
 					},
 					priority: "high",

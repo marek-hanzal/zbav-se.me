@@ -78,6 +78,7 @@ export const transactionMessagePersonalCreateFx = Effect.fn("transactionMessageP
 								payload: {
 									type: "buyer-message",
 									transactionId: transaction.id,
+									listingId: transaction.listingId,
 									messageThreadId: transaction.messageThreadId,
 								},
 								priority: "high",
@@ -88,6 +89,7 @@ export const transactionMessagePersonalCreateFx = Effect.fn("transactionMessageP
 								payload: {
 									type: "seller-message",
 									transactionId: transaction.id,
+									listingId: transaction.listingId,
 									messageThreadId: transaction.messageThreadId,
 								},
 								priority: "high",

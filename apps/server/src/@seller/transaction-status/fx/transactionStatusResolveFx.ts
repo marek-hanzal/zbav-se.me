@@ -84,6 +84,7 @@ export const transactionStatusResolveFx = Effect.fn("transactionStatusResolveFx"
 				payload: {
 					type: "seller-message",
 					transactionId: transaction.id,
+					listingId: transaction.listingId,
 					messageThreadId: transaction.messageThreadId,
 				},
 				priority: "high",

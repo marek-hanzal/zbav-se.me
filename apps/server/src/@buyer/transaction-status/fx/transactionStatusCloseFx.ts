@@ -86,6 +86,7 @@ export const transactionStatusCloseFx = Effect.fn("transactionStatusCloseFx")(fu
 							payload: {
 								type: "buyer-message",
 								transactionId: transaction.id,
+								listingId: transaction.listingId,
 								messageThreadId: transaction.messageThreadId,
 							},
 							priority: "high",
@@ -96,6 +97,7 @@ export const transactionStatusCloseFx = Effect.fn("transactionStatusCloseFx")(fu
 							payload: {
 								type: "seller-message",
 								transactionId: transaction.id,
+								listingId: transaction.listingId,
 								messageThreadId: transaction.messageThreadId,
 							},
 							priority: "high",
