@@ -9,7 +9,7 @@ import type {
 
 export const withInboxArchiveMutation = withMutation<
 	tInboxQuery,
-	tApiInboxArchiveResponse[200],
+	tApiInboxArchiveResponse[204],
 	apiInboxArchiveError
 >({
 	keys(variables) {

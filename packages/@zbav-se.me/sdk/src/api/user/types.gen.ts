@@ -211,16 +211,6 @@ export type tGalleryCountQuery = {
 };
 
 /**
- * Bulk archive result
- */
-export type tInboxArchiveResult = {
-    /**
-     * Number of archived items
-     */
-    archived: number;
-};
-
-/**
  * Query object for inbox collection
  */
 export type tInboxQuery = {
@@ -365,67 +355,18 @@ export type tInbox = {
      */
     timestamp: string;
     type: tInboxTypeEnum;
-    payload: tInboxPayload;
+    /**
+     * Inbox payload
+     */
+    payload: {
+        [key: string]: unknown;
+    };
     priority: tInboxPriorityEnum;
     /**
      * Archive timestamp (null/undefined = active)
      */
     archivedAt?: string;
 };
-
-/**
- * Inbox payload per type
- */
-export type tInboxPayload = tInboxSellerMessagePayload | tInboxBuyerMessagePayload | tInboxThumbPayload;
-
-/**
- * Payload for seller message notifications
- */
-export type tInboxSellerMessagePayload = {
-    /**
-     * Related transaction identifier
-     */
-    transactionId: string;
-    /**
-     * Related message thread identifier
-     */
-    messageThreadId: string;
-};
-
-/**
- * Payload for buyer message notifications
- */
-export type tInboxBuyerMessagePayload = {
-    /**
-     * Related transaction identifier
-     */
-    transactionId: string;
-    /**
-     * Related message thread identifier
-     */
-    messageThreadId: string;
-};
-
-/**
- * Payload for thumb notifications
- */
-export type tInboxThumbPayload = {
-    /**
-     * Listing identifier
-     */
-    listingId: string;
-    type: tThumbEnum;
-};
-
-/**
- * Type of thumb
- */
-export const tThumbEnum = { like: 'like', dislike: 'dislike' } as const;
-
-/**
- * Type of thumb
- */
-export type tThumbEnum = typeof tThumbEnum[keyof typeof tThumbEnum];
 
 /**
  * Query object for inbox count
@@ -1138,9 +1079,9 @@ export type apiInboxArchiveError = apiInboxArchiveErrors[keyof apiInboxArchiveEr
 
 export type tApiInboxArchiveResponse = {
     /**
-     * Archive result
+     * Archived, no content
      */
-    200: tInboxArchiveResult;
+    204: void;
 };
 
 export type apiInboxArchiveResponse = tApiInboxArchiveResponse[keyof tApiInboxArchiveResponse];

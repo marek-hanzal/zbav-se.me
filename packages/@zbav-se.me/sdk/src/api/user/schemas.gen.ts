@@ -242,19 +242,6 @@ export const sGalleryCountQuery = {
     }
 } as const;
 
-export const sInboxArchiveResult = {
-    type: 'object',
-    properties: {
-        archived: {
-            type: 'integer',
-            minimum: 0
-        }
-    },
-    required: [
-        'archived'
-    ]
-} as const;
-
 export const sInboxQuery = {
     type: 'object',
     properties: {
@@ -406,7 +393,9 @@ export const sInbox = {
             $ref: '#/components/schemas/InboxTypeEnum'
         },
         payload: {
-            $ref: '#/components/schemas/InboxPayload'
+            type: 'object',
+            properties: {},
+            additionalProperties: {}
         },
         priority: {
             $ref: '#/components/schemas/InboxPriorityEnum'
@@ -422,76 +411,6 @@ export const sInbox = {
         'type',
         'payload',
         'priority'
-    ]
-} as const;
-
-export const sInboxPayload = {
-    anyOf: [
-        {
-            $ref: '#/components/schemas/InboxSellerMessagePayload'
-        },
-        {
-            $ref: '#/components/schemas/InboxBuyerMessagePayload'
-        },
-        {
-            $ref: '#/components/schemas/InboxThumbPayload'
-        }
-    ]
-} as const;
-
-export const sInboxSellerMessagePayload = {
-    type: 'object',
-    properties: {
-        transactionId: {
-            type: 'string'
-        },
-        messageThreadId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'transactionId',
-        'messageThreadId'
-    ]
-} as const;
-
-export const sInboxBuyerMessagePayload = {
-    type: 'object',
-    properties: {
-        transactionId: {
-            type: 'string'
-        },
-        messageThreadId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'transactionId',
-        'messageThreadId'
-    ]
-} as const;
-
-export const sInboxThumbPayload = {
-    type: 'object',
-    properties: {
-        listingId: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/ThumbEnum'
-        }
-    },
-    required: [
-        'listingId',
-        'type'
-    ]
-} as const;
-
-export const sThumbEnum = {
-    type: 'string',
-    enum: [
-        'like',
-        'dislike'
     ]
 } as const;
 

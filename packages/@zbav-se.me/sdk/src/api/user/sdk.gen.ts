@@ -77,7 +77,6 @@ export const apiGalleryCount = <ThrowOnError extends boolean = false>(options?: 
  */
 export const apiInboxArchive = <ThrowOnError extends boolean = false>(options?: Options<tApiInboxArchiveRequest, ThrowOnError>) => (options?.client ?? client).post<tApiInboxArchiveResponse, apiInboxArchiveErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiInboxArchiveData.parseAsync(data),
-    responseType: 'json',
     responseValidator: async (data) => await zApiInboxArchiveResponse.parseAsync(data),
     url: '/api/user/inbox/archive',
     ...options,
