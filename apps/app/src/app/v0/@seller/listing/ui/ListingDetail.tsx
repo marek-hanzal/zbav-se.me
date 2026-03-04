@@ -8,8 +8,8 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { ConditionIcon } from "~/app/@common/condition/ui/ConditionIcon";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
+import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { CategoryInline } from "~/app/@session/category/ui/CategoryInline/CategoryInline";
-import { ListingOverlay } from "./ListingOverlay";
 
 export namespace ListingDetail {
 	export interface Hooks {
@@ -42,9 +42,16 @@ export const ListingDetail: FC<ListingDetail.Props> = ({ listing, ui, hooks, ...
 					position: "relative",
 				}}
 			>
-				<ListingOverlay
-					data-ui={"ListingDetail-[ListingOverlay]"}
-					listing={listing}
+				<ListingPrice
+					data-ui={"ListingOverlay-[ListingPrice]"}
+					price={listing.price}
+					priceType={listing.priceType}
+					currency={listing.currency}
+					ui={{
+						snapTo: "top-center",
+						opacity: "8",
+						zIndex: true,
+					}}
 				/>
 
 				<HeroImage

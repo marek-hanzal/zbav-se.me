@@ -43,3 +43,6 @@ Maps to server API: `/api/buyer/*`.
   - `@buyer/favourite/FavouriteListPage/FavouriteList/`
 - Favourite toggle button for feed listing card is localized to page scope:
   - `@buyer/feed/FeedListingPage/FavouriteButton/`
+- Buyer message list page is now active scope (`v0` page removed):
+  - `@buyer/transaction/MessageListPage/MessageListPage.tsx`
+  - `@buyer/transaction/~public/MessageListPage.ts`

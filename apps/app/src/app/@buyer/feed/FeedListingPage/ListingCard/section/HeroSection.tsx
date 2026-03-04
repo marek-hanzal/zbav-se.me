@@ -12,7 +12,7 @@ export namespace HeroSection {
 	export interface Props {
 		feedId: string;
 		listing: tListing;
-		onView(view: "gallery" | "transaction"): void;
+		onView(view: "gallery"): void;
 	}
 }
 
@@ -50,26 +50,28 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 					}}
 				/>
 
-				<FavouriteButton
-					feedId={feedId}
-					listingId={listing.id}
-					iconProps={{
-						ui: {
-							text: "xl",
-						},
-					}}
-					ui={{
-						tone: "secondary",
-						theme: "light",
-						round: "full",
-						square: "md",
-						justify: "center",
-						items: "center",
-						size: undefined,
-						inner: undefined,
-						snapTo: "top-right",
-					}}
-				/>
+				{listing.my ? null : (
+					<FavouriteButton
+						feedId={feedId}
+						listingId={listing.id}
+						iconProps={{
+							ui: {
+								text: "xl",
+							},
+						}}
+						ui={{
+							tone: "secondary",
+							theme: "light",
+							round: "full",
+							square: "md",
+							justify: "center",
+							items: "center",
+							size: undefined,
+							inner: undefined,
+							snapTo: "top-right",
+						}}
+					/>
+				)}
 
 				<HeroImage
 					data-ui={"HeroSection-[HeroImage]"}
@@ -83,10 +85,7 @@ export const HeroSection: FC<HeroSection.Props> = ({ feedId, listing, onView }) 
 				/>
 			</Container>
 
-			<TransactionButton
-				listing={listing}
-				onView={onView}
-			/>
+			{listing.my ? null : <TransactionButton listing={listing} />}
 		</>
 	);
 };

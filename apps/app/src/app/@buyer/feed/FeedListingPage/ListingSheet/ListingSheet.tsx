@@ -6,11 +6,10 @@ import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, type PropsWithChildren, useCallback, useMemo, useState } from "react";
 import { SellerInfo } from "~/app/@buyer/listing/~public/SellerInfo";
 import { GalleryPreview } from "~/app/@common/gallery/ui/GalleryPreview";
-import { Transaction } from "~/app/v0/@buyer/transaction/ui/Transaction";
 import { ListingCard } from "../ListingCard/ListingCard";
 
 export namespace ListingSheet {
-	export type View = "default" | "transaction" | "gallery" | "seller-info";
+	export type View = "default" | "gallery" | "seller-info";
 
 	export interface Props extends PropsWithChildren, SheetView.PropsEx<View> {
 		feedId: string;
@@ -54,24 +53,6 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 				),
 				header: () => ({
 					title: translator.text("Listing gallery (title)"),
-					right: (
-						<CloseButton
-							iconEnabled={CloseIcon}
-							onClick={$onClose}
-						/>
-					),
-				}),
-			},
-			transaction: {
-				children: listing.transactionId ? (
-					<Transaction
-						_suspense={"I know"}
-						transactionId={listing.transactionId}
-						refresh={2_500}
-					/>
-				) : null,
-				header: () => ({
-					title: translator.text("Listing messages (title)"),
 					right: (
 						<CloseButton
 							iconEnabled={CloseIcon}
