@@ -242,6 +242,292 @@ export const sGalleryCountQuery = {
     }
 } as const;
 
+export const sInboxArchiveResult = {
+    type: 'object',
+    properties: {
+        archived: {
+            type: 'integer',
+            minimum: 0
+        }
+    },
+    required: [
+        'archived'
+    ]
+} as const;
+
+export const sInboxQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/InboxFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/InboxWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/InboxSort'
+            }
+        }
+    }
+} as const;
+
+export const sInboxFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/InboxTypeEnum'
+        },
+        priority: {
+            $ref: '#/components/schemas/InboxPriorityEnum'
+        },
+        archivedAtIsNull: {
+            type: 'boolean'
+        },
+        timestampGte: {
+            type: 'string'
+        },
+        timestampLte: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sInboxTypeEnum = {
+    type: 'string',
+    enum: [
+        'seller-message',
+        'buyer-message',
+        'thumb'
+    ]
+} as const;
+
+export const sInboxPriorityEnum = {
+    type: 'string',
+    enum: [
+        'common',
+        'high'
+    ]
+} as const;
+
+export const sInboxWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/InboxTypeEnum'
+        },
+        priority: {
+            $ref: '#/components/schemas/InboxPriorityEnum'
+        },
+        archivedAtIsNull: {
+            type: 'boolean'
+        },
+        timestampGte: {
+            type: 'string'
+        },
+        timestampLte: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sInboxSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/InboxSortField'
+        },
+        order: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'order'
+    ]
+} as const;
+
+export const sInboxSortField = {
+    type: 'string',
+    enum: [
+        'timestamp',
+        'archivedAt',
+        'priority'
+    ]
+} as const;
+
+export const sInbox = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        timestamp: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/InboxTypeEnum'
+        },
+        payload: {
+            $ref: '#/components/schemas/InboxPayload'
+        },
+        priority: {
+            $ref: '#/components/schemas/InboxPriorityEnum'
+        },
+        archivedAt: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'userId',
+        'timestamp',
+        'type',
+        'payload',
+        'priority'
+    ]
+} as const;
+
+export const sInboxPayload = {
+    anyOf: [
+        {
+            $ref: '#/components/schemas/InboxSellerMessagePayload'
+        },
+        {
+            $ref: '#/components/schemas/InboxBuyerMessagePayload'
+        },
+        {
+            $ref: '#/components/schemas/InboxThumbPayload'
+        }
+    ]
+} as const;
+
+export const sInboxSellerMessagePayload = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        messageThreadId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId',
+        'messageThreadId'
+    ]
+} as const;
+
+export const sInboxBuyerMessagePayload = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        messageThreadId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId',
+        'messageThreadId'
+    ]
+} as const;
+
+export const sInboxThumbPayload = {
+    type: 'object',
+    properties: {
+        listingId: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/ThumbEnum'
+        }
+    },
+    required: [
+        'listingId',
+        'type'
+    ]
+} as const;
+
+export const sThumbEnum = {
+    type: 'string',
+    enum: [
+        'like',
+        'dislike'
+    ]
+} as const;
+
+export const sInboxCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            $ref: '#/components/schemas/InboxFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/InboxWhere'
+        }
+    }
+} as const;
+
+export const sInboxPatch = {
+    type: 'object',
+    properties: {
+        patch: {
+            type: 'object',
+            properties: {
+                archivedAt: {
+                    type: 'string'
+                }
+            }
+        },
+        query: {
+            $ref: '#/components/schemas/InboxQuery'
+        }
+    },
+    required: [
+        'patch',
+        'query'
+    ]
+} as const;
+
 export const sMessageItem = {
     type: 'object',
     properties: {

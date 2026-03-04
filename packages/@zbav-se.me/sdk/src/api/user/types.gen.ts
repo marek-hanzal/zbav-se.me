@@ -211,6 +211,244 @@ export type tGalleryCountQuery = {
 };
 
 /**
+ * Bulk archive result
+ */
+export type tInboxArchiveResult = {
+    /**
+     * Number of archived items
+     */
+    archived: number;
+};
+
+/**
+ * Query object for inbox collection
+ */
+export type tInboxQuery = {
+    cursor?: tCursor;
+    filter?: tInboxFilter;
+    where?: tInboxWhere;
+    sort?: Array<tInboxSort>;
+};
+
+/**
+ * Inbox filters
+ */
+export type tInboxFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * Inbox owner filter
+     */
+    userId?: string;
+    type?: tInboxTypeEnum;
+    priority?: tInboxPriorityEnum;
+    /**
+     * Filter archived/null state
+     */
+    archivedAtIsNull?: boolean;
+    /**
+     * Lower timestamp bound
+     */
+    timestampGte?: string;
+    /**
+     * Upper timestamp bound
+     */
+    timestampLte?: string;
+};
+
+/**
+ * Inbox type
+ */
+export const tInboxTypeEnum = {
+    'seller-message': 'seller-message',
+    'buyer-message': 'buyer-message',
+    thumb: 'thumb'
+} as const;
+
+/**
+ * Inbox type
+ */
+export type tInboxTypeEnum = typeof tInboxTypeEnum[keyof typeof tInboxTypeEnum];
+
+/**
+ * Inbox priority level
+ */
+export const tInboxPriorityEnum = { common: 'common', high: 'high' } as const;
+
+/**
+ * Inbox priority level
+ */
+export type tInboxPriorityEnum = typeof tInboxPriorityEnum[keyof typeof tInboxPriorityEnum];
+
+/**
+ * App-level where filters
+ */
+export type tInboxWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * Inbox owner filter
+     */
+    userId?: string;
+    type?: tInboxTypeEnum;
+    priority?: tInboxPriorityEnum;
+    /**
+     * Filter archived/null state
+     */
+    archivedAtIsNull?: boolean;
+    /**
+     * Lower timestamp bound
+     */
+    timestampGte?: string;
+    /**
+     * Upper timestamp bound
+     */
+    timestampLte?: string;
+};
+
+/**
+ * Sort object for inbox collection
+ */
+export type tInboxSort = {
+    field: tInboxSortField;
+    order: tOrderEnum;
+};
+
+/**
+ * Sort field for inbox collection
+ */
+export const tInboxSortField = {
+    timestamp: 'timestamp',
+    archivedAt: 'archivedAt',
+    priority: 'priority'
+} as const;
+
+/**
+ * Sort field for inbox collection
+ */
+export type tInboxSortField = typeof tInboxSortField[keyof typeof tInboxSortField];
+
+/**
+ * Inbox item
+ */
+export type tInbox = {
+    /**
+     * Inbox identifier
+     */
+    id: string;
+    /**
+     * Recipient user identifier
+     */
+    userId: string;
+    /**
+     * Inbox event timestamp
+     */
+    timestamp: string;
+    type: tInboxTypeEnum;
+    payload: tInboxPayload;
+    priority: tInboxPriorityEnum;
+    /**
+     * Archive timestamp (null/undefined = active)
+     */
+    archivedAt?: string;
+};
+
+/**
+ * Inbox payload per type
+ */
+export type tInboxPayload = tInboxSellerMessagePayload | tInboxBuyerMessagePayload | tInboxThumbPayload;
+
+/**
+ * Payload for seller message notifications
+ */
+export type tInboxSellerMessagePayload = {
+    /**
+     * Related transaction identifier
+     */
+    transactionId: string;
+    /**
+     * Related message thread identifier
+     */
+    messageThreadId: string;
+};
+
+/**
+ * Payload for buyer message notifications
+ */
+export type tInboxBuyerMessagePayload = {
+    /**
+     * Related transaction identifier
+     */
+    transactionId: string;
+    /**
+     * Related message thread identifier
+     */
+    messageThreadId: string;
+};
+
+/**
+ * Payload for thumb notifications
+ */
+export type tInboxThumbPayload = {
+    /**
+     * Listing identifier
+     */
+    listingId: string;
+    type: tThumbEnum;
+};
+
+/**
+ * Type of thumb
+ */
+export const tThumbEnum = { like: 'like', dislike: 'dislike' } as const;
+
+/**
+ * Type of thumb
+ */
+export type tThumbEnum = typeof tThumbEnum[keyof typeof tThumbEnum];
+
+/**
+ * Query object for inbox count
+ */
+export type tInboxCountQuery = {
+    filter?: tInboxFilter;
+    where?: tInboxWhere;
+};
+
+/**
+ * Patch one inbox item resolved by query
+ */
+export type tInboxPatch = {
+    patch: {
+        /**
+         * Archive timestamp
+         */
+        archivedAt?: string;
+    };
+    query: tInboxQuery;
+};
+
+/**
  * Message collection item
  */
 export type tMessageItem = {
@@ -878,6 +1116,148 @@ export type tApiGalleryCountResponse = {
 };
 
 export type apiGalleryCountResponse = tApiGalleryCountResponse[keyof tApiGalleryCountResponse];
+
+export type tApiInboxArchiveRequest = {
+    /**
+     * Inbox query used for bulk archive
+     */
+    body?: tInboxQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/inbox/archive';
+};
+
+export type apiInboxArchiveErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiInboxArchiveError = apiInboxArchiveErrors[keyof apiInboxArchiveErrors];
+
+export type tApiInboxArchiveResponse = {
+    /**
+     * Archive result
+     */
+    200: tInboxArchiveResult;
+};
+
+export type apiInboxArchiveResponse = tApiInboxArchiveResponse[keyof tApiInboxArchiveResponse];
+
+export type tApiInboxCollectionRequest = {
+    body?: tInboxQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/inbox/collection';
+};
+
+export type apiInboxCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiInboxCollectionError = apiInboxCollectionErrors[keyof apiInboxCollectionErrors];
+
+export type tApiInboxCollectionResponse = {
+    /**
+     * Inbox collection
+     */
+    200: Array<tInbox>;
+};
+
+export type apiInboxCollectionResponse = tApiInboxCollectionResponse[keyof tApiInboxCollectionResponse];
+
+export type tApiInboxCountRequest = {
+    body?: tInboxCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/inbox/count';
+};
+
+export type apiInboxCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiInboxCountError = apiInboxCountErrors[keyof apiInboxCountErrors];
+
+export type tApiInboxCountResponse = {
+    /**
+     * Inbox count
+     */
+    200: tCount;
+};
+
+export type apiInboxCountResponse = tApiInboxCountResponse[keyof tApiInboxCountResponse];
+
+export type tApiInboxFetchRequest = {
+    /**
+     * Inbox query
+     */
+    body?: tInboxQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/inbox/fetch';
+};
+
+export type apiInboxFetchErrors = {
+    /**
+     * Inbox item not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiInboxFetchError = apiInboxFetchErrors[keyof apiInboxFetchErrors];
+
+export type tApiInboxFetchResponse = {
+    /**
+     * Inbox item
+     */
+    200: tInbox;
+};
+
+export type apiInboxFetchResponse = tApiInboxFetchResponse[keyof tApiInboxFetchResponse];
+
+export type tApiInboxPatchRequest = {
+    /**
+     * Inbox patch payload
+     */
+    body?: tInboxPatch;
+    path?: never;
+    query?: never;
+    url: '/api/user/inbox/patch';
+};
+
+export type apiInboxPatchErrors = {
+    /**
+     * Inbox item not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiInboxPatchError = apiInboxPatchErrors[keyof apiInboxPatchErrors];
+
+export type tApiInboxPatchResponse = {
+    /**
+     * Patched inbox item
+     */
+    200: tInbox;
+};
+
+export type apiInboxPatchResponse = tApiInboxPatchResponse[keyof tApiInboxPatchResponse];
 
 export type tApiMessageThreadMessageCollectionRequest = {
     body?: tMessageQuery;

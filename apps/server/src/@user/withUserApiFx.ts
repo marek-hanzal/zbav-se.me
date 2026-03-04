@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { withGalleryApiFx } from "~/@user/gallery/withGalleryApiFx";
+import { withInboxApiFx } from "~/@user/inbox/withInboxApiFx";
 import { withMessageThreadApiFx } from "~/@user/message-thread/withMessageThreadApiFx";
 import { withS3ApiFx } from "~/@user/s3/withS3ApiFx";
 import { withTransactionMessageGalleryApiFx } from "~/@user/transaction-message-gallery/withTransactionMessageGalleryApiFx";
@@ -38,6 +39,7 @@ export const withUserApiFx = Effect.fn("withUserApiFx")(function* () {
 
 	yield* Effect.all([
 		withGalleryApiFx(),
+		withInboxApiFx(),
 		withMessageThreadApiFx(),
 		withS3ApiFx(),
 		withTransactionMessageGalleryApiFx(),
