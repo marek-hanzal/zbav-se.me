@@ -91,7 +91,6 @@ const Data: FC<Data.Props> = ({ priority }) => {
 	);
 
 	const { data: activeCount } = withInboxQuery.useCountQuery(activeCountQuery);
-	const { data: archivedCount } = withInboxQuery.useCountQuery(archivedCountQuery);
 
 	return (
 		<Container
@@ -176,10 +175,10 @@ const Data: FC<Data.Props> = ({ priority }) => {
 			/>
 
 			<Container data-ui="InboxListPageData[Archived]">
-				<InboxList query={archivedQuery} />
-				{archivedCount.filter === 0 ? (
-					<Tx label="No archived inbox items (message)" />
-				) : null}
+				<InboxList
+					query={archivedQuery}
+					textEmpty="No archived inbox items (message)"
+				/>
 			</Container>
 		</Container>
 	);
