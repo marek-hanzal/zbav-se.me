@@ -23,7 +23,7 @@ const icon: uiIcon.Ui = {
 
 export namespace HomeMenu {
 	export interface Props extends Container.Props {
-		//
+		onLinkClick?: () => void;
 	}
 }
 
@@ -33,7 +33,7 @@ export namespace HomeMenu {
  *
  * @see apps/app/src/app/@user/home/page/HomePage.tsx
  */
-export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
+export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const isHome = useMatchRoute()({
 		to: "/$locale/home",
@@ -103,6 +103,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 
 				<Group>
 					<NotificationLink
+						onLinkClick={onLinkClick}
 						iconProps={{
 							ui: {
 								...icon,

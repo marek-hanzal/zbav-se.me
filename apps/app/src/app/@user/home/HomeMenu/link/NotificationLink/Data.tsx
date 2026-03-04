@@ -15,10 +15,11 @@ import type { FC } from "react";
 export namespace Data {
 	export interface Props extends MarkSuspense.Props {
 		iconProps?: Icon.PropsEx;
+		onLinkClick?: () => void;
 	}
 }
 
-export const Data: FC<Data.Props> = ({ _suspense, iconProps }) => {
+export const Data: FC<Data.Props> = ({ _suspense, iconProps, onLinkClick }) => {
 	const locale = useLocale();
 	const { data: highCount } = withInboxQuery.useCountQuery({
 		where: {
@@ -58,6 +59,7 @@ export const Data: FC<Data.Props> = ({ _suspense, iconProps }) => {
 					to={"/$locale/inbox/$type"}
 					icon={ChevronRightIcon}
 					iconPosition={"right"}
+					onClick={onLinkClick}
 					params={{
 						locale,
 						type: "high",
@@ -104,6 +106,7 @@ export const Data: FC<Data.Props> = ({ _suspense, iconProps }) => {
 					to={"/$locale/inbox/$type"}
 					icon={ChevronRightIcon}
 					iconPosition={"right"}
+					onClick={onLinkClick}
 					params={{
 						locale,
 						type: "common",

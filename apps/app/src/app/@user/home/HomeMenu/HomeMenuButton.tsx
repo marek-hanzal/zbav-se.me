@@ -69,7 +69,11 @@ export const HomeMenuButton: FC<HomeMenuButton.Props> = ({ ui, ...props }) => {
 					disableScroll: true,
 				}}
 			>
-				<HomeMenu />
+				<HomeMenu
+					onLinkClick={() => {
+						setIsOpen(false);
+					}}
+				/>
 			</BottomSheet>
 		</>
 	);

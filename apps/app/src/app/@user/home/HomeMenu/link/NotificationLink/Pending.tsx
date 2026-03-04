@@ -11,10 +11,11 @@ import type { FC } from "react";
 export namespace Pending {
 	export interface Props {
 		iconProps?: Icon.PropsEx;
+		onLinkClick?: () => void;
 	}
 }
 
-export const Pending: FC<Pending.Props> = ({ iconProps }) => {
+export const Pending: FC<Pending.Props> = ({ iconProps, onLinkClick }) => {
 	const locale = useLocale();
 
 	return (
@@ -34,7 +35,7 @@ export const Pending: FC<Pending.Props> = ({ iconProps }) => {
 					text: "lg",
 				}}
 			>
-				<Tx label={"Loading... (label)"} />
+				<Tx label={"Notifications (label)"} />
 			</TypoIcon>
 
 			<Container
@@ -48,6 +49,7 @@ export const Pending: FC<Pending.Props> = ({ iconProps }) => {
 					to={"/$locale/inbox/$type"}
 					icon={ChevronRightIcon}
 					iconPosition={"right"}
+					onClick={onLinkClick}
 					params={{
 						locale,
 						type: "high",
@@ -74,13 +76,14 @@ export const Pending: FC<Pending.Props> = ({ iconProps }) => {
 						className: [],
 					})}
 				>
-					<Tx label={"Loading... (label)"} />
+					<Tx label={"Priority (label)"} />
 				</LinkTo>
 
 				<LinkTo
 					to={"/$locale/inbox/$type"}
 					icon={ChevronRightIcon}
 					iconPosition={"right"}
+					onClick={onLinkClick}
 					params={{
 						locale,
 						type: "common",
@@ -107,7 +110,7 @@ export const Pending: FC<Pending.Props> = ({ iconProps }) => {
 						className: [],
 					})}
 				>
-					<Tx label={"Loading... (label)"} />
+					<Tx label={"Others (label)"} />
 				</LinkTo>
 			</Container>
 		</Group>
