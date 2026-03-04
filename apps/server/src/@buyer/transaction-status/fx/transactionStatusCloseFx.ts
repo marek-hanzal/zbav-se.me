@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { transactionPatchFx } from "~/@buyer/transaction/fx/transactionPatchFx";
 import { transactionStatusCreateFx } from "~/@buyer/transaction-status/fx/transactionStatusCreateFx";
 import type { TransactionStatusCloseSchema } from "~/@buyer/transaction-status/schema/TransactionStatusCloseSchema";
+import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
@@ -76,6 +77,30 @@ export const transactionStatusCloseFx = Effect.fn("transactionStatusCloseFx")(fu
 				messageThreadId: transaction.messageThreadId,
 				text: "Transaction closed (message)",
 			});
+
+			yield* inboxCreateFx(
+				transaction.side === "buyer"
+					? {
+							userId: transaction.sellerId,
+							type: "buyer-message",
+							payload: {
+								type: "buyer-message",
+								transactionId: transaction.id,
+								messageThreadId: transaction.messageThreadId,
+							},
+							priority: "high",
+						}
+					: {
+							userId: transaction.buyerId,
+							type: "seller-message",
+							payload: {
+								type: "seller-message",
+								transactionId: transaction.id,
+								messageThreadId: transaction.messageThreadId,
+							},
+							priority: "high",
+						},
+			);
 
 			yield* userInteractionEventFx({
 				userId,
