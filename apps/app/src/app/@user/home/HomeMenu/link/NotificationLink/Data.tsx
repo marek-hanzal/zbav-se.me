@@ -5,6 +5,8 @@ import { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
+import { Typo } from "@use-pico/client/ui/typo";
+import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { withInboxQuery } from "@zbav-se.me/sdk/query/user";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
@@ -83,6 +85,19 @@ export const Data: FC<Data.Props> = ({ _suspense, iconProps }) => {
 					})}
 				>
 					<Tx label={"Priority (label)"} />
+
+					{highCount.filter > 0 ? (
+						<Typo
+							label={`(${
+								highCount.filter > 9
+									? "9+"
+									: toLocaleNumber({
+											number: highCount.filter,
+											locale,
+										})
+							})`}
+						/>
+					) : null}
 				</LinkTo>
 
 				<LinkTo
