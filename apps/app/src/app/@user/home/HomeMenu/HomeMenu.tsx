@@ -99,6 +99,9 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 							},
 						}}
 					/>
+				</Group>
+
+				<Group>
 					<NotificationLink
 						iconProps={{
 							ui: {
