@@ -7,7 +7,7 @@ import { Image } from "./Image";
 
 export namespace ListItem {
 	export interface Props extends Omit<Group.Props, "title"> {
-		hero: tUpload | undefined;
+		hero: tUpload | undefined | null;
 		title: ReactNode;
 		bottom: ReactNode;
 	}
@@ -32,6 +32,7 @@ export const ListItem: FC<ListItem.Props> = ({
 				"h-24",
 				"md:h-28",
 				"shrink-0",
+				"relative",
 				className,
 			]}
 			ui={{

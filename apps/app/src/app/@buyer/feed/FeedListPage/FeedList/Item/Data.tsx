@@ -49,7 +49,7 @@ export const Data: FC<Data.Props> = ({ feedId, ui, ...props }) => {
 				}}
 			>
 				<ListItem
-					hero={feed.upload ?? undefined}
+					hero={feed.upload}
 					title={
 						<Tx
 							label={feed.name}

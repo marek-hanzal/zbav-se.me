@@ -40,7 +40,7 @@ export const Pending: FC<Pending.Props> = (props) => {
 			})}
 			{...props}
 		>
-			<Tx label={"Loading... (label)"} />
+			<Tx label="Inbox (label)" />
 		</LinkTo>
 	);
 };

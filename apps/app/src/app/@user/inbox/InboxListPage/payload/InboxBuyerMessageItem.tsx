@@ -31,7 +31,7 @@ export const InboxBuyerMessageItem: FC<InboxBuyerMessageItem.Props> = ({ item, p
 			to="/$locale/seller/message/$listingId/list"
 			params={{
 				locale,
-				listingId: payload.messageThreadId,
+				listingId: payload.listingId,
 			}}
 			onClick={() => {
 				if (item.archivedAt) {
