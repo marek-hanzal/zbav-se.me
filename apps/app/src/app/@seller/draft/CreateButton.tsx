@@ -27,6 +27,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ ui, className, ...props }
 		},
 		invalidate: [
 			"collection",
+			"count",
 		],
 	});
 

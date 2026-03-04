@@ -16,9 +16,6 @@
 035b4a691d02ff22e504324450fa9d11678d834249e37ad92b5a3545:
     ref: Dispute transaction (button)
     value: Vyřešit problém
-03c0da8e141f01b2b55f8576cb22830a0e9828128a2fbb52bc5cc452:
-    ref: Common priority (label)
-    value: Common priority (label)
 03dd4711e2aaba77a79e582ae21f6acf1aaa8b9bcd089b1b8e2de80e:
     ref: Close draft (button)
     value: Odložit na později
@@ -47,9 +44,6 @@
     ref: Transaction buyer info not available (message)
     value: |
         Zatím nemám dost dat o kupujícím - teď je to na tvé vlastní intuici.
-0b9bb6ac7ef168ba91f595c6c1a6fda5cbaad946e43af84f211df4a5:
-    ref: Inbox (label)
-    value: Notifikace
 0bfcff0fd8397bbe2de9284b3fe89a16ac4fbf192d890b04a396258b:
     ref: Draft edit (title)
     value: Nový inzerát
@@ -118,12 +112,6 @@
         chalupa
 
         nebo domov - nikdo jiný tuto polohu neuvidí.
-18d0aa0094b84a81991a7a790976d21930005328432c61d6fbfdd8b5:
-    ref: Open message thread (button)
-    value: Open message thread (button)
-193e90b9f89e573e2e1dd6b703d3d59019d23fd6eb818b86c92f4644:
-    ref: high
-    value: high
 1943b1ef0623fcc6116ef391b30cce37b7fd75dcde851410b1d5f9d6:
     ref: Upload photos (button)
     value: Nahraj fotky
@@ -236,6 +224,9 @@
 39506faaa681b27e6ed65d4237e07c6a2c63838b44f9495159f1ec8b:
     ref: Listing - Pros not filled
     value: Nechceš něco vyzdvihnout?
+39c37874e7619ae6dd79e98c8385c033871ad284b152bbd4b394ecc4:
+    ref: Others (label)
+    value: Ostatní
 3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
     ref: Price (placeholder)
     value: Cena
@@ -274,6 +265,9 @@
 44768dba85d12f054b4b9820de22bfdf8dcd0d561e4edc9d5546340b:
     ref: Find listings (label)
     value: Hledat
+45260cbfb1db18e4526fef4cc251c0564b693545bec5e2fa17efea67:
+    ref: New buyer message (label)
+    value: Zpráva od kupujícího
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
     ref: Uploading photo (title)
     value: Nahrávám fotku, momentík...
@@ -328,6 +322,9 @@
 5216a97ce804ea83d2142778cf1659ad70adc72c670ea7365e396fcb:
     ref: Go home (welcome)
     value: Jdeme na to!
+53630910d2b191f4a79a007e555fd44b9e109f75bafb3df5171ea48f:
+    ref: New seller message (label)
+    value: Zpráva od prodejce
 5611e161fc48366fdb56f2529712795617513c1b346552e32a53ff19:
     ref: Loading... (button)
     value: ...Rozjímám...
@@ -375,9 +372,6 @@
 5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
     ref: Really delete feed (button)
     value: Opravdu?
-60914c93951f077db120e2a9fe941c560140cd1f7783bd1bb3e69e56:
-    ref: Inbox buyer message (title)
-    value: Inbox buyer message (title)
 61324250f05e5b53c0994000ad235a587fa6c894a2414d561a434548:
     ref: Draft list (title)
     value: Rozpracované inzeráty
@@ -467,6 +461,9 @@
 7fff5a32624ca773f775bae93783cbc55b943a4c968052d2b32e91cd:
     ref: Mark transaction as successful (button)
     value: Jsem spokojený, zavřít
+80e54746f4fbbb896f101293d4a57144d41147ca4fa9787d50940980:
+    ref: Priority (label)
+    value: Důležité
 80eb01c4f083e6af9055876045562a9157c605f15686e89854ee632b:
     ref: unused
     value: unused
@@ -561,9 +558,6 @@
 957897e367a94096dcbfda99c8cf5bd4dc9f4d2a2292065c65990299:
     ref: Draft - action section (title)
     value: Co dál?
-96affccf100d82ded90e969eb9da2e2da3193acfe9d5055b78758ef6:
-    ref: Inbox seller message (title)
-    value: Inbox seller message (title)
 987bae9b81c35e9840767773141ed1ff4f077d951fa808c85af4250f:
     ref: Decision rate (hint)
     value: >
@@ -980,6 +974,9 @@ babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
 bb5e50b301be27567cdb705ba4f700188154893f0faee5a597fd9284:
     ref: User score (label)
     value: Skóre
+bbd8808bf4c28cd66cc606e6a7d8c4ab0c2cd43a8f8ae2aace45a73b:
+    ref: Notifications (label)
+    value: Notifikace
 bcd9934e20e9f9156bc934d5ff4ae78c96d19fdc0ec072a3a20e1371:
     ref: Listing - Pros (label)
     value: Co chci vyzdvihnout
@@ -1071,9 +1068,6 @@ c7011d532414a06429fe3823d5c970b1de99d6e19fd0f06ea309c7c3:
 c7147aaa47c54e90b7023be8ee57d73010a71c259e352067aaad48e6:
     ref: Reject transaction (button)
     value: Odmítnout a zavřít
-ca3c94af24817d8012c2d393395704a678e8b3dd6dcc0456fc388c23:
-    ref: High priority (label)
-    value: High priority (label)
 cbac5f835956010c5b45bed61ee098674baef1e75ef17acc19462ac1:
     ref: Flag listing (button)
     value: Nahlásit inzerát

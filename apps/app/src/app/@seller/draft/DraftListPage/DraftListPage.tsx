@@ -25,6 +25,9 @@ export const DraftListPage: FC<DraftListPage.Props> = (props) => {
 		>
 			<DraftList
 				query={{
+					where: {
+						usedAtIsNull: true,
+					},
 					sort: [
 						{
 							field: "updatedAt",
