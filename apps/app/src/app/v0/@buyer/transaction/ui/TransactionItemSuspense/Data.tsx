@@ -24,8 +24,8 @@ export const Data: FC<Data.Props> = ({ _suspense, transactionId, ...props }) => 
 			<ListItem
 				data-ui={"TransactionItem[Item]"}
 				hero={hero}
-					title={
-						<Tx
+				title={
+					<Tx
 						label={transaction.title}
 						ui={{
 							font: "bold",
@@ -38,9 +38,9 @@ export const Data: FC<Data.Props> = ({ _suspense, transactionId, ...props }) => 
 							"w-full",
 							"max-w-full",
 							"min-w-0",
-							]}
-						/>
-					}
+						]}
+					/>
+				}
 				bottom={
 					<Tx
 						label={transaction.location.address}
