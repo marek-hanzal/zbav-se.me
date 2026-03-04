@@ -1,5 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { InboxPriorityEnumSchema } from "~/database/@enum/InboxPriorityEnumSchema";
+import { InboxTypeEnumSchema } from "~/database/@enum/InboxTypeEnumSchema";
 
 export const InboxTableSchema = z.object({
 	id: z.string().openapi({
@@ -12,9 +13,7 @@ export const InboxTableSchema = z.object({
 		description: "Inbox event timestamp",
 		type: "string",
 	}),
-	type: z.string().openapi({
-		description: "Inbox item type",
-	}),
+	type: InboxTypeEnumSchema,
 	payload: z.looseObject({}).openapi({
 		description: "Inbox payload",
 	}),
