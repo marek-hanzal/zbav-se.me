@@ -21,6 +21,7 @@ export const Data: FC<Data.Props> = ({ _suspense, ...props }) => {
 	const locale = useLocale();
 	const { data: count } = withInboxQuery.useCountQuery({
 		where: {
+			priority: "high",
 			archivedAtIsNull: true,
 		},
 	});
@@ -69,15 +70,17 @@ export const Data: FC<Data.Props> = ({ _suspense, ...props }) => {
 				>
 					<Tx label="Inbox (label)" />
 
-					<Typo
-						ui={{
-							text: "sm",
-						}}
-						label={`(${toLocaleNumber({
-							number: count.filter,
-							locale,
-						})})`}
-					/>
+					{count.filter > 0 ? (
+						<Typo
+							ui={{
+								text: "sm",
+							}}
+							label={`(${toLocaleNumber({
+								number: count.filter,
+								locale,
+							})})`}
+						/>
+					) : null}
 				</Container>
 			</TypoIcon>
 		</LinkTo>
