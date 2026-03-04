@@ -179,7 +179,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								...icon,
 							},
 						}}
-						to="/$locale/seller/message/list"
+						to="/$locale/inbox/list"
 						params={{
 							locale,
 						}}
@@ -200,7 +200,7 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 								},
 							}}
 						>
-							<Tx label="Messages (label)" />
+							<Tx label="Inbox (label)" />
 						</TypoIcon>
 					</LinkTo>
 				</Group>
