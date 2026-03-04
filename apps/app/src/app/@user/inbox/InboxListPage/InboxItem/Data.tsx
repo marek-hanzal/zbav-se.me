@@ -1,3 +1,4 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
@@ -9,17 +10,17 @@ import {
 import { withInboxQuery } from "@zbav-se.me/sdk/query/user/inbox";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { InboxBuyerMessageItem } from "./payload/InboxBuyerMessageItem";
-import { InboxSellerMessageItem } from "./payload/InboxSellerMessageItem";
-import { InboxThumbItem } from "./payload/InboxThumbItem";
+import { InboxBuyerMessageItem } from "../payload/InboxBuyerMessageItem";
+import { InboxSellerMessageItem } from "../payload/InboxSellerMessageItem";
+import { InboxThumbItem } from "../payload/InboxThumbItem";
 
-export namespace InboxItem {
-	export interface Props extends Container.Props {
+export namespace Data {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		inboxId: string;
 	}
 }
 
-export const InboxItem: FC<InboxItem.Props> = ({ inboxId, ...props }) => {
+export const Data: FC<Data.Props> = ({ _suspense, inboxId, ...props }) => {
 	const { data: item } = withInboxQuery.useFetchQuery(inboxId);
 	const patchMutation = withInboxQuery.usePatchMutation();
 

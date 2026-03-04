@@ -9,7 +9,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { Suspense, useMemo, useState } from "react";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
-import { InboxItem } from "./InboxItem";
+import { InboxItem } from "./InboxItem/InboxItem";
 
 export namespace InboxListPage {
 	export interface Props extends TitleContainer.Props {
