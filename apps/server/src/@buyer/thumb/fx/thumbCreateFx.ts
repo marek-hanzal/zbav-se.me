@@ -5,6 +5,7 @@ import { listingCheckIfOwnFx } from "~/@buyer/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/@buyer/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/@buyer/listing-event/fx/listingEventCreateFx";
 import type { ThumbCreateSchema } from "~/@buyer/thumb/schema/ThumbCreateSchema";
+import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
@@ -45,6 +46,14 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 				message: "You cannot provide thumb on your own listing.",
 			});
 
+			const listing = yield* listingFetchFx({
+				userId,
+				where: {
+					id: listingId,
+				},
+				scope: {},
+			});
+
 			yield* listingEventCreateFx({
 				userId,
 				listingId,
@@ -67,6 +76,22 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 					.executeTakeFirstOrThrow(),
 			);
 
+			yield* inboxCreateFx({
+				userId: listing.userId,
+				type: "thumb",
+				payload: {
+					type: "thumb",
+					listingId,
+					thumb: type,
+				},
+				priority: "common",
+			});
+
+			/**
+			 * It's intentional, because listing has a lot of user-related
+			 * data, e.g. if it has thumb and so on, so we need to fetch fresh
+			 * listing.
+			 */
 			return yield* listingFetchFx({
 				userId,
 				where: {
