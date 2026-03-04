@@ -1,0 +1,37 @@
+import { z } from "@hono/zod-openapi";
+import { InboxPriorityEnumSchema } from "~/database/@enum/InboxPriorityEnumSchema";
+
+export const InboxTableSchema = z.object({
+	id: z.string().openapi({
+		description: "ID of the inbox entry",
+	}),
+	userId: z.string().openapi({
+		description: "Recipient user identifier",
+	}),
+	timestamp: z.coerce.date().openapi({
+		description: "Inbox event timestamp",
+		type: "string",
+	}),
+	type: z.string().openapi({
+		description: "Inbox item type",
+	}),
+	payload: z.looseObject({}).openapi({
+		description: "Inbox payload",
+	}),
+	priority: InboxPriorityEnumSchema,
+	archivedAt: z
+		.union([
+			z.null(),
+			z.coerce.date(),
+		])
+		.openapi({
+			description: "Archive timestamp (null = active)",
+			type: "string",
+		}),
+});
+
+export type InboxTableSchema = typeof InboxTableSchema;
+
+export namespace InboxTableSchema {
+	export type Type = z.infer<InboxTableSchema>;
+}

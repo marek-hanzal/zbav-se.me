@@ -12,6 +12,7 @@ import type { GalleryItemTableSchema } from "~/database/@table/GalleryItemTableS
 import type { GalleryTableSchema } from "~/database/@table/GalleryTableSchema";
 import type { GitHubTableSchema } from "~/database/@table/GitHubTableSchema";
 import type { IgnoreTableSchema } from "~/database/@table/IgnoreTableSchema";
+import type { InboxTableSchema } from "~/database/@table/InboxTableSchema";
 import type { ListingEventTableSchema } from "~/database/@table/ListingEventTableSchema";
 import type { ListingTableSchema } from "~/database/@table/ListingTableSchema";
 import type { LocationTableSchema } from "~/database/@table/LocationTableSchema";
@@ -45,6 +46,7 @@ export interface Database {
 	gallery: GalleryTableSchema.Type;
 	github: GitHubTableSchema.Type;
 	ignore: IgnoreTableSchema.Type;
+	inbox: InboxTableSchema.Type;
 	listing_event: ListingEventTableSchema.Type;
 	listing: ListingTableSchema.Type;
 	location: LocationTableSchema.Type;
