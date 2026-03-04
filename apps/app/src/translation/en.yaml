@@ -813,3 +813,51 @@ ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
 ff95e127f3feec3ae1c640001d56b07697ca4fa473da4213348be958:
   ref: open
   value: open
+inbox_001_label:
+  ref: Inbox (label)
+  value: Inbox
+inbox_002_title:
+  ref: Inbox (title)
+  value: Inbox
+inbox_003_mark_all:
+  ref: Mark all (button)
+  value: Mark all
+inbox_004_high_only:
+  ref: High only (label)
+  value: High only
+inbox_005_no_archived:
+  ref: No archived inbox items (message)
+  value: No archived inbox items.
+inbox_006_open_listing:
+  ref: Open listing preview (button)
+  value: Open listing preview
+inbox_007_open_thread:
+  ref: Open message thread (button)
+  value: Open message thread
+inbox_008_thumb_like:
+  ref: Thumb like (label)
+  value: Thumb like
+inbox_009_thumb_dislike:
+  ref: Thumb dislike (label)
+  value: Thumb dislike
+inbox_010_seller_message:
+  ref: Inbox seller message (title)
+  value: Seller replied to buyer
+inbox_011_buyer_message:
+  ref: Inbox buyer message (title)
+  value: Buyer replied to seller
+inbox_012_thumb_title:
+  ref: Inbox thumb (title)
+  value: Listing thumb update
+inbox_013_all:
+  ref: All (label)
+  value: All
+inbox_014_high_priority:
+  ref: High priority (label)
+  value: High priority
+inbox_015_common_priority:
+  ref: Common priority (label)
+  value: Common priority
+inbox_016_mark_as_read:
+  ref: Mark as read (button)
+  value: Mark as read

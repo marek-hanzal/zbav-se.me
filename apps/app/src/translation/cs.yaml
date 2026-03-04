@@ -1292,3 +1292,51 @@ seller - Transaction successful (message):
 
         Dál už tu nic není.
     static: true
+inbox_001_label:
+    ref: Inbox (label)
+    value: Inbox
+inbox_002_title:
+    ref: Inbox (title)
+    value: Inbox
+inbox_003_mark_all:
+    ref: Mark all (button)
+    value: Označit vše
+inbox_004_high_only:
+    ref: High only (label)
+    value: Jen high
+inbox_005_no_archived:
+    ref: No archived inbox items (message)
+    value: Žádné archivované položky.
+inbox_006_open_listing:
+    ref: Open listing preview (button)
+    value: Otevřít náhled inzerátu
+inbox_007_open_thread:
+    ref: Open message thread (button)
+    value: Otevřít zprávy
+inbox_008_thumb_like:
+    ref: Thumb like (label)
+    value: Lajk
+inbox_009_thumb_dislike:
+    ref: Thumb dislike (label)
+    value: Dislajk
+inbox_010_seller_message:
+    ref: Inbox seller message (title)
+    value: Prodejce odpověděl kupujícímu
+inbox_011_buyer_message:
+    ref: Inbox buyer message (title)
+    value: Kupující odpověděl prodejci
+inbox_012_thumb_title:
+    ref: Inbox thumb (title)
+    value: Reakce na inzerát
+inbox_013_all:
+    ref: All (label)
+    value: Vše
+inbox_014_high_priority:
+    ref: High priority (label)
+    value: Vysoká priorita
+inbox_015_common_priority:
+    ref: Common priority (label)
+    value: Běžná priorita
+inbox_016_mark_as_read:
+    ref: Mark as read (button)
+    value: Označit jako přečtené
