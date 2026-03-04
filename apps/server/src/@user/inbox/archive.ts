@@ -71,11 +71,11 @@ export const withArchiveApiFx = Effect.fn("withArchiveApiFx")(function* () {
 				withKyselyFx(c.get("kysely")),
 				withLoggingFx(axiomConfig, "apiInboxArchive"),
 				withDateFx,
-					withCatchFx({
-						RuntimeErrorFx(e) {
-							return c.json(noticeError(e), 500);
-						},
-					}),
+				withCatchFx({
+					RuntimeErrorFx(e) {
+						return c.json(noticeError(e), 500);
+					},
+				}),
 				Effect.runPromise,
 			);
 		},
