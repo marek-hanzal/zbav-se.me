@@ -1,4 +1,3 @@
-import { useMatchRoute } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { ChevronRightIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
@@ -17,15 +16,6 @@ export namespace Data {
 
 export const Data: FC<Data.Props> = ({ _suspense, ...props }) => {
 	const locale = useLocale();
-	const matchRoute = useMatchRoute();
-
-	if (
-		matchRoute({
-			to: "/$locale/home",
-		})
-	) {
-		return null;
-	}
 
 	return (
 		<LinkTo

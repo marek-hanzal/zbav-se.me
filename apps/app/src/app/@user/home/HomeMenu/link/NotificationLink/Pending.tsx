@@ -31,6 +31,13 @@ export const Pending: FC<Pending.Props> = (props) => {
 				},
 				className: [],
 			})}
+			{...uiMenuButton({
+				ui: {
+					tone: "neutral",
+					theme: "light",
+				},
+				className: [],
+			})}
 			{...props}
 		>
 			<Tx label={"Loading... (label)"} />

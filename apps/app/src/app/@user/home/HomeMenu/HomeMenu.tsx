@@ -1,3 +1,4 @@
+import { useMatchRoute } from "@tanstack/react-router";
 import type { uiIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
@@ -14,6 +15,11 @@ import { NotificationLink } from "./link/NotificationLink/NotificationLink";
 import { ProfileLink } from "./link/ProfileLink/ProfileLink";
 import { SearchLink } from "./link/SearchLink/SearchLink";
 
+const icon: uiIcon.Ui = {
+	color: "lead",
+	text: "2xl",
+};
+
 export namespace HomeMenu {
 	export interface Props extends Container.Props {
 		//
@@ -28,10 +34,10 @@ export namespace HomeMenu {
  */
 export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 	const containerRef = useRef<HTMLDivElement>(null);
-	const icon: uiIcon.Ui = {
-		color: "lead",
-		text: "2xl",
-	};
+	const matchRoute = useMatchRoute();
+	const isHome = matchRoute({
+		to: "/$locale/home",
+	});
 
 	return (
 		<Container
@@ -59,15 +65,17 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 					gap: "md",
 				}}
 			>
-				<Group>
-					<HomeLink
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-					/>
-				</Group>
+				{isHome ? null : (
+					<Group>
+						<HomeLink
+							iconProps={{
+								ui: {
+									...icon,
+								},
+							}}
+						/>
+					</Group>
+				)}
 
 				<Group>
 					<ListingsLink

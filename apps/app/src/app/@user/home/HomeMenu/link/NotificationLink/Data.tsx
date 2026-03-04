@@ -1,8 +1,11 @@
 import { useLocale } from "@use-pico/client/hook";
 import { ChevronRightIcon, NotificationIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
+import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
+import { Typo } from "@use-pico/client/ui/typo";
+import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { withInboxQuery } from "@zbav-se.me/sdk/query/user";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
@@ -16,20 +19,10 @@ export namespace Data {
 
 export const Data: FC<Data.Props> = ({ _suspense, ...props }) => {
 	const locale = useLocale();
-	const { data: recent } = withInboxQuery.useCollectionQuery({
+	const { data: count } = withInboxQuery.useCountQuery({
 		where: {
-			archivedAtIsNull: false,
+			archivedAtIsNull: true,
 		},
-		cursor: {
-			page: 0,
-			size: 1,
-		},
-		sort: [
-			{
-				field: "timestamp",
-				order: "desc",
-			},
-		],
 	});
 
 	return (
@@ -51,7 +44,7 @@ export const Data: FC<Data.Props> = ({ _suspense, ...props }) => {
 			})}
 			{...uiMenuButton({
 				ui: {
-					tone: "neutral",
+					tone: count.filter > 0 ? "secondary" : "neutral",
 					theme: "light",
 				},
 				className: [],
@@ -67,7 +60,25 @@ export const Data: FC<Data.Props> = ({ _suspense, ...props }) => {
 					},
 				}}
 			>
-				<Tx label="Inbox (label)" />
+				<Container
+					ui={{
+						flow: "horizontal",
+						gap: "default",
+						items: "center",
+					}}
+				>
+					<Tx label="Inbox (label)" />
+
+					<Typo
+						ui={{
+							text: "sm",
+						}}
+						label={`(${toLocaleNumber({
+							number: count.filter,
+							locale,
+						})})`}
+					/>
+				</Container>
 			</TypoIcon>
 		</LinkTo>
 	);
