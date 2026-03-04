@@ -5,7 +5,9 @@ import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 import { TransactionList } from "~/app/v0/@buyer/transaction/ui/TransactionList";
 
 export namespace MessageListPage {
-	export interface Props extends TitleContainer.Props {}
+	export interface Props extends TitleContainer.Props {
+		//
+	}
 }
 
 export const MessageListPage: FC<MessageListPage.Props> = (props) => {
