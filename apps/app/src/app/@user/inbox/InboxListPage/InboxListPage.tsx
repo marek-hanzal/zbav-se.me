@@ -13,6 +13,9 @@ export namespace InboxListPage {
 
 export const InboxListPage: FC<InboxListPage.Props> = (props) => {
 	const inboxQuery: tInboxQuery = {
+		where: {
+			archivedAtIsNull: true,
+		},
 		cursor: {
 			page: 0,
 			size: 1000,
