@@ -1,9 +1,9 @@
-import { useMatchRoute } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { ChevronRightIcon, NotificationIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
+import { withInboxQuery } from "@zbav-se.me/sdk/query/user";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
@@ -16,7 +16,21 @@ export namespace Data {
 
 export const Data: FC<Data.Props> = ({ _suspense, ...props }) => {
 	const locale = useLocale();
-	const matchRoute = useMatchRoute();
+	const { data: recent } = withInboxQuery.useCollectionQuery({
+		where: {
+			archivedAtIsNull: false,
+		},
+		cursor: {
+			page: 0,
+			size: 1,
+		},
+		sort: [
+			{
+				field: "timestamp",
+				order: "desc",
+			},
+		],
+	});
 
 	return (
 		<LinkTo
@@ -28,17 +42,20 @@ export const Data: FC<Data.Props> = ({ _suspense, ...props }) => {
 			params={{
 				locale,
 			}}
-			{...(matchRoute({
-				to: "/$locale/inbox/list",
-			})
-				? uiMenuButton({
-						ui: {
-							tone: "primary",
-							theme: "light",
-						},
-						className: [],
-					})
-				: {})}
+			activeProps={uiMenuButton({
+				ui: {
+					tone: "primary",
+					theme: "light",
+				},
+				className: [],
+			})}
+			{...uiMenuButton({
+				ui: {
+					tone: "neutral",
+					theme: "light",
+				},
+				className: [],
+			})}
 			{...props}
 		>
 			<TypoIcon

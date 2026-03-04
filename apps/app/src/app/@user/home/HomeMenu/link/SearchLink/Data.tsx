@@ -1,4 +1,3 @@
-import { useMatchRoute } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
 import { ChevronRightIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
@@ -17,7 +16,6 @@ export namespace Data {
 
 export const Data: FC<Data.Props> = ({ _suspense, ...props }) => {
 	const locale = useLocale();
-	const matchRoute = useMatchRoute();
 
 	return (
 		<LinkTo
@@ -29,17 +27,20 @@ export const Data: FC<Data.Props> = ({ _suspense, ...props }) => {
 			params={{
 				locale,
 			}}
-			{...(matchRoute({
-				to: "/$locale/buyer/search",
-			})
-				? uiMenuButton({
-						ui: {
-							tone: "primary",
-							theme: "light",
-						},
-						className: [],
-					})
-				: {})}
+			activeProps={uiMenuButton({
+				ui: {
+					tone: "primary",
+					theme: "light",
+				},
+				className: [],
+			})}
+			{...uiMenuButton({
+				ui: {
+					tone: "neutral",
+					theme: "light",
+				},
+				className: [],
+			})}
 			{...props}
 		>
 			<TypoIcon
