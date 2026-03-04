@@ -9,7 +9,7 @@
     value: Informace o kupujícím
 02a24434f76061e34a1281f0c237f98e6061c8f1411cbad86a4884fc:
     ref: Messages - seller (label)
-    value: Prodejce
+    value: Prodávám
 0353a7e7a341b6b63f3e182605fd6627a8e0e1c6897b7bf639ff5d89:
     ref: Back (label)
     value: Zpět
@@ -1130,7 +1130,7 @@ dc9bf90858ca4e7cede4dc10e9939dea37d678f40fb69f16c9b30d9e:
     value: Celé jméno
 de75432fdd962d61c3b89d0c4098554de1f957cfd40f3f2fc50967c0:
     ref: Messages - buyer (label)
-    value: Kupující
+    value: Kupuju
 de8832ba89f066ff957f2387c53ed8c543d4ed977d7fac554ab3f590:
     ref: Go to my feed (button)
     value: Inzeráty
