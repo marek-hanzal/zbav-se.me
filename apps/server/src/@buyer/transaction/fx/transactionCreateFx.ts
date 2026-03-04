@@ -7,6 +7,7 @@ import { transactionFetchFx } from "~/@buyer/transaction/fx/transactionFetchFx";
 import type { TransactionCreateSchema } from "~/@buyer/transaction/schema/TransactionCreateSchema";
 import { transactionStatusCreateFx } from "~/@buyer/transaction-status/fx/transactionStatusCreateFx";
 import { TransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
+import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { messageThreadCreateFx } from "~/@user/message-thread/fx/messageThreadCreateFx";
 import { messageUserCreateFx } from "~/@user/message-thread-user/fx/messageUserCreateFx";
@@ -127,6 +128,17 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 				userId,
 				messageThreadId: messageThread.id,
 				text: "Transaction pending (message)",
+			});
+
+			yield* inboxCreateFx({
+				userId: listing.userId,
+				type: "buyer-message",
+				payload: {
+					type: "buyer-message",
+					transactionId: id,
+					messageThreadId: messageThread.id,
+				},
+				priority: "high",
 			});
 
 			yield* userInteractionEventFx({
