@@ -27,6 +27,9 @@ export const Data: FC<Data.Props> = ({ _suspense, query, textEmpty, ...props }) 
 			ui={{
 				flow: "vertical",
 				gap: "default",
+				height: "full",
+				scroll: "vertical",
+				inner: "default",
 			}}
 			{...props}
 		>

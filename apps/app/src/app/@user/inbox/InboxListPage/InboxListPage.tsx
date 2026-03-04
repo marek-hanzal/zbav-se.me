@@ -36,16 +36,6 @@ export const InboxListPage: FC<InboxListPage.Props> = (props) => {
 					...inboxQuery,
 				}}
 			/>
-
-			<InboxList
-				query={{
-					where: {
-						archivedAtIsNull: false,
-					},
-					...inboxQuery,
-				}}
-				textEmpty={translator.text("No archived inbox items (message)")}
-			/>
 		</TitleContainer>
 	);
 };
