@@ -7,6 +7,9 @@
 022cc5c29a7e44c9fd5d268e2abcc13f44f38fcabbe0552e3d6c0710:
     ref: Buyer info (button)
     value: Informace o kupujícím
+02a24434f76061e34a1281f0c237f98e6061c8f1411cbad86a4884fc:
+    ref: Messages - seller (label)
+    value: Prodejce
 0353a7e7a341b6b63f3e182605fd6627a8e0e1c6897b7bf639ff5d89:
     ref: Back (label)
     value: Zpět
@@ -507,6 +510,9 @@
 8866d75345937a7e6fbab726a781f3a5f2e71eb87f5c61f0d4fe13d0:
     ref: Open listing preview (button)
     value: Open listing preview (button)
+886e7f1206862942937e7dc0ca0620af2e9bf5d3055337548bdba3d9:
+    ref: Messages (label)
+    value: Zprávy
 892fa1e47fe46e918f187198c917e00504737676df992315e0c40b8c:
     ref: Warranty not selected
     value: Bez garance záruky
@@ -1122,6 +1128,9 @@ dbb55f0c704298dbeda11ddad88ff05b151057e984bf244f0d09c4d9:
 dc9bf90858ca4e7cede4dc10e9939dea37d678f40fb69f16c9b30d9e:
     ref: Personal - Name (label)
     value: Celé jméno
+de75432fdd962d61c3b89d0c4098554de1f957cfd40f3f2fc50967c0:
+    ref: Messages - buyer (label)
+    value: Kupující
 de8832ba89f066ff957f2387c53ed8c543d4ed977d7fac554ab3f590:
     ref: Go to my feed (button)
     value: Inzeráty
