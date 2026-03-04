@@ -262,7 +262,9 @@ export type tInboxFilter = {
 export const tInboxTypeEnum = {
     'seller-message': 'seller-message',
     'buyer-message': 'buyer-message',
-    thumb: 'thumb'
+    thumb: 'thumb',
+    favourite: 'favourite',
+    unfavourite: 'unfavourite'
 } as const;
 
 /**
@@ -366,7 +368,7 @@ export type tInbox = {
 /**
  * Inbox payload per type
  */
-export type tInboxPayload = tInboxSellerMessagePayload | tInboxBuyerMessagePayload | tInboxThumbPayload;
+export type tInboxPayload = tInboxSellerMessagePayload | tInboxBuyerMessagePayload | tInboxThumbPayload | tInboxFavouritePayload | tInboxUnfavouritePayload;
 
 /**
  * Payload for seller message notifications
@@ -419,6 +421,28 @@ export const tThumbEnum = { like: 'like', dislike: 'dislike' } as const;
  * Type of thumb
  */
 export type tThumbEnum = typeof tThumbEnum[keyof typeof tThumbEnum];
+
+/**
+ * Payload for favourite notifications
+ */
+export type tInboxFavouritePayload = {
+    type: tInboxTypeEnum;
+    /**
+     * Related listing identifier
+     */
+    listingId: string;
+};
+
+/**
+ * Payload for unfavourite notifications
+ */
+export type tInboxUnfavouritePayload = {
+    type: tInboxTypeEnum;
+    /**
+     * Related listing identifier
+     */
+    listingId: string;
+};
 
 /**
  * Query object for inbox count

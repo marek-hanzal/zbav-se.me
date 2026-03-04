@@ -5,6 +5,7 @@ import type { FavouriteToggleSchema } from "~/@buyer/favourite/schema/FavouriteT
 import { listingCheckIfOwnFx } from "~/@buyer/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/@buyer/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/@buyer/listing-event/fx/listingEventCreateFx";
+import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withTraceFx } from "~/effect/withTraceFx";
 
@@ -32,7 +33,7 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
-			yield* listingCheckIfOwnFx({
+			const listingUserId = yield* listingCheckIfOwnFx({
 				userId,
 				listingId,
 				message: "You cannot add your own listing to favourites",
@@ -52,6 +53,16 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 							listingId,
 							event: "favourite",
 						}).pipe(Effect.ignore);
+
+						yield* inboxCreateFx({
+							userId: listingUserId,
+							type: "favourite",
+							payload: {
+								type: "favourite",
+								listingId,
+							},
+							priority: "high",
+						});
 
 						return yield* listingFetchFx({
 							userId,
@@ -74,6 +85,16 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 							listingId,
 							event: "unfavourite",
 						}).pipe(Effect.ignore);
+
+						yield* inboxCreateFx({
+							userId: listingUserId,
+							type: "unfavourite",
+							payload: {
+								type: "unfavourite",
+								listingId,
+							},
+							priority: "high",
+						});
 
 						return yield* listingFetchFx({
 							userId,

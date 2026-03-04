@@ -15,6 +15,8 @@ export const InboxMigration: Migration = {
 				"seller-message",
 				"buyer-message",
 				"thumb",
+				"favourite",
+				"unfavourite",
 			])
 			.execute();
 

@@ -304,7 +304,9 @@ export const sInboxTypeEnum = {
     enum: [
         'seller-message',
         'buyer-message',
-        'thumb'
+        'thumb',
+        'favourite',
+        'unfavourite'
     ]
 } as const;
 
@@ -426,6 +428,12 @@ export const sInboxPayload = {
         },
         {
             $ref: '#/components/schemas/InboxThumbPayload'
+        },
+        {
+            $ref: '#/components/schemas/InboxFavouritePayload'
+        },
+        {
+            $ref: '#/components/schemas/InboxUnfavouritePayload'
         }
     ]
 } as const;
@@ -495,6 +503,38 @@ export const sThumbEnum = {
     enum: [
         'like',
         'dislike'
+    ]
+} as const;
+
+export const sInboxFavouritePayload = {
+    type: 'object',
+    properties: {
+        type: {
+            $ref: '#/components/schemas/InboxTypeEnum'
+        },
+        listingId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'type',
+        'listingId'
+    ]
+} as const;
+
+export const sInboxUnfavouritePayload = {
+    type: 'object',
+    properties: {
+        type: {
+            $ref: '#/components/schemas/InboxTypeEnum'
+        },
+        listingId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'type',
+        'listingId'
     ]
 } as const;
 

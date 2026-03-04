@@ -231,7 +231,9 @@ export type zGalleryCountQuery = z.infer<typeof zGalleryCountQuery>;
 export const zInboxTypeEnum = z.enum([
     'seller-message',
     'buyer-message',
-    'thumb'
+    'thumb',
+    'favourite',
+    'unfavourite'
 ]).register(z.globalRegistry, {
     description: 'Inbox type'
 });
@@ -411,12 +413,42 @@ export const zInboxThumbPayload = z.object({
 export type zInboxThumbPayload = z.infer<typeof zInboxThumbPayload>;
 
 /**
+ * Payload for favourite notifications
+ */
+export const zInboxFavouritePayload = z.object({
+    type: zInboxTypeEnum,
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'Related listing identifier'
+    })
+}).register(z.globalRegistry, {
+    description: 'Payload for favourite notifications'
+});
+
+export type zInboxFavouritePayload = z.infer<typeof zInboxFavouritePayload>;
+
+/**
+ * Payload for unfavourite notifications
+ */
+export const zInboxUnfavouritePayload = z.object({
+    type: zInboxTypeEnum,
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'Related listing identifier'
+    })
+}).register(z.globalRegistry, {
+    description: 'Payload for unfavourite notifications'
+});
+
+export type zInboxUnfavouritePayload = z.infer<typeof zInboxUnfavouritePayload>;
+
+/**
  * Inbox payload per type
  */
 export const zInboxPayload = z.union([
     zInboxSellerMessagePayload,
     zInboxBuyerMessagePayload,
-    zInboxThumbPayload
+    zInboxThumbPayload,
+    zInboxFavouritePayload,
+    zInboxUnfavouritePayload
 ]);
 
 export type zInboxPayload = z.infer<typeof zInboxPayload>;
