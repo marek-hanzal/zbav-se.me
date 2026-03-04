@@ -399,7 +399,11 @@ export const sInbox = {
             $ref: '#/components/schemas/InboxPriorityEnum'
         },
         archivedAt: {
-            type: 'string'
+            type: [
+                'string',
+                'null'
+            ],
+            format: 'date-time'
         }
     },
     required: [

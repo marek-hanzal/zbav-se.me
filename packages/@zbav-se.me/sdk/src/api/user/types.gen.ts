@@ -360,7 +360,7 @@ export type tInbox = {
     /**
      * Archive timestamp (null/undefined = active)
      */
-    archivedAt?: string;
+    archivedAt?: string | null;
 };
 
 /**

@@ -437,9 +437,7 @@ export const zInbox = z.object({
     type: zInboxTypeEnum,
     payload: zInboxPayload,
     priority: zInboxPriorityEnum,
-    archivedAt: z.string().register(z.globalRegistry, {
-        description: 'Archive timestamp (null/undefined = active)'
-    }).optional()
+    archivedAt: z.iso.datetime().nullish()
 }).register(z.globalRegistry, {
     description: 'Inbox item'
 });

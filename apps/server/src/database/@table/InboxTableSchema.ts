@@ -18,15 +18,9 @@ export const InboxTableSchema = z.object({
 		description: "Inbox payload",
 	}),
 	priority: InboxPriorityEnumSchema,
-	archivedAt: z
-		.union([
-			z.null(),
-			z.coerce.date(),
-		])
-		.openapi({
-			description: "Archive timestamp (null = active)",
-			type: "string",
-		}),
+	archivedAt: z.coerce.date().nullable().openapi({
+		description: "Archive timestamp (null = active)",
+	}),
 });
 
 export type InboxTableSchema = typeof InboxTableSchema;

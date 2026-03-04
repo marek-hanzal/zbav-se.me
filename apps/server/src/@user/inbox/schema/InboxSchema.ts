@@ -18,16 +18,9 @@ export const InboxSchema = z
 		type: InboxTypeEnumSchema,
 		payload: InboxPayloadSchema,
 		priority: InboxPriorityEnumSchema,
-		archivedAt: z
-			.union([
-				z.null(),
-				z.coerce.date(),
-			])
-			.optional()
-			.openapi({
-				description: "Archive timestamp (null/undefined = active)",
-				type: "string",
-			}),
+		archivedAt: z.coerce.date().nullable().optional().openapi({
+			description: "Archive timestamp (null/undefined = active)",
+		}),
 	})
 	.strip()
 	.openapi("Inbox", {
