@@ -19,6 +19,11 @@ export const Pending: FC<Pending.Props> = (props) => {
 		>
 			<SpinnerContainer
 				type={"icon"}
+				iconProps={{
+					ui: {
+						text: "lg",
+					},
+				}}
 				ui={{
 					snapTo: "middle",
 				}}
