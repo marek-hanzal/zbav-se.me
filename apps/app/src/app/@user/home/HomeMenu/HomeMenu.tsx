@@ -1,12 +1,8 @@
 import { useMatchRoute } from "@tanstack/react-router";
-import { useLocale } from "@use-pico/client/hook";
-import { ChevronRightIcon, MessageIcon, type uiIcon } from "@use-pico/client/icon";
+import type { uiIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { Group } from "@use-pico/client/ui/group";
-import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Tx } from "@use-pico/client/ui/tx";
-import { TypoIcon } from "@zbav-se.me/ui/typo";
 import { useRef } from "react";
 import { DraftLink } from "./link/DraftLink/DraftLink";
 import { DraftListLink } from "./link/DraftListLink/DraftListLink";
@@ -14,6 +10,7 @@ import { FavouritesLink } from "./link/FavouritesLink/FavouritesLink";
 import { FeedLink } from "./link/FeedLink/FeedLink";
 import { HomeLink } from "./link/HomeLink/HomeLink";
 import { ListingsLink } from "./link/ListingsLink/ListingsLink";
+import { MessageLink } from "./link/MessageLink/MessageLink";
 import { MyListingsLink } from "./link/MyListingsLink/MyListingsLink";
 import { NotificationLink } from "./link/NotificationLink/NotificationLink";
 import { ProfileLink } from "./link/ProfileLink/ProfileLink";
@@ -37,10 +34,8 @@ export namespace HomeMenu {
  * @see apps/app/src/app/@user/home/page/HomePage.tsx
  */
 export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
-	const locale = useLocale();
 	const containerRef = useRef<HTMLDivElement>(null);
-	const matchRoute = useMatchRoute();
-	const isHome = matchRoute({
+	const isHome = useMatchRoute()({
 		to: "/$locale/home",
 	});
 
@@ -116,67 +111,13 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 					/>
 				</Group>
 
-				<Group
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						background: "default",
+				<MessageLink
+					iconProps={{
+						ui: {
+							...icon,
+						},
 					}}
-				>
-					<TypoIcon
-						icon={MessageIcon}
-						iconProps={{
-							ui: icon,
-						}}
-						ui={{
-							inner: "lg",
-							justify: "start",
-							text: "lg",
-						}}
-					>
-						<Tx label={"Messages (label)"} />
-					</TypoIcon>
-
-					<Container
-						ui={{
-							flow: "horizontal",
-							justify: "space-evenly",
-							inner: "default",
-						}}
-					>
-						<LinkTo
-							to={"/$locale/seller/message/list"}
-							icon={ChevronRightIcon}
-							iconPosition={"right"}
-							params={{
-								locale,
-							}}
-							ui={{
-								tone: "neutral",
-								theme: "light",
-								text: "lg",
-							}}
-						>
-							<Tx label={"Messages - seller (label)"} />
-						</LinkTo>
-
-						<LinkTo
-							to={"/$locale/buyer/message/list"}
-							icon={ChevronRightIcon}
-							iconPosition={"right"}
-							params={{
-								locale,
-							}}
-							ui={{
-								tone: "neutral",
-								theme: "light",
-								text: "lg",
-							}}
-						>
-							<Tx label={"Messages - buyer (label)"} />
-						</LinkTo>
-					</Container>
-				</Group>
+				/>
 
 				<Group>
 					<MyListingsLink
