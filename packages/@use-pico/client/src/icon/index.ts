@@ -43,6 +43,8 @@ export { LoaderIcon } from "./LoaderIcon";
 export { LogoutIcon } from "./LogoutIcon";
 export { LteIcon } from "./LteIcon";
 export { MenuIcon } from "./MenuIcon";
+export { MessageIcon } from "./MessageIcon";
+export { NotificationIcon } from "./NotificationIcon";
 export { PlusIcon } from "./PlusIcon";
 export { RefreshIcon } from "./RefreshIcon";
 export { SaveIcon } from "./SaveIcon";

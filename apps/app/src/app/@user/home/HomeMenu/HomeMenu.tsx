@@ -11,13 +11,13 @@ import {
 	FavouriteIcon,
 	FindListingsIcon,
 	HomeIcon,
-	MessageIcon,
 	MyListingsIcon,
 } from "@zbav-se.me/ui/icon";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import { useRef } from "react";
-import { HomeMenuDraftLink } from "./HomeMenuDraftLink";
+import { DraftLink } from "./DraftLink/DraftLink";
+import { NotificationLink } from "./NotificationLink/NotificationLink";
 
 export namespace HomeMenu {
 	export interface Props extends Container.Props {
@@ -165,44 +165,8 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 						</TypoIcon>
 					</LinkTo>
 
-					<HomeMenuDraftLink icon={icon} />
-				</Group>
-
-				<Group>
-					<LinkTo
-						{...uiMenuButton({
-							className: [],
-						})}
-						icon={MessageIcon}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-						to="/$locale/inbox/list"
-						params={{
-							locale,
-						}}
-						activeProps={uiMenuButton({
-							ui: {
-								tone: "primary",
-								theme: "light",
-							},
-							className: [],
-						})}
-					>
-						<TypoIcon
-							flip
-							icon={ChevronRightIcon}
-							iconProps={{
-								ui: {
-									opacity: "5",
-								},
-							}}
-						>
-							<Tx label="Inbox (label)" />
-						</TypoIcon>
-					</LinkTo>
+					<DraftLink icon={icon} />
+					<NotificationLink icon={icon} />
 				</Group>
 
 				<Group>
