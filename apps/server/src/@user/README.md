@@ -39,6 +39,17 @@ This domain handles all operations on user-owned, private data. Everything in th
   - `message_system` - System notifications
 - **Message Thread User** - Thread participants
 
+### Inbox
+- **Collection** - List inbox items with query/filter/sort/cursor
+- **Fetch** - Resolve one inbox item
+- **Count** - Count inbox items for active/archived sections
+- **Patch** - Mark one inbox item as archived/read
+- **Archive** - Bulk archive selected items using `InboxQuery`
+- Types:
+  - `seller-message`
+  - `buyer-message`
+  - `thumb`
+
 ### Transaction Messages
 - Transaction-specific message types:
   - **Transaction Message Text** - Text in transaction
