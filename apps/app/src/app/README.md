@@ -36,6 +36,6 @@ No buyer <-> seller imports.
 
 ## Navigation additions
 
-- Added user inbox route: `/$locale/inbox/list`.
+- Added user inbox route: `/$locale/inbox/$type` (`high` or `common`).
 - Home menu message entry now points to Inbox (`Inbox (label)`).
 - Existing buyer/seller message routes remain available for conversation flows.

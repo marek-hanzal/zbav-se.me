@@ -7,38 +7,18 @@ import { InboxList } from "./InboxList/InboxList";
 
 export namespace InboxListPage {
 	export interface Props extends TitleContainer.Props {
-		//
+		query: tInboxQuery;
 	}
 }
 
-export const InboxListPage: FC<InboxListPage.Props> = (props) => {
-	const inboxQuery: tInboxQuery = {
-		where: {
-			// archivedAtIsNull: true,
-		},
-		cursor: {
-			page: 0,
-			size: 1000,
-		},
-		sort: [
-			{
-				field: "timestamp",
-				order: "desc",
-			},
-		],
-	};
-
+export const InboxListPage: FC<InboxListPage.Props> = ({ query, ...props }) => {
 	return (
 		<TitleContainer
 			textTitle={translator.text("Inbox (title)")}
 			right={<HomeMenuButton />}
 			{...props}
 		>
-			<InboxList
-				query={{
-					...inboxQuery,
-				}}
-			/>
+			<InboxList query={query} />
 		</TitleContainer>
 	);
 };

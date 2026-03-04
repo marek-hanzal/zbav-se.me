@@ -1,88 +1,116 @@
 import { useLocale } from "@use-pico/client/hook";
-import { ChevronRightIcon, NotificationIcon } from "@use-pico/client/icon";
+import { ChevronRightIcon, type Icon, NotificationIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
+import { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import { Typo } from "@use-pico/client/ui/typo";
-import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import { withInboxQuery } from "@zbav-se.me/sdk/query/user";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
 export namespace Data {
-	export interface Props extends Pick<LinkTo.Props, "ui" | "iconProps">, MarkSuspense.Props {
-		//
+	export interface Props extends MarkSuspense.Props {
+		iconProps?: Icon.PropsEx;
 	}
 }
 
-export const Data: FC<Data.Props> = ({ _suspense, ...props }) => {
+export const Data: FC<Data.Props> = ({ _suspense, iconProps }) => {
 	const locale = useLocale();
-	const { data: count } = withInboxQuery.useCountQuery({
-		where: {
-			priority: "high",
-			archivedAtIsNull: true,
-		},
-	});
 
 	return (
-		<LinkTo
-			{...uiMenuButton({
-				className: [],
-			})}
-			icon={NotificationIcon}
-			to="/$locale/inbox/list"
-			params={{
-				locale,
+		<Group
+			ui={{
+				tone: "neutral",
+				theme: "light",
+				background: "default",
 			}}
-			activeProps={uiMenuButton({
-				ui: {
-					tone: "primary",
-					theme: "light",
-				},
-				className: [],
-			})}
-			{...uiMenuButton({
-				ui: {
-					tone: count.filter > 0 ? "secondary" : "neutral",
-					theme: "light",
-				},
-				className: [],
-			})}
-			{...props}
 		>
 			<TypoIcon
-				flip
-				icon={ChevronRightIcon}
-				iconProps={{
-					ui: {
-						opacity: "5",
-					},
+				icon={NotificationIcon}
+				iconProps={iconProps}
+				ui={{
+					inner: "lg",
+					justify: "start",
+					text: "lg",
 				}}
 			>
-				<Container
-					ui={{
-						flow: "horizontal",
-						gap: "default",
-						items: "center",
-					}}
-				>
-					<Tx label="Inbox (label)" />
-
-					{count.filter > 0 ? (
-						<Typo
-							ui={{
-								text: "sm",
-							}}
-							label={`(${toLocaleNumber({
-								number: count.filter,
-								locale,
-							})})`}
-						/>
-					) : null}
-				</Container>
+				<Tx label={"Notifications (label)"} />
 			</TypoIcon>
-		</LinkTo>
+
+			<Container
+				ui={{
+					flow: "horizontal",
+					justify: "space-evenly",
+					inner: "default",
+				}}
+			>
+				<LinkTo
+					to={"/$locale/inbox/$type"}
+					icon={ChevronRightIcon}
+					iconPosition={"right"}
+					params={{
+						locale,
+						type: "high",
+					}}
+					activeProps={uiMenuButton({
+						ui: {
+							flow: "horizontal",
+							justify: "center",
+							items: "center",
+							tone: "primary",
+							theme: "light",
+						},
+						className: [],
+					})}
+					{...uiMenuButton({
+						ui: {
+							flow: "horizontal",
+							justify: "center",
+							items: "center",
+							tone: "neutral",
+							theme: "light",
+							text: "lg",
+						},
+						className: [],
+					})}
+				>
+					<Tx label={"Priority (label)"} />
+				</LinkTo>
+
+				<LinkTo
+					to={"/$locale/inbox/$type"}
+					icon={ChevronRightIcon}
+					iconPosition={"right"}
+					params={{
+						locale,
+						type: "common",
+					}}
+					activeProps={uiMenuButton({
+						ui: {
+							flow: "horizontal",
+							justify: "center",
+							items: "center",
+							tone: "primary",
+							theme: "light",
+						},
+						className: [],
+					})}
+					{...uiMenuButton({
+						ui: {
+							flow: "horizontal",
+							justify: "center",
+							items: "center",
+							tone: "neutral",
+							theme: "light",
+							text: "lg",
+						},
+						className: [],
+					})}
+				>
+					<Tx label={"Others (label)"} />
+				</LinkTo>
+			</Container>
+		</Group>
 	);
 };
