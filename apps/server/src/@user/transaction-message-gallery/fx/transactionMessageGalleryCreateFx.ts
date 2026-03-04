@@ -105,29 +105,29 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 					isTerminal: false,
 				});
 
-					yield* inboxCreateFx(
-						transaction.side === "buyer"
-							? {
-									userId: transaction.sellerId,
+				yield* inboxCreateFx(
+					transaction.side === "buyer"
+						? {
+								userId: transaction.sellerId,
+								type: "buyer-message",
+								payload: {
 									type: "buyer-message",
-									payload: {
-										type: "buyer-message",
-										transactionId: transaction.id,
-										messageThreadId: transaction.messageThreadId,
-									},
-									priority: "high",
-								}
-							: {
-									userId: transaction.buyerId,
-									type: "seller-message",
-									payload: {
-										type: "seller-message",
-										transactionId: transaction.id,
-										messageThreadId: transaction.messageThreadId,
-									},
-									priority: "high",
+									transactionId: transaction.id,
+									messageThreadId: transaction.messageThreadId,
 								},
-					);
+								priority: "high",
+							}
+						: {
+								userId: transaction.buyerId,
+								type: "seller-message",
+								payload: {
+									type: "seller-message",
+									transactionId: transaction.id,
+									messageThreadId: transaction.messageThreadId,
+								},
+								priority: "high",
+							},
+				);
 
 				return yield* messageGalleryCreateFx({
 					userId,
