@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import type { TransactionStatusDisputeSchema } from "~/@common/transaction-status/schema/TransactionStatusDisputeSchema";
 import { transactionPatchFx } from "~/@seller/transaction/fx/transactionPatchFx";
 import { transactionStatusCreateFx } from "~/@seller/transaction-status/fx/transactionStatusCreateFx";
+import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { withTraceFx } from "~/effect/withTraceFx";
@@ -60,6 +61,18 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 		userId,
 		messageThreadId: transaction.messageThreadId,
 		text: "Seller disputed the transaction (message)",
+	});
+
+	yield* inboxCreateFx({
+		userId: transaction.buyerId,
+		type: "seller-message",
+		payload: {
+			type: "seller-message",
+			transactionId: transaction.id,
+			listingId: transaction.listingId,
+			messageThreadId: transaction.messageThreadId,
+		},
+		priority: "high",
 	});
 
 	return yield* transactionStatusCreateFx({

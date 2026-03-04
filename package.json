@@ -29,7 +29,7 @@
 		"dotenv-cli": "11.0.0",
 		"npm-run-all2": "8.0.4",
 		"syncpack": "14.0.0",
-		"turbo": "2.8.12",
+		"turbo": "2.8.13",
 		"typescript": "beta"
 	},
 	"license": "MIT",

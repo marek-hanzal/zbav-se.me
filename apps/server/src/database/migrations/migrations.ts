@@ -30,6 +30,7 @@ import { ThumbMigration } from "~/database/migrations/0028-thumb";
 import { UserEventMigration } from "~/database/migrations/0029-user-event";
 import { BoardMigration } from "~/database/migrations/0030-board";
 import { BoardItemMigration } from "~/database/migrations/0031-board-item";
+import { InboxMigration } from "~/database/migrations/0032-inbox";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -64,4 +65,5 @@ export const migrations = {
 	"0029-user-event": UserEventMigration,
 	"0030-board": BoardMigration,
 	"0031-board-item": BoardItemMigration,
+	"0032-inbox": InboxMigration,
 } as const;

@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { transactionPatchFx } from "~/@seller/transaction/fx/transactionPatchFx";
 import { transactionStatusCreateFx } from "~/@seller/transaction-status/fx/transactionStatusCreateFx";
 import type { TransactionStatusResolveSchema } from "~/@seller/transaction-status/schema/TransactionStatusResolveSchema";
+import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
@@ -75,6 +76,18 @@ export const transactionStatusResolveFx = Effect.fn("transactionStatusResolveFx"
 				userId,
 				messageThreadId: transaction.messageThreadId,
 				text: "Seller resolved the transaction (message)",
+			});
+
+			yield* inboxCreateFx({
+				userId: transaction.buyerId,
+				type: "seller-message",
+				payload: {
+					type: "seller-message",
+					transactionId: transaction.id,
+					listingId: transaction.listingId,
+					messageThreadId: transaction.messageThreadId,
+				},
+				priority: "high",
 			});
 
 			yield* userInteractionEventFx({

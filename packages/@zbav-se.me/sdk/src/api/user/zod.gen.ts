@@ -226,6 +226,291 @@ export const zGalleryCountQuery = z.object({
 export type zGalleryCountQuery = z.infer<typeof zGalleryCountQuery>;
 
 /**
+ * Inbox type
+ */
+export const zInboxTypeEnum = z.enum([
+    'seller-message',
+    'buyer-message',
+    'thumb',
+    'favourite',
+    'unfavourite'
+]).register(z.globalRegistry, {
+    description: 'Inbox type'
+});
+
+export type zInboxTypeEnum = z.infer<typeof zInboxTypeEnum>;
+
+/**
+ * Inbox priority level
+ */
+export const zInboxPriorityEnum = z.enum(['common', 'high']).register(z.globalRegistry, {
+    description: 'Inbox priority level'
+});
+
+export type zInboxPriorityEnum = z.infer<typeof zInboxPriorityEnum>;
+
+/**
+ * Inbox filters
+ */
+export const zInboxFilter = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    }).optional(),
+    userId: z.string().register(z.globalRegistry, {
+        description: 'Inbox owner filter'
+    }).optional(),
+    type: zInboxTypeEnum.optional(),
+    priority: zInboxPriorityEnum.optional(),
+    archivedAtIsNull: z.boolean().register(z.globalRegistry, {
+        description: 'Filter archived/null state'
+    }).optional(),
+    timestampGte: z.string().register(z.globalRegistry, {
+        description: 'Lower timestamp bound'
+    }).optional(),
+    timestampLte: z.string().register(z.globalRegistry, {
+        description: 'Upper timestamp bound'
+    }).optional()
+}).register(z.globalRegistry, {
+    description: 'Inbox filters'
+});
+
+export type zInboxFilter = z.infer<typeof zInboxFilter>;
+
+/**
+ * App-level where filters
+ */
+export const zInboxWhere = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    }).optional(),
+    idIn: z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    }).optional(),
+    fulltext: z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    }).optional(),
+    userId: z.string().register(z.globalRegistry, {
+        description: 'Inbox owner filter'
+    }).optional(),
+    type: zInboxTypeEnum.optional(),
+    priority: zInboxPriorityEnum.optional(),
+    archivedAtIsNull: z.boolean().register(z.globalRegistry, {
+        description: 'Filter archived/null state'
+    }).optional(),
+    timestampGte: z.string().register(z.globalRegistry, {
+        description: 'Lower timestamp bound'
+    }).optional(),
+    timestampLte: z.string().register(z.globalRegistry, {
+        description: 'Upper timestamp bound'
+    }).optional()
+}).register(z.globalRegistry, {
+    description: 'App-level where filters'
+});
+
+export type zInboxWhere = z.infer<typeof zInboxWhere>;
+
+/**
+ * Sort field for inbox collection
+ */
+export const zInboxSortField = z.enum([
+    'timestamp',
+    'archivedAt',
+    'priority'
+]).register(z.globalRegistry, {
+    description: 'Sort field for inbox collection'
+});
+
+export type zInboxSortField = z.infer<typeof zInboxSortField>;
+
+/**
+ * Sort object for inbox collection
+ */
+export const zInboxSort = z.object({
+    field: zInboxSortField,
+    order: zOrderEnum
+}).register(z.globalRegistry, {
+    description: 'Sort object for inbox collection'
+});
+
+export type zInboxSort = z.infer<typeof zInboxSort>;
+
+/**
+ * Query object for inbox collection
+ */
+export const zInboxQuery = z.object({
+    cursor: zCursor.optional(),
+    filter: zInboxFilter.optional(),
+    where: zInboxWhere.optional(),
+    sort: z.array(zInboxSort).optional()
+}).register(z.globalRegistry, {
+    description: 'Query object for inbox collection'
+});
+
+export type zInboxQuery = z.infer<typeof zInboxQuery>;
+
+/**
+ * Payload for seller message notifications
+ */
+export const zInboxSellerMessagePayload = z.object({
+    type: zInboxTypeEnum,
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'Related transaction identifier'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'Related listing identifier'
+    }),
+    messageThreadId: z.string().register(z.globalRegistry, {
+        description: 'Related message thread identifier'
+    })
+}).register(z.globalRegistry, {
+    description: 'Payload for seller message notifications'
+});
+
+export type zInboxSellerMessagePayload = z.infer<typeof zInboxSellerMessagePayload>;
+
+/**
+ * Payload for buyer message notifications
+ */
+export const zInboxBuyerMessagePayload = z.object({
+    type: zInboxTypeEnum,
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'Related transaction identifier'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'Related listing identifier'
+    }),
+    messageThreadId: z.string().register(z.globalRegistry, {
+        description: 'Related message thread identifier'
+    })
+}).register(z.globalRegistry, {
+    description: 'Payload for buyer message notifications'
+});
+
+export type zInboxBuyerMessagePayload = z.infer<typeof zInboxBuyerMessagePayload>;
+
+/**
+ * Type of thumb
+ */
+export const zThumbEnum = z.enum(['like', 'dislike']).register(z.globalRegistry, {
+    description: 'Type of thumb'
+});
+
+export type zThumbEnum = z.infer<typeof zThumbEnum>;
+
+/**
+ * Payload for thumb notifications
+ */
+export const zInboxThumbPayload = z.object({
+    type: zInboxTypeEnum,
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'Listing identifier'
+    }),
+    thumb: zThumbEnum
+}).register(z.globalRegistry, {
+    description: 'Payload for thumb notifications'
+});
+
+export type zInboxThumbPayload = z.infer<typeof zInboxThumbPayload>;
+
+/**
+ * Payload for favourite notifications
+ */
+export const zInboxFavouritePayload = z.object({
+    type: zInboxTypeEnum,
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'Related listing identifier'
+    })
+}).register(z.globalRegistry, {
+    description: 'Payload for favourite notifications'
+});
+
+export type zInboxFavouritePayload = z.infer<typeof zInboxFavouritePayload>;
+
+/**
+ * Payload for unfavourite notifications
+ */
+export const zInboxUnfavouritePayload = z.object({
+    type: zInboxTypeEnum,
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'Related listing identifier'
+    })
+}).register(z.globalRegistry, {
+    description: 'Payload for unfavourite notifications'
+});
+
+export type zInboxUnfavouritePayload = z.infer<typeof zInboxUnfavouritePayload>;
+
+/**
+ * Inbox payload per type
+ */
+export const zInboxPayload = z.union([
+    zInboxSellerMessagePayload,
+    zInboxBuyerMessagePayload,
+    zInboxThumbPayload,
+    zInboxFavouritePayload,
+    zInboxUnfavouritePayload
+]);
+
+export type zInboxPayload = z.infer<typeof zInboxPayload>;
+
+/**
+ * Inbox item
+ */
+export const zInbox = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'Inbox identifier'
+    }),
+    userId: z.string().register(z.globalRegistry, {
+        description: 'Recipient user identifier'
+    }),
+    timestamp: z.string().register(z.globalRegistry, {
+        description: 'Inbox event timestamp'
+    }),
+    type: zInboxTypeEnum,
+    payload: zInboxPayload,
+    priority: zInboxPriorityEnum,
+    archivedAt: z.iso.datetime().nullish()
+}).register(z.globalRegistry, {
+    description: 'Inbox item'
+});
+
+export type zInbox = z.infer<typeof zInbox>;
+
+/**
+ * Query object for inbox count
+ */
+export const zInboxCountQuery = z.object({
+    filter: zInboxFilter.optional(),
+    where: zInboxWhere.optional()
+}).register(z.globalRegistry, {
+    description: 'Query object for inbox count'
+});
+
+export type zInboxCountQuery = z.infer<typeof zInboxCountQuery>;
+
+/**
+ * Patch one inbox item resolved by query
+ */
+export const zInboxPatch = z.object({
+    patch: z.object({
+        archivedAt: z.string().register(z.globalRegistry, {
+            description: 'Archive timestamp'
+        }).optional()
+    }),
+    query: zInboxQuery
+}).register(z.globalRegistry, {
+    description: 'Patch one inbox item resolved by query'
+});
+
+export type zInboxPatch = z.infer<typeof zInboxPatch>;
+
+/**
  * Type of message
  */
 export const zMessageTypeEnum = z.enum([
@@ -867,6 +1152,85 @@ export type zapiGalleryCountRequest = z.infer<typeof zApiGalleryCountData>;
 export const zApiGalleryCountResponse = zCount;
 
 export type zapiGalleryCountResponse = z.infer<typeof zApiGalleryCountResponse>;
+
+export const zApiInboxArchiveData = z.object({
+    body: zInboxQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
+});
+
+export type zapiInboxArchiveRequest = z.infer<typeof zApiInboxArchiveData>;
+
+/**
+ * Archived, no content
+ */
+export const zApiInboxArchiveResponse = z.void().register(z.globalRegistry, {
+    description: 'Archived, no content'
+});
+
+export type zapiInboxArchiveResponse = z.infer<typeof zApiInboxArchiveResponse>;
+
+export const zApiInboxCollectionData = z.object({
+    body: zInboxQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
+});
+
+export type zapiInboxCollectionRequest = z.infer<typeof zApiInboxCollectionData>;
+
+/**
+ * Inbox collection
+ */
+export const zApiInboxCollectionResponse = z.array(zInbox).register(z.globalRegistry, {
+    description: 'Inbox collection'
+});
+
+export type zapiInboxCollectionResponse = z.infer<typeof zApiInboxCollectionResponse>;
+
+export const zApiInboxCountData = z.object({
+    body: zInboxCountQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
+});
+
+export type zapiInboxCountRequest = z.infer<typeof zApiInboxCountData>;
+
+/**
+ * Inbox count
+ */
+export const zApiInboxCountResponse = zCount;
+
+export type zapiInboxCountResponse = z.infer<typeof zApiInboxCountResponse>;
+
+export const zApiInboxFetchData = z.object({
+    body: zInboxQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
+});
+
+export type zapiInboxFetchRequest = z.infer<typeof zApiInboxFetchData>;
+
+/**
+ * Inbox item
+ */
+export const zApiInboxFetchResponse = zInbox;
+
+export type zapiInboxFetchResponse = z.infer<typeof zApiInboxFetchResponse>;
+
+export const zApiInboxPatchData = z.object({
+    body: zInboxPatch.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
+});
+
+export type zapiInboxPatchRequest = z.infer<typeof zApiInboxPatchData>;
+
+/**
+ * Patched inbox item
+ */
+export const zApiInboxPatchResponse = zInbox;
+
+export type zapiInboxPatchResponse = z.infer<typeof zApiInboxPatchResponse>;
 
 export const zApiMessageThreadMessageCollectionData = z.object({
     body: zMessageQuery.optional(),

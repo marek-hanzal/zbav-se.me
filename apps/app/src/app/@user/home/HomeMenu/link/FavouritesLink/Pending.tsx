@@ -1,18 +1,17 @@
 import { useLocale } from "@use-pico/client/hook";
-import type { uiIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import { DraftIcon } from "@zbav-se.me/ui/icon";
+import { FavouriteIcon } from "@zbav-se.me/ui/icon";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
 export namespace Pending {
-	export interface Props extends LinkTo.Props {
-		iconUi: uiIcon.Ui;
+	export interface Props extends Pick<LinkTo.Props, "ui" | "iconProps"> {
+		//
 	}
 }
 
-export const Pending: FC<Pending.Props> = ({ iconUi }) => {
+export const Pending: FC<Pending.Props> = (props) => {
 	const locale = useLocale();
 
 	return (
@@ -20,13 +19,8 @@ export const Pending: FC<Pending.Props> = ({ iconUi }) => {
 			{...uiMenuButton({
 				className: [],
 			})}
-			icon={DraftIcon}
-			iconProps={{
-				ui: {
-					...iconUi,
-				},
-			}}
-			to="/$locale/seller/draft/resolve"
+			icon={FavouriteIcon}
+			to="/$locale/buyer/favourite/list"
 			params={{
 				locale,
 			}}
@@ -37,6 +31,7 @@ export const Pending: FC<Pending.Props> = ({ iconUi }) => {
 				},
 				className: [],
 			})}
+			{...props}
 		>
 			<Tx label={"Loading... (label)"} />
 		</LinkTo>

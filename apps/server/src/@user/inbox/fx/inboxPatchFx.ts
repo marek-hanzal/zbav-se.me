@@ -1,0 +1,59 @@
+import { Effect } from "effect";
+import { inboxFetchFx } from "~/@user/inbox/fx/inboxFetchFx";
+import type { InboxFilterSchema } from "~/@user/inbox/schema/InboxFilterSchema";
+import type { InboxPatchSchema } from "~/@user/inbox/schema/InboxPatchSchema";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { withTraceFx } from "~/effect/withTraceFx";
+
+export namespace inboxPatchFx {
+	export interface Props extends InboxPatchSchema.Type {
+		scope: InboxFilterSchema.Type;
+	}
+}
+
+export const inboxPatchFx = Effect.fn("inboxPatchFx")(function* ({
+	patch,
+	query,
+	scope,
+}: inboxPatchFx.Props) {
+	yield* withTraceFx({
+		fx: "inboxPatchFx",
+		input: {
+			patch,
+			query,
+			scope,
+		},
+	});
+
+	return yield* withTransactionFx(
+		Effect.gen(function* () {
+			const { kysely } = yield* KyselyContextFx;
+
+			const inbox = yield* inboxFetchFx({
+				...query,
+				scope,
+			});
+
+			yield* tryDbFx(async () =>
+				kysely
+					.updateTable("inbox")
+					.set(patch)
+					.where("id", "=", inbox.id)
+					.executeTakeFirst(),
+			);
+
+			return yield* inboxFetchFx({
+				where: {
+					id: inbox.id,
+				},
+				scope: {
+					userId: inbox.userId,
+				},
+			});
+		}),
+	);
+});
+
+export type inboxPatchFx = ReturnType<typeof inboxPatchFx>;

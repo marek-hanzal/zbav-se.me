@@ -1,5 +1,5 @@
 import { useLocale } from "@use-pico/client/hook";
-import { ChevronRightIcon } from "@use-pico/client/icon";
+import { ChevronRightIcon, MessageIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -8,7 +8,6 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tTransactionQuery } from "@zbav-se.me/sdk/api/seller";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
-import { MessageIcon } from "@zbav-se.me/ui/icon";
 import type { FC, ReactNode } from "react";
 
 export namespace TransactionListContainer {

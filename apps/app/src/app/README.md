@@ -33,3 +33,9 @@ Buyer and seller remain hard-separated in code and routing. Endpoint suffixes an
 - `@seller`: `@common`, `@session`, `@user`.
 
 No buyer <-> seller imports.
+
+## Navigation additions
+
+- Added user inbox route: `/$locale/inbox/$type` (`high` or `common`).
+- Home menu message entry now points to Inbox (`Inbox (label)`).
+- Existing buyer/seller message routes remain available for conversation flows.

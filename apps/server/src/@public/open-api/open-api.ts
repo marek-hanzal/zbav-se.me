@@ -49,6 +49,10 @@ const tagsRegistry: Record<
 		name: "Message Thread",
 		description: "Message thread management",
 	},
+	Inbox: {
+		name: "Inbox",
+		description: "Inbox notifications and archival flows",
+	},
 	S3: {
 		name: "S3",
 		description: "S3 pre-signed URL generation for direct uploads",

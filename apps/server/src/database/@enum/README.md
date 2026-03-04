@@ -36,6 +36,10 @@ All enum schemas correspond to PostgreSQL enum types created in migrations:
 ### Thumb Enum
 - **ThumbEnumSchema** - Thumb type (`like`, `dislike`)
 
+### Inbox Enums
+- **InboxPriorityEnumSchema** - Inbox priority (`common`, `high`)
+- **InboxTypeEnumSchema** - Inbox type (`seller-message`, `buyer-message`, `thumb`)
+
 ## Usage
 
 Import enum schemas from this directory:
@@ -65,6 +69,8 @@ Each enum schema corresponds to a PostgreSQL enum type created in migrations:
 - `user_ex_side_enum` → `UserSideEnumSchema`
 - `user_event_scope_enum` → `UserEventScopeEnumSchema`
 - `thumb_enum` → `ThumbEnumSchema`
+- `inbox_priority_enum` → `InboxPriorityEnumSchema`
+- `inbox_type_enum` → `InboxTypeEnumSchema`
 
 ## Adding New Enums
 

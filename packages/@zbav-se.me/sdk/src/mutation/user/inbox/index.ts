@@ -1,0 +1,1 @@
+export { withInboxArchiveMutation } from "./withInboxArchiveMutation";

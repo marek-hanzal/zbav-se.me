@@ -1,6 +1,6 @@
 import { useMatchRoute } from "@tanstack/react-router";
 import { useLocale } from "@use-pico/client/hook";
-import { ChevronRightIcon, type uiIcon } from "@use-pico/client/icon";
+import { ChevronRightIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
@@ -10,12 +10,12 @@ import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
 export namespace Data {
-	export interface Props extends MarkSuspense.Props {
-		icon: uiIcon.Ui;
+	export interface Props extends Pick<LinkTo.Props, "ui" | "iconProps">, MarkSuspense.Props {
+		//
 	}
 }
 
-export const Data: FC<Data.Props> = ({ _suspense, icon }) => {
+export const Data: FC<Data.Props> = ({ _suspense, ...props }) => {
 	const locale = useLocale();
 	const matchRoute = useMatchRoute();
 	const { data } = withDraftQuery.useCollectionQuery({
@@ -44,11 +44,6 @@ export const Data: FC<Data.Props> = ({ _suspense, icon }) => {
 					? "icon-[solar--bill-check-linear]"
 					: "icon-[solar--bill-list-linear]"
 			}
-			iconProps={{
-				ui: {
-					...icon,
-				},
-			}}
 			to="/$locale/seller/draft/resolve"
 			params={{
 				locale,
@@ -64,6 +59,7 @@ export const Data: FC<Data.Props> = ({ _suspense, icon }) => {
 						className: [],
 					})
 				: {})}
+			{...props}
 		>
 			<TypoIcon
 				flip

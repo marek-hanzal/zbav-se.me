@@ -1,6 +1,7 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { TransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
+import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { messageLocationCreateFx } from "~/@user/message-location/fx/messageLocationCreateFx";
 import type { TransactionMessageLocationCreateSchema } from "~/@user/transaction-message-location/schema/TransactionMessageLocationCreateSchema";
 import { transactionStatusGateFx } from "~/@user/transaction-status/fx/transactionStatusGateFx";
@@ -68,6 +69,32 @@ export const transactionMessageLocationCreateFx = Effect.fn("transactionMessageL
 					event: "transaction.message",
 					isTerminal: false,
 				});
+
+				yield* inboxCreateFx(
+					transaction.side === "buyer"
+						? {
+								userId: transaction.sellerId,
+								type: "buyer-message",
+								payload: {
+									type: "buyer-message",
+									transactionId: transaction.id,
+									listingId: transaction.listingId,
+									messageThreadId: transaction.messageThreadId,
+								},
+								priority: "high",
+							}
+						: {
+								userId: transaction.buyerId,
+								type: "seller-message",
+								payload: {
+									type: "seller-message",
+									transactionId: transaction.id,
+									listingId: transaction.listingId,
+									messageThreadId: transaction.messageThreadId,
+								},
+								priority: "high",
+							},
+				);
 
 				return yield* messageLocationCreateFx({
 					userId,

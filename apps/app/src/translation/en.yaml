@@ -7,6 +7,9 @@
 022cc5c29a7e44c9fd5d268e2abcc13f44f38fcabbe0552e3d6c0710:
   ref: Buyer info (button)
   value: Buyer info (button)
+02a24434f76061e34a1281f0c237f98e6061c8f1411cbad86a4884fc:
+  ref: Messages - seller (label)
+  value: Messages - seller (label)
 0353a7e7a341b6b63f3e182605fd6627a8e0e1c6897b7bf639ff5d89:
   ref: Back (label)
   value: Back (label)
@@ -100,9 +103,6 @@
 1b63424af287e8864ce39b0f977235e745ee16c2db56823d017bc4fd:
   ref: Listing warranty (label)
   value: Listing warranty (label)
-1bbdc9dc7f6591dc1499c568c88587d61a1993247ea04942fc818c14:
-  ref: No listings in feed (message)
-  value: No listings in feed (message)
 1db65f00c76028b1ac9c7c45672cbf0ad4130d6fd354960e762f05e4:
   ref: Reaction rate (hint)
   value: Reaction rate (hint)
@@ -151,9 +151,6 @@
 2b8fe8725888d2731e48730886edcba6b89f8bba62b68812a8e5738b:
   ref: Reaction p90 (label)
   value: Reaction p90 (label)
-2bad77ac9199d19ca4cf85d780cf6f7f747cc6520bc1899bb6717029:
-  ref: Go to home (link)
-  value: Go to home (link)
 2cc4d8606ebcda522231e7ebd01a2df339a8f8edc36ec3830eedf4c6:
   ref: Listing seller info not available (message)
   value: Listing seller info not available (message)
@@ -184,6 +181,9 @@
 356f63775751bd5232d3021e2d6775a39bb1f9a2ec6041b1e763e6b9:
   ref: Dispute transaction - confirm (button)
   value: Dispute transaction - confirm (button)
+36725bc2ac5cbe7bac8e1e99ad76766f37ce4ce1e330af2152a16d6d:
+  ref: Listing favourited (label)
+  value: Listing favourited (label)
 3685c79576a1efb41990be4a56a962ff63eaab48e01dd64da8e62c16:
   ref: No drafts (title)
   value: No drafts (title)
@@ -196,6 +196,9 @@
 39506faaa681b27e6ed65d4237e07c6a2c63838b44f9495159f1ec8b:
   ref: Listing - Pros not filled
   value: Listing - Pros not filled
+39c37874e7619ae6dd79e98c8385c033871ad284b152bbd4b394ecc4:
+  ref: Others (label)
+  value: Others (label)
 3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
   ref: Price (placeholder)
   value: Price (placeholder)
@@ -205,6 +208,9 @@
 3c053b1e31a27b42457f488aabe08c89ccd7268700f1cc41b5c77f2f:
   ref: No my listings (title)
   value: No my listings (title)
+3c46c4d48f1a7f0f11b7131be79bb300ff4358446736ad106a935168:
+  ref: Inbox (title)
+  value: Inbox (title)
 3ca78530a9e9985ed4678eeb359e23a9c8e913ec6de9f637c0f53e46:
   ref: Price - free
   value: Price - free
@@ -226,12 +232,12 @@
 43c97e37d539928f112ef93039df9510299f8c68dc170da7c864a3ba:
   ref: Draft list (label)
   value: Draft list (label)
-44730392630376ff51d9117fa4de944bb7209b64056ee497a9b10308:
-  ref: Listing messages (title)
-  value: Listing messages (title)
 44768dba85d12f054b4b9820de22bfdf8dcd0d561e4edc9d5546340b:
   ref: Find listings (label)
   value: Find listings (label)
+45260cbfb1db18e4526fef4cc251c0564b693545bec5e2fa17efea67:
+  ref: New buyer message (label)
+  value: New buyer message (label)
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
   ref: Uploading photo (title)
   value: Uploading photo (title)
@@ -253,9 +259,6 @@
 49728f07dea157d2683933772ad0785a610a41c6bf91f753cee3b069:
   ref: Listing restriction (title)
   value: Listing restriction (title)
-4a3927203489e82672dc24ffdae6d9ee72b4b486e2562f0debce4b59:
-  ref: That's all for now (message)
-  value: That's all for now (message)
 4a6d672731040044ea10a6210d1d72de8ce2a49c57e6eab1ba45eb66:
   ref: Feed name (required)
   value: Feed name (required)
@@ -274,6 +277,9 @@
 5216a97ce804ea83d2142778cf1659ad70adc72c670ea7365e396fcb:
   ref: Go home (welcome)
   value: Go home (welcome)
+53630910d2b191f4a79a007e555fd44b9e109f75bafb3df5171ea48f:
+  ref: New seller message (label)
+  value: New seller message (label)
 5611e161fc48366fdb56f2529712795617513c1b346552e32a53ff19:
   ref: Loading... (button)
   value: Loading... (button)
@@ -289,9 +295,6 @@
 591b812973b8193e4ba322d124037a7e66dfb4eedbbd74a82a527d6a:
   ref: Feed name (label)
   value: Feed name (label)
-59934a1f13d42118882c0a0a64cf3f270c5ad2f54185826385cb2abf:
-  ref: Go to feed (link)
-  value: Go to feed (link)
 59e4c4c7191a4de1ac5a2debf4ed14ba44d3f4c2af0488a28d835701:
   ref: Transaction buyer info not available (title)
   value: Transaction buyer info not available (title)
@@ -352,9 +355,6 @@
 69b8258820206f2dc2cded5a9cf7c8b51708a5a81d8de92c0ef3450f:
   ref: Feed category not selected
   value: Feed category not selected
-6bb64856bd7a11806d6d5510ba7c78890bc8cc3a6e80f6bb043a405b:
-  ref: Try changing your feed or open all listings (message)
-  value: Try changing your feed or open all listings (message)
 70ed6d112dab8cf69d055339929e4dd23299e2c5f9c4ef97371bd13e:
   ref: No drafts for current filter (title)
   value: No drafts for current filter (title)
@@ -364,9 +364,6 @@
 730685ddac55ab05051064ae829f90b99a300329a4818c287d8f51a5:
   ref: Tracking number not filled
   value: Tracking number not filled
-7375db8ba1d4534eb55b16f42a2aa4350c5bb0ed60dfba9f45bc8e3c:
-  ref: No listings in feed (title)
-  value: No listings in feed (title)
 7580acbe8e7737448df6843032c9575ad2499c73387ed60adad1e37f:
   ref: No transactions for current filter (title)
   value: No transactions for current filter (title)
@@ -406,18 +403,24 @@
 7fff5a32624ca773f775bae93783cbc55b943a4c968052d2b32e91cd:
   ref: Mark transaction as successful (button)
   value: Mark transaction as successful (button)
+80e54746f4fbbb896f101293d4a57144d41147ca4fa9787d50940980:
+  ref: Priority (label)
+  value: Priority (label)
 80eb01c4f083e6af9055876045562a9157c605f15686e89854ee632b:
   ref: unused
   value: unused
-80f1cb48a13ac3f252655cc343aabaf2f428cf49d2ed39fde9b21b3e:
-  ref: No more listings to show (message)
-  value: No more listings to show (message)
 81c4d07e10662bb6e4aaabc348129b026766ab5f1200c052899255bc:
   ref: Feed range (label)
   value: Feed range (label)
 8239714e7da3bb0847e7e0f4bd956f5dff5fe8037a32a4fbbd354331:
   ref: Create transaction (button)
   value: Create transaction (button)
+836b19fc748e6429a7591712239acea4d936fab1b0671f538ba91660:
+  ref: Listing unfavourited (label)
+  value: Listing unfavourited (label)
+83b634826d57876d245185f68ced81274d52163ed8a9af640530ab71:
+  ref: You got like (label)
+  value: You got like (label)
 847f52b94d2fd82f89cf548490067c305182a98ca1342616d166ae6a:
   ref: Personal - Phone (placeholder)
   value: Personal - Phone (placeholder)
@@ -436,9 +439,6 @@
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
   ref: With VAT
   value: With VAT
-883460559a0e6fabb28562556c7d790c58af1fae8a9ed309e37f7a4a:
-  ref: Refresh feed (label)
-  value: Refresh feed (label)
 886e7f1206862942937e7dc0ca0620af2e9bf5d3055337548bdba3d9:
   ref: Messages (label)
   value: Messages (label)
@@ -499,9 +499,6 @@
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
   ref: Create listing (label)
   value: Create listing (label)
-98f6a223daf4e94480bc0042d2658a8ac3d61b1eb7b3afab6d0e8fc5:
-  ref: No listings in this favourites feed (title)
-  value: No listings in this favourites feed (title)
 990f159a82184824fdafb2ab63fa2ab1f67849d8a138773d04be2fd4:
   ref: Seller - listings (label)
   value: Seller - listings (label)
@@ -520,9 +517,6 @@
 9d96a108b9c86846287f96e8664fd01cd443ac91d6eb92649db0a909:
   ref: Feed select (title)
   value: Feed select (title)
-9da7a14d4dc999a28f1935fd5781e0d5f609bf8f28fc86ef66b5c605:
-  ref: Add to favourite (button)
-  value: Add to favourite (button)
 9dced25fcc591774e6324d19f6e85e64b06b431e2eed98692b12fa8d:
   ref: User profile (title)
   value: User profile (title)
@@ -547,9 +541,6 @@ a221a6d62ef13cc1c9f1269bcb08f09d61d7aea9f0bcea418d744384:
 a46be85abba5f0371038aa633d7378f4fd8376be6b7e7a9b7b22ec05:
   ref: Listing age (hint)
   value: Listing age (hint)
-a5fecc06a3719ab30505196a44d06c91c2c7e8497978d8572efb9e30:
-  ref: Remove from favourite (button)
-  value: Remove from favourite (button)
 a62fb7339fce50f73673412c11f10a25880e1e7b942b7261366a8529:
   ref: closed
   value: closed
@@ -628,6 +619,9 @@ babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
 bb5e50b301be27567cdb705ba4f700188154893f0faee5a597fd9284:
   ref: User score (label)
   value: User score (label)
+bbd8808bf4c28cd66cc606e6a7d8c4ab0c2cd43a8f8ae2aace45a73b:
+  ref: Notifications (label)
+  value: Notifications (label)
 bcd9934e20e9f9156bc934d5ff4ae78c96d19fdc0ec072a3a20e1371:
   ref: Listing - Pros (label)
   value: Listing - Pros (label)
@@ -639,6 +633,9 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     message than this :(
   value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
     better message than this :(
+c1027406c1e7f916add90ca2c8f0bf30253d4f1caf9dd10bf5789b1c:
+  ref: Inbox thumb (title)
+  value: Inbox thumb (title)
 c25e8a6359df6fbcc11434b2d0bcaf641237490f399adfa91cd8702b:
   ref: Home (label)
   value: Home (label)
@@ -648,9 +645,6 @@ c360a8542e6f85f8f1c9cacccc525cb1fcdf6b743584428ee6111e55:
 c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
   ref: Feed title not filled
   value: Feed title not filled
-c3cfe2aa73f2129c42c9fc884e58bbbbceff97836e48baabfa7675af:
-  ref: That's all for now (title)
-  value: That's all for now (title)
 c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
   ref: Price (title)
   value: Price (title)
@@ -690,6 +684,9 @@ d30ca5022499ee9c8ab4d9d4a2bb4f65292849e295cbb63503707671:
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
   ref: Listing condition (label)
   value: Listing condition (label)
+d60d6c00507c0ff00445c84999529eb3c9da48141213ff1a5396cc72:
+  ref: You got dislike (label)
+  value: You got dislike (label)
 d8afcd78535d2c0ab7b58dfcc92c11456c55fe96dab19a1de6a24218:
   ref: Closer rate (hint)
   value: Closer rate (hint)
@@ -705,24 +702,21 @@ dbb55f0c704298dbeda11ddad88ff05b151057e984bf244f0d09c4d9:
 dc9bf90858ca4e7cede4dc10e9939dea37d678f40fb69f16c9b30d9e:
   ref: Personal - Name (label)
   value: Personal - Name (label)
+de75432fdd962d61c3b89d0c4098554de1f957cfd40f3f2fc50967c0:
+  ref: Messages - buyer (label)
+  value: Messages - buyer (label)
 de8832ba89f066ff957f2387c53ed8c543d4ed977d7fac554ab3f590:
   ref: Go to my feed (button)
   value: Go to my feed (button)
-e14a7b455d617b56b9ff6118784b59871a8191a5b9db34d76e02d9fa:
-  ref: Back to favourites (link)
-  value: Back to favourites (link)
 e24d776c431f2cb9d46c2bbd22e31dcbf906057798f788ae78b0e9c8:
   ref: Draft - those others (title)
   value: Draft - those others (title)
+e28de503976684df4b16c4366122c99432deab1cf2b99efa46456e0f:
+  ref: like
+  value: like
 e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
   ref: Listing title (required)
   value: Listing title (required)
-e3d63232691a609a75cc717a24a0086f7f54578766588ae686fc30ff:
-  ref: No favourites yet (title)
-  value: No favourites yet (title)
-e4889b76006e4faf6c6b72d87f7711888de501f0e58936e7053832d6:
-  ref: Refresh feed (button)
-  value: Refresh feed (button)
 e6ae675232ef4ec304588531c21f87323fba1e262aff12e5dccf22d5:
   ref: Warranty (title)
   value: Warranty (title)
