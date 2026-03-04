@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { InboxPayloadSchema } from "~/@user/inbox/schema/InboxPayloadSchema";
-import { InboxTypeEnumSchema } from "~/@user/inbox/schema/InboxTypeEnumSchema";
 import { InboxPriorityEnumSchema } from "~/database/@enum/InboxPriorityEnumSchema";
+import { InboxTypeEnumSchema } from "~/database/@enum/InboxTypeEnumSchema";
 
 export const InboxSchema = z
 	.looseObject({

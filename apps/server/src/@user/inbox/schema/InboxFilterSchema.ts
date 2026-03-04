@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
-import { InboxTypeEnumSchema } from "~/@user/inbox/schema/InboxTypeEnumSchema";
 import { InboxPriorityEnumSchema } from "~/database/@enum/InboxPriorityEnumSchema";
+import { InboxTypeEnumSchema } from "~/database/@enum/InboxTypeEnumSchema";
 import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 
 export const InboxFilterSchema = z
