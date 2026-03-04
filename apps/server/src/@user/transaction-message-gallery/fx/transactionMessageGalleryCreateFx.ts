@@ -3,6 +3,7 @@ import { Effect } from "effect";
 import { TransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
 import { galleryInsertFx } from "~/@user/gallery/fx/galleryInsertFx";
 import { galleryItemInsertFx } from "~/@user/gallery-item/fx/galleryItemInsertFx";
+import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { messageGalleryCreateFx } from "~/@user/message-gallery/fx/messageGalleryCreateFx";
 import type { TransactionMessageGalleryCreateSchema } from "~/@user/transaction-message-gallery/schema/TransactionMessageGalleryCreateSchema";
 import { transactionStatusGateFx } from "~/@user/transaction-status/fx/transactionStatusGateFx";
@@ -103,6 +104,30 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 					event: "transaction.message",
 					isTerminal: false,
 				});
+
+					yield* inboxCreateFx(
+						transaction.side === "buyer"
+							? {
+									userId: transaction.sellerId,
+									type: "buyer-message",
+									payload: {
+										type: "buyer-message",
+										transactionId: transaction.id,
+										messageThreadId: transaction.messageThreadId,
+									},
+									priority: "high",
+								}
+							: {
+									userId: transaction.buyerId,
+									type: "seller-message",
+									payload: {
+										type: "seller-message",
+										transactionId: transaction.id,
+										messageThreadId: transaction.messageThreadId,
+									},
+									priority: "high",
+								},
+					);
 
 				return yield* messageGalleryCreateFx({
 					userId,
