@@ -1,7 +1,9 @@
+import { useLocale } from "@use-pico/client/hook";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
+import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
 import type { tInbox, zInboxThumbPayload } from "@zbav-se.me/sdk/api/user";
 import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
@@ -20,6 +22,7 @@ export namespace InboxThumbItem {
 }
 
 export const InboxThumbItem: FC<InboxThumbItem.Props> = ({ item, payload }) => {
+	const locale = useLocale();
 	const [isOpen, setIsOpen] = useState(false);
 	const { data: listing } = withListingQuery.useFetchQuery(payload.listingId);
 	const hero = useUpload(listing.gallery.items);
@@ -39,14 +42,41 @@ export const InboxThumbItem: FC<InboxThumbItem.Props> = ({ item, payload }) => {
 								: "You got dislike (label)"
 						}
 						ui={{
-							tone: item.archivedAt ? "neutral" : "primary",
+							tone: item.archivedAt
+								? "neutral"
+								: payload.thumb === "like"
+									? "secondary"
+									: "neutral",
 							theme: "light",
 							font: item.archivedAt ? "normal" : "bold",
 							color: "lead",
 						}}
 					/>
 				}
-				bottom={<Typo label={listing.title} />}
+				bottom={
+					<Container
+						ui={{
+							flow: "vertical",
+						}}
+					>
+						<Typo
+							label={listing.title}
+							ui={{
+								text: "sm",
+							}}
+						/>
+						<Typo
+							label={toTimeDiff({
+								locale,
+								time: item.timestamp,
+							})}
+							ui={{
+								text: "xs",
+								opacity: "7",
+							}}
+						/>
+					</Container>
+				}
 				onClick={() => {
 					setIsOpen(true);
 					if (item.archivedAt) {

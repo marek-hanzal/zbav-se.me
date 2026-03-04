@@ -100,9 +100,6 @@
     value: >
         Důležitá hodnota, pokud prodáváš něco, co podléhá např. omezení věku nebo
         dokonce vyžaduje oprávnění k užití.
-13aee5bd68299f450dac5654df822f05768721b865c8898f050c9b4a:
-    ref: Thumb like (label)
-    value: Thumb like (label)
 14663fea507627f6c98c1360a9aa3c6d275ed885e44051e7d88af28a:
     ref: Feed age (hint)
     value: >
@@ -227,9 +224,6 @@
 3685c79576a1efb41990be4a56a962ff63eaab48e01dd64da8e62c16:
     ref: No drafts (title)
     value: No drafts (title)
-37252e02db69770d8028e8825d312cec20566cb29b9f520a938629c5:
-    ref: Mark as read (button)
-    value: Mark as read (button)
 376b4e9c64fcef908876651b54c8c0d6a03a96798a140ba2a9c865f2:
     ref: rejected
     value: rejected
@@ -277,9 +271,6 @@
 44768dba85d12f054b4b9820de22bfdf8dcd0d561e4edc9d5546340b:
     ref: Find listings (label)
     value: Hledat
-453cf6f300c4b0e1d2c6dbe6e13c3d4284746df1401fdb666c08aa27:
-    ref: Thumb dislike (label)
-    value: Thumb dislike (label)
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
     ref: Uploading photo (title)
     value: Nahrávám fotku, momentík...
@@ -461,9 +452,6 @@
 7bd8fc15e1d93b10be826ce8e00ebabcfb79fbb806b8c52e2fcef824:
     ref: Feed name (title)
     value: Vyber si název
-7c1d20d1f039d4e690283dbcc0e523c142a79e03b3daedfcd844c11a:
-    ref: No archived inbox items (message)
-    value: No archived inbox items (message)
 7dbeb77d3b315a1061d4bcd83875d872181ea3f46593933720e8dc4a:
     ref: Close transaction (button)
     value: Hotovo, zavřít
@@ -485,6 +473,9 @@
 8239714e7da3bb0847e7e0f4bd956f5dff5fe8037a32a4fbbd354331:
     ref: Create transaction (button)
     value: Mám zájem!
+83b634826d57876d245185f68ced81274d52163ed8a9af640530ab71:
+    ref: You got like (label)
+    value: Někomu se líbí tvůj inzerát!
 847f52b94d2fd82f89cf548490067c305182a98ca1342616d166ae6a:
     ref: Personal - Phone (placeholder)
     value: Tvoje telefonní číslo
@@ -507,9 +498,6 @@
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
     ref: With VAT
     value: With VAT
-8866d75345937a7e6fbab726a781f3a5f2e71eb87f5c61f0d4fe13d0:
-    ref: Open listing preview (button)
-    value: Open listing preview (button)
 886e7f1206862942937e7dc0ca0620af2e9bf5d3055337548bdba3d9:
     ref: Messages (label)
     value: Zprávy
@@ -1110,6 +1098,9 @@ d30ca5022499ee9c8ab4d9d4a2bb4f65292849e295cbb63503707671:
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
     ref: Listing condition (label)
     value: Stav
+d60d6c00507c0ff00445c84999529eb3c9da48141213ff1a5396cc72:
+    ref: You got dislike (label)
+    value: Někomu se nelíbí tvůj inzerát
 d8afcd78535d2c0ab7b58dfcc92c11456c55fe96dab19a1de6a24218:
     ref: Closer rate (hint)
     value: >
