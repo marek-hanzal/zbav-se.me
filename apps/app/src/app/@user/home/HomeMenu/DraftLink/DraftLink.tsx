@@ -15,12 +15,11 @@ export namespace DraftLink {
 	}
 }
 
-export const DraftLink: FC<DraftLink.Props> = ({ icon, ...props }) => {
+export const DraftLink: FC<DraftLink.Props> = (props) => {
 	return (
-		<Suspense fallback={<Pending iconUi={icon} />}>
+		<Suspense fallback={<Pending {...props} />}>
 			<Data
 				_suspense={"I know"}
-				icon={icon}
 				{...props}
 			/>
 		</Suspense>

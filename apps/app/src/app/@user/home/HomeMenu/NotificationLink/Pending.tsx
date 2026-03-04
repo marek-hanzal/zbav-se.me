@@ -1,7 +1,7 @@
 import { useLocale } from "@use-pico/client/hook";
+import { NotificationIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import { DraftIcon } from "@zbav-se.me/ui/icon";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
@@ -19,8 +19,8 @@ export const Pending: FC<Pending.Props> = (props) => {
 			{...uiMenuButton({
 				className: [],
 			})}
-			icon={DraftIcon}
-			to="/$locale/seller/draft/resolve"
+			icon={NotificationIcon}
+			to="/$locale/inbox/list"
 			params={{
 				locale,
 			}}

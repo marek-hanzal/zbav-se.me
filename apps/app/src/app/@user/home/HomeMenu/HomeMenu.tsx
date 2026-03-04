@@ -165,8 +165,20 @@ export const HomeMenu = ({ ui, ...props }: HomeMenu.Props) => {
 						</TypoIcon>
 					</LinkTo>
 
-					<DraftLink icon={icon} />
-					<NotificationLink icon={icon} />
+					<DraftLink
+						iconProps={{
+							ui: {
+								...icon,
+							},
+						}}
+					/>
+					<NotificationLink
+						iconProps={{
+							ui: {
+								...icon,
+							},
+						}}
+					/>
 				</Group>
 
 				<Group>
