@@ -32,7 +32,7 @@ export const InboxFavouriteItem: FC<InboxFavouriteItem.Props> = ({ item, payload
 				<Tx
 					label={"Listing favourited (label)"}
 					ui={{
-						tone: item.archivedAt ? "neutral" : "primary",
+						tone: item.archivedAt ? "neutral" : "secondary",
 						theme: "light",
 						font: item.archivedAt ? "normal" : "bold",
 						color: "lead",

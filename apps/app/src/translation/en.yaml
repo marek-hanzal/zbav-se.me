@@ -193,6 +193,9 @@
 356f63775751bd5232d3021e2d6775a39bb1f9a2ec6041b1e763e6b9:
   ref: Dispute transaction - confirm (button)
   value: Dispute transaction - confirm (button)
+36725bc2ac5cbe7bac8e1e99ad76766f37ce4ce1e330af2152a16d6d:
+  ref: Listing favourited (label)
+  value: Listing favourited (label)
 3685c79576a1efb41990be4a56a962ff63eaab48e01dd64da8e62c16:
   ref: No drafts (title)
   value: No drafts (title)
@@ -415,6 +418,9 @@
 8239714e7da3bb0847e7e0f4bd956f5dff5fe8037a32a4fbbd354331:
   ref: Create transaction (button)
   value: Create transaction (button)
+836b19fc748e6429a7591712239acea4d936fab1b0671f538ba91660:
+  ref: Listing unfavourited (label)
+  value: Listing unfavourited (label)
 83b634826d57876d245185f68ced81274d52163ed8a9af640530ab71:
   ref: You got like (label)
   value: You got like (label)
