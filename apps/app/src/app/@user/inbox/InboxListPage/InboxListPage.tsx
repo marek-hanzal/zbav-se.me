@@ -9,7 +9,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { Suspense, useMemo, useState } from "react";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
-import { InboxItem } from "./InboxItem/InboxItem";
+import { InboxList } from "./InboxList/InboxList";
 
 export namespace InboxListPage {
 	export interface Props extends TitleContainer.Props {
@@ -90,8 +90,6 @@ const Data: FC<Data.Props> = ({ priority }) => {
 		],
 	);
 
-	const { data: activeIds } = withInboxQuery.useCollectionQuery(activeQuery);
-	const { data: archivedIds } = withInboxQuery.useCollectionQuery(archivedQuery);
 	const { data: activeCount } = withInboxQuery.useCountQuery(activeCountQuery);
 	const { data: archivedCount } = withInboxQuery.useCountQuery(archivedCountQuery);
 
@@ -165,19 +163,8 @@ const Data: FC<Data.Props> = ({ priority }) => {
 				</Button>
 			</Container>
 
-			<Container
-				data-ui="InboxListPageData[Active]"
-				ui={{
-					flow: "vertical",
-					gap: "default",
-				}}
-			>
-				{activeIds.map((inboxId) => (
-					<InboxItem
-						key={inboxId}
-						inboxId={inboxId}
-					/>
-				))}
+			<Container data-ui="InboxListPageData[Active]">
+				<InboxList query={activeQuery} />
 			</Container>
 
 			<Container
@@ -188,19 +175,8 @@ const Data: FC<Data.Props> = ({ priority }) => {
 				}}
 			/>
 
-			<Container
-				data-ui="InboxListPageData[Archived]"
-				ui={{
-					flow: "vertical",
-					gap: "default",
-				}}
-			>
-				{archivedIds.map((inboxId) => (
-					<InboxItem
-						key={inboxId}
-						inboxId={inboxId}
-					/>
-				))}
+			<Container data-ui="InboxListPageData[Archived]">
+				<InboxList query={archivedQuery} />
 				{archivedCount.filter === 0 ? (
 					<Tx label="No archived inbox items (message)" />
 				) : null}
