@@ -48,6 +48,11 @@ This domain provides endpoints that don't require authentication. It includes sy
 - Scalar UI for API docs
 - Generated from route definitions
 
+### MCP Bridge
+- **MCP** - `/api/public/:token/mcp`
+- Exposes OpenAPI-tagged operations (`mcp`) as MCP tools without re-implementing endpoint logic.
+- Uses bearer token fallback (`Authorization: Bearer <token>`) resolved from `user_ex.mcp`.
+
 ### Origin
 - **Origin** - Origin/domain information
 - Configuration and CORS utilities

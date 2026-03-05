@@ -153,6 +153,10 @@ const tagsRegistry: Record<
 		name: "Schema",
 		description: "OpenAPI schema exposure only – endpoints return 400",
 	},
+	mcp: {
+		name: "mcp",
+		description: "Endpoints exposed through MCP bridge tooling",
+	},
 } as const;
 
 const extractTagsFromOpenApiDocument = (

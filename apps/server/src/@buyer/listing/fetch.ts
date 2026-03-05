@@ -59,6 +59,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 			},
 			tags: [
 				"Listing",
+				"mcp",
 			],
 			summary: "Fetch a listing based on the provided query",
 		}),

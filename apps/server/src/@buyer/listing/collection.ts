@@ -51,6 +51,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 			},
 			tags: [
 				"Listing",
+				"mcp",
 			],
 			summary: "Fetch a collection of listings based on the provided query",
 		}),
