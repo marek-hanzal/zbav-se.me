@@ -5,9 +5,9 @@ import { AxiomContextFx } from "~/@common/axiom/context/AxiomContextFx";
 export const withTestAxiomFx = <A, E, R>(eff: Effect.Effect<A, E, R>) =>
 	eff.pipe(
 		Effect.provideService(AxiomContextFx, {
-			dataset: "",
+			dataset: "test",
 			root: "test",
 			traceId: genId(),
-			token: "",
+			token: "<nope>",
 		}),
 	);
