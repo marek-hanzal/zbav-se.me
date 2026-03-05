@@ -1,7 +1,7 @@
 {
 	"mcpServers": {
 		"zbav-se-me-local": {
-			"url": "http://obsidian-ii.local:3032/api/public/mcp/mcp",
+			"url": "http://obsidian-ii.local:3032/api/public/mcp",
 			"transport": "streamable_http",
 			"bearerTokenEnvVar": "MCP_BEARER_TOKEN",
 			"headers": {
