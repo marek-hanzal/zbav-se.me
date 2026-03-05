@@ -8,10 +8,16 @@ export const withAuthEndpointFx = Effect.fn("withAuthEndpointFx")(function* () {
 	const { root } = yield* RoutesContextFx;
 	const { dialect } = yield* KyselyContextFx;
 
-	const authApi = auth(() => dialect);
-	const { handler } = authApi;
-	const withDiscovery = oAuthDiscoveryMetadata(authApi);
-	const withProtectedResource = oAuthProtectedResourceMetadata(authApi);
+	const authApi = auth(() => dialect, {
+		basePath: "/api/auth",
+	});
+	const oauthApi = auth(() => dialect, {
+		basePath: "/api/oauth",
+	});
+	const { handler: withAuthHandler } = authApi;
+	const { handler: withOauthHandler } = oauthApi;
+	const withDiscovery = oAuthDiscoveryMetadata(oauthApi);
+	const withProtectedResource = oAuthProtectedResourceMetadata(oauthApi);
 
 	root.on(
 		[
@@ -19,10 +25,31 @@ export const withAuthEndpointFx = Effect.fn("withAuthEndpointFx")(function* () {
 			"GET",
 		],
 		"/api/auth/*",
-		(c) => handler(c.req.raw),
+		(c) => withAuthHandler(c.req.raw),
+	);
+
+	root.on(
+		[
+			"POST",
+			"GET",
+		],
+		"/api/oauth/*",
+		(c) => withOauthHandler(c.req.raw),
 	);
 
 	root.get("/.well-known/oauth-authorization-server", (c) => {
+		return withDiscovery(c.req.raw);
+	});
+
+	root.get("/.well-known/oauth-authorization-server/*", (c) => {
+		return withDiscovery(c.req.raw);
+	});
+
+	root.get("/.well-known/openid-configuration", (c) => {
+		return withDiscovery(c.req.raw);
+	});
+
+	root.get("/.well-known/openid-configuration/*", (c) => {
 		return withDiscovery(c.req.raw);
 	});
 
@@ -34,7 +61,15 @@ export const withAuthEndpointFx = Effect.fn("withAuthEndpointFx")(function* () {
 		return withProtectedResource(c.req.raw);
 	});
 
-	root.get("/api/auth/.well-known/oauth-protected-resource/*", (c) => {
+	root.get("/api/oauth/.well-known/oauth-authorization-server", (c) => {
+		return withDiscovery(c.req.raw);
+	});
+
+	root.get("/api/oauth/.well-known/openid-configuration", (c) => {
+		return withDiscovery(c.req.raw);
+	});
+
+	root.get("/api/oauth/.well-known/oauth-protected-resource", (c) => {
 		return withProtectedResource(c.req.raw);
 	});
 });

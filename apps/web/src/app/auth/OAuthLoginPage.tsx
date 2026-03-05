@@ -55,7 +55,7 @@ const withContinueOAuth = async (query: Record<string, string>) => {
 
 	window.location.href = linkTo({
 		base: import.meta.env.VITE_SERVER_API,
-		href: "/api/auth/mcp/authorize",
+		href: "/api/oauth/mcp/authorize",
 		query,
 	});
 };
