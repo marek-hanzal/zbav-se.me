@@ -1,44 +1,42 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { listingCollectionFx } from "~/@buyer/listing/fx/listingCollectionFx";
-import { ListingQuerySchema } from "~/@buyer/listing/schema/ListingQuerySchema";
-import { ListingSchema } from "~/@buyer/listing/schema/ListingSchema";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
+import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
+import { userExTokenDisableFx } from "~/@user/user-ex/fx/userExTokenDisableFx";
+import { UserExSchema } from "~/@user/user-ex/schema/UserExSchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
-const CollectionSchema = z.array(ListingSchema);
+export const withTokenDisableApiFx = Effect.fn("withTokenDisableApiFx")(function* () {
+	const { userHono } = yield* RoutesContextFx;
 
-export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* () {
-	const { buyerHono } = yield* RoutesContextFx;
-	buyerHono.openapi(
+	userHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/listing/collection",
-			description: "Returns listings based on provided parameters",
-			operationId: "apiListingCollection",
-			request: {
-				body: {
-					content: {
-						"application/json": {
-							schema: ListingQuerySchema,
-						},
-					},
-				},
-			},
+			path: "/token/disable",
+			description: "Disable user bearer token",
+			operationId: "apiUserTokenDisable",
 			responses: {
 				200: {
 					content: {
 						"application/json": {
-							schema: CollectionSchema,
+							schema: UserExSchema,
 						},
 					},
-					description: "Access collection of listings based on provided query",
+					description: "User token disabled successfully",
+				},
+				409: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Conflict (e.g. duplicate)",
 				},
 				500: {
 					content: {
@@ -50,11 +48,10 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 				},
 			},
 			tags: [
-				"buyer",
-				"Listing",
-				"mcp",
+				"User",
+				"Token",
 			],
-			summary: "Fetch a collection of listings based on the provided query",
+			summary: "Disable user token",
 		}),
 		async (c) => {
 			const axiomConfig = ServerAxiomSchema.parse(process.env);
@@ -63,25 +60,29 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 				const user = c.get("user");
 
 				yield* Effect.annotateLogsScoped({
-					endpoint: "apiListingCollection",
+					endpoint: "apiUserTokenDisable",
 					userId: user.id,
 				});
 
 				return c.json(
 					yield* zodGuardFx({
-						schema: CollectionSchema,
-						dataFx: listingCollectionFx({
-							...c.req.valid("json"),
+						schema: UserExSchema,
+						dataFx: userExTokenDisableFx({
 							userId: user.id,
-							scope: {},
 						}),
 					}),
 					200,
 				);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig, "apiListingCollection"),
+				withLoggingFx(axiomConfig, "apiUserTokenDisable"),
 				withCatchFx({
+					RuntimeErrorFx(e) {
+						return c.json(noticeError(e), 500);
+					},
+					ConflictErrorFx(e) {
+						return c.json(noticeError(e), 409);
+					},
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);
 					},

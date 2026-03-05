@@ -3,6 +3,7 @@ import { bodyLimit } from "hono/body-limit";
 import { cors } from "hono/cors";
 import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
+import type { auth as authType } from "~/auth/auth";
 import { auth } from "~/auth/auth";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
@@ -59,7 +60,35 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 				headers: c.req.raw.headers,
 			});
 			if (!session) {
-				c.set("user", null);
+				const authorization = c.req.raw.headers.get("authorization");
+				const bearerPrefix = "Bearer ";
+				const token =
+					authorization && authorization.startsWith(bearerPrefix)
+						? authorization.slice(bearerPrefix.length).trim()
+						: null;
+
+				if (!token) {
+					c.set("user", null);
+					return next();
+				}
+
+				const mcpUser = await kysely.kysely
+					.selectFrom("user_ex")
+					.innerJoin("user", "user.id", "user_ex.userId")
+					.selectAll("user")
+					.select([
+						"user_ex.locationId as locationId",
+						"user_ex.side as side",
+					])
+					.where("user_ex.token", "=", token)
+					.executeTakeFirst();
+
+				if (!mcpUser) {
+					c.set("user", null);
+					return next();
+				}
+
+				c.set("user", mcpUser as authType.User);
 				return next();
 			}
 			c.set("user", session.user);

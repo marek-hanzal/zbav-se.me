@@ -86,3 +86,13 @@ bun run typecheck
 
 - Dependency cleanup decisions in this repository are evidence-based from source usage.
 - `knip` is treated as a candidate signal, not as the source of truth.
+
+## MCP
+
+Shared MCP server template is in [`mcp.json`](./mcp.json).
+
+- Endpoint: `http://obsidian-ii.local:3032/api/public/mcp`
+- Auth env var: `MCP_BEARER_TOKEN`
+- Transport: `streamable_http`
+
+Note: Codex desktop currently reads MCP server config from `~/.codex/config.toml`.

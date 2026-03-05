@@ -16,6 +16,7 @@ import { KyselyContextLayerFx } from "~/database/context/KyselyContextLayerFx";
 import { database } from "~/database/kysely";
 import { withHono } from "~/hono/withHono";
 import { initMiddlewareFx } from "~/init/initMiddlewareFx";
+import { withMcpApiFx } from "~/mcp/withMcpApiFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { RoutesContextLayer } from "~/route/context/RoutesContextLayer";
 import { ServerDatabaseSchema } from "~/schema/env/ServerDatabaseSchema";
@@ -60,6 +61,7 @@ const app = await Effect.gen(function* () {
 		withUserApiFx(),
 		withSellerApiFx(),
 		withBuyerApiFx(),
+		withMcpApiFx(),
 	]).pipe(Effect.provide(kyselyContext));
 
 	return root;

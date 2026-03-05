@@ -23,6 +23,15 @@ export const UserExTableSchema = z
 				UserSideEnumSchema,
 			])
 			.optional(),
+		token: z
+			.union([
+				z.string(),
+				z.null(),
+			])
+			.optional()
+			.openapi({
+				description: "Bearer token used for agent access and API token fallback auth",
+			}),
 	})
 	.strip();
 
