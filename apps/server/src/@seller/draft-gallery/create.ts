@@ -94,7 +94,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiDraftGalleryCreate"),
+				withLoggingFx(axiomConfig, "apiDraftGalleryCreate", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withCatchFx({

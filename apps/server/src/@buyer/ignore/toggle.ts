@@ -94,7 +94,7 @@ export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
 				);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig, "apiIgnoreToggle"),
+				withLoggingFx(axiomConfig, "apiIgnoreToggle", c.get("traceId")),
 				withDateFx,
 				withCatchFx({
 					InvalidRequestErrorFx(e) {

@@ -3,7 +3,7 @@ import { flagFetchFx } from "~/@buyer/flag/fx/flagFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace flagDeleteFx {
 	export interface Props {
@@ -16,8 +16,9 @@ export const flagDeleteFx = Effect.fn("flagDeleteFx")(function* ({
 	userId,
 	listingId,
 }: flagDeleteFx.Props) {
-	yield* withTraceFx({
-		fx: "flagDeleteFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "flagDeleteFx",
 		input: {
 			userId,
 			listingId,

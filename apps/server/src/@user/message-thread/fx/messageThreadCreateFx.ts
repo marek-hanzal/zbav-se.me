@@ -6,7 +6,7 @@ import type { MessageThreadCreateSchema } from "~/@user/message-thread/schema/Me
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace messageThreadCreateFx {
 	export type Props = MessageThreadCreateSchema.Type;
@@ -15,8 +15,9 @@ export namespace messageThreadCreateFx {
 export const messageThreadCreateFx = Effect.fn("messageThreadCreateFx")(function* (
 	props: messageThreadCreateFx.Props,
 ) {
-	yield* withTraceFx({
-		fx: "messageThreadCreateFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "messageThreadCreateFx",
 		input: props,
 	});
 

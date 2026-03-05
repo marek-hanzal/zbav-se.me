@@ -6,7 +6,7 @@ import type { FeedPatchSchema } from "~/@buyer/feed/schema/FeedPatchSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace feedPatchFx {
 	export interface Props extends FeedPatchSchema.Type {
@@ -19,8 +19,9 @@ export const feedPatchFx = Effect.fn("feedPatchFx")(function* ({
 	query,
 	scope,
 }: feedPatchFx.Props) {
-	yield* withTraceFx({
-		fx: "feedPatchFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "feedPatchFx",
 		input: {
 			patch,
 			query,

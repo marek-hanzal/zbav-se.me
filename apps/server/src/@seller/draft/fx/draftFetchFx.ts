@@ -4,7 +4,7 @@ import { withDraftQueryBuilderFx } from "~/@seller/draft/db/withDraftQueryBuilde
 import { withDraftSelectFx } from "~/@seller/draft/db/withDraftSelectFx";
 import type { DraftFilterSchema } from "~/@seller/draft/schema/DraftFilterSchema";
 import type { DraftQuerySchema } from "~/@seller/draft/schema/DraftQuerySchema";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace draftFetchFx {
 	export interface Props extends DraftQuerySchema.Type {
@@ -18,8 +18,9 @@ export const draftFetchFx = Effect.fn("draftFetchFx")(function* ({
 	scope,
 	sort,
 }: draftFetchFx.Props) {
-	yield* withTraceFx({
-		fx: "draftFetchFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "draftFetchFx",
 		input: {
 			filter,
 			where,

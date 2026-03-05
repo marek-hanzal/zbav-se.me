@@ -12,7 +12,7 @@ import { userEventCreateFx } from "~/@user/user-event/fx/userEventCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace listingCreateFx {
@@ -26,8 +26,9 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 	uploadIds,
 	...data
 }: listingCreateFx.Props) {
-	yield* withTraceFx({
-		fx: "listingCreateFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "listingCreateFx",
 		input: {
 			userId,
 			uploadIds,
@@ -44,8 +45,9 @@ export const listingCreateFx = Effect.fn("listingCreateFx")(function* ({
 			const now = dateContext.now();
 
 			if (uploadIds.length === 0) {
-				yield* withTraceFx({
-					fx: "listingCreateFx",
+				yield* traceLogFx({
+					level: "trace",
+					message: "listingCreateFx",
 					error: {
 						message: "At least one upload is required",
 					},

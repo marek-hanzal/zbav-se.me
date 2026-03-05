@@ -87,7 +87,7 @@ export const withAcceptApiFx = Effect.fn("withAcceptApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiTransactionStatusAccept"),
+				withLoggingFx(axiomConfig, "apiTransactionStatusAccept", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx(),

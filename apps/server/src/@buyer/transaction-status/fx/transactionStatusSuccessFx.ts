@@ -7,7 +7,7 @@ import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCr
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionStatusSuccessFx {
@@ -20,8 +20,9 @@ export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx"
 	userId,
 	transactionId,
 }: transactionStatusSuccessFx.Props) {
-	yield* withTraceFx({
-		fx: "transactionStatusSuccessFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "transactionStatusSuccessFx",
 		input: {
 			userId,
 			transactionId,
@@ -37,8 +38,9 @@ export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx"
 			});
 
 			if (transaction.side === "seller") {
-				yield* withTraceFx({
-					fx: "transactionStatusSuccessFx",
+				yield* traceLogFx({
+					level: "trace",
+					message: "transactionStatusSuccessFx",
 					error: {
 						message: "Seller cannot mark a transaction as successful",
 					},
@@ -48,8 +50,9 @@ export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx"
 				});
 			}
 			if (transaction.status !== "resolved" && transaction.status !== "dispute") {
-				yield* withTraceFx({
-					fx: "transactionStatusSuccessFx",
+				yield* traceLogFx({
+					level: "trace",
+					message: "transactionStatusSuccessFx",
 					error: {
 						message: `Transaction must be resolved or dispute before success, got ${transaction.status}`,
 					},

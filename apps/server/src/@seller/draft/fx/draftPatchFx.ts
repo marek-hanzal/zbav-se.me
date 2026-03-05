@@ -6,7 +6,7 @@ import type { DraftPatchSchema } from "~/@seller/draft/schema/DraftPatchSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace draftPatchFx {
 	export interface Props extends DraftPatchSchema.Type {
@@ -19,8 +19,9 @@ export const draftPatchFx = Effect.fn("draftPatchFx")(function* ({
 	query,
 	scope,
 }: draftPatchFx.Props) {
-	yield* withTraceFx({
-		fx: "draftPatchFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "draftPatchFx",
 		input: {
 			patch,
 			query,

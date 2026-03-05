@@ -79,7 +79,7 @@ export const withCategoryCollectionApiFx = Effect.fn("withCategoryCollectionApiF
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiCategoryCollection"),
+				withLoggingFx(axiomConfig, "apiCategoryCollection", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				//

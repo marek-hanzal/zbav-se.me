@@ -7,7 +7,7 @@ import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCh
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace messageLocationCreateFx {
 	export interface Props extends MessageLocationCreateSchema.Type {
@@ -20,8 +20,9 @@ export const messageLocationCreateFx = Effect.fn("messageLocationCreateFx")(func
 	messageThreadId,
 	locationId,
 }: messageLocationCreateFx.Props) {
-	yield* withTraceFx({
-		fx: "messageLocationCreateFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "messageLocationCreateFx",
 		input: {
 			userId,
 			messageThreadId,

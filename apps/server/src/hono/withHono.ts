@@ -7,6 +7,7 @@ export const withHono = () => {
 		Variables: {
 			user: auth.User | null;
 			kysely: KyselyContext;
+			traceId: string;
 		};
 	}>();
 };

@@ -7,7 +7,7 @@ import type { LocationTableSchema } from "~/database/@table/LocationTableSchema"
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace locationAutocompleteFx {
 	export interface Props {
@@ -22,8 +22,9 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 	lang,
 	limit = 5,
 }: locationAutocompleteFx.Props) {
-	yield* withTraceFx({
-		fx: "locationAutocompleteFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "locationAutocompleteFx",
 		input: {
 			text,
 			lang,
@@ -32,8 +33,9 @@ export const locationAutocompleteFx = Effect.fn("locationAutocompleteFx")(functi
 	});
 
 	if (text.length < 3) {
-		yield* withTraceFx({
-			fx: "locationAutocompleteFx",
+		yield* traceLogFx({
+			level: "trace",
+			message: "locationAutocompleteFx",
 			error: {
 				message: "Text too short",
 			},

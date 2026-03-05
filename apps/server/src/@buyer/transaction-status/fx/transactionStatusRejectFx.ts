@@ -6,7 +6,7 @@ import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionStatusRejectFx {
@@ -19,8 +19,9 @@ export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(
 	userId,
 	transactionId,
 }: transactionStatusRejectFx.Props) {
-	yield* withTraceFx({
-		fx: "transactionStatusRejectFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "transactionStatusRejectFx",
 		input: {
 			userId,
 			transactionId,
@@ -34,8 +35,9 @@ export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(
 	});
 
 	if (transaction.side !== "buyer") {
-		yield* withTraceFx({
-			fx: "transactionStatusRejectFx",
+		yield* traceLogFx({
+			level: "trace",
+			message: "transactionStatusRejectFx",
 			error: {
 				message: "Only buyer can reject a transaction from buyer endpoint",
 			},

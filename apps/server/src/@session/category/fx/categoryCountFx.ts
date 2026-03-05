@@ -4,7 +4,7 @@ import { withCategoryCollectionSelectFx } from "~/@session/category/db/withCateg
 import { withCategoryQueryBuilderFx } from "~/@session/category/db/withCategoryQueryBuilderFx";
 import type { CategoryCountQuerySchema } from "~/@session/category/schema/CategoryCountQuerySchema";
 import type { CategoryFilterSchema } from "~/@session/category/schema/CategoryFilterSchema";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace categoryCountFx {
 	export interface Props extends CategoryCountQuerySchema.Type {
@@ -17,8 +17,9 @@ export const categoryCountFx = Effect.fn("categoryCountFx")(function* ({
 	where,
 	scope,
 }: categoryCountFx.Props) {
-	yield* withTraceFx({
-		fx: "categoryCountFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "categoryCountFx",
 		input: {
 			filter,
 			where,

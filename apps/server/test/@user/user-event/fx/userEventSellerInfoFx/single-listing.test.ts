@@ -12,6 +12,7 @@ import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
 import { testabase } from "~test/testabase";
+import { withTestAxiomFx } from "~test/withTestAxiomFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Single listing returns nothing", async () => {
@@ -75,6 +76,7 @@ describe("userEventSellerInfoFx", () => {
 		}).pipe(
 			withKyselyFx(database),
 			withDateFx,
+			withTestAxiomFx,
 			withLocationFx({
 				api: "https://api.geoapify.com",
 				autocomplete: "/v1/geocode/autocomplete",

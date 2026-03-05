@@ -5,7 +5,7 @@ import type { InboxPatchSchema } from "~/@user/inbox/schema/InboxPatchSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace inboxPatchFx {
 	export interface Props extends InboxPatchSchema.Type {
@@ -18,8 +18,9 @@ export const inboxPatchFx = Effect.fn("inboxPatchFx")(function* ({
 	query,
 	scope,
 }: inboxPatchFx.Props) {
-	yield* withTraceFx({
-		fx: "inboxPatchFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "inboxPatchFx",
 		input: {
 			patch,
 			query,

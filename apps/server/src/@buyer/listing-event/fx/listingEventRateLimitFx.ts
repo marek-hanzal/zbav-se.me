@@ -3,7 +3,7 @@ import { Effect } from "effect";
 import type { ListingEventEnumSchema } from "~/database/@enum/ListingEventEnumSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 import { TooManyRequestsFx } from "~/error/TooManyRequestsFx";
 
 export namespace listingEventRateLimitFx {
@@ -19,8 +19,9 @@ export const listingEventRateLimitFx = Effect.fn("listingEventRateLimitFx")(func
 	event,
 	minutes = 10,
 }: listingEventRateLimitFx.Props) {
-	yield* withTraceFx({
-		fx: "listingEventRateLimitFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "listingEventRateLimitFx",
 		input: {
 			listingId,
 			event,

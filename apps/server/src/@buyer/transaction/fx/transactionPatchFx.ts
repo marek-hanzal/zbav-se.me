@@ -7,7 +7,7 @@ import type { TransactionFilterSchema } from "~/@common/transaction/schema/Trans
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace transactionPatchFx {
 	export interface Props extends TransactionPatchSchema.Type {
@@ -22,8 +22,9 @@ export const transactionPatchFx = Effect.fn("transactionPatchFx")(function* ({
 	query,
 	scope,
 }: transactionPatchFx.Props) {
-	yield* withTraceFx({
-		fx: "transactionPatchFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "transactionPatchFx",
 		input: {
 			userId,
 			patch,

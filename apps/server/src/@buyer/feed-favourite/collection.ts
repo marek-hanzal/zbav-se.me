@@ -83,7 +83,7 @@ export const withFeedFavouriteCollectionApiFx = Effect.fn("withFeedFavouriteColl
 					);
 				}).pipe(
 					withKyselyFx(c.get("kysely")),
-					withLoggingFx(axiomConfig, "apiFeedFavouriteCollection"),
+					withLoggingFx(axiomConfig, "apiFeedFavouriteCollection", c.get("traceId")),
 					withCatchFx({
 						ZodErrorFx({ zod }) {
 							return c.json(noticeZodError(zod), 500);

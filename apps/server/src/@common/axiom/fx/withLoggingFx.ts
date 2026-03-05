@@ -4,17 +4,17 @@ import { AxiomLoggerLayer } from "~/@common/axiom/context/AxiomLoggerLayer";
 import type { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 
 export const withLoggingFx =
-	(cfg: ServerAxiomSchema.Type, name: string) =>
+	(cfg: ServerAxiomSchema.Type, root: string, traceId: string) =>
 	<A, E, R>(eff: Effect.Effect<A, E, R>) =>
 		eff.pipe(
-			Effect.tap(() => Effect.log(name)),
+			Effect.tap(() => Effect.log(root)),
 			Effect.tapError((e) => {
 				return Effect.gen(function* () {
 					yield* Effect.annotateLogsScoped({
 						$catch: e,
 					});
 
-					return yield* Effect.logError(name);
+					return yield* Effect.logError(root);
 				});
 			}),
 			Effect.tapDefect((e) => {
@@ -23,16 +23,17 @@ export const withLoggingFx =
 						$fatal: e,
 					});
 
-					return yield* Effect.logFatal(name);
+					return yield* Effect.logFatal(root);
 				});
 			}),
 			//
-			Effect.withLogSpan("runtime"),
 			Effect.provide(AxiomLoggerLayer),
 			Effect.provide(
 				AxiomContextLayer({
 					token: cfg.SERVER_AXIOM_TOKEN,
 					dataset: cfg.SERVER_AXIOM_DATASET,
+					root,
+					traceId,
 				}),
 			),
 			Effect.provide(Logger.minimumLogLevel(LogLevel.Info)),

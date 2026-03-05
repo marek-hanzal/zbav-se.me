@@ -3,7 +3,7 @@ import { favouriteFetchFx } from "~/@buyer/favourite/fx/favouriteFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace favouriteDeleteFx {
 	export interface Props {
@@ -16,8 +16,9 @@ export const favouriteDeleteFx = Effect.fn("favouriteDeleteFx")(function* ({
 	userId,
 	listingId,
 }: favouriteDeleteFx.Props) {
-	yield* withTraceFx({
-		fx: "favouriteDeleteFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "favouriteDeleteFx",
 		input: {
 			userId,
 			listingId,

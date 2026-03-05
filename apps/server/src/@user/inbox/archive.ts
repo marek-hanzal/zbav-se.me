@@ -69,7 +69,7 @@ export const withArchiveApiFx = Effect.fn("withArchiveApiFx")(function* () {
 				return c.body(null, 204);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig, "apiInboxArchive"),
+				withLoggingFx(axiomConfig, "apiInboxArchive", c.get("traceId")),
 				withDateFx,
 				withCatchFx({
 					RuntimeErrorFx(e) {

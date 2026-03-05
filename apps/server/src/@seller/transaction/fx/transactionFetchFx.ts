@@ -4,7 +4,7 @@ import type { TransactionFilterSchema } from "~/@common/transaction/schema/Trans
 import type { TransactionQuerySchema } from "~/@common/transaction/schema/TransactionQuerySchema";
 import { withTransactionQueryBuilderFx } from "~/@seller/transaction/db/withTransactionQueryBuilderFx";
 import { withTransactionSelectFx } from "~/@seller/transaction/db/withTransactionSelectFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace transactionFetchFx {
 	export interface Props extends TransactionQuerySchema.Type {
@@ -18,8 +18,9 @@ export const transactionFetchFx = Effect.fn("transactionFetchFx")(function* ({
 	scope,
 	sort,
 }: transactionFetchFx.Props) {
-	yield* withTraceFx({
-		fx: "transactionFetchFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "transactionFetchFx",
 		input: {
 			filter,
 			where,

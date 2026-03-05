@@ -5,7 +5,7 @@ import type { DraftQuerySchema } from "~/@seller/draft/schema/DraftQuerySchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace draftDeleteFx {
 	export interface Props extends Omit<DraftQuerySchema.Type, "cursor" | "sort"> {
@@ -14,8 +14,9 @@ export namespace draftDeleteFx {
 }
 
 export const draftDeleteFx = Effect.fn("draftDeleteFx")(function* (query: draftDeleteFx.Props) {
-	yield* withTraceFx({
-		fx: "draftDeleteFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "draftDeleteFx",
 		input: {
 			query,
 		},

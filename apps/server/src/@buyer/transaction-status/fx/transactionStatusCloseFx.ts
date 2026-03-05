@@ -7,7 +7,7 @@ import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCr
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionStatusCloseFx {
@@ -20,8 +20,9 @@ export const transactionStatusCloseFx = Effect.fn("transactionStatusCloseFx")(fu
 	userId,
 	transactionId,
 }: transactionStatusCloseFx.Props) {
-	yield* withTraceFx({
-		fx: "transactionStatusCloseFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "transactionStatusCloseFx",
 		input: {
 			userId,
 			transactionId,
@@ -37,8 +38,9 @@ export const transactionStatusCloseFx = Effect.fn("transactionStatusCloseFx")(fu
 			});
 
 			if (transaction.side === "seller") {
-				yield* withTraceFx({
-					fx: "transactionStatusCloseFx",
+				yield* traceLogFx({
+					level: "trace",
+					message: "transactionStatusCloseFx",
 					error: {
 						message: "Seller cannot close a transaction",
 					},
@@ -48,8 +50,9 @@ export const transactionStatusCloseFx = Effect.fn("transactionStatusCloseFx")(fu
 				});
 			}
 			if (transaction.status !== "resolved" && transaction.status !== "dispute") {
-				yield* withTraceFx({
-					fx: "transactionStatusCloseFx",
+				yield* traceLogFx({
+					level: "trace",
+					message: "transactionStatusCloseFx",
 					error: {
 						message: `Transaction must be resolved or dispute before close, got ${transaction.status}`,
 					},

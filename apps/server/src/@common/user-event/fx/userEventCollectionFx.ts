@@ -4,7 +4,7 @@ import { withUserEventCollectionSelectFx } from "~/@common/user-event/db/withUse
 import { withUserEventQueryBuilderFx } from "~/@common/user-event/db/withUserEventQueryBuilderFx";
 import type { UserEventFilterSchema } from "~/@common/user-event/schema/UserEventFilterSchema";
 import type { UserEventQuerySchema } from "~/@common/user-event/schema/UserEventQuerySchema";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace userEventCollectionFx {
 	export interface Props extends UserEventQuerySchema.Type {
@@ -19,8 +19,9 @@ export const userEventCollectionFx = Effect.fn("userEventCollectionFx")(function
 	cursor,
 	sort,
 }: userEventCollectionFx.Props) {
-	yield* withTraceFx({
-		fx: "userEventCollectionFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "userEventCollectionFx",
 		input: {
 			filter,
 			where,

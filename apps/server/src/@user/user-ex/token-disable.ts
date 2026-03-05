@@ -75,7 +75,7 @@ export const withTokenDisableApiFx = Effect.fn("withTokenDisableApiFx")(function
 				);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig, "apiUserTokenDisable"),
+				withLoggingFx(axiomConfig, "apiUserTokenDisable", c.get("traceId")),
 				withCatchFx({
 					RuntimeErrorFx(e) {
 						return c.json(noticeError(e), 500);

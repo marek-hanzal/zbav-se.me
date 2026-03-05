@@ -95,7 +95,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig, "apiThumbCreate"),
+				withLoggingFx(axiomConfig, "apiThumbCreate", c.get("traceId")),
 				withDateFx,
 				withCatchFx({
 					InvalidRequestErrorFx(e) {

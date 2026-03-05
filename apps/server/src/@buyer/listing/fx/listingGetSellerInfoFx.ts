@@ -5,7 +5,7 @@ import { SellerInfoSchema } from "~/@buyer/listing/schema/SellerInfoSchema";
 import { userEventSellerInfoFx } from "~/@buyer/user-event/fx/userEventSellerInfoFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace listingGetSellerInfoFx {
 	export interface Props {
@@ -16,8 +16,9 @@ export namespace listingGetSellerInfoFx {
 export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(function* ({
 	listingId,
 }: listingGetSellerInfoFx.Props) {
-	yield* withTraceFx({
-		fx: "listingGetSellerInfoFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "listingGetSellerInfoFx",
 		input: {
 			listingId,
 		},
@@ -45,8 +46,9 @@ export const listingGetSellerInfoFx = Effect.fn("listingGetSellerInfoFx")(functi
 	);
 
 	if (!userInfo) {
-		yield* withTraceFx({
-			fx: "listingGetSellerInfoFx",
+		yield* traceLogFx({
+			level: "trace",
+			message: "listingGetSellerInfoFx",
 			error: {
 				resource: "listing-seller-info",
 				message: "Seller info not available",

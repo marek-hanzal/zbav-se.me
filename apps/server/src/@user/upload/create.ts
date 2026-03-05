@@ -101,7 +101,7 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				withUploadFx({
 					cdn: cdnConfig.SERVER_CONTENT_CDN,
 				}),
-				withLoggingFx(axiomConfig, "apiUploadCreate"),
+				withLoggingFx(axiomConfig, "apiUploadCreate", c.get("traceId")),
 				withCatchFx({
 					InvalidRequestErrorFx(e) {
 						return c.json(noticeError(e), 400);
