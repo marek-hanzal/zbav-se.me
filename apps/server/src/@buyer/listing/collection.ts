@@ -55,6 +55,13 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 				"mcp",
 			],
 			summary: "Fetch a collection of listings based on the provided query",
+			"x-mcp-meta": {
+				annotations: {
+					readOnlyHint: true,
+					destructiveHint: false,
+					idempotentHint: true,
+				},
+			},
 		}),
 		async (c) => {
 			const axiomConfig = ServerAxiomSchema.parse(process.env);

@@ -43,6 +43,40 @@ interface WithNamespacedToolNameProps {
 	namespace: string;
 }
 
+type McpMetaAnnotations = {
+	destructiveHint?: boolean;
+	idempotentHint?: boolean;
+	openWorldHint?: boolean;
+	readOnlyHint?: boolean;
+	title?: string;
+};
+
+type McpMetaMap = Map<string, McpMetaAnnotations>;
+
+interface WithMcpMetaKeyProps {
+	method: string;
+	operationId?: string;
+	path: string;
+}
+
+const McpMetaAnnotationsSchema = z
+	.object({
+		title: z.string().optional(),
+		readOnlyHint: z.boolean().optional(),
+		destructiveHint: z.boolean().optional(),
+		idempotentHint: z.boolean().optional(),
+		openWorldHint: z.boolean().optional(),
+	})
+	.catch({});
+
+const McpMetaSchema = z
+	.object({
+		annotations: McpMetaAnnotationsSchema.default({}),
+	})
+	.catch({
+		annotations: {},
+	});
+
 const isJsonRecord = (value: unknown): value is JsonRecord => {
 	return typeof value === "object" && value !== null && !Array.isArray(value);
 };
@@ -190,6 +224,62 @@ const withMcpTools = async (document: ReturnType<typeof withBuyerOpenApiDocument
 	});
 };
 
+const withMcpMetaKey = ({ method, operationId, path }: WithMcpMetaKeyProps): string => {
+	return operationId ? `operationId:${operationId}` : `${method.toUpperCase()} ${path}`;
+};
+
+const withMcpMetaAnnotations = (value: unknown): McpMetaAnnotations | undefined => {
+	if (value === undefined) {
+		return undefined;
+	}
+
+	return McpMetaSchema.parse(value).annotations;
+};
+
+const withMcpMetaMap = (document: ReturnType<typeof withBuyerOpenApiDocument>): McpMetaMap => {
+	const map: McpMetaMap = new Map();
+
+	for (const [path, pathItem] of Object.entries(document.paths ?? {})) {
+		if (!isJsonRecord(pathItem)) {
+			continue;
+		}
+
+		for (const method of [
+			"get",
+			"put",
+			"post",
+			"delete",
+			"options",
+			"head",
+			"patch",
+			"trace",
+		] as const) {
+			const operation = pathItem[method];
+			if (!isJsonRecord(operation)) {
+				continue;
+			}
+
+			const mcpMeta = withMcpMetaAnnotations(operation["x-mcp-meta"]);
+			if (!mcpMeta) {
+				continue;
+			}
+
+			const operationId =
+				typeof operation.operationId === "string" ? operation.operationId : undefined;
+			map.set(
+				withMcpMetaKey({
+					method,
+					operationId,
+					path,
+				}),
+				mcpMeta,
+			);
+		}
+	}
+
+	return map;
+};
+
 const withResourceContent = ({ uri, value }: WithResourceContentProps) => {
 	return {
 		contents: [
@@ -234,6 +324,25 @@ const withToolNamespace = ({ path, tags }: WithToolNamespaceProps): string => {
 
 const withNamespacedToolName = ({ name, namespace }: WithNamespacedToolNameProps): string => {
 	return `${namespace}.${name}`;
+};
+
+const withToolAnnotations = (tool: McpOpenAPITool, mcpMeta?: McpMetaAnnotations) => {
+	const method = tool.metadata.method.toUpperCase();
+	const readOnlyByMethod = method === "GET" || method === "HEAD" || method === "OPTIONS";
+
+	if (!mcpMeta && !readOnlyByMethod) {
+		return undefined;
+	}
+
+	const readOnlyHint = mcpMeta?.readOnlyHint ?? readOnlyByMethod;
+
+	return {
+		title: mcpMeta?.title,
+		readOnlyHint,
+		destructiveHint: mcpMeta?.destructiveHint ?? !readOnlyHint,
+		idempotentHint: mcpMeta?.idempotentHint ?? readOnlyHint,
+		openWorldHint: mcpMeta?.openWorldHint,
+	};
 };
 
 const withToolResponse = async (response: Response) => {
@@ -295,6 +404,7 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 
 	let cache: null | {
 		document: ReturnType<typeof withBuyerOpenApiDocument>;
+		mcpMetaMap: McpMetaMap;
 		tools: McpOpenAPITool[];
 	} = null;
 
@@ -305,15 +415,17 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 
 		const document = withBuyerOpenApiDocument(buyerHono);
 		const tools = await withMcpTools(document);
+		const mcpMetaMap = withMcpMetaMap(document);
 		cache = {
 			document,
+			mcpMetaMap,
 			tools,
 		};
 		return cache;
 	};
 
 	const handle = async (request: Request, accessToken: string) => {
-		const { document, tools } = await fetchMcpState();
+		const { document, mcpMetaMap, tools } = await fetchMcpState();
 		const server = new McpServer({
 			name: "zbav-se-buyer-listing-mcp",
 			version: "0.1.0",
@@ -399,12 +511,20 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 				name: tool.name,
 				namespace,
 			});
+			const mcpMeta = mcpMetaMap.get(
+				withMcpMetaKey({
+					method: tool.metadata.method.toUpperCase(),
+					operationId: tool.metadata.operationId,
+					path: tool.metadata.path,
+				}),
+			);
 
 			server.registerTool(
 				namespacedToolName,
 				{
 					description: tool.description,
 					inputSchema: withToolInputSchema(tool.inputSchema),
+					annotations: withToolAnnotations(tool, mcpMeta),
 				},
 				async (rawArgs: unknown) => {
 					const args = withToolArgs(rawArgs);

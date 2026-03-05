@@ -15,6 +15,7 @@ This domain unifies former buyer session and buyer user capabilities behind `/ap
 - **Seller Info** - Get seller profile metrics for listing detail
 - **Check Ownership** - Verify if listing belongs to current user
 - Buyer listing `fetch` and `collection` endpoints are marked with OpenAPI tag `mcp` for MCP bridge exposure.
+- MCP behavior hints are controlled via OpenAPI `x-mcp-meta.annotations` (for these buyer listing endpoints: read-only, non-destructive, idempotent).
 
 ### Listing Events
 - **Create** - Record listing interaction events
