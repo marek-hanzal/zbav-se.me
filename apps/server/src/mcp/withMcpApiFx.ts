@@ -11,6 +11,9 @@ import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 
 type ToolArgs = Record<string, unknown>;
 type JsonRecord = Record<string, unknown>;
+type JsonSchema = Record<string, unknown>;
+type JsonSchemaInput = JsonSchema | boolean;
+type ZodSchema = z.ZodTypeAny;
 
 interface ToolRequest {
 	body: JsonRecord | undefined;
@@ -44,6 +47,22 @@ const isJsonRecord = (value: unknown): value is JsonRecord => {
 	return typeof value === "object" && value !== null && !Array.isArray(value);
 };
 
+const isJsonSchema = (value: unknown): value is JsonSchema => {
+	return isJsonRecord(value);
+};
+
+const isJsonSchemaInput = (value: unknown): value is JsonSchemaInput => {
+	return typeof value === "boolean" || isJsonSchema(value);
+};
+
+const withToolInputSchema = (schema: unknown): ZodSchema => {
+	if (!isJsonSchemaInput(schema)) {
+		return z.object({}).catchall(z.unknown());
+	}
+
+	return z.fromJSONSchema(schema);
+};
+
 const withToolArgs = (value: unknown): ToolArgs => {
 	return isJsonRecord(value) ? value : {};
 };
@@ -67,6 +86,23 @@ const withCookieHeader = (cookies: Record<string, string>): string | null => {
 	return entries
 		.map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
 		.join("; ");
+};
+
+const withMcpCompatibleRequest = (request: Request): Request => {
+	const accept = request.headers.get("Accept") ?? "";
+	const hasJson = accept.includes("application/json");
+	const hasEventStream = accept.includes("text/event-stream");
+
+	if (hasJson && hasEventStream) {
+		return request;
+	}
+
+	const headers = new Headers(request.headers);
+	headers.set("Accept", "application/json, text/event-stream");
+
+	return new Request(request, {
+		headers,
+	});
 };
 
 const withMappedRequest = ({ args, mappers, path }: WithMappedRequestProps) => {
@@ -368,7 +404,7 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 				namespacedToolName,
 				{
 					description: tool.description,
-					inputSchema: z.object({}).catchall(z.unknown()),
+					inputSchema: withToolInputSchema(tool.inputSchema),
 				},
 				async (rawArgs: unknown) => {
 					const args = withToolArgs(rawArgs);
@@ -414,7 +450,7 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 	};
 
 	const withHandler = withMcpAuth(authApi, async (request, session) => {
-		return handle(request, session.accessToken);
+		return handle(withMcpCompatibleRequest(request), session.accessToken);
 	});
 
 	root.all("/api/mcp", async (c) => {
