@@ -23,14 +23,14 @@ export const UserExTableSchema = z
 				UserSideEnumSchema,
 			])
 			.optional(),
-		mcp: z
+		token: z
 			.union([
 				z.string(),
 				z.null(),
 			])
 			.optional()
 			.openapi({
-				description: "MCP bearer token used for agent access",
+				description: "Bearer token used for agent access and API token fallback auth",
 			}),
 	})
 	.strip();

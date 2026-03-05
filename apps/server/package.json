@@ -5,7 +5,7 @@
 	"scripts": {
 		"dev": "run-p dev:*",
 		"dev:nitro": "PORT=3032 nitro dev --host 0.0.0.0",
-		"dev:mcp": "bunx @modelcontextprotocol/inspector",
+		"dev:mcp": "DANGEROUSLY_OMIT_AUTH=true bunx @modelcontextprotocol/inspector",
 		"build": "nitro build && bun ./cli/size.ts",
 		"seed:core": "bun ./cli/seed-core.ts",
 		"seed:interaction": "bun ./cli/seed-interaction.ts",

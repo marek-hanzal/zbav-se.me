@@ -257,13 +257,13 @@ const withToolResponse = async (response: Response) => {
 };
 
 const withTokenCheck = async ({ kysely, token }: WithTokenCheckProps) => {
-	const mcp = await kysely
+	const userToken = await kysely
 		.selectFrom("user_ex")
 		.select("userId")
-		.where("mcp", "=", token)
+		.where("token", "=", token)
 		.executeTakeFirst();
 
-	return Boolean(mcp);
+	return Boolean(userToken);
 };
 
 export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {

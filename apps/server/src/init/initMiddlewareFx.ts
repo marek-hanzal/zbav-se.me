@@ -80,7 +80,7 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 						"user_ex.locationId as locationId",
 						"user_ex.side as side",
 					])
-					.where("user_ex.mcp", "=", token)
+					.where("user_ex.token", "=", token)
 					.executeTakeFirst();
 
 				if (!mcpUser) {
