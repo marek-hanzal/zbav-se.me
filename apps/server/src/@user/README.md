@@ -80,6 +80,8 @@ This domain handles all operations on user-owned, private data. Everything in th
 ### User Extended Data
 - **Fetch** - Get extended user data
 - **Patch** - Update user extended data
+- **Token Enable** - Generate and persist user token (`/api/user/token/enable`)
+- **Token Disable** - Revoke user token by setting it to `null` (`/api/user/token/disable`)
 - Additional user profile information
 - User preferences and settings
 
