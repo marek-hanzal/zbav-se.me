@@ -20,6 +20,7 @@ import { Route as CsPrivacyRouteImport } from './@routes/cs/privacy'
 import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
 import { Route as LocaleRegisterRouteImport } from './@routes/$locale/register'
 import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
+import { Route as LocaleOathRouteImport } from './@routes/$locale/oath'
 import { Route as LocaleLoginRouteImport } from './@routes/$locale/login'
 import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
 
@@ -78,6 +79,11 @@ const LocalePrivacyRoute = LocalePrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => LocaleRoute,
 } as any)
+const LocaleOathRoute = LocaleOathRouteImport.update({
+  id: '/oath',
+  path: '/oath',
+  getParentRoute: () => LocaleRoute,
+} as any)
 const LocaleLoginRoute = LocaleLoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/login': typeof LocaleLoginRoute
+  '/$locale/oath': typeof LocaleOathRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/register': typeof LocaleRegisterRoute
   '/$locale/tos': typeof LocaleTosRoute
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/login': typeof LocaleLoginRoute
+  '/$locale/oath': typeof LocaleOathRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/register': typeof LocaleRegisterRoute
   '/$locale/tos': typeof LocaleTosRoute
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/login': typeof LocaleLoginRoute
+  '/$locale/oath': typeof LocaleOathRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/register': typeof LocaleRegisterRoute
   '/$locale/tos': typeof LocaleTosRoute
@@ -141,6 +150,7 @@ export interface FileRouteTypes {
     | '/$locale'
     | '/$locale/landing'
     | '/$locale/login'
+    | '/$locale/oath'
     | '/$locale/privacy'
     | '/$locale/register'
     | '/$locale/tos'
@@ -155,6 +165,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$locale/landing'
     | '/$locale/login'
+    | '/$locale/oath'
     | '/$locale/privacy'
     | '/$locale/register'
     | '/$locale/tos'
@@ -170,6 +181,7 @@ export interface FileRouteTypes {
     | '/$locale'
     | '/$locale/landing'
     | '/$locale/login'
+    | '/$locale/oath'
     | '/$locale/privacy'
     | '/$locale/register'
     | '/$locale/tos'
@@ -270,6 +282,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocalePrivacyRouteImport
       parentRoute: typeof LocaleRoute
     }
+    '/$locale/oath': {
+      id: '/$locale/oath'
+      path: '/oath'
+      fullPath: '/$locale/oath'
+      preLoaderRoute: typeof LocaleOathRouteImport
+      parentRoute: typeof LocaleRoute
+    }
     '/$locale/login': {
       id: '/$locale/login'
       path: '/login'
@@ -290,6 +309,7 @@ declare module '@tanstack/react-router' {
 interface LocaleRouteChildren {
   LocaleLandingRoute: typeof LocaleLandingRoute
   LocaleLoginRoute: typeof LocaleLoginRoute
+  LocaleOathRoute: typeof LocaleOathRoute
   LocalePrivacyRoute: typeof LocalePrivacyRoute
   LocaleRegisterRoute: typeof LocaleRegisterRoute
   LocaleTosRoute: typeof LocaleTosRoute
@@ -299,6 +319,7 @@ interface LocaleRouteChildren {
 const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleLandingRoute: LocaleLandingRoute,
   LocaleLoginRoute: LocaleLoginRoute,
+  LocaleOathRoute: LocaleOathRoute,
   LocalePrivacyRoute: LocalePrivacyRoute,
   LocaleRegisterRoute: LocaleRegisterRoute,
   LocaleTosRoute: LocaleTosRoute,

@@ -1,9 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Container } from "@use-pico/client/ui/container";
-import { Status } from "@use-pico/client/ui/status";
-import { translator } from "@use-pico/common/translator";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { linkTo } from "@use-pico/common/link-to";
 import { z } from "zod";
-import { OAuthLoginPage } from "~/app/auth/OAuthLoginPage";
+import { getLocaleFn } from "~/app/locale/getLocaleFn";
 
 const SearchSchema = z.record(z.string(), z.string());
 
@@ -11,29 +9,19 @@ export const Route = createFileRoute("/redirect/oath")({
 	validateSearch(search) {
 		return SearchSchema.parse(search);
 	},
-	errorComponent() {
-		return (
-			<Container
-				ui={{
-					layout: "vertical-centered",
-					height: "full",
-					width: "full",
-					inner: "xl",
-				}}
-			>
-				<Status
-					textTitle={translator.text("Something went wrong")}
-					textMessage={translator.text("Please try again later.")}
-					ui={{
-						width: "full",
-					}}
-				/>
-			</Container>
-		);
+	loaderDeps({ search }) {
+		return {
+			search,
+		};
 	},
-	component() {
-		const query = Route.useSearch();
+	async loader({ deps }) {
+		const locale = await getLocaleFn();
 
-		return <OAuthLoginPage query={query} />;
+		throw redirect({
+			href: linkTo({
+				href: `/${locale}/oath`,
+				query: deps.search,
+			}),
+		});
 	},
 });
