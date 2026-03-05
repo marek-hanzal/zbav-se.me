@@ -9,6 +9,17 @@ import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerViteSchema } from "~/schema/env/ServerViteSchema";
 
+const withAuthorizationToken = (headers: Headers): null | string => {
+	const authorization = headers.get("authorization");
+	const bearerPrefix = "Bearer ";
+
+	if (!authorization || !authorization.startsWith(bearerPrefix)) {
+		return null;
+	}
+
+	return authorization.slice(bearerPrefix.length).trim();
+};
+
 export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 	const { root } = yield* RoutesContextFx;
 	const kysely = yield* KyselyContextFx;
@@ -60,15 +71,35 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 				headers: c.req.raw.headers,
 			});
 			if (!session) {
-				const authorization = c.req.raw.headers.get("authorization");
-				const bearerPrefix = "Bearer ";
-				const token =
-					authorization && authorization.startsWith(bearerPrefix)
-						? authorization.slice(bearerPrefix.length).trim()
-						: null;
+				const token = withAuthorizationToken(c.req.raw.headers);
 
 				if (!token) {
 					c.set("user", null);
+					return next();
+				}
+
+				const mcpSession = await api.getMcpSession({
+					headers: c.req.raw.headers,
+				});
+
+				if (mcpSession) {
+					const mcpOauthUser = await kysely.kysely
+						.selectFrom("user_ex")
+						.innerJoin("user", "user.id", "user_ex.userId")
+						.selectAll("user")
+						.select([
+							"user_ex.locationId as locationId",
+							"user_ex.side as side",
+						])
+						.where("user.id", "=", mcpSession.userId)
+						.executeTakeFirst();
+
+					if (!mcpOauthUser) {
+						c.set("user", null);
+						return next();
+					}
+
+					c.set("user", mcpOauthUser as authType.User);
 					return next();
 				}
 
