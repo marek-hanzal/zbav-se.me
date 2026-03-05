@@ -50,6 +50,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 				},
 			},
 			tags: [
+				"buyer",
 				"Listing",
 				"mcp",
 			],

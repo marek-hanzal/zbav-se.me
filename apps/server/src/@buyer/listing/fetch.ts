@@ -58,6 +58,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 				},
 			},
 			tags: [
+				"buyer",
 				"Listing",
 				"mcp",
 			],
