@@ -16,6 +16,7 @@ export const UserExMigration: Migration = {
 			.addColumn("userId", "text", (col) => col.notNull().unique())
 			.addColumn("locationId", "text")
 			.addColumn("side", sql`user_ex_side_enum`)
+			.addColumn("token", "text")
 			.addForeignKeyConstraint(
 				"user_ex_[userId]_fk",
 				[
@@ -48,5 +49,11 @@ export const UserExMigration: Migration = {
 			.on("user_ex")
 			.column("locationId")
 			.execute();
+
+		await sql`
+			CREATE UNIQUE INDEX "user_ex_[token]_unique_idx"
+			ON user_ex (token)
+			WHERE token IS NOT NULL
+		`.execute(db);
 	},
 };
