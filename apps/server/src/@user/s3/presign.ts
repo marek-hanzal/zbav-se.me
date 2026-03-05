@@ -94,7 +94,7 @@ export const withPresignApiFx = Effect.fn("withPresignApiFx")(function* () {
 				withUploadFx({
 					cdn: cdnConfig.SERVER_CONTENT_CDN,
 				}),
-				withLoggingFx(axiomConfig, "apiS3Presign"),
+				withLoggingFx(axiomConfig, "apiS3Presign", c.get("traceId")),
 				withCatchFx({
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);

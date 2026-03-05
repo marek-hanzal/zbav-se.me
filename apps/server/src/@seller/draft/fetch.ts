@@ -87,7 +87,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 				);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig, "apiDraftFetch"),
+				withLoggingFx(axiomConfig, "apiDraftFetch", c.get("traceId")),
 				//
 				withCatchFx({
 					NotFoundErrorFx() {

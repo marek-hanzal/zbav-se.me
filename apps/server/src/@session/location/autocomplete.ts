@@ -81,7 +81,7 @@ export const withLocationAutocompleteApiFx = Effect.fn("withLocationAutocomplete
 						200,
 					);
 				}).pipe(
-					withLoggingFx(axiomConfig, "apiLocationAutocomplete"),
+					withLoggingFx(axiomConfig, "apiLocationAutocomplete", c.get("traceId")),
 					withKyselyFx(c.get("kysely")),
 					withLocationFx({
 						geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,

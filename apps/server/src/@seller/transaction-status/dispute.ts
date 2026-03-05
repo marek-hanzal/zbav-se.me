@@ -95,7 +95,7 @@ export const withDisputeApiFx = Effect.fn("withDisputeApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiTransactionStatusDispute"),
+				withLoggingFx(axiomConfig, "apiTransactionStatusDispute", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx(),

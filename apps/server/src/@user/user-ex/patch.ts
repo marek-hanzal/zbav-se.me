@@ -86,7 +86,7 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 				);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig, "apiUserExPatch"),
+				withLoggingFx(axiomConfig, "apiUserExPatch", c.get("traceId")),
 				withCatchFx({
 					RuntimeErrorFx(e) {
 						return c.json(noticeError(e), 500);

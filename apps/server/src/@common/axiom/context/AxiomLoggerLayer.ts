@@ -15,7 +15,7 @@ const toSpans = (spans: List.List<LogSpan.LogSpan>) => {
 export const AxiomLoggerLayer = Logger.replaceScoped(
 	Logger.defaultLogger,
 	Effect.gen(function* () {
-		const { dataset } = yield* AxiomContextFx;
+		const { dataset, root, traceId } = yield* AxiomContextFx;
 		const client = yield* axiomClientFx();
 
 		return Logger.make(async (log) => {
@@ -24,6 +24,8 @@ export const AxiomLoggerLayer = Logger.replaceScoped(
 				level: log.logLevel.label,
 				msg: Array.isArray(log.message) ? log.message.join(", ") : log.message,
 				spans: toSpans(log.spans),
+				root,
+				traceId,
 				...annotationsToObject(log.annotations),
 			};
 

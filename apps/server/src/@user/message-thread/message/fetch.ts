@@ -83,7 +83,7 @@ export const withMessageFetchApiFx = Effect.fn("withMessageFetchApiFx")(function
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiMessageThreadMessageFetch"),
+				withLoggingFx(axiomConfig, "apiMessageThreadMessageFetch", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withCatchFx({
 					NotFoundErrorFx() {

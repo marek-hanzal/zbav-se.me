@@ -37,11 +37,14 @@ The `@common` domain exists to:
 - Used in `@user` and `@public` domains for file upload operations
 
 ### Axiom Operations
-- **AxiomContextFx** - Effect context for Axiom configuration (API token)
+- **AxiomContextFx** - Effect context for Axiom configuration and request correlation (`token`, `dataset`, `traceId`, `root`)
 - **AxiomContextLayer** - Effect layer provider for Axiom context
 - **AxiomContextLayerFx** - Effect layer factory for Axiom context
 - **axiomClientFx** - Effect function to create Axiom client for log ingestion
+- **withLoggingFx** - Logging provider wrapper that binds request-level `traceId` and endpoint-level `root`
+- **withTraceFx** - Emits per-event trace logs (no aggregate `$trace` payload)
 - Reads from `SERVER_AXIOM_TOKEN` and `SERVER_AXIOM_DATASET` environment variables
+- Every emitted Axiom event includes `traceId` and `root` for correlation and grouping
 
 ### Upload Context
 - **UploadContextFx** - Effect context for upload configuration (CDN base URL)

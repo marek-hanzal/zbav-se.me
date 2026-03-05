@@ -95,7 +95,7 @@ export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiTransactionStatusReject"),
+				withLoggingFx(axiomConfig, "apiTransactionStatusReject", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx(),

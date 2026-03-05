@@ -1,3 +1,4 @@
+import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { bodyLimit } from "hono/body-limit";
 import { cors } from "hono/cors";
@@ -51,6 +52,10 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 		credentials: false,
 	});
 
+	root.use(async (c, next) => {
+		c.set("traceId", genId());
+		return next();
+	});
 	root.use(requestId());
 	root.use(secureHeaders());
 	root.use("/api/mcp", withOpenCors);

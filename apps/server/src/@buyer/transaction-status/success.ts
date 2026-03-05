@@ -96,7 +96,7 @@ export const withSuccessApiFx = Effect.fn("withSuccessApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiTransactionStatusSuccess"),
+				withLoggingFx(axiomConfig, "apiTransactionStatusSuccess", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx(),

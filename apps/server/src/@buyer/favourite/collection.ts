@@ -80,7 +80,7 @@ export const withCollectionApiFx = Effect.fn("withCollectionApiFx")(function* ()
 				);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig, "apiFavouriteCollection"),
+				withLoggingFx(axiomConfig, "apiFavouriteCollection", c.get("traceId")),
 				withCatchFx({
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);

@@ -73,7 +73,7 @@ export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(func
 							bucket: s3Config.SERVER_S3_BUCKET,
 						}),
 					),
-					withLoggingFx(axiomConfig, "apiJanitorCleanup"),
+					withLoggingFx(axiomConfig, "apiJanitorCleanup", c.get("traceId")),
 					Effect.runPromise,
 				);
 			} catch (e) {

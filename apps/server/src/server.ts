@@ -4,6 +4,7 @@ import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
 import { withBuyerApiFx } from "~/@buyer/withBuyerApiFx";
 import { withBuyerHono } from "~/@buyer/withBuyerHono";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { withPublicApiFx } from "~/@public/withPublicApiFx";
 import { withPublicHono } from "~/@public/withPublicHono";
 import { withSellerApiFx } from "~/@seller/withSellerApiFx";
@@ -19,12 +20,26 @@ import { initMiddlewareFx } from "~/init/initMiddlewareFx";
 import { withMcpApiFx } from "~/mcp/withMcpApiFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { RoutesContextLayer } from "~/route/context/RoutesContextLayer";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { ServerDatabaseSchema } from "~/schema/env/ServerDatabaseSchema";
 
 const app = await Effect.gen(function* () {
 	const { root } = yield* RoutesContextFx;
+	const axiomConfig = ServerAxiomSchema.parse(process.env);
 
 	root.onError((err, c) => {
+		void Effect.logError("server.fallback.error")
+			.pipe(
+				Effect.annotateLogs({
+					error: err instanceof Error ? err.message : "unknown-error",
+					method: c.req.method,
+					path: c.req.path,
+				}),
+				withLoggingFx(axiomConfig, "server.fallback", c.get("traceId")),
+				Effect.runPromise,
+			)
+			.catch(() => undefined);
+
 		return c.json(
 			{
 				type: "error",

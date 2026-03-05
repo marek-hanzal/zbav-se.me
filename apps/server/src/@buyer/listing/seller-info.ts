@@ -88,7 +88,7 @@ export const withSellerInfoApiFx = Effect.fn("withSellerInfoApiFx")(function* ()
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiListingSellerInfo"),
+				withLoggingFx(axiomConfig, "apiListingSellerInfo", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withCatchFx({
 					NotFoundErrorFx() {

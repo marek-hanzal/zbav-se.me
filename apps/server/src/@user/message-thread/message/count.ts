@@ -107,7 +107,7 @@ export const withMessageCountApiFx = Effect.fn("withMessageCountApiFx")(function
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiMessageThreadMessageCount"),
+				withLoggingFx(axiomConfig, "apiMessageThreadMessageCount", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withCatchFx({
 					NotFoundErrorFx() {

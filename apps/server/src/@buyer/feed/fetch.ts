@@ -88,7 +88,7 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 			}).pipe(
 				Effect.tapError(() => Effect.logError("apiFeedFetch")),
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig, "apiFeedFetch"),
+				withLoggingFx(axiomConfig, "apiFeedFetch", c.get("traceId")),
 				withCatchFx({
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);

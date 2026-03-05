@@ -111,7 +111,7 @@ export const withMessageCollectionApiFx = Effect.fn("withMessageCollectionApiFx"
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiMessageThreadMessageCollection"),
+				withLoggingFx(axiomConfig, "apiMessageThreadMessageCollection", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				//
 				withCatchFx({

@@ -95,7 +95,7 @@ export const withCloseApiFx = Effect.fn("withCloseApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiTransactionStatusClose"),
+				withLoggingFx(axiomConfig, "apiTransactionStatusClose", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx(),
