@@ -49,7 +49,7 @@ export const auth = (dialect: () => Dialect) => {
 			}),
 			mcp({
 				loginPage: `${viteConfig.VITE_WEB_ORIGIN}/redirect/oath`,
-				resource: new URL("/api/public/mcp", viteConfig.VITE_SERVER_API).toString(),
+				resource: new URL("/api/mcp", viteConfig.VITE_SERVER_API).toString(),
 			}),
 			openAPI({
 				disableDefaultReference: true,
