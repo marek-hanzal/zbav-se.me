@@ -29,4 +29,12 @@ export const withAuthEndpointFx = Effect.fn("withAuthEndpointFx")(function* () {
 	root.get("/.well-known/oauth-protected-resource", (c) => {
 		return withProtectedResource(c.req.raw);
 	});
+
+	root.get("/.well-known/oauth-protected-resource/*", (c) => {
+		return withProtectedResource(c.req.raw);
+	});
+
+	root.get("/api/auth/.well-known/oauth-protected-resource/*", (c) => {
+		return withProtectedResource(c.req.raw);
+	});
 });
