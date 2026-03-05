@@ -1,7 +1,7 @@
 import { passkey } from "@better-auth/passkey";
 import { genId } from "@use-pico/common/gen-id";
 import { betterAuth } from "better-auth";
-import { anonymous, customSession, openAPI } from "better-auth/plugins";
+import { anonymous, customSession, mcp, openAPI } from "better-auth/plugins";
 import { type Dialect, Kysely } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import type { Database } from "~/database/Database";
@@ -46,6 +46,10 @@ export const auth = (dialect: () => Dialect) => {
 				async onLinkAccount() {
 					//
 				},
+			}),
+			mcp({
+				loginPage: `${viteConfig.VITE_WEB_ORIGIN}/redirect/login`,
+				resource: new URL("/api/public/mcp", viteConfig.VITE_SERVER_API).toString(),
 			}),
 			openAPI({
 				disableDefaultReference: true,

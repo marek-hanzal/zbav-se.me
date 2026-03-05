@@ -1,9 +1,12 @@
 import { OpenAPIHono, z } from "@hono/zod-openapi";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
+import { withMcpAuth } from "better-auth/plugins";
 import { Effect } from "effect";
 import { type McpOpenAPITool, OpenAPIToolGenerator, type ParameterMapper } from "mcp-from-openapi";
 import type { withBuyerHono } from "~/@buyer/withBuyerHono";
+import { auth } from "~/auth/auth";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 
 type ToolArgs = Record<string, unknown>;
@@ -197,17 +200,6 @@ const withNamespacedToolName = ({ name, namespace }: WithNamespacedToolNameProps
 	return `${namespace}.${name}`;
 };
 
-const withAuthorizationHeader = (request: Request): null | string => {
-	const authorization = request.headers.get("authorization");
-	const bearerPrefix = "Bearer ";
-
-	if (!authorization || !authorization.startsWith(bearerPrefix)) {
-		return null;
-	}
-
-	return authorization.trim();
-};
-
 const withToolResponse = async (response: Response) => {
 	const contentType = response.headers.get("content-type") ?? "";
 	const isJson = contentType.includes("application/json");
@@ -262,6 +254,8 @@ const withToolResponse = async (response: Response) => {
 
 export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 	const { root, buyerHono } = yield* RoutesContextFx;
+	const { dialect } = yield* KyselyContextFx;
+	const authApi = auth(() => dialect);
 
 	let cache: null | {
 		document: ReturnType<typeof withBuyerOpenApiDocument>;
@@ -282,7 +276,7 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 		return cache;
 	};
 
-	const handle = async (request: Request, authorizationHeader: string) => {
+	const handle = async (request: Request, accessToken: string) => {
 		const { document, tools } = await fetchMcpState();
 		const server = new McpServer({
 			name: "zbav-se-buyer-listing-mcp",
@@ -386,7 +380,7 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 
 					const headers = new Headers(mapped.headers);
 					headers.set("Accept", "application/json");
-					headers.set("Authorization", authorizationHeader);
+					headers.set("Authorization", `Bearer ${accessToken}`);
 
 					const cookie = withCookieHeader(mapped.cookies);
 					if (cookie) {
@@ -419,37 +413,15 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 		return transport.handleRequest(request);
 	};
 
+	const withHandler = withMcpAuth(authApi, async (request, session) => {
+		return handle(request, session.accessToken);
+	});
+
 	root.all("/api/public/mcp", async (c) => {
-		const user = c.get("user");
-		const authorizationHeader = withAuthorizationHeader(c.req.raw);
-
-		if (!user || !authorizationHeader) {
-			return c.json(
-				{
-					type: "error",
-					message: "Shooooo! Shooo!",
-				},
-				401,
-			);
-		}
-
-		return handle(c.req.raw, authorizationHeader);
+		return withHandler(c.req.raw);
 	});
 
 	root.all("/api/public/mcp/*", async (c) => {
-		const user = c.get("user");
-		const authorizationHeader = withAuthorizationHeader(c.req.raw);
-
-		if (!user || !authorizationHeader) {
-			return c.json(
-				{
-					type: "error",
-					message: "Shooooo! Shooo!",
-				},
-				401,
-			);
-		}
-
-		return handle(c.req.raw, authorizationHeader);
+		return withHandler(c.req.raw);
 	});
 });
