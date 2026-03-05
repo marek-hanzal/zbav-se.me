@@ -13,9 +13,13 @@ export namespace auth {
 
 	export type User = Api["$Infer"]["Session"]["user"];
 	export type Session = Api["$Infer"]["Session"]["session"];
+
+	export interface Config {
+		basePath?: string;
+	}
 }
 
-export const auth = (dialect: () => Dialect) => {
+export const auth = (dialect: () => Dialect, config: auth.Config = {}) => {
 	const connection = dialect();
 
 	const betterAuthConfig = ServerBetterAuthSchema.parse(process.env);
@@ -34,6 +38,7 @@ export const auth = (dialect: () => Dialect) => {
 	return betterAuth({
 		database: connection,
 		baseURL: viteConfig.VITE_SERVER_API,
+		basePath: config.basePath ?? "/api/auth",
 		secret: betterAuthConfig.SERVER_BETTER_AUTH_SECRET,
 		plugins: [
 			passkey({
@@ -50,6 +55,12 @@ export const auth = (dialect: () => Dialect) => {
 			mcp({
 				loginPage: `${viteConfig.VITE_WEB_ORIGIN}/redirect/oath`,
 				resource: new URL("/api/mcp", viteConfig.VITE_SERVER_API).toString(),
+				oidcConfig: {
+					loginPage: `${viteConfig.VITE_WEB_ORIGIN}/redirect/oath`,
+					metadata: {
+						issuer: viteConfig.VITE_SERVER_API,
+					},
+				},
 			}),
 			openAPI({
 				disableDefaultReference: true,

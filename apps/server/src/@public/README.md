@@ -12,6 +12,9 @@ This domain provides endpoints that don't require authentication. It includes sy
 - **Auth** - Authentication endpoints (login, register, etc.)
 - Better Auth integration
 - Public authentication operations
+- Standard session auth remains under `/api/auth/*` (cookie-oriented flow).
+- OAuth/MCP flow is exposed under `/api/oauth/*` with open CORS for cross-origin OAuth clients.
+- Root OAuth/OIDC `.well-known/*` discovery is exposed and points to the OAuth flow under `/api/oauth/*`.
 
 ### CORS Proxy
 - **CORS Proxy** - Cross-origin request proxy
