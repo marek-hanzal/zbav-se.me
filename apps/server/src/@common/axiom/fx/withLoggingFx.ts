@@ -27,7 +27,6 @@ export const withLoggingFx =
 				});
 			}),
 			//
-			Effect.withLogSpan("runtime"),
 			Effect.provide(AxiomLoggerLayer),
 			Effect.provide(
 				AxiomContextLayer({
