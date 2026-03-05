@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './@routes/__root'
 import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
+import { Route as RedirectOathRouteImport } from './@routes/redirect/oath'
 import { Route as RedirectLoginRouteImport } from './@routes/redirect/login'
 import { Route as RedirectLandingRouteImport } from './@routes/redirect/landing'
 import { Route as CsTosRouteImport } from './@routes/cs/tos'
@@ -36,6 +37,11 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LocaleRoute,
+} as any)
+const RedirectOathRoute = RedirectOathRouteImport.update({
+  id: '/redirect/oath',
+  path: '/redirect/oath',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const RedirectLoginRoute = RedirectLoginRouteImport.update({
   id: '/redirect/login',
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/cs/tos': typeof CsTosRoute
   '/redirect/landing': typeof RedirectLandingRoute
   '/redirect/login': typeof RedirectLoginRoute
+  '/redirect/oath': typeof RedirectOathRoute
   '/$locale/': typeof LocaleIndexRoute
 }
 export interface FileRoutesByTo {
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/cs/tos': typeof CsTosRoute
   '/redirect/landing': typeof RedirectLandingRoute
   '/redirect/login': typeof RedirectLoginRoute
+  '/redirect/oath': typeof RedirectOathRoute
   '/$locale': typeof LocaleIndexRoute
 }
 export interface FileRoutesById {
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   '/cs/tos': typeof CsTosRoute
   '/redirect/landing': typeof RedirectLandingRoute
   '/redirect/login': typeof RedirectLoginRoute
+  '/redirect/oath': typeof RedirectOathRoute
   '/$locale/': typeof LocaleIndexRoute
 }
 export interface FileRouteTypes {
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
     | '/cs/tos'
     | '/redirect/landing'
     | '/redirect/login'
+    | '/redirect/oath'
     | '/$locale/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -152,6 +162,7 @@ export interface FileRouteTypes {
     | '/cs/tos'
     | '/redirect/landing'
     | '/redirect/login'
+    | '/redirect/oath'
     | '/$locale'
   id:
     | '__root__'
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/cs/tos'
     | '/redirect/landing'
     | '/redirect/login'
+    | '/redirect/oath'
     | '/$locale/'
   fileRoutesById: FileRoutesById
 }
@@ -176,6 +188,7 @@ export interface RootRouteChildren {
   CsTosRoute: typeof CsTosRoute
   RedirectLandingRoute: typeof RedirectLandingRoute
   RedirectLoginRoute: typeof RedirectLoginRoute
+  RedirectOathRoute: typeof RedirectOathRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -200,6 +213,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/'
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRoute
+    }
+    '/redirect/oath': {
+      id: '/redirect/oath'
+      path: '/redirect/oath'
+      fullPath: '/redirect/oath'
+      preLoaderRoute: typeof RedirectOathRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/redirect/login': {
       id: '/redirect/login'
@@ -295,6 +315,7 @@ const rootRouteChildren: RootRouteChildren = {
   CsTosRoute: CsTosRoute,
   RedirectLandingRoute: RedirectLandingRoute,
   RedirectLoginRoute: RedirectLoginRoute,
+  RedirectOathRoute: RedirectOathRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
