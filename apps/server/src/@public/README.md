@@ -48,12 +48,6 @@ This domain provides endpoints that don't require authentication. It includes sy
 - Scalar UI for API docs
 - Generated from route definitions
 
-### MCP Bridge
-- **MCP** - `/api/public/mcp`
-- Exposes OpenAPI-tagged operations (`mcp`) as MCP tools without re-implementing endpoint logic.
-- Uses Better Auth MCP OAuth (`better-auth@1.5.x`) via `withMcpAuth`.
-- OAuth metadata and token endpoints are available under `/api/auth` (for example `/.well-known/oauth-authorization-server`).
-
 ### Origin
 - **Origin** - Origin/domain information
 - Configuration and CORS utilities

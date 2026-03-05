@@ -417,11 +417,11 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 		return handle(request, session.accessToken);
 	});
 
-	root.all("/api/public/mcp", async (c) => {
+	root.all("/api/mcp", async (c) => {
 		return withHandler(c.req.raw);
 	});
 
-	root.all("/api/public/mcp/*", async (c) => {
+	root.all("/api/mcp/*", async (c) => {
 		return withHandler(c.req.raw);
 	});
 });

@@ -91,7 +91,7 @@ bun run typecheck
 
 Shared MCP server template is in [`mcp.json`](./mcp.json).
 
-- Endpoint: `http://obsidian-ii.local:3032/api/public/mcp`
+- Endpoint: `http://obsidian-ii.local:3032/api/mcp`
 - Auth env var: `MCP_BEARER_TOKEN`
 - Transport: `streamable_http`
 

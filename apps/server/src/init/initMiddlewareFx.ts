@@ -53,8 +53,8 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 
 	root.use(requestId());
 	root.use(secureHeaders());
-	root.use("/api/public/mcp", withOpenCors);
-	root.use("/api/public/mcp/*", withOpenCors);
+	root.use("/api/mcp", withOpenCors);
+	root.use("/api/mcp/*", withOpenCors);
 	root.use("/api/auth/mcp/*", withOpenCors);
 	root.use("/.well-known/*", withOpenCors);
 	root.use("/api/auth/.well-known/*", withOpenCors);
