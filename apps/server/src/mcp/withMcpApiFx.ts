@@ -34,6 +34,16 @@ interface WithResourceContentProps {
 	value: unknown;
 }
 
+interface WithToolNamespaceProps {
+	path: string;
+	tags?: string[];
+}
+
+interface WithNamespacedToolNameProps {
+	name: string;
+	namespace: string;
+}
+
 const isJsonRecord = (value: unknown): value is JsonRecord => {
 	return typeof value === "object" && value !== null && !Array.isArray(value);
 };
@@ -160,6 +170,40 @@ const withResourceContent = ({ uri, value }: WithResourceContentProps) => {
 	};
 };
 
+const withSanitizedName = (value: string): string => {
+	return value
+		.trim()
+		.toLowerCase()
+		.replace(/[^a-z0-9._-]+/g, "-")
+		.replace(/^-+|-+$/g, "")
+		.replace(/-+/g, "-");
+};
+
+const withPathNamespace = (path: string): string => {
+	const [, api, namespace] = path.split("/");
+	if (api === "api" && namespace) {
+		return withSanitizedName(namespace);
+	}
+
+	return "default";
+};
+
+const withToolNamespace = ({ path, tags }: WithToolNamespaceProps): string => {
+	const firstTag = tags?.[0];
+	if (firstTag) {
+		const namespace = withSanitizedName(firstTag);
+		if (namespace.length > 0) {
+			return namespace;
+		}
+	}
+
+	return withPathNamespace(path);
+};
+
+const withNamespacedToolName = ({ name, namespace }: WithNamespacedToolNameProps): string => {
+	return `${namespace}.${name}`;
+};
+
 const withToolResponse = async (response: Response) => {
 	const contentType = response.headers.get("content-type") ?? "";
 	const isJson = contentType.includes("application/json");
@@ -281,17 +325,30 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 				mimeType: "application/json",
 			},
 			async (uri) => {
-				return withResourceContent({
-					uri,
-					value: tools.map((tool) => ({
-						name: tool.name,
-						description: tool.description,
-						method: tool.metadata.method.toUpperCase(),
-						path: tool.metadata.path,
-					})),
-				});
-			},
-		);
+					return withResourceContent({
+						uri,
+						value: tools.map((tool) => {
+							const namespace = withToolNamespace({
+								path: tool.metadata.path,
+								tags: tool.metadata.tags,
+							});
+
+							return {
+								name: withNamespacedToolName({
+									name: tool.name,
+									namespace,
+								}),
+								namespace,
+								originalName: tool.name,
+								description: tool.description,
+								method: tool.metadata.method.toUpperCase(),
+								path: tool.metadata.path,
+								tags: tool.metadata.tags ?? [],
+							};
+						}),
+					});
+				},
+			);
 
 		server.registerResource(
 			"mcp-openapi",
@@ -310,8 +367,17 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 		);
 
 		for (const tool of tools) {
+			const namespace = withToolNamespace({
+				path: tool.metadata.path,
+				tags: tool.metadata.tags,
+			});
+			const namespacedToolName = withNamespacedToolName({
+				name: tool.name,
+				namespace,
+			});
+
 			server.registerTool(
-				tool.name,
+				namespacedToolName,
 				{
 					description: tool.description,
 					inputSchema: z.object({}).catchall(z.unknown()),
