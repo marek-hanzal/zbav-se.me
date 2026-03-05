@@ -29,6 +29,62 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 	root.use(requestId());
 	root.use(secureHeaders());
 	root.use(
+		"/api/public/mcp",
+		cors({
+			origin: "*",
+			allowHeaders: [
+				"User-Agent",
+				"Content-Type",
+				"Authorization",
+				"Mcp-Protocol-Version",
+				"Last-Event-ID",
+			],
+			allowMethods: [
+				"GET",
+				"POST",
+				"DELETE",
+				"OPTIONS",
+			],
+			exposeHeaders: [
+				"Content-Length",
+				"X-Request-Id",
+				"WWW-Authenticate",
+				"Mcp-Session-Id",
+				"Mcp-Protocol-Version",
+			],
+			maxAge: 600,
+			credentials: false,
+		}),
+	);
+	root.use(
+		"/api/public/mcp/*",
+		cors({
+			origin: "*",
+			allowHeaders: [
+				"User-Agent",
+				"Content-Type",
+				"Authorization",
+				"Mcp-Protocol-Version",
+				"Last-Event-ID",
+			],
+			allowMethods: [
+				"GET",
+				"POST",
+				"DELETE",
+				"OPTIONS",
+			],
+			exposeHeaders: [
+				"Content-Length",
+				"X-Request-Id",
+				"WWW-Authenticate",
+				"Mcp-Session-Id",
+				"Mcp-Protocol-Version",
+			],
+			maxAge: 600,
+			credentials: false,
+		}),
+	);
+	root.use(
 		cors({
 			origin: [
 				viteConfig.VITE_WEB_ORIGIN,
