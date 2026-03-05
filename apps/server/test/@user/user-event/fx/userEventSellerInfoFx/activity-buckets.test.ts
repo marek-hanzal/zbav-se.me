@@ -8,6 +8,7 @@ import { auth } from "~/auth/auth";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { testabase } from "~test/testabase";
+import { withTestAxiomFx } from "~test/withTestAxiomFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Activity buckets - high activity (recent user actions)", async () => {
@@ -77,7 +78,13 @@ describe("userEventSellerInfoFx", () => {
 			return yield* userEventSellerInfoFx({
 				userId: sellerId,
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.scoped, Effect.runPromise);
+		}).pipe(
+			withKyselyFx(database),
+			withDateFx,
+			withTestAxiomFx,
+			Effect.scoped,
+			Effect.runPromise,
+		);
 
 		expect(result).not.toBeNull();
 		if (!result) return;
@@ -152,7 +159,13 @@ describe("userEventSellerInfoFx", () => {
 			return yield* userEventSellerInfoFx({
 				userId: sellerId,
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.scoped, Effect.runPromise);
+		}).pipe(
+			withKyselyFx(database),
+			withDateFx,
+			withTestAxiomFx,
+			Effect.scoped,
+			Effect.runPromise,
+		);
 
 		expect(result).not.toBeNull();
 		if (!result) return;
@@ -227,7 +240,13 @@ describe("userEventSellerInfoFx", () => {
 			return yield* userEventSellerInfoFx({
 				userId: sellerId,
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.scoped, Effect.runPromise);
+		}).pipe(
+			withKyselyFx(database),
+			withDateFx,
+			withTestAxiomFx,
+			Effect.scoped,
+			Effect.runPromise,
+		);
 
 		expect(result).not.toBeNull();
 		if (!result) return;
@@ -302,7 +321,13 @@ describe("userEventSellerInfoFx", () => {
 			return yield* userEventSellerInfoFx({
 				userId: sellerId,
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.scoped, Effect.runPromise);
+		}).pipe(
+			withKyselyFx(database),
+			withDateFx,
+			withTestAxiomFx,
+			Effect.scoped,
+			Effect.runPromise,
+		);
 
 		expect(result).not.toBeNull();
 		if (!result) return;

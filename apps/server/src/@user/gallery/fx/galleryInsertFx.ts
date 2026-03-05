@@ -4,15 +4,16 @@ import { Effect } from "effect";
 import type { galleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export const galleryInsertFx = Effect.fn("galleryInsertFx")(function* ({
 	userId,
 	id,
 	...props
 }: galleryCreateFx.Props) {
-	yield* withTraceFx({
-		fx: "galleryInsertFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "galleryInsertFx",
 		input: {
 			userId,
 			id,

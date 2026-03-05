@@ -4,7 +4,7 @@ import { withListingQueryBuilderFx } from "~/@buyer/listing/db/withListingQueryB
 import { withListingSelectFx } from "~/@buyer/listing/db/withListingSelectFx";
 import type { ListingFilterSchema } from "~/@buyer/listing/schema/ListingFilterSchema";
 import type { ListingQuerySchema } from "~/@buyer/listing/schema/ListingQuerySchema";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace listingFetchFx {
 	export interface Props extends ListingQuerySchema.Type {
@@ -21,8 +21,9 @@ export const listingFetchFx = Effect.fn("listingFetchFx")(function* ({
 	sort,
 	meta,
 }: listingFetchFx.Props) {
-	yield* withTraceFx({
-		fx: "listingFetchFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "listingFetchFx",
 		input: {
 			userId,
 			filter,

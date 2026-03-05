@@ -7,7 +7,7 @@ import type { UserEventCreateSchema } from "~/@user/user-event/schema/UserEventC
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 const ignored: UserEventEnumSchema.Type[] = [
 	"listing.create",
@@ -24,8 +24,9 @@ export const userEventCreateFx = Effect.fn("userEventCreateFx")(function* ({
 	group,
 	...data
 }: userEventCreateFx.Props) {
-	yield* withTraceFx({
-		fx: "userEventCreateFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "userEventCreateFx",
 		input: {
 			userId,
 			group,

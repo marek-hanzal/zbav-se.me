@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 import { AccessDeniedErrorFx } from "~/error/AccessDeniedErrorFx";
 import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
 
@@ -18,8 +18,9 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 	transactionId,
 	message = "You are not allowed to access this transaction",
 }: transactionResolveFx.Props) {
-	yield* withTraceFx({
-		fx: "transactionResolveFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "transactionResolveFx",
 		input: {
 			userId,
 			transactionId,
@@ -67,8 +68,9 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 	);
 
 	if (!transaction) {
-		yield* withTraceFx({
-			fx: "transactionResolveFx",
+		yield* traceLogFx({
+			level: "trace",
+			message: "transactionResolveFx",
 			error: {
 				message,
 			},
@@ -79,8 +81,9 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 	}
 
 	if (!transaction.status) {
-		yield* withTraceFx({
-			fx: "transactionResolveFx",
+		yield* traceLogFx({
+			level: "trace",
+			message: "transactionResolveFx",
 			error: {
 				message: "Transaction status is missing",
 			},

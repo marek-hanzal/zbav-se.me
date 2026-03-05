@@ -2,7 +2,7 @@ import { NotFoundErrorFx } from "@use-pico/common/error";
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace listingCheckIfOwnFx {
@@ -22,8 +22,9 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 	listingId,
 	message,
 }: listingCheckIfOwnFx.Props) {
-	yield* withTraceFx({
-		fx: "listingCheckIfOwnFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "listingCheckIfOwnFx",
 		input: {
 			userId,
 			listingId,
@@ -41,8 +42,9 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 	);
 
 	if (!listing) {
-		yield* withTraceFx({
-			fx: "listingCheckIfOwnFx",
+		yield* traceLogFx({
+			level: "trace",
+			message: "listingCheckIfOwnFx",
 			error: {
 				resource: "listing",
 				resourceId: listingId,
@@ -57,8 +59,9 @@ export const listingCheckIfOwnFx = Effect.fn("listingCheckIfOwnFx")(function* ({
 	}
 
 	if (listing.userId === userId) {
-		yield* withTraceFx({
-			fx: "listingCheckIfOwnFx",
+		yield* traceLogFx({
+			level: "trace",
+			message: "listingCheckIfOwnFx",
 			error: {
 				message,
 			},

@@ -6,7 +6,7 @@ import type { TransactionStatusCreateSchema } from "~/@common/transaction-status
 import { transactionStatusFetchFx } from "~/@session/transaction-status/fx/transactionStatusFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace transactionStatusCreateFx {
 	export interface Props extends TransactionStatusCreateSchema.Type {
@@ -19,8 +19,9 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 	userId,
 	...create
 }: transactionStatusCreateFx.Props) {
-	yield* withTraceFx({
-		fx: "transactionStatusCreateFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "transactionStatusCreateFx",
 		input: {
 			userId,
 			...create,

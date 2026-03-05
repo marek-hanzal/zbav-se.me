@@ -6,7 +6,7 @@ import type { InboxCreateSchema } from "~/@user/inbox/schema/InboxCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace inboxCreateFx {
 	export interface Props extends InboxCreateSchema.Type {
@@ -20,8 +20,9 @@ export const inboxCreateFx = Effect.fn("inboxCreateFx")(function* ({
 	payload,
 	priority,
 }: inboxCreateFx.Props) {
-	yield* withTraceFx({
-		fx: "inboxCreateFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "inboxCreateFx",
 		input: {
 			userId,
 			type,

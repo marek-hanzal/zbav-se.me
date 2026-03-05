@@ -7,7 +7,7 @@ import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCh
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace messageThreadPatchFx {
 	export interface Props extends MessageThreadPatchSchema.Type {
@@ -22,8 +22,9 @@ export const messageThreadPatchFx = Effect.fn("messageThreadPatchFx")(function* 
 	query,
 	scope,
 }: messageThreadPatchFx.Props) {
-	yield* withTraceFx({
-		fx: "messageThreadPatchFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "messageThreadPatchFx",
 		input: {
 			userId,
 			patch,

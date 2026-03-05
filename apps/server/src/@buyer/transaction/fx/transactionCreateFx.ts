@@ -15,7 +15,7 @@ import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEve
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace transactionCreateFx {
 	export interface Props extends TransactionCreateSchema.Type {
@@ -28,8 +28,9 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 	listingId,
 	...data
 }: transactionCreateFx.Props) {
-	yield* withTraceFx({
-		fx: "transactionCreateFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "transactionCreateFx",
 		input: {
 			userId,
 			listingId,
@@ -55,8 +56,9 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 			);
 
 			if (!listing) {
-				yield* withTraceFx({
-					fx: "transactionCreateFx",
+				yield* traceLogFx({
+					level: "trace",
+					message: "transactionCreateFx",
 					error: {
 						resource: "listing",
 						resourceId: listingId,

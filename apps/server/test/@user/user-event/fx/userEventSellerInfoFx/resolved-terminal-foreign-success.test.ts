@@ -8,6 +8,7 @@ import { auth } from "~/auth/auth";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { testabase } from "~test/testabase";
+import { withTestAxiomFx } from "~test/withTestAxiomFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Resolved: counts foreign transaction.success as buyer-terminal for seller resolve", async () => {
@@ -108,7 +109,13 @@ describe("userEventSellerInfoFx", () => {
 			return yield* userEventSellerInfoFx({
 				userId: sellerId,
 			});
-		}).pipe(withKyselyFx(database), withDateFx, Effect.scoped, Effect.runPromise);
+		}).pipe(
+			withKyselyFx(database),
+			withDateFx,
+			withTestAxiomFx,
+			Effect.scoped,
+			Effect.runPromise,
+		);
 
 		expect(result).not.toBeNull();
 		if (!result) return;

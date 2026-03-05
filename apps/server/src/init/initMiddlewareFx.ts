@@ -185,7 +185,7 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 				const token = withAuthorizationToken(c.req.raw.headers);
 
 				if (!token) {
-					await withAuthLog({
+					await withAuthLog(axiomConfig, {
 						hasAuthorization: Boolean(c.req.header("authorization")),
 						hasUser: false,
 						level: "warning",
@@ -217,7 +217,7 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 						.executeTakeFirst();
 
 					if (!mcpOauthUser) {
-						await withAuthLog({
+						await withAuthLog(axiomConfig, {
 							hasAuthorization: Boolean(c.req.header("authorization")),
 							hasUser: false,
 							level: "warning",
@@ -232,7 +232,7 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 						return next();
 					}
 
-					await withAuthLog({
+					await withAuthLog(axiomConfig, {
 						hasAuthorization: Boolean(c.req.header("authorization")),
 						hasUser: true,
 						level: "info",
@@ -259,7 +259,7 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 					.executeTakeFirst();
 
 				if (!mcpUser) {
-					await withAuthLog({
+					await withAuthLog(axiomConfig, {
 						hasAuthorization: Boolean(c.req.header("authorization")),
 						hasUser: false,
 						level: "warning",
@@ -274,7 +274,7 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 					return next();
 				}
 
-				await withAuthLog({
+				await withAuthLog(axiomConfig, {
 					hasAuthorization: Boolean(c.req.header("authorization")),
 					hasUser: true,
 					level: "info",
@@ -288,7 +288,7 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 				c.set("user", mcpUser as authType.User);
 				return next();
 			}
-			await withAuthLog({
+			await withAuthLog(axiomConfig, {
 				hasAuthorization: Boolean(c.req.header("authorization")),
 				hasUser: true,
 				level: "info",
@@ -302,7 +302,7 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 			c.set("user", session.user);
 			return next();
 		} catch {
-			await withAuthLog({
+			await withAuthLog(axiomConfig, {
 				hasAuthorization: Boolean(c.req.header("authorization")),
 				hasUser: false,
 				level: "error",

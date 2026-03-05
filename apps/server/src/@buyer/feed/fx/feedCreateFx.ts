@@ -6,7 +6,7 @@ import type { FeedCreateSchema } from "~/@buyer/feed/schema/FeedCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 import { ConflictErrorFx } from "~/error/ConflictErrorFx";
 
 export namespace feedCreateFx {
@@ -20,8 +20,9 @@ export const feedCreateFx = Effect.fn("feedCreateFx")(function* ({
 	query,
 	...data
 }: feedCreateFx.Props) {
-	yield* withTraceFx({
-		fx: "feedCreateFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "feedCreateFx",
 		input: {
 			userId,
 			query,

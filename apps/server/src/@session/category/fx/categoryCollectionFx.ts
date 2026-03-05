@@ -5,7 +5,7 @@ import { withCategoryQueryBuilderFx } from "~/@session/category/db/withCategoryQ
 import type { CategoryFilterSchema } from "~/@session/category/schema/CategoryFilterSchema";
 import type { CategoryQuerySchema } from "~/@session/category/schema/CategoryQuerySchema";
 import { categoryMissCreateFx } from "~/@session/category-miss/fx/categoryMissCreateFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace categoryCollectionFx {
 	export interface Props extends CategoryQuerySchema.Type {
@@ -20,8 +20,9 @@ export const categoryCollectionFx = Effect.fn("categoryCollectionFx")(function* 
 	scope,
 	sort,
 }: categoryCollectionFx.Props) {
-	yield* withTraceFx({
-		fx: "categoryCollectionFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "categoryCollectionFx",
 		input: {
 			cursor,
 			filter,

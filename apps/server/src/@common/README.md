@@ -42,7 +42,7 @@ The `@common` domain exists to:
 - **AxiomContextLayerFx** - Effect layer factory for Axiom context
 - **axiomClientFx** - Effect function to create Axiom client for log ingestion
 - **withLoggingFx** - Logging provider wrapper that binds request-level `traceId` and endpoint-level `root`
-- **withTraceFx** - Emits per-event trace logs (no aggregate `$trace` payload)
+- **traceLogFx** - Emits per-event trace logs (no aggregate `$trace` payload)
 - Reads from `SERVER_AXIOM_TOKEN` and `SERVER_AXIOM_DATASET` environment variables
 - Every emitted Axiom event includes `traceId` and `root` for correlation and grouping
 

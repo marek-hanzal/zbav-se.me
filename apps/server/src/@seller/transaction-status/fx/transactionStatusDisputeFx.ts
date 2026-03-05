@@ -5,7 +5,7 @@ import { transactionStatusCreateFx } from "~/@seller/transaction-status/fx/trans
 import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionStatusDisputeFx {
@@ -18,8 +18,9 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 	userId,
 	transactionId,
 }: transactionStatusDisputeFx.Props) {
-	yield* withTraceFx({
-		fx: "transactionStatusDisputeFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "transactionStatusDisputeFx",
 		input: {
 			userId,
 			transactionId,
@@ -33,8 +34,9 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 	});
 
 	if (transaction.side !== "seller") {
-		yield* withTraceFx({
-			fx: "transactionStatusDisputeFx",
+		yield* traceLogFx({
+			level: "trace",
+			message: "transactionStatusDisputeFx",
 			error: {
 				message: "Only seller can dispute a transaction from seller endpoint",
 			},

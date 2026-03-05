@@ -6,7 +6,7 @@ import type { FavouriteCreateSchema } from "~/@buyer/favourite/schema/FavouriteC
 import { feedFetchFx } from "~/@buyer/feed/fx/feedFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace favouriteCreateFx {
 	export interface Props extends FavouriteCreateSchema.Type {
@@ -19,8 +19,9 @@ export const favouriteCreateFx = Effect.fn("favouriteCreateFx")(function* ({
 	feedId,
 	...data
 }: favouriteCreateFx.Props) {
-	yield* withTraceFx({
-		fx: "favouriteCreateFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "favouriteCreateFx",
 		input: {
 			userId,
 			feedId,

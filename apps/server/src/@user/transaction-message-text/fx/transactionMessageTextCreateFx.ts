@@ -9,7 +9,7 @@ import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEve
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace transactionMessageTextCreateFx {
 	export interface Props extends TransactionMessageTextCreateSchema.Type {
@@ -19,8 +19,9 @@ export namespace transactionMessageTextCreateFx {
 
 export const transactionMessageTextCreateFx = Effect.fn("transactionMessageTextCreateFx")(
 	function* ({ userId, transactionId, message }: transactionMessageTextCreateFx.Props) {
-		yield* withTraceFx({
-			fx: "transactionMessageTextCreateFx",
+		yield* traceLogFx({
+			level: "trace",
+			message: "transactionMessageTextCreateFx",
 			input: {
 				userId,
 				transactionId,

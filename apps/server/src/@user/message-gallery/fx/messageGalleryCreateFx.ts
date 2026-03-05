@@ -7,7 +7,7 @@ import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCh
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace messageGalleryCreateFx {
 	export interface Props extends MessageGalleryCreateSchema.Type {
@@ -20,8 +20,9 @@ export const messageGalleryCreateFx = Effect.fn("messageGalleryCreateFx")(functi
 	messageThreadId,
 	galleryId,
 }: messageGalleryCreateFx.Props) {
-	yield* withTraceFx({
-		fx: "messageGalleryCreateFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "messageGalleryCreateFx",
 		input: {
 			userId,
 			messageThreadId,

@@ -4,7 +4,7 @@ import { Effect } from "effect";
 import { sql } from "kysely";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace categoryMissCreateFx {
 	export interface Props {
@@ -17,8 +17,9 @@ export const categoryMissCreateFx = Effect.fn("categoryMissCreateFx")(function* 
 	fulltext,
 	limit = 4,
 }: categoryMissCreateFx.Props) {
-	yield* withTraceFx({
-		fx: "categoryMissCreateFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "categoryMissCreateFx",
 		input: {
 			fulltext,
 			limit,

@@ -6,7 +6,7 @@ import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 import { RuntimeErrorFx } from "~/error/RuntimeErrorFx";
 
 export namespace transactionStatusAcceptFx {
@@ -19,8 +19,9 @@ export const transactionStatusAcceptFx = Effect.fn("transactionStatusAcceptFx")(
 	userId,
 	transactionId,
 }: transactionStatusAcceptFx.Props) {
-	yield* withTraceFx({
-		fx: "transactionStatusAcceptFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "transactionStatusAcceptFx",
 		input: {
 			userId,
 			transactionId,
@@ -34,8 +35,9 @@ export const transactionStatusAcceptFx = Effect.fn("transactionStatusAcceptFx")(
 	});
 
 	if (transaction.side === "buyer") {
-		yield* withTraceFx({
-			fx: "transactionStatusAcceptFx",
+		yield* traceLogFx({
+			level: "trace",
+			message: "transactionStatusAcceptFx",
 			error: {
 				message: "Buyer cannot accept a transaction",
 			},
@@ -45,8 +47,9 @@ export const transactionStatusAcceptFx = Effect.fn("transactionStatusAcceptFx")(
 		});
 	}
 	if (transaction.status !== "pending") {
-		yield* withTraceFx({
-			fx: "transactionStatusAcceptFx",
+		yield* traceLogFx({
+			level: "trace",
+			message: "transactionStatusAcceptFx",
 			error: {
 				message: `Transaction must be pending before accept, got ${transaction.status}`,
 			},

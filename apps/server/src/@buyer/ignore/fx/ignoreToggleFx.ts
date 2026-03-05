@@ -6,7 +6,7 @@ import { listingCheckIfOwnFx } from "~/@buyer/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/@buyer/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/@buyer/listing-event/fx/listingEventCreateFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace ignoreToggleFx {
 	export interface Props extends IgnoreToggleSchema.Type {
@@ -19,8 +19,9 @@ export const ignoreToggleFx = Effect.fn("ignoreToggleFx")(function* ({
 	toggle,
 	listingId,
 }: ignoreToggleFx.Props) {
-	yield* withTraceFx({
-		fx: "ignoreToggleFx",
+	yield* traceLogFx({
+		level: "trace",
+		message: "ignoreToggleFx",
 		input: {
 			userId,
 			toggle,

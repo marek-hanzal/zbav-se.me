@@ -2,7 +2,7 @@ import { NotFoundErrorFx } from "@use-pico/common/error";
 import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
-import { withTraceFx } from "~/effect/withTraceFx";
+import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace messageUserCheckFx {
 	export interface Props {
@@ -28,8 +28,9 @@ export const messageUserCheckFx = Effect.fn("messageUserCheckFx")(function* ({
 	);
 
 	if (!result) {
-		yield* withTraceFx({
-			fx: "messageUserCheckFx",
+		yield* traceLogFx({
+			level: "trace",
+			message: "messageUserCheckFx",
 			error: {
 				resource: "message-thread-user",
 				resourceId: "(user-ids+messageThreadId)",
