@@ -4,10 +4,13 @@ import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/
 import { withMcpAuth } from "better-auth/plugins";
 import { Effect } from "effect";
 import { type McpOpenAPITool, OpenAPIToolGenerator, type ParameterMapper } from "mcp-from-openapi";
+import { match } from "ts-pattern";
 import type { withBuyerHono } from "~/@buyer/withBuyerHono";
+import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { auth } from "~/auth/auth";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
+import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 
 type ToolArgs = Record<string, unknown>;
 type JsonRecord = Record<string, unknown>;
@@ -57,6 +60,23 @@ interface WithMcpMetaKeyProps {
 	method: string;
 	operationId?: string;
 	path: string;
+}
+
+interface WithMcpLogProps {
+	level?: "error" | "info" | "warning";
+	message: string;
+	root: string;
+	traceId: string;
+	values?: Record<string, unknown>;
+}
+
+interface HandleProps {
+	accessToken: string;
+	method: string;
+	path: string;
+	request: Request;
+	traceId: string;
+	userAgent: string;
 }
 
 const McpMetaAnnotationsSchema = z
@@ -400,7 +420,28 @@ const withToolResponse = async (response: Response) => {
 export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 	const { root, buyerHono } = yield* RoutesContextFx;
 	const { dialect } = yield* KyselyContextFx;
+	const axiomConfig = ServerAxiomSchema.parse(process.env);
 	const authApi = auth(() => dialect);
+	const withMcpLog = async ({
+		level = "info",
+		message,
+		root: logRoot,
+		traceId,
+		values = {},
+	}: WithMcpLogProps) => {
+		const logFx = match(level)
+			.with("warning", () => Effect.logWarning(message))
+			.with("error", () => Effect.logError(message))
+			.otherwise(() => Effect.log(message));
+
+		await logFx
+			.pipe(
+				Effect.annotateLogs(values),
+				withLoggingFx(axiomConfig, logRoot, traceId),
+				Effect.runPromise,
+			)
+			.catch(() => undefined);
+	};
 
 	let cache: null | {
 		document: ReturnType<typeof withBuyerOpenApiDocument>;
@@ -424,7 +465,25 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 		return cache;
 	};
 
-	const handle = async (request: Request, accessToken: string) => {
+	const handle = async ({
+		accessToken,
+		method,
+		path,
+		request,
+		traceId,
+		userAgent,
+	}: HandleProps) => {
+		await withMcpLog({
+			message: "mcp.request.start",
+			root: "mcp.gateway",
+			traceId,
+			values: {
+				method,
+				path,
+				userAgent,
+			},
+		});
+
 		const { document, mcpMetaMap, tools } = await fetchMcpState();
 		const server = new McpServer({
 			name: "zbav-se-buyer-listing-mcp",
@@ -547,15 +606,49 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 						headers.set("Content-Type", "application/json");
 					}
 
-					const response = await root.fetch(
-						new Request(`http://internal${mapped.path}`, {
+					await withMcpLog({
+						message: "mcp.tool.invoke",
+						root: `mcp.tool.${namespacedToolName}`,
+						traceId,
+						values: {
 							method: tool.metadata.method.toUpperCase(),
-							headers,
-							body: mapped.body ? JSON.stringify(mapped.body) : undefined,
-						}),
-					);
+							path: mapped.path,
+						},
+					});
 
-					return withToolResponse(response);
+					try {
+						const response = await root.fetch(
+							new Request(`http://internal${mapped.path}`, {
+								method: tool.metadata.method.toUpperCase(),
+								headers,
+								body: mapped.body ? JSON.stringify(mapped.body) : undefined,
+							}),
+						);
+
+						await withMcpLog({
+							message: "mcp.tool.result",
+							root: `mcp.tool.${namespacedToolName}`,
+							traceId,
+							values: {
+								ok: response.ok,
+								status: response.status,
+							},
+						});
+
+						return withToolResponse(response);
+					} catch (error) {
+						await withMcpLog({
+							level: "error",
+							message: "mcp.tool.error",
+							root: `mcp.tool.${namespacedToolName}`,
+							traceId,
+							values: {
+								error: error instanceof Error ? error.message : "unknown-error",
+							},
+						});
+
+						throw error;
+					}
 				},
 			);
 		}
@@ -569,15 +662,63 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 		return transport.handleRequest(request);
 	};
 
-	const withHandler = withMcpAuth(authApi, async (request, session) => {
-		return handle(withMcpCompatibleRequest(request), session.accessToken);
-	});
-
 	root.all("/api/mcp", async (c) => {
-		return withHandler(c.req.raw);
+		const withHandler = withMcpAuth(authApi, async (request, session) => {
+			return handle({
+				accessToken: session.accessToken,
+				method: c.req.method,
+				path: c.req.path,
+				request: withMcpCompatibleRequest(request),
+				traceId: c.get("traceId"),
+				userAgent: c.req.header("user-agent") ?? "",
+			});
+		});
+
+		const response = await withHandler(c.req.raw);
+		if (response.status === 401) {
+			await withMcpLog({
+				level: "warning",
+				message: "mcp.auth.unauthorized",
+				root: "mcp.gateway",
+				traceId: c.get("traceId"),
+				values: {
+					method: c.req.method,
+					path: c.req.path,
+					userAgent: c.req.header("user-agent") ?? "",
+				},
+			});
+		}
+
+		return response;
 	});
 
 	root.all("/api/mcp/*", async (c) => {
-		return withHandler(c.req.raw);
+		const withHandler = withMcpAuth(authApi, async (request, session) => {
+			return handle({
+				accessToken: session.accessToken,
+				method: c.req.method,
+				path: c.req.path,
+				request: withMcpCompatibleRequest(request),
+				traceId: c.get("traceId"),
+				userAgent: c.req.header("user-agent") ?? "",
+			});
+		});
+
+		const response = await withHandler(c.req.raw);
+		if (response.status === 401) {
+			await withMcpLog({
+				level: "warning",
+				message: "mcp.auth.unauthorized",
+				root: "mcp.gateway",
+				traceId: c.get("traceId"),
+				values: {
+					method: c.req.method,
+					path: c.req.path,
+					userAgent: c.req.header("user-agent") ?? "",
+				},
+			});
+		}
+
+		return response;
 	});
 });

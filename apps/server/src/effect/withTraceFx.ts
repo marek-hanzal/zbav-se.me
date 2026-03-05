@@ -1,15 +1,15 @@
-import { Effect, HashMap, Option } from "effect";
+import { Effect } from "effect";
+import { AxiomContextFx } from "~/@common/axiom/context/AxiomContextFx";
 
 export const withTraceFx = (item: unknown) =>
 	Effect.gen(function* () {
-		const annotations = yield* Effect.logAnnotations;
+		const axiom = yield* AxiomContextFx;
 
-		const prev = HashMap.get(annotations, "$trace").pipe(
-			Option.getOrElse(() => []),
-		) as unknown[];
-
-		yield* Effect.annotateLogsScoped("$trace", [
-			...prev,
-			item,
-		]);
+		yield* Effect.log("trace").pipe(
+			Effect.annotateLogsScoped({
+				root: axiom.root,
+				trace: item,
+				traceId: axiom.traceId,
+			}),
+		);
 	});
