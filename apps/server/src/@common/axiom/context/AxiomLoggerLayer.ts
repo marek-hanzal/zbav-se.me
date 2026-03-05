@@ -16,7 +16,11 @@ export const AxiomLoggerLayer = Logger.replaceScoped(
 	Logger.defaultLogger,
 	Effect.gen(function* () {
 		const { dataset, root, traceId } = yield* AxiomContextFx;
-		const client = yield* axiomClientFx();
+		const client = yield* Effect.acquireRelease(axiomClientFx(), (client) => {
+			return Effect.promise(async () => {
+				await client.flush().catch(() => undefined);
+			});
+		});
 
 		return Logger.make(async (log) => {
 			const event = {
@@ -32,8 +36,6 @@ export const AxiomLoggerLayer = Logger.replaceScoped(
 			client.ingest(dataset, [
 				event,
 			]);
-
-			await client.flush().catch(() => undefined);
 		});
 	}),
 );
