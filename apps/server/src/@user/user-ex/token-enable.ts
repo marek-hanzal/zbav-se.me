@@ -1,8 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
+import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeError } from "~/@common/notice/noticeError";
+import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { userExTokenEnableFx } from "~/@user/user-ex/fx/userExTokenEnableFx";
+import { UserExSchema } from "~/@user/user-ex/schema/UserExSchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
@@ -19,8 +22,13 @@ export const withTokenEnableApiFx = Effect.fn("withTokenEnableApiFx")(function* 
 			description: "Generate and enable user bearer token",
 			operationId: "apiUserTokenEnable",
 			responses: {
-				204: {
-					description: "User token generated successfully, no content",
+				200: {
+					content: {
+						"application/json": {
+							schema: UserExSchema,
+						},
+					},
+					description: "User token generated successfully",
 				},
 				409: {
 					content: {
@@ -40,7 +48,8 @@ export const withTokenEnableApiFx = Effect.fn("withTokenEnableApiFx")(function* 
 				},
 			},
 			tags: [
-				"User Ex",
+				"User",
+				"Token",
 			],
 			summary: "Enable user token",
 		}),
@@ -55,11 +64,15 @@ export const withTokenEnableApiFx = Effect.fn("withTokenEnableApiFx")(function* 
 					userId: user.id,
 				});
 
-				yield* userExTokenEnableFx({
-					userId: user.id,
-				});
-
-				return c.body(null, 204);
+				return c.json(
+					yield* zodGuardFx({
+						schema: UserExSchema,
+						dataFx: userExTokenEnableFx({
+							userId: user.id,
+						}),
+					}),
+					200,
+				);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
 				withLoggingFx(axiomConfig, "apiUserTokenEnable"),
@@ -69,6 +82,9 @@ export const withTokenEnableApiFx = Effect.fn("withTokenEnableApiFx")(function* 
 					},
 					ConflictErrorFx(e) {
 						return c.json(noticeError(e), 409);
+					},
+					ZodErrorFx({ zod }) {
+						return c.json(noticeZodError(zod), 500);
 					},
 				}),
 				Effect.runPromise,
