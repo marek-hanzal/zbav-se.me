@@ -1,6 +1,6 @@
 # Zbav se mě!
 
-A modern C2C marketplace monorepo.
+A modern C2C marketplace monorepo!
 
 This repo stays public for transparency and learning, but it is **not open source for commercial reuse**. Please read [LICENSE.md](./LICENSE.md) before using any part of the code.
 
