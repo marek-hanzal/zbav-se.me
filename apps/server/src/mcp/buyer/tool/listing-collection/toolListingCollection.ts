@@ -8,8 +8,8 @@ import {
 	ListingMcpOutputSchema,
 	withListingMcpOutput,
 } from "~/mcp/buyer/schema/ListingMcpOutputSchema";
-import { McpSchema } from "~/mcp/McpSchema";
 import { ListingQueryMcpSchema } from "~/mcp/buyer/schema/ListingQueryMcpSchema";
+import { McpSchema } from "~/mcp/McpSchema";
 import type { McpToolDefinition } from "~/mcp/McpToolDefinition";
 
 const ListingCollectionSchema = z

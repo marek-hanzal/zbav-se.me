@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { McpSchema } from "~/mcp/McpSchema";
 import type { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
+import { McpSchema } from "~/mcp/McpSchema";
 import type { StaticResourceDocument } from "~/mcp/resource/static/StaticResourceDocument";
 import { withStaticResourceDefinition } from "~/mcp/resource/static/withStaticResourceDefinition";
 

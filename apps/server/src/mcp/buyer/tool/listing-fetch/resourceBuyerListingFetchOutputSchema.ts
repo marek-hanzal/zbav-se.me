@@ -1,7 +1,7 @@
-import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
-import { McpSchema } from "~/mcp/McpSchema";
 import { resourceListingSchema } from "~/mcp/buyer/resource/resourceListingSchema";
 import { toolListingFetch } from "~/mcp/buyer/tool/listing-fetch/toolListingFetch";
+import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
+import { McpSchema } from "~/mcp/McpSchema";
 
 export const resourceBuyerListingFetchOutputSchema: McpResourceDefinition.Definition = {
 	name: "mcp-schema-buyer-listing-fetch",
