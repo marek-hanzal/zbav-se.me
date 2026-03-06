@@ -36,9 +36,15 @@ const withResourceEntry = (
 ): ResourceEntry => {
 	const inputSchema = McpSchema.withJsonSchema(tool.inputSchema, "input");
 	const outputSchema = McpSchema.withJsonSchema(tool.outputSchema, "output");
-	const itemFieldResourceUris = tool.fieldResourceUris.filter((uri) =>
-		uri.startsWith(McpSchema.withFieldResourceUri("listing.")),
-	);
+	const itemFieldResourceUris = tool.fieldResourceUris.filter((uri) => {
+		return [
+			"listing.",
+			"location.",
+			"category.",
+			"draft.",
+			"upload.",
+		].some((prefix) => uri.startsWith(McpSchema.withFieldResourceUri(prefix)));
+	});
 	const itemOutputSchema =
 		outputSchema.type === "array" &&
 		outputSchema.items &&

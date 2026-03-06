@@ -3,8 +3,33 @@ import EntityDraftJson from "../../../../public/mcp/entity/draft.json";
 import EntityGalleryJson from "../../../../public/mcp/entity/gallery.json";
 import EntityListingJson from "../../../../public/mcp/entity/listing.json";
 import EntityLocationJson from "../../../../public/mcp/entity/location.json";
+import EntityUploadJson from "../../../../public/mcp/entity/upload.json";
+import FieldCategoryCategoryJson from "../../../../public/mcp/field/category-category.json";
+import FieldCategoryFilterFulltextJson from "../../../../public/mcp/field/category-filter-fulltext.json";
+import FieldCategoryGroupJson from "../../../../public/mcp/field/category-group.json";
+import FieldCategoryIdJson from "../../../../public/mcp/field/category-id.json";
+import FieldCategoryLocaleJson from "../../../../public/mcp/field/category-locale.json";
+import FieldCategorySlugJson from "../../../../public/mcp/field/category-slug.json";
 import FieldCursorPageJson from "../../../../public/mcp/field/cursor-page.json";
 import FieldCursorSizeJson from "../../../../public/mcp/field/cursor-size.json";
+import FieldDraftAgeJson from "../../../../public/mcp/field/draft-age.json";
+import FieldDraftCategoryIdJson from "../../../../public/mcp/field/draft-category-id.json";
+import FieldDraftConditionJson from "../../../../public/mcp/field/draft-condition.json";
+import FieldDraftConsJson from "../../../../public/mcp/field/draft-cons.json";
+import FieldDraftDeliveryJson from "../../../../public/mcp/field/draft-delivery.json";
+import FieldDraftDescriptionJson from "../../../../public/mcp/field/draft-description.json";
+import FieldDraftExpiresAtJson from "../../../../public/mcp/field/draft-expires-at.json";
+import FieldDraftGalleryJson from "../../../../public/mcp/field/draft-gallery.json";
+import FieldDraftIdJson from "../../../../public/mcp/field/draft-id.json";
+import FieldDraftLocationIdJson from "../../../../public/mcp/field/draft-location-id.json";
+import FieldDraftPriceJson from "../../../../public/mcp/field/draft-price.json";
+import FieldDraftPriceTypeJson from "../../../../public/mcp/field/draft-price-type.json";
+import FieldDraftProsJson from "../../../../public/mcp/field/draft-pros.json";
+import FieldDraftRestrictionJson from "../../../../public/mcp/field/draft-restriction.json";
+import FieldDraftTitleJson from "../../../../public/mcp/field/draft-title.json";
+import FieldDraftUploadIdsJson from "../../../../public/mcp/field/draft-upload-ids.json";
+import FieldDraftUsedAtJson from "../../../../public/mcp/field/draft-used-at.json";
+import FieldDraftWarrantyJson from "../../../../public/mcp/field/draft-warranty.json";
 import FieldFilterAgeInJson from "../../../../public/mcp/field/filter-age-in.json";
 import FieldFilterAgeMaxJson from "../../../../public/mcp/field/filter-age-max.json";
 import FieldFilterAgeMinJson from "../../../../public/mcp/field/filter-age-min.json";
@@ -50,13 +75,36 @@ import FieldListingPriceTypeJson from "../../../../public/mcp/field/listing-pric
 import FieldListingRestrictionJson from "../../../../public/mcp/field/listing-restriction.json";
 import FieldListingThumbJson from "../../../../public/mcp/field/listing-thumb.json";
 import FieldListingTransactionIdJson from "../../../../public/mcp/field/listing-transaction-id.json";
+import FieldListingUploadIdsJson from "../../../../public/mcp/field/listing-upload-ids.json";
 import FieldListingWarrantyJson from "../../../../public/mcp/field/listing-warranty.json";
+import FieldLocationAddressJson from "../../../../public/mcp/field/location-address.json";
+import FieldLocationAutocompleteLangJson from "../../../../public/mcp/field/location-autocomplete-lang.json";
+import FieldLocationAutocompleteTextJson from "../../../../public/mcp/field/location-autocomplete-text.json";
+import FieldLocationCityJson from "../../../../public/mcp/field/location-city.json";
+import FieldLocationCodeJson from "../../../../public/mcp/field/location-code.json";
+import FieldLocationConfidenceJson from "../../../../public/mcp/field/location-confidence.json";
+import FieldLocationCountryJson from "../../../../public/mcp/field/location-country.json";
+import FieldLocationLangJson from "../../../../public/mcp/field/location-lang.json";
+import FieldLocationLatJson from "../../../../public/mcp/field/location-lat.json";
+import FieldLocationLonJson from "../../../../public/mcp/field/location-lon.json";
+import FieldLocationQueryJson from "../../../../public/mcp/field/location-query.json";
+import FieldLocationStreetJson from "../../../../public/mcp/field/location-street.json";
+import FieldLocationZipJson from "../../../../public/mcp/field/location-zip.json";
 import FieldMetaFeedIdJson from "../../../../public/mcp/field/meta-feed-id.json";
 import FieldMetaLatLonJson from "../../../../public/mcp/field/meta-lat-lon.json";
 import FieldSortFieldJson from "../../../../public/mcp/field/sort-field.json";
 import FieldSortOrderJson from "../../../../public/mcp/field/sort-order.json";
+import FieldS3CdnJson from "../../../../public/mcp/field/s3-cdn.json";
+import FieldS3ContentTypeJson from "../../../../public/mcp/field/s3-content-type.json";
+import FieldS3ExtensionJson from "../../../../public/mcp/field/s3-extension.json";
+import FieldS3PathJson from "../../../../public/mcp/field/s3-path.json";
+import FieldS3UrlJson from "../../../../public/mcp/field/s3-url.json";
+import FieldUploadIdJson from "../../../../public/mcp/field/upload-id.json";
+import FieldUploadUrlJson from "../../../../public/mcp/field/upload-url.json";
 import GuideFailuresJson from "../../../../public/mcp/guide/failures.json";
+import GuideDraftWriteFlowJson from "../../../../public/mcp/guide/draft-write-flow.json";
 import GuideListingBehaviorJson from "../../../../public/mcp/guide/listing-behavior.json";
+import GuideNamespacesJson from "../../../../public/mcp/guide/namespaces.json";
 import GuideOverviewJson from "../../../../public/mcp/guide/overview.json";
 import GuideQueryProfilesJson from "../../../../public/mcp/guide/query-profiles.json";
 import GuideRolesJson from "../../../../public/mcp/guide/roles.json";
@@ -67,8 +115,19 @@ import ProfileBuyerSearchByDeliveryJson from "../../../../public/mcp/profile/buy
 import ProfileBuyerSearchFavouritesJson from "../../../../public/mcp/profile/buyer-search-favourites.json";
 import ProfileBuyerSearchMineJson from "../../../../public/mcp/profile/buyer-search-mine.json";
 import ProfileBuyerSearchNearbyJson from "../../../../public/mcp/profile/buyer-search-nearby.json";
+import ProfileSellerDraftCreateCompleteJson from "../../../../public/mcp/profile/seller-draft-create-complete.json";
+import ProfileSellerDraftGalleryReplaceJson from "../../../../public/mcp/profile/seller-draft-gallery-replace.json";
+import ProfileSellerDraftPatchProgressiveJson from "../../../../public/mcp/profile/seller-draft-patch-progressive.json";
+import ProfileSellerImagePrepareUploadJson from "../../../../public/mcp/profile/seller-image-upload-prepare.json";
+import ProfileSellerListingPublishFromDraftJson from "../../../../public/mcp/profile/seller-listing-publish-from-draft.json";
+import ProfileSessionCategorySelectJson from "../../../../public/mcp/profile/session-category-select.json";
+import ProfileSessionLocationAutocompleteJson from "../../../../public/mcp/profile/session-location-autocomplete.json";
+import ProfileSessionLocationTranslateAddressJson from "../../../../public/mcp/profile/session-location-translate-address.json";
+import SchemaEnumAllowedContentTypeJson from "../../../../public/mcp/schema/enum/allowed-content-type.json";
+import SchemaEnumAllowedExtensionJson from "../../../../public/mcp/schema/enum/allowed-extension.json";
 import SchemaEnumCurrencyJson from "../../../../public/mcp/schema/enum/currency.json";
 import SchemaEnumListingDeliveryJson from "../../../../public/mcp/schema/enum/listing-delivery.json";
+import SchemaEnumListingExpireJson from "../../../../public/mcp/schema/enum/listing-expire.json";
 import SchemaEnumListingPriceJson from "../../../../public/mcp/schema/enum/listing-price.json";
 import SchemaEnumListingRestrictionJson from "../../../../public/mcp/schema/enum/listing-restriction.json";
 import SchemaEnumListingSortJson from "../../../../public/mcp/schema/enum/listing-sort.json";
@@ -123,6 +182,11 @@ const staticResources = [
 		uri: McpSchema.withGuideResourceUri("listing-behavior"),
 	},
 	{
+		documentPath: "guide/namespaces.json",
+		staticUrl: "/mcp/guide/namespaces.json",
+		uri: McpSchema.withGuideResourceUri("namespaces"),
+	},
+	{
 		documentPath: "guide/search-and-ranking.json",
 		staticUrl: "/mcp/guide/search-and-ranking.json",
 		uri: McpSchema.withGuideResourceUri("search-and-ranking"),
@@ -131,6 +195,11 @@ const staticResources = [
 		documentPath: "guide/query-profiles.json",
 		staticUrl: "/mcp/guide/query-profiles.json",
 		uri: McpSchema.withGuideResourceUri("query-profiles"),
+	},
+	{
+		documentPath: "guide/draft-write-flow.json",
+		staticUrl: "/mcp/guide/draft-write-flow.json",
+		uri: McpSchema.withGuideResourceUri("draft-write-flow"),
 	},
 	{
 		documentPath: "guide/failures.json",
@@ -170,6 +239,54 @@ const staticProfileResources = [
 		staticUrl: "/mcp/profile/buyer-search-favourites.json",
 		uri: McpSchema.withProfileResourceUri("buyer.search.favourites"),
 	},
+	{
+		profileName: "session.category.select",
+		documentPath: "profile/session-category-select.json",
+		staticUrl: "/mcp/profile/session-category-select.json",
+		uri: McpSchema.withProfileResourceUri("session.category.select"),
+	},
+	{
+		profileName: "session.location.autocomplete",
+		documentPath: "profile/session-location-autocomplete.json",
+		staticUrl: "/mcp/profile/session-location-autocomplete.json",
+		uri: McpSchema.withProfileResourceUri("session.location.autocomplete"),
+	},
+	{
+		profileName: "session.location.translateAddress",
+		documentPath: "profile/session-location-translate-address.json",
+		staticUrl: "/mcp/profile/session-location-translate-address.json",
+		uri: McpSchema.withProfileResourceUri("session.location.translateAddress"),
+	},
+	{
+		profileName: "seller.draft.createComplete",
+		documentPath: "profile/seller-draft-create-complete.json",
+		staticUrl: "/mcp/profile/seller-draft-create-complete.json",
+		uri: McpSchema.withProfileResourceUri("seller.draft.createComplete"),
+	},
+	{
+		profileName: "seller.draft.patchProgressive",
+		documentPath: "profile/seller-draft-patch-progressive.json",
+		staticUrl: "/mcp/profile/seller-draft-patch-progressive.json",
+		uri: McpSchema.withProfileResourceUri("seller.draft.patchProgressive"),
+	},
+	{
+		profileName: "seller.image.prepareUpload",
+		documentPath: "profile/seller-image-upload-prepare.json",
+		staticUrl: "/mcp/profile/seller-image-upload-prepare.json",
+		uri: McpSchema.withProfileResourceUri("seller.image.prepareUpload"),
+	},
+	{
+		profileName: "seller.draft.galleryReplace",
+		documentPath: "profile/seller-draft-gallery-replace.json",
+		staticUrl: "/mcp/profile/seller-draft-gallery-replace.json",
+		uri: McpSchema.withProfileResourceUri("seller.draft.galleryReplace"),
+	},
+	{
+		profileName: "seller.listing.publishFromDraft",
+		documentPath: "profile/seller-listing-publish-from-draft.json",
+		staticUrl: "/mcp/profile/seller-listing-publish-from-draft.json",
+		uri: McpSchema.withProfileResourceUri("seller.listing.publishFromDraft"),
+	},
 ] as const satisfies readonly StaticProfileResourceEntry[];
 
 const staticEntityResources = [
@@ -203,6 +320,12 @@ const staticEntityResources = [
 		staticUrl: "/mcp/entity/category.json",
 		uri: McpSchema.withEntityResourceUri("category"),
 	},
+	{
+		entityName: "upload",
+		documentPath: "entity/upload.json",
+		staticUrl: "/mcp/entity/upload.json",
+		uri: McpSchema.withEntityResourceUri("upload"),
+	},
 ] as const satisfies readonly StaticEntityResourceEntry[];
 
 const staticEnumResources = [
@@ -213,10 +336,28 @@ const staticEnumResources = [
 		uri: McpSchema.withEnumResourceUri("listing-restriction"),
 	},
 	{
+		enumName: "allowed-extension",
+		documentPath: "schema/enum/allowed-extension.json",
+		staticUrl: "/mcp/schema/enum/allowed-extension.json",
+		uri: McpSchema.withEnumResourceUri("allowed-extension"),
+	},
+	{
+		enumName: "allowed-content-type",
+		documentPath: "schema/enum/allowed-content-type.json",
+		staticUrl: "/mcp/schema/enum/allowed-content-type.json",
+		uri: McpSchema.withEnumResourceUri("allowed-content-type"),
+	},
+	{
 		enumName: "currency",
 		documentPath: "schema/enum/currency.json",
 		staticUrl: "/mcp/schema/enum/currency.json",
 		uri: McpSchema.withEnumResourceUri("currency"),
+	},
+	{
+		enumName: "listing-expire",
+		documentPath: "schema/enum/listing-expire.json",
+		staticUrl: "/mcp/schema/enum/listing-expire.json",
+		uri: McpSchema.withEnumResourceUri("listing-expire"),
 	},
 	{
 		enumName: "listing-price",
@@ -262,6 +403,150 @@ const staticFieldResources = [
 		documentPath: "field/cursor-size.json",
 		staticUrl: "/mcp/field/cursor-size.json",
 		uri: McpSchema.withFieldResourceUri("cursor.size"),
+	},
+	{
+		fieldName: "category.filter.fulltext",
+		documentPath: "field/category-filter-fulltext.json",
+		staticUrl: "/mcp/field/category-filter-fulltext.json",
+		uri: McpSchema.withFieldResourceUri("category.filter.fulltext"),
+	},
+	{
+		fieldName: "category.id",
+		documentPath: "field/category-id.json",
+		staticUrl: "/mcp/field/category-id.json",
+		uri: McpSchema.withFieldResourceUri("category.id"),
+	},
+	{
+		fieldName: "category.group",
+		documentPath: "field/category-group.json",
+		staticUrl: "/mcp/field/category-group.json",
+		uri: McpSchema.withFieldResourceUri("category.group"),
+	},
+	{
+		fieldName: "category.category",
+		documentPath: "field/category-category.json",
+		staticUrl: "/mcp/field/category-category.json",
+		uri: McpSchema.withFieldResourceUri("category.category"),
+	},
+	{
+		fieldName: "category.slug",
+		documentPath: "field/category-slug.json",
+		staticUrl: "/mcp/field/category-slug.json",
+		uri: McpSchema.withFieldResourceUri("category.slug"),
+	},
+	{
+		fieldName: "category.locale",
+		documentPath: "field/category-locale.json",
+		staticUrl: "/mcp/field/category-locale.json",
+		uri: McpSchema.withFieldResourceUri("category.locale"),
+	},
+	{
+		fieldName: "draft.id",
+		documentPath: "field/draft-id.json",
+		staticUrl: "/mcp/field/draft-id.json",
+		uri: McpSchema.withFieldResourceUri("draft.id"),
+	},
+	{
+		fieldName: "draft.title",
+		documentPath: "field/draft-title.json",
+		staticUrl: "/mcp/field/draft-title.json",
+		uri: McpSchema.withFieldResourceUri("draft.title"),
+	},
+	{
+		fieldName: "draft.description",
+		documentPath: "field/draft-description.json",
+		staticUrl: "/mcp/field/draft-description.json",
+		uri: McpSchema.withFieldResourceUri("draft.description"),
+	},
+	{
+		fieldName: "draft.price",
+		documentPath: "field/draft-price.json",
+		staticUrl: "/mcp/field/draft-price.json",
+		uri: McpSchema.withFieldResourceUri("draft.price"),
+	},
+	{
+		fieldName: "draft.priceType",
+		documentPath: "field/draft-price-type.json",
+		staticUrl: "/mcp/field/draft-price-type.json",
+		uri: McpSchema.withFieldResourceUri("draft.priceType"),
+	},
+	{
+		fieldName: "draft.condition",
+		documentPath: "field/draft-condition.json",
+		staticUrl: "/mcp/field/draft-condition.json",
+		uri: McpSchema.withFieldResourceUri("draft.condition"),
+	},
+	{
+		fieldName: "draft.age",
+		documentPath: "field/draft-age.json",
+		staticUrl: "/mcp/field/draft-age.json",
+		uri: McpSchema.withFieldResourceUri("draft.age"),
+	},
+	{
+		fieldName: "draft.delivery",
+		documentPath: "field/draft-delivery.json",
+		staticUrl: "/mcp/field/draft-delivery.json",
+		uri: McpSchema.withFieldResourceUri("draft.delivery"),
+	},
+	{
+		fieldName: "draft.warranty",
+		documentPath: "field/draft-warranty.json",
+		staticUrl: "/mcp/field/draft-warranty.json",
+		uri: McpSchema.withFieldResourceUri("draft.warranty"),
+	},
+	{
+		fieldName: "draft.restriction",
+		documentPath: "field/draft-restriction.json",
+		staticUrl: "/mcp/field/draft-restriction.json",
+		uri: McpSchema.withFieldResourceUri("draft.restriction"),
+	},
+	{
+		fieldName: "draft.locationId",
+		documentPath: "field/draft-location-id.json",
+		staticUrl: "/mcp/field/draft-location-id.json",
+		uri: McpSchema.withFieldResourceUri("draft.locationId"),
+	},
+	{
+		fieldName: "draft.categoryId",
+		documentPath: "field/draft-category-id.json",
+		staticUrl: "/mcp/field/draft-category-id.json",
+		uri: McpSchema.withFieldResourceUri("draft.categoryId"),
+	},
+	{
+		fieldName: "draft.expiresAt",
+		documentPath: "field/draft-expires-at.json",
+		staticUrl: "/mcp/field/draft-expires-at.json",
+		uri: McpSchema.withFieldResourceUri("draft.expiresAt"),
+	},
+	{
+		fieldName: "draft.pros",
+		documentPath: "field/draft-pros.json",
+		staticUrl: "/mcp/field/draft-pros.json",
+		uri: McpSchema.withFieldResourceUri("draft.pros"),
+	},
+	{
+		fieldName: "draft.cons",
+		documentPath: "field/draft-cons.json",
+		staticUrl: "/mcp/field/draft-cons.json",
+		uri: McpSchema.withFieldResourceUri("draft.cons"),
+	},
+	{
+		fieldName: "draft.uploadIds",
+		documentPath: "field/draft-upload-ids.json",
+		staticUrl: "/mcp/field/draft-upload-ids.json",
+		uri: McpSchema.withFieldResourceUri("draft.uploadIds"),
+	},
+	{
+		fieldName: "draft.gallery",
+		documentPath: "field/draft-gallery.json",
+		staticUrl: "/mcp/field/draft-gallery.json",
+		uri: McpSchema.withFieldResourceUri("draft.gallery"),
+	},
+	{
+		fieldName: "draft.usedAt",
+		documentPath: "field/draft-used-at.json",
+		staticUrl: "/mcp/field/draft-used-at.json",
+		uri: McpSchema.withFieldResourceUri("draft.usedAt"),
 	},
 	{
 		fieldName: "filter.id",
@@ -384,6 +669,84 @@ const staticFieldResources = [
 		uri: McpSchema.withFieldResourceUri("filter.expiresAtAfter"),
 	},
 	{
+		fieldName: "locationAutocomplete.text",
+		documentPath: "field/location-autocomplete-text.json",
+		staticUrl: "/mcp/field/location-autocomplete-text.json",
+		uri: McpSchema.withFieldResourceUri("locationAutocomplete.text"),
+	},
+	{
+		fieldName: "locationAutocomplete.lang",
+		documentPath: "field/location-autocomplete-lang.json",
+		staticUrl: "/mcp/field/location-autocomplete-lang.json",
+		uri: McpSchema.withFieldResourceUri("locationAutocomplete.lang"),
+	},
+	{
+		fieldName: "location.query",
+		documentPath: "field/location-query.json",
+		staticUrl: "/mcp/field/location-query.json",
+		uri: McpSchema.withFieldResourceUri("location.query"),
+	},
+	{
+		fieldName: "location.lang",
+		documentPath: "field/location-lang.json",
+		staticUrl: "/mcp/field/location-lang.json",
+		uri: McpSchema.withFieldResourceUri("location.lang"),
+	},
+	{
+		fieldName: "location.address",
+		documentPath: "field/location-address.json",
+		staticUrl: "/mcp/field/location-address.json",
+		uri: McpSchema.withFieldResourceUri("location.address"),
+	},
+	{
+		fieldName: "location.city",
+		documentPath: "field/location-city.json",
+		staticUrl: "/mcp/field/location-city.json",
+		uri: McpSchema.withFieldResourceUri("location.city"),
+	},
+	{
+		fieldName: "location.street",
+		documentPath: "field/location-street.json",
+		staticUrl: "/mcp/field/location-street.json",
+		uri: McpSchema.withFieldResourceUri("location.street"),
+	},
+	{
+		fieldName: "location.zip",
+		documentPath: "field/location-zip.json",
+		staticUrl: "/mcp/field/location-zip.json",
+		uri: McpSchema.withFieldResourceUri("location.zip"),
+	},
+	{
+		fieldName: "location.country",
+		documentPath: "field/location-country.json",
+		staticUrl: "/mcp/field/location-country.json",
+		uri: McpSchema.withFieldResourceUri("location.country"),
+	},
+	{
+		fieldName: "location.code",
+		documentPath: "field/location-code.json",
+		staticUrl: "/mcp/field/location-code.json",
+		uri: McpSchema.withFieldResourceUri("location.code"),
+	},
+	{
+		fieldName: "location.confidence",
+		documentPath: "field/location-confidence.json",
+		staticUrl: "/mcp/field/location-confidence.json",
+		uri: McpSchema.withFieldResourceUri("location.confidence"),
+	},
+	{
+		fieldName: "location.lat",
+		documentPath: "field/location-lat.json",
+		staticUrl: "/mcp/field/location-lat.json",
+		uri: McpSchema.withFieldResourceUri("location.lat"),
+	},
+	{
+		fieldName: "location.lon",
+		documentPath: "field/location-lon.json",
+		staticUrl: "/mcp/field/location-lon.json",
+		uri: McpSchema.withFieldResourceUri("location.lon"),
+	},
+	{
 		fieldName: "listing.my",
 		documentPath: "field/listing-my.json",
 		staticUrl: "/mcp/field/listing-my.json",
@@ -460,6 +823,12 @@ const staticFieldResources = [
 		documentPath: "field/listing-draft-id.json",
 		staticUrl: "/mcp/field/listing-draft-id.json",
 		uri: McpSchema.withFieldResourceUri("listing.draftId"),
+	},
+	{
+		fieldName: "listing.uploadIds",
+		documentPath: "field/listing-upload-ids.json",
+		staticUrl: "/mcp/field/listing-upload-ids.json",
+		uri: McpSchema.withFieldResourceUri("listing.uploadIds"),
 	},
 	{
 		fieldName: "filter.range",
@@ -563,6 +932,48 @@ const staticFieldResources = [
 		staticUrl: "/mcp/field/sort-order.json",
 		uri: McpSchema.withFieldResourceUri("sort.order"),
 	},
+	{
+		fieldName: "s3.path",
+		documentPath: "field/s3-path.json",
+		staticUrl: "/mcp/field/s3-path.json",
+		uri: McpSchema.withFieldResourceUri("s3.path"),
+	},
+	{
+		fieldName: "s3.extension",
+		documentPath: "field/s3-extension.json",
+		staticUrl: "/mcp/field/s3-extension.json",
+		uri: McpSchema.withFieldResourceUri("s3.extension"),
+	},
+	{
+		fieldName: "s3.contentType",
+		documentPath: "field/s3-content-type.json",
+		staticUrl: "/mcp/field/s3-content-type.json",
+		uri: McpSchema.withFieldResourceUri("s3.contentType"),
+	},
+	{
+		fieldName: "s3.url",
+		documentPath: "field/s3-url.json",
+		staticUrl: "/mcp/field/s3-url.json",
+		uri: McpSchema.withFieldResourceUri("s3.url"),
+	},
+	{
+		fieldName: "s3.cdn",
+		documentPath: "field/s3-cdn.json",
+		staticUrl: "/mcp/field/s3-cdn.json",
+		uri: McpSchema.withFieldResourceUri("s3.cdn"),
+	},
+	{
+		fieldName: "upload.id",
+		documentPath: "field/upload-id.json",
+		staticUrl: "/mcp/field/upload-id.json",
+		uri: McpSchema.withFieldResourceUri("upload.id"),
+	},
+	{
+		fieldName: "upload.url",
+		documentPath: "field/upload-url.json",
+		staticUrl: "/mcp/field/upload-url.json",
+		uri: McpSchema.withFieldResourceUri("upload.url"),
+	},
 ] as const satisfies readonly StaticFieldResourceEntry[];
 
 const staticDocumentByPath: Record<string, unknown> = {
@@ -571,8 +982,33 @@ const staticDocumentByPath: Record<string, unknown> = {
 	"entity/gallery.json": EntityGalleryJson,
 	"entity/listing.json": EntityListingJson,
 	"entity/location.json": EntityLocationJson,
+	"entity/upload.json": EntityUploadJson,
+	"field/category-category.json": FieldCategoryCategoryJson,
+	"field/category-filter-fulltext.json": FieldCategoryFilterFulltextJson,
+	"field/category-group.json": FieldCategoryGroupJson,
+	"field/category-id.json": FieldCategoryIdJson,
+	"field/category-locale.json": FieldCategoryLocaleJson,
+	"field/category-slug.json": FieldCategorySlugJson,
 	"field/cursor-page.json": FieldCursorPageJson,
 	"field/cursor-size.json": FieldCursorSizeJson,
+	"field/draft-age.json": FieldDraftAgeJson,
+	"field/draft-category-id.json": FieldDraftCategoryIdJson,
+	"field/draft-condition.json": FieldDraftConditionJson,
+	"field/draft-cons.json": FieldDraftConsJson,
+	"field/draft-delivery.json": FieldDraftDeliveryJson,
+	"field/draft-description.json": FieldDraftDescriptionJson,
+	"field/draft-expires-at.json": FieldDraftExpiresAtJson,
+	"field/draft-gallery.json": FieldDraftGalleryJson,
+	"field/draft-id.json": FieldDraftIdJson,
+	"field/draft-location-id.json": FieldDraftLocationIdJson,
+	"field/draft-price-type.json": FieldDraftPriceTypeJson,
+	"field/draft-price.json": FieldDraftPriceJson,
+	"field/draft-pros.json": FieldDraftProsJson,
+	"field/draft-restriction.json": FieldDraftRestrictionJson,
+	"field/draft-title.json": FieldDraftTitleJson,
+	"field/draft-upload-ids.json": FieldDraftUploadIdsJson,
+	"field/draft-used-at.json": FieldDraftUsedAtJson,
+	"field/draft-warranty.json": FieldDraftWarrantyJson,
 	"field/filter-age-in.json": FieldFilterAgeInJson,
 	"field/filter-age-max.json": FieldFilterAgeMaxJson,
 	"field/filter-age-min.json": FieldFilterAgeMinJson,
@@ -618,13 +1054,36 @@ const staticDocumentByPath: Record<string, unknown> = {
 	"field/listing-restriction.json": FieldListingRestrictionJson,
 	"field/listing-thumb.json": FieldListingThumbJson,
 	"field/listing-transaction-id.json": FieldListingTransactionIdJson,
+	"field/listing-upload-ids.json": FieldListingUploadIdsJson,
 	"field/listing-warranty.json": FieldListingWarrantyJson,
+	"field/location-address.json": FieldLocationAddressJson,
+	"field/location-autocomplete-lang.json": FieldLocationAutocompleteLangJson,
+	"field/location-autocomplete-text.json": FieldLocationAutocompleteTextJson,
+	"field/location-city.json": FieldLocationCityJson,
+	"field/location-code.json": FieldLocationCodeJson,
+	"field/location-confidence.json": FieldLocationConfidenceJson,
+	"field/location-country.json": FieldLocationCountryJson,
+	"field/location-lang.json": FieldLocationLangJson,
+	"field/location-lat.json": FieldLocationLatJson,
+	"field/location-lon.json": FieldLocationLonJson,
+	"field/location-query.json": FieldLocationQueryJson,
+	"field/location-street.json": FieldLocationStreetJson,
+	"field/location-zip.json": FieldLocationZipJson,
 	"field/meta-feed-id.json": FieldMetaFeedIdJson,
 	"field/meta-lat-lon.json": FieldMetaLatLonJson,
+	"field/s3-cdn.json": FieldS3CdnJson,
+	"field/s3-content-type.json": FieldS3ContentTypeJson,
+	"field/s3-extension.json": FieldS3ExtensionJson,
+	"field/s3-path.json": FieldS3PathJson,
+	"field/s3-url.json": FieldS3UrlJson,
 	"field/sort-field.json": FieldSortFieldJson,
 	"field/sort-order.json": FieldSortOrderJson,
+	"field/upload-id.json": FieldUploadIdJson,
+	"field/upload-url.json": FieldUploadUrlJson,
+	"guide/draft-write-flow.json": GuideDraftWriteFlowJson,
 	"guide/failures.json": GuideFailuresJson,
 	"guide/listing-behavior.json": GuideListingBehaviorJson,
+	"guide/namespaces.json": GuideNamespacesJson,
 	"guide/overview.json": GuideOverviewJson,
 	"guide/query-profiles.json": GuideQueryProfilesJson,
 	"guide/roles.json": GuideRolesJson,
@@ -635,8 +1094,19 @@ const staticDocumentByPath: Record<string, unknown> = {
 	"profile/buyer-search-favourites.json": ProfileBuyerSearchFavouritesJson,
 	"profile/buyer-search-mine.json": ProfileBuyerSearchMineJson,
 	"profile/buyer-search-nearby.json": ProfileBuyerSearchNearbyJson,
+	"profile/seller-draft-create-complete.json": ProfileSellerDraftCreateCompleteJson,
+	"profile/seller-draft-gallery-replace.json": ProfileSellerDraftGalleryReplaceJson,
+	"profile/seller-draft-patch-progressive.json": ProfileSellerDraftPatchProgressiveJson,
+	"profile/seller-image-upload-prepare.json": ProfileSellerImagePrepareUploadJson,
+	"profile/seller-listing-publish-from-draft.json": ProfileSellerListingPublishFromDraftJson,
+	"profile/session-category-select.json": ProfileSessionCategorySelectJson,
+	"profile/session-location-autocomplete.json": ProfileSessionLocationAutocompleteJson,
+	"profile/session-location-translate-address.json": ProfileSessionLocationTranslateAddressJson,
+	"schema/enum/allowed-content-type.json": SchemaEnumAllowedContentTypeJson,
+	"schema/enum/allowed-extension.json": SchemaEnumAllowedExtensionJson,
 	"schema/enum/currency.json": SchemaEnumCurrencyJson,
 	"schema/enum/listing-delivery.json": SchemaEnumListingDeliveryJson,
+	"schema/enum/listing-expire.json": SchemaEnumListingExpireJson,
 	"schema/enum/listing-price.json": SchemaEnumListingPriceJson,
 	"schema/enum/listing-restriction.json": SchemaEnumListingRestrictionJson,
 	"schema/enum/listing-sort.json": SchemaEnumListingSortJson,
