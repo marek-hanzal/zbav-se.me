@@ -12,6 +12,8 @@ import {
 	withStaticProfileResourceTemplate,
 	withStaticResources,
 } from "~/mcp/resource/static";
+import { resourceLocationSchema } from "~/mcp/session/resource/resourceLocationSchema";
+import { resourceSessionLocationAutocompleteOutputSchema } from "~/mcp/session/tool/location-autocomplete/resourceSessionLocationAutocompleteOutputSchema";
 import type { ServerInfo } from "~/mcp/serverInfo";
 import { mcpTools } from "~/mcp/tool";
 
@@ -35,8 +37,10 @@ export const withMcpResources = ({
 		}),
 		...withStaticResources(),
 		resourceListingSchema,
+		resourceLocationSchema,
 		resourceBuyerListingFetchOutputSchema,
 		resourceBuyerListingCollectionOutputSchema,
+		resourceSessionLocationAutocompleteOutputSchema,
 	];
 
 	const templates: McpResourceDefinition.TemplateDefinition[] = [

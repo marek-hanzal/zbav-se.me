@@ -322,12 +322,10 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 			);
 		}
 
-		const registerTool = <TInputSchema extends z.ZodType, TOutputSchema extends z.ZodType>(
-			tool: McpToolDefinition.Definition<TInputSchema, TOutputSchema>,
-		) => {
+		const registerTool = (tool: McpToolDefinition.Definition<z.ZodType, z.ZodType>) => {
 			const toolName = `${tool.namespace}.${tool.name}`;
 			const handleTool = (async (
-				args: z.output<TInputSchema>,
+				args: z.output<z.ZodType>,
 				_extra: RequestHandlerExtra<ServerRequest, ServerNotification>,
 			): Promise<CallToolResult> => {
 				await withMcpLog({
@@ -437,10 +435,9 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 			);
 		};
 
-		const [toolListingFetch, toolListingCollection] = mcpTools;
-
-		registerTool(toolListingFetch);
-		registerTool(toolListingCollection);
+		for (const tool of mcpTools) {
+			registerTool(tool);
+		}
 
 		const transport = new WebStandardStreamableHTTPServerTransport({
 			enableJsonResponse: true,

@@ -51,6 +51,19 @@ import FieldListingRestrictionJson from "../../../../public/mcp/field/listing-re
 import FieldListingThumbJson from "../../../../public/mcp/field/listing-thumb.json";
 import FieldListingTransactionIdJson from "../../../../public/mcp/field/listing-transaction-id.json";
 import FieldListingWarrantyJson from "../../../../public/mcp/field/listing-warranty.json";
+import FieldLocationAddressJson from "../../../../public/mcp/field/location-address.json";
+import FieldLocationAutocompleteLangJson from "../../../../public/mcp/field/location-autocomplete-lang.json";
+import FieldLocationAutocompleteTextJson from "../../../../public/mcp/field/location-autocomplete-text.json";
+import FieldLocationCityJson from "../../../../public/mcp/field/location-city.json";
+import FieldLocationCodeJson from "../../../../public/mcp/field/location-code.json";
+import FieldLocationConfidenceJson from "../../../../public/mcp/field/location-confidence.json";
+import FieldLocationCountryJson from "../../../../public/mcp/field/location-country.json";
+import FieldLocationLangJson from "../../../../public/mcp/field/location-lang.json";
+import FieldLocationLatJson from "../../../../public/mcp/field/location-lat.json";
+import FieldLocationLonJson from "../../../../public/mcp/field/location-lon.json";
+import FieldLocationQueryJson from "../../../../public/mcp/field/location-query.json";
+import FieldLocationStreetJson from "../../../../public/mcp/field/location-street.json";
+import FieldLocationZipJson from "../../../../public/mcp/field/location-zip.json";
 import FieldMetaFeedIdJson from "../../../../public/mcp/field/meta-feed-id.json";
 import FieldMetaLatLonJson from "../../../../public/mcp/field/meta-lat-lon.json";
 import FieldSortFieldJson from "../../../../public/mcp/field/sort-field.json";
@@ -67,6 +80,8 @@ import ProfileBuyerSearchByDeliveryJson from "../../../../public/mcp/profile/buy
 import ProfileBuyerSearchFavouritesJson from "../../../../public/mcp/profile/buyer-search-favourites.json";
 import ProfileBuyerSearchMineJson from "../../../../public/mcp/profile/buyer-search-mine.json";
 import ProfileBuyerSearchNearbyJson from "../../../../public/mcp/profile/buyer-search-nearby.json";
+import ProfileSessionLocationAutocompleteJson from "../../../../public/mcp/profile/session-location-autocomplete.json";
+import ProfileSessionLocationTranslateAddressJson from "../../../../public/mcp/profile/session-location-translate-address.json";
 import SchemaEnumCurrencyJson from "../../../../public/mcp/schema/enum/currency.json";
 import SchemaEnumListingDeliveryJson from "../../../../public/mcp/schema/enum/listing-delivery.json";
 import SchemaEnumListingPriceJson from "../../../../public/mcp/schema/enum/listing-price.json";
@@ -169,6 +184,18 @@ const staticProfileResources = [
 		documentPath: "profile/buyer-search-favourites.json",
 		staticUrl: "/mcp/profile/buyer-search-favourites.json",
 		uri: McpSchema.withProfileResourceUri("buyer.search.favourites"),
+	},
+	{
+		profileName: "session.location.autocomplete",
+		documentPath: "profile/session-location-autocomplete.json",
+		staticUrl: "/mcp/profile/session-location-autocomplete.json",
+		uri: McpSchema.withProfileResourceUri("session.location.autocomplete"),
+	},
+	{
+		profileName: "session.location.translateAddress",
+		documentPath: "profile/session-location-translate-address.json",
+		staticUrl: "/mcp/profile/session-location-translate-address.json",
+		uri: McpSchema.withProfileResourceUri("session.location.translateAddress"),
 	},
 ] as const satisfies readonly StaticProfileResourceEntry[];
 
@@ -382,6 +409,84 @@ const staticFieldResources = [
 		documentPath: "field/filter-expires-at-after.json",
 		staticUrl: "/mcp/field/filter-expires-at-after.json",
 		uri: McpSchema.withFieldResourceUri("filter.expiresAtAfter"),
+	},
+	{
+		fieldName: "locationAutocomplete.text",
+		documentPath: "field/location-autocomplete-text.json",
+		staticUrl: "/mcp/field/location-autocomplete-text.json",
+		uri: McpSchema.withFieldResourceUri("locationAutocomplete.text"),
+	},
+	{
+		fieldName: "locationAutocomplete.lang",
+		documentPath: "field/location-autocomplete-lang.json",
+		staticUrl: "/mcp/field/location-autocomplete-lang.json",
+		uri: McpSchema.withFieldResourceUri("locationAutocomplete.lang"),
+	},
+	{
+		fieldName: "location.query",
+		documentPath: "field/location-query.json",
+		staticUrl: "/mcp/field/location-query.json",
+		uri: McpSchema.withFieldResourceUri("location.query"),
+	},
+	{
+		fieldName: "location.lang",
+		documentPath: "field/location-lang.json",
+		staticUrl: "/mcp/field/location-lang.json",
+		uri: McpSchema.withFieldResourceUri("location.lang"),
+	},
+	{
+		fieldName: "location.address",
+		documentPath: "field/location-address.json",
+		staticUrl: "/mcp/field/location-address.json",
+		uri: McpSchema.withFieldResourceUri("location.address"),
+	},
+	{
+		fieldName: "location.city",
+		documentPath: "field/location-city.json",
+		staticUrl: "/mcp/field/location-city.json",
+		uri: McpSchema.withFieldResourceUri("location.city"),
+	},
+	{
+		fieldName: "location.street",
+		documentPath: "field/location-street.json",
+		staticUrl: "/mcp/field/location-street.json",
+		uri: McpSchema.withFieldResourceUri("location.street"),
+	},
+	{
+		fieldName: "location.zip",
+		documentPath: "field/location-zip.json",
+		staticUrl: "/mcp/field/location-zip.json",
+		uri: McpSchema.withFieldResourceUri("location.zip"),
+	},
+	{
+		fieldName: "location.country",
+		documentPath: "field/location-country.json",
+		staticUrl: "/mcp/field/location-country.json",
+		uri: McpSchema.withFieldResourceUri("location.country"),
+	},
+	{
+		fieldName: "location.code",
+		documentPath: "field/location-code.json",
+		staticUrl: "/mcp/field/location-code.json",
+		uri: McpSchema.withFieldResourceUri("location.code"),
+	},
+	{
+		fieldName: "location.confidence",
+		documentPath: "field/location-confidence.json",
+		staticUrl: "/mcp/field/location-confidence.json",
+		uri: McpSchema.withFieldResourceUri("location.confidence"),
+	},
+	{
+		fieldName: "location.lat",
+		documentPath: "field/location-lat.json",
+		staticUrl: "/mcp/field/location-lat.json",
+		uri: McpSchema.withFieldResourceUri("location.lat"),
+	},
+	{
+		fieldName: "location.lon",
+		documentPath: "field/location-lon.json",
+		staticUrl: "/mcp/field/location-lon.json",
+		uri: McpSchema.withFieldResourceUri("location.lon"),
 	},
 	{
 		fieldName: "listing.my",
@@ -619,6 +724,19 @@ const staticDocumentByPath: Record<string, unknown> = {
 	"field/listing-thumb.json": FieldListingThumbJson,
 	"field/listing-transaction-id.json": FieldListingTransactionIdJson,
 	"field/listing-warranty.json": FieldListingWarrantyJson,
+	"field/location-address.json": FieldLocationAddressJson,
+	"field/location-autocomplete-lang.json": FieldLocationAutocompleteLangJson,
+	"field/location-autocomplete-text.json": FieldLocationAutocompleteTextJson,
+	"field/location-city.json": FieldLocationCityJson,
+	"field/location-code.json": FieldLocationCodeJson,
+	"field/location-confidence.json": FieldLocationConfidenceJson,
+	"field/location-country.json": FieldLocationCountryJson,
+	"field/location-lang.json": FieldLocationLangJson,
+	"field/location-lat.json": FieldLocationLatJson,
+	"field/location-lon.json": FieldLocationLonJson,
+	"field/location-query.json": FieldLocationQueryJson,
+	"field/location-street.json": FieldLocationStreetJson,
+	"field/location-zip.json": FieldLocationZipJson,
 	"field/meta-feed-id.json": FieldMetaFeedIdJson,
 	"field/meta-lat-lon.json": FieldMetaLatLonJson,
 	"field/sort-field.json": FieldSortFieldJson,
@@ -635,6 +753,8 @@ const staticDocumentByPath: Record<string, unknown> = {
 	"profile/buyer-search-favourites.json": ProfileBuyerSearchFavouritesJson,
 	"profile/buyer-search-mine.json": ProfileBuyerSearchMineJson,
 	"profile/buyer-search-nearby.json": ProfileBuyerSearchNearbyJson,
+	"profile/session-location-autocomplete.json": ProfileSessionLocationAutocompleteJson,
+	"profile/session-location-translate-address.json": ProfileSessionLocationTranslateAddressJson,
 	"schema/enum/currency.json": SchemaEnumCurrencyJson,
 	"schema/enum/listing-delivery.json": SchemaEnumListingDeliveryJson,
 	"schema/enum/listing-price.json": SchemaEnumListingPriceJson,
