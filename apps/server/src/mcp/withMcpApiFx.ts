@@ -25,6 +25,7 @@ type JsonValue =
 type JsonRecord = Record<string, JsonValue>;
 type JsonSchema = {
 	description?: string;
+	items?: JsonSchema;
 	properties?: Record<string, JsonSchema>;
 	required?: string[];
 	type?: string | string[];
@@ -93,6 +94,13 @@ interface ResourceEntry {
 	inputSchema: JsonSchema;
 	name: string;
 	namespace: string;
+	outputSchemaResourceUri: string;
+	outputSummary: {
+		description?: string;
+		name: string;
+		required: boolean;
+		type: string;
+	}[];
 	outputSchema: JsonSchema;
 	title: string;
 }
@@ -249,6 +257,18 @@ const withArgumentSummary = (schema: JsonSchema): ResourceEntry["argumentSummary
 	});
 };
 
+const withOutputSummary = (schema: JsonSchema): ResourceEntry["outputSummary"] => {
+	if (schema.type === "array" && schema.items) {
+		return withArgumentSummary(schema.items);
+	}
+
+	return withArgumentSummary(schema);
+};
+
+const withSchemaResourceUri = (name: string): string => {
+	return `zbav://mcp/schema/${name}`;
+};
+
 const withResourceEntry = (
 	tool: McpToolDefinition.Definition<z.ZodType, z.ZodType>,
 ): ResourceEntry => {
@@ -264,6 +284,8 @@ const withResourceEntry = (
 		inputSchema,
 		outputSchema,
 		argumentSummary: withArgumentSummary(inputSchema),
+		outputSummary: withOutputSummary(outputSchema),
+		outputSchemaResourceUri: withSchemaResourceUri(`${tool.namespace}.${tool.name}`),
 		examples: tool.examples as McpToolDefinition.Example<JsonRecord>[],
 	};
 };
@@ -284,14 +306,46 @@ const withStructuredContent = (value: unknown): Record<string, unknown> => {
 	};
 };
 
-const withSuccessResult = (value: unknown): ToolSuccessResult => {
+const withSuccessText = ({
+	schemaResourceUri,
+	toolTitle,
+	value,
+}: {
+	schemaResourceUri: string;
+	toolTitle: string;
+	value: unknown;
+}): string => {
+	if (Array.isArray(value)) {
+		return `Returned ${value.length} item(s) from ${toolTitle}. Use structuredContent.items for machine-readable data. Output schema: ${schemaResourceUri}.`;
+	}
+
+	if (isJsonRecord(value)) {
+		return `Returned one result from ${toolTitle}. Use structuredContent for machine-readable fields. Output schema: ${schemaResourceUri}.`;
+	}
+
+	return `Returned a result from ${toolTitle}. Output schema: ${schemaResourceUri}.`;
+};
+
+const withSuccessResult = ({
+	schemaResourceUri,
+	toolTitle,
+	value,
+}: {
+	schemaResourceUri: string;
+	toolTitle: string;
+	value: unknown;
+}): ToolSuccessResult => {
 	const text = JSON.stringify(value, null, 2);
 
 	return {
 		content: [
 			{
 				type: "text",
-				text,
+				text: `${withSuccessText({
+					schemaResourceUri,
+					toolTitle,
+					value,
+				})}\n\n${text}`,
 			},
 		],
 		structuredContent: withStructuredContent(value),
@@ -364,6 +418,7 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 
 		const server = new McpServer(SERVER_INFO);
 		const resourceEntries = mcpTools.map(withResourceEntry);
+		const listingSchema = withJsonSchema(toolListingFetch.outputSchema, "output");
 
 		server.registerResource(
 			"mcp-health",
@@ -393,6 +448,72 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 				mimeType: "application/json",
 			},
 			async (uri) => withResourceContent(uri, resourceEntries),
+		);
+
+		server.registerResource(
+			"mcp-schema-listing",
+			withSchemaResourceUri("listing"),
+			{
+				title: "Listing Output Schema",
+				description:
+					"Shared buyer listing output schema with field descriptions for model consumption.",
+				mimeType: "application/json",
+			},
+			async (uri) =>
+				withResourceContent(uri, {
+					name: "listing",
+					title: "Listing Output Schema",
+					description:
+						"Shared schema for a single buyer-visible listing returned by MCP listing tools.",
+					outputSchema: listingSchema,
+					outputSummary: withOutputSummary(listingSchema),
+				}),
+		);
+
+		server.registerResource(
+			"mcp-schema-buyer-listing-fetch",
+			withSchemaResourceUri("buyer.listingFetch"),
+			{
+				title: "buyer.listingFetch Output Schema",
+				description: "Output schema resource for the buyer.listingFetch MCP tool.",
+				mimeType: "application/json",
+			},
+			async (uri) =>
+				withResourceContent(uri, {
+					name: "buyer.listingFetch",
+					title: toolListingFetch.title,
+					description: toolListingFetch.description,
+					outputSchema: listingSchema,
+					outputSummary: withOutputSummary(listingSchema),
+					relatedSchemas: [
+						withSchemaResourceUri("listing"),
+					],
+				}),
+		);
+
+		server.registerResource(
+			"mcp-schema-buyer-listing-collection",
+			withSchemaResourceUri("buyer.listingCollection"),
+			{
+				title: "buyer.listingCollection Output Schema",
+				description: "Output schema resource for the buyer.listingCollection MCP tool.",
+				mimeType: "application/json",
+			},
+			async (uri) => {
+				const outputSchema = withJsonSchema(toolListingCollection.outputSchema, "output");
+
+				return withResourceContent(uri, {
+					name: "buyer.listingCollection",
+					title: toolListingCollection.title,
+					description: toolListingCollection.description,
+					outputSchema,
+					outputSummary: withOutputSummary(outputSchema),
+					itemSchemaUri: withSchemaResourceUri("listing"),
+					relatedSchemas: [
+						withSchemaResourceUri("listing"),
+					],
+				});
+			},
 		);
 
 		server.registerTool(
@@ -449,7 +570,11 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 						},
 					});
 
-					return withSuccessResult(result);
+					return withSuccessResult({
+						value: result,
+						toolTitle: toolListingFetch.title,
+						schemaResourceUri: withSchemaResourceUri("buyer.listingFetch"),
+					});
 				} catch (error) {
 					await withMcpLog({
 						level: "error",
@@ -533,7 +658,11 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 						},
 					});
 
-					return withSuccessResult(result);
+					return withSuccessResult({
+						value: result,
+						toolTitle: toolListingCollection.title,
+						schemaResourceUri: withSchemaResourceUri("buyer.listingCollection"),
+					});
 				} catch (error) {
 					await withMcpLog({
 						level: "error",
