@@ -1,159 +1,114 @@
-import { OpenAPIHono, z } from "@hono/zod-openapi";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
+import type { ToolAnnotations } from "@modelcontextprotocol/sdk/types.js";
 import { withMcpAuth } from "better-auth/plugins";
 import { Effect } from "effect";
-import { type McpOpenAPITool, OpenAPIToolGenerator, type ParameterMapper } from "mcp-from-openapi";
 import { match } from "ts-pattern";
-import type { withBuyerHono } from "~/@buyer/withBuyerHono";
+import { toJSONSchema, type z } from "zod";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { auth } from "~/auth/auth";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withKyselyFx } from "~/database/fx/withKyselyFx";
+import { toolListingCollection } from "~/mcp/buyer/toolListingCollection";
+import { toolListingFetch } from "~/mcp/buyer/toolListingFetch";
+import type { McpToolDefinition } from "~/mcp/McpToolDefinition";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 
-type ToolArgs = Record<string, unknown>;
-type JsonRecord = Record<string, unknown>;
-type JsonSchema = Record<string, unknown>;
-type JsonSchemaInput = JsonSchema | boolean;
-type ZodSchema = z.ZodTypeAny;
-
-interface ToolRequest {
-	body: JsonRecord | undefined;
-	cookies: Record<string, string>;
-	headers: Headers;
-	path: string;
-}
-
-interface WithMappedRequestProps {
-	args: ToolArgs;
-	mappers: ParameterMapper[];
-	path: string;
-}
-
-interface WithResourceContentProps {
-	uri: URL;
-	value: unknown;
-}
-
-interface WithToolNamespaceProps {
-	path: string;
-	tags?: string[];
-}
-
-interface WithNamespacedToolNameProps {
-	name: string;
-	namespace: string;
-}
-
-type McpMetaAnnotations = {
-	destructiveHint?: boolean;
-	idempotentHint?: boolean;
-	openWorldHint?: boolean;
-	readOnlyHint?: boolean;
-	title?: string;
+type JsonPrimitive = boolean | null | number | string;
+type JsonValue =
+	| JsonPrimitive
+	| JsonValue[]
+	| {
+			[key: string]: JsonValue;
+	  };
+type JsonRecord = Record<string, JsonValue>;
+type JsonSchema = {
+	description?: string;
+	properties?: Record<string, JsonSchema>;
+	required?: string[];
+	type?: string | string[];
+	[key: string]: unknown;
 };
+type McpSession = {
+	accessToken: string;
+	clientId: string;
+	scopes: string;
+	userId: string;
+};
+type RunnableEffect<T> = Effect.Effect<T, unknown, never>;
 
-type McpMetaMap = Map<string, McpMetaAnnotations>;
-
-interface WithMcpMetaKeyProps {
+interface HandleProps {
 	method: string;
-	operationId?: string;
 	path: string;
+	request: Request;
+	session: McpSession;
+	traceId: string;
+	userAgent: string;
 }
 
 interface WithMcpLogProps {
 	level?: "error" | "info" | "warning";
 	message: string;
-	root: string;
 	traceId: string;
 	values?: Record<string, unknown>;
 }
 
-interface HandleProps {
-	accessToken: string;
-	method: string;
-	path: string;
-	request: Request;
-	traceId: string;
-	userAgent: string;
-}
-
 interface McpRequestLogValues {
-	jsonRpcId?: string | number | null;
+	hasArguments?: boolean;
+	jsonRpcId?: null | number | string;
 	jsonRpcMethod?: string;
 	jsonRpcToolName?: string;
-	hasArguments?: boolean;
+	requestBody?: unknown;
 }
 
 interface McpResponseLogValues {
 	jsonRpcErrorCode?: number;
 	jsonRpcErrorMessage?: string;
-	jsonRpcId?: string | number | null;
-	jsonRpcResultType?: string;
+	jsonRpcId?: null | number | string;
+	responseBody?: unknown;
 }
 
-const McpMetaAnnotationsSchema = z
-	.object({
-		title: z.string().optional(),
-		readOnlyHint: z.boolean().optional(),
-		destructiveHint: z.boolean().optional(),
-		idempotentHint: z.boolean().optional(),
-		openWorldHint: z.boolean().optional(),
-	})
-	.catch({});
+interface ToolSuccessResult {
+	[key: string]: unknown;
+	content: [
+		{
+			text: string;
+			type: "text";
+		},
+	];
+	structuredContent: Record<string, unknown>;
+}
 
-const McpMetaSchema = z
-	.object({
-		annotations: McpMetaAnnotationsSchema.default({}),
-	})
-	.catch({
-		annotations: {},
-	});
+interface ResourceEntry {
+	annotations: ToolAnnotations;
+	argumentSummary: {
+		description?: string;
+		name: string;
+		required: boolean;
+		type: string;
+	}[];
+	description: string;
+	examples: McpToolDefinition.Example<JsonRecord>[];
+	inputSchema: JsonSchema;
+	name: string;
+	namespace: string;
+	outputSchema: JsonSchema;
+	title: string;
+}
+
+const SERVER_INFO = {
+	name: "zbav-se.me MCP",
+	version: "0.2.0",
+} as const;
+
+const mcpTools = [
+	toolListingFetch,
+	toolListingCollection,
+] as const satisfies readonly McpToolDefinition.Definition<z.ZodType, z.ZodType>[];
 
 const isJsonRecord = (value: unknown): value is JsonRecord => {
 	return typeof value === "object" && value !== null && !Array.isArray(value);
-};
-
-const isJsonSchema = (value: unknown): value is JsonSchema => {
-	return isJsonRecord(value);
-};
-
-const isJsonSchemaInput = (value: unknown): value is JsonSchemaInput => {
-	return typeof value === "boolean" || isJsonSchema(value);
-};
-
-const withToolInputSchema = (schema: unknown): ZodSchema => {
-	if (!isJsonSchemaInput(schema)) {
-		return z.object({}).catchall(z.unknown());
-	}
-
-	return z.fromJSONSchema(schema);
-};
-
-const withToolArgs = (value: unknown): ToolArgs => {
-	return isJsonRecord(value) ? value : {};
-};
-
-const withValue = (value: unknown): string => {
-	if (typeof value === "string") {
-		return value;
-	}
-	if (typeof value === "number" || typeof value === "boolean") {
-		return String(value);
-	}
-	return JSON.stringify(value);
-};
-
-const withCookieHeader = (cookies: Record<string, string>): string | null => {
-	const entries = Object.entries(cookies);
-	if (entries.length === 0) {
-		return null;
-	}
-
-	return entries
-		.map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-		.join("; ");
 };
 
 const withMcpCompatibleRequest = (request: Request): Request => {
@@ -173,148 +128,76 @@ const withMcpCompatibleRequest = (request: Request): Request => {
 	});
 };
 
-const withMappedRequest = ({ args, mappers, path }: WithMappedRequestProps) => {
-	const query = new URLSearchParams();
-	const headers = new Headers();
-	const cookies: Record<string, string> = {};
-	const body: JsonRecord = {};
+const withJsonRpcId = (value: unknown): McpRequestLogValues["jsonRpcId"] => {
+	if (typeof value === "string" || typeof value === "number" || value === null) {
+		return value;
+	}
 
-	let resolvedPath = path;
+	return undefined;
+};
 
-	for (const mapper of mappers) {
-		const input = args[mapper.inputKey];
+const withRequestLogValues = async (request: Request): Promise<McpRequestLogValues> => {
+	const contentType = request.headers.get("content-type") ?? "";
+	if (!contentType.includes("application/json")) {
+		return {};
+	}
 
-		if (input === undefined || mapper.security) {
-			continue;
+	try {
+		const requestBody = await request.clone().json();
+		if (!isJsonRecord(requestBody)) {
+			return {
+				requestBody,
+			};
 		}
 
-		switch (mapper.type) {
-			case "path": {
-				const encoded = encodeURIComponent(withValue(input));
-				resolvedPath = resolvedPath
-					.replace(`{${mapper.key}}`, encoded)
-					.replace(`:${mapper.key}`, encoded);
-				break;
+		const params = isJsonRecord(requestBody.params) ? requestBody.params : undefined;
+
+		return {
+			requestBody,
+			jsonRpcId: withJsonRpcId(requestBody.id),
+			jsonRpcMethod: typeof requestBody.method === "string" ? requestBody.method : undefined,
+			jsonRpcToolName: typeof params?.name === "string" ? params.name : undefined,
+			hasArguments: params ? "arguments" in params : undefined,
+		};
+	} catch {
+		return {};
+	}
+};
+
+const withErrorResponseLogValues = async (response: Response): Promise<McpResponseLogValues> => {
+	const contentType = response.headers.get("content-type") ?? "";
+	if (contentType.includes("application/json")) {
+		try {
+			const responseBody = await response.clone().json();
+			if (!isJsonRecord(responseBody)) {
+				return {
+					responseBody,
+				};
 			}
-			case "query": {
-				if (Array.isArray(input)) {
-					for (const value of input) {
-						query.append(mapper.key, withValue(value));
-					}
-					break;
-				}
-				query.append(mapper.key, withValue(input));
-				break;
-			}
-			case "header": {
-				headers.set(mapper.key, withValue(input));
-				break;
-			}
-			case "cookie": {
-				cookies[mapper.key] = withValue(input);
-				break;
-			}
-			case "body": {
-				body[mapper.key] = input;
-				break;
-			}
+
+			const error = isJsonRecord(responseBody.error) ? responseBody.error : undefined;
+
+			return {
+				responseBody,
+				jsonRpcId: withJsonRpcId(responseBody.id),
+				jsonRpcErrorCode: typeof error?.code === "number" ? error.code : undefined,
+				jsonRpcErrorMessage: typeof error?.message === "string" ? error.message : undefined,
+			};
+		} catch {
+			return {};
 		}
 	}
 
-	const hasBody = Object.keys(body).length > 0;
-	const queryString = query.toString();
-	const fullPath = queryString.length > 0 ? `${resolvedPath}?${queryString}` : resolvedPath;
-
-	return {
-		body: hasBody ? body : undefined,
-		cookies,
-		headers,
-		path: fullPath,
-	} satisfies ToolRequest;
-};
-
-const withBuyerOpenApiDocument = (buyerHono: withBuyerHono) => {
-	const tmp = new OpenAPIHono();
-	tmp.route("/api/buyer", buyerHono);
-
-	return tmp.getOpenAPI31Document({
-		openapi: "3.1.0",
-		info: {
-			title: "Buyer zbav-se.me MCP bridge",
-			version: "0.5.0",
-		},
-		security: [],
-	});
-};
-
-const withMcpTools = async (document: ReturnType<typeof withBuyerOpenApiDocument>) => {
-	const generator = await OpenAPIToolGenerator.fromJSON(document);
-
-	return generator.generateTools({
-		filterFn(operation) {
-			return operation.tags?.includes("mcp") ?? false;
-		},
-		includeSecurityInInput: false,
-	});
-};
-
-const withMcpMetaKey = ({ method, operationId, path }: WithMcpMetaKeyProps): string => {
-	return operationId ? `operationId:${operationId}` : `${method.toUpperCase()} ${path}`;
-};
-
-const withMcpMetaAnnotations = (value: unknown): McpMetaAnnotations | undefined => {
-	if (value === undefined) {
-		return undefined;
+	try {
+		return {
+			responseBody: await response.clone().text(),
+		};
+	} catch {
+		return {};
 	}
-
-	return McpMetaSchema.parse(value).annotations;
 };
 
-const withMcpMetaMap = (document: ReturnType<typeof withBuyerOpenApiDocument>): McpMetaMap => {
-	const map: McpMetaMap = new Map();
-
-	for (const [path, pathItem] of Object.entries(document.paths ?? {})) {
-		if (!isJsonRecord(pathItem)) {
-			continue;
-		}
-
-		for (const method of [
-			"get",
-			"put",
-			"post",
-			"delete",
-			"options",
-			"head",
-			"patch",
-			"trace",
-		] as const) {
-			const operation = pathItem[method];
-			if (!isJsonRecord(operation)) {
-				continue;
-			}
-
-			const mcpMeta = withMcpMetaAnnotations(operation["x-mcp-meta"]);
-			if (!mcpMeta) {
-				continue;
-			}
-
-			const operationId =
-				typeof operation.operationId === "string" ? operation.operationId : undefined;
-			map.set(
-				withMcpMetaKey({
-					method,
-					operationId,
-					path,
-				}),
-				mcpMeta,
-			);
-		}
-	}
-
-	return map;
-};
-
-const withResourceContent = ({ uri, value }: WithResourceContentProps) => {
+const withResourceContent = (uri: URL, value: unknown) => {
 	return {
 		contents: [
 			{
@@ -326,182 +209,121 @@ const withResourceContent = ({ uri, value }: WithResourceContentProps) => {
 	};
 };
 
-const withSanitizedName = (value: string): string => {
-	return value
-		.trim()
-		.toLowerCase()
-		.replace(/[^a-z0-9._-]+/g, "-")
-		.replace(/^-+|-+$/g, "")
-		.replace(/-+/g, "-");
+const withJsonSchema = (schema: z.ZodType): JsonSchema => {
+	return toJSONSchema(schema) as JsonSchema;
 };
 
-const withPathNamespace = (path: string): string => {
-	const [, api, namespace] = path.split("/");
-	if (api === "api" && namespace) {
-		return withSanitizedName(namespace);
+const withArgumentSummary = (schema: JsonSchema): ResourceEntry["argumentSummary"] => {
+	if (schema.type !== "object" || !schema.properties) {
+		return [];
 	}
 
-	return "default";
-};
+	const required = Array.isArray(schema.required) ? schema.required : [];
 
-const withToolNamespace = ({ path, tags }: WithToolNamespaceProps): string => {
-	const firstTag = tags?.[0];
-	if (firstTag) {
-		const namespace = withSanitizedName(firstTag);
-		if (namespace.length > 0) {
-			return namespace;
+	return Object.entries(schema.properties).map(([name, value]) => {
+		if (!value || typeof value !== "object" || Array.isArray(value)) {
+			return {
+				name,
+				required: required.includes(name),
+				type: "unknown",
+			};
 		}
-	}
 
-	return withPathNamespace(path);
+		const propertySchema = value as {
+			description?: string;
+			type?: string | string[];
+		};
+		const type = Array.isArray(propertySchema.type)
+			? propertySchema.type.join(" | ")
+			: (propertySchema.type ?? "unknown");
+
+		return {
+			name,
+			required: required.includes(name),
+			type,
+			description: propertySchema.description,
+		};
+	});
 };
 
-const withNamespacedToolName = ({ name, namespace }: WithNamespacedToolNameProps): string => {
-	return `${namespace}.${name}`;
-};
-
-const withToolAnnotations = (tool: McpOpenAPITool, mcpMeta?: McpMetaAnnotations) => {
-	const method = tool.metadata.method.toUpperCase();
-	const readOnlyByMethod = method === "GET" || method === "HEAD" || method === "OPTIONS";
-
-	if (!mcpMeta && !readOnlyByMethod) {
-		return undefined;
-	}
-
-	const readOnlyHint = mcpMeta?.readOnlyHint ?? readOnlyByMethod;
+const withResourceEntry = (
+	tool: McpToolDefinition.Definition<z.ZodType, z.ZodType>,
+): ResourceEntry => {
+	const inputSchema = withJsonSchema(tool.inputSchema);
+	const outputSchema = withJsonSchema(tool.outputSchema);
 
 	return {
-		title: mcpMeta?.title,
-		readOnlyHint,
-		destructiveHint: mcpMeta?.destructiveHint ?? !readOnlyHint,
-		idempotentHint: mcpMeta?.idempotentHint ?? readOnlyHint,
-		openWorldHint: mcpMeta?.openWorldHint,
+		name: `${tool.namespace}.${tool.name}`,
+		namespace: tool.namespace,
+		title: tool.title,
+		description: tool.description,
+		annotations: tool.annotations,
+		inputSchema,
+		outputSchema,
+		argumentSummary: withArgumentSummary(inputSchema),
+		examples: tool.examples as McpToolDefinition.Example<JsonRecord>[],
 	};
 };
 
-const withToolResponse = async (response: Response) => {
-	const contentType = response.headers.get("content-type") ?? "";
-	const isJson = contentType.includes("application/json");
-
-	if (!isJson) {
-		const text = await response.text();
-		if (!response.ok) {
-			return {
-				content: [
-					{
-						type: "text" as const,
-						text: `HTTP ${response.status}: ${text}`,
-					},
-				],
-				isError: true,
-			};
-		}
+const withStructuredContent = (value: unknown): Record<string, unknown> => {
+	if (Array.isArray(value)) {
 		return {
-			content: [
-				{
-					type: "text" as const,
-					text,
-				},
-			],
+			items: value,
 		};
 	}
 
-	const json = await response.json();
-	const text = JSON.stringify(json);
-
-	if (!response.ok) {
-		return {
-			content: [
-				{
-					type: "text" as const,
-					text: `HTTP ${response.status}: ${text}`,
-				},
-			],
-			isError: true,
-		};
+	if (isJsonRecord(value)) {
+		return value;
 	}
+
+	return {
+		value,
+	};
+};
+
+const withSuccessResult = (value: unknown): ToolSuccessResult => {
+	const text = JSON.stringify(value, null, 2);
 
 	return {
 		content: [
 			{
-				type: "text" as const,
+				type: "text",
 				text,
 			},
 		],
+		structuredContent: withStructuredContent(value),
 	};
 };
 
-const withMcpRequestLogValues = async (request: Request): Promise<McpRequestLogValues> => {
-	const contentType = request.headers.get("content-type") ?? "";
-	if (!contentType.includes("application/json")) {
-		return {};
-	}
-
-	try {
-		const payload = await request.clone().json();
-		if (!isJsonRecord(payload)) {
-			return {};
-		}
-
-		const params = isJsonRecord(payload.params) ? payload.params : undefined;
-
-		return {
-			jsonRpcId:
-				typeof payload.id === "string" || typeof payload.id === "number" || payload.id === null
-					? payload.id
-					: undefined,
-			jsonRpcMethod: typeof payload.method === "string" ? payload.method : undefined,
-			jsonRpcToolName: typeof params?.name === "string" ? params.name : undefined,
-			hasArguments: params ? "arguments" in params : undefined,
-		};
-	} catch {
-		return {};
-	}
+const withRunnableEffect = <T>(effect: Effect.Effect<T, unknown, any>): RunnableEffect<T> => {
+	return effect as RunnableEffect<T>;
 };
 
-const withMcpResponseLogValues = async (response: Response): Promise<McpResponseLogValues> => {
-	const contentType = response.headers.get("content-type") ?? "";
-	if (!contentType.includes("application/json")) {
-		return {};
-	}
-
-	try {
-		const payload = await response.clone().json();
-		if (!isJsonRecord(payload)) {
-			return {};
-		}
-
-		const error = isJsonRecord(payload.error) ? payload.error : undefined;
-		const result = payload.result;
-
+const withSerializedError = (error: unknown) => {
+	if (error instanceof Error) {
 		return {
-			jsonRpcId:
-				typeof payload.id === "string" || typeof payload.id === "number" || payload.id === null
-					? payload.id
-					: undefined,
-			jsonRpcErrorCode: typeof error?.code === "number" ? error.code : undefined,
-			jsonRpcErrorMessage: typeof error?.message === "string" ? error.message : undefined,
-			jsonRpcResultType:
-				result === undefined || result === null
-					? undefined
-					: Array.isArray(result)
-						? "array"
-						: typeof result,
+			name: error.name,
+			message: error.message,
+			stack: error.stack,
+			cause: error.cause,
 		};
-	} catch {
-		return {};
 	}
+
+	return {
+		error,
+	};
 };
 
 export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
-	const { root, buyerHono } = yield* RoutesContextFx;
-	const { dialect } = yield* KyselyContextFx;
+	const { root } = yield* RoutesContextFx;
+	const kysely = yield* KyselyContextFx;
+	const { dialect } = kysely;
 	const axiomConfig = ServerAxiomSchema.parse(process.env);
 	const authApi = auth(() => dialect);
+
 	const withMcpLog = async ({
 		level = "info",
 		message,
-		root: logRoot,
 		traceId,
 		values = {},
 	}: WithMcpLogProps) => {
@@ -513,81 +335,47 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 		await logFx
 			.pipe(
 				Effect.annotateLogs(values),
-				withLoggingFx(axiomConfig, logRoot, traceId),
+				withLoggingFx(axiomConfig, "mcp", traceId),
 				Effect.runPromise,
 			)
 			.catch(() => undefined);
 	};
 
-	let cache: null | {
-		document: ReturnType<typeof withBuyerOpenApiDocument>;
-		mcpMetaMap: McpMetaMap;
-		tools: McpOpenAPITool[];
-	} = null;
-
-	const fetchMcpState = async () => {
-		if (cache) {
-			return cache;
-		}
-
-		const document = withBuyerOpenApiDocument(buyerHono);
-		const tools = await withMcpTools(document);
-		const mcpMetaMap = withMcpMetaMap(document);
-		cache = {
-			document,
-			mcpMetaMap,
-			tools,
-		};
-		return cache;
-	};
-
-	const handle = async ({
-		accessToken,
-		method,
-		path,
-		request,
-		traceId,
-		userAgent,
-	}: HandleProps) => {
-		const requestValues = await withMcpRequestLogValues(request);
+	const handle = async ({ method, path, request, session, traceId, userAgent }: HandleProps) => {
+		const requestValues = await withRequestLogValues(request);
 
 		await withMcpLog({
 			message: "mcp.request.start",
-			root: "mcp",
 			traceId,
 			values: {
 				method,
 				path,
 				userAgent,
+				clientId: session.clientId,
+				userId: session.userId,
 				...requestValues,
 			},
 		});
 
-		const { document, mcpMetaMap, tools } = await fetchMcpState();
-		const server = new McpServer({
-			name: "zbav-se-buyer-listing-mcp",
-			version: "0.1.0",
-		});
+		const server = new McpServer(SERVER_INFO);
+		const resourceEntries = mcpTools.map(withResourceEntry);
 
 		server.registerResource(
 			"mcp-health",
 			"zbav://mcp/health",
 			{
 				title: "MCP Health",
-				description: "Runtime state and MCP server metadata",
+				description: "Runtime status for the zbav-se.me MCP server.",
 				mimeType: "application/json",
 			},
-			async (uri) => {
-				return withResourceContent({
-					uri,
-					value: {
-						name: "zbav-se-buyer-listing-mcp",
-						version: "0.1.0",
-						toolCount: tools.length,
-						timestamp: new Date().toISOString(),
-					},
-				});
-			},
+			async (uri) =>
+				withResourceContent(uri, {
+					name: SERVER_INFO.name,
+					version: SERVER_INFO.version,
+					timestamp: new Date().toISOString(),
+					toolCount: mcpTools.length,
+					toolNames: mcpTools.map((tool) => `${tool.namespace}.${tool.name}`),
+				}),
 		);
 
 		server.registerResource(
@@ -595,189 +383,270 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 			"zbav://mcp/tools",
 			{
 				title: "MCP Tools",
-				description: "Exported MCP tools and their API operation mapping",
+				description:
+					"Model-facing catalog of manually registered MCP tools, including annotations, schema summaries, and examples.",
 				mimeType: "application/json",
 			},
-			async (uri) => {
-				return withResourceContent({
-					uri,
-					value: tools.map((tool) => {
-						const namespace = withToolNamespace({
-							path: tool.metadata.path,
-							tags: tool.metadata.tags,
-						});
-
-						return {
-							name: withNamespacedToolName({
-								name: tool.name,
-								namespace,
-							}),
-							namespace,
-							originalName: tool.name,
-							description: tool.description,
-							method: tool.metadata.method.toUpperCase(),
-							path: tool.metadata.path,
-							tags: tool.metadata.tags ?? [],
-						};
-					}),
-				});
-			},
+			async (uri) => withResourceContent(uri, resourceEntries),
 		);
 
-		server.registerResource(
-			"mcp-openapi",
-			"zbav://mcp/openapi",
+		const fetchOutputJsonSchema = withJsonSchema(toolListingFetch.outputSchema);
+
+		server.registerTool(
+			`${toolListingFetch.namespace}.${toolListingFetch.name}`,
 			{
-				title: "MCP OpenAPI",
-				description: "OpenAPI snapshot used for MCP tool generation",
-				mimeType: "application/json",
-			},
-			async (uri) => {
-				return withResourceContent({
-					uri,
-					value: document,
-				});
-			},
-		);
-
-		for (const tool of tools) {
-			const namespace = withToolNamespace({
-				path: tool.metadata.path,
-				tags: tool.metadata.tags,
-			});
-			const namespacedToolName = withNamespacedToolName({
-				name: tool.name,
-				namespace,
-			});
-			const mcpMeta = mcpMetaMap.get(
-				withMcpMetaKey({
-					method: tool.metadata.method.toUpperCase(),
-					operationId: tool.metadata.operationId,
-					path: tool.metadata.path,
-				}),
-			);
-
-			server.registerTool(
-				namespacedToolName,
-				{
-					description: tool.description,
-					inputSchema: withToolInputSchema(tool.inputSchema),
-					annotations: withToolAnnotations(tool, mcpMeta),
+				title: toolListingFetch.title,
+				description: toolListingFetch.description,
+				inputSchema: toolListingFetch.inputSchema,
+				outputSchema:
+					fetchOutputJsonSchema.type === "object"
+						? toolListingFetch.outputSchema
+						: undefined,
+				annotations: toolListingFetch.annotations,
+				_meta: {
+					examples: toolListingFetch.examples,
+					namespace: toolListingFetch.namespace,
 				},
-				async (rawArgs: unknown) => {
-					const args = withToolArgs(rawArgs);
-					const mapped = withMappedRequest({
-						args,
-						mappers: tool.mapper,
-						path: tool.metadata.path,
-					});
+			},
+			async (args: z.output<typeof toolListingFetch.inputSchema>) => {
+				const toolName = `${toolListingFetch.namespace}.${toolListingFetch.name}`;
 
-					const headers = new Headers(mapped.headers);
-					headers.set("Accept", "application/json");
-					headers.set("Authorization", `Bearer ${accessToken}`);
+				await withMcpLog({
+					message: "mcp.tool.invoke",
+					traceId,
+					values: {
+						toolName,
+						userId: session.userId,
+						arguments: args,
+					},
+				});
 
-					const cookie = withCookieHeader(mapped.cookies);
-					if (cookie) {
-						headers.set("Cookie", cookie);
-					}
-
-					if (mapped.body) {
-						headers.set("Content-Type", "application/json");
-					}
+				try {
+					const result = await Effect.runPromise(
+						withRunnableEffect(
+							toolListingFetch
+								.execute(args, {
+									userId: session.userId,
+									traceId,
+								})
+								.pipe(
+									withKyselyFx(kysely),
+									withLoggingFx(axiomConfig, "mcp", traceId),
+									Effect.annotateLogs({
+										toolName,
+										userId: session.userId,
+									}),
+								),
+						),
+					);
 
 					await withMcpLog({
-						message: "mcp.tool.invoke",
-						root: "mcp",
+						message: "mcp.tool.result",
 						traceId,
 						values: {
-							toolName: namespacedToolName,
-							method: tool.metadata.method.toUpperCase(),
-							path: mapped.path,
+							toolName,
+							ok: true,
 						},
 					});
 
-					try {
-						const response = await root.fetch(
-							new Request(`http://internal${mapped.path}`, {
-								method: tool.metadata.method.toUpperCase(),
-								headers,
-								body: mapped.body ? JSON.stringify(mapped.body) : undefined,
-							}),
-						);
+					return withSuccessResult(result);
+				} catch (error) {
+					await withMcpLog({
+						level: "error",
+						message: "mcp.tool.error",
+						traceId,
+						values: {
+							toolName,
+							ok: false,
+							arguments: args,
+							error: withSerializedError(error),
+						},
+					});
 
-						await withMcpLog({
-							message: "mcp.tool.result",
-							root: "mcp",
-							traceId,
-							values: {
-								toolName: namespacedToolName,
-								ok: response.ok,
-								status: response.status,
+					return {
+						content: [
+							{
+								type: "text" as const,
+								text:
+									error instanceof Error
+										? error.message
+										: "The MCP tool failed to execute.",
 							},
-						});
+						],
+						isError: true,
+					};
+				}
+			},
+		);
 
-						return withToolResponse(response);
-					} catch (error) {
-						await withMcpLog({
-							level: "error",
-							message: "mcp.tool.error",
-							root: "mcp",
-							traceId,
-							values: {
-								toolName: namespacedToolName,
-								error: error instanceof Error ? error.message : "unknown-error",
-							},
-						});
-
-						throw error;
-					}
+		server.registerTool(
+			`${toolListingCollection.namespace}.${toolListingCollection.name}`,
+			{
+				title: toolListingCollection.title,
+				description: toolListingCollection.description,
+				inputSchema: toolListingCollection.inputSchema,
+				annotations: toolListingCollection.annotations,
+				_meta: {
+					examples: toolListingCollection.examples,
+					namespace: toolListingCollection.namespace,
+					outputSchema: withJsonSchema(toolListingCollection.outputSchema),
 				},
-			);
-		}
+			},
+			async (args: z.output<typeof toolListingCollection.inputSchema>) => {
+				const toolName = `${toolListingCollection.namespace}.${toolListingCollection.name}`;
+
+				await withMcpLog({
+					message: "mcp.tool.invoke",
+					traceId,
+					values: {
+						toolName,
+						userId: session.userId,
+						arguments: args,
+					},
+				});
+
+				try {
+					const result = await Effect.runPromise(
+						withRunnableEffect(
+							toolListingCollection
+								.execute(args, {
+									userId: session.userId,
+									traceId,
+								})
+								.pipe(
+									withKyselyFx(kysely),
+									withLoggingFx(axiomConfig, "mcp", traceId),
+									Effect.annotateLogs({
+										toolName,
+										userId: session.userId,
+									}),
+								),
+						),
+					);
+
+					await withMcpLog({
+						message: "mcp.tool.result",
+						traceId,
+						values: {
+							toolName,
+							ok: true,
+						},
+					});
+
+					return withSuccessResult(result);
+				} catch (error) {
+					await withMcpLog({
+						level: "error",
+						message: "mcp.tool.error",
+						traceId,
+						values: {
+							toolName,
+							ok: false,
+							arguments: args,
+							error: withSerializedError(error),
+						},
+					});
+
+					return {
+						content: [
+							{
+								type: "text" as const,
+								text:
+									error instanceof Error
+										? error.message
+										: "The MCP tool failed to execute.",
+							},
+						],
+						isError: true,
+					};
+				}
+			},
+		);
 
 		const transport = new WebStandardStreamableHTTPServerTransport({
 			enableJsonResponse: true,
 			sessionIdGenerator: undefined,
 		});
+
 		await server.connect(transport);
-		const response = await transport.handleRequest(request);
-		const responseValues = await withMcpResponseLogValues(response);
 
-		await withMcpLog({
-			level: response.ok ? "info" : "warning",
-			message: response.ok ? "mcp.request.result" : "mcp.request.failed",
-			root: "mcp",
-			traceId,
-			values: {
-				method,
-				path,
-				status: response.status,
-				ok: response.ok,
-				...responseValues,
-			},
-		});
+		try {
+			const response = await transport.handleRequest(request);
 
-		return response;
+			if (response.ok) {
+				await withMcpLog({
+					message: "mcp.request.result",
+					traceId,
+					values: {
+						method,
+						path,
+						status: response.status,
+						ok: true,
+						jsonRpcId: requestValues.jsonRpcId,
+						jsonRpcMethod: requestValues.jsonRpcMethod,
+						jsonRpcToolName: requestValues.jsonRpcToolName,
+					},
+				});
+			} else {
+				await withMcpLog({
+					level: "warning",
+					message: "mcp.request.failed",
+					traceId,
+					values: {
+						method,
+						path,
+						status: response.status,
+						ok: false,
+						jsonRpcMethod: requestValues.jsonRpcMethod,
+						jsonRpcToolName: requestValues.jsonRpcToolName,
+						...(await withErrorResponseLogValues(response)),
+					},
+				});
+			}
+
+			return response;
+		} catch (error) {
+			await withMcpLog({
+				level: "error",
+				message: "mcp.request.error",
+				traceId,
+				values: {
+					method,
+					path,
+					jsonRpcMethod: requestValues.jsonRpcMethod,
+					jsonRpcToolName: requestValues.jsonRpcToolName,
+					error: withSerializedError(error),
+				},
+			});
+
+			throw error;
+		}
 	};
 
-	root.all("/api/mcp", async (c) => {
-		const withHandler = withMcpAuth(authApi, async (request, session) => {
-			return handle({
-				accessToken: session.accessToken,
-				method: c.req.method,
-				path: c.req.path,
+	const withHandler = (method: string, path: string, traceId: string, userAgent: string) =>
+		withMcpAuth(authApi, async (request, session) =>
+			handle({
+				method,
+				path,
 				request: withMcpCompatibleRequest(request),
-				traceId: c.get("traceId"),
-				userAgent: c.req.header("user-agent") ?? "",
-			});
-		});
+				session,
+				traceId,
+				userAgent,
+			}),
+		);
 
-		const response = await withHandler(c.req.raw);
+	root.all("/api/mcp", async (c) => {
+		const response = await withHandler(
+			c.req.method,
+			c.req.path,
+			c.get("traceId"),
+			c.req.header("user-agent") ?? "",
+		)(c.req.raw);
+
 		if (response.status === 401) {
 			await withMcpLog({
 				level: "warning",
 				message: "mcp.auth.unauthorized",
-				root: "mcp",
 				traceId: c.get("traceId"),
 				values: {
 					method: c.req.method,
@@ -791,23 +660,17 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 	});
 
 	root.all("/api/mcp/*", async (c) => {
-		const withHandler = withMcpAuth(authApi, async (request, session) => {
-			return handle({
-				accessToken: session.accessToken,
-				method: c.req.method,
-				path: c.req.path,
-				request: withMcpCompatibleRequest(request),
-				traceId: c.get("traceId"),
-				userAgent: c.req.header("user-agent") ?? "",
-			});
-		});
+		const response = await withHandler(
+			c.req.method,
+			c.req.path,
+			c.get("traceId"),
+			c.req.header("user-agent") ?? "",
+		)(c.req.raw);
 
-		const response = await withHandler(c.req.raw);
 		if (response.status === 401) {
 			await withMcpLog({
 				level: "warning",
 				message: "mcp.auth.unauthorized",
-				root: "mcp",
 				traceId: c.get("traceId"),
 				values: {
 					method: c.req.method,
