@@ -178,6 +178,60 @@ const staticEnumResources = [
 
 const staticFieldResources = [
 	{
+		fieldName: "cursor.page",
+		documentPath: "field/cursor-page.json",
+		staticUrl: "/mcp/field/cursor-page.json",
+		uri: McpSchema.withFieldResourceUri("cursor.page"),
+	},
+	{
+		fieldName: "cursor.size",
+		documentPath: "field/cursor-size.json",
+		staticUrl: "/mcp/field/cursor-size.json",
+		uri: McpSchema.withFieldResourceUri("cursor.size"),
+	},
+	{
+		fieldName: "filter.id",
+		documentPath: "field/filter-id.json",
+		staticUrl: "/mcp/field/filter-id.json",
+		uri: McpSchema.withFieldResourceUri("filter.id"),
+	},
+	{
+		fieldName: "filter.fulltext",
+		documentPath: "field/filter-fulltext.json",
+		staticUrl: "/mcp/field/filter-fulltext.json",
+		uri: McpSchema.withFieldResourceUri("filter.fulltext"),
+	},
+	{
+		fieldName: "filter.priceMin",
+		documentPath: "field/filter-price-min.json",
+		staticUrl: "/mcp/field/filter-price-min.json",
+		uri: McpSchema.withFieldResourceUri("filter.priceMin"),
+	},
+	{
+		fieldName: "filter.priceMax",
+		documentPath: "field/filter-price-max.json",
+		staticUrl: "/mcp/field/filter-price-max.json",
+		uri: McpSchema.withFieldResourceUri("filter.priceMax"),
+	},
+	{
+		fieldName: "filter.deliveryIn",
+		documentPath: "field/filter-delivery-in.json",
+		staticUrl: "/mcp/field/filter-delivery-in.json",
+		uri: McpSchema.withFieldResourceUri("filter.deliveryIn"),
+	},
+	{
+		fieldName: "filter.categoryIdIn",
+		documentPath: "field/filter-category-id-in.json",
+		staticUrl: "/mcp/field/filter-category-id-in.json",
+		uri: McpSchema.withFieldResourceUri("filter.categoryIdIn"),
+	},
+	{
+		fieldName: "filter.currencyIn",
+		documentPath: "field/filter-currency-in.json",
+		staticUrl: "/mcp/field/filter-currency-in.json",
+		uri: McpSchema.withFieldResourceUri("filter.currencyIn"),
+	},
+	{
 		fieldName: "listing.my",
 		documentPath: "field/listing-my.json",
 		staticUrl: "/mcp/field/listing-my.json",
@@ -314,6 +368,24 @@ const staticFieldResources = [
 		documentPath: "field/filter-is-favourite.json",
 		staticUrl: "/mcp/field/filter-is-favourite.json",
 		uri: McpSchema.withFieldResourceUri("filter.isFavourite"),
+	},
+	{
+		fieldName: "meta.latLon",
+		documentPath: "field/meta-lat-lon.json",
+		staticUrl: "/mcp/field/meta-lat-lon.json",
+		uri: McpSchema.withFieldResourceUri("meta.latLon"),
+	},
+	{
+		fieldName: "sort.field",
+		documentPath: "field/sort-field.json",
+		staticUrl: "/mcp/field/sort-field.json",
+		uri: McpSchema.withFieldResourceUri("sort.field"),
+	},
+	{
+		fieldName: "sort.order",
+		documentPath: "field/sort-order.json",
+		staticUrl: "/mcp/field/sort-order.json",
+		uri: McpSchema.withFieldResourceUri("sort.order"),
 	},
 ] as const satisfies readonly StaticFieldResourceEntry[];
 
