@@ -209,8 +209,11 @@ const withResourceContent = (uri: URL, value: unknown) => {
 	};
 };
 
-const withJsonSchema = (schema: z.ZodType): JsonSchema => {
-	return toJSONSchema(schema) as JsonSchema;
+const withJsonSchema = (schema: z.ZodType, io: "input" | "output"): JsonSchema => {
+	return toJSONSchema(schema, {
+		io,
+		unrepresentable: "any",
+	}) as JsonSchema;
 };
 
 const withArgumentSummary = (schema: JsonSchema): ResourceEntry["argumentSummary"] => {
@@ -249,8 +252,8 @@ const withArgumentSummary = (schema: JsonSchema): ResourceEntry["argumentSummary
 const withResourceEntry = (
 	tool: McpToolDefinition.Definition<z.ZodType, z.ZodType>,
 ): ResourceEntry => {
-	const inputSchema = withJsonSchema(tool.inputSchema);
-	const outputSchema = withJsonSchema(tool.outputSchema);
+	const inputSchema = withJsonSchema(tool.inputSchema, "input");
+	const outputSchema = withJsonSchema(tool.outputSchema, "output");
 
 	return {
 		name: `${tool.namespace}.${tool.name}`,
@@ -319,7 +322,9 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 	const kysely = yield* KyselyContextFx;
 	const { dialect } = kysely;
 	const axiomConfig = ServerAxiomSchema.parse(process.env);
-	const authApi = auth(() => dialect);
+	const authApi = auth(() => dialect, {
+		basePath: "/api/oauth",
+	});
 
 	const withMcpLog = async ({
 		level = "info",
@@ -390,22 +395,17 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 			async (uri) => withResourceContent(uri, resourceEntries),
 		);
 
-		const fetchOutputJsonSchema = withJsonSchema(toolListingFetch.outputSchema);
-
 		server.registerTool(
 			`${toolListingFetch.namespace}.${toolListingFetch.name}`,
 			{
 				title: toolListingFetch.title,
 				description: toolListingFetch.description,
 				inputSchema: toolListingFetch.inputSchema,
-				outputSchema:
-					fetchOutputJsonSchema.type === "object"
-						? toolListingFetch.outputSchema
-						: undefined,
 				annotations: toolListingFetch.annotations,
 				_meta: {
 					examples: toolListingFetch.examples,
 					namespace: toolListingFetch.namespace,
+					outputSchema: withJsonSchema(toolListingFetch.outputSchema, "output"),
 				},
 			},
 			async (args: z.output<typeof toolListingFetch.inputSchema>) => {
@@ -489,7 +489,7 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 				_meta: {
 					examples: toolListingCollection.examples,
 					namespace: toolListingCollection.namespace,
-					outputSchema: withJsonSchema(toolListingCollection.outputSchema),
+					outputSchema: withJsonSchema(toolListingCollection.outputSchema, "output"),
 				},
 			},
 			async (args: z.output<typeof toolListingCollection.inputSchema>) => {

@@ -4,6 +4,7 @@ import { Effect } from "effect";
 import { listingCollectionFx } from "~/@buyer/listing/fx/listingCollectionFx";
 import { ListingQuerySchema } from "~/@buyer/listing/schema/ListingQuerySchema";
 import { ListingSchema } from "~/@buyer/listing/schema/ListingSchema";
+import { ListingQueryMcpSchema } from "~/mcp/buyer/schema/ListingQueryMcpSchema";
 import type { McpToolDefinition } from "~/mcp/McpToolDefinition";
 
 const ListingCollectionSchema = z
@@ -12,7 +13,7 @@ const ListingCollectionSchema = z
 
 type ListingCollectionSchema = typeof ListingCollectionSchema;
 
-const examples: McpToolDefinition.Example<ListingQuerySchema.Type>[] = [
+const examples: McpToolDefinition.Example<ListingQueryMcpSchema.Type>[] = [
 	{
 		title: "Newest listings with pagination",
 		description:
@@ -60,7 +61,7 @@ const examples: McpToolDefinition.Example<ListingQuerySchema.Type>[] = [
 ];
 
 export const toolListingCollection: McpToolDefinition.Definition<
-	ListingQuerySchema,
+	ListingQueryMcpSchema,
 	ListingCollectionSchema
 > = {
 	name: "listingCollection",
@@ -74,14 +75,16 @@ export const toolListingCollection: McpToolDefinition.Definition<
 		destructiveHint: false,
 		idempotentHint: true,
 	},
-	inputSchema: ListingQuerySchema.describe(
+	inputSchema: ListingQueryMcpSchema.describe(
 		"Buyer listing collection query. Supports pagination, fulltext, filters, sort, and optional meta such as lat/lon for distance-aware results.",
 	),
 	outputSchema: ListingCollectionSchema,
 	examples,
 	execute(args, context) {
+		const query = ListingQuerySchema.parse(args);
+
 		return listingCollectionFx({
-			...args,
+			...query,
 			userId: context.userId,
 			scope: {},
 		}).pipe(
