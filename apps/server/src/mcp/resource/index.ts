@@ -2,6 +2,7 @@ import { resourceListingSchema } from "~/mcp/buyer/resource/resourceListingSchem
 import { resourceBuyerListingCollectionOutputSchema } from "~/mcp/buyer/tool/listing-collection/resourceBuyerListingCollectionOutputSchema";
 import { resourceBuyerListingFetchOutputSchema } from "~/mcp/buyer/tool/listing-fetch/resourceBuyerListingFetchOutputSchema";
 import type { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
+import { withResourceMcpCatalogs } from "~/mcp/resource/resourceMcpCatalogs";
 import { withResourceMcpHealth } from "~/mcp/resource/resourceMcpHealth";
 import { withResourceMcpTools } from "~/mcp/resource/resourceMcpTools";
 import {
@@ -24,25 +25,36 @@ export const withMcpResources = ({
 	resources: McpResourceDefinition.Definition[];
 	templates: McpResourceDefinition.TemplateDefinition[];
 } => {
+	const resources: McpResourceDefinition.Definition[] = [
+		withResourceMcpHealth({
+			serverInfo,
+			tools: mcpTools,
+		}),
+		withResourceMcpTools({
+			tools: mcpTools,
+		}),
+		...withStaticResources(),
+		resourceListingSchema,
+		resourceBuyerListingFetchOutputSchema,
+		resourceBuyerListingCollectionOutputSchema,
+	];
+
+	const templates: McpResourceDefinition.TemplateDefinition[] = [
+		withStaticFieldResourceTemplate(),
+		withStaticProfileResourceTemplate(),
+		withStaticEntityResourceTemplate(),
+		withStaticEnumResourceTemplate(),
+	];
+
 	return {
 		resources: [
-			withResourceMcpHealth({
-				serverInfo,
+			...resources,
+			...withResourceMcpCatalogs({
+				resources,
+				templates,
 				tools: mcpTools,
 			}),
-			withResourceMcpTools({
-				tools: mcpTools,
-			}),
-			...withStaticResources(),
-			resourceListingSchema,
-			resourceBuyerListingFetchOutputSchema,
-			resourceBuyerListingCollectionOutputSchema,
 		],
-		templates: [
-			withStaticFieldResourceTemplate(),
-			withStaticProfileResourceTemplate(),
-			withStaticEntityResourceTemplate(),
-			withStaticEnumResourceTemplate(),
-		],
+		templates,
 	};
 };
