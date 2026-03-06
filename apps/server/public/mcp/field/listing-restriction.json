@@ -1,0 +1,7 @@
+{
+	"name": "listing.restriction",
+	"title": "Field: listing.restriction",
+	"description": "Meaning of the buyer-visible listing.restriction field.",
+	"kind": "field",
+	"text": "# listing.restriction\n\nTL;DR:\n- listing.restriction is the content handling level of the listing.\n\nWhat it means:\n- listing.restriction tells the agent how carefully the listing should be treated in product and visibility terms.\n- Use the enum resource for exact value meanings: zbav://mcp/schema/enum/listing-restriction.\n\nAgent hint:\n- Treat stronger restriction levels as real product constraints, not cosmetic labels.\n"
+}

@@ -1,0 +1,7 @@
+{
+	"name": "listing.priceType",
+	"title": "Field: listing.priceType",
+	"description": "Meaning of the buyer-visible listing.priceType field.",
+	"kind": "field",
+	"text": "# listing.priceType\n\nTL;DR:\n- listing.priceType tells the agent how to interpret listing.price.\n\nWhat it means:\n- closed: the listing exposes a fixed or already-determined price amount.\n- open: the listing price should be treated as open for further interpretation rather than final.\n\nAgent hint:\n- Always interpret listing.price together with listing.priceType.\n"
+}

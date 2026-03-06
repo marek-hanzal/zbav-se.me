@@ -97,12 +97,16 @@ const FilterSchema = z
 		range: z
 			.number()
 			.min(0)
-			.describe("Maximum geo distance in kilometers when geo context is available.")
+			.describe(
+				"Maximum geo distance in kilometers when meta.latLon is available. See zbav://mcp/field/filter.range.",
+			)
 			.optional(),
 		title: z.string().describe("Match listing title text.").optional(),
 		withOwn: z
 			.boolean()
-			.describe("Include listings owned by the current authenticated user.")
+			.describe(
+				"Include listings owned by the current authenticated user. See zbav://mcp/field/filter.withOwn.",
+			)
 			.optional(),
 		my: z
 			.boolean()
@@ -110,14 +114,16 @@ const FilterSchema = z
 			.optional(),
 		withIgnored: z
 			.boolean()
-			.describe("Include listings ignored by the current authenticated user.")
+			.describe(
+				"Include listings ignored by the current authenticated user. See zbav://mcp/field/filter.withIgnored.",
+			)
 			.optional(),
 		isFavourite: z
 			.boolean()
 			.describe("Match listings by favourite state for the current authenticated user.")
 			.optional(),
 		feedId: NonEmptyIdSchema.describe(
-			"Match one feed id when browsing a feed-driven surface.",
+			"Match one feed id when browsing a feed-driven surface. See zbav://mcp/field/filter.feedId.",
 		).optional(),
 		feedIdIn: z
 			.array(NonEmptyIdSchema)
@@ -131,12 +137,8 @@ const FilterSchema = z
 			.optional(),
 	})
 	.describe(
-		"Primary buyer filter block. Use this for exact ids, fulltext, category, price, geo range, favourite state, and other buyer-facing constraints.",
+		"Primary buyer filter block. Use this public MCP filter for exact ids, fulltext, category, price, geo range, favourite state, and other buyer-facing constraints.",
 	);
-
-const WhereSchema = FilterSchema.describe(
-	"Compatibility filter block with the same shape as filter. Prefer filter unless the calling workflow explicitly expects where.",
-);
 
 const SortItemSchema = z
 	.object({
@@ -171,7 +173,6 @@ export const ListingQueryMcpSchema = z
 			size: 256,
 		}).optional(),
 		filter: FilterSchema.optional(),
-		where: WhereSchema.optional(),
 		sort: z
 			.array(SortItemSchema)
 			.describe(
@@ -181,7 +182,7 @@ export const ListingQueryMcpSchema = z
 		meta: MetaSchema.optional(),
 	})
 	.describe(
-		"Buyer listing query for MCP. Use it for exact ids, fulltext search, filters, sort, and optional geolocation context.",
+		"Buyer listing query for MCP. Use filter for public buyer-facing constraints, sort for ordering, and meta for execution context such as geolocation.",
 	);
 
 export type ListingQueryMcpSchema = typeof ListingQueryMcpSchema;

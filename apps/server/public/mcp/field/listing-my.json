@@ -1,0 +1,7 @@
+{
+	"name": "listing.my",
+	"title": "Field: listing.my",
+	"description": "Meaning of the buyer-visible listing.my field.",
+	"kind": "field",
+	"text": "# listing.my\n\nTL;DR:\n- True means the published listing belongs to the current authenticated user.\n\nWhat it means:\n- listing.my is an actor-specific ownership flag in buyer context.\n- It does not mean the listing is private or editable through buyer tools.\n\nAgent hint:\n- Use this when the workflow needs to distinguish the user's own listings from other people's listings.\n"
+}

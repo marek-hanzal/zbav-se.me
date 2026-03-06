@@ -1,0 +1,7 @@
+{
+	"name": "listing.warranty",
+	"title": "Field: listing.warranty",
+	"description": "Meaning of the buyer-visible listing.warranty field.",
+	"kind": "field",
+	"text": "# listing.warranty\n\nTL;DR:\n- listing.warranty describes the warranty mode attached to the listing.\n\nWhat it means:\n- warranty: the listing includes warranty support.\n- no-warranty: no warranty is provided.\n- custom: the warranty situation exists but needs custom reading from listing context or future product surface.\n\nAgent hint:\n- When warranty is custom, avoid overclaiming exact legal coverage without more context.\n"
+}

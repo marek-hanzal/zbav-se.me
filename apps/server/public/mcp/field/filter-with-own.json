@@ -1,0 +1,7 @@
+{
+	"name": "filter.withOwn",
+	"title": "Field: filter.withOwn",
+	"description": "Meaning of the buyer query filter.withOwn field.",
+	"kind": "field",
+	"text": "# filter.withOwn\n\nTL;DR:\n- filter.withOwn controls whether the collection may include the current user's own listings.\n\nWhat it means:\n- True allows the current user's own listings to remain in the result set.\n- False excludes them.\n\nAgent hint:\n- Use filter.my when you want only the user's own listings. Use filter.withOwn when you want to control inclusion in a broader query.\n"
+}

@@ -1,0 +1,7 @@
+{
+	"name": "listing.condition",
+	"title": "Field: listing.condition",
+	"description": "Meaning of the buyer-visible listing.condition field.",
+	"kind": "field",
+	"text": "# listing.condition\n\nTL;DR:\n- listing.condition is a normalized condition score, not free text.\n\nWhat it means:\n- listing.condition expresses the state of the offered item on the marketplace condition scale.\n- Higher values should be treated as better condition.\n- Null means the listing does not expose a condition score.\n\nAgent hint:\n- Use listing.condition for sorting and filtering by relative quality, not as a substitute for detailed inspection text or images.\n"
+}

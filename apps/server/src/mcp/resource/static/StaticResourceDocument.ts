@@ -1,7 +1,7 @@
 export namespace StaticResourceDocument {
 	export interface Base {
 		description: string;
-		kind: "entity" | "enum" | "guide";
+		kind: "entity" | "enum" | "field" | "guide";
 		name: string;
 		title: string;
 	}
@@ -23,5 +23,10 @@ export namespace StaticResourceDocument {
 		values: Record<string, string>;
 	}
 
-	export type Any = Entity | Enum | Guide;
+	export interface Field extends Base {
+		kind: "field";
+		text: string;
+	}
+
+	export type Any = Entity | Enum | Field | Guide;
 }

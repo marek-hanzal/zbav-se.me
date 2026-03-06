@@ -73,7 +73,7 @@ export const toolListingCollection: McpToolDefinition.Definition<
 	namespace: "buyer",
 	title: "Buyer Listing Collection",
 	description:
-		"Buyer-side tool for browsing, searching, paginating, and sorting published listings in shopping context. See: zbav://mcp/guide/overview, zbav://mcp/guide/rules, zbav://mcp/guide/roles, zbav://mcp/guide/listing-behavior, and zbav://mcp/entity/listing.",
+		"Buyer-side tool for browsing, searching, paginating, and sorting published listings in shopping context. Use filter for public buyer-facing constraints, sort for ordering, and meta for geolocation context. See: zbav://mcp/guide/overview, zbav://mcp/guide/rules, zbav://mcp/guide/roles, zbav://mcp/guide/listing-behavior, zbav://mcp/guide/search-and-ranking, and zbav://mcp/entity/listing.",
 	role: "buyer",
 	workflowHint:
 		"Use for buyer-side browse, search, pagination, and sorting over published listings.",
@@ -82,6 +82,7 @@ export const toolListingCollection: McpToolDefinition.Definition<
 		McpSchema.withGuideResourceUri("rules"),
 		McpSchema.withGuideResourceUri("roles"),
 		McpSchema.withGuideResourceUri("listing-behavior"),
+		McpSchema.withGuideResourceUri("search-and-ranking"),
 	],
 	entityResourceUris: [
 		McpSchema.withEntityResourceUri("listing"),

@@ -1,0 +1,7 @@
+{
+	"name": "filter.withIgnored",
+	"title": "Field: filter.withIgnored",
+	"description": "Meaning of the buyer query filter.withIgnored field.",
+	"kind": "field",
+	"text": "# filter.withIgnored\n\nTL;DR:\n- filter.withIgnored controls whether ignored listings may appear in the result set.\n\nWhat it means:\n- True allows listings ignored by the current user to remain visible in results.\n- False excludes them.\n\nAgent hint:\n- Use this when the workflow explicitly wants to include or exclude already-ignored listings.\n"
+}

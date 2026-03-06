@@ -48,7 +48,7 @@ export const toolListingFetch: McpToolDefinition.Definition<
 	namespace: "buyer",
 	title: "Buyer Listing Fetch",
 	description:
-		"Buyer-side tool for inspecting one published listing in shopping context. Use this when you need a single concrete listing that matches a focused query, such as an exact listing id or a tightly constrained search. See: zbav://mcp/guide/overview, zbav://mcp/guide/rules, zbav://mcp/guide/roles, zbav://mcp/guide/listing-behavior, and zbav://mcp/entity/listing.",
+		"Buyer-side tool for inspecting one published listing in shopping context. Use this when you need a single concrete listing that matches a focused query, such as an exact listing id or a tightly constrained search. The public MCP contract prefers filter for constraints. See: zbav://mcp/guide/overview, zbav://mcp/guide/rules, zbav://mcp/guide/roles, zbav://mcp/guide/listing-behavior, zbav://mcp/guide/search-and-ranking, and zbav://mcp/entity/listing.",
 	role: "buyer",
 	workflowHint: "Use for buyer-side detail inspection of one published listing.",
 	guideResourceUris: [
@@ -56,6 +56,7 @@ export const toolListingFetch: McpToolDefinition.Definition<
 		McpSchema.withGuideResourceUri("rules"),
 		McpSchema.withGuideResourceUri("roles"),
 		McpSchema.withGuideResourceUri("listing-behavior"),
+		McpSchema.withGuideResourceUri("search-and-ranking"),
 	],
 	entityResourceUris: [
 		McpSchema.withEntityResourceUri("listing"),
