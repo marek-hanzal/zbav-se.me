@@ -58,18 +58,9 @@ export const withFetchApiFx = Effect.fn("withFetchApiFx")(function* () {
 				},
 			},
 			tags: [
-				"buyer",
 				"Listing",
-				"mcp",
 			],
 			summary: "Fetch a listing based on the provided query",
-			"x-mcp-meta": {
-				annotations: {
-					readOnlyHint: true,
-					destructiveHint: false,
-					idempotentHint: true,
-				},
-			},
 		}),
 		async (c) => {
 			const axiomConfig = ServerAxiomSchema.parse(process.env);
