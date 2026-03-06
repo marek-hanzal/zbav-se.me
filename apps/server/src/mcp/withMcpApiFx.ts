@@ -79,6 +79,20 @@ interface HandleProps {
 	userAgent: string;
 }
 
+interface McpRequestLogValues {
+	jsonRpcId?: string | number | null;
+	jsonRpcMethod?: string;
+	jsonRpcToolName?: string;
+	hasArguments?: boolean;
+}
+
+interface McpResponseLogValues {
+	jsonRpcErrorCode?: number;
+	jsonRpcErrorMessage?: string;
+	jsonRpcId?: string | number | null;
+	jsonRpcResultType?: string;
+}
+
 const McpMetaAnnotationsSchema = z
 	.object({
 		title: z.string().optional(),
@@ -417,6 +431,68 @@ const withToolResponse = async (response: Response) => {
 	};
 };
 
+const withMcpRequestLogValues = async (request: Request): Promise<McpRequestLogValues> => {
+	const contentType = request.headers.get("content-type") ?? "";
+	if (!contentType.includes("application/json")) {
+		return {};
+	}
+
+	try {
+		const payload = await request.clone().json();
+		if (!isJsonRecord(payload)) {
+			return {};
+		}
+
+		const params = isJsonRecord(payload.params) ? payload.params : undefined;
+
+		return {
+			jsonRpcId:
+				typeof payload.id === "string" || typeof payload.id === "number" || payload.id === null
+					? payload.id
+					: undefined,
+			jsonRpcMethod: typeof payload.method === "string" ? payload.method : undefined,
+			jsonRpcToolName: typeof params?.name === "string" ? params.name : undefined,
+			hasArguments: params ? "arguments" in params : undefined,
+		};
+	} catch {
+		return {};
+	}
+};
+
+const withMcpResponseLogValues = async (response: Response): Promise<McpResponseLogValues> => {
+	const contentType = response.headers.get("content-type") ?? "";
+	if (!contentType.includes("application/json")) {
+		return {};
+	}
+
+	try {
+		const payload = await response.clone().json();
+		if (!isJsonRecord(payload)) {
+			return {};
+		}
+
+		const error = isJsonRecord(payload.error) ? payload.error : undefined;
+		const result = payload.result;
+
+		return {
+			jsonRpcId:
+				typeof payload.id === "string" || typeof payload.id === "number" || payload.id === null
+					? payload.id
+					: undefined,
+			jsonRpcErrorCode: typeof error?.code === "number" ? error.code : undefined,
+			jsonRpcErrorMessage: typeof error?.message === "string" ? error.message : undefined,
+			jsonRpcResultType:
+				result === undefined || result === null
+					? undefined
+					: Array.isArray(result)
+						? "array"
+						: typeof result,
+		};
+	} catch {
+		return {};
+	}
+};
+
 export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 	const { root, buyerHono } = yield* RoutesContextFx;
 	const { dialect } = yield* KyselyContextFx;
@@ -473,14 +549,17 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 		traceId,
 		userAgent,
 	}: HandleProps) => {
+		const requestValues = await withMcpRequestLogValues(request);
+
 		await withMcpLog({
 			message: "mcp.request.start",
-			root: "mcp.gateway",
+			root: "mcp",
 			traceId,
 			values: {
 				method,
 				path,
 				userAgent,
+				...requestValues,
 			},
 		});
 
@@ -608,9 +687,10 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 
 					await withMcpLog({
 						message: "mcp.tool.invoke",
-						root: `mcp.tool.${namespacedToolName}`,
+						root: "mcp",
 						traceId,
 						values: {
+							toolName: namespacedToolName,
 							method: tool.metadata.method.toUpperCase(),
 							path: mapped.path,
 						},
@@ -627,9 +707,10 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 
 						await withMcpLog({
 							message: "mcp.tool.result",
-							root: `mcp.tool.${namespacedToolName}`,
+							root: "mcp",
 							traceId,
 							values: {
+								toolName: namespacedToolName,
 								ok: response.ok,
 								status: response.status,
 							},
@@ -640,9 +721,10 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 						await withMcpLog({
 							level: "error",
 							message: "mcp.tool.error",
-							root: `mcp.tool.${namespacedToolName}`,
+							root: "mcp",
 							traceId,
 							values: {
+								toolName: namespacedToolName,
 								error: error instanceof Error ? error.message : "unknown-error",
 							},
 						});
@@ -658,8 +740,24 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 			sessionIdGenerator: undefined,
 		});
 		await server.connect(transport);
+		const response = await transport.handleRequest(request);
+		const responseValues = await withMcpResponseLogValues(response);
 
-		return transport.handleRequest(request);
+		await withMcpLog({
+			level: response.ok ? "info" : "warning",
+			message: response.ok ? "mcp.request.result" : "mcp.request.failed",
+			root: "mcp",
+			traceId,
+			values: {
+				method,
+				path,
+				status: response.status,
+				ok: response.ok,
+				...responseValues,
+			},
+		});
+
+		return response;
 	};
 
 	root.all("/api/mcp", async (c) => {
@@ -679,7 +777,7 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 			await withMcpLog({
 				level: "warning",
 				message: "mcp.auth.unauthorized",
-				root: "mcp.gateway",
+				root: "mcp",
 				traceId: c.get("traceId"),
 				values: {
 					method: c.req.method,
@@ -709,7 +807,7 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 			await withMcpLog({
 				level: "warning",
 				message: "mcp.auth.unauthorized",
-				root: "mcp.gateway",
+				root: "mcp",
 				traceId: c.get("traceId"),
 				values: {
 					method: c.req.method,
