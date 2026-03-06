@@ -1,44 +1,33 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
-import type { ToolAnnotations } from "@modelcontextprotocol/sdk/types.js";
+import type { RequestHandlerExtra } from "@modelcontextprotocol/sdk/shared/protocol.js";
+import type {
+	CallToolResult,
+	ServerNotification,
+	ServerRequest,
+} from "@modelcontextprotocol/sdk/types.js";
 import { withMcpAuth } from "better-auth/plugins";
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import { toJSONSchema, type z } from "zod";
+import type { z } from "zod";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { auth } from "~/auth/auth";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
-import { toolListingCollection } from "~/mcp/buyer/toolListingCollection";
-import { toolListingFetch } from "~/mcp/buyer/toolListingFetch";
+import { McpSchema } from "~/mcp/McpSchema";
 import type { McpToolDefinition } from "~/mcp/McpToolDefinition";
+import { withMcpResources } from "~/mcp/resource";
+import { SERVER_INFO } from "~/mcp/serverInfo";
+import { mcpTools } from "~/mcp/tool";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 
-type JsonPrimitive = boolean | null | number | string;
-type JsonValue =
-	| JsonPrimitive
-	| JsonValue[]
-	| {
-			[key: string]: JsonValue;
-	  };
-type JsonRecord = Record<string, JsonValue>;
-type JsonSchema = {
-	description?: string;
-	items?: JsonSchema;
-	properties?: Record<string, JsonSchema>;
-	required?: string[];
-	type?: string | string[];
-	[key: string]: unknown;
-};
 type McpSession = {
 	accessToken: string;
 	clientId: string;
 	scopes: string;
 	userId: string;
 };
-type RunnableEffect<T> = Effect.Effect<T, unknown, never>;
-
 interface HandleProps {
 	method: string;
 	path: string;
@@ -69,55 +58,6 @@ interface McpResponseLogValues {
 	jsonRpcId?: null | number | string;
 	responseBody?: unknown;
 }
-
-interface ToolSuccessResult {
-	[key: string]: unknown;
-	content: [
-		{
-			text: string;
-			type: "text";
-		},
-	];
-	structuredContent: Record<string, unknown>;
-}
-
-interface ResourceEntry {
-	annotations: ToolAnnotations;
-	argumentSummary: {
-		description?: string;
-		name: string;
-		required: boolean;
-		type: string;
-	}[];
-	description: string;
-	examples: McpToolDefinition.Example<JsonRecord>[];
-	inputSchema: JsonSchema;
-	name: string;
-	namespace: string;
-	outputSchemaResourceUri: string;
-	outputSummary: {
-		description?: string;
-		name: string;
-		required: boolean;
-		type: string;
-	}[];
-	outputSchema: JsonSchema;
-	title: string;
-}
-
-const SERVER_INFO = {
-	name: "zbav-se.me MCP",
-	version: "0.2.0",
-} as const;
-
-const mcpTools = [
-	toolListingFetch,
-	toolListingCollection,
-] as const satisfies readonly McpToolDefinition.Definition<z.ZodType, z.ZodType>[];
-
-const isJsonRecord = (value: unknown): value is JsonRecord => {
-	return typeof value === "object" && value !== null && !Array.isArray(value);
-};
 
 const withMcpCompatibleRequest = (request: Request): Request => {
 	const accept = request.headers.get("Accept") ?? "";
@@ -152,13 +92,13 @@ const withRequestLogValues = async (request: Request): Promise<McpRequestLogValu
 
 	try {
 		const requestBody = await request.clone().json();
-		if (!isJsonRecord(requestBody)) {
+		if (!McpSchema.isJsonRecord(requestBody)) {
 			return {
 				requestBody,
 			};
 		}
 
-		const params = isJsonRecord(requestBody.params) ? requestBody.params : undefined;
+		const params = McpSchema.isJsonRecord(requestBody.params) ? requestBody.params : undefined;
 
 		return {
 			requestBody,
@@ -177,13 +117,15 @@ const withErrorResponseLogValues = async (response: Response): Promise<McpRespon
 	if (contentType.includes("application/json")) {
 		try {
 			const responseBody = await response.clone().json();
-			if (!isJsonRecord(responseBody)) {
+			if (!McpSchema.isJsonRecord(responseBody)) {
 				return {
 					responseBody,
 				};
 			}
 
-			const error = isJsonRecord(responseBody.error) ? responseBody.error : undefined;
+			const error = McpSchema.isJsonRecord(responseBody.error)
+				? responseBody.error
+				: undefined;
 
 			return {
 				responseBody,
@@ -205,91 +147,6 @@ const withErrorResponseLogValues = async (response: Response): Promise<McpRespon
 	}
 };
 
-const withResourceContent = (uri: URL, value: unknown) => {
-	return {
-		contents: [
-			{
-				uri: uri.toString(),
-				mimeType: "application/json",
-				text: JSON.stringify(value),
-			},
-		],
-	};
-};
-
-const withJsonSchema = (schema: z.ZodType, io: "input" | "output"): JsonSchema => {
-	return toJSONSchema(schema, {
-		io,
-		unrepresentable: "any",
-	}) as JsonSchema;
-};
-
-const withArgumentSummary = (schema: JsonSchema): ResourceEntry["argumentSummary"] => {
-	if (schema.type !== "object" || !schema.properties) {
-		return [];
-	}
-
-	const required = Array.isArray(schema.required) ? schema.required : [];
-
-	return Object.entries(schema.properties).map(([name, value]) => {
-		if (!value || typeof value !== "object" || Array.isArray(value)) {
-			return {
-				name,
-				required: required.includes(name),
-				type: "unknown",
-			};
-		}
-
-		const propertySchema = value as {
-			description?: string;
-			type?: string | string[];
-		};
-		const type = Array.isArray(propertySchema.type)
-			? propertySchema.type.join(" | ")
-			: (propertySchema.type ?? "unknown");
-
-		return {
-			name,
-			required: required.includes(name),
-			type,
-			description: propertySchema.description,
-		};
-	});
-};
-
-const withOutputSummary = (schema: JsonSchema): ResourceEntry["outputSummary"] => {
-	if (schema.type === "array" && schema.items) {
-		return withArgumentSummary(schema.items);
-	}
-
-	return withArgumentSummary(schema);
-};
-
-const withSchemaResourceUri = (name: string): string => {
-	return `zbav://mcp/schema/${name}`;
-};
-
-const withResourceEntry = (
-	tool: McpToolDefinition.Definition<z.ZodType, z.ZodType>,
-): ResourceEntry => {
-	const inputSchema = withJsonSchema(tool.inputSchema, "input");
-	const outputSchema = withJsonSchema(tool.outputSchema, "output");
-
-	return {
-		name: `${tool.namespace}.${tool.name}`,
-		namespace: tool.namespace,
-		title: tool.title,
-		description: tool.description,
-		annotations: tool.annotations,
-		inputSchema,
-		outputSchema,
-		argumentSummary: withArgumentSummary(inputSchema),
-		outputSummary: withOutputSummary(outputSchema),
-		outputSchemaResourceUri: withSchemaResourceUri(`${tool.namespace}.${tool.name}`),
-		examples: tool.examples as McpToolDefinition.Example<JsonRecord>[],
-	};
-};
-
 const withStructuredContent = (value: unknown): Record<string, unknown> => {
 	if (Array.isArray(value)) {
 		return {
@@ -297,7 +154,7 @@ const withStructuredContent = (value: unknown): Record<string, unknown> => {
 		};
 	}
 
-	if (isJsonRecord(value)) {
+	if (McpSchema.isJsonRecord(value)) {
 		return value;
 	}
 
@@ -319,7 +176,7 @@ const withSuccessText = ({
 		return `Returned ${value.length} item(s) from ${toolTitle}. Use structuredContent.items for machine-readable data. Output schema: ${schemaResourceUri}.`;
 	}
 
-	if (isJsonRecord(value)) {
+	if (McpSchema.isJsonRecord(value)) {
 		return `Returned one result from ${toolTitle}. Use structuredContent for machine-readable fields. Output schema: ${schemaResourceUri}.`;
 	}
 
@@ -334,7 +191,7 @@ const withSuccessResult = ({
 	schemaResourceUri: string;
 	toolTitle: string;
 	value: unknown;
-}): ToolSuccessResult => {
+}): CallToolResult => {
 	const text = JSON.stringify(value, null, 2);
 
 	return {
@@ -352,8 +209,16 @@ const withSuccessResult = ({
 	};
 };
 
-const withRunnableEffect = <T>(effect: Effect.Effect<T, unknown, any>): RunnableEffect<T> => {
-	return effect as RunnableEffect<T>;
+const withErrorResult = (error: unknown): CallToolResult => {
+	return {
+		content: [
+			{
+				type: "text",
+				text: error instanceof Error ? error.message : "The MCP tool failed to execute.",
+			},
+		],
+		isError: true,
+	};
 };
 
 const withSerializedError = (error: unknown) => {
@@ -417,121 +282,29 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 		});
 
 		const server = new McpServer(SERVER_INFO);
-		const resourceEntries = mcpTools.map(withResourceEntry);
-		const listingSchema = withJsonSchema(toolListingFetch.outputSchema, "output");
-
-		server.registerResource(
-			"mcp-health",
-			"zbav://mcp/health",
-			{
-				title: "MCP Health",
-				description: "Runtime status for the zbav-se.me MCP server.",
-				mimeType: "application/json",
-			},
-			async (uri) =>
-				withResourceContent(uri, {
-					name: SERVER_INFO.name,
-					version: SERVER_INFO.version,
-					timestamp: new Date().toISOString(),
-					toolCount: mcpTools.length,
-					toolNames: mcpTools.map((tool) => `${tool.namespace}.${tool.name}`),
-				}),
-		);
-
-		server.registerResource(
-			"mcp-tools",
-			"zbav://mcp/tools",
-			{
-				title: "MCP Tools",
-				description:
-					"Model-facing catalog of manually registered MCP tools, including annotations, schema summaries, and examples.",
-				mimeType: "application/json",
-			},
-			async (uri) => withResourceContent(uri, resourceEntries),
-		);
-
-		server.registerResource(
-			"mcp-schema-listing",
-			withSchemaResourceUri("listing"),
-			{
-				title: "Listing Output Schema",
-				description:
-					"Shared buyer listing output schema with field descriptions for model consumption.",
-				mimeType: "application/json",
-			},
-			async (uri) =>
-				withResourceContent(uri, {
-					name: "listing",
-					title: "Listing Output Schema",
-					description:
-						"Shared schema for a single buyer-visible listing returned by MCP listing tools.",
-					outputSchema: listingSchema,
-					outputSummary: withOutputSummary(listingSchema),
-				}),
-		);
-
-		server.registerResource(
-			"mcp-schema-buyer-listing-fetch",
-			withSchemaResourceUri("buyer.listingFetch"),
-			{
-				title: "buyer.listingFetch Output Schema",
-				description: "Output schema resource for the buyer.listingFetch MCP tool.",
-				mimeType: "application/json",
-			},
-			async (uri) =>
-				withResourceContent(uri, {
-					name: "buyer.listingFetch",
-					title: toolListingFetch.title,
-					description: toolListingFetch.description,
-					outputSchema: listingSchema,
-					outputSummary: withOutputSummary(listingSchema),
-					relatedSchemas: [
-						withSchemaResourceUri("listing"),
-					],
-				}),
-		);
-
-		server.registerResource(
-			"mcp-schema-buyer-listing-collection",
-			withSchemaResourceUri("buyer.listingCollection"),
-			{
-				title: "buyer.listingCollection Output Schema",
-				description: "Output schema resource for the buyer.listingCollection MCP tool.",
-				mimeType: "application/json",
-			},
-			async (uri) => {
-				const outputSchema = withJsonSchema(toolListingCollection.outputSchema, "output");
-
-				return withResourceContent(uri, {
-					name: "buyer.listingCollection",
-					title: toolListingCollection.title,
-					description: toolListingCollection.description,
-					outputSchema,
-					outputSummary: withOutputSummary(outputSchema),
-					itemSchemaUri: withSchemaResourceUri("listing"),
-					relatedSchemas: [
-						withSchemaResourceUri("listing"),
-					],
-				});
-			},
-		);
-
-		server.registerTool(
-			`${toolListingFetch.namespace}.${toolListingFetch.name}`,
-			{
-				title: toolListingFetch.title,
-				description: toolListingFetch.description,
-				inputSchema: toolListingFetch.inputSchema,
-				annotations: toolListingFetch.annotations,
-				_meta: {
-					examples: toolListingFetch.examples,
-					namespace: toolListingFetch.namespace,
-					outputSchema: withJsonSchema(toolListingFetch.outputSchema, "output"),
+		for (const resource of withMcpResources({
+			serverInfo: SERVER_INFO,
+		})) {
+			server.registerResource(
+				resource.name,
+				resource.uri,
+				{
+					title: resource.title,
+					description: resource.description,
+					mimeType: resource.mimeType,
 				},
-			},
-			async (args: z.output<typeof toolListingFetch.inputSchema>) => {
-				const toolName = `${toolListingFetch.namespace}.${toolListingFetch.name}`;
+				resource.read,
+			);
+		}
 
+		const registerTool = <TInputSchema extends z.ZodType, TOutputSchema extends z.ZodType>(
+			tool: McpToolDefinition.Definition<TInputSchema, TOutputSchema>,
+		) => {
+			const toolName = `${tool.namespace}.${tool.name}`;
+			const handleTool = (async (
+				args: z.output<TInputSchema>,
+				_extra: RequestHandlerExtra<ServerRequest, ServerNotification>,
+			): Promise<CallToolResult> => {
 				await withMcpLog({
 					message: "mcp.tool.invoke",
 					traceId,
@@ -543,23 +316,20 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 				});
 
 				try {
-					const result = await Effect.runPromise(
-						withRunnableEffect(
-							toolListingFetch
-								.execute(args, {
-									userId: session.userId,
-									traceId,
-								})
-								.pipe(
-									withKyselyFx(kysely),
-									withLoggingFx(axiomConfig, "mcp", traceId),
-									Effect.annotateLogs({
-										toolName,
-										userId: session.userId,
-									}),
-								),
-						),
-					);
+					const effect = tool
+						.execute(args, {
+							userId: session.userId,
+							traceId,
+						})
+						.pipe(
+							withKyselyFx(kysely),
+							withLoggingFx(axiomConfig, "mcp", traceId),
+							Effect.annotateLogs({
+								toolName,
+								userId: session.userId,
+							}),
+						) as Effect.Effect<unknown, unknown, never>;
+					const result = await Effect.runPromise(effect);
 
 					await withMcpLog({
 						message: "mcp.tool.result",
@@ -572,8 +342,8 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 
 					return withSuccessResult({
 						value: result,
-						toolTitle: toolListingFetch.title,
-						schemaResourceUri: withSchemaResourceUri("buyer.listingFetch"),
+						toolTitle: tool.title,
+						schemaResourceUri: McpSchema.withSchemaResourceUri(toolName),
 					});
 				} catch (error) {
 					await withMcpLog({
@@ -588,109 +358,31 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 						},
 					});
 
-					return {
-						content: [
-							{
-								type: "text" as const,
-								text:
-									error instanceof Error
-										? error.message
-										: "The MCP tool failed to execute.",
-							},
-						],
-						isError: true,
-					};
+					return withErrorResult(error);
 				}
-			},
-		);
+			}) as never;
 
-		server.registerTool(
-			`${toolListingCollection.namespace}.${toolListingCollection.name}`,
-			{
-				title: toolListingCollection.title,
-				description: toolListingCollection.description,
-				inputSchema: toolListingCollection.inputSchema,
-				annotations: toolListingCollection.annotations,
-				_meta: {
-					examples: toolListingCollection.examples,
-					namespace: toolListingCollection.namespace,
-					outputSchema: withJsonSchema(toolListingCollection.outputSchema, "output"),
-				},
-			},
-			async (args: z.output<typeof toolListingCollection.inputSchema>) => {
-				const toolName = `${toolListingCollection.namespace}.${toolListingCollection.name}`;
-
-				await withMcpLog({
-					message: "mcp.tool.invoke",
-					traceId,
-					values: {
-						toolName,
-						userId: session.userId,
-						arguments: args,
+			server.registerTool(
+				toolName,
+				{
+					title: tool.title,
+					description: tool.description,
+					inputSchema: tool.inputSchema,
+					annotations: tool.annotations,
+					_meta: {
+						examples: tool.examples,
+						namespace: tool.namespace,
+						outputSchema: McpSchema.withJsonSchema(tool.outputSchema, "output"),
 					},
-				});
+				},
+				handleTool,
+			);
+		};
 
-				try {
-					const result = await Effect.runPromise(
-						withRunnableEffect(
-							toolListingCollection
-								.execute(args, {
-									userId: session.userId,
-									traceId,
-								})
-								.pipe(
-									withKyselyFx(kysely),
-									withLoggingFx(axiomConfig, "mcp", traceId),
-									Effect.annotateLogs({
-										toolName,
-										userId: session.userId,
-									}),
-								),
-						),
-					);
+		const [toolListingFetch, toolListingCollection] = mcpTools;
 
-					await withMcpLog({
-						message: "mcp.tool.result",
-						traceId,
-						values: {
-							toolName,
-							ok: true,
-						},
-					});
-
-					return withSuccessResult({
-						value: result,
-						toolTitle: toolListingCollection.title,
-						schemaResourceUri: withSchemaResourceUri("buyer.listingCollection"),
-					});
-				} catch (error) {
-					await withMcpLog({
-						level: "error",
-						message: "mcp.tool.error",
-						traceId,
-						values: {
-							toolName,
-							ok: false,
-							arguments: args,
-							error: withSerializedError(error),
-						},
-					});
-
-					return {
-						content: [
-							{
-								type: "text" as const,
-								text:
-									error instanceof Error
-										? error.message
-										: "The MCP tool failed to execute.",
-							},
-						],
-						isError: true,
-					};
-				}
-			},
-		);
+		registerTool(toolListingFetch);
+		registerTool(toolListingCollection);
 
 		const transport = new WebStandardStreamableHTTPServerTransport({
 			enableJsonResponse: true,

@@ -14,7 +14,7 @@ This domain unifies former buyer session and buyer user capabilities behind `/ap
 - **Fetch** - Get listing detail
 - **Seller Info** - Get seller profile metrics for listing detail
 - **Check Ownership** - Verify if listing belongs to current user
-- Buyer listing MCP tools are registered manually under `src/mcp/buyer/*` and call buyer Fx directly instead of going through an OpenAPI bridge.
+- Buyer listing MCP tools are registered manually under `src/mcp/buyer/tool/*`, shared buyer MCP resources live under `src/mcp/buyer/resource/*`, and global MCP resources live under `src/mcp/resource/*`.
 - Public MCP tool names are `buyer.listingFetch` and `buyer.listingCollection`.
 - MCP contracts reuse buyer Zod schemas directly: `ListingQuerySchema` for input, `ListingSchema` for fetch output, and `z.array(ListingSchema)` for collection output metadata.
 - MCP exposes output-oriented schema resources under `zbav://mcp/schema/*`, including shared listing field descriptions for models.
