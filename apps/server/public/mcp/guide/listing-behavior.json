@@ -1,0 +1,7 @@
+{
+	"name": "listing-behavior",
+	"title": "Guide: Listing Behavior",
+	"description": "Agent-facing explanation of buyer listing semantics, including buyer-specific derived fields and listing date formatting.",
+	"kind": "guide",
+	"text": "# Listing Behavior\n\nTL;DR:\n- Buyer listing output is a published listing enriched with buyer-specific signals.\n- Fields like my, isFavourite, isIgnored, hasFlag, transactionId, thumb, distance, and restriction carry workflow meaning.\n- MCP listing dates are ISO 8601 strings.\n\nThis guide explains listing semantics in the current buyer MCP surface.\n\nImportant fields:\n- my: true when the listing belongs to the current authenticated user.\n- isFavourite: true when the current user saved this listing to favourites.\n- isIgnored: true when the current user chose not to see this listing again.\n- hasFlag: true when the current user flagged this listing.\n- transactionId: the current user's related transaction for this listing, or null when none exists.\n- thumb: the current user's like/dislike signal for this listing, or null when none exists.\n- distance: distance from the query location to the listing in kilometers; null when no geo distance applies.\n- restriction: content restriction level for the listing.\n\nDates:\n- createdAt, updatedAt, and expiresAt are returned as ISO 8601 strings in MCP output.\n\nAgent hint:\n- Treat buyer listing output as a shopping-oriented view of a published listing, not as the seller editing model.\n"
+}

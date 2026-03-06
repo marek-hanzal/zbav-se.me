@@ -4,11 +4,6 @@ import { Effect } from "effect";
 import { listingCollectionFx } from "~/@buyer/listing/fx/listingCollectionFx";
 import { ListingQuerySchema } from "~/@buyer/listing/schema/ListingQuerySchema";
 import { ListingSchema } from "~/@buyer/listing/schema/ListingSchema";
-import { ListingMcpFieldNotes } from "~/mcp/buyer/schema/ListingMcpFieldNotes";
-import {
-	ListingCollectionMcpOutputJsonSchema,
-	ListingQueryMcpJsonSchema,
-} from "~/mcp/buyer/schema/ListingMcpJsonSchema";
 import {
 	ListingMcpOutputSchema,
 	withListingMcpOutput,
@@ -100,10 +95,7 @@ export const toolListingCollection: McpToolDefinition.Definition<
 	inputSchema: ListingQueryMcpSchema.describe(
 		"Buyer listing collection query. Supports pagination, fulltext, filters, sort, and optional meta such as lat/lon for distance-aware results.",
 	),
-	inputJsonSchema: ListingQueryMcpJsonSchema,
 	outputSchema: ListingCollectionSchema,
-	outputJsonSchema: ListingCollectionMcpOutputJsonSchema,
-	outputFieldNotes: ListingMcpFieldNotes,
 	examples,
 	execute(args, context) {
 		const query = ListingQuerySchema.parse(args);

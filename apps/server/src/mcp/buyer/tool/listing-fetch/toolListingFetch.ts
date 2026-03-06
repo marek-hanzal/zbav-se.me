@@ -3,11 +3,6 @@ import { Effect } from "effect";
 import { listingFetchFx } from "~/@buyer/listing/fx/listingFetchFx";
 import { ListingQuerySchema } from "~/@buyer/listing/schema/ListingQuerySchema";
 import { ListingSchema } from "~/@buyer/listing/schema/ListingSchema";
-import { ListingMcpFieldNotes } from "~/mcp/buyer/schema/ListingMcpFieldNotes";
-import {
-	ListingMcpOutputJsonSchema,
-	ListingQueryMcpJsonSchema,
-} from "~/mcp/buyer/schema/ListingMcpJsonSchema";
 import {
 	ListingMcpOutputSchema,
 	withListingMcpOutput,
@@ -74,10 +69,7 @@ export const toolListingFetch: McpToolDefinition.Definition<
 	inputSchema: ListingQueryMcpSchema.describe(
 		"Buyer listing query. Accepts exact ids, fulltext, filters, sort, and optional meta such as geolocation.",
 	),
-	inputJsonSchema: ListingQueryMcpJsonSchema,
 	outputSchema: ListingMcpOutputSchema,
-	outputJsonSchema: ListingMcpOutputJsonSchema,
-	outputFieldNotes: ListingMcpFieldNotes,
 	examples,
 	execute(args, context) {
 		const query = ListingQuerySchema.parse(args);

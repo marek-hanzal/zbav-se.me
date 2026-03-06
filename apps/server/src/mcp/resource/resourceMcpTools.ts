@@ -29,8 +29,8 @@ interface WithResourceMcpToolsProps {
 const withResourceEntry = (
 	tool: McpToolDefinition.Definition<z.ZodType, z.ZodType>,
 ): ResourceEntry => {
-	const inputSchema = tool.inputJsonSchema;
-	const outputSchema = tool.outputJsonSchema;
+	const inputSchema = McpSchema.withJsonSchema(tool.inputSchema, "input");
+	const outputSchema = McpSchema.withJsonSchema(tool.outputSchema, "output");
 
 	return {
 		name: `${tool.namespace}.${tool.name}`,

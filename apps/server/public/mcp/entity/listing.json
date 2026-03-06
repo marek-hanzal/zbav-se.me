@@ -1,0 +1,13 @@
+{
+	"name": "listing",
+	"title": "Entity: Listing",
+	"description": "Main published marketplace entity, including how listing relates to draft, gallery, category, and location.",
+	"kind": "entity",
+	"text": "# Listing\n\nTL;DR:\n- Listing is the main published marketplace item.\n- In the current MCP surface, buyer tools return published listing data.\n- A listing comes from a draft and references gallery, category, and location.\n\nWhat it is:\n- A listing is the public, published form of an offer on the marketplace.\n\nWhat it is used for:\n- It is the main thing buyers browse, search, inspect, and compare.\n\nRelationships:\n- listing <- published from draft\n- listing -> gallery\n- listing -> category\n- listing -> location\n\nRole note:\n- In buyer context, listing output can include buyer-specific derived fields such as favourite state, ignore state, thumb state, distance, and transaction hints.\n\nAgent hint:\n- Use listing as the core published entity. If the workflow is about preparation before publication, that is draft, not listing.\n",
+	"relatedEntities": [
+		"zbav://mcp/entity/draft",
+		"zbav://mcp/entity/gallery",
+		"zbav://mcp/entity/category",
+		"zbav://mcp/entity/location"
+	]
+}

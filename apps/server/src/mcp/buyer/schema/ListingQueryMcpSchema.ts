@@ -1,37 +1,187 @@
 import { z } from "@hono/zod-openapi";
-import { ListingFilterSchema } from "~/@buyer/listing/schema/ListingFilterSchema";
-import { ListingQuerySchema } from "~/@buyer/listing/schema/ListingQuerySchema";
-import { ListingWhereSchema } from "~/@buyer/listing/schema/ListingWhereSchema";
 
-type FilterOverrideKeys = Partial<Record<keyof typeof ListingFilterSchema.shape, z.ZodType>>;
+const CurrencyEnumSchema = z.enum([
+	"CZK",
+	"EUR",
+	"USD",
+	"GBP",
+	"PLN",
+	"HUF",
+	"CHF",
+]);
 
-const FilterOverrideSchema = {
-	expiresAtBefore: z.string().optional().openapi({
-		description: "This filter matches listings that expire before the provided date",
-	}),
-	expiresAtAfter: z.string().optional().openapi({
-		description: "This filter matches listings that expire after the provided date",
-	}),
-} satisfies FilterOverrideKeys;
+const ListingDeliveryEnumSchema = z.enum([
+	"personal",
+	"post",
+	"package",
+	"other",
+]);
 
-export const ListingQueryMcpSchema = z
+const ListingWarrantyEnumSchema = z.enum([
+	"warranty",
+	"no-warranty",
+	"custom",
+]);
+
+const ListingSortFieldEnumSchema = z.enum([
+	"price",
+	"condition",
+	"age",
+	"createdAt",
+	"updatedAt",
+	"expiresAt",
+	"geo",
+]);
+
+const OrderEnumSchema = z.enum([
+	"asc",
+	"desc",
+]);
+
+const ScoreSchema = z.number().min(0).max(6);
+const IdSchema = z.string();
+const NonEmptyIdSchema = z.string().min(1);
+
+const CursorSchema = z
 	.object({
-		...ListingQuerySchema.shape,
-		filter: z
-			.object({
-				...ListingFilterSchema.shape,
-				...FilterOverrideSchema,
-			})
+		page: z.number().min(0).describe("Zero-based result page."),
+		size: z.number().min(1).max(1000).describe("Maximum number of results requested."),
+	})
+	.describe("Pagination cursor for browse-style queries.");
+
+const FilterSchema = z
+	.object({
+		id: IdSchema.describe("Match one exact listing id.").optional(),
+		idIn: z.array(IdSchema).describe("Match any of the provided listing ids.").optional(),
+		fulltext: z
+			.string()
+			.describe("Buyer-facing fulltext search over listing content.")
 			.optional(),
-		where: z
-			.object({
-				...ListingWhereSchema.shape,
-				...FilterOverrideSchema,
-			})
+		userId: IdSchema.describe("Limit results to listings owned by one user.").optional(),
+		priceMin: z.number().min(0).describe("Minimum listing price.").optional(),
+		priceMax: z.number().min(0).describe("Maximum listing price.").optional(),
+		conditionMin: ScoreSchema.describe("Minimum condition score.").optional(),
+		conditionMax: ScoreSchema.describe("Maximum condition score.").optional(),
+		conditionIn: z.array(ScoreSchema).describe("Allowed condition scores.").optional(),
+		ageMin: ScoreSchema.describe("Minimum age score.").optional(),
+		ageMax: ScoreSchema.describe("Maximum age score.").optional(),
+		ageIn: z.array(ScoreSchema).describe("Allowed age scores.").optional(),
+		deliveryIn: z
+			.array(ListingDeliveryEnumSchema)
+			.describe("Allowed delivery methods. See zbav://mcp/schema/enum/listing-delivery.")
+			.optional(),
+		warrantyIn: z
+			.array(ListingWarrantyEnumSchema)
+			.describe("Allowed warranty modes. See zbav://mcp/schema/enum/listing-warranty.")
+			.optional(),
+		categoryId: NonEmptyIdSchema.describe("Match one category.").optional(),
+		categoryIdIn: z
+			.array(NonEmptyIdSchema)
+			.describe("Match any of the provided categories.")
+			.optional(),
+		currency: CurrencyEnumSchema.describe(
+			"One price currency. See zbav://mcp/schema/enum/currency.",
+		).optional(),
+		currencyIn: z
+			.array(CurrencyEnumSchema)
+			.describe("Allowed currencies. See zbav://mcp/schema/enum/currency.")
+			.optional(),
+		expiresAtBefore: z
+			.string()
+			.describe("Match listings that expire before the provided ISO 8601 timestamp.")
+			.optional(),
+		expiresAtAfter: z
+			.string()
+			.describe("Match listings that expire after the provided ISO 8601 timestamp.")
+			.optional(),
+		range: z
+			.number()
+			.min(0)
+			.describe("Maximum geo distance in kilometers when geo context is available.")
+			.optional(),
+		title: z.string().describe("Match listing title text.").optional(),
+		withOwn: z
+			.boolean()
+			.describe("Include listings owned by the current authenticated user.")
+			.optional(),
+		my: z
+			.boolean()
+			.describe("Match listings by whether they belong to the current authenticated user.")
+			.optional(),
+		withIgnored: z
+			.boolean()
+			.describe("Include listings ignored by the current authenticated user.")
+			.optional(),
+		isFavourite: z
+			.boolean()
+			.describe("Match listings by favourite state for the current authenticated user.")
+			.optional(),
+		feedId: NonEmptyIdSchema.describe(
+			"Match one feed id when browsing a feed-driven surface.",
+		).optional(),
+		feedIdIn: z
+			.array(NonEmptyIdSchema)
+			.describe("Match any of the provided feed ids.")
+			.optional(),
+		transaction: z
+			.boolean()
+			.describe(
+				"Match listings by whether the current authenticated user has a related transaction.",
+			)
 			.optional(),
 	})
 	.describe(
-		"Buyer listing query for MCP. Date-like filters are passed as strings and then parsed by the server.",
+		"Primary buyer filter block. Use this for exact ids, fulltext, category, price, geo range, favourite state, and other buyer-facing constraints.",
+	);
+
+const WhereSchema = FilterSchema.describe(
+	"Compatibility filter block with the same shape as filter. Prefer filter unless the calling workflow explicitly expects where.",
+);
+
+const SortItemSchema = z
+	.object({
+		field: ListingSortFieldEnumSchema.describe(
+			"Field used for sorting. See zbav://mcp/schema/enum/listing-sort.",
+		),
+		order: OrderEnumSchema.describe("Sort direction. See zbav://mcp/schema/enum/listing-sort."),
+	})
+	.describe("One sort instruction with field and order.");
+
+const MetaSchema = z
+	.object({
+		latLon: z
+			.object({
+				lat: z.number().min(-90).max(90).describe("Latitude in decimal degrees."),
+				lon: z.number().min(-180).max(180).describe("Longitude in decimal degrees."),
+			})
+			.describe("Latitude and longitude for distance-aware buyer queries.")
+			.optional(),
+		feedId: NonEmptyIdSchema.describe(
+			"Feed context for feed-driven buyer surfaces.",
+		).optional(),
+	})
+	.describe(
+		"Optional execution context for the query, such as buyer geolocation for distance-aware results.",
+	);
+
+export const ListingQueryMcpSchema = z
+	.object({
+		cursor: CursorSchema.default({
+			page: 0,
+			size: 256,
+		}).optional(),
+		filter: FilterSchema.optional(),
+		where: WhereSchema.optional(),
+		sort: z
+			.array(SortItemSchema)
+			.describe(
+				"Sort instructions applied in order. See zbav://mcp/schema/enum/listing-sort.",
+			)
+			.optional(),
+		meta: MetaSchema.optional(),
+	})
+	.describe(
+		"Buyer listing query for MCP. Use it for exact ids, fulltext search, filters, sort, and optional geolocation context.",
 	);
 
 export type ListingQueryMcpSchema = typeof ListingQueryMcpSchema;

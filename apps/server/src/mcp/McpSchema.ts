@@ -1,3 +1,5 @@
+import { toJSONSchema, type z } from "zod";
+
 export namespace McpSchema {
 	export type JsonPrimitive = boolean | null | number | string;
 	export type JsonValue =
@@ -30,6 +32,13 @@ export namespace McpSchema {
 
 	export const isJsonRecord = (value: unknown): value is JsonRecord => {
 		return typeof value === "object" && value !== null && !Array.isArray(value);
+	};
+
+	export const withJsonSchema = (schema: z.ZodType, io: "input" | "output"): JsonSchema => {
+		return toJSONSchema(schema, {
+			io,
+			unrepresentable: "any",
+		}) as JsonSchema;
 	};
 
 	const withType = (schema: JsonSchemaWithVariants): string => {

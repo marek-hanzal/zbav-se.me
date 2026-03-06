@@ -10,7 +10,7 @@ export const resourceBuyerListingCollectionOutputSchema: McpResourceDefinition.D
 	description: "Output schema resource for the buyer.listingCollection MCP tool.",
 	mimeType: "application/json",
 	read(uri) {
-		const outputSchema = toolListingCollection.outputJsonSchema;
+		const outputSchema = McpSchema.withJsonSchema(toolListingCollection.outputSchema, "output");
 
 		return McpResourceDefinition.withContent(uri, {
 			name: "buyer.listingCollection",
