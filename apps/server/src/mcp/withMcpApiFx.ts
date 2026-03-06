@@ -70,10 +70,19 @@ const withMcpCompatibleRequest = (request: Request): Request => {
 
 	const headers = new Headers(request.headers);
 	headers.set("Accept", "application/json, text/event-stream");
-
-	return new Request(request, {
+	const init: RequestInit & {
+		duplex?: "half";
+	} = {
+		method: request.method,
 		headers,
-	});
+	};
+
+	if (request.method !== "GET" && request.method !== "HEAD") {
+		init.body = request.body;
+		init.duplex = "half";
+	}
+
+	return new Request(request.url, init);
 };
 
 const withJsonRpcId = (value: unknown): McpRequestLogValues["jsonRpcId"] => {
@@ -372,6 +381,11 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 					_meta: {
 						examples: tool.examples,
 						namespace: tool.namespace,
+						role: tool.role,
+						workflowHint: tool.workflowHint,
+						guideResourceUris: tool.guideResourceUris,
+						entityResourceUris: tool.entityResourceUris,
+						fieldResourceUris: tool.fieldResourceUris,
 						inputSchema: McpSchema.withJsonSchema(tool.inputSchema, "input"),
 						outputSchema: McpSchema.withJsonSchema(tool.outputSchema, "output"),
 					},
@@ -458,50 +472,80 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 		);
 
 	root.all("/api/mcp", async (c) => {
-		const response = await withHandler(
-			c.req.method,
-			c.req.path,
-			c.get("traceId"),
-			c.req.header("user-agent") ?? "",
-		)(c.req.raw);
+		try {
+			const response = await withHandler(
+				c.req.method,
+				c.req.path,
+				c.get("traceId"),
+				c.req.header("user-agent") ?? "",
+			)(c.req.raw);
 
-		if (response.status === 401) {
+			if (response.status === 401) {
+				await withMcpLog({
+					level: "warning",
+					message: "mcp.auth.unauthorized",
+					traceId: c.get("traceId"),
+					values: {
+						method: c.req.method,
+						path: c.req.path,
+						userAgent: c.req.header("user-agent") ?? "",
+					},
+				});
+			}
+
+			return response;
+		} catch (error) {
 			await withMcpLog({
-				level: "warning",
-				message: "mcp.auth.unauthorized",
+				level: "error",
+				message: "mcp.route.error",
 				traceId: c.get("traceId"),
 				values: {
 					method: c.req.method,
 					path: c.req.path,
 					userAgent: c.req.header("user-agent") ?? "",
+					error: withSerializedError(error),
 				},
 			});
+			throw error;
 		}
-
-		return response;
 	});
 
 	root.all("/api/mcp/*", async (c) => {
-		const response = await withHandler(
-			c.req.method,
-			c.req.path,
-			c.get("traceId"),
-			c.req.header("user-agent") ?? "",
-		)(c.req.raw);
+		try {
+			const response = await withHandler(
+				c.req.method,
+				c.req.path,
+				c.get("traceId"),
+				c.req.header("user-agent") ?? "",
+			)(c.req.raw);
 
-		if (response.status === 401) {
+			if (response.status === 401) {
+				await withMcpLog({
+					level: "warning",
+					message: "mcp.auth.unauthorized",
+					traceId: c.get("traceId"),
+					values: {
+						method: c.req.method,
+						path: c.req.path,
+						userAgent: c.req.header("user-agent") ?? "",
+					},
+				});
+			}
+
+			return response;
+		} catch (error) {
 			await withMcpLog({
-				level: "warning",
-				message: "mcp.auth.unauthorized",
+				level: "error",
+				message: "mcp.route.error",
 				traceId: c.get("traceId"),
 				values: {
 					method: c.req.method,
 					path: c.req.path,
 					userAgent: c.req.header("user-agent") ?? "",
+					error: withSerializedError(error),
 				},
 			});
+			throw error;
 		}
-
-		return response;
 	});
 });

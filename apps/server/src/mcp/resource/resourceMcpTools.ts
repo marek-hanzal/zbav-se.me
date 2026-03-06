@@ -10,6 +10,7 @@ interface ResourceEntry {
 	description: string;
 	entityResourceUris: string[];
 	examples: McpToolDefinition.Example<McpSchema.JsonRecord>[];
+	fieldResourceUris: string[];
 	guideResourceUris: string[];
 	inputSchema: McpSchema.JsonSchema;
 	name: string;
@@ -41,6 +42,7 @@ const withResourceEntry = (
 		annotations: tool.annotations,
 		guideResourceUris: tool.guideResourceUris,
 		entityResourceUris: tool.entityResourceUris,
+		fieldResourceUris: tool.fieldResourceUris,
 		inputSchema,
 		outputSchema,
 		argumentSummary: McpSchema.withSummary(inputSchema),

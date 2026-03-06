@@ -13,6 +13,7 @@ export const resourceListingSchema: McpResourceDefinition.Definition = {
 		const outputSchema = McpSchema.withJsonSchema(ListingMcpOutputSchema, "output");
 
 		return McpResourceDefinition.withContent(uri, {
+			canonicalUri: uri.toString(),
 			name: "listing",
 			title: "Listing Output Schema",
 			description:
@@ -32,6 +33,17 @@ export const resourceListingSchema: McpResourceDefinition.Definition = {
 				McpSchema.withEnumResourceUri("listing-warranty"),
 				McpSchema.withEnumResourceUri("listing-delivery"),
 				McpSchema.withEnumResourceUri("thumb"),
+			],
+			fieldResourceUris: [
+				McpSchema.withFieldResourceUri("listing.my"),
+				McpSchema.withFieldResourceUri("listing.condition"),
+				McpSchema.withFieldResourceUri("listing.age"),
+				McpSchema.withFieldResourceUri("listing.priceType"),
+				McpSchema.withFieldResourceUri("listing.warranty"),
+				McpSchema.withFieldResourceUri("listing.restriction"),
+				McpSchema.withFieldResourceUri("listing.transactionId"),
+				McpSchema.withFieldResourceUri("listing.thumb"),
+				McpSchema.withFieldResourceUri("listing.draftId"),
 			],
 		});
 	},
