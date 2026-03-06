@@ -14,8 +14,9 @@ This domain unifies former buyer session and buyer user capabilities behind `/ap
 - **Fetch** - Get listing detail
 - **Seller Info** - Get seller profile metrics for listing detail
 - **Check Ownership** - Verify if listing belongs to current user
-- Buyer listing `fetch` and `collection` endpoints are marked with OpenAPI tag `mcp` for MCP bridge exposure.
-- MCP behavior hints are controlled via OpenAPI `x-mcp-meta.annotations` (for these buyer listing endpoints: read-only, non-destructive, idempotent).
+- Buyer listing MCP tools are registered manually under `src/mcp/buyer/*` and call buyer Fx directly instead of going through an OpenAPI bridge.
+- Public MCP tool names are `buyer.listingFetch` and `buyer.listingCollection`.
+- MCP contracts reuse buyer Zod schemas directly: `ListingQuerySchema` for input, `ListingSchema` for fetch output, and `z.array(ListingSchema)` for collection output metadata.
 
 ### Listing Events
 - **Create** - Record listing interaction events
