@@ -395,6 +395,33 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 					inputSchema: tool.inputSchema,
 					annotations: tool.annotations,
 					_meta: {
+						...(() => {
+							const outputSchema = McpSchema.withJsonSchema(
+								tool.outputSchema,
+								"output",
+							);
+							const itemFieldResourceUris = tool.fieldResourceUris.filter((uri) =>
+								uri.startsWith(McpSchema.withFieldResourceUri("listing.")),
+							);
+							const itemOutputSchema =
+								outputSchema.type === "array" &&
+								outputSchema.items &&
+								typeof outputSchema.items === "object" &&
+								!Array.isArray(outputSchema.items)
+									? outputSchema.items
+									: undefined;
+
+							return {
+								outputSchema,
+								itemOutputSchema,
+								itemOutputSummary: itemOutputSchema
+									? McpSchema.withSummary(itemOutputSchema)
+									: undefined,
+								itemFieldResourceUris: itemOutputSchema
+									? itemFieldResourceUris
+									: undefined,
+							};
+						})(),
 						examples: tool.examples,
 						namespace: tool.namespace,
 						role: tool.role,
@@ -404,7 +431,6 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 						entityResourceUris: tool.entityResourceUris,
 						fieldResourceUris: tool.fieldResourceUris,
 						inputSchema: McpSchema.withJsonSchema(tool.inputSchema, "input"),
-						outputSchema: McpSchema.withJsonSchema(tool.outputSchema, "output"),
 					},
 				},
 				handleTool,

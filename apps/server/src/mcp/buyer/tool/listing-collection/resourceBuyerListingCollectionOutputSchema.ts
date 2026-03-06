@@ -11,6 +11,9 @@ export const resourceBuyerListingCollectionOutputSchema: McpResourceDefinition.D
 	mimeType: "application/json",
 	read(uri) {
 		const outputSchema = McpSchema.withJsonSchema(toolListingCollection.outputSchema, "output");
+		const itemFieldResourceUris = toolListingCollection.fieldResourceUris.filter((fieldUri) =>
+			fieldUri.startsWith(McpSchema.withFieldResourceUri("listing.")),
+		);
 
 		return McpResourceDefinition.withContent(uri, {
 			canonicalUri: uri.toString(),
@@ -23,6 +26,21 @@ export const resourceBuyerListingCollectionOutputSchema: McpResourceDefinition.D
 			profileResourceUris: toolListingCollection.profileResourceUris,
 			entityResourceUris: toolListingCollection.entityResourceUris,
 			fieldResourceUris: toolListingCollection.fieldResourceUris,
+			itemFieldResourceUris,
+			itemOutputSchema:
+				outputSchema.type === "array" &&
+				outputSchema.items &&
+				typeof outputSchema.items === "object" &&
+				!Array.isArray(outputSchema.items)
+					? outputSchema.items
+					: undefined,
+			itemOutputSummary:
+				outputSchema.type === "array" &&
+				outputSchema.items &&
+				typeof outputSchema.items === "object" &&
+				!Array.isArray(outputSchema.items)
+					? McpSchema.withSummary(outputSchema.items)
+					: undefined,
 			responseInterpretationHints: [
 				"Use collection output for browse and search flows, not for guaranteed exact entity lookup.",
 				"distance is meaningful only for geo-aware queries that include meta.latLon.",

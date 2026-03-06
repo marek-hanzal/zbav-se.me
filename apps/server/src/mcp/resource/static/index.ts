@@ -196,10 +196,22 @@ const staticFieldResources = [
 		uri: McpSchema.withFieldResourceUri("filter.id"),
 	},
 	{
+		fieldName: "filter.idIn",
+		documentPath: "field/filter-id-in.json",
+		staticUrl: "/mcp/field/filter-id-in.json",
+		uri: McpSchema.withFieldResourceUri("filter.idIn"),
+	},
+	{
 		fieldName: "filter.fulltext",
 		documentPath: "field/filter-fulltext.json",
 		staticUrl: "/mcp/field/filter-fulltext.json",
 		uri: McpSchema.withFieldResourceUri("filter.fulltext"),
+	},
+	{
+		fieldName: "filter.userId",
+		documentPath: "field/filter-user-id.json",
+		staticUrl: "/mcp/field/filter-user-id.json",
+		uri: McpSchema.withFieldResourceUri("filter.userId"),
 	},
 	{
 		fieldName: "filter.priceMin",
@@ -214,10 +226,58 @@ const staticFieldResources = [
 		uri: McpSchema.withFieldResourceUri("filter.priceMax"),
 	},
 	{
+		fieldName: "filter.conditionMin",
+		documentPath: "field/filter-condition-min.json",
+		staticUrl: "/mcp/field/filter-condition-min.json",
+		uri: McpSchema.withFieldResourceUri("filter.conditionMin"),
+	},
+	{
+		fieldName: "filter.conditionMax",
+		documentPath: "field/filter-condition-max.json",
+		staticUrl: "/mcp/field/filter-condition-max.json",
+		uri: McpSchema.withFieldResourceUri("filter.conditionMax"),
+	},
+	{
+		fieldName: "filter.conditionIn",
+		documentPath: "field/filter-condition-in.json",
+		staticUrl: "/mcp/field/filter-condition-in.json",
+		uri: McpSchema.withFieldResourceUri("filter.conditionIn"),
+	},
+	{
+		fieldName: "filter.ageMin",
+		documentPath: "field/filter-age-min.json",
+		staticUrl: "/mcp/field/filter-age-min.json",
+		uri: McpSchema.withFieldResourceUri("filter.ageMin"),
+	},
+	{
+		fieldName: "filter.ageMax",
+		documentPath: "field/filter-age-max.json",
+		staticUrl: "/mcp/field/filter-age-max.json",
+		uri: McpSchema.withFieldResourceUri("filter.ageMax"),
+	},
+	{
+		fieldName: "filter.ageIn",
+		documentPath: "field/filter-age-in.json",
+		staticUrl: "/mcp/field/filter-age-in.json",
+		uri: McpSchema.withFieldResourceUri("filter.ageIn"),
+	},
+	{
 		fieldName: "filter.deliveryIn",
 		documentPath: "field/filter-delivery-in.json",
 		staticUrl: "/mcp/field/filter-delivery-in.json",
 		uri: McpSchema.withFieldResourceUri("filter.deliveryIn"),
+	},
+	{
+		fieldName: "filter.warrantyIn",
+		documentPath: "field/filter-warranty-in.json",
+		staticUrl: "/mcp/field/filter-warranty-in.json",
+		uri: McpSchema.withFieldResourceUri("filter.warrantyIn"),
+	},
+	{
+		fieldName: "filter.categoryId",
+		documentPath: "field/filter-category-id.json",
+		staticUrl: "/mcp/field/filter-category-id.json",
+		uri: McpSchema.withFieldResourceUri("filter.categoryId"),
 	},
 	{
 		fieldName: "filter.categoryIdIn",
@@ -226,10 +286,28 @@ const staticFieldResources = [
 		uri: McpSchema.withFieldResourceUri("filter.categoryIdIn"),
 	},
 	{
+		fieldName: "filter.currency",
+		documentPath: "field/filter-currency.json",
+		staticUrl: "/mcp/field/filter-currency.json",
+		uri: McpSchema.withFieldResourceUri("filter.currency"),
+	},
+	{
 		fieldName: "filter.currencyIn",
 		documentPath: "field/filter-currency-in.json",
 		staticUrl: "/mcp/field/filter-currency-in.json",
 		uri: McpSchema.withFieldResourceUri("filter.currencyIn"),
+	},
+	{
+		fieldName: "filter.expiresAtBefore",
+		documentPath: "field/filter-expires-at-before.json",
+		staticUrl: "/mcp/field/filter-expires-at-before.json",
+		uri: McpSchema.withFieldResourceUri("filter.expiresAtBefore"),
+	},
+	{
+		fieldName: "filter.expiresAtAfter",
+		documentPath: "field/filter-expires-at-after.json",
+		staticUrl: "/mcp/field/filter-expires-at-after.json",
+		uri: McpSchema.withFieldResourceUri("filter.expiresAtAfter"),
 	},
 	{
 		fieldName: "listing.my",
@@ -334,6 +412,12 @@ const staticFieldResources = [
 		uri: McpSchema.withFieldResourceUri("filter.feedId"),
 	},
 	{
+		fieldName: "filter.feedIdIn",
+		documentPath: "field/filter-feed-id-in.json",
+		staticUrl: "/mcp/field/filter-feed-id-in.json",
+		uri: McpSchema.withFieldResourceUri("filter.feedIdIn"),
+	},
+	{
 		fieldName: "listing.distance",
 		documentPath: "field/listing-distance.json",
 		staticUrl: "/mcp/field/listing-distance.json",
@@ -370,10 +454,28 @@ const staticFieldResources = [
 		uri: McpSchema.withFieldResourceUri("filter.isFavourite"),
 	},
 	{
+		fieldName: "filter.title",
+		documentPath: "field/filter-title.json",
+		staticUrl: "/mcp/field/filter-title.json",
+		uri: McpSchema.withFieldResourceUri("filter.title"),
+	},
+	{
+		fieldName: "filter.transaction",
+		documentPath: "field/filter-transaction.json",
+		staticUrl: "/mcp/field/filter-transaction.json",
+		uri: McpSchema.withFieldResourceUri("filter.transaction"),
+	},
+	{
 		fieldName: "meta.latLon",
 		documentPath: "field/meta-lat-lon.json",
 		staticUrl: "/mcp/field/meta-lat-lon.json",
 		uri: McpSchema.withFieldResourceUri("meta.latLon"),
+	},
+	{
+		fieldName: "meta.feedId",
+		documentPath: "field/meta-feed-id.json",
+		staticUrl: "/mcp/field/meta-feed-id.json",
+		uri: McpSchema.withFieldResourceUri("meta.feedId"),
 	},
 	{
 		fieldName: "sort.field",

@@ -12,6 +12,9 @@ interface ResourceEntry {
 	examples: McpToolDefinition.Example<McpSchema.JsonRecord>[];
 	fieldResourceUris: string[];
 	guideResourceUris: string[];
+	itemFieldResourceUris?: string[];
+	itemOutputSchema?: McpSchema.JsonSchema;
+	itemOutputSummary?: McpSchema.SummaryItem[];
 	inputSchema: McpSchema.JsonSchema;
 	name: string;
 	namespace: string;
@@ -33,6 +36,16 @@ const withResourceEntry = (
 ): ResourceEntry => {
 	const inputSchema = McpSchema.withJsonSchema(tool.inputSchema, "input");
 	const outputSchema = McpSchema.withJsonSchema(tool.outputSchema, "output");
+	const itemFieldResourceUris = tool.fieldResourceUris.filter((uri) =>
+		uri.startsWith(McpSchema.withFieldResourceUri("listing.")),
+	);
+	const itemOutputSchema =
+		outputSchema.type === "array" &&
+		outputSchema.items &&
+		typeof outputSchema.items === "object" &&
+		!Array.isArray(outputSchema.items)
+			? outputSchema.items
+			: undefined;
 
 	return {
 		name: `${tool.namespace}.${tool.name}`,
@@ -44,11 +57,14 @@ const withResourceEntry = (
 		guideResourceUris: tool.guideResourceUris,
 		entityResourceUris: tool.entityResourceUris,
 		fieldResourceUris: tool.fieldResourceUris,
+		itemFieldResourceUris: itemOutputSchema ? itemFieldResourceUris : undefined,
 		profileResourceUris: tool.profileResourceUris,
 		inputSchema,
 		outputSchema,
+		itemOutputSchema,
 		argumentSummary: McpSchema.withSummary(inputSchema),
 		outputSummary: McpSchema.withSummary(outputSchema),
+		itemOutputSummary: itemOutputSchema ? McpSchema.withSummary(itemOutputSchema) : undefined,
 		outputSchemaResourceUri: McpSchema.withSchemaResourceUri(`${tool.namespace}.${tool.name}`),
 		examples: tool.examples as McpToolDefinition.Example<McpSchema.JsonRecord>[],
 		workflowHint: tool.workflowHint,
