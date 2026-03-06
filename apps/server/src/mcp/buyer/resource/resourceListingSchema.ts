@@ -1,6 +1,6 @@
-import { ListingSchema } from "~/@buyer/listing/schema/ListingSchema";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
+import { ListingMcpOutputSchema } from "~/mcp/buyer/schema/ListingMcpOutputSchema";
 
 export const resourceListingSchema: McpResourceDefinition.Definition = {
 	name: "mcp-schema-listing",
@@ -10,13 +10,13 @@ export const resourceListingSchema: McpResourceDefinition.Definition = {
 		"Shared buyer listing output schema with field descriptions for model consumption.",
 	mimeType: "application/json",
 	read(uri) {
-		const outputSchema = McpSchema.withJsonSchema(ListingSchema, "output");
+		const outputSchema = McpSchema.withJsonSchema(ListingMcpOutputSchema, "output");
 
 		return McpResourceDefinition.withContent(uri, {
 			name: "listing",
 			title: "Listing Output Schema",
 			description:
-				"Shared schema for a single buyer-visible listing returned by MCP listing tools.",
+				"Shared schema for a single buyer-visible listing returned by MCP listing tools. Date fields are ISO 8601 strings.",
 			outputSchema,
 			outputSummary: McpSchema.withSummary(outputSchema),
 		});
