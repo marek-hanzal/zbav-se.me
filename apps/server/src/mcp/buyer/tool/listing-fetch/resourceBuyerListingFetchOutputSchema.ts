@@ -13,6 +13,7 @@ export const resourceBuyerListingFetchOutputSchema: McpResourceDefinition.Defini
 		const outputSchema = McpSchema.withJsonSchema(toolListingFetch.outputSchema, "output");
 
 		return McpResourceDefinition.withContent(uri, {
+			canonicalUri: uri.toString(),
 			name: "buyer.listingFetch",
 			title: toolListingFetch.title,
 			description: toolListingFetch.description,
@@ -20,6 +21,7 @@ export const resourceBuyerListingFetchOutputSchema: McpResourceDefinition.Defini
 			outputSummary: McpSchema.withSummary(outputSchema),
 			guideResourceUris: toolListingFetch.guideResourceUris,
 			entityResourceUris: toolListingFetch.entityResourceUris,
+			fieldResourceUris: toolListingFetch.fieldResourceUris,
 			relatedSchemas: [
 				resourceListingSchema.uri,
 			],

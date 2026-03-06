@@ -22,6 +22,7 @@ export namespace McpToolDefinition {
 		description: string;
 		entityResourceUris: string[];
 		examples: Example<z.output<TInputSchema>>[];
+		fieldResourceUris: string[];
 		guideResourceUris: string[];
 		inputSchema: TInputSchema;
 		name: string;

@@ -61,6 +61,21 @@ export const toolListingFetch: McpToolDefinition.Definition<
 	entityResourceUris: [
 		McpSchema.withEntityResourceUri("listing"),
 	],
+	fieldResourceUris: [
+		McpSchema.withFieldResourceUri("listing.my"),
+		McpSchema.withFieldResourceUri("listing.condition"),
+		McpSchema.withFieldResourceUri("listing.age"),
+		McpSchema.withFieldResourceUri("listing.priceType"),
+		McpSchema.withFieldResourceUri("listing.warranty"),
+		McpSchema.withFieldResourceUri("listing.restriction"),
+		McpSchema.withFieldResourceUri("listing.transactionId"),
+		McpSchema.withFieldResourceUri("listing.thumb"),
+		McpSchema.withFieldResourceUri("listing.draftId"),
+		McpSchema.withFieldResourceUri("filter.range"),
+		McpSchema.withFieldResourceUri("filter.withOwn"),
+		McpSchema.withFieldResourceUri("filter.withIgnored"),
+		McpSchema.withFieldResourceUri("filter.feedId"),
+	],
 	annotations: {
 		title: "Buyer Listing Fetch",
 		readOnlyHint: true,
