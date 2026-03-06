@@ -47,7 +47,7 @@ export const toolListingFetch: McpToolDefinition.Definition<
 	namespace: "buyer",
 	title: "Buyer Listing Fetch",
 	description:
-		"Fetch one buyer-visible listing using the authenticated buyer context. Use this when you need a single concrete listing that matches a focused query, such as an exact listing id or a tightly constrained search.",
+		"Fetch one buyer-visible listing using the authenticated buyer context. Use this when you need a single concrete listing that matches a focused query, such as an exact listing id or a tightly constrained search. See: zbav://mcp/guide/overview and zbav://mcp/guide/rules.",
 	annotations: {
 		title: "Buyer Listing Fetch",
 		readOnlyHint: true,

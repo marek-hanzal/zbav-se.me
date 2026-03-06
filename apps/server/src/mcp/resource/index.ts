@@ -2,6 +2,8 @@ import { resourceListingSchema } from "~/mcp/buyer/resource/resourceListingSchem
 import { resourceBuyerListingCollectionOutputSchema } from "~/mcp/buyer/tool/listing-collection/resourceBuyerListingCollectionOutputSchema";
 import { resourceBuyerListingFetchOutputSchema } from "~/mcp/buyer/tool/listing-fetch/resourceBuyerListingFetchOutputSchema";
 import type { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
+import { resourceGuideOverview } from "~/mcp/resource/guide/resourceGuideOverview";
+import { resourceGuideRules } from "~/mcp/resource/guide/resourceGuideRules";
 import { withResourceMcpHealth } from "~/mcp/resource/resourceMcpHealth";
 import { withResourceMcpTools } from "~/mcp/resource/resourceMcpTools";
 import type { ServerInfo } from "~/mcp/serverInfo";
@@ -22,6 +24,8 @@ export const withMcpResources = ({
 		withResourceMcpTools({
 			tools: mcpTools,
 		}),
+		resourceGuideOverview,
+		resourceGuideRules,
 		resourceListingSchema,
 		resourceBuyerListingFetchOutputSchema,
 		resourceBuyerListingCollectionOutputSchema,

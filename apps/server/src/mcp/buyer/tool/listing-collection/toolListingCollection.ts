@@ -72,7 +72,7 @@ export const toolListingCollection: McpToolDefinition.Definition<
 	namespace: "buyer",
 	title: "Buyer Listing Collection",
 	description:
-		"Fetch a buyer-visible collection of listings using the authenticated buyer context. Use this for browsing, search, pagination, filtering, and sorting across many listings.",
+		"Fetch a buyer-visible collection of listings using the authenticated buyer context. Use this for browsing, search, pagination, filtering, and sorting across many listings. See: zbav://mcp/guide/overview and zbav://mcp/guide/rules.",
 	annotations: {
 		title: "Buyer Listing Collection",
 		readOnlyHint: true,
