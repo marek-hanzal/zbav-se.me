@@ -1,4 +1,4 @@
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 import type { RequestHandlerExtra } from "@modelcontextprotocol/sdk/shared/protocol.js";
 import type {
@@ -291,9 +291,10 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 		});
 
 		const server = new McpServer(SERVER_INFO);
-		for (const resource of withMcpResources({
+		const { resources, templates } = withMcpResources({
 			serverInfo: SERVER_INFO,
-		})) {
+		});
+		for (const resource of resources) {
 			server.registerResource(
 				resource.name,
 				resource.uri,
@@ -303,6 +304,21 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 					mimeType: resource.mimeType,
 				},
 				resource.read,
+			);
+		}
+		for (const template of templates) {
+			server.registerResource(
+				template.name,
+				new ResourceTemplate(template.uriTemplate, {
+					list: () => template.list(),
+					complete: template.complete,
+				}),
+				{
+					title: template.title,
+					description: template.description,
+					mimeType: template.mimeType,
+				},
+				(uri, variables) => template.read(uri, variables),
 			);
 		}
 
