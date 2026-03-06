@@ -1,0 +1,7 @@
+{
+	"name": "listing.draftId",
+	"title": "Field: listing.draftId",
+	"description": "Meaning of the buyer-visible listing.draftId field.",
+	"kind": "field",
+	"text": "# listing.draftId\n\nTL;DR:\n- listing.draftId points back to the source draft when that relation is available.\n\nWhat it means:\n- A listing is published from a draft.\n- draftId is the linkage to that source draft when the relation is exposed in the current surface.\n- Null means the source draft relation is not available in the current output.\n\nAgent hint:\n- Use this as provenance metadata, not as a buyer-editing affordance.\n"
+}

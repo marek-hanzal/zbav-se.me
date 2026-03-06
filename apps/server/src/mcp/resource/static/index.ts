@@ -1,4 +1,5 @@
 import overview from "../../../../public/mcp/guide/overview.json";
+import searchAndRanking from "../../../../public/mcp/guide/search-and-ranking.json";
 import listingBehavior from "../../../../public/mcp/guide/listing-behavior.json";
 import roles from "../../../../public/mcp/guide/roles.json";
 import rules from "../../../../public/mcp/guide/rules.json";
@@ -14,6 +15,19 @@ import listingRestriction from "../../../../public/mcp/schema/enum/listing-restr
 import listingSort from "../../../../public/mcp/schema/enum/listing-sort.json";
 import listingWarranty from "../../../../public/mcp/schema/enum/listing-warranty.json";
 import thumb from "../../../../public/mcp/schema/enum/thumb.json";
+import filterFeedId from "../../../../public/mcp/field/filter-feed-id.json";
+import filterRange from "../../../../public/mcp/field/filter-range.json";
+import filterWithIgnored from "../../../../public/mcp/field/filter-with-ignored.json";
+import filterWithOwn from "../../../../public/mcp/field/filter-with-own.json";
+import listingAge from "../../../../public/mcp/field/listing-age.json";
+import listingCondition from "../../../../public/mcp/field/listing-condition.json";
+import listingDraftId from "../../../../public/mcp/field/listing-draft-id.json";
+import listingMy from "../../../../public/mcp/field/listing-my.json";
+import listingPriceType from "../../../../public/mcp/field/listing-price-type.json";
+import listingRestrictionField from "../../../../public/mcp/field/listing-restriction.json";
+import listingThumbField from "../../../../public/mcp/field/listing-thumb.json";
+import listingTransactionId from "../../../../public/mcp/field/listing-transaction-id.json";
+import listingWarrantyField from "../../../../public/mcp/field/listing-warranty.json";
 import { McpSchema } from "~/mcp/McpSchema";
 import type { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import type { StaticResourceDocument } from "~/mcp/resource/static/StaticResourceDocument";
@@ -45,6 +59,11 @@ const staticResources = [
 		document: listingBehavior as StaticResourceDocument.Guide,
 		staticUrl: "/mcp/guide/listing-behavior.json",
 		uri: McpSchema.withGuideResourceUri("listing-behavior"),
+	},
+	{
+		document: searchAndRanking as StaticResourceDocument.Guide,
+		staticUrl: "/mcp/guide/search-and-ranking.json",
+		uri: McpSchema.withGuideResourceUri("search-and-ranking"),
 	},
 	{
 		document: listing as StaticResourceDocument.Entity,
@@ -105,6 +124,71 @@ const staticResources = [
 		document: listingSort as StaticResourceDocument.Enum,
 		staticUrl: "/mcp/schema/enum/listing-sort.json",
 		uri: McpSchema.withEnumResourceUri("listing-sort"),
+	},
+	{
+		document: listingMy as StaticResourceDocument.Field,
+		staticUrl: "/mcp/field/listing-my.json",
+		uri: McpSchema.withFieldResourceUri("listing.my"),
+	},
+	{
+		document: listingAge as StaticResourceDocument.Field,
+		staticUrl: "/mcp/field/listing-age.json",
+		uri: McpSchema.withFieldResourceUri("listing.age"),
+	},
+	{
+		document: listingCondition as StaticResourceDocument.Field,
+		staticUrl: "/mcp/field/listing-condition.json",
+		uri: McpSchema.withFieldResourceUri("listing.condition"),
+	},
+	{
+		document: listingPriceType as StaticResourceDocument.Field,
+		staticUrl: "/mcp/field/listing-price-type.json",
+		uri: McpSchema.withFieldResourceUri("listing.priceType"),
+	},
+	{
+		document: listingRestrictionField as StaticResourceDocument.Field,
+		staticUrl: "/mcp/field/listing-restriction.json",
+		uri: McpSchema.withFieldResourceUri("listing.restriction"),
+	},
+	{
+		document: listingWarrantyField as StaticResourceDocument.Field,
+		staticUrl: "/mcp/field/listing-warranty.json",
+		uri: McpSchema.withFieldResourceUri("listing.warranty"),
+	},
+	{
+		document: listingTransactionId as StaticResourceDocument.Field,
+		staticUrl: "/mcp/field/listing-transaction-id.json",
+		uri: McpSchema.withFieldResourceUri("listing.transactionId"),
+	},
+	{
+		document: listingThumbField as StaticResourceDocument.Field,
+		staticUrl: "/mcp/field/listing-thumb.json",
+		uri: McpSchema.withFieldResourceUri("listing.thumb"),
+	},
+	{
+		document: listingDraftId as StaticResourceDocument.Field,
+		staticUrl: "/mcp/field/listing-draft-id.json",
+		uri: McpSchema.withFieldResourceUri("listing.draftId"),
+	},
+	{
+		document: filterRange as StaticResourceDocument.Field,
+		staticUrl: "/mcp/field/filter-range.json",
+		uri: McpSchema.withFieldResourceUri("filter.range"),
+	},
+	{
+		document: filterWithOwn as StaticResourceDocument.Field,
+		staticUrl: "/mcp/field/filter-with-own.json",
+		uri: McpSchema.withFieldResourceUri("filter.withOwn"),
+	},
+	{
+		document: filterWithIgnored as StaticResourceDocument.Field,
+		staticUrl: "/mcp/field/filter-with-ignored.json",
+		uri: McpSchema.withFieldResourceUri("filter.withIgnored"),
+	},
+	{
+		document: filterFeedId as StaticResourceDocument.Field,
+		staticUrl: "/mcp/field/filter-feed-id.json",
+		uri: McpSchema.withFieldResourceUri("filter.feedId"),
 	},
 ] as const satisfies readonly StaticResourceEntry[];
 

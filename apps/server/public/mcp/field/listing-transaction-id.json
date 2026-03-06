@@ -1,0 +1,7 @@
+{
+	"name": "listing.transactionId",
+	"title": "Field: listing.transactionId",
+	"description": "Meaning of the buyer-visible listing.transactionId field.",
+	"kind": "field",
+	"text": "# listing.transactionId\n\nTL;DR:\n- listing.transactionId links the current authenticated user to a related transaction for this listing.\n\nWhat it means:\n- A non-null value means the current user already has a transaction relationship around this listing.\n- Null means no related transaction exists for the current user in the current context.\n\nAgent hint:\n- Treat this as actor-specific workflow state, not as a global property of the listing itself.\n"
+}

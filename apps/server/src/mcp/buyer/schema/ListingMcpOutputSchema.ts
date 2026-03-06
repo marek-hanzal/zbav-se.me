@@ -115,29 +115,31 @@ export const ListingMcpOutputSchema = z
 		id: z.string().describe("Unique listing id."),
 		price: z.number().describe("Listing price amount."),
 		priceType: ListingPriceEnumSchema.describe(
-			"Price interpretation mode for the listing. See zbav://mcp/schema/enum/listing-price.",
+			"Price interpretation mode for the listing. See zbav://mcp/schema/enum/listing-price and zbav://mcp/field/listing.priceType.",
 		),
 		currency: CurrencyEnumSchema.describe(
 			"Currency code used by the listing price. See zbav://mcp/schema/enum/currency.",
 		),
 		condition: NullableNumberSchema.describe(
-			"Condition score for the listing, or null when unavailable.",
+			"Condition score for the listing, or null when unavailable. See zbav://mcp/field/listing.condition.",
 		),
-		age: NullableNumberSchema.describe("Age score for the listing, or null when unavailable."),
+		age: NullableNumberSchema.describe(
+			"Age score for the listing, or null when unavailable. See zbav://mcp/field/listing.age.",
+		),
 		delivery: NullableDeliverySchema.describe(
 			"Supported delivery methods for the listing. See zbav://mcp/schema/enum/listing-delivery.",
 		),
 		warranty: NullableWarrantySchema.describe(
-			"Warranty status for the listing. See zbav://mcp/schema/enum/listing-warranty.",
+			"Warranty status for the listing. See zbav://mcp/schema/enum/listing-warranty and zbav://mcp/field/listing.warranty.",
 		),
 		restriction: ListingRestrictionEnumSchema.describe(
-			"Content restriction level of the listing. See zbav://mcp/schema/enum/listing-restriction.",
+			"Content restriction level of the listing. See zbav://mcp/schema/enum/listing-restriction and zbav://mcp/field/listing.restriction.",
 		),
 		locationId: z.string().describe("Referenced location id."),
 		categoryId: z.string().describe("Referenced category id."),
 		galleryId: z.string().describe("Referenced gallery id."),
 		draftId: NullableStringSchema.describe(
-			"Source draft id for this listing, or null when unavailable.",
+			"Source draft id for this listing, or null when unavailable. See zbav://mcp/field/listing.draftId.",
 		),
 		expiresAt: DateTimeStringSchema.describe(
 			"Listing expiration timestamp in ISO 8601 format.",
@@ -164,7 +166,9 @@ export const ListingMcpOutputSchema = z
 		gallery: GalleryMcpSchema.describe("Resolved gallery attached to the listing."),
 		my: z
 			.boolean()
-			.describe("True when the listing belongs to the current authenticated user."),
+			.describe(
+				"True when the listing belongs to the current authenticated user. See zbav://mcp/field/listing.my.",
+			),
 		isFavourite: z
 			.boolean()
 			.describe("True when the current authenticated user saved this listing to favourites."),
@@ -175,10 +179,10 @@ export const ListingMcpOutputSchema = z
 			.boolean()
 			.describe("True when the current authenticated user flagged this listing."),
 		transactionId: NullableStringSchema.describe(
-			"Transaction ID for the current authenticated user's related transaction, or null when no transaction exists.",
+			"Transaction ID for the current authenticated user's related transaction, or null when no transaction exists. See zbav://mcp/field/listing.transactionId.",
 		),
 		thumb: NullableThumbSchema.describe(
-			"Current authenticated user's thumb reaction for this listing. See zbav://mcp/schema/enum/thumb.",
+			"Current authenticated user's thumb reaction for this listing. See zbav://mcp/schema/enum/thumb and zbav://mcp/field/listing.thumb.",
 		),
 	})
 	.strip()

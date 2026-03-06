@@ -116,4 +116,8 @@ export namespace McpSchema {
 	export const withEnumResourceUri = (name: string): string => {
 		return `zbav://mcp/schema/enum/${name}`;
 	};
+
+	export const withFieldResourceUri = (name: string): string => {
+		return `zbav://mcp/field/${name}`;
+	};
 }

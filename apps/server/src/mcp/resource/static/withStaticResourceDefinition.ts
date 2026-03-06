@@ -22,6 +22,8 @@ const withName = ({
 			return `mcp-entity-${name}`;
 		case "enum":
 			return `mcp-enum-${name}`;
+		case "field":
+			return `mcp-field-${name}`;
 	}
 };
 
@@ -43,6 +45,7 @@ export const withStaticResourceDefinition = ({
 		read(uri) {
 			return McpResourceDefinition.withContent(uri, {
 				...document,
+				canonicalUri: uri.toString(),
 				staticUrl,
 			});
 		},

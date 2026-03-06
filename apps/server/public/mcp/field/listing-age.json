@@ -1,0 +1,7 @@
+{
+	"name": "listing.age",
+	"title": "Field: listing.age",
+	"description": "Meaning of the buyer-visible listing.age field.",
+	"kind": "field",
+	"text": "# listing.age\n\nTL;DR:\n- listing.age is a normalized age score, not a raw timestamp or guaranteed real-world year count.\n\nWhat it means:\n- listing.age expresses how old the offered item is on the marketplace age scale.\n- Treat it as a comparable score for filtering and sorting, not as a precise age in years unless another product surface says otherwise.\n\nAgent hint:\n- Use listing.age for relative comparison and matching, not for exact legal or historical claims.\n"
+}

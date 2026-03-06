@@ -1,0 +1,7 @@
+{
+	"name": "filter.feedId",
+	"title": "Field: filter.feedId",
+	"description": "Meaning of the buyer query filter.feedId field.",
+	"kind": "field",
+	"text": "# filter.feedId\n\nTL;DR:\n- filter.feedId limits results to one feed-driven browsing context.\n\nWhat it means:\n- feedId scopes the listing query to one feed surface or feed-derived context.\n- It is useful when the browsing workflow already started from a known feed.\n\nAgent hint:\n- Use this only when the surrounding workflow is explicitly feed-based. Otherwise prefer normal category or search filters.\n"
+}
