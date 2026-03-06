@@ -20,12 +20,16 @@ export namespace McpToolDefinition {
 	> {
 		annotations: ToolAnnotations;
 		description: string;
+		entityResourceUris: string[];
 		examples: Example<z.output<TInputSchema>>[];
+		guideResourceUris: string[];
 		inputSchema: TInputSchema;
 		name: string;
 		namespace: string;
 		outputSchema: TOutputSchema;
+		role: string;
 		title: string;
+		workflowHint: string;
 		execute(
 			args: z.output<TInputSchema>,
 			context: Context,

@@ -4,11 +4,16 @@ import { Effect } from "effect";
 import { listingCollectionFx } from "~/@buyer/listing/fx/listingCollectionFx";
 import { ListingQuerySchema } from "~/@buyer/listing/schema/ListingQuerySchema";
 import { ListingSchema } from "~/@buyer/listing/schema/ListingSchema";
+import {
+	ListingMcpOutputSchema,
+	withListingMcpOutput,
+} from "~/mcp/buyer/schema/ListingMcpOutputSchema";
+import { McpSchema } from "~/mcp/McpSchema";
 import { ListingQueryMcpSchema } from "~/mcp/buyer/schema/ListingQueryMcpSchema";
 import type { McpToolDefinition } from "~/mcp/McpToolDefinition";
 
 const ListingCollectionSchema = z
-	.array(ListingSchema)
+	.array(ListingMcpOutputSchema)
 	.describe("Array of buyer-visible listings returned for the provided search query.");
 
 type ListingCollectionSchema = typeof ListingCollectionSchema;
@@ -68,7 +73,19 @@ export const toolListingCollection: McpToolDefinition.Definition<
 	namespace: "buyer",
 	title: "Buyer Listing Collection",
 	description:
-		"Fetch a buyer-visible collection of listings using the authenticated buyer context. Use this for browsing, search, pagination, filtering, and sorting across many listings.",
+		"Buyer-side tool for browsing, searching, paginating, and sorting published listings in shopping context. See: zbav://mcp/guide/overview, zbav://mcp/guide/rules, zbav://mcp/guide/roles, zbav://mcp/guide/listing-behavior, and zbav://mcp/entity/listing.",
+	role: "buyer",
+	workflowHint:
+		"Use for buyer-side browse, search, pagination, and sorting over published listings.",
+	guideResourceUris: [
+		McpSchema.withGuideResourceUri("overview"),
+		McpSchema.withGuideResourceUri("rules"),
+		McpSchema.withGuideResourceUri("roles"),
+		McpSchema.withGuideResourceUri("listing-behavior"),
+	],
+	entityResourceUris: [
+		McpSchema.withEntityResourceUri("listing"),
+	],
 	annotations: {
 		title: "Buyer Listing Collection",
 		readOnlyHint: true,
@@ -88,6 +105,13 @@ export const toolListingCollection: McpToolDefinition.Definition<
 			userId: context.userId,
 			scope: {},
 		}).pipe(
+			Effect.andThen((data) =>
+				zodGuardFx({
+					schema: z.array(ListingSchema),
+					dataFx: Effect.succeed(data),
+				}),
+			),
+			Effect.map((data) => data.map(withListingMcpOutput)),
 			Effect.andThen((data) =>
 				zodGuardFx({
 					schema: ListingCollectionSchema,
