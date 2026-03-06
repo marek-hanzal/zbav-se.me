@@ -4,7 +4,12 @@ import { resourceBuyerListingFetchOutputSchema } from "~/mcp/buyer/tool/listing-
 import type { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { withResourceMcpHealth } from "~/mcp/resource/resourceMcpHealth";
 import { withResourceMcpTools } from "~/mcp/resource/resourceMcpTools";
-import { withStaticFieldResourceTemplate, withStaticResources } from "~/mcp/resource/static";
+import {
+	withStaticEntityResourceTemplate,
+	withStaticEnumResourceTemplate,
+	withStaticFieldResourceTemplate,
+	withStaticResources,
+} from "~/mcp/resource/static";
 import type { ServerInfo } from "~/mcp/serverInfo";
 import { mcpTools } from "~/mcp/tool";
 
@@ -34,6 +39,8 @@ export const withMcpResources = ({
 		],
 		templates: [
 			withStaticFieldResourceTemplate(),
+			withStaticEntityResourceTemplate(),
+			withStaticEnumResourceTemplate(),
 		],
 	};
 };
