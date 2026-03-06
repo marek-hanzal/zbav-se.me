@@ -1,5 +1,79 @@
-import { existsSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import EntityCategoryJson from "../../../../public/mcp/entity/category.json";
+import EntityDraftJson from "../../../../public/mcp/entity/draft.json";
+import EntityGalleryJson from "../../../../public/mcp/entity/gallery.json";
+import EntityListingJson from "../../../../public/mcp/entity/listing.json";
+import EntityLocationJson from "../../../../public/mcp/entity/location.json";
+import FieldCursorPageJson from "../../../../public/mcp/field/cursor-page.json";
+import FieldCursorSizeJson from "../../../../public/mcp/field/cursor-size.json";
+import FieldFilterAgeInJson from "../../../../public/mcp/field/filter-age-in.json";
+import FieldFilterAgeMaxJson from "../../../../public/mcp/field/filter-age-max.json";
+import FieldFilterAgeMinJson from "../../../../public/mcp/field/filter-age-min.json";
+import FieldFilterCategoryIdInJson from "../../../../public/mcp/field/filter-category-id-in.json";
+import FieldFilterCategoryIdJson from "../../../../public/mcp/field/filter-category-id.json";
+import FieldFilterConditionInJson from "../../../../public/mcp/field/filter-condition-in.json";
+import FieldFilterConditionMaxJson from "../../../../public/mcp/field/filter-condition-max.json";
+import FieldFilterConditionMinJson from "../../../../public/mcp/field/filter-condition-min.json";
+import FieldFilterCurrencyInJson from "../../../../public/mcp/field/filter-currency-in.json";
+import FieldFilterCurrencyJson from "../../../../public/mcp/field/filter-currency.json";
+import FieldFilterDeliveryInJson from "../../../../public/mcp/field/filter-delivery-in.json";
+import FieldFilterExpiresAtAfterJson from "../../../../public/mcp/field/filter-expires-at-after.json";
+import FieldFilterExpiresAtBeforeJson from "../../../../public/mcp/field/filter-expires-at-before.json";
+import FieldFilterFeedIdInJson from "../../../../public/mcp/field/filter-feed-id-in.json";
+import FieldFilterFeedIdJson from "../../../../public/mcp/field/filter-feed-id.json";
+import FieldFilterFulltextJson from "../../../../public/mcp/field/filter-fulltext.json";
+import FieldFilterIdInJson from "../../../../public/mcp/field/filter-id-in.json";
+import FieldFilterIdJson from "../../../../public/mcp/field/filter-id.json";
+import FieldFilterIsFavouriteJson from "../../../../public/mcp/field/filter-is-favourite.json";
+import FieldFilterMyJson from "../../../../public/mcp/field/filter-my.json";
+import FieldFilterPriceMaxJson from "../../../../public/mcp/field/filter-price-max.json";
+import FieldFilterPriceMinJson from "../../../../public/mcp/field/filter-price-min.json";
+import FieldFilterRangeJson from "../../../../public/mcp/field/filter-range.json";
+import FieldFilterTitleJson from "../../../../public/mcp/field/filter-title.json";
+import FieldFilterTransactionJson from "../../../../public/mcp/field/filter-transaction.json";
+import FieldFilterUserIdJson from "../../../../public/mcp/field/filter-user-id.json";
+import FieldFilterWarrantyInJson from "../../../../public/mcp/field/filter-warranty-in.json";
+import FieldFilterWithIgnoredJson from "../../../../public/mcp/field/filter-with-ignored.json";
+import FieldFilterWithOwnJson from "../../../../public/mcp/field/filter-with-own.json";
+import FieldListingAgeJson from "../../../../public/mcp/field/listing-age.json";
+import FieldListingCategoryJson from "../../../../public/mcp/field/listing-category.json";
+import FieldListingConditionJson from "../../../../public/mcp/field/listing-condition.json";
+import FieldListingDeliveryJson from "../../../../public/mcp/field/listing-delivery.json";
+import FieldListingDistanceJson from "../../../../public/mcp/field/listing-distance.json";
+import FieldListingDraftIdJson from "../../../../public/mcp/field/listing-draft-id.json";
+import FieldListingGalleryJson from "../../../../public/mcp/field/listing-gallery.json";
+import FieldListingHasFlagJson from "../../../../public/mcp/field/listing-has-flag.json";
+import FieldListingIsFavouriteJson from "../../../../public/mcp/field/listing-is-favourite.json";
+import FieldListingIsIgnoredJson from "../../../../public/mcp/field/listing-is-ignored.json";
+import FieldListingLocationJson from "../../../../public/mcp/field/listing-location.json";
+import FieldListingMyJson from "../../../../public/mcp/field/listing-my.json";
+import FieldListingPriceTypeJson from "../../../../public/mcp/field/listing-price-type.json";
+import FieldListingRestrictionJson from "../../../../public/mcp/field/listing-restriction.json";
+import FieldListingThumbJson from "../../../../public/mcp/field/listing-thumb.json";
+import FieldListingTransactionIdJson from "../../../../public/mcp/field/listing-transaction-id.json";
+import FieldListingWarrantyJson from "../../../../public/mcp/field/listing-warranty.json";
+import FieldMetaFeedIdJson from "../../../../public/mcp/field/meta-feed-id.json";
+import FieldMetaLatLonJson from "../../../../public/mcp/field/meta-lat-lon.json";
+import FieldSortFieldJson from "../../../../public/mcp/field/sort-field.json";
+import FieldSortOrderJson from "../../../../public/mcp/field/sort-order.json";
+import GuideFailuresJson from "../../../../public/mcp/guide/failures.json";
+import GuideListingBehaviorJson from "../../../../public/mcp/guide/listing-behavior.json";
+import GuideOverviewJson from "../../../../public/mcp/guide/overview.json";
+import GuideQueryProfilesJson from "../../../../public/mcp/guide/query-profiles.json";
+import GuideRolesJson from "../../../../public/mcp/guide/roles.json";
+import GuideRulesJson from "../../../../public/mcp/guide/rules.json";
+import GuideSearchAndRankingJson from "../../../../public/mcp/guide/search-and-ranking.json";
+import ProfileBuyerSearchByCategoryJson from "../../../../public/mcp/profile/buyer-search-by-category.json";
+import ProfileBuyerSearchByDeliveryJson from "../../../../public/mcp/profile/buyer-search-by-delivery.json";
+import ProfileBuyerSearchFavouritesJson from "../../../../public/mcp/profile/buyer-search-favourites.json";
+import ProfileBuyerSearchMineJson from "../../../../public/mcp/profile/buyer-search-mine.json";
+import ProfileBuyerSearchNearbyJson from "../../../../public/mcp/profile/buyer-search-nearby.json";
+import SchemaEnumCurrencyJson from "../../../../public/mcp/schema/enum/currency.json";
+import SchemaEnumListingDeliveryJson from "../../../../public/mcp/schema/enum/listing-delivery.json";
+import SchemaEnumListingPriceJson from "../../../../public/mcp/schema/enum/listing-price.json";
+import SchemaEnumListingRestrictionJson from "../../../../public/mcp/schema/enum/listing-restriction.json";
+import SchemaEnumListingSortJson from "../../../../public/mcp/schema/enum/listing-sort.json";
+import SchemaEnumListingWarrantyJson from "../../../../public/mcp/schema/enum/listing-warranty.json";
+import SchemaEnumThumbJson from "../../../../public/mcp/schema/enum/thumb.json";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
 import type { StaticResourceDocument } from "~/mcp/resource/static/StaticResourceDocument";
@@ -491,30 +565,92 @@ const staticFieldResources = [
 	},
 ] as const satisfies readonly StaticFieldResourceEntry[];
 
-const withPublicPath = (): string => {
-	const candidates = [
-		join(process.cwd(), "public/mcp"),
-		join(process.cwd(), "apps/server/public/mcp"),
-		join(process.cwd(), ".vercel/output/static/mcp"),
-		join(process.cwd(), "apps/server/.vercel/output/static/mcp"),
-		join(process.cwd(), "../static/mcp"),
-	];
-
-	for (const candidate of candidates) {
-		if (existsSync(candidate)) {
-			return candidate;
-		}
-	}
-
-	throw new Error(`Unable to resolve MCP static resource directory from cwd: ${process.cwd()}`);
+const staticDocumentByPath: Record<string, unknown> = {
+	"entity/category.json": EntityCategoryJson,
+	"entity/draft.json": EntityDraftJson,
+	"entity/gallery.json": EntityGalleryJson,
+	"entity/listing.json": EntityListingJson,
+	"entity/location.json": EntityLocationJson,
+	"field/cursor-page.json": FieldCursorPageJson,
+	"field/cursor-size.json": FieldCursorSizeJson,
+	"field/filter-age-in.json": FieldFilterAgeInJson,
+	"field/filter-age-max.json": FieldFilterAgeMaxJson,
+	"field/filter-age-min.json": FieldFilterAgeMinJson,
+	"field/filter-category-id-in.json": FieldFilterCategoryIdInJson,
+	"field/filter-category-id.json": FieldFilterCategoryIdJson,
+	"field/filter-condition-in.json": FieldFilterConditionInJson,
+	"field/filter-condition-max.json": FieldFilterConditionMaxJson,
+	"field/filter-condition-min.json": FieldFilterConditionMinJson,
+	"field/filter-currency-in.json": FieldFilterCurrencyInJson,
+	"field/filter-currency.json": FieldFilterCurrencyJson,
+	"field/filter-delivery-in.json": FieldFilterDeliveryInJson,
+	"field/filter-expires-at-after.json": FieldFilterExpiresAtAfterJson,
+	"field/filter-expires-at-before.json": FieldFilterExpiresAtBeforeJson,
+	"field/filter-feed-id-in.json": FieldFilterFeedIdInJson,
+	"field/filter-feed-id.json": FieldFilterFeedIdJson,
+	"field/filter-fulltext.json": FieldFilterFulltextJson,
+	"field/filter-id-in.json": FieldFilterIdInJson,
+	"field/filter-id.json": FieldFilterIdJson,
+	"field/filter-is-favourite.json": FieldFilterIsFavouriteJson,
+	"field/filter-my.json": FieldFilterMyJson,
+	"field/filter-price-max.json": FieldFilterPriceMaxJson,
+	"field/filter-price-min.json": FieldFilterPriceMinJson,
+	"field/filter-range.json": FieldFilterRangeJson,
+	"field/filter-title.json": FieldFilterTitleJson,
+	"field/filter-transaction.json": FieldFilterTransactionJson,
+	"field/filter-user-id.json": FieldFilterUserIdJson,
+	"field/filter-warranty-in.json": FieldFilterWarrantyInJson,
+	"field/filter-with-ignored.json": FieldFilterWithIgnoredJson,
+	"field/filter-with-own.json": FieldFilterWithOwnJson,
+	"field/listing-age.json": FieldListingAgeJson,
+	"field/listing-category.json": FieldListingCategoryJson,
+	"field/listing-condition.json": FieldListingConditionJson,
+	"field/listing-delivery.json": FieldListingDeliveryJson,
+	"field/listing-distance.json": FieldListingDistanceJson,
+	"field/listing-draft-id.json": FieldListingDraftIdJson,
+	"field/listing-gallery.json": FieldListingGalleryJson,
+	"field/listing-has-flag.json": FieldListingHasFlagJson,
+	"field/listing-is-favourite.json": FieldListingIsFavouriteJson,
+	"field/listing-is-ignored.json": FieldListingIsIgnoredJson,
+	"field/listing-location.json": FieldListingLocationJson,
+	"field/listing-my.json": FieldListingMyJson,
+	"field/listing-price-type.json": FieldListingPriceTypeJson,
+	"field/listing-restriction.json": FieldListingRestrictionJson,
+	"field/listing-thumb.json": FieldListingThumbJson,
+	"field/listing-transaction-id.json": FieldListingTransactionIdJson,
+	"field/listing-warranty.json": FieldListingWarrantyJson,
+	"field/meta-feed-id.json": FieldMetaFeedIdJson,
+	"field/meta-lat-lon.json": FieldMetaLatLonJson,
+	"field/sort-field.json": FieldSortFieldJson,
+	"field/sort-order.json": FieldSortOrderJson,
+	"guide/failures.json": GuideFailuresJson,
+	"guide/listing-behavior.json": GuideListingBehaviorJson,
+	"guide/overview.json": GuideOverviewJson,
+	"guide/query-profiles.json": GuideQueryProfilesJson,
+	"guide/roles.json": GuideRolesJson,
+	"guide/rules.json": GuideRulesJson,
+	"guide/search-and-ranking.json": GuideSearchAndRankingJson,
+	"profile/buyer-search-by-category.json": ProfileBuyerSearchByCategoryJson,
+	"profile/buyer-search-by-delivery.json": ProfileBuyerSearchByDeliveryJson,
+	"profile/buyer-search-favourites.json": ProfileBuyerSearchFavouritesJson,
+	"profile/buyer-search-mine.json": ProfileBuyerSearchMineJson,
+	"profile/buyer-search-nearby.json": ProfileBuyerSearchNearbyJson,
+	"schema/enum/currency.json": SchemaEnumCurrencyJson,
+	"schema/enum/listing-delivery.json": SchemaEnumListingDeliveryJson,
+	"schema/enum/listing-price.json": SchemaEnumListingPriceJson,
+	"schema/enum/listing-restriction.json": SchemaEnumListingRestrictionJson,
+	"schema/enum/listing-sort.json": SchemaEnumListingSortJson,
+	"schema/enum/listing-warranty.json": SchemaEnumListingWarrantyJson,
+	"schema/enum/thumb.json": SchemaEnumThumbJson,
 };
 
-const publicPath = withPublicPath();
-
 const withDocument = (documentPath: string): StaticResourceDocument.Any => {
-	return JSON.parse(
-		readFileSync(join(publicPath, documentPath), "utf8"),
-	) as StaticResourceDocument.Any;
+	const document = staticDocumentByPath[documentPath];
+	if (!document) {
+		throw new Error(`Unknown MCP static resource document: ${documentPath}`);
+	}
+
+	return document as StaticResourceDocument.Any;
 };
 
 const withStaticFieldResource = (fieldName: string): StaticFieldResourceEntry => {
