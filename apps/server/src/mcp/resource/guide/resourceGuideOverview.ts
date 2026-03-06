@@ -3,14 +3,15 @@ import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 const text = `# Overview
 
 TL;DR:
-- This is a local-first marketplace with strict product rules.
+- This is a smart marketplace for everyone, with explicit buyer and seller roles.
 - Use tools for actions, schema resources for data shape, and guides for behavior.
 - Do not assume hidden shortcuts or soft rules; backend rules are hard.
 
-Zbav-se.me is a calm, local-first marketplace, not a generic bazaar optimized for noise.
+Zbav-se.me is a smart marketplace for everyone, with a clear role split between buyers and sellers.
 
 What the agent should assume:
 - MCP tools operate over the same real business logic as the REST API.
+- Buyer and seller are explicit product roles with distinct toolsets and workflow intent.
 - Buyer tools are for shopping and browsing in the authenticated buyer context.
 - The system prefers structured, minimal, factual interaction over noisy free-form negotiation.
 - Tools describe what can be done. Guide resources explain how the market behaves.

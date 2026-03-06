@@ -14,6 +14,7 @@ What the agent should assume:
 - Visibility gates, sensitivity, bans, limits, and lifecycle states are real hard constraints.
 - Terminal states are final. Closed is closed.
 - A missing listing or result may be intentional, not a backend failure.
+- Buyer and seller roles are distinct; similarly named data can have different workflow meaning by role.
 
 What the agent should do:
 - Respect closed, banned, expired, hidden, ignored, and otherwise unavailable states.

@@ -372,7 +372,8 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 					_meta: {
 						examples: tool.examples,
 						namespace: tool.namespace,
-						outputSchema: McpSchema.withJsonSchema(tool.outputSchema, "output"),
+						inputSchema: tool.inputJsonSchema,
+						outputSchema: tool.outputJsonSchema,
 					},
 				},
 				handleTool,

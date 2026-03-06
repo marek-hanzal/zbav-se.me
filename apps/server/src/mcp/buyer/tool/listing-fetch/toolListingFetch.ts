@@ -3,10 +3,16 @@ import { Effect } from "effect";
 import { listingFetchFx } from "~/@buyer/listing/fx/listingFetchFx";
 import { ListingQuerySchema } from "~/@buyer/listing/schema/ListingQuerySchema";
 import { ListingSchema } from "~/@buyer/listing/schema/ListingSchema";
+import { ListingMcpFieldNotes } from "~/mcp/buyer/schema/ListingMcpFieldNotes";
+import {
+	ListingMcpOutputJsonSchema,
+	ListingQueryMcpJsonSchema,
+} from "~/mcp/buyer/schema/ListingMcpJsonSchema";
 import {
 	ListingMcpOutputSchema,
 	withListingMcpOutput,
 } from "~/mcp/buyer/schema/ListingMcpOutputSchema";
+import { McpSchema } from "~/mcp/McpSchema";
 import { ListingQueryMcpSchema } from "~/mcp/buyer/schema/ListingQueryMcpSchema";
 import type { McpToolDefinition } from "~/mcp/McpToolDefinition";
 
@@ -47,7 +53,18 @@ export const toolListingFetch: McpToolDefinition.Definition<
 	namespace: "buyer",
 	title: "Buyer Listing Fetch",
 	description:
-		"Fetch one buyer-visible listing using the authenticated buyer context. Use this when you need a single concrete listing that matches a focused query, such as an exact listing id or a tightly constrained search. See: zbav://mcp/guide/overview and zbav://mcp/guide/rules.",
+		"Buyer-side tool for inspecting one published listing in shopping context. Use this when you need a single concrete listing that matches a focused query, such as an exact listing id or a tightly constrained search. See: zbav://mcp/guide/overview, zbav://mcp/guide/rules, zbav://mcp/guide/roles, zbav://mcp/guide/listing-behavior, and zbav://mcp/entity/listing.",
+	role: "buyer",
+	workflowHint: "Use for buyer-side detail inspection of one published listing.",
+	guideResourceUris: [
+		McpSchema.withGuideResourceUri("overview"),
+		McpSchema.withGuideResourceUri("rules"),
+		McpSchema.withGuideResourceUri("roles"),
+		McpSchema.withGuideResourceUri("listing-behavior"),
+	],
+	entityResourceUris: [
+		McpSchema.withEntityResourceUri("listing"),
+	],
 	annotations: {
 		title: "Buyer Listing Fetch",
 		readOnlyHint: true,
@@ -57,7 +74,10 @@ export const toolListingFetch: McpToolDefinition.Definition<
 	inputSchema: ListingQueryMcpSchema.describe(
 		"Buyer listing query. Accepts exact ids, fulltext, filters, sort, and optional meta such as geolocation.",
 	),
+	inputJsonSchema: ListingQueryMcpJsonSchema,
 	outputSchema: ListingMcpOutputSchema,
+	outputJsonSchema: ListingMcpOutputJsonSchema,
+	outputFieldNotes: ListingMcpFieldNotes,
 	examples,
 	execute(args, context) {
 		const query = ListingQuerySchema.parse(args);

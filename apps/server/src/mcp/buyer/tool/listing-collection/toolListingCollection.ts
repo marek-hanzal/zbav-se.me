@@ -4,10 +4,16 @@ import { Effect } from "effect";
 import { listingCollectionFx } from "~/@buyer/listing/fx/listingCollectionFx";
 import { ListingQuerySchema } from "~/@buyer/listing/schema/ListingQuerySchema";
 import { ListingSchema } from "~/@buyer/listing/schema/ListingSchema";
+import { ListingMcpFieldNotes } from "~/mcp/buyer/schema/ListingMcpFieldNotes";
+import {
+	ListingCollectionMcpOutputJsonSchema,
+	ListingQueryMcpJsonSchema,
+} from "~/mcp/buyer/schema/ListingMcpJsonSchema";
 import {
 	ListingMcpOutputSchema,
 	withListingMcpOutput,
 } from "~/mcp/buyer/schema/ListingMcpOutputSchema";
+import { McpSchema } from "~/mcp/McpSchema";
 import { ListingQueryMcpSchema } from "~/mcp/buyer/schema/ListingQueryMcpSchema";
 import type { McpToolDefinition } from "~/mcp/McpToolDefinition";
 
@@ -72,7 +78,19 @@ export const toolListingCollection: McpToolDefinition.Definition<
 	namespace: "buyer",
 	title: "Buyer Listing Collection",
 	description:
-		"Fetch a buyer-visible collection of listings using the authenticated buyer context. Use this for browsing, search, pagination, filtering, and sorting across many listings. See: zbav://mcp/guide/overview and zbav://mcp/guide/rules.",
+		"Buyer-side tool for browsing, searching, paginating, and sorting published listings in shopping context. See: zbav://mcp/guide/overview, zbav://mcp/guide/rules, zbav://mcp/guide/roles, zbav://mcp/guide/listing-behavior, and zbav://mcp/entity/listing.",
+	role: "buyer",
+	workflowHint:
+		"Use for buyer-side browse, search, pagination, and sorting over published listings.",
+	guideResourceUris: [
+		McpSchema.withGuideResourceUri("overview"),
+		McpSchema.withGuideResourceUri("rules"),
+		McpSchema.withGuideResourceUri("roles"),
+		McpSchema.withGuideResourceUri("listing-behavior"),
+	],
+	entityResourceUris: [
+		McpSchema.withEntityResourceUri("listing"),
+	],
 	annotations: {
 		title: "Buyer Listing Collection",
 		readOnlyHint: true,
@@ -82,7 +100,10 @@ export const toolListingCollection: McpToolDefinition.Definition<
 	inputSchema: ListingQueryMcpSchema.describe(
 		"Buyer listing collection query. Supports pagination, fulltext, filters, sort, and optional meta such as lat/lon for distance-aware results.",
 	),
+	inputJsonSchema: ListingQueryMcpJsonSchema,
 	outputSchema: ListingCollectionSchema,
+	outputJsonSchema: ListingCollectionMcpOutputJsonSchema,
+	outputFieldNotes: ListingMcpFieldNotes,
 	examples,
 	execute(args, context) {
 		const query = ListingQuerySchema.parse(args);

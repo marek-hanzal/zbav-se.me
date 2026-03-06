@@ -10,7 +10,7 @@ export const resourceBuyerListingCollectionOutputSchema: McpResourceDefinition.D
 	description: "Output schema resource for the buyer.listingCollection MCP tool.",
 	mimeType: "application/json",
 	read(uri) {
-		const outputSchema = McpSchema.withJsonSchema(toolListingCollection.outputSchema, "output");
+		const outputSchema = toolListingCollection.outputJsonSchema;
 
 		return McpResourceDefinition.withContent(uri, {
 			name: "buyer.listingCollection",
@@ -18,6 +18,8 @@ export const resourceBuyerListingCollectionOutputSchema: McpResourceDefinition.D
 			description: toolListingCollection.description,
 			outputSchema,
 			outputSummary: McpSchema.withSummary(outputSchema),
+			guideResourceUris: toolListingCollection.guideResourceUris,
+			entityResourceUris: toolListingCollection.entityResourceUris,
 			itemSchemaUri: resourceListingSchema.uri,
 			relatedSchemas: [
 				resourceListingSchema.uri,

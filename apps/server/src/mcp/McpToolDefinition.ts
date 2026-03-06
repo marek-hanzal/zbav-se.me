@@ -1,6 +1,7 @@
 import type { ToolAnnotations } from "@modelcontextprotocol/sdk/types.js";
 import type { Effect } from "effect";
 import type { z } from "zod";
+import type { McpSchema } from "~/mcp/McpSchema";
 
 export namespace McpToolDefinition {
 	export interface Example<out TArguments> {
@@ -20,12 +21,19 @@ export namespace McpToolDefinition {
 	> {
 		annotations: ToolAnnotations;
 		description: string;
+		entityResourceUris: string[];
 		examples: Example<z.output<TInputSchema>>[];
+		guideResourceUris: string[];
 		inputSchema: TInputSchema;
+		inputJsonSchema: McpSchema.JsonSchema;
 		name: string;
 		namespace: string;
 		outputSchema: TOutputSchema;
+		outputFieldNotes?: Record<string, string>;
+		outputJsonSchema: McpSchema.JsonSchema;
+		role: string;
 		title: string;
+		workflowHint: string;
 		execute(
 			args: z.output<TInputSchema>,
 			context: Context,

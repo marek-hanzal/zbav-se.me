@@ -1,5 +1,3 @@
-import { toJSONSchema, type z } from "zod";
-
 export namespace McpSchema {
 	export type JsonPrimitive = boolean | null | number | string;
 	export type JsonValue =
@@ -25,15 +23,42 @@ export namespace McpSchema {
 		type: string;
 	}
 
+	type JsonSchemaWithVariants = JsonSchema & {
+		anyOf?: JsonSchema[];
+		oneOf?: JsonSchema[];
+	};
+
 	export const isJsonRecord = (value: unknown): value is JsonRecord => {
 		return typeof value === "object" && value !== null && !Array.isArray(value);
 	};
 
-	export const withJsonSchema = (schema: z.ZodType, io: "input" | "output"): JsonSchema => {
-		return toJSONSchema(schema, {
-			io,
-			unrepresentable: "any",
-		}) as JsonSchema;
+	const withType = (schema: JsonSchemaWithVariants): string => {
+		if (typeof schema.type === "string") {
+			if (schema.type === "array" && schema.items) {
+				return `${withType(schema.items)}[]`;
+			}
+
+			return schema.type;
+		}
+
+		if (Array.isArray(schema.type)) {
+			return schema.type.join(" | ");
+		}
+
+		const variants = schema.anyOf ?? schema.oneOf;
+		if (variants) {
+			const types = variants
+				.map((item) => withType(item))
+				.filter((value, index, all) => all.indexOf(value) === index);
+
+			return types.length > 0 ? types.join(" | ") : "unknown";
+		}
+
+		if (schema.properties) {
+			return "object";
+		}
+
+		return "unknown";
 	};
 
 	export const withSummary = (schema: JsonSchema): SummaryItem[] => {
@@ -56,18 +81,12 @@ export namespace McpSchema {
 				};
 			}
 
-			const propertySchema = value as {
-				description?: string;
-				type?: string | string[];
-			};
-			const type = Array.isArray(propertySchema.type)
-				? propertySchema.type.join(" | ")
-				: (propertySchema.type ?? "unknown");
+			const propertySchema = value as JsonSchemaWithVariants;
 
 			return {
 				name,
 				required: required.includes(name),
-				type,
+				type: withType(propertySchema),
 				description: propertySchema.description,
 			};
 		});
@@ -75,5 +94,17 @@ export namespace McpSchema {
 
 	export const withSchemaResourceUri = (name: string): string => {
 		return `zbav://mcp/schema/${name}`;
+	};
+
+	export const withGuideResourceUri = (name: string): string => {
+		return `zbav://mcp/guide/${name}`;
+	};
+
+	export const withEntityResourceUri = (name: string): string => {
+		return `zbav://mcp/entity/${name}`;
+	};
+
+	export const withEnumResourceUri = (name: string): string => {
+		return `zbav://mcp/schema/enum/${name}`;
 	};
 }

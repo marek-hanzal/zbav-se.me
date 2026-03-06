@@ -8,14 +8,18 @@ interface ResourceEntry {
 	annotations: ToolAnnotations;
 	argumentSummary: McpSchema.SummaryItem[];
 	description: string;
+	entityResourceUris: string[];
 	examples: McpToolDefinition.Example<McpSchema.JsonRecord>[];
+	guideResourceUris: string[];
 	inputSchema: McpSchema.JsonSchema;
 	name: string;
 	namespace: string;
 	outputSchema: McpSchema.JsonSchema;
 	outputSchemaResourceUri: string;
 	outputSummary: McpSchema.SummaryItem[];
+	role: string;
 	title: string;
+	workflowHint: string;
 }
 
 interface WithResourceMcpToolsProps {
@@ -25,21 +29,25 @@ interface WithResourceMcpToolsProps {
 const withResourceEntry = (
 	tool: McpToolDefinition.Definition<z.ZodType, z.ZodType>,
 ): ResourceEntry => {
-	const inputSchema = McpSchema.withJsonSchema(tool.inputSchema, "input");
-	const outputSchema = McpSchema.withJsonSchema(tool.outputSchema, "output");
+	const inputSchema = tool.inputJsonSchema;
+	const outputSchema = tool.outputJsonSchema;
 
 	return {
 		name: `${tool.namespace}.${tool.name}`,
 		namespace: tool.namespace,
 		title: tool.title,
 		description: tool.description,
+		role: tool.role,
 		annotations: tool.annotations,
+		guideResourceUris: tool.guideResourceUris,
+		entityResourceUris: tool.entityResourceUris,
 		inputSchema,
 		outputSchema,
 		argumentSummary: McpSchema.withSummary(inputSchema),
 		outputSummary: McpSchema.withSummary(outputSchema),
 		outputSchemaResourceUri: McpSchema.withSchemaResourceUri(`${tool.namespace}.${tool.name}`),
 		examples: tool.examples as McpToolDefinition.Example<McpSchema.JsonRecord>[],
+		workflowHint: tool.workflowHint,
 	};
 };
 
