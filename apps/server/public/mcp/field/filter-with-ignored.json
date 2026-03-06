@@ -1,7 +1,22 @@
 {
 	"name": "filter.withIgnored",
 	"title": "Field: filter.withIgnored",
-	"description": "Meaning of the buyer query filter.withIgnored field.",
+	"description": "Meaning and invariants of the buyer query filter.withIgnored field.",
 	"kind": "field",
-	"text": "# filter.withIgnored\n\nTL;DR:\n- filter.withIgnored controls whether ignored listings may appear in the result set.\n\nWhat it means:\n- True allows listings ignored by the current user to remain visible in results.\n- False excludes them.\n\nAgent hint:\n- Use this when the workflow explicitly wants to include or exclude already-ignored listings.\n"
+	"type": "boolean",
+	"meaning": "Controls whether listings ignored by the current actor remain included in the result set.",
+	"actorDependent": true,
+	"filterable": true,
+	"responseOnly": false,
+	"invariants": [
+		{
+			"label": "Actor relative",
+			"value": "Depends on the authenticated actor's ignore state."
+		},
+		{
+			"label": "Inclusion",
+			"value": "Affects inclusion of ignored items in a broader search, not global listing visibility."
+		}
+	],
+	"text": "# filter.withIgnored\n\nTL;DR:\n- filter.withIgnored controls whether ignored listings are still included for the current actor.\n\nWhat it means:\n- It adjusts inclusion of actor-ignored listings in a search result.\n\nAgent hint:\n- Use this only when the workflow explicitly needs to include ignored items instead of the default buyer-facing view.\n"
 }

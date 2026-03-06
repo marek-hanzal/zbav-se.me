@@ -28,6 +28,7 @@ export namespace McpToolDefinition {
 		name: string;
 		namespace: string;
 		outputSchema: TOutputSchema;
+		profileResourceUris: string[];
 		role: string;
 		title: string;
 		workflowHint: string;

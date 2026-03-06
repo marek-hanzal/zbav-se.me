@@ -1,7 +1,26 @@
 {
 	"name": "listing.age",
 	"title": "Field: listing.age",
-	"description": "Meaning of the buyer-visible listing.age field.",
+	"description": "Meaning and invariants of the buyer-visible listing.age field.",
 	"kind": "field",
-	"text": "# listing.age\n\nTL;DR:\n- listing.age is a normalized age score, not a raw timestamp or guaranteed real-world year count.\n\nWhat it means:\n- listing.age expresses how old the offered item is on the marketplace age scale.\n- Treat it as a comparable score for filtering and sorting, not as a precise age in years unless another product surface says otherwise.\n\nAgent hint:\n- Use listing.age for relative comparison and matching, not for exact legal or historical claims.\n"
+	"type": "number | null",
+	"meaning": "Buyer-facing age score bucket for the listed item, not the age of the listing record itself.",
+	"actorDependent": false,
+	"filterable": true,
+	"responseOnly": false,
+	"nullableWhen": [
+		"The seller did not provide item age information.",
+		"The age score is unavailable for the listing."
+	],
+	"invariants": [
+		{
+			"label": "Semantic",
+			"value": "Represents item age bucket, not record age."
+		},
+		{
+			"label": "Range",
+			"value": "Use as a marketplace bucket score, not an exact number of years."
+		}
+	],
+	"text": "# listing.age\n\nTL;DR:\n- listing.age is a bucketed item-age score, not a raw timestamp and not listing record age.\n\nWhat it means:\n- It expresses how old the item itself is according to marketplace scoring.\n- It is nullable when the age bucket is unavailable.\n\nAgent hint:\n- Explain it as an age score or age bucket unless a richer category-specific interpretation is known.\n"
 }

@@ -1,7 +1,25 @@
 {
 	"name": "listing.draftId",
 	"title": "Field: listing.draftId",
-	"description": "Meaning of the buyer-visible listing.draftId field.",
+	"description": "Meaning and invariants of the buyer-visible listing.draftId field.",
 	"kind": "field",
-	"text": "# listing.draftId\n\nTL;DR:\n- listing.draftId points back to the source draft when that relation is available.\n\nWhat it means:\n- A listing is published from a draft.\n- draftId is the linkage to that source draft when the relation is exposed in the current surface.\n- Null means the source draft relation is not available in the current output.\n\nAgent hint:\n- Use this as provenance metadata, not as a buyer-editing affordance.\n"
+	"type": "string | null",
+	"meaning": "Identifier of the draft from which the listing was published, when available.",
+	"actorDependent": false,
+	"filterable": false,
+	"responseOnly": true,
+	"nullableWhen": [
+		"Source draft linkage is unavailable in the returned view."
+	],
+	"invariants": [
+		{
+			"label": "Lifecycle",
+			"value": "Listings originate from draft flow rather than ad-hoc creation."
+		},
+		{
+			"label": "Null",
+			"value": "Null means draft linkage is not available in the current response, not that draft flow does not exist."
+		}
+	],
+	"text": "# listing.draftId\n\nTL;DR:\n- listing.draftId links the published listing back to its source draft when that linkage is available.\n\nWhat it means:\n- It is a lifecycle hint, not a buyer action handle.\n\nAgent hint:\n- Use it to explain listing origin, not as something a buyer tool should mutate.\n"
 }
