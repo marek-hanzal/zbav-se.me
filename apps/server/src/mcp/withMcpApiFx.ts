@@ -13,6 +13,7 @@ import type { z } from "zod";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { auth } from "~/auth/auth";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { McpSchema } from "~/mcp/McpSchema";
 import type { McpToolDefinition } from "~/mcp/McpToolDefinition";
@@ -346,6 +347,7 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 						})
 						.pipe(
 							withKyselyFx(kysely),
+							withDateFx,
 							withLoggingFx(axiomConfig, "mcp", traceId),
 							Effect.annotateLogs({
 								toolName,
