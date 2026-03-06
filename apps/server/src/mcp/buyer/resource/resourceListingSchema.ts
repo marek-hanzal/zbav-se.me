@@ -34,8 +34,17 @@ export const resourceListingSchema: McpResourceDefinition.Definition = {
 				McpSchema.withEnumResourceUri("listing-delivery"),
 				McpSchema.withEnumResourceUri("thumb"),
 			],
+			guideResourceUris: [
+				McpSchema.withGuideResourceUri("listing-behavior"),
+				McpSchema.withGuideResourceUri("search-and-ranking"),
+				McpSchema.withGuideResourceUri("failures"),
+			],
 			fieldResourceUris: [
 				McpSchema.withFieldResourceUri("listing.my"),
+				McpSchema.withFieldResourceUri("listing.distance"),
+				McpSchema.withFieldResourceUri("listing.isFavourite"),
+				McpSchema.withFieldResourceUri("listing.isIgnored"),
+				McpSchema.withFieldResourceUri("listing.hasFlag"),
 				McpSchema.withFieldResourceUri("listing.condition"),
 				McpSchema.withFieldResourceUri("listing.age"),
 				McpSchema.withFieldResourceUri("listing.priceType"),
@@ -44,6 +53,12 @@ export const resourceListingSchema: McpResourceDefinition.Definition = {
 				McpSchema.withFieldResourceUri("listing.transactionId"),
 				McpSchema.withFieldResourceUri("listing.thumb"),
 				McpSchema.withFieldResourceUri("listing.draftId"),
+			],
+			responseInterpretationHints: [
+				"Prefer expanded linked objects such as location, category, and gallery when explaining a result to a user.",
+				"locationId, categoryId, and galleryId are stable identifiers; location, category, and gallery provide human-readable expanded context.",
+				"distance is meaningful only for geo-aware queries that include meta.latLon; otherwise it may be null.",
+				"my, isFavourite, isIgnored, hasFlag, transactionId, and thumb are actor-relative fields tied to the authenticated buyer context.",
 			],
 		});
 	},

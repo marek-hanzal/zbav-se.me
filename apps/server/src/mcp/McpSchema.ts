@@ -109,6 +109,10 @@ export namespace McpSchema {
 		return `zbav://mcp/guide/${name}`;
 	};
 
+	export const withProfileResourceUri = (name: string): string => {
+		return `zbav://mcp/profile/${name}`;
+	};
+
 	export const withEntityResourceUri = (name: string): string => {
 		return `zbav://mcp/entity/${name}`;
 	};

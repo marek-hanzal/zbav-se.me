@@ -15,6 +15,10 @@ interface StaticFieldResourceEntry extends StaticResourceEntry {
 	fieldName: string;
 }
 
+interface StaticProfileResourceEntry extends StaticResourceEntry {
+	profileName: string;
+}
+
 interface StaticEntityResourceEntry extends StaticResourceEntry {
 	entityName: string;
 }
@@ -49,7 +53,50 @@ const staticResources = [
 		staticUrl: "/mcp/guide/search-and-ranking.json",
 		uri: McpSchema.withGuideResourceUri("search-and-ranking"),
 	},
+	{
+		documentPath: "guide/query-profiles.json",
+		staticUrl: "/mcp/guide/query-profiles.json",
+		uri: McpSchema.withGuideResourceUri("query-profiles"),
+	},
+	{
+		documentPath: "guide/failures.json",
+		staticUrl: "/mcp/guide/failures.json",
+		uri: McpSchema.withGuideResourceUri("failures"),
+	},
 ] as const satisfies readonly StaticResourceEntry[];
+
+const staticProfileResources = [
+	{
+		profileName: "buyer.search.byDelivery",
+		documentPath: "profile/buyer-search-by-delivery.json",
+		staticUrl: "/mcp/profile/buyer-search-by-delivery.json",
+		uri: McpSchema.withProfileResourceUri("buyer.search.byDelivery"),
+	},
+	{
+		profileName: "buyer.search.nearby",
+		documentPath: "profile/buyer-search-nearby.json",
+		staticUrl: "/mcp/profile/buyer-search-nearby.json",
+		uri: McpSchema.withProfileResourceUri("buyer.search.nearby"),
+	},
+	{
+		profileName: "buyer.search.mine",
+		documentPath: "profile/buyer-search-mine.json",
+		staticUrl: "/mcp/profile/buyer-search-mine.json",
+		uri: McpSchema.withProfileResourceUri("buyer.search.mine"),
+	},
+	{
+		profileName: "buyer.search.byCategory",
+		documentPath: "profile/buyer-search-by-category.json",
+		staticUrl: "/mcp/profile/buyer-search-by-category.json",
+		uri: McpSchema.withProfileResourceUri("buyer.search.byCategory"),
+	},
+	{
+		profileName: "buyer.search.favourites",
+		documentPath: "profile/buyer-search-favourites.json",
+		staticUrl: "/mcp/profile/buyer-search-favourites.json",
+		uri: McpSchema.withProfileResourceUri("buyer.search.favourites"),
+	},
+] as const satisfies readonly StaticProfileResourceEntry[];
 
 const staticEntityResources = [
 	{
@@ -208,6 +255,42 @@ const staticFieldResources = [
 		staticUrl: "/mcp/field/filter-feed-id.json",
 		uri: McpSchema.withFieldResourceUri("filter.feedId"),
 	},
+	{
+		fieldName: "listing.distance",
+		documentPath: "field/listing-distance.json",
+		staticUrl: "/mcp/field/listing-distance.json",
+		uri: McpSchema.withFieldResourceUri("listing.distance"),
+	},
+	{
+		fieldName: "listing.isFavourite",
+		documentPath: "field/listing-is-favourite.json",
+		staticUrl: "/mcp/field/listing-is-favourite.json",
+		uri: McpSchema.withFieldResourceUri("listing.isFavourite"),
+	},
+	{
+		fieldName: "listing.isIgnored",
+		documentPath: "field/listing-is-ignored.json",
+		staticUrl: "/mcp/field/listing-is-ignored.json",
+		uri: McpSchema.withFieldResourceUri("listing.isIgnored"),
+	},
+	{
+		fieldName: "listing.hasFlag",
+		documentPath: "field/listing-has-flag.json",
+		staticUrl: "/mcp/field/listing-has-flag.json",
+		uri: McpSchema.withFieldResourceUri("listing.hasFlag"),
+	},
+	{
+		fieldName: "filter.my",
+		documentPath: "field/filter-my.json",
+		staticUrl: "/mcp/field/filter-my.json",
+		uri: McpSchema.withFieldResourceUri("filter.my"),
+	},
+	{
+		fieldName: "filter.isFavourite",
+		documentPath: "field/filter-is-favourite.json",
+		staticUrl: "/mcp/field/filter-is-favourite.json",
+		uri: McpSchema.withFieldResourceUri("filter.isFavourite"),
+	},
 ] as const satisfies readonly StaticFieldResourceEntry[];
 
 const withPublicPath = (): string => {
@@ -240,6 +323,15 @@ const withStaticFieldResource = (fieldName: string): StaticFieldResourceEntry =>
 	const resource = staticFieldResources.find((item) => item.fieldName === fieldName);
 	if (!resource) {
 		throw new Error(`Unknown MCP field resource: ${fieldName}`);
+	}
+
+	return resource;
+};
+
+const withStaticProfileResource = (profileName: string): StaticProfileResourceEntry => {
+	const resource = staticProfileResources.find((item) => item.profileName === profileName);
+	if (!resource) {
+		throw new Error(`Unknown MCP profile resource: ${profileName}`);
 	}
 
 	return resource;
@@ -313,6 +405,54 @@ export const withStaticFieldResourceTemplate = (): McpResourceDefinition.Templat
 			}
 
 			const resource = withStaticFieldResource(fieldName);
+			const document = withDocument(resource.documentPath);
+
+			return McpResourceDefinition.withContent(uri, {
+				...document,
+				canonicalUri: uri.toString(),
+				staticUrl: resource.staticUrl,
+			});
+		},
+	};
+};
+
+export const withStaticProfileResourceTemplate = (): McpResourceDefinition.TemplateDefinition => {
+	return {
+		name: "mcp-profile",
+		title: "Profile: Template",
+		description:
+			"Parameterized query profile documentation for buyer-side MCP search intent patterns.",
+		mimeType: "application/json",
+		uriTemplate: "zbav://mcp/profile/{profileName}",
+		complete: {
+			profileName(value) {
+				return staticProfileResources
+					.map((resource) => resource.profileName)
+					.filter((profileName) => profileName.includes(value));
+			},
+		},
+		list() {
+			return {
+				resources: staticProfileResources.map(({ uri, documentPath }) => {
+					const document = withDocument(documentPath);
+
+					return {
+						uri,
+						name: `mcp-profile-${document.name}`,
+						title: document.title,
+						description: document.description,
+						mimeType: "application/json" as const,
+					};
+				}),
+			};
+		},
+		read(uri, variables) {
+			const profileName = variables.profileName;
+			if (typeof profileName !== "string") {
+				throw new Error(`Missing MCP profileName variable for resource: ${uri.toString()}`);
+			}
+
+			const resource = withStaticProfileResource(profileName);
 			const document = withDocument(resource.documentPath);
 
 			return McpResourceDefinition.withContent(uri, {

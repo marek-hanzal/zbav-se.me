@@ -1,7 +1,28 @@
 {
 	"name": "listing.thumb",
 	"title": "Field: listing.thumb",
-	"description": "Meaning of the buyer-visible listing.thumb field.",
+	"description": "Meaning and invariants of the buyer-visible listing.thumb field.",
 	"kind": "field",
-	"text": "# listing.thumb\n\nTL;DR:\n- listing.thumb is the current user's like/dislike reaction for the listing.\n\nWhat it means:\n- like: the current user positively reacted to the listing.\n- dislike: the current user negatively reacted to the listing.\n- null: the current user has no thumb reaction.\n\nAgent hint:\n- Treat this as a personal reaction signal, not as public marketplace reputation.\n"
+	"type": "string | null",
+	"meaning": "Current actor's thumb reaction for the listing.",
+	"actorDependent": true,
+	"filterable": false,
+	"responseOnly": true,
+	"nullableWhen": [
+		"The current actor has not reacted with a thumb."
+	],
+	"requires": [
+		"See zbav://mcp/schema/enum/thumb for allowed values."
+	],
+	"invariants": [
+		{
+			"label": "Actor relative",
+			"value": "Thumb state is relative to the authenticated actor."
+		},
+		{
+			"label": "Null",
+			"value": "Null means no thumb reaction, not an error."
+		}
+	],
+	"text": "# listing.thumb\n\nTL;DR:\n- listing.thumb is the current actor's thumb reaction, or null when no reaction exists.\n\nWhat it means:\n- It is an actor-relative signal, not a global aggregate.\n\nAgent hint:\n- Explain it as the current user's reaction, not as overall market sentiment.\n"
 }

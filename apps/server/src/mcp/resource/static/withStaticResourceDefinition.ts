@@ -18,6 +18,8 @@ const withName = ({
 	switch (kind) {
 		case "guide":
 			return `mcp-guide-${name}`;
+		case "profile":
+			return `mcp-profile-${name}`;
 		case "entity":
 			return `mcp-entity-${name}`;
 		case "enum":

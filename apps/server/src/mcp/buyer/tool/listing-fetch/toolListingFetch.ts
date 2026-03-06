@@ -48,7 +48,7 @@ export const toolListingFetch: McpToolDefinition.Definition<
 	namespace: "buyer",
 	title: "Buyer Listing Fetch",
 	description:
-		"Buyer-side tool for inspecting one published listing in shopping context. Use this when you need a single concrete listing that matches a focused query, such as an exact listing id or a tightly constrained search. The public MCP contract prefers filter for constraints. See: zbav://mcp/guide/overview, zbav://mcp/guide/rules, zbav://mcp/guide/roles, zbav://mcp/guide/listing-behavior, zbav://mcp/guide/search-and-ranking, and zbav://mcp/entity/listing.",
+		"Buyer-side tool for inspecting one published listing in shopping context. Use this when you need a single concrete listing that matches a focused query, such as an exact listing id or a tightly constrained search. The public MCP contract prefers filter for constraints. See: zbav://mcp/guide/overview, zbav://mcp/guide/rules, zbav://mcp/guide/roles, zbav://mcp/guide/listing-behavior, zbav://mcp/guide/search-and-ranking, zbav://mcp/guide/query-profiles, zbav://mcp/guide/failures, and zbav://mcp/entity/listing.",
 	role: "buyer",
 	workflowHint: "Use for buyer-side detail inspection of one published listing.",
 	guideResourceUris: [
@@ -57,12 +57,25 @@ export const toolListingFetch: McpToolDefinition.Definition<
 		McpSchema.withGuideResourceUri("roles"),
 		McpSchema.withGuideResourceUri("listing-behavior"),
 		McpSchema.withGuideResourceUri("search-and-ranking"),
+		McpSchema.withGuideResourceUri("query-profiles"),
+		McpSchema.withGuideResourceUri("failures"),
+	],
+	profileResourceUris: [
+		McpSchema.withProfileResourceUri("buyer.search.byDelivery"),
+		McpSchema.withProfileResourceUri("buyer.search.nearby"),
+		McpSchema.withProfileResourceUri("buyer.search.mine"),
+		McpSchema.withProfileResourceUri("buyer.search.byCategory"),
+		McpSchema.withProfileResourceUri("buyer.search.favourites"),
 	],
 	entityResourceUris: [
 		McpSchema.withEntityResourceUri("listing"),
 	],
 	fieldResourceUris: [
 		McpSchema.withFieldResourceUri("listing.my"),
+		McpSchema.withFieldResourceUri("listing.distance"),
+		McpSchema.withFieldResourceUri("listing.isFavourite"),
+		McpSchema.withFieldResourceUri("listing.isIgnored"),
+		McpSchema.withFieldResourceUri("listing.hasFlag"),
 		McpSchema.withFieldResourceUri("listing.condition"),
 		McpSchema.withFieldResourceUri("listing.age"),
 		McpSchema.withFieldResourceUri("listing.priceType"),
@@ -72,6 +85,8 @@ export const toolListingFetch: McpToolDefinition.Definition<
 		McpSchema.withFieldResourceUri("listing.thumb"),
 		McpSchema.withFieldResourceUri("listing.draftId"),
 		McpSchema.withFieldResourceUri("filter.range"),
+		McpSchema.withFieldResourceUri("filter.my"),
+		McpSchema.withFieldResourceUri("filter.isFavourite"),
 		McpSchema.withFieldResourceUri("filter.withOwn"),
 		McpSchema.withFieldResourceUri("filter.withIgnored"),
 		McpSchema.withFieldResourceUri("filter.feedId"),

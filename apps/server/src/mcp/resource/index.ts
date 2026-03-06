@@ -8,6 +8,7 @@ import {
 	withStaticEntityResourceTemplate,
 	withStaticEnumResourceTemplate,
 	withStaticFieldResourceTemplate,
+	withStaticProfileResourceTemplate,
 	withStaticResources,
 } from "~/mcp/resource/static";
 import type { ServerInfo } from "~/mcp/serverInfo";
@@ -39,6 +40,7 @@ export const withMcpResources = ({
 		],
 		templates: [
 			withStaticFieldResourceTemplate(),
+			withStaticProfileResourceTemplate(),
 			withStaticEntityResourceTemplate(),
 			withStaticEnumResourceTemplate(),
 		],

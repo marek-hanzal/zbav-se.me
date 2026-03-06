@@ -18,6 +18,7 @@ interface ResourceEntry {
 	outputSchema: McpSchema.JsonSchema;
 	outputSchemaResourceUri: string;
 	outputSummary: McpSchema.SummaryItem[];
+	profileResourceUris: string[];
 	role: string;
 	title: string;
 	workflowHint: string;
@@ -43,6 +44,7 @@ const withResourceEntry = (
 		guideResourceUris: tool.guideResourceUris,
 		entityResourceUris: tool.entityResourceUris,
 		fieldResourceUris: tool.fieldResourceUris,
+		profileResourceUris: tool.profileResourceUris,
 		inputSchema,
 		outputSchema,
 		argumentSummary: McpSchema.withSummary(inputSchema),

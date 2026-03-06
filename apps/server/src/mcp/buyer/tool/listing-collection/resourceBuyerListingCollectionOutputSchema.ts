@@ -20,8 +20,15 @@ export const resourceBuyerListingCollectionOutputSchema: McpResourceDefinition.D
 			outputSchema,
 			outputSummary: McpSchema.withSummary(outputSchema),
 			guideResourceUris: toolListingCollection.guideResourceUris,
+			profileResourceUris: toolListingCollection.profileResourceUris,
 			entityResourceUris: toolListingCollection.entityResourceUris,
 			fieldResourceUris: toolListingCollection.fieldResourceUris,
+			responseInterpretationHints: [
+				"Use collection output for browse and search flows, not for guaranteed exact entity lookup.",
+				"distance is meaningful only for geo-aware queries that include meta.latLon.",
+				"Actor-relative fields such as my, isFavourite, isIgnored, hasFlag, transactionId, and thumb depend on the authenticated buyer context.",
+				"When both id fields and expanded objects are present, prefer the expanded objects for user-facing explanation.",
+			],
 			itemSchemaUri: resourceListingSchema.uri,
 			relatedSchemas: [
 				resourceListingSchema.uri,

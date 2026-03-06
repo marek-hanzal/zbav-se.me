@@ -400,6 +400,7 @@ export const withMcpApiFx = Effect.fn("withMcpApiFx")(function* () {
 						role: tool.role,
 						workflowHint: tool.workflowHint,
 						guideResourceUris: tool.guideResourceUris,
+						profileResourceUris: tool.profileResourceUris,
 						entityResourceUris: tool.entityResourceUris,
 						fieldResourceUris: tool.fieldResourceUris,
 						inputSchema: McpSchema.withJsonSchema(tool.inputSchema, "input"),

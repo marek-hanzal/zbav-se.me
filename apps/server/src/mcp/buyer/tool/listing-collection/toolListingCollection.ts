@@ -73,7 +73,7 @@ export const toolListingCollection: McpToolDefinition.Definition<
 	namespace: "buyer",
 	title: "Buyer Listing Collection",
 	description:
-		"Buyer-side tool for browsing, searching, paginating, and sorting published listings in shopping context. Use filter for public buyer-facing constraints, sort for ordering, and meta for geolocation context. See: zbav://mcp/guide/overview, zbav://mcp/guide/rules, zbav://mcp/guide/roles, zbav://mcp/guide/listing-behavior, zbav://mcp/guide/search-and-ranking, and zbav://mcp/entity/listing.",
+		"Buyer-side tool for browsing, searching, paginating, and sorting published listings in shopping context. Use filter for public buyer-facing constraints, sort for ordering, and meta for geolocation context. See: zbav://mcp/guide/overview, zbav://mcp/guide/rules, zbav://mcp/guide/roles, zbav://mcp/guide/listing-behavior, zbav://mcp/guide/search-and-ranking, zbav://mcp/guide/query-profiles, zbav://mcp/guide/failures, and zbav://mcp/entity/listing.",
 	role: "buyer",
 	workflowHint:
 		"Use for buyer-side browse, search, pagination, and sorting over published listings.",
@@ -83,12 +83,25 @@ export const toolListingCollection: McpToolDefinition.Definition<
 		McpSchema.withGuideResourceUri("roles"),
 		McpSchema.withGuideResourceUri("listing-behavior"),
 		McpSchema.withGuideResourceUri("search-and-ranking"),
+		McpSchema.withGuideResourceUri("query-profiles"),
+		McpSchema.withGuideResourceUri("failures"),
+	],
+	profileResourceUris: [
+		McpSchema.withProfileResourceUri("buyer.search.byDelivery"),
+		McpSchema.withProfileResourceUri("buyer.search.nearby"),
+		McpSchema.withProfileResourceUri("buyer.search.mine"),
+		McpSchema.withProfileResourceUri("buyer.search.byCategory"),
+		McpSchema.withProfileResourceUri("buyer.search.favourites"),
 	],
 	entityResourceUris: [
 		McpSchema.withEntityResourceUri("listing"),
 	],
 	fieldResourceUris: [
 		McpSchema.withFieldResourceUri("listing.my"),
+		McpSchema.withFieldResourceUri("listing.distance"),
+		McpSchema.withFieldResourceUri("listing.isFavourite"),
+		McpSchema.withFieldResourceUri("listing.isIgnored"),
+		McpSchema.withFieldResourceUri("listing.hasFlag"),
 		McpSchema.withFieldResourceUri("listing.condition"),
 		McpSchema.withFieldResourceUri("listing.age"),
 		McpSchema.withFieldResourceUri("listing.priceType"),
@@ -98,6 +111,8 @@ export const toolListingCollection: McpToolDefinition.Definition<
 		McpSchema.withFieldResourceUri("listing.thumb"),
 		McpSchema.withFieldResourceUri("listing.draftId"),
 		McpSchema.withFieldResourceUri("filter.range"),
+		McpSchema.withFieldResourceUri("filter.my"),
+		McpSchema.withFieldResourceUri("filter.isFavourite"),
 		McpSchema.withFieldResourceUri("filter.withOwn"),
 		McpSchema.withFieldResourceUri("filter.withIgnored"),
 		McpSchema.withFieldResourceUri("filter.feedId"),
