@@ -127,7 +127,7 @@ export const ListingMcpOutputSchema = z
 			"Age score for the listing, or null when unavailable. See zbav://mcp/field/listing.age.",
 		),
 		delivery: NullableDeliverySchema.describe(
-			"Supported delivery methods for the listing. See zbav://mcp/schema/enum/listing-delivery.",
+			"Supported delivery methods for the listing. See zbav://mcp/schema/enum/listing-delivery and zbav://mcp/field/listing.delivery.",
 		),
 		warranty: NullableWarrantySchema.describe(
 			"Warranty status for the listing. See zbav://mcp/schema/enum/listing-warranty and zbav://mcp/field/listing.warranty.",
@@ -158,12 +158,18 @@ export const ListingMcpOutputSchema = z
 		updatedAt: DateTimeStringSchema.describe(
 			"Listing last update timestamp in ISO 8601 format.",
 		),
-		location: LocationMcpSchema.describe("Resolved location attached to the listing."),
-		category: CategoryMcpSchema.describe("Resolved category attached to the listing."),
+		location: LocationMcpSchema.describe(
+			"Resolved location attached to the listing. See zbav://mcp/field/listing.location and zbav://mcp/entity/location.",
+		),
+		category: CategoryMcpSchema.describe(
+			"Resolved category attached to the listing. See zbav://mcp/field/listing.category and zbav://mcp/entity/category.",
+		),
 		distance: NullableNumberSchema.describe(
 			"Distance in kilometers from the query location to the listing, or null when no geo distance applies.",
 		),
-		gallery: GalleryMcpSchema.describe("Resolved gallery attached to the listing."),
+		gallery: GalleryMcpSchema.describe(
+			"Resolved gallery attached to the listing. See zbav://mcp/field/listing.gallery and zbav://mcp/entity/gallery.",
+		),
 		my: z
 			.boolean()
 			.describe(

@@ -220,6 +220,30 @@ const staticFieldResources = [
 		uri: McpSchema.withFieldResourceUri("listing.transactionId"),
 	},
 	{
+		fieldName: "listing.delivery",
+		documentPath: "field/listing-delivery.json",
+		staticUrl: "/mcp/field/listing-delivery.json",
+		uri: McpSchema.withFieldResourceUri("listing.delivery"),
+	},
+	{
+		fieldName: "listing.location",
+		documentPath: "field/listing-location.json",
+		staticUrl: "/mcp/field/listing-location.json",
+		uri: McpSchema.withFieldResourceUri("listing.location"),
+	},
+	{
+		fieldName: "listing.category",
+		documentPath: "field/listing-category.json",
+		staticUrl: "/mcp/field/listing-category.json",
+		uri: McpSchema.withFieldResourceUri("listing.category"),
+	},
+	{
+		fieldName: "listing.gallery",
+		documentPath: "field/listing-gallery.json",
+		staticUrl: "/mcp/field/listing-gallery.json",
+		uri: McpSchema.withFieldResourceUri("listing.gallery"),
+	},
+	{
 		fieldName: "listing.thumb",
 		documentPath: "field/listing-thumb.json",
 		staticUrl: "/mcp/field/listing-thumb.json",
