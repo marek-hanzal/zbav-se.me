@@ -104,6 +104,7 @@ import FieldUploadUrlJson from "../../../../public/mcp/field/upload-url.json";
 import GuideFailuresJson from "../../../../public/mcp/guide/failures.json";
 import GuideDraftWriteFlowJson from "../../../../public/mcp/guide/draft-write-flow.json";
 import GuideListingBehaviorJson from "../../../../public/mcp/guide/listing-behavior.json";
+import GuideNamespacesJson from "../../../../public/mcp/guide/namespaces.json";
 import GuideOverviewJson from "../../../../public/mcp/guide/overview.json";
 import GuideQueryProfilesJson from "../../../../public/mcp/guide/query-profiles.json";
 import GuideRolesJson from "../../../../public/mcp/guide/roles.json";
@@ -179,6 +180,11 @@ const staticResources = [
 		documentPath: "guide/listing-behavior.json",
 		staticUrl: "/mcp/guide/listing-behavior.json",
 		uri: McpSchema.withGuideResourceUri("listing-behavior"),
+	},
+	{
+		documentPath: "guide/namespaces.json",
+		staticUrl: "/mcp/guide/namespaces.json",
+		uri: McpSchema.withGuideResourceUri("namespaces"),
 	},
 	{
 		documentPath: "guide/search-and-ranking.json",
@@ -1077,6 +1083,7 @@ const staticDocumentByPath: Record<string, unknown> = {
 	"guide/draft-write-flow.json": GuideDraftWriteFlowJson,
 	"guide/failures.json": GuideFailuresJson,
 	"guide/listing-behavior.json": GuideListingBehaviorJson,
+	"guide/namespaces.json": GuideNamespacesJson,
 	"guide/overview.json": GuideOverviewJson,
 	"guide/query-profiles.json": GuideQueryProfilesJson,
 	"guide/roles.json": GuideRolesJson,
