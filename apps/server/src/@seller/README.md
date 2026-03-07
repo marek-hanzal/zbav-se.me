@@ -10,6 +10,7 @@ This domain unifies former seller session and seller user capabilities behind `/
 
 ### Drafts and Listing Management
 - **Draft** - Collection/count/create/fetch/patch/delete
+  - Draft create can already initialize fields like `delivery`; patching is optional for progressive editing.
 - **Draft Gallery** - Create
 - **Listing** - Collection/count/create/fetch
 

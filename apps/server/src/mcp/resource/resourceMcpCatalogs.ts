@@ -21,7 +21,6 @@ interface CatalogDefinition {
 	catalogUri: string;
 	description: string;
 	resourcePrefix?: string;
-	templateName?: string;
 	title: string;
 }
 
@@ -36,25 +35,25 @@ const catalogDefinitions = [
 		catalogUri: "zbav://mcp/catalog/profiles",
 		title: "Catalog: Profiles",
 		description: "Browsable catalog of canonical MCP query profiles and intent-safe patterns.",
-		templateName: "mcp-profile",
+		resourcePrefix: "zbav://mcp/profile/",
 	},
 	{
 		catalogUri: "zbav://mcp/catalog/entities",
 		title: "Catalog: Entities",
 		description: "Browsable catalog of MCP marketplace entity documentation.",
-		templateName: "mcp-entity",
+		resourcePrefix: "zbav://mcp/entity/",
 	},
 	{
 		catalogUri: "zbav://mcp/catalog/enums",
 		title: "Catalog: Enums",
 		description: "Browsable catalog of MCP enum semantics and allowed value meanings.",
-		templateName: "mcp-enum",
+		resourcePrefix: "zbav://mcp/schema/enum/",
 	},
 	{
 		catalogUri: "zbav://mcp/catalog/fields",
 		title: "Catalog: Fields",
 		description: "Browsable catalog of MCP field semantics, invariants, and caveats.",
-		templateName: "mcp-field",
+		resourcePrefix: "zbav://mcp/field/",
 	},
 	{
 		catalogUri: "zbav://mcp/catalog/schemas",
@@ -63,21 +62,6 @@ const catalogDefinitions = [
 		resourcePrefix: "zbav://mcp/schema/",
 	},
 ] as const satisfies readonly CatalogDefinition[];
-
-const withTemplateEntries = ({
-	templates,
-	templateName,
-}: {
-	templates: readonly McpResourceDefinition.TemplateDefinition[];
-	templateName: string;
-}): CatalogEntry[] => {
-	const template = templates.find((item) => item.name === templateName);
-	if (!template) {
-		return [];
-	}
-
-	return template.list().resources;
-};
 
 const withResourceEntries = ({
 	resources,
@@ -106,13 +90,6 @@ const withCatalogEntries = ({
 	resources: readonly McpResourceDefinition.Definition[];
 	templates: readonly McpResourceDefinition.TemplateDefinition[];
 }): CatalogEntry[] => {
-	if (definition.templateName) {
-		return withTemplateEntries({
-			templates,
-			templateName: definition.templateName,
-		});
-	}
-
 	if (definition.resourcePrefix) {
 		return withResourceEntries({
 			resources,
