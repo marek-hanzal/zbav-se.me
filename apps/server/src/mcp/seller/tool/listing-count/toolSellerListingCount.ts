@@ -56,7 +56,6 @@ export const toolSellerListingCount: McpToolDefinition.Definition<
 		McpSchema.withFieldResourceUri("filter.fulltext"),
 		McpSchema.withFieldResourceUri("count.total"),
 		McpSchema.withFieldResourceUri("count.filter"),
-		McpSchema.withFieldResourceUri("count.where"),
 		McpSchema.withFieldResourceUri("count.isEmpty"),
 		McpSchema.withFieldResourceUri("count.isFilterEmpty"),
 	],

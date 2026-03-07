@@ -8,13 +8,15 @@ import FieldCategoryCategoryJson from "../../../../public/mcp/field/category-cat
 import FieldCategoryFilterFulltextJson from "../../../../public/mcp/field/category-filter-fulltext.json";
 import FieldCategoryGroupJson from "../../../../public/mcp/field/category-group.json";
 import FieldCategoryIdJson from "../../../../public/mcp/field/category-id.json";
+import FieldCategoryIdInJson from "../../../../public/mcp/field/category-id-in.json";
 import FieldCategoryLocaleJson from "../../../../public/mcp/field/category-locale.json";
+import FieldCategoryLocaleInJson from "../../../../public/mcp/field/category-locale-in.json";
 import FieldCategorySlugJson from "../../../../public/mcp/field/category-slug.json";
+import FieldCategorySortJson from "../../../../public/mcp/field/category-sort.json";
 import FieldCountFilterJson from "../../../../public/mcp/field/count-filter.json";
 import FieldCountIsEmptyJson from "../../../../public/mcp/field/count-is-empty.json";
 import FieldCountIsFilterEmptyJson from "../../../../public/mcp/field/count-is-filter-empty.json";
 import FieldCountTotalJson from "../../../../public/mcp/field/count-total.json";
-import FieldCountWhereJson from "../../../../public/mcp/field/count-where.json";
 import FieldCursorPageJson from "../../../../public/mcp/field/cursor-page.json";
 import FieldCursorSizeJson from "../../../../public/mcp/field/cursor-size.json";
 import FieldDraftAgeJson from "../../../../public/mcp/field/draft-age.json";
@@ -454,6 +456,12 @@ const staticFieldResources = [
 		uri: McpSchema.withFieldResourceUri("category.id"),
 	},
 	{
+		fieldName: "category.idIn",
+		documentPath: "field/category-id-in.json",
+		staticUrl: "/mcp/field/category-id-in.json",
+		uri: McpSchema.withFieldResourceUri("category.idIn"),
+	},
+	{
 		fieldName: "category.group",
 		documentPath: "field/category-group.json",
 		staticUrl: "/mcp/field/category-group.json",
@@ -476,6 +484,18 @@ const staticFieldResources = [
 		documentPath: "field/category-locale.json",
 		staticUrl: "/mcp/field/category-locale.json",
 		uri: McpSchema.withFieldResourceUri("category.locale"),
+	},
+	{
+		fieldName: "category.localeIn",
+		documentPath: "field/category-locale-in.json",
+		staticUrl: "/mcp/field/category-locale-in.json",
+		uri: McpSchema.withFieldResourceUri("category.localeIn"),
+	},
+	{
+		fieldName: "category.sort",
+		documentPath: "field/category-sort.json",
+		staticUrl: "/mcp/field/category-sort.json",
+		uri: McpSchema.withFieldResourceUri("category.sort"),
 	},
 	{
 		fieldName: "draft.id",
@@ -620,12 +640,6 @@ const staticFieldResources = [
 		documentPath: "field/count-filter.json",
 		staticUrl: "/mcp/field/count-filter.json",
 		uri: McpSchema.withFieldResourceUri("count.filter"),
-	},
-	{
-		fieldName: "count.where",
-		documentPath: "field/count-where.json",
-		staticUrl: "/mcp/field/count-where.json",
-		uri: McpSchema.withFieldResourceUri("count.where"),
 	},
 	{
 		fieldName: "count.isEmpty",
@@ -1078,15 +1092,17 @@ const staticDocumentByPath: Record<string, unknown> = {
 	"field/category-filter-fulltext.json": FieldCategoryFilterFulltextJson,
 	"field/category-group.json": FieldCategoryGroupJson,
 	"field/category-id.json": FieldCategoryIdJson,
+	"field/category-id-in.json": FieldCategoryIdInJson,
 	"field/category-locale.json": FieldCategoryLocaleJson,
+	"field/category-locale-in.json": FieldCategoryLocaleInJson,
 	"field/category-slug.json": FieldCategorySlugJson,
+	"field/category-sort.json": FieldCategorySortJson,
 	"field/cursor-page.json": FieldCursorPageJson,
 	"field/cursor-size.json": FieldCursorSizeJson,
 	"field/count-filter.json": FieldCountFilterJson,
 	"field/count-is-empty.json": FieldCountIsEmptyJson,
 	"field/count-is-filter-empty.json": FieldCountIsFilterEmptyJson,
 	"field/count-total.json": FieldCountTotalJson,
-	"field/count-where.json": FieldCountWhereJson,
 	"field/draft-age.json": FieldDraftAgeJson,
 	"field/draft-category-id.json": FieldDraftCategoryIdJson,
 	"field/draft-condition.json": FieldDraftConditionJson,
@@ -1264,7 +1280,13 @@ const withStaticEnumResource = (enumName: string): StaticEnumResourceEntry => {
 };
 
 export const withStaticResources = (): McpResourceDefinition.Definition[] => {
-	return staticResources.map(({ documentPath, staticUrl, uri }) => {
+	return [
+		...staticResources,
+		...staticProfileResources,
+		...staticEntityResources,
+		...staticEnumResources,
+		...staticFieldResources,
+	].map(({ documentPath, staticUrl, uri }) => {
 		const document = withDocument(documentPath);
 
 		return withStaticResourceDefinition({
@@ -1281,7 +1303,7 @@ export const withStaticFieldResourceTemplate = (): McpResourceDefinition.Templat
 		name: "mcp-field",
 		title: "Field: Template",
 		description:
-			"Parameterized field documentation for MCP-visible buyer query and listing fields.",
+			"Parameterized field documentation for MCP-visible buyer, seller, session, and user fields.",
 		mimeType: "application/json",
 		uriTemplate: "zbav://mcp/field/{fieldName}",
 		complete: {
@@ -1293,17 +1315,7 @@ export const withStaticFieldResourceTemplate = (): McpResourceDefinition.Templat
 		},
 		list() {
 			return {
-				resources: staticFieldResources.map(({ uri, documentPath }) => {
-					const document = withDocument(documentPath);
-
-					return {
-						uri,
-						name: `mcp-field-${document.name}`,
-						title: document.title,
-						description: document.description,
-						mimeType: "application/json" as const,
-					};
-				}),
+				resources: [],
 			};
 		},
 		read(uri, variables) {
@@ -1329,7 +1341,7 @@ export const withStaticProfileResourceTemplate = (): McpResourceDefinition.Templ
 		name: "mcp-profile",
 		title: "Profile: Template",
 		description:
-			"Parameterized query profile documentation for buyer-side MCP search intent patterns.",
+			"Parameterized query profile documentation for MCP search, draft, upload, and publish intent patterns.",
 		mimeType: "application/json",
 		uriTemplate: "zbav://mcp/profile/{profileName}",
 		complete: {
@@ -1341,17 +1353,7 @@ export const withStaticProfileResourceTemplate = (): McpResourceDefinition.Templ
 		},
 		list() {
 			return {
-				resources: staticProfileResources.map(({ uri, documentPath }) => {
-					const document = withDocument(documentPath);
-
-					return {
-						uri,
-						name: `mcp-profile-${document.name}`,
-						title: document.title,
-						description: document.description,
-						mimeType: "application/json" as const,
-					};
-				}),
+				resources: [],
 			};
 		},
 		read(uri, variables) {
@@ -1388,17 +1390,7 @@ export const withStaticEntityResourceTemplate = (): McpResourceDefinition.Templa
 		},
 		list() {
 			return {
-				resources: staticEntityResources.map(({ uri, documentPath }) => {
-					const document = withDocument(documentPath);
-
-					return {
-						uri,
-						name: `mcp-entity-${document.name}`,
-						title: document.title,
-						description: document.description,
-						mimeType: "application/json" as const,
-					};
-				}),
+				resources: [],
 			};
 		},
 		read(uri, variables) {
@@ -1435,17 +1427,7 @@ export const withStaticEnumResourceTemplate = (): McpResourceDefinition.Template
 		},
 		list() {
 			return {
-				resources: staticEnumResources.map(({ uri, documentPath }) => {
-					const document = withDocument(documentPath);
-
-					return {
-						uri,
-						name: `mcp-enum-${document.name}`,
-						title: document.title,
-						description: document.description,
-						mimeType: "application/json" as const,
-					};
-				}),
+				resources: [],
 			};
 		},
 		read(uri, variables) {

@@ -50,7 +50,6 @@ export const toolDraftCount: McpToolDefinition.Definition<
 		McpSchema.withFieldResourceUri("draft.filter.usedAtIsNull"),
 		McpSchema.withFieldResourceUri("count.total"),
 		McpSchema.withFieldResourceUri("count.filter"),
-		McpSchema.withFieldResourceUri("count.where"),
 		McpSchema.withFieldResourceUri("count.isEmpty"),
 		McpSchema.withFieldResourceUri("count.isFilterEmpty"),
 	],

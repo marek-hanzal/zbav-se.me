@@ -2,9 +2,6 @@ import { z } from "@hono/zod-openapi";
 
 export const CountMcpOutputSchema = z
 	.object({
-		where: z
-			.number()
-			.describe("Count for the query shape represented by internal where semantics."),
 		filter: z
 			.number()
 			.describe("Count for the public filter query semantics exposed through MCP."),
