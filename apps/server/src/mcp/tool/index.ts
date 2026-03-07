@@ -2,8 +2,12 @@ import type { z } from "zod";
 import { toolListingCollection } from "~/mcp/buyer/tool/listing-collection/toolListingCollection";
 import { toolListingFetch } from "~/mcp/buyer/tool/listing-fetch/toolListingFetch";
 import { toolDraftCreate } from "~/mcp/seller/tool/draft-create/toolDraftCreate";
+import { toolDraftCollection } from "~/mcp/seller/tool/draft-collection/toolDraftCollection";
+import { toolDraftCount } from "~/mcp/seller/tool/draft-count/toolDraftCount";
+import { toolDraftFetch } from "~/mcp/seller/tool/draft-fetch/toolDraftFetch";
 import { toolDraftGalleryCreate } from "~/mcp/seller/tool/draft-gallery-create/toolDraftGalleryCreate";
 import { toolDraftPatch } from "~/mcp/seller/tool/draft-patch/toolDraftPatch";
+import { toolSellerListingCount } from "~/mcp/seller/tool/listing-count/toolSellerListingCount";
 import { toolSellerListingCreate } from "~/mcp/seller/tool/listing-create/toolSellerListingCreate";
 import { toolCategoryCollection } from "~/mcp/session/tool/category-collection/toolCategoryCollection";
 import { toolLocationAutocomplete } from "~/mcp/session/tool/location-autocomplete/toolLocationAutocomplete";
@@ -18,8 +22,12 @@ export const mcpTools = [
 	toolLocationAutocomplete,
 	toolS3PreSign,
 	toolUploadCreate,
+	toolDraftCollection,
+	toolDraftFetch,
+	toolDraftCount,
 	toolDraftCreate,
 	toolDraftPatch,
 	toolDraftGalleryCreate,
+	toolSellerListingCount,
 	toolSellerListingCreate,
 ] as const satisfies readonly McpToolDefinition.Definition<z.ZodType, z.ZodType>[];

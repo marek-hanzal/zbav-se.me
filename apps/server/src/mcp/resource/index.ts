@@ -14,9 +14,13 @@ import {
 } from "~/mcp/resource/static";
 import { resourceDraftSchema } from "~/mcp/seller/resource/resourceDraftSchema";
 import { resourceSellerListingSchema } from "~/mcp/seller/resource/resourceSellerListingSchema";
+import { resourceSellerDraftCollectionOutputSchema } from "~/mcp/seller/tool/draft-collection/resourceSellerDraftCollectionOutputSchema";
+import { resourceSellerDraftCountOutputSchema } from "~/mcp/seller/tool/draft-count/resourceSellerDraftCountOutputSchema";
 import { resourceSellerDraftCreateOutputSchema } from "~/mcp/seller/tool/draft-create/resourceSellerDraftCreateOutputSchema";
+import { resourceSellerDraftFetchOutputSchema } from "~/mcp/seller/tool/draft-fetch/resourceSellerDraftFetchOutputSchema";
 import { resourceSellerDraftGalleryCreateOutputSchema } from "~/mcp/seller/tool/draft-gallery-create/resourceSellerDraftGalleryCreateOutputSchema";
 import { resourceSellerDraftPatchOutputSchema } from "~/mcp/seller/tool/draft-patch/resourceSellerDraftPatchOutputSchema";
+import { resourceSellerListingCountOutputSchema } from "~/mcp/seller/tool/listing-count/resourceSellerListingCountOutputSchema";
 import { resourceSellerListingCreateOutputSchema } from "~/mcp/seller/tool/listing-create/resourceSellerListingCreateOutputSchema";
 import { resourceCategorySchema } from "~/mcp/session/resource/resourceCategorySchema";
 import { resourceSessionCategoryCollectionOutputSchema } from "~/mcp/session/tool/category-collection/resourceSessionCategoryCollectionOutputSchema";
@@ -51,6 +55,9 @@ export const withMcpResources = ({
 		resourceListingSchema,
 		resourceDraftSchema,
 		resourceSellerListingSchema,
+		resourceSellerDraftCollectionOutputSchema,
+		resourceSellerDraftFetchOutputSchema,
+		resourceSellerDraftCountOutputSchema,
 		resourceCategorySchema,
 		resourceLocationSchema,
 		resourceUploadSchema,
@@ -64,6 +71,7 @@ export const withMcpResources = ({
 		resourceSellerDraftCreateOutputSchema,
 		resourceSellerDraftPatchOutputSchema,
 		resourceSellerDraftGalleryCreateOutputSchema,
+		resourceSellerListingCountOutputSchema,
 		resourceSellerListingCreateOutputSchema,
 	];
 

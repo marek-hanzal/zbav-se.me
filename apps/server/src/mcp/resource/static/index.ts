@@ -10,6 +10,11 @@ import FieldCategoryGroupJson from "../../../../public/mcp/field/category-group.
 import FieldCategoryIdJson from "../../../../public/mcp/field/category-id.json";
 import FieldCategoryLocaleJson from "../../../../public/mcp/field/category-locale.json";
 import FieldCategorySlugJson from "../../../../public/mcp/field/category-slug.json";
+import FieldCountFilterJson from "../../../../public/mcp/field/count-filter.json";
+import FieldCountIsEmptyJson from "../../../../public/mcp/field/count-is-empty.json";
+import FieldCountIsFilterEmptyJson from "../../../../public/mcp/field/count-is-filter-empty.json";
+import FieldCountTotalJson from "../../../../public/mcp/field/count-total.json";
+import FieldCountWhereJson from "../../../../public/mcp/field/count-where.json";
 import FieldCursorPageJson from "../../../../public/mcp/field/cursor-page.json";
 import FieldCursorSizeJson from "../../../../public/mcp/field/cursor-size.json";
 import FieldDraftAgeJson from "../../../../public/mcp/field/draft-age.json";
@@ -19,6 +24,9 @@ import FieldDraftConsJson from "../../../../public/mcp/field/draft-cons.json";
 import FieldDraftDeliveryJson from "../../../../public/mcp/field/draft-delivery.json";
 import FieldDraftDescriptionJson from "../../../../public/mcp/field/draft-description.json";
 import FieldDraftExpiresAtJson from "../../../../public/mcp/field/draft-expires-at.json";
+import FieldDraftFilterUpdatedAtGteJson from "../../../../public/mcp/field/draft-filter-updated-at-gte.json";
+import FieldDraftFilterUpdatedAtLteJson from "../../../../public/mcp/field/draft-filter-updated-at-lte.json";
+import FieldDraftFilterUsedAtIsNullJson from "../../../../public/mcp/field/draft-filter-used-at-is-null.json";
 import FieldDraftGalleryJson from "../../../../public/mcp/field/draft-gallery.json";
 import FieldDraftIdJson from "../../../../public/mcp/field/draft-id.json";
 import FieldDraftLocationIdJson from "../../../../public/mcp/field/draft-location-id.json";
@@ -26,6 +34,7 @@ import FieldDraftPriceJson from "../../../../public/mcp/field/draft-price.json";
 import FieldDraftPriceTypeJson from "../../../../public/mcp/field/draft-price-type.json";
 import FieldDraftProsJson from "../../../../public/mcp/field/draft-pros.json";
 import FieldDraftRestrictionJson from "../../../../public/mcp/field/draft-restriction.json";
+import FieldDraftSortFieldJson from "../../../../public/mcp/field/draft-sort-field.json";
 import FieldDraftTitleJson from "../../../../public/mcp/field/draft-title.json";
 import FieldDraftUploadIdsJson from "../../../../public/mcp/field/draft-upload-ids.json";
 import FieldDraftUsedAtJson from "../../../../public/mcp/field/draft-used-at.json";
@@ -116,9 +125,13 @@ import ProfileBuyerSearchFavouritesJson from "../../../../public/mcp/profile/buy
 import ProfileBuyerSearchMineJson from "../../../../public/mcp/profile/buyer-search-mine.json";
 import ProfileBuyerSearchNearbyJson from "../../../../public/mcp/profile/buyer-search-nearby.json";
 import ProfileSellerDraftCreateCompleteJson from "../../../../public/mcp/profile/seller-draft-create-complete.json";
+import ProfileSellerDraftFetchExactJson from "../../../../public/mcp/profile/seller-draft-fetch-exact.json";
 import ProfileSellerDraftGalleryReplaceJson from "../../../../public/mcp/profile/seller-draft-gallery-replace.json";
 import ProfileSellerDraftPatchProgressiveJson from "../../../../public/mcp/profile/seller-draft-patch-progressive.json";
+import ProfileSellerDraftReviewRecentJson from "../../../../public/mcp/profile/seller-draft-review-recent.json";
+import ProfileSellerDraftUnusedJson from "../../../../public/mcp/profile/seller-draft-unused.json";
 import ProfileSellerImagePrepareUploadJson from "../../../../public/mcp/profile/seller-image-upload-prepare.json";
+import ProfileSellerListingCountPublishedJson from "../../../../public/mcp/profile/seller-listing-count-published.json";
 import ProfileSellerListingPublishFromDraftJson from "../../../../public/mcp/profile/seller-listing-publish-from-draft.json";
 import ProfileSessionCategorySelectJson from "../../../../public/mcp/profile/session-category-select.json";
 import ProfileSessionLocationAutocompleteJson from "../../../../public/mcp/profile/session-location-autocomplete.json";
@@ -270,6 +283,24 @@ const staticProfileResources = [
 		uri: McpSchema.withProfileResourceUri("seller.draft.patchProgressive"),
 	},
 	{
+		profileName: "seller.draft.reviewRecent",
+		documentPath: "profile/seller-draft-review-recent.json",
+		staticUrl: "/mcp/profile/seller-draft-review-recent.json",
+		uri: McpSchema.withProfileResourceUri("seller.draft.reviewRecent"),
+	},
+	{
+		profileName: "seller.draft.fetchExact",
+		documentPath: "profile/seller-draft-fetch-exact.json",
+		staticUrl: "/mcp/profile/seller-draft-fetch-exact.json",
+		uri: McpSchema.withProfileResourceUri("seller.draft.fetchExact"),
+	},
+	{
+		profileName: "seller.draft.unused",
+		documentPath: "profile/seller-draft-unused.json",
+		staticUrl: "/mcp/profile/seller-draft-unused.json",
+		uri: McpSchema.withProfileResourceUri("seller.draft.unused"),
+	},
+	{
 		profileName: "seller.image.prepareUpload",
 		documentPath: "profile/seller-image-upload-prepare.json",
 		staticUrl: "/mcp/profile/seller-image-upload-prepare.json",
@@ -286,6 +317,12 @@ const staticProfileResources = [
 		documentPath: "profile/seller-listing-publish-from-draft.json",
 		staticUrl: "/mcp/profile/seller-listing-publish-from-draft.json",
 		uri: McpSchema.withProfileResourceUri("seller.listing.publishFromDraft"),
+	},
+	{
+		profileName: "seller.listing.countPublished",
+		documentPath: "profile/seller-listing-count-published.json",
+		staticUrl: "/mcp/profile/seller-listing-count-published.json",
+		uri: McpSchema.withProfileResourceUri("seller.listing.countPublished"),
 	},
 ] as const satisfies readonly StaticProfileResourceEntry[];
 
@@ -547,6 +584,60 @@ const staticFieldResources = [
 		documentPath: "field/draft-used-at.json",
 		staticUrl: "/mcp/field/draft-used-at.json",
 		uri: McpSchema.withFieldResourceUri("draft.usedAt"),
+	},
+	{
+		fieldName: "draft.filter.updatedAtGte",
+		documentPath: "field/draft-filter-updated-at-gte.json",
+		staticUrl: "/mcp/field/draft-filter-updated-at-gte.json",
+		uri: McpSchema.withFieldResourceUri("draft.filter.updatedAtGte"),
+	},
+	{
+		fieldName: "draft.filter.updatedAtLte",
+		documentPath: "field/draft-filter-updated-at-lte.json",
+		staticUrl: "/mcp/field/draft-filter-updated-at-lte.json",
+		uri: McpSchema.withFieldResourceUri("draft.filter.updatedAtLte"),
+	},
+	{
+		fieldName: "draft.filter.usedAtIsNull",
+		documentPath: "field/draft-filter-used-at-is-null.json",
+		staticUrl: "/mcp/field/draft-filter-used-at-is-null.json",
+		uri: McpSchema.withFieldResourceUri("draft.filter.usedAtIsNull"),
+	},
+	{
+		fieldName: "draft.sortField",
+		documentPath: "field/draft-sort-field.json",
+		staticUrl: "/mcp/field/draft-sort-field.json",
+		uri: McpSchema.withFieldResourceUri("draft.sortField"),
+	},
+	{
+		fieldName: "count.total",
+		documentPath: "field/count-total.json",
+		staticUrl: "/mcp/field/count-total.json",
+		uri: McpSchema.withFieldResourceUri("count.total"),
+	},
+	{
+		fieldName: "count.filter",
+		documentPath: "field/count-filter.json",
+		staticUrl: "/mcp/field/count-filter.json",
+		uri: McpSchema.withFieldResourceUri("count.filter"),
+	},
+	{
+		fieldName: "count.where",
+		documentPath: "field/count-where.json",
+		staticUrl: "/mcp/field/count-where.json",
+		uri: McpSchema.withFieldResourceUri("count.where"),
+	},
+	{
+		fieldName: "count.isEmpty",
+		documentPath: "field/count-is-empty.json",
+		staticUrl: "/mcp/field/count-is-empty.json",
+		uri: McpSchema.withFieldResourceUri("count.isEmpty"),
+	},
+	{
+		fieldName: "count.isFilterEmpty",
+		documentPath: "field/count-is-filter-empty.json",
+		staticUrl: "/mcp/field/count-is-filter-empty.json",
+		uri: McpSchema.withFieldResourceUri("count.isFilterEmpty"),
 	},
 	{
 		fieldName: "filter.id",
@@ -991,6 +1082,11 @@ const staticDocumentByPath: Record<string, unknown> = {
 	"field/category-slug.json": FieldCategorySlugJson,
 	"field/cursor-page.json": FieldCursorPageJson,
 	"field/cursor-size.json": FieldCursorSizeJson,
+	"field/count-filter.json": FieldCountFilterJson,
+	"field/count-is-empty.json": FieldCountIsEmptyJson,
+	"field/count-is-filter-empty.json": FieldCountIsFilterEmptyJson,
+	"field/count-total.json": FieldCountTotalJson,
+	"field/count-where.json": FieldCountWhereJson,
 	"field/draft-age.json": FieldDraftAgeJson,
 	"field/draft-category-id.json": FieldDraftCategoryIdJson,
 	"field/draft-condition.json": FieldDraftConditionJson,
@@ -998,6 +1094,9 @@ const staticDocumentByPath: Record<string, unknown> = {
 	"field/draft-delivery.json": FieldDraftDeliveryJson,
 	"field/draft-description.json": FieldDraftDescriptionJson,
 	"field/draft-expires-at.json": FieldDraftExpiresAtJson,
+	"field/draft-filter-updated-at-gte.json": FieldDraftFilterUpdatedAtGteJson,
+	"field/draft-filter-updated-at-lte.json": FieldDraftFilterUpdatedAtLteJson,
+	"field/draft-filter-used-at-is-null.json": FieldDraftFilterUsedAtIsNullJson,
 	"field/draft-gallery.json": FieldDraftGalleryJson,
 	"field/draft-id.json": FieldDraftIdJson,
 	"field/draft-location-id.json": FieldDraftLocationIdJson,
@@ -1005,6 +1104,7 @@ const staticDocumentByPath: Record<string, unknown> = {
 	"field/draft-price.json": FieldDraftPriceJson,
 	"field/draft-pros.json": FieldDraftProsJson,
 	"field/draft-restriction.json": FieldDraftRestrictionJson,
+	"field/draft-sort-field.json": FieldDraftSortFieldJson,
 	"field/draft-title.json": FieldDraftTitleJson,
 	"field/draft-upload-ids.json": FieldDraftUploadIdsJson,
 	"field/draft-used-at.json": FieldDraftUsedAtJson,
@@ -1095,9 +1195,13 @@ const staticDocumentByPath: Record<string, unknown> = {
 	"profile/buyer-search-mine.json": ProfileBuyerSearchMineJson,
 	"profile/buyer-search-nearby.json": ProfileBuyerSearchNearbyJson,
 	"profile/seller-draft-create-complete.json": ProfileSellerDraftCreateCompleteJson,
+	"profile/seller-draft-fetch-exact.json": ProfileSellerDraftFetchExactJson,
 	"profile/seller-draft-gallery-replace.json": ProfileSellerDraftGalleryReplaceJson,
 	"profile/seller-draft-patch-progressive.json": ProfileSellerDraftPatchProgressiveJson,
+	"profile/seller-draft-review-recent.json": ProfileSellerDraftReviewRecentJson,
+	"profile/seller-draft-unused.json": ProfileSellerDraftUnusedJson,
 	"profile/seller-image-upload-prepare.json": ProfileSellerImagePrepareUploadJson,
+	"profile/seller-listing-count-published.json": ProfileSellerListingCountPublishedJson,
 	"profile/seller-listing-publish-from-draft.json": ProfileSellerListingPublishFromDraftJson,
 	"profile/session-category-select.json": ProfileSessionCategorySelectJson,
 	"profile/session-location-autocomplete.json": ProfileSessionLocationAutocompleteJson,
