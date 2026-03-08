@@ -20,12 +20,17 @@ export namespace Data {
 
 export const Data: FC<Data.Props> = ({ _suspense, iconProps, onLinkClick }) => {
 	const locale = useLocale();
-	const { data: highCount } = withInboxQuery.useCountQuery({
-		where: {
-			priority: "high",
-			archivedAtIsNull: true,
+	const { data: highCount } = withInboxQuery.useCountQuery(
+		{
+			where: {
+				priority: "high",
+				archivedAtIsNull: true,
+			},
 		},
-	});
+		{
+			refetchInterval: 2_500,
+		},
+	);
 
 	return (
 		<LinkTo
@@ -87,7 +92,14 @@ export const Data: FC<Data.Props> = ({ _suspense, iconProps, onLinkClick }) => {
 										locale,
 									})}
 						</Badge>
-					) : null}
+					) : (
+						<Tx
+							label={"Inbox - nothing new (label)"}
+							ui={{
+								opacity: "6",
+							}}
+						/>
+					)}
 				</Container>
 			</TypoIcon>
 		</LinkTo>

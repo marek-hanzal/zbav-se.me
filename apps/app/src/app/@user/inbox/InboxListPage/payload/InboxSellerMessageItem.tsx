@@ -23,7 +23,9 @@ export const InboxSellerMessageItem: FC<InboxSellerMessageItem.Props> = ({ item,
 	const { data: listing } = withListingQuery.useFetchQuery(payload.listingId);
 	const hero = useUpload(listing.gallery.items);
 	const patchMutation = withInboxQuery.usePatchMutation({
-		invalidate: [],
+		invalidate: [
+			"count",
+		],
 	});
 
 	return (

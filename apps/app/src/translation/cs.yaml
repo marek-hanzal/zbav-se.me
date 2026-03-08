@@ -234,9 +234,6 @@
 39506faaa681b27e6ed65d4237e07c6a2c63838b44f9495159f1ec8b:
     ref: Listing - Pros not filled
     value: Nechceš něco vyzdvihnout?
-39c37874e7619ae6dd79e98c8385c033871ad284b152bbd4b394ecc4:
-    ref: Others (label)
-    value: Ostatní
 3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
     ref: Price (placeholder)
     value: Cena
@@ -471,9 +468,6 @@
 7fff5a32624ca773f775bae93783cbc55b943a4c968052d2b32e91cd:
     ref: Mark transaction as successful (button)
     value: Jsem spokojený, zavřít
-80e54746f4fbbb896f101293d4a57144d41147ca4fa9787d50940980:
-    ref: Priority (label)
-    value: Důležité
 80eb01c4f083e6af9055876045562a9157c605f15686e89854ee632b:
     ref: unused
     value: unused
@@ -892,6 +886,9 @@ a038a4da09ca1bfcd3d73f545e72575a33516d5e7ef37b09b4f5b397:
 a0d2788aec3760e59aa4f698966708ab8ece9b28608ff2bef10db62d:
     ref: Messages (title)
     value: Zprávy
+a139f46f59f778256c981865c1f30e87d2f787451118cbd9fc8d3699:
+    ref: Inbox - nothing new (label)
+    value: Vše vyřízeno 👍
 a1afd40fa760408a3d789acdbaf42d52d40d45f34dcc9af5fccedffc:
     ref: Age not selected
     value: Stáří nemáš vybrané
