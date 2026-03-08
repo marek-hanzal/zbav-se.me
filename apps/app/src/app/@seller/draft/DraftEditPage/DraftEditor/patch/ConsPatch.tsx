@@ -1,3 +1,4 @@
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
 import { TextInput } from "@use-pico/client/ui/text-input";
@@ -8,17 +9,18 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
 
 export namespace ConsPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSettled?(): void;
+		onView(view: Data.View): void;
 	}
 }
 
-export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
+export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const initialCons = draft.cons ?? [];
 	const paddedCons = [
 		...initialCons,
@@ -27,7 +29,9 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onSettled, ...
 	const [items, setItems] = useState<string[]>(paddedCons);
 
 	const mutation = withDraftQuery.usePatchMutation({
-		onSettled,
+		onSuccess() {
+			onView("delivery");
+		},
 		invalidate: [
 			"collection",
 		],
@@ -109,7 +113,12 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onSettled, ...
 					}}
 					loading={mutation.isPending}
 					disabled={false}
+					textSave={<Tx label={"Continue (label)"} />}
 					textCancel={<Tx label={"Back (label)"} />}
+					saveProps={{
+						iconEnabled: ArrowRightIcon,
+						iconPosition: "right",
+					}}
 				/>
 			</Container>
 		</TitleContainer>

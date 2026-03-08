@@ -1,6 +1,6 @@
-import { UploadMcpOutputSchema } from "~/mcp/user/schema/UploadMcpOutputSchema";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
+import { UploadMcpOutputSchema } from "~/mcp/user/schema/UploadMcpOutputSchema";
 
 export const resourceUploadSchema: McpResourceDefinition.Definition = {
 	name: "mcp-schema-upload",

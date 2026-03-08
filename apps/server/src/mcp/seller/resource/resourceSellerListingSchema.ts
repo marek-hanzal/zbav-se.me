@@ -1,6 +1,6 @@
-import { SellerListingMcpOutputSchema } from "~/mcp/seller/schema/SellerListingMcpOutputSchema";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
+import { SellerListingMcpOutputSchema } from "~/mcp/seller/schema/SellerListingMcpOutputSchema";
 
 export const resourceSellerListingSchema: McpResourceDefinition.Definition = {
 	name: "mcp-schema-seller-listing",

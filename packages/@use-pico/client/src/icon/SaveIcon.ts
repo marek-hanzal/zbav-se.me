@@ -1,1 +1,1 @@
-export const SaveIcon = "icon-[proicons--save-multiple]";
+export const SaveIcon = "icon-[proicons--save]";

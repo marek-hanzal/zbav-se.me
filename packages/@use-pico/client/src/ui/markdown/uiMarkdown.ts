@@ -10,6 +10,7 @@ export namespace uiMarkdown {
 		text?: CoolUi.Text;
 		inner?: CoolUi.Inner;
 		background?: CoolUi.Background;
+		opacity?: CoolUi.Opacity;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;

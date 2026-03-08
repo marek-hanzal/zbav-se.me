@@ -1,4 +1,6 @@
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
+import { Mx } from "@use-pico/client/ui/mx";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListingExpireEnum } from "@zbav-se.me/sdk/api/seller";
@@ -7,24 +9,22 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { ExpireAtSelect } from "~/app/@common/expire-at/ui/ExpireAtSelect";
+import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
 
 export namespace ExpireAtPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSettled?(): void;
+		onView(view: Data.View): void;
 	}
 }
 
-export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({
-	draft,
-	onCancel,
-	onSettled,
-	...props
-}) => {
+export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const mutation = withDraftQuery.usePatchMutation({
-		onSettled,
+		onSuccess() {
+			onView("restriction");
+		},
 		invalidate: [
 			"collection",
 		],
@@ -49,10 +49,23 @@ export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({
 					gap: "default",
 				}}
 			>
-				<ExpireAtSelect
-					value={expiresAt}
-					onChange={setExpiresAt}
-				/>
+				<Container>
+					<ExpireAtSelect
+						value={expiresAt}
+						onChange={setExpiresAt}
+					/>
+
+					<Mx
+						label={"Listing expiration (hint)"}
+						ui={{
+							tone: "neutral",
+							theme: "light",
+							inner: "default",
+							color: "lead",
+							opacity: "7",
+						}}
+					/>
+				</Container>
 
 				<SaveContainer
 					onCancel={onCancel}
@@ -74,7 +87,12 @@ export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({
 					}}
 					loading={mutation.isPending}
 					disabled={!expiresAt}
+					textSave={<Tx label={"Continue (label)"} />}
 					textCancel={<Tx label={"Back (label)"} />}
+					saveProps={{
+						iconEnabled: ArrowRightIcon,
+						iconPosition: "right",
+					}}
 				/>
 			</Container>
 		</TitleContainer>

@@ -25,6 +25,9 @@
 050d325dc0ab4741ff8dd2e315e563bf0a746ea997e21d31bc54f8dd:
   ref: Listing category not selected
   value: Listing category not selected
+056c5d8421348af4114fe316b813803bc6d3a9f939e93b4487b32779:
+  ref: Listing expiration (hint)
+  value: Listing expiration (hint)
 065d90dd69a514382210796119a244615affeef496284f86ceeb388d:
   ref: Feed sorting (label)
   value: Feed sorting (label)
@@ -121,6 +124,9 @@
 2250c7f0548b5cbe0fbdac80837ac558866128e004997e4f6b879f72:
   ref: Feed delivery not selected
   value: Feed delivery not selected
+22646c47784828f58f763ae86a309cb0870361b426d5e732c3b3b96e:
+  ref: Continue (label)
+  value: Continue (label)
 23609a4b2bc2ea2da20065b7286ff1892586974ad83ab17bf92ab7f0:
   ref: Resolve transaction (button)
   value: Resolve transaction (button)

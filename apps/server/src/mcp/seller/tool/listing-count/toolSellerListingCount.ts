@@ -2,11 +2,11 @@ import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { listingCountFx } from "~/@seller/listing/fx/listingCountFx";
 import { ListingCountQuerySchema } from "~/@seller/listing/schema/ListingCountQuerySchema";
-import { CountSchema } from "~/schema/CountSchema";
 import { McpSchema } from "~/mcp/McpSchema";
 import type { McpToolDefinition } from "~/mcp/McpToolDefinition";
 import { CountMcpOutputSchema } from "~/mcp/schema/CountMcpOutputSchema";
 import { SellerListingCountQueryMcpSchema } from "~/mcp/seller/schema/SellerListingCountQueryMcpSchema";
+import { CountSchema } from "~/schema/CountSchema";
 
 const examples: McpToolDefinition.Example<SellerListingCountQueryMcpSchema.Type>[] = [
 	{

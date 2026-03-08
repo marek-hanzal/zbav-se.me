@@ -1,3 +1,4 @@
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
@@ -8,26 +9,24 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { LocationSelect } from "~/app/@common/location/ui/LocationSelect";
+import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
 
 export namespace LocationPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSettled?(): void;
+		onView(view: Data.View): void;
 	}
 }
 
-export const LocationPatch: FC<LocationPatch.Props> = ({
-	draft,
-	onCancel,
-	onSettled,
-	...props
-}) => {
+export const LocationPatch: FC<LocationPatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const [locationId, setLocationId] = useState<string | undefined | null>(draft.locationId);
 	const [location, setLocation] = useState<tLocation | undefined>(undefined);
 	const mutation = withDraftQuery.usePatchMutation({
-		onSettled,
+		onSuccess() {
+			onView("price");
+		},
 		invalidate: [
 			"collection",
 		],
@@ -76,7 +75,12 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 					}}
 					loading={mutation.isPending}
 					disabled={!locationId || !location}
+					textSave={<Tx label={"Continue (label)"} />}
 					textCancel={<Tx label={"Back (label)"} />}
+					saveProps={{
+						iconEnabled: ArrowRightIcon,
+						iconPosition: "right",
+					}}
 				/>
 			</Container>
 		</TitleContainer>

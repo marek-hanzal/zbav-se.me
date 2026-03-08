@@ -4,10 +4,10 @@ import { Effect } from "effect";
 import { categoryCollectionFx } from "~/@session/category/fx/categoryCollectionFx";
 import { CategoryItemSchema } from "~/@session/category/schema/CategoryItemSchema";
 import { CategoryQuerySchema } from "~/@session/category/schema/CategoryQuerySchema";
-import { CategoryMcpOutputSchema } from "~/mcp/session/schema/CategoryMcpOutputSchema";
-import { CategoryQueryMcpSchema } from "~/mcp/session/schema/CategoryQueryMcpSchema";
 import { McpSchema } from "~/mcp/McpSchema";
 import type { McpToolDefinition } from "~/mcp/McpToolDefinition";
+import { CategoryMcpOutputSchema } from "~/mcp/session/schema/CategoryMcpOutputSchema";
+import { CategoryQueryMcpSchema } from "~/mcp/session/schema/CategoryQueryMcpSchema";
 
 const CategoryCollectionMcpSchema = z
 	.array(CategoryMcpOutputSchema)

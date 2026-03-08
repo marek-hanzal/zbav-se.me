@@ -1,3 +1,4 @@
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
@@ -7,23 +8,24 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
 
 export namespace PricePatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSettled?(): void;
+		onView(view: Data.View): void;
 	}
 }
 
-export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
+export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const [price, setPrice] = useState<string | undefined>(
 		draft.price ? String(draft.price) : undefined,
 	);
 	const mutation = withDraftQuery.usePatchMutation({
-		onSettled() {
-			onSettled?.();
+		onSuccess() {
+			onView("priceType");
 		},
 		invalidate: [
 			"collection",
@@ -74,7 +76,12 @@ export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onSettled, .
 					}}
 					loading={mutation.isPending}
 					disabled={!price}
+					textSave={<Tx label={"Continue (label)"} />}
 					textCancel={<Tx label={"Back (label)"} />}
+					saveProps={{
+						iconEnabled: ArrowRightIcon,
+						iconPosition: "right",
+					}}
 				/>
 			</Container>
 		</TitleContainer>

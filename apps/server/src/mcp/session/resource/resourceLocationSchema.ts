@@ -1,6 +1,6 @@
-import { LocationMcpOutputSchema } from "~/mcp/session/schema/LocationMcpOutputSchema";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
+import { LocationMcpOutputSchema } from "~/mcp/session/schema/LocationMcpOutputSchema";
 
 export const resourceLocationSchema: McpResourceDefinition.Definition = {
 	name: "mcp-schema-location",

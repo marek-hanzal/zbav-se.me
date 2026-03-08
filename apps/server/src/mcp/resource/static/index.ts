@@ -1,3 +1,7 @@
+import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
+import { McpSchema } from "~/mcp/McpSchema";
+import type { StaticResourceDocument } from "~/mcp/resource/static/StaticResourceDocument";
+import { withStaticResourceDefinition } from "~/mcp/resource/static/withStaticResourceDefinition";
 import EntityCategoryJson from "../../../../public/mcp/entity/category.json";
 import EntityDraftJson from "../../../../public/mcp/entity/draft.json";
 import EntityGalleryJson from "../../../../public/mcp/entity/gallery.json";
@@ -44,21 +48,21 @@ import FieldDraftWarrantyJson from "../../../../public/mcp/field/draft-warranty.
 import FieldFilterAgeInJson from "../../../../public/mcp/field/filter-age-in.json";
 import FieldFilterAgeMaxJson from "../../../../public/mcp/field/filter-age-max.json";
 import FieldFilterAgeMinJson from "../../../../public/mcp/field/filter-age-min.json";
-import FieldFilterCategoryIdInJson from "../../../../public/mcp/field/filter-category-id-in.json";
 import FieldFilterCategoryIdJson from "../../../../public/mcp/field/filter-category-id.json";
+import FieldFilterCategoryIdInJson from "../../../../public/mcp/field/filter-category-id-in.json";
 import FieldFilterConditionInJson from "../../../../public/mcp/field/filter-condition-in.json";
 import FieldFilterConditionMaxJson from "../../../../public/mcp/field/filter-condition-max.json";
 import FieldFilterConditionMinJson from "../../../../public/mcp/field/filter-condition-min.json";
-import FieldFilterCurrencyInJson from "../../../../public/mcp/field/filter-currency-in.json";
 import FieldFilterCurrencyJson from "../../../../public/mcp/field/filter-currency.json";
+import FieldFilterCurrencyInJson from "../../../../public/mcp/field/filter-currency-in.json";
 import FieldFilterDeliveryInJson from "../../../../public/mcp/field/filter-delivery-in.json";
 import FieldFilterExpiresAtAfterJson from "../../../../public/mcp/field/filter-expires-at-after.json";
 import FieldFilterExpiresAtBeforeJson from "../../../../public/mcp/field/filter-expires-at-before.json";
-import FieldFilterFeedIdInJson from "../../../../public/mcp/field/filter-feed-id-in.json";
 import FieldFilterFeedIdJson from "../../../../public/mcp/field/filter-feed-id.json";
+import FieldFilterFeedIdInJson from "../../../../public/mcp/field/filter-feed-id-in.json";
 import FieldFilterFulltextJson from "../../../../public/mcp/field/filter-fulltext.json";
-import FieldFilterIdInJson from "../../../../public/mcp/field/filter-id-in.json";
 import FieldFilterIdJson from "../../../../public/mcp/field/filter-id.json";
+import FieldFilterIdInJson from "../../../../public/mcp/field/filter-id-in.json";
 import FieldFilterIsFavouriteJson from "../../../../public/mcp/field/filter-is-favourite.json";
 import FieldFilterMyJson from "../../../../public/mcp/field/filter-my.json";
 import FieldFilterPriceMaxJson from "../../../../public/mcp/field/filter-price-max.json";
@@ -103,17 +107,17 @@ import FieldLocationStreetJson from "../../../../public/mcp/field/location-stree
 import FieldLocationZipJson from "../../../../public/mcp/field/location-zip.json";
 import FieldMetaFeedIdJson from "../../../../public/mcp/field/meta-feed-id.json";
 import FieldMetaLatLonJson from "../../../../public/mcp/field/meta-lat-lon.json";
-import FieldSortFieldJson from "../../../../public/mcp/field/sort-field.json";
-import FieldSortOrderJson from "../../../../public/mcp/field/sort-order.json";
 import FieldS3CdnJson from "../../../../public/mcp/field/s3-cdn.json";
 import FieldS3ContentTypeJson from "../../../../public/mcp/field/s3-content-type.json";
 import FieldS3ExtensionJson from "../../../../public/mcp/field/s3-extension.json";
 import FieldS3PathJson from "../../../../public/mcp/field/s3-path.json";
 import FieldS3UrlJson from "../../../../public/mcp/field/s3-url.json";
+import FieldSortFieldJson from "../../../../public/mcp/field/sort-field.json";
+import FieldSortOrderJson from "../../../../public/mcp/field/sort-order.json";
 import FieldUploadIdJson from "../../../../public/mcp/field/upload-id.json";
 import FieldUploadUrlJson from "../../../../public/mcp/field/upload-url.json";
-import GuideFailuresJson from "../../../../public/mcp/guide/failures.json";
 import GuideDraftWriteFlowJson from "../../../../public/mcp/guide/draft-write-flow.json";
+import GuideFailuresJson from "../../../../public/mcp/guide/failures.json";
 import GuideListingBehaviorJson from "../../../../public/mcp/guide/listing-behavior.json";
 import GuideNamespacesJson from "../../../../public/mcp/guide/namespaces.json";
 import GuideOverviewJson from "../../../../public/mcp/guide/overview.json";
@@ -148,10 +152,6 @@ import SchemaEnumListingRestrictionJson from "../../../../public/mcp/schema/enum
 import SchemaEnumListingSortJson from "../../../../public/mcp/schema/enum/listing-sort.json";
 import SchemaEnumListingWarrantyJson from "../../../../public/mcp/schema/enum/listing-warranty.json";
 import SchemaEnumThumbJson from "../../../../public/mcp/schema/enum/thumb.json";
-import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
-import { McpSchema } from "~/mcp/McpSchema";
-import type { StaticResourceDocument } from "~/mcp/resource/static/StaticResourceDocument";
-import { withStaticResourceDefinition } from "~/mcp/resource/static/withStaticResourceDefinition";
 
 interface StaticResourceEntry {
 	documentPath: string;

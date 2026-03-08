@@ -15,7 +15,9 @@ export namespace SaveContainer {
 		 * Already translated text to replace default Cancel label
 		 */
 		textCancel?: ReactNode;
+		cancelProps?: Button.Props;
 		textSave?: ReactNode;
+		saveProps?: Button.Props;
 	}
 }
 
@@ -33,6 +35,8 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 	textCancel,
 	textSave,
 	ui,
+	cancelProps,
+	saveProps,
 	...props
 }) => {
 	return (
@@ -59,6 +63,7 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 				{...uiCancelButton({
 					className: [],
 				})}
+				{...cancelProps}
 			>
 				{textCancel ?? <Tx label="Back (label)" />}
 			</Button>
@@ -76,6 +81,7 @@ export const SaveContainer: FC<SaveContainer.Props> = ({
 				{...uiSaveButton({
 					className: [],
 				})}
+				{...saveProps}
 			>
 				{textSave ?? <Tx label="Save (button)" />}
 			</Button>

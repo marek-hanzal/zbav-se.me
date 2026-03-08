@@ -1,19 +1,22 @@
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller";
 import { withDraftGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/seller/draft";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/app/@common/gallery/ui/GalleryUpload";
+import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
 
 export namespace GalleryPatch {
 	export interface Props extends Container.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSuccess(): void;
+		onView(view: Data.View): void;
 		defaultUploadIds: string[];
 	}
 }
@@ -21,14 +24,31 @@ export namespace GalleryPatch {
 export const GalleryPatch: FC<GalleryPatch.Props> = ({
 	draft,
 	onCancel,
-	onSuccess,
+	onView,
 	ui,
 	defaultUploadIds,
 	...props
 }) => {
 	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
+	const invalidate = withDraftQuery.useInvalidator();
 	const mutation = withDraftGalleryCreateMutation.useMutation({
-		onSuccess,
+		async onPostMutation() {
+			return invalidate(
+				[
+					"fetch",
+				],
+				{
+					fetch: {
+						where: {
+							id: draft.id,
+						},
+					},
+				},
+			);
+		},
+		onSuccess() {
+			onView("title");
+		},
 	});
 
 	return (
@@ -73,7 +93,12 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 					}}
 					loading={mutation.isPending}
 					disabled={uploadIds.length === 0}
+					textSave={<Tx label={"Continue (label)"} />}
 					textCancel={<Tx label={"Back (label)"} />}
+					saveProps={{
+						iconEnabled: ArrowRightIcon,
+						iconPosition: "right",
+					}}
 				/>
 			</Container>
 		</TitleContainer>

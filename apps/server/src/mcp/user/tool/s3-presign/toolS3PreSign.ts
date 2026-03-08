@@ -5,12 +5,12 @@ import { s3PreSignFx } from "~/@common/s3/fx/s3PreSignFx";
 import { withUploadFx } from "~/@common/upload/context/withUploadFx";
 import { S3PreSignRequestSchema } from "~/@user/s3/schema/S3PreSignRequestSchema";
 import { S3PreSignResponseSchema } from "~/@user/s3/schema/S3PreSignResponseSchema";
-import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
-import { ServerS3Schema } from "~/schema/env/ServerS3Schema";
-import { S3PreSignMcpInputSchema } from "~/mcp/user/schema/S3PreSignMcpInputSchema";
-import { S3PreSignMcpOutputSchema } from "~/mcp/user/schema/S3PreSignMcpOutputSchema";
 import { McpSchema } from "~/mcp/McpSchema";
 import type { McpToolDefinition } from "~/mcp/McpToolDefinition";
+import { S3PreSignMcpInputSchema } from "~/mcp/user/schema/S3PreSignMcpInputSchema";
+import { S3PreSignMcpOutputSchema } from "~/mcp/user/schema/S3PreSignMcpOutputSchema";
+import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
+import { ServerS3Schema } from "~/schema/env/ServerS3Schema";
 
 const examples: McpToolDefinition.Example<S3PreSignMcpInputSchema.Type>[] = [
 	{

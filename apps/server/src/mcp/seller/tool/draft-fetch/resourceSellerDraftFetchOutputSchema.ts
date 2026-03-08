@@ -1,7 +1,7 @@
-import { resourceDraftSchema } from "~/mcp/seller/resource/resourceDraftSchema";
-import { toolDraftFetch } from "~/mcp/seller/tool/draft-fetch/toolDraftFetch";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
+import { resourceDraftSchema } from "~/mcp/seller/resource/resourceDraftSchema";
+import { toolDraftFetch } from "~/mcp/seller/tool/draft-fetch/toolDraftFetch";
 
 export const resourceSellerDraftFetchOutputSchema: McpResourceDefinition.Definition = {
 	name: "mcp-schema-seller-draft-fetch",

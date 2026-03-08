@@ -1,4 +1,5 @@
 import { useSelection } from "@use-pico/client/hook";
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
@@ -9,24 +10,22 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { CategorySelect } from "~/app/@session/category/ui/CategorySelect/CategorySelect";
+import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
 
 export namespace CategoryPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSettled?(): void;
+		onView(view: Data.View): void;
 	}
 }
 
-export const CategoryPatch: FC<CategoryPatch.Props> = ({
-	draft,
-	onCancel,
-	onSettled,
-	...props
-}) => {
+export const CategoryPatch: FC<CategoryPatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const mutation = withDraftQuery.usePatchMutation({
-		onSettled,
+		onSuccess() {
+			onView("location");
+		},
 		invalidate: [
 			"collection",
 		],
@@ -81,7 +80,12 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 					}}
 					loading={mutation.isPending}
 					disabled={!categoryId}
+					textSave={<Tx label={"Continue (label)"} />}
 					textCancel={<Tx label={"Back (label)"} />}
+					saveProps={{
+						iconEnabled: ArrowRightIcon,
+						iconPosition: "right",
+					}}
 				/>
 			</Container>
 		</TitleContainer>

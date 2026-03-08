@@ -92,6 +92,9 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 							},
 						}}
 					/>
+				</Group>
+
+				<Group>
 					<SearchLink
 						iconProps={{
 							ui: {

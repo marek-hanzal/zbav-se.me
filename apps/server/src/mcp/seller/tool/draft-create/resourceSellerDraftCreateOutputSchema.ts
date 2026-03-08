@@ -1,7 +1,7 @@
-import { resourceDraftSchema } from "~/mcp/seller/resource/resourceDraftSchema";
-import { toolDraftCreate } from "~/mcp/seller/tool/draft-create/toolDraftCreate";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
+import { resourceDraftSchema } from "~/mcp/seller/resource/resourceDraftSchema";
+import { toolDraftCreate } from "~/mcp/seller/tool/draft-create/toolDraftCreate";
 
 export const resourceSellerDraftCreateOutputSchema: McpResourceDefinition.Definition = {
 	name: "mcp-schema-seller-draft-create",

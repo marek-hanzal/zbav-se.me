@@ -67,7 +67,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 					<TitlePatch
 						draft={draft}
 						onCancel={onDone}
-						onSettled={onDone}
+						onView={setView}
 					/>
 				),
 			},
@@ -76,7 +76,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 					<LocationPatch
 						draft={draft}
 						onCancel={onDone}
-						onSettled={onDone}
+						onView={setView}
 					/>
 				),
 			},
@@ -85,7 +85,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 					<PricePatch
 						draft={draft}
 						onCancel={onDone}
-						onSettled={onDone}
+						onView={setView}
 					/>
 				),
 			},
@@ -94,7 +94,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 					<PriceTypePatch
 						draft={draft}
 						onCancel={onDone}
-						onSettled={onDone}
+						onView={setView}
 					/>
 				),
 			},
@@ -103,7 +103,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 					<CategoryPatch
 						draft={draft}
 						onCancel={onDone}
-						onSettled={onDone}
+						onView={setView}
 					/>
 				),
 			},
@@ -112,7 +112,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 					<ConditionPatch
 						draft={draft}
 						onCancel={onDone}
-						onSettled={onDone}
+						onView={setView}
 					/>
 				),
 			},
@@ -121,7 +121,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 					<AgePatch
 						draft={draft}
 						onCancel={onDone}
-						onSettled={onDone}
+						onView={setView}
 					/>
 				),
 			},
@@ -130,7 +130,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 					<DeliveryPatch
 						draft={draft}
 						onCancel={onDone}
-						onSettled={onDone}
+						onView={setView}
 					/>
 				),
 			},
@@ -139,7 +139,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 					<WarrantyPatch
 						draft={draft}
 						onCancel={onDone}
-						onSettled={onDone}
+						onView={setView}
 					/>
 				),
 			},
@@ -148,7 +148,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 					<RestrictionPatch
 						draft={draft}
 						onCancel={onDone}
-						onSettled={onDone}
+						onView={setView}
 					/>
 				),
 			},
@@ -157,7 +157,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 					<ExpireAtPatch
 						draft={draft}
 						onCancel={onDone}
-						onSettled={onDone}
+						onView={setView}
 					/>
 				),
 			},
@@ -166,7 +166,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 					<GalleryPatch
 						draft={draft}
 						onCancel={onDone}
-						onSuccess={onDone}
+						onView={setView}
 						defaultUploadIds={draft.gallery.items.map((item) => item.uploadId)}
 					/>
 				),
@@ -176,7 +176,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 					<DescriptionPatch
 						draft={draft}
 						onCancel={onDone}
-						onSettled={onDone}
+						onView={setView}
 					/>
 				),
 			},
@@ -185,7 +185,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 					<ProsPatch
 						draft={draft}
 						onCancel={onDone}
-						onSettled={onDone}
+						onView={setView}
 					/>
 				),
 			},
@@ -194,7 +194,7 @@ export const Data: FC<Data.Props> = ({ _suspense, draftId }) => {
 					<ConsPatch
 						draft={draft}
 						onCancel={onDone}
-						onSettled={onDone}
+						onView={setView}
 					/>
 				),
 			},

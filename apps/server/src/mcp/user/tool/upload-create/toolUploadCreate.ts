@@ -5,11 +5,11 @@ import { uploadCreateFx } from "~/@user/upload/fx/uploadCreateFx";
 import { UploadCreateSchema } from "~/@user/upload/schema/UploadCreateSchema";
 import { UploadSchema } from "~/@user/upload/schema/UploadSchema";
 import { withDateFx } from "~/database/fx/withDateFx";
-import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
 import { McpSchema } from "~/mcp/McpSchema";
 import type { McpToolDefinition } from "~/mcp/McpToolDefinition";
 import { UploadCreateMcpInputSchema } from "~/mcp/user/schema/UploadCreateMcpInputSchema";
 import { UploadMcpOutputSchema } from "~/mcp/user/schema/UploadMcpOutputSchema";
+import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
 
 const examples: McpToolDefinition.Example<UploadCreateMcpInputSchema.Type>[] = [
 	{

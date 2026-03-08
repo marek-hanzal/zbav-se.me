@@ -1,4 +1,5 @@
 import { useSelection } from "@use-pico/client/hook";
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
@@ -9,24 +10,22 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { WarrantySelect } from "~/app/@common/warranty/ui/WarrantySelect";
+import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
 
 export namespace WarrantyPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSettled?(): void;
+		onView(view: Data.View): void;
 	}
 }
 
-export const WarrantyPatch: FC<WarrantyPatch.Props> = ({
-	draft,
-	onCancel,
-	onSettled,
-	...props
-}) => {
+export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const mutation = withDraftQuery.usePatchMutation({
-		onSettled,
+		onSuccess() {
+			onView("condition");
+		},
 		invalidate: [
 			"collection",
 		],
@@ -79,7 +78,12 @@ export const WarrantyPatch: FC<WarrantyPatch.Props> = ({
 					}}
 					loading={mutation.isPending}
 					disabled={false}
+					textSave={<Tx label={"Continue (label)"} />}
 					textCancel={<Tx label={"Back (label)"} />}
+					saveProps={{
+						iconEnabled: ArrowRightIcon,
+						iconPosition: "right",
+					}}
 				/>
 			</Container>
 		</TitleContainer>

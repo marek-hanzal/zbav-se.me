@@ -1,7 +1,7 @@
-import { resourceUploadSchema } from "~/mcp/user/resource/resourceUploadSchema";
-import { toolUploadCreate } from "~/mcp/user/tool/upload-create/toolUploadCreate";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
+import { resourceUploadSchema } from "~/mcp/user/resource/resourceUploadSchema";
+import { toolUploadCreate } from "~/mcp/user/tool/upload-create/toolUploadCreate";
 
 export const resourceUserUploadCreateOutputSchema: McpResourceDefinition.Definition = {
 	name: "mcp-schema-user-upload-create",

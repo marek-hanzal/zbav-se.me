@@ -5,11 +5,11 @@ import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompl
 import { withLocationFx } from "~/@session/location/fx/withLocationFx";
 import { LocationAutocompleteSchema } from "~/@session/location/schema/LocationAutocompleteSchema";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
-import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
-import { LocationAutocompleteMcpSchema } from "~/mcp/session/schema/LocationAutocompleteMcpSchema";
-import { LocationMcpOutputSchema } from "~/mcp/session/schema/LocationMcpOutputSchema";
 import { McpSchema } from "~/mcp/McpSchema";
 import type { McpToolDefinition } from "~/mcp/McpToolDefinition";
+import { LocationAutocompleteMcpSchema } from "~/mcp/session/schema/LocationAutocompleteMcpSchema";
+import { LocationMcpOutputSchema } from "~/mcp/session/schema/LocationMcpOutputSchema";
+import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
 
 const LocationAutocompleteCollectionSchema = z
 	.array(LocationMcpOutputSchema)
