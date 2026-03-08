@@ -1,3 +1,4 @@
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { FormField, uiInput } from "@use-pico/client/ui/form";
 import { Mx } from "@use-pico/client/ui/mx";
@@ -103,7 +104,12 @@ export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 					}}
 					loading={mutation.isPending}
 					disabled={false}
+					textSave={<Tx label={"Continue (label)"} />}
 					textCancel={<Tx label={"Back (label)"} />}
+					saveProps={{
+						iconEnabled: ArrowRightIcon,
+						iconPosition: "right",
+					}}
 				/>
 			</Container>
 		</TitleContainer>
