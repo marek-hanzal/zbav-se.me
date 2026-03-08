@@ -62,7 +62,7 @@
         _Později si budeš moci v rámci transakce adresu upřesnit, když budeš chtít._
 0e2d6ae59d756678e034197ebd80f4723aecad41dc953699684a443e:
     ref: Listings (label)
-    value: Inzeráty
+    value: Procházet inzeráty
 0e6cf0e3ce32e8ff03c1c483fa275fb0f2baa4ec9e5e3dcc47b5442f:
     ref: Delivery (title)
     value: Možnost předání
@@ -145,6 +145,9 @@
 2250c7f0548b5cbe0fbdac80837ac558866128e004997e4f6b879f72:
     ref: Feed delivery not selected
     value: Jakékoli
+22646c47784828f58f763ae86a309cb0870361b426d5e732c3b3b96e:
+    ref: Continue (label)
+    value: Pokračovat
 23609a4b2bc2ea2da20065b7286ff1892586974ad83ab17bf92ab7f0:
     ref: Resolve transaction (button)
     value: Vyřízeno
@@ -567,7 +570,7 @@
         po předání balíčku kupující transakci neodklikne.
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
     ref: Create listing (label)
-    value: Vystavit
+    value: Vystavit inzerát
 990f159a82184824fdafb2ab63fa2ab1f67849d8a138773d04be2fd4:
     ref: Seller - listings (label)
     value: Celkový počet inzerátů
@@ -967,7 +970,7 @@ b9c5a03896d71b41f7828f3747be6c509689c279e60f845ab3b23480:
     value: pending
 ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
     ref: My listings (label)
-    value: Vystavené
+    value: Moje inzeráty
 babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
     ref: Location search (placeholder)
     value: Napiš město, kraj, co tě napadne
@@ -1162,7 +1165,7 @@ f18a36932d031042735ffe9b5fbf3fad95a86de7b3b04e8ae3f43986:
     value: Číslo zásilky
 f2a9bcc0bb7a0f3ad780dd42bc9a00c5a6335c480e3cb14512d5934c:
     ref: Favourites (label)
-    value: Oblíbené
+    value: Moje oblíbené
 f3f9c0a66a107af2911fa0f9019dc4526940d1afe4a957e1445e3447:
     ref: Condition not selected
     value: Stav nemáš vybraný

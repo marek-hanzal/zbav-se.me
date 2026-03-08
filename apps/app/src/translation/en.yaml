@@ -121,6 +121,9 @@
 2250c7f0548b5cbe0fbdac80837ac558866128e004997e4f6b879f72:
   ref: Feed delivery not selected
   value: Feed delivery not selected
+22646c47784828f58f763ae86a309cb0870361b426d5e732c3b3b96e:
+  ref: Continue (label)
+  value: Continue (label)
 23609a4b2bc2ea2da20065b7286ff1892586974ad83ab17bf92ab7f0:
   ref: Resolve transaction (button)
   value: Resolve transaction (button)

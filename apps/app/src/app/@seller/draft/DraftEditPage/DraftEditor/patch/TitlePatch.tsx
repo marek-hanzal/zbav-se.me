@@ -1,3 +1,4 @@
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
 import { Mx } from "@use-pico/client/ui/mx";
@@ -87,7 +88,12 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSettled, .
 					}}
 					loading={mutation.isPending}
 					disabled={!title}
+					textSave={<Tx label={"Continue (label)"} />}
 					textCancel={<Tx label={"Back (label)"} />}
+					saveProps={{
+						iconEnabled: ArrowRightIcon,
+						iconPosition: "right",
+					}}
 				/>
 			</Container>
 		</TitleContainer>
