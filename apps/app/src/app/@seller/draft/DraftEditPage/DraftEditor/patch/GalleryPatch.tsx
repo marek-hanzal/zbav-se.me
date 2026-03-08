@@ -4,6 +4,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller";
 import { withDraftGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/seller/draft";
+import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
@@ -29,7 +30,22 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 	...props
 }) => {
 	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
+	const invalidate = withDraftQuery.useInvalidator();
 	const mutation = withDraftGalleryCreateMutation.useMutation({
+		async onPostMutation() {
+			return invalidate(
+				[
+					"fetch",
+				],
+				{
+					fetch: {
+						where: {
+							id: draft.id,
+						},
+					},
+				},
+			);
+		},
 		onSuccess() {
 			onView("title");
 		},
