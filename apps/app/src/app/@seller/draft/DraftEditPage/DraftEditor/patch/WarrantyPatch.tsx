@@ -24,7 +24,7 @@ export namespace WarrantyPatch {
 export const WarrantyPatch: FC<WarrantyPatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			onView("restriction");
+			onView("condition");
 		},
 		invalidate: [
 			"collection",

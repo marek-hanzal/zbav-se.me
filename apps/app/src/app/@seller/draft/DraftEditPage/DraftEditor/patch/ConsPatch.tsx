@@ -30,7 +30,7 @@ export const ConsPatch: FC<ConsPatch.Props> = ({ draft, onCancel, onView, ...pro
 
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			onView("default");
+			onView("delivery");
 		},
 		invalidate: [
 			"collection",

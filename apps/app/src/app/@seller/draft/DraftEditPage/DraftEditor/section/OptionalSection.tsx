@@ -23,6 +23,7 @@ export const OptionalSection: FC<OptionalSection.Props> = ({ draft, onView }) =>
 	return (
 		<>
 			<Tx
+				id={"optional"}
 				label="Draft - those others (title)"
 				ui={{
 					tone: "secondary",

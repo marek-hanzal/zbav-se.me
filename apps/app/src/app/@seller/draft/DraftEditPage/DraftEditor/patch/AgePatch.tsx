@@ -24,7 +24,7 @@ export namespace AgePatch {
 export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			onView("delivery");
+			onView("default");
 		},
 		invalidate: [
 			"collection",
