@@ -10,24 +10,22 @@ import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 import { ConditionSelect } from "~/app/@common/condition/ui/ConditionSelect";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
 
 export namespace ConditionPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSettled?(): void;
+		onView(view: Data.View): void;
 	}
 }
 
-export const ConditionPatch: FC<ConditionPatch.Props> = ({
-	draft,
-	onCancel,
-	onSettled,
-	...props
-}) => {
+export const ConditionPatch: FC<ConditionPatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const mutation = withDraftQuery.usePatchMutation({
-		onSettled,
+		onSuccess() {
+			onView("age");
+		},
 		invalidate: [
 			"collection",
 		],

@@ -10,24 +10,22 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { PriceTypeSelect } from "~/app/@common/price-type/ui/PriceTypeSelect";
+import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
 
 export namespace PriceTypePatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSettled?(): void;
+		onView(view: Data.View): void;
 	}
 }
 
-export const PriceTypePatch: FC<PriceTypePatch.Props> = ({
-	draft,
-	onCancel,
-	onSettled,
-	...props
-}) => {
+export const PriceTypePatch: FC<PriceTypePatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const mutation = withDraftQuery.usePatchMutation({
-		onSettled,
+		onSuccess() {
+			onView("category");
+		},
 		invalidate: [
 			"collection",
 		],

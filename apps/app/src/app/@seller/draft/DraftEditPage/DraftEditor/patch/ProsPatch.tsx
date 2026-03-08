@@ -9,17 +9,18 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
 
 export namespace ProsPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSettled?(): void;
+		onView(view: Data.View): void;
 	}
 }
 
-export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
+export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const initialPros = draft.pros ?? [];
 	const paddedPros = [
 		...initialPros,
@@ -28,7 +29,9 @@ export const ProsPatch: FC<ProsPatch.Props> = ({ draft, onCancel, onSettled, ...
 	const [items, setItems] = useState<string[]>(paddedPros);
 
 	const mutation = withDraftQuery.usePatchMutation({
-		onSettled,
+		onSuccess() {
+			onView("cons");
+		},
 		invalidate: [
 			"collection",
 		],

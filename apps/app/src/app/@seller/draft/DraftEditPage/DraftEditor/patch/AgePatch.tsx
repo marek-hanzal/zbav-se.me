@@ -10,19 +10,22 @@ import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 import { AgeSelection } from "~/app/@common/age/ui/AgeSelection";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
 
 export namespace AgePatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSettled?(): void;
+		onView(view: Data.View): void;
 	}
 }
 
-export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
+export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const mutation = withDraftQuery.usePatchMutation({
-		onSettled,
+		onSuccess() {
+			onView("delivery");
+		},
 		invalidate: [
 			"collection",
 		],

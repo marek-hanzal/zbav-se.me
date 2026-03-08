@@ -11,25 +11,28 @@ import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
 
 export namespace DescriptionPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSettled?(): void;
+		onView(view: Data.View): void;
 	}
 }
 
 export const DescriptionPatch: FC<DescriptionPatch.Props> = ({
 	draft,
 	onCancel,
-	onSettled,
+	onView,
 	...props
 }) => {
 	const [description, setDescription] = useState(draft.description ?? "");
 	const mutation = withDraftQuery.usePatchMutation({
-		onSettled,
+		onSuccess() {
+			onView("pros");
+		},
 		invalidate: [
 			"collection",
 		],

@@ -542,7 +542,7 @@
     value: Poloha
 8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
     ref: Feed (label)
-    value: Seznamy
+    value: Moje uložené
 8d5224a1dcfa23a630c6e76f7921d15195a42e649e050d26a7b5c8f8:
     ref: Delete draft (button)
     value: Smazat
@@ -591,7 +591,7 @@
         kategorii přidáme.
 9d96a108b9c86846287f96e8664fd01cd443ac91d6eb92649db0a909:
     ref: Feed select (title)
-    value: Seznamy inzerátů
+    value: Moje uložené
 9dced25fcc591774e6324d19f6e85e64b06b431e2eed98692b12fa8d:
     ref: User profile (title)
     value: Moje údaje

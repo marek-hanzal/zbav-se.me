@@ -8,23 +8,24 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
+import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
 
 export namespace PricePatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSettled?(): void;
+		onView(view: Data.View): void;
 	}
 }
 
-export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
+export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const [price, setPrice] = useState<string | undefined>(
 		draft.price ? String(draft.price) : undefined,
 	);
 	const mutation = withDraftQuery.usePatchMutation({
-		onSettled() {
-			onSettled?.();
+		onSuccess() {
+			onView("priceType");
 		},
 		invalidate: [
 			"collection",

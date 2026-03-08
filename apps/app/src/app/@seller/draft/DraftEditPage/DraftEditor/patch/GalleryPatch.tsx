@@ -8,13 +8,14 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { GalleryUpload } from "~/app/@common/gallery/ui/GalleryUpload";
+import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
 
 export namespace GalleryPatch {
 	export interface Props extends Container.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSuccess(): void;
+		onView(view: Data.View): void;
 		defaultUploadIds: string[];
 	}
 }
@@ -22,14 +23,16 @@ export namespace GalleryPatch {
 export const GalleryPatch: FC<GalleryPatch.Props> = ({
 	draft,
 	onCancel,
-	onSuccess,
+	onView,
 	ui,
 	defaultUploadIds,
 	...props
 }) => {
 	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
 	const mutation = withDraftGalleryCreateMutation.useMutation({
-		onSuccess,
+		onSuccess() {
+			onView("description");
+		},
 	});
 
 	return (

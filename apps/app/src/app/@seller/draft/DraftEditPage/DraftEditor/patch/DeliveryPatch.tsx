@@ -10,24 +10,22 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { DeliverySelect } from "~/app/@common/delivery/ui/DeliverySelect";
+import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
 
 export namespace DeliveryPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSettled?(): void;
+		onView(view: Data.View): void;
 	}
 }
 
-export const DeliveryPatch: FC<DeliveryPatch.Props> = ({
-	draft,
-	onCancel,
-	onSettled,
-	...props
-}) => {
+export const DeliveryPatch: FC<DeliveryPatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const mutation = withDraftQuery.usePatchMutation({
-		onSettled,
+		onSuccess() {
+			onView("warranty");
+		},
 		invalidate: [
 			"collection",
 		],
