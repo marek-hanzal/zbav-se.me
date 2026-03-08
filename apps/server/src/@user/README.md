@@ -21,6 +21,8 @@ This domain handles all operations on user-owned, private data. Everything in th
 - **Create** - Add item to gallery
 - **Fetch** - Get gallery item
 - Individual photos/images in galleries
+  - Listing gallery payloads join `upload` directly and use a covering
+    `gallery_item ("galleryId", "sort") INCLUDE ("id", "uploadId")` index to avoid nested upload lookups.
 
 ### Message System
 - **Message Thread** - Conversation threads

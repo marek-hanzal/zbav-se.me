@@ -13,6 +13,8 @@ This domain unifies former seller session and seller user capabilities behind `/
   - Draft create can already initialize fields like `delivery`; patching is optional for progressive editing.
 - **Draft Gallery** - Create
 - **Listing** - Collection/count/create/fetch
+  - Collection/fetch select only response fields from `listing`; internal columns like `userId` and
+    `titleVec` stay off the wire and out of row materialization.
 
 ### Transactions
 - **Transaction** - Collection/count/fetch

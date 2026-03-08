@@ -24,7 +24,24 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 
 	const gallerySelect = yield* withGallerySelectFx({});
 
-	return listingSourceSelect.selectAll("l").select((eb) => [
+	return listingSourceSelect.select((eb) => [
+		"l.id",
+		"l.price",
+		"l.priceType",
+		"l.currency",
+		"l.condition",
+		"l.age",
+		"l.warranty",
+		"l.restriction",
+		"l.locationId",
+		"l.categoryId",
+		"l.galleryId",
+		"l.draftId",
+		"l.expiresAt",
+		"l.title",
+		"l.description",
+		"l.createdAt",
+		"l.updatedAt",
 		sql<LocationTableSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
 		sql<CategoryTableSchema.Type>`to_jsonb(${eb.table("cat")}.*)`.as("category"),
 		sql<ListingDeliveryEnumSchema.Type[] | null>`to_jsonb(${eb.ref("l.delivery")})`.as(
@@ -32,7 +49,6 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 		),
 		sql<string[] | null>`to_jsonb(${eb.ref("l.pros")})`.as("pros"),
 		sql<string[] | null>`to_jsonb(${eb.ref("l.cons")})`.as("cons"),
-
 		jsonObjectFrom(gallerySelect.where("gal.id", "=", eb.ref("l.galleryId")).limit(1))
 			.$notNull()
 			.as("gallery"),
