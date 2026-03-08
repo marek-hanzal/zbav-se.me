@@ -60,14 +60,11 @@ export const TransactionStatusMigration: Migration = {
 			])
 			.execute();
 
-		await db.schema
-			.createIndex("transaction_status_[transactionId-createdAt]_idx")
-			.on("transaction_status")
-			.columns([
-				"transactionId",
-				"createdAt",
-			])
-			.execute();
+		await sql`
+			CREATE INDEX "transaction_status_[transactionId-createdAt]_idx"
+			ON "transaction_status" ("transactionId", "createdAt" DESC, "id" DESC)
+			INCLUDE ("status")
+		`.execute(db);
 
 		await db.schema
 			.createIndex("transaction_status_[listingId-createdAt]_idx")
