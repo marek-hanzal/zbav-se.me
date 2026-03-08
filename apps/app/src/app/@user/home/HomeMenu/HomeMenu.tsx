@@ -89,14 +89,7 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 				</Group>
 
 				<Group>
-					<ListingsLink
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-					/>
-					<DraftLink
+					<SearchLink
 						iconProps={{
 							ui: {
 								...icon,
@@ -106,7 +99,14 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 				</Group>
 
 				<Group>
-					<SearchLink
+					<ListingsLink
+						iconProps={{
+							ui: {
+								...icon,
+							},
+						}}
+					/>
+					<DraftLink
 						iconProps={{
 							ui: {
 								...icon,
