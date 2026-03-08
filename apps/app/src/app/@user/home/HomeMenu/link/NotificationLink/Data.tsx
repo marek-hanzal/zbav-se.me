@@ -1,11 +1,10 @@
 import { useLocale } from "@use-pico/client/hook";
 import { ChevronRightIcon, type Icon, NotificationIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
+import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
-import { Group } from "@use-pico/client/ui/group";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import { Typo } from "@use-pico/client/ui/typo";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { withInboxQuery } from "@zbav-se.me/sdk/query/user";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
@@ -29,113 +28,68 @@ export const Data: FC<Data.Props> = ({ _suspense, iconProps, onLinkClick }) => {
 	});
 
 	return (
-		<Group
-			ui={{
-				tone: "neutral",
-				theme: "light",
-				background: "default",
+		<LinkTo
+			to={"/$locale/inbox/$type"}
+			icon={NotificationIcon}
+			iconProps={iconProps}
+			onClick={onLinkClick}
+			params={{
+				locale,
+				type: "high",
 			}}
+			activeProps={uiMenuButton({
+				ui: {
+					tone: "primary",
+					theme: "light",
+				},
+				className: [],
+			})}
+			{...uiMenuButton({
+				ui: {
+					tone: highCount.filter > 0 ? "secondary" : "neutral",
+					theme: "light",
+				},
+				className: [],
+			})}
 		>
 			<TypoIcon
-				icon={NotificationIcon}
-				iconProps={iconProps}
-				ui={{
-					inner: "lg",
-					justify: "start",
-					text: "lg",
+				flip
+				icon={ChevronRightIcon}
+				iconProps={{
+					ui: {
+						opacity: "5",
+					},
 				}}
 			>
-				<Tx label={"Notifications (label)"} />
-			</TypoIcon>
-
-			<Container
-				ui={{
-					flow: "horizontal",
-					justify: "space-evenly",
-					inner: "default",
-				}}
-			>
-				<LinkTo
-					to={"/$locale/inbox/$type"}
-					icon={ChevronRightIcon}
-					iconPosition={"right"}
-					onClick={onLinkClick}
-					params={{
-						locale,
-						type: "high",
+				<Container
+					ui={{
+						flow: "horizontal",
+						items: "center",
+						gap: "default",
+						justify: "space-between",
+						width: "full",
 					}}
-					activeProps={uiMenuButton({
-						ui: {
-							flow: "horizontal",
-							justify: "center",
-							items: "center",
-							tone: "primary",
-							theme: "light",
-						},
-						className: [],
-					})}
-					{...uiMenuButton({
-						ui: {
-							flow: "horizontal",
-							justify: "center",
-							items: "center",
-							tone: highCount.filter > 0 ? "secondary" : "neutral",
-							theme: "light",
-							text: "lg",
-						},
-						className: [],
-					})}
 				>
-					<Tx label={"Priority (label)"} />
+					<Tx label={"Notifications (label)"} />
 
 					{highCount.filter > 0 ? (
-						<Typo
-							label={`(${
-								highCount.filter > 9
-									? "9+"
-									: toLocaleNumber({
-											number: highCount.filter,
-											locale,
-										})
-							})`}
-						/>
+						<Badge
+							ui={{
+								tone: "secondary",
+								theme: "light",
+								size: "xs",
+							}}
+						>
+							{highCount.filter > 9
+								? "9+"
+								: toLocaleNumber({
+										number: highCount.filter,
+										locale,
+									})}
+						</Badge>
 					) : null}
-				</LinkTo>
-
-				<LinkTo
-					to={"/$locale/inbox/$type"}
-					icon={ChevronRightIcon}
-					iconPosition={"right"}
-					onClick={onLinkClick}
-					params={{
-						locale,
-						type: "common",
-					}}
-					activeProps={uiMenuButton({
-						ui: {
-							flow: "horizontal",
-							justify: "center",
-							items: "center",
-							tone: "primary",
-							theme: "light",
-						},
-						className: [],
-					})}
-					{...uiMenuButton({
-						ui: {
-							flow: "horizontal",
-							justify: "center",
-							items: "center",
-							tone: "neutral",
-							theme: "light",
-							text: "lg",
-						},
-						className: [],
-					})}
-				>
-					<Tx label={"Others (label)"} />
-				</LinkTo>
-			</Container>
-		</Group>
+				</Container>
+			</TypoIcon>
+		</LinkTo>
 	);
 };

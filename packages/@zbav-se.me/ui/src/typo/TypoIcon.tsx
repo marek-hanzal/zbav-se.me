@@ -47,6 +47,7 @@ export const TypoIcon: FC<TypoIcon.Props> = ({
 					"flex",
 					"flex-col",
 					"items-start",
+					"w-full",
 					ui?.items === "start" && "items-start",
 					ui?.items === "center" && "items-center",
 				])}
