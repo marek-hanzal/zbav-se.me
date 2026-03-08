@@ -78,6 +78,17 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 				)}
 
 				<Group>
+					<NotificationLink
+						onLinkClick={onLinkClick}
+						iconProps={{
+							ui: {
+								...icon,
+							},
+						}}
+					/>
+				</Group>
+
+				<Group>
 					<ListingsLink
 						iconProps={{
 							ui: {
@@ -103,25 +114,6 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 						}}
 					/>
 				</Group>
-
-				<Group>
-					<NotificationLink
-						onLinkClick={onLinkClick}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-					/>
-				</Group>
-
-				<MessageLink
-					iconProps={{
-						ui: {
-							...icon,
-						},
-					}}
-				/>
 
 				<Group>
 					<MyListingsLink
@@ -156,6 +148,14 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 						}}
 					/>
 				</Group>
+
+				<MessageLink
+					iconProps={{
+						ui: {
+							...icon,
+						},
+					}}
+				/>
 
 				<Group>
 					<ProfileLink
