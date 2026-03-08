@@ -26,7 +26,7 @@ export namespace TitlePatch {
 export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			onView("location");
+			onView("category");
 		},
 		invalidate: [
 			"collection",

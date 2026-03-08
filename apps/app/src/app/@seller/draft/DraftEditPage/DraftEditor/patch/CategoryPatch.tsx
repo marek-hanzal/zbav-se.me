@@ -24,7 +24,7 @@ export namespace CategoryPatch {
 export const CategoryPatch: FC<CategoryPatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			onView("condition");
+			onView("location");
 		},
 		invalidate: [
 			"collection",

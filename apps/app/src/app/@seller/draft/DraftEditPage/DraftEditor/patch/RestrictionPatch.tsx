@@ -29,7 +29,7 @@ export const RestrictionPatch: FC<RestrictionPatch.Props> = ({
 }) => {
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			onView("expireAt");
+			onView("default");
 		},
 		invalidate: [
 			"collection",

@@ -31,7 +31,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
 	const mutation = withDraftGalleryCreateMutation.useMutation({
 		onSuccess() {
-			onView("description");
+			onView("title");
 		},
 	});
 

@@ -24,7 +24,7 @@ export namespace PriceTypePatch {
 export const PriceTypePatch: FC<PriceTypePatch.Props> = ({ draft, onCancel, onView, ...props }) => {
 	const mutation = withDraftQuery.usePatchMutation({
 		onSuccess() {
-			onView("category");
+			onView("expireAt");
 		},
 		invalidate: [
 			"collection",
