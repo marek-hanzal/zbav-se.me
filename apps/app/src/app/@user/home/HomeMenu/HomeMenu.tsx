@@ -85,14 +85,14 @@ export const HomeMenu = ({ ui, onLinkClick, ...props }: HomeMenu.Props) => {
 							},
 						}}
 					/>
-					<SearchLink
+					<DraftLink
 						iconProps={{
 							ui: {
 								...icon,
 							},
 						}}
 					/>
-					<DraftLink
+					<SearchLink
 						iconProps={{
 							ui: {
 								...icon,
