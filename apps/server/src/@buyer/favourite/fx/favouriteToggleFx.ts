@@ -62,7 +62,7 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 								type: "favourite",
 								listingId,
 							},
-							priority: "high",
+							priority: "common",
 						});
 
 						return yield* listingFetchFx({
@@ -94,7 +94,7 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 								type: "unfavourite",
 								listingId,
 							},
-							priority: "high",
+							priority: "common",
 						});
 
 						return yield* listingFetchFx({
