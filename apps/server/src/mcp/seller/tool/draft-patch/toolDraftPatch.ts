@@ -4,10 +4,10 @@ import { draftPatchFx } from "~/@seller/draft/fx/draftPatchFx";
 import { DraftPatchSchema } from "~/@seller/draft/schema/DraftPatchSchema";
 import { DraftSchema } from "~/@seller/draft/schema/DraftSchema";
 import { withDateFx } from "~/database/fx/withDateFx";
-import { DraftMcpOutputSchema, withDraftMcpOutput } from "~/mcp/seller/schema/DraftMcpOutputSchema";
-import { DraftPatchMcpSchema } from "~/mcp/seller/schema/DraftPatchMcpSchema";
 import { McpSchema } from "~/mcp/McpSchema";
 import type { McpToolDefinition } from "~/mcp/McpToolDefinition";
+import { DraftMcpOutputSchema, withDraftMcpOutput } from "~/mcp/seller/schema/DraftMcpOutputSchema";
+import { DraftPatchMcpSchema } from "~/mcp/seller/schema/DraftPatchMcpSchema";
 
 const examples: McpToolDefinition.Example<DraftPatchMcpSchema.Type>[] = [
 	{

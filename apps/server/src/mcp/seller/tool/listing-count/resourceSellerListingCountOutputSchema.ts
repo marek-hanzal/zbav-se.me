@@ -1,6 +1,6 @@
-import { toolSellerListingCount } from "~/mcp/seller/tool/listing-count/toolSellerListingCount";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
+import { toolSellerListingCount } from "~/mcp/seller/tool/listing-count/toolSellerListingCount";
 
 export const resourceSellerListingCountOutputSchema: McpResourceDefinition.Definition = {
 	name: "mcp-schema-seller-listing-count",

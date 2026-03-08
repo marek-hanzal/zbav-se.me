@@ -1,7 +1,7 @@
-import { resourceGallerySchema } from "~/mcp/user/resource/resourceGallerySchema";
-import { toolDraftGalleryCreate } from "~/mcp/seller/tool/draft-gallery-create/toolDraftGalleryCreate";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
+import { toolDraftGalleryCreate } from "~/mcp/seller/tool/draft-gallery-create/toolDraftGalleryCreate";
+import { resourceGallerySchema } from "~/mcp/user/resource/resourceGallerySchema";
 
 export const resourceSellerDraftGalleryCreateOutputSchema: McpResourceDefinition.Definition = {
 	name: "mcp-schema-seller-draft-gallery-create",

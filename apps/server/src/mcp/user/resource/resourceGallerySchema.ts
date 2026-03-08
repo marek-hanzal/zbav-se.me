@@ -1,6 +1,6 @@
-import { GalleryMcpOutputSchema } from "~/mcp/user/schema/GalleryMcpOutputSchema";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
+import { GalleryMcpOutputSchema } from "~/mcp/user/schema/GalleryMcpOutputSchema";
 
 export const resourceGallerySchema: McpResourceDefinition.Definition = {
 	name: "mcp-schema-gallery",

@@ -1,6 +1,6 @@
-import { DraftMcpOutputSchema } from "~/mcp/seller/schema/DraftMcpOutputSchema";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
+import { DraftMcpOutputSchema } from "~/mcp/seller/schema/DraftMcpOutputSchema";
 
 export const resourceDraftSchema: McpResourceDefinition.Definition = {
 	name: "mcp-schema-draft",

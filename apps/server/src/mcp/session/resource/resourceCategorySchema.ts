@@ -1,6 +1,6 @@
-import { CategoryMcpOutputSchema } from "~/mcp/session/schema/CategoryMcpOutputSchema";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
+import { CategoryMcpOutputSchema } from "~/mcp/session/schema/CategoryMcpOutputSchema";
 
 export const resourceCategorySchema: McpResourceDefinition.Definition = {
 	name: "mcp-schema-category",

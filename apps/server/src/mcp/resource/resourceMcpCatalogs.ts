@@ -1,6 +1,5 @@
 import type { z } from "zod";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
-import { McpSchema } from "~/mcp/McpSchema";
 import type { McpToolDefinition } from "~/mcp/McpToolDefinition";
 
 interface WithResourceMcpCatalogsProps {
@@ -84,7 +83,7 @@ const withResourceEntries = ({
 const withCatalogEntries = ({
 	definition,
 	resources,
-	templates,
+	templates: _,
 }: {
 	definition: CatalogDefinition;
 	resources: readonly McpResourceDefinition.Definition[];

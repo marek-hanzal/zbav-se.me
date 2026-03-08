@@ -3,9 +3,9 @@ import { Effect } from "effect";
 import { draftGalleryCreateFx } from "~/@seller/draft-gallery/fx/draftGalleryCreateFx";
 import { DraftGalleryCreateSchema } from "~/@seller/draft-gallery/schema/DraftGalleryCreateSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
-import { DraftGalleryCreateMcpSchema } from "~/mcp/seller/schema/DraftGalleryCreateMcpSchema";
 import { McpSchema } from "~/mcp/McpSchema";
 import type { McpToolDefinition } from "~/mcp/McpToolDefinition";
+import { DraftGalleryCreateMcpSchema } from "~/mcp/seller/schema/DraftGalleryCreateMcpSchema";
 import { GalleryMcpOutputSchema } from "~/mcp/user/schema/GalleryMcpOutputSchema";
 
 const examples: McpToolDefinition.Example<DraftGalleryCreateMcpSchema.Type>[] = [

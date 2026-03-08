@@ -1,7 +1,7 @@
-import { resourceCategorySchema } from "~/mcp/session/resource/resourceCategorySchema";
-import { toolCategoryCollection } from "~/mcp/session/tool/category-collection/toolCategoryCollection";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
+import { resourceCategorySchema } from "~/mcp/session/resource/resourceCategorySchema";
+import { toolCategoryCollection } from "~/mcp/session/tool/category-collection/toolCategoryCollection";
 
 export const resourceSessionCategoryCollectionOutputSchema: McpResourceDefinition.Definition = {
 	name: "mcp-schema-session-category-collection",

@@ -1,6 +1,6 @@
-import { toolDraftCount } from "~/mcp/seller/tool/draft-count/toolDraftCount";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
+import { toolDraftCount } from "~/mcp/seller/tool/draft-count/toolDraftCount";
 
 export const resourceSellerDraftCountOutputSchema: McpResourceDefinition.Definition = {
 	name: "mcp-schema-seller-draft-count",

@@ -22,16 +22,16 @@ import { resourceSellerDraftGalleryCreateOutputSchema } from "~/mcp/seller/tool/
 import { resourceSellerDraftPatchOutputSchema } from "~/mcp/seller/tool/draft-patch/resourceSellerDraftPatchOutputSchema";
 import { resourceSellerListingCountOutputSchema } from "~/mcp/seller/tool/listing-count/resourceSellerListingCountOutputSchema";
 import { resourceSellerListingCreateOutputSchema } from "~/mcp/seller/tool/listing-create/resourceSellerListingCreateOutputSchema";
+import type { ServerInfo } from "~/mcp/serverInfo";
 import { resourceCategorySchema } from "~/mcp/session/resource/resourceCategorySchema";
-import { resourceSessionCategoryCollectionOutputSchema } from "~/mcp/session/tool/category-collection/resourceSessionCategoryCollectionOutputSchema";
 import { resourceLocationSchema } from "~/mcp/session/resource/resourceLocationSchema";
+import { resourceSessionCategoryCollectionOutputSchema } from "~/mcp/session/tool/category-collection/resourceSessionCategoryCollectionOutputSchema";
 import { resourceSessionLocationAutocompleteOutputSchema } from "~/mcp/session/tool/location-autocomplete/resourceSessionLocationAutocompleteOutputSchema";
+import { mcpTools } from "~/mcp/tool";
 import { resourceGallerySchema } from "~/mcp/user/resource/resourceGallerySchema";
 import { resourceUploadSchema } from "~/mcp/user/resource/resourceUploadSchema";
 import { resourceUserS3PreSignOutputSchema } from "~/mcp/user/tool/s3-presign/resourceUserS3PreSignOutputSchema";
 import { resourceUserUploadCreateOutputSchema } from "~/mcp/user/tool/upload-create/resourceUserUploadCreateOutputSchema";
-import type { ServerInfo } from "~/mcp/serverInfo";
-import { mcpTools } from "~/mcp/tool";
 
 interface WithMcpResourcesProps {
 	serverInfo: ServerInfo;

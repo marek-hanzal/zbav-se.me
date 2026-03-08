@@ -1,7 +1,7 @@
-import { resourceSellerListingSchema } from "~/mcp/seller/resource/resourceSellerListingSchema";
-import { toolSellerListingCreate } from "~/mcp/seller/tool/listing-create/toolSellerListingCreate";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
+import { resourceSellerListingSchema } from "~/mcp/seller/resource/resourceSellerListingSchema";
+import { toolSellerListingCreate } from "~/mcp/seller/tool/listing-create/toolSellerListingCreate";
 
 export const resourceSellerListingCreateOutputSchema: McpResourceDefinition.Definition = {
 	name: "mcp-schema-seller-listing-create",

@@ -1,7 +1,7 @@
-import { resourceLocationSchema } from "~/mcp/session/resource/resourceLocationSchema";
-import { toolLocationAutocomplete } from "~/mcp/session/tool/location-autocomplete/toolLocationAutocomplete";
 import { McpResourceDefinition } from "~/mcp/McpResourceDefinition";
 import { McpSchema } from "~/mcp/McpSchema";
+import { resourceLocationSchema } from "~/mcp/session/resource/resourceLocationSchema";
+import { toolLocationAutocomplete } from "~/mcp/session/tool/location-autocomplete/toolLocationAutocomplete";
 
 export const resourceSessionLocationAutocompleteOutputSchema: McpResourceDefinition.Definition = {
 	name: "mcp-schema-session-location-autocomplete",
