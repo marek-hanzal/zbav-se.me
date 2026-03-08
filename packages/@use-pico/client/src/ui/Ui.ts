@@ -23,6 +23,10 @@ export namespace Ui {
 	 */
 	export type Size = "default" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
 	/**
+	 * Badge padding scale.
+	 */
+	export type Badge = Size;
+	/**
 	 * Text size scale.
 	 */
 	export type Text = Size;

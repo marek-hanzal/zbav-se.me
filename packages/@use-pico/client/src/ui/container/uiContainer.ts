@@ -25,6 +25,7 @@ export namespace uiContainer {
 		layout?: Layout;
 		height?: CoolUi.Height;
 		width?: CoolUi.Width;
+		badge?: CoolUi.Badge;
 		gap?: CoolUi.Gap;
 		inner?: CoolUi.Inner;
 		snapTo?: CoolUi.SnapTo;

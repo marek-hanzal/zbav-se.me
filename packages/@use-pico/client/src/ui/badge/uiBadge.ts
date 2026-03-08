@@ -6,6 +6,7 @@ export namespace uiBadge {
 		theme?: CoolUi.Theme;
 		tone?: CoolUi.Tone;
 		//
+		badge?: CoolUi.Badge;
 		round?: CoolUi.Round;
 		size?: CoolUi.Size;
 		//
@@ -49,6 +50,7 @@ export const uiBadge = ({ ui, className }: uiBadge.Props) => {
 		ui: {
 			theme: "light",
 			tone: "primary",
+			badge: "default",
 			background: "default",
 			round: "default",
 			border: true,

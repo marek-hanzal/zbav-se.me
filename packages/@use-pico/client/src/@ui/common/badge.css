@@ -1,0 +1,34 @@
+@layer components {
+	[data-ui-badge="xs"] {
+		@apply px-4 py-0.5;
+	}
+
+	[data-ui-badge="sm"] {
+		@apply px-8 py-1;
+	}
+
+	[data-ui-badge="default"],
+	[data-ui-badge="md"] {
+		@apply px-12 py-1.5;
+	}
+
+	[data-ui-badge="lg"] {
+		@apply px-16 py-2;
+	}
+
+	[data-ui-badge="xl"] {
+		@apply px-20 py-2.5;
+	}
+
+	[data-ui-badge="2xl"] {
+		@apply px-24 py-3;
+	}
+
+	[data-ui-badge="3xl"] {
+		@apply px-28 py-3.5;
+	}
+
+	[data-ui-badge="4xl"] {
+		@apply px-32 py-4;
+	}
+}

@@ -77,7 +77,7 @@ export const Data: FC<Data.Props> = ({ _suspense, iconProps, onLinkClick }) => {
 							ui={{
 								tone: "secondary",
 								theme: "light",
-								size: "xs",
+								badge: "xs",
 							}}
 						>
 							{highCount.filter > 9
