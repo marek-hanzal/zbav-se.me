@@ -25,6 +25,9 @@
 050d325dc0ab4741ff8dd2e315e563bf0a746ea997e21d31bc54f8dd:
   ref: Listing category not selected
   value: Listing category not selected
+056c5d8421348af4114fe316b813803bc6d3a9f939e93b4487b32779:
+  ref: Listing expiration (hint)
+  value: Listing expiration (hint)
 065d90dd69a514382210796119a244615affeef496284f86ceeb388d:
   ref: Feed sorting (label)
   value: Feed sorting (label)

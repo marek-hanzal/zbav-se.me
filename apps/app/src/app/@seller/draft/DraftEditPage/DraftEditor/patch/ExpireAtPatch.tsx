@@ -1,5 +1,6 @@
 import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
+import { Mx } from "@use-pico/client/ui/mx";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListingExpireEnum } from "@zbav-se.me/sdk/api/seller";
@@ -48,10 +49,23 @@ export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({ draft, onCancel, onView
 					gap: "default",
 				}}
 			>
-				<ExpireAtSelect
-					value={expiresAt}
-					onChange={setExpiresAt}
-				/>
+				<Container>
+					<ExpireAtSelect
+						value={expiresAt}
+						onChange={setExpiresAt}
+					/>
+
+					<Mx
+						label={"Listing expiration (hint)"}
+						ui={{
+							tone: "neutral",
+							theme: "light",
+							inner: "default",
+							color: "lead",
+							opacity: "7",
+						}}
+					/>
+				</Container>
 
 				<SaveContainer
 					onCancel={onCancel}
