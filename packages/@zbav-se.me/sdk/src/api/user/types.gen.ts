@@ -838,6 +838,154 @@ export type tMessageCountQuery = {
 };
 
 /**
+ * Message entry (unified view across all message types)
+ */
+export type tMessage = {
+    /**
+     * ID of the message entry
+     */
+    id: string;
+    type: tMessageTypeEnum;
+    payload: tMessagePayload;
+};
+
+/**
+ * Request to create a message within a transaction
+ */
+export type tMessageCreate = ({
+    type: 'text';
+} & tMessageTextCreateInput) | ({
+    type: 'gallery';
+} & tMessageGalleryCreateInput) | ({
+    type: 'location';
+} & tMessageLocationCreateInput) | ({
+    type: 'package';
+} & tMessagePackageCreateInput) | ({
+    type: 'personal';
+} & tMessagePersonalCreateInput);
+
+/**
+ * Request to create a transaction message
+ */
+export type tMessageTextCreateInput = tTransactionMessageTextCreate & {
+    type: 'text';
+};
+
+/**
+ * Request to create a transaction message
+ */
+export type tTransactionMessageTextCreate = {
+    /**
+     * The ID of the transaction to add a message to
+     */
+    transactionId: string;
+    /**
+     * The message content
+     */
+    message: string;
+};
+
+/**
+ * Request to create a transaction message gallery
+ */
+export type tMessageGalleryCreateInput = tTransactionMessageGalleryCreate & {
+    type: 'gallery';
+};
+
+/**
+ * Request to create a transaction message gallery
+ */
+export type tTransactionMessageGalleryCreate = {
+    /**
+     * The ID of the transaction to add a gallery to
+     */
+    transactionId: string;
+    /**
+     * IDs of the uploads; order of uploads defines order in the gallery
+     */
+    uploadIds: Array<string>;
+};
+
+/**
+ * Request to create a transaction message location
+ */
+export type tMessageLocationCreateInput = tTransactionMessageLocationCreate & {
+    type: 'location';
+};
+
+/**
+ * Request to create a transaction message location
+ */
+export type tTransactionMessageLocationCreate = {
+    /**
+     * The ID of the transaction to add a location to
+     */
+    transactionId: string;
+    /**
+     * The ID of the location
+     */
+    locationId: string;
+};
+
+/**
+ * Request to create a transaction message package
+ */
+export type tMessagePackageCreateInput = tTransactionMessagePackageCreate & {
+    type: 'package';
+};
+
+/**
+ * Request to create a transaction message package
+ */
+export type tTransactionMessagePackageCreate = {
+    /**
+     * The ID of the transaction to add a package message to
+     */
+    transactionId: string;
+    /**
+     * Package link
+     */
+    link: string;
+    /**
+     * Tracking number
+     */
+    number: string | null;
+};
+
+/**
+ * Request to create a transaction personal message
+ */
+export type tMessagePersonalCreateInput = tTransactionMessagePersonalCreate & {
+    type: 'personal';
+};
+
+/**
+ * Request to create a transaction personal message
+ */
+export type tTransactionMessagePersonalCreate = {
+    /**
+     * The ID of the transaction to add a personal message to
+     */
+    transactionId: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Phone number
+     */
+    phone: string;
+    /**
+     * Email address
+     */
+    email: string;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+};
+
+/**
  * Allowed extensions
  */
 export const tAllowedExtensionsEnum = {
@@ -871,92 +1019,6 @@ export const tAllowedContentTypesEnum = {
  * Allowed content types
  */
 export type tAllowedContentTypesEnum = typeof tAllowedContentTypesEnum[keyof typeof tAllowedContentTypesEnum];
-
-/**
- * Request to create a transaction message gallery
- */
-export type tTransactionMessageGalleryCreate = {
-    /**
-     * The ID of the transaction to add a gallery to
-     */
-    transactionId: string;
-    /**
-     * IDs of the uploads; order of uploads defines order in the gallery
-     */
-    uploadIds: Array<string>;
-};
-
-/**
- * Request to create a transaction message location
- */
-export type tTransactionMessageLocationCreate = {
-    /**
-     * The ID of the transaction to add a location to
-     */
-    transactionId: string;
-    /**
-     * The ID of the location
-     */
-    locationId: string;
-};
-
-/**
- * Request to create a transaction message package
- */
-export type tTransactionMessagePackageCreate = {
-    /**
-     * The ID of the transaction to add a package message to
-     */
-    transactionId: string;
-    /**
-     * Package link
-     */
-    link: string;
-    /**
-     * Tracking number
-     */
-    number: string | null;
-};
-
-/**
- * Request to create a transaction personal message
- */
-export type tTransactionMessagePersonalCreate = {
-    /**
-     * The ID of the transaction to add a personal message to
-     */
-    transactionId: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Phone number
-     */
-    phone: string;
-    /**
-     * Email address
-     */
-    email: string;
-    /**
-     * ID of the location
-     */
-    locationId: string;
-};
-
-/**
- * Request to create a transaction message
- */
-export type tTransactionMessageTextCreate = {
-    /**
-     * The ID of the transaction to add a message to
-     */
-    transactionId: string;
-    /**
-     * The message content
-     */
-    message: string;
-};
 
 /**
  * Data for creating a new upload
@@ -1305,102 +1367,129 @@ export type tApiInboxPatchResponse = {
 
 export type apiInboxPatchResponse = tApiInboxPatchResponse[keyof tApiInboxPatchResponse];
 
-export type tApiMessageThreadMessageCollectionRequest = {
+export type tApiMessageCollectionRequest = {
+    /**
+     * Query object for message collection
+     */
     body?: tMessageQuery;
-    path: {
-        /**
-         * Message thread identifier
-         */
-        messageThreadId: string;
-    };
+    path?: never;
     query?: never;
-    url: '/api/user/message-thread/{messageThreadId}/message/collection';
+    url: '/api/user/message/collection';
 };
 
-export type apiMessageThreadMessageCollectionErrors = {
-    /**
-     * Message thread not found or not accessible
-     */
-    404: tNotice;
+export type apiMessageCollectionErrors = {
     /**
      * Internal server error
      */
     500: tNotice;
 };
 
-export type apiMessageThreadMessageCollectionError = apiMessageThreadMessageCollectionErrors[keyof apiMessageThreadMessageCollectionErrors];
+export type apiMessageCollectionError = apiMessageCollectionErrors[keyof apiMessageCollectionErrors];
 
-export type tApiMessageThreadMessageCollectionResponse = {
+export type tApiMessageCollectionResponse = {
     /**
-     * Access collection of messages based on provided query
+     * Message collection
      */
     200: Array<tMessageItem>;
 };
 
-export type apiMessageThreadMessageCollectionResponse = tApiMessageThreadMessageCollectionResponse[keyof tApiMessageThreadMessageCollectionResponse];
+export type apiMessageCollectionResponse = tApiMessageCollectionResponse[keyof tApiMessageCollectionResponse];
 
-export type tApiMessageThreadMessageFetchRequest = {
-    body?: tMessageQuery;
+export type tApiMessageCountRequest = {
+    /**
+     * Query object for message count
+     */
+    body?: tMessageCountQuery;
     path?: never;
     query?: never;
-    url: '/api/user/message-thread/message/fetch';
+    url: '/api/user/message/count';
 };
 
-export type apiMessageThreadMessageFetchErrors = {
-    /**
-     * Message not found or not accessible
-     */
-    404: tNotice;
+export type apiMessageCountErrors = {
     /**
      * Internal server error
      */
     500: tNotice;
 };
 
-export type apiMessageThreadMessageFetchError = apiMessageThreadMessageFetchErrors[keyof apiMessageThreadMessageFetchErrors];
+export type apiMessageCountError = apiMessageCountErrors[keyof apiMessageCountErrors];
 
-export type tApiMessageThreadMessageFetchResponse = {
+export type tApiMessageCountResponse = {
     /**
-     * Access message based on provided query
-     */
-    200: tMessageItem;
-};
-
-export type apiMessageThreadMessageFetchResponse = tApiMessageThreadMessageFetchResponse[keyof tApiMessageThreadMessageFetchResponse];
-
-export type tApiMessageThreadMessageCountRequest = {
-    body?: tMessageCountQuery;
-    path: {
-        /**
-         * Message thread identifier
-         */
-        messageThreadId: string;
-    };
-    query?: never;
-    url: '/api/user/message-thread/{messageThreadId}/message/count';
-};
-
-export type apiMessageThreadMessageCountErrors = {
-    /**
-     * Message thread not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiMessageThreadMessageCountError = apiMessageThreadMessageCountErrors[keyof apiMessageThreadMessageCountErrors];
-
-export type tApiMessageThreadMessageCountResponse = {
-    /**
-     * Return counts based on provided query
+     * Message count
      */
     200: tCount;
 };
 
-export type apiMessageThreadMessageCountResponse = tApiMessageThreadMessageCountResponse[keyof tApiMessageThreadMessageCountResponse];
+export type apiMessageCountResponse = tApiMessageCountResponse[keyof tApiMessageCountResponse];
+
+export type tApiMessageCreateRequest = {
+    /**
+     * Data for creating a message
+     */
+    body?: tMessageCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/message/create';
+};
+
+export type apiMessageCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiMessageCreateError = apiMessageCreateErrors[keyof apiMessageCreateErrors];
+
+export type tApiMessageCreateResponse = {
+    /**
+     * Created message
+     */
+    201: tMessage;
+};
+
+export type apiMessageCreateResponse = tApiMessageCreateResponse[keyof tApiMessageCreateResponse];
+
+export type tApiMessageFetchRequest = {
+    /**
+     * Query object for message fetch
+     */
+    body?: tMessageQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/message/fetch';
+};
+
+export type apiMessageFetchErrors = {
+    /**
+     * Message not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiMessageFetchError = apiMessageFetchErrors[keyof apiMessageFetchErrors];
+
+export type tApiMessageFetchResponse = {
+    /**
+     * Message matching provided query
+     */
+    200: tMessage;
+};
+
+export type apiMessageFetchResponse = tApiMessageFetchResponse[keyof tApiMessageFetchResponse];
 
 export type tApiS3PresignRequest = {
     body: {
@@ -1439,186 +1528,6 @@ export type tApiS3PresignResponse = {
 };
 
 export type apiS3PresignResponse = tApiS3PresignResponse[keyof tApiS3PresignResponse];
-
-export type tApiTransactionMessageGalleryCreateRequest = {
-    /**
-     * Query object for transaction message gallery creation
-     */
-    body?: tTransactionMessageGalleryCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction-message-gallery/create';
-};
-
-export type apiTransactionMessageGalleryCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionMessageGalleryCreateError = apiTransactionMessageGalleryCreateErrors[keyof apiTransactionMessageGalleryCreateErrors];
-
-export type tApiTransactionMessageGalleryCreateResponse = {
-    /**
-     * Message gallery created
-     */
-    200: tMessageGallery;
-};
-
-export type apiTransactionMessageGalleryCreateResponse = tApiTransactionMessageGalleryCreateResponse[keyof tApiTransactionMessageGalleryCreateResponse];
-
-export type tApiTransactionMessageLocationCreateRequest = {
-    /**
-     * Query object for transaction message location creation
-     */
-    body?: tTransactionMessageLocationCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction-message-location/create';
-};
-
-export type apiTransactionMessageLocationCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionMessageLocationCreateError = apiTransactionMessageLocationCreateErrors[keyof apiTransactionMessageLocationCreateErrors];
-
-export type tApiTransactionMessageLocationCreateResponse = {
-    /**
-     * Message location created
-     */
-    200: tMessageLocation;
-};
-
-export type apiTransactionMessageLocationCreateResponse = tApiTransactionMessageLocationCreateResponse[keyof tApiTransactionMessageLocationCreateResponse];
-
-export type tApiTransactionMessagePackageCreateRequest = {
-    /**
-     * Query object for transaction message package creation
-     */
-    body?: tTransactionMessagePackageCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction-message-package/create';
-};
-
-export type apiTransactionMessagePackageCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionMessagePackageCreateError = apiTransactionMessagePackageCreateErrors[keyof apiTransactionMessagePackageCreateErrors];
-
-export type tApiTransactionMessagePackageCreateResponse = {
-    /**
-     * Message package created
-     */
-    200: tMessagePackage;
-};
-
-export type apiTransactionMessagePackageCreateResponse = tApiTransactionMessagePackageCreateResponse[keyof tApiTransactionMessagePackageCreateResponse];
-
-export type tApiTransactionMessagePersonalCreateRequest = {
-    /**
-     * Query object for transaction personal message creation
-     */
-    body?: tTransactionMessagePersonalCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction-message-personal/create';
-};
-
-export type apiTransactionMessagePersonalCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionMessagePersonalCreateError = apiTransactionMessagePersonalCreateErrors[keyof apiTransactionMessagePersonalCreateErrors];
-
-export type tApiTransactionMessagePersonalCreateResponse = {
-    /**
-     * Personal message created
-     */
-    200: tMessagePersonal;
-};
-
-export type apiTransactionMessagePersonalCreateResponse = tApiTransactionMessagePersonalCreateResponse[keyof tApiTransactionMessagePersonalCreateResponse];
-
-export type tApiTransactionMessageTextCreateRequest = {
-    /**
-     * Query object for transaction message creation
-     */
-    body?: tTransactionMessageTextCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction-message-text/create';
-};
-
-export type apiTransactionMessageTextCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionMessageTextCreateError = apiTransactionMessageTextCreateErrors[keyof apiTransactionMessageTextCreateErrors];
-
-export type tApiTransactionMessageTextCreateResponse = {
-    /**
-     * Message created
-     */
-    200: tMessageText;
-};
-
-export type apiTransactionMessageTextCreateResponse = tApiTransactionMessageTextCreateResponse[keyof tApiTransactionMessageTextCreateResponse];
 
 export type tApiUploadCreateRequest = {
     /**

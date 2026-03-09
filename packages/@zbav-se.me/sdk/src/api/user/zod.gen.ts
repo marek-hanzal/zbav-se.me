@@ -868,6 +868,179 @@ export const zMessageCountQuery = z.object({
 export type zMessageCountQuery = z.infer<typeof zMessageCountQuery>;
 
 /**
+ * Message entry (unified view across all message types)
+ */
+export const zMessage = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the message entry'
+    }),
+    type: zMessageTypeEnum,
+    payload: zMessagePayload
+}).register(z.globalRegistry, {
+    description: 'Message entry (unified view across all message types)'
+});
+
+export type zMessage = z.infer<typeof zMessage>;
+
+/**
+ * Request to create a transaction message
+ */
+export const zTransactionMessageTextCreate = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the transaction to add a message to'
+    }),
+    message: z.string().register(z.globalRegistry, {
+        description: 'The message content'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to create a transaction message'
+});
+
+export type zTransactionMessageTextCreate = z.infer<typeof zTransactionMessageTextCreate>;
+
+/**
+ * Request to create a transaction message
+ */
+export const zMessageTextCreateInput = zTransactionMessageTextCreate.and(z.object({
+    type: z.enum(['text'])
+}));
+
+export type zMessageTextCreateInput = z.infer<typeof zMessageTextCreateInput>;
+
+/**
+ * Request to create a transaction message gallery
+ */
+export const zTransactionMessageGalleryCreate = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the transaction to add a gallery to'
+    }),
+    uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
+        description: 'IDs of the uploads; order of uploads defines order in the gallery'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to create a transaction message gallery'
+});
+
+export type zTransactionMessageGalleryCreate = z.infer<typeof zTransactionMessageGalleryCreate>;
+
+/**
+ * Request to create a transaction message gallery
+ */
+export const zMessageGalleryCreateInput = zTransactionMessageGalleryCreate.and(z.object({
+    type: z.enum(['gallery'])
+}));
+
+export type zMessageGalleryCreateInput = z.infer<typeof zMessageGalleryCreateInput>;
+
+/**
+ * Request to create a transaction message location
+ */
+export const zTransactionMessageLocationCreate = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the transaction to add a location to'
+    }),
+    locationId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the location'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to create a transaction message location'
+});
+
+export type zTransactionMessageLocationCreate = z.infer<typeof zTransactionMessageLocationCreate>;
+
+/**
+ * Request to create a transaction message location
+ */
+export const zMessageLocationCreateInput = zTransactionMessageLocationCreate.and(z.object({
+    type: z.enum(['location'])
+}));
+
+export type zMessageLocationCreateInput = z.infer<typeof zMessageLocationCreateInput>;
+
+/**
+ * Request to create a transaction message package
+ */
+export const zTransactionMessagePackageCreate = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the transaction to add a package message to'
+    }),
+    link: z.url().register(z.globalRegistry, {
+        description: 'Package link'
+    }),
+    number: z.string().nullable()
+}).register(z.globalRegistry, {
+    description: 'Request to create a transaction message package'
+});
+
+export type zTransactionMessagePackageCreate = z.infer<typeof zTransactionMessagePackageCreate>;
+
+/**
+ * Request to create a transaction message package
+ */
+export const zMessagePackageCreateInput = zTransactionMessagePackageCreate.and(z.object({
+    type: z.enum(['package'])
+}));
+
+export type zMessagePackageCreateInput = z.infer<typeof zMessagePackageCreateInput>;
+
+/**
+ * Request to create a transaction personal message
+ */
+export const zTransactionMessagePersonalCreate = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the transaction to add a personal message to'
+    }),
+    name: z.string().register(z.globalRegistry, {
+        description: 'Name'
+    }),
+    phone: z.string().register(z.globalRegistry, {
+        description: 'Phone number'
+    }),
+    email: z.email().register(z.globalRegistry, {
+        description: 'Email address'
+    }),
+    locationId: z.string().register(z.globalRegistry, {
+        description: 'ID of the location'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to create a transaction personal message'
+});
+
+export type zTransactionMessagePersonalCreate = z.infer<typeof zTransactionMessagePersonalCreate>;
+
+/**
+ * Request to create a transaction personal message
+ */
+export const zMessagePersonalCreateInput = zTransactionMessagePersonalCreate.and(z.object({
+    type: z.enum(['personal'])
+}));
+
+export type zMessagePersonalCreateInput = z.infer<typeof zMessagePersonalCreateInput>;
+
+/**
+ * Request to create a message within a transaction
+ */
+export const zMessageCreate = z.union([
+    z.object({
+        type: z.literal('text')
+    }).and(zMessageTextCreateInput),
+    z.object({
+        type: z.literal('gallery')
+    }).and(zMessageGalleryCreateInput),
+    z.object({
+        type: z.literal('location')
+    }).and(zMessageLocationCreateInput),
+    z.object({
+        type: z.literal('package')
+    }).and(zMessagePackageCreateInput),
+    z.object({
+        type: z.literal('personal')
+    }).and(zMessagePersonalCreateInput)
+]);
+
+export type zMessageCreate = z.infer<typeof zMessageCreate>;
+
+/**
  * Allowed extensions
  */
 export const zAllowedExtensionsEnum = z.enum([
@@ -899,96 +1072,6 @@ export const zAllowedContentTypesEnum = z.enum([
 });
 
 export type zAllowedContentTypesEnum = z.infer<typeof zAllowedContentTypesEnum>;
-
-/**
- * Request to create a transaction message gallery
- */
-export const zTransactionMessageGalleryCreate = z.object({
-    transactionId: z.string().register(z.globalRegistry, {
-        description: 'The ID of the transaction to add a gallery to'
-    }),
-    uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
-        description: 'IDs of the uploads; order of uploads defines order in the gallery'
-    })
-}).register(z.globalRegistry, {
-    description: 'Request to create a transaction message gallery'
-});
-
-export type zTransactionMessageGalleryCreate = z.infer<typeof zTransactionMessageGalleryCreate>;
-
-/**
- * Request to create a transaction message location
- */
-export const zTransactionMessageLocationCreate = z.object({
-    transactionId: z.string().register(z.globalRegistry, {
-        description: 'The ID of the transaction to add a location to'
-    }),
-    locationId: z.string().register(z.globalRegistry, {
-        description: 'The ID of the location'
-    })
-}).register(z.globalRegistry, {
-    description: 'Request to create a transaction message location'
-});
-
-export type zTransactionMessageLocationCreate = z.infer<typeof zTransactionMessageLocationCreate>;
-
-/**
- * Request to create a transaction message package
- */
-export const zTransactionMessagePackageCreate = z.object({
-    transactionId: z.string().register(z.globalRegistry, {
-        description: 'The ID of the transaction to add a package message to'
-    }),
-    link: z.url().register(z.globalRegistry, {
-        description: 'Package link'
-    }),
-    number: z.string().nullable()
-}).register(z.globalRegistry, {
-    description: 'Request to create a transaction message package'
-});
-
-export type zTransactionMessagePackageCreate = z.infer<typeof zTransactionMessagePackageCreate>;
-
-/**
- * Request to create a transaction personal message
- */
-export const zTransactionMessagePersonalCreate = z.object({
-    transactionId: z.string().register(z.globalRegistry, {
-        description: 'The ID of the transaction to add a personal message to'
-    }),
-    name: z.string().register(z.globalRegistry, {
-        description: 'Name'
-    }),
-    phone: z.string().register(z.globalRegistry, {
-        description: 'Phone number'
-    }),
-    email: z.email().register(z.globalRegistry, {
-        description: 'Email address'
-    }),
-    locationId: z.string().register(z.globalRegistry, {
-        description: 'ID of the location'
-    })
-}).register(z.globalRegistry, {
-    description: 'Request to create a transaction personal message'
-});
-
-export type zTransactionMessagePersonalCreate = z.infer<typeof zTransactionMessagePersonalCreate>;
-
-/**
- * Request to create a transaction message
- */
-export const zTransactionMessageTextCreate = z.object({
-    transactionId: z.string().register(z.globalRegistry, {
-        description: 'The ID of the transaction to add a message to'
-    }),
-    message: z.string().register(z.globalRegistry, {
-        description: 'The message content'
-    })
-}).register(z.globalRegistry, {
-    description: 'Request to create a transaction message'
-});
-
-export type zTransactionMessageTextCreate = z.infer<typeof zTransactionMessageTextCreate>;
 
 /**
  * Data for creating a new upload
@@ -1246,60 +1329,67 @@ export const zApiInboxPatchResponse = zInbox;
 
 export type zapiInboxPatchResponse = z.infer<typeof zApiInboxPatchResponse>;
 
-export const zApiMessageThreadMessageCollectionData = z.object({
-    body: zMessageQuery.optional(),
-    path: z.object({
-        messageThreadId: z.string().register(z.globalRegistry, {
-            description: 'Message thread identifier'
-        })
-    }),
-    query: z.never().optional()
-});
-
-export type zapiMessageThreadMessageCollectionRequest = z.infer<typeof zApiMessageThreadMessageCollectionData>;
-
-/**
- * Access collection of messages based on provided query
- */
-export const zApiMessageThreadMessageCollectionResponse = z.array(zMessageItem).register(z.globalRegistry, {
-    description: 'Access collection of messages based on provided query'
-});
-
-export type zapiMessageThreadMessageCollectionResponse = z.infer<typeof zApiMessageThreadMessageCollectionResponse>;
-
-export const zApiMessageThreadMessageFetchData = z.object({
+export const zApiMessageCollectionData = z.object({
     body: zMessageQuery.optional(),
     path: z.never().optional(),
     query: z.never().optional()
 });
 
-export type zapiMessageThreadMessageFetchRequest = z.infer<typeof zApiMessageThreadMessageFetchData>;
+export type zapiMessageCollectionRequest = z.infer<typeof zApiMessageCollectionData>;
 
 /**
- * Access message based on provided query
+ * Message collection
  */
-export const zApiMessageThreadMessageFetchResponse = zMessageItem;
+export const zApiMessageCollectionResponse = z.array(zMessageItem).register(z.globalRegistry, {
+    description: 'Message collection'
+});
 
-export type zapiMessageThreadMessageFetchResponse = z.infer<typeof zApiMessageThreadMessageFetchResponse>;
+export type zapiMessageCollectionResponse = z.infer<typeof zApiMessageCollectionResponse>;
 
-export const zApiMessageThreadMessageCountData = z.object({
+export const zApiMessageCountData = z.object({
     body: zMessageCountQuery.optional(),
-    path: z.object({
-        messageThreadId: z.string().register(z.globalRegistry, {
-            description: 'Message thread identifier'
-        })
-    }),
+    path: z.never().optional(),
     query: z.never().optional()
 });
 
-export type zapiMessageThreadMessageCountRequest = z.infer<typeof zApiMessageThreadMessageCountData>;
+export type zapiMessageCountRequest = z.infer<typeof zApiMessageCountData>;
 
 /**
- * Return counts based on provided query
+ * Message count
  */
-export const zApiMessageThreadMessageCountResponse = zCount;
+export const zApiMessageCountResponse = zCount;
 
-export type zapiMessageThreadMessageCountResponse = z.infer<typeof zApiMessageThreadMessageCountResponse>;
+export type zapiMessageCountResponse = z.infer<typeof zApiMessageCountResponse>;
+
+export const zApiMessageCreateData = z.object({
+    body: zMessageCreate.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
+});
+
+export type zapiMessageCreateRequest = z.infer<typeof zApiMessageCreateData>;
+
+/**
+ * Created message
+ */
+export const zApiMessageCreateResponse = zMessage;
+
+export type zapiMessageCreateResponse = z.infer<typeof zApiMessageCreateResponse>;
+
+export const zApiMessageFetchData = z.object({
+    body: zMessageQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
+});
+
+export type zapiMessageFetchRequest = z.infer<typeof zApiMessageFetchData>;
+
+/**
+ * Message matching provided query
+ */
+export const zApiMessageFetchResponse = zMessage;
+
+export type zapiMessageFetchResponse = z.infer<typeof zApiMessageFetchResponse>;
 
 export const zApiS3PresignData = z.object({
     body: z.object({
@@ -1328,81 +1418,6 @@ export const zApiS3PresignResponse = z.object({
 });
 
 export type zapiS3PresignResponse = z.infer<typeof zApiS3PresignResponse>;
-
-export const zApiTransactionMessageGalleryCreateData = z.object({
-    body: zTransactionMessageGalleryCreate.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiTransactionMessageGalleryCreateRequest = z.infer<typeof zApiTransactionMessageGalleryCreateData>;
-
-/**
- * Message gallery created
- */
-export const zApiTransactionMessageGalleryCreateResponse = zMessageGallery;
-
-export type zapiTransactionMessageGalleryCreateResponse = z.infer<typeof zApiTransactionMessageGalleryCreateResponse>;
-
-export const zApiTransactionMessageLocationCreateData = z.object({
-    body: zTransactionMessageLocationCreate.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiTransactionMessageLocationCreateRequest = z.infer<typeof zApiTransactionMessageLocationCreateData>;
-
-/**
- * Message location created
- */
-export const zApiTransactionMessageLocationCreateResponse = zMessageLocation;
-
-export type zapiTransactionMessageLocationCreateResponse = z.infer<typeof zApiTransactionMessageLocationCreateResponse>;
-
-export const zApiTransactionMessagePackageCreateData = z.object({
-    body: zTransactionMessagePackageCreate.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiTransactionMessagePackageCreateRequest = z.infer<typeof zApiTransactionMessagePackageCreateData>;
-
-/**
- * Message package created
- */
-export const zApiTransactionMessagePackageCreateResponse = zMessagePackage;
-
-export type zapiTransactionMessagePackageCreateResponse = z.infer<typeof zApiTransactionMessagePackageCreateResponse>;
-
-export const zApiTransactionMessagePersonalCreateData = z.object({
-    body: zTransactionMessagePersonalCreate.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiTransactionMessagePersonalCreateRequest = z.infer<typeof zApiTransactionMessagePersonalCreateData>;
-
-/**
- * Personal message created
- */
-export const zApiTransactionMessagePersonalCreateResponse = zMessagePersonal;
-
-export type zapiTransactionMessagePersonalCreateResponse = z.infer<typeof zApiTransactionMessagePersonalCreateResponse>;
-
-export const zApiTransactionMessageTextCreateData = z.object({
-    body: zTransactionMessageTextCreate.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiTransactionMessageTextCreateRequest = z.infer<typeof zApiTransactionMessageTextCreateData>;
-
-/**
- * Message created
- */
-export const zApiTransactionMessageTextCreateResponse = zMessageText;
-
-export type zapiTransactionMessageTextCreateResponse = z.infer<typeof zApiTransactionMessageTextCreateResponse>;
 
 export const zApiUploadCreateData = z.object({
     body: zUploadCreate.optional(),

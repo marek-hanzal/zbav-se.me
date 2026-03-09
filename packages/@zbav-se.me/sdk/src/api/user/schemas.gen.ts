@@ -1088,28 +1088,113 @@ export const sMessageCountQuery = {
     }
 } as const;
 
-export const sAllowedExtensionsEnum = {
-    type: 'string',
-    enum: [
-        'webp',
-        'png',
-        'jpg',
-        'jpeg',
-        'avif',
-        'heic',
-        'heif'
+export const sMessage = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/MessageTypeEnum'
+        },
+        payload: {
+            $ref: '#/components/schemas/MessagePayload'
+        }
+    },
+    required: [
+        'id',
+        'type',
+        'payload'
     ]
 } as const;
 
-export const sAllowedContentTypesEnum = {
-    type: 'string',
-    enum: [
-        'image/jpeg',
-        'image/png',
-        'image/webp',
-        'image/avif',
-        'image/heic',
-        'image/heif'
+export const sMessageCreate = {
+    oneOf: [
+        {
+            $ref: '#/components/schemas/MessageTextCreateInput'
+        },
+        {
+            $ref: '#/components/schemas/MessageGalleryCreateInput'
+        },
+        {
+            $ref: '#/components/schemas/MessageLocationCreateInput'
+        },
+        {
+            $ref: '#/components/schemas/MessagePackageCreateInput'
+        },
+        {
+            $ref: '#/components/schemas/MessagePersonalCreateInput'
+        }
+    ],
+    discriminator: {
+        propertyName: 'type',
+        mapping: {
+            text: '#/components/schemas/MessageTextCreateInput',
+            gallery: '#/components/schemas/MessageGalleryCreateInput',
+            location: '#/components/schemas/MessageLocationCreateInput',
+            package: '#/components/schemas/MessagePackageCreateInput',
+            personal: '#/components/schemas/MessagePersonalCreateInput'
+        }
+    }
+} as const;
+
+export const sMessageTextCreateInput = {
+    allOf: [
+        {
+            $ref: '#/components/schemas/TransactionMessageTextCreate'
+        },
+        {
+            type: 'object',
+            properties: {
+                type: {
+                    type: 'string',
+                    enum: [
+                        'text'
+                    ]
+                }
+            },
+            required: [
+                'type'
+            ]
+        }
+    ]
+} as const;
+
+export const sTransactionMessageTextCreate = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        message: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionId',
+        'message'
+    ]
+} as const;
+
+export const sMessageGalleryCreateInput = {
+    allOf: [
+        {
+            $ref: '#/components/schemas/TransactionMessageGalleryCreate'
+        },
+        {
+            type: 'object',
+            properties: {
+                type: {
+                    type: 'string',
+                    enum: [
+                        'gallery'
+                    ]
+                }
+            },
+            required: [
+                'type'
+            ]
+        }
     ]
 } as const;
 
@@ -1133,6 +1218,28 @@ export const sTransactionMessageGalleryCreate = {
     ]
 } as const;
 
+export const sMessageLocationCreateInput = {
+    allOf: [
+        {
+            $ref: '#/components/schemas/TransactionMessageLocationCreate'
+        },
+        {
+            type: 'object',
+            properties: {
+                type: {
+                    type: 'string',
+                    enum: [
+                        'location'
+                    ]
+                }
+            },
+            required: [
+                'type'
+            ]
+        }
+    ]
+} as const;
+
 export const sTransactionMessageLocationCreate = {
     type: 'object',
     properties: {
@@ -1146,6 +1253,28 @@ export const sTransactionMessageLocationCreate = {
     required: [
         'transactionId',
         'locationId'
+    ]
+} as const;
+
+export const sMessagePackageCreateInput = {
+    allOf: [
+        {
+            $ref: '#/components/schemas/TransactionMessagePackageCreate'
+        },
+        {
+            type: 'object',
+            properties: {
+                type: {
+                    type: 'string',
+                    enum: [
+                        'package'
+                    ]
+                }
+            },
+            required: [
+                'type'
+            ]
+        }
     ]
 } as const;
 
@@ -1170,6 +1299,28 @@ export const sTransactionMessagePackageCreate = {
         'transactionId',
         'link',
         'number'
+    ]
+} as const;
+
+export const sMessagePersonalCreateInput = {
+    allOf: [
+        {
+            $ref: '#/components/schemas/TransactionMessagePersonalCreate'
+        },
+        {
+            type: 'object',
+            properties: {
+                type: {
+                    type: 'string',
+                    enum: [
+                        'personal'
+                    ]
+                }
+            },
+            required: [
+                'type'
+            ]
+        }
     ]
 } as const;
 
@@ -1202,19 +1353,28 @@ export const sTransactionMessagePersonalCreate = {
     ]
 } as const;
 
-export const sTransactionMessageTextCreate = {
-    type: 'object',
-    properties: {
-        transactionId: {
-            type: 'string'
-        },
-        message: {
-            type: 'string'
-        }
-    },
-    required: [
-        'transactionId',
-        'message'
+export const sAllowedExtensionsEnum = {
+    type: 'string',
+    enum: [
+        'webp',
+        'png',
+        'jpg',
+        'jpeg',
+        'avif',
+        'heic',
+        'heif'
+    ]
+} as const;
+
+export const sAllowedContentTypesEnum = {
+    type: 'string',
+    enum: [
+        'image/jpeg',
+        'image/png',
+        'image/webp',
+        'image/avif',
+        'image/heic',
+        'image/heif'
     ]
 } as const;
 
