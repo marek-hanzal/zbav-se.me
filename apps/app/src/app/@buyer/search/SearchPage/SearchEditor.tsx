@@ -1,4 +1,5 @@
 import { Container } from "@use-pico/client/ui/container";
+import { Group } from "@use-pico/client/ui/group";
 import type { FC } from "react";
 import { FeedEditor } from "~/app/@buyer/feed/~public/FeedEditor";
 import { ResetButton } from "./ResetButton";
@@ -29,9 +30,11 @@ export const SearchEditor: FC<SearchEditor.Props> = ({ feedId, ui, ...props }) =
 						gap: "default",
 					}}
 				>
-					<SearchButton feedId={feedId} />
-					<SaveAsFeedButton feedId={feedId} />
-					<ResetButton feedId={feedId} />
+					<Group>
+						<SearchButton feedId={feedId} />
+						<SaveAsFeedButton feedId={feedId} />
+						<ResetButton feedId={feedId} />
+					</Group>
 				</Container>
 			</FeedEditor>
 		</Container>

@@ -1,12 +1,12 @@
 import { useLocale } from "@use-pico/client/hook";
-import { uiButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { uiLinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace SearchButton {
-	export interface Props extends uiButton.Component<{}> {
+	export interface Props extends uiLinkTo.Component<{}> {
 		feedId: string;
 	}
 }
@@ -22,10 +22,23 @@ export const SearchButton: FC<SearchButton.Props> = ({ feedId, ui, className, ..
 				id: feedId,
 			}}
 			icon={SearchIcon}
-			{...uiButton({
+			iconProps={{
 				ui: {
-					tone: "primary",
+					text: "xl",
+				},
+			}}
+			{...uiLinkTo({
+				ui: {
+					tone: "neutral",
 					theme: "light",
+					size: "default",
+					justify: "start",
+					items: "center",
+					background: "default",
+					round: undefined,
+					shadow: false,
+					border: false,
+					width: "full",
 					...ui,
 				},
 				className,

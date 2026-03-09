@@ -134,6 +134,9 @@
 1b63424af287e8864ce39b0f977235e745ee16c2db56823d017bc4fd:
     ref: Listing warranty (label)
     value: Záruka
+1caad87c986357cb074ce8038eadce0b76d7d51170a2dc3017f1c59c:
+    ref: Save as feed (button)
+    value: Uložit
 1db65f00c76028b1ac9c7c45672cbf0ad4130d6fd354960e762f05e4:
     ref: Reaction rate (hint)
     value: Udává poměr reakcí na zprávy - vyšší číslo znamená více reakcí.
@@ -317,6 +320,9 @@
 4d603e3fca4e9f047b0fd3fdd009a1808b0b50eda2aa6f12c206a9c7:
     ref: Share location (button)
     value: Sdílet polohu
+4e635fa67582dafe43092219c67fa6a2e596a963d1b95673277dda75:
+    ref: search
+    value: search
 4e8be956938d9f4112c3219e6c3412bc41010bc446c725492d7ec5c2:
     ref: Personal - Email (placeholder)
     value: Vyplň emailovou adresu
@@ -414,6 +420,9 @@
 69b8258820206f2dc2cded5a9cf7c8b51708a5a81d8de92c0ef3450f:
     ref: Feed category not selected
     value: Všechno
+6ca3f3546da9df7cda3ed2984fd874d81938723ee09b0116ce96825a:
+    ref: Search (button)
+    value: Hledat
 70ed6d112dab8cf69d055339929e4dd23299e2c5f9c4ef97371bd13e:
     ref: No drafts for current filter (title)
     value: No drafts for current filter (title)
@@ -926,15 +935,6 @@ acca87272a911bd673bc0f526d8ddaf4bedf8c4d04a375401d80df47:
 ace3cb7fde09a6de2d13e87440ee5f21a920cd7dff6ac1dc2ee6ba48:
     ref: Search (title)
     value: Hledat
-ace3cb7fde09a6de2d13e87440ee5f21a920cd7dff6ac1dc2ee6ba49:
-    ref: Search (button)
-    value: Hledat
-ace3cb7fde09a6de2d13e87440ee5f21a920cd7dff6ac1dc2ee6ba50:
-    ref: Save as feed (button)
-    value: Uložit jako seznam
-ace3cb7fde09a6de2d13e87440ee5f21a920cd7dff6ac1dc2ee6ba51:
-    ref: Reset search (button)
-    value: Resetovat hledání
 acf5cd0bee4e6bd74eea745c51c41f0b3a17a1de314afd2d76eb056c:
     ref: Personal - Warning (title)
     value: Sdílíš osobní údaje
@@ -1224,6 +1224,9 @@ faecab53142a1792e02de1dfa45f39cc83797a47dc171d3687e10fa0:
 fb5f656c01caafdecfd1468991d74a7ab481b89ce6df9a8c229d726e:
     ref: Package - Link (label)
     value: Odkaz na zásilku
+fc284aa9aa4a2c690a4e62463e646eb74f9af7cb7354ebf85a149a07:
+    ref: Reset search (button)
+    value: Resetovat
 fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
     ref: Back to home (link)
     value: Zpět domů

@@ -65,9 +65,22 @@ export const SaveAsFeedButton: FC<SaveAsFeedButton.Props> = ({
 				onClick={() => setIsOpen(true)}
 				disabled={isLimitReached}
 				iconEnabled={SaveIcon}
+				iconProps={{
+					ui: {
+						text: "xl",
+					},
+				}}
 				ui={{
-					tone: "secondary",
+					tone: "neutral",
 					theme: "light",
+					size: "default",
+					justify: "start",
+					items: "center",
+					background: "default",
+					round: undefined,
+					shadow: false,
+					border: false,
+					width: "full",
 					...ui,
 				}}
 				className={className}

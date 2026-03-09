@@ -50,9 +50,22 @@ export const ResetButton: FC<ResetButton.Props> = ({ feedId, ui, className, ...p
 			disabled={deleteMutation.isPending || createMutation.isPending}
 			loading={deleteMutation.isPending || createMutation.isPending}
 			iconEnabled={RefreshIcon}
+			iconProps={{
+				ui: {
+					text: "xl",
+				},
+			}}
 			ui={{
-				tone: "secondary",
+				tone: "neutral",
 				theme: "light",
+				size: "default",
+				justify: "start",
+				items: "center",
+				background: "default",
+				round: undefined,
+				shadow: false,
+				border: false,
+				width: "full",
 				...ui,
 			}}
 			className={className}

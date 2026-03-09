@@ -1,1 +1,1 @@
-export const SearchIcon = "icon-[line-md--search-twotone]";
+export const SearchIcon = "icon-[proicons--search]";
