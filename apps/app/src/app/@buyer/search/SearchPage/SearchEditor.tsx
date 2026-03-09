@@ -4,7 +4,7 @@ import type { FC } from "react";
 import { FeedEditor } from "~/app/@buyer/feed/~public/FeedEditor";
 import { ResetButton } from "./ResetButton";
 import { SaveAsFeedButton } from "./SaveAsFeedButton";
-import { SearchButton } from "./SearchButton";
+import { SearchButton } from "./SearchButton/SearchButton";
 
 const hidden = [
 	"header",
