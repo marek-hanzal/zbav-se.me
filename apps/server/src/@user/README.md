@@ -24,22 +24,19 @@ This domain handles all operations on user-owned, private data. Everything in th
   - Listing gallery payloads join `upload` directly and use a covering
     `gallery_item ("galleryId", "sort") INCLUDE ("id", "uploadId")` index to avoid nested upload lookups.
 
-### Message System
-- **Message** - Unified transaction message timeline API
-  - **Collection** - List messages with query/filter/sort/cursor
-  - **Count** - Count messages for a query
-  - **Fetch** - Get one message by query
-  - **Create** - Create one typed message in a transaction
-- **Message Thread** - Internal persistence scaffold still used by the current schema
-  - Not mounted as a first-class user API anymore.
-- **Message Types**:
-  - `message_text` - Text messages
-  - `message_gallery` - Photo attachments
-  - `message_location` - Location sharing
-  - `message_package` - Package/tracking info
-  - `message_personal` - Personal contact info
-  - `message_system` - System notifications
-- **Message Thread User** - Thread participants
+### Transaction Entry System
+- **Transaction Entry** - Unified transaction timeline API
+  - **Collection** - List transaction entries with query/filter/sort/cursor
+  - **Count** - Count transaction entries for a query
+  - **Fetch** - Get one transaction entry by query
+  - **Create** - Create one user-authored typed transaction entry
+- **Transaction Entry Kinds**:
+  - `text` - Text timeline entries
+  - `gallery` - Photo attachments
+  - `location` - Location sharing
+  - `package` - Package/tracking info
+  - `personal` - Personal contact info
+  - `status-*` - System/status timeline entries
 
 ### Inbox
 - **Collection** - List inbox items with query/filter/sort/cursor
@@ -62,8 +59,8 @@ This domain handles all operations on user-owned, private data. Everything in th
   - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'ALTER TABLE "inbox" ALTER COLUMN "family" SET NOT NULL;'`
   - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'CREATE INDEX IF NOT EXISTS "inbox_[userId-family]_idx" ON "inbox" ("userId", "family");'`
 
-### Transaction Messages
-- Transaction messaging now enters through the unified **Message** API.
+### Transaction Timeline
+- Transaction communication now enters through the unified **Transaction Entry** API.
 - Transaction-scoped write rules still apply:
   - `pending` blocks user-authored writes
   - `open` and `dispute` allow typed message creation
@@ -112,7 +109,7 @@ This domain handles all operations on user-owned, private data. Everything in th
 ## Use Cases
 
 - Managing personal galleries and photos
-- Sending and receiving messages
+- Sending and receiving transaction timeline entries
 - Managing transaction communications
 - Tracking user activity and events
 - Managing file uploads

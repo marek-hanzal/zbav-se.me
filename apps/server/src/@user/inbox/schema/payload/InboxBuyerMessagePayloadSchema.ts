@@ -9,12 +9,6 @@ export const InboxBuyerMessagePayloadSchema = z
 		transactionId: z.string().openapi({
 			description: "Related transaction identifier",
 		}),
-		listingId: z.string().openapi({
-			description: "Related listing identifier",
-		}),
-		messageThreadId: z.string().openapi({
-			description: "Related message thread identifier",
-		}),
 	})
 	.openapi("InboxBuyerMessagePayload", {
 		description: "Payload for buyer message notifications",

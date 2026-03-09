@@ -13,7 +13,7 @@ import { transactionStatusAcceptFx } from "~/@seller/transaction-status/fx/trans
 import { transactionStatusDisputeFx as sellerDisputeFx } from "~/@seller/transaction-status/fx/transactionStatusDisputeFx";
 import { transactionStatusRejectFx as sellerRejectFx } from "~/@seller/transaction-status/fx/transactionStatusRejectFx";
 import { transactionStatusResolveFx } from "~/@seller/transaction-status/fx/transactionStatusResolveFx";
-import { messageCreateFx } from "~/@user/message/fx/messageCreateFx";
+import { transactionEntryCreateFx } from "~/@user/transaction-entry/fx/transactionEntryCreateFx";
 import MessagePackage from "~/seed/data/message-package.json";
 import MessagePersonal from "~/seed/data/message-personal.json";
 import BuyerText from "~/seed/data/message-text-buyer.json";
@@ -113,50 +113,60 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 		transactionId: transaction.id,
 	}).pipe(withSeedNowFx(timeline.acceptAt));
 
-	yield* messageCreateFx({
+	yield* transactionEntryCreateFx({
 		userId: actorUserId,
-		type: "text",
+		kind: "text",
 		transactionId: transaction.id,
-		message: BuyerText.length > 0 ? list(BuyerText) : "Hi, is this still available?",
+		payload: {
+			text: BuyerText.length > 0 ? list(BuyerText) : "Hi, is this still available?",
+		},
 	}).pipe(withSeedNowFx(timeline.buyerMessageAt));
 
-	yield* messageCreateFx({
+	yield* transactionEntryCreateFx({
 		userId: sellerId,
-		type: "text",
+		kind: "text",
 		transactionId: transaction.id,
-		message: SellerText.length > 0 ? list(SellerText) : "Yes, still available.",
+		payload: {
+			text: SellerText.length > 0 ? list(SellerText) : "Yes, still available.",
+		},
 	}).pipe(withSeedNowFx(timeline.sellerMessageAt));
 
 	if (Math.random() < 0.6) {
-		yield* messageCreateFx({
+		yield* transactionEntryCreateFx({
 			userId: sellerId,
-			type: "location",
+			kind: "location",
 			transactionId: transaction.id,
-			locationId,
+			payload: {
+				locationId,
+			},
 		}).pipe(withSeedNowFx(withMetaAt()), Effect.ignore);
 	}
 
 	if (Math.random() < 0.4 && MessagePersonal.length > 0) {
 		const personal = list(MessagePersonal);
-		yield* messageCreateFx({
+		yield* transactionEntryCreateFx({
 			userId: actorUserId,
-			type: "personal",
+			kind: "personal",
 			transactionId: transaction.id,
-			name: personal.name,
-			phone: personal.phone,
-			email: personal.email,
-			locationId,
+			payload: {
+				name: personal.name,
+				phone: personal.phone,
+				email: personal.email,
+				locationId,
+			},
 		}).pipe(withSeedNowFx(withMetaAt()), Effect.ignore);
 	}
 
 	if (Math.random() < 0.3 && MessagePackage.length > 0) {
 		const pack = list(MessagePackage);
-		yield* messageCreateFx({
+		yield* transactionEntryCreateFx({
 			userId: sellerId,
-			type: "package",
+			kind: "package",
 			transactionId: transaction.id,
-			link: pack.link,
-			number: pack.number,
+			payload: {
+				link: pack.link,
+				number: pack.number,
+			},
 		}).pipe(withSeedNowFx(withMetaAt()), Effect.ignore);
 	}
 

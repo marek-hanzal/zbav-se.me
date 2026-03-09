@@ -8,9 +8,7 @@ import type { TransactionCreateSchema } from "~/@buyer/transaction/schema/Transa
 import { transactionStatusCreateFx } from "~/@buyer/transaction-status/fx/transactionStatusCreateFx";
 import { TransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
 import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
-import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
-import { messageThreadCreateFx } from "~/@user/message-thread/fx/messageThreadCreateFx";
-import { messageUserCreateFx } from "~/@user/message-thread-user/fx/messageUserCreateFx";
+import { transactionUserCreateFx } from "~/@user/transaction-user/fx/transactionUserCreateFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
@@ -72,22 +70,7 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 				});
 			}
 
-			const messageThread = yield* messageThreadCreateFx({});
 			const now = dateContext.now();
-
-			yield* messageUserCreateFx({
-				messageThreadId: messageThread.id,
-				userIds: [
-					/**
-					 * Allow current user executing transaction request
-					 */
-					userId,
-					/**
-					 * Allow seller to participate in this thread too.
-					 */
-					listing.userId,
-				],
-			});
 
 			const id = genId();
 
@@ -99,7 +82,6 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 						id,
 						userId,
 						listingId,
-						messageThreadId: messageThread.id,
 						createdAt: now.toJSDate(),
 						updatedAt: now.toJSDate(),
 						expiresAt: now
@@ -111,6 +93,20 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 					.returningAll()
 					.executeTakeFirstOrThrow(),
 			);
+
+			yield* transactionUserCreateFx({
+				transactionId: id,
+				users: [
+					{
+						userId,
+						side: "buyer",
+					},
+					{
+						userId: listing.userId,
+						side: "seller",
+					},
+				],
+			});
 
 			yield* transactionStatusCreateFx({
 				userId,
@@ -126,12 +122,6 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 				event: "transaction",
 			}).pipe(Effect.ignore);
 
-			yield* messageSystemCreateFx({
-				userId,
-				messageThreadId: messageThread.id,
-				text: "Transaction pending (message)",
-			});
-
 			yield* inboxCreateFx({
 				userId: listing.userId,
 				family: "message",
@@ -139,8 +129,6 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 				payload: {
 					type: "buyer-message",
 					transactionId: id,
-					listingId,
-					messageThreadId: messageThread.id,
 				},
 				priority: "high",
 			});

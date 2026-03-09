@@ -45,13 +45,9 @@ const tagsRegistry: Record<
 		name: "Gallery",
 		description: "Gallery management for images",
 	},
-	Message: {
-		name: "Message",
-		description: "Unified transaction message queries and writes",
-	},
-	"Message Thread": {
-		name: "Message Thread",
-		description: "Message thread management",
+	"Transaction Entry": {
+		name: "Transaction Entry",
+		description: "Transaction timeline entry queries and writes",
 	},
 	Inbox: {
 		name: "Inbox",
@@ -60,26 +56,6 @@ const tagsRegistry: Record<
 	S3: {
 		name: "S3",
 		description: "S3 pre-signed URL generation for direct uploads",
-	},
-	"Transaction Message Gallery": {
-		name: "Transaction Message Gallery",
-		description: "Gallery/image messages within transactions",
-	},
-	"Transaction Message Location": {
-		name: "Transaction Message Location",
-		description: "Location messages within transactions",
-	},
-	"Transaction Message Package": {
-		name: "Transaction Message Package",
-		description: "Package delivery information messages within transactions",
-	},
-	"Transaction Message Personal": {
-		name: "Transaction Message Personal",
-		description: "Personal contact information messages within transactions",
-	},
-	"Transaction Message Text": {
-		name: "Transaction Message Text",
-		description: "Text messages within transactions",
 	},
 	"Transaction Status": {
 		name: "Transaction Status",

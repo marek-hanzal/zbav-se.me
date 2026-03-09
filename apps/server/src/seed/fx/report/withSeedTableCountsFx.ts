@@ -16,15 +16,9 @@ export const SeedPrimaryCoreTables = [
 
 export const SeedPrimaryInteractionTables = [
 	"transaction",
+	"transaction_entry",
 	"transaction_status",
-	"message_thread",
-	"message_thread_user",
-	"message_system",
-	"message_text",
-	"message_gallery",
-	"message_location",
-	"message_package",
-	"message_personal",
+	"transaction_user",
 	"thumb",
 	"favourite",
 	"ignore",

@@ -1,9 +1,10 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { transactionPatchFx } from "~/@buyer/transaction/fx/transactionPatchFx";
 import type { TransactionStatusCreateSchema } from "~/@common/transaction-status/schema/TransactionStatusCreateSchema";
 import { transactionStatusFetchFx } from "~/@session/transaction-status/fx/transactionStatusFetchFx";
+import { transactionEntryCleanupSensitiveFx } from "~/@user/transaction-entry/fx/transactionEntryCleanupSensitiveFx";
+import { withTransactionStatusEntryFx } from "~/@user/transaction-entry/fx/withTransactionStatusEntryFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { traceLogFx } from "~/effect/traceLogFx";
@@ -60,18 +61,24 @@ export const transactionStatusCreateFx = Effect.fn("transactionStatusCreateFx")(
 			.executeTakeFirstOrThrow(),
 	);
 
-	yield* transactionPatchFx({
+	yield* withTransactionStatusEntryFx({
+		transactionId: create.transactionId,
 		userId,
-		patch: {},
-		query: {
-			where: {
-				id: create.transactionId,
-			},
-		},
-		scope: {
-			userId,
-		},
+		scopeUserId: userId,
+		status: create.status,
+		side: create.side,
 	});
+
+	if (
+		create.status === "rejected" ||
+		create.status === "expired" ||
+		create.status === "success" ||
+		create.status === "closed"
+	) {
+		yield* transactionEntryCleanupSensitiveFx({
+			transactionId: create.transactionId,
+		});
+	}
 
 	return yield* transactionStatusFetchFx({
 		where: {

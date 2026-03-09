@@ -1,9 +1,7 @@
 import { Effect } from "effect";
 import type { TransactionStatusRejectSchema } from "~/@common/transaction-status/schema/TransactionStatusRejectSchema";
-import { transactionPatchFx } from "~/@seller/transaction/fx/transactionPatchFx";
 import { transactionStatusCreateFx } from "~/@seller/transaction-status/fx/transactionStatusCreateFx";
 import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
-import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { traceLogFx } from "~/effect/traceLogFx";
@@ -47,25 +45,6 @@ export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(
 		});
 	}
 
-	yield* transactionPatchFx({
-		userId,
-		patch: {},
-		query: {
-			where: {
-				id: transaction.id,
-			},
-		},
-		scope: {
-			userId,
-		},
-	});
-
-	yield* messageSystemCreateFx({
-		userId,
-		messageThreadId: transaction.messageThreadId,
-		text: "Seller rejected the transaction (message)",
-	});
-
 	yield* inboxCreateFx({
 		userId: transaction.buyerId,
 		family: "message",
@@ -73,8 +52,6 @@ export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(
 		payload: {
 			type: "seller-message",
 			transactionId: transaction.id,
-			listingId: transaction.listingId,
-			messageThreadId: transaction.messageThreadId,
 		},
 		priority: "high",
 	});

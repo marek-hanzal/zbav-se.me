@@ -1,9 +1,7 @@
 import { Effect } from "effect";
 import type { TransactionStatusDisputeSchema } from "~/@common/transaction-status/schema/TransactionStatusDisputeSchema";
-import { transactionPatchFx } from "~/@seller/transaction/fx/transactionPatchFx";
 import { transactionStatusCreateFx } from "~/@seller/transaction-status/fx/transactionStatusCreateFx";
 import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
-import { messageSystemCreateFx } from "~/@user/message-system/fx/messageSystemCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { traceLogFx } from "~/effect/traceLogFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
@@ -46,25 +44,6 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 		});
 	}
 
-	yield* transactionPatchFx({
-		userId,
-		patch: {},
-		query: {
-			where: {
-				id: transaction.id,
-			},
-		},
-		scope: {
-			userId,
-		},
-	});
-
-	yield* messageSystemCreateFx({
-		userId,
-		messageThreadId: transaction.messageThreadId,
-		text: "Seller disputed the transaction (message)",
-	});
-
 	yield* inboxCreateFx({
 		userId: transaction.buyerId,
 		family: "message",
@@ -72,8 +51,6 @@ export const transactionStatusDisputeFx = Effect.fn("transactionStatusDisputeFx"
 		payload: {
 			type: "seller-message",
 			transactionId: transaction.id,
-			listingId: transaction.listingId,
-			messageThreadId: transaction.messageThreadId,
 		},
 		priority: "high",
 	});

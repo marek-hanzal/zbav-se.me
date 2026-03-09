@@ -28,6 +28,7 @@ All enum schemas correspond to PostgreSQL enum types created in migrations:
 ### Transaction Enums
 - **TransactionStatusEnumSchema** - Transaction status (`pending`, `open`, `resolved`, `dispute`, `rejected`, `expired`, `success`, `closed`)
 - **TransactionSideEnumSchema** - Transaction side/initiator (`seller`, `buyer`, `transaction`, `system`, `unknown`)
+- **TransactionEntryKindEnumSchema** - Transaction timeline entry kind (`text`, `gallery`, `location`, `package`, `personal`, `status-*`)
 
 ### User Enums
 - **UserSideEnumSchema** - User side (`seller`, `buyer`)
@@ -69,6 +70,7 @@ Each enum schema corresponds to a PostgreSQL enum type created in migrations:
 - `listing_event_type_enum` → `ListingEventEnumSchema`
 - `transaction_status_enum` → `TransactionStatusEnumSchema`
 - `transaction_side_enum` → `TransactionSideEnumSchema`
+- `transaction_entry_kind_enum` → `TransactionEntryKindEnumSchema`
 - `user_ex_side_enum` → `UserSideEnumSchema`
 - `user_event_scope_enum` → `UserEventScopeEnumSchema`
 - `thumb_enum` → `ThumbEnumSchema`
