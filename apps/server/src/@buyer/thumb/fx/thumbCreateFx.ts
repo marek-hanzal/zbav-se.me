@@ -79,6 +79,7 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 
 			yield* inboxCreateFx({
 				userId: listing.userId,
+				family: "reaction",
 				type: "thumb",
 				payload: {
 					type: "thumb",

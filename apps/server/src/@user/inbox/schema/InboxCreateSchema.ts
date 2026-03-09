@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { InboxFamilyEnumSchema } from "~/@user/inbox/schema/InboxFamilyEnumSchema";
 import { InboxPayloadSchema } from "~/@user/inbox/schema/InboxPayloadSchema";
 import { InboxPriorityEnumSchema } from "~/database/@enum/InboxPriorityEnumSchema";
 import { InboxTypeEnumSchema } from "~/database/@enum/InboxTypeEnumSchema";
@@ -8,6 +9,7 @@ export const InboxCreateSchema = z
 		userId: z.string().openapi({
 			description: "Recipient user identifier",
 		}),
+		family: InboxFamilyEnumSchema,
 		type: InboxTypeEnumSchema,
 		payload: InboxPayloadSchema,
 		priority: InboxPriorityEnumSchema,

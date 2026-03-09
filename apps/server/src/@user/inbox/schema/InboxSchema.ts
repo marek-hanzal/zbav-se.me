@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { InboxFamilyEnumSchema } from "~/@user/inbox/schema/InboxFamilyEnumSchema";
 import { InboxPayloadSchema } from "~/@user/inbox/schema/InboxPayloadSchema";
 import { InboxPriorityEnumSchema } from "~/database/@enum/InboxPriorityEnumSchema";
 import { InboxTypeEnumSchema } from "~/database/@enum/InboxTypeEnumSchema";
@@ -15,6 +16,7 @@ export const InboxSchema = z
 			description: "Inbox event timestamp",
 			type: "string",
 		}),
+		family: InboxFamilyEnumSchema,
 		type: InboxTypeEnumSchema,
 		payload: InboxPayloadSchema,
 		priority: InboxPriorityEnumSchema,

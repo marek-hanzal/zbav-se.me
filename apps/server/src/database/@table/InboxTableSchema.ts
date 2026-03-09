@@ -13,6 +13,9 @@ export const InboxTableSchema = z.object({
 		description: "Inbox event timestamp",
 		type: "string",
 	}),
+	family: z.string().openapi({
+		description: "Logical inbox event family",
+	}),
 	type: InboxTypeEnumSchema,
 	payload: z.looseObject({}).openapi({
 		description: "Inbox payload",

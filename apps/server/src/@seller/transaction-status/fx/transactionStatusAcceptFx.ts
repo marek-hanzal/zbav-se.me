@@ -80,6 +80,7 @@ export const transactionStatusAcceptFx = Effect.fn("transactionStatusAcceptFx")(
 
 	yield* inboxCreateFx({
 		userId: transaction.buyerId,
+		family: "message",
 		type: "seller-message",
 		payload: {
 			type: "seller-message",

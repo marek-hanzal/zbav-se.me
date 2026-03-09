@@ -34,6 +34,10 @@ export const withInboxQueryBuilderFx = Effect.fn("withInboxQueryBuilderFx")(func
 		query = query.where("i.userId", "=", where.userId) as TSelect;
 	}
 
+	if (where.family) {
+		query = query.where("i.family", "=", where.family) as TSelect;
+	}
+
 	if (where.type) {
 		query = query.where("i.type", "=", where.type) as TSelect;
 	}

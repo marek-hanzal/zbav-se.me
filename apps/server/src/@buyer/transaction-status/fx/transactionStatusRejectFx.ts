@@ -70,6 +70,7 @@ export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(
 		transaction.side === "buyer"
 			? {
 					userId: transaction.sellerId,
+					family: "message",
 					type: "buyer-message",
 					payload: {
 						type: "buyer-message",
@@ -81,6 +82,7 @@ export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(
 				}
 			: {
 					userId: transaction.buyerId,
+					family: "message",
 					type: "seller-message",
 					payload: {
 						type: "seller-message",
