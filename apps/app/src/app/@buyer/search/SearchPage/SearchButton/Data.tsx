@@ -91,7 +91,14 @@ export const Data: FC<Data.Props> = ({ _suspense, feedId, ui, className, ...prop
 									locale,
 								})}
 					</Badge>
-				) : null}
+				) : (
+					<Tx
+						label={"Search - empty (label)"}
+						ui={{
+							text: "sm",
+						}}
+					/>
+				)}
 			</Container>
 		</LinkTo>
 	);
