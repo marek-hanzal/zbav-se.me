@@ -13,10 +13,7 @@ import { transactionStatusAcceptFx } from "~/@seller/transaction-status/fx/trans
 import { transactionStatusDisputeFx as sellerDisputeFx } from "~/@seller/transaction-status/fx/transactionStatusDisputeFx";
 import { transactionStatusRejectFx as sellerRejectFx } from "~/@seller/transaction-status/fx/transactionStatusRejectFx";
 import { transactionStatusResolveFx } from "~/@seller/transaction-status/fx/transactionStatusResolveFx";
-import { transactionMessageLocationCreateFx } from "~/@user/transaction-message-location/fx/transactionMessageLocationCreateFx";
-import { transactionMessagePackageCreateFx } from "~/@user/transaction-message-package/fx/transactionMessagePackageCreateFx";
-import { transactionMessagePersonalCreateFx } from "~/@user/transaction-message-personal/fx/transactionMessagePersonalCreateFx";
-import { transactionMessageTextCreateFx } from "~/@user/transaction-message-text/fx/transactionMessageTextCreateFx";
+import { messageCreateFx } from "~/@user/message/fx/messageCreateFx";
 import MessagePackage from "~/seed/data/message-package.json";
 import MessagePersonal from "~/seed/data/message-personal.json";
 import BuyerText from "~/seed/data/message-text-buyer.json";
@@ -116,21 +113,24 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 		transactionId: transaction.id,
 	}).pipe(withSeedNowFx(timeline.acceptAt));
 
-	yield* transactionMessageTextCreateFx({
+	yield* messageCreateFx({
 		userId: actorUserId,
+		type: "text",
 		transactionId: transaction.id,
 		message: BuyerText.length > 0 ? list(BuyerText) : "Hi, is this still available?",
 	}).pipe(withSeedNowFx(timeline.buyerMessageAt));
 
-	yield* transactionMessageTextCreateFx({
+	yield* messageCreateFx({
 		userId: sellerId,
+		type: "text",
 		transactionId: transaction.id,
 		message: SellerText.length > 0 ? list(SellerText) : "Yes, still available.",
 	}).pipe(withSeedNowFx(timeline.sellerMessageAt));
 
 	if (Math.random() < 0.6) {
-		yield* transactionMessageLocationCreateFx({
+		yield* messageCreateFx({
 			userId: sellerId,
+			type: "location",
 			transactionId: transaction.id,
 			locationId,
 		}).pipe(withSeedNowFx(withMetaAt()), Effect.ignore);
@@ -138,8 +138,9 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 
 	if (Math.random() < 0.4 && MessagePersonal.length > 0) {
 		const personal = list(MessagePersonal);
-		yield* transactionMessagePersonalCreateFx({
+		yield* messageCreateFx({
 			userId: actorUserId,
+			type: "personal",
 			transactionId: transaction.id,
 			name: personal.name,
 			phone: personal.phone,
@@ -150,8 +151,9 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 
 	if (Math.random() < 0.3 && MessagePackage.length > 0) {
 		const pack = list(MessagePackage);
-		yield* transactionMessagePackageCreateFx({
+		yield* messageCreateFx({
 			userId: sellerId,
+			type: "package",
 			transactionId: transaction.id,
 			link: pack.link,
 			number: pack.number,

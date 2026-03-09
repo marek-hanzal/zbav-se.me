@@ -25,13 +25,13 @@ This domain handles all operations on user-owned, private data. Everything in th
     `gallery_item ("galleryId", "sort") INCLUDE ("id", "uploadId")` index to avoid nested upload lookups.
 
 ### Message System
-- **Message Thread** - Conversation threads
-  - **Collection** - List message threads
-  - **Create** - Start new thread
-  - **Fetch** - Get thread details
-  - **Patch** - Update thread
-- **Message** - Individual messages in threads
-  - **Collection** - List messages in thread
+- **Message** - Unified transaction message timeline API
+  - **Collection** - List messages with query/filter/sort/cursor
+  - **Count** - Count messages for a query
+  - **Fetch** - Get one message by query
+  - **Create** - Create one typed message in a transaction
+- **Message Thread** - Internal persistence scaffold still used by the current schema
+  - Not mounted as a first-class user API anymore.
 - **Message Types**:
   - `message_text` - Text messages
   - `message_gallery` - Photo attachments
@@ -63,12 +63,10 @@ This domain handles all operations on user-owned, private data. Everything in th
   - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'CREATE INDEX IF NOT EXISTS "inbox_[userId-family]_idx" ON "inbox" ("userId", "family");'`
 
 ### Transaction Messages
-- Transaction-specific message types:
-  - **Transaction Message Text** - Text in transaction
-  - **Transaction Message Gallery** - Photos in transaction
-  - **Transaction Message Location** - Meeting place
-  - **Transaction Message Package** - Shipping info
-  - **Transaction Message Personal** - Contact details
+- Transaction messaging now enters through the unified **Message** API.
+- Transaction-scoped write rules still apply:
+  - `pending` blocks user-authored writes
+  - `open` and `dispute` allow typed message creation
 
 ### Transaction Status
 - User-level transaction status operations

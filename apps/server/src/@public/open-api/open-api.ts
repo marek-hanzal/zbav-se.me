@@ -45,6 +45,10 @@ const tagsRegistry: Record<
 		name: "Gallery",
 		description: "Gallery management for images",
 	},
+	Message: {
+		name: "Message",
+		description: "Unified transaction message queries and writes",
+	},
 	"Message Thread": {
 		name: "Message Thread",
 		description: "Message thread management",

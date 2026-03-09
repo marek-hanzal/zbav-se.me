@@ -1,13 +1,8 @@
 import { Effect } from "effect";
 import { withGalleryApiFx } from "~/@user/gallery/withGalleryApiFx";
 import { withInboxApiFx } from "~/@user/inbox/withInboxApiFx";
-import { withMessageThreadApiFx } from "~/@user/message-thread/withMessageThreadApiFx";
+import { withMessageApiFx } from "~/@user/message/withMessageApiFx";
 import { withS3ApiFx } from "~/@user/s3/withS3ApiFx";
-import { withTransactionMessageGalleryApiFx } from "~/@user/transaction-message-gallery/withTransactionMessageGalleryApiFx";
-import { withTransactionMessageLocationApiFx } from "~/@user/transaction-message-location/withTransactionMessageLocationApiFx";
-import { withTransactionMessagePackageApiFx } from "~/@user/transaction-message-package/withTransactionMessagePackageApiFx";
-import { withTransactionMessagePersonalApiFx } from "~/@user/transaction-message-personal/withTransactionMessagePersonalApiFx";
-import { withTransactionMessageTextApiFx } from "~/@user/transaction-message-text/withTransactionMessageTextApiFx";
 import { withUploadApiFx } from "~/@user/upload/withUploadApiFx";
 import { withUserExApiFx } from "~/@user/user-ex/withUserExApiFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
@@ -40,13 +35,8 @@ export const withUserApiFx = Effect.fn("withUserApiFx")(function* () {
 	yield* Effect.all([
 		withGalleryApiFx(),
 		withInboxApiFx(),
-		withMessageThreadApiFx(),
+		withMessageApiFx(),
 		withS3ApiFx(),
-		withTransactionMessageGalleryApiFx(),
-		withTransactionMessageLocationApiFx(),
-		withTransactionMessagePackageApiFx(),
-		withTransactionMessagePersonalApiFx(),
-		withTransactionMessageTextApiFx(),
 		withUploadApiFx(),
 		withUserExApiFx(),
 	]);
