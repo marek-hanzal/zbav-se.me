@@ -18,13 +18,16 @@ import { SortValue } from "./value/SortValue";
 import { WarrantyValueList } from "./value/WarrantyValueList";
 
 export namespace Editor {
-	export interface Props extends Container.Props {
+	export type Section = "header";
+
+	export interface Props extends Omit<Container.Props, "hidden"> {
 		feed: tFeed;
 		onView(view: Data.View): void;
+		hidden?: readonly Section[];
 	}
 }
 
-export const Editor: FC<Editor.Props> = ({ feed, onView, ui, children, ...props }) => {
+export const Editor: FC<Editor.Props> = ({ feed, onView, hidden, ui, children, ...props }) => {
 	return (
 		<Container
 			data-ui={"FeedEditor-[Container.content]"}
@@ -37,37 +40,39 @@ export const Editor: FC<Editor.Props> = ({ feed, onView, ui, children, ...props 
 			}}
 			{...props}
 		>
-			<Group>
-				<GalleryValue
-					label={translator.text("Feed photo gallery (label)")}
-					uploads={
-						feed.upload
-							? [
-									feed.upload,
-								]
-							: []
-					}
-					onClick={() => onView("gallery")}
-				/>
+			{hidden?.includes("header") ? null : (
+				<Group>
+					<GalleryValue
+						label={translator.text("Feed photo gallery (label)")}
+						uploads={
+							feed.upload
+								? [
+										feed.upload,
+									]
+								: []
+						}
+						onClick={() => onView("gallery")}
+					/>
 
-				<NameValue
-					name={feed.name}
-					action={
-						<Icon
-							icon={ChevronRightIcon}
-							ui={{
-								text: "xl",
-							}}
-						/>
-					}
-					wrapperProps={{
-						ui: {
-							tone: feed.name ? "neutral" : "secondary",
-						},
-					}}
-					onClick={() => onView("name")}
-				/>
-			</Group>
+					<NameValue
+						name={feed.name}
+						action={
+							<Icon
+								icon={ChevronRightIcon}
+								ui={{
+									text: "xl",
+								}}
+							/>
+						}
+						wrapperProps={{
+							ui: {
+								tone: feed.name ? "neutral" : "secondary",
+							},
+						}}
+						onClick={() => onView("name")}
+					/>
+				</Group>
+			)}
 
 			<Group>
 				<CategoryValueList

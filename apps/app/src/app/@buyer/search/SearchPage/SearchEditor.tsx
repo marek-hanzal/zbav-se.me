@@ -6,6 +6,10 @@ import { ResetButton } from "./ResetButton";
 import { SaveAsFeedButton } from "./SaveAsFeedButton";
 import { SearchButton } from "./SearchButton";
 
+const hidden = [
+	"header",
+] as const;
+
 export namespace SearchEditor {
 	export interface Props extends Container.Props {
 		feedId: string;
@@ -22,7 +26,10 @@ export const SearchEditor: FC<SearchEditor.Props> = ({ feedId, ui, ...props }) =
 			}}
 			{...props}
 		>
-			<FeedEditor feedId={feedId}>
+			<FeedEditor
+				feedId={feedId}
+				hidden={hidden}
+			>
 				<Container
 					data-ui={"SearchEditor-[Container.actions]"}
 					ui={{

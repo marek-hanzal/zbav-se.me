@@ -1,6 +1,5 @@
 import { useLocale } from "@use-pico/client/hook";
-import { LinkTo } from "@use-pico/client/ui/link-to";
-import { uiLinkTo } from "@use-pico/client/ui/link-to";
+import { LinkTo, uiLinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
