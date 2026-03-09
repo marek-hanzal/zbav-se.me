@@ -22,24 +22,9 @@ export const cleanupTransactionFx = Effect.fn("cleanupTransactionFx")(function* 
 	const candidates = yield* tryDbFx(async () =>
 		kysely
 			.selectFrom("transaction as t")
-			.innerJoinLateral(
-				(eb) =>
-					eb
-						.selectFrom("transaction_status as ts")
-						.select([
-							"ts.status",
-							"ts.createdAt",
-						])
-						.whereRef("ts.transactionId", "=", "t.id")
-						.orderBy("ts.createdAt", "desc")
-						.orderBy("ts.id", "desc")
-						.limit(1)
-						.as("latest_status"),
-				(join) => join.onTrue(),
-			)
 			.select("t.id")
-			.where("latest_status.status", "in", terminalStatuses)
-			.where("latest_status.createdAt", "<=", threshold)
+			.where("t.status", "in", terminalStatuses)
+			.where("t.statusUpdatedAt", "<=", threshold)
 			.execute(),
 	);
 

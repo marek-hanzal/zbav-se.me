@@ -1,14 +1,13 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { transactionStatusCloseFx } from "~/@buyer/transaction-status/fx/transactionStatusCloseFx";
-import { TransactionStatusCloseSchema } from "~/@buyer/transaction-status/schema/TransactionStatusCloseSchema";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withTransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
-import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
+import { transactionRejectFx } from "~/@seller/transaction/fx/transactionRejectFx";
+import { TransactionSchema } from "~/@seller/transaction/schema/TransactionSchema";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
@@ -16,32 +15,35 @@ import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
-export const withCloseApiFx = Effect.fn("withCloseApiFx")(function* () {
-	const { buyerHono } = yield* RoutesContextFx;
-	buyerHono.openapi(
+const TransactionRejectParamsSchema = z
+	.object({
+		transactionId: z.string().openapi({
+			description: "Transaction identifier",
+		}),
+	})
+	.openapi("SellerTransactionRejectParams", {
+		description: "Parameters for rejecting a transaction",
+	});
+
+export const withRejectApiFx = Effect.fn("withRejectApiFx")(function* () {
+	const { sellerHono } = yield* RoutesContextFx;
+	sellerHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/transaction/status/close",
-			description: "Close a listing transaction. Requires access to the transaction.",
-			operationId: "apiTransactionStatusClose",
+			path: "/transaction/{transactionId}/reject",
+			description: "Reject a listing transaction. Requires access to the transaction.",
+			operationId: "apiTransactionSellerReject",
 			request: {
-				body: {
-					content: {
-						"application/json": {
-							schema: TransactionStatusCloseSchema,
-						},
-					},
-					description: "Query object for listing transaction access validation",
-				},
+				params: TransactionRejectParamsSchema,
 			},
 			responses: {
 				200: {
 					content: {
 						"application/json": {
-							schema: TransactionStatusSchema,
+							schema: TransactionSchema,
 						},
 					},
-					description: "Closed status created",
+					description: "Transaction was rejected",
 				},
 				400: {
 					content: {
@@ -69,33 +71,34 @@ export const withCloseApiFx = Effect.fn("withCloseApiFx")(function* () {
 				},
 			},
 			tags: [
-				"Transaction Status",
+				"Transaction",
 			],
-			summary: "Close a listing transaction",
+			summary: "Reject a listing transaction",
 		}),
 		async (c) => {
 			const axiomConfig = ServerAxiomSchema.parse(process.env);
 
 			return Effect.gen(function* () {
 				const user = c.get("user");
+				const { transactionId } = c.req.valid("param");
 
 				yield* Effect.annotateLogsScoped({
-					endpoint: "apiTransactionStatusClose",
+					endpoint: "apiTransactionSellerReject",
 					userId: user.id,
 				});
 
 				return c.json(
 					yield* zodGuardFx({
-						schema: TransactionStatusSchema,
-						dataFx: transactionStatusCloseFx({
-							...c.req.valid("json"),
+						schema: TransactionSchema,
+						dataFx: transactionRejectFx({
+							transactionId,
 							userId: user.id,
 						}),
 					}),
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiTransactionStatusClose", c.get("traceId")),
+				withLoggingFx(axiomConfig, "apiTransactionSellerReject", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx(),

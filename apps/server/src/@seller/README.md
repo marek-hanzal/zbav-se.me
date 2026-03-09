@@ -17,13 +17,11 @@ This domain unifies former seller session and seller user capabilities behind `/
     `titleVec` stay off the wire and out of row materialization.
 
 ### Transactions
-- **Transaction** - Collection/count/fetch
+- **Transaction** - Collection/count/fetch/accept/dispute/reject/resolve
 - **Transaction Buyer Info** - Buyer info lookup for a transaction
 - **Transaction Listing** - Collection/count/fetch listing aggregates
-- **Transaction Status** - accept/dispute/reject/resolve
-  - Latest-status lookups are backed by a covering `transaction_status` index on
-    `("transactionId", "createdAt" DESC, "id" DESC) INCLUDE ("status")` to keep
-    seller transaction collection/count queries off per-row re-sorts.
+- Status authority now lives directly on `transaction.status` with `transaction.statusUpdatedAt`,
+  so seller transaction collection/count queries read current status without a separate status history table.
 
 ## Access Rules
 

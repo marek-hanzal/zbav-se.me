@@ -1,14 +1,13 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
+import { transactionCloseFx } from "~/@buyer/transaction/fx/transactionCloseFx";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withTransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
-import { transactionStatusAcceptFx } from "~/@seller/transaction-status/fx/transactionStatusAcceptFx";
-import { TransactionStatusAcceptSchema } from "~/@seller/transaction-status/schema/TransactionStatusAcceptSchema";
-import { TransactionStatusSchema } from "~/@seller/transaction-status/schema/TransactionStatusSchema";
+import { TransactionSchema } from "~/@buyer/transaction/schema/TransactionSchema";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
@@ -16,32 +15,43 @@ import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
-export const withAcceptApiFx = Effect.fn("withAcceptApiFx")(function* () {
-	const { sellerHono } = yield* RoutesContextFx;
-	sellerHono.openapi(
+const TransactionCloseParamsSchema = z
+	.object({
+		transactionId: z.string().openapi({
+			description: "Transaction identifier",
+		}),
+	})
+	.openapi("TransactionCloseParams", {
+		description: "Parameters for closing a transaction",
+	});
+
+export const withCloseApiFx = Effect.fn("withCloseApiFx")(function* () {
+	const { buyerHono } = yield* RoutesContextFx;
+	buyerHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/transaction/status/accept",
-			description: "Accept a listing transaction. Requires access to the transaction.",
-			operationId: "apiTransactionStatusAccept",
+			path: "/transaction/{transactionId}/close",
+			description: "Close a listing transaction. Requires access to the transaction.",
+			operationId: "apiTransactionClose",
 			request: {
-				body: {
-					content: {
-						"application/json": {
-							schema: TransactionStatusAcceptSchema,
-						},
-					},
-					description: "Query object for listing transaction access validation",
-				},
+				params: TransactionCloseParamsSchema,
 			},
 			responses: {
 				200: {
 					content: {
 						"application/json": {
-							schema: TransactionStatusSchema,
+							schema: TransactionSchema,
 						},
 					},
-					description: "Accepted status created",
+					description: "Transaction was closed",
+				},
+				400: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Invalid request",
 				},
 				404: {
 					content: {
@@ -61,33 +71,34 @@ export const withAcceptApiFx = Effect.fn("withAcceptApiFx")(function* () {
 				},
 			},
 			tags: [
-				"Transaction Status",
+				"Transaction",
 			],
-			summary: "Accept a listing transaction",
+			summary: "Close a listing transaction",
 		}),
 		async (c) => {
 			const axiomConfig = ServerAxiomSchema.parse(process.env);
 
 			return Effect.gen(function* () {
 				const user = c.get("user");
+				const { transactionId } = c.req.valid("param");
 
 				yield* Effect.annotateLogsScoped({
-					endpoint: "apiTransactionStatusAccept",
+					endpoint: "apiTransactionClose",
 					userId: user.id,
 				});
 
 				return c.json(
 					yield* zodGuardFx({
-						schema: TransactionStatusSchema,
-						dataFx: transactionStatusAcceptFx({
-							...c.req.valid("json"),
+						schema: TransactionSchema,
+						dataFx: transactionCloseFx({
+							transactionId,
 							userId: user.id,
 						}),
 					}),
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiTransactionStatusAccept", c.get("traceId")),
+				withLoggingFx(axiomConfig, "apiTransactionClose", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx(),
@@ -97,6 +108,9 @@ export const withAcceptApiFx = Effect.fn("withAcceptApiFx")(function* () {
 					},
 					AccessDeniedErrorFx() {
 						return c.json(NotFoundNotice, 404);
+					},
+					InvalidRequestErrorFx(e) {
+						return c.json(noticeError(e), 400);
 					},
 					RuntimeErrorFx(e) {
 						return c.json(noticeError(e), 500);

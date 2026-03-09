@@ -1,4 +1,4 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
@@ -6,42 +6,44 @@ import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withTransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
-import { TransactionStatusDisputeSchema } from "~/@common/transaction-status/schema/TransactionStatusDisputeSchema";
-import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
+import { transactionDisputeFx } from "~/@seller/transaction/fx/transactionDisputeFx";
+import { TransactionSchema } from "~/@seller/transaction/schema/TransactionSchema";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
-import { transactionStatusDisputeFx } from "./fx/transactionStatusDisputeFx";
+
+const TransactionDisputeParamsSchema = z
+	.object({
+		transactionId: z.string().openapi({
+			description: "Transaction identifier",
+		}),
+	})
+	.openapi("SellerTransactionDisputeParams", {
+		description: "Parameters for disputing a transaction",
+	});
 
 export const withDisputeApiFx = Effect.fn("withDisputeApiFx")(function* () {
-	const { buyerHono } = yield* RoutesContextFx;
-	buyerHono.openapi(
+	const { sellerHono } = yield* RoutesContextFx;
+	sellerHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/transaction/status/dispute",
+			path: "/transaction/{transactionId}/dispute",
 			description: "Dispute a listing transaction. Requires access to the transaction.",
-			operationId: "apiTransactionStatusDispute",
+			operationId: "apiTransactionSellerDispute",
 			request: {
-				body: {
-					content: {
-						"application/json": {
-							schema: TransactionStatusDisputeSchema,
-						},
-					},
-					description: "Query object for listing transaction access validation",
-				},
+				params: TransactionDisputeParamsSchema,
 			},
 			responses: {
 				200: {
 					content: {
 						"application/json": {
-							schema: TransactionStatusSchema,
+							schema: TransactionSchema,
 						},
 					},
-					description: "Disputed status created",
+					description: "Transaction was disputed",
 				},
 				400: {
 					content: {
@@ -69,7 +71,7 @@ export const withDisputeApiFx = Effect.fn("withDisputeApiFx")(function* () {
 				},
 			},
 			tags: [
-				"Transaction Status",
+				"Transaction",
 			],
 			summary: "Dispute a listing transaction",
 		}),
@@ -78,24 +80,25 @@ export const withDisputeApiFx = Effect.fn("withDisputeApiFx")(function* () {
 
 			return Effect.gen(function* () {
 				const user = c.get("user");
+				const { transactionId } = c.req.valid("param");
 
 				yield* Effect.annotateLogsScoped({
-					endpoint: "apiTransactionStatusDispute",
+					endpoint: "apiTransactionSellerDispute",
 					userId: user.id,
 				});
 
 				return c.json(
 					yield* zodGuardFx({
-						schema: TransactionStatusSchema,
-						dataFx: transactionStatusDisputeFx({
-							...c.req.valid("json"),
+						schema: TransactionSchema,
+						dataFx: transactionDisputeFx({
+							transactionId,
 							userId: user.id,
 						}),
 					}),
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiTransactionStatusDispute", c.get("traceId")),
+				withLoggingFx(axiomConfig, "apiTransactionSellerDispute", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx(),

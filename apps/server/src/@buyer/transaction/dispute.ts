@@ -1,14 +1,13 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { transactionStatusSuccessFx } from "~/@buyer/transaction-status/fx/transactionStatusSuccessFx";
-import { TransactionStatusSuccessSchema } from "~/@buyer/transaction-status/schema/TransactionStatusSuccessSchema";
+import { transactionDisputeFx } from "~/@buyer/transaction/fx/transactionDisputeFx";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withTransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
-import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
+import { TransactionSchema } from "~/@buyer/transaction/schema/TransactionSchema";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
@@ -16,33 +15,35 @@ import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
-export const withSuccessApiFx = Effect.fn("withSuccessApiFx")(function* () {
+const TransactionDisputeParamsSchema = z
+	.object({
+		transactionId: z.string().openapi({
+			description: "Transaction identifier",
+		}),
+	})
+	.openapi("TransactionDisputeParams", {
+		description: "Parameters for disputing a transaction",
+	});
+
+export const withDisputeApiFx = Effect.fn("withDisputeApiFx")(function* () {
 	const { buyerHono } = yield* RoutesContextFx;
 	buyerHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/transaction/status/success",
-			description:
-				"Mark a listing transaction as successful. Requires access to the transaction.",
-			operationId: "apiTransactionStatusSuccess",
+			path: "/transaction/{transactionId}/dispute",
+			description: "Dispute a listing transaction. Requires access to the transaction.",
+			operationId: "apiTransactionDispute",
 			request: {
-				body: {
-					content: {
-						"application/json": {
-							schema: TransactionStatusSuccessSchema,
-						},
-					},
-					description: "Query object for listing transaction access validation",
-				},
+				params: TransactionDisputeParamsSchema,
 			},
 			responses: {
 				200: {
 					content: {
 						"application/json": {
-							schema: TransactionStatusSchema,
+							schema: TransactionSchema,
 						},
 					},
-					description: "Success status created",
+					description: "Transaction was disputed",
 				},
 				400: {
 					content: {
@@ -70,33 +71,34 @@ export const withSuccessApiFx = Effect.fn("withSuccessApiFx")(function* () {
 				},
 			},
 			tags: [
-				"Transaction Status",
+				"Transaction",
 			],
-			summary: "Mark a listing transaction as successful",
+			summary: "Dispute a listing transaction",
 		}),
 		async (c) => {
 			const axiomConfig = ServerAxiomSchema.parse(process.env);
 
 			return Effect.gen(function* () {
 				const user = c.get("user");
+				const { transactionId } = c.req.valid("param");
 
 				yield* Effect.annotateLogsScoped({
-					endpoint: "apiTransactionStatusSuccess",
+					endpoint: "apiTransactionDispute",
 					userId: user.id,
 				});
 
 				return c.json(
 					yield* zodGuardFx({
-						schema: TransactionStatusSchema,
-						dataFx: transactionStatusSuccessFx({
-							...c.req.valid("json"),
+						schema: TransactionSchema,
+						dataFx: transactionDisputeFx({
+							transactionId,
 							userId: user.id,
 						}),
 					}),
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiTransactionStatusSuccess", c.get("traceId")),
+				withLoggingFx(axiomConfig, "apiTransactionDispute", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx(),

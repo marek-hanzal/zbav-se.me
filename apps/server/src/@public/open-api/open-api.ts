@@ -57,10 +57,6 @@ const tagsRegistry: Record<
 		name: "S3",
 		description: "S3 pre-signed URL generation for direct uploads",
 	},
-	"Transaction Status": {
-		name: "Transaction Status",
-		description: "Transaction status management",
-	},
 	"User Ex": {
 		name: "User Ex",
 		description: "Extended user information management",

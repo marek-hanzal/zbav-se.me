@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { TransactionStatusEnumSchema } from "~/database/@enum/TransactionStatusEnumSchema";
 
 export const TransactionTableSchema = z.object({
 	id: z.string().openapi({
@@ -16,6 +17,11 @@ export const TransactionTableSchema = z.object({
 	}),
 	updatedAt: z.coerce.date().openapi({
 		description: "Last update timestamp",
+		type: "string",
+	}),
+	status: TransactionStatusEnumSchema,
+	statusUpdatedAt: z.coerce.date().openapi({
+		description: "Last status update timestamp",
 		type: "string",
 	}),
 	expiresAt: z.coerce.date().openapi({

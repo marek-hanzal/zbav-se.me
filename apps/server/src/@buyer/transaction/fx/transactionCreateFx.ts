@@ -5,9 +5,9 @@ import { Effect } from "effect";
 import { listingEventCreateFx } from "~/@buyer/listing-event/fx/listingEventCreateFx";
 import { transactionFetchFx } from "~/@buyer/transaction/fx/transactionFetchFx";
 import type { TransactionCreateSchema } from "~/@buyer/transaction/schema/TransactionCreateSchema";
-import { transactionStatusCreateFx } from "~/@buyer/transaction-status/fx/transactionStatusCreateFx";
 import { TransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
 import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
+import { transactionUpdateStatusFx } from "~/@user/transaction/fx/transactionUpdateStatusFx";
 import { transactionUserCreateFx } from "~/@user/transaction-user/fx/transactionUserCreateFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
@@ -84,6 +84,8 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 						listingId,
 						createdAt: now.toJSDate(),
 						updatedAt: now.toJSDate(),
+						status: "pending",
+						statusUpdatedAt: now.toJSDate(),
 						expiresAt: now
 							.plus({
 								days: config.expires,
@@ -93,6 +95,15 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 					.returningAll()
 					.executeTakeFirstOrThrow(),
 			);
+
+			yield* transactionUpdateStatusFx({
+				userId,
+				transactionId: id,
+				status: null,
+				request: "pending",
+				target: "buyer",
+				side: "buyer",
+			});
 
 			yield* transactionUserCreateFx({
 				transactionId: id,
@@ -106,14 +117,6 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 						side: "seller",
 					},
 				],
-			});
-
-			yield* transactionStatusCreateFx({
-				userId,
-				transactionId: id,
-				listingId,
-				side: "buyer",
-				status: "pending",
 			});
 
 			yield* listingEventCreateFx({

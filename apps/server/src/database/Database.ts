@@ -18,7 +18,6 @@ import type { ListingTableSchema } from "~/database/@table/ListingTableSchema";
 import type { LocationTableSchema } from "~/database/@table/LocationTableSchema";
 import type { ThumbTableSchema } from "~/database/@table/ThumbTableSchema";
 import type { TransactionEntryTableSchema } from "~/database/@table/TransactionEntryTableSchema";
-import type { TransactionStatusTableSchema } from "~/database/@table/TransactionStatusTableSchema";
 import type { TransactionTableSchema } from "~/database/@table/TransactionTableSchema";
 import type { TransactionUserTableSchema } from "~/database/@table/TransactionUserTableSchema";
 import type { UploadTableSchema } from "~/database/@table/UploadTableSchema";
@@ -45,7 +44,6 @@ export interface Database {
 	listing: ListingTableSchema.Type;
 	location: LocationTableSchema.Type;
 	transaction_entry: TransactionEntryTableSchema.Type;
-	transaction_status: TransactionStatusTableSchema.Type;
 	transaction: TransactionTableSchema.Type;
 	transaction_user: TransactionUserTableSchema.Type;
 	upload: UploadTableSchema.Type;

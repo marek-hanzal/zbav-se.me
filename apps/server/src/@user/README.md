@@ -65,10 +65,12 @@ This domain handles all operations on user-owned, private data. Everything in th
   - `pending` blocks user-authored writes
   - `open` and `dispute` allow typed message creation
 
-### Transaction Status
-- User-level transaction status operations
-- Cross-domain transaction state management
-- Transaction status resolution reads latest rows by timestamp and uses deterministic ordering for tied timestamps.
+### Transaction State
+- Shared transaction state helpers live under `@user/transaction`
+- Status authority is stored directly on `transaction.status` and `transaction.statusUpdatedAt`
+- `transactionTransitionFx` is the pure state-machine gate
+- `transactionUpdateStatusFx` applies validated status writes, timeline entries, and terminal cleanup
+- Buyer/seller domains trigger state changes through transaction-scoped actions, not a standalone status domain
 
 ### Upload Management
 - **Collection** - List user's uploads

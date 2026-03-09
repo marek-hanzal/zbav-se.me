@@ -6,7 +6,8 @@ import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import type { InboxCreateSchema } from "~/@user/inbox/schema/InboxCreateSchema";
 import { transactionEntryAppendFx } from "~/@user/transaction-entry/fx/transactionEntryAppendFx";
 import type { TransactionEntryCreateSchema } from "~/@user/transaction-entry/schema/TransactionEntryCreateSchema";
-import { transactionStatusGateFx } from "~/@user/transaction-status/fx/transactionStatusGateFx";
+import { transactionTransitionFx } from "~/@user/transaction/fx/transactionTransitionFx";
+import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
@@ -21,13 +22,15 @@ export namespace transactionEntryCreateFx {
 export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(function* (
 	props: transactionEntryCreateFx.Props,
 ) {
-	const transaction = yield* transactionStatusGateFx({
+	const transaction = yield* transactionResolveFx({
 		userId: props.userId,
 		transactionId: props.transactionId,
-		allowedStatuses: [
-			"open",
-			"dispute",
-		],
+	});
+
+	yield* transactionTransitionFx({
+		status: transaction.status,
+		request: "message",
+		side: transaction.side,
 	});
 
 	yield* userInteractionEventFx({

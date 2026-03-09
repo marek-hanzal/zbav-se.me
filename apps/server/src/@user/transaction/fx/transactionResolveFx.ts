@@ -41,17 +41,8 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 				"l.userId as sellerId",
 				"lt.userId as buyerId",
 				"tu.side",
+				"lt.status",
 			])
-			.select((eb) => {
-				return eb
-					.selectFrom("transaction_status as lts")
-					.select("lts.status")
-					.whereRef("lts.transactionId", "=", "lt.id")
-					.orderBy("lts.createdAt", "desc")
-					.orderBy("lts.id", "desc")
-					.limit(1)
-					.as("status");
-			})
 			/**
 			 * For which transaction we want to resolve
 			 */

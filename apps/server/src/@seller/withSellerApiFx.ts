@@ -4,7 +4,6 @@ import { withDraftGalleryApiFx } from "~/@seller/draft-gallery/withDraftGalleryA
 import { withListingApiFx } from "~/@seller/listing/withListingApiFx";
 import { withTransactionApiFx } from "~/@seller/transaction/withTransactionApiFx";
 import { withTransactionListingApiFx } from "~/@seller/transaction-listing/withTransactionListingApiFx";
-import { withTransactionStatusApiFx } from "~/@seller/transaction-status/withTransactionStatusApiFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 
@@ -38,7 +37,6 @@ export const withSellerApiFx = Effect.fn("withSellerApiFx")(function* () {
 		withListingApiFx(),
 		withTransactionApiFx(),
 		withTransactionListingApiFx(),
-		withTransactionStatusApiFx(),
 	]);
 
 	root.route("/api/seller", sellerHono);

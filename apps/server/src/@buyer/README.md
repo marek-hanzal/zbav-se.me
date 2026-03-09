@@ -32,8 +32,7 @@ This domain unifies former buyer session and buyer user capabilities behind `/ap
 - **Thumb** - Create
 
 ### Transactions
-- **Transaction** - Collection/count/create/fetch
-- **Transaction Status** - close/dispute/reject/success
+- **Transaction** - Collection/count/create/fetch/close/dispute/reject/success
 
 ### User Events
 - Buyer and seller scoring/behavior info used in buyer flows.

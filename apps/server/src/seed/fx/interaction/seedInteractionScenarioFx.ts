@@ -4,15 +4,15 @@ import type { DateTime } from "luxon";
 import { favouriteToggleFx } from "~/@buyer/favourite/fx/favouriteToggleFx";
 import { flagToggleFx } from "~/@buyer/flag/fx/flagToggleFx";
 import { ignoreToggleFx } from "~/@buyer/ignore/fx/ignoreToggleFx";
+import { transactionCloseFx } from "~/@buyer/transaction/fx/transactionCloseFx";
 import { transactionCreateFx } from "~/@buyer/transaction/fx/transactionCreateFx";
-import { transactionStatusCloseFx } from "~/@buyer/transaction-status/fx/transactionStatusCloseFx";
-import { transactionStatusDisputeFx as buyerDisputeFx } from "~/@buyer/transaction-status/fx/transactionStatusDisputeFx";
-import { transactionStatusRejectFx as buyerRejectFx } from "~/@buyer/transaction-status/fx/transactionStatusRejectFx";
-import { transactionStatusSuccessFx } from "~/@buyer/transaction-status/fx/transactionStatusSuccessFx";
-import { transactionStatusAcceptFx } from "~/@seller/transaction-status/fx/transactionStatusAcceptFx";
-import { transactionStatusDisputeFx as sellerDisputeFx } from "~/@seller/transaction-status/fx/transactionStatusDisputeFx";
-import { transactionStatusRejectFx as sellerRejectFx } from "~/@seller/transaction-status/fx/transactionStatusRejectFx";
-import { transactionStatusResolveFx } from "~/@seller/transaction-status/fx/transactionStatusResolveFx";
+import { transactionDisputeFx as buyerDisputeFx } from "~/@buyer/transaction/fx/transactionDisputeFx";
+import { transactionRejectFx as buyerRejectFx } from "~/@buyer/transaction/fx/transactionRejectFx";
+import { transactionSuccessFx } from "~/@buyer/transaction/fx/transactionSuccessFx";
+import { transactionAcceptFx } from "~/@seller/transaction/fx/transactionAcceptFx";
+import { transactionDisputeFx as sellerDisputeFx } from "~/@seller/transaction/fx/transactionDisputeFx";
+import { transactionRejectFx as sellerRejectFx } from "~/@seller/transaction/fx/transactionRejectFx";
+import { transactionResolveFx } from "~/@seller/transaction/fx/transactionResolveFx";
 import { transactionEntryCreateFx } from "~/@user/transaction-entry/fx/transactionEntryCreateFx";
 import MessagePackage from "~/seed/data/message-package.json";
 import MessagePersonal from "~/seed/data/message-personal.json";
@@ -108,7 +108,7 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 		return transaction.id;
 	}
 
-	yield* transactionStatusAcceptFx({
+	yield* transactionAcceptFx({
 		userId: sellerId,
 		transactionId: transaction.id,
 	}).pipe(withSeedNowFx(timeline.acceptAt));
@@ -208,7 +208,7 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 	const resolveAt = withAtLeastGap(timeline.resolveAt, metaCursor, 3);
 	let finalAt = withAtLeastGap(timeline.finalAt, resolveAt, 3);
 
-	yield* transactionStatusResolveFx({
+	yield* transactionResolveFx({
 		userId: sellerId,
 		transactionId: transaction.id,
 	}).pipe(withSeedNowFx(resolveAt));
@@ -242,14 +242,14 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 		variant === "accept_resolve_buyer_dispute_success" ||
 		variant === "accept_resolve_seller_dispute_success"
 	) {
-		yield* transactionStatusSuccessFx({
+		yield* transactionSuccessFx({
 			userId: actorUserId,
 			transactionId: transaction.id,
 		}).pipe(withSeedNowFx(finalAt));
 		return transaction.id;
 	}
 
-	yield* transactionStatusCloseFx({
+	yield* transactionCloseFx({
 		userId: actorUserId,
 		transactionId: transaction.id,
 	}).pipe(withSeedNowFx(finalAt));

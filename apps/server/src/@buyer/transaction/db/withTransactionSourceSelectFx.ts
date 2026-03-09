@@ -19,22 +19,7 @@ export const withTransactionSourceSelectFx = Effect.fn("withTransactionSourceSel
 	let query = kysely
 		.selectFrom("transaction as lt")
 		.innerJoin("listing as l", "lt.listingId", "l.id")
-		.innerJoin("location as loc", "l.locationId", "loc.id")
-		.leftJoinLateral(
-			(eb) =>
-				eb
-					.selectFrom("transaction_status as lts2")
-					.select([
-						"lts2.status as latestStatus",
-						"lts2.createdAt as latestStatusCreatedAt",
-					])
-					.whereRef("lts2.transactionId", "=", eb.ref("lt.id"))
-					.orderBy("lts2.createdAt", "desc")
-					.orderBy("lts2.id", "desc")
-					.limit(1)
-					.as("status"),
-			(join) => join.onTrue(),
-		);
+		.innerJoin("location as loc", "l.locationId", "loc.id");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
@@ -45,7 +30,7 @@ export const withTransactionSourceSelectFx = Effect.fn("withTransactionSourceSel
 				query.orderBy(
 					(eb) =>
 						eb
-							.case(eb.ref("status.latestStatus"))
+							.case(eb.ref("lt.status"))
 							.when("pending")
 							.then(10)
 							.when("dispute")

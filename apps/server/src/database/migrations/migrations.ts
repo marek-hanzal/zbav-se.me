@@ -17,7 +17,6 @@ import { IgnoreMigration } from "~/database/migrations/0015-ignore";
 import { FlagMigration } from "~/database/migrations/0016-flag";
 import { TransactionMigration } from "~/database/migrations/0017-transaction";
 import { TransactionEntryMigration } from "~/database/migrations/0018-transaction-entry";
-import { TransactionStatusMigration } from "~/database/migrations/0019-transaction-status";
 import { TransactionUserMigration } from "~/database/migrations/0020-transaction-user";
 import { GitHubMigration } from "~/database/migrations/0027-github";
 import { ThumbMigration } from "~/database/migrations/0028-thumb";
@@ -46,7 +45,6 @@ export const migrations = {
 	"0016-flag": FlagMigration,
 	"0017-transaction": TransactionMigration,
 	"0018-transaction-entry": TransactionEntryMigration,
-	"0019-transaction-status": TransactionStatusMigration,
 	"0020-transaction-user": TransactionUserMigration,
 	"0027-github": GitHubMigration,
 	"0028-thumb": ThumbMigration,

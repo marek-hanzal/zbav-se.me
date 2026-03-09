@@ -1,4 +1,4 @@
-import type { Migration } from "kysely";
+import { type Migration, sql } from "kysely";
 
 export const TransactionMigration: Migration = {
 	async up(db) {
@@ -34,6 +34,8 @@ export const TransactionMigration: Migration = {
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
 			.addColumn("updatedAt", "timestamptz", (col) => col.notNull())
+			.addColumn("status", sql`transaction_status_enum`, (col) => col.notNull())
+			.addColumn("statusUpdatedAt", "timestamptz", (col) => col.notNull())
 			.addColumn("expiresAt", "timestamptz", (col) => col.notNull())
 			.addForeignKeyConstraint(
 				"transaction_[userId]_fk",
@@ -81,6 +83,15 @@ export const TransactionMigration: Migration = {
 			.createIndex("transaction_[expiresAt]_idx")
 			.on("transaction")
 			.column("expiresAt")
+			.execute();
+
+		await db.schema
+			.createIndex("transaction_[status-statusUpdatedAt]_idx")
+			.on("transaction")
+			.columns([
+				"status",
+				"statusUpdatedAt",
+			])
 			.execute();
 	},
 };

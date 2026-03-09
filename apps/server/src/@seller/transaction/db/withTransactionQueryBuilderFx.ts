@@ -45,11 +45,11 @@ export const withTransactionQueryBuilderFx = Effect.fn("withTransactionQueryBuil
 	}
 
 	if (where.status) {
-		query = query.where("status.latestStatus", "=", where.status) as TSelect;
+		query = query.where("lt.status", "=", where.status) as TSelect;
 	}
 
 	if (where.statusIn && where.statusIn.length > 0) {
-		query = query.where("status.latestStatus", "in", where.statusIn) as TSelect;
+		query = query.where("lt.status", "in", where.statusIn) as TSelect;
 	}
 
 	return yield* Effect.succeed(query);

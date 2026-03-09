@@ -17,7 +17,6 @@ export const SeedPrimaryCoreTables = [
 export const SeedPrimaryInteractionTables = [
 	"transaction",
 	"transaction_entry",
-	"transaction_status",
 	"transaction_user",
 	"thumb",
 	"favourite",
