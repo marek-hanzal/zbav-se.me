@@ -77,9 +77,7 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 		});
 	}
 
-	return {
-		...transaction,
-	} as const;
+	return transaction;
 });
 
 export type transactionResolveFx = ReturnType<typeof transactionResolveFx>;

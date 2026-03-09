@@ -1,4 +1,5 @@
 import { type Migration, sql } from "kysely";
+import { UserEventScopeEnumSchema } from "~/database/@enum/UserEventScopeEnumSchema";
 
 export const UserEventMigration: Migration = {
 	async up(db) {
@@ -7,7 +8,7 @@ export const UserEventMigration: Migration = {
 			.asEnum([
 				"user",
 				"foreign",
-			])
+			] as const satisfies readonly UserEventScopeEnumSchema.Type[])
 			.execute();
 
 		await db.schema

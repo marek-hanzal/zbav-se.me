@@ -1,4 +1,5 @@
 import { type Migration, sql } from "kysely";
+import { ThumbEnumSchema } from "~/database/@enum/ThumbEnumSchema";
 
 export const ThumbMigration: Migration = {
 	async up(db) {
@@ -7,7 +8,7 @@ export const ThumbMigration: Migration = {
 			.asEnum([
 				"like",
 				"dislike",
-			])
+			] as const satisfies readonly ThumbEnumSchema.Type[])
 			.execute();
 
 		await db.schema

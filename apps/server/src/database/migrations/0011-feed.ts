@@ -1,4 +1,5 @@
 import { type Migration, sql } from "kysely";
+import { FeedTypeEnumSchema } from "~/database/@enum/FeedTypeEnumSchema";
 
 export const FeedMigration: Migration = {
 	async up(db) {
@@ -7,7 +8,7 @@ export const FeedMigration: Migration = {
 			.asEnum([
 				"user",
 				"search",
-			])
+			] as const satisfies readonly FeedTypeEnumSchema.Type[])
 			.execute();
 
 		await db.schema

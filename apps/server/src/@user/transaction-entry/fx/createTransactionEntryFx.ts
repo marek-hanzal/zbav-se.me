@@ -3,19 +3,17 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { transactionTouchFx } from "~/@user/transaction/fx/transactionTouchFx";
 import { transactionEntryFetchFx } from "~/@user/transaction-entry/fx/transactionEntryFetchFx";
-import type { TransactionEntryPayloadValueSchema } from "~/@user/transaction-entry/schema/value/TransactionEntryPayloadValueSchema";
-import type { TransactionEntryKindEnumSchema } from "~/database/@enum/TransactionEntryKindEnumSchema";
+import type { TransactionEntryTableSchema } from "~/database/@table/TransactionEntryTableSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 
-export namespace transactionEntryAppendFx {
-	export interface Props {
-		transactionId: string;
-		kind: TransactionEntryKindEnumSchema.Type;
-		userId: string | null;
-		payload: TransactionEntryPayloadValueSchema.Type;
+export namespace createTransactionEntryFx {
+	export type Props = Pick<
+		TransactionEntryTableSchema.Type,
+		"transactionId" | "kind" | "userId" | "payload"
+	> & {
 		scopeUserId: string;
-	}
+	};
 }
 
 /**
@@ -37,13 +35,13 @@ export namespace transactionEntryAppendFx {
  * - user-authored transaction entries (`text`, `gallery`, `location`, `package`, `personal`)
  * - system/status timeline entries emitted from transaction status changes
  */
-export const transactionEntryAppendFx = Effect.fn("transactionEntryAppendFx")(function* ({
+export const createTransactionEntryFx = Effect.fn("createTransactionEntryFx")(function* ({
 	transactionId,
 	kind,
 	userId,
 	payload,
 	scopeUserId,
-}: transactionEntryAppendFx.Props) {
+}: createTransactionEntryFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 	const id = genId();

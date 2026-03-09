@@ -1,43 +1,23 @@
 import { type Migration, sql } from "kysely";
+import { ListingEventEnumSchema } from "~/database/@enum/ListingEventEnumSchema";
 
 export const ListingEventMigration: Migration = {
 	async up(db) {
 		await db.schema
 			.createType("listing_event_type_enum")
 			.asEnum([
-				/**
-				 * From feed, lowest weight
-				 */
 				"impression",
-				/**
-				 * Listing detail, medium weight
-				 */
 				"view",
-				/**
-				 * Explicit ignore of the listing
-				 */
 				"ignore",
 				"unignore",
-				/**
-				 * Flagged listing
-				 */
 				"flag",
 				"unflag",
-				/**
-				 * Started transaction by buyer
-				 */
 				"transaction",
 				"favourite",
 				"unfavourite",
-				/**
-				 * Positive thumb on the listing
-				 */
 				"like",
-				/**
-				 * Negative thumb on the listing
-				 */
 				"dislike",
-			])
+			] as const satisfies readonly ListingEventEnumSchema.Type[])
 			.execute();
 
 		await db.schema

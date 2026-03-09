@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { TransactionEntrySortSchema } from "~/@user/transaction-entry/schema/TransactionEntrySortSchema";
+import type { TransactionEntryTableSchema } from "~/database/@table/TransactionEntryTableSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withTransactionEntrySelectFx {
@@ -16,14 +17,10 @@ export const withTransactionEntrySelectFx = Effect.fn("withTransactionEntrySelec
 }: withTransactionEntrySelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
-	let query = kysely.selectFrom("transaction_entry as te").select([
-		"te.id",
-		"te.transactionId",
-		"te.kind",
-		"te.userId",
-		"te.payload",
-		"te.createdAt",
-	]);
+	let query = kysely
+		.selectFrom("transaction_entry as te")
+		.selectAll("te")
+		.$castTo<TransactionEntryTableSchema.Type>();
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

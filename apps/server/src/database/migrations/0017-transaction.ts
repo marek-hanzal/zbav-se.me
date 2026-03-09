@@ -1,4 +1,6 @@
 import { type Migration, sql } from "kysely";
+import { TransactionSideEnumSchema } from "~/database/@enum/TransactionSideEnumSchema";
+import { TransactionStatusEnumSchema } from "~/database/@enum/TransactionStatusEnumSchema";
 
 export const TransactionMigration: Migration = {
 	async up(db) {
@@ -13,7 +15,7 @@ export const TransactionMigration: Migration = {
 				"expired",
 				"success",
 				"closed",
-			])
+			] as const satisfies readonly TransactionStatusEnumSchema.Type[])
 			.execute();
 
 		await db.schema
@@ -24,7 +26,7 @@ export const TransactionMigration: Migration = {
 				"transaction",
 				"system",
 				"unknown",
-			])
+			] as const satisfies readonly TransactionSideEnumSchema.Type[])
 			.execute();
 
 		await db.schema

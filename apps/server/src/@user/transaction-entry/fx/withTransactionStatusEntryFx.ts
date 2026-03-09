@@ -1,16 +1,10 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import { transactionEntryAppendFx } from "~/@user/transaction-entry/fx/transactionEntryAppendFx";
-import type { TransactionEntryKindEnumSchema } from "~/database/@enum/TransactionEntryKindEnumSchema";
+import { createTransactionEntryFx } from "~/@user/transaction-entry/fx/createTransactionEntryFx";
 import type { TransactionSideEnumSchema } from "~/database/@enum/TransactionSideEnumSchema";
 import type { TransactionStatusEnumSchema } from "~/database/@enum/TransactionStatusEnumSchema";
 
 export namespace withTransactionStatusEntryFx {
-	export interface Entry {
-		kind: TransactionEntryKindEnumSchema.Type;
-		text: string;
-	}
-
 	export interface Props {
 		transactionId: string;
 		userId: string | null;
@@ -27,7 +21,7 @@ export const withTransactionStatusEntryFx = Effect.fn("withTransactionStatusEntr
 	status,
 	side,
 }: withTransactionStatusEntryFx.Props) {
-	const entry = match({
+	return yield* match({
 		status,
 		side,
 	})
@@ -35,110 +29,165 @@ export const withTransactionStatusEntryFx = Effect.fn("withTransactionStatusEntr
 			{
 				status: "pending",
 			},
-			(): withTransactionStatusEntryFx.Entry => ({
-				kind: "status-pending",
-				text: "Transaction pending (message)",
-			}),
+			() =>
+				createTransactionEntryFx({
+					transactionId,
+					kind: "status-pending",
+					userId,
+					payload: {
+						text: "Transaction pending (message)",
+					},
+					scopeUserId,
+				}),
 		)
 		.with(
 			{
 				status: "open",
 			},
-			(): withTransactionStatusEntryFx.Entry => ({
-				kind: "status-open",
-				text: "Seller accepted the transaction (message)",
-			}),
+			() =>
+				createTransactionEntryFx({
+					transactionId,
+					kind: "status-open",
+					userId,
+					payload: {
+						text: "Seller accepted the transaction (message)",
+					},
+					scopeUserId,
+				}),
 		)
 		.with(
 			{
 				status: "resolved",
 			},
-			(): withTransactionStatusEntryFx.Entry => ({
-				kind: "status-resolved",
-				text: "Seller resolved the transaction (message)",
-			}),
+			() =>
+				createTransactionEntryFx({
+					transactionId,
+					kind: "status-resolved",
+					userId,
+					payload: {
+						text: "Seller resolved the transaction (message)",
+					},
+					scopeUserId,
+				}),
 		)
 		.with(
 			{
 				status: "dispute",
 				side: "buyer",
 			},
-			(): withTransactionStatusEntryFx.Entry => ({
-				kind: "status-dispute-buyer",
-				text: "Buyer disputed the transaction (message)",
-			}),
+			() =>
+				createTransactionEntryFx({
+					transactionId,
+					kind: "status-dispute-buyer",
+					userId,
+					payload: {
+						text: "Buyer disputed the transaction (message)",
+					},
+					scopeUserId,
+				}),
 		)
 		.with(
 			{
 				status: "dispute",
 				side: "seller",
 			},
-			(): withTransactionStatusEntryFx.Entry => ({
-				kind: "status-dispute-seller",
-				text: "Seller disputed the transaction (message)",
-			}),
+			() =>
+				createTransactionEntryFx({
+					transactionId,
+					kind: "status-dispute-seller",
+					userId,
+					payload: {
+						text: "Seller disputed the transaction (message)",
+					},
+					scopeUserId,
+				}),
 		)
 		.with(
 			{
 				status: "rejected",
 				side: "buyer",
 			},
-			(): withTransactionStatusEntryFx.Entry => ({
-				kind: "status-rejected-buyer",
-				text: "Buyer rejected the transaction (message)",
-			}),
+			() =>
+				createTransactionEntryFx({
+					transactionId,
+					kind: "status-rejected-buyer",
+					userId,
+					payload: {
+						text: "Buyer rejected the transaction (message)",
+					},
+					scopeUserId,
+				}),
 		)
 		.with(
 			{
 				status: "rejected",
 				side: "seller",
 			},
-			(): withTransactionStatusEntryFx.Entry => ({
-				kind: "status-rejected-seller",
-				text: "Seller rejected the transaction (message)",
-			}),
+			() =>
+				createTransactionEntryFx({
+					transactionId,
+					kind: "status-rejected-seller",
+					userId,
+					payload: {
+						text: "Seller rejected the transaction (message)",
+					},
+					scopeUserId,
+				}),
 		)
 		.with(
 			{
 				status: "expired",
 			},
-			(): withTransactionStatusEntryFx.Entry => ({
-				kind: "status-expired",
-				text: "Transaction expired (message)",
-			}),
+			() =>
+				createTransactionEntryFx({
+					transactionId,
+					kind: "status-expired",
+					userId,
+					payload: {
+						text: "Transaction expired (message)",
+					},
+					scopeUserId,
+				}),
 		)
 		.with(
 			{
 				status: "success",
 			},
-			(): withTransactionStatusEntryFx.Entry => ({
-				kind: "status-success",
-				text: "Transaction successful (message)",
-			}),
+			() =>
+				createTransactionEntryFx({
+					transactionId,
+					kind: "status-success",
+					userId,
+					payload: {
+						text: "Transaction successful (message)",
+					},
+					scopeUserId,
+				}),
 		)
 		.with(
 			{
 				status: "closed",
 			},
-			(): withTransactionStatusEntryFx.Entry => ({
-				kind: "status-closed",
-				text: "Transaction closed (message)",
-			}),
+			() =>
+				createTransactionEntryFx({
+					transactionId,
+					kind: "status-closed",
+					userId,
+					payload: {
+						text: "Transaction closed (message)",
+					},
+					scopeUserId,
+				}),
 		)
-		.otherwise(
-			(): withTransactionStatusEntryFx.Entry => ({
+		.otherwise(() =>
+			createTransactionEntryFx({
+				transactionId,
 				kind: "status-sold",
-				text: "Transaction sold (message)",
+				userId,
+				payload: {
+					text: "Transaction sold (message)",
+				},
+				scopeUserId,
 			}),
 		);
-
-	return yield* transactionEntryAppendFx({
-		transactionId,
-		kind: entry.kind,
-		userId,
-		payload: {
-			text: entry.text,
-		},
-		scopeUserId,
-	});
 });

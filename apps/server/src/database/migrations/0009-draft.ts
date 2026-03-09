@@ -1,4 +1,8 @@
 import { type Migration, sql } from "kysely";
+import { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
+import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
+import { ListingRestrictionEnumSchema } from "~/database/@enum/ListingRestrictionEnumSchema";
+import { ListingWarrantyEnumSchema } from "~/database/@enum/ListingWarrantyEnumSchema";
 
 export const DraftMigration: Migration = {
 	async up(db) {
@@ -10,7 +14,7 @@ export const DraftMigration: Migration = {
 			.asEnum([
 				"closed",
 				"open",
-			])
+			] as const satisfies readonly ListingPriceEnumSchema.Type[])
 			.execute();
 
 		await db.schema
@@ -20,7 +24,7 @@ export const DraftMigration: Migration = {
 				"post",
 				"package",
 				"other",
-			])
+			] as const satisfies readonly ListingDeliveryEnumSchema.Type[])
 			.execute();
 
 		await db.schema
@@ -29,7 +33,7 @@ export const DraftMigration: Migration = {
 				"warranty",
 				"no-warranty",
 				"custom",
-			])
+			] as const satisfies readonly ListingWarrantyEnumSchema.Type[])
 			.execute();
 
 		await db.schema
@@ -40,7 +44,7 @@ export const DraftMigration: Migration = {
 				"adult-relaxed",
 				"sensitive",
 				"restricted",
-			])
+			] as const satisfies readonly ListingRestrictionEnumSchema.Type[])
 			.execute();
 
 		await db.schema

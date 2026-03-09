@@ -1,4 +1,6 @@
 import { type Migration, sql } from "kysely";
+import type { InboxPriorityEnumSchema } from "~/database/@enum/InboxPriorityEnumSchema";
+import type { InboxTypeEnumSchema } from "~/database/@enum/InboxTypeEnumSchema";
 
 export const InboxMigration: Migration = {
 	async up(db) {
@@ -7,7 +9,7 @@ export const InboxMigration: Migration = {
 			.asEnum([
 				"common",
 				"high",
-			])
+			] as const satisfies readonly InboxPriorityEnumSchema.Type[])
 			.execute();
 		await db.schema
 			.createType("inbox_type_enum")
@@ -17,7 +19,7 @@ export const InboxMigration: Migration = {
 				"thumb",
 				"favourite",
 				"unfavourite",
-			])
+			] as const satisfies readonly InboxTypeEnumSchema.Type[])
 			.execute();
 
 		await db.schema

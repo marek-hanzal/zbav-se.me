@@ -30,6 +30,7 @@ This domain handles all operations on user-owned, private data. Everything in th
   - **Count** - Count transaction entries for a query
   - **Fetch** - Get one transaction entry by query
   - **Create** - Create one user-authored typed transaction entry
+- Transaction entry contracts are discriminated by root `kind`, not by payload-only unions
 - **Transaction Entry Kinds**:
   - `text` - Text timeline entries
   - `gallery` - Photo attachments

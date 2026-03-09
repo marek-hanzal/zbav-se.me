@@ -4,7 +4,7 @@ import { galleryInsertFx } from "~/@user/gallery/fx/galleryInsertFx";
 import { galleryItemInsertFx } from "~/@user/gallery-item/fx/galleryItemInsertFx";
 import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import type { InboxCreateSchema } from "~/@user/inbox/schema/InboxCreateSchema";
-import { transactionEntryAppendFx } from "~/@user/transaction-entry/fx/transactionEntryAppendFx";
+import { createTransactionEntryFx } from "~/@user/transaction-entry/fx/createTransactionEntryFx";
 import type { TransactionEntryCreateSchema } from "~/@user/transaction-entry/schema/TransactionEntryCreateSchema";
 import { transactionTransitionFx } from "~/@user/transaction/fx/transactionTransitionFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
@@ -19,12 +19,14 @@ export namespace transactionEntryCreateFx {
 	export type Props = TransactionEntryCreateSchema.Type & UserProps;
 }
 
-export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(function* (
-	props: transactionEntryCreateFx.Props,
-) {
+export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(function* ({
+	userId,
+	transactionId,
+	...entry
+}: transactionEntryCreateFx.Props) {
 	const transaction = yield* transactionResolveFx({
-		userId: props.userId,
-		transactionId: props.transactionId,
+		userId,
+		transactionId,
 	});
 
 	yield* transactionTransitionFx({
@@ -34,7 +36,7 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 	});
 
 	yield* userInteractionEventFx({
-		userId: props.userId,
+		userId,
 		targetId: transaction.side === "buyer" ? transaction.sellerId : transaction.buyerId,
 		source: "transaction",
 		group: transaction.id,
@@ -71,94 +73,94 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 			),
 	);
 
-	return yield* match(props)
+	return yield* match(entry)
 		.with(
 			{
 				kind: "text",
 			},
-			(props) =>
-				transactionEntryAppendFx({
-					transactionId: props.transactionId,
+			({ payload }) =>
+				createTransactionEntryFx({
+					transactionId,
 					kind: "text",
-					userId: props.userId,
-					payload: props.payload,
-					scopeUserId: props.userId,
+					userId,
+					payload,
+					scopeUserId: userId,
 				}),
 		)
 		.with(
 			{
 				kind: "location",
 			},
-			(props) =>
-				transactionEntryAppendFx({
-					transactionId: props.transactionId,
+			({ payload }) =>
+				createTransactionEntryFx({
+					transactionId,
 					kind: "location",
-					userId: props.userId,
-					payload: props.payload,
-					scopeUserId: props.userId,
+					userId,
+					payload,
+					scopeUserId: userId,
 				}),
 		)
 		.with(
 			{
 				kind: "package",
 			},
-			(props) =>
-				transactionEntryAppendFx({
-					transactionId: props.transactionId,
+			({ payload }) =>
+				createTransactionEntryFx({
+					transactionId,
 					kind: "package",
-					userId: props.userId,
-					payload: props.payload,
-					scopeUserId: props.userId,
+					userId,
+					payload,
+					scopeUserId: userId,
 				}),
 		)
 		.with(
 			{
 				kind: "personal",
 			},
-			(props) =>
-				transactionEntryAppendFx({
-					transactionId: props.transactionId,
+			({ payload }) =>
+				createTransactionEntryFx({
+					transactionId,
 					kind: "personal",
-					userId: props.userId,
-					payload: props.payload,
-					scopeUserId: props.userId,
+					userId,
+					payload,
+					scopeUserId: userId,
 				}),
 		)
 		.with(
 			{
 				kind: "gallery",
 			},
-			function* (props) {
-				if (props.payload.uploadIds.length === 0) {
+			function* ({ payload }) {
+				if (payload.uploadIds.length === 0) {
 					return yield* new InvalidRequestErrorFx({
 						message: "At least one upload is required",
 					});
 				}
 
 				const gallery = yield* galleryInsertFx({
-					userId: props.userId,
+					userId,
 				});
 
 				let sort = 0;
-				for (const uploadId of props.payload.uploadIds) {
+				for (const uploadId of payload.uploadIds) {
 					yield* galleryItemInsertFx({
 						galleryId: gallery.id,
 						uploadId,
 						sort,
-						userId: props.userId,
+						userId,
 						check: false,
 					});
 					sort++;
 				}
 
-				return yield* transactionEntryAppendFx({
-					transactionId: props.transactionId,
+				return yield* createTransactionEntryFx({
+					transactionId,
 					kind: "gallery",
-					userId: props.userId,
+					userId,
 					payload: {
 						galleryId: gallery.id,
 					},
-					scopeUserId: props.userId,
+					scopeUserId: userId,
 				});
 			},
 		)

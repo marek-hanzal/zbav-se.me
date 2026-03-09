@@ -1,4 +1,5 @@
 import { type Migration, sql } from "kysely";
+import { UserSideEnumSchema } from "~/database/@enum/UserSideEnumSchema";
 
 export const UserExMigration: Migration = {
 	async up(db) {
@@ -7,7 +8,7 @@ export const UserExMigration: Migration = {
 			.asEnum([
 				"seller",
 				"buyer",
-			])
+			] as const satisfies readonly UserSideEnumSchema.Type[])
 			.execute();
 
 		await db.schema
