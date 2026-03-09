@@ -1,6 +1,6 @@
 import { VisibilityProvider } from "@use-pico/client/context";
 import { useLocale } from "@use-pico/client/hook";
-import { ChevronLeftIcon } from "@use-pico/client/icon";
+import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { createNoopVisibilityStore } from "@use-pico/client/store";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
@@ -9,6 +9,7 @@ import { translator } from "@use-pico/common/translator";
 import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { HeroImage } from "@zbav-se.me/ui/img";
+import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
@@ -28,7 +29,6 @@ export const ListingMessageListPage: FC<ListingMessageListPage.Props> = ({
 }) => {
 	const locale = useLocale();
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
-
 	const [detail, setDetail] = useState(false);
 	const hero = useUpload(listing.gallery.items);
 
@@ -39,8 +39,11 @@ export const ListingMessageListPage: FC<ListingMessageListPage.Props> = ({
 			textSubtitle={listing.title}
 			left={
 				<LinkTo
-					icon={ChevronLeftIcon}
-					to="/$locale/seller/message/list"
+					{...uiBackButton({
+						className: [],
+					})}
+					icon={ArrowLeftIcon}
+					to="/$locale/home"
 					params={{
 						locale,
 					}}
@@ -84,6 +87,7 @@ export const ListingMessageListPage: FC<ListingMessageListPage.Props> = ({
 					ui={{
 						inner: "default",
 					}}
+					listingId={listingId}
 				/>
 			</Container>
 

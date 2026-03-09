@@ -1,23 +1,39 @@
+import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
+import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
-import { type FC, useState } from "react";
+import type { FC } from "react";
 import { match } from "ts-pattern";
-import { TransactionSheet } from "~/app/v0/@seller/transaction/ui/TransactionSheet";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		transactionId: string;
+		listingId: string;
 	}
 }
 
-export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, className, ...props }) => {
-	const [isOpen, setIsOpen] = useState(false);
+export const Data: FC<Data.Props> = ({
+	_suspense,
+	transactionId,
+	listingId,
+	ui,
+	className,
+	...props
+}) => {
+	const locale = useLocale();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
 
 	return (
-		<>
+		<LinkTo
+			to="/$locale/seller/message/$listingId/$transactionId"
+			params={{
+				locale,
+				listingId,
+				transactionId,
+			}}
+		>
 			<Container
 				ui={{
 					tone: "neutral",
@@ -33,7 +49,6 @@ export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, className, 
 					"h-48 md:h-92",
 					className,
 				]}
-				onClick={() => setIsOpen((prev) => !prev)}
 				{...props}
 			>
 				{match(transaction.status)
@@ -82,13 +97,6 @@ export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, className, 
 					/>
 				</Container>
 			</Container>
-
-			<TransactionSheet
-				transactionId={transactionId}
-				isOpen={isOpen}
-				onClose={() => setIsOpen(false)}
-				refresh={1_000 * 5}
-			/>
-		</>
+		</LinkTo>
 	);
 };
