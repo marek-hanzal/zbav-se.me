@@ -12,7 +12,7 @@
 	},
 	"dependencies": {
 		"@tanstack/react-query": "5.90.21",
-		"@tanstack/react-router": "1.166.2",
+		"@tanstack/react-router": "1.166.3",
 		"@types/luxon": "3.7.1",
 		"@use-pico/cls": "workspace:*",
 		"@use-pico/common": "workspace:*",

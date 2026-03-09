@@ -28,7 +28,7 @@
 		"@types/node": "25.3.5",
 		"dotenv-cli": "11.0.0",
 		"npm-run-all2": "8.0.4",
-		"syncpack": "14.1.0",
+		"syncpack": "14.2.0",
 		"turbo": "2.8.14",
 		"typescript": "beta"
 	},
