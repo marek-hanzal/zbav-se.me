@@ -23,6 +23,9 @@ export const SearchButton: FC<SearchButton.Props> = ({ feedId, ui, className, ..
 			icon={SearchIcon}
 			iconProps={{
 				ui: {
+					tone: "primary",
+					theme: "light",
+					color: "lead",
 					text: "xl",
 				},
 			}}
@@ -31,7 +34,7 @@ export const SearchButton: FC<SearchButton.Props> = ({ feedId, ui, className, ..
 					tone: "neutral",
 					theme: "light",
 					size: "default",
-					justify: "start",
+					justify: "center",
 					items: "center",
 					background: "default",
 					round: undefined,
@@ -44,7 +47,15 @@ export const SearchButton: FC<SearchButton.Props> = ({ feedId, ui, className, ..
 			})}
 			{...props}
 		>
-			<Tx label="Search (button)" />
+			<Tx
+				label="Search (button)"
+				ui={{
+					tone: "primary",
+					theme: "light",
+					color: "lead",
+					text: "xl",
+				}}
+			/>
 		</LinkTo>
 	);
 };
