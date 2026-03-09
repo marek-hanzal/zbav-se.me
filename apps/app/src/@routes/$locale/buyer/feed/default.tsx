@@ -17,6 +17,9 @@ export const Route = createFileRoute("/$locale/buyer/feed/default")({
 		const feed =
 			(await withFeedQuery
 				.fetchFn({
+					filter: {
+						type: "user",
+					},
 					sort: [
 						{
 							field: "updatedAt",

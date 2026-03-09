@@ -52,6 +52,7 @@ export const seedCoreFeedFx = Effect.fn("seedCoreFeedFx")(function* ({
 							const location = locations[i % Math.max(1, locations.length)];
 							yield* seedFeedInsertFx({
 								userId,
+								type: "user",
 								name: `seed-${genId()}-${i}`,
 								locationId: location?.id ?? null,
 								query: {},

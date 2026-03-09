@@ -1318,6 +1318,16 @@ export const sUserEx = {
                     $ref: '#/components/schemas/UserSideEnum'
                 }
             ]
+        },
+        token: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         }
     },
     required: [
@@ -1357,6 +1367,16 @@ export const sUserExPatch = {
                         },
                         {
                             $ref: '#/components/schemas/UserSideEnum'
+                        }
+                    ]
+                },
+                token: {
+                    anyOf: [
+                        {
+                            type: 'string'
+                        },
+                        {
+                            type: 'null'
                         }
                     ]
                 }

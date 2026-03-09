@@ -462,6 +462,7 @@ export const zDraftCreate = z.object({
     age: z.number().register(z.globalRegistry, {
         description: 'Age of the item (0-based index)'
     }).optional(),
+    delivery: z.array(zListingDeliveryEnum).nullish(),
     warranty: zListingWarrantyEnum.nullish(),
     restriction: zListingRestrictionEnum.nullish(),
     locationId: z.string().register(z.globalRegistry, {

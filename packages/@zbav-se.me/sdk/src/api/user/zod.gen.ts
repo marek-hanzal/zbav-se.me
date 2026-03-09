@@ -1081,7 +1081,8 @@ export const zUserEx = z.object({
         description: 'ID of the user_ex record'
     }),
     locationId: z.string().nullable(),
-    side: zUserSideEnum.nullish()
+    side: zUserSideEnum.nullish(),
+    token: z.string().nullish()
 }).register(z.globalRegistry, {
     description: 'User extended information'
 });
@@ -1094,7 +1095,8 @@ export type zUserEx = z.infer<typeof zUserEx>;
 export const zUserExPatch = z.object({
     patch: z.object({
         locationId: z.string().nullish(),
-        side: zUserSideEnum.nullish()
+        side: zUserSideEnum.nullish(),
+        token: z.string().nullish()
     }).register(z.globalRegistry, {
         description: 'Fields to update (all optional)'
     })
@@ -1434,3 +1436,33 @@ export type zapiUserExPatchRequest = z.infer<typeof zApiUserExPatchData>;
 export const zApiUserExPatchResponse = zUserEx;
 
 export type zapiUserExPatchResponse = z.infer<typeof zApiUserExPatchResponse>;
+
+export const zApiUserTokenEnableData = z.object({
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
+});
+
+export type zapiUserTokenEnableRequest = z.infer<typeof zApiUserTokenEnableData>;
+
+/**
+ * User token generated successfully
+ */
+export const zApiUserTokenEnableResponse = zUserEx;
+
+export type zapiUserTokenEnableResponse = z.infer<typeof zApiUserTokenEnableResponse>;
+
+export const zApiUserTokenDisableData = z.object({
+    body: z.never().optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
+});
+
+export type zapiUserTokenDisableRequest = z.infer<typeof zApiUserTokenDisableData>;
+
+/**
+ * User token disabled successfully
+ */
+export const zApiUserTokenDisableResponse = zUserEx;
+
+export type zapiUserTokenDisableResponse = z.infer<typeof zApiUserTokenDisableResponse>;

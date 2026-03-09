@@ -925,7 +925,16 @@ acca87272a911bd673bc0f526d8ddaf4bedf8c4d04a375401d80df47:
     value: Bez omezení
 ace3cb7fde09a6de2d13e87440ee5f21a920cd7dff6ac1dc2ee6ba48:
     ref: Search (title)
-    value: Search (title)
+    value: Hledat
+ace3cb7fde09a6de2d13e87440ee5f21a920cd7dff6ac1dc2ee6ba49:
+    ref: Search (button)
+    value: Hledat
+ace3cb7fde09a6de2d13e87440ee5f21a920cd7dff6ac1dc2ee6ba50:
+    ref: Save as feed (button)
+    value: Uložit jako seznam
+ace3cb7fde09a6de2d13e87440ee5f21a920cd7dff6ac1dc2ee6ba51:
+    ref: Reset search (button)
+    value: Resetovat hledání
 acf5cd0bee4e6bd74eea745c51c41f0b3a17a1de314afd2d76eb056c:
     ref: Personal - Warning (title)
     value: Sdílíš osobní údaje

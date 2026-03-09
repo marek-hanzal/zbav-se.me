@@ -1,25 +1,19 @@
+import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
-import { SearchEditor } from "./SearchEditor";
 
-export namespace SearchPage {
+export namespace SearchPagePending {
 	export interface Props extends TitleContainer.Props {
-		feedId: string;
+		//
 	}
 }
 
-/**
- * Composes the route-level search screen and arranges the main page structure for this flow.
- * Use it from route definitions as the primary UI boundary for the search journey.
- *
- * @see apps/app/src/@routes
- */
-export const SearchPage: FC<SearchPage.Props> = ({ feedId, ui, ...props }) => {
+export const SearchPagePending: FC<SearchPagePending.Props> = ({ ui, ...props }) => {
 	return (
 		<TitleContainer
-			data-ui={"SearchPage[TitleContainer]"}
+			data-ui={"SearchPagePending[TitleContainer]"}
 			textTitle={translator.text("Search (title)")}
 			ui={{
 				layout: "vertical-header-content",
@@ -28,7 +22,7 @@ export const SearchPage: FC<SearchPage.Props> = ({ feedId, ui, ...props }) => {
 			right={<HomeMenuButton />}
 			{...props}
 		>
-			<SearchEditor feedId={feedId} />
+			<SpinnerContainer />
 		</TitleContainer>
 	);
 };

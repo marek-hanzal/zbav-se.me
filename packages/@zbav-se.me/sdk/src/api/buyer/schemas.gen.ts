@@ -724,6 +724,9 @@ export const sFeed = {
                 }
             ]
         },
+        type: {
+            $ref: '#/components/schemas/FeedTypeEnum'
+        },
         name: {
             type: 'string'
         },
@@ -745,9 +748,18 @@ export const sFeed = {
         'id',
         'locationId',
         'uploadId',
+        'type',
         'name',
         'query',
         'upload'
+    ]
+} as const;
+
+export const sFeedTypeEnum = {
+    type: 'string',
+    enum: [
+        'user',
+        'search'
     ]
 } as const;
 
@@ -1131,6 +1143,9 @@ export const sLatLon = {
 export const sFeedCreate = {
     type: 'object',
     properties: {
+        type: {
+            $ref: '#/components/schemas/FeedTypeEnum'
+        },
         name: {
             type: 'string',
             minLength: 1
@@ -1150,6 +1165,7 @@ export const sFeedCreate = {
         }
     },
     required: [
+        'type',
         'name',
         'query'
     ]
@@ -1183,6 +1199,9 @@ export const sFeedPatch = {
                             type: 'string'
                         }
                     ]
+                },
+                type: {
+                    $ref: '#/components/schemas/FeedTypeEnum'
                 },
                 name: {
                     type: 'string'
@@ -1240,6 +1259,14 @@ export const sFeedFilter = {
         },
         userId: {
             type: 'string'
+        },
+        type: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/FeedTypeEnum'
+                },
+                {}
+            ]
         }
     }
 } as const;
@@ -1261,6 +1288,14 @@ export const sFeedWhere = {
         },
         userId: {
             type: 'string'
+        },
+        type: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/FeedTypeEnum'
+                },
+                {}
+            ]
         }
     }
 } as const;
@@ -1315,6 +1350,9 @@ export const sFeedItem = {
                 }
             ]
         },
+        type: {
+            $ref: '#/components/schemas/FeedTypeEnum'
+        },
         name: {
             type: 'string'
         },
@@ -1336,6 +1374,7 @@ export const sFeedItem = {
         'id',
         'locationId',
         'uploadId',
+        'type',
         'name',
         'query',
         'upload'
@@ -1380,6 +1419,9 @@ export const sFeedFavouriteItem = {
                 }
             ]
         },
+        type: {
+            $ref: '#/components/schemas/FeedTypeEnum'
+        },
         name: {
             type: 'string'
         },
@@ -1404,6 +1446,7 @@ export const sFeedFavouriteItem = {
         'id',
         'locationId',
         'uploadId',
+        'type',
         'name',
         'query',
         'upload',
@@ -1437,6 +1480,9 @@ export const sFeedFavourite = {
                 }
             ]
         },
+        type: {
+            $ref: '#/components/schemas/FeedTypeEnum'
+        },
         name: {
             type: 'string'
         },
@@ -1461,6 +1507,7 @@ export const sFeedFavourite = {
         'id',
         'locationId',
         'uploadId',
+        'type',
         'name',
         'query',
         'upload',

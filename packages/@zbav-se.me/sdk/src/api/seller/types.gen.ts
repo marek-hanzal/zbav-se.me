@@ -536,6 +536,10 @@ export type tDraftCreate = {
      */
     age?: number;
     /**
+     * Delivery methods for the draft
+     */
+    delivery?: null | Array<tListingDeliveryEnum>;
+    /**
      * Warranty type for the draft
      */
     warranty?: null | tListingWarrantyEnum;

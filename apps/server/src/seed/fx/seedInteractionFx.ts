@@ -65,6 +65,7 @@ export const seedInteractionFx = Effect.fn("seedInteractionFx")(function* ({
 		feeds[0]?.id ??
 		(yield* feedCreateFx({
 			userId: current.id,
+			type: "user",
 			name: `seed-interaction-${genId()}`,
 			query: {},
 			locationId: null,

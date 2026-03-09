@@ -54,3 +54,5 @@ This domain unifies former buyer session and buyer user capabilities behind `/ap
 ## Recent updates
 
 - Geo listing sort now optimizes `geo desc` by converting it to equivalent antipode `geo asc` ordering so PostGIS KNN (`location_[geo]_idx`) can be used.
+- Feed schema now distinguishes `user` and `search` feed types through the shared feed type enum.
+- Feed API remains user-scoped but lets call-sites explicitly filter by feed type instead of enforcing presentation policy on the server.
