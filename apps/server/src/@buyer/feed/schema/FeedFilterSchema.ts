@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { FeedTypeEnumSchema } from "~/database/@enum/FeedTypeEnumSchema";
 import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 
 export const FeedFilterSchema = z
@@ -6,6 +7,9 @@ export const FeedFilterSchema = z
 		...DefaultFilterSchema.shape,
 		userId: z.string().optional().openapi({
 			description: "Exact user id",
+		}),
+		type: FeedTypeEnumSchema.optional().openapi({
+			description: "Exact feed type",
 		}),
 	})
 	.openapi("FeedFilter", {

@@ -555,6 +555,7 @@ export type tFeed = {
      * Hero image for this feed (usually selected from the listings in the feed)
      */
     uploadId: null | string;
+    type: tFeedTypeEnum;
     /**
      * Name of the feed
      */
@@ -565,6 +566,16 @@ export type tFeed = {
      */
     upload: null | tUpload;
 };
+
+/**
+ * Type of the feed
+ */
+export const tFeedTypeEnum = { user: 'user', search: 'search' } as const;
+
+/**
+ * Type of the feed
+ */
+export type tFeedTypeEnum = typeof tFeedTypeEnum[keyof typeof tFeedTypeEnum];
 
 /**
  * Query object for listing collection
@@ -858,6 +869,7 @@ export type tLatLon = {
  * Data for creating a new feed
  */
 export type tFeedCreate = {
+    type: tFeedTypeEnum;
     /**
      * Name of the feed
      */
@@ -889,6 +901,7 @@ export type tFeedPatch = {
          * Hero image for this feed (usually selected from the listings in the feed)
          */
         uploadId?: null | string;
+        type?: tFeedTypeEnum;
         /**
          * Name of the feed
          */
@@ -928,6 +941,7 @@ export type tFeedFilter = {
      * Exact user id
      */
     userId?: string;
+    type?: tFeedTypeEnum & unknown;
 };
 
 /**
@@ -950,6 +964,7 @@ export type tFeedWhere = {
      * Exact user id
      */
     userId?: string;
+    type?: tFeedTypeEnum & unknown;
 };
 
 /**
@@ -986,6 +1001,7 @@ export type tFeedItem = {
      * Hero image for this feed (usually selected from the listings in the feed)
      */
     uploadId: null | string;
+    type: tFeedTypeEnum;
     /**
      * Name of the feed
      */
@@ -1021,6 +1037,7 @@ export type tFeedFavouriteItem = {
      * Hero image for this feed (usually selected from the listings in the feed)
      */
     uploadId: null | string;
+    type: tFeedTypeEnum;
     /**
      * Name of the feed
      */
@@ -1052,6 +1069,7 @@ export type tFeedFavourite = {
      * Hero image for this feed (usually selected from the listings in the feed)
      */
     uploadId: null | string;
+    type: tFeedTypeEnum;
     /**
      * Name of the feed
      */

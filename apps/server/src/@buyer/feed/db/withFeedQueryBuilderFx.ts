@@ -41,5 +41,9 @@ export const withFeedQueryBuilderFx = Effect.fn("withFeedQueryBuilderFx")(functi
 		query = query.where("f.userId", "=", where.userId) as TSelect;
 	}
 
+	if (where.type) {
+		query = query.where("f.type", "=", where.type) as TSelect;
+	}
+
 	return yield* Effect.succeed(query);
 });

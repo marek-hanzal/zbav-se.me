@@ -32,7 +32,7 @@ export const AgeValueList: FC<AgeValueList.Props> = ({ ageIn, ...props }) => {
 				id: String(item),
 				age: String(item),
 			}))}
-			renderFn={(item) => translator.text(`Age ${item} (label)`)}
+			renderFn={(item) => translator.text(`Age ${item.age} (label)`)}
 			wrapperProps={{
 				ui:
 					ageIn.length > 0

@@ -1,7 +1,8 @@
-import type { tFeedCreate } from "@zbav-se.me/sdk/api/buyer";
+import { type tFeedCreate, tFeedTypeEnum } from "@zbav-se.me/sdk/api/buyer";
 
-export const getFeedDefaultCreate = (name: string) =>
+export const getFeedDefaultCreate = (name: string, type: tFeedTypeEnum = tFeedTypeEnum.user) =>
 	({
+		type,
 		name,
 		query: {
 			where: {

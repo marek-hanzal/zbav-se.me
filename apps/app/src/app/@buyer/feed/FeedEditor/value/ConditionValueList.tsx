@@ -31,7 +31,7 @@ export const ConditionValueList: FC<ConditionValueList.Props> = ({ conditionIn, 
 				id: String(item),
 				condition: String(item),
 			}))}
-			renderFn={(item) => translator.text(`Condition ${item} (label)`)}
+			renderFn={(item) => translator.text(`Condition ${item.condition} (label)`)}
 			wrapperProps={{
 				ui:
 					conditionIn.length > 0

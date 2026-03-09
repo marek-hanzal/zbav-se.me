@@ -488,6 +488,15 @@ export const zFavouriteToggle = z.object({
 export type zFavouriteToggle = z.infer<typeof zFavouriteToggle>;
 
 /**
+ * Type of the feed
+ */
+export const zFeedTypeEnum = z.enum(['user', 'search']).register(z.globalRegistry, {
+    description: 'Type of the feed'
+});
+
+export type zFeedTypeEnum = z.infer<typeof zFeedTypeEnum>;
+
+/**
  * Sets the minimum price for the listings
  */
 export const zPriceMin = z.number().gte(0).register(z.globalRegistry, {
@@ -805,6 +814,7 @@ export const zFeed = z.object({
     }),
     locationId: z.string().nullable(),
     uploadId: z.string().nullable(),
+    type: zFeedTypeEnum,
     name: z.string().register(z.globalRegistry, {
         description: 'Name of the feed'
     }),
@@ -820,6 +830,7 @@ export type zFeed = z.infer<typeof zFeed>;
  * Data for creating a new feed
  */
 export const zFeedCreate = z.object({
+    type: zFeedTypeEnum,
     name: z.string().min(1).register(z.globalRegistry, {
         description: 'Name of the feed'
     }),
@@ -846,7 +857,10 @@ export const zFeedFilter = z.object({
     }).optional(),
     userId: z.string().register(z.globalRegistry, {
         description: 'Exact user id'
-    }).optional()
+    }).optional(),
+    type: zFeedTypeEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'Exact feed type'
+    })).optional()
 }).register(z.globalRegistry, {
     description: 'Filter object for feed collection'
 });
@@ -868,7 +882,10 @@ export const zFeedWhere = z.object({
     }).optional(),
     userId: z.string().register(z.globalRegistry, {
         description: 'Exact user id'
-    }).optional()
+    }).optional(),
+    type: zFeedTypeEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'Exact feed type'
+    })).optional()
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
@@ -920,6 +937,7 @@ export const zFeedPatch = z.object({
         }).optional(),
         locationId: z.string().nullish(),
         uploadId: z.string().nullish(),
+        type: zFeedTypeEnum.optional(),
         name: z.string().register(z.globalRegistry, {
             description: 'Name of the feed'
         }).optional(),
@@ -943,6 +961,7 @@ export const zFeedItem = z.object({
     }),
     locationId: z.string().nullable(),
     uploadId: z.string().nullable(),
+    type: zFeedTypeEnum,
     name: z.string().register(z.globalRegistry, {
         description: 'Name of the feed'
     }),
@@ -975,6 +994,7 @@ export const zFeedFavouriteItem = z.object({
     }),
     locationId: z.string().nullable(),
     uploadId: z.string().nullable(),
+    type: zFeedTypeEnum,
     name: z.string().register(z.globalRegistry, {
         description: 'Name of the feed'
     }),
@@ -998,6 +1018,7 @@ export const zFeedFavourite = z.object({
     }),
     locationId: z.string().nullable(),
     uploadId: z.string().nullable(),
+    type: zFeedTypeEnum,
     name: z.string().register(z.globalRegistry, {
         description: 'Name of the feed'
     }),

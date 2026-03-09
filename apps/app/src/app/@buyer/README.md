@@ -46,3 +46,9 @@ Maps to server API: `/api/buyer/*`.
 - Buyer message list page is now active scope (`v0` page removed):
   - `@buyer/transaction/MessageListPage/MessageListPage.tsx`
   - `@buyer/transaction/~public/MessageListPage.ts`
+- Search route now reuses the existing feed editor inline and routes saved search results through feed listing:
+  - `@buyer/search/SearchPage/SearchPage.tsx`
+  - `@buyer/search/SearchPage/SearchEditor.tsx`
+  - `@buyer/search/SearchPage/SearchButton.tsx`
+  - `@buyer/search/SearchPage/SaveAsFeedButton.tsx`
+  - `@buyer/search/SearchPage/ResetButton.tsx`

@@ -19,12 +19,20 @@ export const Data: FC<Data.Props> = ({ _suspense, query, limit, ...props }) => {
 	 */
 	const { data: feedList } = withFeedQuery.useCollectionQuery({
 		...query,
+		filter: {
+			...query.filter,
+			type: "user",
+		},
 		cursor: {
 			page: 0,
 			size: limit,
 		},
 	});
-	const { data: feedCount } = withFeedQuery.useCountQuery({});
+	const { data: feedCount } = withFeedQuery.useCountQuery({
+		filter: {
+			type: "user",
+		},
+	});
 	const isLimitReached = feedCount.filter >= limit;
 
 	return (

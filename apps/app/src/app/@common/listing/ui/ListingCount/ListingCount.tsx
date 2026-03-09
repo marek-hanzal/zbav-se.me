@@ -8,12 +8,6 @@ export namespace ListingCount {
 	}
 }
 
-/**
- * Resolves listing count data in suspense and exposes a stable wrapper for count presentation.
- * Use it in buyer listing views where total results should be shown with loading-safe behavior.
- *
- * @see apps/app/src/app//search/page/SearchPage.tsx
- */
 export const ListingCount: FC<ListingCount.Props> = (props) => {
 	return (
 		<Suspense fallback={<Pending />}>

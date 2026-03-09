@@ -10,9 +10,9 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { withFeedQuery } from "@zbav-se.me/sdk/query/buyer/feed";
 import { type FC, useState } from "react";
 import { ListItem } from "~/app/@common/list-item/ListItem";
+import { ListingCount } from "~/app/@common/listing/ui/ListingCount";
 import { FeedEditorSheet } from "../../../FeedEditor/FeedEditorSheet";
 import { DeleteButton } from "../DeleteButton";
-import { ListingCount } from "./ListingCount";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {

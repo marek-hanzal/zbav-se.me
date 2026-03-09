@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { FeedTypeEnumSchema } from "~/database/@enum/FeedTypeEnumSchema";
 
 export const FeedTableSchema = z.object({
 	id: z.string().openapi({
@@ -24,6 +25,9 @@ export const FeedTableSchema = z.object({
 			description:
 				"Hero image for this feed (usually selected from the listings in the feed)",
 		}),
+	type: FeedTypeEnumSchema.openapi({
+		description: "Type of the feed",
+	}),
 	//
 	name: z.string().openapi({
 		description: "Name of the feed",

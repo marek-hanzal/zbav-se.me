@@ -1032,6 +1032,10 @@ export type tUserEx = {
      */
     locationId: null | string;
     side?: null | tUserSideEnum;
+    /**
+     * Bearer token used for agent access and API token fallback auth
+     */
+    token?: string | null;
 };
 
 /**
@@ -1057,6 +1061,10 @@ export type tUserExPatch = {
          */
         locationId?: null | string;
         side?: null | tUserSideEnum;
+        /**
+         * Bearer token used for agent access and API token fallback auth
+         */
+        token?: string | null;
     };
 };
 
@@ -1698,3 +1706,61 @@ export type tApiUserExPatchResponse = {
 };
 
 export type apiUserExPatchResponse = tApiUserExPatchResponse[keyof tApiUserExPatchResponse];
+
+export type tApiUserTokenEnableRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/user/token/enable';
+};
+
+export type apiUserTokenEnableErrors = {
+    /**
+     * Conflict (e.g. duplicate)
+     */
+    409: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiUserTokenEnableError = apiUserTokenEnableErrors[keyof apiUserTokenEnableErrors];
+
+export type tApiUserTokenEnableResponse = {
+    /**
+     * User token generated successfully
+     */
+    200: tUserEx;
+};
+
+export type apiUserTokenEnableResponse = tApiUserTokenEnableResponse[keyof tApiUserTokenEnableResponse];
+
+export type tApiUserTokenDisableRequest = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/user/token/disable';
+};
+
+export type apiUserTokenDisableErrors = {
+    /**
+     * Conflict (e.g. duplicate)
+     */
+    409: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiUserTokenDisableError = apiUserTokenDisableErrors[keyof apiUserTokenDisableErrors];
+
+export type tApiUserTokenDisableResponse = {
+    /**
+     * User token disabled successfully
+     */
+    200: tUserEx;
+};
+
+export type apiUserTokenDisableResponse = tApiUserTokenDisableResponse[keyof tApiUserTokenDisableResponse];

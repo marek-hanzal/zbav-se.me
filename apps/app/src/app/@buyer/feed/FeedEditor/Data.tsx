@@ -32,10 +32,14 @@ export namespace Data {
 
 	export interface Props extends PropsWithChildren, MarkSuspense.Props {
 		feedId: string;
+		/**
+		 * Must be stable array or hello heavy re-renders!
+		 */
+		hidden?: readonly Editor.Section[];
 	}
 }
 
-export const Data: FC<Data.Props> = ({ _suspense, feedId, children }) => {
+export const Data: FC<Data.Props> = ({ _suspense, feedId, hidden, children }) => {
 	const { data: feed } = withFeedQuery.useFetchQuery(feedId);
 	const [view, setView] = useState<Data.View>("default");
 
@@ -49,6 +53,7 @@ export const Data: FC<Data.Props> = ({ _suspense, feedId, children }) => {
 				<Editor
 					feed={feed}
 					onView={setView}
+					hidden={hidden}
 				>
 					{children}
 				</Editor>
@@ -159,6 +164,7 @@ export const Data: FC<Data.Props> = ({ _suspense, feedId, children }) => {
 		};
 	}, [
 		feed,
+		hidden,
 		onDone,
 		children,
 	]);

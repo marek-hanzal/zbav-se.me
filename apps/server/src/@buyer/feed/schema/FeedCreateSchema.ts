@@ -1,8 +1,12 @@
 import { z } from "@hono/zod-openapi";
 import { ListingQuerySchema } from "~/@buyer/listing/schema/ListingQuerySchema";
+import { FeedTypeEnumSchema } from "~/database/@enum/FeedTypeEnumSchema";
 
 export const FeedCreateSchema = z
 	.looseObject({
+		type: FeedTypeEnumSchema.openapi({
+			description: "Type of the feed",
+		}),
 		name: z.string().min(1).openapi({
 			description: "Name of the feed",
 		}),

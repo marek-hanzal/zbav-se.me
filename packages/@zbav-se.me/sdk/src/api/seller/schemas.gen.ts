@@ -729,6 +729,19 @@ export const sDraftCreate = {
         age: {
             type: 'number'
         },
+        delivery: {
+            anyOf: [
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'array',
+                    items: {
+                        $ref: '#/components/schemas/ListingDeliveryEnum'
+                    }
+                }
+            ]
+        },
         warranty: {
             anyOf: [
                 {

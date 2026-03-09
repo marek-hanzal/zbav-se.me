@@ -1,6 +1,7 @@
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
+import { FEED_LIMIT } from "~/app/@common/limit/Limit";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 import { FeedList } from "./FeedList";
 
@@ -17,8 +18,6 @@ export namespace FeedListPage {
  * @see apps/app/src/@routes
  */
 export const FeedListPage: FC<FeedListPage.Props> = ({ ui, ...props }) => {
-	const feedCountLimit = 3;
-
 	return (
 		<TitleContainer
 			data-ui={"FeedList[TitleContainer]"}
@@ -40,7 +39,7 @@ export const FeedListPage: FC<FeedListPage.Props> = ({ ui, ...props }) => {
 						},
 					],
 				}}
-				limit={feedCountLimit}
+				limit={FEED_LIMIT}
 			/>
 		</TitleContainer>
 	);

@@ -3,11 +3,20 @@ import { type Migration, sql } from "kysely";
 export const FeedMigration: Migration = {
 	async up(db) {
 		await db.schema
+			.createType("feed_type_enum")
+			.asEnum([
+				"user",
+				"search",
+			])
+			.execute();
+
+		await db.schema
 			.createTable("feed")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("locationId", "text")
 			.addColumn("uploadId", "text")
+			.addColumn("type", sql`feed_type_enum`, (col) => col.notNull())
 			.addColumn("name", "text", (col) => col.notNull())
 			.addColumn("query", "jsonb", (col) => col.notNull())
 			.addColumn("createdAt", "timestamptz", (col) => col.notNull())
@@ -45,13 +54,23 @@ export const FeedMigration: Migration = {
 				],
 				(c) => c.onDelete("set null"),
 			)
-			.addUniqueConstraint("feed_[userId-name]_unique_idx", [
+			.addUniqueConstraint("feed_[userId-name-type]_unique_idx", [
 				"userId",
 				"name",
+				"type",
 			])
 			.execute();
 
 		await db.schema.createIndex("feed_[userId]_idx").on("feed").column("userId").execute();
+		await db.schema.createIndex("feed_[type]_idx").on("feed").column("type").execute();
+		await db.schema
+			.createIndex("feed_[userId-type]_idx")
+			.on("feed")
+			.columns([
+				"userId",
+				"type",
+			])
+			.execute();
 
 		await db.schema
 			.createIndex("feed_[updatedAt]_idx")

@@ -130,6 +130,12 @@ When adding to `@common`:
   - `@common/condition/ui/ConditionIcon.tsx`
 - Shared feed default-create helper is now in common service:
   - `@common/feed/service/getFeedDefaultCreate.ts`
+- Shared app limits now live in active common scope:
+  - `@common/limit/Limit.ts`
+- Shared listing count suspense component now lives in active common scope:
+  - `@common/listing/ui/ListingCount/ListingCount.tsx`
+  - `@common/listing/ui/ListingCount/Data.tsx`
+  - `@common/listing/ui/ListingCount/Pending.tsx`
 - `GalleryPreview` was extracted to active scope:
   - `@common/gallery/ui/GalleryPreview.tsx`
 - `GalleryUploadContainer` abstraction was removed; gallery upload flow is now embedded directly at call-sites.

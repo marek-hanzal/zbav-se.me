@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiGalleryCollectionErrors, apiGalleryCountErrors, apiGalleryFetchErrors, apiInboxArchiveErrors, apiInboxCollectionErrors, apiInboxCountErrors, apiInboxFetchErrors, apiInboxPatchErrors, apiMessageThreadMessageCollectionErrors, apiMessageThreadMessageCountErrors, apiMessageThreadMessageFetchErrors, apiS3PresignErrors, apiTransactionMessageGalleryCreateErrors, apiTransactionMessageLocationCreateErrors, apiTransactionMessagePackageCreateErrors, apiTransactionMessagePersonalCreateErrors, apiTransactionMessageTextCreateErrors, apiUploadCreateErrors, apiUploadFetchErrors, apiUserExPatchErrors, tApiGalleryCollectionRequest, tApiGalleryCollectionResponse, tApiGalleryCountRequest, tApiGalleryCountResponse, tApiGalleryFetchRequest, tApiGalleryFetchResponse, tApiInboxArchiveRequest, tApiInboxArchiveResponse, tApiInboxCollectionRequest, tApiInboxCollectionResponse, tApiInboxCountRequest, tApiInboxCountResponse, tApiInboxFetchRequest, tApiInboxFetchResponse, tApiInboxPatchRequest, tApiInboxPatchResponse, tApiMessageThreadMessageCollectionRequest, tApiMessageThreadMessageCollectionResponse, tApiMessageThreadMessageCountRequest, tApiMessageThreadMessageCountResponse, tApiMessageThreadMessageFetchRequest, tApiMessageThreadMessageFetchResponse, tApiS3PresignRequest, tApiS3PresignResponse, tApiTransactionMessageGalleryCreateRequest, tApiTransactionMessageGalleryCreateResponse, tApiTransactionMessageLocationCreateRequest, tApiTransactionMessageLocationCreateResponse, tApiTransactionMessagePackageCreateRequest, tApiTransactionMessagePackageCreateResponse, tApiTransactionMessagePersonalCreateRequest, tApiTransactionMessagePersonalCreateResponse, tApiTransactionMessageTextCreateRequest, tApiTransactionMessageTextCreateResponse, tApiUploadCreateRequest, tApiUploadCreateResponse, tApiUploadFetchRequest, tApiUploadFetchResponse, tApiUserExPatchRequest, tApiUserExPatchResponse } from './types.gen';
-import { zApiGalleryCollectionData, zApiGalleryCollectionResponse, zApiGalleryCountData, zApiGalleryCountResponse, zApiGalleryFetchData, zApiGalleryFetchResponse, zApiInboxArchiveData, zApiInboxArchiveResponse, zApiInboxCollectionData, zApiInboxCollectionResponse, zApiInboxCountData, zApiInboxCountResponse, zApiInboxFetchData, zApiInboxFetchResponse, zApiInboxPatchData, zApiInboxPatchResponse, zApiMessageThreadMessageCollectionData, zApiMessageThreadMessageCollectionResponse, zApiMessageThreadMessageCountData, zApiMessageThreadMessageCountResponse, zApiMessageThreadMessageFetchData, zApiMessageThreadMessageFetchResponse, zApiS3PresignData, zApiS3PresignResponse, zApiTransactionMessageGalleryCreateData, zApiTransactionMessageGalleryCreateResponse, zApiTransactionMessageLocationCreateData, zApiTransactionMessageLocationCreateResponse, zApiTransactionMessagePackageCreateData, zApiTransactionMessagePackageCreateResponse, zApiTransactionMessagePersonalCreateData, zApiTransactionMessagePersonalCreateResponse, zApiTransactionMessageTextCreateData, zApiTransactionMessageTextCreateResponse, zApiUploadCreateData, zApiUploadCreateResponse, zApiUploadFetchData, zApiUploadFetchResponse, zApiUserExPatchData, zApiUserExPatchResponse } from './zod.gen';
+import type { apiGalleryCollectionErrors, apiGalleryCountErrors, apiGalleryFetchErrors, apiInboxArchiveErrors, apiInboxCollectionErrors, apiInboxCountErrors, apiInboxFetchErrors, apiInboxPatchErrors, apiMessageThreadMessageCollectionErrors, apiMessageThreadMessageCountErrors, apiMessageThreadMessageFetchErrors, apiS3PresignErrors, apiTransactionMessageGalleryCreateErrors, apiTransactionMessageLocationCreateErrors, apiTransactionMessagePackageCreateErrors, apiTransactionMessagePersonalCreateErrors, apiTransactionMessageTextCreateErrors, apiUploadCreateErrors, apiUploadFetchErrors, apiUserExPatchErrors, apiUserTokenDisableErrors, apiUserTokenEnableErrors, tApiGalleryCollectionRequest, tApiGalleryCollectionResponse, tApiGalleryCountRequest, tApiGalleryCountResponse, tApiGalleryFetchRequest, tApiGalleryFetchResponse, tApiInboxArchiveRequest, tApiInboxArchiveResponse, tApiInboxCollectionRequest, tApiInboxCollectionResponse, tApiInboxCountRequest, tApiInboxCountResponse, tApiInboxFetchRequest, tApiInboxFetchResponse, tApiInboxPatchRequest, tApiInboxPatchResponse, tApiMessageThreadMessageCollectionRequest, tApiMessageThreadMessageCollectionResponse, tApiMessageThreadMessageCountRequest, tApiMessageThreadMessageCountResponse, tApiMessageThreadMessageFetchRequest, tApiMessageThreadMessageFetchResponse, tApiS3PresignRequest, tApiS3PresignResponse, tApiTransactionMessageGalleryCreateRequest, tApiTransactionMessageGalleryCreateResponse, tApiTransactionMessageLocationCreateRequest, tApiTransactionMessageLocationCreateResponse, tApiTransactionMessagePackageCreateRequest, tApiTransactionMessagePackageCreateResponse, tApiTransactionMessagePersonalCreateRequest, tApiTransactionMessagePersonalCreateResponse, tApiTransactionMessageTextCreateRequest, tApiTransactionMessageTextCreateResponse, tApiUploadCreateRequest, tApiUploadCreateResponse, tApiUploadFetchRequest, tApiUploadFetchResponse, tApiUserExPatchRequest, tApiUserExPatchResponse, tApiUserTokenDisableRequest, tApiUserTokenDisableResponse, tApiUserTokenEnableRequest, tApiUserTokenEnableResponse } from './types.gen';
+import { zApiGalleryCollectionData, zApiGalleryCollectionResponse, zApiGalleryCountData, zApiGalleryCountResponse, zApiGalleryFetchData, zApiGalleryFetchResponse, zApiInboxArchiveData, zApiInboxArchiveResponse, zApiInboxCollectionData, zApiInboxCollectionResponse, zApiInboxCountData, zApiInboxCountResponse, zApiInboxFetchData, zApiInboxFetchResponse, zApiInboxPatchData, zApiInboxPatchResponse, zApiMessageThreadMessageCollectionData, zApiMessageThreadMessageCollectionResponse, zApiMessageThreadMessageCountData, zApiMessageThreadMessageCountResponse, zApiMessageThreadMessageFetchData, zApiMessageThreadMessageFetchResponse, zApiS3PresignData, zApiS3PresignResponse, zApiTransactionMessageGalleryCreateData, zApiTransactionMessageGalleryCreateResponse, zApiTransactionMessageLocationCreateData, zApiTransactionMessageLocationCreateResponse, zApiTransactionMessagePackageCreateData, zApiTransactionMessagePackageCreateResponse, zApiTransactionMessagePersonalCreateData, zApiTransactionMessagePersonalCreateResponse, zApiTransactionMessageTextCreateData, zApiTransactionMessageTextCreateResponse, zApiUploadCreateData, zApiUploadCreateResponse, zApiUploadFetchData, zApiUploadFetchResponse, zApiUserExPatchData, zApiUserExPatchResponse, zApiUserTokenDisableData, zApiUserTokenDisableResponse, zApiUserTokenEnableData, zApiUserTokenEnableResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -352,4 +352,30 @@ export const apiUserExPatch = <ThrowOnError extends boolean = false>(options?: O
         'Content-Type': 'application/json',
         ...options?.headers
     }
+});
+
+/**
+ * Enable user token
+ *
+ * Generate and enable user bearer token
+ */
+export const apiUserTokenEnable = <ThrowOnError extends boolean = false>(options?: Options<tApiUserTokenEnableRequest, ThrowOnError>) => (options?.client ?? client).post<tApiUserTokenEnableResponse, apiUserTokenEnableErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiUserTokenEnableData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiUserTokenEnableResponse.parseAsync(data),
+    url: '/api/user/token/enable',
+    ...options
+});
+
+/**
+ * Disable user token
+ *
+ * Disable user bearer token
+ */
+export const apiUserTokenDisable = <ThrowOnError extends boolean = false>(options?: Options<tApiUserTokenDisableRequest, ThrowOnError>) => (options?.client ?? client).post<tApiUserTokenDisableResponse, apiUserTokenDisableErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiUserTokenDisableData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiUserTokenDisableResponse.parseAsync(data),
+    url: '/api/user/token/disable',
+    ...options
 });
