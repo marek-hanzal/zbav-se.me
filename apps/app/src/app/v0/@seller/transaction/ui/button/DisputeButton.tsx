@@ -4,7 +4,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import { withTransactionStatusDisputeMutation } from "@zbav-se.me/sdk/mutation/seller/transaction-status";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
-import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
+import { withMessageQuery } from "@zbav-se.me/sdk/query/user/message";
 import { FlagIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
@@ -47,11 +47,10 @@ export const DisputeButton: FC<DisputeButton.Props> = ({ transaction, ...props }
 										},
 									},
 								);
-								withMessageThreadMessageCollectionQuery.invalidate(queryClient, {
-									path: {
-										messageThreadId: transaction.messageThreadId,
-									},
-								});
+								withMessageQuery.invalidator(queryClient, [
+									"collection",
+									"count",
+								]);
 							},
 						},
 					);

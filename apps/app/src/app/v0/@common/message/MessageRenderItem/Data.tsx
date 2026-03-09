@@ -1,29 +1,32 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import {
 	zMessageGallery,
-	type zMessageItem,
 	zMessageLocation,
 	zMessagePackage,
 	zMessagePersonal,
 	zMessageSystem,
 	zMessageText,
 } from "@zbav-se.me/sdk/api/user";
+import { withMessageQuery } from "@zbav-se.me/sdk/query/user/message";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { MessageGallery } from "./type/MessageGallery";
-import { MessageLocation } from "./type/MessageLocation";
-import { MessagePackage } from "./type/MessagePackage";
-import { MessagePersonal } from "./type/MessagePersonal";
-import { MessageText } from "./type/MessageText";
+import { MessageGallery } from "../type/MessageGallery";
+import { MessageLocation } from "../type/MessageLocation";
+import { MessagePackage } from "../type/MessagePackage";
+import { MessagePersonal } from "../type/MessagePersonal";
+import { MessageText } from "../type/MessageText";
 
-export namespace MessageRenderItem {
-	export interface Props {
+export namespace Data {
+	export interface Props extends MarkSuspense.Props {
 		side: tUserSideEnum;
-		message: zMessageItem;
+		messageId: string;
 	}
 }
 
-export const MessageRenderItem: FC<MessageRenderItem.Props> = ({ side, message }) => {
+export const Data: FC<Data.Props> = ({ _suspense, side, messageId }) => {
+	const { data: message } = withMessageQuery.useFetchQuery(messageId);
+
 	return match(message.type)
 		.with("text", () => (
 			<MessageText

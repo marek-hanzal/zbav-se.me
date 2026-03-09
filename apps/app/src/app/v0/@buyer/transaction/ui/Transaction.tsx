@@ -100,7 +100,7 @@ export const Transaction: FC<Transaction.Props> = ({
 					<MessageListSuspense
 						side={tUserSideEnum.buyer}
 						containerRef={containerRef}
-						messageThreadId={transaction.messageThreadId}
+						transactionId={transaction.id}
 						refresh={refresh}
 					>
 						<TransactionMessage transaction={transaction} />

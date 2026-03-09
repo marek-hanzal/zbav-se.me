@@ -2,7 +2,7 @@ import { useAutoScroll } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
-import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
+import { withMessageQuery } from "@zbav-se.me/sdk/query/user/message";
 import { type FC, type RefObject, useRef } from "react";
 import { MessageRenderItem } from "~/app/v0/@common/message/MessageRenderItem";
 
@@ -10,7 +10,7 @@ export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		side: tUserSideEnum;
 		containerRef: RefObject<HTMLDivElement | null>;
-		messageThreadId: string;
+		transactionId: string;
 		refresh: number;
 	}
 }
@@ -18,7 +18,7 @@ export namespace Data {
 export const Data: FC<Data.Props> = ({
 	_suspense,
 	side,
-	messageThreadId,
+	transactionId,
 	containerRef,
 	ui,
 	children,
@@ -30,19 +30,17 @@ export const Data: FC<Data.Props> = ({
 		containerRef,
 		contentRef,
 	});
-	const { data } = withMessageThreadMessageCollectionQuery.useSuspenseQuery(
+	const { data } = withMessageQuery.useCollectionQuery(
 		{
-			path: {
-				messageThreadId,
+			filter: {
+				transactionId,
 			},
-			body: {
-				sort: [
-					{
-						field: "createdAt",
-						order: "asc",
-					},
-				],
-			},
+			sort: [
+				{
+					field: "createdAt",
+					order: "asc",
+				},
+			],
 		},
 		{
 			refetchInterval: refresh,
@@ -61,12 +59,12 @@ export const Data: FC<Data.Props> = ({
 			className={"py-1"}
 			{...props}
 		>
-			{data.map((message) => {
+			{data.map((messageId) => {
 				return (
 					<MessageRenderItem
-						key={message.id}
+						key={messageId}
 						side={side}
-						message={message}
+						messageId={messageId}
 					/>
 				);
 			})}

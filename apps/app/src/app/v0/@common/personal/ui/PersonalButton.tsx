@@ -1,9 +1,7 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import { withTransactionMessagePersonalCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
-import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
+import { withMessageQuery } from "@zbav-se.me/sdk/query/user/message";
 import { EmailIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useState } from "react";
@@ -12,18 +10,20 @@ import { PersonalControl } from "./PersonalControl";
 export namespace PersonalButton {
 	export interface Props extends Button.Props {
 		transactionId: string;
-		messageThreadId: string;
 	}
 }
 
-export const PersonalButton: FC<PersonalButton.Props> = ({
-	transactionId,
-	messageThreadId,
-	...props
-}) => {
-	const queryClient = useQueryClient();
+export const PersonalButton: FC<PersonalButton.Props> = ({ transactionId, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const mutation = withTransactionMessagePersonalCreateMutation.useMutation();
+	const mutation = withMessageQuery.useCreateMutation({
+		invalidate: [
+			"collection",
+			"count",
+		],
+		async onPostMutation() {
+			setIsOpen(false);
+		},
+	});
 
 	return (
 		<>
@@ -55,28 +55,14 @@ export const PersonalButton: FC<PersonalButton.Props> = ({
 						setIsOpen(false);
 					}}
 					onSave={({ name, phone, email, locationId }) => {
-						return mutation.mutateAsync(
-							{
-								transactionId,
-								name,
-								phone,
-								email,
-								locationId,
-							},
-							{
-								onSuccess() {
-									setIsOpen(false);
-									withMessageThreadMessageCollectionQuery.invalidate(
-										queryClient,
-										{
-											path: {
-												messageThreadId,
-											},
-										},
-									);
-								},
-							},
-						);
+						return mutation.mutateAsync({
+							type: "personal",
+							transactionId,
+							name,
+							phone,
+							email,
+							locationId,
+						});
 					}}
 					loading={mutation.isPending}
 					ui={{

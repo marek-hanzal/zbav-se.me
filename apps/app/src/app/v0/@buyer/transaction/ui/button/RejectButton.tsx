@@ -4,7 +4,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import { withTransactionStatusRejectMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
-import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
+import { withMessageQuery } from "@zbav-se.me/sdk/query/user/message";
 import { CancelIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
@@ -47,11 +47,10 @@ export const RejectButton: FC<RejectButton.Props> = ({ transaction, ...props }) 
 										},
 									},
 								);
-								withMessageThreadMessageCollectionQuery.invalidate(queryClient, {
-									path: {
-										messageThreadId: transaction.messageThreadId,
-									},
-								});
+								withMessageQuery.invalidator(queryClient, [
+									"collection",
+									"count",
+								]);
 							},
 						},
 					);

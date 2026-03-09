@@ -5,7 +5,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import { withTransactionStatusCloseMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
-import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
+import { withMessageQuery } from "@zbav-se.me/sdk/query/user/message";
 import type { FC } from "react";
 
 export namespace CloseButton {
@@ -42,11 +42,10 @@ export const CloseButton: FC<CloseButton.Props> = ({ transaction, ...props }) =>
 									},
 								},
 							);
-							withMessageThreadMessageCollectionQuery.invalidate(queryClient, {
-								path: {
-									messageThreadId: transaction.messageThreadId,
-								},
-							});
+							withMessageQuery.invalidator(queryClient, [
+								"collection",
+								"count",
+							]);
 						},
 					},
 				);

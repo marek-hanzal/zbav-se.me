@@ -1,9 +1,7 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import { withTransactionMessagePackageCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
-import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
+import { withMessageQuery } from "@zbav-se.me/sdk/query/user/message";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useState } from "react";
@@ -12,18 +10,20 @@ import { PackageControl } from "./PackageControl";
 export namespace PackageButton {
 	export interface Props extends Button.Props {
 		transactionId: string;
-		messageThreadId: string;
 	}
 }
 
-export const PackageButton: FC<PackageButton.Props> = ({
-	transactionId,
-	messageThreadId,
-	...props
-}) => {
-	const queryClient = useQueryClient();
+export const PackageButton: FC<PackageButton.Props> = ({ transactionId, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const mutation = withTransactionMessagePackageCreateMutation.useMutation();
+	const mutation = withMessageQuery.useCreateMutation({
+		invalidate: [
+			"collection",
+			"count",
+		],
+		async onPostMutation() {
+			setIsOpen(false);
+		},
+	});
 
 	return (
 		<>
@@ -55,26 +55,12 @@ export const PackageButton: FC<PackageButton.Props> = ({
 						setIsOpen(false);
 					}}
 					onSave={({ link, number }) => {
-						return mutation.mutateAsync(
-							{
-								transactionId,
-								link,
-								number,
-							},
-							{
-								onSuccess() {
-									setIsOpen(false);
-									withMessageThreadMessageCollectionQuery.invalidate(
-										queryClient,
-										{
-											path: {
-												messageThreadId,
-											},
-										},
-									);
-								},
-							},
-						);
+						return mutation.mutateAsync({
+							type: "package",
+							transactionId,
+							link,
+							number,
+						});
 					}}
 					loading={mutation.isPending}
 					ui={{

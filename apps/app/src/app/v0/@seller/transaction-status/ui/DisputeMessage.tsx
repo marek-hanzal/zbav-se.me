@@ -1,8 +1,6 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { Container } from "@use-pico/client/ui/container";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import { withTransactionMessageGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
-import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
 import { type FC, useState } from "react";
 import { GalleryUploadButton } from "~/app/@common/gallery/ui/GalleryUploadButton";
 import { LocationButton } from "~/app/v0/@common/location/ui/LocationButton";
@@ -17,7 +15,6 @@ export namespace DisputeMessage {
 }
 
 export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...props }) => {
-	const queryClient = useQueryClient();
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
@@ -37,7 +34,6 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...p
 		>
 			<PackageButton
 				transactionId={transaction.id}
-				messageThreadId={transaction.messageThreadId}
 				{...MessageButtonUi}
 			/>
 
@@ -54,11 +50,6 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...p
 				})}
 				onSuccess={() => {
 					setIsGalleryOpen(false);
-					withMessageThreadMessageCollectionQuery.invalidate(queryClient, {
-						path: {
-							messageThreadId: transaction.messageThreadId,
-						},
-					});
 				}}
 				onCancel={() => {
 					setIsGalleryOpen(false);
@@ -68,13 +59,11 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...p
 
 			<LocationButton
 				transactionId={transaction.id}
-				messageThreadId={transaction.messageThreadId}
 				{...MessageButtonUi}
 			/>
 
 			<PersonalButton
 				transactionId={transaction.id}
-				messageThreadId={transaction.messageThreadId}
 				{...MessageButtonUi}
 			/>
 		</Container>

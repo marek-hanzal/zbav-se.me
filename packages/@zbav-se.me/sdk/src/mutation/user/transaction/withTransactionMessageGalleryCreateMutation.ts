@@ -1,16 +1,17 @@
 import { withMutation } from "@use-pico/client/mutation";
 import { withApi } from "@use-pico/common/api";
-import { apiTransactionMessageGalleryCreate } from "../../../api/user/sdk.gen";
+import { apiMessageCreate } from "../../../api/user/sdk.gen";
 import type {
-	apiTransactionMessageGalleryCreateError,
-	tApiTransactionMessageGalleryCreateResponse,
+	apiMessageCreateError,
+	tApiMessageCreateResponse,
 	tTransactionMessageGalleryCreate,
 } from "../../../api/user/types.gen";
+import { withMessageQuery } from "../../../query/user/message";
 
 export const withTransactionMessageGalleryCreateMutation = withMutation<
 	tTransactionMessageGalleryCreate,
-	tApiTransactionMessageGalleryCreateResponse[200],
-	apiTransactionMessageGalleryCreateError
+	tApiMessageCreateResponse[201],
+	apiMessageCreateError
 >({
 	keys(variables) {
 		return [
@@ -21,10 +22,22 @@ export const withTransactionMessageGalleryCreateMutation = withMutation<
 	},
 	async mutationFn(body) {
 		return withApi(
-			apiTransactionMessageGalleryCreate({
-				body,
+			apiMessageCreate({
+				body: {
+					type: "gallery",
+					...body,
+				},
 			}),
 		);
 	},
-	invalidate: [],
+	invalidate: [
+		{
+			async invalidate(queryClient) {
+				await withMessageQuery.invalidator(queryClient, [
+					"collection",
+					"count",
+				]);
+			},
+		},
+	],
 });
