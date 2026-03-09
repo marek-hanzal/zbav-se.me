@@ -226,6 +226,15 @@ export const zGalleryCountQuery = z.object({
 export type zGalleryCountQuery = z.infer<typeof zGalleryCountQuery>;
 
 /**
+ * Inbox family
+ */
+export const zInboxFamilyEnum = z.enum(['message', 'reaction']).register(z.globalRegistry, {
+    description: 'Inbox family'
+});
+
+export type zInboxFamilyEnum = z.infer<typeof zInboxFamilyEnum>;
+
+/**
  * Inbox type
  */
 export const zInboxTypeEnum = z.enum([
@@ -265,6 +274,7 @@ export const zInboxFilter = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Inbox owner filter'
     }).optional(),
+    family: zInboxFamilyEnum.optional(),
     type: zInboxTypeEnum.optional(),
     priority: zInboxPriorityEnum.optional(),
     archivedAtIsNull: z.boolean().register(z.globalRegistry, {
@@ -298,6 +308,7 @@ export const zInboxWhere = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Inbox owner filter'
     }).optional(),
+    family: zInboxFamilyEnum.optional(),
     type: zInboxTypeEnum.optional(),
     priority: zInboxPriorityEnum.optional(),
     archivedAtIsNull: z.boolean().register(z.globalRegistry, {
@@ -472,6 +483,7 @@ export const zInbox = z.object({
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
     }),
+    family: zInboxFamilyEnum,
     type: zInboxTypeEnum,
     payload: zInboxPayload,
     priority: zInboxPriorityEnum,

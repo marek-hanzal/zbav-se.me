@@ -68,6 +68,7 @@ export const transactionStatusRejectFx = Effect.fn("transactionStatusRejectFx")(
 
 	yield* inboxCreateFx({
 		userId: transaction.buyerId,
+		family: "message",
 		type: "seller-message",
 		payload: {
 			type: "seller-message",

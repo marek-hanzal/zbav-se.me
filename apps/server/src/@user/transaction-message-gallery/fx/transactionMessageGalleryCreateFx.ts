@@ -111,6 +111,7 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 					transaction.side === "buyer"
 						? {
 								userId: transaction.sellerId,
+								family: "message",
 								type: "buyer-message",
 								payload: {
 									type: "buyer-message",
@@ -122,6 +123,7 @@ export const transactionMessageGalleryCreateFx = Effect.fn("transactionMessageGa
 							}
 						: {
 								userId: transaction.buyerId,
+								family: "message",
 								type: "seller-message",
 								payload: {
 									type: "seller-message",

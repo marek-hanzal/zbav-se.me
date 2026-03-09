@@ -281,6 +281,9 @@ export const sInboxFilter = {
         userId: {
             type: 'string'
         },
+        family: {
+            $ref: '#/components/schemas/InboxFamilyEnum'
+        },
         type: {
             $ref: '#/components/schemas/InboxTypeEnum'
         },
@@ -297,6 +300,14 @@ export const sInboxFilter = {
             type: 'string'
         }
     }
+} as const;
+
+export const sInboxFamilyEnum = {
+    type: 'string',
+    enum: [
+        'message',
+        'reaction'
+    ]
 } as const;
 
 export const sInboxTypeEnum = {
@@ -335,6 +346,9 @@ export const sInboxWhere = {
         },
         userId: {
             type: 'string'
+        },
+        family: {
+            $ref: '#/components/schemas/InboxFamilyEnum'
         },
         type: {
             $ref: '#/components/schemas/InboxTypeEnum'
@@ -391,6 +405,9 @@ export const sInbox = {
         timestamp: {
             type: 'string'
         },
+        family: {
+            $ref: '#/components/schemas/InboxFamilyEnum'
+        },
         type: {
             $ref: '#/components/schemas/InboxTypeEnum'
         },
@@ -412,6 +429,7 @@ export const sInbox = {
         'id',
         'userId',
         'timestamp',
+        'family',
         'type',
         'payload',
         'priority'

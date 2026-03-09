@@ -16,6 +16,7 @@ export namespace inboxCreateFx {
 
 export const inboxCreateFx = Effect.fn("inboxCreateFx")(function* ({
 	userId,
+	family,
 	type,
 	payload,
 	priority,
@@ -25,6 +26,7 @@ export const inboxCreateFx = Effect.fn("inboxCreateFx")(function* ({
 		message: "inboxCreateFx",
 		input: {
 			userId,
+			family,
 			type,
 			priority,
 			payload,
@@ -43,6 +45,7 @@ export const inboxCreateFx = Effect.fn("inboxCreateFx")(function* ({
 					.values({
 						id,
 						userId,
+						family,
 						type,
 						payload,
 						priority,

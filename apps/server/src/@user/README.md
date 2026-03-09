@@ -47,10 +47,20 @@ This domain handles all operations on user-owned, private data. Everything in th
 - **Count** - Count inbox items for active/archived sections
 - **Patch** - Mark one inbox item as archived/read
 - **Archive** - Bulk archive selected items using `InboxQuery`
+- Family:
+  - `message`
+  - `reaction`
 - Types:
   - `seller-message`
   - `buyer-message`
   - `thumb`
+  - `favourite`
+  - `unfavourite`
+- Local Docker Compose upgrade for existing databases:
+  - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'ALTER TABLE "inbox" ADD COLUMN IF NOT EXISTS "family" text;'`
+- Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c "UPDATE \"inbox\" SET \"family\" = CASE WHEN \"type\" IN ('seller-message', 'buyer-message') THEN 'message' WHEN \"type\" IN ('thumb', 'favourite', 'unfavourite') THEN 'reaction' ELSE \"family\" END WHERE \"family\" IS NULL;"`
+  - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'ALTER TABLE "inbox" ALTER COLUMN "family" SET NOT NULL;'`
+  - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'CREATE INDEX IF NOT EXISTS "inbox_[userId-family]_idx" ON "inbox" ("userId", "family");'`
 
 ### Transaction Messages
 - Transaction-specific message types:

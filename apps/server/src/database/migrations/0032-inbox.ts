@@ -25,6 +25,7 @@ export const InboxMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("timestamp", "timestamptz", (col) => col.notNull())
+			.addColumn("family", "text", (col) => col.notNull())
 			.addColumn("type", sql`inbox_type_enum`, (col) => col.notNull())
 			.addColumn("payload", "jsonb", (col) => col.notNull())
 			.addColumn("priority", sql`inbox_priority_enum`, (col) => col.notNull())
@@ -55,6 +56,15 @@ export const InboxMigration: Migration = {
 			.columns([
 				"userId",
 				"priority",
+			])
+			.execute();
+
+		await db.schema
+			.createIndex("inbox_[userId-family]_idx")
+			.on("inbox")
+			.columns([
+				"userId",
+				"family",
 			])
 			.execute();
 	},

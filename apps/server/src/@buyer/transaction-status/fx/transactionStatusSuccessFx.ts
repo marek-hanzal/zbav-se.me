@@ -85,6 +85,7 @@ export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx"
 				transaction.side === "buyer"
 					? {
 							userId: transaction.sellerId,
+							family: "message",
 							type: "buyer-message",
 							payload: {
 								type: "buyer-message",
@@ -96,6 +97,7 @@ export const transactionStatusSuccessFx = Effect.fn("transactionStatusSuccessFx"
 						}
 					: {
 							userId: transaction.buyerId,
+							family: "message",
 							type: "seller-message",
 							payload: {
 								type: "seller-message",

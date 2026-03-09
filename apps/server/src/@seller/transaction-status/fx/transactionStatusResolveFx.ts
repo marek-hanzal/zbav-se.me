@@ -83,6 +83,7 @@ export const transactionStatusResolveFx = Effect.fn("transactionStatusResolveFx"
 
 			yield* inboxCreateFx({
 				userId: transaction.buyerId,
+				family: "message",
 				type: "seller-message",
 				payload: {
 					type: "seller-message",

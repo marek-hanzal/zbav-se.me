@@ -240,6 +240,7 @@ export type tInboxFilter = {
      * Inbox owner filter
      */
     userId?: string;
+    family?: tInboxFamilyEnum;
     type?: tInboxTypeEnum;
     priority?: tInboxPriorityEnum;
     /**
@@ -255,6 +256,16 @@ export type tInboxFilter = {
      */
     timestampLte?: string;
 };
+
+/**
+ * Inbox family
+ */
+export const tInboxFamilyEnum = { message: 'message', reaction: 'reaction' } as const;
+
+/**
+ * Inbox family
+ */
+export type tInboxFamilyEnum = typeof tInboxFamilyEnum[keyof typeof tInboxFamilyEnum];
 
 /**
  * Inbox type
@@ -302,6 +313,7 @@ export type tInboxWhere = {
      * Inbox owner filter
      */
     userId?: string;
+    family?: tInboxFamilyEnum;
     type?: tInboxTypeEnum;
     priority?: tInboxPriorityEnum;
     /**
@@ -356,6 +368,7 @@ export type tInbox = {
      * Inbox event timestamp
      */
     timestamp: string;
+    family: tInboxFamilyEnum;
     type: tInboxTypeEnum;
     payload: tInboxPayload;
     priority: tInboxPriorityEnum;
