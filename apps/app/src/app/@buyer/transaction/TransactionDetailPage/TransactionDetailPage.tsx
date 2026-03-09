@@ -4,21 +4,26 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { type FC, Suspense } from "react";
+import type { FC } from "react";
+import { Suspense } from "react";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
-import { TransactionListingList } from "~/app/v0/@seller/transaction-listing/ui/TransactionListingList";
-import { TransactionListingListPending } from "~/app/v0/@seller/transaction-listing/ui/TransactionListingListPending";
+import { Transaction } from "~/app/v0/@buyer/transaction/ui/Transaction";
+import { TransactionPending } from "~/app/v0/@buyer/transaction/ui/TransactionPending";
 
-export namespace MessageListPage {
-	export interface Props extends TitleContainer.Props {}
+export namespace TransactionDetailPage {
+	export interface Props extends TitleContainer.Props {
+		transactionId: string;
+	}
 }
 
-export const MessageListPage: FC<MessageListPage.Props> = (props) => {
+export const TransactionDetailPage: FC<TransactionDetailPage.Props> = ({
+	transactionId,
+	...props
+}) => {
 	const locale = useLocale();
 
 	return (
 		<TitleContainer
-			data-ui="SellerMessageList[TitleContainer]"
 			textTitle={translator.text("Messages (title)")}
 			left={
 				<LinkTo
@@ -35,20 +40,11 @@ export const MessageListPage: FC<MessageListPage.Props> = (props) => {
 			right={<HomeMenuButton />}
 			{...props}
 		>
-			<Suspense fallback={<TransactionListingListPending />}>
-				<TransactionListingList
+			<Suspense fallback={<TransactionPending />}>
+				<Transaction
 					_suspense={"I know"}
-					query={{
-						sort: [
-							{
-								field: "createdAt",
-								order: "desc",
-							},
-						],
-					}}
-					ui={{
-						inner: "default",
-					}}
+					transactionId={transactionId}
+					refresh={1_000 * 5}
 				/>
 			</Suspense>
 		</TitleContainer>

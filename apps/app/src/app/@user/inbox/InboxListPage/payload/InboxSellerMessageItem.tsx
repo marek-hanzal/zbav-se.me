@@ -30,9 +30,10 @@ export const InboxSellerMessageItem: FC<InboxSellerMessageItem.Props> = ({ item,
 
 	return (
 		<LinkTo
-			to="/$locale/buyer/message/list"
+			to="/$locale/buyer/message/$transactionId"
 			params={{
 				locale,
+				transactionId: payload.transactionId,
 			}}
 			onClick={() => {
 				if (item.archivedAt) {
