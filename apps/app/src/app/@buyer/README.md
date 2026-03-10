@@ -54,4 +54,4 @@ Maps to server API: `/api/buyer/*`.
   - `@buyer/search/SearchPage/ResetButton.tsx`
 - Buyer transaction action buttons now use the buyer transaction mutation SDK surface (`close`, `dispute`, `reject`, `success`) and invalidate `transaction-entry` timeline queries.
 - Buyer message detail UI now reads conversation timeline through `@user/transaction-entry` instead of the removed message query wrapper.
-- Buyer top-level `TitleContainer` pages now use the shared `@common/nav/BackHomeButton` for explicit back-to-home navigation where the screen is not itself home.
+- Buyer `TitleContainer` pages that navigate back home now use the shared `@common/nav/BackHomeButton` instead of repeating inline `LinkTo + uiBackButton` wiring.

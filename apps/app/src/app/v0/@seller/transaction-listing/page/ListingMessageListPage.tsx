@@ -1,17 +1,15 @@
 import { VisibilityProvider } from "@use-pico/client/context";
 import { useLocale } from "@use-pico/client/hook";
-import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { createNoopVisibilityStore } from "@use-pico/client/store";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
-import { LinkTo } from "@use-pico/client/ui/link-to";
 import { translator } from "@use-pico/common/translator";
 import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
+import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 import { ListingSheet } from "~/app/v0/@seller/listing/ui/ListingSheet";
 import { TransactionList } from "~/app/v0/@seller/transaction/ui/TransactionList";
@@ -37,18 +35,7 @@ export const ListingMessageListPage: FC<ListingMessageListPage.Props> = ({
 			data-ui="SellerMessageList[TitleContainer]"
 			textTitle={translator.text("Messages (title)")}
 			textSubtitle={listing.title}
-			left={
-				<LinkTo
-					{...uiBackButton({
-						className: [],
-					})}
-					icon={ArrowLeftIcon}
-					to="/$locale/home"
-					params={{
-						locale,
-					}}
-				/>
-			}
+			left={<BackHomeButton />}
 			right={<HomeMenuButton />}
 			{...props}
 		>
