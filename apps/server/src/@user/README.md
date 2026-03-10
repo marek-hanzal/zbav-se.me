@@ -70,7 +70,7 @@ This domain handles all operations on user-owned, private data. Everything in th
 - Transaction-scoped write rules still apply:
   - `pending` blocks user-authored writes
   - `open` and `dispute` allow typed entry creation for both sides, with `package` still seller-only
-  - `resolved` keeps chat open for `text`, but blocks the richer structured entry kinds
+- `resolved` keeps chat open only for buyer `text`, but blocks seller replies and the richer structured entry kinds
 
 ### Transaction State
 - Shared transaction state helpers live under `@user/transaction`

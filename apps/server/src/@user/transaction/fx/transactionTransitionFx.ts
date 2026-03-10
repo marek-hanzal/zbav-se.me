@@ -128,10 +128,6 @@ const LittleMachine = {
 			request: "text",
 			side: "buyer",
 		},
-		{
-			request: "text",
-			side: "seller",
-		},
 		// resolved
 		{
 			request: "dispute",
