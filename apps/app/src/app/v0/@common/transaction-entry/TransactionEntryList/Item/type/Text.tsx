@@ -8,7 +8,7 @@ import type { tTransactionEntryText } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
-export namespace TransactionEntryText {
+export namespace Text {
 	export interface Props extends Container.Props {
 		/**
 		 * From which point of view the message is displayed
@@ -18,7 +18,7 @@ export namespace TransactionEntryText {
 	}
 }
 
-export const TransactionEntryText: FC<TransactionEntryText.Props> = ({
+export const Text: FC<Text.Props> = ({
 	side,
 	transactionEntry,
 	...props

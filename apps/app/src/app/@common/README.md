@@ -85,7 +85,7 @@ When adding to `@common`:
   - `@common/transaction-entry/TransactionEntryList/TransactionEntryList.tsx` composes local suspense fallback for feature call-sites.
   - `@common/transaction-entry/TransactionEntryList/Item/Data.tsx` owns `transaction_entry.kind` dispatch (`text/status/gallery/location/personal/package`).
   - `@common/transaction-entry/TransactionEntryList/Item/type/*` contains local entry render variants used only by the list item renderer.
-  - `TransactionEntryText.tsx` and `TransactionEntryCommon.tsx` stay intentionally separate, even though they currently render near-identical UI.
+  - `Text.tsx` and `Common.tsx` stay intentionally separate, even though they currently render near-identical UI.
 - Shared message creation controls now create user-authored `transaction_entry` records:
   - package, personal, location, text, and gallery flows use transaction-entry SDK wrappers
   - linked gallery/location data is fetched through dedicated queries instead of old message payload hydration

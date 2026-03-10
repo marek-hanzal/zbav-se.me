@@ -7,13 +7,13 @@ import { withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
-export namespace TransactionEntryLocation {
+export namespace Location {
 	export interface Props extends Container.Props {
 		transactionEntry: tTransactionEntryLocation;
 	}
 }
 
-export const TransactionEntryLocation: FC<TransactionEntryLocation.Props> = ({
+export const Location: FC<Location.Props> = ({
 	transactionEntry,
 	...props
 }) => {

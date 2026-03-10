@@ -9,13 +9,13 @@ import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
-export namespace TransactionEntryPackage {
+export namespace Package {
 	export interface Props extends Container.Props {
 		transactionEntry: tTransactionEntryPackage;
 	}
 }
 
-export const TransactionEntryPackage: FC<TransactionEntryPackage.Props> = ({
+export const Package: FC<Package.Props> = ({
 	transactionEntry,
 	...props
 }) => {

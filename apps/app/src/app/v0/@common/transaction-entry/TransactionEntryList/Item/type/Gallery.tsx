@@ -9,13 +9,13 @@ import { type FC, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { GalleryPreviewSheet } from "~/app/@common/gallery/ui/GalleryPreviewSheet";
 
-export namespace TransactionEntryGallery {
+export namespace Gallery {
 	export interface Props extends Container.Props {
 		transactionEntry: tTransactionEntryGallery;
 	}
 }
 
-export const TransactionEntryGallery: FC<TransactionEntryGallery.Props> = ({
+export const Gallery: FC<Gallery.Props> = ({
 	transactionEntry,
 	...props
 }) => {

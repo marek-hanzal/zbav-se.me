@@ -1,29 +1,28 @@
 import { useLocale } from "@use-pico/client/hook";
 import { Container, type uiContainer } from "@use-pico/client/ui/container";
-import { Mx } from "@use-pico/client/ui/mx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
-import type { tTransactionEntryCommon } from "@zbav-se.me/sdk/api/user";
+import type { tTransactionEntryPersonal } from "@zbav-se.me/sdk/api/user";
+import { withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
-export namespace TransactionEntryCommon {
+export namespace Personal {
 	export interface Props extends Container.Props {
-		/**
-		 * From which point of view the message is displayed
-		 */
-		side: tUserSideEnum;
-		transactionEntry: tTransactionEntryCommon;
+		transactionEntry: tTransactionEntryPersonal;
 	}
 }
 
-export const TransactionEntryCommon: FC<TransactionEntryCommon.Props> = ({
-	side,
+export const Personal: FC<Personal.Props> = ({
 	transactionEntry,
 	...props
 }) => {
 	const locale = useLocale();
+	const { data: location } = withLocationFetchQuery.useSuspenseQuery({
+		where: {
+			id: transactionEntry.payload.locationId,
+		},
+	});
 
 	return (
 		<Container
@@ -31,6 +30,7 @@ export const TransactionEntryCommon: FC<TransactionEntryCommon.Props> = ({
 				theme: "light",
 				background: "alt",
 				border: true,
+				flow: "vertical",
 				inner: "default",
 				round: "default",
 				...match<typeof transactionEntry.direction, uiContainer.Ui>(
@@ -59,15 +59,52 @@ export const TransactionEntryCommon: FC<TransactionEntryCommon.Props> = ({
 					? "ml-auto"
 					: undefined,
 				transactionEntry.direction === "system"
-					? "w-full"
+					? [
+							"mx-auto",
+							"text-center",
+						]
 					: undefined,
 			]}
 			{...props}
 		>
-			<Mx
-				label={`${side} - ${transactionEntry.payload.text}`}
-				fallback={transactionEntry.payload.text}
-			/>
+			<Container
+				ui={{
+					layout: "vertical-flex",
+					gap: "xs",
+				}}
+			>
+				<Typo
+					label={transactionEntry.payload.name}
+					ui={{
+						wrap: "wrap",
+						font: "bold",
+					}}
+					className={"py-1"}
+				/>
+
+				<Typo
+					label={transactionEntry.payload.phone}
+					ui={{
+						wrap: "wrap",
+					}}
+				/>
+
+				<Typo
+					label={transactionEntry.payload.email}
+					ui={{
+						wrap: "wrap",
+					}}
+					className={"py-1"}
+				/>
+
+				<Typo
+					label={location.address}
+					ui={{
+						wrap: "wrap",
+					}}
+					className={"py-1"}
+				/>
+			</Container>
 
 			<Typo
 				label={toTimeDiff({

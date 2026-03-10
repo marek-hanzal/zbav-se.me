@@ -3,12 +3,12 @@ import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { TransactionEntryCommon } from "./type/TransactionEntryCommon";
-import { TransactionEntryGallery } from "./type/TransactionEntryGallery";
-import { TransactionEntryLocation } from "./type/TransactionEntryLocation";
-import { TransactionEntryPackage } from "./type/TransactionEntryPackage";
-import { TransactionEntryPersonal } from "./type/TransactionEntryPersonal";
-import { TransactionEntryText } from "./type/TransactionEntryText";
+import { Common } from "./type/Common";
+import { Gallery } from "./type/Gallery";
+import { Location } from "./type/Location";
+import { Package } from "./type/Package";
+import { Personal } from "./type/Personal";
+import { Text } from "./type/Text";
 
 export namespace Data {
 	export interface Props extends MarkSuspense.Props {
@@ -26,7 +26,7 @@ export const Data: FC<Data.Props> = ({ _suspense, side, transactionEntryId }) =>
 				kind: "text",
 			},
 			(transactionEntry) => (
-				<TransactionEntryText
+				<Text
 					side={side}
 					transactionEntry={transactionEntry}
 				/>
@@ -67,7 +67,7 @@ export const Data: FC<Data.Props> = ({ _suspense, side, transactionEntryId }) =>
 				kind: "status-closed",
 			},
 			(transactionEntry) => (
-				<TransactionEntryCommon
+				<Common
 					side={side}
 					transactionEntry={transactionEntry}
 				/>
@@ -77,25 +77,25 @@ export const Data: FC<Data.Props> = ({ _suspense, side, transactionEntryId }) =>
 			{
 				kind: "gallery",
 			},
-			(transactionEntry) => <TransactionEntryGallery transactionEntry={transactionEntry} />,
+			(transactionEntry) => <Gallery transactionEntry={transactionEntry} />,
 		)
 		.with(
 			{
 				kind: "location",
 			},
-			(transactionEntry) => <TransactionEntryLocation transactionEntry={transactionEntry} />,
+			(transactionEntry) => <Location transactionEntry={transactionEntry} />,
 		)
 		.with(
 			{
 				kind: "personal",
 			},
-			(transactionEntry) => <TransactionEntryPersonal transactionEntry={transactionEntry} />,
+			(transactionEntry) => <Personal transactionEntry={transactionEntry} />,
 		)
 		.with(
 			{
 				kind: "package",
 			},
-			(transactionEntry) => <TransactionEntryPackage transactionEntry={transactionEntry} />,
+			(transactionEntry) => <Package transactionEntry={transactionEntry} />,
 		)
 		.exhaustive();
 };
