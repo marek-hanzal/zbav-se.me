@@ -11,4 +11,5 @@ export const TransactionEntryGallerySchema = z
 			}),
 		}),
 	})
+	.strip()
 	.openapi("TransactionEntryGallery");
