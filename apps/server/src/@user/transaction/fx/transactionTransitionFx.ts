@@ -40,6 +40,196 @@ const LittleMachine = {
 			side: null,
 		},
 	],
+	open: [
+		{
+			request: "resolved",
+			side: "seller",
+		},
+		{
+			request: "status-resolved",
+			side: "seller",
+		},
+		{
+			request: "rejected",
+			side: "buyer",
+		},
+		{
+			request: "status-rejected-buyer",
+			side: "buyer",
+		},
+		{
+			request: "rejected",
+			side: "seller",
+		},
+		{
+			request: "status-rejected-seller",
+			side: "seller",
+		},
+		{
+			request: "expired",
+			side: null,
+		},
+		{
+			request: "status-expired",
+			side: null,
+		},
+		{
+			request: "text",
+			side: "buyer",
+		},
+		{
+			request: "text",
+			side: "seller",
+		},
+		{
+			request: "gallery",
+			side: "buyer",
+		},
+		{
+			request: "gallery",
+			side: "seller",
+		},
+		{
+			request: "location",
+			side: "buyer",
+		},
+		{
+			request: "location",
+			side: "seller",
+		},
+		{
+			request: "personal",
+			side: "buyer",
+		},
+		{
+			request: "personal",
+			side: "seller",
+		},
+		{
+			request: "package",
+			side: "seller",
+		},
+	],
+	resolved: [
+		{
+			request: "text",
+			side: "buyer",
+		},
+		{
+			request: "text",
+			side: "seller",
+		},
+		{
+			request: "dispute",
+			side: "buyer",
+		},
+		{
+			request: "status-dispute-buyer",
+			side: "buyer",
+		},
+		{
+			request: "dispute",
+			side: "seller",
+		},
+		{
+			request: "status-dispute-seller",
+			side: "seller",
+		},
+		{
+			request: "success",
+			side: "buyer",
+		},
+		{
+			request: "status-success",
+			side: "buyer",
+		},
+		{
+			request: "closed",
+			side: "buyer",
+		},
+		{
+			request: "status-closed",
+			side: "buyer",
+		},
+		{
+			request: "expired",
+			side: null,
+		},
+		{
+			request: "status-expired",
+			side: null,
+		},
+	],
+	dispute: [
+		{
+			request: "resolved",
+			side: "seller",
+		},
+		{
+			request: "status-resolved",
+			side: "seller",
+		},
+		{
+			request: "success",
+			side: "buyer",
+		},
+		{
+			request: "status-success",
+			side: "buyer",
+		},
+		{
+			request: "closed",
+			side: "buyer",
+		},
+		{
+			request: "status-closed",
+			side: "buyer",
+		},
+		{
+			request: "expired",
+			side: null,
+		},
+		{
+			request: "status-expired",
+			side: null,
+		},
+		{
+			request: "text",
+			side: "buyer",
+		},
+		{
+			request: "text",
+			side: "seller",
+		},
+		{
+			request: "gallery",
+			side: "buyer",
+		},
+		{
+			request: "gallery",
+			side: "seller",
+		},
+		{
+			request: "location",
+			side: "buyer",
+		},
+		{
+			request: "location",
+			side: "seller",
+		},
+		{
+			request: "personal",
+			side: "buyer",
+		},
+		{
+			request: "personal",
+			side: "seller",
+		},
+		{
+			request: "package",
+			side: "seller",
+		},
+	],
 } as const satisfies Partial<Record<Transitions.Kind, Transitions.Entry[]>>;
 
 export namespace Transitions {
@@ -76,196 +266,9 @@ export namespace Transitions {
 			},
 		],
 		pending: LittleMachine.pending,
-		open: [
-			{
-				request: "resolved",
-				side: "seller",
-			},
-			{
-				request: "status-resolved",
-				side: "seller",
-			},
-			{
-				request: "rejected",
-				side: "buyer",
-			},
-			{
-				request: "status-rejected-buyer",
-				side: "buyer",
-			},
-			{
-				request: "rejected",
-				side: "seller",
-			},
-			{
-				request: "status-rejected-seller",
-				side: "seller",
-			},
-			{
-				request: "expired",
-				side: null,
-			},
-			{
-				request: "status-expired",
-				side: null,
-			},
-			{
-				request: "text",
-				side: "buyer",
-			},
-			{
-				request: "text",
-				side: "seller",
-			},
-			{
-				request: "gallery",
-				side: "buyer",
-			},
-			{
-				request: "gallery",
-				side: "seller",
-			},
-			{
-				request: "location",
-				side: "buyer",
-			},
-			{
-				request: "location",
-				side: "seller",
-			},
-			{
-				request: "personal",
-				side: "buyer",
-			},
-			{
-				request: "personal",
-				side: "seller",
-			},
-			{
-				request: "package",
-				side: "seller",
-			},
-		],
-		resolved: [
-			{
-				request: "text",
-				side: "buyer",
-			},
-			{
-				request: "text",
-				side: "seller",
-			},
-			{
-				request: "dispute",
-				side: "buyer",
-			},
-			{
-				request: "status-dispute-buyer",
-				side: "buyer",
-			},
-			{
-				request: "dispute",
-				side: "seller",
-			},
-			{
-				request: "status-dispute-seller",
-				side: "seller",
-			},
-			{
-				request: "success",
-				side: "buyer",
-			},
-			{
-				request: "status-success",
-				side: "buyer",
-			},
-			{
-				request: "closed",
-				side: "buyer",
-			},
-			{
-				request: "status-closed",
-				side: "buyer",
-			},
-			{
-				request: "expired",
-				side: null,
-			},
-			{
-				request: "status-expired",
-				side: null,
-			},
-		],
-		dispute: [
-			{
-				request: "resolved",
-				side: "seller",
-			},
-			{
-				request: "status-resolved",
-				side: "seller",
-			},
-			{
-				request: "success",
-				side: "buyer",
-			},
-			{
-				request: "status-success",
-				side: "buyer",
-			},
-			{
-				request: "closed",
-				side: "buyer",
-			},
-			{
-				request: "status-closed",
-				side: "buyer",
-			},
-			{
-				request: "expired",
-				side: null,
-			},
-			{
-				request: "status-expired",
-				side: null,
-			},
-			{
-				request: "text",
-				side: "buyer",
-			},
-			{
-				request: "text",
-				side: "seller",
-			},
-			{
-				request: "gallery",
-				side: "buyer",
-			},
-			{
-				request: "gallery",
-				side: "seller",
-			},
-			{
-				request: "location",
-				side: "buyer",
-			},
-			{
-				request: "location",
-				side: "seller",
-			},
-			{
-				request: "personal",
-				side: "buyer",
-			},
-			{
-				request: "personal",
-				side: "seller",
-			},
-			{
-				request: "package",
-				side: "seller",
-			},
-		],
+		open: LittleMachine.open,
+		resolved: LittleMachine.resolved,
+		dispute: LittleMachine.dispute,
 		rejected: [],
 		expired: [],
 		success: [],
@@ -275,300 +278,11 @@ export namespace Transitions {
 		location: [],
 		package: [],
 		personal: [],
-		"status-pending": [
-			{
-				request: "open",
-				side: "seller",
-			},
-			{
-				request: "status-open",
-				side: "seller",
-			},
-			{
-				request: "rejected",
-				side: "buyer",
-			},
-			{
-				request: "status-rejected-buyer",
-				side: "buyer",
-			},
-			{
-				request: "rejected",
-				side: "seller",
-			},
-			{
-				request: "status-rejected-seller",
-				side: "seller",
-			},
-			{
-				request: "expired",
-				side: null,
-			},
-			{
-				request: "status-expired",
-				side: null,
-			},
-		],
-		"status-open": [
-			{
-				request: "resolved",
-				side: "seller",
-			},
-			{
-				request: "status-resolved",
-				side: "seller",
-			},
-			{
-				request: "rejected",
-				side: "buyer",
-			},
-			{
-				request: "status-rejected-buyer",
-				side: "buyer",
-			},
-			{
-				request: "rejected",
-				side: "seller",
-			},
-			{
-				request: "status-rejected-seller",
-				side: "seller",
-			},
-			{
-				request: "expired",
-				side: null,
-			},
-			{
-				request: "status-expired",
-				side: null,
-			},
-			{
-				request: "text",
-				side: "buyer",
-			},
-			{
-				request: "text",
-				side: "seller",
-			},
-			{
-				request: "gallery",
-				side: "buyer",
-			},
-			{
-				request: "gallery",
-				side: "seller",
-			},
-			{
-				request: "location",
-				side: "buyer",
-			},
-			{
-				request: "location",
-				side: "seller",
-			},
-			{
-				request: "personal",
-				side: "buyer",
-			},
-			{
-				request: "personal",
-				side: "seller",
-			},
-			{
-				request: "package",
-				side: "seller",
-			},
-		],
-		"status-resolved": [
-			{
-				request: "text",
-				side: "buyer",
-			},
-			{
-				request: "text",
-				side: "seller",
-			},
-			{
-				request: "dispute",
-				side: "buyer",
-			},
-			{
-				request: "status-dispute-buyer",
-				side: "buyer",
-			},
-			{
-				request: "dispute",
-				side: "seller",
-			},
-			{
-				request: "status-dispute-seller",
-				side: "seller",
-			},
-			{
-				request: "success",
-				side: "buyer",
-			},
-			{
-				request: "status-success",
-				side: "buyer",
-			},
-			{
-				request: "closed",
-				side: "buyer",
-			},
-			{
-				request: "status-closed",
-				side: "buyer",
-			},
-			{
-				request: "expired",
-				side: null,
-			},
-			{
-				request: "status-expired",
-				side: null,
-			},
-		],
-		"status-dispute-buyer": [
-			{
-				request: "resolved",
-				side: "seller",
-			},
-			{
-				request: "status-resolved",
-				side: "seller",
-			},
-			{
-				request: "success",
-				side: "buyer",
-			},
-			{
-				request: "status-success",
-				side: "buyer",
-			},
-			{
-				request: "closed",
-				side: "buyer",
-			},
-			{
-				request: "status-closed",
-				side: "buyer",
-			},
-			{
-				request: "expired",
-				side: null,
-			},
-			{
-				request: "status-expired",
-				side: null,
-			},
-			{
-				request: "text",
-				side: "buyer",
-			},
-			{
-				request: "text",
-				side: "seller",
-			},
-			{
-				request: "gallery",
-				side: "buyer",
-			},
-			{
-				request: "gallery",
-				side: "seller",
-			},
-			{
-				request: "location",
-				side: "buyer",
-			},
-			{
-				request: "location",
-				side: "seller",
-			},
-			{
-				request: "personal",
-				side: "buyer",
-			},
-			{
-				request: "personal",
-				side: "seller",
-			},
-			{
-				request: "package",
-				side: "seller",
-			},
-		],
-		"status-dispute-seller": [
-			{
-				request: "resolved",
-				side: "seller",
-			},
-			{
-				request: "status-resolved",
-				side: "seller",
-			},
-			{
-				request: "success",
-				side: "buyer",
-			},
-			{
-				request: "status-success",
-				side: "buyer",
-			},
-			{
-				request: "closed",
-				side: "buyer",
-			},
-			{
-				request: "status-closed",
-				side: "buyer",
-			},
-			{
-				request: "expired",
-				side: null,
-			},
-			{
-				request: "status-expired",
-				side: null,
-			},
-			{
-				request: "text",
-				side: "buyer",
-			},
-			{
-				request: "text",
-				side: "seller",
-			},
-			{
-				request: "gallery",
-				side: "buyer",
-			},
-			{
-				request: "gallery",
-				side: "seller",
-			},
-			{
-				request: "location",
-				side: "buyer",
-			},
-			{
-				request: "location",
-				side: "seller",
-			},
-			{
-				request: "personal",
-				side: "buyer",
-			},
-			{
-				request: "personal",
-				side: "seller",
-			},
-			{
-				request: "package",
-				side: "seller",
-			},
-		],
+		"status-pending": LittleMachine.pending,
+		"status-open": LittleMachine.open,
+		"status-resolved": LittleMachine.resolved,
+		"status-dispute-buyer": LittleMachine.dispute,
+		"status-dispute-seller": LittleMachine.dispute,
 		"status-rejected-buyer": [],
 		"status-rejected-seller": [],
 		"status-sold": [],
