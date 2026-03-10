@@ -2,31 +2,34 @@ import { useLocale } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tTransactionEntryGallery } from "@zbav-se.me/sdk/api/user";
 import { withGalleryFetchQuery } from "@zbav-se.me/sdk/query/user/gallery";
+import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
-import { useUser } from "~/app/@common/auth/hook/useUser";
 import { GalleryPreviewSheet } from "~/app/@common/gallery/ui/GalleryPreviewSheet";
 
 export namespace TransactionEntryGallery {
+	export type TransactionEntry = Extract<
+		withTransactionEntryQuery.Entity,
+		{
+			kind: "gallery";
+		}
+	>;
+
 	export interface Props extends Container.Props {
-		message: tTransactionEntryGallery;
+		transactionEntry: TransactionEntry;
 	}
 }
 
 export const TransactionEntryGallery: FC<TransactionEntryGallery.Props> = ({
-	message,
+	transactionEntry,
 	...props
 }) => {
 	const locale = useLocale();
-	const user = useUser();
-	const direction =
-		message.userId === null ? "system" : message.userId === user.id ? "out" : "in";
 	const { data: gallery } = withGalleryFetchQuery.useSuspenseQuery({
 		where: {
-			id: message.payload.galleryId,
+			id: transactionEntry.payload.galleryId,
 		},
 	});
 	const hero = useUpload(gallery.items);
@@ -40,13 +43,13 @@ export const TransactionEntryGallery: FC<TransactionEntryGallery.Props> = ({
 			className={[
 				"w-2/3",
 				"h-48",
-				direction === "in" ? [] : undefined,
-				direction === "out"
+				transactionEntry.direction === "in" ? [] : undefined,
+				transactionEntry.direction === "out"
 					? [
 							"ml-auto",
 						]
 					: undefined,
-				direction === "system"
+				transactionEntry.direction === "system"
 					? [
 							"mx-auto",
 							"text-center",
@@ -69,7 +72,7 @@ export const TransactionEntryGallery: FC<TransactionEntryGallery.Props> = ({
 			<Typo
 				label={toTimeDiff({
 					locale,
-					time: message.createdAt,
+					time: transactionEntry.createdAt,
 					type: "relative",
 				})}
 				ui={{

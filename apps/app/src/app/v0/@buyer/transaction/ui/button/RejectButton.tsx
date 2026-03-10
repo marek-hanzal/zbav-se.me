@@ -16,7 +16,27 @@ export namespace RejectButton {
 
 export const RejectButton: FC<RejectButton.Props> = ({ transaction, ...props }) => {
 	const queryClient = useQueryClient();
-	const mutation = withTransactionRejectMutation.useMutation();
+	const mutation = withTransactionRejectMutation.useMutation({
+		async onPostMutation() {
+			withTransactionQuery.invalidator(
+				queryClient,
+				[
+					"fetch",
+				],
+				{
+					fetch: {
+						where: {
+							id: transaction.id,
+						},
+					},
+				},
+			);
+			withTransactionEntryQuery.invalidator(queryClient, [
+				"collection",
+				"count",
+			]);
+		},
+	});
 
 	return (
 		<ConfirmButton
@@ -28,35 +48,12 @@ export const RejectButton: FC<RejectButton.Props> = ({ transaction, ...props }) 
 				},
 				children: <Tx label="Reject transaction - confirm (button)" />,
 				onClick() {
-					mutation.mutate(
-						{
-							path: {
-								transactionId: transaction.id,
-							},
-							url: "/api/buyer/transaction/{transactionId}/reject",
+					mutation.mutate({
+						path: {
+							transactionId: transaction.id,
 						},
-						{
-							onSuccess() {
-								withTransactionQuery.invalidator(
-									queryClient,
-									[
-										"fetch",
-									],
-									{
-										fetch: {
-											where: {
-												id: transaction.id,
-											},
-										},
-									},
-								);
-								withTransactionEntryQuery.invalidator(queryClient, [
-									"collection",
-									"count",
-								]);
-							},
-						},
-					);
+						url: "/api/buyer/transaction/{transactionId}/reject",
+					});
 				},
 			}}
 			loading={mutation.isPending}

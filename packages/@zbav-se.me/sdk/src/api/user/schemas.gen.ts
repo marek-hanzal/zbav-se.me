@@ -1352,6 +1352,15 @@ export const sTransactionEntryCommon = {
     ]
 } as const;
 
+export const sTransactionEntryDirectionEnum = {
+    type: 'string',
+    enum: [
+        'in',
+        'out',
+        'system'
+    ]
+} as const;
+
 export const sTransactionEntryQuery = {
     type: 'object',
     properties: {

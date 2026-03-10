@@ -894,6 +894,20 @@ export type tTransactionEntryCommon = {
 };
 
 /**
+ * Direction of the entry relative to the current user
+ */
+export const tTransactionEntryDirectionEnum = {
+    in: 'in',
+    out: 'out',
+    system: 'system'
+} as const;
+
+/**
+ * Direction of the entry relative to the current user
+ */
+export type tTransactionEntryDirectionEnum = typeof tTransactionEntryDirectionEnum[keyof typeof tTransactionEntryDirectionEnum];
+
+/**
  * Query object for transaction entry collection
  */
 export type tTransactionEntryQuery = {
@@ -1532,7 +1546,9 @@ export type tApiTransactionEntryCollectionResponse = {
     /**
      * Transaction entry collection
      */
-    200: Array<tTransactionEntry>;
+    200: Array<tTransactionEntry & {
+        direction: tTransactionEntryDirectionEnum;
+    }>;
 };
 
 export type apiTransactionEntryCollectionResponse = tApiTransactionEntryCollectionResponse[keyof tApiTransactionEntryCollectionResponse];
@@ -1590,7 +1606,9 @@ export type tApiTransactionEntryCreateResponse = {
     /**
      * Created transaction entry
      */
-    201: tTransactionEntry;
+    201: tTransactionEntry & {
+        direction: tTransactionEntryDirectionEnum;
+    };
 };
 
 export type apiTransactionEntryCreateResponse = tApiTransactionEntryCreateResponse[keyof tApiTransactionEntryCreateResponse];
@@ -1619,7 +1637,9 @@ export type tApiTransactionEntryFetchResponse = {
     /**
      * Transaction entry
      */
-    200: tTransactionEntry;
+    200: tTransactionEntry & {
+        direction: tTransactionEntryDirectionEnum;
+    };
 };
 
 export type apiTransactionEntryFetchResponse = tApiTransactionEntryFetchResponse[keyof tApiTransactionEntryFetchResponse];

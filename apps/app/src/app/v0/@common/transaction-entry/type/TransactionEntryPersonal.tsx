@@ -2,29 +2,32 @@ import { useLocale } from "@use-pico/client/hook";
 import { Container, type uiContainer } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tTransactionEntryPersonal } from "@zbav-se.me/sdk/api/user";
 import { withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
+import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { useUser } from "~/app/@common/auth/hook/useUser";
 
 export namespace TransactionEntryPersonal {
+	export type TransactionEntry = Extract<
+		withTransactionEntryQuery.Entity,
+		{
+			kind: "personal";
+		}
+	>;
+
 	export interface Props extends Container.Props {
-		message: tTransactionEntryPersonal;
+		transactionEntry: TransactionEntry;
 	}
 }
 
 export const TransactionEntryPersonal: FC<TransactionEntryPersonal.Props> = ({
-	message,
+	transactionEntry,
 	...props
 }) => {
 	const locale = useLocale();
-	const user = useUser();
-	const direction =
-		message.userId === null ? "system" : message.userId === user.id ? "out" : "in";
 	const { data: location } = withLocationFetchQuery.useSuspenseQuery({
 		where: {
-			id: message.payload.locationId,
+			id: transactionEntry.payload.locationId,
 		},
 	});
 
@@ -37,7 +40,7 @@ export const TransactionEntryPersonal: FC<TransactionEntryPersonal.Props> = ({
 				flow: "vertical",
 				inner: "default",
 				round: "default",
-				...match<typeof direction, uiContainer.Ui>(direction)
+				...match<typeof transactionEntry.direction, uiContainer.Ui>(transactionEntry.direction)
 					.with("in", () => {
 						return {
 							tone: "link",
@@ -57,13 +60,13 @@ export const TransactionEntryPersonal: FC<TransactionEntryPersonal.Props> = ({
 			}}
 			className={[
 				"w-2/3",
-				direction === "in" ? [] : undefined,
-				direction === "out"
+				transactionEntry.direction === "in" ? [] : undefined,
+				transactionEntry.direction === "out"
 					? [
 							"ml-auto",
 						]
 					: undefined,
-				direction === "system"
+				transactionEntry.direction === "system"
 					? [
 							"mx-auto",
 							"text-center",
@@ -79,7 +82,7 @@ export const TransactionEntryPersonal: FC<TransactionEntryPersonal.Props> = ({
 				}}
 			>
 				<Typo
-					label={message.payload.name}
+					label={transactionEntry.payload.name}
 					ui={{
 						wrap: "wrap",
 						font: "bold",
@@ -88,14 +91,14 @@ export const TransactionEntryPersonal: FC<TransactionEntryPersonal.Props> = ({
 				/>
 
 				<Typo
-					label={message.payload.phone}
+					label={transactionEntry.payload.phone}
 					ui={{
 						wrap: "wrap",
 					}}
 				/>
 
 				<Typo
-					label={message.payload.email}
+					label={transactionEntry.payload.email}
 					ui={{
 						wrap: "wrap",
 					}}
@@ -114,7 +117,7 @@ export const TransactionEntryPersonal: FC<TransactionEntryPersonal.Props> = ({
 			<Typo
 				label={toTimeDiff({
 					locale,
-					time: message.createdAt,
+					time: transactionEntry.createdAt,
 					type: "relative",
 				})}
 				ui={{

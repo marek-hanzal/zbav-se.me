@@ -27,7 +27,7 @@ export const Data: FC<Data.Props> = ({ _suspense, side, messageId }) => {
 			(message) => (
 				<TransactionEntryText
 					side={side}
-					message={message}
+					transactionEntry={message}
 				/>
 			),
 		)
@@ -68,7 +68,7 @@ export const Data: FC<Data.Props> = ({ _suspense, side, messageId }) => {
 			(message) => (
 				<TransactionEntryText
 					side={side}
-					message={message}
+					transactionEntry={message}
 				/>
 			),
 		)
@@ -76,25 +76,25 @@ export const Data: FC<Data.Props> = ({ _suspense, side, messageId }) => {
 			{
 				kind: "gallery",
 			},
-			(message) => <TransactionEntryGallery message={message} />,
+			(message) => <TransactionEntryGallery transactionEntry={message} />,
 		)
 		.with(
 			{
 				kind: "location",
 			},
-			(message) => <TransactionEntryLocation message={message} />,
+			(message) => <TransactionEntryLocation transactionEntry={message} />,
 		)
 		.with(
 			{
 				kind: "personal",
 			},
-			(message) => <TransactionEntryPersonal message={message} />,
+			(message) => <TransactionEntryPersonal transactionEntry={message} />,
 		)
 		.with(
 			{
 				kind: "package",
 			},
-			(message) => <TransactionEntryPackage message={message} />,
+			(message) => <TransactionEntryPackage transactionEntry={message} />,
 		)
 		.exhaustive();
 };

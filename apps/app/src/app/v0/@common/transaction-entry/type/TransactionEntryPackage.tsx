@@ -4,27 +4,30 @@ import { Container, LabelValue, type uiContainer } from "@use-pico/client/ui/con
 import { Typo, uiTypo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
-import type { tTransactionEntryPackage } from "@zbav-se.me/sdk/api/user";
+import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { useUser } from "~/app/@common/auth/hook/useUser";
 
 export namespace TransactionEntryPackage {
+	export type TransactionEntry = Extract<
+		withTransactionEntryQuery.Entity,
+		{
+			kind: "package";
+		}
+	>;
+
 	export interface Props extends Container.Props {
-		message: tTransactionEntryPackage;
+		transactionEntry: TransactionEntry;
 	}
 }
 
 export const TransactionEntryPackage: FC<TransactionEntryPackage.Props> = ({
-	message,
+	transactionEntry,
 	...props
 }) => {
 	const locale = useLocale();
-	const user = useUser();
-	const direction =
-		message.userId === null ? "system" : message.userId === user.id ? "out" : "in";
-	const url = new URL(message.payload.link);
+	const url = new URL(transactionEntry.payload.link);
 	const domain = url.hostname.replace(/^www\./, "");
 
 	return (
@@ -32,7 +35,7 @@ export const TransactionEntryPackage: FC<TransactionEntryPackage.Props> = ({
 			ui={{
 				flow: "vertical",
 				gap: "xs",
-				...match<typeof direction, uiContainer.Ui>(direction)
+				...match<typeof transactionEntry.direction, uiContainer.Ui>(transactionEntry.direction)
 					.with("in", () => {
 						return {
 							tone: "link",
@@ -52,13 +55,13 @@ export const TransactionEntryPackage: FC<TransactionEntryPackage.Props> = ({
 			}}
 			className={[
 				"w-2/3",
-				direction === "in" ? [] : undefined,
-				direction === "out"
+				transactionEntry.direction === "in" ? [] : undefined,
+				transactionEntry.direction === "out"
 					? [
 							"ml-auto",
 						]
 					: undefined,
-				direction === "system"
+				transactionEntry.direction === "system"
 					? [
 							"mx-auto",
 							"text-center",
@@ -71,7 +74,7 @@ export const TransactionEntryPackage: FC<TransactionEntryPackage.Props> = ({
 				textLabel={domain}
 				textValue={
 					<a
-						href={message.payload.link}
+						href={transactionEntry.payload.link}
 						target="_blank"
 						rel="noopener noreferrer"
 						{...uiTypo({
@@ -83,7 +86,7 @@ export const TransactionEntryPackage: FC<TransactionEntryPackage.Props> = ({
 							],
 						})}
 					>
-						{message.payload.link}
+						{transactionEntry.payload.link}
 					</a>
 				}
 				action={
@@ -101,7 +104,7 @@ export const TransactionEntryPackage: FC<TransactionEntryPackage.Props> = ({
 
 			<LabelValue
 				textLabel={translator.text("Tracking number (label)")}
-				textValue={message.payload.number}
+				textValue={transactionEntry.payload.number}
 				textEmpty={translator.text("Tracking number not filled")}
 				action={
 					<Icon
@@ -119,7 +122,7 @@ export const TransactionEntryPackage: FC<TransactionEntryPackage.Props> = ({
 			<Typo
 				label={toTimeDiff({
 					locale,
-					time: message.createdAt,
+					time: transactionEntry.createdAt,
 					type: "relative",
 				})}
 				ui={{

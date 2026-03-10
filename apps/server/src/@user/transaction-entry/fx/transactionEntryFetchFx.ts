@@ -22,6 +22,7 @@ export const transactionEntryFetchFx = Effect.fn("transactionEntryFetchFx")(func
 	return yield* withFetchFx({
 		resource: "transaction-entry",
 		selectFx: withTransactionEntrySelectFx({
+			userId,
 			sort,
 		}),
 		filter,

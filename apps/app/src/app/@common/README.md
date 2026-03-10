@@ -81,8 +81,8 @@ When adding to `@common`:
 
 - Transaction list container abstraction was removed from `@common/transaction/ui/`; buyer/seller now keep their own domain-specific list containers to avoid cross-domain generic query wrappers.
 - Transaction-entry rendering is split into focused parts:
-  - `@common/transaction-entry/TransactionEntryListSuspense/Data.tsx` handles data/container composition.
-  - `@common/transaction-entry/TransactionEntryListSuspense.tsx` composes local suspense fallback for feature call-sites.
+  - `@common/transaction-entry/TransactionEntryList/Data.tsx` handles data/container composition.
+  - `@common/transaction-entry/TransactionEntryList/TransactionEntryList.tsx` composes local suspense fallback for feature call-sites.
   - `@common/transaction-entry/TransactionEntryRenderItem/Data.tsx` owns `transaction_entry.kind` dispatch (`text/status/gallery/location/personal/package`).
 - Shared message creation controls now create user-authored `transaction_entry` records:
   - package, personal, location, text, and gallery flows use transaction-entry SDK wrappers

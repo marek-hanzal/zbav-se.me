@@ -1,14 +1,14 @@
 import { type FC, Suspense } from "react";
-import { Data } from "./TransactionEntryListSuspense/Data";
-import { Pending } from "./TransactionEntryListSuspense/Pending";
+import { Data } from "./Data";
+import { Pending } from "./Pending";
 
-export namespace TransactionEntryListSuspense {
+export namespace TransactionEntryList {
 	export interface Props extends Omit<Data.Props, "_suspense"> {
 		//
 	}
 }
 
-export const TransactionEntryListSuspense: FC<TransactionEntryListSuspense.Props> = ({
+export const TransactionEntryList: FC<TransactionEntryList.Props> = ({
 	children,
 	...props
 }) => {

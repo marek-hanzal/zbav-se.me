@@ -22,6 +22,7 @@ export const transactionEntryCollectionFx = Effect.fn("transactionEntryCollectio
 }: transactionEntryCollectionFx.Props) {
 	return yield* withCollectionFx({
 		selectFx: withTransactionEntrySelectFx({
+			userId,
 			sort,
 		}),
 		cursor: cursor ?? {

@@ -16,42 +16,39 @@ export namespace ResolveButton {
 
 export const ResolveButton: FC<ResolveButton.Props> = ({ transaction, ...props }) => {
 	const queryClient = useQueryClient();
-	const mutation = withTransactionResolveMutation.useMutation();
+	const mutation = withTransactionResolveMutation.useMutation({
+		async onPostMutation() {
+			withTransactionQuery.invalidator(
+				queryClient,
+				[
+					"fetch",
+				],
+				{
+					fetch: {
+						where: {
+							id: transaction.id,
+						},
+					},
+				},
+			);
+			withTransactionEntryQuery.invalidator(queryClient, [
+				"collection",
+				"count",
+			]);
+		},
+	});
 
 	return (
 		<Button
 			data-ui="ResolveButton[Button]"
 			iconEnabled={CheckIcon}
 			onClick={() => {
-				mutation.mutate(
-					{
-						path: {
-							transactionId: transaction.id,
-						},
-						url: "/api/seller/transaction/{transactionId}/resolve",
+				mutation.mutate({
+					path: {
+						transactionId: transaction.id,
 					},
-					{
-						onSuccess() {
-							withTransactionQuery.invalidator(
-								queryClient,
-								[
-									"fetch",
-								],
-								{
-									fetch: {
-										where: {
-											id: transaction.id,
-										},
-									},
-								},
-							);
-							withTransactionEntryQuery.invalidator(queryClient, [
-								"collection",
-								"count",
-							]);
-						},
-					},
-				);
+					url: "/api/seller/transaction/{transactionId}/resolve",
+				});
 			}}
 			loading={mutation.isPending}
 			disabled={mutation.isPending}

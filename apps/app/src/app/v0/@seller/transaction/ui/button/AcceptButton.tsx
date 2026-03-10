@@ -16,42 +16,39 @@ export namespace AcceptButton {
 
 export const AcceptButton: FC<AcceptButton.Props> = ({ transaction, ...props }) => {
 	const queryClient = useQueryClient();
-	const mutation = withTransactionAcceptMutation.useMutation();
+	const mutation = withTransactionAcceptMutation.useMutation({
+		async onPostMutation() {
+			withTransactionQuery.invalidator(
+				queryClient,
+				[
+					"fetch",
+				],
+				{
+					fetch: {
+						where: {
+							id: transaction.id,
+						},
+					},
+				},
+			);
+			withTransactionEntryQuery.invalidator(queryClient, [
+				"collection",
+				"count",
+			]);
+		},
+	});
 
 	return (
 		<Button
 			data-ui="AcceptButton[Button]"
 			iconEnabled={CheckIcon}
 			onClick={() => {
-				mutation.mutate(
-					{
-						path: {
-							transactionId: transaction.id,
-						},
-						url: "/api/seller/transaction/{transactionId}/accept",
+				mutation.mutate({
+					path: {
+						transactionId: transaction.id,
 					},
-					{
-						onSuccess() {
-							withTransactionQuery.invalidator(
-								queryClient,
-								[
-									"fetch",
-								],
-								{
-									fetch: {
-										where: {
-											id: transaction.id,
-										},
-									},
-								},
-							);
-							withTransactionEntryQuery.invalidator(queryClient, [
-								"collection",
-								"count",
-							]);
-						},
-					},
-				);
+					url: "/api/seller/transaction/{transactionId}/accept",
+				});
 			}}
 			loading={mutation.isPending}
 			disabled={mutation.isPending}

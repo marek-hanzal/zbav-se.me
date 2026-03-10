@@ -19,7 +19,9 @@ export const transactionEntryCountFx = Effect.fn("transactionEntryCountFx")(func
 	scope,
 }: transactionEntryCountFx.Props) {
 	return yield* withCountFx({
-		selectFx: withTransactionEntrySelectFx({}),
+		selectFx: withTransactionEntrySelectFx({
+			userId,
+		}),
 		filter,
 		where,
 		scope,

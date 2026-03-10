@@ -862,6 +862,19 @@ export const zTransactionEntry = z.union([
 export type zTransactionEntry = z.infer<typeof zTransactionEntry>;
 
 /**
+ * Direction of the entry relative to the current user
+ */
+export const zTransactionEntryDirectionEnum = z.enum([
+    'in',
+    'out',
+    'system'
+]).register(z.globalRegistry, {
+    description: 'Direction of the entry relative to the current user'
+});
+
+export type zTransactionEntryDirectionEnum = z.infer<typeof zTransactionEntryDirectionEnum>;
+
+/**
  * Type of transaction timeline entry
  */
 export const zTransactionEntryKindEnum = z.enum([
@@ -1390,7 +1403,9 @@ export type zapiTransactionEntryCollectionRequest = z.infer<typeof zApiTransacti
 /**
  * Transaction entry collection
  */
-export const zApiTransactionEntryCollectionResponse = z.array(zTransactionEntry).register(z.globalRegistry, {
+export const zApiTransactionEntryCollectionResponse = z.array(zTransactionEntry.and(z.object({
+    direction: zTransactionEntryDirectionEnum
+}))).register(z.globalRegistry, {
     description: 'Transaction entry collection'
 });
 
@@ -1422,7 +1437,9 @@ export type zapiTransactionEntryCreateRequest = z.infer<typeof zApiTransactionEn
 /**
  * Created transaction entry
  */
-export const zApiTransactionEntryCreateResponse = zTransactionEntry;
+export const zApiTransactionEntryCreateResponse = zTransactionEntry.and(z.object({
+    direction: zTransactionEntryDirectionEnum
+}));
 
 export type zapiTransactionEntryCreateResponse = z.infer<typeof zApiTransactionEntryCreateResponse>;
 
@@ -1437,7 +1454,9 @@ export type zapiTransactionEntryFetchRequest = z.infer<typeof zApiTransactionEnt
 /**
  * Transaction entry
  */
-export const zApiTransactionEntryFetchResponse = zTransactionEntry;
+export const zApiTransactionEntryFetchResponse = zTransactionEntry.and(z.object({
+    direction: zTransactionEntryDirectionEnum
+}));
 
 export type zapiTransactionEntryFetchResponse = z.infer<typeof zApiTransactionEntryFetchResponse>;
 

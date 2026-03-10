@@ -16,42 +16,39 @@ export namespace CloseButton {
 
 export const CloseButton: FC<CloseButton.Props> = ({ transaction, ...props }) => {
 	const queryClient = useQueryClient();
-	const mutation = withTransactionCloseMutation.useMutation();
+	const mutation = withTransactionCloseMutation.useMutation({
+		async onPostMutation() {
+			withTransactionQuery.invalidator(
+				queryClient,
+				[
+					"fetch",
+				],
+				{
+					fetch: {
+						where: {
+							id: transaction.id,
+						},
+					},
+				},
+			);
+			withTransactionEntryQuery.invalidator(queryClient, [
+				"collection",
+				"count",
+			]);
+		},
+	});
 
 	return (
 		<Button
 			data-ui="CloseButton[Button]"
 			iconEnabled={CheckIcon}
 			onClick={() => {
-				mutation.mutate(
-					{
-						path: {
-							transactionId: transaction.id,
-						},
-						url: "/api/buyer/transaction/{transactionId}/close",
+				mutation.mutate({
+					path: {
+						transactionId: transaction.id,
 					},
-					{
-						onSuccess() {
-							withTransactionQuery.invalidator(
-								queryClient,
-								[
-									"fetch",
-								],
-								{
-									fetch: {
-										where: {
-											id: transaction.id,
-										},
-									},
-								},
-							);
-							withTransactionEntryQuery.invalidator(queryClient, [
-								"collection",
-								"count",
-							]);
-						},
-					},
-				);
+					url: "/api/buyer/transaction/{transactionId}/close",
+				});
 			}}
 			loading={mutation.isPending}
 			disabled={mutation.isPending}

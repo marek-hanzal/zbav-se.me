@@ -4,30 +4,45 @@ import { Mx } from "@use-pico/client/ui/mx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
-import type { tTransactionEntryCommon, tTransactionEntryText } from "@zbav-se.me/sdk/api/user";
+import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { useUser } from "~/app/@common/auth/hook/useUser";
 
 export namespace TransactionEntryText {
+	export type TransactionEntry = Extract<
+		withTransactionEntryQuery.Entity,
+		{
+			kind:
+				| "text"
+				| "status-pending"
+				| "status-open"
+				| "status-resolved"
+				| "status-dispute-buyer"
+				| "status-dispute-seller"
+				| "status-rejected-buyer"
+				| "status-rejected-seller"
+				| "status-sold"
+				| "status-expired"
+				| "status-success"
+				| "status-closed";
+		}
+	>;
+
 	export interface Props extends Container.Props {
 		/**
 		 * From which point of view the message is displayed
 		 */
 		side: tUserSideEnum;
-		message: tTransactionEntryText | tTransactionEntryCommon;
+		transactionEntry: TransactionEntry;
 	}
 }
 
 export const TransactionEntryText: FC<TransactionEntryText.Props> = ({
 	side,
-	message,
+	transactionEntry,
 	...props
 }) => {
 	const locale = useLocale();
-	const user = useUser();
-	const direction =
-		message.userId === null ? "system" : message.userId === user.id ? "out" : "in";
 
 	return (
 		<Container
@@ -37,7 +52,7 @@ export const TransactionEntryText: FC<TransactionEntryText.Props> = ({
 				border: true,
 				inner: "default",
 				round: "default",
-				...match<typeof direction, uiContainer.Ui>(direction)
+				...match<typeof transactionEntry.direction, uiContainer.Ui>(transactionEntry.direction)
 					.with("in", () => {
 						return {
 							tone: "link",
@@ -57,13 +72,13 @@ export const TransactionEntryText: FC<TransactionEntryText.Props> = ({
 			}}
 			className={[
 				"w-2/3",
-				direction === "in" ? [] : undefined,
-				direction === "out"
+				transactionEntry.direction === "in" ? [] : undefined,
+				transactionEntry.direction === "out"
 					? [
 							"ml-auto",
 						]
 					: undefined,
-				direction === "system"
+				transactionEntry.direction === "system"
 					? [
 							"w-full",
 						]
@@ -72,14 +87,14 @@ export const TransactionEntryText: FC<TransactionEntryText.Props> = ({
 			{...props}
 		>
 			<Mx
-				label={`${side} - ${message.payload.text}`}
-				fallback={message.payload.text}
+				label={`${side} - ${transactionEntry.payload.text}`}
+				fallback={transactionEntry.payload.text}
 			/>
 
 			<Typo
 				label={toTimeDiff({
 					locale,
-					time: message.createdAt,
+					time: transactionEntry.createdAt,
 					type: "relative",
 				})}
 				ui={{
