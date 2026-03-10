@@ -36,7 +36,10 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 				scopeUserId,
 				kind,
 				...data
-			}: Pick<TransactionEntryTableSchema.Type, "transactionId" | "kind" | "userId" | "payload"> & {
+			}: Pick<
+				TransactionEntryTableSchema.Type,
+				"transactionId" | "kind" | "userId" | "payload"
+			> & {
 				scopeUserId: string;
 			}) {
 				const { kysely } = yield* KyselyContextFx;

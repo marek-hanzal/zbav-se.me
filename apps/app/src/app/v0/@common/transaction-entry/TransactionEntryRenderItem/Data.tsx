@@ -20,12 +20,17 @@ export const Data: FC<Data.Props> = ({ _suspense, side, messageId }) => {
 	const { data: message } = withTransactionEntryQuery.useFetchQuery(messageId);
 
 	return match(message)
-		.with({ kind: "text" }, (message) => (
-			<TransactionEntryText
-				side={side}
-				message={message}
-			/>
-		))
+		.with(
+			{
+				kind: "text",
+			},
+			(message) => (
+				<TransactionEntryText
+					side={side}
+					message={message}
+				/>
+			),
+		)
 		.with(
 			{
 				kind: "status-pending",
@@ -67,9 +72,29 @@ export const Data: FC<Data.Props> = ({ _suspense, side, messageId }) => {
 				/>
 			),
 		)
-		.with({ kind: "gallery" }, (message) => <TransactionEntryGallery message={message} />)
-		.with({ kind: "location" }, (message) => <TransactionEntryLocation message={message} />)
-		.with({ kind: "personal" }, (message) => <TransactionEntryPersonal message={message} />)
-		.with({ kind: "package" }, (message) => <TransactionEntryPackage message={message} />)
+		.with(
+			{
+				kind: "gallery",
+			},
+			(message) => <TransactionEntryGallery message={message} />,
+		)
+		.with(
+			{
+				kind: "location",
+			},
+			(message) => <TransactionEntryLocation message={message} />,
+		)
+		.with(
+			{
+				kind: "personal",
+			},
+			(message) => <TransactionEntryPersonal message={message} />,
+		)
+		.with(
+			{
+				kind: "package",
+			},
+			(message) => <TransactionEntryPackage message={message} />,
+		)
 		.exhaustive();
 };

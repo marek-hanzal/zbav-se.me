@@ -28,14 +28,14 @@ export const RejectButton: FC<RejectButton.Props> = ({ transaction, ...props }) 
 				},
 				children: <Tx label="Reject transaction - confirm (button)" />,
 				onClick() {
-				mutation.mutate(
-					{
-						path: {
-							transactionId: transaction.id,
+					mutation.mutate(
+						{
+							path: {
+								transactionId: transaction.id,
+							},
+							url: "/api/seller/transaction/{transactionId}/reject",
 						},
-						url: "/api/seller/transaction/{transactionId}/reject",
-					},
-					{
+						{
 							onSuccess() {
 								withTransactionQuery.invalidator(
 									queryClient,

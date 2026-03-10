@@ -22,7 +22,8 @@ export const TransactionEntryPackage: FC<TransactionEntryPackage.Props> = ({
 }) => {
 	const locale = useLocale();
 	const user = useUser();
-	const direction = message.userId === null ? "system" : message.userId === user.id ? "out" : "in";
+	const direction =
+		message.userId === null ? "system" : message.userId === user.id ? "out" : "in";
 	const url = new URL(message.payload.link);
 	const domain = url.hostname.replace(/^www\./, "");
 

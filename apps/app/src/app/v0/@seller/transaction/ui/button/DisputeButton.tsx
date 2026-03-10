@@ -28,14 +28,14 @@ export const DisputeButton: FC<DisputeButton.Props> = ({ transaction, ...props }
 				},
 				children: <Tx label="Dispute transaction - confirm (button)" />,
 				onClick() {
-				mutation.mutate(
-					{
-						path: {
-							transactionId: transaction.id,
+					mutation.mutate(
+						{
+							path: {
+								transactionId: transaction.id,
+							},
+							url: "/api/seller/transaction/{transactionId}/dispute",
 						},
-						url: "/api/seller/transaction/{transactionId}/dispute",
-					},
-					{
+						{
 							onSuccess() {
 								withTransactionQuery.invalidator(
 									queryClient,

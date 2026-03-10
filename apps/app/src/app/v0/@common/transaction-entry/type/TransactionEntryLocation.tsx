@@ -20,7 +20,8 @@ export const TransactionEntryLocation: FC<TransactionEntryLocation.Props> = ({
 }) => {
 	const locale = useLocale();
 	const user = useUser();
-	const direction = message.userId === null ? "system" : message.userId === user.id ? "out" : "in";
+	const direction =
+		message.userId === null ? "system" : message.userId === user.id ? "out" : "in";
 	const { data: location } = withLocationFetchQuery.useSuspenseQuery({
 		where: {
 			id: message.payload.locationId,
