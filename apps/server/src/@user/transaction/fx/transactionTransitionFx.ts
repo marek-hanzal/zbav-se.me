@@ -7,10 +7,12 @@ import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 const LittleMachine = {
 	pending: [
+		// pending
 		{
 			request: "open",
 			side: "seller",
 		},
+		// status
 		{
 			request: "status-open",
 			side: "seller",
@@ -20,31 +22,36 @@ const LittleMachine = {
 			side: "buyer",
 		},
 		{
-			request: "status-rejected-buyer",
-			side: "buyer",
-		},
-		{
 			request: "rejected",
 			side: "seller",
+		},
+		// status
+		{
+			request: "status-rejected-buyer",
+			side: "buyer",
 		},
 		{
 			request: "status-rejected-seller",
 			side: "seller",
 		},
+		// terminal
 		{
 			request: "expired",
 			side: null,
 		},
+		// status
 		{
 			request: "status-expired",
 			side: null,
 		},
 	],
 	open: [
+		// open
 		{
 			request: "resolved",
 			side: "seller",
 		},
+		// status
 		{
 			request: "status-resolved",
 			side: "seller",
@@ -54,25 +61,29 @@ const LittleMachine = {
 			side: "buyer",
 		},
 		{
-			request: "status-rejected-buyer",
-			side: "buyer",
-		},
-		{
 			request: "rejected",
 			side: "seller",
+		},
+		// status
+		{
+			request: "status-rejected-buyer",
+			side: "buyer",
 		},
 		{
 			request: "status-rejected-seller",
 			side: "seller",
 		},
+		// terminal
 		{
 			request: "expired",
 			side: null,
 		},
+		// status
 		{
 			request: "status-expired",
 			side: null,
 		},
+		// entries
 		{
 			request: "text",
 			side: "buyer",
@@ -105,12 +116,14 @@ const LittleMachine = {
 			request: "personal",
 			side: "seller",
 		},
+		// seller-only
 		{
 			request: "package",
 			side: "seller",
 		},
 	],
 	resolved: [
+		// entries
 		{
 			request: "text",
 			side: "buyer",
@@ -119,28 +132,27 @@ const LittleMachine = {
 			request: "text",
 			side: "seller",
 		},
+		// resolved
 		{
 			request: "dispute",
 			side: "buyer",
 		},
+		{
+			request: "dispute",
+			side: "seller",
+		},
+		// status
 		{
 			request: "status-dispute-buyer",
 			side: "buyer",
 		},
 		{
-			request: "dispute",
-			side: "seller",
-		},
-		{
 			request: "status-dispute-seller",
 			side: "seller",
 		},
+		// terminal
 		{
 			request: "success",
-			side: "buyer",
-		},
-		{
-			request: "status-success",
 			side: "buyer",
 		},
 		{
@@ -148,12 +160,17 @@ const LittleMachine = {
 			side: "buyer",
 		},
 		{
-			request: "status-closed",
+			request: "expired",
+			side: null,
+		},
+		// status
+		{
+			request: "status-success",
 			side: "buyer",
 		},
 		{
-			request: "expired",
-			side: null,
+			request: "status-closed",
+			side: "buyer",
 		},
 		{
 			request: "status-expired",
@@ -161,20 +178,19 @@ const LittleMachine = {
 		},
 	],
 	dispute: [
+		// dispute
 		{
 			request: "resolved",
 			side: "seller",
 		},
+		// status
 		{
 			request: "status-resolved",
 			side: "seller",
 		},
+		// terminal
 		{
 			request: "success",
-			side: "buyer",
-		},
-		{
-			request: "status-success",
 			side: "buyer",
 		},
 		{
@@ -182,17 +198,23 @@ const LittleMachine = {
 			side: "buyer",
 		},
 		{
-			request: "status-closed",
+			request: "expired",
+			side: null,
+		},
+		// status
+		{
+			request: "status-success",
 			side: "buyer",
 		},
 		{
-			request: "expired",
-			side: null,
+			request: "status-closed",
+			side: "buyer",
 		},
 		{
 			request: "status-expired",
 			side: null,
 		},
+		// entries
 		{
 			request: "text",
 			side: "buyer",
@@ -225,6 +247,7 @@ const LittleMachine = {
 			request: "personal",
 			side: "seller",
 		},
+		// seller-only
 		{
 			request: "package",
 			side: "seller",
@@ -256,39 +279,43 @@ export namespace Transitions {
 	 */
 	export const Machine = {
 		null: [
+			// bootstrap
 			{
 				request: "pending",
 				side: "buyer",
 			},
+			// status
 			{
 				request: "status-pending",
 				side: "buyer",
 			},
 		],
+		//
 		pending: LittleMachine.pending,
+		"status-pending": LittleMachine.pending,
 		open: LittleMachine.open,
+		"status-open": LittleMachine.open,
 		resolved: LittleMachine.resolved,
+		"status-resolved": LittleMachine.resolved,
 		dispute: LittleMachine.dispute,
+		"status-dispute-buyer": LittleMachine.dispute,
+		"status-dispute-seller": LittleMachine.dispute,
 		rejected: [],
+		"status-rejected-buyer": [],
+		"status-rejected-seller": [],
 		expired: [],
+		"status-expired": [],
 		success: [],
+		"status-success": [],
 		closed: [],
+		"status-closed": [],
+		"status-sold": [],
+		//
 		text: [],
 		gallery: [],
 		location: [],
 		package: [],
 		personal: [],
-		"status-pending": LittleMachine.pending,
-		"status-open": LittleMachine.open,
-		"status-resolved": LittleMachine.resolved,
-		"status-dispute-buyer": LittleMachine.dispute,
-		"status-dispute-seller": LittleMachine.dispute,
-		"status-rejected-buyer": [],
-		"status-rejected-seller": [],
-		"status-sold": [],
-		"status-expired": [],
-		"status-success": [],
-		"status-closed": [],
 	} as const satisfies Record<"null" | Kind, Entry[]>;
 }
 
