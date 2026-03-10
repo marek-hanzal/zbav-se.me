@@ -1,3 +1,5 @@
+import { DateContextFx } from "@use-pico/common/date";
+import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { galleryInsertFx } from "~/@user/gallery/fx/galleryInsertFx";
@@ -5,10 +7,14 @@ import { galleryItemInsertFx } from "~/@user/gallery-item/fx/galleryItemInsertFx
 import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import type { InboxCreateSchema } from "~/@user/inbox/schema/InboxCreateSchema";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
+import { transactionTouchFx } from "~/@user/transaction/fx/transactionTouchFx";
 import { transactionTransitionFx } from "~/@user/transaction/fx/transactionTransitionFx";
-import { createTransactionEntryFx } from "~/@user/transaction-entry/fx/createTransactionEntryFx";
+import { transactionEntryFetchFx } from "~/@user/transaction-entry/fx/transactionEntryFetchFx";
 import type { TransactionEntryCreateSchema } from "~/@user/transaction-entry/schema/TransactionEntryCreateSchema";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
+import type { TransactionEntryTableSchema } from "~/database/@table/TransactionEntryTableSchema";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
+import { tryDbFx } from "~/database/fx/tryDbFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionEntryCreateFx {
@@ -24,6 +30,40 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 	transactionId,
 	...entry
 }: transactionEntryCreateFx.Props) {
+	const createTransactionEntryFx = Effect.fn("createTransactionEntryFx")(function* ({
+		scopeUserId,
+		...data
+	}: Pick<TransactionEntryTableSchema.Type, "transactionId" | "kind" | "userId" | "payload"> & {
+		scopeUserId: string;
+	}) {
+		const { kysely } = yield* KyselyContextFx;
+		const dateContext = yield* DateContextFx;
+		const id = genId();
+
+		yield* tryDbFx(async () =>
+			kysely
+				.insertInto("transaction_entry")
+				.values({
+					...data,
+					id,
+					createdAt: dateContext.now().toJSDate(),
+				})
+				.executeTakeFirstOrThrow(),
+		);
+
+		yield* transactionTouchFx({
+			transactionId,
+			userId: scopeUserId,
+		});
+
+		return yield* transactionEntryFetchFx({
+			userId: scopeUserId,
+			where: {
+				id,
+			},
+		});
+	});
+
 	const transaction = yield* transactionResolveFx({
 		userId,
 		transactionId,
