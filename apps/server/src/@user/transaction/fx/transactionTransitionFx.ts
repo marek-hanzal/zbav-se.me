@@ -5,6 +5,43 @@ import type { TransactionStatusEnumSchema } from "~/database/@enum/TransactionSt
 import { traceLogFx } from "~/effect/traceLogFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
+const LittleMachine = {
+	pending: [
+		{
+			request: "open",
+			side: "seller",
+		},
+		{
+			request: "status-open",
+			side: "seller",
+		},
+		{
+			request: "rejected",
+			side: "buyer",
+		},
+		{
+			request: "status-rejected-buyer",
+			side: "buyer",
+		},
+		{
+			request: "rejected",
+			side: "seller",
+		},
+		{
+			request: "status-rejected-seller",
+			side: "seller",
+		},
+		{
+			request: "expired",
+			side: null,
+		},
+		{
+			request: "status-expired",
+			side: null,
+		},
+	],
+} as const satisfies Partial<Record<Transitions.Kind, Transitions.Entry[]>>;
+
 export namespace Transitions {
 	/**
 	 * All recognized transition kinds.
@@ -27,7 +64,7 @@ export namespace Transitions {
 	 * State machine - allowed transitions - input is "request", output are allowed states; when an empty
 	 * array, transition is not allowed.
 	 */
-	export const Machine: Record<"null" | Kind, Entry[]> = {
+	export const Machine = {
 		null: [
 			{
 				request: "pending",
@@ -38,40 +75,7 @@ export namespace Transitions {
 				side: "buyer",
 			},
 		],
-		pending: [
-			{
-				request: "open",
-				side: "seller",
-			},
-			{
-				request: "status-open",
-				side: "seller",
-			},
-			{
-				request: "rejected",
-				side: "buyer",
-			},
-			{
-				request: "status-rejected-buyer",
-				side: "buyer",
-			},
-			{
-				request: "rejected",
-				side: "seller",
-			},
-			{
-				request: "status-rejected-seller",
-				side: "seller",
-			},
-			{
-				request: "expired",
-				side: null,
-			},
-			{
-				request: "status-expired",
-				side: null,
-			},
-		],
+		pending: LittleMachine.pending,
 		open: [
 			{
 				request: "resolved",
@@ -571,7 +575,7 @@ export namespace Transitions {
 		"status-expired": [],
 		"status-success": [],
 		"status-closed": [],
-	};
+	} as const satisfies Record<"null" | Kind, Entry[]>;
 }
 
 export namespace transactionTransitionFx {
