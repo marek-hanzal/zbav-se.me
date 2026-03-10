@@ -8,6 +8,7 @@ import type { FC } from "react";
 import type { z } from "zod";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
+// biome-ignore lint/correctness/noUnusedVariables: Ssst!
 const PackageSchema = zTransactionEntryPackageCreate.shape.payload;
 export namespace PackageSchema {
 	export type Type = z.infer<typeof PackageSchema>;

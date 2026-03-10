@@ -12,6 +12,7 @@ import type { z } from "zod";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { LocationSelect } from "~/app/@common/location/ui/LocationSelect";
 
+// biome-ignore lint/correctness/noUnusedVariables: Ssst!
 const PersonalSchema = zTransactionEntryPersonalCreate.shape.payload;
 export namespace PersonalSchema {
 	export type Type = z.infer<typeof PersonalSchema>;

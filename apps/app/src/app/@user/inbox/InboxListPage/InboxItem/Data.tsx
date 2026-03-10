@@ -8,8 +8,8 @@ import { InboxSellerMessageItem } from "../payload/InboxSellerMessageItem";
 import { InboxSystemItem } from "../payload/InboxSystemItem";
 import { InboxThumbItem } from "../payload/InboxThumbItem";
 import { InboxTransactionItem } from "../payload/InboxTransactionItem";
-import { InboxUnknownItem } from "../payload/InboxUnknownItem";
 import { InboxUnfavouriteItem } from "../payload/InboxUnfavouriteItem";
+import { InboxUnknownItem } from "../payload/InboxUnknownItem";
 
 export namespace Data {
 	export interface Props extends MarkSuspense.Props {
