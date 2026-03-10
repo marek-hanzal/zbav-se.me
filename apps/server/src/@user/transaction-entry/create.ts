@@ -1,4 +1,4 @@
-import { createRoute } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
@@ -7,7 +7,11 @@ import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withTransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
 import { transactionEntryCreateFx } from "~/@user/transaction-entry/fx/transactionEntryCreateFx";
-import { TransactionEntryCreateSchema } from "~/@user/transaction-entry/schema/TransactionEntryCreateSchema";
+import { GallerySchema } from "~/@user/transaction-entry/schema/TransactionEntryCreateSchema/GallerySchema";
+import { LocationSchema } from "~/@user/transaction-entry/schema/TransactionEntryCreateSchema/LocationSchema";
+import { PackageSchema } from "~/@user/transaction-entry/schema/TransactionEntryCreateSchema/PackageSchema";
+import { PersonalSchema } from "~/@user/transaction-entry/schema/TransactionEntryCreateSchema/PersonalSchema";
+import { TextSchema } from "~/@user/transaction-entry/schema/TransactionEntryCreateSchema/TextSchema";
 import { TransactionEntrySchema } from "~/@user/transaction-entry/schema/TransactionEntrySchema";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
@@ -15,6 +19,18 @@ import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
+
+const CreateSchema = z
+	.discriminatedUnion("kind", [
+		TextSchema,
+		GallerySchema,
+		LocationSchema,
+		PackageSchema,
+		PersonalSchema,
+	])
+	.openapi("TransactionEntryCreate", {
+		description: "Request to append one user-authored transaction entry",
+	});
 
 export const withTransactionEntryCreateApiFx = Effect.fn("withTransactionEntryCreateApiFx")(
 	function* () {
@@ -30,7 +46,7 @@ export const withTransactionEntryCreateApiFx = Effect.fn("withTransactionEntryCr
 					body: {
 						content: {
 							"application/json": {
-								schema: TransactionEntryCreateSchema,
+								schema: CreateSchema,
 							},
 						},
 					},

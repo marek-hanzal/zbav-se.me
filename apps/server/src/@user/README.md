@@ -38,6 +38,7 @@ This domain handles all operations on user-owned, private data. Everything in th
   - `package` - Package/tracking info
   - `personal` - Personal contact info
   - `status-*` - System/status timeline entries
+- Public `/transaction-entry/create` accepts only the user-authored kinds above; `status-*` entries are internal-only
 
 ### Inbox
 - **Collection** - List inbox items with query/filter/sort/cursor
