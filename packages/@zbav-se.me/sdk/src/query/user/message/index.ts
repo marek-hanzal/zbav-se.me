@@ -1,1 +1,0 @@
-export { withMessageQuery } from "./withMessageQuery";
