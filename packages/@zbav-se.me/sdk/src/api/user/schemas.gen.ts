@@ -1057,9 +1057,6 @@ export const sTransactionEntryText = {
         createdAt: {
             type: 'string'
         },
-        direction: {
-            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
-        },
         kind: {
             type: 'string',
             enum: [
@@ -1084,18 +1081,8 @@ export const sTransactionEntryText = {
         'transactionId',
         'userId',
         'createdAt',
-        'direction',
         'kind',
         'payload'
-    ]
-} as const;
-
-export const sTransactionEntryDirectionEnum = {
-    type: 'string',
-    enum: [
-        'in',
-        'out',
-        'system'
     ]
 } as const;
 
@@ -1116,9 +1103,6 @@ export const sTransactionEntryGallery = {
         },
         createdAt: {
             type: 'string'
-        },
-        direction: {
-            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
         },
         kind: {
             type: 'string',
@@ -1144,7 +1128,6 @@ export const sTransactionEntryGallery = {
         'transactionId',
         'userId',
         'createdAt',
-        'direction',
         'kind',
         'payload'
     ]
@@ -1167,9 +1150,6 @@ export const sTransactionEntryLocation = {
         },
         createdAt: {
             type: 'string'
-        },
-        direction: {
-            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
         },
         kind: {
             type: 'string',
@@ -1195,7 +1175,6 @@ export const sTransactionEntryLocation = {
         'transactionId',
         'userId',
         'createdAt',
-        'direction',
         'kind',
         'payload'
     ]
@@ -1218,9 +1197,6 @@ export const sTransactionEntryPackage = {
         },
         createdAt: {
             type: 'string'
-        },
-        direction: {
-            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
         },
         kind: {
             type: 'string',
@@ -1254,7 +1230,6 @@ export const sTransactionEntryPackage = {
         'transactionId',
         'userId',
         'createdAt',
-        'direction',
         'kind',
         'payload'
     ]
@@ -1277,9 +1252,6 @@ export const sTransactionEntryPersonal = {
         },
         createdAt: {
             type: 'string'
-        },
-        direction: {
-            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
         },
         kind: {
             type: 'string',
@@ -1318,7 +1290,6 @@ export const sTransactionEntryPersonal = {
         'transactionId',
         'userId',
         'createdAt',
-        'direction',
         'kind',
         'payload'
     ]
@@ -1341,9 +1312,6 @@ export const sTransactionEntryCommon = {
         },
         createdAt: {
             type: 'string'
-        },
-        direction: {
-            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
         },
         kind: {
             type: 'string',
@@ -1379,7 +1347,6 @@ export const sTransactionEntryCommon = {
         'transactionId',
         'userId',
         'createdAt',
-        'direction',
         'kind',
         'payload'
     ]

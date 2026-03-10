@@ -15,10 +15,7 @@ export namespace Package {
 	}
 }
 
-export const Package: FC<Package.Props> = ({
-	transactionEntry,
-	...props
-}) => {
+export const Package: FC<Package.Props> = ({ transactionEntry, ...props }) => {
 	const locale = useLocale();
 	const url = new URL(transactionEntry.payload.link);
 	const domain = url.hostname.replace(/^www\./, "");
@@ -50,9 +47,7 @@ export const Package: FC<Package.Props> = ({
 			}}
 			className={[
 				"w-2/3",
-				transactionEntry.direction === "out"
-					? "ml-auto"
-					: undefined,
+				transactionEntry.direction === "out" ? "ml-auto" : undefined,
 				transactionEntry.direction === "system"
 					? [
 							"mx-auto",

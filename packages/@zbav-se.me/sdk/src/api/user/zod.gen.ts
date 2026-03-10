@@ -670,19 +670,6 @@ export const zAllowedContentTypesEnum = z.enum([
 
 export type zAllowedContentTypesEnum = z.infer<typeof zAllowedContentTypesEnum>;
 
-/**
- * Direction of the entry relative to the current user
- */
-export const zTransactionEntryDirectionEnum = z.enum([
-    'in',
-    'out',
-    'system'
-]).register(z.globalRegistry, {
-    description: 'Direction of the entry relative to the current user'
-});
-
-export type zTransactionEntryDirectionEnum = z.infer<typeof zTransactionEntryDirectionEnum>;
-
 export const zTransactionEntryText = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'Transaction entry identifier'
@@ -694,7 +681,6 @@ export const zTransactionEntryText = z.object({
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
-    direction: zTransactionEntryDirectionEnum,
     kind: z.enum(['text']),
     payload: z.object({
         text: z.string().register(z.globalRegistry, {
@@ -716,7 +702,6 @@ export const zTransactionEntryGallery = z.object({
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
-    direction: zTransactionEntryDirectionEnum,
     kind: z.enum(['gallery']),
     payload: z.object({
         galleryId: z.string().register(z.globalRegistry, {
@@ -738,7 +723,6 @@ export const zTransactionEntryLocation = z.object({
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
-    direction: zTransactionEntryDirectionEnum,
     kind: z.enum(['location']),
     payload: z.object({
         locationId: z.string().register(z.globalRegistry, {
@@ -760,7 +744,6 @@ export const zTransactionEntryPackage = z.object({
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
-    direction: zTransactionEntryDirectionEnum,
     kind: z.enum(['package']),
     payload: z.object({
         link: z.url().register(z.globalRegistry, {
@@ -783,7 +766,6 @@ export const zTransactionEntryPersonal = z.object({
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
-    direction: zTransactionEntryDirectionEnum,
     kind: z.enum(['personal']),
     payload: z.object({
         name: z.string().register(z.globalRegistry, {
@@ -817,7 +799,6 @@ export const zTransactionEntryCommon = z.object({
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
-    direction: zTransactionEntryDirectionEnum,
     kind: z.enum([
         'status-pending',
         'status-open',

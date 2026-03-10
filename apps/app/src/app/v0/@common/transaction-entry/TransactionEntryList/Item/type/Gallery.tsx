@@ -15,10 +15,7 @@ export namespace Gallery {
 	}
 }
 
-export const Gallery: FC<Gallery.Props> = ({
-	transactionEntry,
-	...props
-}) => {
+export const Gallery: FC<Gallery.Props> = ({ transactionEntry, ...props }) => {
 	const locale = useLocale();
 	const { data: gallery } = withGalleryFetchQuery.useSuspenseQuery({
 		where: {
@@ -36,9 +33,7 @@ export const Gallery: FC<Gallery.Props> = ({
 			className={[
 				"w-2/3",
 				"h-48",
-				transactionEntry.direction === "out"
-					? "ml-auto"
-					: undefined,
+				transactionEntry.direction === "out" ? "ml-auto" : undefined,
 				transactionEntry.direction === "system"
 					? [
 							"mx-auto",

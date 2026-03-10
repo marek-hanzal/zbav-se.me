@@ -18,11 +18,7 @@ export namespace Common {
 	}
 }
 
-export const Common: FC<Common.Props> = ({
-	side,
-	transactionEntry,
-	...props
-}) => {
+export const Common: FC<Common.Props> = ({ side, transactionEntry, ...props }) => {
 	const locale = useLocale();
 
 	return (
@@ -55,12 +51,8 @@ export const Common: FC<Common.Props> = ({
 			}}
 			className={[
 				"w-2/3",
-				transactionEntry.direction === "out"
-					? "ml-auto"
-					: undefined,
-				transactionEntry.direction === "system"
-					? "w-full"
-					: undefined,
+				transactionEntry.direction === "out" ? "ml-auto" : undefined,
+				transactionEntry.direction === "system" ? "w-full" : undefined,
 			]}
 			{...props}
 		>

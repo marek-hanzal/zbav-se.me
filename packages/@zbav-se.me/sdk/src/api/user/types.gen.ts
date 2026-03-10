@@ -729,7 +729,6 @@ export type tTransactionEntryText = {
      * Creation timestamp
      */
     createdAt: string;
-    direction: tTransactionEntryDirectionEnum;
     kind: 'text';
     payload: {
         /**
@@ -739,20 +738,6 @@ export type tTransactionEntryText = {
         [key: string]: unknown;
     };
 };
-
-/**
- * Direction of the entry relative to the current user
- */
-export const tTransactionEntryDirectionEnum = {
-    in: 'in',
-    out: 'out',
-    system: 'system'
-} as const;
-
-/**
- * Direction of the entry relative to the current user
- */
-export type tTransactionEntryDirectionEnum = typeof tTransactionEntryDirectionEnum[keyof typeof tTransactionEntryDirectionEnum];
 
 export type tTransactionEntryGallery = {
     /**
@@ -771,7 +756,6 @@ export type tTransactionEntryGallery = {
      * Creation timestamp
      */
     createdAt: string;
-    direction: tTransactionEntryDirectionEnum;
     kind: 'gallery';
     payload: {
         /**
@@ -799,7 +783,6 @@ export type tTransactionEntryLocation = {
      * Creation timestamp
      */
     createdAt: string;
-    direction: tTransactionEntryDirectionEnum;
     kind: 'location';
     payload: {
         /**
@@ -827,7 +810,6 @@ export type tTransactionEntryPackage = {
      * Creation timestamp
      */
     createdAt: string;
-    direction: tTransactionEntryDirectionEnum;
     kind: 'package';
     payload: {
         /**
@@ -859,7 +841,6 @@ export type tTransactionEntryPersonal = {
      * Creation timestamp
      */
     createdAt: string;
-    direction: tTransactionEntryDirectionEnum;
     kind: 'personal';
     payload: {
         /**
@@ -902,7 +883,6 @@ export type tTransactionEntryCommon = {
      * Creation timestamp
      */
     createdAt: string;
-    direction: tTransactionEntryDirectionEnum;
     kind: 'status-pending' | 'status-open' | 'status-resolved' | 'status-dispute-buyer' | 'status-dispute-seller' | 'status-rejected-buyer' | 'status-rejected-seller' | 'status-sold' | 'status-expired' | 'status-success' | 'status-closed';
     payload: {
         /**

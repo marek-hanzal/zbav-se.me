@@ -13,10 +13,7 @@ export namespace Location {
 	}
 }
 
-export const Location: FC<Location.Props> = ({
-	transactionEntry,
-	...props
-}) => {
+export const Location: FC<Location.Props> = ({ transactionEntry, ...props }) => {
 	const locale = useLocale();
 	const { data: location } = withLocationFetchQuery.useSuspenseQuery({
 		where: {
@@ -55,9 +52,7 @@ export const Location: FC<Location.Props> = ({
 			}}
 			className={[
 				"w-2/3",
-				transactionEntry.direction === "out"
-					? "ml-auto"
-					: undefined,
+				transactionEntry.direction === "out" ? "ml-auto" : undefined,
 				transactionEntry.direction === "system"
 					? [
 							"mx-auto",

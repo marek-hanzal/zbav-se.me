@@ -18,11 +18,7 @@ export namespace Text {
 	}
 }
 
-export const Text: FC<Text.Props> = ({
-	side,
-	transactionEntry,
-	...props
-}) => {
+export const Text: FC<Text.Props> = ({ side, transactionEntry, ...props }) => {
 	const locale = useLocale();
 
 	return (
@@ -55,12 +51,8 @@ export const Text: FC<Text.Props> = ({
 			}}
 			className={[
 				"w-2/3",
-				transactionEntry.direction === "out"
-					? "ml-auto"
-					: undefined,
-				transactionEntry.direction === "system"
-					? "w-full"
-					: undefined,
+				transactionEntry.direction === "out" ? "ml-auto" : undefined,
+				transactionEntry.direction === "system" ? "w-full" : undefined,
 			]}
 			{...props}
 		>
