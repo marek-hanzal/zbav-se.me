@@ -22,6 +22,7 @@ This domain unifies former seller session and seller user capabilities behind `/
 - **Transaction Listing** - Collection/count/fetch listing aggregates
 - Status authority now lives directly on `transaction.status` with `transaction.statusUpdatedAt`,
   so seller transaction collection/count queries read current status without a separate status history table.
+- Seller transaction status actions append shared status/system timeline entries through the user transaction helpers.
 
 ## Access Rules
 

@@ -33,6 +33,7 @@ This domain unifies former buyer session and buyer user capabilities behind `/ap
 
 ### Transactions
 - **Transaction** - Collection/count/create/fetch/close/dispute/reject/success
+- Buyer transaction status actions append shared status/system timeline entries through the user transaction helpers.
 
 ### User Events
 - Buyer and seller scoring/behavior info used in buyer flows.

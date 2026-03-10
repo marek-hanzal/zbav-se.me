@@ -71,7 +71,8 @@ This domain handles all operations on user-owned, private data. Everything in th
 - Shared transaction state helpers live under `@user/transaction`
 - Status authority is stored directly on `transaction.status` and `transaction.statusUpdatedAt`
 - `transactionTransitionFx` is the pure state-machine gate for both status transitions and transaction-entry write permissions
-- `transactionUpdateStatusFx` applies validated status writes, appends system/status timeline entries, and runs terminal cleanup
+- `transactionUpdateStatusFx` applies validated status writes and runs terminal cleanup
+- `transactionStatusMessageFx` is the shared source of truth for appending status/system timeline entries
 - Buyer/seller domains trigger state changes through transaction-scoped actions, not a standalone status domain
 
 ### Upload Management
