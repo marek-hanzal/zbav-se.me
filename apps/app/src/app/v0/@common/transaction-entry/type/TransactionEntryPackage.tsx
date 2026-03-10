@@ -50,11 +50,8 @@ export const TransactionEntryPackage: FC<TransactionEntryPackage.Props> = ({
 			}}
 			className={[
 				"w-2/3",
-				transactionEntry.direction === "in" ? [] : undefined,
 				transactionEntry.direction === "out"
-					? [
-							"ml-auto",
-						]
+					? "ml-auto"
 					: undefined,
 				transactionEntry.direction === "system"
 					? [

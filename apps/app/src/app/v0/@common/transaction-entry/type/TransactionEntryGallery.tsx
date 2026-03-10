@@ -36,11 +36,8 @@ export const TransactionEntryGallery: FC<TransactionEntryGallery.Props> = ({
 			className={[
 				"w-2/3",
 				"h-48",
-				transactionEntry.direction === "in" ? [] : undefined,
 				transactionEntry.direction === "out"
-					? [
-							"ml-auto",
-						]
+					? "ml-auto"
 					: undefined,
 				transactionEntry.direction === "system"
 					? [

@@ -4,7 +4,7 @@ import { Mx } from "@use-pico/client/ui/mx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
-import type { tTransactionEntryCommon, tTransactionEntryText } from "@zbav-se.me/sdk/api/user";
+import type { tTransactionEntryText } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
@@ -14,7 +14,7 @@ export namespace TransactionEntryText {
 		 * From which point of view the message is displayed
 		 */
 		side: tUserSideEnum;
-		transactionEntry: tTransactionEntryText | tTransactionEntryCommon;
+		transactionEntry: tTransactionEntryText;
 	}
 }
 
@@ -55,16 +55,11 @@ export const TransactionEntryText: FC<TransactionEntryText.Props> = ({
 			}}
 			className={[
 				"w-2/3",
-				transactionEntry.direction === "in" ? [] : undefined,
 				transactionEntry.direction === "out"
-					? [
-							"ml-auto",
-						]
+					? "ml-auto"
 					: undefined,
 				transactionEntry.direction === "system"
-					? [
-							"w-full",
-						]
+					? "w-full"
 					: undefined,
 			]}
 			{...props}
