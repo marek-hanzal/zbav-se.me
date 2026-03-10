@@ -46,6 +46,7 @@ This domain handles all operations on user-owned, private data. Everything in th
 - **Count** - Count inbox items for active/archived sections
 - **Patch** - Mark one inbox item as archived/read
 - **Archive** - Bulk archive selected items using `InboxQuery`
+- Inbox contracts are discriminated by root `type`, not by payload-only unions
 - Family:
   - `message`
   - `reaction`
