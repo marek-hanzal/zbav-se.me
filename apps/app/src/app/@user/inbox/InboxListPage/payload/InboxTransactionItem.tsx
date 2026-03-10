@@ -27,21 +27,29 @@ export const InboxTransactionItem: FC<InboxTransactionItem.Props> = ({ item }) =
 	return (
 		<LinkTo
 			{...match(item.payload.target)
-				.with("buyer", () => ({
-					to: "/$locale/buyer/message/$transactionId",
-					params: {
-						locale,
-						transactionId: item.payload.transactionId,
-					},
-				} as const))
-				.with("seller", () => ({
-					to: "/$locale/seller/message/$listingId/$transactionId",
-					params: {
-						locale,
-						listingId: item.payload.listingId,
-						transactionId: item.payload.transactionId,
-					},
-				} as const))
+				.with(
+					"buyer",
+					() =>
+						({
+							to: "/$locale/buyer/message/$transactionId",
+							params: {
+								locale,
+								transactionId: item.payload.transactionId,
+							},
+						}) as const,
+				)
+				.with(
+					"seller",
+					() =>
+						({
+							to: "/$locale/seller/message/$listingId/$transactionId",
+							params: {
+								locale,
+								listingId: item.payload.listingId,
+								transactionId: item.payload.transactionId,
+							},
+						}) as const,
+				)
 				.exhaustive()}
 			onClick={() => {
 				if (item.archivedAt) {
@@ -56,8 +64,8 @@ export const InboxTransactionItem: FC<InboxTransactionItem.Props> = ({ item }) =
 							id: item.id,
 						},
 					},
-					});
-				}}
+				});
+			}}
 		>
 			<ListItem
 				hero={undefined}
