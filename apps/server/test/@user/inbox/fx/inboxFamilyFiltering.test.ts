@@ -33,10 +33,7 @@ describe("inbox family", () => {
 					family: "message",
 					type: "buyer-message",
 					payload: {
-						type: "buyer-message",
 						transactionId: "tx-1",
-						listingId: "listing-1",
-						messageThreadId: "thread-1",
 					},
 					priority: "high",
 					archivedAt: null,
@@ -48,9 +45,8 @@ describe("inbox family", () => {
 					family: "reaction",
 					type: "thumb",
 					payload: {
-						type: "thumb",
 						listingId: "listing-1",
-						thumb: "up",
+						thumb: "like",
 					},
 					priority: "common",
 					archivedAt: null,

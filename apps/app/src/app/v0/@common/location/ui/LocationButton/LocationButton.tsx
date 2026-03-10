@@ -1,8 +1,6 @@
-import { useQueryClient } from "@tanstack/react-query";
 import type { StateType } from "@use-pico/common/type";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
-import { withTransactionMessageLocationCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
-import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
+import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import type { FC } from "react";
 import { useState } from "react";
 import { Content } from "./Content";
@@ -12,20 +10,22 @@ import { Trigger } from "./Trigger";
 export namespace LocationButton {
 	export interface Props extends Omit<Trigger.Props, "onOpen"> {
 		transactionId: string;
-		messageThreadId: string;
 	}
 }
 
-export const LocationButton: FC<LocationButton.Props> = ({
-	transactionId,
-	messageThreadId,
-	...props
-}) => {
-	const queryClient = useQueryClient();
+export const LocationButton: FC<LocationButton.Props> = ({ transactionId, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [locationId, setLocationId] = useState<string | undefined | null>(null);
 	const [location, setLocation] = useState<tLocation | undefined>(undefined);
-	const mutation = withTransactionMessageLocationCreateMutation.useMutation();
+	const mutation = withTransactionEntryQuery.useCreateMutation({
+		invalidate: [
+			"collection",
+			"count",
+		],
+		async onPostMutation() {
+			setIsOpen(false);
+		},
+	});
 
 	const isOpenState: StateType.State<boolean> = {
 		value: isOpen,
@@ -62,25 +62,13 @@ export const LocationButton: FC<LocationButton.Props> = ({
 							return;
 						}
 
-						mutation.mutate(
-							{
-								transactionId,
+						mutation.mutate({
+							transactionId,
+							kind: "location",
+							payload: {
 								locationId,
 							},
-							{
-								onSuccess() {
-									setIsOpen(false);
-									withMessageThreadMessageCollectionQuery.invalidate(
-										queryClient,
-										{
-											path: {
-												messageThreadId,
-											},
-										},
-									);
-								},
-							},
-						);
+						});
 					}}
 				/>
 			</Sheet>

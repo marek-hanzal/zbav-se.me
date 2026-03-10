@@ -1633,10 +1633,6 @@ export type tTransaction = {
      */
     listingId: string;
     /**
-     * ID of the message thread associated with the transaction
-     */
-    messageThreadId: string;
-    /**
      * Creation timestamp
      */
     createdAt: string;
@@ -1644,6 +1640,11 @@ export type tTransaction = {
      * Last update timestamp
      */
     updatedAt: string;
+    status: tTransactionStatusEnum;
+    /**
+     * Last status update timestamp
+     */
+    statusUpdatedAt: string;
     /**
      * Expiration timestamp
      */
@@ -1652,7 +1653,6 @@ export type tTransaction = {
      * Transaction title
      */
     title: string;
-    status: tTransactionStatusEnum;
     gallery: tGallery & unknown;
     /**
      * Price of the listing
@@ -1671,6 +1671,7 @@ export const tTransactionStatusEnum = {
     open: 'open',
     resolved: 'resolved',
     dispute: 'dispute',
+    sold: 'sold',
     rejected: 'rejected',
     expired: 'expired',
     success: 'success',
@@ -1793,86 +1794,6 @@ export type tTransactionCreate = {
      * ID of the listing to start a transaction for
      */
     listingId: string;
-};
-
-/**
- * Listing transaction status entry
- */
-export type tTransactionStatus = {
-    /**
-     * ID of the transaction status entry
-     */
-    id: string;
-    /**
-     * ID of the transaction referenced by the status
-     */
-    transactionId: string;
-    /**
-     * ID of the listing referenced by the status
-     */
-    listingId: string;
-    side: tTransactionSideEnum;
-    status: tTransactionStatusEnum;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-};
-
-/**
- * Who initiated or affected the transaction change
- */
-export const tTransactionSideEnum = {
-    seller: 'seller',
-    buyer: 'buyer',
-    transaction: 'transaction',
-    system: 'system',
-    unknown: 'unknown'
-} as const;
-
-/**
- * Who initiated or affected the transaction change
- */
-export type tTransactionSideEnum = typeof tTransactionSideEnum[keyof typeof tTransactionSideEnum];
-
-/**
- * Request to close a listing transaction
- */
-export type tTransactionStatusClose = {
-    /**
-     * The ID of the listing transaction to close
-     */
-    transactionId: string;
-};
-
-/**
- * Request to dispute a listing transaction
- */
-export type tTransactionStatusDispute = {
-    /**
-     * The ID of the listing transaction to dispute
-     */
-    transactionId: string;
-};
-
-/**
- * Request to reject a listing transaction
- */
-export type tTransactionStatusReject = {
-    /**
-     * The ID of the listing transaction to reject
-     */
-    transactionId: string;
-};
-
-/**
- * Request to mark a listing transaction as successful
- */
-export type tTransactionStatusSuccess = {
-    /**
-     * The ID of the listing transaction to mark as successful
-     */
-    transactionId: string;
 };
 
 export type tApiFavouriteCollectionRequest = {
@@ -2616,6 +2537,44 @@ export type tApiThumbCreateResponse = {
 
 export type apiThumbCreateResponse = tApiThumbCreateResponse[keyof tApiThumbCreateResponse];
 
+export type tApiTransactionCloseRequest = {
+    body?: never;
+    path: {
+        /**
+         * Transaction identifier
+         */
+        transactionId: string;
+    };
+    query?: never;
+    url: '/api/buyer/transaction/{transactionId}/close';
+};
+
+export type apiTransactionCloseErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionCloseError = apiTransactionCloseErrors[keyof apiTransactionCloseErrors];
+
+export type tApiTransactionCloseResponse = {
+    /**
+     * Transaction was closed
+     */
+    200: tTransaction;
+};
+
+export type apiTransactionCloseResponse = tApiTransactionCloseResponse[keyof tApiTransactionCloseResponse];
+
 export type tApiTransactionCollectionRequest = {
     body?: tTransactionQuery;
     path?: never;
@@ -2678,6 +2637,10 @@ export type tApiTransactionCreateRequest = {
 
 export type apiTransactionCreateErrors = {
     /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
      * Listing not found
      */
     404: tNotice;
@@ -2701,6 +2664,44 @@ export type tApiTransactionCreateResponse = {
 };
 
 export type apiTransactionCreateResponse = tApiTransactionCreateResponse[keyof tApiTransactionCreateResponse];
+
+export type tApiTransactionDisputeRequest = {
+    body?: never;
+    path: {
+        /**
+         * Transaction identifier
+         */
+        transactionId: string;
+    };
+    query?: never;
+    url: '/api/buyer/transaction/{transactionId}/dispute';
+};
+
+export type apiTransactionDisputeErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionDisputeError = apiTransactionDisputeErrors[keyof apiTransactionDisputeErrors];
+
+export type tApiTransactionDisputeResponse = {
+    /**
+     * Transaction was disputed
+     */
+    200: tTransaction;
+};
+
+export type apiTransactionDisputeResponse = tApiTransactionDisputeResponse[keyof tApiTransactionDisputeResponse];
 
 export type tApiTransactionFetchRequest = {
     /**
@@ -2734,17 +2735,19 @@ export type tApiTransactionFetchResponse = {
 
 export type apiTransactionFetchResponse = tApiTransactionFetchResponse[keyof tApiTransactionFetchResponse];
 
-export type tApiTransactionStatusCloseRequest = {
-    /**
-     * Query object for listing transaction access validation
-     */
-    body?: tTransactionStatusClose;
-    path?: never;
+export type tApiTransactionRejectRequest = {
+    body?: never;
+    path: {
+        /**
+         * Transaction identifier
+         */
+        transactionId: string;
+    };
     query?: never;
-    url: '/api/buyer/transaction/status/close';
+    url: '/api/buyer/transaction/{transactionId}/reject';
 };
 
-export type apiTransactionStatusCloseErrors = {
+export type apiTransactionRejectErrors = {
     /**
      * Invalid request
      */
@@ -2759,28 +2762,30 @@ export type apiTransactionStatusCloseErrors = {
     500: tNotice;
 };
 
-export type apiTransactionStatusCloseError = apiTransactionStatusCloseErrors[keyof apiTransactionStatusCloseErrors];
+export type apiTransactionRejectError = apiTransactionRejectErrors[keyof apiTransactionRejectErrors];
 
-export type tApiTransactionStatusCloseResponse = {
+export type tApiTransactionRejectResponse = {
     /**
-     * Closed status created
+     * Transaction was rejected
      */
-    200: tTransactionStatus;
+    200: tTransaction;
 };
 
-export type apiTransactionStatusCloseResponse = tApiTransactionStatusCloseResponse[keyof tApiTransactionStatusCloseResponse];
+export type apiTransactionRejectResponse = tApiTransactionRejectResponse[keyof tApiTransactionRejectResponse];
 
-export type tApiTransactionStatusDisputeRequest = {
-    /**
-     * Query object for listing transaction access validation
-     */
-    body?: tTransactionStatusDispute;
-    path?: never;
+export type tApiTransactionSuccessRequest = {
+    body?: never;
+    path: {
+        /**
+         * Transaction identifier
+         */
+        transactionId: string;
+    };
     query?: never;
-    url: '/api/buyer/transaction/status/dispute';
+    url: '/api/buyer/transaction/{transactionId}/success';
 };
 
-export type apiTransactionStatusDisputeErrors = {
+export type apiTransactionSuccessErrors = {
     /**
      * Invalid request
      */
@@ -2795,85 +2800,13 @@ export type apiTransactionStatusDisputeErrors = {
     500: tNotice;
 };
 
-export type apiTransactionStatusDisputeError = apiTransactionStatusDisputeErrors[keyof apiTransactionStatusDisputeErrors];
+export type apiTransactionSuccessError = apiTransactionSuccessErrors[keyof apiTransactionSuccessErrors];
 
-export type tApiTransactionStatusDisputeResponse = {
+export type tApiTransactionSuccessResponse = {
     /**
-     * Disputed status created
+     * Transaction was marked as successful
      */
-    200: tTransactionStatus;
+    200: tTransaction;
 };
 
-export type apiTransactionStatusDisputeResponse = tApiTransactionStatusDisputeResponse[keyof tApiTransactionStatusDisputeResponse];
-
-export type tApiTransactionStatusRejectRequest = {
-    /**
-     * Query object for listing transaction access validation
-     */
-    body?: tTransactionStatusReject;
-    path?: never;
-    query?: never;
-    url: '/api/buyer/transaction/status/reject';
-};
-
-export type apiTransactionStatusRejectErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Listing transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionStatusRejectError = apiTransactionStatusRejectErrors[keyof apiTransactionStatusRejectErrors];
-
-export type tApiTransactionStatusRejectResponse = {
-    /**
-     * Rejected status created
-     */
-    200: tTransactionStatus;
-};
-
-export type apiTransactionStatusRejectResponse = tApiTransactionStatusRejectResponse[keyof tApiTransactionStatusRejectResponse];
-
-export type tApiTransactionStatusSuccessRequest = {
-    /**
-     * Query object for listing transaction access validation
-     */
-    body?: tTransactionStatusSuccess;
-    path?: never;
-    query?: never;
-    url: '/api/buyer/transaction/status/success';
-};
-
-export type apiTransactionStatusSuccessErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Listing transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionStatusSuccessError = apiTransactionStatusSuccessErrors[keyof apiTransactionStatusSuccessErrors];
-
-export type tApiTransactionStatusSuccessResponse = {
-    /**
-     * Success status created
-     */
-    200: tTransactionStatus;
-};
-
-export type apiTransactionStatusSuccessResponse = tApiTransactionStatusSuccessResponse[keyof tApiTransactionStatusSuccessResponse];
+export type apiTransactionSuccessResponse = tApiTransactionSuccessResponse[keyof tApiTransactionSuccessResponse];

@@ -34,6 +34,6 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 			jsonObjectFrom(gallerySelect.where("gal.id", "=", eb.ref("l.galleryId")).limit(1))
 				.$notNull()
 				.as("gallery"),
-		(eb) => eb.ref("status.latestStatus").$notNull().as("status"),
+		(eb) => eb.ref("lt.status").$notNull().as("status"),
 	]);
 });

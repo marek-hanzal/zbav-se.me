@@ -26,8 +26,9 @@ All enum schemas correspond to PostgreSQL enum types created in migrations:
 - **ListingEventEnumSchema** - Listing event types (`impression`, `view`, `ignore`, `unignore`, `flag`, `unflag`, `transaction`, `favourite`, `unfavourite`, `like`, `dislike`)
 
 ### Transaction Enums
-- **TransactionStatusEnumSchema** - Transaction status (`pending`, `open`, `resolved`, `dispute`, `rejected`, `expired`, `success`, `closed`)
+- **TransactionStatusEnumSchema** - Transaction status (`pending`, `open`, `resolved`, `dispute`, `sold`, `rejected`, `expired`, `success`, `closed`)
 - **TransactionSideEnumSchema** - Transaction side/initiator (`seller`, `buyer`, `transaction`, `system`, `unknown`)
+- **TransactionEntryKindEnumSchema** - Transaction timeline entry kind (`text`, `gallery`, `location`, `package`, `personal`, `status-*`)
 
 ### User Enums
 - **UserSideEnumSchema** - User side (`seller`, `buyer`)
@@ -41,7 +42,7 @@ All enum schemas correspond to PostgreSQL enum types created in migrations:
 
 ### Inbox Enums
 - **InboxPriorityEnumSchema** - Inbox priority (`common`, `high`)
-- **InboxTypeEnumSchema** - Inbox type (`seller-message`, `buyer-message`, `thumb`)
+- **InboxTypeEnumSchema** - Inbox type (`buyer-message`, `seller-message`, `transaction`, `system`, `unknown`, `thumb`, `favourite`, `unfavourite`)
 
 ## Usage
 
@@ -69,6 +70,7 @@ Each enum schema corresponds to a PostgreSQL enum type created in migrations:
 - `listing_event_type_enum` → `ListingEventEnumSchema`
 - `transaction_status_enum` → `TransactionStatusEnumSchema`
 - `transaction_side_enum` → `TransactionSideEnumSchema`
+- `transaction_entry_kind_enum` → `TransactionEntryKindEnumSchema`
 - `user_ex_side_enum` → `UserSideEnumSchema`
 - `user_event_scope_enum` → `UserEventScopeEnumSchema`
 - `thumb_enum` → `ThumbEnumSchema`
@@ -79,9 +81,9 @@ Each enum schema corresponds to a PostgreSQL enum type created in migrations:
 ## Adding New Enums
 
 When adding a new enum to the database:
-1. Create the enum type in a migration using `createType().asEnum()`
+1. Create the enum type in a migration using `toEnumGuard<EnumSchema.Type>()([... ] as const)`
 2. Create a corresponding Zod schema in this directory
-3. Use the same values in both the migration and the schema
+3. Keep the migration array wrapped with `toEnumGuard` so enum drift fails loudly
 4. Update this README with the new enum
 
 ## Related Directories

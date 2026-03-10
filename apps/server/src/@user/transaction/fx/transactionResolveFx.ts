@@ -34,36 +34,20 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 		kysely
 			.selectFrom("transaction as lt")
 			.innerJoin("listing as l", "lt.listingId", "l.id")
+			.innerJoin("transaction_user as tu", "tu.transactionId", "lt.id")
 			.select([
 				"lt.id",
 				"lt.listingId",
-				"lt.messageThreadId",
 				"l.userId as sellerId",
 				"lt.userId as buyerId",
+				"tu.side",
+				"lt.status",
 			])
-			.select((eb) => {
-				return eb
-					.selectFrom("transaction_status as lts")
-					.select("lts.status")
-					.whereRef("lts.transactionId", "=", "lt.id")
-					.orderBy("lts.createdAt", "desc")
-					.orderBy("lts.id", "desc")
-					.limit(1)
-					.as("status");
-			})
 			/**
 			 * For which transaction we want to resolve
 			 */
 			.where("lt.id", "=", transactionId)
-			/**
-			 * We've to check if current user is on either side of the transaction
-			 */
-			.where((eb) => {
-				return eb.or([
-					eb("lt.userId", "=", userId),
-					eb("l.userId", "=", userId),
-				]);
-			})
+			.where("tu.userId", "=", userId)
 			.executeTakeFirst(),
 	);
 
@@ -93,10 +77,7 @@ export const transactionResolveFx = Effect.fn("transactionResolveFx")(function* 
 		});
 	}
 
-	return {
-		...transaction,
-		side: transaction.buyerId === userId ? "buyer" : "seller",
-	} as const;
+	return transaction;
 });
 
 export type transactionResolveFx = ReturnType<typeof transactionResolveFx>;

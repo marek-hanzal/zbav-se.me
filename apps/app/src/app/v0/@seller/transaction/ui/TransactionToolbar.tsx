@@ -2,9 +2,9 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { DisputeToolbar } from "~/app/v0/@seller/transaction-status/ui/DisputeToolbar";
-import { OpenToolbar } from "~/app/v0/@seller/transaction-status/ui/OpenToolbar";
-import { ResolvedToolbar } from "~/app/v0/@seller/transaction-status/ui/ResolvedToolbar";
+import { DisputeToolbar } from "~/app/v0/@seller/transaction/ui/status/DisputeToolbar";
+import { OpenToolbar } from "~/app/v0/@seller/transaction/ui/status/OpenToolbar";
+import { ResolvedToolbar } from "~/app/v0/@seller/transaction/ui/status/ResolvedToolbar";
 
 export namespace TransactionToolbar {
 	export interface Props extends Container.Props {
@@ -23,7 +23,7 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({ transaction, 
 		.with("dispute", () => {
 			return <DisputeToolbar transaction={transaction} />;
 		})
-		.with("pending", "rejected", "expired", "success", "closed", () => {
+		.with("pending", "rejected", "sold", "expired", "success", "closed", () => {
 			return null;
 		})
 		.exhaustive();

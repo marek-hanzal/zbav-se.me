@@ -1,10 +1,7 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
-import { withTransactionStatusAcceptMutation } from "@zbav-se.me/sdk/mutation/seller/transaction-status";
-import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
-import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
+import { withTransactionAcceptMutation } from "@zbav-se.me/sdk/mutation/seller/transaction";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
@@ -15,41 +12,19 @@ export namespace AcceptButton {
 }
 
 export const AcceptButton: FC<AcceptButton.Props> = ({ transaction, ...props }) => {
-	const queryClient = useQueryClient();
-	const mutation = withTransactionStatusAcceptMutation.useMutation();
+	const mutation = withTransactionAcceptMutation.useMutation();
 
 	return (
 		<Button
 			data-ui="AcceptButton[Button]"
 			iconEnabled={CheckIcon}
 			onClick={() => {
-				mutation.mutate(
-					{
+				mutation.mutate({
+					path: {
 						transactionId: transaction.id,
 					},
-					{
-						onSuccess() {
-							withTransactionQuery.invalidator(
-								queryClient,
-								[
-									"fetch",
-								],
-								{
-									fetch: {
-										where: {
-											id: transaction.id,
-										},
-									},
-								},
-							);
-							withMessageThreadMessageCollectionQuery.invalidate(queryClient, {
-								path: {
-									messageThreadId: transaction.messageThreadId,
-								},
-							});
-						},
-					},
-				);
+					url: "/api/seller/transaction/{transactionId}/accept",
+				});
 			}}
 			loading={mutation.isPending}
 			disabled={mutation.isPending}

@@ -24,22 +24,21 @@ This domain handles all operations on user-owned, private data. Everything in th
   - Listing gallery payloads join `upload` directly and use a covering
     `gallery_item ("galleryId", "sort") INCLUDE ("id", "uploadId")` index to avoid nested upload lookups.
 
-### Message System
-- **Message Thread** - Conversation threads
-  - **Collection** - List message threads
-  - **Create** - Start new thread
-  - **Fetch** - Get thread details
-  - **Patch** - Update thread
-- **Message** - Individual messages in threads
-  - **Collection** - List messages in thread
-- **Message Types**:
-  - `message_text` - Text messages
-  - `message_gallery` - Photo attachments
-  - `message_location` - Location sharing
-  - `message_package` - Package/tracking info
-  - `message_personal` - Personal contact info
-  - `message_system` - System notifications
-- **Message Thread User** - Thread participants
+### Transaction Entry System
+- **Transaction Entry** - Unified transaction timeline API
+  - **Collection** - List transaction entries with query/filter/sort/cursor
+  - **Count** - Count transaction entries for a query
+  - **Fetch** - Get one transaction entry by query
+  - **Create** - Create one user-authored typed transaction entry
+- Transaction entry contracts are discriminated by root `kind`, not by payload-only unions
+- **Transaction Entry Kinds**:
+  - `text` - Text timeline entries
+  - `gallery` - Photo attachments
+  - `location` - Location sharing
+  - `package` - Package/tracking info
+  - `personal` - Personal contact info
+  - `status-*` - System/status timeline entries
+- Public `/transaction-entry/create` accepts only the user-authored kinds above; `status-*` entries are internal-only
 
 ### Inbox
 - **Collection** - List inbox items with query/filter/sort/cursor
@@ -47,33 +46,40 @@ This domain handles all operations on user-owned, private data. Everything in th
 - **Count** - Count inbox items for active/archived sections
 - **Patch** - Mark one inbox item as archived/read
 - **Archive** - Bulk archive selected items using `InboxQuery`
+- Inbox contracts are discriminated by root `type`, not by payload-only unions
 - Family:
   - `message`
   - `reaction`
 - Types:
-  - `seller-message`
   - `buyer-message`
+  - `seller-message`
+  - `transaction`
+  - `system`
+  - `unknown`
   - `thumb`
   - `favourite`
   - `unfavourite`
+- Transaction-like inbox payloads (`transaction`, `system`, `unknown`) carry `transactionId`, `listingId`, and recipient `target` so the app can deep-link into the correct buyer/seller transaction detail route.
 - Local Docker Compose upgrade for existing databases:
   - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'ALTER TABLE "inbox" ADD COLUMN IF NOT EXISTS "family" text;'`
-- Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c "UPDATE \"inbox\" SET \"family\" = CASE WHEN \"type\" IN ('seller-message', 'buyer-message') THEN 'message' WHEN \"type\" IN ('thumb', 'favourite', 'unfavourite') THEN 'reaction' ELSE \"family\" END WHERE \"family\" IS NULL;"`
+- Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c "UPDATE \"inbox\" SET \"family\" = CASE WHEN \"type\" IN ('buyer-message', 'seller-message', 'transaction', 'system', 'unknown') THEN 'message' WHEN \"type\" IN ('thumb', 'favourite', 'unfavourite') THEN 'reaction' ELSE \"family\" END WHERE \"family\" IS NULL;"`
   - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'ALTER TABLE "inbox" ALTER COLUMN "family" SET NOT NULL;'`
   - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'CREATE INDEX IF NOT EXISTS "inbox_[userId-family]_idx" ON "inbox" ("userId", "family");'`
 
-### Transaction Messages
-- Transaction-specific message types:
-  - **Transaction Message Text** - Text in transaction
-  - **Transaction Message Gallery** - Photos in transaction
-  - **Transaction Message Location** - Meeting place
-  - **Transaction Message Package** - Shipping info
-  - **Transaction Message Personal** - Contact details
+### Transaction Timeline
+- Transaction communication now enters through the unified **Transaction Entry** API.
+- Transaction-scoped write rules still apply:
+  - `pending` blocks user-authored writes
+  - `open` and `dispute` allow typed entry creation for both sides, with `package` still seller-only
+- `resolved` keeps chat open only for buyer `text`, but blocks seller replies and the richer structured entry kinds
 
-### Transaction Status
-- User-level transaction status operations
-- Cross-domain transaction state management
-- Transaction status resolution reads latest rows by timestamp and uses deterministic ordering for tied timestamps.
+### Transaction State
+- Shared transaction state helpers live under `@user/transaction`
+- Status authority is stored directly on `transaction.status` and `transaction.statusUpdatedAt`
+- `transactionTransitionFx` is the pure state-machine gate for both status transitions and transaction-entry write permissions
+- `transactionUpdateStatusFx` applies validated status writes and runs terminal cleanup
+- `transactionStatusMessageFx` is the shared source of truth for appending status/system timeline entries
+- Buyer/seller domains trigger state changes through transaction-scoped actions, not a standalone status domain
 
 ### Upload Management
 - **Collection** - List user's uploads
@@ -114,7 +120,7 @@ This domain handles all operations on user-owned, private data. Everything in th
 ## Use Cases
 
 - Managing personal galleries and photos
-- Sending and receiving messages
+- Sending and receiving transaction timeline entries
 - Managing transaction communications
 - Tracking user activity and events
 - Managing file uploads

@@ -1,10 +1,8 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
-import { withTransactionMessageTextCreateMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withMessageThreadMessageCollectionQuery } from "@zbav-se.me/sdk/query/user/message-thread";
+import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC } from "react";
 import { match } from "ts-pattern";
@@ -16,8 +14,12 @@ export namespace TransactionChat {
 }
 
 export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ...props }) => {
-	const queryClient = useQueryClient();
-	const messageMutation = withTransactionMessageTextCreateMutation.useMutation();
+	const messageMutation = withTransactionEntryQuery.useCreateMutation({
+		invalidate: [
+			"collection",
+			"count",
+		],
+	});
 
 	return (
 		<Container
@@ -34,25 +36,13 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 					return (
 						<ChatInput
 							onSubmit={(message) => {
-								messageMutation.mutate(
-									{
-										transactionId: transaction.id,
-										message,
+								messageMutation.mutate({
+									transactionId: transaction.id,
+									kind: "text",
+									payload: {
+										text: message,
 									},
-									{
-										onSuccess() {
-											withMessageThreadMessageCollectionQuery.invalidate(
-												queryClient,
-												{
-													path: {
-														messageThreadId:
-															transaction.messageThreadId,
-													},
-												},
-											);
-										},
-									},
-								);
+								});
 							}}
 							placeholder={translator.text(
 								"Transaction - send a message (placeholder)",
@@ -63,32 +53,14 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 				})
 				.with("resolved", () => {
 					return (
-						<ChatInput
-							onSubmit={(message) => {
-								messageMutation.mutate(
-									{
-										transactionId: transaction.id,
-										message,
-									},
-									{
-										onSuccess() {
-											withMessageThreadMessageCollectionQuery.invalidate(
-												queryClient,
-												{
-													path: {
-														messageThreadId:
-															transaction.messageThreadId,
-													},
-												},
-											);
-										},
-									},
-								);
+						<Tx
+							label={"Chat - transaction resolved - seller cannot write (message)"}
+							ui={{
+								width: "full",
+								text: "sm",
+								opacity: "6",
 							}}
-							placeholder={translator.text(
-								"Transaction - resolved -send a message (placeholder)",
-							)}
-							loading={messageMutation.isPending}
+							className="text-center"
 						/>
 					);
 				})
@@ -109,25 +81,13 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 					return (
 						<ChatInput
 							onSubmit={(message) => {
-								messageMutation.mutate(
-									{
-										transactionId: transaction.id,
-										message,
+								messageMutation.mutate({
+									transactionId: transaction.id,
+									kind: "text",
+									payload: {
+										text: message,
 									},
-									{
-										onSuccess() {
-											withMessageThreadMessageCollectionQuery.invalidate(
-												queryClient,
-												{
-													path: {
-														messageThreadId:
-															transaction.messageThreadId,
-													},
-												},
-											);
-										},
-									},
-								);
+								});
 							}}
 							placeholder={translator.text(
 								"Transaction - dispute - send a message (placeholder)",
@@ -136,7 +96,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 						/>
 					);
 				})
-				.with("rejected", "expired", "success", "closed", () => {
+				.with("rejected", "sold", "expired", "success", "closed", () => {
 					return (
 						<Tx
 							label={"Chat - transaction closed (message)"}

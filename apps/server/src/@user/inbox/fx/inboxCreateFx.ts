@@ -9,9 +9,7 @@ import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace inboxCreateFx {
-	export interface Props extends InboxCreateSchema.Type {
-		//
-	}
+	export type Props = InboxCreateSchema.Type;
 }
 
 export const inboxCreateFx = Effect.fn("inboxCreateFx")(function* ({

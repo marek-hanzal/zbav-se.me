@@ -1,10 +1,7 @@
-import { useLocale } from "@use-pico/client/hook";
-import { ArrowLeftIcon } from "@use-pico/client/icon";
-import { LinkTo } from "@use-pico/client/ui/link-to";
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, Suspense } from "react";
+import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 import { TransactionListingList } from "~/app/v0/@seller/transaction-listing/ui/TransactionListingList";
 import { TransactionListingListPending } from "~/app/v0/@seller/transaction-listing/ui/TransactionListingListPending";
@@ -14,24 +11,11 @@ export namespace MessageListPage {
 }
 
 export const MessageListPage: FC<MessageListPage.Props> = (props) => {
-	const locale = useLocale();
-
 	return (
 		<TitleContainer
 			data-ui="SellerMessageList[TitleContainer]"
 			textTitle={translator.text("Messages (title)")}
-			left={
-				<LinkTo
-					{...uiBackButton({
-						className: [],
-					})}
-					icon={ArrowLeftIcon}
-					to="/$locale/home"
-					params={{
-						locale,
-					}}
-				/>
-			}
+			left={<BackHomeButton />}
 			right={<HomeMenuButton />}
 			{...props}
 		>

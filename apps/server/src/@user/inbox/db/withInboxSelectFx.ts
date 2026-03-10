@@ -1,9 +1,7 @@
 import { Effect } from "effect";
-import { sql } from "kysely";
 import { match } from "ts-pattern";
-import type { InboxFamilyEnumSchema } from "~/@user/inbox/schema/InboxFamilyEnumSchema";
-import type { InboxPayloadSchema } from "~/@user/inbox/schema/InboxPayloadSchema";
 import type { InboxSortSchema } from "~/@user/inbox/schema/InboxSortSchema";
+import type { InboxTableSchema } from "~/database/@table/InboxTableSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withInboxSelectFx {
@@ -19,16 +17,7 @@ export const withInboxSelectFx = Effect.fn("withInboxSelectFx")(function* ({
 }: withInboxSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
-	let query = kysely.selectFrom("inbox as i").select([
-		"i.id",
-		"i.userId",
-		"i.timestamp",
-		sql<InboxFamilyEnumSchema.Type>`i.family`.as("family"),
-		"i.type",
-		sql<InboxPayloadSchema.Type>`i.payload`.as("payload"),
-		"i.priority",
-		"i.archivedAt",
-	]);
+	let query = kysely.selectFrom("inbox as i").selectAll("i").$castTo<InboxTableSchema.Type>();
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

@@ -9,7 +9,7 @@ import { type FC, useRef, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
-import { MessageListSuspense } from "~/app/v0/@common/message/MessageListSuspense";
+import { TransactionEntryList } from "~/app/v0/@common/transaction-entry/TransactionEntryList";
 import { TransactionChat } from "./TransactionChat";
 import { TransactionMessage } from "./TransactionMessage";
 import { TransactionToolbar } from "./TransactionToolbar";
@@ -97,15 +97,15 @@ export const Transaction: FC<Transaction.Props> = ({
 						/>
 					</Container>
 
-					<MessageListSuspense
+					<TransactionEntryList
 						side={tUserSideEnum.buyer}
 						containerRef={containerRef}
-						messageThreadId={transaction.messageThreadId}
+						transactionId={transaction.id}
 						refresh={refresh}
 					>
 						<TransactionMessage transaction={transaction} />
 						<TransactionToolbar transaction={transaction} />
-					</MessageListSuspense>
+					</TransactionEntryList>
 
 					<VisibilityContext value={createNoopVisibilityStore()}>
 						ListingSheet or sthing

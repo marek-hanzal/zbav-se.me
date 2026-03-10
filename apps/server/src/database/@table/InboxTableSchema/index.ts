@@ -1,0 +1,1 @@
+export { InboxTableSchema } from "./InboxTableSchema";

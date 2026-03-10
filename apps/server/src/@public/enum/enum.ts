@@ -6,14 +6,13 @@ import { ActivityEnumSchema } from "~/@common/user-event/schema/ActivityEnumSche
 import { LoadEnumSchema } from "~/@common/user-event/schema/LoadEnumSchema";
 import { UserEventEnumSchema } from "~/@common/user-event/schema/UserEventEnumSchema";
 import { UserEventSourceEnumSchema } from "~/@common/user-event/schema/UserEventSourceEnumSchema";
-import { MessageDirectionEnumSchema } from "~/@user/message/schema/MessageDirectionEnumSchema";
-import { MessageTypeEnumSchema } from "~/@user/message/schema/MessageTypeEnumSchema";
 import { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
 import { ListingEventEnumSchema } from "~/database/@enum/ListingEventEnumSchema";
 import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
 import { ListingRestrictionEnumSchema } from "~/database/@enum/ListingRestrictionEnumSchema";
 import { ListingWarrantyEnumSchema } from "~/database/@enum/ListingWarrantyEnumSchema";
 import { ThumbEnumSchema } from "~/database/@enum/ThumbEnumSchema";
+import { TransactionEntryKindEnumSchema } from "~/database/@enum/TransactionEntryKindEnumSchema";
 import { TransactionSideEnumSchema } from "~/database/@enum/TransactionSideEnumSchema";
 import { TransactionStatusEnumSchema } from "~/database/@enum/TransactionStatusEnumSchema";
 import { UserEventScopeEnumSchema } from "~/database/@enum/UserEventScopeEnumSchema";
@@ -415,17 +414,17 @@ export const withEnumEndpointFx = Effect.fn("withEnumEndpointFx")(function* () {
 	publicHono.openapi(
 		createRoute({
 			method: "get",
-			path: "/enum/message-direction",
-			description: "Returns MessageDirection enum values",
-			operationId: "apiPublicEnumMessageDirection",
+			path: "/enum/transaction-entry-kind",
+			description: "Returns TransactionEntryKind enum values",
+			operationId: "apiPublicEnumTransactionEntryKind",
 			responses: {
 				200: {
 					content: {
 						"application/json": {
-							schema: MessageDirectionEnumSchema.array(),
+							schema: TransactionEntryKindEnumSchema.array(),
 						},
 					},
-					description: "MessageDirection enum",
+					description: "TransactionEntryKind enum",
 				},
 			},
 			security: [],
@@ -433,31 +432,7 @@ export const withEnumEndpointFx = Effect.fn("withEnumEndpointFx")(function* () {
 				"Enum",
 			],
 		}),
-		(c) => c.json(keysOf(MessageDirectionEnumSchema.enum)),
-	);
-
-	publicHono.openapi(
-		createRoute({
-			method: "get",
-			path: "/enum/message-type",
-			description: "Returns MessageType enum values",
-			operationId: "apiPublicEnumMessageType",
-			responses: {
-				200: {
-					content: {
-						"application/json": {
-							schema: MessageTypeEnumSchema.array(),
-						},
-					},
-					description: "MessageType enum",
-				},
-			},
-			security: [],
-			tags: [
-				"Enum",
-			],
-		}),
-		(c) => c.json(keysOf(MessageTypeEnumSchema.enum)),
+		(c) => c.json(keysOf(TransactionEntryKindEnumSchema.enum)),
 	);
 
 	publicHono.openapi(

@@ -4,19 +4,16 @@ import type { DateTime } from "luxon";
 import { favouriteToggleFx } from "~/@buyer/favourite/fx/favouriteToggleFx";
 import { flagToggleFx } from "~/@buyer/flag/fx/flagToggleFx";
 import { ignoreToggleFx } from "~/@buyer/ignore/fx/ignoreToggleFx";
+import { transactionCloseFx } from "~/@buyer/transaction/fx/transactionCloseFx";
 import { transactionCreateFx } from "~/@buyer/transaction/fx/transactionCreateFx";
-import { transactionStatusCloseFx } from "~/@buyer/transaction-status/fx/transactionStatusCloseFx";
-import { transactionStatusDisputeFx as buyerDisputeFx } from "~/@buyer/transaction-status/fx/transactionStatusDisputeFx";
-import { transactionStatusRejectFx as buyerRejectFx } from "~/@buyer/transaction-status/fx/transactionStatusRejectFx";
-import { transactionStatusSuccessFx } from "~/@buyer/transaction-status/fx/transactionStatusSuccessFx";
-import { transactionStatusAcceptFx } from "~/@seller/transaction-status/fx/transactionStatusAcceptFx";
-import { transactionStatusDisputeFx as sellerDisputeFx } from "~/@seller/transaction-status/fx/transactionStatusDisputeFx";
-import { transactionStatusRejectFx as sellerRejectFx } from "~/@seller/transaction-status/fx/transactionStatusRejectFx";
-import { transactionStatusResolveFx } from "~/@seller/transaction-status/fx/transactionStatusResolveFx";
-import { transactionMessageLocationCreateFx } from "~/@user/transaction-message-location/fx/transactionMessageLocationCreateFx";
-import { transactionMessagePackageCreateFx } from "~/@user/transaction-message-package/fx/transactionMessagePackageCreateFx";
-import { transactionMessagePersonalCreateFx } from "~/@user/transaction-message-personal/fx/transactionMessagePersonalCreateFx";
-import { transactionMessageTextCreateFx } from "~/@user/transaction-message-text/fx/transactionMessageTextCreateFx";
+import { transactionDisputeFx as buyerDisputeFx } from "~/@buyer/transaction/fx/transactionDisputeFx";
+import { transactionRejectFx as buyerRejectFx } from "~/@buyer/transaction/fx/transactionRejectFx";
+import { transactionSuccessFx } from "~/@buyer/transaction/fx/transactionSuccessFx";
+import { transactionAcceptFx } from "~/@seller/transaction/fx/transactionAcceptFx";
+import { transactionDisputeFx as sellerDisputeFx } from "~/@seller/transaction/fx/transactionDisputeFx";
+import { transactionRejectFx as sellerRejectFx } from "~/@seller/transaction/fx/transactionRejectFx";
+import { transactionResolveFx } from "~/@seller/transaction/fx/transactionResolveFx";
+import { transactionEntryCreateFx } from "~/@user/transaction-entry/fx/transactionEntryCreateFx";
 import MessagePackage from "~/seed/data/message-package.json";
 import MessagePersonal from "~/seed/data/message-personal.json";
 import BuyerText from "~/seed/data/message-text-buyer.json";
@@ -111,50 +108,65 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 		return transaction.id;
 	}
 
-	yield* transactionStatusAcceptFx({
+	yield* transactionAcceptFx({
 		userId: sellerId,
 		transactionId: transaction.id,
 	}).pipe(withSeedNowFx(timeline.acceptAt));
 
-	yield* transactionMessageTextCreateFx({
+	yield* transactionEntryCreateFx({
 		userId: actorUserId,
+		kind: "text",
 		transactionId: transaction.id,
-		message: BuyerText.length > 0 ? list(BuyerText) : "Hi, is this still available?",
+		payload: {
+			text: BuyerText.length > 0 ? list(BuyerText) : "Hi, is this still available?",
+		},
 	}).pipe(withSeedNowFx(timeline.buyerMessageAt));
 
-	yield* transactionMessageTextCreateFx({
+	yield* transactionEntryCreateFx({
 		userId: sellerId,
+		kind: "text",
 		transactionId: transaction.id,
-		message: SellerText.length > 0 ? list(SellerText) : "Yes, still available.",
+		payload: {
+			text: SellerText.length > 0 ? list(SellerText) : "Yes, still available.",
+		},
 	}).pipe(withSeedNowFx(timeline.sellerMessageAt));
 
 	if (Math.random() < 0.6) {
-		yield* transactionMessageLocationCreateFx({
+		yield* transactionEntryCreateFx({
 			userId: sellerId,
+			kind: "location",
 			transactionId: transaction.id,
-			locationId,
+			payload: {
+				locationId,
+			},
 		}).pipe(withSeedNowFx(withMetaAt()), Effect.ignore);
 	}
 
 	if (Math.random() < 0.4 && MessagePersonal.length > 0) {
 		const personal = list(MessagePersonal);
-		yield* transactionMessagePersonalCreateFx({
+		yield* transactionEntryCreateFx({
 			userId: actorUserId,
+			kind: "personal",
 			transactionId: transaction.id,
-			name: personal.name,
-			phone: personal.phone,
-			email: personal.email,
-			locationId,
+			payload: {
+				name: personal.name,
+				phone: personal.phone,
+				email: personal.email,
+				locationId,
+			},
 		}).pipe(withSeedNowFx(withMetaAt()), Effect.ignore);
 	}
 
 	if (Math.random() < 0.3 && MessagePackage.length > 0) {
 		const pack = list(MessagePackage);
-		yield* transactionMessagePackageCreateFx({
+		yield* transactionEntryCreateFx({
 			userId: sellerId,
+			kind: "package",
 			transactionId: transaction.id,
-			link: pack.link,
-			number: pack.number,
+			payload: {
+				link: pack.link,
+				number: pack.number,
+			},
 		}).pipe(withSeedNowFx(withMetaAt()), Effect.ignore);
 	}
 
@@ -196,7 +208,7 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 	const resolveAt = withAtLeastGap(timeline.resolveAt, metaCursor, 3);
 	let finalAt = withAtLeastGap(timeline.finalAt, resolveAt, 3);
 
-	yield* transactionStatusResolveFx({
+	yield* transactionResolveFx({
 		userId: sellerId,
 		transactionId: transaction.id,
 	}).pipe(withSeedNowFx(resolveAt));
@@ -230,14 +242,14 @@ export const seedInteractionScenarioFx = Effect.fn("seedInteractionScenarioFx")(
 		variant === "accept_resolve_buyer_dispute_success" ||
 		variant === "accept_resolve_seller_dispute_success"
 	) {
-		yield* transactionStatusSuccessFx({
+		yield* transactionSuccessFx({
 			userId: actorUserId,
 			transactionId: transaction.id,
 		}).pipe(withSeedNowFx(finalAt));
 		return transaction.id;
 	}
 
-	yield* transactionStatusCloseFx({
+	yield* transactionCloseFx({
 		userId: actorUserId,
 		transactionId: transaction.id,
 	}).pipe(withSeedNowFx(finalAt));

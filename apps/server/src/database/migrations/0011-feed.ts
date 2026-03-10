@@ -1,13 +1,17 @@
+import { toEnumGuard } from "@use-pico/common/to-enum-guard";
 import { type Migration, sql } from "kysely";
+import type { FeedTypeEnumSchema } from "~/database/@enum/FeedTypeEnumSchema";
 
 export const FeedMigration: Migration = {
 	async up(db) {
 		await db.schema
 			.createType("feed_type_enum")
-			.asEnum([
-				"user",
-				"search",
-			])
+			.asEnum(
+				toEnumGuard<FeedTypeEnumSchema.Type>()([
+					"user",
+					"search",
+				] as const),
+			)
 			.execute();
 
 		await db.schema

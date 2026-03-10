@@ -23,10 +23,8 @@ The `@common` domain exists to:
 - **TransactionFilterSchema**, **TransactionSortSchema**, **TransactionWhereSchema**, **TransactionQuerySchema** - Query/filter/sort schemas for transaction collection (used in `@buyer-user`, `@seller-user`)
 - Used across `@buyer-user`, `@seller-user`, `@user`, and `@public` domains
 
-### Transaction Status Schemas
-- **TransactionStatusCreateSchema** - Request to create a transaction status (used in `@buyer-user`, `@seller-user`)
-- **TransactionStatusDisputeSchema**, **TransactionStatusRejectSchema** - Request bodies for dispute/reject (used in `@buyer-user`, `@seller-user`)
-- Also used in `@user` and `@session` domains for transaction status operations
+### Transaction Schemas
+- Used in `@buyer-user`, `@seller-user`, and `@user` transaction flows
 
 ### S3 Operations
 - **S3ContextFx** - Effect context for S3 configuration (API endpoint, credentials, bucket)

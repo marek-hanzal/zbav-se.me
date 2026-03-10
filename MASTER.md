@@ -1234,10 +1234,10 @@ Related:
 ### Transakce
 ← [předchozí](#koncept-flag-uzivatele) | [další](#koncept-zpravy) →
 
-Transakce je obálka obchodu: stav, pravidla a timeline. **Stojí na [Zprávách](#koncept-zpravy)** — zprávy jsou obsah, transakce je kontext.
+Transakce je obálka obchodu: stav, pravidla a timeline. Je to **autorita obchodu**. Zprávy nejsou samostatnej paralelní svět; jsou jen jedním typem záznamu uvnitř transaction timeline.
 
 Základní kontrakty:
-- 1 vlákno = 1 transakce = 1 konkrétní inzerát (izolovaný kontext).
+- 1 transakce = 1 konkrétní inzerát + 1 konkrétní buyer/seller kontext.
 - Stavový model je autorita tady v tomhle dokumentu.
 - „Zavřeno je zavřeno“: terminal stavy jsou read-only, nejde re-open.
 - „Zavřít bez emocí“ je `rejected`: explicitní stopka a hint „OK, tady cesta nevede“. Na začátku transakce to může poslat **prodejce i kupující**.
@@ -1248,10 +1248,10 @@ Stavový model (prakticky):
 | ---------- | -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `pending`  | kupující klikne „Mám zájem“                                                                  | kupující **nemůže psát**, ale může **couvnout** (zrušit zájem → `rejected`); prodejce jen **Přijmout** / **Odmítnout**                                           |
 | `open`     | prodejce přijme                                                                              | odemknou se zprávy + strukturovaný widgety                                                                                                                       |
-| `resolved` | prodejce označí „vyřešeno“                                                                   | **inzerát přepnu do `sold`**; ostatní transakce nad tímhle inzerátem přepnu do `sold`; tahle transakce běží dál, dokud kupující nedá finále (`success`/`closed`) |
+| `resolved` | prodejce označí „vyřešeno“                                                                   | tahle transakce běží dál, dokud kupující nedá finále (`success`/`closed`); strukturovaná komunikace se omezí a zůstává jen to, co dává smysl pro dotažení konce    |
 | `dispute`  | někdo přepne do sporu                                                                        | běží dál (řeší se), dokud kupující nedá finále (`success`/`closed`)                                                                                              |
 | `rejected` | kupující nebo prodejce odmítne („bez emocí“)                                                 | read-only                                                                                                                                                        |
-| `sold`     | systém označí „už prodáno“ (inzerát se prodal v jiným vlákně / ručně)                        | read-only                                                                                                                                                        |
+| `sold`     | systémová stopka „už prodáno“                                                                | read-only                                                                                                                                                        |
 | `expired`  | transakce vyprší po **3 dnech bez aktivity** (aktivita = cokoliv, co se stane nad transakcí) | read-only                                                                                                                                                        |
 | `success`  | kupující potvrdí „dopadlo to“                                                                | read-only                                                                                                                                                        |
 | `closed`   | kupující zavře (ukončí pro sebe)                                                             | read-only                                                                                                                                                        |
@@ -1268,12 +1268,13 @@ Anti-spam a ochrana prodejce:
 - Odmítnutí je legitimní volba bez vysvětlování. Žádnej mentální dluh.
 
 Timeline místo chatu:
-- Detail transakce je časová osa faktů: systémové stavy + text, když chtějí, + strukturovaný widgety, když je text zbytečnej.
-- Systém drží pravdu vedle toho, i když si lidi píšou normálně.
+- Detail transakce je časová osa faktů: systémové stavy + lidská komunikace + strukturovaný záznamy, když je text zbytečnej.
+- Timeline nese jak user-authored komunikaci, tak systémové/status události.
+- Zpráva není samostatná persisted doména. Je to prostě jeden záznam v transaction timeline.
 
 Retence a čistky:
 - Transakce je dočasná věc. Po finálním stavu proběhne úklid ve dvou krocích:
-  - hned: mažu všechno strukturovaný (viz typy zpráv v [Zprávách](#koncept-zpravy) — všechno krom `message_text` a `message_gallery`),
+  - hned: mažu všechno citlivý a strukturovaný, co už po konci obchodu nemá důvod žít,
   - po **3 měsících**: hard delete celé transakce (včetně textů a fotek).
 
 Related:
@@ -1285,18 +1286,22 @@ Related:
 ### Zprávy
 ← [předchozí](#koncept-transakce) | [další](#koncept-notifikace) →
 
-Zprávy jsou obsah transakce. Text je volnost pro lidi, ale systém drží fakta vedle toho.
+„Zprávy“ je lidskej název pro komunikaci uvnitř transakce. Technicky ani produktově to není samostatnej paralelní svět mimo transakci.
 
-Typy zpráv (co systém umí):
+Co v transaction timeline žije:
+- text pro normální lidskou domluvu,
+- galerie jako důkaz nebo doplnění bez slohovky,
+- lokace jako strukturovaný fakt,
+- balík/tracking jako strukturovaný fakt,
+- osobní údaje jako dočasná citlivá věc,
+- systémové/status záznamy jako fakt „co se stalo“.
 
-| Typ                | Co to je                       | Poznámka                                 |
-| ------------------ | ------------------------------ | ---------------------------------------- |
-| `message_text`     | klasická textová zpráva        | volnost pro lidi                         |
-| `message_gallery`  | obrázek (jedna fotka)          | důkaz / doplnění bez slohovky            |
-| `message_location` | poloha                         | strukturovaná [Lokace](#koncept-lokace)  |
-| `message_package`  | info o balíku                  | tracking / dopravce jako fakt v timeline |
-| `message_personal` | osobní info                    | kontakty a další citlivý údaje           |
-| `message_system`   | systémová zpráva bez uživatele | fakt „co se stalo“ (např. změna stavu)   |
+Kontrakt:
+- V `pending` se user-authored komunikace neposílá.
+- `open` a `dispute` dovolují text i strukturovaný zápisy podle role.
+- `resolved` nechává už jen to, co dává smysl pro dotažení konce.
+- Terminal stavy jsou read-only.
+- Systémové/status záznamy vznikají automaticky ze změn stavu a nesmí se tvářit jako samostatnej chat.
 
 Tracking (zásilka):
 - Tracking není bezpečnostní feature. Je to jen fakt v timeline.
@@ -1304,12 +1309,8 @@ Tracking (zásilka):
 - Když tracking number není, nic navíc nepíšu.
 
 Retence po ukončení transakce:
-- Všechny typy **kromě** `message_text` a `message_gallery` se po ukončení transakce **mažou**.
+- Citlivý a strukturovaný zápisy, který po konci obchodu ztrácí smysl, se po ukončení transakce **mažou**.
 - „Ukončení transakce“ = dosažení terminal stavu (`rejected` / `sold` / `expired` / `success` / `closed`).
-
-Kontrakt:
-- V `pending` se zprávy neposílají.
-- Strukturovaný data ukládám odděleně, aby šla cíleně mazat hned po ukončení transakce.
 
 Related:
 - [Lokace](#koncept-lokace)
@@ -1329,6 +1330,7 @@ Filosofie ticha:
 Inbox First:
 - Inbox je jediný zdroj pravdy pro „co se stalo“.
 - Všechno ostatní (push/email) je jen mirror toho, co už existuje v Inboxu.
+- Inbox musí umět nést realitu transakce: zprávu od kupujícího, zprávu od prodávajícího, systémovou transaction událost i čistě systémovou událost.
 
 Email jako zrcadlo:
 - Email není primární kanál. Je to volitelný forward/digest toho, co už je v Inboxu.
@@ -1337,6 +1339,7 @@ Email jako zrcadlo:
 Kontrakt:
 - Notifikace se nesmí stát další paralelní svět. Když něco umím zjistit v Inboxu, nesmím k tomu psát nový pravidla do emailu/pushe.
 - Deduplikace je normální (nebudu spamovat ten samej fakt víckrát, jen protože to jde).
+- Inbox typ události musí odpovídat tomu, odkud ta věc reálně přišla: buyer / seller / transaction / system. `unknown` je jen nouzovej fallback, ne běžná realita.
 
 Kritické výjimky:
 - Některý věci se neptají a jdou vždy (reset hesla, bezpečnostní alerty).
@@ -1461,7 +1464,7 @@ Nechci nedotažený transakce žít navěky. Když se obchod nerozjede nebo se n
 
 Kontrakt:
 - Transakce vyprší defaultně za **3 dny bez aktivity**.
-- Aktivita = **jakákoli aktivita nad transakcí** (zprávy i systémové události / změny stavu).
+- Aktivita = **jakákoli aktivita nad transakcí** (user-authored komunikace i systémové/status události).
 - Vypršení přepne transakci do `expired` (read-only).
 - `expired` je finální stav: žádný re-open.
 - Vypršení je systémová akce → v [User Eventech](#koncept-user-eventy) vzniká `transaction.expired`.

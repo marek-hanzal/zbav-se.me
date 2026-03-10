@@ -172,6 +172,7 @@ export const tTransactionStatusEnum = {
     open: 'open',
     resolved: 'resolved',
     dispute: 'dispute',
+    sold: 'sold',
     rejected: 'rejected',
     expired: 'expired',
     success: 'success',
@@ -264,36 +265,31 @@ export const tUserEventSourceEnum = { listing: 'listing', transaction: 'transact
 export type tUserEventSourceEnum = typeof tUserEventSourceEnum[keyof typeof tUserEventSourceEnum];
 
 /**
- * Direction of the message
+ * Type of transaction timeline entry
  */
-export const tMessageDirectionEnum = {
-    in: 'in',
-    out: 'out',
-    system: 'system'
-} as const;
-
-/**
- * Direction of the message
- */
-export type tMessageDirectionEnum = typeof tMessageDirectionEnum[keyof typeof tMessageDirectionEnum];
-
-/**
- * Type of message
- */
-export const tMessageTypeEnum = {
+export const tTransactionEntryKindEnum = {
     text: 'text',
     gallery: 'gallery',
     location: 'location',
-    personal: 'personal',
     package: 'package',
-    date: 'date',
-    system: 'system'
+    personal: 'personal',
+    'status-pending': 'status-pending',
+    'status-open': 'status-open',
+    'status-resolved': 'status-resolved',
+    'status-dispute-buyer': 'status-dispute-buyer',
+    'status-dispute-seller': 'status-dispute-seller',
+    'status-rejected-buyer': 'status-rejected-buyer',
+    'status-rejected-seller': 'status-rejected-seller',
+    'status-sold': 'status-sold',
+    'status-expired': 'status-expired',
+    'status-success': 'status-success',
+    'status-closed': 'status-closed'
 } as const;
 
 /**
- * Type of message
+ * Type of transaction timeline entry
  */
-export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
+export type tTransactionEntryKindEnum = typeof tTransactionEntryKindEnum[keyof typeof tTransactionEntryKindEnum];
 
 /**
  * Order
@@ -883,37 +879,21 @@ export type tApiPublicEnumUserEventSourceResponse = {
 
 export type apiPublicEnumUserEventSourceResponse = tApiPublicEnumUserEventSourceResponse[keyof tApiPublicEnumUserEventSourceResponse];
 
-export type tApiPublicEnumMessageDirectionRequest = {
+export type tApiPublicEnumTransactionEntryKindRequest = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/api/public/enum/message-direction';
+    url: '/api/public/enum/transaction-entry-kind';
 };
 
-export type tApiPublicEnumMessageDirectionResponse = {
+export type tApiPublicEnumTransactionEntryKindResponse = {
     /**
-     * MessageDirection enum
+     * TransactionEntryKind enum
      */
-    200: Array<tMessageDirectionEnum>;
+    200: Array<tTransactionEntryKindEnum>;
 };
 
-export type apiPublicEnumMessageDirectionResponse = tApiPublicEnumMessageDirectionResponse[keyof tApiPublicEnumMessageDirectionResponse];
-
-export type tApiPublicEnumMessageTypeRequest = {
-    body?: never;
-    path?: never;
-    query?: never;
-    url: '/api/public/enum/message-type';
-};
-
-export type tApiPublicEnumMessageTypeResponse = {
-    /**
-     * MessageType enum
-     */
-    200: Array<tMessageTypeEnum>;
-};
-
-export type apiPublicEnumMessageTypeResponse = tApiPublicEnumMessageTypeResponse[keyof tApiPublicEnumMessageTypeResponse];
+export type apiPublicEnumTransactionEntryKindResponse = tApiPublicEnumTransactionEntryKindResponse[keyof tApiPublicEnumTransactionEntryKindResponse];
 
 export type tApiPublicEnumNoticeTypeRequest = {
     body?: never;

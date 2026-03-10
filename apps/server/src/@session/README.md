@@ -25,16 +25,10 @@ This domain provides endpoints that require a session (authenticated user) but w
 - Geocoding and location management
 - Context layer for location operations
 
-### Transaction Status Operations
-- **Create** - Create transaction status event
-- **Accept** - Accept transaction (pending → open)
-- **Reject** - Reject transaction
-- **Resolve** - Resolve transaction (seller marks resolved)
-- **Success** - Mark transaction as successful
-- **Close** - Close transaction
-- **Dispute** - Open dispute
-- **Fetch** - Get transaction status
-- Core transaction state machine operations
+### Transaction Operations
+- Session-level helpers can participate in the transaction state machine
+- Status authority lives directly on `transaction.status` and `transaction.statusUpdatedAt`
+- Buyer/seller APIs expose concrete transaction actions such as accept, reject, resolve, success, close, and dispute
 
 ### Upload Management
 - **Fetch** - Get upload details
@@ -57,7 +51,7 @@ This domain provides endpoints that require a session (authenticated user) but w
 ## Use Cases
 
 - Browsing categories and locations
-- Managing transaction status (core operations)
+- Participating in transaction state transitions
 - Getting upload metadata
 - Generating S3 upload URLs
 - Reporting missing categories

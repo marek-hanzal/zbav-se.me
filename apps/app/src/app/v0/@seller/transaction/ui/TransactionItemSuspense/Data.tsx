@@ -52,7 +52,7 @@ export const Data: FC<Data.Props> = ({
 				{...props}
 			>
 				{match(transaction.status)
-					.with("rejected", "expired", "success", "closed", () => {
+					.with("rejected", "sold", "expired", "success", "closed", () => {
 						return (
 							<Container
 								data-ui="TransactionItem-[Overlay]"

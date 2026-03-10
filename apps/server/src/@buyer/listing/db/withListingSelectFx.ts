@@ -99,35 +99,18 @@ export const withListingSelectFx = Effect.fn("withListingSelectFx")(function* ({
 
 		eb
 			.selectFrom("transaction as lt")
-			.innerJoin("transaction_status as lts", (join) =>
-				join
-					.onRef("lts.transactionId", "=", "lt.id")
-					.on((eb) =>
-						eb(
-							"lts.id",
-							"=",
-							eb
-								.selectFrom("transaction_status as lts2")
-								.select("lts2.id")
-								.whereRef("lts2.transactionId", "=", "lt.id")
-								.orderBy("lts2.createdAt", "desc")
-								.orderBy("lts2.id", "desc")
-								.limit(1),
-						),
-					),
-			)
 			.select("lt.id")
 			.whereRef("lt.listingId", "=", "l.id")
 			.where("lt.userId", "=", userId)
-			.where("lts.status", "in", [
+			.where("lt.status", "in", [
 				"pending",
 				"open",
 				"rejected",
 				"resolved",
 				"success",
 			])
-			.orderBy("lts.createdAt", "desc")
-			.orderBy("lts.id", "desc")
+			.orderBy("lt.statusUpdatedAt", "desc")
+			.orderBy("lt.id", "desc")
 			.limit(1)
 			.as("transactionId"),
 

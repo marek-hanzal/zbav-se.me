@@ -18,7 +18,7 @@ Buyer and seller remain hard-separated in code and routing. Endpoint suffixes an
 |------------|------------|---------|-------------|
 | `@public` | `/api/public/*` | No auth | Login, register, public pages |
 | `@session` | `/api/session/*` | Authenticated shared | Categories, locations, common lookups |
-| `@user` | `/api/user/*` | User-private shared | Gallery, messages, uploads |
+| `@user` | `/api/user/*` | User-private shared | Gallery, inbox, transaction-entry timeline, uploads |
 | `@buyer` | `/api/buyer/*` | Buyer domain | Buyer listing, feed, preference, transaction flows |
 | `@seller` | `/api/seller/*` | Seller domain | Seller draft, listing, transaction flows |
 | `@common` | — | No API | Shared UI/types/hooks |
@@ -43,3 +43,4 @@ No buyer <-> seller imports.
   - `/$locale/buyer/message/$transactionId`
   - `/$locale/seller/message/$listingId/$transactionId`
 - Message and inbox pages now use explicit back-to-home links.
+- Internal message conversation data now comes from `transaction_entry` APIs even where UX copy still says “Messages”.

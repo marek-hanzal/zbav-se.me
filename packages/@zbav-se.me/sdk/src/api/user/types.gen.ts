@@ -271,8 +271,11 @@ export type tInboxFamilyEnum = typeof tInboxFamilyEnum[keyof typeof tInboxFamily
  * Inbox type
  */
 export const tInboxTypeEnum = {
-    'seller-message': 'seller-message',
     'buyer-message': 'buyer-message',
+    'seller-message': 'seller-message',
+    transaction: 'transaction',
+    system: 'system',
+    unknown: 'unknown',
     thumb: 'thumb',
     favourite: 'favourite',
     unfavourite: 'unfavourite'
@@ -355,7 +358,25 @@ export type tInboxSortField = typeof tInboxSortField[keyof typeof tInboxSortFiel
 /**
  * Inbox item
  */
-export type tInbox = {
+export type tInbox = ({
+    type: 'buyer-message';
+} & tInboxBuyerMessage) | ({
+    type: 'seller-message';
+} & tInboxSellerMessage) | ({
+    type: 'transaction';
+} & tInboxTransaction) | ({
+    type: 'system';
+} & tInboxSystem) | ({
+    type: 'unknown';
+} & tInboxUnknown) | ({
+    type: 'thumb';
+} & tInboxThumb) | ({
+    type: 'favourite';
+} & tInboxFavourite) | ({
+    type: 'unfavourite';
+} & tInboxUnfavourite);
+
+export type tInboxBuyerMessage = {
     /**
      * Inbox identifier
      */
@@ -368,69 +389,211 @@ export type tInbox = {
      * Inbox event timestamp
      */
     timestamp: string;
-    family: tInboxFamilyEnum;
-    type: tInboxTypeEnum;
-    payload: tInboxPayload;
+    family: 'message';
     priority: tInboxPriorityEnum;
     /**
-     * Archive timestamp (null/undefined = active)
+     * Archive timestamp (null = active)
      */
-    archivedAt?: string | null;
+    archivedAt: string | null;
+    type: 'buyer-message';
+    payload: {
+        /**
+         * Related transaction identifier
+         */
+        transactionId: string;
+        /**
+         * Related transaction entry identifier when available
+         */
+        transactionEntryId?: string;
+        [key: string]: unknown;
+    };
+};
+
+export type tInboxSellerMessage = {
+    /**
+     * Inbox identifier
+     */
+    id: string;
+    /**
+     * Recipient user identifier
+     */
+    userId: string;
+    /**
+     * Inbox event timestamp
+     */
+    timestamp: string;
+    family: 'message';
+    priority: tInboxPriorityEnum;
+    /**
+     * Archive timestamp (null = active)
+     */
+    archivedAt: string | null;
+    type: 'seller-message';
+    payload: {
+        /**
+         * Related transaction identifier
+         */
+        transactionId: string;
+        /**
+         * Related transaction entry identifier when available
+         */
+        transactionEntryId?: string;
+        [key: string]: unknown;
+    };
+};
+
+export type tInboxTransaction = {
+    /**
+     * Inbox identifier
+     */
+    id: string;
+    /**
+     * Recipient user identifier
+     */
+    userId: string;
+    /**
+     * Inbox event timestamp
+     */
+    timestamp: string;
+    family: 'message';
+    priority: tInboxPriorityEnum;
+    /**
+     * Archive timestamp (null = active)
+     */
+    archivedAt: string | null;
+    type: 'transaction';
+    payload: {
+        /**
+         * Related transaction identifier
+         */
+        transactionId: string;
+        /**
+         * Related listing identifier for seller-scoped transaction routes
+         */
+        listingId: string;
+        /**
+         * Related transaction entry identifier when available
+         */
+        transactionEntryId?: string;
+        target: tUserSideEnum;
+        [key: string]: unknown;
+    };
 };
 
 /**
- * Inbox payload per type
+ * Recipient-side transaction detail target used for deep-link routing
  */
-export type tInboxPayload = tInboxSellerMessagePayload | tInboxBuyerMessagePayload | tInboxThumbPayload | tInboxFavouritePayload | tInboxUnfavouritePayload;
+export const tUserSideEnum = { seller: 'seller', buyer: 'buyer' } as const;
 
 /**
- * Payload for seller message notifications
+ * Recipient-side transaction detail target used for deep-link routing
  */
-export type tInboxSellerMessagePayload = {
-    type: tInboxTypeEnum;
+export type tUserSideEnum = typeof tUserSideEnum[keyof typeof tUserSideEnum];
+
+export type tInboxSystem = {
     /**
-     * Related transaction identifier
+     * Inbox identifier
      */
-    transactionId: string;
+    id: string;
     /**
-     * Related listing identifier
+     * Recipient user identifier
      */
-    listingId: string;
+    userId: string;
     /**
-     * Related message thread identifier
+     * Inbox event timestamp
      */
-    messageThreadId: string;
+    timestamp: string;
+    family: 'message';
+    priority: tInboxPriorityEnum;
+    /**
+     * Archive timestamp (null = active)
+     */
+    archivedAt: string | null;
+    type: 'system';
+    payload: {
+        /**
+         * Related transaction identifier
+         */
+        transactionId: string;
+        /**
+         * Related listing identifier for seller-scoped transaction routes
+         */
+        listingId: string;
+        /**
+         * Related transaction entry identifier when available
+         */
+        transactionEntryId?: string;
+        target: tUserSideEnum;
+        [key: string]: unknown;
+    };
 };
 
-/**
- * Payload for buyer message notifications
- */
-export type tInboxBuyerMessagePayload = {
-    type: tInboxTypeEnum;
+export type tInboxUnknown = {
     /**
-     * Related transaction identifier
+     * Inbox identifier
      */
-    transactionId: string;
+    id: string;
     /**
-     * Related listing identifier
+     * Recipient user identifier
      */
-    listingId: string;
+    userId: string;
     /**
-     * Related message thread identifier
+     * Inbox event timestamp
      */
-    messageThreadId: string;
+    timestamp: string;
+    family: 'message';
+    priority: tInboxPriorityEnum;
+    /**
+     * Archive timestamp (null = active)
+     */
+    archivedAt: string | null;
+    type: 'unknown';
+    payload: {
+        /**
+         * Related transaction identifier
+         */
+        transactionId: string;
+        /**
+         * Related listing identifier for seller-scoped transaction routes
+         */
+        listingId: string;
+        /**
+         * Related transaction entry identifier when available
+         */
+        transactionEntryId?: string;
+        target: tUserSideEnum;
+        [key: string]: unknown;
+    };
 };
 
-/**
- * Payload for thumb notifications
- */
-export type tInboxThumbPayload = {
-    type: tInboxTypeEnum;
+export type tInboxThumb = {
     /**
-     * Listing identifier
+     * Inbox identifier
      */
-    listingId: string;
-    thumb: tThumbEnum;
+    id: string;
+    /**
+     * Recipient user identifier
+     */
+    userId: string;
+    /**
+     * Inbox event timestamp
+     */
+    timestamp: string;
+    family: 'reaction';
+    priority: tInboxPriorityEnum;
+    /**
+     * Archive timestamp (null = active)
+     */
+    archivedAt: string | null;
+    type: 'thumb';
+    payload: {
+        /**
+         * Listing identifier
+         */
+        listingId: string;
+        thumb: tThumbEnum;
+        [key: string]: unknown;
+    };
 };
 
 /**
@@ -443,26 +606,62 @@ export const tThumbEnum = { like: 'like', dislike: 'dislike' } as const;
  */
 export type tThumbEnum = typeof tThumbEnum[keyof typeof tThumbEnum];
 
-/**
- * Payload for favourite notifications
- */
-export type tInboxFavouritePayload = {
-    type: tInboxTypeEnum;
+export type tInboxFavourite = {
     /**
-     * Related listing identifier
+     * Inbox identifier
      */
-    listingId: string;
+    id: string;
+    /**
+     * Recipient user identifier
+     */
+    userId: string;
+    /**
+     * Inbox event timestamp
+     */
+    timestamp: string;
+    family: 'reaction';
+    priority: tInboxPriorityEnum;
+    /**
+     * Archive timestamp (null = active)
+     */
+    archivedAt: string | null;
+    type: 'favourite';
+    payload: {
+        /**
+         * Related listing identifier
+         */
+        listingId: string;
+        [key: string]: unknown;
+    };
 };
 
-/**
- * Payload for unfavourite notifications
- */
-export type tInboxUnfavouritePayload = {
-    type: tInboxTypeEnum;
+export type tInboxUnfavourite = {
     /**
-     * Related listing identifier
+     * Inbox identifier
      */
-    listingId: string;
+    id: string;
+    /**
+     * Recipient user identifier
+     */
+    userId: string;
+    /**
+     * Inbox event timestamp
+     */
+    timestamp: string;
+    family: 'reaction';
+    priority: tInboxPriorityEnum;
+    /**
+     * Archive timestamp (null = active)
+     */
+    archivedAt: string | null;
+    type: 'unfavourite';
+    payload: {
+        /**
+         * Related listing identifier
+         */
+        listingId: string;
+        [key: string]: unknown;
+    };
 };
 
 /**
@@ -484,357 +683,6 @@ export type tInboxPatch = {
         archivedAt?: string;
     };
     query: tInboxQuery;
-};
-
-/**
- * Message collection item
- */
-export type tMessageItem = {
-    /**
-     * ID of the message entry
-     */
-    id: string;
-    type: tMessageTypeEnum;
-    payload: tMessagePayload;
-};
-
-/**
- * Type of message
- */
-export const tMessageTypeEnum = {
-    text: 'text',
-    gallery: 'gallery',
-    location: 'location',
-    personal: 'personal',
-    package: 'package',
-    date: 'date',
-    system: 'system'
-} as const;
-
-/**
- * Type of message
- */
-export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
-
-/**
- * Message payload (unified view across all message types)
- */
-export type tMessagePayload = tMessageText | tMessageGallery | tMessageLocation | tMessagePersonal | tMessagePackage | tMessageSystem;
-
-/**
- * Message text entry
- */
-export type tMessageText = {
-    /**
-     * ID of the message entry
-     */
-    id: string;
-    /**
-     * Message content (database column name)
-     */
-    text: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-};
-
-/**
- * Direction of the message
- */
-export const tMessageDirectionEnum = {
-    in: 'in',
-    out: 'out',
-    system: 'system'
-} as const;
-
-/**
- * Direction of the message
- */
-export type tMessageDirectionEnum = typeof tMessageDirectionEnum[keyof typeof tMessageDirectionEnum];
-
-/**
- * Message gallery entry
- */
-export type tMessageGallery = {
-    /**
-     * ID of the message gallery entry
-     */
-    id: string;
-    /**
-     * ID of the gallery
-     */
-    galleryId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-    gallery: tGallery;
-};
-
-/**
- * Message location entry
- */
-export type tMessageLocation = {
-    /**
-     * ID of the message location entry
-     */
-    id: string;
-    /**
-     * ID of the location
-     */
-    locationId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-    location: tLocation;
-};
-
-/**
- * Location data
- */
-export type tLocation = {
-    id: string;
-    /**
-     * The query that was used to get the location
-     */
-    query: string;
-    /**
-     * The language that was used to get the location
-     */
-    lang: string;
-    /**
-     * The country that the location is in
-     */
-    country: string;
-    /**
-     * Country code
-     */
-    code: string;
-    /**
-     * The county that the location is in
-     */
-    county: null | string;
-    /**
-     * The municipality that the location is in
-     */
-    municipality: null | string;
-    /**
-     * The state that the location is in
-     */
-    state: null | string;
-    /**
-     * Full address preview of a location
-     */
-    address: string;
-    /**
-     * The city that the location is in
-     */
-    city: null | string;
-    /**
-     * The street that the location is on
-     */
-    street: null | string;
-    /**
-     * The postal/zip code of the location
-     */
-    zip: null | string;
-    /**
-     * Confidence score of the location (based on query)
-     */
-    confidence: number;
-    /**
-     * Used to uniquely identify this location entry
-     */
-    hash: string;
-    /**
-     * Latitude of the location
-     */
-    lat: number;
-    /**
-     * Longitude of the location
-     */
-    lon: number;
-};
-
-/**
- * Message personal entry
- */
-export type tMessagePersonal = {
-    /**
-     * ID of the message personal entry
-     */
-    id: string;
-    /**
-     * Name
-     */
-    name: string;
-    /**
-     * Phone number
-     */
-    phone: string;
-    /**
-     * Email address
-     */
-    email: string;
-    /**
-     * ID of the location
-     */
-    locationId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-    location: tLocation;
-};
-
-/**
- * Message package entry
- */
-export type tMessagePackage = {
-    /**
-     * ID of the message package entry
-     */
-    id: string;
-    /**
-     * Package link
-     */
-    link: string;
-    /**
-     * Tracking number
-     */
-    number: string | null;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-};
-
-/**
- * Message system entry
- */
-export type tMessageSystem = {
-    /**
-     * ID of the message entry
-     */
-    id: string;
-    /**
-     * Message content
-     */
-    text: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    type: tMessageTypeEnum;
-    direction: tMessageDirectionEnum;
-};
-
-/**
- * Query object for message collection
- */
-export type tMessageQuery = {
-    cursor?: tCursor;
-    filter?: tMessageFilter;
-    where?: tMessageWhere;
-    sort?: Array<tMessageSort>;
-};
-
-/**
- * Filter object for message collection
- */
-export type tMessageFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact messageThreadId
-     */
-    messageThreadId?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact transactionId
-     */
-    transactionId?: string;
-};
-
-/**
- * App-based filters
- */
-export type tMessageWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact messageThreadId
-     */
-    messageThreadId?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact transactionId
-     */
-    transactionId?: string;
-};
-
-/**
- * Sort parameters for message collection
- */
-export type tMessageSort = {
-    field: tMessageSortField;
-    order: tOrderEnum;
-};
-
-/**
- * Available sort fields for message collection
- */
-export const tMessageSortField = { id: 'id', createdAt: 'createdAt' } as const;
-
-/**
- * Available sort fields for message collection
- */
-export type tMessageSortField = typeof tMessageSortField[keyof typeof tMessageSortField];
-
-/**
- * Query object for message count
- */
-export type tMessageCountQuery = {
-    filter?: tMessageFilter;
-    where?: tMessageWhere;
 };
 
 /**
@@ -873,89 +721,476 @@ export const tAllowedContentTypesEnum = {
 export type tAllowedContentTypesEnum = typeof tAllowedContentTypesEnum[keyof typeof tAllowedContentTypesEnum];
 
 /**
- * Request to create a transaction message gallery
+ * Transaction timeline entry
  */
-export type tTransactionMessageGalleryCreate = {
+export type tTransactionEntry = ({
+    kind: 'text';
+} & tTransactionEntryText) | ({
+    kind: 'gallery';
+} & tTransactionEntryGallery) | ({
+    kind: 'location';
+} & tTransactionEntryLocation) | ({
+    kind: 'package';
+} & tTransactionEntryPackage) | ({
+    kind: 'personal';
+} & tTransactionEntryPersonal) | ({
+    kind: 'status-pending' | 'status-open' | 'status-resolved' | 'status-dispute-buyer' | 'status-dispute-seller' | 'status-rejected-buyer' | 'status-rejected-seller' | 'status-sold' | 'status-expired' | 'status-success' | 'status-closed';
+} & tTransactionEntryCommon);
+
+/**
+ * Transaction text entry with user-authored message payload
+ */
+export type tTransactionEntryText = {
     /**
-     * The ID of the transaction to add a gallery to
+     * Transaction entry identifier
+     */
+    id: string;
+    /**
+     * Transaction identifier
      */
     transactionId: string;
     /**
-     * IDs of the uploads; order of uploads defines order in the gallery
+     * Author/actor user identifier
      */
-    uploadIds: Array<string>;
+    userId: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    kind: 'text';
+    payload: {
+        /**
+         * Text entry body
+         */
+        text: string;
+        [key: string]: unknown;
+    };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
 };
 
 /**
- * Request to create a transaction message location
+ * Direction of the transaction entry from the current viewer perspective
  */
-export type tTransactionMessageLocationCreate = {
+export const tTransactionEntryDirectionEnum = {
+    in: 'in',
+    out: 'out',
+    system: 'system'
+} as const;
+
+/**
+ * Direction of the transaction entry from the current viewer perspective
+ */
+export type tTransactionEntryDirectionEnum = typeof tTransactionEntryDirectionEnum[keyof typeof tTransactionEntryDirectionEnum];
+
+/**
+ * Transaction gallery entry with linked gallery payload
+ */
+export type tTransactionEntryGallery = {
     /**
-     * The ID of the transaction to add a location to
+     * Transaction entry identifier
+     */
+    id: string;
+    /**
+     * Transaction identifier
      */
     transactionId: string;
     /**
-     * The ID of the location
+     * Author/actor user identifier
      */
-    locationId: string;
+    userId: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    kind: 'gallery';
+    payload: {
+        /**
+         * Gallery identifier linked to this entry
+         */
+        galleryId: string;
+        [key: string]: unknown;
+    };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
 };
 
 /**
- * Request to create a transaction message package
+ * Transaction location entry with linked location payload
  */
-export type tTransactionMessagePackageCreate = {
+export type tTransactionEntryLocation = {
     /**
-     * The ID of the transaction to add a package message to
+     * Transaction entry identifier
+     */
+    id: string;
+    /**
+     * Transaction identifier
      */
     transactionId: string;
     /**
-     * Package link
+     * Author/actor user identifier
      */
-    link: string;
+    userId: string | null;
     /**
-     * Tracking number
+     * Creation timestamp
      */
-    number: string | null;
+    createdAt: string;
+    kind: 'location';
+    payload: {
+        /**
+         * Location identifier linked to this entry
+         */
+        locationId: string;
+        [key: string]: unknown;
+    };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
 };
 
 /**
- * Request to create a transaction personal message
+ * Transaction package entry with shipment tracking payload
  */
-export type tTransactionMessagePersonalCreate = {
+export type tTransactionEntryPackage = {
     /**
-     * The ID of the transaction to add a personal message to
+     * Transaction entry identifier
+     */
+    id: string;
+    /**
+     * Transaction identifier
      */
     transactionId: string;
     /**
-     * Name
+     * Author/actor user identifier
      */
-    name: string;
+    userId: string | null;
     /**
-     * Phone number
+     * Creation timestamp
      */
-    phone: string;
-    /**
-     * Email address
-     */
-    email: string;
-    /**
-     * ID of the location
-     */
-    locationId: string;
+    createdAt: string;
+    kind: 'package';
+    payload: {
+        /**
+         * Package tracking link
+         */
+        link: string;
+        /**
+         * Package tracking number
+         */
+        number: string | null;
+        [key: string]: unknown;
+    };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
 };
 
 /**
- * Request to create a transaction message
+ * Transaction personal entry with contact and handoff payload
  */
-export type tTransactionMessageTextCreate = {
+export type tTransactionEntryPersonal = {
     /**
-     * The ID of the transaction to add a message to
+     * Transaction entry identifier
+     */
+    id: string;
+    /**
+     * Transaction identifier
      */
     transactionId: string;
     /**
-     * The message content
+     * Author/actor user identifier
      */
-    message: string;
+    userId: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    kind: 'personal';
+    payload: {
+        /**
+         * Contact name
+         */
+        name: string;
+        /**
+         * Contact phone
+         */
+        phone: string;
+        /**
+         * Contact email
+         */
+        email: string;
+        /**
+         * Contact location identifier
+         */
+        locationId: string;
+        [key: string]: unknown;
+    };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
+};
+
+/**
+ * Transaction system entry with shared status or informational payload
+ */
+export type tTransactionEntryCommon = {
+    /**
+     * Transaction entry identifier
+     */
+    id: string;
+    /**
+     * Transaction identifier
+     */
+    transactionId: string;
+    /**
+     * Author/actor user identifier
+     */
+    userId: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    kind: 'status-pending' | 'status-open' | 'status-resolved' | 'status-dispute-buyer' | 'status-dispute-seller' | 'status-rejected-buyer' | 'status-rejected-seller' | 'status-sold' | 'status-expired' | 'status-success' | 'status-closed';
+    payload: {
+        /**
+         * Translation key for the system/status timeline entry
+         */
+        text: string;
+        [key: string]: unknown;
+    };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
+};
+
+/**
+ * Query object for transaction entry collection
+ */
+export type tTransactionEntryQuery = {
+    cursor?: tCursor;
+    filter?: tTransactionEntryFilter;
+    where?: tTransactionEntryWhere;
+    sort?: Array<tTransactionEntrySort>;
+};
+
+/**
+ * Transaction entry collection filters
+ */
+export type tTransactionEntryFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * Matches a concrete transaction identifier
+     */
+    transactionId?: string;
+    /**
+     * Matches a concrete actor identifier
+     */
+    userId?: string;
+    kind?: tTransactionEntryKindEnum;
+    /**
+     * Matches any of the provided transaction entry kinds
+     */
+    kindIn?: Array<tTransactionEntryKindEnum>;
+    [key: string]: unknown;
+};
+
+/**
+ * Type of transaction timeline entry
+ */
+export const tTransactionEntryKindEnum = {
+    text: 'text',
+    gallery: 'gallery',
+    location: 'location',
+    package: 'package',
+    personal: 'personal',
+    'status-pending': 'status-pending',
+    'status-open': 'status-open',
+    'status-resolved': 'status-resolved',
+    'status-dispute-buyer': 'status-dispute-buyer',
+    'status-dispute-seller': 'status-dispute-seller',
+    'status-rejected-buyer': 'status-rejected-buyer',
+    'status-rejected-seller': 'status-rejected-seller',
+    'status-sold': 'status-sold',
+    'status-expired': 'status-expired',
+    'status-success': 'status-success',
+    'status-closed': 'status-closed'
+} as const;
+
+/**
+ * Type of transaction timeline entry
+ */
+export type tTransactionEntryKindEnum = typeof tTransactionEntryKindEnum[keyof typeof tTransactionEntryKindEnum];
+
+/**
+ * App-level filters for transaction entry queries
+ */
+export type tTransactionEntryWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * Matches a concrete transaction identifier
+     */
+    transactionId?: string;
+    /**
+     * Matches a concrete actor identifier
+     */
+    userId?: string;
+    kind?: tTransactionEntryKindEnum;
+    /**
+     * Matches any of the provided transaction entry kinds
+     */
+    kindIn?: Array<tTransactionEntryKindEnum>;
+    [key: string]: unknown;
+};
+
+/**
+ * Sort object for transaction entry collection
+ */
+export type tTransactionEntrySort = {
+    field: tTransactionEntrySortField;
+    order: tOrderEnum;
+    [key: string]: unknown;
+};
+
+/**
+ * Sort field for transaction entry collection
+ */
+export const tTransactionEntrySortField = { id: 'id', createdAt: 'createdAt' } as const;
+
+/**
+ * Sort field for transaction entry collection
+ */
+export type tTransactionEntrySortField = typeof tTransactionEntrySortField[keyof typeof tTransactionEntrySortField];
+
+/**
+ * Query object for transaction entry count
+ */
+export type tTransactionEntryCountQuery = {
+    filter?: tTransactionEntryFilter;
+    where?: tTransactionEntryWhere;
+};
+
+/**
+ * Request to append one user-authored transaction entry
+ */
+export type tTransactionEntryCreate = ({
+    kind: 'text';
+} & tTransactionEntryTextCreate) | ({
+    kind: 'gallery';
+} & tTransactionEntryGalleryCreate) | ({
+    kind: 'location';
+} & tTransactionEntryLocationCreate) | ({
+    kind: 'package';
+} & tTransactionEntryPackageCreate) | ({
+    kind: 'personal';
+} & tTransactionEntryPersonalCreate);
+
+export type tTransactionEntryTextCreate = {
+    /**
+     * Transaction identifier
+     */
+    transactionId: string;
+    kind: 'text';
+    payload: {
+        /**
+         * Text entry body
+         */
+        text: string;
+        [key: string]: unknown;
+    };
+};
+
+export type tTransactionEntryGalleryCreate = {
+    /**
+     * Transaction identifier
+     */
+    transactionId: string;
+    kind: 'gallery';
+    payload: {
+        /**
+         * Ordered uploads used to build the gallery entry
+         */
+        uploadIds: Array<string>;
+        [key: string]: unknown;
+    };
+};
+
+export type tTransactionEntryLocationCreate = {
+    /**
+     * Transaction identifier
+     */
+    transactionId: string;
+    kind: 'location';
+    payload: {
+        /**
+         * Location identifier linked to this entry
+         */
+        locationId: string;
+        [key: string]: unknown;
+    };
+};
+
+export type tTransactionEntryPackageCreate = {
+    /**
+     * Transaction identifier
+     */
+    transactionId: string;
+    kind: 'package';
+    payload: {
+        /**
+         * Package tracking link
+         */
+        link: string;
+        /**
+         * Package tracking number
+         */
+        number: string | null;
+        [key: string]: unknown;
+    };
+};
+
+export type tTransactionEntryPersonalCreate = {
+    /**
+     * Transaction identifier
+     */
+    transactionId: string;
+    kind: 'personal';
+    payload: {
+        /**
+         * Contact name
+         */
+        name: string;
+        /**
+         * Contact phone
+         */
+        phone: string;
+        /**
+         * Contact email
+         */
+        email: string;
+        /**
+         * Contact location identifier
+         */
+        locationId: string;
+        [key: string]: unknown;
+    };
 };
 
 /**
@@ -1044,22 +1279,12 @@ export type tUserEx = {
      * Default location for the user - user for listings & listing sorting
      */
     locationId: null | string;
-    side?: null | tUserSideEnum;
+    side?: null | (tUserSideEnum & unknown);
     /**
      * Bearer token used for agent access and API token fallback auth
      */
     token?: string | null;
 };
-
-/**
- * Side of the user
- */
-export const tUserSideEnum = { seller: 'seller', buyer: 'buyer' } as const;
-
-/**
- * Side of the user
- */
-export type tUserSideEnum = typeof tUserSideEnum[keyof typeof tUserSideEnum];
 
 /**
  * Data for patching a user ex
@@ -1073,7 +1298,7 @@ export type tUserExPatch = {
          * Default location for the user - user for listings & listing sorting
          */
         locationId?: null | string;
-        side?: null | tUserSideEnum;
+        side?: null | (tUserSideEnum & unknown);
         /**
          * Bearer token used for agent access and API token fallback auth
          */
@@ -1305,103 +1530,6 @@ export type tApiInboxPatchResponse = {
 
 export type apiInboxPatchResponse = tApiInboxPatchResponse[keyof tApiInboxPatchResponse];
 
-export type tApiMessageThreadMessageCollectionRequest = {
-    body?: tMessageQuery;
-    path: {
-        /**
-         * Message thread identifier
-         */
-        messageThreadId: string;
-    };
-    query?: never;
-    url: '/api/user/message-thread/{messageThreadId}/message/collection';
-};
-
-export type apiMessageThreadMessageCollectionErrors = {
-    /**
-     * Message thread not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiMessageThreadMessageCollectionError = apiMessageThreadMessageCollectionErrors[keyof apiMessageThreadMessageCollectionErrors];
-
-export type tApiMessageThreadMessageCollectionResponse = {
-    /**
-     * Access collection of messages based on provided query
-     */
-    200: Array<tMessageItem>;
-};
-
-export type apiMessageThreadMessageCollectionResponse = tApiMessageThreadMessageCollectionResponse[keyof tApiMessageThreadMessageCollectionResponse];
-
-export type tApiMessageThreadMessageFetchRequest = {
-    body?: tMessageQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/message-thread/message/fetch';
-};
-
-export type apiMessageThreadMessageFetchErrors = {
-    /**
-     * Message not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiMessageThreadMessageFetchError = apiMessageThreadMessageFetchErrors[keyof apiMessageThreadMessageFetchErrors];
-
-export type tApiMessageThreadMessageFetchResponse = {
-    /**
-     * Access message based on provided query
-     */
-    200: tMessageItem;
-};
-
-export type apiMessageThreadMessageFetchResponse = tApiMessageThreadMessageFetchResponse[keyof tApiMessageThreadMessageFetchResponse];
-
-export type tApiMessageThreadMessageCountRequest = {
-    body?: tMessageCountQuery;
-    path: {
-        /**
-         * Message thread identifier
-         */
-        messageThreadId: string;
-    };
-    query?: never;
-    url: '/api/user/message-thread/{messageThreadId}/message/count';
-};
-
-export type apiMessageThreadMessageCountErrors = {
-    /**
-     * Message thread not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiMessageThreadMessageCountError = apiMessageThreadMessageCountErrors[keyof apiMessageThreadMessageCountErrors];
-
-export type tApiMessageThreadMessageCountResponse = {
-    /**
-     * Return counts based on provided query
-     */
-    200: tCount;
-};
-
-export type apiMessageThreadMessageCountResponse = tApiMessageThreadMessageCountResponse[keyof tApiMessageThreadMessageCountResponse];
-
 export type tApiS3PresignRequest = {
     body: {
         /**
@@ -1440,23 +1568,70 @@ export type tApiS3PresignResponse = {
 
 export type apiS3PresignResponse = tApiS3PresignResponse[keyof tApiS3PresignResponse];
 
-export type tApiTransactionMessageGalleryCreateRequest = {
-    /**
-     * Query object for transaction message gallery creation
-     */
-    body?: tTransactionMessageGalleryCreate;
+export type tApiTransactionEntryCollectionRequest = {
+    body?: tTransactionEntryQuery;
     path?: never;
     query?: never;
-    url: '/api/user/transaction-message-gallery/create';
+    url: '/api/user/transaction-entry/collection';
 };
 
-export type apiTransactionMessageGalleryCreateErrors = {
+export type apiTransactionEntryCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionEntryCollectionError = apiTransactionEntryCollectionErrors[keyof apiTransactionEntryCollectionErrors];
+
+export type tApiTransactionEntryCollectionResponse = {
+    /**
+     * Transaction entry collection
+     */
+    200: Array<tTransactionEntry>;
+};
+
+export type apiTransactionEntryCollectionResponse = tApiTransactionEntryCollectionResponse[keyof tApiTransactionEntryCollectionResponse];
+
+export type tApiTransactionEntryCountRequest = {
+    body?: tTransactionEntryCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction-entry/count';
+};
+
+export type apiTransactionEntryCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionEntryCountError = apiTransactionEntryCountErrors[keyof apiTransactionEntryCountErrors];
+
+export type tApiTransactionEntryCountResponse = {
+    /**
+     * Transaction entry count
+     */
+    200: tCount;
+};
+
+export type apiTransactionEntryCountResponse = tApiTransactionEntryCountResponse[keyof tApiTransactionEntryCountResponse];
+
+export type tApiTransactionEntryCreateRequest = {
+    body?: tTransactionEntryCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction-entry/create';
+};
+
+export type apiTransactionEntryCreateErrors = {
     /**
      * Invalid request
      */
     400: tNotice;
     /**
-     * Transaction not found or not accessible
+     * Transaction not found or inaccessible
      */
     404: tNotice;
     /**
@@ -1465,34 +1640,27 @@ export type apiTransactionMessageGalleryCreateErrors = {
     500: tNotice;
 };
 
-export type apiTransactionMessageGalleryCreateError = apiTransactionMessageGalleryCreateErrors[keyof apiTransactionMessageGalleryCreateErrors];
+export type apiTransactionEntryCreateError = apiTransactionEntryCreateErrors[keyof apiTransactionEntryCreateErrors];
 
-export type tApiTransactionMessageGalleryCreateResponse = {
+export type tApiTransactionEntryCreateResponse = {
     /**
-     * Message gallery created
+     * Created transaction entry
      */
-    200: tMessageGallery;
+    201: tTransactionEntry;
 };
 
-export type apiTransactionMessageGalleryCreateResponse = tApiTransactionMessageGalleryCreateResponse[keyof tApiTransactionMessageGalleryCreateResponse];
+export type apiTransactionEntryCreateResponse = tApiTransactionEntryCreateResponse[keyof tApiTransactionEntryCreateResponse];
 
-export type tApiTransactionMessageLocationCreateRequest = {
-    /**
-     * Query object for transaction message location creation
-     */
-    body?: tTransactionMessageLocationCreate;
+export type tApiTransactionEntryFetchRequest = {
+    body?: tTransactionEntryQuery;
     path?: never;
     query?: never;
-    url: '/api/user/transaction-message-location/create';
+    url: '/api/user/transaction-entry/fetch';
 };
 
-export type apiTransactionMessageLocationCreateErrors = {
+export type apiTransactionEntryFetchErrors = {
     /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Transaction not found or not accessible
+     * Transaction entry not found
      */
     404: tNotice;
     /**
@@ -1501,124 +1669,16 @@ export type apiTransactionMessageLocationCreateErrors = {
     500: tNotice;
 };
 
-export type apiTransactionMessageLocationCreateError = apiTransactionMessageLocationCreateErrors[keyof apiTransactionMessageLocationCreateErrors];
+export type apiTransactionEntryFetchError = apiTransactionEntryFetchErrors[keyof apiTransactionEntryFetchErrors];
 
-export type tApiTransactionMessageLocationCreateResponse = {
+export type tApiTransactionEntryFetchResponse = {
     /**
-     * Message location created
+     * Transaction entry
      */
-    200: tMessageLocation;
+    200: tTransactionEntry;
 };
 
-export type apiTransactionMessageLocationCreateResponse = tApiTransactionMessageLocationCreateResponse[keyof tApiTransactionMessageLocationCreateResponse];
-
-export type tApiTransactionMessagePackageCreateRequest = {
-    /**
-     * Query object for transaction message package creation
-     */
-    body?: tTransactionMessagePackageCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction-message-package/create';
-};
-
-export type apiTransactionMessagePackageCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionMessagePackageCreateError = apiTransactionMessagePackageCreateErrors[keyof apiTransactionMessagePackageCreateErrors];
-
-export type tApiTransactionMessagePackageCreateResponse = {
-    /**
-     * Message package created
-     */
-    200: tMessagePackage;
-};
-
-export type apiTransactionMessagePackageCreateResponse = tApiTransactionMessagePackageCreateResponse[keyof tApiTransactionMessagePackageCreateResponse];
-
-export type tApiTransactionMessagePersonalCreateRequest = {
-    /**
-     * Query object for transaction personal message creation
-     */
-    body?: tTransactionMessagePersonalCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction-message-personal/create';
-};
-
-export type apiTransactionMessagePersonalCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionMessagePersonalCreateError = apiTransactionMessagePersonalCreateErrors[keyof apiTransactionMessagePersonalCreateErrors];
-
-export type tApiTransactionMessagePersonalCreateResponse = {
-    /**
-     * Personal message created
-     */
-    200: tMessagePersonal;
-};
-
-export type apiTransactionMessagePersonalCreateResponse = tApiTransactionMessagePersonalCreateResponse[keyof tApiTransactionMessagePersonalCreateResponse];
-
-export type tApiTransactionMessageTextCreateRequest = {
-    /**
-     * Query object for transaction message creation
-     */
-    body?: tTransactionMessageTextCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/transaction-message-text/create';
-};
-
-export type apiTransactionMessageTextCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tNotice;
-    /**
-     * Transaction not found or not accessible
-     */
-    404: tNotice;
-    /**
-     * Internal server error
-     */
-    500: tNotice;
-};
-
-export type apiTransactionMessageTextCreateError = apiTransactionMessageTextCreateErrors[keyof apiTransactionMessageTextCreateErrors];
-
-export type tApiTransactionMessageTextCreateResponse = {
-    /**
-     * Message created
-     */
-    200: tMessageText;
-};
-
-export type apiTransactionMessageTextCreateResponse = tApiTransactionMessageTextCreateResponse[keyof tApiTransactionMessageTextCreateResponse];
+export type apiTransactionEntryFetchResponse = tApiTransactionEntryFetchResponse[keyof tApiTransactionEntryFetchResponse];
 
 export type tApiUploadCreateRequest = {
     /**

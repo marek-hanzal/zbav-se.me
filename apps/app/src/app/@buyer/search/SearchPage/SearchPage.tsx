@@ -1,6 +1,7 @@
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
+import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 import { SearchEditor } from "./SearchEditor";
 
@@ -21,6 +22,7 @@ export const SearchPage: FC<SearchPage.Props> = ({ feedId, ui, ...props }) => {
 		<TitleContainer
 			data-ui={"SearchPage[TitleContainer]"}
 			textTitle={translator.text("Search (title)")}
+			left={<BackHomeButton />}
 			ui={{
 				layout: "vertical-header-content",
 				...ui,

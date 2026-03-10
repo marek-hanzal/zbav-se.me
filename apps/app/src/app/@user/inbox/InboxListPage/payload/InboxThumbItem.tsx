@@ -5,7 +5,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
-import type { tInbox, zInboxThumbPayload } from "@zbav-se.me/sdk/api/user";
+import type { tInboxThumb } from "@zbav-se.me/sdk/api/user";
 import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
 import { withInboxQuery } from "@zbav-se.me/sdk/query/user/inbox";
 import { CloseButton } from "@zbav-se.me/ui/button";
@@ -16,15 +16,14 @@ import { ListItem } from "~/app/@common/list-item/ListItem";
 
 export namespace InboxThumbItem {
 	export interface Props {
-		item: tInbox;
-		payload: zInboxThumbPayload;
+		item: tInboxThumb;
 	}
 }
 
-export const InboxThumbItem: FC<InboxThumbItem.Props> = ({ item, payload }) => {
+export const InboxThumbItem: FC<InboxThumbItem.Props> = ({ item }) => {
 	const locale = useLocale();
 	const [isOpen, setIsOpen] = useState(false);
-	const { data: listing } = withListingQuery.useFetchQuery(payload.listingId);
+	const { data: listing } = withListingQuery.useFetchQuery(item.payload.listingId);
 	const hero = useUpload(listing.gallery.items);
 	const patchMutation = withInboxQuery.usePatchMutation({
 		invalidate: [],
@@ -37,14 +36,14 @@ export const InboxThumbItem: FC<InboxThumbItem.Props> = ({ item, payload }) => {
 				title={
 					<Tx
 						label={
-							payload.thumb === "like"
+							item.payload.thumb === "like"
 								? "You got like (label)"
 								: "You got dislike (label)"
 						}
 						ui={{
 							tone: item.archivedAt
 								? "neutral"
-								: payload.thumb === "like"
+								: item.payload.thumb === "like"
 									? "secondary"
 									: "neutral",
 							theme: "light",

@@ -43,6 +43,14 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					},
 					description: "The transaction was created",
 				},
+				400: {
+					content: {
+						"application/json": {
+							schema: NoticeSchema,
+						},
+					},
+					description: "Invalid request",
+				},
 				404: {
 					content: {
 						"application/json": {
@@ -103,11 +111,11 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);
 					},
+					InvalidRequestErrorFx(e) {
+						return c.json(noticeError(e), 400);
+					},
 					RuntimeErrorFx(e) {
 						return c.json(noticeError(e), 500);
-					},
-					ConflictErrorFx(e) {
-						return c.json(noticeError(e), 409);
 					},
 					ZodErrorFx({ zod }) {
 						return c.json(noticeZodError(zod), 500);

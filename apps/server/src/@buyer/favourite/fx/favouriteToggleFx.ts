@@ -60,7 +60,6 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 							family: "reaction",
 							type: "favourite",
 							payload: {
-								type: "favourite",
 								listingId,
 							},
 							priority: "common",
@@ -93,7 +92,6 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 							family: "reaction",
 							type: "unfavourite",
 							payload: {
-								type: "unfavourite",
 								listingId,
 							},
 							priority: "common",
