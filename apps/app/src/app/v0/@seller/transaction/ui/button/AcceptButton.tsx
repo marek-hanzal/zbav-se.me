@@ -1,10 +1,7 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import { withTransactionAcceptMutation } from "@zbav-se.me/sdk/mutation/seller/transaction";
-import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
-import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
@@ -15,28 +12,7 @@ export namespace AcceptButton {
 }
 
 export const AcceptButton: FC<AcceptButton.Props> = ({ transaction, ...props }) => {
-	const queryClient = useQueryClient();
-	const mutation = withTransactionAcceptMutation.useMutation({
-		async onPostMutation() {
-			withTransactionQuery.invalidator(
-				queryClient,
-				[
-					"fetch",
-				],
-				{
-					fetch: {
-						where: {
-							id: transaction.id,
-						},
-					},
-				},
-			);
-			withTransactionEntryQuery.invalidator(queryClient, [
-				"collection",
-				"count",
-			]);
-		},
-	});
+	const mutation = withTransactionAcceptMutation.useMutation();
 
 	return (
 		<Button

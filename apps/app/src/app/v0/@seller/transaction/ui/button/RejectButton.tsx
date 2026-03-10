@@ -1,10 +1,7 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import { withTransactionRejectMutation } from "@zbav-se.me/sdk/mutation/seller/transaction";
-import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
-import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import { CancelIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
@@ -15,28 +12,7 @@ export namespace RejectButton {
 }
 
 export const RejectButton: FC<RejectButton.Props> = ({ transaction, ...props }) => {
-	const queryClient = useQueryClient();
-	const mutation = withTransactionRejectMutation.useMutation({
-		async onPostMutation() {
-			withTransactionQuery.invalidator(
-				queryClient,
-				[
-					"fetch",
-				],
-				{
-					fetch: {
-						where: {
-							id: transaction.id,
-						},
-					},
-				},
-			);
-			withTransactionEntryQuery.invalidator(queryClient, [
-				"collection",
-				"count",
-			]);
-		},
-	});
+	const mutation = withTransactionRejectMutation.useMutation();
 
 	return (
 		<ConfirmButton

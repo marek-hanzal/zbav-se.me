@@ -6,6 +6,8 @@ import type {
 	tApiTransactionAcceptRequest,
 	tApiTransactionAcceptResponse,
 } from "../../../api/seller/types.gen";
+import { withTransactionQuery } from "../../../query/seller/transaction";
+import { withTransactionEntryQuery } from "../../../query/user/transaction-entry";
 
 export const withTransactionAcceptMutation = withMutation<
 	tApiTransactionAcceptRequest,
@@ -22,5 +24,17 @@ export const withTransactionAcceptMutation = withMutation<
 	async mutationFn(data) {
 		return withApi(apiTransactionAccept(data));
 	},
-	invalidate: [],
+	invalidate: [
+		{
+			async invalidate(queryClient) {
+				await withTransactionQuery.invalidator(queryClient, [
+					"fetch",
+				]);
+				await withTransactionEntryQuery.invalidator(queryClient, [
+					"collection",
+					"count",
+				]);
+			},
+		},
+	],
 });
