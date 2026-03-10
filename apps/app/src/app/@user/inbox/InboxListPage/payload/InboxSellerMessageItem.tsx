@@ -4,8 +4,8 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tInbox, zInboxSellerMessagePayload } from "@zbav-se.me/sdk/api/user";
-import { withListingQuery } from "@zbav-se.me/sdk/query/buyer/listing";
+import type { tInboxSellerMessage } from "@zbav-se.me/sdk/api/user";
+import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { withInboxQuery } from "@zbav-se.me/sdk/query/user/inbox";
 import type { FC } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
@@ -13,15 +13,14 @@ import { ListItem } from "~/app/@common/list-item/ListItem";
 
 export namespace InboxSellerMessageItem {
 	export interface Props {
-		item: tInbox;
-		payload: zInboxSellerMessagePayload;
+		item: tInboxSellerMessage;
 	}
 }
 
-export const InboxSellerMessageItem: FC<InboxSellerMessageItem.Props> = ({ item, payload }) => {
+export const InboxSellerMessageItem: FC<InboxSellerMessageItem.Props> = ({ item }) => {
 	const locale = useLocale();
-	const { data: listing } = withListingQuery.useFetchQuery(payload.listingId);
-	const hero = useUpload(listing.gallery.items);
+	const { data: transaction } = withTransactionQuery.useFetchQuery(item.payload.transactionId);
+	const hero = useUpload(transaction.gallery.items);
 	const patchMutation = withInboxQuery.usePatchMutation({
 		invalidate: [
 			"count",
@@ -33,7 +32,7 @@ export const InboxSellerMessageItem: FC<InboxSellerMessageItem.Props> = ({ item,
 			to="/$locale/buyer/message/$transactionId"
 			params={{
 				locale,
-				transactionId: payload.transactionId,
+				transactionId: transaction.id,
 			}}
 			onClick={() => {
 				if (item.archivedAt) {
@@ -71,7 +70,7 @@ export const InboxSellerMessageItem: FC<InboxSellerMessageItem.Props> = ({ item,
 						}}
 					>
 						<Typo
-							label={listing.title}
+							label={transaction.title}
 							ui={{
 								text: "sm",
 							}}

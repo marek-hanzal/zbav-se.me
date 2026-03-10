@@ -1,18 +1,24 @@
 import { useLocale } from "@use-pico/client/hook";
 import { Container, type uiContainer } from "@use-pico/client/ui/container";
+import { Mx } from "@use-pico/client/ui/mx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tMessageLocation } from "@zbav-se.me/sdk/api/user";
+import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
+import type { tTransactionEntryCommon } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
-export namespace MessageLocation {
+export namespace Common {
 	export interface Props extends Container.Props {
-		message: tMessageLocation;
+		/**
+		 * From which point of view the message is displayed
+		 */
+		side: tUserSideEnum;
+		transactionEntry: tTransactionEntryCommon;
 	}
 }
 
-export const MessageLocation: FC<MessageLocation.Props> = ({ message, ...props }) => {
+export const Common: FC<Common.Props> = ({ side, transactionEntry, ...props }) => {
 	const locale = useLocale();
 
 	return (
@@ -21,10 +27,11 @@ export const MessageLocation: FC<MessageLocation.Props> = ({ message, ...props }
 				theme: "light",
 				background: "alt",
 				border: true,
-				flow: "vertical",
 				inner: "default",
 				round: "default",
-				...match<typeof message.direction, uiContainer.Ui>(message.direction)
+				...match<typeof transactionEntry.direction, uiContainer.Ui>(
+					transactionEntry.direction,
+				)
 					.with("in", () => {
 						return {
 							tone: "link",
@@ -44,33 +51,20 @@ export const MessageLocation: FC<MessageLocation.Props> = ({ message, ...props }
 			}}
 			className={[
 				"w-2/3",
-				message.direction === "in" ? [] : undefined,
-				message.direction === "out"
-					? [
-							"ml-auto",
-						]
-					: undefined,
-				message.direction === "system"
-					? [
-							"mx-auto",
-							"text-center",
-						]
-					: undefined,
+				transactionEntry.direction === "out" ? "ml-auto" : undefined,
+				transactionEntry.direction === "system" ? "w-full" : undefined,
 			]}
 			{...props}
 		>
-			<Typo
-				label={message.location.address}
-				ui={{
-					wrap: "wrap",
-				}}
-				className={"py-1"}
+			<Mx
+				label={`${side} - ${transactionEntry.payload.text}`}
+				fallback={transactionEntry.payload.text}
 			/>
 
 			<Typo
 				label={toTimeDiff({
 					locale,
-					time: message.createdAt,
+					time: transactionEntry.createdAt,
 					type: "relative",
 				})}
 				ui={{

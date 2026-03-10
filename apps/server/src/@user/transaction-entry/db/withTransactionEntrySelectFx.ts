@@ -1,11 +1,13 @@
 import { Effect } from "effect";
 import { match } from "ts-pattern";
+import type { TransactionEntryDirectionEnumSchema } from "~/@user/transaction-entry/schema/TransactionEntryDirectionEnumSchema";
+import type { TransactionEntrySchema } from "~/@user/transaction-entry/schema/TransactionEntrySchema";
 import type { TransactionEntrySortSchema } from "~/@user/transaction-entry/schema/TransactionEntrySortSchema";
-import type { TransactionEntryTableSchema } from "~/database/@table/TransactionEntryTableSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withTransactionEntrySelectFx {
 	export interface Props {
+		userId: string;
 		sort?: TransactionEntrySortSchema.Type[];
 	}
 
@@ -13,6 +15,7 @@ export namespace withTransactionEntrySelectFx {
 }
 
 export const withTransactionEntrySelectFx = Effect.fn("withTransactionEntrySelectFx")(function* ({
+	userId,
 	sort,
 }: withTransactionEntrySelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
@@ -20,7 +23,19 @@ export const withTransactionEntrySelectFx = Effect.fn("withTransactionEntrySelec
 	let query = kysely
 		.selectFrom("transaction_entry as te")
 		.selectAll("te")
-		.$castTo<TransactionEntryTableSchema.Type>();
+		.select((eb) =>
+			eb
+				.case()
+				.when("te.userId", "is", null)
+				.then("system")
+				.when("te.userId", "=", userId)
+				.then("out")
+				.else("in")
+				.end()
+				.$castTo<TransactionEntryDirectionEnumSchema.Type>()
+				.as("direction"),
+		)
+		.$castTo<TransactionEntrySchema.Type>();
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

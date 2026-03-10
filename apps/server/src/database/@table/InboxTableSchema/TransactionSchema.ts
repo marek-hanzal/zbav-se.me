@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { UserSideEnumSchema } from "~/database/@enum/UserSideEnumSchema";
 import { InboxSchema } from "./InboxSchema";
 
 export const TransactionSchema = z
@@ -10,8 +11,14 @@ export const TransactionSchema = z
 			transactionId: z.string().openapi({
 				description: "Related transaction identifier",
 			}),
+			listingId: z.string().openapi({
+				description: "Related listing identifier for seller-scoped transaction routes",
+			}),
 			transactionEntryId: z.string().optional().openapi({
 				description: "Related transaction entry identifier when available",
+			}),
+			target: UserSideEnumSchema.openapi({
+				description: "Recipient-side transaction detail target used for deep-link routing",
 			}),
 		}),
 	})

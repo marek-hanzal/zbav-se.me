@@ -11,7 +11,7 @@ Maps to server API: `/api/seller/*`.
 ## Scope
 
 - Seller draft and listing management.
-- Seller transaction and transaction-status flows.
+- Seller transaction flows, including transaction-entry timeline rendering and status actions.
 - Seller buyer-info/metrics UI in transaction context.
 
 ## Imports
@@ -38,3 +38,6 @@ Maps to server API: `/api/seller/*`.
   - `@seller/draft/DraftEditPage/DraftEditor/value/ProsValueList.tsx`
   - `@seller/draft/DraftEditPage/DraftEditor/value/RestrictionValue.tsx`
   - `@seller/draft/DraftEditPage/DraftEditor/value/WarrantyValue.tsx`
+- Seller transaction action buttons now use the seller transaction mutation SDK surface (`accept`, `dispute`, `reject`, `resolve`) and invalidate `transaction-entry` timeline queries.
+- Seller message detail UI now reads conversation timeline through `@user/transaction-entry`, with `resolved` treated as seller read-only.
+- Seller `TitleContainer` pages that navigate back home now use the shared `@common/nav/BackHomeButton` instead of repeating inline `LinkTo + uiBackButton` wiring.

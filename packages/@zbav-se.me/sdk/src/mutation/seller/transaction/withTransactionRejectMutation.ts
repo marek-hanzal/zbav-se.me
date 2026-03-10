@@ -6,7 +6,8 @@ import type {
 	tApiTransactionSellerRejectRequest,
 	tApiTransactionSellerRejectResponse,
 } from "../../../api/seller/types.gen";
-import { withTransactionFetchQuery } from "../../../query/seller/transaction/withTransactionFetchQuery";
+import { withTransactionQuery } from "../../../query/seller/transaction";
+import { withTransactionEntryQuery } from "../../../query/user/transaction-entry";
 
 export const withTransactionRejectMutation = withMutation<
 	tApiTransactionSellerRejectRequest,
@@ -24,6 +25,16 @@ export const withTransactionRejectMutation = withMutation<
 		return withApi(apiTransactionSellerReject(data));
 	},
 	invalidate: [
-		withTransactionFetchQuery,
+		{
+			async invalidate(queryClient) {
+				await withTransactionQuery.invalidator(queryClient, [
+					"fetch",
+				]);
+				await withTransactionEntryQuery.invalidator(queryClient, [
+					"collection",
+					"count",
+				]);
+			},
+		},
 	],
 });

@@ -2,21 +2,27 @@ import { useLocale } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tMessageGallery } from "@zbav-se.me/sdk/api/user";
+import type { tTransactionEntryGallery } from "@zbav-se.me/sdk/api/user";
+import { withGalleryFetchQuery } from "@zbav-se.me/sdk/query/user/gallery";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { GalleryPreviewSheet } from "~/app/@common/gallery/ui/GalleryPreviewSheet";
 
-export namespace MessageGallery {
+export namespace Gallery {
 	export interface Props extends Container.Props {
-		message: tMessageGallery;
+		transactionEntry: tTransactionEntryGallery;
 	}
 }
 
-export const MessageGallery: FC<MessageGallery.Props> = ({ message, ...props }) => {
+export const Gallery: FC<Gallery.Props> = ({ transactionEntry, ...props }) => {
 	const locale = useLocale();
-	const hero = useUpload(message.gallery.items);
+	const { data: gallery } = withGalleryFetchQuery.useSuspenseQuery({
+		where: {
+			id: transactionEntry.payload.galleryId,
+		},
+	});
+	const hero = useUpload(gallery.items);
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
@@ -27,13 +33,8 @@ export const MessageGallery: FC<MessageGallery.Props> = ({ message, ...props }) 
 			className={[
 				"w-2/3",
 				"h-48",
-				message.direction === "in" ? [] : undefined,
-				message.direction === "out"
-					? [
-							"ml-auto",
-						]
-					: undefined,
-				message.direction === "system"
+				transactionEntry.direction === "out" ? "ml-auto" : undefined,
+				transactionEntry.direction === "system"
 					? [
 							"mx-auto",
 							"text-center",
@@ -56,7 +57,7 @@ export const MessageGallery: FC<MessageGallery.Props> = ({ message, ...props }) 
 			<Typo
 				label={toTimeDiff({
 					locale,
-					time: message.createdAt,
+					time: transactionEntry.createdAt,
 					type: "relative",
 				})}
 				ui={{
@@ -72,7 +73,7 @@ export const MessageGallery: FC<MessageGallery.Props> = ({ message, ...props }) 
 			/>
 
 			<GalleryPreviewSheet
-				uploads={message.gallery.items.map((item) => item.upload)}
+				uploads={gallery.items.map((item) => item.upload)}
 				isOpen={isGalleryOpen}
 				onClose={() => setIsGalleryOpen(false)}
 			/>

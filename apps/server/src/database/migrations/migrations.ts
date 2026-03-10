@@ -17,13 +17,11 @@ import { IgnoreMigration } from "~/database/migrations/0015-ignore";
 import { FlagMigration } from "~/database/migrations/0016-flag";
 import { TransactionMigration } from "~/database/migrations/0017-transaction";
 import { TransactionEntryMigration } from "~/database/migrations/0018-transaction-entry";
-import { TransactionUserMigration } from "~/database/migrations/0020-transaction-user";
-import { GitHubMigration } from "~/database/migrations/0027-github";
-import { ThumbMigration } from "~/database/migrations/0028-thumb";
-import { UserEventMigration } from "~/database/migrations/0029-user-event";
-import { BoardMigration } from "~/database/migrations/0030-board";
-import { BoardItemMigration } from "~/database/migrations/0031-board-item";
-import { InboxMigration } from "~/database/migrations/0032-inbox";
+import { TransactionUserMigration } from "~/database/migrations/0019-transaction-user";
+import { GitHubMigration } from "~/database/migrations/0020-github";
+import { ThumbMigration } from "~/database/migrations/0021-thumb";
+import { UserEventMigration } from "~/database/migrations/0022-user-event";
+import { InboxMigration } from "~/database/migrations/0023-inbox";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -45,11 +43,9 @@ export const migrations = {
 	"0016-flag": FlagMigration,
 	"0017-transaction": TransactionMigration,
 	"0018-transaction-entry": TransactionEntryMigration,
-	"0020-transaction-user": TransactionUserMigration,
-	"0027-github": GitHubMigration,
-	"0028-thumb": ThumbMigration,
-	"0029-user-event": UserEventMigration,
-	"0030-board": BoardMigration,
-	"0031-board-item": BoardItemMigration,
-	"0032-inbox": InboxMigration,
+	"0019-transaction-user": TransactionUserMigration,
+	"0020-github": GitHubMigration,
+	"0021-thumb": ThumbMigration,
+	"0022-user-event": UserEventMigration,
+	"0023-inbox": InboxMigration,
 } as const;

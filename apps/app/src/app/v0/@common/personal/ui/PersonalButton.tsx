@@ -1,7 +1,7 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
-import { withMessageQuery } from "@zbav-se.me/sdk/query/user/message";
+import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import { EmailIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useState } from "react";
@@ -15,7 +15,7 @@ export namespace PersonalButton {
 
 export const PersonalButton: FC<PersonalButton.Props> = ({ transactionId, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const mutation = withMessageQuery.useCreateMutation({
+	const mutation = withTransactionEntryQuery.useCreateMutation({
 		invalidate: [
 			"collection",
 			"count",
@@ -54,14 +54,11 @@ export const PersonalButton: FC<PersonalButton.Props> = ({ transactionId, ...pro
 					onCancel={() => {
 						setIsOpen(false);
 					}}
-					onSave={({ name, phone, email, locationId }) => {
+					onSave={(payload) => {
 						return mutation.mutateAsync({
-							type: "personal",
 							transactionId,
-							name,
-							phone,
-							email,
-							locationId,
+							kind: "personal",
+							payload,
 						});
 					}}
 					loading={mutation.isPending}

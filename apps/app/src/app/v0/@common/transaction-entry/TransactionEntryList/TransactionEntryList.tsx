@@ -1,14 +1,14 @@
 import { type FC, Suspense } from "react";
-import { Data } from "./MessageListSuspense/Data";
-import { Pending } from "./MessageListSuspense/Pending";
+import { Data } from "./Data";
+import { Pending } from "./Pending";
 
-export namespace MessageListSuspense {
+export namespace TransactionEntryList {
 	export interface Props extends Omit<Data.Props, "_suspense"> {
 		//
 	}
 }
 
-export const MessageListSuspense: FC<MessageListSuspense.Props> = ({ children, ...props }) => {
+export const TransactionEntryList: FC<TransactionEntryList.Props> = ({ children, ...props }) => {
 	return (
 		<Suspense fallback={<Pending />}>
 			<Data

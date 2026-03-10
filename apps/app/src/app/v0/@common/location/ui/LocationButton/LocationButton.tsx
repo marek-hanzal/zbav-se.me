@@ -1,6 +1,6 @@
 import type { StateType } from "@use-pico/common/type";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
-import { withMessageQuery } from "@zbav-se.me/sdk/query/user/message";
+import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import type { FC } from "react";
 import { useState } from "react";
 import { Content } from "./Content";
@@ -17,7 +17,7 @@ export const LocationButton: FC<LocationButton.Props> = ({ transactionId, ...pro
 	const [isOpen, setIsOpen] = useState(false);
 	const [locationId, setLocationId] = useState<string | undefined | null>(null);
 	const [location, setLocation] = useState<tLocation | undefined>(undefined);
-	const mutation = withMessageQuery.useCreateMutation({
+	const mutation = withTransactionEntryQuery.useCreateMutation({
 		invalidate: [
 			"collection",
 			"count",
@@ -63,9 +63,11 @@ export const LocationButton: FC<LocationButton.Props> = ({ transactionId, ...pro
 						}
 
 						mutation.mutate({
-							type: "location",
 							transactionId,
-							locationId,
+							kind: "location",
+							payload: {
+								locationId,
+							},
 						});
 					}}
 				/>

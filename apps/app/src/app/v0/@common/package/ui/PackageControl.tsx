@@ -2,16 +2,14 @@ import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { zTransactionMessagePackageCreate } from "@zbav-se.me/sdk/api/user";
+import { zTransactionEntryPackageCreate } from "@zbav-se.me/sdk/api/user";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import type { z } from "zod";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 
-// biome-ignore lint/correctness/noUnusedVariables: Ssst
-const PackageSchema = zTransactionMessagePackageCreate.omit({
-	transactionId: true,
-});
+// biome-ignore lint/correctness/noUnusedVariables: Ssst!
+const PackageSchema = zTransactionEntryPackageCreate.shape.payload;
 export namespace PackageSchema {
 	export type Type = z.infer<typeof PackageSchema>;
 }

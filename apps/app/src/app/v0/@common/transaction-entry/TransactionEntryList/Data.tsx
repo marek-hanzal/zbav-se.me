@@ -2,9 +2,9 @@ import { useAutoScroll } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
-import { withMessageQuery } from "@zbav-se.me/sdk/query/user/message";
+import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import { type FC, type RefObject, useRef } from "react";
-import { MessageRenderItem } from "~/app/v0/@common/message/MessageRenderItem";
+import { Item } from "./Item";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -30,7 +30,7 @@ export const Data: FC<Data.Props> = ({
 		containerRef,
 		contentRef,
 	});
-	const { data } = withMessageQuery.useCollectionQuery(
+	const { data } = withTransactionEntryQuery.useCollectionQuery(
 		{
 			filter: {
 				transactionId,
@@ -59,12 +59,12 @@ export const Data: FC<Data.Props> = ({
 			className={"py-1"}
 			{...props}
 		>
-			{data.map((messageId) => {
+			{data.map((transactionEntryId) => {
 				return (
-					<MessageRenderItem
-						key={messageId}
+					<Item
+						key={transactionEntryId}
 						side={side}
-						messageId={messageId}
+						transactionEntryId={transactionEntryId}
 					/>
 				);
 			})}

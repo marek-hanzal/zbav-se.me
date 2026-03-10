@@ -36,7 +36,10 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 				scopeUserId,
 				kind,
 				...data
-			}: Pick<TransactionEntryTableSchema.Type, "transactionId" | "kind" | "userId" | "payload"> & {
+			}: Pick<
+				TransactionEntryTableSchema.Type,
+				"transactionId" | "kind" | "userId" | "payload"
+			> & {
 				scopeUserId: string;
 			}) {
 				const { kysely } = yield* KyselyContextFx;
@@ -268,7 +271,9 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 							type: "transaction",
 							payload: {
 								transactionId: transaction.id,
+								listingId: transaction.listingId,
 								transactionEntryId: transactionEntry.id,
+								target: "seller",
 							},
 							priority: "high",
 						}),
@@ -278,7 +283,9 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 							type: "transaction",
 							payload: {
 								transactionId: transaction.id,
+								listingId: transaction.listingId,
 								transactionEntryId: transactionEntry.id,
+								target: "buyer",
 							},
 							priority: "high",
 						}),
@@ -292,7 +299,9 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 							type: "system",
 							payload: {
 								transactionId: transaction.id,
+								listingId: transaction.listingId,
 								transactionEntryId: transactionEntry.id,
+								target: "seller",
 							},
 							priority: "high",
 						}),
@@ -302,7 +311,9 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 							type: "system",
 							payload: {
 								transactionId: transaction.id,
+								listingId: transaction.listingId,
 								transactionEntryId: transactionEntry.id,
+								target: "buyer",
 							},
 							priority: "high",
 						}),

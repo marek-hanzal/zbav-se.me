@@ -5,6 +5,7 @@ import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { useUser } from "~/app/@common/auth/hook/useUser";
+import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 import { SignOutButton } from "./SignOutButton";
 
@@ -25,6 +26,7 @@ export const UserPage: FC<UserPage.Props> = ({ ui, ...props }) => {
 		<TitleContainer
 			data-ui={"User[TitleContainer]"}
 			textTitle={translator.text("User profile (title)")}
+			left={<BackHomeButton />}
 			right={<HomeMenuButton />}
 			ui={{
 				layout: "vertical-header-content",

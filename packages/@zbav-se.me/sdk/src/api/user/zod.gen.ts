@@ -420,6 +420,15 @@ export const zInboxSellerMessage = z.object({
 
 export type zInboxSellerMessage = z.infer<typeof zInboxSellerMessage>;
 
+/**
+ * Recipient-side transaction detail target used for deep-link routing
+ */
+export const zUserSideEnum = z.enum(['seller', 'buyer']).register(z.globalRegistry, {
+    description: 'Recipient-side transaction detail target used for deep-link routing'
+});
+
+export type zUserSideEnum = z.infer<typeof zUserSideEnum>;
+
 export const zInboxTransaction = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'Inbox identifier'
@@ -438,9 +447,13 @@ export const zInboxTransaction = z.object({
         transactionId: z.string().register(z.globalRegistry, {
             description: 'Related transaction identifier'
         }),
+        listingId: z.string().register(z.globalRegistry, {
+            description: 'Related listing identifier for seller-scoped transaction routes'
+        }),
         transactionEntryId: z.string().register(z.globalRegistry, {
             description: 'Related transaction entry identifier when available'
-        }).optional()
+        }).optional(),
+        target: zUserSideEnum
     })
 });
 
@@ -464,9 +477,13 @@ export const zInboxSystem = z.object({
         transactionId: z.string().register(z.globalRegistry, {
             description: 'Related transaction identifier'
         }),
+        listingId: z.string().register(z.globalRegistry, {
+            description: 'Related listing identifier for seller-scoped transaction routes'
+        }),
         transactionEntryId: z.string().register(z.globalRegistry, {
             description: 'Related transaction entry identifier when available'
-        }).optional()
+        }).optional(),
+        target: zUserSideEnum
     })
 });
 
@@ -490,9 +507,13 @@ export const zInboxUnknown = z.object({
         transactionId: z.string().register(z.globalRegistry, {
             description: 'Related transaction identifier'
         }),
+        listingId: z.string().register(z.globalRegistry, {
+            description: 'Related listing identifier for seller-scoped transaction routes'
+        }),
         transactionEntryId: z.string().register(z.globalRegistry, {
             description: 'Related transaction entry identifier when available'
-        }).optional()
+        }).optional(),
+        target: zUserSideEnum
     })
 });
 
@@ -670,6 +691,22 @@ export const zAllowedContentTypesEnum = z.enum([
 
 export type zAllowedContentTypesEnum = z.infer<typeof zAllowedContentTypesEnum>;
 
+/**
+ * Direction of the transaction entry from the current viewer perspective
+ */
+export const zTransactionEntryDirectionEnum = z.enum([
+    'in',
+    'out',
+    'system'
+]).register(z.globalRegistry, {
+    description: 'Direction of the transaction entry from the current viewer perspective'
+});
+
+export type zTransactionEntryDirectionEnum = z.infer<typeof zTransactionEntryDirectionEnum>;
+
+/**
+ * Transaction text entry with user-authored message payload
+ */
 export const zTransactionEntryText = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'Transaction entry identifier'
@@ -686,11 +723,17 @@ export const zTransactionEntryText = z.object({
         text: z.string().register(z.globalRegistry, {
             description: 'Text entry body'
         })
-    })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction text entry with user-authored message payload'
 });
 
 export type zTransactionEntryText = z.infer<typeof zTransactionEntryText>;
 
+/**
+ * Transaction gallery entry with linked gallery payload
+ */
 export const zTransactionEntryGallery = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'Transaction entry identifier'
@@ -707,11 +750,17 @@ export const zTransactionEntryGallery = z.object({
         galleryId: z.string().register(z.globalRegistry, {
             description: 'Gallery identifier linked to this entry'
         })
-    })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction gallery entry with linked gallery payload'
 });
 
 export type zTransactionEntryGallery = z.infer<typeof zTransactionEntryGallery>;
 
+/**
+ * Transaction location entry with linked location payload
+ */
 export const zTransactionEntryLocation = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'Transaction entry identifier'
@@ -728,11 +777,17 @@ export const zTransactionEntryLocation = z.object({
         locationId: z.string().register(z.globalRegistry, {
             description: 'Location identifier linked to this entry'
         })
-    })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction location entry with linked location payload'
 });
 
 export type zTransactionEntryLocation = z.infer<typeof zTransactionEntryLocation>;
 
+/**
+ * Transaction package entry with shipment tracking payload
+ */
 export const zTransactionEntryPackage = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'Transaction entry identifier'
@@ -750,11 +805,17 @@ export const zTransactionEntryPackage = z.object({
             description: 'Package tracking link'
         }),
         number: z.string().nullable()
-    })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction package entry with shipment tracking payload'
 });
 
 export type zTransactionEntryPackage = z.infer<typeof zTransactionEntryPackage>;
 
+/**
+ * Transaction personal entry with contact and handoff payload
+ */
 export const zTransactionEntryPersonal = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'Transaction entry identifier'
@@ -780,13 +841,16 @@ export const zTransactionEntryPersonal = z.object({
         locationId: z.string().register(z.globalRegistry, {
             description: 'Contact location identifier'
         })
-    })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction personal entry with contact and handoff payload'
 });
 
 export type zTransactionEntryPersonal = z.infer<typeof zTransactionEntryPersonal>;
 
 /**
- * Common entry payload
+ * Transaction system entry with shared status or informational payload
  */
 export const zTransactionEntryCommon = z.object({
     id: z.string().register(z.globalRegistry, {
@@ -816,9 +880,10 @@ export const zTransactionEntryCommon = z.object({
         text: z.string().register(z.globalRegistry, {
             description: 'Translation key for the system/status timeline entry'
         })
-    })
+    }),
+    direction: zTransactionEntryDirectionEnum
 }).register(z.globalRegistry, {
-    description: 'Common entry payload'
+    description: 'Transaction system entry with shared status or informational payload'
 });
 
 export type zTransactionEntryCommon = z.infer<typeof zTransactionEntryCommon>;
@@ -1182,15 +1247,6 @@ export const zUploadQuery = z.object({
 export type zUploadQuery = z.infer<typeof zUploadQuery>;
 
 /**
- * Side of the user
- */
-export const zUserSideEnum = z.enum(['seller', 'buyer']).register(z.globalRegistry, {
-    description: 'Side of the user'
-});
-
-export type zUserSideEnum = z.infer<typeof zUserSideEnum>;
-
-/**
  * User extended information
  */
 export const zUserEx = z.object({
@@ -1198,7 +1254,9 @@ export const zUserEx = z.object({
         description: 'ID of the user_ex record'
     }),
     locationId: z.string().nullable(),
-    side: zUserSideEnum.nullish(),
+    side: zUserSideEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'Side of the user'
+    })).nullish(),
     token: z.string().nullish()
 }).register(z.globalRegistry, {
     description: 'User extended information'
@@ -1212,7 +1270,9 @@ export type zUserEx = z.infer<typeof zUserEx>;
 export const zUserExPatch = z.object({
     patch: z.object({
         locationId: z.string().nullish(),
-        side: zUserSideEnum.nullish(),
+        side: zUserSideEnum.and(z.unknown().register(z.globalRegistry, {
+            description: 'Side of the user'
+        })).nullish(),
         token: z.string().nullish()
     }).register(z.globalRegistry, {
         description: 'Fields to update (all optional)'

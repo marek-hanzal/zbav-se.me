@@ -1,19 +1,20 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
-import { withTransactionMessageGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
+import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
+import { withTransactionEntryGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction-entry";
 import { type FC, useState } from "react";
 import { GalleryUploadButton } from "~/app/@common/gallery/ui/GalleryUploadButton";
 import { LocationButton } from "~/app/v0/@common/location/ui/LocationButton";
+import { PackageButton } from "~/app/v0/@common/package/ui/PackageButton";
 import { PersonalButton } from "~/app/v0/@common/personal/ui/PersonalButton";
 import { MessageButtonUi } from "~/app/v0/@common/transaction/ui/MessageButtonUi";
 
-export namespace OpenMessage {
+export namespace DisputeMessage {
 	export interface Props extends Container.Props {
 		transaction: tTransaction;
 	}
 }
 
-export const OpenMessage: FC<OpenMessage.Props> = ({ transaction, ui, ...props }) => {
+export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...props }) => {
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
@@ -22,7 +23,7 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ transaction, ui, ...props }
 				round: "default",
 				flow: "vertical",
 				gap: "default",
-				tone: "primary",
+				tone: "link",
 				...ui,
 			}}
 			className={[
@@ -31,12 +32,7 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ transaction, ui, ...props }
 			]}
 			{...props}
 		>
-			<PersonalButton
-				transactionId={transaction.id}
-				{...MessageButtonUi}
-			/>
-
-			<LocationButton
+			<PackageButton
 				transactionId={transaction.id}
 				{...MessageButtonUi}
 			/>
@@ -47,7 +43,7 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ transaction, ui, ...props }
 					value: isGalleryOpen,
 					set: setIsGalleryOpen,
 				}}
-				withMutation={withTransactionMessageGalleryCreateMutation}
+				withMutation={withTransactionEntryGalleryCreateMutation}
 				toMutation={(uploadIds) => ({
 					transactionId: transaction.id,
 					uploadIds,
@@ -58,6 +54,16 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ transaction, ui, ...props }
 				onCancel={() => {
 					setIsGalleryOpen(false);
 				}}
+				{...MessageButtonUi}
+			/>
+
+			<LocationButton
+				transactionId={transaction.id}
+				{...MessageButtonUi}
+			/>
+
+			<PersonalButton
+				transactionId={transaction.id}
 				{...MessageButtonUi}
 			/>
 		</Container>

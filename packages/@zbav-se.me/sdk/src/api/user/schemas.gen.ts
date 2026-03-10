@@ -602,12 +602,20 @@ export const sInboxTransaction = {
                 transactionId: {
                     type: 'string'
                 },
+                listingId: {
+                    type: 'string'
+                },
                 transactionEntryId: {
                     type: 'string'
+                },
+                target: {
+                    $ref: '#/components/schemas/UserSideEnum'
                 }
             },
             required: [
-                'transactionId'
+                'transactionId',
+                'listingId',
+                'target'
             ],
             additionalProperties: {}
         }
@@ -621,6 +629,14 @@ export const sInboxTransaction = {
         'archivedAt',
         'type',
         'payload'
+    ]
+} as const;
+
+export const sUserSideEnum = {
+    type: 'string',
+    enum: [
+        'seller',
+        'buyer'
     ]
 } as const;
 
@@ -664,12 +680,20 @@ export const sInboxSystem = {
                 transactionId: {
                     type: 'string'
                 },
+                listingId: {
+                    type: 'string'
+                },
                 transactionEntryId: {
                     type: 'string'
+                },
+                target: {
+                    $ref: '#/components/schemas/UserSideEnum'
                 }
             },
             required: [
-                'transactionId'
+                'transactionId',
+                'listingId',
+                'target'
             ],
             additionalProperties: {}
         }
@@ -726,12 +750,20 @@ export const sInboxUnknown = {
                 transactionId: {
                     type: 'string'
                 },
+                listingId: {
+                    type: 'string'
+                },
                 transactionEntryId: {
                     type: 'string'
+                },
+                target: {
+                    $ref: '#/components/schemas/UserSideEnum'
                 }
             },
             required: [
-                'transactionId'
+                'transactionId',
+                'listingId',
+                'target'
             ],
             additionalProperties: {}
         }
@@ -1074,6 +1106,9 @@ export const sTransactionEntryText = {
                 'text'
             ],
             additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
         }
     },
     required: [
@@ -1082,7 +1117,18 @@ export const sTransactionEntryText = {
         'userId',
         'createdAt',
         'kind',
-        'payload'
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
+} as const;
+
+export const sTransactionEntryDirectionEnum = {
+    type: 'string',
+    enum: [
+        'in',
+        'out',
+        'system'
     ]
 } as const;
 
@@ -1121,6 +1167,9 @@ export const sTransactionEntryGallery = {
                 'galleryId'
             ],
             additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
         }
     },
     required: [
@@ -1129,8 +1178,10 @@ export const sTransactionEntryGallery = {
         'userId',
         'createdAt',
         'kind',
-        'payload'
-    ]
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
 } as const;
 
 export const sTransactionEntryLocation = {
@@ -1168,6 +1219,9 @@ export const sTransactionEntryLocation = {
                 'locationId'
             ],
             additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
         }
     },
     required: [
@@ -1176,8 +1230,10 @@ export const sTransactionEntryLocation = {
         'userId',
         'createdAt',
         'kind',
-        'payload'
-    ]
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
 } as const;
 
 export const sTransactionEntryPackage = {
@@ -1223,6 +1279,9 @@ export const sTransactionEntryPackage = {
                 'number'
             ],
             additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
         }
     },
     required: [
@@ -1231,8 +1290,10 @@ export const sTransactionEntryPackage = {
         'userId',
         'createdAt',
         'kind',
-        'payload'
-    ]
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
 } as const;
 
 export const sTransactionEntryPersonal = {
@@ -1283,6 +1344,9 @@ export const sTransactionEntryPersonal = {
                 'locationId'
             ],
             additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
         }
     },
     required: [
@@ -1291,8 +1355,10 @@ export const sTransactionEntryPersonal = {
         'userId',
         'createdAt',
         'kind',
-        'payload'
-    ]
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
 } as const;
 
 export const sTransactionEntryCommon = {
@@ -1340,6 +1406,9 @@ export const sTransactionEntryCommon = {
                 'text'
             ],
             additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
         }
     },
     required: [
@@ -1348,8 +1417,10 @@ export const sTransactionEntryCommon = {
         'userId',
         'createdAt',
         'kind',
-        'payload'
-    ]
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
 } as const;
 
 export const sTransactionEntryQuery = {
@@ -1830,7 +1901,12 @@ export const sUserEx = {
                     type: 'null'
                 },
                 {
-                    $ref: '#/components/schemas/UserSideEnum'
+                    allOf: [
+                        {
+                            $ref: '#/components/schemas/UserSideEnum'
+                        },
+                        {}
+                    ]
                 }
             ]
         },
@@ -1848,14 +1924,6 @@ export const sUserEx = {
     required: [
         'id',
         'locationId'
-    ]
-} as const;
-
-export const sUserSideEnum = {
-    type: 'string',
-    enum: [
-        'seller',
-        'buyer'
     ]
 } as const;
 
@@ -1881,7 +1949,12 @@ export const sUserExPatch = {
                             type: 'null'
                         },
                         {
-                            $ref: '#/components/schemas/UserSideEnum'
+                            allOf: [
+                                {
+                                    $ref: '#/components/schemas/UserSideEnum'
+                                },
+                                {}
+                            ]
                         }
                     ]
                 },

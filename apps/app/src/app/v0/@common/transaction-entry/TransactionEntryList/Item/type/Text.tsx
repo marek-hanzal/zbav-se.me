@@ -4,21 +4,21 @@ import { Mx } from "@use-pico/client/ui/mx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
-import type { tMessageText } from "@zbav-se.me/sdk/api/user";
+import type { tTransactionEntryText } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
-export namespace MessageText {
+export namespace Text {
 	export interface Props extends Container.Props {
 		/**
 		 * From which point of view the message is displayed
 		 */
 		side: tUserSideEnum;
-		message: tMessageText;
+		transactionEntry: tTransactionEntryText;
 	}
 }
 
-export const MessageText: FC<MessageText.Props> = ({ side, message, ...props }) => {
+export const Text: FC<Text.Props> = ({ side, transactionEntry, ...props }) => {
 	const locale = useLocale();
 
 	return (
@@ -29,7 +29,9 @@ export const MessageText: FC<MessageText.Props> = ({ side, message, ...props }) 
 				border: true,
 				inner: "default",
 				round: "default",
-				...match<typeof message.direction, uiContainer.Ui>(message.direction)
+				...match<typeof transactionEntry.direction, uiContainer.Ui>(
+					transactionEntry.direction,
+				)
 					.with("in", () => {
 						return {
 							tone: "link",
@@ -49,29 +51,20 @@ export const MessageText: FC<MessageText.Props> = ({ side, message, ...props }) 
 			}}
 			className={[
 				"w-2/3",
-				message.direction === "in" ? [] : undefined,
-				message.direction === "out"
-					? [
-							"ml-auto",
-						]
-					: undefined,
-				message.direction === "system"
-					? [
-							"w-full",
-						]
-					: undefined,
+				transactionEntry.direction === "out" ? "ml-auto" : undefined,
+				transactionEntry.direction === "system" ? "w-full" : undefined,
 			]}
 			{...props}
 		>
 			<Mx
-				label={`${side} - ${message.text}`}
-				fallback={message.text}
+				label={`${side} - ${transactionEntry.payload.text}`}
+				fallback={transactionEntry.payload.text}
 			/>
 
 			<Typo
 				label={toTimeDiff({
 					locale,
-					time: message.createdAt,
+					time: transactionEntry.createdAt,
 					type: "relative",
 				})}
 				ui={{

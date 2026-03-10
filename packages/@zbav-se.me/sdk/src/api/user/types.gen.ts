@@ -468,12 +468,27 @@ export type tInboxTransaction = {
          */
         transactionId: string;
         /**
+         * Related listing identifier for seller-scoped transaction routes
+         */
+        listingId: string;
+        /**
          * Related transaction entry identifier when available
          */
         transactionEntryId?: string;
+        target: tUserSideEnum;
         [key: string]: unknown;
     };
 };
+
+/**
+ * Recipient-side transaction detail target used for deep-link routing
+ */
+export const tUserSideEnum = { seller: 'seller', buyer: 'buyer' } as const;
+
+/**
+ * Recipient-side transaction detail target used for deep-link routing
+ */
+export type tUserSideEnum = typeof tUserSideEnum[keyof typeof tUserSideEnum];
 
 export type tInboxSystem = {
     /**
@@ -501,9 +516,14 @@ export type tInboxSystem = {
          */
         transactionId: string;
         /**
+         * Related listing identifier for seller-scoped transaction routes
+         */
+        listingId: string;
+        /**
          * Related transaction entry identifier when available
          */
         transactionEntryId?: string;
+        target: tUserSideEnum;
         [key: string]: unknown;
     };
 };
@@ -534,9 +554,14 @@ export type tInboxUnknown = {
          */
         transactionId: string;
         /**
+         * Related listing identifier for seller-scoped transaction routes
+         */
+        listingId: string;
+        /**
          * Related transaction entry identifier when available
          */
         transactionEntryId?: string;
+        target: tUserSideEnum;
         [key: string]: unknown;
     };
 };
@@ -712,6 +737,9 @@ export type tTransactionEntry = ({
     kind: 'status-pending' | 'status-open' | 'status-resolved' | 'status-dispute-buyer' | 'status-dispute-seller' | 'status-rejected-buyer' | 'status-rejected-seller' | 'status-sold' | 'status-expired' | 'status-success' | 'status-closed';
 } & tTransactionEntryCommon);
 
+/**
+ * Transaction text entry with user-authored message payload
+ */
 export type tTransactionEntryText = {
     /**
      * Transaction entry identifier
@@ -737,8 +765,27 @@ export type tTransactionEntryText = {
         text: string;
         [key: string]: unknown;
     };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
 };
 
+/**
+ * Direction of the transaction entry from the current viewer perspective
+ */
+export const tTransactionEntryDirectionEnum = {
+    in: 'in',
+    out: 'out',
+    system: 'system'
+} as const;
+
+/**
+ * Direction of the transaction entry from the current viewer perspective
+ */
+export type tTransactionEntryDirectionEnum = typeof tTransactionEntryDirectionEnum[keyof typeof tTransactionEntryDirectionEnum];
+
+/**
+ * Transaction gallery entry with linked gallery payload
+ */
 export type tTransactionEntryGallery = {
     /**
      * Transaction entry identifier
@@ -764,8 +811,13 @@ export type tTransactionEntryGallery = {
         galleryId: string;
         [key: string]: unknown;
     };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
 };
 
+/**
+ * Transaction location entry with linked location payload
+ */
 export type tTransactionEntryLocation = {
     /**
      * Transaction entry identifier
@@ -791,8 +843,13 @@ export type tTransactionEntryLocation = {
         locationId: string;
         [key: string]: unknown;
     };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
 };
 
+/**
+ * Transaction package entry with shipment tracking payload
+ */
 export type tTransactionEntryPackage = {
     /**
      * Transaction entry identifier
@@ -822,8 +879,13 @@ export type tTransactionEntryPackage = {
         number: string | null;
         [key: string]: unknown;
     };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
 };
 
+/**
+ * Transaction personal entry with contact and handoff payload
+ */
 export type tTransactionEntryPersonal = {
     /**
      * Transaction entry identifier
@@ -861,10 +923,12 @@ export type tTransactionEntryPersonal = {
         locationId: string;
         [key: string]: unknown;
     };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
 };
 
 /**
- * Common entry payload
+ * Transaction system entry with shared status or informational payload
  */
 export type tTransactionEntryCommon = {
     /**
@@ -891,6 +955,8 @@ export type tTransactionEntryCommon = {
         text: string;
         [key: string]: unknown;
     };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
 };
 
 /**
@@ -1213,22 +1279,12 @@ export type tUserEx = {
      * Default location for the user - user for listings & listing sorting
      */
     locationId: null | string;
-    side?: null | tUserSideEnum;
+    side?: null | (tUserSideEnum & unknown);
     /**
      * Bearer token used for agent access and API token fallback auth
      */
     token?: string | null;
 };
-
-/**
- * Side of the user
- */
-export const tUserSideEnum = { seller: 'seller', buyer: 'buyer' } as const;
-
-/**
- * Side of the user
- */
-export type tUserSideEnum = typeof tUserSideEnum[keyof typeof tUserSideEnum];
 
 /**
  * Data for patching a user ex
@@ -1242,7 +1298,7 @@ export type tUserExPatch = {
          * Default location for the user - user for listings & listing sorting
          */
         locationId?: null | string;
-        side?: null | tUserSideEnum;
+        side?: null | (tUserSideEnum & unknown);
         /**
          * Bearer token used for agent access and API token fallback auth
          */

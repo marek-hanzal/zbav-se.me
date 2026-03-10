@@ -2,18 +2,24 @@ import { useLocale } from "@use-pico/client/hook";
 import { Container, type uiContainer } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tMessagePersonal } from "@zbav-se.me/sdk/api/user";
+import type { tTransactionEntryPersonal } from "@zbav-se.me/sdk/api/user";
+import { withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
-export namespace MessagePersonal {
+export namespace Personal {
 	export interface Props extends Container.Props {
-		message: tMessagePersonal;
+		transactionEntry: tTransactionEntryPersonal;
 	}
 }
 
-export const MessagePersonal: FC<MessagePersonal.Props> = ({ message, ...props }) => {
+export const Personal: FC<Personal.Props> = ({ transactionEntry, ...props }) => {
 	const locale = useLocale();
+	const { data: location } = withLocationFetchQuery.useSuspenseQuery({
+		where: {
+			id: transactionEntry.payload.locationId,
+		},
+	});
 
 	return (
 		<Container
@@ -24,7 +30,9 @@ export const MessagePersonal: FC<MessagePersonal.Props> = ({ message, ...props }
 				flow: "vertical",
 				inner: "default",
 				round: "default",
-				...match<typeof message.direction, uiContainer.Ui>(message.direction)
+				...match<typeof transactionEntry.direction, uiContainer.Ui>(
+					transactionEntry.direction,
+				)
 					.with("in", () => {
 						return {
 							tone: "link",
@@ -44,13 +52,8 @@ export const MessagePersonal: FC<MessagePersonal.Props> = ({ message, ...props }
 			}}
 			className={[
 				"w-2/3",
-				message.direction === "in" ? [] : undefined,
-				message.direction === "out"
-					? [
-							"ml-auto",
-						]
-					: undefined,
-				message.direction === "system"
+				transactionEntry.direction === "out" ? "ml-auto" : undefined,
+				transactionEntry.direction === "system"
 					? [
 							"mx-auto",
 							"text-center",
@@ -66,7 +69,7 @@ export const MessagePersonal: FC<MessagePersonal.Props> = ({ message, ...props }
 				}}
 			>
 				<Typo
-					label={message.name}
+					label={transactionEntry.payload.name}
 					ui={{
 						wrap: "wrap",
 						font: "bold",
@@ -75,14 +78,14 @@ export const MessagePersonal: FC<MessagePersonal.Props> = ({ message, ...props }
 				/>
 
 				<Typo
-					label={message.phone}
+					label={transactionEntry.payload.phone}
 					ui={{
 						wrap: "wrap",
 					}}
 				/>
 
 				<Typo
-					label={message.email}
+					label={transactionEntry.payload.email}
 					ui={{
 						wrap: "wrap",
 					}}
@@ -90,7 +93,7 @@ export const MessagePersonal: FC<MessagePersonal.Props> = ({ message, ...props }
 				/>
 
 				<Typo
-					label={message.location.address}
+					label={location.address}
 					ui={{
 						wrap: "wrap",
 					}}
@@ -101,7 +104,7 @@ export const MessagePersonal: FC<MessagePersonal.Props> = ({ message, ...props }
 			<Typo
 				label={toTimeDiff({
 					locale,
-					time: message.createdAt,
+					time: transactionEntry.createdAt,
 					type: "relative",
 				})}
 				ui={{
