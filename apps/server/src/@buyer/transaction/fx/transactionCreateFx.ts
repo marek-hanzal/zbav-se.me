@@ -7,6 +7,7 @@ import { transactionFetchFx } from "~/@buyer/transaction/fx/transactionFetchFx";
 import type { TransactionCreateSchema } from "~/@buyer/transaction/schema/TransactionCreateSchema";
 import { TransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
 import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
+import { transactionStatusMessageFx } from "~/@user/transaction/fx/transactionStatusMessageFx";
 import { transactionUpdateStatusFx } from "~/@user/transaction/fx/transactionUpdateStatusFx";
 import { transactionUserCreateFx } from "~/@user/transaction-user/fx/transactionUserCreateFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
@@ -102,6 +103,13 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 				status: null,
 				request: "pending",
 				target: "buyer",
+			});
+
+			yield* transactionStatusMessageFx({
+				transactionId: id,
+				request: "pending",
+				target: "buyer",
+				userId,
 			});
 
 			yield* transactionUserCreateFx({

@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { transactionFetchFx } from "~/@buyer/transaction/fx/transactionFetchFx";
 import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
+import { transactionStatusMessageFx } from "~/@user/transaction/fx/transactionStatusMessageFx";
 import { transactionUpdateStatusFx } from "~/@user/transaction/fx/transactionUpdateStatusFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
@@ -41,6 +42,13 @@ export const transactionCloseFx = Effect.fn("transactionCloseFx")(function* ({
 				status: transaction.status,
 				request: "closed",
 				target: transaction.side,
+			});
+
+			yield* transactionStatusMessageFx({
+				transactionId: transaction.id,
+				request: "closed",
+				target: transaction.side,
+				userId,
 			});
 
 			yield* inboxCreateFx({

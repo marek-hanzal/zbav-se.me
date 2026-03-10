@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { transactionFetchFx } from "~/@seller/transaction/fx/transactionFetchFx";
 import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
+import { transactionStatusMessageFx } from "~/@user/transaction/fx/transactionStatusMessageFx";
 import { transactionUpdateStatusFx } from "~/@user/transaction/fx/transactionUpdateStatusFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { traceLogFx } from "~/effect/traceLogFx";
@@ -40,6 +41,13 @@ export const transactionDisputeFx = Effect.fn("transactionDisputeFx")(function* 
 				status: transaction.status,
 				request: "dispute",
 				target: "seller",
+			});
+
+			yield* transactionStatusMessageFx({
+				transactionId: transaction.id,
+				request: "dispute",
+				target: "seller",
+				userId,
 			});
 
 			yield* inboxCreateFx({
