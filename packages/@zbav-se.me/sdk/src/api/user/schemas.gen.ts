@@ -1074,6 +1074,9 @@ export const sTransactionEntryText = {
                 'text'
             ],
             additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
         }
     },
     required: [
@@ -1082,7 +1085,18 @@ export const sTransactionEntryText = {
         'userId',
         'createdAt',
         'kind',
-        'payload'
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
+} as const;
+
+export const sTransactionEntryDirectionEnum = {
+    type: 'string',
+    enum: [
+        'in',
+        'out',
+        'system'
     ]
 } as const;
 
@@ -1121,6 +1135,9 @@ export const sTransactionEntryGallery = {
                 'galleryId'
             ],
             additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
         }
     },
     required: [
@@ -1129,8 +1146,10 @@ export const sTransactionEntryGallery = {
         'userId',
         'createdAt',
         'kind',
-        'payload'
-    ]
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
 } as const;
 
 export const sTransactionEntryLocation = {
@@ -1168,6 +1187,9 @@ export const sTransactionEntryLocation = {
                 'locationId'
             ],
             additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
         }
     },
     required: [
@@ -1176,8 +1198,10 @@ export const sTransactionEntryLocation = {
         'userId',
         'createdAt',
         'kind',
-        'payload'
-    ]
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
 } as const;
 
 export const sTransactionEntryPackage = {
@@ -1223,6 +1247,9 @@ export const sTransactionEntryPackage = {
                 'number'
             ],
             additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
         }
     },
     required: [
@@ -1231,8 +1258,10 @@ export const sTransactionEntryPackage = {
         'userId',
         'createdAt',
         'kind',
-        'payload'
-    ]
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
 } as const;
 
 export const sTransactionEntryPersonal = {
@@ -1283,6 +1312,9 @@ export const sTransactionEntryPersonal = {
                 'locationId'
             ],
             additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
         }
     },
     required: [
@@ -1291,8 +1323,10 @@ export const sTransactionEntryPersonal = {
         'userId',
         'createdAt',
         'kind',
-        'payload'
-    ]
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
 } as const;
 
 export const sTransactionEntryCommon = {
@@ -1340,6 +1374,9 @@ export const sTransactionEntryCommon = {
                 'text'
             ],
             additionalProperties: {}
+        },
+        direction: {
+            $ref: '#/components/schemas/TransactionEntryDirectionEnum'
         }
     },
     required: [
@@ -1348,8 +1385,10 @@ export const sTransactionEntryCommon = {
         'userId',
         'createdAt',
         'kind',
-        'payload'
-    ]
+        'payload',
+        'direction'
+    ],
+    additionalProperties: {}
 } as const;
 
 export const sTransactionEntryQuery = {

@@ -670,6 +670,22 @@ export const zAllowedContentTypesEnum = z.enum([
 
 export type zAllowedContentTypesEnum = z.infer<typeof zAllowedContentTypesEnum>;
 
+/**
+ * Direction of the transaction entry from the current viewer perspective
+ */
+export const zTransactionEntryDirectionEnum = z.enum([
+    'in',
+    'out',
+    'system'
+]).register(z.globalRegistry, {
+    description: 'Direction of the transaction entry from the current viewer perspective'
+});
+
+export type zTransactionEntryDirectionEnum = z.infer<typeof zTransactionEntryDirectionEnum>;
+
+/**
+ * Transaction text entry with user-authored message payload
+ */
 export const zTransactionEntryText = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'Transaction entry identifier'
@@ -686,11 +702,17 @@ export const zTransactionEntryText = z.object({
         text: z.string().register(z.globalRegistry, {
             description: 'Text entry body'
         })
-    })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction text entry with user-authored message payload'
 });
 
 export type zTransactionEntryText = z.infer<typeof zTransactionEntryText>;
 
+/**
+ * Transaction gallery entry with linked gallery payload
+ */
 export const zTransactionEntryGallery = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'Transaction entry identifier'
@@ -707,11 +729,17 @@ export const zTransactionEntryGallery = z.object({
         galleryId: z.string().register(z.globalRegistry, {
             description: 'Gallery identifier linked to this entry'
         })
-    })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction gallery entry with linked gallery payload'
 });
 
 export type zTransactionEntryGallery = z.infer<typeof zTransactionEntryGallery>;
 
+/**
+ * Transaction location entry with linked location payload
+ */
 export const zTransactionEntryLocation = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'Transaction entry identifier'
@@ -728,11 +756,17 @@ export const zTransactionEntryLocation = z.object({
         locationId: z.string().register(z.globalRegistry, {
             description: 'Location identifier linked to this entry'
         })
-    })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction location entry with linked location payload'
 });
 
 export type zTransactionEntryLocation = z.infer<typeof zTransactionEntryLocation>;
 
+/**
+ * Transaction package entry with shipment tracking payload
+ */
 export const zTransactionEntryPackage = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'Transaction entry identifier'
@@ -750,11 +784,17 @@ export const zTransactionEntryPackage = z.object({
             description: 'Package tracking link'
         }),
         number: z.string().nullable()
-    })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction package entry with shipment tracking payload'
 });
 
 export type zTransactionEntryPackage = z.infer<typeof zTransactionEntryPackage>;
 
+/**
+ * Transaction personal entry with contact and handoff payload
+ */
 export const zTransactionEntryPersonal = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'Transaction entry identifier'
@@ -780,13 +820,16 @@ export const zTransactionEntryPersonal = z.object({
         locationId: z.string().register(z.globalRegistry, {
             description: 'Contact location identifier'
         })
-    })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction personal entry with contact and handoff payload'
 });
 
 export type zTransactionEntryPersonal = z.infer<typeof zTransactionEntryPersonal>;
 
 /**
- * Common entry payload
+ * Transaction system entry with shared status or informational payload
  */
 export const zTransactionEntryCommon = z.object({
     id: z.string().register(z.globalRegistry, {
@@ -816,9 +859,10 @@ export const zTransactionEntryCommon = z.object({
         text: z.string().register(z.globalRegistry, {
             description: 'Translation key for the system/status timeline entry'
         })
-    })
+    }),
+    direction: zTransactionEntryDirectionEnum
 }).register(z.globalRegistry, {
-    description: 'Common entry payload'
+    description: 'Transaction system entry with shared status or informational payload'
 });
 
 export type zTransactionEntryCommon = z.infer<typeof zTransactionEntryCommon>;

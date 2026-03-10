@@ -712,6 +712,9 @@ export type tTransactionEntry = ({
     kind: 'status-pending' | 'status-open' | 'status-resolved' | 'status-dispute-buyer' | 'status-dispute-seller' | 'status-rejected-buyer' | 'status-rejected-seller' | 'status-sold' | 'status-expired' | 'status-success' | 'status-closed';
 } & tTransactionEntryCommon);
 
+/**
+ * Transaction text entry with user-authored message payload
+ */
 export type tTransactionEntryText = {
     /**
      * Transaction entry identifier
@@ -737,8 +740,27 @@ export type tTransactionEntryText = {
         text: string;
         [key: string]: unknown;
     };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
 };
 
+/**
+ * Direction of the transaction entry from the current viewer perspective
+ */
+export const tTransactionEntryDirectionEnum = {
+    in: 'in',
+    out: 'out',
+    system: 'system'
+} as const;
+
+/**
+ * Direction of the transaction entry from the current viewer perspective
+ */
+export type tTransactionEntryDirectionEnum = typeof tTransactionEntryDirectionEnum[keyof typeof tTransactionEntryDirectionEnum];
+
+/**
+ * Transaction gallery entry with linked gallery payload
+ */
 export type tTransactionEntryGallery = {
     /**
      * Transaction entry identifier
@@ -764,8 +786,13 @@ export type tTransactionEntryGallery = {
         galleryId: string;
         [key: string]: unknown;
     };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
 };
 
+/**
+ * Transaction location entry with linked location payload
+ */
 export type tTransactionEntryLocation = {
     /**
      * Transaction entry identifier
@@ -791,8 +818,13 @@ export type tTransactionEntryLocation = {
         locationId: string;
         [key: string]: unknown;
     };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
 };
 
+/**
+ * Transaction package entry with shipment tracking payload
+ */
 export type tTransactionEntryPackage = {
     /**
      * Transaction entry identifier
@@ -822,8 +854,13 @@ export type tTransactionEntryPackage = {
         number: string | null;
         [key: string]: unknown;
     };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
 };
 
+/**
+ * Transaction personal entry with contact and handoff payload
+ */
 export type tTransactionEntryPersonal = {
     /**
      * Transaction entry identifier
@@ -861,10 +898,12 @@ export type tTransactionEntryPersonal = {
         locationId: string;
         [key: string]: unknown;
     };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
 };
 
 /**
- * Common entry payload
+ * Transaction system entry with shared status or informational payload
  */
 export type tTransactionEntryCommon = {
     /**
@@ -891,6 +930,8 @@ export type tTransactionEntryCommon = {
         text: string;
         [key: string]: unknown;
     };
+    direction: tTransactionEntryDirectionEnum;
+    [key: string]: unknown;
 };
 
 /**
