@@ -3,6 +3,7 @@ import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/seller";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
+import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 import type { Data } from "./Data";
 import { ActionSection } from "./section/ActionSection";
@@ -20,6 +21,7 @@ export const Editor: FC<Editor.Props> = ({ draft, onView }) => {
 	return (
 		<TitleContainer
 			textTitle={translator.text("Draft edit (title)")}
+			left={<BackHomeButton />}
 			right={<HomeMenuButton />}
 		>
 			<Container

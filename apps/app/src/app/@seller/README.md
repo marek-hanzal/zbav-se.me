@@ -40,3 +40,4 @@ Maps to server API: `/api/seller/*`.
   - `@seller/draft/DraftEditPage/DraftEditor/value/WarrantyValue.tsx`
 - Seller transaction action buttons now use the seller transaction mutation SDK surface (`accept`, `dispute`, `reject`, `resolve`) and invalidate `transaction-entry` timeline queries.
 - Seller message detail UI now reads conversation timeline through `@user/transaction-entry`, with `resolved` treated as seller read-only.
+- Seller top-level `TitleContainer` pages now use the shared `@common/nav/BackHomeButton` for explicit back-to-home navigation where the screen is not itself home.
