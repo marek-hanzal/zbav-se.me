@@ -3,12 +3,12 @@ import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { TransactionEntryCommon } from "../../type/TransactionEntryCommon";
-import { TransactionEntryGallery } from "../../type/TransactionEntryGallery";
-import { TransactionEntryLocation } from "../../type/TransactionEntryLocation";
-import { TransactionEntryPackage } from "../../type/TransactionEntryPackage";
-import { TransactionEntryPersonal } from "../../type/TransactionEntryPersonal";
-import { TransactionEntryText } from "../../type/TransactionEntryText";
+import { TransactionEntryCommon } from "./type/TransactionEntryCommon";
+import { TransactionEntryGallery } from "./type/TransactionEntryGallery";
+import { TransactionEntryLocation } from "./type/TransactionEntryLocation";
+import { TransactionEntryPackage } from "./type/TransactionEntryPackage";
+import { TransactionEntryPersonal } from "./type/TransactionEntryPersonal";
+import { TransactionEntryText } from "./type/TransactionEntryText";
 
 export namespace Data {
 	export interface Props extends MarkSuspense.Props {
