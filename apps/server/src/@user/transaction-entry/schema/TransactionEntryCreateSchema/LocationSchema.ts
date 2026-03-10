@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { BaseCreateSchema } from "./BaseCreateSchema";
+import { EntrySchema } from "./EntrySchema";
 
-export const LocationCreateSchema = z
+export const LocationSchema = z
 	.looseObject({
-		...BaseCreateSchema.shape,
+		...EntrySchema.shape,
 		kind: z.literal("location"),
 		payload: z.looseObject({
 			locationId: z.string().openapi({
@@ -11,10 +11,11 @@ export const LocationCreateSchema = z
 			}),
 		}),
 	})
+	.strip()
 	.openapi("TransactionEntryLocationCreate");
 
-export type LocationCreateSchema = typeof LocationCreateSchema;
+export type LocationSchema = typeof LocationSchema;
 
-export namespace LocationCreateSchema {
-	export type Type = z.infer<LocationCreateSchema>;
+export namespace LocationSchema {
+	export type Type = z.infer<LocationSchema>;
 }

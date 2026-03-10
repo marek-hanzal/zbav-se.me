@@ -1,6 +1,4 @@
 import type { auth } from "~/auth/auth";
-import type { BoardItemTableSchema } from "~/database/@table/BoardItemTableSchema";
-import type { BoardTableSchema } from "~/database/@table/BoardTableSchema";
 import type { CategoryMissTableSchema } from "~/database/@table/CategoryMissTableSchema";
 import type { CategorySpotlightTableSchema } from "~/database/@table/CategorySpotlightTableSchema";
 import type { CategoryTableSchema } from "~/database/@table/CategoryTableSchema";
@@ -25,8 +23,6 @@ import type { UserEventTableSchema } from "~/database/@table/UserEventTableSchem
 import type { UserExTableSchema } from "~/database/@table/UserExTableSchema";
 
 export interface Database {
-	board: BoardTableSchema.Type;
-	board_item: BoardItemTableSchema.Type;
 	category_miss: CategoryMissTableSchema.Type;
 	category_spotlight: CategorySpotlightTableSchema.Type;
 	category: CategoryTableSchema.Type;

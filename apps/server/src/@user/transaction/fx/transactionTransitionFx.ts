@@ -150,23 +150,22 @@ export namespace transactionTransitionFx {
 export const transactionTransitionFx = Effect.fn("transactionTransitionFx")(function* (
 	props: transactionTransitionFx.Props,
 ) {
-		yield* traceLogFx({
-			level: "trace",
-			message: "transactionTransitionFx",
-			input: props,
+	yield* traceLogFx({
+		level: "trace",
+		message: "transactionTransitionFx",
+		input: props,
+	});
+
+	const allowedTransitions = Transitions.Map[props.status ?? "null"];
+	const transition = allowedTransitions.find(
+		(transition) => transition.request === props.request && transition.side === props.side,
+	);
+
+	if (!transition) {
+		return yield* new InvalidRequestErrorFx({
+			message: `Invalid transaction status transition from ${props.status ?? "null"} to ${props.request} for ${props.side ?? "system"}`,
 		});
-
-		const allowedTransitions = Transitions.Map[props.status ?? "null"];
-		const transition = allowedTransitions.find(
-			(transition) => transition.request === props.request && transition.side === props.side,
-		);
-
-		if (!transition) {
-			return yield* new InvalidRequestErrorFx({
-				message: `Invalid transaction status transition from ${props.status ?? "null"} to ${props.request} for ${props.side ?? "system"}`,
-			});
-		}
-	},
-);
+	}
+});
 
 export type transactionTransitionFx = ReturnType<typeof transactionTransitionFx>;

@@ -16,5 +16,4 @@ export const EntrySchema = z
 			type: "string",
 		}),
 	})
-	.strip()
-	.openapi("TransactionEntryBase");
+	.strip();

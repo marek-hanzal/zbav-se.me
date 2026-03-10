@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { BaseCreateSchema } from "./BaseCreateSchema";
+import { EntrySchema } from "./EntrySchema";
 
-export const GalleryCreateSchema = z
+export const GallerySchema = z
 	.looseObject({
-		...BaseCreateSchema.shape,
+		...EntrySchema.shape,
 		kind: z.literal("gallery"),
 		payload: z.looseObject({
 			uploadIds: z.array(z.string()).min(1).openapi({
@@ -11,10 +11,11 @@ export const GalleryCreateSchema = z
 			}),
 		}),
 	})
+	.strip()
 	.openapi("TransactionEntryGalleryCreate");
 
-export type GalleryCreateSchema = typeof GalleryCreateSchema;
+export type GallerySchema = typeof GallerySchema;
 
-export namespace GalleryCreateSchema {
-	export type Type = z.infer<GalleryCreateSchema>;
+export namespace GallerySchema {
+	export type Type = z.infer<GallerySchema>;
 }

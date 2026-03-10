@@ -31,7 +31,8 @@ export const withSuccessApiFx = Effect.fn("withSuccessApiFx")(function* () {
 		createRoute({
 			method: "post",
 			path: "/transaction/{transactionId}/success",
-			description: "Mark a listing transaction as successful. Requires access to the transaction.",
+			description:
+				"Mark a listing transaction as successful. Requires access to the transaction.",
 			operationId: "apiTransactionSuccess",
 			request: {
 				params: TransactionSuccessParamsSchema,

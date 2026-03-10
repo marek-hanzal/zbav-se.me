@@ -2,7 +2,10 @@ import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { transactionEntryCleanupSensitiveFx } from "~/@user/transaction-entry/fx/transactionEntryCleanupSensitiveFx";
 import { withTransactionStatusEntryFx } from "~/@user/transaction-entry/fx/withTransactionStatusEntryFx";
-import { Transitions, transactionTransitionFx } from "~/@user/transaction/fx/transactionTransitionFx";
+import {
+	Transitions,
+	transactionTransitionFx,
+} from "~/@user/transaction/fx/transactionTransitionFx";
 import type { TransactionSideEnumSchema } from "~/database/@enum/TransactionSideEnumSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
@@ -70,14 +73,14 @@ export const transactionUpdateStatusFx = Effect.fn("transactionUpdateStatusFx")(
 	const dateContext = yield* DateContextFx;
 
 	yield* tryDbFx(async () =>
-			kysely
-				.updateTable("transaction")
-				.set({
-					status: request,
-					statusUpdatedAt: dateContext.now().toJSDate(),
-				})
-				.where("id", "=", transactionId)
-				.executeTakeFirstOrThrow(),
+		kysely
+			.updateTable("transaction")
+			.set({
+				status: request,
+				statusUpdatedAt: dateContext.now().toJSDate(),
+			})
+			.where("id", "=", transactionId)
+			.executeTakeFirstOrThrow(),
 	);
 
 	yield* withTransactionStatusEntryFx({

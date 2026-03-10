@@ -23,6 +23,6 @@ export const CommonSchema = z
 		}),
 	})
 	.strip()
-	.openapi("TransactionEntryCommon", {
-		description: "Common entry payload",
+	.openapi("TransactionEntryCommonCreate", {
+		description: "Common entry create payload",
 	});
