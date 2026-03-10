@@ -1,17 +1,23 @@
 import { withMutation } from "@use-pico/client/mutation";
 import { withApi } from "@use-pico/common/api";
-import { apiMessageCreate } from "../../../api/user/sdk.gen";
+import { apiTransactionEntryCreate } from "../../../api/user/sdk.gen";
 import type {
-	apiMessageCreateError,
-	tApiMessageCreateResponse,
-	tTransactionMessageGalleryCreate,
+	apiTransactionEntryCreateError,
+	tApiTransactionEntryCreateResponse,
 } from "../../../api/user/types.gen";
-import { withMessageQuery } from "../../../query/user/message";
+import { withTransactionEntryQuery } from "../../../query/user/transaction-entry";
+
+export namespace withTransactionMessageGalleryCreateMutation {
+	export interface Props {
+		transactionId: string;
+		uploadIds: string[];
+	}
+}
 
 export const withTransactionMessageGalleryCreateMutation = withMutation<
-	tTransactionMessageGalleryCreate,
-	tApiMessageCreateResponse[201],
-	apiMessageCreateError
+	withTransactionMessageGalleryCreateMutation.Props,
+	tApiTransactionEntryCreateResponse[201],
+	apiTransactionEntryCreateError
 >({
 	keys(variables) {
 		return [
@@ -22,10 +28,13 @@ export const withTransactionMessageGalleryCreateMutation = withMutation<
 	},
 	async mutationFn(body) {
 		return withApi(
-			apiMessageCreate({
+			apiTransactionEntryCreate({
 				body: {
-					type: "gallery",
-					...body,
+					transactionId: body.transactionId,
+					kind: "gallery",
+					payload: {
+						uploadIds: body.uploadIds,
+					},
 				},
 			}),
 		);
@@ -33,7 +42,7 @@ export const withTransactionMessageGalleryCreateMutation = withMutation<
 	invalidate: [
 		{
 			async invalidate(queryClient) {
-				await withMessageQuery.invalidator(queryClient, [
+				await withTransactionEntryQuery.invalidator(queryClient, [
 					"collection",
 					"count",
 				]);

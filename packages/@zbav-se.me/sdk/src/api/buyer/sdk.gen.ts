@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiFavouriteCollectionErrors, apiFavouriteCountErrors, apiFavouriteToggleErrors, apiFeedCollectionErrors, apiFeedCountErrors, apiFeedCreateErrors, apiFeedDeleteErrors, apiFeedFavouriteCollectionErrors, apiFeedFavouriteCountErrors, apiFeedFavouriteFetchErrors, apiFeedFetchErrors, apiFeedGalleryCreateErrors, apiFeedPatchErrors, apiFlagCollectionErrors, apiFlagCountErrors, apiFlagToggleErrors, apiIgnoreCollectionErrors, apiIgnoreCountErrors, apiIgnoreToggleErrors, apiListingCollectionErrors, apiListingCountErrors, apiListingEventCreateErrors, apiListingFetchErrors, apiListingSellerInfoErrors, apiThumbCreateErrors, apiTransactionCollectionErrors, apiTransactionCountErrors, apiTransactionCreateErrors, apiTransactionFetchErrors, apiTransactionStatusCloseErrors, apiTransactionStatusDisputeErrors, apiTransactionStatusRejectErrors, apiTransactionStatusSuccessErrors, tApiFavouriteCollectionRequest, tApiFavouriteCollectionResponse, tApiFavouriteCountRequest, tApiFavouriteCountResponse, tApiFavouriteToggleRequest, tApiFavouriteToggleResponse, tApiFeedCollectionRequest, tApiFeedCollectionResponse, tApiFeedCountRequest, tApiFeedCountResponse, tApiFeedCreateRequest, tApiFeedCreateResponse, tApiFeedDeleteRequest, tApiFeedDeleteResponse, tApiFeedFavouriteCollectionRequest, tApiFeedFavouriteCollectionResponse, tApiFeedFavouriteCountRequest, tApiFeedFavouriteCountResponse, tApiFeedFavouriteFetchRequest, tApiFeedFavouriteFetchResponse, tApiFeedFetchRequest, tApiFeedFetchResponse, tApiFeedGalleryCreateRequest, tApiFeedGalleryCreateResponse, tApiFeedPatchRequest, tApiFeedPatchResponse, tApiFlagCollectionRequest, tApiFlagCollectionResponse, tApiFlagCountRequest, tApiFlagCountResponse, tApiFlagToggleRequest, tApiFlagToggleResponse, tApiIgnoreCollectionRequest, tApiIgnoreCollectionResponse, tApiIgnoreCountRequest, tApiIgnoreCountResponse, tApiIgnoreToggleRequest, tApiIgnoreToggleResponse, tApiListingCollectionRequest, tApiListingCollectionResponse, tApiListingCountRequest, tApiListingCountResponse, tApiListingEventCreateRequest, tApiListingEventCreateResponse, tApiListingFetchRequest, tApiListingFetchResponse, tApiListingSellerInfoRequest, tApiListingSellerInfoResponse, tApiThumbCreateRequest, tApiThumbCreateResponse, tApiTransactionCollectionRequest, tApiTransactionCollectionResponse, tApiTransactionCountRequest, tApiTransactionCountResponse, tApiTransactionCreateRequest, tApiTransactionCreateResponse, tApiTransactionFetchRequest, tApiTransactionFetchResponse, tApiTransactionStatusCloseRequest, tApiTransactionStatusCloseResponse, tApiTransactionStatusDisputeRequest, tApiTransactionStatusDisputeResponse, tApiTransactionStatusRejectRequest, tApiTransactionStatusRejectResponse, tApiTransactionStatusSuccessRequest, tApiTransactionStatusSuccessResponse } from './types.gen';
-import { zApiFavouriteCollectionData, zApiFavouriteCollectionResponse, zApiFavouriteCountData, zApiFavouriteCountResponse, zApiFavouriteToggleData, zApiFavouriteToggleResponse, zApiFeedCollectionData, zApiFeedCollectionResponse, zApiFeedCountData, zApiFeedCountResponse, zApiFeedCreateData, zApiFeedCreateResponse, zApiFeedDeleteData, zApiFeedDeleteResponse, zApiFeedFavouriteCollectionData, zApiFeedFavouriteCollectionResponse, zApiFeedFavouriteCountData, zApiFeedFavouriteCountResponse, zApiFeedFavouriteFetchData, zApiFeedFavouriteFetchResponse, zApiFeedFetchData, zApiFeedFetchResponse, zApiFeedGalleryCreateData, zApiFeedGalleryCreateResponse, zApiFeedPatchData, zApiFeedPatchResponse, zApiFlagCollectionData, zApiFlagCollectionResponse, zApiFlagCountData, zApiFlagCountResponse, zApiFlagToggleData, zApiFlagToggleResponse, zApiIgnoreCollectionData, zApiIgnoreCollectionResponse, zApiIgnoreCountData, zApiIgnoreCountResponse, zApiIgnoreToggleData, zApiIgnoreToggleResponse, zApiListingCollectionData, zApiListingCollectionResponse, zApiListingCountData, zApiListingCountResponse, zApiListingEventCreateData, zApiListingEventCreateResponse, zApiListingFetchData, zApiListingFetchResponse, zApiListingSellerInfoData, zApiListingSellerInfoResponse, zApiThumbCreateData, zApiThumbCreateResponse, zApiTransactionCollectionData, zApiTransactionCollectionResponse, zApiTransactionCountData, zApiTransactionCountResponse, zApiTransactionCreateData, zApiTransactionCreateResponse, zApiTransactionFetchData, zApiTransactionFetchResponse, zApiTransactionStatusCloseData, zApiTransactionStatusCloseResponse, zApiTransactionStatusDisputeData, zApiTransactionStatusDisputeResponse, zApiTransactionStatusRejectData, zApiTransactionStatusRejectResponse, zApiTransactionStatusSuccessData, zApiTransactionStatusSuccessResponse } from './zod.gen';
+import type { apiFavouriteCollectionErrors, apiFavouriteCountErrors, apiFavouriteToggleErrors, apiFeedCollectionErrors, apiFeedCountErrors, apiFeedCreateErrors, apiFeedDeleteErrors, apiFeedFavouriteCollectionErrors, apiFeedFavouriteCountErrors, apiFeedFavouriteFetchErrors, apiFeedFetchErrors, apiFeedGalleryCreateErrors, apiFeedPatchErrors, apiFlagCollectionErrors, apiFlagCountErrors, apiFlagToggleErrors, apiIgnoreCollectionErrors, apiIgnoreCountErrors, apiIgnoreToggleErrors, apiListingCollectionErrors, apiListingCountErrors, apiListingEventCreateErrors, apiListingFetchErrors, apiListingSellerInfoErrors, apiThumbCreateErrors, apiTransactionCloseErrors, apiTransactionCollectionErrors, apiTransactionCountErrors, apiTransactionCreateErrors, apiTransactionDisputeErrors, apiTransactionFetchErrors, apiTransactionRejectErrors, apiTransactionSuccessErrors, tApiFavouriteCollectionRequest, tApiFavouriteCollectionResponse, tApiFavouriteCountRequest, tApiFavouriteCountResponse, tApiFavouriteToggleRequest, tApiFavouriteToggleResponse, tApiFeedCollectionRequest, tApiFeedCollectionResponse, tApiFeedCountRequest, tApiFeedCountResponse, tApiFeedCreateRequest, tApiFeedCreateResponse, tApiFeedDeleteRequest, tApiFeedDeleteResponse, tApiFeedFavouriteCollectionRequest, tApiFeedFavouriteCollectionResponse, tApiFeedFavouriteCountRequest, tApiFeedFavouriteCountResponse, tApiFeedFavouriteFetchRequest, tApiFeedFavouriteFetchResponse, tApiFeedFetchRequest, tApiFeedFetchResponse, tApiFeedGalleryCreateRequest, tApiFeedGalleryCreateResponse, tApiFeedPatchRequest, tApiFeedPatchResponse, tApiFlagCollectionRequest, tApiFlagCollectionResponse, tApiFlagCountRequest, tApiFlagCountResponse, tApiFlagToggleRequest, tApiFlagToggleResponse, tApiIgnoreCollectionRequest, tApiIgnoreCollectionResponse, tApiIgnoreCountRequest, tApiIgnoreCountResponse, tApiIgnoreToggleRequest, tApiIgnoreToggleResponse, tApiListingCollectionRequest, tApiListingCollectionResponse, tApiListingCountRequest, tApiListingCountResponse, tApiListingEventCreateRequest, tApiListingEventCreateResponse, tApiListingFetchRequest, tApiListingFetchResponse, tApiListingSellerInfoRequest, tApiListingSellerInfoResponse, tApiThumbCreateRequest, tApiThumbCreateResponse, tApiTransactionCloseRequest, tApiTransactionCloseResponse, tApiTransactionCollectionRequest, tApiTransactionCollectionResponse, tApiTransactionCountRequest, tApiTransactionCountResponse, tApiTransactionCreateRequest, tApiTransactionCreateResponse, tApiTransactionDisputeRequest, tApiTransactionDisputeResponse, tApiTransactionFetchRequest, tApiTransactionFetchResponse, tApiTransactionRejectRequest, tApiTransactionRejectResponse, tApiTransactionSuccessRequest, tApiTransactionSuccessResponse } from './types.gen';
+import { zApiFavouriteCollectionData, zApiFavouriteCollectionResponse, zApiFavouriteCountData, zApiFavouriteCountResponse, zApiFavouriteToggleData, zApiFavouriteToggleResponse, zApiFeedCollectionData, zApiFeedCollectionResponse, zApiFeedCountData, zApiFeedCountResponse, zApiFeedCreateData, zApiFeedCreateResponse, zApiFeedDeleteData, zApiFeedDeleteResponse, zApiFeedFavouriteCollectionData, zApiFeedFavouriteCollectionResponse, zApiFeedFavouriteCountData, zApiFeedFavouriteCountResponse, zApiFeedFavouriteFetchData, zApiFeedFavouriteFetchResponse, zApiFeedFetchData, zApiFeedFetchResponse, zApiFeedGalleryCreateData, zApiFeedGalleryCreateResponse, zApiFeedPatchData, zApiFeedPatchResponse, zApiFlagCollectionData, zApiFlagCollectionResponse, zApiFlagCountData, zApiFlagCountResponse, zApiFlagToggleData, zApiFlagToggleResponse, zApiIgnoreCollectionData, zApiIgnoreCollectionResponse, zApiIgnoreCountData, zApiIgnoreCountResponse, zApiIgnoreToggleData, zApiIgnoreToggleResponse, zApiListingCollectionData, zApiListingCollectionResponse, zApiListingCountData, zApiListingCountResponse, zApiListingEventCreateData, zApiListingEventCreateResponse, zApiListingFetchData, zApiListingFetchResponse, zApiListingSellerInfoData, zApiListingSellerInfoResponse, zApiThumbCreateData, zApiThumbCreateResponse, zApiTransactionCloseData, zApiTransactionCloseResponse, zApiTransactionCollectionData, zApiTransactionCollectionResponse, zApiTransactionCountData, zApiTransactionCountResponse, zApiTransactionCreateData, zApiTransactionCreateResponse, zApiTransactionDisputeData, zApiTransactionDisputeResponse, zApiTransactionFetchData, zApiTransactionFetchResponse, zApiTransactionRejectData, zApiTransactionRejectResponse, zApiTransactionSuccessData, zApiTransactionSuccessResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -441,6 +441,19 @@ export const apiThumbCreate = <ThrowOnError extends boolean = false>(options?: O
 });
 
 /**
+ * Close a listing transaction
+ *
+ * Close a listing transaction. Requires access to the transaction.
+ */
+export const apiTransactionClose = <ThrowOnError extends boolean = false>(options: Options<tApiTransactionCloseRequest, ThrowOnError>) => (options.client ?? client).post<tApiTransactionCloseResponse, apiTransactionCloseErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiTransactionCloseData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiTransactionCloseResponse.parseAsync(data),
+    url: '/api/buyer/transaction/{transactionId}/close',
+    ...options
+});
+
+/**
  * Fetch a collection of transactions based on the provided query
  *
  * Returns transactions based on provided parameters
@@ -492,6 +505,19 @@ export const apiTransactionCreate = <ThrowOnError extends boolean = false>(optio
 });
 
 /**
+ * Dispute a listing transaction
+ *
+ * Dispute a listing transaction. Requires access to the transaction.
+ */
+export const apiTransactionDispute = <ThrowOnError extends boolean = false>(options: Options<tApiTransactionDisputeRequest, ThrowOnError>) => (options.client ?? client).post<tApiTransactionDisputeResponse, apiTransactionDisputeErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiTransactionDisputeData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiTransactionDisputeResponse.parseAsync(data),
+    url: '/api/buyer/transaction/{transactionId}/dispute',
+    ...options
+});
+
+/**
  * Fetch a transaction based on the provided query
  *
  * Return a transaction based on the provided query
@@ -509,54 +535,16 @@ export const apiTransactionFetch = <ThrowOnError extends boolean = false>(option
 });
 
 /**
- * Close a listing transaction
- *
- * Close a listing transaction. Requires access to the transaction.
- */
-export const apiTransactionStatusClose = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionStatusCloseRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionStatusCloseResponse, apiTransactionStatusCloseErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiTransactionStatusCloseData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiTransactionStatusCloseResponse.parseAsync(data),
-    url: '/api/buyer/transaction/status/close',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Dispute a listing transaction
- *
- * Dispute a listing transaction. Requires access to the transaction.
- */
-export const apiTransactionStatusDispute = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionStatusDisputeRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionStatusDisputeResponse, apiTransactionStatusDisputeErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiTransactionStatusDisputeData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiTransactionStatusDisputeResponse.parseAsync(data),
-    url: '/api/buyer/transaction/status/dispute',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
  * Reject a listing transaction
  *
  * Reject a listing transaction. Requires access to the transaction.
  */
-export const apiTransactionStatusReject = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionStatusRejectRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionStatusRejectResponse, apiTransactionStatusRejectErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiTransactionStatusRejectData.parseAsync(data),
+export const apiTransactionReject = <ThrowOnError extends boolean = false>(options: Options<tApiTransactionRejectRequest, ThrowOnError>) => (options.client ?? client).post<tApiTransactionRejectResponse, apiTransactionRejectErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiTransactionRejectData.parseAsync(data),
     responseType: 'json',
-    responseValidator: async (data) => await zApiTransactionStatusRejectResponse.parseAsync(data),
-    url: '/api/buyer/transaction/status/reject',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
+    responseValidator: async (data) => await zApiTransactionRejectResponse.parseAsync(data),
+    url: '/api/buyer/transaction/{transactionId}/reject',
+    ...options
 });
 
 /**
@@ -564,14 +552,10 @@ export const apiTransactionStatusReject = <ThrowOnError extends boolean = false>
  *
  * Mark a listing transaction as successful. Requires access to the transaction.
  */
-export const apiTransactionStatusSuccess = <ThrowOnError extends boolean = false>(options?: Options<tApiTransactionStatusSuccessRequest, ThrowOnError>) => (options?.client ?? client).post<tApiTransactionStatusSuccessResponse, apiTransactionStatusSuccessErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiTransactionStatusSuccessData.parseAsync(data),
+export const apiTransactionSuccess = <ThrowOnError extends boolean = false>(options: Options<tApiTransactionSuccessRequest, ThrowOnError>) => (options.client ?? client).post<tApiTransactionSuccessResponse, apiTransactionSuccessErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiTransactionSuccessData.parseAsync(data),
     responseType: 'json',
-    responseValidator: async (data) => await zApiTransactionStatusSuccessResponse.parseAsync(data),
-    url: '/api/buyer/transaction/status/success',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
+    responseValidator: async (data) => await zApiTransactionSuccessResponse.parseAsync(data),
+    url: '/api/buyer/transaction/{transactionId}/success',
+    ...options
 });

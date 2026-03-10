@@ -163,6 +163,7 @@ export const zTransactionStatusEnum = z.enum([
     'open',
     'resolved',
     'dispute',
+    'sold',
     'rejected',
     'expired',
     'success',
@@ -248,34 +249,30 @@ export const zUserEventSourceEnum = z.enum(['listing', 'transaction']).register(
 export type zUserEventSourceEnum = z.infer<typeof zUserEventSourceEnum>;
 
 /**
- * Direction of the message
+ * Type of transaction timeline entry
  */
-export const zMessageDirectionEnum = z.enum([
-    'in',
-    'out',
-    'system'
-]).register(z.globalRegistry, {
-    description: 'Direction of the message'
-});
-
-export type zMessageDirectionEnum = z.infer<typeof zMessageDirectionEnum>;
-
-/**
- * Type of message
- */
-export const zMessageTypeEnum = z.enum([
+export const zTransactionEntryKindEnum = z.enum([
     'text',
     'gallery',
     'location',
-    'personal',
     'package',
-    'date',
-    'system'
+    'personal',
+    'status-pending',
+    'status-open',
+    'status-resolved',
+    'status-dispute-buyer',
+    'status-dispute-seller',
+    'status-rejected-buyer',
+    'status-rejected-seller',
+    'status-sold',
+    'status-expired',
+    'status-success',
+    'status-closed'
 ]).register(z.globalRegistry, {
-    description: 'Type of message'
+    description: 'Type of transaction timeline entry'
 });
 
-export type zMessageTypeEnum = z.infer<typeof zMessageTypeEnum>;
+export type zTransactionEntryKindEnum = z.infer<typeof zTransactionEntryKindEnum>;
 
 /**
  * Order
@@ -855,39 +852,22 @@ export const zApiPublicEnumUserEventSourceResponse = z.array(zUserEventSourceEnu
 
 export type zapiPublicEnumUserEventSourceResponse = z.infer<typeof zApiPublicEnumUserEventSourceResponse>;
 
-export const zApiPublicEnumMessageDirectionData = z.object({
+export const zApiPublicEnumTransactionEntryKindData = z.object({
     body: z.never().optional(),
     path: z.never().optional(),
     query: z.never().optional()
 });
 
-export type zapiPublicEnumMessageDirectionRequest = z.infer<typeof zApiPublicEnumMessageDirectionData>;
+export type zapiPublicEnumTransactionEntryKindRequest = z.infer<typeof zApiPublicEnumTransactionEntryKindData>;
 
 /**
- * MessageDirection enum
+ * TransactionEntryKind enum
  */
-export const zApiPublicEnumMessageDirectionResponse = z.array(zMessageDirectionEnum).register(z.globalRegistry, {
-    description: 'MessageDirection enum'
+export const zApiPublicEnumTransactionEntryKindResponse = z.array(zTransactionEntryKindEnum).register(z.globalRegistry, {
+    description: 'TransactionEntryKind enum'
 });
 
-export type zapiPublicEnumMessageDirectionResponse = z.infer<typeof zApiPublicEnumMessageDirectionResponse>;
-
-export const zApiPublicEnumMessageTypeData = z.object({
-    body: z.never().optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiPublicEnumMessageTypeRequest = z.infer<typeof zApiPublicEnumMessageTypeData>;
-
-/**
- * MessageType enum
- */
-export const zApiPublicEnumMessageTypeResponse = z.array(zMessageTypeEnum).register(z.globalRegistry, {
-    description: 'MessageType enum'
-});
-
-export type zapiPublicEnumMessageTypeResponse = z.infer<typeof zApiPublicEnumMessageTypeResponse>;
+export type zapiPublicEnumTransactionEntryKindResponse = z.infer<typeof zApiPublicEnumTransactionEntryKindResponse>;
 
 export const zApiPublicEnumNoticeTypeData = z.object({
     body: z.never().optional(),

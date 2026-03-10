@@ -737,6 +737,66 @@ export const zListingCreate = z.object({
 export type zListingCreate = z.infer<typeof zListingCreate>;
 
 /**
+ * Current status of the listing transaction
+ */
+export const zTransactionStatusEnum = z.enum([
+    'pending',
+    'open',
+    'resolved',
+    'dispute',
+    'sold',
+    'rejected',
+    'expired',
+    'success',
+    'closed'
+]).register(z.globalRegistry, {
+    description: 'Current status of the listing transaction'
+});
+
+export type zTransactionStatusEnum = z.infer<typeof zTransactionStatusEnum>;
+
+/**
+ * Transaction data
+ */
+export const zTransaction = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the related listing'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    updatedAt: z.string().register(z.globalRegistry, {
+        description: 'Last update timestamp'
+    }),
+    status: zTransactionStatusEnum,
+    statusUpdatedAt: z.string().register(z.globalRegistry, {
+        description: 'Last status update timestamp'
+    }),
+    expiresAt: z.string().register(z.globalRegistry, {
+        description: 'Expiration timestamp'
+    }),
+    title: z.string().register(z.globalRegistry, {
+        description: 'Transaction title'
+    }),
+    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
+        description: 'Gallery data with items'
+    })),
+    price: z.number().register(z.globalRegistry, {
+        description: 'Price of the listing'
+    }),
+    priceType: zListingPriceEnum,
+    currency: zCurrencyEnum,
+    location: zLocation
+}).register(z.globalRegistry, {
+    description: 'Transaction data'
+});
+
+export type zTransaction = z.infer<typeof zTransaction>;
+
+/**
  * Initial reaction on opened transaction by seller.
  */
 export const zUserEventBuyerReaction = z.object({
@@ -926,24 +986,6 @@ export const zTransactionBuyerInfo = z.object({
 export type zTransactionBuyerInfo = z.infer<typeof zTransactionBuyerInfo>;
 
 /**
- * This filter matches the current status of the transaction
- */
-export const zTransactionStatusEnum = z.enum([
-    'pending',
-    'open',
-    'resolved',
-    'dispute',
-    'rejected',
-    'expired',
-    'success',
-    'closed'
-]).register(z.globalRegistry, {
-    description: 'This filter matches the current status of the transaction'
-});
-
-export type zTransactionStatusEnum = z.infer<typeof zTransactionStatusEnum>;
-
-/**
  * Filter object for transaction collection
  */
 export const zTransactionFilter = z.object({
@@ -962,10 +1004,10 @@ export const zTransactionFilter = z.object({
     listingId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
     }).optional(),
-    status: zTransactionStatusEnum.optional(),
-    statusIn: z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
-        description: 'Current status of the listing transaction'
-    }))).register(z.globalRegistry, {
+    status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'This filter matches the current status of the transaction'
+    })).optional(),
+    statusIn: z.array(zTransactionStatusEnum).register(z.globalRegistry, {
         description: 'This filter matches any of the provided statuses for the current status of the transaction'
     }).optional()
 }).register(z.globalRegistry, {
@@ -993,10 +1035,10 @@ export const zTransactionWhere = z.object({
     listingId: z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
     }).optional(),
-    status: zTransactionStatusEnum.optional(),
-    statusIn: z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
-        description: 'Current status of the listing transaction'
-    }))).register(z.globalRegistry, {
+    status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'This filter matches the current status of the transaction'
+    })).optional(),
+    statusIn: z.array(zTransactionStatusEnum).register(z.globalRegistry, {
         description: 'This filter matches any of the provided statuses for the current status of the transaction'
     }).optional()
 }).register(z.globalRegistry, {
@@ -1044,49 +1086,6 @@ export const zTransactionQuery = z.object({
 });
 
 export type zTransactionQuery = z.infer<typeof zTransactionQuery>;
-
-/**
- * Transaction data
- */
-export const zTransaction = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the transaction'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the related listing'
-    }),
-    messageThreadId: z.string().register(z.globalRegistry, {
-        description: 'ID of the message thread associated with the transaction'
-    }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    updatedAt: z.string().register(z.globalRegistry, {
-        description: 'Last update timestamp'
-    }),
-    expiresAt: z.string().register(z.globalRegistry, {
-        description: 'Expiration timestamp'
-    }),
-    title: z.string().register(z.globalRegistry, {
-        description: 'Transaction title'
-    }),
-    status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
-        description: 'Current status of the listing transaction'
-    })),
-    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
-        description: 'Gallery data with items'
-    })),
-    price: z.number().register(z.globalRegistry, {
-        description: 'Price of the listing'
-    }),
-    priceType: zListingPriceEnum,
-    currency: zCurrencyEnum,
-    location: zLocation
-}).register(z.globalRegistry, {
-    description: 'Transaction data'
-});
-
-export type zTransaction = z.infer<typeof zTransaction>;
 
 /**
  * Query object for transaction count
@@ -1216,99 +1215,6 @@ export const zTransactionListingCountQuery = z.object({
 });
 
 export type zTransactionListingCountQuery = z.infer<typeof zTransactionListingCountQuery>;
-
-/**
- * Who initiated or affected the transaction change
- */
-export const zTransactionSideEnum = z.enum([
-    'seller',
-    'buyer',
-    'transaction',
-    'system',
-    'unknown'
-]).register(z.globalRegistry, {
-    description: 'Who initiated or affected the transaction change'
-});
-
-export type zTransactionSideEnum = z.infer<typeof zTransactionSideEnum>;
-
-/**
- * Listing transaction status entry
- */
-export const zTransactionStatus = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the transaction status entry'
-    }),
-    transactionId: z.string().register(z.globalRegistry, {
-        description: 'ID of the transaction referenced by the status'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing referenced by the status'
-    }),
-    side: zTransactionSideEnum,
-    status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
-        description: 'Current status of the listing transaction'
-    })),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    })
-}).register(z.globalRegistry, {
-    description: 'Listing transaction status entry'
-});
-
-export type zTransactionStatus = z.infer<typeof zTransactionStatus>;
-
-/**
- * Request to accept a listing transaction
- */
-export const zTransactionStatusAccept = z.object({
-    transactionId: z.string().register(z.globalRegistry, {
-        description: 'The ID of the listing transaction to accept'
-    })
-}).register(z.globalRegistry, {
-    description: 'Request to accept a listing transaction'
-});
-
-export type zTransactionStatusAccept = z.infer<typeof zTransactionStatusAccept>;
-
-/**
- * Request to dispute a listing transaction
- */
-export const zTransactionStatusDispute = z.object({
-    transactionId: z.string().register(z.globalRegistry, {
-        description: 'The ID of the listing transaction to dispute'
-    })
-}).register(z.globalRegistry, {
-    description: 'Request to dispute a listing transaction'
-});
-
-export type zTransactionStatusDispute = z.infer<typeof zTransactionStatusDispute>;
-
-/**
- * Request to reject a listing transaction
- */
-export const zTransactionStatusReject = z.object({
-    transactionId: z.string().register(z.globalRegistry, {
-        description: 'The ID of the listing transaction to reject'
-    })
-}).register(z.globalRegistry, {
-    description: 'Request to reject a listing transaction'
-});
-
-export type zTransactionStatusReject = z.infer<typeof zTransactionStatusReject>;
-
-/**
- * Request to resolve a listing transaction
- */
-export const zTransactionStatusResolve = z.object({
-    transactionId: z.string().register(z.globalRegistry, {
-        description: 'The ID of the listing transaction to resolve'
-    })
-}).register(z.globalRegistry, {
-    description: 'Request to resolve a listing transaction'
-});
-
-export type zTransactionStatusResolve = z.infer<typeof zTransactionStatusResolve>;
 
 export const zApiDraftCollectionData = z.object({
     body: zDraftQuery.optional(),
@@ -1481,6 +1387,25 @@ export const zApiListingFetchResponse = zListing;
 
 export type zapiListingFetchResponse = z.infer<typeof zApiListingFetchResponse>;
 
+export const zApiTransactionAcceptData = z.object({
+    body: z.never().optional(),
+    path: z.object({
+        transactionId: z.string().register(z.globalRegistry, {
+            description: 'Transaction identifier'
+        })
+    }),
+    query: z.never().optional()
+});
+
+export type zapiTransactionAcceptRequest = z.infer<typeof zApiTransactionAcceptData>;
+
+/**
+ * Transaction was accepted
+ */
+export const zApiTransactionAcceptResponse = zTransaction;
+
+export type zapiTransactionAcceptResponse = z.infer<typeof zApiTransactionAcceptResponse>;
+
 export const zApiTransactionBuyerInfoData = z.object({
     body: zTransactionQuery.optional(),
     path: z.never().optional(),
@@ -1528,6 +1453,25 @@ export const zApiTransactionCountResponse = zCount;
 
 export type zapiTransactionCountResponse = z.infer<typeof zApiTransactionCountResponse>;
 
+export const zApiTransactionSellerDisputeData = z.object({
+    body: z.never().optional(),
+    path: z.object({
+        transactionId: z.string().register(z.globalRegistry, {
+            description: 'Transaction identifier'
+        })
+    }),
+    query: z.never().optional()
+});
+
+export type zapiTransactionSellerDisputeRequest = z.infer<typeof zApiTransactionSellerDisputeData>;
+
+/**
+ * Transaction was disputed
+ */
+export const zApiTransactionSellerDisputeResponse = zTransaction;
+
+export type zapiTransactionSellerDisputeResponse = z.infer<typeof zApiTransactionSellerDisputeResponse>;
+
 export const zApiTransactionFetchData = z.object({
     body: zTransactionQuery.optional(),
     path: z.never().optional(),
@@ -1542,6 +1486,44 @@ export type zapiTransactionFetchRequest = z.infer<typeof zApiTransactionFetchDat
 export const zApiTransactionFetchResponse = zTransaction;
 
 export type zapiTransactionFetchResponse = z.infer<typeof zApiTransactionFetchResponse>;
+
+export const zApiTransactionSellerRejectData = z.object({
+    body: z.never().optional(),
+    path: z.object({
+        transactionId: z.string().register(z.globalRegistry, {
+            description: 'Transaction identifier'
+        })
+    }),
+    query: z.never().optional()
+});
+
+export type zapiTransactionSellerRejectRequest = z.infer<typeof zApiTransactionSellerRejectData>;
+
+/**
+ * Transaction was rejected
+ */
+export const zApiTransactionSellerRejectResponse = zTransaction;
+
+export type zapiTransactionSellerRejectResponse = z.infer<typeof zApiTransactionSellerRejectResponse>;
+
+export const zApiTransactionResolveData = z.object({
+    body: z.never().optional(),
+    path: z.object({
+        transactionId: z.string().register(z.globalRegistry, {
+            description: 'Transaction identifier'
+        })
+    }),
+    query: z.never().optional()
+});
+
+export type zapiTransactionResolveRequest = z.infer<typeof zApiTransactionResolveData>;
+
+/**
+ * Transaction was resolved
+ */
+export const zApiTransactionResolveResponse = zTransaction;
+
+export type zapiTransactionResolveResponse = z.infer<typeof zApiTransactionResolveResponse>;
 
 export const zApiTransactionListingCollectionData = z.object({
     body: zTransactionListingQuery.optional(),
@@ -1589,63 +1571,3 @@ export type zapiTransactionListingFetchRequest = z.infer<typeof zApiTransactionL
 export const zApiTransactionListingFetchResponse = zTransactionListing;
 
 export type zapiTransactionListingFetchResponse = z.infer<typeof zApiTransactionListingFetchResponse>;
-
-export const zApiTransactionStatusAcceptData = z.object({
-    body: zTransactionStatusAccept.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiTransactionStatusAcceptRequest = z.infer<typeof zApiTransactionStatusAcceptData>;
-
-/**
- * Accepted status created
- */
-export const zApiTransactionStatusAcceptResponse = zTransactionStatus;
-
-export type zapiTransactionStatusAcceptResponse = z.infer<typeof zApiTransactionStatusAcceptResponse>;
-
-export const zApiTransactionStatusDisputeData = z.object({
-    body: zTransactionStatusDispute.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiTransactionStatusDisputeRequest = z.infer<typeof zApiTransactionStatusDisputeData>;
-
-/**
- * Disputed status created
- */
-export const zApiTransactionStatusDisputeResponse = zTransactionStatus;
-
-export type zapiTransactionStatusDisputeResponse = z.infer<typeof zApiTransactionStatusDisputeResponse>;
-
-export const zApiTransactionStatusRejectData = z.object({
-    body: zTransactionStatusReject.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiTransactionStatusRejectRequest = z.infer<typeof zApiTransactionStatusRejectData>;
-
-/**
- * Rejected status created
- */
-export const zApiTransactionStatusRejectResponse = zTransactionStatus;
-
-export type zapiTransactionStatusRejectResponse = z.infer<typeof zApiTransactionStatusRejectResponse>;
-
-export const zApiTransactionStatusResolveData = z.object({
-    body: zTransactionStatusResolve.optional(),
-    path: z.never().optional(),
-    query: z.never().optional()
-});
-
-export type zapiTransactionStatusResolveRequest = z.infer<typeof zApiTransactionStatusResolveData>;
-
-/**
- * Resolved status created
- */
-export const zApiTransactionStatusResolveResponse = zTransactionStatus;
-
-export type zapiTransactionStatusResolveResponse = z.infer<typeof zApiTransactionStatusResolveResponse>;

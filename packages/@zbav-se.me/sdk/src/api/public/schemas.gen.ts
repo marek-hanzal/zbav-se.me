@@ -128,6 +128,7 @@ export const sTransactionStatusEnum = {
         'open',
         'resolved',
         'dispute',
+        'sold',
         'rejected',
         'expired',
         'success',
@@ -194,25 +195,25 @@ export const sUserEventSourceEnum = {
     ]
 } as const;
 
-export const sMessageDirectionEnum = {
-    type: 'string',
-    enum: [
-        'in',
-        'out',
-        'system'
-    ]
-} as const;
-
-export const sMessageTypeEnum = {
+export const sTransactionEntryKindEnum = {
     type: 'string',
     enum: [
         'text',
         'gallery',
         'location',
-        'personal',
         'package',
-        'date',
-        'system'
+        'personal',
+        'status-pending',
+        'status-open',
+        'status-resolved',
+        'status-dispute-buyer',
+        'status-dispute-seller',
+        'status-rejected-buyer',
+        'status-rejected-seller',
+        'status-sold',
+        'status-expired',
+        'status-success',
+        'status-closed'
     ]
 } as const;
 

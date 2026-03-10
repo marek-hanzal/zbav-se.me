@@ -2194,13 +2194,16 @@ export const sTransaction = {
         listingId: {
             type: 'string'
         },
-        messageThreadId: {
-            type: 'string'
-        },
         createdAt: {
             type: 'string'
         },
         updatedAt: {
+            type: 'string'
+        },
+        status: {
+            $ref: '#/components/schemas/TransactionStatusEnum'
+        },
+        statusUpdatedAt: {
             type: 'string'
         },
         expiresAt: {
@@ -2208,9 +2211,6 @@ export const sTransaction = {
         },
         title: {
             type: 'string'
-        },
-        status: {
-            $ref: '#/components/schemas/TransactionStatusEnum'
         },
         gallery: {
             allOf: [
@@ -2236,12 +2236,12 @@ export const sTransaction = {
     required: [
         'id',
         'listingId',
-        'messageThreadId',
         'createdAt',
         'updatedAt',
+        'status',
+        'statusUpdatedAt',
         'expiresAt',
         'title',
-        'status',
         'gallery',
         'price',
         'priceType',
@@ -2257,6 +2257,7 @@ export const sTransactionStatusEnum = {
         'open',
         'resolved',
         'dispute',
+        'sold',
         'rejected',
         'expired',
         'success',
@@ -2408,96 +2409,5 @@ export const sTransactionCreate = {
     },
     required: [
         'listingId'
-    ]
-} as const;
-
-export const sTransactionStatus = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        transactionId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        },
-        side: {
-            $ref: '#/components/schemas/TransactionSideEnum'
-        },
-        status: {
-            $ref: '#/components/schemas/TransactionStatusEnum'
-        },
-        createdAt: {
-            type: 'string'
-        }
-    },
-    required: [
-        'id',
-        'transactionId',
-        'listingId',
-        'side',
-        'status',
-        'createdAt'
-    ]
-} as const;
-
-export const sTransactionSideEnum = {
-    type: 'string',
-    enum: [
-        'seller',
-        'buyer',
-        'transaction',
-        'system',
-        'unknown'
-    ]
-} as const;
-
-export const sTransactionStatusClose = {
-    type: 'object',
-    properties: {
-        transactionId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'transactionId'
-    ]
-} as const;
-
-export const sTransactionStatusDispute = {
-    type: 'object',
-    properties: {
-        transactionId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'transactionId'
-    ]
-} as const;
-
-export const sTransactionStatusReject = {
-    type: 'object',
-    properties: {
-        transactionId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'transactionId'
-    ]
-} as const;
-
-export const sTransactionStatusSuccess = {
-    type: 'object',
-    properties: {
-        transactionId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'transactionId'
     ]
 } as const;

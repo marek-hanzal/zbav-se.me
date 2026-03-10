@@ -313,8 +313,11 @@ export const sInboxFamilyEnum = {
 export const sInboxTypeEnum = {
     type: 'string',
     enum: [
-        'seller-message',
         'buyer-message',
+        'seller-message',
+        'transaction',
+        'system',
+        'unknown',
         'thumb',
         'favourite',
         'unfavourite'
@@ -394,6 +397,48 @@ export const sInboxSortField = {
 } as const;
 
 export const sInbox = {
+    oneOf: [
+        {
+            $ref: '#/components/schemas/InboxBuyerMessage'
+        },
+        {
+            $ref: '#/components/schemas/InboxSellerMessage'
+        },
+        {
+            $ref: '#/components/schemas/InboxTransaction'
+        },
+        {
+            $ref: '#/components/schemas/InboxSystem'
+        },
+        {
+            $ref: '#/components/schemas/InboxUnknown'
+        },
+        {
+            $ref: '#/components/schemas/InboxThumb'
+        },
+        {
+            $ref: '#/components/schemas/InboxFavourite'
+        },
+        {
+            $ref: '#/components/schemas/InboxUnfavourite'
+        }
+    ],
+    discriminator: {
+        propertyName: 'type',
+        mapping: {
+            'buyer-message': '#/components/schemas/InboxBuyerMessage',
+            'seller-message': '#/components/schemas/InboxSellerMessage',
+            transaction: '#/components/schemas/InboxTransaction',
+            system: '#/components/schemas/InboxSystem',
+            unknown: '#/components/schemas/InboxUnknown',
+            thumb: '#/components/schemas/InboxThumb',
+            favourite: '#/components/schemas/InboxFavourite',
+            unfavourite: '#/components/schemas/InboxUnfavourite'
+        }
+    }
+} as const;
+
+export const sInboxBuyerMessage = {
     type: 'object',
     properties: {
         id: {
@@ -406,13 +451,10 @@ export const sInbox = {
             type: 'string'
         },
         family: {
-            $ref: '#/components/schemas/InboxFamilyEnum'
-        },
-        type: {
-            $ref: '#/components/schemas/InboxTypeEnum'
-        },
-        payload: {
-            $ref: '#/components/schemas/InboxPayload'
+            type: 'string',
+            enum: [
+                'message'
+            ]
         },
         priority: {
             $ref: '#/components/schemas/InboxPriorityEnum'
@@ -423,6 +465,27 @@ export const sInbox = {
                 'null'
             ],
             format: 'date-time'
+        },
+        type: {
+            type: 'string',
+            enum: [
+                'buyer-message'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                transactionId: {
+                    type: 'string'
+                },
+                transactionEntryId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'transactionId'
+            ],
+            additionalProperties: {}
         }
     },
     required: [
@@ -430,97 +493,321 @@ export const sInbox = {
         'userId',
         'timestamp',
         'family',
+        'priority',
+        'archivedAt',
         'type',
-        'payload',
-        'priority'
+        'payload'
     ]
 } as const;
 
-export const sInboxPayload = {
-    anyOf: [
-        {
-            $ref: '#/components/schemas/InboxSellerMessagePayload'
-        },
-        {
-            $ref: '#/components/schemas/InboxBuyerMessagePayload'
-        },
-        {
-            $ref: '#/components/schemas/InboxThumbPayload'
-        },
-        {
-            $ref: '#/components/schemas/InboxFavouritePayload'
-        },
-        {
-            $ref: '#/components/schemas/InboxUnfavouritePayload'
-        }
-    ]
-} as const;
-
-export const sInboxSellerMessagePayload = {
+export const sInboxSellerMessage = {
     type: 'object',
     properties: {
+        id: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        timestamp: {
+            type: 'string'
+        },
+        family: {
+            type: 'string',
+            enum: [
+                'message'
+            ]
+        },
+        priority: {
+            $ref: '#/components/schemas/InboxPriorityEnum'
+        },
+        archivedAt: {
+            type: [
+                'string',
+                'null'
+            ],
+            format: 'date-time'
+        },
         type: {
-            $ref: '#/components/schemas/InboxTypeEnum'
+            type: 'string',
+            enum: [
+                'seller-message'
+            ]
         },
-        transactionId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        },
-        messageThreadId: {
-            type: 'string'
+        payload: {
+            type: 'object',
+            properties: {
+                transactionId: {
+                    type: 'string'
+                },
+                transactionEntryId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'transactionId'
+            ],
+            additionalProperties: {}
         }
     },
     required: [
+        'id',
+        'userId',
+        'timestamp',
+        'family',
+        'priority',
+        'archivedAt',
         'type',
-        'transactionId',
-        'listingId',
-        'messageThreadId'
+        'payload'
     ]
 } as const;
 
-export const sInboxBuyerMessagePayload = {
+export const sInboxTransaction = {
     type: 'object',
     properties: {
+        id: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        timestamp: {
+            type: 'string'
+        },
+        family: {
+            type: 'string',
+            enum: [
+                'message'
+            ]
+        },
+        priority: {
+            $ref: '#/components/schemas/InboxPriorityEnum'
+        },
+        archivedAt: {
+            type: [
+                'string',
+                'null'
+            ],
+            format: 'date-time'
+        },
         type: {
-            $ref: '#/components/schemas/InboxTypeEnum'
+            type: 'string',
+            enum: [
+                'transaction'
+            ]
         },
-        transactionId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        },
-        messageThreadId: {
-            type: 'string'
+        payload: {
+            type: 'object',
+            properties: {
+                transactionId: {
+                    type: 'string'
+                },
+                transactionEntryId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'transactionId'
+            ],
+            additionalProperties: {}
         }
     },
     required: [
+        'id',
+        'userId',
+        'timestamp',
+        'family',
+        'priority',
+        'archivedAt',
         'type',
-        'transactionId',
-        'listingId',
-        'messageThreadId'
+        'payload'
     ]
 } as const;
 
-export const sInboxThumbPayload = {
+export const sInboxSystem = {
     type: 'object',
     properties: {
-        type: {
-            $ref: '#/components/schemas/InboxTypeEnum'
-        },
-        listingId: {
+        id: {
             type: 'string'
         },
-        thumb: {
-            $ref: '#/components/schemas/ThumbEnum'
+        userId: {
+            type: 'string'
+        },
+        timestamp: {
+            type: 'string'
+        },
+        family: {
+            type: 'string',
+            enum: [
+                'message'
+            ]
+        },
+        priority: {
+            $ref: '#/components/schemas/InboxPriorityEnum'
+        },
+        archivedAt: {
+            type: [
+                'string',
+                'null'
+            ],
+            format: 'date-time'
+        },
+        type: {
+            type: 'string',
+            enum: [
+                'system'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                transactionId: {
+                    type: 'string'
+                },
+                transactionEntryId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'transactionId'
+            ],
+            additionalProperties: {}
         }
     },
     required: [
+        'id',
+        'userId',
+        'timestamp',
+        'family',
+        'priority',
+        'archivedAt',
         'type',
-        'listingId',
-        'thumb'
+        'payload'
+    ]
+} as const;
+
+export const sInboxUnknown = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        timestamp: {
+            type: 'string'
+        },
+        family: {
+            type: 'string',
+            enum: [
+                'message'
+            ]
+        },
+        priority: {
+            $ref: '#/components/schemas/InboxPriorityEnum'
+        },
+        archivedAt: {
+            type: [
+                'string',
+                'null'
+            ],
+            format: 'date-time'
+        },
+        type: {
+            type: 'string',
+            enum: [
+                'unknown'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                transactionId: {
+                    type: 'string'
+                },
+                transactionEntryId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'transactionId'
+            ],
+            additionalProperties: {}
+        }
+    },
+    required: [
+        'id',
+        'userId',
+        'timestamp',
+        'family',
+        'priority',
+        'archivedAt',
+        'type',
+        'payload'
+    ]
+} as const;
+
+export const sInboxThumb = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        timestamp: {
+            type: 'string'
+        },
+        family: {
+            type: 'string',
+            enum: [
+                'reaction'
+            ]
+        },
+        priority: {
+            $ref: '#/components/schemas/InboxPriorityEnum'
+        },
+        archivedAt: {
+            type: [
+                'string',
+                'null'
+            ],
+            format: 'date-time'
+        },
+        type: {
+            type: 'string',
+            enum: [
+                'thumb'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                listingId: {
+                    type: 'string'
+                },
+                thumb: {
+                    $ref: '#/components/schemas/ThumbEnum'
+                }
+            },
+            required: [
+                'listingId',
+                'thumb'
+            ],
+            additionalProperties: {}
+        }
+    },
+    required: [
+        'id',
+        'userId',
+        'timestamp',
+        'family',
+        'priority',
+        'archivedAt',
+        'type',
+        'payload'
     ]
 } as const;
 
@@ -532,35 +819,121 @@ export const sThumbEnum = {
     ]
 } as const;
 
-export const sInboxFavouritePayload = {
+export const sInboxFavourite = {
     type: 'object',
     properties: {
-        type: {
-            $ref: '#/components/schemas/InboxTypeEnum'
-        },
-        listingId: {
+        id: {
             type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        timestamp: {
+            type: 'string'
+        },
+        family: {
+            type: 'string',
+            enum: [
+                'reaction'
+            ]
+        },
+        priority: {
+            $ref: '#/components/schemas/InboxPriorityEnum'
+        },
+        archivedAt: {
+            type: [
+                'string',
+                'null'
+            ],
+            format: 'date-time'
+        },
+        type: {
+            type: 'string',
+            enum: [
+                'favourite'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                listingId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'listingId'
+            ],
+            additionalProperties: {}
         }
     },
     required: [
+        'id',
+        'userId',
+        'timestamp',
+        'family',
+        'priority',
+        'archivedAt',
         'type',
-        'listingId'
+        'payload'
     ]
 } as const;
 
-export const sInboxUnfavouritePayload = {
+export const sInboxUnfavourite = {
     type: 'object',
     properties: {
-        type: {
-            $ref: '#/components/schemas/InboxTypeEnum'
-        },
-        listingId: {
+        id: {
             type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        timestamp: {
+            type: 'string'
+        },
+        family: {
+            type: 'string',
+            enum: [
+                'reaction'
+            ]
+        },
+        priority: {
+            $ref: '#/components/schemas/InboxPriorityEnum'
+        },
+        archivedAt: {
+            type: [
+                'string',
+                'null'
+            ],
+            format: 'date-time'
+        },
+        type: {
+            type: 'string',
+            enum: [
+                'unfavourite'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                listingId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'listingId'
+            ],
+            additionalProperties: {}
         }
     },
     required: [
+        'id',
+        'userId',
+        'timestamp',
+        'family',
+        'priority',
+        'archivedAt',
         'type',
-        'listingId'
+        'payload'
     ]
 } as const;
 
@@ -597,762 +970,6 @@ export const sInboxPatch = {
     ]
 } as const;
 
-export const sMessageItem = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/MessageTypeEnum'
-        },
-        payload: {
-            $ref: '#/components/schemas/MessagePayload'
-        }
-    },
-    required: [
-        'id',
-        'type',
-        'payload'
-    ]
-} as const;
-
-export const sMessageTypeEnum = {
-    type: 'string',
-    enum: [
-        'text',
-        'gallery',
-        'location',
-        'personal',
-        'package',
-        'date',
-        'system'
-    ]
-} as const;
-
-export const sMessagePayload = {
-    anyOf: [
-        {
-            $ref: '#/components/schemas/MessageText'
-        },
-        {
-            $ref: '#/components/schemas/MessageGallery'
-        },
-        {
-            $ref: '#/components/schemas/MessageLocation'
-        },
-        {
-            $ref: '#/components/schemas/MessagePersonal'
-        },
-        {
-            $ref: '#/components/schemas/MessagePackage'
-        },
-        {
-            $ref: '#/components/schemas/MessageSystem'
-        }
-    ]
-} as const;
-
-export const sMessageText = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        text: {
-            type: 'string'
-        },
-        createdAt: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/MessageTypeEnum'
-        },
-        direction: {
-            $ref: '#/components/schemas/MessageDirectionEnum'
-        }
-    },
-    required: [
-        'id',
-        'text',
-        'createdAt',
-        'type',
-        'direction'
-    ]
-} as const;
-
-export const sMessageDirectionEnum = {
-    type: 'string',
-    enum: [
-        'in',
-        'out',
-        'system'
-    ]
-} as const;
-
-export const sMessageGallery = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        galleryId: {
-            type: 'string'
-        },
-        createdAt: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/MessageTypeEnum'
-        },
-        direction: {
-            $ref: '#/components/schemas/MessageDirectionEnum'
-        },
-        gallery: {
-            $ref: '#/components/schemas/Gallery'
-        }
-    },
-    required: [
-        'id',
-        'galleryId',
-        'createdAt',
-        'type',
-        'direction',
-        'gallery'
-    ]
-} as const;
-
-export const sMessageLocation = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        locationId: {
-            type: 'string'
-        },
-        createdAt: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/MessageTypeEnum'
-        },
-        direction: {
-            $ref: '#/components/schemas/MessageDirectionEnum'
-        },
-        location: {
-            $ref: '#/components/schemas/Location'
-        }
-    },
-    required: [
-        'id',
-        'locationId',
-        'createdAt',
-        'type',
-        'direction',
-        'location'
-    ]
-} as const;
-
-export const sLocation = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        query: {
-            type: 'string'
-        },
-        lang: {
-            type: 'string'
-        },
-        country: {
-            type: 'string'
-        },
-        code: {
-            type: 'string'
-        },
-        county: {
-            anyOf: [
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'string'
-                }
-            ]
-        },
-        municipality: {
-            anyOf: [
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'string'
-                }
-            ]
-        },
-        state: {
-            anyOf: [
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'string'
-                }
-            ]
-        },
-        address: {
-            type: 'string'
-        },
-        city: {
-            anyOf: [
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'string'
-                }
-            ]
-        },
-        street: {
-            anyOf: [
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'string'
-                }
-            ]
-        },
-        zip: {
-            anyOf: [
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'string'
-                }
-            ]
-        },
-        confidence: {
-            type: 'number'
-        },
-        hash: {
-            type: 'string'
-        },
-        lat: {
-            type: 'number'
-        },
-        lon: {
-            type: 'number'
-        }
-    },
-    required: [
-        'id',
-        'query',
-        'lang',
-        'country',
-        'code',
-        'county',
-        'municipality',
-        'state',
-        'address',
-        'city',
-        'street',
-        'zip',
-        'confidence',
-        'hash',
-        'lat',
-        'lon'
-    ]
-} as const;
-
-export const sMessagePersonal = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        name: {
-            type: 'string'
-        },
-        phone: {
-            type: 'string'
-        },
-        email: {
-            type: 'string',
-            format: 'email'
-        },
-        locationId: {
-            type: 'string'
-        },
-        createdAt: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/MessageTypeEnum'
-        },
-        direction: {
-            $ref: '#/components/schemas/MessageDirectionEnum'
-        },
-        location: {
-            $ref: '#/components/schemas/Location'
-        }
-    },
-    required: [
-        'id',
-        'name',
-        'phone',
-        'email',
-        'locationId',
-        'createdAt',
-        'type',
-        'direction',
-        'location'
-    ]
-} as const;
-
-export const sMessagePackage = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        link: {
-            type: 'string',
-            format: 'uri'
-        },
-        number: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        createdAt: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/MessageTypeEnum'
-        },
-        direction: {
-            $ref: '#/components/schemas/MessageDirectionEnum'
-        }
-    },
-    required: [
-        'id',
-        'link',
-        'number',
-        'createdAt',
-        'type',
-        'direction'
-    ]
-} as const;
-
-export const sMessageSystem = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        text: {
-            type: 'string'
-        },
-        createdAt: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/MessageTypeEnum'
-        },
-        direction: {
-            $ref: '#/components/schemas/MessageDirectionEnum'
-        }
-    },
-    required: [
-        'id',
-        'text',
-        'createdAt',
-        'type',
-        'direction'
-    ]
-} as const;
-
-export const sMessageQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
-        },
-        filter: {
-            $ref: '#/components/schemas/MessageFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/MessageWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/MessageSort'
-            }
-        }
-    }
-} as const;
-
-export const sMessageFilter = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        messageThreadId: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        transactionId: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sMessageWhere = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        messageThreadId: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        transactionId: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sMessageSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/MessageSortField'
-        },
-        order: {
-            $ref: '#/components/schemas/OrderEnum'
-        }
-    },
-    required: [
-        'field',
-        'order'
-    ]
-} as const;
-
-export const sMessageSortField = {
-    type: 'string',
-    enum: [
-        'id',
-        'createdAt'
-    ]
-} as const;
-
-export const sMessageCountQuery = {
-    type: 'object',
-    properties: {
-        filter: {
-            $ref: '#/components/schemas/MessageFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/MessageWhere'
-        }
-    }
-} as const;
-
-export const sMessage = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/MessageTypeEnum'
-        },
-        payload: {
-            $ref: '#/components/schemas/MessagePayload'
-        }
-    },
-    required: [
-        'id',
-        'type',
-        'payload'
-    ]
-} as const;
-
-export const sMessageCreate = {
-    oneOf: [
-        {
-            $ref: '#/components/schemas/MessageTextCreateInput'
-        },
-        {
-            $ref: '#/components/schemas/MessageGalleryCreateInput'
-        },
-        {
-            $ref: '#/components/schemas/MessageLocationCreateInput'
-        },
-        {
-            $ref: '#/components/schemas/MessagePackageCreateInput'
-        },
-        {
-            $ref: '#/components/schemas/MessagePersonalCreateInput'
-        }
-    ],
-    discriminator: {
-        propertyName: 'type',
-        mapping: {
-            text: '#/components/schemas/MessageTextCreateInput',
-            gallery: '#/components/schemas/MessageGalleryCreateInput',
-            location: '#/components/schemas/MessageLocationCreateInput',
-            package: '#/components/schemas/MessagePackageCreateInput',
-            personal: '#/components/schemas/MessagePersonalCreateInput'
-        }
-    }
-} as const;
-
-export const sMessageTextCreateInput = {
-    allOf: [
-        {
-            $ref: '#/components/schemas/TransactionMessageTextCreate'
-        },
-        {
-            type: 'object',
-            properties: {
-                type: {
-                    type: 'string',
-                    enum: [
-                        'text'
-                    ]
-                }
-            },
-            required: [
-                'type'
-            ]
-        }
-    ]
-} as const;
-
-export const sTransactionMessageTextCreate = {
-    type: 'object',
-    properties: {
-        transactionId: {
-            type: 'string'
-        },
-        message: {
-            type: 'string'
-        }
-    },
-    required: [
-        'transactionId',
-        'message'
-    ]
-} as const;
-
-export const sMessageGalleryCreateInput = {
-    allOf: [
-        {
-            $ref: '#/components/schemas/TransactionMessageGalleryCreate'
-        },
-        {
-            type: 'object',
-            properties: {
-                type: {
-                    type: 'string',
-                    enum: [
-                        'gallery'
-                    ]
-                }
-            },
-            required: [
-                'type'
-            ]
-        }
-    ]
-} as const;
-
-export const sTransactionMessageGalleryCreate = {
-    type: 'object',
-    properties: {
-        transactionId: {
-            type: 'string'
-        },
-        uploadIds: {
-            type: 'array',
-            items: {
-                type: 'string'
-            },
-            minItems: 1
-        }
-    },
-    required: [
-        'transactionId',
-        'uploadIds'
-    ]
-} as const;
-
-export const sMessageLocationCreateInput = {
-    allOf: [
-        {
-            $ref: '#/components/schemas/TransactionMessageLocationCreate'
-        },
-        {
-            type: 'object',
-            properties: {
-                type: {
-                    type: 'string',
-                    enum: [
-                        'location'
-                    ]
-                }
-            },
-            required: [
-                'type'
-            ]
-        }
-    ]
-} as const;
-
-export const sTransactionMessageLocationCreate = {
-    type: 'object',
-    properties: {
-        transactionId: {
-            type: 'string'
-        },
-        locationId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'transactionId',
-        'locationId'
-    ]
-} as const;
-
-export const sMessagePackageCreateInput = {
-    allOf: [
-        {
-            $ref: '#/components/schemas/TransactionMessagePackageCreate'
-        },
-        {
-            type: 'object',
-            properties: {
-                type: {
-                    type: 'string',
-                    enum: [
-                        'package'
-                    ]
-                }
-            },
-            required: [
-                'type'
-            ]
-        }
-    ]
-} as const;
-
-export const sTransactionMessagePackageCreate = {
-    type: 'object',
-    properties: {
-        transactionId: {
-            type: 'string'
-        },
-        link: {
-            type: 'string',
-            format: 'uri'
-        },
-        number: {
-            type: [
-                'string',
-                'null'
-            ]
-        }
-    },
-    required: [
-        'transactionId',
-        'link',
-        'number'
-    ]
-} as const;
-
-export const sMessagePersonalCreateInput = {
-    allOf: [
-        {
-            $ref: '#/components/schemas/TransactionMessagePersonalCreate'
-        },
-        {
-            type: 'object',
-            properties: {
-                type: {
-                    type: 'string',
-                    enum: [
-                        'personal'
-                    ]
-                }
-            },
-            required: [
-                'type'
-            ]
-        }
-    ]
-} as const;
-
-export const sTransactionMessagePersonalCreate = {
-    type: 'object',
-    properties: {
-        transactionId: {
-            type: 'string'
-        },
-        name: {
-            type: 'string'
-        },
-        phone: {
-            type: 'string'
-        },
-        email: {
-            type: 'string',
-            format: 'email'
-        },
-        locationId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'transactionId',
-        'name',
-        'phone',
-        'email',
-        'locationId'
-    ]
-} as const;
-
 export const sAllowedExtensionsEnum = {
     type: 'string',
     enum: [
@@ -1375,6 +992,726 @@ export const sAllowedContentTypesEnum = {
         'image/avif',
         'image/heic',
         'image/heif'
+    ]
+} as const;
+
+export const sTransactionEntry = {
+    oneOf: [
+        {
+            $ref: '#/components/schemas/TransactionEntryText'
+        },
+        {
+            $ref: '#/components/schemas/TransactionEntryGallery'
+        },
+        {
+            $ref: '#/components/schemas/TransactionEntryLocation'
+        },
+        {
+            $ref: '#/components/schemas/TransactionEntryPackage'
+        },
+        {
+            $ref: '#/components/schemas/TransactionEntryPersonal'
+        },
+        {
+            $ref: '#/components/schemas/TransactionEntryCommon'
+        }
+    ],
+    discriminator: {
+        propertyName: 'kind',
+        mapping: {
+            text: '#/components/schemas/TransactionEntryText',
+            gallery: '#/components/schemas/TransactionEntryGallery',
+            location: '#/components/schemas/TransactionEntryLocation',
+            package: '#/components/schemas/TransactionEntryPackage',
+            personal: '#/components/schemas/TransactionEntryPersonal',
+            'status-pending': '#/components/schemas/TransactionEntryCommon',
+            'status-open': '#/components/schemas/TransactionEntryCommon',
+            'status-resolved': '#/components/schemas/TransactionEntryCommon',
+            'status-dispute-buyer': '#/components/schemas/TransactionEntryCommon',
+            'status-dispute-seller': '#/components/schemas/TransactionEntryCommon',
+            'status-rejected-buyer': '#/components/schemas/TransactionEntryCommon',
+            'status-rejected-seller': '#/components/schemas/TransactionEntryCommon',
+            'status-sold': '#/components/schemas/TransactionEntryCommon',
+            'status-expired': '#/components/schemas/TransactionEntryCommon',
+            'status-success': '#/components/schemas/TransactionEntryCommon',
+            'status-closed': '#/components/schemas/TransactionEntryCommon'
+        }
+    }
+} as const;
+
+export const sTransactionEntryText = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        transactionId: {
+            type: 'string'
+        },
+        userId: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        kind: {
+            type: 'string',
+            enum: [
+                'text'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                text: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'text'
+            ],
+            additionalProperties: {}
+        }
+    },
+    required: [
+        'id',
+        'transactionId',
+        'userId',
+        'createdAt',
+        'kind',
+        'payload'
+    ]
+} as const;
+
+export const sTransactionEntryGallery = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        transactionId: {
+            type: 'string'
+        },
+        userId: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        kind: {
+            type: 'string',
+            enum: [
+                'gallery'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                galleryId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'galleryId'
+            ],
+            additionalProperties: {}
+        }
+    },
+    required: [
+        'id',
+        'transactionId',
+        'userId',
+        'createdAt',
+        'kind',
+        'payload'
+    ]
+} as const;
+
+export const sTransactionEntryLocation = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        transactionId: {
+            type: 'string'
+        },
+        userId: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        kind: {
+            type: 'string',
+            enum: [
+                'location'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                locationId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'locationId'
+            ],
+            additionalProperties: {}
+        }
+    },
+    required: [
+        'id',
+        'transactionId',
+        'userId',
+        'createdAt',
+        'kind',
+        'payload'
+    ]
+} as const;
+
+export const sTransactionEntryPackage = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        transactionId: {
+            type: 'string'
+        },
+        userId: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        kind: {
+            type: 'string',
+            enum: [
+                'package'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                link: {
+                    type: 'string',
+                    format: 'uri'
+                },
+                number: {
+                    type: [
+                        'string',
+                        'null'
+                    ]
+                }
+            },
+            required: [
+                'link',
+                'number'
+            ],
+            additionalProperties: {}
+        }
+    },
+    required: [
+        'id',
+        'transactionId',
+        'userId',
+        'createdAt',
+        'kind',
+        'payload'
+    ]
+} as const;
+
+export const sTransactionEntryPersonal = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        transactionId: {
+            type: 'string'
+        },
+        userId: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        kind: {
+            type: 'string',
+            enum: [
+                'personal'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                name: {
+                    type: 'string'
+                },
+                phone: {
+                    type: 'string'
+                },
+                email: {
+                    type: 'string',
+                    format: 'email'
+                },
+                locationId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'name',
+                'phone',
+                'email',
+                'locationId'
+            ],
+            additionalProperties: {}
+        }
+    },
+    required: [
+        'id',
+        'transactionId',
+        'userId',
+        'createdAt',
+        'kind',
+        'payload'
+    ]
+} as const;
+
+export const sTransactionEntryCommon = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        transactionId: {
+            type: 'string'
+        },
+        userId: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        kind: {
+            type: 'string',
+            enum: [
+                'status-pending',
+                'status-open',
+                'status-resolved',
+                'status-dispute-buyer',
+                'status-dispute-seller',
+                'status-rejected-buyer',
+                'status-rejected-seller',
+                'status-sold',
+                'status-expired',
+                'status-success',
+                'status-closed'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                text: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'text'
+            ],
+            additionalProperties: {}
+        }
+    },
+    required: [
+        'id',
+        'transactionId',
+        'userId',
+        'createdAt',
+        'kind',
+        'payload'
+    ]
+} as const;
+
+export const sTransactionEntryQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/TransactionEntryFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/TransactionEntryWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/TransactionEntrySort'
+            }
+        }
+    }
+} as const;
+
+export const sTransactionEntryFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        transactionId: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        kind: {
+            $ref: '#/components/schemas/TransactionEntryKindEnum'
+        },
+        kindIn: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/TransactionEntryKindEnum'
+            }
+        }
+    },
+    additionalProperties: {}
+} as const;
+
+export const sTransactionEntryKindEnum = {
+    type: 'string',
+    enum: [
+        'text',
+        'gallery',
+        'location',
+        'package',
+        'personal',
+        'status-pending',
+        'status-open',
+        'status-resolved',
+        'status-dispute-buyer',
+        'status-dispute-seller',
+        'status-rejected-buyer',
+        'status-rejected-seller',
+        'status-sold',
+        'status-expired',
+        'status-success',
+        'status-closed'
+    ]
+} as const;
+
+export const sTransactionEntryWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        transactionId: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        kind: {
+            $ref: '#/components/schemas/TransactionEntryKindEnum'
+        },
+        kindIn: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/TransactionEntryKindEnum'
+            }
+        }
+    },
+    additionalProperties: {}
+} as const;
+
+export const sTransactionEntrySort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/TransactionEntrySortField'
+        },
+        order: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'order'
+    ],
+    additionalProperties: {}
+} as const;
+
+export const sTransactionEntrySortField = {
+    type: 'string',
+    enum: [
+        'id',
+        'createdAt'
+    ]
+} as const;
+
+export const sTransactionEntryCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            $ref: '#/components/schemas/TransactionEntryFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/TransactionEntryWhere'
+        }
+    }
+} as const;
+
+export const sTransactionEntryCreate = {
+    oneOf: [
+        {
+            $ref: '#/components/schemas/TransactionEntryTextCreate'
+        },
+        {
+            $ref: '#/components/schemas/TransactionEntryGalleryCreate'
+        },
+        {
+            $ref: '#/components/schemas/TransactionEntryLocationCreate'
+        },
+        {
+            $ref: '#/components/schemas/TransactionEntryPackageCreate'
+        },
+        {
+            $ref: '#/components/schemas/TransactionEntryPersonalCreate'
+        }
+    ],
+    discriminator: {
+        propertyName: 'kind',
+        mapping: {
+            text: '#/components/schemas/TransactionEntryTextCreate',
+            gallery: '#/components/schemas/TransactionEntryGalleryCreate',
+            location: '#/components/schemas/TransactionEntryLocationCreate',
+            package: '#/components/schemas/TransactionEntryPackageCreate',
+            personal: '#/components/schemas/TransactionEntryPersonalCreate'
+        }
+    }
+} as const;
+
+export const sTransactionEntryTextCreate = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        kind: {
+            type: 'string',
+            enum: [
+                'text'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                text: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'text'
+            ],
+            additionalProperties: {}
+        }
+    },
+    required: [
+        'transactionId',
+        'kind',
+        'payload'
+    ]
+} as const;
+
+export const sTransactionEntryGalleryCreate = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        kind: {
+            type: 'string',
+            enum: [
+                'gallery'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                uploadIds: {
+                    type: 'array',
+                    items: {
+                        type: 'string'
+                    },
+                    minItems: 1
+                }
+            },
+            required: [
+                'uploadIds'
+            ],
+            additionalProperties: {}
+        }
+    },
+    required: [
+        'transactionId',
+        'kind',
+        'payload'
+    ]
+} as const;
+
+export const sTransactionEntryLocationCreate = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        kind: {
+            type: 'string',
+            enum: [
+                'location'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                locationId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'locationId'
+            ],
+            additionalProperties: {}
+        }
+    },
+    required: [
+        'transactionId',
+        'kind',
+        'payload'
+    ]
+} as const;
+
+export const sTransactionEntryPackageCreate = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        kind: {
+            type: 'string',
+            enum: [
+                'package'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                link: {
+                    type: 'string',
+                    format: 'uri'
+                },
+                number: {
+                    type: [
+                        'string',
+                        'null'
+                    ]
+                }
+            },
+            required: [
+                'link',
+                'number'
+            ],
+            additionalProperties: {}
+        }
+    },
+    required: [
+        'transactionId',
+        'kind',
+        'payload'
+    ]
+} as const;
+
+export const sTransactionEntryPersonalCreate = {
+    type: 'object',
+    properties: {
+        transactionId: {
+            type: 'string'
+        },
+        kind: {
+            type: 'string',
+            enum: [
+                'personal'
+            ]
+        },
+        payload: {
+            type: 'object',
+            properties: {
+                name: {
+                    type: 'string'
+                },
+                phone: {
+                    type: 'string'
+                },
+                email: {
+                    type: 'string',
+                    format: 'email'
+                },
+                locationId: {
+                    type: 'string'
+                }
+            },
+            required: [
+                'name',
+                'phone',
+                'email',
+                'locationId'
+            ],
+            additionalProperties: {}
+        }
+    },
+    required: [
+        'transactionId',
+        'kind',
+        'payload'
     ]
 } as const;
 
