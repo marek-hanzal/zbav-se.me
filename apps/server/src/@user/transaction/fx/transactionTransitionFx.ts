@@ -5,6 +5,13 @@ import type { TransactionStatusEnumSchema } from "~/database/@enum/TransactionSt
 import { traceLogFx } from "~/effect/traceLogFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
+/**
+ * Shared transition blocks reused by the main machine.
+ *
+ * The goal here is not to be clever; it is just a small deduplication helper for
+ * states that currently share the same allowed requests. The real source of truth
+ * remains `Transitions.Machine` below.
+ */
 const LittleMachine = {
 	pending: [
 		// pending
@@ -253,15 +260,30 @@ const LittleMachine = {
 
 export namespace Transitions {
 	/**
-	 * All recognized transition kinds.
+	 * Every recognized input the machine can validate.
+	 *
+	 * This intentionally includes both:
+	 * - transaction statuses (`pending`, `open`, ...)
+	 * - transaction entry kinds (`text`, `gallery`, `status-open`, ...)
+	 *
+	 * Reason:
+	 * the same gate is used both for validating status transitions and for
+	 * validating whether a concrete transaction entry may be created in the
+	 * current transaction state.
 	 */
 	export type Kind = TransactionStatusEnumSchema.Type | TransactionEntryKindEnumSchema.Type;
 
+	/**
+	 * One allowed request from one concrete state.
+	 */
 	export interface Entry {
 		request: Kind;
 		side: TransactionSideEnumSchema.Type | null;
 	}
 
+	/**
+	 * Terminal statuses that trigger cleanup of sensitive structured entries.
+	 */
 	export const CleanupSensitiveStatus: readonly TransactionStatusEnumSchema.Type[] = [
 		"sold",
 		"rejected",
@@ -271,8 +293,23 @@ export namespace Transitions {
 	];
 
 	/**
-	 * State machine - allowed transitions - input is "request", output are allowed states; when an empty
-	 * array, transition is not allowed.
+	 * Main transaction state machine.
+	 *
+	 * This is the server-side source of truth for transaction flow rules.
+	 *
+	 * We validate three things through this one machine:
+	 * 1. status -> status transitions
+	 * 2. status -> status-message transitions (`status-*`)
+	 * 3. status -> user-authored transaction-entry writes (`text`, `gallery`, ...)
+	 *
+	 * Reading rule:
+	 * - object key = current transaction state we are validating from
+	 * - array item = one allowed request from that state
+	 * - empty array = hard stop, nothing more is allowed from that state
+	 *
+	 * This file should stay blunt and easy to compare with `MASTER.md`, client UX,
+	 * and endpoint behavior. If there is a conflict, this machine is the thing we
+	 * compare against first.
 	 */
 	export const Machine = {
 		null: [
@@ -320,22 +357,47 @@ export namespace Transitions {
 export namespace transactionTransitionFx {
 	export interface Props {
 		/**
-		 * Current transaction status we are validating against.
+		 * Current transaction state we are validating against.
+		 *
+		 * This is intentionally `Transitions.Kind | null`, not just the plain status
+		 * enum, because the machine is also used when we validate status-message and
+		 * transaction-entry requests against the current flow state.
+		 *
+		 * `null` is the bootstrap state used before the very first transition exists.
 		 */
 		status: Transitions.Kind | null;
 		/**
-		 * Requested transaction action or target status transition.
+		 * Requested transition/input we want to allow.
+		 *
+		 * This may be:
+		 * - a target transaction status
+		 * - a `status-*` transaction entry kind
+		 * - a user-authored transaction entry kind
 		 */
 		request: Transitions.Kind;
 		/**
-		 * Side this request is meant for.
+		 * Side this request is evaluated for.
 		 *
-		 * Use `null` for side-agnostic system transitions.
+		 * Use `null` for side-agnostic system transitions, for example expiration.
 		 */
 		side: TransactionSideEnumSchema.Type | null;
 	}
 }
 
+/**
+ * Validates whether a requested transaction action is allowed from the current
+ * transaction state.
+ *
+ * Important:
+ * - this function is a pure gate; it does not write anything
+ * - callers are expected to run it before they mutate status or append entries
+ * - when validation fails, the request dies with `InvalidRequestErrorFx`
+ *
+ * In practice this is the single backend reference for:
+ * - "which status may follow which status"
+ * - "who may trigger that transition"
+ * - "which transaction-entry kinds are allowed in each state"
+ */
 export const transactionTransitionFx = Effect.fn("transactionTransitionFx")(function* (
 	props: transactionTransitionFx.Props,
 ) {
