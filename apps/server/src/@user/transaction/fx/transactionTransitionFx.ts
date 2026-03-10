@@ -266,6 +266,22 @@ export namespace Transitions {
 		expired: [],
 		success: [],
 		closed: [],
+		text: [],
+		gallery: [],
+		location: [],
+		package: [],
+		personal: [],
+		"status-pending": [],
+		"status-open": [],
+		"status-resolved": [],
+		"status-dispute-buyer": [],
+		"status-dispute-seller": [],
+		"status-rejected-buyer": [],
+		"status-rejected-seller": [],
+		"status-sold": [],
+		"status-expired": [],
+		"status-success": [],
+		"status-closed": [],
 	};
 }
 
