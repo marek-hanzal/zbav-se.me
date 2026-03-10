@@ -81,9 +81,9 @@ Each enum schema corresponds to a PostgreSQL enum type created in migrations:
 ## Adding New Enums
 
 When adding a new enum to the database:
-1. Create the enum type in a migration using `toEnumGuard<EnumSchema.Type>()([...])`
+1. Create the enum type in a migration using `toEnumGuard<EnumSchema.Type>()([... ] as const)`
 2. Create a corresponding Zod schema in this directory
-3. Keep the migration array wrapped with `toEnumGuard` and type-checked against the schema so enum drift fails loudly
+3. Keep the migration array wrapped with `toEnumGuard` so enum drift fails loudly
 4. Update this README with the new enum
 
 ## Related Directories

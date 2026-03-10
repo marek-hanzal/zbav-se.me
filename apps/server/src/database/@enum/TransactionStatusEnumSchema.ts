@@ -24,6 +24,8 @@ export const TransactionStatusEnumSchema = z
 		 * Terminal states
 		 */
 
+		// Marked as sold outside of the standard happy-path result flow
+		"sold",
 		// Explicitly closed transaction by seller or buyer
 		"rejected",
 		// Expired transaction is "unknown" state (no action received from either side)
