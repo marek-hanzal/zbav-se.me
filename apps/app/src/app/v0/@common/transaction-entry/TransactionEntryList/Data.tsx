@@ -4,7 +4,7 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import { type FC, type RefObject, useRef } from "react";
-import { TransactionEntryRenderItem } from "~/app/v0/@common/transaction-entry/TransactionEntryRenderItem";
+import { Item } from "./Item";
 
 export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -61,7 +61,7 @@ export const Data: FC<Data.Props> = ({
 		>
 			{data.map((transactionEntryId) => {
 				return (
-					<TransactionEntryRenderItem
+					<Item
 						key={transactionEntryId}
 						side={side}
 						transactionEntryId={transactionEntryId}
