@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { BaseEntrySchema } from "./BaseEntrySchema";
+import { EntrySchema } from "./EntrySchema";
 
-export const TransactionEntryLocationSchema = z
+export const LocationSchema = z
 	.looseObject({
-		...BaseEntrySchema.shape,
+		...EntrySchema.shape,
 		kind: z.literal("location"),
 		payload: z.looseObject({
 			locationId: z.string().openapi({

@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { BaseEntrySchema } from "./BaseEntrySchema";
+import { EntrySchema } from "./EntrySchema";
 
-export const TransactionEntryPersonalSchema = z
+export const PersonalSchema = z
 	.looseObject({
-		...BaseEntrySchema.shape,
+		...EntrySchema.shape,
 		kind: z.literal("personal"),
 		payload: z.looseObject({
 			name: z.string().openapi({
@@ -20,4 +20,5 @@ export const TransactionEntryPersonalSchema = z
 			}),
 		}),
 	})
+	.strip()
 	.openapi("TransactionEntryPersonal");

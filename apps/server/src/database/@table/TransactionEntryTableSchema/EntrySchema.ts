@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 
-export const BaseEntrySchema = z
+export const EntrySchema = z
 	.looseObject({
 		id: z.string().openapi({
 			description: "Transaction entry identifier",
@@ -16,4 +16,5 @@ export const BaseEntrySchema = z
 			type: "string",
 		}),
 	})
+	.strip()
 	.openapi("TransactionEntryBase");

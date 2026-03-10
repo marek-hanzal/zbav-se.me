@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { BaseEntrySchema } from "./BaseEntrySchema";
+import { EntrySchema } from "./EntrySchema";
 
-export const TransactionEntryGallerySchema = z
+export const GallerySchema = z
 	.looseObject({
-		...BaseEntrySchema.shape,
+		...EntrySchema.shape,
 		kind: z.literal("gallery"),
 		payload: z.looseObject({
 			galleryId: z.string().openapi({
