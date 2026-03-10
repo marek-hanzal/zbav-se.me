@@ -12,22 +12,22 @@ import { TransactionEntryText } from "../type/TransactionEntryText";
 export namespace Data {
 	export interface Props extends MarkSuspense.Props {
 		side: tUserSideEnum;
-		messageId: string;
+		transactionEntryId: string;
 	}
 }
 
-export const Data: FC<Data.Props> = ({ _suspense, side, messageId }) => {
-	const { data: message } = withTransactionEntryQuery.useFetchQuery(messageId);
+export const Data: FC<Data.Props> = ({ _suspense, side, transactionEntryId }) => {
+	const { data: transactionEntry } = withTransactionEntryQuery.useFetchQuery(transactionEntryId);
 
-	return match(message)
+	return match(transactionEntry)
 		.with(
 			{
 				kind: "text",
 			},
-			(message) => (
+			(transactionEntry) => (
 				<TransactionEntryText
 					side={side}
-					transactionEntry={message}
+					transactionEntry={transactionEntry}
 				/>
 			),
 		)
@@ -65,10 +65,10 @@ export const Data: FC<Data.Props> = ({ _suspense, side, messageId }) => {
 			{
 				kind: "status-closed",
 			},
-			(message) => (
+			(transactionEntry) => (
 				<TransactionEntryText
 					side={side}
-					transactionEntry={message}
+					transactionEntry={transactionEntry}
 				/>
 			),
 		)
@@ -76,25 +76,25 @@ export const Data: FC<Data.Props> = ({ _suspense, side, messageId }) => {
 			{
 				kind: "gallery",
 			},
-			(message) => <TransactionEntryGallery transactionEntry={message} />,
+			(transactionEntry) => <TransactionEntryGallery transactionEntry={transactionEntry} />,
 		)
 		.with(
 			{
 				kind: "location",
 			},
-			(message) => <TransactionEntryLocation transactionEntry={message} />,
+			(transactionEntry) => <TransactionEntryLocation transactionEntry={transactionEntry} />,
 		)
 		.with(
 			{
 				kind: "personal",
 			},
-			(message) => <TransactionEntryPersonal transactionEntry={message} />,
+			(transactionEntry) => <TransactionEntryPersonal transactionEntry={transactionEntry} />,
 		)
 		.with(
 			{
 				kind: "package",
 			},
-			(message) => <TransactionEntryPackage transactionEntry={message} />,
+			(transactionEntry) => <TransactionEntryPackage transactionEntry={transactionEntry} />,
 		)
 		.exhaustive();
 };

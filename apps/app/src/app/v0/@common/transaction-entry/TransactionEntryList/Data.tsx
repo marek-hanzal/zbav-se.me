@@ -64,7 +64,7 @@ export const Data: FC<Data.Props> = ({
 					<TransactionEntryRenderItem
 						key={transactionEntryId}
 						side={side}
-						messageId={transactionEntryId}
+						transactionEntryId={transactionEntryId}
 					/>
 				);
 			})}
