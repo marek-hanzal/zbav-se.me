@@ -29,26 +29,28 @@ export const withTransactionSourceSelectFx = Effect.fn("withTransactionSourceSel
 			.with("status", () =>
 				query.orderBy(
 					(eb) =>
-						eb
-							.case(eb.ref("lt.status"))
-							.when("pending")
-							.then(10)
-							.when("dispute")
-							.then(15)
-							.when("open")
-							.then(20)
-							.when("resolved")
-							.then(30)
-							.when("rejected")
-							.then(40)
-							.when("expired")
-							.then(50)
-							.when("success")
-							.then(60)
-							.when("closed")
-							.then(70)
-							.else(999)
-							.end(),
+							eb
+								.case(eb.ref("lt.status"))
+								.when("pending")
+								.then(10)
+								.when("open")
+								.then(20)
+								.when("resolved")
+								.then(30)
+								.when("dispute")
+								.then(40)
+								.when("rejected")
+								.then(50)
+								.when("sold")
+								.then(60)
+								.when("expired")
+								.then(70)
+								.when("success")
+								.then(80)
+								.when("closed")
+								.then(90)
+								.else(999)
+								.end(),
 					item.order,
 				),
 			)
