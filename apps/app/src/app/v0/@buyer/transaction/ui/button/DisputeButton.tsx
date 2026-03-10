@@ -2,9 +2,9 @@ import { useQueryClient } from "@tanstack/react-query";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
-import { withTransactionStatusDisputeMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
+import { withTransactionDisputeMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
-import { withMessageQuery } from "@zbav-se.me/sdk/query/user/message";
+import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import { FlagIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
@@ -16,7 +16,7 @@ export namespace DisputeButton {
 
 export const DisputeButton: FC<DisputeButton.Props> = ({ transaction, ...props }) => {
 	const queryClient = useQueryClient();
-	const mutation = withTransactionStatusDisputeMutation.useMutation();
+	const mutation = withTransactionDisputeMutation.useMutation();
 
 	return (
 		<ConfirmButton
@@ -28,11 +28,14 @@ export const DisputeButton: FC<DisputeButton.Props> = ({ transaction, ...props }
 				},
 				children: <Tx label="Dispute transaction - confirm (button)" />,
 				onClick() {
-					mutation.mutate(
-						{
+				mutation.mutate(
+					{
+						path: {
 							transactionId: transaction.id,
 						},
-						{
+						url: "/api/buyer/transaction/{transactionId}/dispute",
+					},
+					{
 							onSuccess() {
 								withTransactionQuery.invalidator(
 									queryClient,
@@ -47,7 +50,7 @@ export const DisputeButton: FC<DisputeButton.Props> = ({ transaction, ...props }
 										},
 									},
 								);
-								withMessageQuery.invalidator(queryClient, [
+								withTransactionEntryQuery.invalidator(queryClient, [
 									"collection",
 									"count",
 								]);

@@ -20,7 +20,7 @@ What goes into `@common` should be **low-level, foundational** pieces. Prefer pu
 ## What's Here (scope)
 
 - **Shared UI** – buttons, forms, layout pieces without domain logic
-- **Shared types** – types for transactions, transaction status, user events, listing (pros/cons, expire)
+- **Shared types** – types for transactions, transaction lifecycle, user events, listing (pros/cons, expire)
 - **Shared schemas/validation** – validation usable on the frontend (e.g. query params, filters)
 - **Shared hooks/utils** – pure utilities with no dependency on a specific domain
 - **Transaction context** – default transaction settings (expires, extend)
@@ -80,10 +80,14 @@ When adding to `@common`:
 ## Recent updates
 
 - Transaction list container abstraction was removed from `@common/transaction/ui/`; buyer/seller now keep their own domain-specific list containers to avoid cross-domain generic query wrappers.
-- Message rendering was split into focused parts:
-  - `@common/message/MessageListSuspense/MessageList.tsx` now handles data/container composition.
-  - `@common/message/MessageListSuspense.tsx` now composes local suspense fallback (`MessageListPending`) for feature call-sites.
-  - `@common/message/MessageRenderItem.tsx` now owns message-type dispatch (`text/system/gallery/location/personal/package`).
+- Transaction-entry rendering is split into focused parts:
+  - `@common/transaction-entry/TransactionEntryListSuspense/Data.tsx` handles data/container composition.
+  - `@common/transaction-entry/TransactionEntryListSuspense.tsx` composes local suspense fallback for feature call-sites.
+  - `@common/transaction-entry/TransactionEntryRenderItem/Data.tsx` owns `transaction_entry.kind` dispatch (`text/status/gallery/location/personal/package`).
+- Shared message creation controls now create user-authored `transaction_entry` records:
+  - package, personal, location, text, and gallery flows use transaction-entry SDK wrappers
+  - linked gallery/location data is fetched through dedicated queries instead of old message payload hydration
+- Inbox rendering now consumes the root inbox discriminated union instead of payload-only parsing.
 - Auth utilities were extracted to active scope:
   - `@common/auth/authClient.ts`
   - `@common/auth/getSessionFn.ts`

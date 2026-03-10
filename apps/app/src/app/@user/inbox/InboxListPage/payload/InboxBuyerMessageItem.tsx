@@ -4,8 +4,8 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tInbox, zInboxBuyerMessagePayload } from "@zbav-se.me/sdk/api/user";
-import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
+import type { tInboxBuyerMessage } from "@zbav-se.me/sdk/api/user";
+import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import { withInboxQuery } from "@zbav-se.me/sdk/query/user/inbox";
 import type { FC } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
@@ -13,15 +13,14 @@ import { ListItem } from "~/app/@common/list-item/ListItem";
 
 export namespace InboxBuyerMessageItem {
 	export interface Props {
-		item: tInbox;
-		payload: zInboxBuyerMessagePayload;
+		item: tInboxBuyerMessage;
 	}
 }
 
-export const InboxBuyerMessageItem: FC<InboxBuyerMessageItem.Props> = ({ item, payload }) => {
+export const InboxBuyerMessageItem: FC<InboxBuyerMessageItem.Props> = ({ item }) => {
 	const locale = useLocale();
-	const { data: listing } = withListingQuery.useFetchQuery(payload.listingId);
-	const hero = useUpload(listing.gallery.items);
+	const { data: transaction } = withTransactionQuery.useFetchQuery(item.payload.transactionId);
+	const hero = useUpload(transaction.gallery.items);
 	const patchMutation = withInboxQuery.usePatchMutation({
 		invalidate: [
 			"count",
@@ -33,8 +32,8 @@ export const InboxBuyerMessageItem: FC<InboxBuyerMessageItem.Props> = ({ item, p
 			to="/$locale/seller/message/$listingId/$transactionId"
 			params={{
 				locale,
-				listingId: payload.listingId,
-				transactionId: payload.transactionId,
+				listingId: transaction.listingId,
+				transactionId: transaction.id,
 			}}
 			onClick={() => {
 				if (item.archivedAt) {
@@ -72,7 +71,7 @@ export const InboxBuyerMessageItem: FC<InboxBuyerMessageItem.Props> = ({ item, p
 						}}
 					>
 						<Typo
-							label={listing.title}
+							label={transaction.title}
 							ui={{
 								text: "sm",
 							}}

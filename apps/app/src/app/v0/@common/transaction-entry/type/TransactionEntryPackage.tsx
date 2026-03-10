@@ -4,20 +4,26 @@ import { Container, LabelValue, type uiContainer } from "@use-pico/client/ui/con
 import { Typo, uiTypo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
-import type { tMessagePackage } from "@zbav-se.me/sdk/api/user";
+import type { tTransactionEntryPackage } from "@zbav-se.me/sdk/api/user";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import { useUser } from "~/app/@common/auth/hook/useUser";
 
-export namespace MessagePackage {
+export namespace TransactionEntryPackage {
 	export interface Props extends Container.Props {
-		message: tMessagePackage;
+		message: tTransactionEntryPackage;
 	}
 }
 
-export const MessagePackage: FC<MessagePackage.Props> = ({ message, ...props }) => {
+export const TransactionEntryPackage: FC<TransactionEntryPackage.Props> = ({
+	message,
+	...props
+}) => {
 	const locale = useLocale();
-	const url = new URL(message.link);
+	const user = useUser();
+	const direction = message.userId === null ? "system" : message.userId === user.id ? "out" : "in";
+	const url = new URL(message.payload.link);
 	const domain = url.hostname.replace(/^www\./, "");
 
 	return (
@@ -25,7 +31,7 @@ export const MessagePackage: FC<MessagePackage.Props> = ({ message, ...props }) 
 			ui={{
 				flow: "vertical",
 				gap: "xs",
-				...match<typeof message.direction, uiContainer.Ui>(message.direction)
+				...match<typeof direction, uiContainer.Ui>(direction)
 					.with("in", () => {
 						return {
 							tone: "link",
@@ -45,13 +51,13 @@ export const MessagePackage: FC<MessagePackage.Props> = ({ message, ...props }) 
 			}}
 			className={[
 				"w-2/3",
-				message.direction === "in" ? [] : undefined,
-				message.direction === "out"
+				direction === "in" ? [] : undefined,
+				direction === "out"
 					? [
 							"ml-auto",
 						]
 					: undefined,
-				message.direction === "system"
+				direction === "system"
 					? [
 							"mx-auto",
 							"text-center",
@@ -64,7 +70,7 @@ export const MessagePackage: FC<MessagePackage.Props> = ({ message, ...props }) 
 				textLabel={domain}
 				textValue={
 					<a
-						href={message.link}
+						href={message.payload.link}
 						target="_blank"
 						rel="noopener noreferrer"
 						{...uiTypo({
@@ -76,7 +82,7 @@ export const MessagePackage: FC<MessagePackage.Props> = ({ message, ...props }) 
 							],
 						})}
 					>
-						{message.link}
+						{message.payload.link}
 					</a>
 				}
 				action={
@@ -94,7 +100,7 @@ export const MessagePackage: FC<MessagePackage.Props> = ({ message, ...props }) 
 
 			<LabelValue
 				textLabel={translator.text("Tracking number (label)")}
-				textValue={message.number}
+				textValue={message.payload.number}
 				textEmpty={translator.text("Tracking number not filled")}
 				action={
 					<Icon

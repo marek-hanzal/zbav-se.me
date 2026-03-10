@@ -2,8 +2,8 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { DisputeMessage } from "~/app/v0/@seller/transaction-status/ui/DisputeMessage";
-import { OpenMessage } from "~/app/v0/@seller/transaction-status/ui/OpenMessage";
+import { DisputeMessage } from "~/app/v0/@seller/transaction/ui/status/DisputeMessage";
+import { OpenMessage } from "~/app/v0/@seller/transaction/ui/status/OpenMessage";
 import { PendingMessage } from "./PendingMessage";
 
 export namespace TransactionMessage {
@@ -23,7 +23,7 @@ export const TransactionMessage: FC<TransactionMessage.Props> = ({ transaction, 
 		.with("dispute", () => {
 			return <DisputeMessage transaction={transaction} />;
 		})
-		.with("rejected", "resolved", "expired", "success", "closed", () => {
+		.with("rejected", "resolved", "sold", "expired", "success", "closed", () => {
 			return null;
 		})
 		.exhaustive();

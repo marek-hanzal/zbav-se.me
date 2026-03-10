@@ -2,9 +2,9 @@ import { useQueryClient } from "@tanstack/react-query";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
-import { withTransactionStatusRejectMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
+import { withTransactionRejectMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
-import { withMessageQuery } from "@zbav-se.me/sdk/query/user/message";
+import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import { CancelIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
@@ -16,7 +16,7 @@ export namespace RejectButton {
 
 export const RejectButton: FC<RejectButton.Props> = ({ transaction, ...props }) => {
 	const queryClient = useQueryClient();
-	const mutation = withTransactionStatusRejectMutation.useMutation();
+	const mutation = withTransactionRejectMutation.useMutation();
 
 	return (
 		<ConfirmButton
@@ -28,11 +28,14 @@ export const RejectButton: FC<RejectButton.Props> = ({ transaction, ...props }) 
 				},
 				children: <Tx label="Reject transaction - confirm (button)" />,
 				onClick() {
-					mutation.mutate(
-						{
+				mutation.mutate(
+					{
+						path: {
 							transactionId: transaction.id,
 						},
-						{
+						url: "/api/buyer/transaction/{transactionId}/reject",
+					},
+					{
 							onSuccess() {
 								withTransactionQuery.invalidator(
 									queryClient,
@@ -47,7 +50,7 @@ export const RejectButton: FC<RejectButton.Props> = ({ transaction, ...props }) 
 										},
 									},
 								);
-								withMessageQuery.invalidator(queryClient, [
+								withTransactionEntryQuery.invalidator(queryClient, [
 									"collection",
 									"count",
 								]);

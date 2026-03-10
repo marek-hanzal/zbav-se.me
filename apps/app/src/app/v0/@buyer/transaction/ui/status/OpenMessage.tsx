@@ -1,20 +1,19 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
-import { withTransactionMessageGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
+import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
+import { withTransactionEntryGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction-entry";
 import { type FC, useState } from "react";
 import { GalleryUploadButton } from "~/app/@common/gallery/ui/GalleryUploadButton";
 import { LocationButton } from "~/app/v0/@common/location/ui/LocationButton";
-import { PackageButton } from "~/app/v0/@common/package/ui/PackageButton";
 import { PersonalButton } from "~/app/v0/@common/personal/ui/PersonalButton";
 import { MessageButtonUi } from "~/app/v0/@common/transaction/ui/MessageButtonUi";
 
-export namespace DisputeMessage {
+export namespace OpenMessage {
 	export interface Props extends Container.Props {
 		transaction: tTransaction;
 	}
 }
 
-export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...props }) => {
+export const OpenMessage: FC<OpenMessage.Props> = ({ transaction, ui, ...props }) => {
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
@@ -23,7 +22,7 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...p
 				round: "default",
 				flow: "vertical",
 				gap: "default",
-				tone: "link",
+				tone: "primary",
 				...ui,
 			}}
 			className={[
@@ -32,7 +31,12 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...p
 			]}
 			{...props}
 		>
-			<PackageButton
+			<PersonalButton
+				transactionId={transaction.id}
+				{...MessageButtonUi}
+			/>
+
+			<LocationButton
 				transactionId={transaction.id}
 				{...MessageButtonUi}
 			/>
@@ -43,7 +47,7 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...p
 					value: isGalleryOpen,
 					set: setIsGalleryOpen,
 				}}
-				withMutation={withTransactionMessageGalleryCreateMutation}
+				withMutation={withTransactionEntryGalleryCreateMutation}
 				toMutation={(uploadIds) => ({
 					transactionId: transaction.id,
 					uploadIds,
@@ -54,16 +58,6 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...p
 				onCancel={() => {
 					setIsGalleryOpen(false);
 				}}
-				{...MessageButtonUi}
-			/>
-
-			<LocationButton
-				transactionId={transaction.id}
-				{...MessageButtonUi}
-			/>
-
-			<PersonalButton
-				transactionId={transaction.id}
 				{...MessageButtonUi}
 			/>
 		</Container>

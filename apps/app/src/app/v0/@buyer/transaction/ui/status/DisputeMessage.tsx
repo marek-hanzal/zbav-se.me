@@ -1,6 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
-import { withTransactionMessageGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction";
+import { withTransactionEntryGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction-entry";
 import { type FC, useState } from "react";
 import { GalleryUploadButton } from "~/app/@common/gallery/ui/GalleryUploadButton";
 import { LocationButton } from "~/app/v0/@common/location/ui/LocationButton";
@@ -37,7 +37,7 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...p
 					value: isGalleryOpen,
 					set: setIsGalleryOpen,
 				}}
-				withMutation={withTransactionMessageGalleryCreateMutation}
+				withMutation={withTransactionEntryGalleryCreateMutation}
 				toMutation={(uploadIds) => ({
 					transactionId: transaction.id,
 					uploadIds,

@@ -3,9 +3,9 @@ import { CheckIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
-import { withTransactionStatusCloseMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
+import { withTransactionCloseMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
-import { withMessageQuery } from "@zbav-se.me/sdk/query/user/message";
+import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import type { FC } from "react";
 
 export namespace CloseButton {
@@ -16,7 +16,7 @@ export namespace CloseButton {
 
 export const CloseButton: FC<CloseButton.Props> = ({ transaction, ...props }) => {
 	const queryClient = useQueryClient();
-	const mutation = withTransactionStatusCloseMutation.useMutation();
+	const mutation = withTransactionCloseMutation.useMutation();
 
 	return (
 		<Button
@@ -25,7 +25,10 @@ export const CloseButton: FC<CloseButton.Props> = ({ transaction, ...props }) =>
 			onClick={() => {
 				mutation.mutate(
 					{
-						transactionId: transaction.id,
+						path: {
+							transactionId: transaction.id,
+						},
+						url: "/api/buyer/transaction/{transactionId}/close",
 					},
 					{
 						onSuccess() {
@@ -42,7 +45,7 @@ export const CloseButton: FC<CloseButton.Props> = ({ transaction, ...props }) =>
 									},
 								},
 							);
-							withMessageQuery.invalidator(queryClient, [
+							withTransactionEntryQuery.invalidator(queryClient, [
 								"collection",
 								"count",
 							]);

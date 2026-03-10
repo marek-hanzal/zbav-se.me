@@ -4,7 +4,7 @@ import { FormField } from "@use-pico/client/ui/form";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
-import { zTransactionMessagePersonalCreate } from "@zbav-se.me/sdk/api/user";
+import { zTransactionEntryPersonalCreate } from "@zbav-se.me/sdk/api/user";
 import { useAppForm } from "@zbav-se.me/ui/form";
 import { uiWarningStatus } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
@@ -12,10 +12,7 @@ import type { z } from "zod";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { LocationSelect } from "~/app/@common/location/ui/LocationSelect";
 
-// biome-ignore lint/correctness/noUnusedVariables: Ssst
-const PersonalSchema = zTransactionMessagePersonalCreate.omit({
-	transactionId: true,
-});
+const PersonalSchema = zTransactionEntryPersonalCreate.shape.payload;
 export namespace PersonalSchema {
 	export type Type = z.infer<typeof PersonalSchema>;
 }

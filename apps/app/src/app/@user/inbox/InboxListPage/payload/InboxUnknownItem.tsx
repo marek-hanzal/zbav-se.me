@@ -3,35 +3,33 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tInboxUnfavourite } from "@zbav-se.me/sdk/api/user";
-import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
+import type { tInboxUnknown } from "@zbav-se.me/sdk/api/user";
 import { withInboxQuery } from "@zbav-se.me/sdk/query/user/inbox";
 import type { FC } from "react";
-import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListItem } from "~/app/@common/list-item/ListItem";
 
-export namespace InboxUnfavouriteItem {
+export namespace InboxUnknownItem {
 	export interface Props {
-		item: tInboxUnfavourite;
+		item: tInboxUnknown;
 	}
 }
 
-export const InboxUnfavouriteItem: FC<InboxUnfavouriteItem.Props> = ({ item }) => {
+export const InboxUnknownItem: FC<InboxUnknownItem.Props> = ({ item }) => {
 	const locale = useLocale();
-	const { data: listing } = withListingQuery.useFetchQuery(item.payload.listingId);
-	const hero = useUpload(listing.gallery.items);
 	const patchMutation = withInboxQuery.usePatchMutation({
-		invalidate: [],
+		invalidate: [
+			"count",
+		],
 	});
 
 	return (
 		<ListItem
-			hero={hero}
+			hero={undefined}
 			title={
 				<Tx
-					label={"Listing unfavourited (label)"}
+					label={"Unknown update (label)"}
 					ui={{
-						tone: item.archivedAt ? "neutral" : "primary",
+						tone: item.archivedAt ? "neutral" : "secondary",
 						theme: "light",
 						font: item.archivedAt ? "normal" : "bold",
 						color: "lead",
@@ -44,7 +42,12 @@ export const InboxUnfavouriteItem: FC<InboxUnfavouriteItem.Props> = ({ item }) =
 						flow: "vertical",
 					}}
 				>
-					<Typo label={listing.title} />
+					<Typo
+						label={item.payload.transactionEntryId ?? item.payload.transactionId}
+						ui={{
+							text: "sm",
+						}}
+					/>
 					<Typo
 						label={toTimeDiff({
 							locale,

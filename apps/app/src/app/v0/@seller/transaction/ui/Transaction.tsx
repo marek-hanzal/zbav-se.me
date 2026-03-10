@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import { type FC, useRef } from "react";
-import { MessageListSuspense } from "~/app/v0/@common/message/MessageListSuspense";
+import { TransactionEntryListSuspense } from "~/app/v0/@common/transaction-entry/TransactionEntryListSuspense";
 import { TransactionChat } from "./TransactionChat";
 import { TransactionMessage } from "./TransactionMessage";
 import { TransactionToolbar } from "./TransactionToolbar";
@@ -51,7 +51,7 @@ export const Transaction: FC<Transaction.Props> = ({
 						scroll: "vertical",
 					}}
 				>
-					<MessageListSuspense
+					<TransactionEntryListSuspense
 						side={tUserSideEnum.seller}
 						containerRef={containerRef}
 						transactionId={transaction.id}
@@ -59,7 +59,7 @@ export const Transaction: FC<Transaction.Props> = ({
 					>
 						<TransactionMessage transaction={transaction} />
 						<TransactionToolbar transaction={transaction} />
-					</MessageListSuspense>
+					</TransactionEntryListSuspense>
 				</Container>
 
 				<TransactionChat transaction={transaction} />

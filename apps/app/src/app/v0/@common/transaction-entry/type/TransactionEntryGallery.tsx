@@ -2,21 +2,33 @@ import { useLocale } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tMessageGallery } from "@zbav-se.me/sdk/api/user";
+import type { tTransactionEntryGallery } from "@zbav-se.me/sdk/api/user";
+import { withGalleryFetchQuery } from "@zbav-se.me/sdk/query/user/gallery";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
+import { useUser } from "~/app/@common/auth/hook/useUser";
 import { GalleryPreviewSheet } from "~/app/@common/gallery/ui/GalleryPreviewSheet";
 
-export namespace MessageGallery {
+export namespace TransactionEntryGallery {
 	export interface Props extends Container.Props {
-		message: tMessageGallery;
+		message: tTransactionEntryGallery;
 	}
 }
 
-export const MessageGallery: FC<MessageGallery.Props> = ({ message, ...props }) => {
+export const TransactionEntryGallery: FC<TransactionEntryGallery.Props> = ({
+	message,
+	...props
+}) => {
 	const locale = useLocale();
-	const hero = useUpload(message.gallery.items);
+	const user = useUser();
+	const direction = message.userId === null ? "system" : message.userId === user.id ? "out" : "in";
+	const { data: gallery } = withGalleryFetchQuery.useSuspenseQuery({
+		where: {
+			id: message.payload.galleryId,
+		},
+	});
+	const hero = useUpload(gallery.items);
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
@@ -27,13 +39,13 @@ export const MessageGallery: FC<MessageGallery.Props> = ({ message, ...props }) 
 			className={[
 				"w-2/3",
 				"h-48",
-				message.direction === "in" ? [] : undefined,
-				message.direction === "out"
+				direction === "in" ? [] : undefined,
+				direction === "out"
 					? [
 							"ml-auto",
 						]
 					: undefined,
-				message.direction === "system"
+				direction === "system"
 					? [
 							"mx-auto",
 							"text-center",
@@ -72,7 +84,7 @@ export const MessageGallery: FC<MessageGallery.Props> = ({ message, ...props }) 
 			/>
 
 			<GalleryPreviewSheet
-				uploads={message.gallery.items.map((item) => item.upload)}
+				uploads={gallery.items.map((item) => item.upload)}
 				isOpen={isGalleryOpen}
 				onClose={() => setIsGalleryOpen(false)}
 			/>

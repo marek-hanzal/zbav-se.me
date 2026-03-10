@@ -12,7 +12,7 @@ Maps to server API: `/api/buyer/*`.
 
 - Listing browsing, seller info, listing events.
 - Buyer feeds, favourites, ignore/flag/thumb actions.
-- Buyer transaction and transaction-status flows.
+- Buyer transaction flows, including transaction-entry timeline rendering and status actions.
 
 ## Imports
 
@@ -52,3 +52,5 @@ Maps to server API: `/api/buyer/*`.
   - `@buyer/search/SearchPage/SearchButton.tsx`
   - `@buyer/search/SearchPage/SaveAsFeedButton.tsx`
   - `@buyer/search/SearchPage/ResetButton.tsx`
+- Buyer transaction action buttons now use the buyer transaction mutation SDK surface (`close`, `dispute`, `reject`, `success`) and invalidate `transaction-entry` timeline queries.
+- Buyer message detail UI now reads conversation timeline through `@user/transaction-entry` instead of the removed message query wrapper.

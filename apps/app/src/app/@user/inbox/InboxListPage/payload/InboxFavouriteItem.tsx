@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tInbox, zInboxFavouritePayload } from "@zbav-se.me/sdk/api/user";
+import type { tInboxFavourite } from "@zbav-se.me/sdk/api/user";
 import { withListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
 import { withInboxQuery } from "@zbav-se.me/sdk/query/user/inbox";
 import type { FC } from "react";
@@ -12,14 +12,13 @@ import { ListItem } from "~/app/@common/list-item/ListItem";
 
 export namespace InboxFavouriteItem {
 	export interface Props {
-		item: tInbox;
-		payload: zInboxFavouritePayload;
+		item: tInboxFavourite;
 	}
 }
 
-export const InboxFavouriteItem: FC<InboxFavouriteItem.Props> = ({ item, payload }) => {
+export const InboxFavouriteItem: FC<InboxFavouriteItem.Props> = ({ item }) => {
 	const locale = useLocale();
-	const { data: listing } = withListingQuery.useFetchQuery(payload.listingId);
+	const { data: listing } = withListingQuery.useFetchQuery(item.payload.listingId);
 	const hero = useUpload(listing.gallery.items);
 	const patchMutation = withInboxQuery.usePatchMutation({
 		invalidate: [],

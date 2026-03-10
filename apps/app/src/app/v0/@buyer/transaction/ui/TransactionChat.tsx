@@ -2,7 +2,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
-import { withMessageQuery } from "@zbav-se.me/sdk/query/user/message";
+import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC } from "react";
 import { match } from "ts-pattern";
@@ -14,7 +14,7 @@ export namespace TransactionChat {
 }
 
 export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ...props }) => {
-	const messageMutation = withMessageQuery.useCreateMutation({
+	const messageMutation = withTransactionEntryQuery.useCreateMutation({
 		invalidate: [
 			"collection",
 			"count",
@@ -37,9 +37,11 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 						<ChatInput
 							onSubmit={(message) => {
 								messageMutation.mutate({
-									type: "text",
 									transactionId: transaction.id,
-									message,
+									kind: "text",
+									payload: {
+										text: message,
+									},
 								});
 							}}
 							placeholder={translator.text(
@@ -54,9 +56,11 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 						<ChatInput
 							onSubmit={(message) => {
 								messageMutation.mutate({
-									type: "text",
 									transactionId: transaction.id,
-									message,
+									kind: "text",
+									payload: {
+										text: message,
+									},
 								});
 							}}
 							placeholder={translator.text(
@@ -84,9 +88,11 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 						<ChatInput
 							onSubmit={(message) => {
 								messageMutation.mutate({
-									type: "text",
 									transactionId: transaction.id,
-									message,
+									kind: "text",
+									payload: {
+										text: message,
+									},
 								});
 							}}
 							placeholder={translator.text(
@@ -96,7 +102,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 						/>
 					);
 				})
-				.with("rejected", "expired", "success", "closed", () => {
+				.with("rejected", "sold", "expired", "success", "closed", () => {
 					return (
 						<Tx
 							label={"Chat - transaction closed (message)"}

@@ -1,25 +1,31 @@
 import { useLocale } from "@use-pico/client/hook";
 import { Container, type uiContainer } from "@use-pico/client/ui/container";
-import { Mx } from "@use-pico/client/ui/mx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
-import type { tMessageText } from "@zbav-se.me/sdk/api/user";
+import type { tTransactionEntryLocation } from "@zbav-se.me/sdk/api/user";
+import { withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import { useUser } from "~/app/@common/auth/hook/useUser";
 
-export namespace MessageText {
+export namespace TransactionEntryLocation {
 	export interface Props extends Container.Props {
-		/**
-		 * From which point of view the message is displayed
-		 */
-		side: tUserSideEnum;
-		message: tMessageText;
+		message: tTransactionEntryLocation;
 	}
 }
 
-export const MessageText: FC<MessageText.Props> = ({ side, message, ...props }) => {
+export const TransactionEntryLocation: FC<TransactionEntryLocation.Props> = ({
+	message,
+	...props
+}) => {
 	const locale = useLocale();
+	const user = useUser();
+	const direction = message.userId === null ? "system" : message.userId === user.id ? "out" : "in";
+	const { data: location } = withLocationFetchQuery.useSuspenseQuery({
+		where: {
+			id: message.payload.locationId,
+		},
+	});
 
 	return (
 		<Container
@@ -27,9 +33,10 @@ export const MessageText: FC<MessageText.Props> = ({ side, message, ...props }) 
 				theme: "light",
 				background: "alt",
 				border: true,
+				flow: "vertical",
 				inner: "default",
 				round: "default",
-				...match<typeof message.direction, uiContainer.Ui>(message.direction)
+				...match<typeof direction, uiContainer.Ui>(direction)
 					.with("in", () => {
 						return {
 							tone: "link",
@@ -49,23 +56,27 @@ export const MessageText: FC<MessageText.Props> = ({ side, message, ...props }) 
 			}}
 			className={[
 				"w-2/3",
-				message.direction === "in" ? [] : undefined,
-				message.direction === "out"
+				direction === "in" ? [] : undefined,
+				direction === "out"
 					? [
 							"ml-auto",
 						]
 					: undefined,
-				message.direction === "system"
+				direction === "system"
 					? [
-							"w-full",
+							"mx-auto",
+							"text-center",
 						]
 					: undefined,
 			]}
 			{...props}
 		>
-			<Mx
-				label={`${side} - ${message.text}`}
-				fallback={message.text}
+			<Typo
+				label={location.address}
+				ui={{
+					wrap: "wrap",
+				}}
+				className={"py-1"}
 			/>
 
 			<Typo

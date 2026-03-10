@@ -1,19 +1,32 @@
 import { useLocale } from "@use-pico/client/hook";
 import { Container, type uiContainer } from "@use-pico/client/ui/container";
+import { Mx } from "@use-pico/client/ui/mx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tMessagePersonal } from "@zbav-se.me/sdk/api/user";
+import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
+import type { tTransactionEntryCommon, tTransactionEntryText } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import { useUser } from "~/app/@common/auth/hook/useUser";
 
-export namespace MessagePersonal {
+export namespace TransactionEntryText {
 	export interface Props extends Container.Props {
-		message: tMessagePersonal;
+		/**
+		 * From which point of view the message is displayed
+		 */
+		side: tUserSideEnum;
+		message: tTransactionEntryText | tTransactionEntryCommon;
 	}
 }
 
-export const MessagePersonal: FC<MessagePersonal.Props> = ({ message, ...props }) => {
+export const TransactionEntryText: FC<TransactionEntryText.Props> = ({
+	side,
+	message,
+	...props
+}) => {
 	const locale = useLocale();
+	const user = useUser();
+	const direction = message.userId === null ? "system" : message.userId === user.id ? "out" : "in";
 
 	return (
 		<Container
@@ -21,10 +34,9 @@ export const MessagePersonal: FC<MessagePersonal.Props> = ({ message, ...props }
 				theme: "light",
 				background: "alt",
 				border: true,
-				flow: "vertical",
 				inner: "default",
 				round: "default",
-				...match<typeof message.direction, uiContainer.Ui>(message.direction)
+				...match<typeof direction, uiContainer.Ui>(direction)
 					.with("in", () => {
 						return {
 							tone: "link",
@@ -44,59 +56,24 @@ export const MessagePersonal: FC<MessagePersonal.Props> = ({ message, ...props }
 			}}
 			className={[
 				"w-2/3",
-				message.direction === "in" ? [] : undefined,
-				message.direction === "out"
+				direction === "in" ? [] : undefined,
+				direction === "out"
 					? [
 							"ml-auto",
 						]
 					: undefined,
-				message.direction === "system"
+				direction === "system"
 					? [
-							"mx-auto",
-							"text-center",
+							"w-full",
 						]
 					: undefined,
 			]}
 			{...props}
 		>
-			<Container
-				ui={{
-					layout: "vertical-flex",
-					gap: "xs",
-				}}
-			>
-				<Typo
-					label={message.name}
-					ui={{
-						wrap: "wrap",
-						font: "bold",
-					}}
-					className={"py-1"}
-				/>
-
-				<Typo
-					label={message.phone}
-					ui={{
-						wrap: "wrap",
-					}}
-				/>
-
-				<Typo
-					label={message.email}
-					ui={{
-						wrap: "wrap",
-					}}
-					className={"py-1"}
-				/>
-
-				<Typo
-					label={message.location.address}
-					ui={{
-						wrap: "wrap",
-					}}
-					className={"py-1"}
-				/>
-			</Container>
+			<Mx
+				label={`${side} - ${message.payload.text}`}
+				fallback={message.payload.text}
+			/>
 
 			<Typo
 				label={toTimeDiff({
