@@ -267,6 +267,7 @@ export namespace Transitions {
 	}
 
 	export const CleanupSensitiveStatus: readonly TransactionStatusEnumSchema.Type[] = [
+		"sold",
 		"rejected",
 		"expired",
 		"success",
@@ -300,6 +301,8 @@ export namespace Transitions {
 		dispute: LittleMachine.dispute,
 		"status-dispute-buyer": LittleMachine.dispute,
 		"status-dispute-seller": LittleMachine.dispute,
+		sold: [],
+		"status-sold": [],
 		rejected: [],
 		"status-rejected-buyer": [],
 		"status-rejected-seller": [],
@@ -309,7 +312,6 @@ export namespace Transitions {
 		"status-success": [],
 		closed: [],
 		"status-closed": [],
-		"status-sold": [],
 		//
 		text: [],
 		gallery: [],

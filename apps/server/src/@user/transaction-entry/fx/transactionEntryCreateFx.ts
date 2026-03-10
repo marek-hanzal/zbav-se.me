@@ -5,7 +5,6 @@ import { match } from "ts-pattern";
 import { galleryInsertFx } from "~/@user/gallery/fx/galleryInsertFx";
 import { galleryItemInsertFx } from "~/@user/gallery-item/fx/galleryItemInsertFx";
 import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
-import type { InboxCreateSchema } from "~/@user/inbox/schema/InboxCreateSchema";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionTouchFx } from "~/@user/transaction/fx/transactionTouchFx";
 import { transactionTransitionFx } from "~/@user/transaction/fx/transactionTransitionFx";
@@ -15,6 +14,7 @@ import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEve
 import type { TransactionEntryTableSchema } from "~/database/@table/TransactionEntryTableSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace transactionEntryCreateFx {
@@ -30,230 +30,261 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 	transactionId,
 	...entry
 }: transactionEntryCreateFx.Props) {
-	const createTransactionEntryFx = Effect.fn("createTransactionEntryFx")(function* ({
-		scopeUserId,
-		kind,
-		...data
-	}: Pick<TransactionEntryTableSchema.Type, "transactionId" | "kind" | "userId" | "payload"> & {
-		scopeUserId: string;
-	}) {
-		const { kysely } = yield* KyselyContextFx;
-		const dateContext = yield* DateContextFx;
-		const id = genId();
+	return yield* withTransactionFx(
+		Effect.gen(function* () {
+			const createTransactionEntryFx = Effect.fn("createTransactionEntryFx")(function* ({
+				scopeUserId,
+				kind,
+				...data
+			}: Pick<TransactionEntryTableSchema.Type, "transactionId" | "kind" | "userId" | "payload"> & {
+				scopeUserId: string;
+			}) {
+				const { kysely } = yield* KyselyContextFx;
+				const dateContext = yield* DateContextFx;
+				const id = genId();
 
-		yield* transactionTransitionFx({
-			status: transaction.status,
-			request: kind,
-			side: transaction.side,
-		});
+				yield* transactionTransitionFx({
+					status: transaction.status,
+					request: kind,
+					side: transaction.side,
+				});
 
-		yield* tryDbFx(async () =>
-			kysely
-				.insertInto("transaction_entry")
-				.values({
-					...data,
-					id,
-					kind,
-					createdAt: dateContext.now().toJSDate(),
-				})
-				.executeTakeFirstOrThrow(),
-		);
+				yield* tryDbFx(async () =>
+					kysely
+						.insertInto("transaction_entry")
+						.values({
+							...data,
+							id,
+							kind,
+							createdAt: dateContext.now().toJSDate(),
+						})
+						.executeTakeFirstOrThrow(),
+				);
 
-		yield* transactionTouchFx({
-			transactionId,
-			userId: scopeUserId,
-		});
+				yield* transactionTouchFx({
+					transactionId,
+					userId: scopeUserId,
+				});
 
-		return yield* transactionEntryFetchFx({
-			userId: scopeUserId,
-			where: {
-				id,
-			},
-		});
-	});
+				return yield* transactionEntryFetchFx({
+					userId: scopeUserId,
+					where: {
+						id,
+					},
+				});
+			});
 
-	const transaction = yield* transactionResolveFx({
-		userId,
-		transactionId,
-	});
+			const transaction = yield* transactionResolveFx({
+				userId,
+				transactionId,
+			});
 
-	yield* userInteractionEventFx({
-		userId,
-		targetId: transaction.side === "buyer" ? transaction.sellerId : transaction.buyerId,
-		source: "transaction",
-		group: transaction.id,
-		event: "transaction.message",
-		isTerminal: false,
-	});
+			/**
+			 * We intentionally keep these side effects before the actual write/transition gate.
+			 * We know this is not ideal, but the current behavior is relied on and will be
+			 * revisited separately once transaction entry writes get their own dedicated flow.
+			 */
+			yield* userInteractionEventFx({
+				userId,
+				targetId: transaction.side === "buyer" ? transaction.sellerId : transaction.buyerId,
+				source: "transaction",
+				group: transaction.id,
+				event: "transaction.message",
+				isTerminal: false,
+			});
 
-	yield* inboxCreateFx(
-		match(transaction.side)
-			.with(
-				"buyer",
-				(): InboxCreateSchema.Type => ({
-					userId: transaction.sellerId,
-					family: "message",
-					type: "buyer-message",
-					payload: {
+			yield* match(transaction.side)
+				.with("buyer", () =>
+					inboxCreateFx({
+						userId: transaction.sellerId,
+						family: "message",
 						type: "buyer-message",
-						transactionId: transaction.id,
-					},
-					priority: "high",
-				}),
-			)
-			.otherwise(
-				(): InboxCreateSchema.Type => ({
-					userId: transaction.buyerId,
-					family: "message",
-					type: "seller-message",
-					payload: {
+						payload: {
+							type: "buyer-message",
+							transactionId: transaction.id,
+						},
+						priority: "high",
+					}),
+				)
+				.with("seller", () =>
+					inboxCreateFx({
+						userId: transaction.buyerId,
+						family: "message",
 						type: "seller-message",
-						transactionId: transaction.id,
+						payload: {
+							type: "seller-message",
+							transactionId: transaction.id,
+						},
+						priority: "high",
+					}),
+				)
+				.with("transaction", "system", () =>
+					Effect.all([
+						inboxCreateFx({
+							userId: transaction.sellerId,
+							family: "message",
+							type: "buyer-message",
+							payload: {
+								type: "buyer-message",
+								transactionId: transaction.id,
+							},
+							priority: "high",
+						}),
+						inboxCreateFx({
+							userId: transaction.buyerId,
+							family: "message",
+							type: "seller-message",
+							payload: {
+								type: "seller-message",
+								transactionId: transaction.id,
+							},
+							priority: "high",
+						}),
+					]).pipe(Effect.asVoid),
+				)
+				.otherwise(() => Effect.void);
+
+			return yield* match(entry)
+				.with(
+					{
+						kind: "text",
 					},
-					priority: "high",
-				}),
-			),
+					({ payload }) => {
+						return createTransactionEntryFx({
+							transactionId,
+							kind: "text",
+							userId,
+							payload,
+							scopeUserId: userId,
+						});
+					},
+				)
+				.with(
+					{
+						kind: "location",
+					},
+					({ payload }) => {
+						return createTransactionEntryFx({
+							transactionId,
+							kind: "location",
+							userId,
+							payload,
+							scopeUserId: userId,
+						});
+					},
+				)
+				.with(
+					{
+						kind: "package",
+					},
+					({ payload }) => {
+						return createTransactionEntryFx({
+							transactionId,
+							kind: "package",
+							userId,
+							payload,
+							scopeUserId: userId,
+						});
+					},
+				)
+				.with(
+					{
+						kind: "personal",
+					},
+					({ payload }) => {
+						return createTransactionEntryFx({
+							transactionId,
+							kind: "personal",
+							userId,
+							payload,
+							scopeUserId: userId,
+						});
+					},
+				)
+				.with(
+					{
+						kind: "gallery",
+					},
+					function* ({ payload }) {
+						if (payload.uploadIds.length === 0) {
+							return yield* new InvalidRequestErrorFx({
+								message: "At least one upload is required",
+							});
+						}
+
+						const gallery = yield* galleryInsertFx({
+							userId,
+						});
+
+						let sort = 0;
+						for (const uploadId of payload.uploadIds) {
+							yield* galleryItemInsertFx({
+								galleryId: gallery.id,
+								uploadId,
+								sort,
+								userId,
+								check: false,
+							});
+							sort++;
+						}
+
+						return yield* createTransactionEntryFx({
+							transactionId,
+							kind: "gallery",
+							userId,
+							payload: {
+								galleryId: gallery.id,
+							},
+							scopeUserId: userId,
+						});
+					},
+				)
+				// common
+				.with(
+					{
+						kind: "status-open",
+					},
+					{
+						kind: "status-pending",
+					},
+					{
+						kind: "status-resolved",
+					},
+					{
+						kind: "status-rejected-buyer",
+					},
+					{
+						kind: "status-rejected-seller",
+					},
+					{
+						kind: "status-dispute-buyer",
+					},
+					{
+						kind: "status-dispute-seller",
+					},
+					{
+						kind: "status-expired",
+					},
+					{
+						kind: "status-success",
+					},
+					{
+						kind: "status-closed",
+					},
+					{
+						kind: "status-sold",
+					},
+					({ kind, payload }) => {
+						return createTransactionEntryFx({
+							transactionId,
+							kind,
+							userId,
+							payload,
+							scopeUserId: userId,
+						});
+					},
+				)
+				.exhaustive();
+		}),
 	);
-
-	return yield* match(entry)
-		.with(
-			{
-				kind: "text",
-			},
-			({ payload }) => {
-				return createTransactionEntryFx({
-					transactionId,
-					kind: "text",
-					userId,
-					payload,
-					scopeUserId: userId,
-				});
-			},
-		)
-		.with(
-			{
-				kind: "location",
-			},
-			({ payload }) => {
-				return createTransactionEntryFx({
-					transactionId,
-					kind: "location",
-					userId,
-					payload,
-					scopeUserId: userId,
-				});
-			},
-		)
-		.with(
-			{
-				kind: "package",
-			},
-			({ payload }) => {
-				return createTransactionEntryFx({
-					transactionId,
-					kind: "package",
-					userId,
-					payload,
-					scopeUserId: userId,
-				});
-			},
-		)
-		.with(
-			{
-				kind: "personal",
-			},
-			({ payload }) => {
-				return createTransactionEntryFx({
-					transactionId,
-					kind: "personal",
-					userId,
-					payload,
-					scopeUserId: userId,
-				});
-			},
-		)
-		.with(
-			{
-				kind: "gallery",
-			},
-			function* ({ payload }) {
-				if (payload.uploadIds.length === 0) {
-					return yield* new InvalidRequestErrorFx({
-						message: "At least one upload is required",
-					});
-				}
-
-				const gallery = yield* galleryInsertFx({
-					userId,
-				});
-
-				let sort = 0;
-				for (const uploadId of payload.uploadIds) {
-					yield* galleryItemInsertFx({
-						galleryId: gallery.id,
-						uploadId,
-						sort,
-						userId,
-						check: false,
-					});
-					sort++;
-				}
-
-				return yield* createTransactionEntryFx({
-					transactionId,
-					kind: "gallery",
-					userId,
-					payload: {
-						galleryId: gallery.id,
-					},
-					scopeUserId: userId,
-				});
-			},
-		)
-		// common
-		.with(
-			{
-				kind: "status-open",
-			},
-			{
-				kind: "status-pending",
-			},
-			{
-				kind: "status-resolved",
-			},
-			{
-				kind: "status-rejected-buyer",
-			},
-			{
-				kind: "status-rejected-seller",
-			},
-			{
-				kind: "status-dispute-buyer",
-			},
-			{
-				kind: "status-dispute-seller",
-			},
-			{
-				kind: "status-expired",
-			},
-			{
-				kind: "status-success",
-			},
-			{
-				kind: "status-closed",
-			},
-			{
-				kind: "status-sold",
-			},
-			({ kind, payload }) => {
-				return createTransactionEntryFx({
-					transactionId,
-					kind,
-					userId,
-					payload,
-					scopeUserId: userId,
-				});
-			},
-		)
-		.exhaustive();
 });
