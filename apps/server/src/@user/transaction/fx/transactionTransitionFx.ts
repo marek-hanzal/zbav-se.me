@@ -33,6 +33,10 @@ export namespace Transitions {
 				request: "pending",
 				side: "buyer",
 			},
+			{
+				request: "status-pending",
+				side: "buyer",
+			},
 		],
 		pending: [
 			{
@@ -40,7 +44,15 @@ export namespace Transitions {
 				side: "seller",
 			},
 			{
+				request: "status-open",
+				side: "seller",
+			},
+			{
 				request: "rejected",
+				side: "buyer",
+			},
+			{
+				request: "status-rejected-buyer",
 				side: "buyer",
 			},
 			{
@@ -48,7 +60,15 @@ export namespace Transitions {
 				side: "seller",
 			},
 			{
+				request: "status-rejected-seller",
+				side: "seller",
+			},
+			{
 				request: "expired",
+				side: null,
+			},
+			{
+				request: "status-expired",
 				side: null,
 			},
 		],
@@ -58,7 +78,15 @@ export namespace Transitions {
 				side: "seller",
 			},
 			{
+				request: "status-resolved",
+				side: "seller",
+			},
+			{
 				request: "rejected",
+				side: "buyer",
+			},
+			{
+				request: "status-rejected-buyer",
 				side: "buyer",
 			},
 			{
@@ -66,17 +94,77 @@ export namespace Transitions {
 				side: "seller",
 			},
 			{
+				request: "status-rejected-seller",
+				side: "seller",
+			},
+			{
 				request: "expired",
 				side: null,
 			},
+			{
+				request: "status-expired",
+				side: null,
+			},
+			{
+				request: "text",
+				side: "buyer",
+			},
+			{
+				request: "text",
+				side: "seller",
+			},
+			{
+				request: "gallery",
+				side: "buyer",
+			},
+			{
+				request: "gallery",
+				side: "seller",
+			},
+			{
+				request: "location",
+				side: "buyer",
+			},
+			{
+				request: "location",
+				side: "seller",
+			},
+			{
+				request: "personal",
+				side: "buyer",
+			},
+			{
+				request: "personal",
+				side: "seller",
+			},
+			{
+				request: "package",
+				side: "seller",
+			},
 		],
 		resolved: [
+			{
+				request: "text",
+				side: "buyer",
+			},
+			{
+				request: "text",
+				side: "seller",
+			},
 			{
 				request: "dispute",
 				side: "buyer",
 			},
 			{
+				request: "status-dispute-buyer",
+				side: "buyer",
+			},
+			{
 				request: "dispute",
+				side: "seller",
+			},
+			{
+				request: "status-dispute-seller",
 				side: "seller",
 			},
 			{
@@ -84,11 +172,23 @@ export namespace Transitions {
 				side: "buyer",
 			},
 			{
+				request: "status-success",
+				side: "buyer",
+			},
+			{
 				request: "closed",
 				side: "buyer",
 			},
 			{
+				request: "status-closed",
+				side: "buyer",
+			},
+			{
 				request: "expired",
+				side: null,
+			},
+			{
+				request: "status-expired",
 				side: null,
 			},
 		],
@@ -98,7 +198,15 @@ export namespace Transitions {
 				side: "seller",
 			},
 			{
+				request: "status-resolved",
+				side: "seller",
+			},
+			{
 				request: "success",
+				side: "buyer",
+			},
+			{
+				request: "status-success",
 				side: "buyer",
 			},
 			{
@@ -106,8 +214,52 @@ export namespace Transitions {
 				side: "buyer",
 			},
 			{
+				request: "status-closed",
+				side: "buyer",
+			},
+			{
 				request: "expired",
 				side: null,
+			},
+			{
+				request: "status-expired",
+				side: null,
+			},
+			{
+				request: "text",
+				side: "buyer",
+			},
+			{
+				request: "text",
+				side: "seller",
+			},
+			{
+				request: "gallery",
+				side: "buyer",
+			},
+			{
+				request: "gallery",
+				side: "seller",
+			},
+			{
+				request: "location",
+				side: "buyer",
+			},
+			{
+				request: "location",
+				side: "seller",
+			},
+			{
+				request: "personal",
+				side: "buyer",
+			},
+			{
+				request: "personal",
+				side: "seller",
+			},
+			{
+				request: "package",
+				side: "seller",
 			},
 		],
 		rejected: [],

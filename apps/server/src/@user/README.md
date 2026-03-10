@@ -64,12 +64,13 @@ This domain handles all operations on user-owned, private data. Everything in th
 - Transaction communication now enters through the unified **Transaction Entry** API.
 - Transaction-scoped write rules still apply:
   - `pending` blocks user-authored writes
-  - `open` and `dispute` allow typed message creation
+  - `open` and `dispute` allow typed entry creation for both sides, with `package` still seller-only
+  - `resolved` keeps chat open for `text`, but blocks the richer structured entry kinds
 
 ### Transaction State
 - Shared transaction state helpers live under `@user/transaction`
 - Status authority is stored directly on `transaction.status` and `transaction.statusUpdatedAt`
-- `transactionTransitionFx` is the pure state-machine gate
+- `transactionTransitionFx` is the pure state-machine gate for both status transitions and transaction-entry write permissions
 - `transactionUpdateStatusFx` applies validated status writes, timeline entries, and terminal cleanup
 - Buyer/seller domains trigger state changes through transaction-scoped actions, not a standalone status domain
 
