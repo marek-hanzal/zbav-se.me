@@ -32,6 +32,7 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 }: transactionEntryCreateFx.Props) {
 	const createTransactionEntryFx = Effect.fn("createTransactionEntryFx")(function* ({
 		scopeUserId,
+		kind,
 		...data
 	}: Pick<TransactionEntryTableSchema.Type, "transactionId" | "kind" | "userId" | "payload"> & {
 		scopeUserId: string;
@@ -40,12 +41,19 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 		const dateContext = yield* DateContextFx;
 		const id = genId();
 
+		yield* transactionTransitionFx({
+			status: transaction.status,
+			request: kind,
+			side: transaction.side,
+		});
+
 		yield* tryDbFx(async () =>
 			kysely
 				.insertInto("transaction_entry")
 				.values({
 					...data,
 					id,
+					kind,
 					createdAt: dateContext.now().toJSDate(),
 				})
 				.executeTakeFirstOrThrow(),
@@ -67,12 +75,6 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 	const transaction = yield* transactionResolveFx({
 		userId,
 		transactionId,
-	});
-
-	yield* transactionTransitionFx({
-		status: transaction.status,
-		request: "message",
-		side: transaction.side,
 	});
 
 	yield* userInteractionEventFx({

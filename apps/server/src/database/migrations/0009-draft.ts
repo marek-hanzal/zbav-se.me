@@ -1,8 +1,8 @@
 import { type Migration, sql } from "kysely";
-import { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
-import { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
-import { ListingRestrictionEnumSchema } from "~/database/@enum/ListingRestrictionEnumSchema";
-import { ListingWarrantyEnumSchema } from "~/database/@enum/ListingWarrantyEnumSchema";
+import type { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
+import type { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
+import type { ListingRestrictionEnumSchema } from "~/database/@enum/ListingRestrictionEnumSchema";
+import type { ListingWarrantyEnumSchema } from "~/database/@enum/ListingWarrantyEnumSchema";
 
 export const DraftMigration: Migration = {
 	async up(db) {

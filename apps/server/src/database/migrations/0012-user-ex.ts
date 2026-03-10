@@ -1,5 +1,5 @@
 import { type Migration, sql } from "kysely";
-import { UserSideEnumSchema } from "~/database/@enum/UserSideEnumSchema";
+import type { UserSideEnumSchema } from "~/database/@enum/UserSideEnumSchema";
 
 export const UserExMigration: Migration = {
 	async up(db) {

@@ -1,28 +1,33 @@
 import { Effect } from "effect";
+import type { TransactionEntryKindEnumSchema } from "~/database/@enum/TransactionEntryKindEnumSchema";
 import type { TransactionSideEnumSchema } from "~/database/@enum/TransactionSideEnumSchema";
 import type { TransactionStatusEnumSchema } from "~/database/@enum/TransactionStatusEnumSchema";
 import { traceLogFx } from "~/effect/traceLogFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace Transitions {
-	export type Status = TransactionStatusEnumSchema.Type | null;
-	export type Side = TransactionSideEnumSchema.Type | null;
-	export type Request = TransactionStatusEnumSchema.Type | "message";
-	export type StatusRequest = TransactionStatusEnumSchema.Type;
+	/**
+	 * All recognized transition kinds.
+	 */
+	export type Kind = TransactionStatusEnumSchema.Type | TransactionEntryKindEnumSchema.Type;
 
 	export interface Entry {
-		request: Request;
-		side: Side;
+		request: Kind;
+		side: TransactionSideEnumSchema.Type | null;
 	}
 
-	export const CleanupSensitiveStatus: readonly StatusRequest[] = [
+	export const CleanupSensitiveStatus: readonly TransactionStatusEnumSchema.Type[] = [
 		"rejected",
 		"expired",
 		"success",
 		"closed",
 	];
 
-	export const Map: Record<"null" | TransactionStatusEnumSchema.Type, Entry[]> = {
+	/**
+	 * State machine - allowed transitions - input is "request", output are allowed states; when an empty
+	 * array, transition is not allowed.
+	 */
+	export const Machine: Record<"null" | Kind, Entry[]> = {
 		null: [
 			{
 				request: "pending",
@@ -48,14 +53,6 @@ export namespace Transitions {
 			},
 		],
 		open: [
-			{
-				request: "message",
-				side: "buyer",
-			},
-			{
-				request: "message",
-				side: "seller",
-			},
 			{
 				request: "resolved",
 				side: "seller",
@@ -97,14 +94,6 @@ export namespace Transitions {
 		],
 		dispute: [
 			{
-				request: "message",
-				side: "buyer",
-			},
-			{
-				request: "message",
-				side: "seller",
-			},
-			{
 				request: "resolved",
 				side: "seller",
 			},
@@ -133,17 +122,17 @@ export namespace transactionTransitionFx {
 		/**
 		 * Current transaction status we are validating against.
 		 */
-		status: Transitions.Status;
+		status: Transitions.Kind | null;
 		/**
 		 * Requested transaction action or target status transition.
 		 */
-		request: Transitions.Request;
+		request: Transitions.Kind;
 		/**
 		 * Side this request is meant for.
 		 *
 		 * Use `null` for side-agnostic system transitions.
 		 */
-		side: Transitions.Side;
+		side: TransactionSideEnumSchema.Type | null;
 	}
 }
 
@@ -156,7 +145,7 @@ export const transactionTransitionFx = Effect.fn("transactionTransitionFx")(func
 		input: props,
 	});
 
-	const allowedTransitions = Transitions.Map[props.status ?? "null"];
+	const allowedTransitions = Transitions.Machine[props.status ?? "null"];
 	const transition = allowedTransitions.find(
 		(transition) => transition.request === props.request && transition.side === props.side,
 	);

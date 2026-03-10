@@ -1,5 +1,5 @@
 import { type Migration, sql } from "kysely";
-import { ThumbEnumSchema } from "~/database/@enum/ThumbEnumSchema";
+import type { ThumbEnumSchema } from "~/database/@enum/ThumbEnumSchema";
 
 export const ThumbMigration: Migration = {
 	async up(db) {

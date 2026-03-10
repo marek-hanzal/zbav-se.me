@@ -1,5 +1,5 @@
 import { type Migration, sql } from "kysely";
-import { TransactionEntryKindEnumSchema } from "~/database/@enum/TransactionEntryKindEnumSchema";
+import type { TransactionEntryKindEnumSchema } from "~/database/@enum/TransactionEntryKindEnumSchema";
 
 export const TransactionEntryMigration: Migration = {
 	async up(db) {

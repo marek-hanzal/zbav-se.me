@@ -1,5 +1,5 @@
 import { type Migration, sql } from "kysely";
-import { FeedTypeEnumSchema } from "~/database/@enum/FeedTypeEnumSchema";
+import type { FeedTypeEnumSchema } from "~/database/@enum/FeedTypeEnumSchema";
 
 export const FeedMigration: Migration = {
 	async up(db) {

@@ -1,5 +1,5 @@
 import { type Migration, sql } from "kysely";
-import { UserEventScopeEnumSchema } from "~/database/@enum/UserEventScopeEnumSchema";
+import type { UserEventScopeEnumSchema } from "~/database/@enum/UserEventScopeEnumSchema";
 
 export const UserEventMigration: Migration = {
 	async up(db) {

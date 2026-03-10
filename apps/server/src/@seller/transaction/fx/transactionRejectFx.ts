@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { transactionFetchFx } from "~/@seller/transaction/fx/transactionFetchFx";
+import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionUpdateStatusFx } from "~/@user/transaction/fx/transactionUpdateStatusFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";

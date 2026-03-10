@@ -1,5 +1,5 @@
 import { type Migration, sql } from "kysely";
-import { ListingEventEnumSchema } from "~/database/@enum/ListingEventEnumSchema";
+import type { ListingEventEnumSchema } from "~/database/@enum/ListingEventEnumSchema";
 
 export const ListingEventMigration: Migration = {
 	async up(db) {
