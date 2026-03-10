@@ -59,6 +59,7 @@ This domain handles all operations on user-owned, private data. Everything in th
   - `thumb`
   - `favourite`
   - `unfavourite`
+- Transaction-like inbox payloads (`transaction`, `system`, `unknown`) carry `transactionId`, `listingId`, and recipient `target` so the app can deep-link into the correct buyer/seller transaction detail route.
 - Local Docker Compose upgrade for existing databases:
   - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'ALTER TABLE "inbox" ADD COLUMN IF NOT EXISTS "family" text;'`
 - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c "UPDATE \"inbox\" SET \"family\" = CASE WHEN \"type\" IN ('buyer-message', 'seller-message', 'transaction', 'system', 'unknown') THEN 'message' WHEN \"type\" IN ('thumb', 'favourite', 'unfavourite') THEN 'reaction' ELSE \"family\" END WHERE \"family\" IS NULL;"`

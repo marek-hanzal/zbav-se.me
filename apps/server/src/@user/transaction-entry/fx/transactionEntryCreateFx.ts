@@ -271,7 +271,9 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 							type: "transaction",
 							payload: {
 								transactionId: transaction.id,
+								listingId: transaction.listingId,
 								transactionEntryId: transactionEntry.id,
+								target: "seller",
 							},
 							priority: "high",
 						}),
@@ -281,7 +283,9 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 							type: "transaction",
 							payload: {
 								transactionId: transaction.id,
+								listingId: transaction.listingId,
 								transactionEntryId: transactionEntry.id,
+								target: "buyer",
 							},
 							priority: "high",
 						}),
@@ -295,7 +299,9 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 							type: "system",
 							payload: {
 								transactionId: transaction.id,
+								listingId: transaction.listingId,
 								transactionEntryId: transactionEntry.id,
+								target: "seller",
 							},
 							priority: "high",
 						}),
@@ -305,7 +311,9 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 							type: "system",
 							payload: {
 								transactionId: transaction.id,
+								listingId: transaction.listingId,
 								transactionEntryId: transactionEntry.id,
+								target: "buyer",
 							},
 							priority: "high",
 						}),

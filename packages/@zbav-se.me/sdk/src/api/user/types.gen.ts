@@ -468,12 +468,27 @@ export type tInboxTransaction = {
          */
         transactionId: string;
         /**
+         * Related listing identifier for seller-scoped transaction routes
+         */
+        listingId: string;
+        /**
          * Related transaction entry identifier when available
          */
         transactionEntryId?: string;
+        target: tUserSideEnum;
         [key: string]: unknown;
     };
 };
+
+/**
+ * Recipient-side transaction detail target used for deep-link routing
+ */
+export const tUserSideEnum = { seller: 'seller', buyer: 'buyer' } as const;
+
+/**
+ * Recipient-side transaction detail target used for deep-link routing
+ */
+export type tUserSideEnum = typeof tUserSideEnum[keyof typeof tUserSideEnum];
 
 export type tInboxSystem = {
     /**
@@ -501,9 +516,14 @@ export type tInboxSystem = {
          */
         transactionId: string;
         /**
+         * Related listing identifier for seller-scoped transaction routes
+         */
+        listingId: string;
+        /**
          * Related transaction entry identifier when available
          */
         transactionEntryId?: string;
+        target: tUserSideEnum;
         [key: string]: unknown;
     };
 };
@@ -534,9 +554,14 @@ export type tInboxUnknown = {
          */
         transactionId: string;
         /**
+         * Related listing identifier for seller-scoped transaction routes
+         */
+        listingId: string;
+        /**
          * Related transaction entry identifier when available
          */
         transactionEntryId?: string;
+        target: tUserSideEnum;
         [key: string]: unknown;
     };
 };
@@ -1254,22 +1279,12 @@ export type tUserEx = {
      * Default location for the user - user for listings & listing sorting
      */
     locationId: null | string;
-    side?: null | tUserSideEnum;
+    side?: null | (tUserSideEnum & unknown);
     /**
      * Bearer token used for agent access and API token fallback auth
      */
     token?: string | null;
 };
-
-/**
- * Side of the user
- */
-export const tUserSideEnum = { seller: 'seller', buyer: 'buyer' } as const;
-
-/**
- * Side of the user
- */
-export type tUserSideEnum = typeof tUserSideEnum[keyof typeof tUserSideEnum];
 
 /**
  * Data for patching a user ex
@@ -1283,7 +1298,7 @@ export type tUserExPatch = {
          * Default location for the user - user for listings & listing sorting
          */
         locationId?: null | string;
-        side?: null | tUserSideEnum;
+        side?: null | (tUserSideEnum & unknown);
         /**
          * Bearer token used for agent access and API token fallback auth
          */

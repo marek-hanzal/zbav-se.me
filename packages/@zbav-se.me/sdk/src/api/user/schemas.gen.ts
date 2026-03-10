@@ -602,12 +602,20 @@ export const sInboxTransaction = {
                 transactionId: {
                     type: 'string'
                 },
+                listingId: {
+                    type: 'string'
+                },
                 transactionEntryId: {
                     type: 'string'
+                },
+                target: {
+                    $ref: '#/components/schemas/UserSideEnum'
                 }
             },
             required: [
-                'transactionId'
+                'transactionId',
+                'listingId',
+                'target'
             ],
             additionalProperties: {}
         }
@@ -621,6 +629,14 @@ export const sInboxTransaction = {
         'archivedAt',
         'type',
         'payload'
+    ]
+} as const;
+
+export const sUserSideEnum = {
+    type: 'string',
+    enum: [
+        'seller',
+        'buyer'
     ]
 } as const;
 
@@ -664,12 +680,20 @@ export const sInboxSystem = {
                 transactionId: {
                     type: 'string'
                 },
+                listingId: {
+                    type: 'string'
+                },
                 transactionEntryId: {
                     type: 'string'
+                },
+                target: {
+                    $ref: '#/components/schemas/UserSideEnum'
                 }
             },
             required: [
-                'transactionId'
+                'transactionId',
+                'listingId',
+                'target'
             ],
             additionalProperties: {}
         }
@@ -726,12 +750,20 @@ export const sInboxUnknown = {
                 transactionId: {
                     type: 'string'
                 },
+                listingId: {
+                    type: 'string'
+                },
                 transactionEntryId: {
                     type: 'string'
+                },
+                target: {
+                    $ref: '#/components/schemas/UserSideEnum'
                 }
             },
             required: [
-                'transactionId'
+                'transactionId',
+                'listingId',
+                'target'
             ],
             additionalProperties: {}
         }
@@ -1869,7 +1901,12 @@ export const sUserEx = {
                     type: 'null'
                 },
                 {
-                    $ref: '#/components/schemas/UserSideEnum'
+                    allOf: [
+                        {
+                            $ref: '#/components/schemas/UserSideEnum'
+                        },
+                        {}
+                    ]
                 }
             ]
         },
@@ -1887,14 +1924,6 @@ export const sUserEx = {
     required: [
         'id',
         'locationId'
-    ]
-} as const;
-
-export const sUserSideEnum = {
-    type: 'string',
-    enum: [
-        'seller',
-        'buyer'
     ]
 } as const;
 
@@ -1920,7 +1949,12 @@ export const sUserExPatch = {
                             type: 'null'
                         },
                         {
-                            $ref: '#/components/schemas/UserSideEnum'
+                            allOf: [
+                                {
+                                    $ref: '#/components/schemas/UserSideEnum'
+                                },
+                                {}
+                            ]
                         }
                     ]
                 },
