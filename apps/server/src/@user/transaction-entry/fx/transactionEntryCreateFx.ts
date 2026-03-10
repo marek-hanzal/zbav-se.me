@@ -4,10 +4,10 @@ import { galleryInsertFx } from "~/@user/gallery/fx/galleryInsertFx";
 import { galleryItemInsertFx } from "~/@user/gallery-item/fx/galleryItemInsertFx";
 import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import type { InboxCreateSchema } from "~/@user/inbox/schema/InboxCreateSchema";
+import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
+import { transactionTransitionFx } from "~/@user/transaction/fx/transactionTransitionFx";
 import { createTransactionEntryFx } from "~/@user/transaction-entry/fx/createTransactionEntryFx";
 import type { TransactionEntryCreateSchema } from "~/@user/transaction-entry/schema/TransactionEntryCreateSchema";
-import { transactionTransitionFx } from "~/@user/transaction/fx/transactionTransitionFx";
-import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
@@ -78,53 +78,57 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 			{
 				kind: "text",
 			},
-			({ payload }) =>
-				createTransactionEntryFx({
+			({ payload }) => {
+				return createTransactionEntryFx({
 					transactionId,
 					kind: "text",
 					userId,
 					payload,
 					scopeUserId: userId,
-				}),
+				});
+			},
 		)
 		.with(
 			{
 				kind: "location",
 			},
-			({ payload }) =>
-				createTransactionEntryFx({
+			({ payload }) => {
+				return createTransactionEntryFx({
 					transactionId,
 					kind: "location",
 					userId,
 					payload,
 					scopeUserId: userId,
-				}),
+				});
+			},
 		)
 		.with(
 			{
 				kind: "package",
 			},
-			({ payload }) =>
-				createTransactionEntryFx({
+			({ payload }) => {
+				return createTransactionEntryFx({
 					transactionId,
 					kind: "package",
 					userId,
 					payload,
 					scopeUserId: userId,
-				}),
+				});
+			},
 		)
 		.with(
 			{
 				kind: "personal",
 			},
-			({ payload }) =>
-				createTransactionEntryFx({
+			({ payload }) => {
+				return createTransactionEntryFx({
 					transactionId,
 					kind: "personal",
 					userId,
 					payload,
 					scopeUserId: userId,
-				}),
+				});
+			},
 		)
 		.with(
 			{
@@ -160,6 +164,51 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 					payload: {
 						galleryId: gallery.id,
 					},
+					scopeUserId: userId,
+				});
+			},
+		)
+		// common
+		.with(
+			{
+				kind: "status-open",
+			},
+			{
+				kind: "status-pending",
+			},
+			{
+				kind: "status-resolved",
+			},
+			{
+				kind: "status-rejected-buyer",
+			},
+			{
+				kind: "status-rejected-seller",
+			},
+			{
+				kind: "status-dispute-buyer",
+			},
+			{
+				kind: "status-dispute-seller",
+			},
+			{
+				kind: "status-expired",
+			},
+			{
+				kind: "status-success",
+			},
+			{
+				kind: "status-closed",
+			},
+			{
+				kind: "status-sold",
+			},
+			({ kind, payload }) => {
+				return createTransactionEntryFx({
+					transactionId,
+					kind,
+					userId,
+					payload,
 					scopeUserId: userId,
 				});
 			},
