@@ -1,12 +1,10 @@
 import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
-import {
-	type Transitions,
-	transactionTransitionFx,
-} from "~/@user/transaction/fx/transactionTransitionFx";
+import { transactionTransitionFx } from "~/@user/transaction/fx/transactionTransitionFx";
 import { transactionEntryCleanupSensitiveFx } from "~/@user/transaction-entry/fx/transactionEntryCleanupSensitiveFx";
-import { withTransactionStatusEntryFx } from "~/@user/transaction-entry/fx/withTransactionStatusEntryFx";
 import type { TransactionSideEnumSchema } from "~/database/@enum/TransactionSideEnumSchema";
+import type { TransactionStatusEnumSchema } from "~/database/@enum/TransactionStatusEnumSchema";
+import type { UserSideEnumSchema } from "~/database/@enum/UserSideEnumSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { traceLogFx } from "~/effect/traceLogFx";
@@ -24,17 +22,17 @@ export namespace transactionUpdateStatusFx {
 		/**
 		 * Current transaction status we are processing.
 		 */
-		status: Transitions.Status;
+		status: TransactionStatusEnumSchema.Type;
 		/**
 		 * Requested target status we want to transition to.
 		 */
-		request: Transitions.StatusRequest;
+		request: TransactionStatusEnumSchema.Type;
 		/**
 		 * Side this transition is meant for.
 		 *
 		 * Use `null` for side-agnostic system transitions.
 		 */
-		target: Transitions.Side;
+		target: TransactionSideEnumSchema.Type | null;
 		/**
 		 * Acting side stored into the transaction entry timeline.
 		 */
@@ -82,14 +80,6 @@ export const transactionUpdateStatusFx = Effect.fn("transactionUpdateStatusFx")(
 			.where("id", "=", transactionId)
 			.executeTakeFirstOrThrow(),
 	);
-
-	yield* withTransactionStatusEntryFx({
-		transactionId,
-		userId,
-		scopeUserId: userId,
-		status: request,
-		side,
-	});
 
 	yield* transactionEntryCleanupSensitiveFx({
 		transactionId,

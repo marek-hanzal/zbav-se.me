@@ -3,6 +3,7 @@ import { transactionFetchFx } from "~/@buyer/transaction/fx/transactionFetchFx";
 import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionUpdateStatusFx } from "~/@user/transaction/fx/transactionUpdateStatusFx";
+import { transactionEntryCreateFx } from "~/@user/transaction-entry/fx/transactionEntryCreateFx";
 import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEventFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { traceLogFx } from "~/effect/traceLogFx";
@@ -40,8 +41,20 @@ export const transactionCloseFx = Effect.fn("transactionCloseFx")(function* ({
 				transactionId: transaction.id,
 				status: transaction.status,
 				request: "closed",
-				target: "buyer",
+				target: transaction.side,
 				side: transaction.side,
+			});
+
+			/**
+			 * @TODO Create transactionStatusMessageFx which will generate proper messages for buyer/seller based on the status
+			 */
+			yield* transactionEntryCreateFx({
+				kind: "status-closed",
+				transactionId: transaction.id,
+				userId,
+				// payload: {
+				//     text: transaction.side === 'buyer'
+				// },
 			});
 
 			yield* inboxCreateFx({
