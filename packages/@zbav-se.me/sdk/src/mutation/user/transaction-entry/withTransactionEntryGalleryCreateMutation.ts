@@ -7,21 +7,22 @@ import type {
 } from "../../../api/user/types.gen";
 import { withTransactionEntryQuery } from "../../../query/user/transaction-entry";
 
-export namespace withTransactionMessageGalleryCreateMutation {
+export namespace withTransactionEntryGalleryCreateMutation {
 	export interface Props {
 		transactionId: string;
 		uploadIds: string[];
 	}
 }
 
-export const withTransactionMessageGalleryCreateMutation = withMutation<
-	withTransactionMessageGalleryCreateMutation.Props,
+export const withTransactionEntryGalleryCreateMutation = withMutation<
+	withTransactionEntryGalleryCreateMutation.Props,
 	tApiTransactionEntryCreateResponse[201],
 	apiTransactionEntryCreateError
 >({
 	keys(variables) {
 		return [
-			"transaction-message-gallery",
+			"transaction-entry",
+			"gallery",
 			"create",
 			variables,
 		];

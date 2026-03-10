@@ -1,5 +1,5 @@
 export { withTransactionCreateMutation } from "./withTransactionCreateMutation";
-export { withTransactionStatusCloseMutation } from "./withTransactionStatusCloseMutation";
-export { withTransactionStatusDisputeMutation } from "./withTransactionStatusDisputeMutation";
-export { withTransactionStatusRejectMutation } from "./withTransactionStatusRejectMutation";
-export { withTransactionStatusSuccessMutation } from "./withTransactionStatusSuccessMutation";
+export { withTransactionCloseMutation } from "./withTransactionCloseMutation";
+export { withTransactionDisputeMutation } from "./withTransactionDisputeMutation";
+export { withTransactionRejectMutation } from "./withTransactionRejectMutation";
+export { withTransactionSuccessMutation } from "./withTransactionSuccessMutation";

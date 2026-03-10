@@ -1,0 +1,1 @@
+export { withTransactionEntryGalleryCreateMutation } from "./withTransactionEntryGalleryCreateMutation";

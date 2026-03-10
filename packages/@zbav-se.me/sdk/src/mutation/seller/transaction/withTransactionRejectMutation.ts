@@ -1,0 +1,29 @@
+import { withMutation } from "@use-pico/client/mutation";
+import { withApi } from "@use-pico/common/api";
+import { apiTransactionSellerReject } from "../../../api/seller/sdk.gen";
+import type {
+	apiTransactionSellerRejectError,
+	tApiTransactionSellerRejectRequest,
+	tApiTransactionSellerRejectResponse,
+} from "../../../api/seller/types.gen";
+import { withTransactionFetchQuery } from "../../../query/seller/transaction/withTransactionFetchQuery";
+
+export const withTransactionRejectMutation = withMutation<
+	tApiTransactionSellerRejectRequest,
+	tApiTransactionSellerRejectResponse[200],
+	apiTransactionSellerRejectError
+>({
+	keys(variables) {
+		return [
+			"transaction",
+			"reject",
+			variables,
+		];
+	},
+	async mutationFn(data) {
+		return withApi(apiTransactionSellerReject(data));
+	},
+	invalidate: [
+		withTransactionFetchQuery,
+	],
+});
