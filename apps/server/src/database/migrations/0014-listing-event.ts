@@ -1,3 +1,4 @@
+import { toEnumGuard } from "@use-pico/common/to-enum-guard";
 import { type Migration, sql } from "kysely";
 import type { ListingEventEnumSchema } from "~/database/@enum/ListingEventEnumSchema";
 
@@ -5,19 +6,21 @@ export const ListingEventMigration: Migration = {
 	async up(db) {
 		await db.schema
 			.createType("listing_event_type_enum")
-			.asEnum([
-				"impression",
-				"view",
-				"ignore",
-				"unignore",
-				"flag",
-				"unflag",
-				"transaction",
-				"favourite",
-				"unfavourite",
-				"like",
-				"dislike",
-			] as const satisfies readonly ListingEventEnumSchema.Type[])
+			.asEnum(
+				toEnumGuard<ListingEventEnumSchema.Type>()([
+					"impression",
+					"view",
+					"ignore",
+					"unignore",
+					"flag",
+					"unflag",
+					"transaction",
+					"favourite",
+					"unfavourite",
+					"like",
+					"dislike",
+				] as const),
+			)
 			.execute();
 
 		await db.schema

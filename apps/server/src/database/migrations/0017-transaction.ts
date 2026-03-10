@@ -1,3 +1,4 @@
+import { toEnumGuard } from "@use-pico/common/to-enum-guard";
 import { type Migration, sql } from "kysely";
 import type { TransactionSideEnumSchema } from "~/database/@enum/TransactionSideEnumSchema";
 import type { TransactionStatusEnumSchema } from "~/database/@enum/TransactionStatusEnumSchema";
@@ -6,27 +7,32 @@ export const TransactionMigration: Migration = {
 	async up(db) {
 		await db.schema
 			.createType("transaction_status_enum")
-			.asEnum([
-				"pending",
-				"open",
-				"resolved",
-				"dispute",
-				"rejected",
-				"expired",
-				"success",
-				"closed",
-			] as const satisfies readonly TransactionStatusEnumSchema.Type[])
+			.asEnum(
+				toEnumGuard<TransactionStatusEnumSchema.Type>()([
+					"pending",
+					"open",
+					"resolved",
+					"dispute",
+					"sold",
+					"rejected",
+					"expired",
+					"success",
+					"closed",
+				] as const),
+			)
 			.execute();
 
 		await db.schema
 			.createType("transaction_side_enum")
-			.asEnum([
-				"seller",
-				"buyer",
-				"transaction",
-				"system",
-				"unknown",
-			] as const satisfies readonly TransactionSideEnumSchema.Type[])
+			.asEnum(
+				toEnumGuard<TransactionSideEnumSchema.Type>()([
+					"seller",
+					"buyer",
+					"transaction",
+					"system",
+					"unknown",
+				] as const),
+			)
 			.execute();
 
 		await db.schema

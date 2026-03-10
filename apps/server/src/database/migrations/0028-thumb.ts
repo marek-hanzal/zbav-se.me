@@ -1,3 +1,4 @@
+import { toEnumGuard } from "@use-pico/common/to-enum-guard";
 import { type Migration, sql } from "kysely";
 import type { ThumbEnumSchema } from "~/database/@enum/ThumbEnumSchema";
 
@@ -5,10 +6,12 @@ export const ThumbMigration: Migration = {
 	async up(db) {
 		await db.schema
 			.createType("thumb_enum")
-			.asEnum([
-				"like",
-				"dislike",
-			] as const satisfies readonly ThumbEnumSchema.Type[])
+			.asEnum(
+				toEnumGuard<ThumbEnumSchema.Type>()([
+					"like",
+					"dislike",
+				] as const),
+			)
 			.execute();
 
 		await db.schema

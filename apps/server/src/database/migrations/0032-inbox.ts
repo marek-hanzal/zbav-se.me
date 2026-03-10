@@ -1,3 +1,4 @@
+import { toEnumGuard } from "@use-pico/common/to-enum-guard";
 import { type Migration, sql } from "kysely";
 import type { InboxPriorityEnumSchema } from "~/database/@enum/InboxPriorityEnumSchema";
 import type { InboxTypeEnumSchema } from "~/database/@enum/InboxTypeEnumSchema";
@@ -6,20 +7,24 @@ export const InboxMigration: Migration = {
 	async up(db) {
 		await db.schema
 			.createType("inbox_priority_enum")
-			.asEnum([
-				"common",
-				"high",
-			] as const satisfies readonly InboxPriorityEnumSchema.Type[])
+			.asEnum(
+				toEnumGuard<InboxPriorityEnumSchema.Type>()([
+					"common",
+					"high",
+				] as const),
+			)
 			.execute();
 		await db.schema
 			.createType("inbox_type_enum")
-			.asEnum([
-				"seller-message",
-				"buyer-message",
-				"thumb",
-				"favourite",
-				"unfavourite",
-			] as const satisfies readonly InboxTypeEnumSchema.Type[])
+			.asEnum(
+				toEnumGuard<InboxTypeEnumSchema.Type>()([
+					"seller-message",
+					"buyer-message",
+					"thumb",
+					"favourite",
+					"unfavourite",
+				] as const),
+			)
 			.execute();
 
 		await db.schema

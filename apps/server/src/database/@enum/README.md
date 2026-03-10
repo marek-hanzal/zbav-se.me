@@ -26,7 +26,7 @@ All enum schemas correspond to PostgreSQL enum types created in migrations:
 - **ListingEventEnumSchema** - Listing event types (`impression`, `view`, `ignore`, `unignore`, `flag`, `unflag`, `transaction`, `favourite`, `unfavourite`, `like`, `dislike`)
 
 ### Transaction Enums
-- **TransactionStatusEnumSchema** - Transaction status (`pending`, `open`, `resolved`, `dispute`, `rejected`, `expired`, `success`, `closed`)
+- **TransactionStatusEnumSchema** - Transaction status (`pending`, `open`, `resolved`, `dispute`, `sold`, `rejected`, `expired`, `success`, `closed`)
 - **TransactionSideEnumSchema** - Transaction side/initiator (`seller`, `buyer`, `transaction`, `system`, `unknown`)
 - **TransactionEntryKindEnumSchema** - Transaction timeline entry kind (`text`, `gallery`, `location`, `package`, `personal`, `status-*`)
 
@@ -81,9 +81,9 @@ Each enum schema corresponds to a PostgreSQL enum type created in migrations:
 ## Adding New Enums
 
 When adding a new enum to the database:
-1. Create the enum type in a migration using a manual array typed against `EnumSchema.Type[]`
+1. Create the enum type in a migration using `toEnumGuard<EnumSchema.Type>()([...])`
 2. Create a corresponding Zod schema in this directory
-3. Keep the migration array type-checked against the schema so enum drift fails loudly
+3. Keep the migration array wrapped with `toEnumGuard` and type-checked against the schema so enum drift fails loudly
 4. Update this README with the new enum
 
 ## Related Directories

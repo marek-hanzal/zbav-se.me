@@ -1,3 +1,4 @@
+import { toEnumGuard } from "@use-pico/common/to-enum-guard";
 import { type Migration, sql } from "kysely";
 import type { ListingDeliveryEnumSchema } from "~/database/@enum/ListingDeliveryEnumSchema";
 import type { ListingPriceEnumSchema } from "~/database/@enum/ListingPriceEnumSchema";
@@ -11,40 +12,48 @@ export const DraftMigration: Migration = {
 
 		await db.schema
 			.createType("listing_price_enum")
-			.asEnum([
-				"closed",
-				"open",
-			] as const satisfies readonly ListingPriceEnumSchema.Type[])
+			.asEnum(
+				toEnumGuard<ListingPriceEnumSchema.Type>()([
+					"closed",
+					"open",
+				] as const),
+			)
 			.execute();
 
 		await db.schema
 			.createType("listing_delivery_enum")
-			.asEnum([
-				"personal",
-				"post",
-				"package",
-				"other",
-			] as const satisfies readonly ListingDeliveryEnumSchema.Type[])
+			.asEnum(
+				toEnumGuard<ListingDeliveryEnumSchema.Type>()([
+					"personal",
+					"post",
+					"package",
+					"other",
+				] as const),
+			)
 			.execute();
 
 		await db.schema
 			.createType("listing_warranty_enum")
-			.asEnum([
-				"warranty",
-				"no-warranty",
-				"custom",
-			] as const satisfies readonly ListingWarrantyEnumSchema.Type[])
+			.asEnum(
+				toEnumGuard<ListingWarrantyEnumSchema.Type>()([
+					"warranty",
+					"no-warranty",
+					"custom",
+				] as const),
+			)
 			.execute();
 
 		await db.schema
 			.createType("listing_restriction_enum")
-			.asEnum([
-				"none",
-				"adult",
-				"adult-relaxed",
-				"sensitive",
-				"restricted",
-			] as const satisfies readonly ListingRestrictionEnumSchema.Type[])
+			.asEnum(
+				toEnumGuard<ListingRestrictionEnumSchema.Type>()([
+					"none",
+					"adult",
+					"adult-relaxed",
+					"sensitive",
+					"restricted",
+				] as const),
+			)
 			.execute();
 
 		await db.schema

@@ -1,3 +1,4 @@
+import { toEnumGuard } from "@use-pico/common/to-enum-guard";
 import { type Migration, sql } from "kysely";
 import type { UserEventScopeEnumSchema } from "~/database/@enum/UserEventScopeEnumSchema";
 
@@ -5,10 +6,12 @@ export const UserEventMigration: Migration = {
 	async up(db) {
 		await db.schema
 			.createType("user_event_scope_enum")
-			.asEnum([
-				"user",
-				"foreign",
-			] as const satisfies readonly UserEventScopeEnumSchema.Type[])
+			.asEnum(
+				toEnumGuard<UserEventScopeEnumSchema.Type>()([
+					"user",
+					"foreign",
+				] as const),
+			)
 			.execute();
 
 		await db.schema

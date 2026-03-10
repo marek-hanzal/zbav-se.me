@@ -1,3 +1,4 @@
+import { toEnumGuard } from "@use-pico/common/to-enum-guard";
 import { type Migration, sql } from "kysely";
 import type { UserSideEnumSchema } from "~/database/@enum/UserSideEnumSchema";
 
@@ -5,10 +6,12 @@ export const UserExMigration: Migration = {
 	async up(db) {
 		await db.schema
 			.createType("user_ex_side_enum")
-			.asEnum([
-				"seller",
-				"buyer",
-			] as const satisfies readonly UserSideEnumSchema.Type[])
+			.asEnum(
+				toEnumGuard<UserSideEnumSchema.Type>()([
+					"seller",
+					"buyer",
+				] as const),
+			)
 			.execute();
 
 		await db.schema
