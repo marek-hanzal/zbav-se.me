@@ -2,23 +2,16 @@ import { useLocale } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
+import type { tTransactionEntryGallery } from "@zbav-se.me/sdk/api/user";
 import { withGalleryFetchQuery } from "@zbav-se.me/sdk/query/user/gallery";
-import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { GalleryPreviewSheet } from "~/app/@common/gallery/ui/GalleryPreviewSheet";
 
 export namespace TransactionEntryGallery {
-	export type TransactionEntry = Extract<
-		withTransactionEntryQuery.Entity,
-		{
-			kind: "gallery";
-		}
-	>;
-
 	export interface Props extends Container.Props {
-		transactionEntry: TransactionEntry;
+		transactionEntry: tTransactionEntryGallery;
 	}
 }
 

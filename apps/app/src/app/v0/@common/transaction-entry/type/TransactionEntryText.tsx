@@ -4,36 +4,17 @@ import { Mx } from "@use-pico/client/ui/mx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
-import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
+import type { tTransactionEntryCommon, tTransactionEntryText } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
 export namespace TransactionEntryText {
-	export type TransactionEntry = Extract<
-		withTransactionEntryQuery.Entity,
-		{
-			kind:
-				| "text"
-				| "status-pending"
-				| "status-open"
-				| "status-resolved"
-				| "status-dispute-buyer"
-				| "status-dispute-seller"
-				| "status-rejected-buyer"
-				| "status-rejected-seller"
-				| "status-sold"
-				| "status-expired"
-				| "status-success"
-				| "status-closed";
-		}
-	>;
-
 	export interface Props extends Container.Props {
 		/**
 		 * From which point of view the message is displayed
 		 */
 		side: tUserSideEnum;
-		transactionEntry: TransactionEntry;
+		transactionEntry: tTransactionEntryText | tTransactionEntryCommon;
 	}
 }
 

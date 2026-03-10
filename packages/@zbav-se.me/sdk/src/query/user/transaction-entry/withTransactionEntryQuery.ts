@@ -5,22 +5,14 @@ import {
 	apiTransactionEntryCount,
 	apiTransactionEntryCreate,
 	apiTransactionEntryFetch,
-	type tApiTransactionEntryCollectionResponse,
+	type tTransactionEntry,
 	type tTransactionEntryCountQuery,
 	type tTransactionEntryCreate,
 	type tTransactionEntryQuery,
-	type tApiTransactionEntryCreateResponse,
-	type tApiTransactionEntryFetchResponse,
 } from "../../../api/user";
 
-export namespace withTransactionEntryQuery {
-	export type Entity = tApiTransactionEntryFetchResponse[200];
-	export type Collection = tApiTransactionEntryCollectionResponse[200];
-	export type Create = tApiTransactionEntryCreateResponse[201];
-}
-
 export const withTransactionEntryQuery = withEntityQuery<
-	withTransactionEntryQuery.Entity,
+	tTransactionEntry,
 	tTransactionEntryQuery,
 	tTransactionEntryQuery,
 	tTransactionEntryCountQuery,

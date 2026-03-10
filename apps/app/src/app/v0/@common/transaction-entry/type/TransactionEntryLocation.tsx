@@ -2,21 +2,14 @@ import { useLocale } from "@use-pico/client/hook";
 import { Container, type uiContainer } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
+import type { tTransactionEntryLocation } from "@zbav-se.me/sdk/api/user";
 import { withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
-import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
 export namespace TransactionEntryLocation {
-	export type TransactionEntry = Extract<
-		withTransactionEntryQuery.Entity,
-		{
-			kind: "location";
-		}
-	>;
-
 	export interface Props extends Container.Props {
-		transactionEntry: TransactionEntry;
+		transactionEntry: tTransactionEntryLocation;
 	}
 }
 

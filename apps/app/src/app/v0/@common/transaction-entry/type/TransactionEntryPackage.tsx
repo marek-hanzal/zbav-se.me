@@ -4,21 +4,14 @@ import { Container, LabelValue, type uiContainer } from "@use-pico/client/ui/con
 import { Typo, uiTypo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
-import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
+import type { tTransactionEntryPackage } from "@zbav-se.me/sdk/api/user";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
 export namespace TransactionEntryPackage {
-	export type TransactionEntry = Extract<
-		withTransactionEntryQuery.Entity,
-		{
-			kind: "package";
-		}
-	>;
-
 	export interface Props extends Container.Props {
-		transactionEntry: TransactionEntry;
+		transactionEntry: tTransactionEntryPackage;
 	}
 }
 
