@@ -4,7 +4,6 @@ import { transactionTransitionFx } from "~/@user/transaction/fx/transactionTrans
 import { transactionEntryCleanupSensitiveFx } from "~/@user/transaction-entry/fx/transactionEntryCleanupSensitiveFx";
 import type { TransactionSideEnumSchema } from "~/database/@enum/TransactionSideEnumSchema";
 import type { TransactionStatusEnumSchema } from "~/database/@enum/TransactionStatusEnumSchema";
-import type { UserSideEnumSchema } from "~/database/@enum/UserSideEnumSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { traceLogFx } from "~/effect/traceLogFx";
@@ -22,7 +21,7 @@ export namespace transactionUpdateStatusFx {
 		/**
 		 * Current transaction status we are processing.
 		 */
-		status: TransactionStatusEnumSchema.Type;
+		status: TransactionStatusEnumSchema.Type | null;
 		/**
 		 * Requested target status we want to transition to.
 		 */
@@ -33,10 +32,6 @@ export namespace transactionUpdateStatusFx {
 		 * Use `null` for side-agnostic system transitions.
 		 */
 		target: TransactionSideEnumSchema.Type | null;
-		/**
-		 * Acting side stored into the transaction entry timeline.
-		 */
-		side: TransactionSideEnumSchema.Type;
 	}
 }
 
@@ -46,7 +41,6 @@ export const transactionUpdateStatusFx = Effect.fn("transactionUpdateStatusFx")(
 	status,
 	request,
 	target,
-	side,
 }: transactionUpdateStatusFx.Props) {
 	yield* traceLogFx({
 		level: "trace",
@@ -57,7 +51,6 @@ export const transactionUpdateStatusFx = Effect.fn("transactionUpdateStatusFx")(
 			status,
 			request,
 			target,
-			side,
 		},
 	});
 
@@ -69,13 +62,15 @@ export const transactionUpdateStatusFx = Effect.fn("transactionUpdateStatusFx")(
 
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
+	const now = dateContext.now().toJSDate();
 
 	yield* tryDbFx(async () =>
 		kysely
 			.updateTable("transaction")
 			.set({
 				status: request,
-				statusUpdatedAt: dateContext.now().toJSDate(),
+				statusUpdatedAt: now,
+				updatedAt: now,
 			})
 			.where("id", "=", transactionId)
 			.executeTakeFirstOrThrow(),
