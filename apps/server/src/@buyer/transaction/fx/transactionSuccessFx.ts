@@ -41,7 +41,6 @@ export const transactionSuccessFx = Effect.fn("transactionSuccessFx")(function* 
 				status: transaction.status,
 				request: "success",
 				target: "buyer",
-				side: transaction.side,
 			});
 
 			yield* inboxCreateFx({

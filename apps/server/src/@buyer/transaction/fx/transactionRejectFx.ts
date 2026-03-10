@@ -41,7 +41,6 @@ export const transactionRejectFx = Effect.fn("transactionRejectFx")(function* ({
 				status: transaction.status,
 				request: "rejected",
 				target: "buyer",
-				side: transaction.side,
 			});
 
 			yield* inboxCreateFx({

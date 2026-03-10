@@ -40,7 +40,6 @@ export const transactionDisputeFx = Effect.fn("transactionDisputeFx")(function* 
 				status: transaction.status,
 				request: "dispute",
 				target: "buyer",
-				side: transaction.side,
 			});
 
 			yield* inboxCreateFx({

@@ -102,7 +102,6 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 				status: null,
 				request: "pending",
 				target: "buyer",
-				side: "buyer",
 			});
 
 			yield* transactionUserCreateFx({
