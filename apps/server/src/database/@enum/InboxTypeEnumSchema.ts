@@ -2,8 +2,11 @@ import { z } from "@hono/zod-openapi";
 
 export const InboxTypeEnumSchema = z
 	.enum([
-		"seller-message",
 		"buyer-message",
+		"seller-message",
+		"transaction",
+		"system",
+		"unknown",
 		"thumb",
 		"favourite",
 		"unfavourite",

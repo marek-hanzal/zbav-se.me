@@ -82,7 +82,6 @@ export const thumbCreateFx = Effect.fn("thumbCreateFx")(function* ({
 				family: "reaction",
 				type: "thumb",
 				payload: {
-					type: "thumb",
 					listingId,
 					thumb: type,
 				},

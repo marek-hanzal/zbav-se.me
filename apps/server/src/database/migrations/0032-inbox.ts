@@ -18,8 +18,11 @@ export const InboxMigration: Migration = {
 			.createType("inbox_type_enum")
 			.asEnum(
 				toEnumGuard<InboxTypeEnumSchema.Type>()([
-					"seller-message",
 					"buyer-message",
+					"seller-message",
+					"transaction",
+					"system",
+					"unknown",
 					"thumb",
 					"favourite",
 					"unfavourite",

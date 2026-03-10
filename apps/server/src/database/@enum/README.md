@@ -42,7 +42,7 @@ All enum schemas correspond to PostgreSQL enum types created in migrations:
 
 ### Inbox Enums
 - **InboxPriorityEnumSchema** - Inbox priority (`common`, `high`)
-- **InboxTypeEnumSchema** - Inbox type (`seller-message`, `buyer-message`, `thumb`)
+- **InboxTypeEnumSchema** - Inbox type (`buyer-message`, `seller-message`, `transaction`, `system`, `unknown`, `thumb`, `favourite`, `unfavourite`)
 
 ## Usage
 

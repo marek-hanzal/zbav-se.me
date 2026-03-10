@@ -93,58 +93,7 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 				isTerminal: false,
 			});
 
-			yield* match(transaction.side)
-				.with("buyer", () =>
-					inboxCreateFx({
-						userId: transaction.sellerId,
-						family: "message",
-						type: "buyer-message",
-						payload: {
-							type: "buyer-message",
-							transactionId: transaction.id,
-						},
-						priority: "high",
-					}),
-				)
-				.with("seller", () =>
-					inboxCreateFx({
-						userId: transaction.buyerId,
-						family: "message",
-						type: "seller-message",
-						payload: {
-							type: "seller-message",
-							transactionId: transaction.id,
-						},
-						priority: "high",
-					}),
-				)
-				.with("transaction", "system", () =>
-					Effect.all([
-						inboxCreateFx({
-							userId: transaction.sellerId,
-							family: "message",
-							type: "buyer-message",
-							payload: {
-								type: "buyer-message",
-								transactionId: transaction.id,
-							},
-							priority: "high",
-						}),
-						inboxCreateFx({
-							userId: transaction.buyerId,
-							family: "message",
-							type: "seller-message",
-							payload: {
-								type: "seller-message",
-								transactionId: transaction.id,
-							},
-							priority: "high",
-						}),
-					]).pipe(Effect.asVoid),
-				)
-				.otherwise(() => Effect.void);
-
-			return yield* match(entry)
+			const transactionEntry = yield* match(entry)
 				.with(
 					{
 						kind: "text",
@@ -285,6 +234,83 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 					},
 				)
 				.exhaustive();
+
+			yield* match(transaction.side)
+				.with("buyer", () =>
+					inboxCreateFx({
+						userId: transaction.sellerId,
+						family: "message",
+						type: "buyer-message",
+						payload: {
+							transactionId: transaction.id,
+							transactionEntryId: transactionEntry.id,
+						},
+						priority: "high",
+					}),
+				)
+				.with("seller", () =>
+					inboxCreateFx({
+						userId: transaction.buyerId,
+						family: "message",
+						type: "seller-message",
+						payload: {
+							transactionId: transaction.id,
+							transactionEntryId: transactionEntry.id,
+						},
+						priority: "high",
+					}),
+				)
+				.with("transaction", () =>
+					Effect.all([
+						inboxCreateFx({
+							userId: transaction.sellerId,
+							family: "message",
+							type: "transaction",
+							payload: {
+								transactionId: transaction.id,
+								transactionEntryId: transactionEntry.id,
+							},
+							priority: "high",
+						}),
+						inboxCreateFx({
+							userId: transaction.buyerId,
+							family: "message",
+							type: "transaction",
+							payload: {
+								transactionId: transaction.id,
+								transactionEntryId: transactionEntry.id,
+							},
+							priority: "high",
+						}),
+					]).pipe(Effect.asVoid),
+				)
+				.with("system", () =>
+					Effect.all([
+						inboxCreateFx({
+							userId: transaction.sellerId,
+							family: "message",
+							type: "system",
+							payload: {
+								transactionId: transaction.id,
+								transactionEntryId: transactionEntry.id,
+							},
+							priority: "high",
+						}),
+						inboxCreateFx({
+							userId: transaction.buyerId,
+							family: "message",
+							type: "system",
+							payload: {
+								transactionId: transaction.id,
+								transactionEntryId: transactionEntry.id,
+							},
+							priority: "high",
+						}),
+					]).pipe(Effect.asVoid),
+				)
+				.otherwise(() => Effect.void);
+
+			return transactionEntry;
 		}),
 	);
 });

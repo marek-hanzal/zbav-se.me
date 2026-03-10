@@ -137,7 +137,6 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 				family: "message",
 				type: "buyer-message",
 				payload: {
-					type: "buyer-message",
 					transactionId: id,
 				},
 				priority: "high",

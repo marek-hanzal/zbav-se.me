@@ -55,7 +55,6 @@ export const transactionDisputeFx = Effect.fn("transactionDisputeFx")(function* 
 				family: "message",
 				type: "buyer-message",
 				payload: {
-					type: "buyer-message",
 					transactionId: transaction.id,
 				},
 				priority: "high",
