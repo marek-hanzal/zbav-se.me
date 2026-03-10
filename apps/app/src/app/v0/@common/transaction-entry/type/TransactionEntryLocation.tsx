@@ -33,7 +33,9 @@ export const TransactionEntryLocation: FC<TransactionEntryLocation.Props> = ({
 				flow: "vertical",
 				inner: "default",
 				round: "default",
-				...match<typeof transactionEntry.direction, uiContainer.Ui>(transactionEntry.direction)
+				...match<typeof transactionEntry.direction, uiContainer.Ui>(
+					transactionEntry.direction,
+				)
 					.with("in", () => {
 						return {
 							tone: "link",

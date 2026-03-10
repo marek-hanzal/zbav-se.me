@@ -8,10 +8,7 @@ export namespace TransactionEntryList {
 	}
 }
 
-export const TransactionEntryList: FC<TransactionEntryList.Props> = ({
-	children,
-	...props
-}) => {
+export const TransactionEntryList: FC<TransactionEntryList.Props> = ({ children, ...props }) => {
 	return (
 		<Suspense fallback={<Pending />}>
 			<Data

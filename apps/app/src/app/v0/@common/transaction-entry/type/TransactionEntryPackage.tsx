@@ -28,7 +28,9 @@ export const TransactionEntryPackage: FC<TransactionEntryPackage.Props> = ({
 			ui={{
 				flow: "vertical",
 				gap: "xs",
-				...match<typeof transactionEntry.direction, uiContainer.Ui>(transactionEntry.direction)
+				...match<typeof transactionEntry.direction, uiContainer.Ui>(
+					transactionEntry.direction,
+				)
 					.with("in", () => {
 						return {
 							tone: "link",
