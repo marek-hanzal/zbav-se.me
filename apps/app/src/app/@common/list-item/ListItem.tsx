@@ -1,13 +1,15 @@
 import { ChevronRightIcon, Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
-import type { tUpload } from "@zbav-se.me/sdk/api/user";
+import { type tUpload, zUpload } from "@zbav-se.me/sdk/api/user";
 import type { FC, ReactNode } from "react";
 import { Image } from "./Image";
 
 export namespace ListItem {
+	export type Hero = tUpload | ReactNode | undefined | null;
+
 	export interface Props extends Omit<Group.Props, "title"> {
-		hero: tUpload | undefined | null;
+		hero: Hero;
 		title: ReactNode;
 		bottom: ReactNode;
 	}
@@ -24,6 +26,16 @@ export const ListItem: FC<ListItem.Props> = ({
 	children,
 	...props
 }) => {
+	const upload = zUpload.safeParse(hero);
+	const heroNode: ReactNode =
+		hero == null ? (
+			<Image />
+		) : upload.success ? (
+			<Image src={upload.data.url} />
+		) : (
+			(hero as ReactNode)
+		);
+
 	return (
 		<Group
 			data-ui={"ListItem[Group]"}
@@ -52,7 +64,7 @@ export const ListItem: FC<ListItem.Props> = ({
 					width: "full",
 				}}
 			>
-				<Image src={hero?.url} />
+				{heroNode}
 
 				<Container
 					className={"min-w-0 flex-1"}

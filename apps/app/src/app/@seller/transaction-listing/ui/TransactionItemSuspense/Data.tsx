@@ -1,13 +1,16 @@
 import { useLocale } from "@use-pico/client/hook";
+import { Icon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Tx } from "@use-pico/client/ui/tx";
+import { Typo } from "@use-pico/client/ui/typo";
+import { toTimeDiff } from "@use-pico/common/time";
+import { translator } from "@use-pico/common/translator";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListItem } from "~/app/@common/list-item/ListItem";
+import { Preview } from "./Preview";
 
 export namespace Data {
 	export interface Props extends ListItem.PropsEx, MarkSuspense.Props {
@@ -18,7 +21,6 @@ export namespace Data {
 export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, className, ...props }) => {
 	const locale = useLocale();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
-	const hero = useUpload(transaction.gallery.items);
 
 	return (
 		<LinkTo
@@ -30,15 +32,52 @@ export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, className, 
 		>
 			<ListItem
 				data-ui={"TransactionItem[Item]"}
-				hero={hero}
+				hero={
+					<Container
+						data-ui="TransactionItem-[Hero]"
+						className={"aspect-square h-full shrink-0 overflow-hidden"}
+						ui={{
+							tone: "subtle",
+							theme: "light",
+							round: "md",
+							height: "full",
+							flow: "horizontal",
+							items: "center",
+							justify: "center",
+							background: "default",
+						}}
+					>
+						<Icon
+							icon={match(transaction.status)
+								.with("pending", () => "icon-[solar--clock-circle-linear]")
+								.with("open", () => "icon-[solar--chat-round-linear]")
+								.with(
+									"resolved",
+									"success",
+									"sold",
+									() => "icon-[solar--check-circle-linear]",
+								)
+								.with("dispute", () => "icon-[solar--danger-circle-linear]")
+								.with(
+									"rejected",
+									"expired",
+									"closed",
+									() => "icon-[solar--lock-keyhole-linear]",
+								)
+								.exhaustive()}
+							ui={{
+								text: "2xl",
+								color: "text",
+								opacity: "7",
+							}}
+						/>
+					</Container>
+				}
 				title={
-					<Tx
-						label={transaction.title}
+					<Typo
+						label={translator.text(transaction.status)}
 						ui={{
 							font: "bold",
-							display: "block",
-							width: "full",
-							truncate: true,
 						}}
 						className={[
 							"block",
@@ -49,22 +88,30 @@ export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, className, 
 					/>
 				}
 				bottom={
-					<Tx
-						label={transaction.location.address}
+					<Container
 						ui={{
-							text: "sm",
-							opacity: "6",
-							display: "block",
+							flow: "horizontal",
+							justify: "space-between",
 							width: "full",
-							truncate: true,
+							gap: "default",
+							items: "center",
 						}}
-						className={[
-							"block",
-							"w-full",
-							"max-w-full",
-							"min-w-0",
-						]}
-					/>
+					>
+						<Container className={"min-w-0 flex-1"}>
+							<Preview transactionId={transaction.id} />
+						</Container>
+
+						<Typo
+							label={toTimeDiff({
+								locale,
+								time: transaction.updatedAt,
+							})}
+							ui={{
+								text: "xs",
+								opacity: "7",
+							}}
+						/>
+					</Container>
 				}
 				ui={ui}
 				className={className}
