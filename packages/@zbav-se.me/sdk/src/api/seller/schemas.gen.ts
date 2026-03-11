@@ -1452,6 +1452,9 @@ export const sTransaction = {
         currency: {
             $ref: '#/components/schemas/CurrencyEnum'
         },
+        unreadCount: {
+            type: 'number'
+        },
         location: {
             $ref: '#/components/schemas/Location'
         }
@@ -1469,6 +1472,7 @@ export const sTransaction = {
         'price',
         'priceType',
         'currency',
+        'unreadCount',
         'location'
     ]
 } as const;
@@ -1893,8 +1897,20 @@ export const sTransactionListing = {
             ],
             minimum: 0
         },
+        unreadCount: {
+            type: 'number'
+        },
         lastAt: {
             type: 'string'
+        },
+        lastKind: {
+            $ref: '#/components/schemas/TransactionEntryKindEnum'
+        },
+        lastText: {
+            type: [
+                'string',
+                'null'
+            ]
         }
     },
     required: [
@@ -1903,7 +1919,32 @@ export const sTransactionListing = {
         'title',
         'gallery',
         'count',
-        'lastAt'
+        'unreadCount',
+        'lastAt',
+        'lastKind',
+        'lastText'
+    ]
+} as const;
+
+export const sTransactionEntryKindEnum = {
+    type: 'string',
+    enum: [
+        'text',
+        'gallery',
+        'location',
+        'package',
+        'personal',
+        'status-pending',
+        'status-open',
+        'status-resolved',
+        'status-dispute-buyer',
+        'status-dispute-seller',
+        'status-rejected-buyer',
+        'status-rejected-seller',
+        'status-sold',
+        'status-expired',
+        'status-success',
+        'status-closed'
     ]
 } as const;
 
@@ -1989,7 +2030,8 @@ export const sTransactionListingSort = {
 export const sTransactionListingSortField = {
     type: 'string',
     enum: [
-        'createdAt'
+        'createdAt',
+        'lastAt'
     ]
 } as const;
 

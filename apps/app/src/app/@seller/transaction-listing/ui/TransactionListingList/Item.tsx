@@ -1,23 +1,25 @@
 import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
+import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller/transaction-listing";
 import type { FC } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
+import { Image } from "~/app/@common/list-item/Image";
 import { ListItem } from "~/app/@common/list-item/ListItem";
+import { toActivityLabel } from "~/app/@seller/transaction/~public/toStatusLabel";
 
-export namespace Data {
+export namespace Item {
 	export interface Props extends ListItem.PropsEx, MarkSuspense.Props {
 		transactionListingId: string;
 	}
 }
 
-export const Data: FC<Data.Props> = ({
+export const Item: FC<Item.Props> = ({
 	_suspense,
 	transactionListingId,
 	ui,
@@ -28,6 +30,8 @@ export const Data: FC<Data.Props> = ({
 	const { data: transactionListing } =
 		withTransactionListingQuery.useFetchQuery(transactionListingId);
 	const hero = useUpload(transactionListing.gallery.items);
+	const unreadCount = transactionListing.unreadCount;
+	const isUnread = unreadCount > 0;
 
 	return (
 		<LinkTo
@@ -38,25 +42,54 @@ export const Data: FC<Data.Props> = ({
 			}}
 		>
 			<ListItem
-				data-ui={"TransactionListingItem[Item]"}
-				hero={hero}
+				data-ui={"TransactionListingList[Item]"}
+				hero={
+					<Container
+						data-ui="TransactionListingList[Hero]"
+						ui={{
+							position: "relative",
+							height: "full",
+						}}
+					>
+						<Image src={hero.url} />
+
+						{isUnread ? (
+							<Badge
+								data-ui="TransactionListingList[Badge]"
+								ui={{
+									snapTo: "top-right",
+									tone: "secondary",
+									theme: "light",
+									badge: "xs",
+								}}
+							>
+								{unreadCount > 9
+									? "9+"
+									: toLocaleNumber({
+											locale,
+											number: unreadCount,
+										})}
+							</Badge>
+						) : null}
+					</Container>
+				}
 				title={
-					<Tx
+					<Typo
 						label={transactionListing.title}
 						ui={{
-							tone: "brand",
+							tone: "neutral",
 							theme: "light",
 							color: "lead",
-							font: "bold",
+							font: isUnread ? "bold" : "normal",
 							display: "block",
 							width: "full",
-							truncate: true,
 						}}
 						className={[
 							"block",
 							"w-full",
 							"max-w-full",
 							"min-w-0",
+							"truncate",
 						]}
 					/>
 				}
@@ -67,18 +100,30 @@ export const Data: FC<Data.Props> = ({
 							justify: "space-between",
 							width: "full",
 							gap: "default",
+							items: "center",
 						}}
 					>
 						<Typo
-							label={`x${toLocaleNumber({
-								locale,
-								number: transactionListing.count,
-							})}`}
+							label={toActivityLabel({
+								kind: transactionListing.lastKind,
+								text: transactionListing.lastText,
+							})}
 							ui={{
 								text: "sm",
-								opacity: "7",
+								tone: isUnread ? "neutral" : "subtle",
+								theme: "light",
+								font: isUnread ? "bold" : "normal",
+								color: "text",
 							}}
+							className={[
+								"block",
+								"min-w-0",
+								"max-w-full",
+								"flex-1",
+								"truncate",
+							]}
 						/>
+
 						<Typo
 							label={toTimeDiff({
 								locale,

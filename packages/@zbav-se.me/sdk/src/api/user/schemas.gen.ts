@@ -284,6 +284,13 @@ export const sInboxFilter = {
         reference: {
             type: 'string'
         },
+        referenceIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            minItems: 1
+        },
         family: {
             $ref: '#/components/schemas/InboxFamilyEnum'
         },
@@ -355,6 +362,13 @@ export const sInboxWhere = {
         },
         reference: {
             type: 'string'
+        },
+        referenceIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            minItems: 1
         },
         family: {
             $ref: '#/components/schemas/InboxFamilyEnum'
@@ -454,7 +468,10 @@ export const sInboxBuyerMessage = {
             type: 'string'
         },
         reference: {
-            type: 'string'
+            type: 'array',
+            items: {
+                type: 'string'
+            }
         },
         timestamp: {
             type: 'string'
@@ -520,7 +537,10 @@ export const sInboxSellerMessage = {
             type: 'string'
         },
         reference: {
-            type: 'string'
+            type: 'array',
+            items: {
+                type: 'string'
+            }
         },
         timestamp: {
             type: 'string'
@@ -586,7 +606,10 @@ export const sInboxTransaction = {
             type: 'string'
         },
         reference: {
-            type: 'string'
+            type: 'array',
+            items: {
+                type: 'string'
+            }
         },
         timestamp: {
             type: 'string'
@@ -668,7 +691,10 @@ export const sInboxSystem = {
             type: 'string'
         },
         reference: {
-            type: 'string'
+            type: 'array',
+            items: {
+                type: 'string'
+            }
         },
         timestamp: {
             type: 'string'
@@ -742,7 +768,10 @@ export const sInboxUnknown = {
             type: 'string'
         },
         reference: {
-            type: 'string'
+            type: 'array',
+            items: {
+                type: 'string'
+            }
         },
         timestamp: {
             type: 'string'
@@ -816,7 +845,10 @@ export const sInboxThumb = {
             type: 'string'
         },
         reference: {
-            type: 'string'
+            type: 'array',
+            items: {
+                type: 'string'
+            }
         },
         timestamp: {
             type: 'string'
@@ -891,7 +923,10 @@ export const sInboxFavourite = {
             type: 'string'
         },
         reference: {
-            type: 'string'
+            type: 'array',
+            items: {
+                type: 'string'
+            }
         },
         timestamp: {
             type: 'string'
@@ -954,7 +989,10 @@ export const sInboxUnfavourite = {
             type: 'string'
         },
         reference: {
-            type: 'string'
+            type: 'array',
+            items: {
+                type: 'string'
+            }
         },
         timestamp: {
             type: 'string'

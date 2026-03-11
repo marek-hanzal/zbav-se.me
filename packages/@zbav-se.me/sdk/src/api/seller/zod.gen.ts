@@ -789,6 +789,9 @@ export const zTransaction = z.object({
     }),
     priceType: zListingPriceEnum,
     currency: zCurrencyEnum,
+    unreadCount: z.number().register(z.globalRegistry, {
+        description: 'Unread inbox buyer-message count for this transaction'
+    }),
     location: zLocation
 }).register(z.globalRegistry, {
     description: 'Transaction data'
@@ -1100,6 +1103,32 @@ export const zTransactionCountQuery = z.object({
 export type zTransactionCountQuery = z.infer<typeof zTransactionCountQuery>;
 
 /**
+ * Kind of the most recent transaction activity under this listing
+ */
+export const zTransactionEntryKindEnum = z.enum([
+    'text',
+    'gallery',
+    'location',
+    'package',
+    'personal',
+    'status-pending',
+    'status-open',
+    'status-resolved',
+    'status-dispute-buyer',
+    'status-dispute-seller',
+    'status-rejected-buyer',
+    'status-rejected-seller',
+    'status-sold',
+    'status-expired',
+    'status-success',
+    'status-closed'
+]).register(z.globalRegistry, {
+    description: 'Kind of the most recent transaction activity under this listing'
+});
+
+export type zTransactionEntryKindEnum = z.infer<typeof zTransactionEntryKindEnum>;
+
+/**
  * Aggregated transaction information per listing
  */
 export const zTransactionListing = z.object({
@@ -1116,9 +1145,14 @@ export const zTransactionListing = z.object({
         description: 'Listing gallery images'
     })),
     count: z.int().gte(0).nullable(),
+    unreadCount: z.number().register(z.globalRegistry, {
+        description: 'Unread inbox transaction-event count for this listing'
+    }),
     lastAt: z.string().register(z.globalRegistry, {
         description: 'Timestamp of the most recent activity in any transaction under this listing'
-    })
+    }),
+    lastKind: zTransactionEntryKindEnum,
+    lastText: z.string().nullable()
 }).register(z.globalRegistry, {
     description: 'Aggregated transaction information per listing'
 });
@@ -1172,7 +1206,7 @@ export type zTransactionListingWhere = z.infer<typeof zTransactionListingWhere>;
 /**
  * Field of the transaction-listing sort
  */
-export const zTransactionListingSortField = z.enum(['createdAt']).register(z.globalRegistry, {
+export const zTransactionListingSortField = z.enum(['createdAt', 'lastAt']).register(z.globalRegistry, {
     description: 'Field of the transaction-listing sort'
 });
 

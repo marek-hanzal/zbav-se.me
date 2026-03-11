@@ -45,7 +45,7 @@ export const inboxCreateFx = Effect.fn("inboxCreateFx")(function* ({
 					.values({
 						id,
 						userId,
-						reference,
+						reference: reference ?? [],
 						family,
 						type,
 						payload,

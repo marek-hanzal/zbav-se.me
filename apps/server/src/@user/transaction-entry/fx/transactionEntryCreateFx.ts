@@ -242,7 +242,10 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 				.with("buyer", () =>
 					inboxCreateFx({
 						userId: transaction.sellerId,
-						reference: transaction.listingId,
+						reference: [
+							transaction.listingId,
+							transaction.id,
+						],
 						family: "transaction",
 						type: "buyer-message",
 						payload: {
@@ -255,7 +258,10 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 				.with("seller", () =>
 					inboxCreateFx({
 						userId: transaction.buyerId,
-						reference: transaction.listingId,
+						reference: [
+							transaction.listingId,
+							transaction.id,
+						],
 						family: "transaction",
 						type: "seller-message",
 						payload: {
@@ -269,7 +275,10 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 					Effect.all([
 						inboxCreateFx({
 							userId: transaction.sellerId,
-							reference: transaction.listingId,
+							reference: [
+								transaction.listingId,
+								transaction.id,
+							],
 							family: "transaction",
 							type: "transaction",
 							payload: {
@@ -282,7 +291,10 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 						}),
 						inboxCreateFx({
 							userId: transaction.buyerId,
-							reference: transaction.listingId,
+							reference: [
+								transaction.listingId,
+								transaction.id,
+							],
 							family: "transaction",
 							type: "transaction",
 							payload: {
@@ -299,7 +311,10 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 					Effect.all([
 						inboxCreateFx({
 							userId: transaction.sellerId,
-							reference: transaction.listingId,
+							reference: [
+								transaction.listingId,
+								transaction.id,
+							],
 							family: "transaction",
 							type: "system",
 							payload: {
@@ -312,7 +327,10 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 						}),
 						inboxCreateFx({
 							userId: transaction.buyerId,
-							reference: transaction.listingId,
+							reference: [
+								transaction.listingId,
+								transaction.id,
+							],
 							family: "transaction",
 							type: "system",
 							payload: {

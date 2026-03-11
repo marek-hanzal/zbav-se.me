@@ -8,11 +8,12 @@ import { Label } from "./Label";
 
 export namespace Preview {
 	export interface Props extends MarkSuspense.Props {
+		isUnread: boolean;
 		transactionId: string;
 	}
 }
 
-export const Preview: FC<Preview.Props> = ({ _suspense, transactionId }) => {
+export const Preview: FC<Preview.Props> = ({ _suspense, isUnread, transactionId }) => {
 	const query: tTransactionEntryQuery = {
 		cursor: {
 			page: 0,
@@ -38,7 +39,8 @@ export const Preview: FC<Preview.Props> = ({ _suspense, transactionId }) => {
 				label={translator.text("Transaction row - no activity (label)")}
 				ui={{
 					text: "sm",
-					opacity: "6",
+					opacity: isUnread ? undefined : "6",
+					font: isUnread ? "bold" : "normal",
 				}}
 				className={[
 					"block",
@@ -54,6 +56,7 @@ export const Preview: FC<Preview.Props> = ({ _suspense, transactionId }) => {
 	return (
 		<Label
 			_suspense={_suspense}
+			isUnread={isUnread}
 			transactionEntryId={transactionEntryId}
 		/>
 	);

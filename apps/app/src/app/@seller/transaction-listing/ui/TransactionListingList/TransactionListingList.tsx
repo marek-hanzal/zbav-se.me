@@ -9,7 +9,7 @@ import { translator } from "@use-pico/common/translator";
 import type { tTransactionListingQuery } from "@zbav-se.me/sdk/api/seller";
 import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller/transaction-listing";
 import type { FC } from "react";
-import { TransactionListingItemSuspense } from "./TransactionListingItemSuspense";
+import { Item } from "./Item";
 
 export namespace TransactionListingList {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -104,13 +104,16 @@ export const TransactionListingList: FC<TransactionListingList.Props> = ({
 						gap: "default",
 					}}
 				>
-					{data.map((transactionListingId) => (
-						<TransactionListingItemSuspense
-							key={transactionListingId}
-							data-id={transactionListingId}
-							transactionListingId={transactionListingId}
-						/>
-					))}
+					{data.map((transactionListingId) => {
+						return (
+							<Item
+								key={transactionListingId}
+								data-id={transactionListingId}
+								_suspense={_suspense}
+								transactionListingId={transactionListingId}
+							/>
+						);
+					})}
 				</Container>
 			)}
 		</Container>

@@ -29,6 +29,17 @@ export const withTransactionSelectFx = Effect.fn("withTransactionSelectFx")(func
 		"l.priceType",
 		"l.currency",
 		"lt.updatedAt as lastAt",
+		(eb) =>
+			sql<number>`coalesce((${eb
+				.selectFrom("inbox as i")
+				.select((eb) => eb.fn.countAll<number>().as("unreadCount"))
+				.whereRef("i.userId", "=", "l.userId")
+				.where("i.family", "=", "transaction")
+				.where("i.type", "=", "buyer-message")
+				.where("i.archivedAt", "is", null)
+				.where(
+					sql<boolean>`${sql.ref("i.reference")} @> ARRAY[${eb.ref("lt.id")}]::text[]`,
+				)}), 0)`.as("unreadCount"),
 		(eb) => sql<LocationTableSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
 		(eb) =>
 			jsonObjectFrom(gallerySelect.where("gal.id", "=", eb.ref("l.galleryId")).limit(1))

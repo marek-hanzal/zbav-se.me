@@ -38,9 +38,19 @@ No buyer <-> seller imports.
 
 - Added user inbox route: `/$locale/inbox/$type` (`high` or `common`).
 - Home menu message entry now points to Inbox (`Inbox (label)`).
-- Existing buyer/seller message routes remain available for conversation flows.
+- Buyer and seller transaction flows now use stable `transaction` routes instead of legacy `message` paths:
+  - `/$locale/buyer/transaction/list`
+  - `/$locale/buyer/transaction/$transactionId/detail`
+  - `/$locale/seller/transaction/list`
+  - `/$locale/seller/transaction/$listingId/list`
+  - `/$locale/seller/transaction/$transactionId/detail`
 - Message conversation detail now uses dedicated routes instead of bottom sheets:
-  - `/$locale/buyer/message/$transactionId`
-  - `/$locale/seller/message/$listingId/$transactionId`
+  - `/$locale/buyer/transaction/$transactionId/detail`
+  - `/$locale/seller/transaction/$transactionId/detail`
 - Message and inbox pages now use explicit back-to-home links.
 - Internal message conversation data now comes from `transaction_entry` APIs even where UX copy still says “Messages”.
+
+## Inbox invariant
+
+- Inbox is the source of truth for unread state, badge counts, grouped unread counts by `reference`, and similar "needs attention" UI signals.
+- App features must reuse Inbox family/reference counts instead of inventing local unread counters or transaction-status-based badge logic.

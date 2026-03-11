@@ -6,6 +6,7 @@ export const TransactionListingSortSchema = z
 		field: z
 			.enum([
 				"createdAt",
+				"lastAt",
 			])
 			.openapi("TransactionListingSortField", {
 				description: "Field of the transaction-listing sort",

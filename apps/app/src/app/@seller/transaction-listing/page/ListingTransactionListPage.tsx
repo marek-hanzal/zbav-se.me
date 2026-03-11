@@ -30,7 +30,7 @@ export const ListingTransactionListPage: FC<ListingTransactionListPage.Props> = 
 				order: "asc",
 			},
 			{
-				field: "createdAt",
+				field: "updatedAt",
 				order: "desc",
 			},
 		],

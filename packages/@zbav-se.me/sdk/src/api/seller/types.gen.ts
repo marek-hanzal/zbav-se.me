@@ -938,6 +938,10 @@ export type tTransaction = {
     price: number;
     priceType: tListingPriceEnum;
     currency: tCurrencyEnum;
+    /**
+     * Unread inbox buyer-message count for this transaction
+     */
+    unreadCount: number;
     location: tLocation;
 };
 
@@ -1265,10 +1269,46 @@ export type tTransactionListing = {
      */
     count: number | null;
     /**
+     * Unread inbox transaction-event count for this listing
+     */
+    unreadCount: number;
+    /**
      * Timestamp of the most recent activity in any transaction under this listing
      */
     lastAt: string;
+    lastKind: tTransactionEntryKindEnum;
+    /**
+     * Text payload of the most recent transaction activity when the kind is text
+     */
+    lastText: string | null;
 };
+
+/**
+ * Kind of the most recent transaction activity under this listing
+ */
+export const tTransactionEntryKindEnum = {
+    text: 'text',
+    gallery: 'gallery',
+    location: 'location',
+    package: 'package',
+    personal: 'personal',
+    'status-pending': 'status-pending',
+    'status-open': 'status-open',
+    'status-resolved': 'status-resolved',
+    'status-dispute-buyer': 'status-dispute-buyer',
+    'status-dispute-seller': 'status-dispute-seller',
+    'status-rejected-buyer': 'status-rejected-buyer',
+    'status-rejected-seller': 'status-rejected-seller',
+    'status-sold': 'status-sold',
+    'status-expired': 'status-expired',
+    'status-success': 'status-success',
+    'status-closed': 'status-closed'
+} as const;
+
+/**
+ * Kind of the most recent transaction activity under this listing
+ */
+export type tTransactionEntryKindEnum = typeof tTransactionEntryKindEnum[keyof typeof tTransactionEntryKindEnum];
 
 /**
  * Query object for transaction-listing collection
@@ -1335,7 +1375,7 @@ export type tTransactionListingSort = {
 /**
  * Field of the transaction-listing sort
  */
-export const tTransactionListingSortField = { createdAt: 'createdAt' } as const;
+export const tTransactionListingSortField = { createdAt: 'createdAt', lastAt: 'lastAt' } as const;
 
 /**
  * Field of the transaction-listing sort

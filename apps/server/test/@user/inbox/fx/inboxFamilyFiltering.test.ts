@@ -29,7 +29,10 @@ describe("inbox family", () => {
 				{
 					id: "inbox-message",
 					userId: user.id,
-					reference: "listing-1",
+					reference: [
+						"listing-1",
+						"tx-1",
+					],
 					timestamp: new Date("2026-03-09T09:00:00.000Z"),
 					family: "transaction",
 					type: "buyer-message",
@@ -42,7 +45,9 @@ describe("inbox family", () => {
 				{
 					id: "inbox-reaction",
 					userId: user.id,
-					reference: "listing-1",
+					reference: [
+						"listing-1",
+					],
 					timestamp: new Date("2026-03-09T10:00:00.000Z"),
 					family: "reaction",
 					type: "thumb",
@@ -109,7 +114,10 @@ describe("inbox family", () => {
 				{
 					id: "inbox-reference-a",
 					userId: user.id,
-					reference: "listing-a",
+					reference: [
+						"listing-a",
+						"tx-a",
+					],
 					timestamp: new Date("2026-03-09T09:00:00.000Z"),
 					family: "transaction",
 					type: "buyer-message",
@@ -122,7 +130,9 @@ describe("inbox family", () => {
 				{
 					id: "inbox-reference-b",
 					userId: user.id,
-					reference: "listing-b",
+					reference: [
+						"listing-b",
+					],
 					timestamp: new Date("2026-03-09T10:00:00.000Z"),
 					family: "reaction",
 					type: "favourite",
@@ -150,6 +160,8 @@ describe("inbox family", () => {
 
 		expect(rows).toHaveLength(1);
 		expect(rows[0]?.id).toBe("inbox-reference-b");
-		expect(rows[0]?.reference).toBe("listing-b");
+		expect(rows[0]?.reference).toEqual([
+			"listing-b",
+		]);
 	});
 });
