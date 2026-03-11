@@ -4,13 +4,13 @@ import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import { translator } from "@use-pico/common/translator";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { ListItem } from "~/app/@common/list-item/ListItem";
 import { Preview } from "./Preview";
 import { StatusIcon } from "./StatusIcon";
+import { toStatusLabel } from "./toStatusLabel";
 
 export namespace Data {
 	export interface Props extends ListItem.PropsEx, MarkSuspense.Props {
@@ -35,31 +35,7 @@ export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, className, 
 				hero={<StatusIcon status={transaction.status} />}
 				title={
 					<Typo
-						label={match(transaction.status)
-							.with("pending", () =>
-								translator.text("Transaction status pending (label)"),
-							)
-							.with("open", () => translator.text("Transaction status open (label)"))
-							.with("resolved", () =>
-								translator.text("Transaction status resolved (label)"),
-							)
-							.with("dispute", () =>
-								translator.text("Transaction status dispute (label)"),
-							)
-							.with("rejected", () =>
-								translator.text("Transaction status rejected (label)"),
-							)
-							.with("sold", () => translator.text("Transaction status sold (label)"))
-							.with("expired", () =>
-								translator.text("Transaction status expired (label)"),
-							)
-							.with("success", () =>
-								translator.text("Transaction status success (label)"),
-							)
-							.with("closed", () =>
-								translator.text("Transaction status closed (label)"),
-							)
-							.exhaustive()}
+						label={toStatusLabel(transaction.status)}
 						ui={{
 							font: "bold",
 						}}

@@ -13,18 +13,22 @@ export namespace Preview {
 
 export const Preview: FC<Preview.Props> = ({ transactionId }) => {
 	const query: tTransactionEntryQuery = {
+		cursor: {
+			page: 0,
+			size: 1,
+		},
 		filter: {
 			transactionId,
 		},
 		sort: [
 			{
 				field: "createdAt",
-				order: "asc",
+				order: "desc",
 			},
 		],
 	};
 	const { data } = withTransactionEntryQuery.useCollectionQuery(query);
-	const [transactionEntryId] = data.slice(-1);
+	const [transactionEntryId] = data;
 
 	if (!transactionEntryId) {
 		return (

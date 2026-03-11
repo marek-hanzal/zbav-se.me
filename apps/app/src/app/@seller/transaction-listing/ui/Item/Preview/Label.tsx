@@ -4,6 +4,7 @@ import type { tTransactionEntry } from "@zbav-se.me/sdk/api/user";
 import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import { toStatusLabel } from "../toStatusLabel";
 
 export namespace Label {
 	export interface Props {
@@ -25,19 +26,19 @@ const toLabel = (transactionEntry: tTransactionEntry) => {
 			{
 				kind: "status-pending",
 			},
-			() => translator.text("Transaction row - status pending (label)"),
+			() => toStatusLabel("pending"),
 		)
 		.with(
 			{
 				kind: "status-open",
 			},
-			() => translator.text("Transaction row - status open (label)"),
+			() => toStatusLabel("open"),
 		)
 		.with(
 			{
 				kind: "status-resolved",
 			},
-			() => translator.text("Transaction row - status resolved (label)"),
+			() => toStatusLabel("resolved"),
 		)
 		.with(
 			{
@@ -46,7 +47,7 @@ const toLabel = (transactionEntry: tTransactionEntry) => {
 			{
 				kind: "status-dispute-seller",
 			},
-			() => translator.text("Transaction row - status dispute (label)"),
+			() => toStatusLabel("dispute"),
 		)
 		.with(
 			{
@@ -55,31 +56,31 @@ const toLabel = (transactionEntry: tTransactionEntry) => {
 			{
 				kind: "status-rejected-seller",
 			},
-			() => translator.text("Transaction row - status rejected (label)"),
+			() => toStatusLabel("rejected"),
 		)
 		.with(
 			{
 				kind: "status-sold",
 			},
-			() => translator.text("Transaction row - status sold (label)"),
+			() => toStatusLabel("sold"),
 		)
 		.with(
 			{
 				kind: "status-expired",
 			},
-			() => translator.text("Transaction row - status expired (label)"),
+			() => toStatusLabel("expired"),
 		)
 		.with(
 			{
 				kind: "status-success",
 			},
-			() => translator.text("Transaction row - status success (label)"),
+			() => toStatusLabel("success"),
 		)
 		.with(
 			{
 				kind: "status-closed",
 			},
-			() => translator.text("Transaction row - status closed (label)"),
+			() => toStatusLabel("closed"),
 		)
 		.with(
 			{
