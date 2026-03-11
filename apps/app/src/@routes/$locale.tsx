@@ -5,14 +5,14 @@ import { LocalePage } from "~/app/@common/locale/~public/LocalePage";
 
 export const Route = createFileRoute("/$locale")({
 	ssr: false,
-	async beforeLoad({ params: { locale }, context: { queryClient } }) {
-		const { data } = await withSessionQuery.ensure(queryClient, undefined, {
+	async loader({ params: { locale }, context: { queryClient } }) {
+		const { data: session } = await withSessionQuery.ensure(queryClient, undefined, {
 			staleTime: 0,
 			gcTime: 0,
 			throwOnError: true,
 		});
 
-		if (!data?.user) {
+		if (!session?.user) {
 			throw redirect({
 				href: linkTo({
 					base: import.meta.env.VITE_WEB_ORIGIN,
@@ -25,21 +25,16 @@ export const Route = createFileRoute("/$locale")({
 			});
 		}
 
-		return {
-			user: data?.user,
-		};
-	},
-	async loader({ params: { locale }, context: { user } }) {
 		try {
 			return {
 				translations: (await import(`../translation/${locale}.yaml`)).default,
-				user,
+				user: session.user,
 			} as const;
 		} catch {
 			console.warn(`Locale [${locale}] not found, using default locale`);
 			return {
 				translations: (await import(`../translation/cs.yaml`)).default,
-				user,
+				user: session.user,
 			} as const;
 		}
 	},

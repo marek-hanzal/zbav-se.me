@@ -8,11 +8,9 @@ import {
 } from "@tanstack/react-router";
 import { uiContainer } from "@use-pico/client/ui/container";
 import { Toaster } from "sonner";
-import type { authClient } from "~/app/@common/auth/authClient";
 import styles from "~/assets/style.css?url";
 
 export const Route = createRootRouteWithContext<{
-	user?: typeof authClient.$Infer.Session.user | null;
 	queryClient: QueryClient;
 }>()({
 	head: () => ({
