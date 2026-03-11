@@ -1,4 +1,3 @@
-import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { tTransactionQuery } from "@zbav-se.me/sdk/api/seller";
@@ -10,13 +9,12 @@ import { ListingTransactionHero } from "../ListingTransactionHero";
 import { TransactionList } from "../ui/TransactionList";
 
 export namespace ListingTransactionListPage {
-	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
+	export interface Props extends TitleContainer.Props {
 		listingId: string;
 	}
 }
 
 export const ListingTransactionListPage: FC<ListingTransactionListPage.Props> = ({
-	_suspense,
 	listingId,
 	...props
 }) => {

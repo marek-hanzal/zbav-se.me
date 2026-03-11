@@ -1,6 +1,5 @@
 import { useLocale } from "@use-pico/client/hook";
 import { ChevronRightIcon, MessageIcon } from "@use-pico/client/icon";
-import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
@@ -11,7 +10,7 @@ import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import type { FC, ReactNode } from "react";
 
 export namespace TransactionListContainer {
-	export interface Props extends Container.Props, MarkSuspense.Props {
+	export interface Props extends Container.Props {
 		query: tTransactionQuery;
 		renderItem(transactionId: string): ReactNode;
 		refetchInterval?: number;
@@ -19,7 +18,6 @@ export namespace TransactionListContainer {
 }
 
 export const TransactionListContainer: FC<TransactionListContainer.Props> = ({
-	_suspense,
 	query,
 	renderItem,
 	refetchInterval = 5_000,

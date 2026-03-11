@@ -7,11 +7,6 @@ export const Route = createFileRoute("/$locale/seller/transaction/$listingId/lis
 	component() {
 		const { listingId } = Route.useParams();
 
-		return (
-			<ListingTransactionListPage
-				_suspense={"I know"}
-				listingId={listingId}
-			/>
-		);
+		return <ListingTransactionListPage listingId={listingId} />;
 	},
 });

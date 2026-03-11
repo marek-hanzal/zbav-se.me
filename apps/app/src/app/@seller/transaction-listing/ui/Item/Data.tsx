@@ -1,5 +1,4 @@
 import { useLocale } from "@use-pico/client/hook";
-import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Typo } from "@use-pico/client/ui/typo";
@@ -13,12 +12,12 @@ import { StatusIcon } from "./StatusIcon";
 import { toStatusLabel } from "./toStatusLabel";
 
 export namespace Data {
-	export interface Props extends ListItem.PropsEx, MarkSuspense.Props {
+	export interface Props extends ListItem.PropsEx {
 		transactionId: string;
 	}
 }
 
-export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, className, ...props }) => {
+export const Data: FC<Data.Props> = ({ transactionId, ui, className, ...props }) => {
 	const locale = useLocale();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
 
