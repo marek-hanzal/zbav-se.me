@@ -12,28 +12,19 @@ import { ListItem } from "~/app/@common/list-item/ListItem";
 export namespace Data {
 	export interface Props extends ListItem.PropsEx, MarkSuspense.Props {
 		transactionId: string;
-		listingId: string;
 	}
 }
 
-export const Data: FC<Data.Props> = ({
-	_suspense,
-	transactionId,
-	listingId,
-	ui,
-	className,
-	...props
-}) => {
+export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, className, ...props }) => {
 	const locale = useLocale();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
 	const hero = useUpload(transaction.gallery.items);
 
 	return (
 		<LinkTo
-			to="/$locale/seller/message/$listingId/$transactionId"
+			to="/$locale/seller/transaction/$transactionId/detail"
 			params={{
 				locale,
-				listingId,
 				transactionId,
 			}}
 		>

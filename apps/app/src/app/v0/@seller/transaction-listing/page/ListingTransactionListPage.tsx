@@ -13,13 +13,13 @@ import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 import { ListingSheet } from "~/app/v0/@seller/listing/ui/ListingSheet";
 import { TransactionList } from "~/app/v0/@seller/transaction/ui/TransactionList";
 
-export namespace ListingMessageListPage {
+export namespace ListingTransactionListPage {
 	export interface Props extends TitleContainer.Props, MarkSuspense.Props {
 		listingId: string;
 	}
 }
 
-export const ListingMessageListPage: FC<ListingMessageListPage.Props> = ({
+export const ListingTransactionListPage: FC<ListingTransactionListPage.Props> = ({
 	_suspense,
 	listingId,
 	...props
@@ -30,7 +30,7 @@ export const ListingMessageListPage: FC<ListingMessageListPage.Props> = ({
 
 	return (
 		<TitleContainer
-			data-ui="SellerMessageList[TitleContainer]"
+			data-ui="ListingTransactionList[TitleContainer]"
 			textTitle={translator.text("Messages (title)")}
 			textSubtitle={listing.title}
 			left={<BackHomeButton />}
@@ -39,7 +39,7 @@ export const ListingMessageListPage: FC<ListingMessageListPage.Props> = ({
 		>
 			<Container>
 				<Container
-					data-ui="MessageList-[HeroContainer]"
+					data-ui="ListingTransactionList-[HeroContainer]"
 					ui={{
 						position: "relative",
 						height: "content",
@@ -72,7 +72,6 @@ export const ListingMessageListPage: FC<ListingMessageListPage.Props> = ({
 					ui={{
 						inner: "default",
 					}}
-					listingId={listingId}
 				/>
 			</Container>
 

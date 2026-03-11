@@ -4,14 +4,16 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 
-export namespace ListingMessageListPendingPage {
+export namespace ListingTransactionListPendingPage {
 	export interface Props extends TitleContainer.Props {}
 }
 
-export const ListingMessageListPendingPage: FC<ListingMessageListPendingPage.Props> = (props) => {
+export const ListingTransactionListPendingPage: FC<ListingTransactionListPendingPage.Props> = (
+	props,
+) => {
 	return (
 		<TitleContainer
-			data-ui="SellerMessageList[TitleContainer]"
+			data-ui="ListingTransactionList[TitleContainer]"
 			textTitle={translator.text("Messages (title)")}
 			left={<BackHomeButton />}
 			{...props}

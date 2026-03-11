@@ -5,13 +5,13 @@ import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
 import { TransactionList } from "~/app/v0/@buyer/transaction/ui/TransactionList";
 
-export namespace MessageListPage {
+export namespace TransactionListPage {
 	export interface Props extends TitleContainer.Props {
 		//
 	}
 }
 
-export const MessageListPage: FC<MessageListPage.Props> = (props) => {
+export const TransactionListPage: FC<TransactionListPage.Props> = (props) => {
 	return (
 		<TitleContainer
 			textTitle={translator.text("Messages (title)")}

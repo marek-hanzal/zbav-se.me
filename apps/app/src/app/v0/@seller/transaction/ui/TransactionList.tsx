@@ -8,11 +8,10 @@ import { TransactionListContainerPending } from "./TransactionListContainerPendi
 export namespace TransactionList {
 	export interface Props extends Container.Props {
 		query: tTransactionQuery;
-		listingId?: string;
 	}
 }
 
-export const TransactionList: FC<TransactionList.Props> = ({ query, listingId, ...props }) => {
+export const TransactionList: FC<TransactionList.Props> = ({ query, ...props }) => {
 	return (
 		<Suspense fallback={<TransactionListContainerPending />}>
 			<TransactionListContainer
@@ -23,7 +22,6 @@ export const TransactionList: FC<TransactionList.Props> = ({ query, listingId, .
 						key={transactionId}
 						data-id={transactionId}
 						transactionId={transactionId}
-						listingId={listingId ?? query.where?.listingId ?? ""}
 					/>
 				)}
 				{...props}

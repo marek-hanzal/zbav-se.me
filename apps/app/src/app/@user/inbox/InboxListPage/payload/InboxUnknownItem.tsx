@@ -31,7 +31,7 @@ export const InboxUnknownItem: FC<InboxUnknownItem.Props> = ({ item }) => {
 					"buyer",
 					() =>
 						({
-							to: "/$locale/buyer/message/$transactionId",
+							to: "/$locale/buyer/transaction/$transactionId",
 							params: {
 								locale,
 								transactionId: item.payload.transactionId,
@@ -42,10 +42,9 @@ export const InboxUnknownItem: FC<InboxUnknownItem.Props> = ({ item }) => {
 					"seller",
 					() =>
 						({
-							to: "/$locale/seller/message/$listingId/$transactionId",
+							to: "/$locale/seller/transaction/$transactionId/detail",
 							params: {
 								locale,
-								listingId: item.payload.listingId,
 								transactionId: item.payload.transactionId,
 							},
 						}) as const,
