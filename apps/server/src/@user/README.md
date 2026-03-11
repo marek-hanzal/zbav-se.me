@@ -62,17 +62,12 @@ This domain handles all operations on user-owned, private data. Everything in th
   - `favourite`
   - `unfavourite`
 - Transaction-like inbox payloads (`transaction`, `system`, `unknown`) carry `transactionId`, `listingId`, and recipient `target` so the app can deep-link into the correct buyer/seller transaction detail route.
-- Inbox rows now also store required normalized `reference` metadata. For the current inbox families, `reference` always equals the related `listingId` and can be used for grouping/filtering without reading payload variants.
-- Local Docker Compose upgrade for existing databases:
-  - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'ALTER TABLE "inbox" ADD COLUMN IF NOT EXISTS "family" text;'`
-- Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c "UPDATE \"inbox\" SET \"family\" = CASE WHEN \"type\" IN ('buyer-message', 'seller-message', 'transaction', 'system', 'unknown') THEN 'transaction' WHEN \"type\" IN ('thumb', 'favourite', 'unfavourite') THEN 'reaction' ELSE \"family\" END WHERE \"family\" IS NULL OR \"family\" = 'message';"`
-  - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'ALTER TABLE "inbox" ALTER COLUMN "family" SET NOT NULL;'`
-  - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'CREATE INDEX IF NOT EXISTS "inbox_[userId-family]_idx" ON "inbox" ("userId", "family");'`
-  - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'ALTER TABLE "inbox" ADD COLUMN IF NOT EXISTS "reference" text;'`
-  - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c "UPDATE \"inbox\" SET \"reference\" = \"payload\"->>'listingId' WHERE \"reference\" IS NULL;"`
-  - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c "UPDATE \"inbox\" AS i SET \"reference\" = t.\"listingId\" FROM \"transaction\" AS t WHERE i.\"reference\" IS NULL AND i.\"payload\"->>'transactionId' = t.\"id\";"`
-  - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'ALTER TABLE "inbox" ALTER COLUMN "reference" SET NOT NULL;'`
-  - Run `docker compose exec postgres psql -U postgres -d zbav_se_me -c 'CREATE INDEX IF NOT EXISTS "inbox_[userId-reference]_idx" ON "inbox" ("userId", "reference");'`
+- Inbox rows can store optional normalized `reference` metadata as `string[]`.
+- Reference rules:
+  - reaction-family rows store the related listing reference only: `[listingId]`
+  - transaction-family rows store both listing and transaction references: `[listingId, transactionId]`
+  - `where.reference` means "reference array contains this value"
+  - `where.referenceIn` means "reference array overlaps any of these values"
 
 ### Transaction Timeline
 - Transaction communication now enters through the unified **Transaction Entry** API.

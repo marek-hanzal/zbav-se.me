@@ -30,7 +30,7 @@ export const Item: FC<Item.Props> = ({
 	const { data: transactionListing } =
 		withTransactionListingQuery.useFetchQuery(transactionListingId);
 	const hero = useUpload(transactionListing.gallery.items);
-	const unreadCount = transactionListing.unreadCount ?? 0;
+	const unreadCount = transactionListing.unreadCount;
 	const isUnread = unreadCount > 0;
 
 	return (

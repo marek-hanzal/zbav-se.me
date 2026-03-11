@@ -278,7 +278,10 @@ export const zInboxFilter = z.object({
         description: 'Inbox owner filter'
     }).optional(),
     reference: z.string().register(z.globalRegistry, {
-        description: 'Normalized reference filter'
+        description: 'Match inbox rows whose reference array contains this key'
+    }).optional(),
+    referenceIn: z.array(z.string()).min(1).register(z.globalRegistry, {
+        description: 'Match inbox rows whose reference array overlaps any of these keys'
     }).optional(),
     family: zInboxFamilyEnum.optional(),
     type: zInboxTypeEnum.optional(),
@@ -315,7 +318,10 @@ export const zInboxWhere = z.object({
         description: 'Inbox owner filter'
     }).optional(),
     reference: z.string().register(z.globalRegistry, {
-        description: 'Normalized reference filter'
+        description: 'Match inbox rows whose reference array contains this key'
+    }).optional(),
+    referenceIn: z.array(z.string()).min(1).register(z.globalRegistry, {
+        description: 'Match inbox rows whose reference array overlaps any of these keys'
     }).optional(),
     family: zInboxFamilyEnum.optional(),
     type: zInboxTypeEnum.optional(),
@@ -381,8 +387,8 @@ export const zInboxBuyerMessage = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
-    reference: z.string().register(z.globalRegistry, {
-        description: 'Normalized reference key used for inbox grouping'
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
     }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
@@ -410,8 +416,8 @@ export const zInboxSellerMessage = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
-    reference: z.string().register(z.globalRegistry, {
-        description: 'Normalized reference key used for inbox grouping'
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
     }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
@@ -448,8 +454,8 @@ export const zInboxTransaction = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
-    reference: z.string().register(z.globalRegistry, {
-        description: 'Normalized reference key used for inbox grouping'
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
     }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
@@ -481,8 +487,8 @@ export const zInboxSystem = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
-    reference: z.string().register(z.globalRegistry, {
-        description: 'Normalized reference key used for inbox grouping'
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
     }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
@@ -514,8 +520,8 @@ export const zInboxUnknown = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
-    reference: z.string().register(z.globalRegistry, {
-        description: 'Normalized reference key used for inbox grouping'
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
     }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
@@ -556,8 +562,8 @@ export const zInboxThumb = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
-    reference: z.string().register(z.globalRegistry, {
-        description: 'Normalized reference key used for inbox grouping'
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
     }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
@@ -583,8 +589,8 @@ export const zInboxFavourite = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
-    reference: z.string().register(z.globalRegistry, {
-        description: 'Normalized reference key used for inbox grouping'
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
     }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
@@ -609,8 +615,8 @@ export const zInboxUnfavourite = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
-    reference: z.string().register(z.globalRegistry, {
-        description: 'Normalized reference key used for inbox grouping'
+    reference: z.array(z.string()).register(z.globalRegistry, {
+        description: 'Normalized reference keys used for inbox grouping'
     }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'

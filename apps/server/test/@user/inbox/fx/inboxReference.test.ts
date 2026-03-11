@@ -1,13 +1,14 @@
 import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
-import { transactionCreateFx } from "~/@buyer/transaction/fx/transactionCreateFx";
 import { thumbCreateFx } from "~/@buyer/thumb/fx/thumbCreateFx";
-import { withUploadFx } from "~/@common/upload/context/withUploadFx";
+import { transactionCreateFx } from "~/@buyer/transaction/fx/transactionCreateFx";
 import { withTransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
+import { withUploadFx } from "~/@common/upload/context/withUploadFx";
 import { listingCreateFx } from "~/@seller/listing/fx/listingCreateFx";
 import { categoryFetchFx } from "~/@session/category/fx/categoryFetchFx";
 import { locationAutocompleteFx } from "~/@session/location/fx/locationAutocompleteFx";
 import { withLocationFx } from "~/@session/location/fx/withLocationFx";
+import { inboxCollectionFx } from "~/@user/inbox/fx/inboxCollectionFx";
 import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { uploadCreateFx } from "~/@user/upload/fx/uploadCreateFx";
 import { auth } from "~/auth/auth";
@@ -44,10 +45,7 @@ const withInboxRuntimeFx = (database: Awaited<ReturnType<typeof testabase>>) => 
 		);
 };
 
-const createListingFixtureFx = ({
-	buyerId,
-	sellerId,
-}: Omit<ListingFixture, "listingId">) =>
+const createListingFixtureFx = ({ buyerId, sellerId }: Omit<ListingFixture, "listingId">) =>
 	Effect.gen(function* () {
 		const category = yield* categoryFetchFx({
 			where: {
@@ -112,7 +110,10 @@ describe("inbox reference", () => {
 		const inbox = await Effect.gen(function* () {
 			return yield* inboxCreateFx({
 				userId: user.id,
-				reference: "listing-direct",
+				reference: [
+					"listing-direct",
+					"transaction-direct",
+				],
 				family: "reaction",
 				type: "favourite",
 				payload: {
@@ -122,7 +123,10 @@ describe("inbox reference", () => {
 			});
 		}).pipe(withInboxRuntimeFx(database), Effect.runPromise);
 
-		expect(inbox.reference).toBe("listing-direct");
+		expect(inbox.reference).toEqual([
+			"listing-direct",
+			"transaction-direct",
+		]);
 	});
 
 	it("maps transaction inbox reference from listingId", async () => {
@@ -160,6 +164,12 @@ describe("inbox reference", () => {
 			});
 		}).pipe(withInboxRuntimeFx(database), Effect.runPromise);
 
+		const transaction = await database.kysely
+			.selectFrom("transaction")
+			.select("id")
+			.where("listingId", "=", fixture.listingId)
+			.executeTakeFirstOrThrow();
+
 		const inbox = await database.kysely
 			.selectFrom("inbox")
 			.select([
@@ -172,7 +182,10 @@ describe("inbox reference", () => {
 			.where("type", "=", "buyer-message")
 			.executeTakeFirstOrThrow();
 
-		expect(inbox.reference).toBe(fixture.listingId);
+		expect(inbox.reference).toEqual([
+			fixture.listingId,
+			transaction.id,
+		]);
 	});
 
 	it("maps reaction inbox reference from listingId", async () => {
@@ -223,6 +236,95 @@ describe("inbox reference", () => {
 			.where("type", "=", "thumb")
 			.executeTakeFirstOrThrow();
 
-		expect(inbox.reference).toBe(fixture.listingId);
+		expect(inbox.reference).toEqual([
+			fixture.listingId,
+		]);
+	});
+
+	it("matches single reference and referenceIn against reference arrays", async () => {
+		const database = await testabase("inboxReference-query-filtering");
+
+		const { api } = auth(() => {
+			return database.dialect;
+		});
+
+		const { user } = await api.signUpEmail({
+			body: {
+				email: "inbox-reference-filter@test.cz",
+				name: "Inbox Filter",
+				password: "12345678",
+			},
+		});
+
+		const inboxIds = await Effect.gen(function* () {
+			const listingInbox = yield* inboxCreateFx({
+				userId: user.id,
+				reference: [
+					"listing-1",
+					"transaction-1",
+				],
+				family: "transaction",
+				type: "transaction",
+				payload: {
+					listingId: "listing-1",
+					target: "seller",
+					transactionId: "transaction-1",
+				},
+				priority: "high",
+			});
+
+			const otherInbox = yield* inboxCreateFx({
+				userId: user.id,
+				reference: [
+					"listing-2",
+					"transaction-2",
+				],
+				family: "transaction",
+				type: "transaction",
+				payload: {
+					listingId: "listing-2",
+					target: "seller",
+					transactionId: "transaction-2",
+				},
+				priority: "high",
+			});
+
+			return {
+				listingInboxId: listingInbox.id,
+				otherInboxId: otherInbox.id,
+			};
+		}).pipe(withInboxRuntimeFx(database), Effect.runPromise);
+
+		const singleReference = await Effect.gen(function* () {
+			return yield* inboxCollectionFx({
+				where: {
+					reference: "transaction-1",
+				},
+				scope: {
+					userId: user.id,
+				},
+			});
+		}).pipe(withInboxRuntimeFx(database), Effect.runPromise);
+
+		const anyReference = await Effect.gen(function* () {
+			return yield* inboxCollectionFx({
+				where: {
+					referenceIn: [
+						"listing-3",
+						"listing-2",
+					],
+				},
+				scope: {
+					userId: user.id,
+				},
+			});
+		}).pipe(withInboxRuntimeFx(database), Effect.runPromise);
+
+		expect(singleReference.map(({ id }) => id)).toEqual([
+			inboxIds.listingInboxId,
+		]);
+		expect(anyReference.map(({ id }) => id)).toEqual([
+			inboxIds.otherInboxId,
+		]);
 	});
 });

@@ -22,6 +22,10 @@ export const TransactionSchema = z
 		}),
 		priceType: ListingPriceEnumSchema,
 		currency: CurrencyEnumSchema,
+		unreadCount: z.coerce.number().int().nonnegative().openapi({
+			description: "Unread inbox buyer-message count for this transaction",
+			type: "number",
+		}),
 		//
 		location: LocationSchema,
 	})

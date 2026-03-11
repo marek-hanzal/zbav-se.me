@@ -21,6 +21,8 @@ export namespace Item {
 export const Item: FC<Item.Props> = ({ _suspense, transactionId, ui, className, ...props }) => {
 	const locale = useLocale();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
+	const unreadCount = transaction.unreadCount ?? 0;
+	const isUnread = unreadCount > 0;
 
 	return (
 		<LinkTo
@@ -32,12 +34,19 @@ export const Item: FC<Item.Props> = ({ _suspense, transactionId, ui, className, 
 		>
 			<ListItem
 				data-ui={"TransactionItem[Item]"}
-				hero={<StatusIcon status={transaction.status} />}
+				hero={
+					<StatusIcon
+						status={transaction.status}
+						unreadCount={unreadCount}
+					/>
+				}
 				title={
 					<Typo
 						label={toStatusLabel(transaction.status)}
 						ui={{
 							font: "bold",
+							tone: isUnread ? "neutral" : "subtle",
+							theme: "light",
 						}}
 						className={[
 							"block",
@@ -60,6 +69,7 @@ export const Item: FC<Item.Props> = ({ _suspense, transactionId, ui, className, 
 						<Container className={"min-w-0 flex-1"}>
 							<Preview
 								_suspense={_suspense}
+								isUnread={isUnread}
 								transactionId={transaction.id}
 							/>
 						</Container>
@@ -71,7 +81,8 @@ export const Item: FC<Item.Props> = ({ _suspense, transactionId, ui, className, 
 							})}
 							ui={{
 								text: "xs",
-								opacity: "7",
+								opacity: isUnread ? undefined : "7",
+								font: isUnread ? "bold" : "normal",
 							}}
 						/>
 					</Container>

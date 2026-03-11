@@ -6,23 +6,29 @@ import { toActivityLabel } from "~/app/@seller/transaction/~public/toStatusLabel
 
 export namespace Label {
 	export interface Props extends MarkSuspense.Props {
+		isUnread: boolean;
 		transactionEntryId: string;
 	}
 }
 
-export const Label: FC<Label.Props> = ({ _suspense, transactionEntryId }) => {
+export const Label: FC<Label.Props> = ({ _suspense, isUnread, transactionEntryId }) => {
 	const { data: transactionEntry } = withTransactionEntryQuery.useFetchQuery(transactionEntryId);
+	const label =
+		transactionEntry.kind === "text"
+			? transactionEntry.payload.text
+			: toActivityLabel({
+					kind: transactionEntry.kind,
+					text: null,
+				});
 
 	return (
 		<Typo
 			data-ui="TransactionItemPreview[Value]"
-			label={toActivityLabel({
-				kind: transactionEntry.kind,
-				text: transactionEntry.kind === "text" ? transactionEntry.payload.text : null,
-			})}
+			label={label}
 			ui={{
 				text: "sm",
-				opacity: "6",
+				opacity: isUnread ? undefined : "6",
+				font: isUnread ? "bold" : "normal",
 			}}
 			className={[
 				"block",

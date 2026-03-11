@@ -32,13 +32,16 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 				.selectFrom("transaction as lt")
 				.select((eb) => eb.fn.countAll<number>().as("count"))
 				.whereRef("lt.listingId", "=", "l.id")})`.as("count"),
-			sql<number>`(${eb
+			sql<number>`coalesce((${eb
 				.selectFrom("inbox as i")
 				.select((eb) => eb.fn.countAll<number>().as("unreadCount"))
 				.whereRef("i.userId", "=", "l.userId")
-				.whereRef("i.reference", "=", "l.id")
 				.where("i.family", "=", "transaction")
-				.where("i.archivedAt", "is", null)})`.as("unreadCount"),
+				.where("i.type", "=", "buyer-message")
+				.where("i.archivedAt", "is", null)
+				.where(
+					sql<boolean>`${sql.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`,
+				)}), 0)`.as("unreadCount"),
 			sql<Date>`(${eb
 				.selectFrom("transaction_entry as te")
 				.innerJoin("transaction as lt", "lt.id", "te.transactionId")

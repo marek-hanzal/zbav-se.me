@@ -1,4 +1,5 @@
 import { Icon } from "@use-pico/client/icon";
+import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import type { FC } from "react";
@@ -7,10 +8,13 @@ import { match } from "ts-pattern";
 export namespace StatusIcon {
 	export interface Props {
 		status: tTransaction["status"];
+		unreadCount?: number;
 	}
 }
 
-export const StatusIcon: FC<StatusIcon.Props> = ({ status }) => {
+export const StatusIcon: FC<StatusIcon.Props> = ({ status, unreadCount = 0 }) => {
+	const isUnread = unreadCount > 0;
+
 	return (
 		<Container
 			data-ui="TransactionItem-[Hero]"
@@ -45,6 +49,20 @@ export const StatusIcon: FC<StatusIcon.Props> = ({ status }) => {
 					opacity: "7",
 				}}
 			/>
+
+			{isUnread ? (
+				<Badge
+					data-ui="TransactionItem[Badge]"
+					ui={{
+						snapTo: "top-right",
+						tone: "secondary",
+						theme: "light",
+						badge: "xs",
+					}}
+				>
+					{unreadCount > 9 ? "9+" : unreadCount}
+				</Badge>
+			) : null}
 		</Container>
 	);
 };

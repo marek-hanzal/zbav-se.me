@@ -241,9 +241,13 @@ export type tInboxFilter = {
      */
     userId?: string;
     /**
-     * Normalized reference filter
+     * Match inbox rows whose reference array contains this key
      */
     reference?: string;
+    /**
+     * Match inbox rows whose reference array overlaps any of these keys
+     */
+    referenceIn?: Array<string>;
     family?: tInboxFamilyEnum;
     type?: tInboxTypeEnum;
     priority?: tInboxPriorityEnum;
@@ -321,9 +325,13 @@ export type tInboxWhere = {
      */
     userId?: string;
     /**
-     * Normalized reference filter
+     * Match inbox rows whose reference array contains this key
      */
     reference?: string;
+    /**
+     * Match inbox rows whose reference array overlaps any of these keys
+     */
+    referenceIn?: Array<string>;
     family?: tInboxFamilyEnum;
     type?: tInboxTypeEnum;
     priority?: tInboxPriorityEnum;
@@ -394,9 +402,9 @@ export type tInboxBuyerMessage = {
      */
     userId: string;
     /**
-     * Normalized reference key used for inbox grouping
+     * Normalized reference keys used for inbox grouping
      */
-    reference: string;
+    reference: Array<string>;
     /**
      * Inbox event timestamp
      */
@@ -431,9 +439,9 @@ export type tInboxSellerMessage = {
      */
     userId: string;
     /**
-     * Normalized reference key used for inbox grouping
+     * Normalized reference keys used for inbox grouping
      */
-    reference: string;
+    reference: Array<string>;
     /**
      * Inbox event timestamp
      */
@@ -468,9 +476,9 @@ export type tInboxTransaction = {
      */
     userId: string;
     /**
-     * Normalized reference key used for inbox grouping
+     * Normalized reference keys used for inbox grouping
      */
-    reference: string;
+    reference: Array<string>;
     /**
      * Inbox event timestamp
      */
@@ -520,9 +528,9 @@ export type tInboxSystem = {
      */
     userId: string;
     /**
-     * Normalized reference key used for inbox grouping
+     * Normalized reference keys used for inbox grouping
      */
-    reference: string;
+    reference: Array<string>;
     /**
      * Inbox event timestamp
      */
@@ -562,9 +570,9 @@ export type tInboxUnknown = {
      */
     userId: string;
     /**
-     * Normalized reference key used for inbox grouping
+     * Normalized reference keys used for inbox grouping
      */
-    reference: string;
+    reference: Array<string>;
     /**
      * Inbox event timestamp
      */
@@ -604,9 +612,9 @@ export type tInboxThumb = {
      */
     userId: string;
     /**
-     * Normalized reference key used for inbox grouping
+     * Normalized reference keys used for inbox grouping
      */
-    reference: string;
+    reference: Array<string>;
     /**
      * Inbox event timestamp
      */
@@ -648,9 +656,9 @@ export type tInboxFavourite = {
      */
     userId: string;
     /**
-     * Normalized reference key used for inbox grouping
+     * Normalized reference keys used for inbox grouping
      */
-    reference: string;
+    reference: Array<string>;
     /**
      * Inbox event timestamp
      */
@@ -681,9 +689,9 @@ export type tInboxUnfavourite = {
      */
     userId: string;
     /**
-     * Normalized reference key used for inbox grouping
+     * Normalized reference keys used for inbox grouping
      */
-    reference: string;
+    reference: Array<string>;
     /**
      * Inbox event timestamp
      */

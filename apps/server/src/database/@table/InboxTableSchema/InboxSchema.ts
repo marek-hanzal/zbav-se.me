@@ -10,8 +10,8 @@ export const InboxSchema = z
 		userId: z.string().openapi({
 			description: "Recipient user identifier",
 		}),
-		reference: z.string().openapi({
-			description: "Normalized reference key used for inbox grouping",
+		reference: z.array(z.string()).openapi({
+			description: "Normalized reference keys used for inbox grouping",
 		}),
 		timestamp: z.coerce.date().openapi({
 			description: "Inbox event timestamp",
