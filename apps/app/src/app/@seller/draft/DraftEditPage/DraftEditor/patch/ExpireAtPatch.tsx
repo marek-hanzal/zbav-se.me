@@ -4,13 +4,19 @@ import { Mx } from "@use-pico/client/ui/mx";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListingExpireEnum } from "@zbav-se.me/sdk/api/seller";
+import { zListingCreate } from "@zbav-se.me/sdk/api/seller";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { type FC, useState } from "react";
+import { useAppForm } from "@zbav-se.me/ui/form";
+import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { ExpireAtSelect } from "~/app/@common/expire-at/ui/ExpireAtSelect";
 import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
+
+const ExpireAtSchema = zListingCreate.pick({
+	expiresAt: true,
+});
 
 export namespace ExpireAtPatch {
 	export interface Props extends TitleContainer.Props {
@@ -29,9 +35,29 @@ export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({ draft, onCancel, onView
 			"collection",
 		],
 	});
-	const [expiresAt, setExpiresAt] = useState<tListingExpireEnum | undefined>(
-		draft.expiresAt as tListingExpireEnum,
-	);
+	const form = useAppForm({
+		defaultValues: {
+			expiresAt: (draft.expiresAt as tListingExpireEnum | null) ?? null,
+		},
+		validators: {
+			onMount: ExpireAtSchema,
+			onChange: ExpireAtSchema,
+			onBlur: ExpireAtSchema,
+			onSubmit: ExpireAtSchema,
+		},
+		async onSubmit({ value }) {
+			mutation.mutate({
+				patch: {
+					expiresAt: value.expiresAt,
+				},
+				query: {
+					where: {
+						id: draft.id,
+					},
+				},
+			});
+		},
+	});
 
 	return (
 		<TitleContainer
@@ -49,51 +75,49 @@ export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({ draft, onCancel, onView
 					gap: "default",
 				}}
 			>
-				<Container>
-					<ExpireAtSelect
-						value={expiresAt}
-						onChange={setExpiresAt}
-					/>
+				<form.AppField name={"expiresAt"}>
+					{(field) => (
+						<Container>
+							<ExpireAtSelect
+								value={field.state.value ?? undefined}
+								onChange={(value) => {
+									field.handleChange(value);
+									field.handleBlur();
+								}}
+							/>
 
-					<Mx
-						label={"Listing expiration (hint)"}
-						ui={{
-							tone: "neutral",
-							theme: "light",
-							inner: "default",
-							color: "lead",
-							opacity: "7",
-						}}
-					/>
-				</Container>
+							<Mx
+								label={"Listing expiration (hint)"}
+								ui={{
+									tone: "neutral",
+									theme: "light",
+									inner: "default",
+									color: "lead",
+									opacity: "7",
+								}}
+							/>
+						</Container>
+					)}
+				</form.AppField>
 
-				<SaveContainer
-					onCancel={onCancel}
-					onSave={() => {
-						if (!expiresAt) {
-							return;
-						}
-
-						mutation.mutate({
-							patch: {
-								expiresAt,
-							},
-							query: {
-								where: {
-									id: draft.id,
-								},
-							},
-						});
-					}}
-					loading={mutation.isPending}
-					disabled={!expiresAt}
-					textSave={<Tx label={"Continue (label)"} />}
-					textCancel={<Tx label={"Back (label)"} />}
-					saveProps={{
-						iconEnabled: ArrowRightIcon,
-						iconPosition: "right",
-					}}
-				/>
+				<form.Subscribe selector={(state) => state.isValid}>
+					{(isValid) => (
+						<SaveContainer
+							onCancel={onCancel}
+							onSave={() => {
+								form.handleSubmit();
+							}}
+							loading={mutation.isPending}
+							disabled={!isValid || mutation.isPending}
+							textSave={<Tx label={"Continue (label)"} />}
+							textCancel={<Tx label={"Back (label)"} />}
+							saveProps={{
+								iconEnabled: ArrowRightIcon,
+								iconPosition: "right",
+							}}
+						/>
+					)}
+				</form.Subscribe>
 			</Container>
 		</TitleContainer>
 	);

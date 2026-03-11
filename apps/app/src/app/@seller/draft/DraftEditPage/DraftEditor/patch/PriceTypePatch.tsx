@@ -5,13 +5,19 @@ import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListingPriceEnum } from "@zbav-se.me/sdk/api/seller";
+import { zListingCreate } from "@zbav-se.me/sdk/api/seller";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { useAppForm } from "@zbav-se.me/ui/form";
 import type { FC } from "react";
 import { SaveContainer } from "~/app/@common/container/ui/SaveContainer";
 import { PriceTypeSelect } from "~/app/@common/price-type/ui/PriceTypeSelect";
 import type { Data } from "../Data";
 import { EditAction } from "../EditAction";
+
+const PriceTypeSchema = zListingCreate.pick({
+	priceType: true,
+});
 
 export namespace PriceTypePatch {
 	export interface Props extends TitleContainer.Props {
@@ -30,6 +36,29 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({ draft, onCancel, onVi
 			"collection",
 		],
 	});
+	const form = useAppForm({
+		defaultValues: {
+			priceType: (draft.priceType as tListingPriceEnum | null) ?? null,
+		},
+		validators: {
+			onMount: PriceTypeSchema,
+			onChange: PriceTypeSchema,
+			onBlur: PriceTypeSchema,
+			onSubmit: PriceTypeSchema,
+		},
+		async onSubmit({ value }) {
+			mutation.mutate({
+				patch: {
+					priceType: value.priceType,
+				},
+				query: {
+					where: {
+						id: draft.id,
+					},
+				},
+			});
+		},
+	});
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "single",
 		initial: draft.priceType
@@ -39,10 +68,14 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({ draft, onCancel, onVi
 					},
 				]
 			: [],
+		onSelect(item) {
+			form.setFieldValue("priceType", (item?.id as tListingPriceEnum | undefined) ?? null);
+			form.setFieldMeta("priceType", (meta) => ({
+				...meta,
+				isTouched: true,
+			}));
+		},
 	});
-
-	const priceTypeId = selection.optional.singleId();
-	const priceType = (priceTypeId as tListingPriceEnum) ?? null;
 
 	return (
 		<TitleContainer
@@ -60,31 +93,28 @@ export const PriceTypePatch: FC<PriceTypePatch.Props> = ({ draft, onCancel, onVi
 					gap: "default",
 				}}
 			>
-				<PriceTypeSelect selection={selection} />
+				<form.AppField name={"priceType"}>
+					{(_field) => <PriceTypeSelect selection={selection} />}
+				</form.AppField>
 
-				<SaveContainer
-					onCancel={onCancel}
-					onSave={() => {
-						mutation.mutate({
-							patch: {
-								priceType,
-							},
-							query: {
-								where: {
-									id: draft.id,
-								},
-							},
-						});
-					}}
-					loading={mutation.isPending}
-					disabled={priceType === null}
-					textSave={<Tx label={"Continue (label)"} />}
-					textCancel={<Tx label={"Back (label)"} />}
-					saveProps={{
-						iconEnabled: ArrowRightIcon,
-						iconPosition: "right",
-					}}
-				/>
+				<form.Subscribe selector={(state) => state.isValid}>
+					{(isValid) => (
+						<SaveContainer
+							onCancel={onCancel}
+							onSave={() => {
+								form.handleSubmit();
+							}}
+							loading={mutation.isPending}
+							disabled={!isValid || mutation.isPending}
+							textSave={<Tx label={"Continue (label)"} />}
+							textCancel={<Tx label={"Back (label)"} />}
+							saveProps={{
+								iconEnabled: ArrowRightIcon,
+								iconPosition: "right",
+							}}
+						/>
+					)}
+				</form.Subscribe>
 			</Container>
 		</TitleContainer>
 	);

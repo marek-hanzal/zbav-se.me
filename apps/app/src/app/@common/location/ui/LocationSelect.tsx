@@ -11,6 +11,7 @@ export namespace LocationSelect {
 		value: string | undefined | null;
 		onChange(value: string): void;
 		onLocation?(value: tLocation): void;
+		onSearchChange?(value: Fulltext.Value): void;
 		textHint: string;
 		warningStatusProps?: Status.Props;
 	}
@@ -26,12 +27,17 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 	value,
 	onChange,
 	onLocation,
+	onSearchChange,
 	textHint,
 	ui,
 	warningStatusProps,
 	...props
 }) => {
 	const [search, setSearch] = useState<Fulltext.Value>();
+	const handleSearchChange = (value: Fulltext.Value) => {
+		setSearch(value);
+		onSearchChange?.(value);
+	};
 
 	return (
 		<Container
@@ -47,7 +53,7 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 			<Fulltext
 				state={{
 					value: search,
-					set: setSearch,
+					set: handleSearchChange,
 				}}
 				textPlaceholder={translator.text("Location search (placeholder)")}
 			/>
