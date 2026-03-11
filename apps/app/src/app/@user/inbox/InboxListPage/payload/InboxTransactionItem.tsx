@@ -31,7 +31,7 @@ export const InboxTransactionItem: FC<InboxTransactionItem.Props> = ({ item }) =
 					"buyer",
 					() =>
 						({
-							to: "/$locale/buyer/transaction/$transactionId",
+							to: "/$locale/buyer/transaction/$transactionId/detail",
 							params: {
 								locale,
 								transactionId: item.payload.transactionId,

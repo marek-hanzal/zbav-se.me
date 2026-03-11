@@ -22,7 +22,7 @@ export const Data: FC<Data.Props> = ({ _suspense, transactionId, ...props }) => 
 
 	return (
 		<LinkTo
-			to="/$locale/buyer/transaction/$transactionId"
+			to="/$locale/buyer/transaction/$transactionId/detail"
 			params={{
 				locale,
 				transactionId,

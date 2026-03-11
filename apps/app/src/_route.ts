@@ -25,13 +25,13 @@ import { Route as LocaleSellerListingMyRouteImport } from './@routes/$locale/sel
 import { Route as LocaleSellerDraftResolveRouteImport } from './@routes/$locale/seller/draft/resolve'
 import { Route as LocaleSellerDraftListRouteImport } from './@routes/$locale/seller/draft/list'
 import { Route as LocaleBuyerTransactionListRouteImport } from './@routes/$locale/buyer/transaction/list'
-import { Route as LocaleBuyerTransactionTransactionIdRouteImport } from './@routes/$locale/buyer/transaction/$transactionId'
 import { Route as LocaleBuyerFeedListRouteImport } from './@routes/$locale/buyer/feed/list'
 import { Route as LocaleBuyerFeedDefaultRouteImport } from './@routes/$locale/buyer/feed/default'
 import { Route as LocaleBuyerFavouriteListRouteImport } from './@routes/$locale/buyer/favourite/list'
 import { Route as LocaleSellerTransactionTransactionIdDetailRouteImport } from './@routes/$locale/seller/transaction/$transactionId/detail'
 import { Route as LocaleSellerTransactionListingIdListRouteImport } from './@routes/$locale/seller/transaction/$listingId/list'
 import { Route as LocaleSellerDraftIdEditRouteImport } from './@routes/$locale/seller/draft/$id/edit'
+import { Route as LocaleBuyerTransactionTransactionIdDetailRouteImport } from './@routes/$locale/buyer/transaction/$transactionId/detail'
 import { Route as LocaleBuyerFeedIdListRouteImport } from './@routes/$locale/buyer/feed/$id/list'
 import { Route as LocaleBuyerFeedIdFavouriteListRouteImport } from './@routes/$locale/buyer/feed/$id/favourite/list'
 
@@ -118,12 +118,6 @@ const LocaleBuyerTransactionListRoute =
     path: '/buyer/transaction/list',
     getParentRoute: () => LocaleRoute,
   } as any)
-const LocaleBuyerTransactionTransactionIdRoute =
-  LocaleBuyerTransactionTransactionIdRouteImport.update({
-    id: '/buyer/transaction/$transactionId',
-    path: '/buyer/transaction/$transactionId',
-    getParentRoute: () => LocaleRoute,
-  } as any)
 const LocaleBuyerFeedListRoute = LocaleBuyerFeedListRouteImport.update({
   id: '/buyer/feed/list',
   path: '/buyer/feed/list',
@@ -157,6 +151,12 @@ const LocaleSellerDraftIdEditRoute = LocaleSellerDraftIdEditRouteImport.update({
   path: '/seller/draft/$id/edit',
   getParentRoute: () => LocaleRoute,
 } as any)
+const LocaleBuyerTransactionTransactionIdDetailRoute =
+  LocaleBuyerTransactionTransactionIdDetailRouteImport.update({
+    id: '/buyer/transaction/$transactionId/detail',
+    path: '/buyer/transaction/$transactionId/detail',
+    getParentRoute: () => LocaleRoute,
+  } as any)
 const LocaleBuyerFeedIdListRoute = LocaleBuyerFeedIdListRouteImport.update({
   id: '/buyer/feed/$id/list',
   path: '/buyer/feed/$id/list',
@@ -184,13 +184,13 @@ export interface FileRoutesByFullPath {
   '/$locale/buyer/favourite/list': typeof LocaleBuyerFavouriteListRoute
   '/$locale/buyer/feed/default': typeof LocaleBuyerFeedDefaultRoute
   '/$locale/buyer/feed/list': typeof LocaleBuyerFeedListRoute
-  '/$locale/buyer/transaction/$transactionId': typeof LocaleBuyerTransactionTransactionIdRoute
   '/$locale/buyer/transaction/list': typeof LocaleBuyerTransactionListRoute
   '/$locale/seller/draft/list': typeof LocaleSellerDraftListRoute
   '/$locale/seller/draft/resolve': typeof LocaleSellerDraftResolveRoute
   '/$locale/seller/listing/my': typeof LocaleSellerListingMyRoute
   '/$locale/seller/transaction/list': typeof LocaleSellerTransactionListRoute
   '/$locale/buyer/feed/$id/list': typeof LocaleBuyerFeedIdListRoute
+  '/$locale/buyer/transaction/$transactionId/detail': typeof LocaleBuyerTransactionTransactionIdDetailRoute
   '/$locale/seller/draft/$id/edit': typeof LocaleSellerDraftIdEditRoute
   '/$locale/seller/transaction/$listingId/list': typeof LocaleSellerTransactionListingIdListRoute
   '/$locale/seller/transaction/$transactionId/detail': typeof LocaleSellerTransactionTransactionIdDetailRoute
@@ -210,13 +210,13 @@ export interface FileRoutesByTo {
   '/$locale/buyer/favourite/list': typeof LocaleBuyerFavouriteListRoute
   '/$locale/buyer/feed/default': typeof LocaleBuyerFeedDefaultRoute
   '/$locale/buyer/feed/list': typeof LocaleBuyerFeedListRoute
-  '/$locale/buyer/transaction/$transactionId': typeof LocaleBuyerTransactionTransactionIdRoute
   '/$locale/buyer/transaction/list': typeof LocaleBuyerTransactionListRoute
   '/$locale/seller/draft/list': typeof LocaleSellerDraftListRoute
   '/$locale/seller/draft/resolve': typeof LocaleSellerDraftResolveRoute
   '/$locale/seller/listing/my': typeof LocaleSellerListingMyRoute
   '/$locale/seller/transaction/list': typeof LocaleSellerTransactionListRoute
   '/$locale/buyer/feed/$id/list': typeof LocaleBuyerFeedIdListRoute
+  '/$locale/buyer/transaction/$transactionId/detail': typeof LocaleBuyerTransactionTransactionIdDetailRoute
   '/$locale/seller/draft/$id/edit': typeof LocaleSellerDraftIdEditRoute
   '/$locale/seller/transaction/$listingId/list': typeof LocaleSellerTransactionListingIdListRoute
   '/$locale/seller/transaction/$transactionId/detail': typeof LocaleSellerTransactionTransactionIdDetailRoute
@@ -238,13 +238,13 @@ export interface FileRoutesById {
   '/$locale/buyer/favourite/list': typeof LocaleBuyerFavouriteListRoute
   '/$locale/buyer/feed/default': typeof LocaleBuyerFeedDefaultRoute
   '/$locale/buyer/feed/list': typeof LocaleBuyerFeedListRoute
-  '/$locale/buyer/transaction/$transactionId': typeof LocaleBuyerTransactionTransactionIdRoute
   '/$locale/buyer/transaction/list': typeof LocaleBuyerTransactionListRoute
   '/$locale/seller/draft/list': typeof LocaleSellerDraftListRoute
   '/$locale/seller/draft/resolve': typeof LocaleSellerDraftResolveRoute
   '/$locale/seller/listing/my': typeof LocaleSellerListingMyRoute
   '/$locale/seller/transaction/list': typeof LocaleSellerTransactionListRoute
   '/$locale/buyer/feed/$id/list': typeof LocaleBuyerFeedIdListRoute
+  '/$locale/buyer/transaction/$transactionId/detail': typeof LocaleBuyerTransactionTransactionIdDetailRoute
   '/$locale/seller/draft/$id/edit': typeof LocaleSellerDraftIdEditRoute
   '/$locale/seller/transaction/$listingId/list': typeof LocaleSellerTransactionListingIdListRoute
   '/$locale/seller/transaction/$transactionId/detail': typeof LocaleSellerTransactionTransactionIdDetailRoute
@@ -267,13 +267,13 @@ export interface FileRouteTypes {
     | '/$locale/buyer/favourite/list'
     | '/$locale/buyer/feed/default'
     | '/$locale/buyer/feed/list'
-    | '/$locale/buyer/transaction/$transactionId'
     | '/$locale/buyer/transaction/list'
     | '/$locale/seller/draft/list'
     | '/$locale/seller/draft/resolve'
     | '/$locale/seller/listing/my'
     | '/$locale/seller/transaction/list'
     | '/$locale/buyer/feed/$id/list'
+    | '/$locale/buyer/transaction/$transactionId/detail'
     | '/$locale/seller/draft/$id/edit'
     | '/$locale/seller/transaction/$listingId/list'
     | '/$locale/seller/transaction/$transactionId/detail'
@@ -293,13 +293,13 @@ export interface FileRouteTypes {
     | '/$locale/buyer/favourite/list'
     | '/$locale/buyer/feed/default'
     | '/$locale/buyer/feed/list'
-    | '/$locale/buyer/transaction/$transactionId'
     | '/$locale/buyer/transaction/list'
     | '/$locale/seller/draft/list'
     | '/$locale/seller/draft/resolve'
     | '/$locale/seller/listing/my'
     | '/$locale/seller/transaction/list'
     | '/$locale/buyer/feed/$id/list'
+    | '/$locale/buyer/transaction/$transactionId/detail'
     | '/$locale/seller/draft/$id/edit'
     | '/$locale/seller/transaction/$listingId/list'
     | '/$locale/seller/transaction/$transactionId/detail'
@@ -320,13 +320,13 @@ export interface FileRouteTypes {
     | '/$locale/buyer/favourite/list'
     | '/$locale/buyer/feed/default'
     | '/$locale/buyer/feed/list'
-    | '/$locale/buyer/transaction/$transactionId'
     | '/$locale/buyer/transaction/list'
     | '/$locale/seller/draft/list'
     | '/$locale/seller/draft/resolve'
     | '/$locale/seller/listing/my'
     | '/$locale/seller/transaction/list'
     | '/$locale/buyer/feed/$id/list'
+    | '/$locale/buyer/transaction/$transactionId/detail'
     | '/$locale/seller/draft/$id/edit'
     | '/$locale/seller/transaction/$listingId/list'
     | '/$locale/seller/transaction/$transactionId/detail'
@@ -454,13 +454,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleBuyerTransactionListRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/buyer/transaction/$transactionId': {
-      id: '/$locale/buyer/transaction/$transactionId'
-      path: '/buyer/transaction/$transactionId'
-      fullPath: '/$locale/buyer/transaction/$transactionId'
-      preLoaderRoute: typeof LocaleBuyerTransactionTransactionIdRouteImport
-      parentRoute: typeof LocaleRoute
-    }
     '/$locale/buyer/feed/list': {
       id: '/$locale/buyer/feed/list'
       path: '/buyer/feed/list'
@@ -503,6 +496,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleSellerDraftIdEditRouteImport
       parentRoute: typeof LocaleRoute
     }
+    '/$locale/buyer/transaction/$transactionId/detail': {
+      id: '/$locale/buyer/transaction/$transactionId/detail'
+      path: '/buyer/transaction/$transactionId/detail'
+      fullPath: '/$locale/buyer/transaction/$transactionId/detail'
+      preLoaderRoute: typeof LocaleBuyerTransactionTransactionIdDetailRouteImport
+      parentRoute: typeof LocaleRoute
+    }
     '/$locale/buyer/feed/$id/list': {
       id: '/$locale/buyer/feed/$id/list'
       path: '/buyer/feed/$id/list'
@@ -531,13 +531,13 @@ interface LocaleRouteChildren {
   LocaleBuyerFavouriteListRoute: typeof LocaleBuyerFavouriteListRoute
   LocaleBuyerFeedDefaultRoute: typeof LocaleBuyerFeedDefaultRoute
   LocaleBuyerFeedListRoute: typeof LocaleBuyerFeedListRoute
-  LocaleBuyerTransactionTransactionIdRoute: typeof LocaleBuyerTransactionTransactionIdRoute
   LocaleBuyerTransactionListRoute: typeof LocaleBuyerTransactionListRoute
   LocaleSellerDraftListRoute: typeof LocaleSellerDraftListRoute
   LocaleSellerDraftResolveRoute: typeof LocaleSellerDraftResolveRoute
   LocaleSellerListingMyRoute: typeof LocaleSellerListingMyRoute
   LocaleSellerTransactionListRoute: typeof LocaleSellerTransactionListRoute
   LocaleBuyerFeedIdListRoute: typeof LocaleBuyerFeedIdListRoute
+  LocaleBuyerTransactionTransactionIdDetailRoute: typeof LocaleBuyerTransactionTransactionIdDetailRoute
   LocaleSellerDraftIdEditRoute: typeof LocaleSellerDraftIdEditRoute
   LocaleSellerTransactionListingIdListRoute: typeof LocaleSellerTransactionListingIdListRoute
   LocaleSellerTransactionTransactionIdDetailRoute: typeof LocaleSellerTransactionTransactionIdDetailRoute
@@ -555,14 +555,14 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleBuyerFavouriteListRoute: LocaleBuyerFavouriteListRoute,
   LocaleBuyerFeedDefaultRoute: LocaleBuyerFeedDefaultRoute,
   LocaleBuyerFeedListRoute: LocaleBuyerFeedListRoute,
-  LocaleBuyerTransactionTransactionIdRoute:
-    LocaleBuyerTransactionTransactionIdRoute,
   LocaleBuyerTransactionListRoute: LocaleBuyerTransactionListRoute,
   LocaleSellerDraftListRoute: LocaleSellerDraftListRoute,
   LocaleSellerDraftResolveRoute: LocaleSellerDraftResolveRoute,
   LocaleSellerListingMyRoute: LocaleSellerListingMyRoute,
   LocaleSellerTransactionListRoute: LocaleSellerTransactionListRoute,
   LocaleBuyerFeedIdListRoute: LocaleBuyerFeedIdListRoute,
+  LocaleBuyerTransactionTransactionIdDetailRoute:
+    LocaleBuyerTransactionTransactionIdDetailRoute,
   LocaleSellerDraftIdEditRoute: LocaleSellerDraftIdEditRoute,
   LocaleSellerTransactionListingIdListRoute:
     LocaleSellerTransactionListingIdListRoute,
