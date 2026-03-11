@@ -145,7 +145,7 @@ When adding to `@common`:
   - `@common/listing/ui/ListingCount/Pending.tsx`
 - Shared `ListItem` loading shell now lives in active common scope:
   - `@common/list-item/ListItemPending.tsx`
-- Shared `ListItem` hero input now accepts either parsed upload data or custom hero content, so domain call-sites can keep the same row shell while swapping the left visual slot from image to status/icon UI.
+- Shared `ListItem` hero input now parses upload-compatible values first and otherwise renders the provided node content directly, so domain call-sites can keep the same row shell while swapping the left visual slot from image to status/icon UI.
 - `GalleryPreview` was extracted to active scope:
   - `@common/gallery/ui/GalleryPreview.tsx`
 - `GalleryUploadContainer` abstraction was removed; gallery upload flow is now embedded directly at call-sites.

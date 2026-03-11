@@ -27,7 +27,7 @@ export const ListItem: FC<ListItem.Props> = ({
 	...props
 }) => {
 	const upload = zUpload.safeParse(hero);
-	const heroNode: ReactNode =
+	const image: ReactNode =
 		hero == null ? (
 			<Image />
 		) : upload.success ? (
@@ -64,7 +64,7 @@ export const ListItem: FC<ListItem.Props> = ({
 					width: "full",
 				}}
 			>
-				{heroNode}
+				{image}
 
 				<Container
 					className={"min-w-0 flex-1"}
