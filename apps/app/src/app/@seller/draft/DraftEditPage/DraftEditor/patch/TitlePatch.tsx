@@ -41,6 +41,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onView, ...p
 			title: draft.title ?? "",
 		},
 		validators: {
+			onMount: TitleSchema,
 			onChange: TitleSchema,
 			onBlur: TitleSchema,
 			onSubmit: TitleSchema,
