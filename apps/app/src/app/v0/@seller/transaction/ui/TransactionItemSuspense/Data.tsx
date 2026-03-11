@@ -6,9 +6,11 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import { useUpload } from "~/app/@common/gallery/hook/useUpload";
+import { ListItem } from "~/app/@common/list-item/ListItem";
 
 export namespace Data {
-	export interface Props extends Container.Props, MarkSuspense.Props {
+	export interface Props extends ListItem.PropsEx, MarkSuspense.Props {
 		transactionId: string;
 		listingId: string;
 	}
@@ -24,6 +26,7 @@ export const Data: FC<Data.Props> = ({
 }) => {
 	const locale = useLocale();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
+	const hero = useUpload(transaction.gallery.items);
 
 	return (
 		<LinkTo
@@ -34,21 +37,46 @@ export const Data: FC<Data.Props> = ({
 				transactionId,
 			}}
 		>
-			<Container
-				ui={{
-					tone: "neutral",
-					theme: "light",
-					background: "default",
-					border: true,
-					shadow: true,
-					position: "relative",
-					round: "default",
-					...ui,
-				}}
-				className={[
-					"h-48 md:h-92",
-					className,
-				]}
+			<ListItem
+				data-ui={"TransactionItem[Item]"}
+				hero={hero}
+				title={
+					<Tx
+						label={transaction.title}
+						ui={{
+							font: "bold",
+							display: "block",
+							width: "full",
+							truncate: true,
+						}}
+						className={[
+							"block",
+							"w-full",
+							"max-w-full",
+							"min-w-0",
+						]}
+					/>
+				}
+				bottom={
+					<Tx
+						label={transaction.location.address}
+						ui={{
+							text: "sm",
+							opacity: "6",
+							display: "block",
+							width: "full",
+							truncate: true,
+						}}
+						className={[
+							"block",
+							"w-full",
+							"max-w-full",
+							"min-w-0",
+						]}
+					/>
+				}
+				ui={ui}
+				className={className}
 				{...props}
 			>
 				{match(transaction.status)
@@ -61,6 +89,7 @@ export const Data: FC<Data.Props> = ({
 									theme: "light",
 									background: "default",
 									opacity: "8",
+									round: "default",
 								}}
 								className={[
 									"absolute",
@@ -73,30 +102,7 @@ export const Data: FC<Data.Props> = ({
 						return null;
 					})
 					.exhaustive()}
-
-				<Container
-					ui={{
-						tone: "secondary",
-						theme: "light",
-						color: "lead",
-						flow: "vertical",
-						background: "default",
-						border: true,
-						shadow: true,
-						inner: "default",
-						round: "default",
-						snapTo: "bottom",
-					}}
-					className={"text-center"}
-				>
-					<Tx
-						label={transaction.title}
-						ui={{
-							font: "bold",
-						}}
-					/>
-				</Container>
-			</Container>
+			</ListItem>
 		</LinkTo>
 	);
 };

@@ -1,5 +1,4 @@
 import { VisibilityProvider } from "@use-pico/client/context";
-import { useLocale } from "@use-pico/client/hook";
 import { createNoopVisibilityStore } from "@use-pico/client/store";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
@@ -25,7 +24,6 @@ export const ListingMessageListPage: FC<ListingMessageListPage.Props> = ({
 	listingId,
 	...props
 }) => {
-	const locale = useLocale();
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 	const [detail, setDetail] = useState(false);
 	const hero = useUpload(listing.gallery.items);

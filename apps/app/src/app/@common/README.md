@@ -143,6 +143,8 @@ When adding to `@common`:
   - `@common/listing/ui/ListingCount/ListingCount.tsx`
   - `@common/listing/ui/ListingCount/Data.tsx`
   - `@common/listing/ui/ListingCount/Pending.tsx`
+- Shared `ListItem` loading shell now lives in active common scope:
+  - `@common/list-item/ListItemPending.tsx`
 - `GalleryPreview` was extracted to active scope:
   - `@common/gallery/ui/GalleryPreview.tsx`
 - `GalleryUploadContainer` abstraction was removed; gallery upload flow is now embedded directly at call-sites.

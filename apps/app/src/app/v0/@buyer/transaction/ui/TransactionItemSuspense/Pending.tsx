@@ -1,20 +1,12 @@
-import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
-import { ListItem } from "~/app/@common/list-item/ListItem";
+import { ListItemPending } from "~/app/@common/list-item/ListItemPending";
 
 export namespace Pending {
-	export interface Props extends ListItem.PropsEx {
+	export interface Props extends ListItemPending.Props {
 		//
 	}
 }
 
 export const Pending: FC<Pending.Props> = (props) => {
-	return (
-		<ListItem
-			hero={undefined}
-			title={translator.text("Loading... (label)")}
-			bottom={undefined}
-			{...props}
-		/>
-	);
+	return <ListItemPending {...props} />;
 };
