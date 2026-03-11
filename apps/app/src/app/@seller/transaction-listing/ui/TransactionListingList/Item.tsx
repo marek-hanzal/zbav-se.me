@@ -13,13 +13,13 @@ import { Image } from "~/app/@common/list-item/Image";
 import { ListItem } from "~/app/@common/list-item/ListItem";
 import { toActivityLabel } from "~/app/@seller/transaction/~public/toStatusLabel";
 
-export namespace TransactionListingItem {
+export namespace Item {
 	export interface Props extends ListItem.PropsEx, MarkSuspense.Props {
 		transactionListingId: string;
 	}
 }
 
-export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
+export const Item: FC<Item.Props> = ({
 	_suspense,
 	transactionListingId,
 	ui,
@@ -42,10 +42,10 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 			}}
 		>
 			<ListItem
-				data-ui={"TransactionListingItem[Item]"}
+				data-ui={"TransactionListingList[Item]"}
 				hero={
 					<Container
-						data-ui="TransactionListingItem[Hero]"
+						data-ui="TransactionListingList[Hero]"
 						ui={{
 							position: "relative",
 							height: "full",
@@ -55,7 +55,7 @@ export const TransactionListingItem: FC<TransactionListingItem.Props> = ({
 
 						{isUnread ? (
 							<Badge
-								data-ui="TransactionListingItem[Badge]"
+								data-ui="TransactionListingList[Badge]"
 								ui={{
 									snapTo: "top-right",
 									tone: "secondary",
