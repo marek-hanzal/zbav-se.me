@@ -1265,9 +1265,21 @@ export type tTransactionListing = {
      */
     count: number | null;
     /**
+     * Unread inbox transaction-event count for this listing
+     */
+    unreadCount: number | null;
+    /**
      * Timestamp of the most recent activity in any transaction under this listing
      */
     lastAt: string;
+    /**
+     * Kind of the most recent transaction activity under this listing
+     */
+    lastKind: 'text' | 'gallery' | 'location' | 'package' | 'personal' | 'status-pending' | 'status-open' | 'status-resolved' | 'status-dispute-buyer' | 'status-dispute-seller' | 'status-rejected-buyer' | 'status-rejected-seller' | 'status-sold' | 'status-expired' | 'status-success' | 'status-closed';
+    /**
+     * Text payload of the most recent transaction activity when the kind is text
+     */
+    lastText: string | null;
 };
 
 /**
@@ -1335,7 +1347,7 @@ export type tTransactionListingSort = {
 /**
  * Field of the transaction-listing sort
  */
-export const tTransactionListingSortField = { createdAt: 'createdAt' } as const;
+export const tTransactionListingSortField = { createdAt: 'createdAt', lastAt: 'lastAt' } as const;
 
 /**
  * Field of the transaction-listing sort

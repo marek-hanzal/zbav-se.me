@@ -31,6 +31,17 @@ export const withTransactionListingSourceSelectFx = Effect.fn(
 	for (const item of sort ?? []) {
 		query = match(item.field)
 			.with("createdAt", () => query.orderBy("l.createdAt", item.order))
+			.with("lastAt", () =>
+				query.orderBy((eb) =>
+					eb
+						.selectFrom("transaction_entry as te")
+						.innerJoin("transaction as lt", "lt.id", "te.transactionId")
+						.select("te.createdAt")
+						.whereRef("lt.listingId", "=", "l.id")
+						.orderBy("te.createdAt", item.order)
+						.limit(1),
+				),
+			)
 			.exhaustive();
 	}
 

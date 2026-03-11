@@ -1116,9 +1116,31 @@ export const zTransactionListing = z.object({
         description: 'Listing gallery images'
     })),
     count: z.int().gte(0).nullable(),
+    unreadCount: z.int().gte(0).nullable(),
     lastAt: z.string().register(z.globalRegistry, {
         description: 'Timestamp of the most recent activity in any transaction under this listing'
-    })
+    }),
+    lastKind: z.enum([
+        'text',
+        'gallery',
+        'location',
+        'package',
+        'personal',
+        'status-pending',
+        'status-open',
+        'status-resolved',
+        'status-dispute-buyer',
+        'status-dispute-seller',
+        'status-rejected-buyer',
+        'status-rejected-seller',
+        'status-sold',
+        'status-expired',
+        'status-success',
+        'status-closed'
+    ]).register(z.globalRegistry, {
+        description: 'Kind of the most recent transaction activity under this listing'
+    }),
+    lastText: z.string().nullable()
 }).register(z.globalRegistry, {
     description: 'Aggregated transaction information per listing'
 });
@@ -1172,7 +1194,7 @@ export type zTransactionListingWhere = z.infer<typeof zTransactionListingWhere>;
 /**
  * Field of the transaction-listing sort
  */
-export const zTransactionListingSortField = z.enum(['createdAt']).register(z.globalRegistry, {
+export const zTransactionListingSortField = z.enum(['createdAt', 'lastAt']).register(z.globalRegistry, {
     description: 'Field of the transaction-listing sort'
 });
 

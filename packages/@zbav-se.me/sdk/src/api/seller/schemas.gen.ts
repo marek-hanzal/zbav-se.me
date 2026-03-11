@@ -1893,8 +1893,42 @@ export const sTransactionListing = {
             ],
             minimum: 0
         },
+        unreadCount: {
+            type: [
+                'integer',
+                'null'
+            ],
+            minimum: 0
+        },
         lastAt: {
             type: 'string'
+        },
+        lastKind: {
+            type: 'string',
+            enum: [
+                'text',
+                'gallery',
+                'location',
+                'package',
+                'personal',
+                'status-pending',
+                'status-open',
+                'status-resolved',
+                'status-dispute-buyer',
+                'status-dispute-seller',
+                'status-rejected-buyer',
+                'status-rejected-seller',
+                'status-sold',
+                'status-expired',
+                'status-success',
+                'status-closed'
+            ]
+        },
+        lastText: {
+            type: [
+                'string',
+                'null'
+            ]
         }
     },
     required: [
@@ -1903,7 +1937,10 @@ export const sTransactionListing = {
         'title',
         'gallery',
         'count',
-        'lastAt'
+        'unreadCount',
+        'lastAt',
+        'lastKind',
+        'lastText'
     ]
 } as const;
 
@@ -1989,7 +2026,8 @@ export const sTransactionListingSort = {
 export const sTransactionListingSortField = {
     type: 'string',
     enum: [
-        'createdAt'
+        'createdAt',
+        'lastAt'
     ]
 } as const;
 

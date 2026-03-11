@@ -26,6 +26,9 @@ Maps to server API: `/api/seller/*`.
 
 ## Recent updates
 
+- Seller top-level transaction list now lives in active scope at `@seller/transaction-listing/*` instead of the remaining `v0` stack.
+- Seller listing aggregate rows now use Inbox-driven unread counts grouped by listing `reference`; badge and unread emphasis must come from Inbox rather than local transaction counters.
+- Seller top-level transaction rows now render listing title, latest activity label, and latest activity time from the `transaction-listing` aggregate.
 - Draft editor localizes single-use read-only value components:
   - `@seller/draft/DraftEditPage/DraftEditor/value/CategoryValue.tsx`
   - `@seller/draft/DraftEditPage/DraftEditor/value/AgeValue.tsx`

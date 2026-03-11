@@ -47,6 +47,8 @@ This domain handles all operations on user-owned, private data. Everything in th
 - **Patch** - Mark one inbox item as archived/read
 - **Archive** - Bulk archive selected items using `InboxQuery`
 - Inbox contracts are discriminated by root `type`, not by payload-only unions
+- Inbox is the source of truth for unread state, badge counts, grouped unread counts by `reference`, and similar "needs attention" signals across the app.
+- Features must derive unread/badge behavior from Inbox instead of inventing parallel counters or transaction-status heuristics.
 - Family:
   - `transaction`
   - `reaction`

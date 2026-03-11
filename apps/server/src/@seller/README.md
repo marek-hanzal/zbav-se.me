@@ -23,6 +23,8 @@ This domain unifies former seller session and seller user capabilities behind `/
 - Status authority now lives directly on `transaction.status` with `transaction.statusUpdatedAt`,
   so seller transaction collection/count queries read current status without a separate status history table.
 - Seller transaction status actions append shared status/system timeline entries through the user transaction helpers.
+- Seller `transaction-listing` aggregates now carry the latest activity timestamp/kind/text for each listing row.
+- Seller `transaction-listing` unread counts are derived from Inbox `reference` rows (`family = transaction`, `archivedAt = null`) and should remain aligned with Inbox as the unread source of truth.
 
 ## Access Rules
 
