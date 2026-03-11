@@ -8,8 +8,6 @@ export const isValid = (draft: tDraft) => {
 	};
 	const isValid = zListingCreate.safeParse(data).success;
 
-	console.log("v", zListingCreate.safeParse(data));
-
 	return {
 		isValid,
 		data,
