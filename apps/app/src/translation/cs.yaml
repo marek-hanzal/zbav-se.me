@@ -1305,3 +1305,6 @@ seller - Transaction successful (message):
 
         Dál už tu nic není.
     static: true
+"Too small: expected string to have >=5 characters":
+    value: "Přitlač - potřebuju nejméně pět znaků."
+    static: true
