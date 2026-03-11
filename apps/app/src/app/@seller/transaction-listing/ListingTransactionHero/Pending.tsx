@@ -1,4 +1,4 @@
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Container } from "@use-pico/client/ui/container";
 import type { FC } from "react";
 
 export namespace Pending {
@@ -15,11 +15,13 @@ export const Pending: FC<Pending.Props> = ({ ui, ...props }) => {
 			ui={{
 				position: "relative",
 				width: "full",
+				tone: "neutral",
+				theme: "light",
+				background: "default",
+				opacity: "4",
 				...ui,
 			}}
 			{...props}
-		>
-			<SpinnerContainer className={"h-full"} />
-		</Container>
+		/>
 	);
 };

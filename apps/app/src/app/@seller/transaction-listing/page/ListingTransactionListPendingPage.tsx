@@ -24,11 +24,15 @@ export const ListingTransactionListPendingPage: FC<ListingTransactionListPending
 			<Container>
 				<ListingTransactionHeroPending />
 
-				<SpinnerContainer
+				<Container
 					ui={{
+						layout: "vertical-centered",
+						height: "full",
 						inner: "default",
 					}}
-				/>
+				>
+					<SpinnerContainer />
+				</Container>
 			</Container>
 		</TitleContainer>
 	);
