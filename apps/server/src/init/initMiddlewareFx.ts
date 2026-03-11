@@ -11,6 +11,7 @@ import { auth } from "~/auth/auth";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
 import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
+import { ServerDebugSchema } from "~/schema/env/ServerDebugSchema";
 import { ServerViteSchema } from "~/schema/env/ServerViteSchema";
 
 const withAuthorizationToken = (headers: Headers): null | string => {
@@ -66,6 +67,7 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 	const kysely = yield* KyselyContextFx;
 
 	const axiomConfig = ServerAxiomSchema.parse(process.env);
+	const debugConfig = ServerDebugSchema.parse(process.env);
 	const viteConfig = ServerViteSchema.parse(process.env);
 	const withOpenCors = cors({
 		origin: "*",
@@ -172,6 +174,15 @@ export const initMiddlewareFx = Effect.fn("initMiddleware")(function* () {
 			maxSize: 1024 * 50,
 		}),
 	);
+	root.use("/api/*", async (_c, next) => {
+		if (debugConfig.SERVER_DEBUG_DELAY_MS > 0) {
+			await new Promise((resolve) => {
+				setTimeout(resolve, debugConfig.SERVER_DEBUG_DELAY_MS);
+			});
+		}
+
+		return next();
+	});
 	root.use(async (c, next) => {
 		c.set("kysely", kysely);
 

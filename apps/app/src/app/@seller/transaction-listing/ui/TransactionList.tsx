@@ -8,20 +8,19 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tTransactionQuery } from "@zbav-se.me/sdk/api/seller";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
-import type { FC, ReactNode } from "react";
+import type { FC } from "react";
+import { Item } from "./Item";
 
-export namespace TransactionListContainer {
+export namespace TransactionList {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		query: tTransactionQuery;
-		renderItem(transactionId: string): ReactNode;
 		refetchInterval?: number;
 	}
 }
 
-export const TransactionListContainer: FC<TransactionListContainer.Props> = ({
+export const TransactionList: FC<TransactionList.Props> = ({
 	_suspense,
 	query,
-	renderItem,
 	refetchInterval = 5_000,
 	ui,
 	...props
@@ -107,7 +106,16 @@ export const TransactionListContainer: FC<TransactionListContainer.Props> = ({
 						gap: "default",
 					}}
 				>
-					{data.map((transactionId) => renderItem(transactionId))}
+					{data.map((transactionId) => {
+						return (
+							<Item
+								key={transactionId}
+								data-id={transactionId}
+								_suspense={_suspense}
+								transactionId={transactionId}
+							/>
+						);
+					})}
 				</Container>
 			)}
 		</Container>

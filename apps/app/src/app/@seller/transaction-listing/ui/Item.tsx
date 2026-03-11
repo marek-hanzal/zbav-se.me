@@ -2,23 +2,25 @@ import { useLocale } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Tx } from "@use-pico/client/ui/tx";
+import { Typo } from "@use-pico/client/ui/typo";
+import { toTimeDiff } from "@use-pico/common/time";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListItem } from "~/app/@common/list-item/ListItem";
+import { toStatusLabel } from "~/app/@seller/transaction/~public/toStatusLabel";
+import { Preview } from "./Item/Preview";
+import { StatusIcon } from "./Item/StatusIcon";
 
-export namespace Data {
+export namespace Item {
 	export interface Props extends ListItem.PropsEx, MarkSuspense.Props {
 		transactionId: string;
 	}
 }
 
-export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, className, ...props }) => {
+export const Item: FC<Item.Props> = ({ _suspense, transactionId, ui, className, ...props }) => {
 	const locale = useLocale();
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
-	const hero = useUpload(transaction.gallery.items);
 
 	return (
 		<LinkTo
@@ -30,15 +32,12 @@ export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, className, 
 		>
 			<ListItem
 				data-ui={"TransactionItem[Item]"}
-				hero={hero}
+				hero={<StatusIcon status={transaction.status} />}
 				title={
-					<Tx
-						label={transaction.title}
+					<Typo
+						label={toStatusLabel(transaction.status)}
 						ui={{
 							font: "bold",
-							display: "block",
-							width: "full",
-							truncate: true,
 						}}
 						className={[
 							"block",
@@ -49,22 +48,33 @@ export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, className, 
 					/>
 				}
 				bottom={
-					<Tx
-						label={transaction.location.address}
+					<Container
 						ui={{
-							text: "sm",
-							opacity: "6",
-							display: "block",
+							flow: "horizontal",
+							justify: "space-between",
 							width: "full",
-							truncate: true,
+							gap: "default",
+							items: "center",
 						}}
-						className={[
-							"block",
-							"w-full",
-							"max-w-full",
-							"min-w-0",
-						]}
-					/>
+					>
+						<Container className={"min-w-0 flex-1"}>
+							<Preview
+								_suspense={_suspense}
+								transactionId={transaction.id}
+							/>
+						</Container>
+
+						<Typo
+							label={toTimeDiff({
+								locale,
+								time: transaction.updatedAt,
+							})}
+							ui={{
+								text: "xs",
+								opacity: "7",
+							}}
+						/>
+					</Container>
 				}
 				ui={ui}
 				className={className}
