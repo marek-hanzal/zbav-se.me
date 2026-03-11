@@ -4,7 +4,6 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
-import { Pending as ListingTransactionHeroPending } from "../ListingTransactionHero/Pending";
 
 export namespace ListingTransactionListPendingPage {
 	export interface Props extends TitleContainer.Props {}
@@ -21,18 +20,14 @@ export const ListingTransactionListPendingPage: FC<ListingTransactionListPending
 			right={<HomeMenuButton />}
 			{...props}
 		>
-			<Container>
-				<ListingTransactionHeroPending />
-
-				<Container
-					ui={{
-						layout: "vertical-centered",
-						height: "full",
-						inner: "default",
-					}}
-				>
-					<SpinnerContainer />
-				</Container>
+			<Container
+				ui={{
+					layout: "vertical-centered",
+					height: "full",
+					inner: "default",
+				}}
+			>
+				<SpinnerContainer />
 			</Container>
 		</TitleContainer>
 	);

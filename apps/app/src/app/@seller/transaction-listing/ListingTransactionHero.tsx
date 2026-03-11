@@ -1,3 +1,4 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
@@ -8,13 +9,18 @@ import type { FC } from "react";
 import { useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 
-export namespace Data {
-	export interface Props extends Container.Props {
+export namespace ListingTransactionHero {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		listingId: string;
 	}
 }
 
-export const Data: FC<Data.Props> = ({ listingId, ui, ...props }) => {
+export const ListingTransactionHero: FC<ListingTransactionHero.Props> = ({
+	_suspense,
+	listingId,
+	ui,
+	...props
+}) => {
 	const { data: listing } = withListingQuery.useFetchQuery(listingId);
 	const [isOpen, setIsOpen] = useState(false);
 	const hero = useUpload(listing.gallery.items);

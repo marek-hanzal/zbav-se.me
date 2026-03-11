@@ -1,16 +1,11 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
 import type { tTransactionEntry } from "@zbav-se.me/sdk/api/user";
 import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { toStatusLabel } from "../toStatusLabel";
-
-export namespace Label {
-	export interface Props {
-		transactionEntryId: string;
-	}
-}
+import { toStatusLabel } from "~/app/@seller/transaction/~public/toStatusLabel";
 
 const toLabel = (transactionEntry: tTransactionEntry) => {
 	return match(transactionEntry)
@@ -109,7 +104,13 @@ const toLabel = (transactionEntry: tTransactionEntry) => {
 		.exhaustive();
 };
 
-export const Label: FC<Label.Props> = ({ transactionEntryId }) => {
+export namespace Label {
+	export interface Props extends MarkSuspense.Props {
+		transactionEntryId: string;
+	}
+}
+
+export const Label: FC<Label.Props> = ({ _suspense, transactionEntryId }) => {
 	const { data: transactionEntry } = withTransactionEntryQuery.useFetchQuery(transactionEntryId);
 
 	return (

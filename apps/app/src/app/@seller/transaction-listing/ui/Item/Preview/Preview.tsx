@@ -1,3 +1,4 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
 import type { tTransactionEntryQuery } from "@zbav-se.me/sdk/api/user";
@@ -6,12 +7,12 @@ import type { FC } from "react";
 import { Label } from "./Label";
 
 export namespace Preview {
-	export interface Props {
+	export interface Props extends MarkSuspense.Props {
 		transactionId: string;
 	}
 }
 
-export const Preview: FC<Preview.Props> = ({ transactionId }) => {
+export const Preview: FC<Preview.Props> = ({ _suspense, transactionId }) => {
 	const query: tTransactionEntryQuery = {
 		cursor: {
 			page: 0,
@@ -50,5 +51,10 @@ export const Preview: FC<Preview.Props> = ({ transactionId }) => {
 		);
 	}
 
-	return <Label transactionEntryId={transactionEntryId} />;
+	return (
+		<Label
+			_suspense={_suspense}
+			transactionEntryId={transactionEntryId}
+		/>
+	);
 };
