@@ -240,6 +240,10 @@ export type tInboxFilter = {
      * Inbox owner filter
      */
     userId?: string;
+    /**
+     * Normalized reference filter
+     */
+    reference?: string;
     family?: tInboxFamilyEnum;
     type?: tInboxTypeEnum;
     priority?: tInboxPriorityEnum;
@@ -260,7 +264,7 @@ export type tInboxFilter = {
 /**
  * Inbox family
  */
-export const tInboxFamilyEnum = { message: 'message', reaction: 'reaction' } as const;
+export const tInboxFamilyEnum = { transaction: 'transaction', reaction: 'reaction' } as const;
 
 /**
  * Inbox family
@@ -316,6 +320,10 @@ export type tInboxWhere = {
      * Inbox owner filter
      */
     userId?: string;
+    /**
+     * Normalized reference filter
+     */
+    reference?: string;
     family?: tInboxFamilyEnum;
     type?: tInboxTypeEnum;
     priority?: tInboxPriorityEnum;
@@ -386,10 +394,14 @@ export type tInboxBuyerMessage = {
      */
     userId: string;
     /**
+     * Normalized reference key used for inbox grouping
+     */
+    reference: string;
+    /**
      * Inbox event timestamp
      */
     timestamp: string;
-    family: 'message';
+    family: 'transaction';
     priority: tInboxPriorityEnum;
     /**
      * Archive timestamp (null = active)
@@ -419,10 +431,14 @@ export type tInboxSellerMessage = {
      */
     userId: string;
     /**
+     * Normalized reference key used for inbox grouping
+     */
+    reference: string;
+    /**
      * Inbox event timestamp
      */
     timestamp: string;
-    family: 'message';
+    family: 'transaction';
     priority: tInboxPriorityEnum;
     /**
      * Archive timestamp (null = active)
@@ -452,10 +468,14 @@ export type tInboxTransaction = {
      */
     userId: string;
     /**
+     * Normalized reference key used for inbox grouping
+     */
+    reference: string;
+    /**
      * Inbox event timestamp
      */
     timestamp: string;
-    family: 'message';
+    family: 'transaction';
     priority: tInboxPriorityEnum;
     /**
      * Archive timestamp (null = active)
@@ -500,10 +520,14 @@ export type tInboxSystem = {
      */
     userId: string;
     /**
+     * Normalized reference key used for inbox grouping
+     */
+    reference: string;
+    /**
      * Inbox event timestamp
      */
     timestamp: string;
-    family: 'message';
+    family: 'transaction';
     priority: tInboxPriorityEnum;
     /**
      * Archive timestamp (null = active)
@@ -538,10 +562,14 @@ export type tInboxUnknown = {
      */
     userId: string;
     /**
+     * Normalized reference key used for inbox grouping
+     */
+    reference: string;
+    /**
      * Inbox event timestamp
      */
     timestamp: string;
-    family: 'message';
+    family: 'transaction';
     priority: tInboxPriorityEnum;
     /**
      * Archive timestamp (null = active)
@@ -575,6 +603,10 @@ export type tInboxThumb = {
      * Recipient user identifier
      */
     userId: string;
+    /**
+     * Normalized reference key used for inbox grouping
+     */
+    reference: string;
     /**
      * Inbox event timestamp
      */
@@ -616,6 +648,10 @@ export type tInboxFavourite = {
      */
     userId: string;
     /**
+     * Normalized reference key used for inbox grouping
+     */
+    reference: string;
+    /**
      * Inbox event timestamp
      */
     timestamp: string;
@@ -644,6 +680,10 @@ export type tInboxUnfavourite = {
      * Recipient user identifier
      */
     userId: string;
+    /**
+     * Normalized reference key used for inbox grouping
+     */
+    reference: string;
     /**
      * Inbox event timestamp
      */

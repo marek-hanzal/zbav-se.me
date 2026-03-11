@@ -10,6 +10,9 @@ export const InboxFilterSchema = z
 		userId: z.string().optional().openapi({
 			description: "Inbox owner filter",
 		}),
+		reference: z.string().optional().openapi({
+			description: "Normalized reference filter",
+		}),
 		family: InboxFamilyEnumSchema.optional(),
 		type: InboxTypeEnumSchema.optional(),
 		priority: InboxPriorityEnumSchema.optional(),

@@ -228,7 +228,7 @@ export type zGalleryCountQuery = z.infer<typeof zGalleryCountQuery>;
 /**
  * Inbox family
  */
-export const zInboxFamilyEnum = z.enum(['message', 'reaction']).register(z.globalRegistry, {
+export const zInboxFamilyEnum = z.enum(['transaction', 'reaction']).register(z.globalRegistry, {
     description: 'Inbox family'
 });
 
@@ -277,6 +277,9 @@ export const zInboxFilter = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Inbox owner filter'
     }).optional(),
+    reference: z.string().register(z.globalRegistry, {
+        description: 'Normalized reference filter'
+    }).optional(),
     family: zInboxFamilyEnum.optional(),
     type: zInboxTypeEnum.optional(),
     priority: zInboxPriorityEnum.optional(),
@@ -310,6 +313,9 @@ export const zInboxWhere = z.object({
     }).optional(),
     userId: z.string().register(z.globalRegistry, {
         description: 'Inbox owner filter'
+    }).optional(),
+    reference: z.string().register(z.globalRegistry, {
+        description: 'Normalized reference filter'
     }).optional(),
     family: zInboxFamilyEnum.optional(),
     type: zInboxTypeEnum.optional(),
@@ -375,10 +381,13 @@ export const zInboxBuyerMessage = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
+    reference: z.string().register(z.globalRegistry, {
+        description: 'Normalized reference key used for inbox grouping'
+    }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
     }),
-    family: z.enum(['message']),
+    family: z.enum(['transaction']),
     priority: zInboxPriorityEnum,
     archivedAt: z.iso.datetime().nullable(),
     type: z.enum(['buyer-message']),
@@ -401,10 +410,13 @@ export const zInboxSellerMessage = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
+    reference: z.string().register(z.globalRegistry, {
+        description: 'Normalized reference key used for inbox grouping'
+    }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
     }),
-    family: z.enum(['message']),
+    family: z.enum(['transaction']),
     priority: zInboxPriorityEnum,
     archivedAt: z.iso.datetime().nullable(),
     type: z.enum(['seller-message']),
@@ -436,10 +448,13 @@ export const zInboxTransaction = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
+    reference: z.string().register(z.globalRegistry, {
+        description: 'Normalized reference key used for inbox grouping'
+    }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
     }),
-    family: z.enum(['message']),
+    family: z.enum(['transaction']),
     priority: zInboxPriorityEnum,
     archivedAt: z.iso.datetime().nullable(),
     type: z.enum(['transaction']),
@@ -466,10 +481,13 @@ export const zInboxSystem = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
+    reference: z.string().register(z.globalRegistry, {
+        description: 'Normalized reference key used for inbox grouping'
+    }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
     }),
-    family: z.enum(['message']),
+    family: z.enum(['transaction']),
     priority: zInboxPriorityEnum,
     archivedAt: z.iso.datetime().nullable(),
     type: z.enum(['system']),
@@ -496,10 +514,13 @@ export const zInboxUnknown = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
+    reference: z.string().register(z.globalRegistry, {
+        description: 'Normalized reference key used for inbox grouping'
+    }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
     }),
-    family: z.enum(['message']),
+    family: z.enum(['transaction']),
     priority: zInboxPriorityEnum,
     archivedAt: z.iso.datetime().nullable(),
     type: z.enum(['unknown']),
@@ -535,6 +556,9 @@ export const zInboxThumb = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
+    reference: z.string().register(z.globalRegistry, {
+        description: 'Normalized reference key used for inbox grouping'
+    }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
     }),
@@ -559,6 +583,9 @@ export const zInboxFavourite = z.object({
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
     }),
+    reference: z.string().register(z.globalRegistry, {
+        description: 'Normalized reference key used for inbox grouping'
+    }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'
     }),
@@ -581,6 +608,9 @@ export const zInboxUnfavourite = z.object({
     }),
     userId: z.string().register(z.globalRegistry, {
         description: 'Recipient user identifier'
+    }),
+    reference: z.string().register(z.globalRegistry, {
+        description: 'Normalized reference key used for inbox grouping'
     }),
     timestamp: z.string().register(z.globalRegistry, {
         description: 'Inbox event timestamp'

@@ -242,7 +242,8 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 				.with("buyer", () =>
 					inboxCreateFx({
 						userId: transaction.sellerId,
-						family: "message",
+						reference: transaction.listingId,
+						family: "transaction",
 						type: "buyer-message",
 						payload: {
 							transactionId: transaction.id,
@@ -254,7 +255,8 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 				.with("seller", () =>
 					inboxCreateFx({
 						userId: transaction.buyerId,
-						family: "message",
+						reference: transaction.listingId,
+						family: "transaction",
 						type: "seller-message",
 						payload: {
 							transactionId: transaction.id,
@@ -267,7 +269,8 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 					Effect.all([
 						inboxCreateFx({
 							userId: transaction.sellerId,
-							family: "message",
+							reference: transaction.listingId,
+							family: "transaction",
 							type: "transaction",
 							payload: {
 								transactionId: transaction.id,
@@ -279,7 +282,8 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 						}),
 						inboxCreateFx({
 							userId: transaction.buyerId,
-							family: "message",
+							reference: transaction.listingId,
+							family: "transaction",
 							type: "transaction",
 							payload: {
 								transactionId: transaction.id,
@@ -295,7 +299,8 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 					Effect.all([
 						inboxCreateFx({
 							userId: transaction.sellerId,
-							family: "message",
+							reference: transaction.listingId,
+							family: "transaction",
 							type: "system",
 							payload: {
 								transactionId: transaction.id,
@@ -307,7 +312,8 @@ export const transactionEntryCreateFx = Effect.fn("transactionEntryCreateFx")(fu
 						}),
 						inboxCreateFx({
 							userId: transaction.buyerId,
-							family: "message",
+							reference: transaction.listingId,
+							family: "transaction",
 							type: "system",
 							payload: {
 								transactionId: transaction.id,

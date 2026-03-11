@@ -7,6 +7,9 @@ export const InboxSchema = z
 		userId: z.string().openapi({
 			description: "Recipient user identifier",
 		}),
+		reference: z.string().openapi({
+			description: "Normalized reference key used for inbox grouping",
+		}),
 		family: InboxFamilyEnumSchema,
 		priority: InboxPriorityEnumSchema,
 	})

@@ -281,6 +281,9 @@ export const sInboxFilter = {
         userId: {
             type: 'string'
         },
+        reference: {
+            type: 'string'
+        },
         family: {
             $ref: '#/components/schemas/InboxFamilyEnum'
         },
@@ -305,7 +308,7 @@ export const sInboxFilter = {
 export const sInboxFamilyEnum = {
     type: 'string',
     enum: [
-        'message',
+        'transaction',
         'reaction'
     ]
 } as const;
@@ -348,6 +351,9 @@ export const sInboxWhere = {
             type: 'string'
         },
         userId: {
+            type: 'string'
+        },
+        reference: {
             type: 'string'
         },
         family: {
@@ -447,13 +453,16 @@ export const sInboxBuyerMessage = {
         userId: {
             type: 'string'
         },
+        reference: {
+            type: 'string'
+        },
         timestamp: {
             type: 'string'
         },
         family: {
             type: 'string',
             enum: [
-                'message'
+                'transaction'
             ]
         },
         priority: {
@@ -491,6 +500,7 @@ export const sInboxBuyerMessage = {
     required: [
         'id',
         'userId',
+        'reference',
         'timestamp',
         'family',
         'priority',
@@ -509,13 +519,16 @@ export const sInboxSellerMessage = {
         userId: {
             type: 'string'
         },
+        reference: {
+            type: 'string'
+        },
         timestamp: {
             type: 'string'
         },
         family: {
             type: 'string',
             enum: [
-                'message'
+                'transaction'
             ]
         },
         priority: {
@@ -553,6 +566,7 @@ export const sInboxSellerMessage = {
     required: [
         'id',
         'userId',
+        'reference',
         'timestamp',
         'family',
         'priority',
@@ -571,13 +585,16 @@ export const sInboxTransaction = {
         userId: {
             type: 'string'
         },
+        reference: {
+            type: 'string'
+        },
         timestamp: {
             type: 'string'
         },
         family: {
             type: 'string',
             enum: [
-                'message'
+                'transaction'
             ]
         },
         priority: {
@@ -623,6 +640,7 @@ export const sInboxTransaction = {
     required: [
         'id',
         'userId',
+        'reference',
         'timestamp',
         'family',
         'priority',
@@ -649,13 +667,16 @@ export const sInboxSystem = {
         userId: {
             type: 'string'
         },
+        reference: {
+            type: 'string'
+        },
         timestamp: {
             type: 'string'
         },
         family: {
             type: 'string',
             enum: [
-                'message'
+                'transaction'
             ]
         },
         priority: {
@@ -701,6 +722,7 @@ export const sInboxSystem = {
     required: [
         'id',
         'userId',
+        'reference',
         'timestamp',
         'family',
         'priority',
@@ -719,13 +741,16 @@ export const sInboxUnknown = {
         userId: {
             type: 'string'
         },
+        reference: {
+            type: 'string'
+        },
         timestamp: {
             type: 'string'
         },
         family: {
             type: 'string',
             enum: [
-                'message'
+                'transaction'
             ]
         },
         priority: {
@@ -771,6 +796,7 @@ export const sInboxUnknown = {
     required: [
         'id',
         'userId',
+        'reference',
         'timestamp',
         'family',
         'priority',
@@ -787,6 +813,9 @@ export const sInboxThumb = {
             type: 'string'
         },
         userId: {
+            type: 'string'
+        },
+        reference: {
             type: 'string'
         },
         timestamp: {
@@ -834,6 +863,7 @@ export const sInboxThumb = {
     required: [
         'id',
         'userId',
+        'reference',
         'timestamp',
         'family',
         'priority',
@@ -858,6 +888,9 @@ export const sInboxFavourite = {
             type: 'string'
         },
         userId: {
+            type: 'string'
+        },
+        reference: {
             type: 'string'
         },
         timestamp: {
@@ -901,6 +934,7 @@ export const sInboxFavourite = {
     required: [
         'id',
         'userId',
+        'reference',
         'timestamp',
         'family',
         'priority',
@@ -917,6 +951,9 @@ export const sInboxUnfavourite = {
             type: 'string'
         },
         userId: {
+            type: 'string'
+        },
+        reference: {
             type: 'string'
         },
         timestamp: {
@@ -960,6 +997,7 @@ export const sInboxUnfavourite = {
     required: [
         'id',
         'userId',
+        'reference',
         'timestamp',
         'family',
         'priority',

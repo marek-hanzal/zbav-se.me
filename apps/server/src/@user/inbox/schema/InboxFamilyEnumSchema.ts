@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 
 export const InboxFamilyEnumSchema = z
 	.enum([
-		"message",
+		"transaction",
 		"reaction",
 	])
 	.openapi("InboxFamilyEnum", {
