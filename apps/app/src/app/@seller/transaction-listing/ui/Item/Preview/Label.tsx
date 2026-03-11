@@ -13,18 +13,14 @@ export namespace Label {
 
 export const Label: FC<Label.Props> = ({ _suspense, isUnread, transactionEntryId }) => {
 	const { data: transactionEntry } = withTransactionEntryQuery.useFetchQuery(transactionEntryId);
-	const label =
-		transactionEntry.kind === "text"
-			? transactionEntry.payload.text
-			: toActivityLabel({
-					kind: transactionEntry.kind,
-					text: null,
-				});
 
 	return (
 		<Typo
 			data-ui="TransactionItemPreview[Value]"
-			label={label}
+			label={toActivityLabel({
+				kind: transactionEntry.kind,
+				text: transactionEntry.kind === "text" ? transactionEntry.payload.text : null,
+			})}
 			ui={{
 				text: "sm",
 				opacity: isUnread ? undefined : "6",

@@ -26,6 +26,10 @@ export const ListingTransactionListPage: FC<ListingTransactionListPage.Props> = 
 		},
 		sort: [
 			{
+				field: "status",
+				order: "asc",
+			},
+			{
 				field: "updatedAt",
 				order: "desc",
 			},
