@@ -41,6 +41,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onView, ...p
 			title: draft.title ?? "",
 		},
 		validators: {
+			onChange: TitleSchema,
 			onBlur: TitleSchema,
 			onSubmit: TitleSchema,
 		},
@@ -120,20 +121,24 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onView, ...p
 					/>
 				</Status>
 
-				<SaveContainer
-					onCancel={onCancel}
-					onSave={() => {
-						form.handleSubmit();
-					}}
-					loading={mutation.isPending}
-					disabled={!form.state.isValid || mutation.isPending}
-					textSave={<Tx label={"Continue (label)"} />}
-					textCancel={<Tx label={"Back (label)"} />}
-					saveProps={{
-						iconEnabled: ArrowRightIcon,
-						iconPosition: "right",
-					}}
-				/>
+				<form.Subscribe selector={(state) => state.isValid}>
+					{(isValid) => (
+						<SaveContainer
+							onCancel={onCancel}
+							onSave={() => {
+								form.handleSubmit();
+							}}
+							loading={mutation.isPending}
+							disabled={!isValid || mutation.isPending}
+							textSave={<Tx label={"Continue (label)"} />}
+							textCancel={<Tx label={"Back (label)"} />}
+							saveProps={{
+								iconEnabled: ArrowRightIcon,
+								iconPosition: "right",
+							}}
+						/>
+					)}
+				</form.Subscribe>
 			</Container>
 		</TitleContainer>
 	);
