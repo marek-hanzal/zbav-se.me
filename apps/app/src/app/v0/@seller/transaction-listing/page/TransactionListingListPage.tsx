@@ -1,3 +1,4 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, Suspense } from "react";
@@ -7,10 +8,13 @@ import { TransactionListingList } from "~/app/v0/@seller/transaction-listing/ui/
 import { TransactionListingListPending } from "~/app/v0/@seller/transaction-listing/ui/TransactionListingListPending";
 
 export namespace TransactionListingListPage {
-	export interface Props extends TitleContainer.Props {}
+	export interface Props extends TitleContainer.Props, MarkSuspense.Props {}
 }
 
-export const TransactionListingListPage: FC<TransactionListingListPage.Props> = (props) => {
+export const TransactionListingListPage: FC<TransactionListingListPage.Props> = ({
+	_suspense,
+	...props
+}) => {
 	return (
 		<TitleContainer
 			data-ui="SellerTransactionListingList[TitleContainer]"
