@@ -1,15 +1,17 @@
+import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
-import type { tTransactionEntry } from "@zbav-se.me/sdk/api/user";
+import type { tTransactionEntry, tTransactionEntryQuery } from "@zbav-se.me/sdk/api/user";
+import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
-export namespace PreviewValue {
+export namespace Preview {
 	export interface Props {
-		transactionEntry: tTransactionEntry;
+		transactionId: string;
 	}
 }
 
-export const PreviewValue: FC<PreviewValue.Props> = ({ transactionEntry }) => {
+const toLabel = (transactionEntry: tTransactionEntry) => {
 	return match(transactionEntry)
 		.with(
 			{
@@ -104,4 +106,60 @@ export const PreviewValue: FC<PreviewValue.Props> = ({ transactionEntry }) => {
 			() => translator.text("Transaction row - personal activity (label)"),
 		)
 		.exhaustive();
+};
+
+export const Preview: FC<Preview.Props> = ({ transactionId }) => {
+	const query: tTransactionEntryQuery = {
+		filter: {
+			transactionId,
+		},
+		sort: [
+			{
+				field: "createdAt",
+				order: "asc",
+			},
+		],
+	};
+	const { data } = withTransactionEntryQuery.useCollectionQuery(query);
+	const [transactionEntryId] = data.slice(-1);
+
+	if (!transactionEntryId) {
+		return (
+			<Typo
+				data-ui="TransactionItemPreview[Fallback]"
+				label={translator.text("Transaction row - no activity (label)")}
+				ui={{
+					text: "sm",
+					opacity: "6",
+				}}
+				className={[
+					"block",
+					"w-full",
+					"max-w-full",
+					"min-w-0",
+					"truncate",
+				]}
+			/>
+		);
+	}
+
+	const { data: transactionEntry } = withTransactionEntryQuery.useFetchQuery(transactionEntryId);
+
+	return (
+		<Typo
+			data-ui="TransactionItemPreview[Value]"
+			label={toLabel(transactionEntry)}
+			ui={{
+				text: "sm",
+				opacity: "6",
+			}}
+			className={[
+				"block",
+				"w-full",
+				"max-w-full",
+				"min-w-0",
+				"truncate",
+			]}
+		/>
+	);
 };

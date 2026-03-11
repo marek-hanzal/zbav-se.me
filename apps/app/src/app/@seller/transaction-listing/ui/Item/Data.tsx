@@ -1,5 +1,4 @@
 import { useLocale } from "@use-pico/client/hook";
-import { Icon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -11,6 +10,7 @@ import type { FC } from "react";
 import { match } from "ts-pattern";
 import { ListItem } from "~/app/@common/list-item/ListItem";
 import { Preview } from "./Preview";
+import { StatusIcon } from "./StatusIcon";
 
 export namespace Data {
 	export interface Props extends ListItem.PropsEx, MarkSuspense.Props {
@@ -32,50 +32,34 @@ export const Data: FC<Data.Props> = ({ _suspense, transactionId, ui, className, 
 		>
 			<ListItem
 				data-ui={"TransactionItem[Item]"}
-				hero={
-					<Container
-						data-ui="TransactionItem-[Hero]"
-						className={"aspect-square h-full shrink-0 overflow-hidden"}
-						ui={{
-							tone: "subtle",
-							theme: "light",
-							round: "md",
-							height: "full",
-							flow: "horizontal",
-							items: "center",
-							justify: "center",
-							background: "default",
-						}}
-					>
-						<Icon
-							icon={match(transaction.status)
-								.with("pending", () => "icon-[solar--clock-circle-linear]")
-								.with("open", () => "icon-[solar--chat-round-linear]")
-								.with(
-									"resolved",
-									"success",
-									"sold",
-									() => "icon-[solar--check-circle-linear]",
-								)
-								.with("dispute", () => "icon-[solar--danger-circle-linear]")
-								.with(
-									"rejected",
-									"expired",
-									"closed",
-									() => "icon-[solar--lock-keyhole-linear]",
-								)
-								.exhaustive()}
-							ui={{
-								text: "2xl",
-								color: "text",
-								opacity: "7",
-							}}
-						/>
-					</Container>
-				}
+				hero={<StatusIcon status={transaction.status} />}
 				title={
 					<Typo
-						label={translator.text(transaction.status)}
+						label={match(transaction.status)
+							.with("pending", () =>
+								translator.text("Transaction status pending (label)"),
+							)
+							.with("open", () => translator.text("Transaction status open (label)"))
+							.with("resolved", () =>
+								translator.text("Transaction status resolved (label)"),
+							)
+							.with("dispute", () =>
+								translator.text("Transaction status dispute (label)"),
+							)
+							.with("rejected", () =>
+								translator.text("Transaction status rejected (label)"),
+							)
+							.with("sold", () => translator.text("Transaction status sold (label)"))
+							.with("expired", () =>
+								translator.text("Transaction status expired (label)"),
+							)
+							.with("success", () =>
+								translator.text("Transaction status success (label)"),
+							)
+							.with("closed", () =>
+								translator.text("Transaction status closed (label)"),
+							)
+							.exhaustive()}
 						ui={{
 							font: "bold",
 						}}

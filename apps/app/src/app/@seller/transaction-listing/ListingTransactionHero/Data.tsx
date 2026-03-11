@@ -49,9 +49,10 @@ export const Data: FC<Data.Props> = ({ _suspense, listingId, ui, ...props }) => 
 						width: "full",
 						inner: "sm",
 						tone: "neutral",
-						theme: "dark",
+						theme: "light",
 						background: "default",
 						opacity: "8",
+						items: "center",
 						zIndex: true,
 					}}
 				>
@@ -59,13 +60,16 @@ export const Data: FC<Data.Props> = ({ _suspense, listingId, ui, ...props }) => 
 						label={listing.title}
 						ui={{
 							tone: "neutral",
-							theme: "dark",
+							theme: "light",
 							color: "text",
 							font: "bold",
 							display: "block",
 							width: "full",
 						}}
-						className={"line-clamp-2"}
+						className={[
+							"line-clamp-2",
+							"text-center",
+						]}
 					/>
 				</Container>
 			</Container>

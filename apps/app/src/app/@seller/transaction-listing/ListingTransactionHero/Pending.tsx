@@ -20,21 +20,6 @@ export const Pending: FC<Pending.Props> = ({ ui, ...props }) => {
 			{...props}
 		>
 			<SpinnerContainer className={"h-full"} />
-
-			<Container
-				data-ui="ListingTransactionHero-[TitleOverlay.pending]"
-				className={"pointer-events-none"}
-				ui={{
-					snapTo: "bottom-center",
-					width: "full",
-					inner: "sm",
-					tone: "neutral",
-					theme: "dark",
-					background: "default",
-					opacity: "8",
-					zIndex: true,
-				}}
-			/>
 		</Container>
 	);
 };

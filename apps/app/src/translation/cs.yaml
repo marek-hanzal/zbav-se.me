@@ -264,6 +264,9 @@
 3960c63d6623448c7062ab8297028d3c8009ef0d306130144895e7a4:
   ref: Transaction row - status success (label)
   value: Obchod dokončen
+3a1b3a1d80c69a71c07cd3e3bb533761f1e1262f783807d8052329c9:
+  ref: Transaction status rejected (label)
+  value: Obchod odmítnut
 3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
   ref: Price (placeholder)
   value: Cena
@@ -347,6 +350,9 @@
 4d603e3fca4e9f047b0fd3fdd009a1808b0b50eda2aa6f12c206a9c7:
   ref: Share location (button)
   value: Sdílet polohu
+4d83e7c062f2a34e98c8953735ec95520b6b39a4300df4c9742f5cb7:
+  ref: Transaction status pending (label)
+  value: Nový zájemce
 4e635fa67582dafe43092219c67fa6a2e596a963d1b95673277dda75:
   ref: search
   value: search
@@ -359,6 +365,9 @@
 4f04083c52884888c6258c7fe83a35ff1ce96d78ee8c600a0397392c:
   ref: Seller info (button)
   value: Informace o prodejci
+4ff4882e934b1e4c4ed0e5873160931aeada352a1001061997555d13:
+  ref: Transaction status dispute (label)
+  value: Řeší se problém
 51d0de4745868cd9a29e9371a60984174ca070619de07193cd91bda0:
   ref: Transaction row - status closed (label)
   value: Obchod uzavřen
@@ -368,6 +377,9 @@
 53630910d2b191f4a79a007e555fd44b9e109f75bafb3df5171ea48f:
   ref: New seller message (label)
   value: Zpráva od prodejce
+55672785780f3eaea6cb3ccba093853d44e33d6e4f984123c2b89a7a:
+  ref: Transaction status expired (label)
+  value: Obchod vypršel
 5611e161fc48366fdb56f2529712795617513c1b346552e32a53ff19:
   ref: Loading... (button)
   value: ...Rozjímám...
@@ -391,6 +403,9 @@
   value: |
     Je něco, co bys chtěl zdůraznit? Tato pole jsou pouze
     informativní určená pro detail inzerátu.
+5a8078e6e02d8cb9bd3325ff9d933c81a891ba287edbbf7175e41c29:
+  ref: Transaction status resolved (label)
+  value: Vyřešeno
 5b65a4cf7255c3e4465c81b9bc1b31317d2f4aa306b4c038a4a5b00c:
   ref: Feed category (label)
   value: Kategorie, co tě zajímají
@@ -412,6 +427,9 @@
 5f8d3eb16bf7b5c857416890f7e4c3ff3d02dfa73a7d621f9a603e9f:
   ref: Listing photo gallery (label)
   value: Nahraj fotky
+5f8fac6b4c34a106a1ca60552e94ccd263a2dd51ce2099c6de06e4f9:
+  ref: Transaction status sold (label)
+  value: Označeno jako prodané
 5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
   ref: Really delete feed (button)
   value: Opravdu?
@@ -421,6 +439,9 @@
 61324250f05e5b53c0994000ad235a587fa6c894a2414d561a434548:
   ref: Draft list (title)
   value: Rozpracované inzeráty
+61dd087b73e6d2b3291aa14c76d9dcc813946be2957f788836796746:
+  ref: Transaction status closed (label)
+  value: Obchod uzavřen
 62323b76d8ec615cba6e105b1c5c1e2e4f6e9f89de5a251ed565809f:
   ref: Transaction row - personal activity (label)
   value: Sdílí předání
@@ -602,6 +623,9 @@
 92f8ed3e921515bd08034e9707119cb1472e34759a88f45647289475:
   ref: resolved
   value: resolved
+93580224c5f7a548173e9671932098b0671d7deae93ab57295cb300b:
+  ref: Transaction status success (label)
+  value: Obchod dokončen
 93766f804027b28f5ce55c85ccb887c09c3d8e78a84074aed256ca9a:
   ref: Listing title (title)
   value: Titulek
@@ -1309,6 +1333,9 @@ ff95e127f3feec3ae1c640001d56b07697ca4fa473da4213348be958:
 ff9811e08ce9319de719611b5f4fe308df81d57b9cd88cc2ddd9d3b3:
   ref: Transaction row - status pending (label)
   value: Nový zájemce
+ffbc6be860a399d98c4f2dba58bd6deca4118189f2befade5e28ce2f:
+  ref: Transaction status open (label)
+  value: Přijatý obchod
 seller - Buyer rejected the transaction (message):
   value: |
     **Kupující odmítl obchod.**
