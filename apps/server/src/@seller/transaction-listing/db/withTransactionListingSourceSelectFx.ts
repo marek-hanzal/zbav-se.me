@@ -1,12 +1,8 @@
 import { Effect } from "effect";
-import { match } from "ts-pattern";
-import type { TransactionListingSortSchema } from "~/@seller/transaction-listing/schema/TransactionListingSortSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withTransactionListingSourceSelectFx {
-	export interface Props {
-		sort?: TransactionListingSortSchema.Type[];
-	}
+	export type Props = {};
 
 	export type Select = Effect.Effect.Success<
 		ReturnType<typeof withTransactionListingSourceSelectFx>
@@ -15,10 +11,10 @@ export namespace withTransactionListingSourceSelectFx {
 
 export const withTransactionListingSourceSelectFx = Effect.fn(
 	"withTransactionListingSourceSelectFx",
-)(function* ({ sort }: withTransactionListingSourceSelectFx.Props) {
+)(function* (_props: withTransactionListingSourceSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
-	let query = kysely
+	return kysely
 		.selectFrom("listing as l")
 		.where(({ exists, selectFrom }) =>
 			exists(
@@ -27,23 +23,4 @@ export const withTransactionListingSourceSelectFx = Effect.fn(
 					.whereRef("lt.listingId", "=", "l.id"),
 			),
 		);
-
-	for (const item of sort ?? []) {
-		query = match(item.field)
-			.with("createdAt", () => query.orderBy("l.createdAt", item.order))
-			.with("lastAt", () =>
-				query.orderBy((eb) =>
-					eb
-						.selectFrom("transaction_entry as te")
-						.innerJoin("transaction as lt", "lt.id", "te.transactionId")
-						.select("te.createdAt")
-						.whereRef("lt.listingId", "=", "l.id")
-						.orderBy("te.createdAt", item.order)
-						.limit(1),
-				),
-			)
-			.exhaustive();
-	}
-
-	return query;
 });

@@ -938,6 +938,11 @@ export type tTransaction = {
     price: number;
     priceType: tListingPriceEnum;
     currency: tCurrencyEnum;
+    lastKind: tTransactionEntryKindEnum;
+    /**
+     * Text payload of the latest activity when the latest activity is text
+     */
+    lastText: string | null;
     /**
      * Unread inbox buyer-message count for this transaction
      */
@@ -964,6 +969,34 @@ export const tTransactionStatusEnum = {
  * Current status of the listing transaction
  */
 export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
+
+/**
+ * Kind of the latest activity inside this transaction
+ */
+export const tTransactionEntryKindEnum = {
+    text: 'text',
+    gallery: 'gallery',
+    location: 'location',
+    package: 'package',
+    personal: 'personal',
+    'status-pending': 'status-pending',
+    'status-open': 'status-open',
+    'status-resolved': 'status-resolved',
+    'status-dispute-buyer': 'status-dispute-buyer',
+    'status-dispute-seller': 'status-dispute-seller',
+    'status-rejected-buyer': 'status-rejected-buyer',
+    'status-rejected-seller': 'status-rejected-seller',
+    'status-sold': 'status-sold',
+    'status-expired': 'status-expired',
+    'status-success': 'status-success',
+    'status-closed': 'status-closed',
+    null: null
+} as const;
+
+/**
+ * Kind of the latest activity inside this transaction
+ */
+export type tTransactionEntryKindEnum = typeof tTransactionEntryKindEnum[keyof typeof tTransactionEntryKindEnum];
 
 /**
  * Buyer info for the transaction
@@ -1276,39 +1309,12 @@ export type tTransactionListing = {
      * Timestamp of the most recent activity in any transaction under this listing
      */
     lastAt: string;
-    lastKind: tTransactionEntryKindEnum;
+    lastKind: tTransactionEntryKindEnum & unknown;
     /**
      * Text payload of the most recent transaction activity when the kind is text
      */
     lastText: string | null;
 };
-
-/**
- * Kind of the most recent transaction activity under this listing
- */
-export const tTransactionEntryKindEnum = {
-    text: 'text',
-    gallery: 'gallery',
-    location: 'location',
-    package: 'package',
-    personal: 'personal',
-    'status-pending': 'status-pending',
-    'status-open': 'status-open',
-    'status-resolved': 'status-resolved',
-    'status-dispute-buyer': 'status-dispute-buyer',
-    'status-dispute-seller': 'status-dispute-seller',
-    'status-rejected-buyer': 'status-rejected-buyer',
-    'status-rejected-seller': 'status-rejected-seller',
-    'status-sold': 'status-sold',
-    'status-expired': 'status-expired',
-    'status-success': 'status-success',
-    'status-closed': 'status-closed'
-} as const;
-
-/**
- * Kind of the most recent transaction activity under this listing
- */
-export type tTransactionEntryKindEnum = typeof tTransactionEntryKindEnum[keyof typeof tTransactionEntryKindEnum];
 
 /**
  * Query object for transaction-listing collection

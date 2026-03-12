@@ -756,6 +756,32 @@ export const zTransactionStatusEnum = z.enum([
 export type zTransactionStatusEnum = z.infer<typeof zTransactionStatusEnum>;
 
 /**
+ * Kind of the latest activity inside this transaction
+ */
+export const zTransactionEntryKindEnum = z.enum([
+    'text',
+    'gallery',
+    'location',
+    'package',
+    'personal',
+    'status-pending',
+    'status-open',
+    'status-resolved',
+    'status-dispute-buyer',
+    'status-dispute-seller',
+    'status-rejected-buyer',
+    'status-rejected-seller',
+    'status-sold',
+    'status-expired',
+    'status-success',
+    'status-closed'
+]).register(z.globalRegistry, {
+    description: 'Kind of the latest activity inside this transaction'
+}).nullable();
+
+export type zTransactionEntryKindEnum = z.infer<typeof zTransactionEntryKindEnum>;
+
+/**
  * Transaction data
  */
 export const zTransaction = z.object({
@@ -789,6 +815,8 @@ export const zTransaction = z.object({
     }),
     priceType: zListingPriceEnum,
     currency: zCurrencyEnum,
+    lastKind: zTransactionEntryKindEnum,
+    lastText: z.string().nullable(),
     unreadCount: z.number().register(z.globalRegistry, {
         description: 'Unread inbox buyer-message count for this transaction'
     }),
@@ -1103,32 +1131,6 @@ export const zTransactionCountQuery = z.object({
 export type zTransactionCountQuery = z.infer<typeof zTransactionCountQuery>;
 
 /**
- * Kind of the most recent transaction activity under this listing
- */
-export const zTransactionEntryKindEnum = z.enum([
-    'text',
-    'gallery',
-    'location',
-    'package',
-    'personal',
-    'status-pending',
-    'status-open',
-    'status-resolved',
-    'status-dispute-buyer',
-    'status-dispute-seller',
-    'status-rejected-buyer',
-    'status-rejected-seller',
-    'status-sold',
-    'status-expired',
-    'status-success',
-    'status-closed'
-]).register(z.globalRegistry, {
-    description: 'Kind of the most recent transaction activity under this listing'
-});
-
-export type zTransactionEntryKindEnum = z.infer<typeof zTransactionEntryKindEnum>;
-
-/**
  * Aggregated transaction information per listing
  */
 export const zTransactionListing = z.object({
@@ -1151,7 +1153,9 @@ export const zTransactionListing = z.object({
     lastAt: z.string().register(z.globalRegistry, {
         description: 'Timestamp of the most recent activity in any transaction under this listing'
     }),
-    lastKind: zTransactionEntryKindEnum,
+    lastKind: zTransactionEntryKindEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'Kind of the most recent transaction activity under this listing'
+    })),
     lastText: z.string().nullable()
 }).register(z.globalRegistry, {
     description: 'Aggregated transaction information per listing'

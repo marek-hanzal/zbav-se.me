@@ -1452,6 +1452,15 @@ export const sTransaction = {
         currency: {
             $ref: '#/components/schemas/CurrencyEnum'
         },
+        lastKind: {
+            $ref: '#/components/schemas/TransactionEntryKindEnum'
+        },
+        lastText: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
         unreadCount: {
             type: 'number'
         },
@@ -1472,6 +1481,8 @@ export const sTransaction = {
         'price',
         'priceType',
         'currency',
+        'lastKind',
+        'lastText',
         'unreadCount',
         'location'
     ]
@@ -1489,6 +1500,32 @@ export const sTransactionStatusEnum = {
         'expired',
         'success',
         'closed'
+    ]
+} as const;
+
+export const sTransactionEntryKindEnum = {
+    type: [
+        'string',
+        'null'
+    ],
+    enum: [
+        'text',
+        'gallery',
+        'location',
+        'package',
+        'personal',
+        'status-pending',
+        'status-open',
+        'status-resolved',
+        'status-dispute-buyer',
+        'status-dispute-seller',
+        'status-rejected-buyer',
+        'status-rejected-seller',
+        'status-sold',
+        'status-expired',
+        'status-success',
+        'status-closed',
+        null
     ]
 } as const;
 
@@ -1904,7 +1941,12 @@ export const sTransactionListing = {
             type: 'string'
         },
         lastKind: {
-            $ref: '#/components/schemas/TransactionEntryKindEnum'
+            allOf: [
+                {
+                    $ref: '#/components/schemas/TransactionEntryKindEnum'
+                },
+                {}
+            ]
         },
         lastText: {
             type: [
@@ -1923,28 +1965,6 @@ export const sTransactionListing = {
         'lastAt',
         'lastKind',
         'lastText'
-    ]
-} as const;
-
-export const sTransactionEntryKindEnum = {
-    type: 'string',
-    enum: [
-        'text',
-        'gallery',
-        'location',
-        'package',
-        'personal',
-        'status-pending',
-        'status-open',
-        'status-resolved',
-        'status-dispute-buyer',
-        'status-dispute-seller',
-        'status-rejected-buyer',
-        'status-rejected-seller',
-        'status-sold',
-        'status-expired',
-        'status-success',
-        'status-closed'
     ]
 } as const;
 

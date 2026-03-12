@@ -1,12 +1,16 @@
 import { Effect } from "effect";
 import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
+import { match } from "ts-pattern";
 import { withTransactionListingSourceSelectFx } from "~/@seller/transaction-listing/db/withTransactionListingSourceSelectFx";
 import type { TransactionListingSchema } from "~/@seller/transaction-listing/schema/TransactionListingSchema";
+import type { TransactionListingSortSchema } from "~/@seller/transaction-listing/schema/TransactionListingSortSchema";
 import { withGallerySelectFx } from "~/@user/gallery/db/withGallerySelectFx";
 
 export namespace withTransactionListingSelectFx {
-	export interface Props extends withTransactionListingSourceSelectFx.Props {}
+	export interface Props {
+		sort?: TransactionListingSortSchema.Type[];
+	}
 
 	export type Select = Effect.Effect.Success<ReturnType<typeof withTransactionListingSelectFx>>;
 }
@@ -15,13 +19,11 @@ type tLastKind = TransactionListingSchema.Type["lastKind"];
 
 export const withTransactionListingSelectFx = Effect.fn("withTransactionListingSelectFx")(
 	function* ({ sort }: withTransactionListingSelectFx.Props) {
-		const sourceSelect = yield* withTransactionListingSourceSelectFx({
-			sort,
-		});
+		const sourceSelect = yield* withTransactionListingSourceSelectFx({});
 
 		const gallerySelect = yield* withGallerySelectFx({});
 
-		return sourceSelect.select((eb) => {
+		let query = sourceSelect.select((eb) => {
 			const lastActivitySelect = eb
 				.selectFrom("transaction_entry as te")
 				.innerJoin("transaction as lt", "lt.id", "te.transactionId")
@@ -57,12 +59,22 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 					.where("i.type", "=", "buyer-message")
 					.where("i.archivedAt", "is", null)
 					.where(
-						sql<boolean>`${sql.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`,
+						(ieb) =>
+							sql<boolean>`${ieb.ref("i.reference")} @> ARRAY[${eb.ref("l.id")}]::text[]`,
 					)}), 0)`.as("unreadCount"),
 				sql<Date>`(${lastActivitySelect.select("te.createdAt")})`.as("lastAt"),
 				sql<tLastKind>`(${lastActivitySelect.select("te.kind")})`.as("lastKind"),
 				sql<string | null>`(${lastTextSelect})`.as("lastText"),
 			];
 		});
+
+		for (const item of sort ?? []) {
+			query = match(item.field)
+				.with("createdAt", () => query.orderBy("l.createdAt", item.order))
+				.with("lastAt", () => query.orderBy(sql.ref("lastAt"), item.order))
+				.exhaustive();
+		}
+
+		return query;
 	},
 );

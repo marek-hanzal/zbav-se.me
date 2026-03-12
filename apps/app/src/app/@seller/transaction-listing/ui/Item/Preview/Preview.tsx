@@ -1,38 +1,20 @@
-import type { MarkSuspense } from "@use-pico/client/type";
 import { Typo } from "@use-pico/client/ui/typo";
 import { translator } from "@use-pico/common/translator";
-import type { tTransactionEntryQuery } from "@zbav-se.me/sdk/api/user";
-import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
+import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import type { FC } from "react";
-import { Label } from "./Label";
+import { toActivityLabel } from "~/app/@seller/transaction/~public/toStatusLabel";
 
 export namespace Preview {
-	export interface Props extends MarkSuspense.Props {
+	export interface Props {
 		isUnread: boolean;
-		transactionId: string;
+		transaction: tTransaction;
 	}
 }
 
-export const Preview: FC<Preview.Props> = ({ _suspense, isUnread, transactionId }) => {
-	const query: tTransactionEntryQuery = {
-		cursor: {
-			page: 0,
-			size: 1,
-		},
-		filter: {
-			transactionId,
-		},
-		sort: [
-			{
-				field: "createdAt",
-				order: "desc",
-			},
-		],
-	};
-	const { data } = withTransactionEntryQuery.useCollectionQuery(query);
-	const [transactionEntryId] = data;
+export const Preview: FC<Preview.Props> = ({ isUnread, transaction }) => {
+	const { lastKind, lastText } = transaction;
 
-	if (!transactionEntryId) {
+	if (!lastKind) {
 		return (
 			<Typo
 				data-ui="TransactionItemPreview[Fallback]"
@@ -54,10 +36,24 @@ export const Preview: FC<Preview.Props> = ({ _suspense, isUnread, transactionId 
 	}
 
 	return (
-		<Label
-			_suspense={_suspense}
-			isUnread={isUnread}
-			transactionEntryId={transactionEntryId}
+		<Typo
+			data-ui="TransactionItemPreview[Value]"
+			label={toActivityLabel({
+				kind: lastKind,
+				text: lastText,
+			})}
+			ui={{
+				text: "sm",
+				opacity: isUnread ? undefined : "6",
+				font: isUnread ? "bold" : "normal",
+			}}
+			className={[
+				"block",
+				"w-full",
+				"max-w-full",
+				"min-w-0",
+				"truncate",
+			]}
 		/>
 	);
 };

@@ -18,6 +18,74 @@ export namespace TransactionListingList {
 	}
 }
 
+type tEmptyStateProps = {
+	query: tTransactionListingQuery;
+};
+
+const EmptyState: FC<tEmptyStateProps> = ({ query }) => {
+	const locale = useLocale();
+	const { data: transactionListingCount } = withTransactionListingQuery.useCountQuery(query);
+
+	return transactionListingCount.isEmpty ? (
+		<Container
+			ui={{
+				layout: "vertical-centered",
+				height: "full",
+			}}
+		>
+			<Status
+				icon={MessageIcon}
+				textTitle={translator.text("No listings with transactions (title)")}
+				textMessage={translator.text("No listings with transactions (message)")}
+				action={
+					<LinkTo
+						icon={ChevronRightIcon}
+						iconPosition={"right"}
+						to={"/$locale/seller/listing/my"}
+						params={{
+							locale,
+						}}
+						ui={{
+							background: "default",
+							border: true,
+							shadow: true,
+							round: "default",
+							size: "default",
+						}}
+					>
+						<Tx label={"Go to my listings (button)"} />
+					</LinkTo>
+				}
+				ui={{
+					tone: "brand",
+					theme: "light",
+					inner: "4xl",
+				}}
+				className="text-center"
+			/>
+		</Container>
+	) : (
+		<Container
+			ui={{
+				layout: "vertical-centered",
+				height: "full",
+			}}
+		>
+			<Status
+				icon={MessageIcon}
+				textTitle={translator.text("No listings for current filter (title)")}
+				textMessage={translator.text("No listings for current filter (message)")}
+				ui={{
+					tone: "brand",
+					theme: "light",
+					inner: "4xl",
+				}}
+				className="text-center"
+			/>
+		</Container>
+	);
+};
+
 export const TransactionListingList: FC<TransactionListingList.Props> = ({
 	_suspense,
 	query,
@@ -25,11 +93,9 @@ export const TransactionListingList: FC<TransactionListingList.Props> = ({
 	ui,
 	...props
 }) => {
-	const locale = useLocale();
 	const { data } = withTransactionListingQuery.useCollectionQuery(query, {
 		refetchInterval,
 	});
-	const { data: transactionListingCount } = withTransactionListingQuery.useCountQuery(query);
 
 	return (
 		<Container
@@ -40,64 +106,7 @@ export const TransactionListingList: FC<TransactionListingList.Props> = ({
 			}}
 			{...props}
 		>
-			{transactionListingCount.isEmpty ? (
-				<Container
-					ui={{
-						layout: "vertical-centered",
-						height: "full",
-					}}
-				>
-					<Status
-						icon={MessageIcon}
-						textTitle={translator.text("No listings with transactions (title)")}
-						textMessage={translator.text("No listings with transactions (message)")}
-						action={
-							<LinkTo
-								icon={ChevronRightIcon}
-								iconPosition={"right"}
-								to={"/$locale/seller/listing/my"}
-								params={{
-									locale,
-								}}
-								ui={{
-									background: "default",
-									border: true,
-									shadow: true,
-									round: "default",
-									size: "default",
-								}}
-							>
-								<Tx label={"Go to my listings (button)"} />
-							</LinkTo>
-						}
-						ui={{
-							tone: "brand",
-							theme: "light",
-							inner: "4xl",
-						}}
-						className="text-center"
-					/>
-				</Container>
-			) : transactionListingCount.isFilterEmpty ? (
-				<Container
-					ui={{
-						layout: "vertical-centered",
-						height: "full",
-					}}
-				>
-					<Status
-						icon={MessageIcon}
-						textTitle={translator.text("No listings for current filter (title)")}
-						textMessage={translator.text("No listings for current filter (message)")}
-						ui={{
-							tone: "brand",
-							theme: "light",
-							inner: "4xl",
-						}}
-						className="text-center"
-					/>
-				</Container>
-			) : (
+			{data.length > 0 ? (
 				<Container
 					ui={{
 						layout: "vertical-flex",
@@ -115,6 +124,8 @@ export const TransactionListingList: FC<TransactionListingList.Props> = ({
 						);
 					})}
 				</Container>
+			) : (
+				<EmptyState query={query} />
 			)}
 		</Container>
 	);
