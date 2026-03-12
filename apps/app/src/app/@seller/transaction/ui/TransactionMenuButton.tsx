@@ -1,8 +1,6 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
-import { translator } from "@use-pico/common/translator";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
-import { CloseButton } from "@zbav-se.me/ui/button";
 import { PaperclipIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useState } from "react";
@@ -25,12 +23,23 @@ export const TransactionMenuButton: FC<TransactionMenuButton.Props> = ({
 			<Button
 				data-ui={"TransactionMenuButton[Button]"}
 				iconEnabled={PaperclipIcon}
+				iconProps={{
+					ui: {
+						text: "xl",
+					},
+				}}
 				onClick={() => {
 					setIsOpen(true);
 				}}
 				ui={{
 					tone: "link",
 					theme: "light",
+					square: "sm",
+					justify: "center",
+					items: "center",
+					border: false,
+					shadow: false,
+					background: undefined,
 				}}
 				{...props}
 			/>
@@ -42,10 +51,6 @@ export const TransactionMenuButton: FC<TransactionMenuButton.Props> = ({
 					setIsOpen(false);
 				}}
 				detent={"content"}
-				header={({ close }) => ({
-					title: translator.text("Transaction options (title)"),
-					right: <CloseButton onClick={close} />,
-				})}
 			>
 				<TransactionMenu transaction={transaction} />
 			</BottomSheet>

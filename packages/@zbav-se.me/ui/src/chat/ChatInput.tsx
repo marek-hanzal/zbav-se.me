@@ -1,9 +1,6 @@
-import { PlusIcon } from "@use-pico/client/icon";
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { uiInput } from "@use-pico/client/ui/form";
-import type { StateType } from "@use-pico/common/type";
 import {
 	type FC,
 	type KeyboardEventHandler,
@@ -16,20 +13,12 @@ import {
 import { SendMessageIcon } from "../icon";
 
 export namespace ChatInput {
-	export namespace Menu {
-		export interface Props {
-			state: StateType.State<boolean>;
-			content: ReactNode;
-			props?: BottomSheet.PropsEx;
-		}
-	}
-
 	export interface Props extends Omit<Container.Props, "onSubmit" | "onChange"> {
 		onSubmit(value: string): void;
 		placeholder: string;
 		maxRows?: number;
 		loading: boolean;
-		menu?: Menu.Props;
+		left?: ReactNode;
 	}
 }
 
@@ -38,7 +27,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 	placeholder,
 	maxRows = 6,
 	loading,
-	menu,
+	left,
 	ui,
 	...props
 }) => {
@@ -107,36 +96,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 			}}
 			{...props}
 		>
-			{menu ? (
-				<>
-					<Button
-						data-ui={"ChatInput-Button-menu"}
-						iconEnabled={PlusIcon}
-						onClick={() => menu.state.set((prev) => !prev)}
-						ui={{
-							tone: "link",
-						}}
-					/>
-
-					<BottomSheet
-						data-ui={"ChatInput-BottomSheet-menu"}
-						isOpen={menu.state.value}
-						onClose={() => menu.state.set(false)}
-						{...menu.props}
-					>
-						<Container
-							data-ui={"ChatInput-BottomSheet-Container"}
-							ui={{
-								layout: "vertical-flex",
-								gap: "md",
-								inner: "default",
-							}}
-						>
-							{menu.content}
-						</Container>
-					</BottomSheet>
-				</>
-			) : null}
+			{left}
 
 			<textarea
 				ref={textareaRef}
