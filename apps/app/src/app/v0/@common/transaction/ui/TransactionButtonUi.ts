@@ -9,10 +9,10 @@ export const TransactionButtonUi: ConfirmButton.Props = {
 	ui: {
 		tone: "neutral",
 		theme: "light",
-		round: "default",
+		round: undefined,
 		background: "default",
 		text: "sm",
-		border: true,
+		border: false,
 		shadow: false,
 		width: "full",
 		size: "sm",

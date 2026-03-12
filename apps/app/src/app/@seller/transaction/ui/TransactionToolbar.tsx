@@ -31,12 +31,12 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({ transaction, 
 
 	return toolbar ? (
 		<Group
+			data-ui={"TransactionToolbar[Group]"}
 			ui={{
 				flow: "vertical",
 				opacity: "8",
 				justify: "center",
 				items: "center",
-				gap: "default",
 				width: "full",
 				...ui,
 			}}
