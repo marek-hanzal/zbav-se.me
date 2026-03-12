@@ -3,7 +3,7 @@ import type { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tTransactionEntryGallery } from "@zbav-se.me/sdk/api/user";
-import { withGalleryFetchQuery } from "@zbav-se.me/sdk/query/user/gallery";
+import { withTransactionEntryGalleryFetchQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
@@ -18,9 +18,9 @@ export namespace Gallery {
 
 export const Gallery: FC<Gallery.Props> = ({ transactionEntry, ...props }) => {
 	const locale = useLocale();
-	const { data: gallery } = withGalleryFetchQuery.useSuspenseQuery({
+	const { data: gallery } = withTransactionEntryGalleryFetchQuery.useSuspenseQuery({
 		where: {
-			id: transactionEntry.payload.galleryId,
+			transactionEntryId: transactionEntry.id,
 		},
 	});
 	const hero = useUpload(gallery.items);

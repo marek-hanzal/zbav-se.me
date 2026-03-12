@@ -1887,6 +1887,30 @@ export const sTransactionEntryPersonalCreate = {
     ]
 } as const;
 
+export const sTransactionEntryGalleryQuery = {
+    type: 'object',
+    properties: {
+        where: {
+            $ref: '#/components/schemas/TransactionEntryGalleryWhere'
+        }
+    },
+    required: [
+        'where'
+    ]
+} as const;
+
+export const sTransactionEntryGalleryWhere = {
+    type: 'object',
+    properties: {
+        transactionEntryId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'transactionEntryId'
+    ]
+} as const;
+
 export const sUploadCreate = {
     type: 'object',
     properties: {

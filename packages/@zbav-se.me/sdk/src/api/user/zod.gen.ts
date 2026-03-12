@@ -1222,6 +1222,30 @@ export const zTransactionEntryCreate = z.union([
 export type zTransactionEntryCreate = z.infer<typeof zTransactionEntryCreate>;
 
 /**
+ * Gallery lookup scoped by transaction entry identifier
+ */
+export const zTransactionEntryGalleryWhere = z.object({
+    transactionEntryId: z.string().register(z.globalRegistry, {
+        description: 'Transaction entry identifier linked to the gallery'
+    })
+}).register(z.globalRegistry, {
+    description: 'Gallery lookup scoped by transaction entry identifier'
+});
+
+export type zTransactionEntryGalleryWhere = z.infer<typeof zTransactionEntryGalleryWhere>;
+
+/**
+ * Query object for transaction-entry gallery fetch
+ */
+export const zTransactionEntryGalleryQuery = z.object({
+    where: zTransactionEntryGalleryWhere
+}).register(z.globalRegistry, {
+    description: 'Query object for transaction-entry gallery fetch'
+});
+
+export type zTransactionEntryGalleryQuery = z.infer<typeof zTransactionEntryGalleryQuery>;
+
+/**
  * Data for creating a new upload
  */
 export const zUploadCreate = z.object({
@@ -1578,6 +1602,21 @@ export type zapiTransactionEntryFetchRequest = z.infer<typeof zApiTransactionEnt
 export const zApiTransactionEntryFetchResponse = zTransactionEntry;
 
 export type zapiTransactionEntryFetchResponse = z.infer<typeof zApiTransactionEntryFetchResponse>;
+
+export const zApiTransactionEntryGalleryFetchData = z.object({
+    body: zTransactionEntryGalleryQuery.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
+});
+
+export type zapiTransactionEntryGalleryFetchRequest = z.infer<typeof zApiTransactionEntryGalleryFetchData>;
+
+/**
+ * Gallery linked to the requested transaction entry
+ */
+export const zApiTransactionEntryGalleryFetchResponse = zGallery;
+
+export type zapiTransactionEntryGalleryFetchResponse = z.infer<typeof zApiTransactionEntryGalleryFetchResponse>;
 
 export const zApiUploadCreateData = z.object({
     body: zUploadCreate.optional(),

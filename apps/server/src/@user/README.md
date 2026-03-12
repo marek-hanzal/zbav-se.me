@@ -29,6 +29,7 @@ This domain handles all operations on user-owned, private data. Everything in th
   - **Collection** - List transaction entries with query/filter/sort/cursor
   - **Count** - Count transaction entries for a query
   - **Fetch** - Get one transaction entry by query
+  - **Gallery fetch** - Get gallery content for one gallery entry after transaction participation is validated
   - **Create** - Create one user-authored typed transaction entry
 - Transaction entry contracts are discriminated by root `kind`, not by payload-only unions
 - **Transaction Entry Kinds**:
@@ -70,6 +71,7 @@ This domain handles all operations on user-owned, private data. Everything in th
   - `where.reference` means "reference array contains this value"
   - `where.referenceIn` means "reference array overlaps any of these values"
 - Inbox collection/count coalesces `buyer-message` and `seller-message` rows by `payload.transactionId`, always keeping the newest inbox row for a thread.
+- Owner-scoped `@user/gallery/*` fetches must not be reused for transaction conversation rendering; timeline gallery access goes through `@user/transaction-entry/gallery/fetch`, which validates transaction participation first and only then returns the linked gallery.
 
 ### Transaction Timeline
 - Transaction communication now enters through the unified **Transaction Entry** API.
