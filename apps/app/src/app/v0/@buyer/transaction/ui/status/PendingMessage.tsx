@@ -1,10 +1,10 @@
-import { Container } from "@use-pico/client/ui/container";
-import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
+import type { Container } from "@use-pico/client/ui/container";
+import { Group } from "@use-pico/client/ui/group";
+import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
-import { BuyerInfoButton } from "~/app/@seller/transaction/~public/BuyerInfoButton";
+import { SellerInfoButton } from "~/app/@buyer/listing/~public/SellerInfoButton";
 import { MessageButtonUi } from "~/app/v0/@common/transaction/ui/MessageButtonUi";
-import { AcceptButton } from "./button/AcceptButton";
-import { RejectButton } from "./button/RejectButton";
+import { RejectButton } from "../button/RejectButton";
 
 export namespace PendingMessage {
 	export interface Props extends Container.Props {
@@ -14,12 +14,11 @@ export namespace PendingMessage {
 
 export const PendingMessage: FC<PendingMessage.Props> = ({ transaction, ui, ...props }) => {
 	return (
-		<Container
+		<Group
 			ui={{
 				round: "default",
 				flow: "vertical",
-				gap: "default",
-				tone: "link",
+				tone: "primary",
 				...ui,
 			}}
 			className={[
@@ -28,13 +27,8 @@ export const PendingMessage: FC<PendingMessage.Props> = ({ transaction, ui, ...p
 			]}
 			{...props}
 		>
-			<BuyerInfoButton
-				transactionId={transaction.id}
-				{...MessageButtonUi}
-			/>
-
-			<AcceptButton
-				transaction={transaction}
+			<SellerInfoButton
+				listingId={transaction.listingId}
 				{...MessageButtonUi}
 			/>
 
@@ -42,6 +36,6 @@ export const PendingMessage: FC<PendingMessage.Props> = ({ transaction, ui, ...p
 				transaction={transaction}
 				{...MessageButtonUi}
 			/>
-		</Container>
+		</Group>
 	);
 };

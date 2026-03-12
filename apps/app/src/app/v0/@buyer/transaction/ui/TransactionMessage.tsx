@@ -4,7 +4,7 @@ import type { FC } from "react";
 import { match } from "ts-pattern";
 import { DisputeMessage } from "~/app/v0/@buyer/transaction/ui/status/DisputeMessage";
 import { OpenMessage } from "~/app/v0/@buyer/transaction/ui/status/OpenMessage";
-import { PendingMessage } from "./PendingMessage";
+import { PendingMessage } from "./status/PendingMessage";
 
 export namespace TransactionMessage {
 	export interface Props extends Container.Props {
