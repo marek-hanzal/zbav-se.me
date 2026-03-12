@@ -5,8 +5,6 @@ import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef, useState } from "react";
 import { TransactionChat } from "~/app/@buyer/transaction/~public/TransactionChat";
-import { TransactionMessage } from "~/app/@buyer/transaction/~public/TransactionMessage";
-import { TransactionToolbar } from "~/app/@buyer/transaction/~public/TransactionToolbar";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
@@ -103,11 +101,7 @@ export const Transaction: FC<Transaction.Props> = ({
 						ui={{
 							inner: "default",
 						}}
-					>
-						<TransactionMessage transaction={transaction} />
-
-						<TransactionToolbar transaction={transaction} />
-					</TransactionEntryList>
+					/>
 				</Container>
 
 				<TransactionChat
