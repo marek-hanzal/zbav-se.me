@@ -120,6 +120,7 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 							ui={{
 								layout: "vertical-flex",
 								gap: "default",
+								opacity: "7",
 							}}
 						>
 							<Typo
