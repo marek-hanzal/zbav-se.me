@@ -23,6 +23,10 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 		filter: {
 			active: true,
 		},
+		cursor: {
+			page: 0,
+			size: 1000,
+		},
 		sort: [
 			{
 				field: "lastAt",
@@ -34,6 +38,10 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 	const inactiveQuery: tTransactionListingQuery = {
 		filter: {
 			active: false,
+		},
+		cursor: {
+			page: 0,
+			size: 1000,
 		},
 		sort: [
 			{

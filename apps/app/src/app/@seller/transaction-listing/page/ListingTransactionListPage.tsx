@@ -24,6 +24,10 @@ export const ListingTransactionListPage: FC<ListingTransactionListPage.Props> = 
 		where: {
 			listingId,
 		},
+		cursor: {
+			page: 0,
+			size: 1000,
+		},
 		sort: [
 			{
 				field: "status",
