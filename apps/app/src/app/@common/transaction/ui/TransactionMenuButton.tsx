@@ -1,17 +1,22 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { PaperclipIcon } from "@zbav-se.me/ui/icon";
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 import { useState } from "react";
 
 export namespace TransactionMenuButton {
-	export interface Props extends Button.Props {
-		//
+	export type Close = () => void;
+
+	export interface Props extends Omit<Button.Props, "children"> {
+		children(close: Close): ReactNode;
 	}
 }
 
 export const TransactionMenuButton: FC<TransactionMenuButton.Props> = ({ children, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
+	const close = () => {
+		setIsOpen(false);
+	};
 
 	return (
 		<>
@@ -42,12 +47,10 @@ export const TransactionMenuButton: FC<TransactionMenuButton.Props> = ({ childre
 			<BottomSheet
 				data-ui={"TransactionMenuButton[BottomSheet]"}
 				isOpen={isOpen}
-				onClose={() => {
-					setIsOpen(false);
-				}}
+				onClose={close}
 				detent={"content"}
 			>
-				{children}
+				{children(close)}
 			</BottomSheet>
 		</>
 	);
