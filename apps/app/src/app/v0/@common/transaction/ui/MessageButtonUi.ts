@@ -3,7 +3,7 @@ import type { ConfirmButton } from "@use-pico/client/ui/button";
 export const MessageButtonUi: ConfirmButton.Props = {
 	iconProps: {
 		ui: {
-			text: "xl",
+			text: "2xl",
 		},
 	},
 	ui: {
@@ -11,10 +11,10 @@ export const MessageButtonUi: ConfirmButton.Props = {
 		theme: "light",
 		round: undefined,
 		background: "default",
-		text: "sm",
+		text: "lg",
 		border: false,
 		shadow: false,
 		width: "full",
-		size: "sm",
+		size: "md",
 	},
 };

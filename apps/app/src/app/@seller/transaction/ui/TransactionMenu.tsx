@@ -18,6 +18,7 @@ export const TransactionMenu: FC<TransactionMenu.Props> = ({ transaction, ui, ..
 				flow: "vertical",
 				gap: "md",
 				width: "full",
+				inner: "default",
 				...ui,
 			}}
 			{...props}

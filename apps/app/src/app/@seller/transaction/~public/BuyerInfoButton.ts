@@ -1,1 +1,1 @@
-export { BuyerInfoButton } from "../ui/BuyerInfoButton";
+export { BuyerInfoButton } from "../ui/button/BuyerInfoButton";

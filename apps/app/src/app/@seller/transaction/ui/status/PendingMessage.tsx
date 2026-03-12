@@ -22,10 +22,6 @@ export const PendingMessage: FC<PendingMessage.Props> = ({ transaction, ui, ...p
 				tone: "link",
 				...ui,
 			}}
-			className={[
-				"w-2/3",
-				"ml-auto",
-			]}
 			{...props}
 		>
 			<BuyerInfoButton

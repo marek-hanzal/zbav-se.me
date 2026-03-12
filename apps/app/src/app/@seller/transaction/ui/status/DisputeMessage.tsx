@@ -26,10 +26,6 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...p
 				tone: "link",
 				...ui,
 			}}
-			className={[
-				"w-2/3",
-				"ml-auto",
-			]}
 			{...props}
 		>
 			<PackageButton

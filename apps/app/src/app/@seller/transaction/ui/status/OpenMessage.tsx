@@ -26,10 +26,6 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ transaction, ui, ...props }
 				tone: "link",
 				...ui,
 			}}
-			className={[
-				"w-2/3",
-				"ml-auto",
-			]}
 			{...props}
 		>
 			<PackageButton

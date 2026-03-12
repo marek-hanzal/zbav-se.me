@@ -26,10 +26,6 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ transaction, ui, ...props }
 				tone: "primary",
 				...ui,
 			}}
-			className={[
-				"w-2/3",
-				"ml-auto",
-			]}
 			{...props}
 		>
 			<PersonalButton
