@@ -29,7 +29,6 @@ export const Gallery: FC<Gallery.Props> = ({ transactionEntry, ...props }) => {
 	return (
 		<TypeContainer
 			direction={transactionEntry.direction}
-			framed={false}
 			ui={{
 				position: "relative",
 				theme: undefined,

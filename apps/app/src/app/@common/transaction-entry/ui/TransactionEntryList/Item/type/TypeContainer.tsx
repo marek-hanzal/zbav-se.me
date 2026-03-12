@@ -6,25 +6,18 @@ import { match } from "ts-pattern";
 export namespace TypeContainer {
 	export interface Props extends Container.Props {
 		direction: tTransactionEntryDirectionEnum;
-		framed?: boolean;
 	}
 }
 
-export const TypeContainer: FC<TypeContainer.Props> = ({
-	direction,
-	framed = true,
-	ui,
-	className,
-	...props
-}) => {
+export const TypeContainer: FC<TypeContainer.Props> = ({ direction, ui, className, ...props }) => {
 	return (
 		<Container
 			ui={{
 				theme: "light",
 				background: "alt",
-				border: framed,
-				inner: framed ? "default" : undefined,
-				round: framed ? "default" : undefined,
+				border: true,
+				inner: "default",
+				round: "default",
 				...match<typeof direction, uiContainer.Ui>(direction)
 					.with("in", () => {
 						return {
