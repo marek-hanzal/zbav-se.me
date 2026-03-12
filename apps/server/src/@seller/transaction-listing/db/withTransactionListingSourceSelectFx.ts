@@ -19,17 +19,17 @@ export const withTransactionListingSourceSelectFx = Effect.fn(
 		.selectFrom("listing as l")
 		.selectAll("l")
 		.select((eb) => {
-			return jsonObjectFrom(
-				eb
-					.selectFrom("transaction_entry as te")
-					.selectAll("te")
-					.innerJoin("transaction as lt", "lt.id", "te.transactionId")
-					.whereRef("lt.listingId", "=", "l.id")
-					.orderBy("te.createdAt", "desc")
-					.limit(1),
-			)
-				.$notNull()
-				.as("entry");
+			const lastActivitySelect = eb
+				.selectFrom("transaction_entry as te")
+				.innerJoin("transaction as lt", "lt.id", "te.transactionId")
+				.whereRef("lt.listingId", "=", "l.id")
+				.orderBy("te.createdAt", "desc")
+				.limit(1);
+
+			return [
+				jsonObjectFrom(lastActivitySelect.selectAll("te")).$notNull().as("entry"),
+				lastActivitySelect.select("te.createdAt").$asScalar().$notNull().as("lastAt"),
+			];
 		})
 		.where(({ exists, selectFrom }) =>
 			exists(

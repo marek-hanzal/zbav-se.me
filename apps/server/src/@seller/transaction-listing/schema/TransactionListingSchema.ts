@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
-import { TransactionEntryKindEnumSchema } from "~/database/@enum/TransactionEntryKindEnumSchema";
+import { TransactionEntrySchema } from "~/@user/transaction-entry/schema/TransactionEntrySchema";
 
 export const TransactionListingSchema = z
 	.object({
@@ -23,17 +23,11 @@ export const TransactionListingSchema = z
 			description: "Unread inbox transaction-event count for this listing",
 			type: "number",
 		}),
+		entry: TransactionEntrySchema,
 		lastAt: z.coerce.date().openapi({
 			description:
 				"Timestamp of the most recent activity in any transaction under this listing",
 			type: "string",
-		}),
-		lastKind: TransactionEntryKindEnumSchema.openapi({
-			description: "Kind of the most recent transaction activity under this listing",
-		}),
-		lastText: z.string().nullable().openapi({
-			description:
-				"Text payload of the most recent transaction activity when the kind is text",
 		}),
 	})
 	.openapi("TransactionListing", {
