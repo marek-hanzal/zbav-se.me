@@ -1,6 +1,6 @@
 import { Icon } from "@use-pico/client/icon";
-import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
+import { Typo } from "@use-pico/client/ui/typo";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import type { FC } from "react";
 import { match } from "ts-pattern";
@@ -33,7 +33,7 @@ export const StatusIcon: FC<StatusIcon.Props> = ({ status, unreadCount = 0 }) =>
 			<Icon
 				icon={match(status)
 					.with("pending", () => "icon-[solar--clock-circle-linear]")
-					.with("open", () => "icon-[solar--chat-round-linear]")
+					.with("open", () => "icon-[solar--dialog-linear]")
 					.with("resolved", "success", "sold", () => "icon-[solar--check-circle-linear]")
 					.with("dispute", () => "icon-[solar--danger-circle-linear]")
 					.with(
@@ -51,17 +51,15 @@ export const StatusIcon: FC<StatusIcon.Props> = ({ status, unreadCount = 0 }) =>
 			/>
 
 			{isUnread ? (
-				<Badge
+				<Typo
 					data-ui="TransactionItem[Badge]"
 					ui={{
-						snapTo: "top-right",
+						snapTo: "bottom-left",
 						tone: "secondary",
 						theme: "light",
-						badge: "xs",
 					}}
-				>
-					{unreadCount > 9 ? "9+" : unreadCount}
-				</Badge>
+					label={`x${unreadCount > 9 ? "9+" : unreadCount}`}
+				/>
 			) : null}
 		</Container>
 	);

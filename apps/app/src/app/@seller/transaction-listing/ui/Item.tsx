@@ -8,8 +8,7 @@ import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { ListItem } from "~/app/@common/list-item/ListItem";
-import { toStatusLabel } from "~/app/@seller/transaction/~public/toStatusLabel";
-import { Preview } from "./Item/Preview";
+import { toActivityLabel, toStatusLabel } from "~/app/@seller/transaction/~public/toStatusLabel";
 import { StatusIcon } from "./Item/StatusIcon";
 
 export namespace Item {
@@ -44,9 +43,10 @@ export const Item: FC<Item.Props> = ({ _suspense, transactionId, ui, className, 
 					<Typo
 						label={toStatusLabel(transaction.status)}
 						ui={{
-							font: "bold",
-							tone: isUnread ? "neutral" : "subtle",
+							tone: "neutral",
 							theme: "light",
+							color: "lead",
+							font: isUnread ? "bold" : "normal",
 						}}
 						className={[
 							"block",
@@ -59,17 +59,32 @@ export const Item: FC<Item.Props> = ({ _suspense, transactionId, ui, className, 
 				bottom={
 					<Container
 						ui={{
-							flow: "horizontal",
-							justify: "space-between",
+							flow: "vertical",
 							width: "full",
-							gap: "default",
-							items: "center",
+							items: "start",
 						}}
 					>
 						<Container className={"min-w-0 flex-1"}>
-							<Preview
-								isUnread={isUnread}
-								transaction={transaction}
+							<Typo
+								data-ui="TransactionItemPreview[Value]"
+								label={toActivityLabel({
+									entry: transaction.entry,
+								})}
+								ui={{
+									tone: "neutral",
+									theme: "light",
+									color: "lead",
+									text: "sm",
+									opacity: isUnread ? undefined : "6",
+									font: "normal",
+								}}
+								className={[
+									"block",
+									"w-full",
+									"max-w-full",
+									"min-w-0",
+									"truncate",
+								]}
 							/>
 						</Container>
 
@@ -81,7 +96,7 @@ export const Item: FC<Item.Props> = ({ _suspense, transactionId, ui, className, 
 							ui={{
 								text: "xs",
 								opacity: isUnread ? undefined : "7",
-								font: isUnread ? "bold" : "normal",
+								font: "normal",
 							}}
 						/>
 					</Container>

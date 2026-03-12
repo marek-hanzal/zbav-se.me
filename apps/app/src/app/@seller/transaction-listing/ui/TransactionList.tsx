@@ -1,5 +1,6 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
+import { EmptyState } from "@use-pico/client/ui/empty-state";
 import type { tTransactionQuery } from "@zbav-se.me/sdk/api/seller";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import type { FC } from "react";
@@ -33,7 +34,18 @@ export const TransactionList: FC<TransactionList.Props> = ({
 			}}
 			{...props}
 		>
-			{data.length > 0 ? (
+			<EmptyState
+				check={[
+					{
+						check() {
+							return !data.length;
+						},
+						render() {
+							return <Empty query={query} />;
+						},
+					},
+				]}
+			>
 				<Container
 					ui={{
 						layout: "vertical-flex",
@@ -51,9 +63,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						);
 					})}
 				</Container>
-			) : (
-				<Empty query={query} />
-			)}
+			</EmptyState>
 		</Container>
 	);
 };
