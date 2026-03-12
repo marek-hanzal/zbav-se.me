@@ -1,19 +1,20 @@
 import { useLocale } from "@use-pico/client/hook";
+import type { Container as ContainerType } from "@use-pico/client/ui/container";
 import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tTransactionEntryPersonal } from "@zbav-se.me/sdk/api/user";
 import { withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
-import { TypeContainer } from "./TypeContainer";
+import { TypeContainer } from "../TypeContainer";
 
-export namespace Personal {
-	export interface Props extends Container.Props {
+export namespace Data {
+	export interface Props extends ContainerType.Props {
 		transactionEntry: tTransactionEntryPersonal;
 	}
 }
 
-export const Personal: FC<Personal.Props> = ({ transactionEntry, ...props }) => {
+export const Data: FC<Data.Props> = ({ transactionEntry, ...props }) => {
 	const locale = useLocale();
 	const { data: location } = withLocationFetchQuery.useSuspenseQuery({
 		where: {

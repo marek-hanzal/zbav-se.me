@@ -1,35 +1,40 @@
 import { useLocale } from "@use-pico/client/hook";
 import type { Container } from "@use-pico/client/ui/container";
-import { Mx } from "@use-pico/client/ui/mx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
-import type { tTransactionEntryCommon } from "@zbav-se.me/sdk/api/user";
+import type { tTransactionEntryLocation } from "@zbav-se.me/sdk/api/user";
+import { withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
-import { TypeContainer } from "./TypeContainer";
+import { TypeContainer } from "../TypeContainer";
 
-export namespace Common {
+export namespace Data {
 	export interface Props extends Container.Props {
-		/**
-		 * From which point of view the message is displayed
-		 */
-		side: tUserSideEnum;
-		transactionEntry: tTransactionEntryCommon;
+		transactionEntry: tTransactionEntryLocation;
 	}
 }
 
-export const Common: FC<Common.Props> = ({ side, transactionEntry, ...props }) => {
+export const Data: FC<Data.Props> = ({ transactionEntry, ...props }) => {
 	const locale = useLocale();
+	const { data: location } = withLocationFetchQuery.useSuspenseQuery({
+		where: {
+			id: transactionEntry.payload.locationId,
+		},
+	});
 
 	return (
 		<TypeContainer
-			data-ui={"CommonEntry[TypeContainer]"}
 			direction={transactionEntry.direction}
+			ui={{
+				flow: "vertical",
+			}}
 			{...props}
 		>
-			<Mx
-				label={`${side} - ${transactionEntry.payload.text}`}
-				fallback={transactionEntry.payload.text}
+			<Typo
+				label={location.address}
+				ui={{
+					wrap: "wrap",
+				}}
+				className={"py-1"}
 			/>
 
 			<Typo

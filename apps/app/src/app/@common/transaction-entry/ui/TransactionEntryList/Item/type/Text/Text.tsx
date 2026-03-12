@@ -6,13 +6,10 @@ import { toTimeDiff } from "@use-pico/common/time";
 import type { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import type { tTransactionEntryText } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
-import { TypeContainer } from "./TypeContainer";
+import { TypeContainer } from "../TypeContainer";
 
 export namespace Text {
 	export interface Props extends Container.Props {
-		/**
-		 * From which point of view the message is displayed
-		 */
 		side: tUserSideEnum;
 		transactionEntry: tTransactionEntryText;
 	}

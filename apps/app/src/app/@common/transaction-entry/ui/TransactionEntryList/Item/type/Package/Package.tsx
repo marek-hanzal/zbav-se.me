@@ -1,13 +1,14 @@
 import { useLocale } from "@use-pico/client/hook";
 import { ExternalIcon, Icon } from "@use-pico/client/icon";
-import { type Container, LabelValue } from "@use-pico/client/ui/container";
+import type { Container } from "@use-pico/client/ui/container";
+import { LabelValue } from "@use-pico/client/ui/container";
 import { Typo, uiTypo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
 import type { tTransactionEntryPackage } from "@zbav-se.me/sdk/api/user";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { TypeContainer } from "./TypeContainer";
+import { TypeContainer } from "../TypeContainer";
 
 export namespace Package {
 	export interface Props extends Container.Props {

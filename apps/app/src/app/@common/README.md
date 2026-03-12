@@ -84,7 +84,7 @@ When adding to `@common`:
 - Transaction-entry rendering is split into focused parts:
   - `@common/transaction-entry/TransactionEntryList/TransactionEntryList.tsx` now owns collection fetch + container composition directly and publicly acknowledges `MarkSuspense.Props`.
   - `@common/transaction-entry/TransactionEntryList/Item/Data.tsx` owns `transaction_entry.kind` dispatch (`text/status/gallery/location/personal/package`).
-  - `@common/transaction-entry/TransactionEntryList/Item/type/*` contains local entry render variants used only by the list item renderer.
+  - `@common/transaction-entry/TransactionEntryList/Item/type/*` contains folder-local entry render variants used only by the list item renderer; async entry types that fetch extra data (`gallery`, `location`, `personal`) follow the local `Component/Data/Pending` pattern to keep load-state height stable, while plain text/common/package renders stay inline without extra suspense noise.
   - `@common/transaction-entry/ui/TransactionEntryList/Item/type/TypeContainer.tsx` now holds the shared direction-aware bubble container used by the entry type renderers.
   - `@common/transaction-entry/ui/button/LocationButton/*` now owns the shared transaction-entry location action flow; it no longer lives in the old `v0/@common/location` stack and accepts the shared transaction menu `close` callback.
   - `Gallery/*` uses local `Suspense -> Data/Pending` composition and reads linked gallery content through the transaction-entry gallery endpoint, not the owner-scoped gallery fetch route.
