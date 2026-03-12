@@ -1,32 +1,32 @@
-import { Container, type uiContainer } from "@use-pico/client/ui/container";
+import type { uiContainer } from "@use-pico/client/ui/container";
+import { Group } from "@use-pico/client/ui/group";
 import type { tTransactionEntryDirectionEnum } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
 export namespace TypeContainer {
-	export interface Props extends Container.Props {
+	export interface Props extends Group.Props {
 		direction: tTransactionEntryDirectionEnum;
 	}
 }
 
 export const TypeContainer: FC<TypeContainer.Props> = ({ direction, ui, className, ...props }) => {
 	return (
-		<Container
+		<Group
 			ui={{
 				theme: "light",
 				background: "alt",
-				border: true,
 				inner: "default",
-				round: "default",
 				...match<typeof direction, uiContainer.Ui>(direction)
 					.with("in", () => {
 						return {
-							tone: "link",
+							tone: "neutral",
 						};
 					})
 					.with("out", () => {
 						return {
-							tone: "primary",
+							tone: "link",
+							opacity: "7",
 						};
 					})
 					.with("system", () => {
@@ -38,7 +38,7 @@ export const TypeContainer: FC<TypeContainer.Props> = ({ direction, ui, classNam
 				...ui,
 			}}
 			className={[
-				"w-2/3",
+				"w-4/5",
 				direction === "out" ? "ml-auto" : undefined,
 				direction === "system" ? "w-full" : undefined,
 				className,

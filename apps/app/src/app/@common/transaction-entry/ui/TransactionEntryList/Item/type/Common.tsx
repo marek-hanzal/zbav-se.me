@@ -23,6 +23,7 @@ export const Common: FC<Common.Props> = ({ side, transactionEntry, ...props }) =
 
 	return (
 		<TypeContainer
+			data-ui={"CommonEntry[TypeContainer]"}
 			direction={transactionEntry.direction}
 			{...props}
 		>

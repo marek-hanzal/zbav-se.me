@@ -34,6 +34,7 @@ export const Gallery: FC<Gallery.Props> = ({ transactionEntry, ...props }) => {
 				theme: undefined,
 				background: undefined,
 				round: undefined,
+				inner: undefined,
 			}}
 			className={"h-48"}
 			{...props}
