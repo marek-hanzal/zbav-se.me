@@ -35,6 +35,10 @@ export const Data: FC<Data.Props> = ({
 			filter: {
 				transactionId,
 			},
+			cursor: {
+				page: 0,
+				size: 1000,
+			},
 			sort: [
 				{
 					field: "createdAt",
