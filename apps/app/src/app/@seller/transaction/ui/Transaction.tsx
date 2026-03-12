@@ -95,7 +95,12 @@ export const Transaction: FC<Transaction.Props> = ({
 					</TransactionEntryList>
 				</Container>
 
-				<TransactionChat transaction={transaction} />
+				<TransactionChat
+					transaction={transaction}
+					ui={{
+						inner: "default",
+					}}
+				/>
 			</Container>
 		</Container>
 	);
