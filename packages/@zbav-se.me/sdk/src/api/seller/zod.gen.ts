@@ -1390,6 +1390,9 @@ export const zTransactionListingFilter = z.object({
     fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
     }).optional(),
+    active: z.boolean().register(z.globalRegistry, {
+        description: 'When true, match listings with unread buyer-message inbox activity; when false, match listings without unread buyer-message inbox activity'
+    }).optional(),
     userId: z.string().register(z.globalRegistry, {
         description: 'This filter matches listings of a specific seller (by userId)'
     }).optional()
@@ -1411,6 +1414,9 @@ export const zTransactionListingWhere = z.object({
     }).optional(),
     fulltext: z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
+    }).optional(),
+    active: z.boolean().register(z.globalRegistry, {
+        description: 'When true, match listings with unread buyer-message inbox activity; when false, match listings without unread buyer-message inbox activity'
     }).optional(),
     userId: z.string().register(z.globalRegistry, {
         description: 'This filter matches listings of a specific seller (by userId)'

@@ -2359,6 +2359,9 @@ export const sTransactionListingFilter = {
         fulltext: {
             type: 'string'
         },
+        active: {
+            type: 'boolean'
+        },
         userId: {
             type: 'string'
         }
@@ -2379,6 +2382,9 @@ export const sTransactionListingWhere = {
         },
         fulltext: {
             type: 'string'
+        },
+        active: {
+            type: 'boolean'
         },
         userId: {
             type: 'string'

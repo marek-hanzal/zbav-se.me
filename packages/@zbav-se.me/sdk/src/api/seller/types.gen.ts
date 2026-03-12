@@ -1568,6 +1568,10 @@ export type tTransactionListingFilter = {
      */
     fulltext?: string;
     /**
+     * When true, match listings with unread buyer-message inbox activity; when false, match listings without unread buyer-message inbox activity
+     */
+    active?: boolean;
+    /**
      * This filter matches listings of a specific seller (by userId)
      */
     userId?: string;
@@ -1589,6 +1593,10 @@ export type tTransactionListingWhere = {
      * Runs fulltext on the collection/query.
      */
     fulltext?: string;
+    /**
+     * When true, match listings with unread buyer-message inbox activity; when false, match listings without unread buyer-message inbox activity
+     */
+    active?: boolean;
     /**
      * This filter matches listings of a specific seller (by userId)
      */

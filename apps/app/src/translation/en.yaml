@@ -64,9 +64,6 @@
 0f44d510d8a8cf53325df192dfac3d02f4299c2d9a4a5dbe2dad9a6f:
   ref: Price type not set
   value: Price type not set
-100dac2b72cffa95c1ce120fe8011f1b987f610e5571411388a43f95:
-  ref: Transaction row - no activity (label)
-  value: No activity yet
 1033ff575b4fcc2a5f68f0546b255961c4cf9514267255fbd76e2920:
   ref: Listing title not filled
   value: Listing title not filled
@@ -97,9 +94,6 @@
 15edabc6931564b26e9e7c4e83be79266953662d2a96c4544f5988e5:
   ref: Price type (title)
   value: Price type (title)
-165543bb2301d8334d4a1a3a24508ecdb815a4d2f69ab8c6cdb19ae5:
-  ref: text
-  value: text
 17d657e028b311247a42416aa1a3a6a7bbd603c9ad2640db1a845a89:
   ref: Feed location security (hint)
   value: Feed location security (hint)
@@ -151,9 +145,6 @@
 23609a4b2bc2ea2da20065b7286ff1892586974ad83ab17bf92ab7f0:
   ref: Resolve transaction (button)
   value: Resolve transaction (button)
-23a5a2b0c85fa0c8b2a5b2034bdc1db0806eba84401f3f69128b6734:
-  ref: status-dispute-seller
-  value: status-dispute-seller
 23d96471b4cb8b94656db913455c655d345ce88c217df03f385d2750:
   ref: Personal - Location (label)
   value: Personal - Location (label)
@@ -172,9 +163,6 @@
 29b5698dbd428037dfdf3d01534751de7b9bbdce4a6eeb4df2655548:
   ref: Price not set
   value: Price not set
-2a593f06c4e8d294158b5b9038b0d1653501021392a841af82b81a47:
-  ref: status-rejected-seller
-  value: status-rejected-seller
 2a78710504a9af9d66b9fa9e2c9afb55d6612509f413ea535758007a:
   ref: zbav-se.me
   value: zbav-se.me
@@ -319,15 +307,9 @@
 4ff4882e934b1e4c4ed0e5873160931aeada352a1001061997555d13:
   ref: Transaction status dispute (label)
   value: Issue reported
-50532c2e9db39105c7f3283cfbbf6b7af7cbdce8fd3a50b5f534ec30:
-  ref: status-rejected-buyer
-  value: status-rejected-buyer
 5216a97ce804ea83d2142778cf1659ad70adc72c670ea7365e396fcb:
   ref: Go home (welcome)
   value: Go home (welcome)
-526badb489d8d3d7d9939183f66d6bcbdb6000348208633c8c0ffecf:
-  ref: status-sold
-  value: status-sold
 53630910d2b191f4a79a007e555fd44b9e109f75bafb3df5171ea48f:
   ref: New seller message (label)
   value: New seller message (label)
@@ -427,6 +409,9 @@
 69b8258820206f2dc2cded5a9cf7c8b51708a5a81d8de92c0ef3450f:
   ref: Feed category not selected
   value: Feed category not selected
+69ecfcc9f50466ecbb4da735d6b6f5a55898fe06c4befd118f245ad9:
+  ref: Messages active listings section (title)
+  value: Needs attention
 6ca3f3546da9df7cda3ed2984fd874d81938723ee09b0116ce96825a:
   ref: Search (button)
   value: Search (button)
@@ -487,15 +472,9 @@
 81c4d07e10662bb6e4aaabc348129b026766ab5f1200c052899255bc:
   ref: Feed range (label)
   value: Feed range (label)
-81ed90d7377d842b225ec4ccd4051737de8603853d9a907b6d1c21bc:
-  ref: status-closed
-  value: status-closed
 8239714e7da3bb0847e7e0f4bd956f5dff5fe8037a32a4fbbd354331:
   ref: Create transaction (button)
   value: Create transaction (button)
-82b3dc3d155db11d7f5dfd61803b33a8a3ffe8f9bef0379acaee1be5:
-  ref: status-expired
-  value: status-expired
 836b19fc748e6429a7591712239acea4d936fab1b0671f538ba91660:
   ref: Listing unfavourited (label)
   value: Listing unfavourited (label)
@@ -610,12 +589,12 @@
 9dced25fcc591774e6324d19f6e85e64b06b431e2eed98692b12fa8d:
   ref: User profile (title)
   value: User profile (title)
-9e183b3b3c9a1e97eade82b6b19752aaf37de5e75f2057225349c6ae:
-  ref: status-pending
-  value: status-pending
 9ec0c5126167d5163918eaad873d557770c9bf65cd72b2ee8bd27c29:
   ref: Share package (button)
   value: Share package (button)
+9ee5f3bd7911a7eeba1208301fcf3964b7f1e029bb39480bef8a63c5:
+  ref: Messages inactive listings section (title)
+  value: Waiting
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
   ref: Fulltext (placeholder)
   value: Fulltext (placeholder)
@@ -738,9 +717,6 @@ c1027406c1e7f916add90ca2c8f0bf30253d4f1caf9dd10bf5789b1c:
 c25e8a6359df6fbcc11434b2d0bcaf641237490f399adfa91cd8702b:
   ref: Home (label)
   value: Home (label)
-c2d45dbed7b5cae8937c4a0b436d5537a9b6571232a62c3fadee4baf:
-  ref: status-resolved
-  value: status-resolved
 c360a8542e6f85f8f1c9cacccc525cb1fcdf6b743584428ee6111e55:
   ref: Shop (title)
   value: Shop (title)
@@ -819,9 +795,6 @@ e28de503976684df4b16c4366122c99432deab1cf2b99efa46456e0f:
 e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
   ref: Listing title (required)
   value: Listing title (required)
-e4bafc9f4207e5d6682f18a52a821c0f05f6572e37d57549557fd29a:
-  ref: status-dispute-buyer
-  value: status-dispute-buyer
 e6ae675232ef4ec304588531c21f87323fba1e262aff12e5dccf22d5:
   ref: Warranty (title)
   value: Warranty (title)
@@ -888,9 +861,6 @@ fa6165a1f31837973b2b0797274535b064db2f341bf26976563565aa:
 fa65ccecdeb5bdcf00a832c72eb27cdaca5a549ea59fc48ad7267ab9:
   ref: Delivery not selected
   value: Delivery not selected
-fa68a046563d14018d27abeb6628f38cae659f5dfda29f41a17e450b:
-  ref: status-open
-  value: status-open
 fa8d4af882062a1148f43f806622a6851ff29ff80f66467624617d7a:
   ref: Listing location (hint)
   value: Listing location (hint)
@@ -915,9 +885,6 @@ fdb69271db36531b164409df527dbb3a05c166c78966f8d05b6e1797:
 fe53b76f86226fc536cae35874aff7a3ccfbc38e4700d3ac5c087b9b:
   ref: Message location security (hint)
   value: Message location security (hint)
-fe9a85659e1051a9e96aa6758c5d01eb430e84106be9843a82561eed:
-  ref: status-success
-  value: status-success
 ff16f6190259edb2dc944cd87e70410856d658de53880f79b4e9c403:
   ref: No drafts (message)
   value: No drafts (message)
