@@ -1,4 +1,5 @@
-import { Container } from "@use-pico/client/ui/container";
+import type { Container } from "@use-pico/client/ui/container";
+import { Group } from "@use-pico/client/ui/group";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import type { FC } from "react";
 import { match } from "ts-pattern";
@@ -29,7 +30,7 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({ transaction, 
 		.exhaustive();
 
 	return toolbar ? (
-		<Container
+		<Group
 			ui={{
 				flow: "vertical",
 				opacity: "8",
@@ -39,12 +40,9 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({ transaction, 
 				width: "full",
 				...ui,
 			}}
-			className={[
-				"py-1",
-			]}
 			{...props}
 		>
 			{toolbar}
-		</Container>
+		</Group>
 	) : null;
 };
