@@ -11,15 +11,11 @@ export namespace Preview {
 }
 
 export const Preview: FC<Preview.Props> = ({ isUnread, transaction }) => {
-	const kind = transaction.entry.kind;
-	const text = "text" === transaction.entry.kind ? transaction.entry.payload.text : null;
-
 	return (
 		<Typo
 			data-ui="TransactionItemPreview[Value]"
 			label={toActivityLabel({
-				kind,
-				text,
+				entry: transaction.entry,
 			})}
 			ui={{
 				text: "sm",

@@ -105,8 +105,7 @@ export const Item: FC<Item.Props> = ({
 					>
 						<Typo
 							label={toActivityLabel({
-								kind: transactionListing.lastKind,
-								text: transactionListing.lastText,
+								entry: transactionListing.entry,
 							})}
 							ui={{
 								text: "sm",

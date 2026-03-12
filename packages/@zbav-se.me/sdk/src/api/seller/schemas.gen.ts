@@ -1849,20 +1849,7 @@ export const sTransactionEntryCommon = {
             type: 'string'
         },
         kind: {
-            type: 'string',
-            enum: [
-                'status-pending',
-                'status-open',
-                'status-resolved',
-                'status-dispute-buyer',
-                'status-dispute-seller',
-                'status-rejected-buyer',
-                'status-rejected-seller',
-                'status-sold',
-                'status-expired',
-                'status-success',
-                'status-closed'
-            ]
+            $ref: '#/components/schemas/TransactionCommonKindEnum'
         },
         payload: {
             type: 'object',
@@ -1890,6 +1877,23 @@ export const sTransactionEntryCommon = {
         'direction'
     ],
     additionalProperties: {}
+} as const;
+
+export const sTransactionCommonKindEnum = {
+    type: 'string',
+    enum: [
+        'status-pending',
+        'status-open',
+        'status-resolved',
+        'status-dispute-buyer',
+        'status-dispute-seller',
+        'status-rejected-buyer',
+        'status-rejected-seller',
+        'status-sold',
+        'status-expired',
+        'status-success',
+        'status-closed'
+    ]
 } as const;
 
 export const sTransactionBuyerInfo = {
@@ -2300,17 +2304,11 @@ export const sTransactionListing = {
         unreadCount: {
             type: 'number'
         },
+        entry: {
+            $ref: '#/components/schemas/TransactionEntry'
+        },
         lastAt: {
             type: 'string'
-        },
-        lastKind: {
-            $ref: '#/components/schemas/TransactionEntryKindEnum'
-        },
-        lastText: {
-            type: [
-                'string',
-                'null'
-            ]
         }
     },
     required: [
@@ -2320,31 +2318,8 @@ export const sTransactionListing = {
         'gallery',
         'count',
         'unreadCount',
-        'lastAt',
-        'lastKind',
-        'lastText'
-    ]
-} as const;
-
-export const sTransactionEntryKindEnum = {
-    type: 'string',
-    enum: [
-        'text',
-        'gallery',
-        'location',
-        'package',
-        'personal',
-        'status-pending',
-        'status-open',
-        'status-resolved',
-        'status-dispute-buyer',
-        'status-dispute-seller',
-        'status-rejected-buyer',
-        'status-rejected-seller',
-        'status-sold',
-        'status-expired',
-        'status-success',
-        'status-closed'
+        'entry',
+        'lastAt'
     ]
 } as const;
 

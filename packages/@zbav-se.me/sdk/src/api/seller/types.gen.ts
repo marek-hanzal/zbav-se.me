@@ -967,7 +967,7 @@ export const tTransactionStatusEnum = {
 export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
 
 /**
- * Most recent transaction entry. Transactions always have at least one entry, so this field is always present.
+ * Transaction timeline entry
  */
 export type tTransactionEntry = ({
     kind: 'text';
@@ -1193,7 +1193,7 @@ export type tTransactionEntryCommon = {
      * Creation timestamp
      */
     createdAt: string;
-    kind: 'status-pending' | 'status-open' | 'status-resolved' | 'status-dispute-buyer' | 'status-dispute-seller' | 'status-rejected-buyer' | 'status-rejected-seller' | 'status-sold' | 'status-expired' | 'status-success' | 'status-closed';
+    kind: tTransactionCommonKindEnum;
     payload: {
         /**
          * Translation key for the system/status timeline entry
@@ -1204,6 +1204,28 @@ export type tTransactionEntryCommon = {
     direction: tTransactionEntryDirectionEnum;
     [key: string]: unknown;
 };
+
+/**
+ * Common (shared) entries sharing same shape
+ */
+export const tTransactionCommonKindEnum = {
+    'status-pending': 'status-pending',
+    'status-open': 'status-open',
+    'status-resolved': 'status-resolved',
+    'status-dispute-buyer': 'status-dispute-buyer',
+    'status-dispute-seller': 'status-dispute-seller',
+    'status-rejected-buyer': 'status-rejected-buyer',
+    'status-rejected-seller': 'status-rejected-seller',
+    'status-sold': 'status-sold',
+    'status-expired': 'status-expired',
+    'status-success': 'status-success',
+    'status-closed': 'status-closed'
+} as const;
+
+/**
+ * Common (shared) entries sharing same shape
+ */
+export type tTransactionCommonKindEnum = typeof tTransactionCommonKindEnum[keyof typeof tTransactionCommonKindEnum];
 
 /**
  * Buyer info for the transaction
@@ -1512,43 +1534,12 @@ export type tTransactionListing = {
      * Unread inbox transaction-event count for this listing
      */
     unreadCount: number;
+    entry: tTransactionEntry;
     /**
      * Timestamp of the most recent activity in any transaction under this listing
      */
     lastAt: string;
-    lastKind: tTransactionEntryKindEnum;
-    /**
-     * Text payload of the most recent transaction activity when the kind is text
-     */
-    lastText: string | null;
 };
-
-/**
- * Kind of the most recent transaction activity under this listing
- */
-export const tTransactionEntryKindEnum = {
-    text: 'text',
-    gallery: 'gallery',
-    location: 'location',
-    package: 'package',
-    personal: 'personal',
-    'status-pending': 'status-pending',
-    'status-open': 'status-open',
-    'status-resolved': 'status-resolved',
-    'status-dispute-buyer': 'status-dispute-buyer',
-    'status-dispute-seller': 'status-dispute-seller',
-    'status-rejected-buyer': 'status-rejected-buyer',
-    'status-rejected-seller': 'status-rejected-seller',
-    'status-sold': 'status-sold',
-    'status-expired': 'status-expired',
-    'status-success': 'status-success',
-    'status-closed': 'status-closed'
-} as const;
-
-/**
- * Kind of the most recent transaction activity under this listing
- */
-export type tTransactionEntryKindEnum = typeof tTransactionEntryKindEnum[keyof typeof tTransactionEntryKindEnum];
 
 /**
  * Query object for transaction-listing collection

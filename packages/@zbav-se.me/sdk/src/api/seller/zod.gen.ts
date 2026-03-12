@@ -914,6 +914,27 @@ export const zTransactionEntryPersonal = z.object({
 export type zTransactionEntryPersonal = z.infer<typeof zTransactionEntryPersonal>;
 
 /**
+ * Common (shared) entries sharing same shape
+ */
+export const zTransactionCommonKindEnum = z.enum([
+    'status-pending',
+    'status-open',
+    'status-resolved',
+    'status-dispute-buyer',
+    'status-dispute-seller',
+    'status-rejected-buyer',
+    'status-rejected-seller',
+    'status-sold',
+    'status-expired',
+    'status-success',
+    'status-closed'
+]).register(z.globalRegistry, {
+    description: 'Common (shared) entries sharing same shape'
+});
+
+export type zTransactionCommonKindEnum = z.infer<typeof zTransactionCommonKindEnum>;
+
+/**
  * Transaction system entry with shared status or informational payload
  */
 export const zTransactionEntryCommon = z.object({
@@ -927,19 +948,7 @@ export const zTransactionEntryCommon = z.object({
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
-    kind: z.enum([
-        'status-pending',
-        'status-open',
-        'status-resolved',
-        'status-dispute-buyer',
-        'status-dispute-seller',
-        'status-rejected-buyer',
-        'status-rejected-seller',
-        'status-sold',
-        'status-expired',
-        'status-success',
-        'status-closed'
-    ]),
+    kind: zTransactionCommonKindEnum,
     payload: z.object({
         text: z.string().register(z.globalRegistry, {
             description: 'Translation key for the system/status timeline entry'
@@ -953,7 +962,7 @@ export const zTransactionEntryCommon = z.object({
 export type zTransactionEntryCommon = z.infer<typeof zTransactionEntryCommon>;
 
 /**
- * Most recent transaction entry. Transactions always have at least one entry, so this field is always present.
+ * Transaction timeline entry
  */
 export const zTransactionEntry = z.union([
     z.object({
@@ -1339,32 +1348,6 @@ export const zTransactionCountQuery = z.object({
 export type zTransactionCountQuery = z.infer<typeof zTransactionCountQuery>;
 
 /**
- * Kind of the most recent transaction activity under this listing
- */
-export const zTransactionEntryKindEnum = z.enum([
-    'text',
-    'gallery',
-    'location',
-    'package',
-    'personal',
-    'status-pending',
-    'status-open',
-    'status-resolved',
-    'status-dispute-buyer',
-    'status-dispute-seller',
-    'status-rejected-buyer',
-    'status-rejected-seller',
-    'status-sold',
-    'status-expired',
-    'status-success',
-    'status-closed'
-]).register(z.globalRegistry, {
-    description: 'Kind of the most recent transaction activity under this listing'
-});
-
-export type zTransactionEntryKindEnum = z.infer<typeof zTransactionEntryKindEnum>;
-
-/**
  * Aggregated transaction information per listing
  */
 export const zTransactionListing = z.object({
@@ -1384,11 +1367,10 @@ export const zTransactionListing = z.object({
     unreadCount: z.number().register(z.globalRegistry, {
         description: 'Unread inbox transaction-event count for this listing'
     }),
+    entry: zTransactionEntry,
     lastAt: z.string().register(z.globalRegistry, {
         description: 'Timestamp of the most recent activity in any transaction under this listing'
-    }),
-    lastKind: zTransactionEntryKindEnum,
-    lastText: z.string().nullable()
+    })
 }).register(z.globalRegistry, {
     description: 'Aggregated transaction information per listing'
 });

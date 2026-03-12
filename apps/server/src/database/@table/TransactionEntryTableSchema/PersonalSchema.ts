@@ -1,10 +1,13 @@
 import { z } from "@hono/zod-openapi";
+import { TransactionEntryKindEnumSchema } from "~/database/@enum/TransactionEntryKindEnumSchema";
 import { EntrySchema } from "./EntrySchema";
 
 export const PersonalSchema = z
 	.looseObject({
 		...EntrySchema.shape,
-		kind: z.literal("personal"),
+		kind: TransactionEntryKindEnumSchema.extract([
+			"personal",
+		]),
 		payload: z.looseObject({
 			name: z.string().openapi({
 				description: "Contact name",

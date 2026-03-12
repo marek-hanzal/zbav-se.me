@@ -23,10 +23,7 @@ export const TransactionSchema = z
 		}),
 		priceType: ListingPriceEnumSchema,
 		currency: CurrencyEnumSchema,
-		entry: TransactionEntrySchema.openapi({
-			description:
-				"Most recent transaction entry. Transactions always have at least one entry, so this field is always present.",
-		}),
+		entry: TransactionEntrySchema,
 		unreadCount: z.coerce.number().int().nonnegative().openapi({
 			description: "Unread inbox buyer-message count for this transaction",
 			type: "number",
