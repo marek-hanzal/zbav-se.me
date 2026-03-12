@@ -5,10 +5,10 @@ import { withTransactionEntryGalleryCreateMutation } from "@zbav-se.me/sdk/mutat
 import { type FC, useState } from "react";
 import { SellerInfoButton } from "~/app/@buyer/listing/~public/SellerInfoButton";
 import { GalleryUploadButton } from "~/app/@common/gallery/ui/GalleryUploadButton";
+import { MessageButtonUi } from "~/app/@common/transaction/ui";
 import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 import { LocationButton } from "~/app/@common/transaction-entry/ui/button/LocationButton";
 import { PersonalButton } from "~/app/v0/@common/personal/ui/PersonalButton";
-import { MessageButtonUi } from "~/app/v0/@common/transaction/ui/MessageButtonUi";
 
 export namespace DisputeMessage {
 	export interface Props extends Container.Props {
@@ -21,52 +21,64 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
-		<Group
-			ui={{
-				round: "default",
-				flow: "vertical",
-				tone: "primary",
-				...ui,
-			}}
-			{...props}
-		>
-			<GalleryUploadButton
-				defaultUploadIds={[]}
-				state={{
-					value: isGalleryOpen,
-					set: setIsGalleryOpen,
+		<>
+			<Group
+				ui={{
+					round: "default",
+					flow: "vertical",
+					tone: "primary",
+					...ui,
 				}}
-				withMutation={withTransactionEntryGalleryCreateMutation}
-				toMutation={(uploadIds) => ({
-					transactionId: transaction.id,
-					uploadIds,
-				})}
-				onSuccess={() => {
-					setIsGalleryOpen(false);
-					close();
+				{...props}
+			>
+				<GalleryUploadButton
+					defaultUploadIds={[]}
+					state={{
+						value: isGalleryOpen,
+						set: setIsGalleryOpen,
+					}}
+					withMutation={withTransactionEntryGalleryCreateMutation}
+					toMutation={(uploadIds) => ({
+						transactionId: transaction.id,
+						uploadIds,
+					})}
+					onSuccess={() => {
+						setIsGalleryOpen(false);
+						close();
+					}}
+					onCancel={() => {
+						setIsGalleryOpen(false);
+					}}
+					{...MessageButtonUi}
+				/>
+
+				<LocationButton
+					close={close}
+					transactionId={transaction.id}
+					{...MessageButtonUi}
+				/>
+
+				<PersonalButton
+					close={close}
+					transactionId={transaction.id}
+					{...MessageButtonUi}
+				/>
+			</Group>
+
+			<Group
+				ui={{
+					round: "default",
+					flow: "vertical",
+					tone: "primary",
+					...ui,
 				}}
-				onCancel={() => {
-					setIsGalleryOpen(false);
-				}}
-				{...MessageButtonUi}
-			/>
-
-			<LocationButton
-				close={close}
-				transactionId={transaction.id}
-				{...MessageButtonUi}
-			/>
-
-			<PersonalButton
-				close={close}
-				transactionId={transaction.id}
-				{...MessageButtonUi}
-			/>
-
-			<SellerInfoButton
-				listingId={transaction.listingId}
-				{...MessageButtonUi}
-			/>
-		</Group>
+				{...props}
+			>
+				<SellerInfoButton
+					listingId={transaction.listingId}
+					{...MessageButtonUi}
+				/>
+			</Group>
+		</>
 	);
 };

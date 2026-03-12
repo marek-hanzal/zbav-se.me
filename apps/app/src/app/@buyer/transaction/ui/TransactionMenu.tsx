@@ -21,6 +21,7 @@ export const TransactionMenu: FC<TransactionMenu.Props> = ({
 	return (
 		<Container
 			data-ui={"TransactionMenu[Container]"}
+			data-transaction={transaction.status}
 			ui={{
 				flow: "vertical",
 				gap: "md",

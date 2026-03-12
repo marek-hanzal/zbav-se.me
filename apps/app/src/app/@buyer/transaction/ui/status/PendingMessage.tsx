@@ -3,8 +3,8 @@ import { Group } from "@use-pico/client/ui/group";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
 import { SellerInfoButton } from "~/app/@buyer/listing/~public/SellerInfoButton";
+import { MessageButtonUi } from "~/app/@common/transaction/ui";
 import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
-import { MessageButtonUi } from "~/app/v0/@common/transaction/ui/MessageButtonUi";
 import { RejectButton } from "../button/RejectButton";
 
 export namespace PendingMessage {
@@ -16,25 +16,37 @@ export namespace PendingMessage {
 
 export const PendingMessage: FC<PendingMessage.Props> = ({ close, transaction, ui, ...props }) => {
 	return (
-		<Group
-			ui={{
-				round: "default",
-				flow: "vertical",
-				tone: "primary",
-				...ui,
-			}}
-			{...props}
-		>
-			<SellerInfoButton
-				listingId={transaction.listingId}
-				{...MessageButtonUi}
-			/>
+		<>
+			<Group
+				ui={{
+					round: "default",
+					flow: "vertical",
+					tone: "primary",
+					...ui,
+				}}
+				{...props}
+			>
+				<SellerInfoButton
+					listingId={transaction.listingId}
+					{...MessageButtonUi}
+				/>
+			</Group>
 
-			<RejectButton
-				close={close}
-				transaction={transaction}
-				{...MessageButtonUi}
-			/>
-		</Group>
+			<Group
+				ui={{
+					round: "default",
+					flow: "vertical",
+					tone: "primary",
+					...ui,
+				}}
+				{...props}
+			>
+				<RejectButton
+					close={close}
+					transaction={transaction}
+					{...MessageButtonUi}
+				/>
+			</Group>
+		</>
 	);
 };

@@ -93,6 +93,9 @@ When adding to `@common`:
 - Shared transaction detail bottom-sheet trigger now lives in active common scope:
   - `@common/transaction/ui/TransactionMenuButton.tsx`
   - buyer/seller transaction chats pass role-specific menu content through `children` instead of keeping duplicate button + sheet implementations.
+- Shared transaction action button UI presets now live in active common scope:
+  - `@common/transaction/ui/MessageButtonUi.ts`
+  - `@common/transaction/ui/TransactionButtonUi.ts`
 - Shared message creation controls now create user-authored `transaction_entry` records:
   - package, personal, location, text, and gallery flows use transaction-entry SDK wrappers
   - linked gallery/location data is fetched through dedicated queries instead of old message payload hydration

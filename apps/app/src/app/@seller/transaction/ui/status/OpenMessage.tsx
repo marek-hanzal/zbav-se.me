@@ -4,11 +4,11 @@ import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import { withTransactionEntryGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction-entry";
 import { type FC, useState } from "react";
 import { GalleryUploadButton } from "~/app/@common/gallery/ui/GalleryUploadButton";
+import { MessageButtonUi } from "~/app/@common/transaction/ui";
 import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 import { LocationButton } from "~/app/@common/transaction-entry/ui/button/LocationButton";
 import { PackageButton } from "~/app/v0/@common/package/ui/PackageButton";
 import { PersonalButton } from "~/app/v0/@common/personal/ui/PersonalButton";
-import { MessageButtonUi } from "~/app/v0/@common/transaction/ui/MessageButtonUi";
 
 export namespace OpenMessage {
 	export interface Props extends Container.Props {
@@ -22,6 +22,7 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ close, transaction, ui, ...
 
 	return (
 		<Group
+			data-ui={"OpenMessage[Group]"}
 			ui={{
 				round: "default",
 				flow: "vertical",

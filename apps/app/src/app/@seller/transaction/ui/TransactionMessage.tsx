@@ -17,6 +17,7 @@ export namespace TransactionMessage {
 export const TransactionMessage: FC<TransactionMessage.Props> = ({
 	close,
 	transaction,
+	ui,
 	...props
 }) => {
 	const message = match(transaction.status)
@@ -49,5 +50,16 @@ export const TransactionMessage: FC<TransactionMessage.Props> = ({
 		})
 		.exhaustive();
 
-	return message ? <Container {...props}>{message}</Container> : null;
+	return message ? (
+		<Container
+			ui={{
+				flow: "vertical",
+				gap: "default",
+				...ui,
+			}}
+			{...props}
+		>
+			{message}
+		</Container>
+	) : null;
 };
