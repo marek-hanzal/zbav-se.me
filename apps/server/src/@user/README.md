@@ -69,6 +69,7 @@ This domain handles all operations on user-owned, private data. Everything in th
   - transaction-family rows store both listing and transaction references: `[listingId, transactionId]`
   - `where.reference` means "reference array contains this value"
   - `where.referenceIn` means "reference array overlaps any of these values"
+- Inbox collection/count coalesces `buyer-message` and `seller-message` rows by `payload.transactionId`, always keeping the newest inbox row for a thread.
 
 ### Transaction Timeline
 - Transaction communication now enters through the unified **Transaction Entry** API.

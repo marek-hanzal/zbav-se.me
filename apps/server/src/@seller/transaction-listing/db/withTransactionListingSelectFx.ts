@@ -32,7 +32,11 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 					.whereRef("lt.listingId", "=", "l.id")})`.as("count"),
 				sql<number>`coalesce((${eb
 					.selectFrom("inbox as i")
-					.select((eb) => eb.fn.countAll<number>().as("unreadCount"))
+					.select((eb) =>
+						sql<number>`count(distinct ${eb.ref("i.payload")} ->> 'transactionId')`.as(
+							"unreadCount",
+						),
+					)
 					.whereRef("i.userId", "=", "l.userId")
 					.where("i.family", "=", "transaction")
 					.where("i.type", "=", "buyer-message")
