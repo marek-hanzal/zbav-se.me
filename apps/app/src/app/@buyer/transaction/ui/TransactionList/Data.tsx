@@ -10,7 +10,7 @@ import type { tTransactionQuery } from "@zbav-se.me/sdk/api/buyer";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import type { FC, ReactNode } from "react";
 
-export namespace TransactionListContainer {
+export namespace Data {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		query: tTransactionQuery;
 		renderItem(transactionId: string): ReactNode;
@@ -18,7 +18,7 @@ export namespace TransactionListContainer {
 	}
 }
 
-export const TransactionListContainer: FC<TransactionListContainer.Props> = ({
+export const Data: FC<Data.Props> = ({
 	_suspense,
 	query,
 	renderItem,

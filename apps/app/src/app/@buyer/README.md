@@ -30,6 +30,7 @@ Maps to server API: `/api/buyer/*`.
   - `@buyer/feed/FeedEditor/patch/GalleryPatch.tsx`
 - Buyer transaction detail now imports shared transaction-entry timeline rendering from active common scope at `@common/transaction-entry/*` instead of the old `v0` common stack.
 - Buyer transaction detail root component, message, toolbar, menu, chat, and status stacks now live in active scope at `@buyer/transaction/ui/*`; the shared bottom-sheet trigger button now lives in `@common/transaction/ui/TransactionMenuButton.tsx`.
+- Buyer transaction list stack now lives in active scope at `@buyer/transaction/ui/TransactionList/*`; the old `v0` buyer list wrapper/data/item stack is no longer used by the route.
 - Feed editor value components with single usage were localized to feed editor:
   - `@buyer/feed/FeedEditor/value/`
     - `AgeValueList.tsx`
