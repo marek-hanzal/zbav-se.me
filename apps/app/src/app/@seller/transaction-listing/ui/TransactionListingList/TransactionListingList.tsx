@@ -24,18 +24,16 @@ export const TransactionListingList: FC<TransactionListingList.Props> = ({
 			}}
 			{...props}
 		>
-			{transactionListingIds.length > 0
-				? transactionListingIds.map((transactionListingId) => {
-						return (
-							<Item
-								key={transactionListingId}
-								data-id={transactionListingId}
-								_suspense={_suspense}
-								transactionListingId={transactionListingId}
-							/>
-						);
-					})
-				: null}
+			{transactionListingIds.map((transactionListingId) => {
+				return (
+					<Item
+						key={transactionListingId}
+						data-id={transactionListingId}
+						_suspense={_suspense}
+						transactionListingId={transactionListingId}
+					/>
+				);
+			})}
 		</Container>
 	);
 };

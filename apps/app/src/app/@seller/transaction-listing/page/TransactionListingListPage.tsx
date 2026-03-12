@@ -89,12 +89,13 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 							<Typo
 								label={translator.text("Messages active listings section (title)")}
 								ui={{
+									tone: "primary",
+									theme: "light",
 									text: "sm",
 									font: "bold",
-									tone: "neutral",
-									theme: "light",
 									color: "lead",
 								}}
+								className={"text-center"}
 							/>
 
 							<TransactionListingList
@@ -116,13 +117,14 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 									"Messages inactive listings section (title)",
 								)}
 								ui={{
-									text: "sm",
-									font: "bold",
 									tone: "neutral",
 									theme: "light",
+									text: "sm",
+									font: "bold",
 									color: "lead",
 									opacity: "7",
 								}}
+								className={"text-center"}
 							/>
 
 							<TransactionListingList
