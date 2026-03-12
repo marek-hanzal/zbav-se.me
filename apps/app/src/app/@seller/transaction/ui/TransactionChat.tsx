@@ -6,7 +6,8 @@ import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transactio
 import { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { TransactionMenuButton } from "./TransactionMenuButton";
+import { TransactionMenuButton } from "~/app/@common/transaction/ui";
+import { TransactionMenu } from "./TransactionMenu";
 
 export namespace TransactionChat {
 	export interface Props extends Container.Props {
@@ -49,7 +50,11 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 								"Transaction - send a message (placeholder)",
 							)}
 							loading={messageMutation.isPending}
-							left={<TransactionMenuButton transaction={transaction} />}
+							left={
+								<TransactionMenuButton>
+									<TransactionMenu transaction={transaction} />
+								</TransactionMenuButton>
+							}
 						/>
 					);
 				})
@@ -64,7 +69,9 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 								width: "full",
 							}}
 						>
-							<TransactionMenuButton transaction={transaction} />
+							<TransactionMenuButton>
+								<TransactionMenu transaction={transaction} />
+							</TransactionMenuButton>
 
 							<Tx
 								label={
@@ -91,7 +98,9 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 								width: "full",
 							}}
 						>
-							<TransactionMenuButton transaction={transaction} />
+							<TransactionMenuButton>
+								<TransactionMenu transaction={transaction} />
+							</TransactionMenuButton>
 
 							<Tx
 								label={"Transaction not accepted - seller (message)"}
@@ -121,7 +130,11 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 								"Transaction - dispute - send a message (placeholder)",
 							)}
 							loading={messageMutation.isPending}
-							left={<TransactionMenuButton transaction={transaction} />}
+							left={
+								<TransactionMenuButton>
+									<TransactionMenu transaction={transaction} />
+								</TransactionMenuButton>
+							}
 						/>
 					);
 				})

@@ -89,6 +89,9 @@ When adding to `@common`:
   - `Gallery/*` uses local `Suspense -> Data/Pending` composition and reads linked gallery content through the transaction-entry gallery endpoint, not the owner-scoped gallery fetch route.
   - `Text.tsx` and `Common.tsx` stay intentionally separate, even though they currently render near-identical UI.
 - Shared page-level title navigation now uses `@common/nav/BackHomeButton/BackHomeButton.tsx` for screens that should provide an explicit return path to home.
+- Shared transaction detail bottom-sheet trigger now lives in active common scope:
+  - `@common/transaction/ui/TransactionMenuButton.tsx`
+  - buyer/seller transaction chats pass role-specific menu content through `children` instead of keeping duplicate button + sheet implementations.
 - Shared message creation controls now create user-authored `transaction_entry` records:
   - package, personal, location, text, and gallery flows use transaction-entry SDK wrappers
   - linked gallery/location data is fetched through dedicated queries instead of old message payload hydration
