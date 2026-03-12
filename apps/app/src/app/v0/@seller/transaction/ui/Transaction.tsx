@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import { type FC, useRef } from "react";
-import { TransactionEntryList } from "~/app/@common/transaction-entry/TransactionEntryList";
+import { TransactionEntryList } from "~/app/@common/transaction-entry/ui/TransactionEntryList";
 import { TransactionChat } from "./TransactionChat";
 import { TransactionMessage } from "./TransactionMessage";
 import { TransactionToolbar } from "./TransactionToolbar";

@@ -9,7 +9,7 @@ import { type FC, useRef, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
-import { TransactionEntryList } from "~/app/@common/transaction-entry/TransactionEntryList";
+import { TransactionEntryList } from "~/app/@common/transaction-entry/ui/TransactionEntryList";
 import { TransactionChat } from "./TransactionChat";
 import { TransactionMessage } from "./TransactionMessage";
 import { TransactionToolbar } from "./TransactionToolbar";
