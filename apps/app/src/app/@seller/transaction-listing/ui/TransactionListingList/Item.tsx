@@ -57,10 +57,12 @@ export const Item: FC<Item.Props> = ({
 							<Badge
 								data-ui="TransactionListingList[Badge]"
 								ui={{
-									snapTo: "top-right",
+									snapTo: "bottom-left",
 									tone: "secondary",
 									theme: "light",
 									badge: "xs",
+									font: "bold",
+									opacity: "8",
 								}}
 							>
 								{unreadCount > 9
