@@ -4,12 +4,12 @@ import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef, useState } from "react";
+import { TransactionChat } from "~/app/@buyer/transaction/~public/TransactionChat";
 import { TransactionToolbar } from "~/app/@buyer/transaction/~public/TransactionToolbar";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
 import { TransactionEntryList } from "~/app/@common/transaction-entry/ui/TransactionEntryList";
-import { TransactionChat } from "~/app/v0/@buyer/transaction/ui/TransactionChat";
 import { TransactionMessage } from "~/app/v0/@buyer/transaction/ui/TransactionMessage";
 
 export namespace Transaction {
