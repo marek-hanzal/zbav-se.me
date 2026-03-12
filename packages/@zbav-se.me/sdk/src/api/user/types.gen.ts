@@ -995,7 +995,7 @@ export type tTransactionEntryCommon = {
      * Creation timestamp
      */
     createdAt: string;
-    kind: 'status-pending' | 'status-open' | 'status-resolved' | 'status-dispute-buyer' | 'status-dispute-seller' | 'status-rejected-buyer' | 'status-rejected-seller' | 'status-sold' | 'status-expired' | 'status-success' | 'status-closed';
+    kind: tTransactionCommonKindEnum;
     payload: {
         /**
          * Translation key for the system/status timeline entry
@@ -1006,6 +1006,28 @@ export type tTransactionEntryCommon = {
     direction: tTransactionEntryDirectionEnum;
     [key: string]: unknown;
 };
+
+/**
+ * Common (shared) entries sharing same shape
+ */
+export const tTransactionCommonKindEnum = {
+    'status-pending': 'status-pending',
+    'status-open': 'status-open',
+    'status-resolved': 'status-resolved',
+    'status-dispute-buyer': 'status-dispute-buyer',
+    'status-dispute-seller': 'status-dispute-seller',
+    'status-rejected-buyer': 'status-rejected-buyer',
+    'status-rejected-seller': 'status-rejected-seller',
+    'status-sold': 'status-sold',
+    'status-expired': 'status-expired',
+    'status-success': 'status-success',
+    'status-closed': 'status-closed'
+} as const;
+
+/**
+ * Common (shared) entries sharing same shape
+ */
+export type tTransactionCommonKindEnum = typeof tTransactionCommonKindEnum[keyof typeof tTransactionCommonKindEnum];
 
 /**
  * Query object for transaction entry collection

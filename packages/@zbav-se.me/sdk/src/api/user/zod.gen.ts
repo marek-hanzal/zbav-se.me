@@ -886,6 +886,27 @@ export const zTransactionEntryPersonal = z.object({
 export type zTransactionEntryPersonal = z.infer<typeof zTransactionEntryPersonal>;
 
 /**
+ * Common (shared) entries sharing same shape
+ */
+export const zTransactionCommonKindEnum = z.enum([
+    'status-pending',
+    'status-open',
+    'status-resolved',
+    'status-dispute-buyer',
+    'status-dispute-seller',
+    'status-rejected-buyer',
+    'status-rejected-seller',
+    'status-sold',
+    'status-expired',
+    'status-success',
+    'status-closed'
+]).register(z.globalRegistry, {
+    description: 'Common (shared) entries sharing same shape'
+});
+
+export type zTransactionCommonKindEnum = z.infer<typeof zTransactionCommonKindEnum>;
+
+/**
  * Transaction system entry with shared status or informational payload
  */
 export const zTransactionEntryCommon = z.object({
@@ -899,19 +920,7 @@ export const zTransactionEntryCommon = z.object({
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
-    kind: z.enum([
-        'status-pending',
-        'status-open',
-        'status-resolved',
-        'status-dispute-buyer',
-        'status-dispute-seller',
-        'status-rejected-buyer',
-        'status-rejected-seller',
-        'status-sold',
-        'status-expired',
-        'status-success',
-        'status-closed'
-    ]),
+    kind: zTransactionCommonKindEnum,
     payload: z.object({
         text: z.string().register(z.globalRegistry, {
             description: 'Translation key for the system/status timeline entry'

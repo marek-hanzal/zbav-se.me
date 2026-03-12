@@ -1,19 +1,20 @@
 import { translator } from "@use-pico/common/translator";
-import type { tTransactionListing } from "@zbav-se.me/sdk/api/seller";
+import type { tTransactionEntry } from "@zbav-se.me/sdk/api/user";
+import { zTransactionEntryText } from "@zbav-se.me/sdk/api/user";
 import { match } from "ts-pattern";
 import { toStatusLabel } from "./toStatusLabel";
 
 export namespace toActivityLabel {
 	export interface Props {
-		kind: tTransactionListing["lastKind"];
-		text: null | string;
+		entry: tTransactionEntry;
 	}
 }
 
-export const toActivityLabel = ({ kind, text }: toActivityLabel.Props) => {
-	return match(kind)
+export const toActivityLabel = ({ entry }: toActivityLabel.Props) => {
+	return match(entry.kind)
 		.with("text", () => {
-			return text ?? translator.text("Transaction row - no activity (label)");
+			const { payload } = zTransactionEntryText.parse(entry);
+			return payload.text;
 		})
 		.with("status-pending", () => toStatusLabel("pending"))
 		.with("status-open", () => toStatusLabel("open"))

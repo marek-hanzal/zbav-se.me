@@ -15,7 +15,9 @@ export const CommonSchema = z
 			"location",
 			"package",
 			"personal",
-		]),
+		]).openapi("TransactionCommonKindEnum", {
+			description: "Common (shared) entries sharing same shape",
+		}),
 		payload: z.looseObject({
 			text: z.string().openapi({
 				description: "Translation key for the system/status timeline entry",

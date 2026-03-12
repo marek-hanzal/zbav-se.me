@@ -1,12 +1,12 @@
 import { Effect } from "effect";
-import { match } from "ts-pattern";
-import type { TransactionListingSortSchema } from "~/@seller/transaction-listing/schema/TransactionListingSortSchema";
+import { sql } from "kysely";
+import { jsonObjectFrom } from "kysely/helpers/postgres";
+import type { TransactionEntryDirectionEnumSchema } from "~/@user/transaction-entry/schema/TransactionEntryDirectionEnumSchema";
+import type { TransactionEntrySchema } from "~/@user/transaction-entry/schema/TransactionEntrySchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 
 export namespace withTransactionListingSourceSelectFx {
-	export interface Props {
-		sort?: TransactionListingSortSchema.Type[];
-	}
+	export type Props = {};
 
 	export type Select = Effect.Effect.Success<
 		ReturnType<typeof withTransactionListingSourceSelectFx>
@@ -15,11 +15,36 @@ export namespace withTransactionListingSourceSelectFx {
 
 export const withTransactionListingSourceSelectFx = Effect.fn(
 	"withTransactionListingSourceSelectFx",
-)(function* ({ sort }: withTransactionListingSourceSelectFx.Props) {
+)(function* (_props: withTransactionListingSourceSelectFx.Props) {
 	const { kysely } = yield* KyselyContextFx;
 
-	let query = kysely
+	return kysely
 		.selectFrom("listing as l")
+		.selectAll("l")
+		.select((eb) => {
+			const lastActivitySelect = eb
+				.selectFrom("transaction_entry as te")
+				.innerJoin("transaction as lt", "lt.id", "te.transactionId")
+				.whereRef("lt.listingId", "=", "l.id")
+				.orderBy("te.createdAt", "desc")
+				.limit(1);
+
+			return [
+				jsonObjectFrom(
+					lastActivitySelect.selectAll("te").select((eb) =>
+						sql<TransactionEntryDirectionEnumSchema.Type>`case
+							when ${eb.ref("te.userId")} is null then 'system'
+							when ${eb.ref("te.userId")} = ${eb.ref("l.userId")} then 'out'
+							else 'in'
+						end`.as("direction"),
+					),
+				)
+					.$notNull()
+					.$castTo<TransactionEntrySchema.Type>()
+					.as("entry"),
+				lastActivitySelect.select("te.createdAt").$asScalar().$notNull().as("lastAt"),
+			];
+		})
 		.where(({ exists, selectFrom }) =>
 			exists(
 				selectFrom("transaction as lt")
@@ -27,23 +52,4 @@ export const withTransactionListingSourceSelectFx = Effect.fn(
 					.whereRef("lt.listingId", "=", "l.id"),
 			),
 		);
-
-	for (const item of sort ?? []) {
-		query = match(item.field)
-			.with("createdAt", () => query.orderBy("l.createdAt", item.order))
-			.with("lastAt", () =>
-				query.orderBy((eb) =>
-					eb
-						.selectFrom("transaction_entry as te")
-						.innerJoin("transaction as lt", "lt.id", "te.transactionId")
-						.select("te.createdAt")
-						.whereRef("lt.listingId", "=", "l.id")
-						.orderBy("te.createdAt", item.order)
-						.limit(1),
-				),
-			)
-			.exhaustive();
-	}
-
-	return query;
 });

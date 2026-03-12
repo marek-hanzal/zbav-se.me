@@ -1456,20 +1456,7 @@ export const sTransactionEntryCommon = {
             type: 'string'
         },
         kind: {
-            type: 'string',
-            enum: [
-                'status-pending',
-                'status-open',
-                'status-resolved',
-                'status-dispute-buyer',
-                'status-dispute-seller',
-                'status-rejected-buyer',
-                'status-rejected-seller',
-                'status-sold',
-                'status-expired',
-                'status-success',
-                'status-closed'
-            ]
+            $ref: '#/components/schemas/TransactionCommonKindEnum'
         },
         payload: {
             type: 'object',
@@ -1497,6 +1484,23 @@ export const sTransactionEntryCommon = {
         'direction'
     ],
     additionalProperties: {}
+} as const;
+
+export const sTransactionCommonKindEnum = {
+    type: 'string',
+    enum: [
+        'status-pending',
+        'status-open',
+        'status-resolved',
+        'status-dispute-buyer',
+        'status-dispute-seller',
+        'status-rejected-buyer',
+        'status-rejected-seller',
+        'status-sold',
+        'status-expired',
+        'status-success',
+        'status-closed'
+    ]
 } as const;
 
 export const sTransactionEntryQuery = {

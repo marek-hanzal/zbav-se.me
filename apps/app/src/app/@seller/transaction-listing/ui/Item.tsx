@@ -68,9 +68,8 @@ export const Item: FC<Item.Props> = ({ _suspense, transactionId, ui, className, 
 					>
 						<Container className={"min-w-0 flex-1"}>
 							<Preview
-								_suspense={_suspense}
 								isUnread={isUnread}
-								transactionId={transaction.id}
+								transaction={transaction}
 							/>
 						</Container>
 
