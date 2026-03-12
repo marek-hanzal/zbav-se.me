@@ -31,6 +31,7 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 			{...props}
 		>
 			<PackageButton
+				close={close}
 				transactionId={transaction.id}
 				{...MessageButtonUi}
 			/>
@@ -48,6 +49,7 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 				})}
 				onSuccess={() => {
 					setIsGalleryOpen(false);
+					close();
 				}}
 				onCancel={() => {
 					setIsGalleryOpen(false);
@@ -62,6 +64,7 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 			/>
 
 			<PersonalButton
+				close={close}
 				transactionId={transaction.id}
 				{...MessageButtonUi}
 			/>

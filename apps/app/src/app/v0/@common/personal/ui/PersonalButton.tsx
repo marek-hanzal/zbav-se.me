@@ -6,15 +6,17 @@ import { CloseButton } from "@zbav-se.me/ui/button";
 import { EmailIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useState } from "react";
+import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 import { PersonalControl } from "./PersonalControl";
 
 export namespace PersonalButton {
 	export interface Props extends Button.Props {
+		close?: TransactionMenuButton.Close;
 		transactionId: string;
 	}
 }
 
-export const PersonalButton: FC<PersonalButton.Props> = ({ transactionId, ...props }) => {
+export const PersonalButton: FC<PersonalButton.Props> = ({ close, transactionId, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const mutation = withTransactionEntryQuery.useCreateMutation({
 		invalidate: [
@@ -23,6 +25,7 @@ export const PersonalButton: FC<PersonalButton.Props> = ({ transactionId, ...pro
 		],
 		async onPostMutation() {
 			setIsOpen(false);
+			close?.();
 		},
 	});
 

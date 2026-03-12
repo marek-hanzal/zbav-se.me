@@ -31,6 +31,7 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ close, transaction, ui, ...
 			{...props}
 		>
 			<PersonalButton
+				close={close}
 				transactionId={transaction.id}
 				{...MessageButtonUi}
 			/>
@@ -54,6 +55,7 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ close, transaction, ui, ...
 				})}
 				onSuccess={() => {
 					setIsGalleryOpen(false);
+					close();
 				}}
 				onCancel={() => {
 					setIsGalleryOpen(false);

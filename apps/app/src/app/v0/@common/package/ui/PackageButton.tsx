@@ -5,15 +5,17 @@ import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transactio
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useState } from "react";
+import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 import { PackageControl } from "./PackageControl";
 
 export namespace PackageButton {
 	export interface Props extends Button.Props {
+		close?: TransactionMenuButton.Close;
 		transactionId: string;
 	}
 }
 
-export const PackageButton: FC<PackageButton.Props> = ({ transactionId, ...props }) => {
+export const PackageButton: FC<PackageButton.Props> = ({ close, transactionId, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const mutation = withTransactionEntryQuery.useCreateMutation({
 		invalidate: [
@@ -22,6 +24,7 @@ export const PackageButton: FC<PackageButton.Props> = ({ transactionId, ...props
 		],
 		async onPostMutation() {
 			setIsOpen(false);
+			close?.();
 		},
 	});
 
