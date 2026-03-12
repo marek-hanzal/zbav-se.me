@@ -1,5 +1,6 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import type { StateType } from "@use-pico/common/type";
+import { CloseButton } from "@zbav-se.me/ui/button";
 import type { FC, PropsWithChildren } from "react";
 
 export namespace Sheet {
@@ -15,10 +16,11 @@ export const Sheet: FC<Sheet.Props> = ({ state, children }) => {
 			onClose={() => {
 				state.set(false);
 			}}
-			detent={"full"}
+			detent={"default"}
 			withHeader
-			header={() => ({
+			header={({ close }) => ({
 				title: "Share location (title)",
+				right: <CloseButton onClick={close} />,
 			})}
 		>
 			{children}

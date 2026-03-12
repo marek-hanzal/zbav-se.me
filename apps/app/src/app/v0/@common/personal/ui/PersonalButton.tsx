@@ -2,6 +2,7 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
+import { CloseButton } from "@zbav-se.me/ui/button";
 import { EmailIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useState } from "react";
@@ -43,10 +44,11 @@ export const PersonalButton: FC<PersonalButton.Props> = ({ transactionId, ...pro
 				onClose={() => {
 					setIsOpen(false);
 				}}
-				detent={"full"}
+				detent={"default"}
 				withHeader
-				header={() => ({
+				header={({ close }) => ({
 					title: "Share contact info (title)",
+					right: <CloseButton onClick={close} />,
 				})}
 			>
 				<PersonalControl
