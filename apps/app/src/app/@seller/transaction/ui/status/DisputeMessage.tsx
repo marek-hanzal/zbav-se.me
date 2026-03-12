@@ -5,7 +5,7 @@ import { withTransactionEntryGalleryCreateMutation } from "@zbav-se.me/sdk/mutat
 import { type FC, useState } from "react";
 import { GalleryUploadButton } from "~/app/@common/gallery/ui/GalleryUploadButton";
 import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
-import { LocationButton } from "~/app/v0/@common/location/ui/LocationButton";
+import { LocationButton } from "~/app/@common/transaction-entry/ui/button/LocationButton";
 import { PackageButton } from "~/app/v0/@common/package/ui/PackageButton";
 import { PersonalButton } from "~/app/v0/@common/personal/ui/PersonalButton";
 import { MessageButtonUi } from "~/app/v0/@common/transaction/ui/MessageButtonUi";
@@ -56,6 +56,7 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ close, transaction, u
 			/>
 
 			<LocationButton
+				close={close}
 				transactionId={transaction.id}
 				{...MessageButtonUi}
 			/>

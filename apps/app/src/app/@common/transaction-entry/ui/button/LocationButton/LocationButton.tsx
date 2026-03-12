@@ -1,19 +1,20 @@
-import type { StateType } from "@use-pico/common/type";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import type { FC } from "react";
 import { useState } from "react";
+import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 import { Content } from "./Content";
 import { Sheet } from "./Sheet";
 import { Trigger } from "./Trigger";
 
 export namespace LocationButton {
 	export interface Props extends Omit<Trigger.Props, "onOpen"> {
+		close: TransactionMenuButton.Close;
 		transactionId: string;
 	}
 }
 
-export const LocationButton: FC<LocationButton.Props> = ({ transactionId, ...props }) => {
+export const LocationButton: FC<LocationButton.Props> = ({ close, transactionId, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [locationId, setLocationId] = useState<string | undefined | null>(null);
 	const [location, setLocation] = useState<tLocation | undefined>(undefined);
@@ -24,21 +25,9 @@ export const LocationButton: FC<LocationButton.Props> = ({ transactionId, ...pro
 		],
 		async onPostMutation() {
 			setIsOpen(false);
+			close();
 		},
 	});
-
-	const isOpenState: StateType.State<boolean> = {
-		value: isOpen,
-		set: setIsOpen,
-	};
-	const locationIdState: StateType.State<string | undefined | null> = {
-		value: locationId,
-		set: setLocationId,
-	};
-	const locationState: StateType.State<tLocation | undefined> = {
-		value: location,
-		set: setLocation,
-	};
 
 	return (
 		<>
@@ -49,10 +38,21 @@ export const LocationButton: FC<LocationButton.Props> = ({ transactionId, ...pro
 				{...props}
 			/>
 
-			<Sheet state={isOpenState}>
+			<Sheet
+				state={{
+					value: isOpen,
+					set: setIsOpen,
+				}}
+			>
 				<Content
-					locationIdState={locationIdState}
-					locationState={locationState}
+					locationIdState={{
+						value: locationId,
+						set: setLocationId,
+					}}
+					locationState={{
+						value: location,
+						set: setLocation,
+					}}
 					loading={mutation.isPending}
 					onCancel={() => {
 						setIsOpen(false);

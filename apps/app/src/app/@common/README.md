@@ -86,6 +86,7 @@ When adding to `@common`:
   - `@common/transaction-entry/TransactionEntryList/Item/Data.tsx` owns `transaction_entry.kind` dispatch (`text/status/gallery/location/personal/package`).
   - `@common/transaction-entry/TransactionEntryList/Item/type/*` contains local entry render variants used only by the list item renderer.
   - `@common/transaction-entry/ui/TransactionEntryList/Item/type/TypeContainer.tsx` now holds the shared direction-aware bubble container used by the entry type renderers.
+  - `@common/transaction-entry/ui/button/LocationButton/*` now owns the shared transaction-entry location action flow; it no longer lives in the old `v0/@common/location` stack and accepts the shared transaction menu `close` callback.
   - `Gallery/*` uses local `Suspense -> Data/Pending` composition and reads linked gallery content through the transaction-entry gallery endpoint, not the owner-scoped gallery fetch route.
   - `Text.tsx` and `Common.tsx` stay intentionally separate, even though they currently render near-identical UI.
 - Shared page-level title navigation now uses `@common/nav/BackHomeButton/BackHomeButton.tsx` for screens that should provide an explicit return path to home.
