@@ -2,17 +2,23 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 import { DisputeMessage } from "./status/DisputeMessage";
 import { OpenMessage } from "./status/OpenMessage";
 import { PendingMessage } from "./status/PendingMessage";
 
 export namespace TransactionMessage {
 	export interface Props extends Container.Props {
+		close: TransactionMenuButton.Close;
 		transaction: tTransaction;
 	}
 }
 
-export const TransactionMessage: FC<TransactionMessage.Props> = ({ transaction, ...props }) => {
+export const TransactionMessage: FC<TransactionMessage.Props> = ({
+	close,
+	transaction,
+	...props
+}) => {
 	const message = match(transaction.status)
 		.with("pending", () => {
 			return <PendingMessage transaction={transaction} />;

@@ -30,9 +30,15 @@ export const TransactionMenu: FC<TransactionMenu.Props> = ({
 			}}
 			{...props}
 		>
-			<TransactionMessage transaction={transaction} />
+			<TransactionMessage
+				close={close}
+				transaction={transaction}
+			/>
 
-			<TransactionToolbar transaction={transaction} />
+			<TransactionToolbar
+				close={close}
+				transaction={transaction}
+			/>
 		</Container>
 	);
 };
