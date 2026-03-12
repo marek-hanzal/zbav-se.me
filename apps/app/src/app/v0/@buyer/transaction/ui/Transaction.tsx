@@ -96,6 +96,7 @@ export const Transaction: FC<Transaction.Props> = ({
 					</Container>
 
 					<TransactionEntryList
+						_suspense={"I know"}
 						side={tUserSideEnum.buyer}
 						containerRef={containerRef}
 						transactionId={transaction.id}
