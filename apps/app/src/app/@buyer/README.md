@@ -28,6 +28,7 @@ Maps to server API: `/api/buyer/*`.
 
 - Feed editor gallery patch was moved to active scope:
   - `@buyer/feed/FeedEditor/patch/GalleryPatch.tsx`
+- Buyer transaction detail now imports shared transaction-entry timeline rendering from active common scope at `@common/transaction-entry/*` instead of the old `v0` common stack.
 - Feed editor value components with single usage were localized to feed editor:
   - `@buyer/feed/FeedEditor/value/`
     - `AgeValueList.tsx`

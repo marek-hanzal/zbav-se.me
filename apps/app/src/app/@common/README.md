@@ -80,6 +80,7 @@ When adding to `@common`:
 ## Recent updates
 
 - Transaction list container abstraction was removed from `@common/transaction/ui/`; buyer/seller now keep their own domain-specific list containers to avoid cross-domain generic query wrappers.
+- Transaction-entry timeline rendering now lives in active common scope at `@common/transaction-entry/*`; buyer/seller transaction detail screens no longer import the old `v0` common stack.
 - Transaction-entry rendering is split into focused parts:
   - `@common/transaction-entry/TransactionEntryList/Data.tsx` handles data/container composition.
   - `@common/transaction-entry/TransactionEntryList/TransactionEntryList.tsx` composes local suspense fallback for feature call-sites.
