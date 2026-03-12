@@ -1,4 +1,5 @@
-import { Container } from "@use-pico/client/ui/container";
+import type { Container } from "@use-pico/client/ui/container";
+import { Group } from "@use-pico/client/ui/group";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import { withTransactionEntryGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction-entry";
 import { type FC, useState } from "react";
@@ -18,11 +19,10 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ transaction, ui, ...props }
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
-		<Container
+		<Group
 			ui={{
 				round: "default",
 				flow: "vertical",
-				gap: "default",
 				tone: "link",
 				...ui,
 			}}
@@ -66,6 +66,6 @@ export const OpenMessage: FC<OpenMessage.Props> = ({ transaction, ui, ...props }
 				}}
 				{...MessageButtonUi}
 			/>
-		</Container>
+		</Group>
 	);
 };

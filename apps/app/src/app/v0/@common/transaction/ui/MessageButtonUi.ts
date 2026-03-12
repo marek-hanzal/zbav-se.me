@@ -9,10 +9,10 @@ export const MessageButtonUi: ConfirmButton.Props = {
 	ui: {
 		tone: "link",
 		theme: "light",
-		round: "full",
+		round: undefined,
 		background: "default",
 		text: "sm",
-		border: true,
+		border: false,
 		shadow: false,
 		width: "full",
 		size: "sm",
