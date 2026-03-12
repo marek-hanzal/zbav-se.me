@@ -38,6 +38,7 @@ export function useAutoScroll({
 		debounceMs,
 		{
 			leading: true,
+			trailing: true,
 		},
 	);
 
@@ -63,11 +64,20 @@ export function useAutoScroll({
 		const ro = new ResizeObserver(() => {
 			scrollToEnd(resizeBehavior);
 		});
+		const mo = new MutationObserver(() => {
+			scrollToEnd(resizeBehavior);
+		});
 
 		ro.observe(contentRef.current);
+		mo.observe(contentRef.current, {
+			childList: true,
+			subtree: true,
+			characterData: true,
+		});
 
 		return () => {
 			ro.disconnect();
+			mo.disconnect();
 		};
 	}, [
 		enabled,
