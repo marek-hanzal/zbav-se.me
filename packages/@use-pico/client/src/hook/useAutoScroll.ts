@@ -43,46 +43,82 @@ export function useAutoScroll({
 	);
 
 	useLayoutEffect(() => {
-		if (!enabled || !containerRef.current || !contentRef.current) {
+		if (!enabled) {
 			return;
 		}
 
-		scrollToEnd(initialBehavior);
+		let frame = 0;
+
+		const onReady = () => {
+			if (!containerRef.current || !contentRef.current) {
+				frame = requestAnimationFrame(onReady);
+
+				return;
+			}
+
+			scrollToEnd(initialBehavior);
+		};
+
+		onReady();
+
+		return () => {
+			cancelAnimationFrame(frame);
+		};
 	}, [
 		enabled,
-		containerRef.current,
-		contentRef.current,
+		containerRef,
+		contentRef,
 		scrollToEnd,
 		initialBehavior,
 	]);
 
 	useLayoutEffect(() => {
-		if (!enabled || !contentRef.current || !containerRef.current) {
+		if (!enabled) {
 			return;
 		}
 
-		const ro = new ResizeObserver(() => {
-			scrollToEnd(resizeBehavior);
-		});
-		const mo = new MutationObserver(() => {
-			scrollToEnd(resizeBehavior);
-		});
+		let frame = 0;
+		let disconnect = () => {
+			//
+		};
 
-		ro.observe(contentRef.current);
-		mo.observe(contentRef.current, {
-			childList: true,
-			subtree: true,
-			characterData: true,
-		});
+		const onReady = () => {
+			if (!containerRef.current || !contentRef.current) {
+				frame = requestAnimationFrame(onReady);
+
+				return;
+			}
+
+			const ro = new ResizeObserver(() => {
+				scrollToEnd(resizeBehavior);
+			});
+			const mo = new MutationObserver(() => {
+				scrollToEnd(resizeBehavior);
+			});
+
+			ro.observe(contentRef.current);
+			mo.observe(contentRef.current, {
+				childList: true,
+				subtree: true,
+				characterData: true,
+			});
+
+			disconnect = () => {
+				ro.disconnect();
+				mo.disconnect();
+			};
+		};
+
+		onReady();
 
 		return () => {
-			ro.disconnect();
-			mo.disconnect();
+			cancelAnimationFrame(frame);
+			disconnect();
 		};
 	}, [
 		enabled,
-		containerRef.current,
-		contentRef.current,
+		containerRef,
+		contentRef,
 		scrollToEnd,
 		resizeBehavior,
 	]);
