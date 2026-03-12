@@ -1,54 +1,51 @@
 import { useLocale } from "@use-pico/client/hook";
-import { Container } from "@use-pico/client/ui/container";
+import type { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tTransactionEntryGallery } from "@zbav-se.me/sdk/api/user";
-import { withGalleryFetchQuery } from "@zbav-se.me/sdk/query/user/gallery";
+import { withTransactionEntryGalleryFetchQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { GalleryPreviewSheet } from "~/app/@common/gallery/ui/GalleryPreviewSheet";
+import { TypeContainer } from "../TypeContainer";
 
-export namespace Gallery {
+export namespace Data {
 	export interface Props extends Container.Props {
 		transactionEntry: tTransactionEntryGallery;
 	}
 }
 
-export const Gallery: FC<Gallery.Props> = ({ transactionEntry, ...props }) => {
+export const Data: FC<Data.Props> = ({ transactionEntry, ...props }) => {
 	const locale = useLocale();
-	const { data: gallery } = withGalleryFetchQuery.useSuspenseQuery({
+	const { data: gallery } = withTransactionEntryGalleryFetchQuery.useSuspenseQuery({
 		where: {
-			id: transactionEntry.payload.galleryId,
+			transactionEntryId: transactionEntry.id,
 		},
 	});
 	const hero = useUpload(gallery.items);
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
-		<Container
+		<TypeContainer
+			direction={transactionEntry.direction}
 			ui={{
 				position: "relative",
+				theme: undefined,
+				background: undefined,
+				round: undefined,
+				inner: undefined,
 			}}
-			className={[
-				"w-2/3",
-				"h-48",
-				transactionEntry.direction === "out" ? "ml-auto" : undefined,
-				transactionEntry.direction === "system"
-					? [
-							"mx-auto",
-							"text-center",
-						]
-					: undefined,
-			]}
+			className={"h-48"}
 			{...props}
 		>
 			<HeroImage
 				src={hero.url}
 				visible
 				ui={{
+					tone: "neutral",
 					theme: "light",
-					background: "alt",
+					background: "default",
 					round: "default",
 				}}
 				onClick={() => setIsGalleryOpen((prev) => !prev)}
@@ -77,6 +74,6 @@ export const Gallery: FC<Gallery.Props> = ({ transactionEntry, ...props }) => {
 				isOpen={isGalleryOpen}
 				onClose={() => setIsGalleryOpen(false)}
 			/>
-		</Container>
+		</TypeContainer>
 	);
 };

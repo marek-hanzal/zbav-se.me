@@ -1,11 +1,11 @@
 import { useLocale } from "@use-pico/client/hook";
-import { Container, type uiContainer } from "@use-pico/client/ui/container";
+import type { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tTransactionEntryLocation } from "@zbav-se.me/sdk/api/user";
 import { withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
-import { match } from "ts-pattern";
+import { TypeContainer } from "./TypeContainer";
 
 export namespace Location {
 	export interface Props extends Container.Props {
@@ -22,44 +22,11 @@ export const Location: FC<Location.Props> = ({ transactionEntry, ...props }) => 
 	});
 
 	return (
-		<Container
+		<TypeContainer
+			direction={transactionEntry.direction}
 			ui={{
-				theme: "light",
-				background: "alt",
-				border: true,
 				flow: "vertical",
-				inner: "default",
-				round: "default",
-				...match<typeof transactionEntry.direction, uiContainer.Ui>(
-					transactionEntry.direction,
-				)
-					.with("in", () => {
-						return {
-							tone: "link",
-						};
-					})
-					.with("out", () => {
-						return {
-							tone: "primary",
-						};
-					})
-					.with("system", () => {
-						return {
-							tone: "neutral",
-						};
-					})
-					.exhaustive(),
 			}}
-			className={[
-				"w-2/3",
-				transactionEntry.direction === "out" ? "ml-auto" : undefined,
-				transactionEntry.direction === "system"
-					? [
-							"mx-auto",
-							"text-center",
-						]
-					: undefined,
-			]}
 			{...props}
 		>
 			<Typo
@@ -81,6 +48,6 @@ export const Location: FC<Location.Props> = ({ transactionEntry, ...props }) => 
 					opacity: "6",
 				}}
 			/>
-		</Container>
+		</TypeContainer>
 	);
 };

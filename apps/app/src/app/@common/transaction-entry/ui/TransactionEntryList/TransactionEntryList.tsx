@@ -6,7 +6,7 @@ import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transactio
 import { type FC, type RefObject, useRef } from "react";
 import { Item } from "./Item";
 
-export namespace Data {
+export namespace TransactionEntryList {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		side: tUserSideEnum;
 		containerRef: RefObject<HTMLDivElement | null>;
@@ -15,7 +15,7 @@ export namespace Data {
 	}
 }
 
-export const Data: FC<Data.Props> = ({
+export const TransactionEntryList: FC<TransactionEntryList.Props> = ({
 	_suspense,
 	side,
 	transactionId,
@@ -60,7 +60,6 @@ export const Data: FC<Data.Props> = ({
 				gap: "lg",
 				...ui,
 			}}
-			className={"py-1"}
 			{...props}
 		>
 			{data.map((transactionEntryId) => {

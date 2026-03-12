@@ -1,13 +1,13 @@
 import { useLocale } from "@use-pico/client/hook";
 import { ExternalIcon, Icon } from "@use-pico/client/icon";
-import { Container, LabelValue, type uiContainer } from "@use-pico/client/ui/container";
+import { type Container, LabelValue } from "@use-pico/client/ui/container";
 import { Typo, uiTypo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import { translator } from "@use-pico/common/translator";
 import type { tTransactionEntryPackage } from "@zbav-se.me/sdk/api/user";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
-import { match } from "ts-pattern";
+import { TypeContainer } from "./TypeContainer";
 
 export namespace Package {
 	export interface Props extends Container.Props {
@@ -21,40 +21,12 @@ export const Package: FC<Package.Props> = ({ transactionEntry, ...props }) => {
 	const domain = url.hostname.replace(/^www\./, "");
 
 	return (
-		<Container
+		<TypeContainer
+			direction={transactionEntry.direction}
 			ui={{
 				flow: "vertical",
 				gap: "xs",
-				...match<typeof transactionEntry.direction, uiContainer.Ui>(
-					transactionEntry.direction,
-				)
-					.with("in", () => {
-						return {
-							tone: "link",
-						};
-					})
-					.with("out", () => {
-						return {
-							tone: "primary",
-						};
-					})
-					.with("system", () => {
-						return {
-							tone: "neutral",
-						};
-					})
-					.exhaustive(),
 			}}
-			className={[
-				"w-2/3",
-				transactionEntry.direction === "out" ? "ml-auto" : undefined,
-				transactionEntry.direction === "system"
-					? [
-							"mx-auto",
-							"text-center",
-						]
-					: undefined,
-			]}
 			{...props}
 		>
 			<LabelValue
@@ -117,6 +89,6 @@ export const Package: FC<Package.Props> = ({ transactionEntry, ...props }) => {
 					opacity: "6",
 				}}
 			/>
-		</Container>
+		</TypeContainer>
 	);
 };

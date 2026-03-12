@@ -2,8 +2,8 @@ import { translator } from "@use-pico/common/translator";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, Suspense } from "react";
 import { BackHomeButton } from "~/app/@common/nav/BackHomeButton";
+import { Transaction } from "~/app/@seller/transaction/~public/Transaction";
 import { HomeMenuButton } from "~/app/@user/home/~public/HomeMenuButton";
-import { Transaction } from "~/app/v0/@seller/transaction/ui/Transaction";
 import { TransactionPending } from "~/app/v0/@seller/transaction/ui/TransactionPending";
 import { TransactionDetailInvalidate } from "./TransactionDetailInvalidate";
 

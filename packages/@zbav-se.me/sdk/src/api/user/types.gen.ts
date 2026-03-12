@@ -1277,6 +1277,23 @@ export type tTransactionEntryPersonalCreate = {
 };
 
 /**
+ * Query object for transaction-entry gallery fetch
+ */
+export type tTransactionEntryGalleryQuery = {
+    where: tTransactionEntryGalleryWhere;
+};
+
+/**
+ * Gallery lookup scoped by transaction entry identifier
+ */
+export type tTransactionEntryGalleryWhere = {
+    /**
+     * Transaction entry identifier linked to the gallery
+     */
+    transactionEntryId: string;
+};
+
+/**
  * Data for creating a new upload
  */
 export type tUploadCreate = {
@@ -1790,6 +1807,38 @@ export type tApiTransactionEntryFetchResponse = {
 };
 
 export type apiTransactionEntryFetchResponse = tApiTransactionEntryFetchResponse[keyof tApiTransactionEntryFetchResponse];
+
+export type tApiTransactionEntryGalleryFetchRequest = {
+    /**
+     * Transaction-entry gallery query object
+     */
+    body?: tTransactionEntryGalleryQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/transaction-entry/gallery/fetch';
+};
+
+export type apiTransactionEntryGalleryFetchErrors = {
+    /**
+     * Gallery not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiTransactionEntryGalleryFetchError = apiTransactionEntryGalleryFetchErrors[keyof apiTransactionEntryGalleryFetchErrors];
+
+export type tApiTransactionEntryGalleryFetchResponse = {
+    /**
+     * Gallery linked to the requested transaction entry
+     */
+    200: tGallery;
+};
+
+export type apiTransactionEntryGalleryFetchResponse = tApiTransactionEntryGalleryFetchResponse[keyof tApiTransactionEntryGalleryFetchResponse];
 
 export type tApiUploadCreateRequest = {
     /**

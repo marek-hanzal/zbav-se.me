@@ -1,5 +1,3 @@
-import { VisibilityContext } from "@use-pico/client/context";
-import { createNoopVisibilityStore } from "@use-pico/client/store";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
@@ -9,10 +7,10 @@ import { type FC, useRef, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { LocationBadge } from "~/app/@common/location/ui/LocationBadge";
-import { TransactionEntryList } from "~/app/v0/@common/transaction-entry/TransactionEntryList";
-import { TransactionChat } from "./TransactionChat";
-import { TransactionMessage } from "./TransactionMessage";
-import { TransactionToolbar } from "./TransactionToolbar";
+import { TransactionEntryList } from "~/app/@common/transaction-entry/ui/TransactionEntryList";
+import { TransactionChat } from "~/app/v0/@buyer/transaction/ui/TransactionChat";
+import { TransactionMessage } from "~/app/v0/@buyer/transaction/ui/TransactionMessage";
+import { TransactionToolbar } from "~/app/v0/@buyer/transaction/ui/TransactionToolbar";
 
 export namespace Transaction {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -47,7 +45,6 @@ export const Transaction: FC<Transaction.Props> = ({
 					layout: "vertical-content-footer",
 					height: "full",
 					gap: "xs",
-					inner: "default",
 				}}
 			>
 				<Container
@@ -98,21 +95,26 @@ export const Transaction: FC<Transaction.Props> = ({
 					</Container>
 
 					<TransactionEntryList
+						_suspense={"I know"}
 						side={tUserSideEnum.buyer}
 						containerRef={containerRef}
 						transactionId={transaction.id}
 						refresh={refresh}
+						ui={{
+							inner: "default",
+						}}
 					>
 						<TransactionMessage transaction={transaction} />
 						<TransactionToolbar transaction={transaction} />
 					</TransactionEntryList>
-
-					<VisibilityContext value={createNoopVisibilityStore()}>
-						ListingSheet or sthing
-					</VisibilityContext>
 				</Container>
 
-				<TransactionChat transaction={transaction} />
+				<TransactionChat
+					transaction={transaction}
+					ui={{
+						inner: "default",
+					}}
+				/>
 			</Container>
 		</Container>
 	);

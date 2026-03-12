@@ -80,11 +80,13 @@ When adding to `@common`:
 ## Recent updates
 
 - Transaction list container abstraction was removed from `@common/transaction/ui/`; buyer/seller now keep their own domain-specific list containers to avoid cross-domain generic query wrappers.
+- Transaction-entry timeline rendering now lives in active common scope at `@common/transaction-entry/*`; buyer/seller transaction detail screens no longer import the old `v0` common stack.
 - Transaction-entry rendering is split into focused parts:
-  - `@common/transaction-entry/TransactionEntryList/Data.tsx` handles data/container composition.
-  - `@common/transaction-entry/TransactionEntryList/TransactionEntryList.tsx` composes local suspense fallback for feature call-sites.
+  - `@common/transaction-entry/TransactionEntryList/TransactionEntryList.tsx` now owns collection fetch + container composition directly and publicly acknowledges `MarkSuspense.Props`.
   - `@common/transaction-entry/TransactionEntryList/Item/Data.tsx` owns `transaction_entry.kind` dispatch (`text/status/gallery/location/personal/package`).
   - `@common/transaction-entry/TransactionEntryList/Item/type/*` contains local entry render variants used only by the list item renderer.
+  - `@common/transaction-entry/ui/TransactionEntryList/Item/type/TypeContainer.tsx` now holds the shared direction-aware bubble container used by the entry type renderers.
+  - `Gallery/*` uses local `Suspense -> Data/Pending` composition and reads linked gallery content through the transaction-entry gallery endpoint, not the owner-scoped gallery fetch route.
   - `Text.tsx` and `Common.tsx` stay intentionally separate, even though they currently render near-identical UI.
 - Shared page-level title navigation now uses `@common/nav/BackHomeButton/BackHomeButton.tsx` for screens that should provide an explicit return path to home.
 - Shared message creation controls now create user-authored `transaction_entry` records:

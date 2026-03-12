@@ -5,7 +5,6 @@ import {
 	type ComponentProps,
 	type FC,
 	type ReactNode,
-	useEffect,
 	useLayoutEffect,
 	useRef,
 	useState,
@@ -36,6 +35,7 @@ export namespace HeroImage {
 		 * Used when image loading fails (`onError`) or when the image is complete but invalid.
 		 */
 		errorStatusProps?: Status.Props;
+		spinner?: ReactNode;
 
 		/**
 		 * Fallback node rendered when `visible` is `false`.
@@ -64,6 +64,7 @@ export namespace HeroImage {
 export const HeroImage: FC<HeroImage.Props> = ({
 	visible = true,
 	errorStatusProps,
+	spinner,
 	invisible,
 	onLoad,
 	onError,
@@ -73,15 +74,15 @@ export const HeroImage: FC<HeroImage.Props> = ({
 	//
 	...props
 }) => {
-	const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
+	const [state, setState] = useState<{
+		src: string | undefined;
+		status: "loading" | "loaded" | "error";
+	}>({
+		src: props.src,
+		status: "loading",
+	});
 	const imgRef = useRef<HTMLImageElement | null>(null);
-
-	useEffect(() => {
-		void props.src;
-		setState("loading");
-	}, [
-		props.src,
-	]);
+	const status = state.src === props.src ? state.status : "loading";
 
 	useLayoutEffect(() => {
 		const img = imgRef.current;
@@ -90,9 +91,14 @@ export const HeroImage: FC<HeroImage.Props> = ({
 		}
 
 		if (img.complete) {
-			setState(img.naturalWidth > 0 ? "loaded" : "error");
+			setState({
+				src: props.src,
+				status: img.naturalWidth > 0 ? "loaded" : "error",
+			});
 		}
-	});
+	}, [
+		props.src,
+	]);
 
 	if (!visible) {
 		return invisible;
@@ -123,24 +129,30 @@ export const HeroImage: FC<HeroImage.Props> = ({
 				referrerPolicy={"origin"}
 				crossOrigin={"anonymous"}
 				onLoad={(e) => {
-					setState("loaded");
+					setState({
+						src: props.src,
+						status: "loaded",
+					});
 					onLoad?.(e);
 				}}
 				onError={(e) => {
 					console.error(e);
-					setState("error");
+					setState({
+						src: props.src,
+						status: "error",
+					});
 					onError?.(e);
 				}}
 				style={{
-					opacity: state === "loaded" ? 1 : 0,
+					opacity: status === "loaded" ? 1 : 0,
 					transition: "opacity 120ms ease",
 				}}
 				{...props}
 			/>
 
-			{state === "loading" ? <SpinnerContainer /> : null}
+			{status === "loading" ? (spinner ?? <SpinnerContainer />) : null}
 
-			{state === "error" ? (
+			{status === "error" ? (
 				<Container
 					data-ui={"HeroImage-error"}
 					ui={{
