@@ -52,10 +52,20 @@ export const TransactionListingListPage: FC<TransactionListingListPage.Props> = 
 		],
 	};
 
-	const { data: activeTransactionListingIds } =
-		withTransactionListingQuery.useCollectionQuery(activeQuery);
-	const { data: inactiveTransactionListingIds } =
-		withTransactionListingQuery.useCollectionQuery(inactiveQuery);
+	const refetchInterval = 5_000;
+
+	const { data: activeTransactionListingIds } = withTransactionListingQuery.useCollectionQuery(
+		activeQuery,
+		{
+			refetchInterval,
+		},
+	);
+	const { data: inactiveTransactionListingIds } = withTransactionListingQuery.useCollectionQuery(
+		inactiveQuery,
+		{
+			refetchInterval,
+		},
+	);
 	const isEmpty =
 		activeTransactionListingIds.length === 0 && inactiveTransactionListingIds.length === 0;
 

@@ -98,11 +98,10 @@ export const Item: FC<Item.Props> = ({
 				bottom={
 					<Container
 						ui={{
-							flow: "horizontal",
-							justify: "space-between",
+							flow: "vertical",
+							// justify: "space-between",
 							width: "full",
-							gap: "default",
-							items: "center",
+							items: "start",
 						}}
 					>
 						<Typo
@@ -111,9 +110,9 @@ export const Item: FC<Item.Props> = ({
 							})}
 							ui={{
 								text: "sm",
-								tone: isUnread ? "neutral" : "subtle",
+								tone: "neutral",
 								theme: "light",
-								font: isUnread ? "bold" : "normal",
+								font: "normal",
 								color: "text",
 							}}
 							className={[
