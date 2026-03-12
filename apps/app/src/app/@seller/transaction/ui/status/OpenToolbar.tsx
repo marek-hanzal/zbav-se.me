@@ -1,7 +1,7 @@
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import type { FC } from "react";
 import { TransactionButtonUi } from "~/app/v0/@common/transaction/ui/TransactionButtonUi";
-import { ResolveButton } from "~/app/v0/@seller/transaction/ui/button/ResolveButton";
+import { ResolveButton } from "../button/ResolveButton";
 
 export namespace OpenToolbar {
 	export interface Props {

@@ -3,18 +3,19 @@ import { Group } from "@use-pico/client/ui/group";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import { withTransactionEntryGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user/transaction-entry";
 import { type FC, useState } from "react";
+import { SellerInfoButton } from "~/app/@buyer/listing/~public/SellerInfoButton";
 import { GalleryUploadButton } from "~/app/@common/gallery/ui/GalleryUploadButton";
 import { LocationButton } from "~/app/v0/@common/location/ui/LocationButton";
 import { PersonalButton } from "~/app/v0/@common/personal/ui/PersonalButton";
 import { MessageButtonUi } from "~/app/v0/@common/transaction/ui/MessageButtonUi";
 
-export namespace DisputeMessage {
+export namespace OpenMessage {
 	export interface Props extends Container.Props {
 		transaction: tTransaction;
 	}
 }
 
-export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...props }) => {
+export const OpenMessage: FC<OpenMessage.Props> = ({ transaction, ui, ...props }) => {
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
@@ -31,6 +32,16 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...p
 			]}
 			{...props}
 		>
+			<PersonalButton
+				transactionId={transaction.id}
+				{...MessageButtonUi}
+			/>
+
+			<LocationButton
+				transactionId={transaction.id}
+				{...MessageButtonUi}
+			/>
+
 			<GalleryUploadButton
 				defaultUploadIds={[]}
 				state={{
@@ -51,13 +62,8 @@ export const DisputeMessage: FC<DisputeMessage.Props> = ({ transaction, ui, ...p
 				{...MessageButtonUi}
 			/>
 
-			<LocationButton
-				transactionId={transaction.id}
-				{...MessageButtonUi}
-			/>
-
-			<PersonalButton
-				transactionId={transaction.id}
+			<SellerInfoButton
+				listingId={transaction.listingId}
 				{...MessageButtonUi}
 			/>
 		</Group>

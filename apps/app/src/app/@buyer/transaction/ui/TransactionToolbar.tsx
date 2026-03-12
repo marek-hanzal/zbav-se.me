@@ -3,9 +3,9 @@ import { Group } from "@use-pico/client/ui/group";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { DisputeToolbar } from "~/app/v0/@buyer/transaction/ui/status/DisputeToolbar";
-import { OpenToolbar } from "~/app/v0/@buyer/transaction/ui/status/OpenToolbar";
-import { ResolvedToolbar } from "~/app/v0/@buyer/transaction/ui/status/ResolvedToolbar";
+import { DisputeToolbar } from "./status/DisputeToolbar";
+import { OpenToolbar } from "./status/OpenToolbar";
+import { ResolvedToolbar } from "./status/ResolvedToolbar";
 
 export namespace TransactionToolbar {
 	export interface Props extends Container.Props {

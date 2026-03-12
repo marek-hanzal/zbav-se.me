@@ -8,8 +8,8 @@ import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { TransactionEntryList } from "~/app/@common/transaction-entry/ui/TransactionEntryList";
 import { TransactionChat } from "~/app/@seller/transaction/~public/TransactionChat";
+import { TransactionMessage } from "~/app/@seller/transaction/~public/TransactionMessage";
 import { TransactionToolbar } from "~/app/@seller/transaction/~public/TransactionToolbar";
-import { TransactionMessage } from "~/app/v0/@seller/transaction/ui/TransactionMessage";
 
 export namespace Transaction {
 	export interface Props extends Container.Props, MarkSuspense.Props {
