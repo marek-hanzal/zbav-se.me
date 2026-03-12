@@ -23,13 +23,28 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 }) => {
 	const toolbar = match(transaction.status)
 		.with("open", () => {
-			return <OpenToolbar transaction={transaction} />;
+			return (
+				<OpenToolbar
+					close={close}
+					transaction={transaction}
+				/>
+			);
 		})
 		.with("resolved", () => {
-			return <ResolvedToolbar transaction={transaction} />;
+			return (
+				<ResolvedToolbar
+					close={close}
+					transaction={transaction}
+				/>
+			);
 		})
 		.with("dispute", () => {
-			return <DisputeToolbar transaction={transaction} />;
+			return (
+				<DisputeToolbar
+					close={close}
+					transaction={transaction}
+				/>
+			);
 		})
 		.with("pending", "rejected", "sold", "expired", "success", "closed", () => {
 			return null;

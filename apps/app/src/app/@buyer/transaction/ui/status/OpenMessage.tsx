@@ -5,17 +5,19 @@ import { withTransactionEntryGalleryCreateMutation } from "@zbav-se.me/sdk/mutat
 import { type FC, useState } from "react";
 import { SellerInfoButton } from "~/app/@buyer/listing/~public/SellerInfoButton";
 import { GalleryUploadButton } from "~/app/@common/gallery/ui/GalleryUploadButton";
+import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 import { LocationButton } from "~/app/v0/@common/location/ui/LocationButton";
 import { PersonalButton } from "~/app/v0/@common/personal/ui/PersonalButton";
 import { MessageButtonUi } from "~/app/v0/@common/transaction/ui/MessageButtonUi";
 
 export namespace OpenMessage {
 	export interface Props extends Container.Props {
+		close: TransactionMenuButton.Close;
 		transaction: tTransaction;
 	}
 }
 
-export const OpenMessage: FC<OpenMessage.Props> = ({ transaction, ui, ...props }) => {
+export const OpenMessage: FC<OpenMessage.Props> = ({ close, transaction, ui, ...props }) => {
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (

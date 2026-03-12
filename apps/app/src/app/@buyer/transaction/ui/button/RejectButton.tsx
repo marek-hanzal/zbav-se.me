@@ -4,15 +4,21 @@ import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import { withTransactionRejectMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
 import { CancelIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 
 export namespace RejectButton {
 	export interface Props extends Partial<ConfirmButton.Props> {
+		close: TransactionMenuButton.Close;
 		transaction: tTransaction;
 	}
 }
 
-export const RejectButton: FC<RejectButton.Props> = ({ transaction, ...props }) => {
-	const mutation = withTransactionRejectMutation.useMutation();
+export const RejectButton: FC<RejectButton.Props> = ({ close, transaction, ...props }) => {
+	const mutation = withTransactionRejectMutation.useMutation({
+		onSuccess() {
+			close();
+		},
+	});
 
 	return (
 		<ConfirmButton

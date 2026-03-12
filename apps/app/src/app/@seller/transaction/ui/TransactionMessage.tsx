@@ -21,13 +21,28 @@ export const TransactionMessage: FC<TransactionMessage.Props> = ({
 }) => {
 	const message = match(transaction.status)
 		.with("pending", () => {
-			return <PendingMessage transaction={transaction} />;
+			return (
+				<PendingMessage
+					close={close}
+					transaction={transaction}
+				/>
+			);
 		})
 		.with("open", () => {
-			return <OpenMessage transaction={transaction} />;
+			return (
+				<OpenMessage
+					close={close}
+					transaction={transaction}
+				/>
+			);
 		})
 		.with("dispute", () => {
-			return <DisputeMessage transaction={transaction} />;
+			return (
+				<DisputeMessage
+					close={close}
+					transaction={transaction}
+				/>
+			);
 		})
 		.with("rejected", "resolved", "sold", "expired", "success", "closed", () => {
 			return null;

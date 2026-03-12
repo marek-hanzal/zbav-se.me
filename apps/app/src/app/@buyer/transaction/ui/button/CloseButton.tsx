@@ -4,15 +4,21 @@ import { Tx } from "@use-pico/client/ui/tx";
 import type { tTransaction } from "@zbav-se.me/sdk/api/buyer";
 import { withTransactionCloseMutation } from "@zbav-se.me/sdk/mutation/buyer/transaction";
 import type { FC } from "react";
+import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 
 export namespace CloseButton {
 	export interface Props extends Button.Props {
+		close: TransactionMenuButton.Close;
 		transaction: tTransaction;
 	}
 }
 
-export const CloseButton: FC<CloseButton.Props> = ({ transaction, ...props }) => {
-	const mutation = withTransactionCloseMutation.useMutation();
+export const CloseButton: FC<CloseButton.Props> = ({ close, transaction, ...props }) => {
+	const mutation = withTransactionCloseMutation.useMutation({
+		onSuccess() {
+			close();
+		},
+	});
 
 	return (
 		<Button

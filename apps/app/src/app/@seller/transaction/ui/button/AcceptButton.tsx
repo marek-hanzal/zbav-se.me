@@ -4,15 +4,21 @@ import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import { withTransactionAcceptMutation } from "@zbav-se.me/sdk/mutation/seller/transaction";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 
 export namespace AcceptButton {
 	export interface Props extends Button.Props {
+		close: TransactionMenuButton.Close;
 		transaction: tTransaction;
 	}
 }
 
-export const AcceptButton: FC<AcceptButton.Props> = ({ transaction, ...props }) => {
-	const mutation = withTransactionAcceptMutation.useMutation();
+export const AcceptButton: FC<AcceptButton.Props> = ({ close, transaction, ...props }) => {
+	const mutation = withTransactionAcceptMutation.useMutation({
+		onSuccess() {
+			close();
+		},
+	});
 
 	return (
 		<Button
