@@ -71,7 +71,7 @@ export const withTransactionListingSelectFx = Effect.fn("withTransactionListingS
 		for (const item of sort ?? []) {
 			query = match(item.field)
 				.with("createdAt", () => query.orderBy("l.createdAt", item.order))
-				.with("lastAt", () => query.orderBy(sql.ref("lastAt"), item.order))
+				.with("lastAt", () => query.orderBy("lastAt", item.order))
 				.exhaustive();
 		}
 

@@ -756,30 +756,239 @@ export const zTransactionStatusEnum = z.enum([
 export type zTransactionStatusEnum = z.infer<typeof zTransactionStatusEnum>;
 
 /**
- * Kind of the latest activity inside this transaction
+ * Direction of the transaction entry from the current viewer perspective
  */
-export const zTransactionEntryKindEnum = z.enum([
-    'text',
-    'gallery',
-    'location',
-    'package',
-    'personal',
-    'status-pending',
-    'status-open',
-    'status-resolved',
-    'status-dispute-buyer',
-    'status-dispute-seller',
-    'status-rejected-buyer',
-    'status-rejected-seller',
-    'status-sold',
-    'status-expired',
-    'status-success',
-    'status-closed'
+export const zTransactionEntryDirectionEnum = z.enum([
+    'in',
+    'out',
+    'system'
 ]).register(z.globalRegistry, {
-    description: 'Kind of the latest activity inside this transaction'
-}).nullable();
+    description: 'Direction of the transaction entry from the current viewer perspective'
+});
 
-export type zTransactionEntryKindEnum = z.infer<typeof zTransactionEntryKindEnum>;
+export type zTransactionEntryDirectionEnum = z.infer<typeof zTransactionEntryDirectionEnum>;
+
+/**
+ * Transaction text entry with user-authored message payload
+ */
+export const zTransactionEntryText = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'Transaction entry identifier'
+    }),
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'Transaction identifier'
+    }),
+    userId: z.string().nullable(),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    kind: z.enum(['text']),
+    payload: z.object({
+        text: z.string().register(z.globalRegistry, {
+            description: 'Text entry body'
+        })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction text entry with user-authored message payload'
+});
+
+export type zTransactionEntryText = z.infer<typeof zTransactionEntryText>;
+
+/**
+ * Transaction gallery entry with linked gallery payload
+ */
+export const zTransactionEntryGallery = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'Transaction entry identifier'
+    }),
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'Transaction identifier'
+    }),
+    userId: z.string().nullable(),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    kind: z.enum(['gallery']),
+    payload: z.object({
+        galleryId: z.string().register(z.globalRegistry, {
+            description: 'Gallery identifier linked to this entry'
+        })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction gallery entry with linked gallery payload'
+});
+
+export type zTransactionEntryGallery = z.infer<typeof zTransactionEntryGallery>;
+
+/**
+ * Transaction location entry with linked location payload
+ */
+export const zTransactionEntryLocation = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'Transaction entry identifier'
+    }),
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'Transaction identifier'
+    }),
+    userId: z.string().nullable(),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    kind: z.enum(['location']),
+    payload: z.object({
+        locationId: z.string().register(z.globalRegistry, {
+            description: 'Location identifier linked to this entry'
+        })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction location entry with linked location payload'
+});
+
+export type zTransactionEntryLocation = z.infer<typeof zTransactionEntryLocation>;
+
+/**
+ * Transaction package entry with shipment tracking payload
+ */
+export const zTransactionEntryPackage = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'Transaction entry identifier'
+    }),
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'Transaction identifier'
+    }),
+    userId: z.string().nullable(),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    kind: z.enum(['package']),
+    payload: z.object({
+        link: z.url().register(z.globalRegistry, {
+            description: 'Package tracking link'
+        }),
+        number: z.string().nullable()
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction package entry with shipment tracking payload'
+});
+
+export type zTransactionEntryPackage = z.infer<typeof zTransactionEntryPackage>;
+
+/**
+ * Transaction personal entry with contact and handoff payload
+ */
+export const zTransactionEntryPersonal = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'Transaction entry identifier'
+    }),
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'Transaction identifier'
+    }),
+    userId: z.string().nullable(),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    kind: z.enum(['personal']),
+    payload: z.object({
+        name: z.string().register(z.globalRegistry, {
+            description: 'Contact name'
+        }),
+        phone: z.string().register(z.globalRegistry, {
+            description: 'Contact phone'
+        }),
+        email: z.email().register(z.globalRegistry, {
+            description: 'Contact email'
+        }),
+        locationId: z.string().register(z.globalRegistry, {
+            description: 'Contact location identifier'
+        })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction personal entry with contact and handoff payload'
+});
+
+export type zTransactionEntryPersonal = z.infer<typeof zTransactionEntryPersonal>;
+
+/**
+ * Transaction system entry with shared status or informational payload
+ */
+export const zTransactionEntryCommon = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'Transaction entry identifier'
+    }),
+    transactionId: z.string().register(z.globalRegistry, {
+        description: 'Transaction identifier'
+    }),
+    userId: z.string().nullable(),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    kind: z.enum([
+        'status-pending',
+        'status-open',
+        'status-resolved',
+        'status-dispute-buyer',
+        'status-dispute-seller',
+        'status-rejected-buyer',
+        'status-rejected-seller',
+        'status-sold',
+        'status-expired',
+        'status-success',
+        'status-closed'
+    ]),
+    payload: z.object({
+        text: z.string().register(z.globalRegistry, {
+            description: 'Translation key for the system/status timeline entry'
+        })
+    }),
+    direction: zTransactionEntryDirectionEnum
+}).register(z.globalRegistry, {
+    description: 'Transaction system entry with shared status or informational payload'
+});
+
+export type zTransactionEntryCommon = z.infer<typeof zTransactionEntryCommon>;
+
+/**
+ * Most recent transaction entry. Transactions always have at least one entry, so this field is always present.
+ */
+export const zTransactionEntry = z.union([
+    z.object({
+        kind: z.literal('text')
+    }).and(zTransactionEntryText),
+    z.object({
+        kind: z.literal('gallery')
+    }).and(zTransactionEntryGallery),
+    z.object({
+        kind: z.literal('location')
+    }).and(zTransactionEntryLocation),
+    z.object({
+        kind: z.literal('package')
+    }).and(zTransactionEntryPackage),
+    z.object({
+        kind: z.literal('personal')
+    }).and(zTransactionEntryPersonal),
+    z.object({
+        kind: z.union([
+            z.literal('status-pending'),
+            z.literal('status-open'),
+            z.literal('status-resolved'),
+            z.literal('status-dispute-buyer'),
+            z.literal('status-dispute-seller'),
+            z.literal('status-rejected-buyer'),
+            z.literal('status-rejected-seller'),
+            z.literal('status-sold'),
+            z.literal('status-expired'),
+            z.literal('status-success'),
+            z.literal('status-closed')
+        ])
+    }).and(zTransactionEntryCommon)
+]);
+
+export type zTransactionEntry = z.infer<typeof zTransactionEntry>;
 
 /**
  * Transaction data
@@ -815,8 +1024,7 @@ export const zTransaction = z.object({
     }),
     priceType: zListingPriceEnum,
     currency: zCurrencyEnum,
-    lastKind: zTransactionEntryKindEnum,
-    lastText: z.string().nullable(),
+    entry: zTransactionEntry,
     unreadCount: z.number().register(z.globalRegistry, {
         description: 'Unread inbox buyer-message count for this transaction'
     }),
@@ -1131,6 +1339,32 @@ export const zTransactionCountQuery = z.object({
 export type zTransactionCountQuery = z.infer<typeof zTransactionCountQuery>;
 
 /**
+ * Kind of the most recent transaction activity under this listing
+ */
+export const zTransactionEntryKindEnum = z.enum([
+    'text',
+    'gallery',
+    'location',
+    'package',
+    'personal',
+    'status-pending',
+    'status-open',
+    'status-resolved',
+    'status-dispute-buyer',
+    'status-dispute-seller',
+    'status-rejected-buyer',
+    'status-rejected-seller',
+    'status-sold',
+    'status-expired',
+    'status-success',
+    'status-closed'
+]).register(z.globalRegistry, {
+    description: 'Kind of the most recent transaction activity under this listing'
+});
+
+export type zTransactionEntryKindEnum = z.infer<typeof zTransactionEntryKindEnum>;
+
+/**
  * Aggregated transaction information per listing
  */
 export const zTransactionListing = z.object({
@@ -1153,9 +1387,7 @@ export const zTransactionListing = z.object({
     lastAt: z.string().register(z.globalRegistry, {
         description: 'Timestamp of the most recent activity in any transaction under this listing'
     }),
-    lastKind: zTransactionEntryKindEnum.and(z.unknown().register(z.globalRegistry, {
-        description: 'Kind of the most recent transaction activity under this listing'
-    })),
+    lastKind: zTransactionEntryKindEnum,
     lastText: z.string().nullable()
 }).register(z.globalRegistry, {
     description: 'Aggregated transaction information per listing'

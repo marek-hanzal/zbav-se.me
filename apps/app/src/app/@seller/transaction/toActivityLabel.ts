@@ -3,11 +3,9 @@ import type { tTransactionEntryKindEnum } from "@zbav-se.me/sdk/api/seller";
 import { match } from "ts-pattern";
 import { toStatusLabel } from "./toStatusLabel";
 
-type tActivityKind = null | tTransactionEntryKindEnum;
-
 export namespace toActivityLabel {
 	export interface Props {
-		kind: tActivityKind;
+		kind: tTransactionEntryKindEnum | null;
 		text: null | string;
 	}
 }
