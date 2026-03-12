@@ -45,7 +45,6 @@ export const Transaction: FC<Transaction.Props> = ({
 					layout: "vertical-content-footer",
 					height: "full",
 					gap: "xs",
-					inner: "default",
 				}}
 			>
 				<Container
@@ -101,6 +100,9 @@ export const Transaction: FC<Transaction.Props> = ({
 						containerRef={containerRef}
 						transactionId={transaction.id}
 						refresh={refresh}
+						ui={{
+							inner: "default",
+						}}
 					>
 						<TransactionMessage transaction={transaction} />
 						<TransactionToolbar transaction={transaction} />

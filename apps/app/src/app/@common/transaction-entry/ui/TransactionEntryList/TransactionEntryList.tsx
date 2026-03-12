@@ -60,7 +60,6 @@ export const TransactionEntryList: FC<TransactionEntryList.Props> = ({
 				gap: "lg",
 				...ui,
 			}}
-			className={"py-1"}
 			{...props}
 		>
 			{data.map((transactionEntryId) => {

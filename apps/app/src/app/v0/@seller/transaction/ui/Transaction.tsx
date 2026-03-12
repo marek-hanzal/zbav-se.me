@@ -2,7 +2,10 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
 import { withTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
+import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef } from "react";
+import { useUpload } from "~/app/@common/gallery/hook/useUpload";
+import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { TransactionEntryList } from "~/app/@common/transaction-entry/ui/TransactionEntryList";
 import { TransactionChat } from "./TransactionChat";
 import { TransactionMessage } from "./TransactionMessage";
@@ -25,6 +28,7 @@ export const Transaction: FC<Transaction.Props> = ({
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId, {
 		refetchInterval: refresh,
 	});
+	const hero = useUpload(transaction.gallery.items);
 
 	return (
 		<Container
@@ -39,24 +43,52 @@ export const Transaction: FC<Transaction.Props> = ({
 					layout: "vertical-content-footer",
 					height: "full",
 					gap: "xs",
-					inner: "default",
 				}}
 			>
 				<Container
 					data-ui="Transaction-[MessageListContainer]"
 					ref={containerRef}
 					ui={{
-						layout: "vertical",
+						layout: "vertical-header-content",
 						height: "full",
 						scroll: "vertical",
 					}}
 				>
+					<Container
+						data-ui="Transaction-[HeroContainer]"
+						ui={{
+							position: "relative",
+							height: "content",
+						}}
+					>
+						<HeroImage
+							src={hero.url}
+							alt={`Hero image for transaction ${transaction.id}`}
+							className={"h-42"}
+						/>
+
+						<ListingPrice
+							data-ui={"ListingOverlay-[ListingPrice]"}
+							price={transaction.price}
+							priceType={transaction.priceType}
+							currency={transaction.currency}
+							ui={{
+								snapTo: "top-center",
+								opacity: "8",
+								zIndex: true,
+							}}
+						/>
+					</Container>
+
 					<TransactionEntryList
 						_suspense={"I know"}
 						side={tUserSideEnum.seller}
 						containerRef={containerRef}
 						transactionId={transaction.id}
 						refresh={refresh}
+						ui={{
+							inner: "default",
+						}}
 					>
 						<TransactionMessage transaction={transaction} />
 						<TransactionToolbar transaction={transaction} />
