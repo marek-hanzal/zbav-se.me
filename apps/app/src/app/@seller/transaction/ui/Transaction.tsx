@@ -7,9 +7,9 @@ import { type FC, useRef } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
 import { TransactionEntryList } from "~/app/@common/transaction-entry/ui/TransactionEntryList";
-import { TransactionChat } from "./TransactionChat";
-import { TransactionMessage } from "./TransactionMessage";
-import { TransactionToolbar } from "./TransactionToolbar";
+import { TransactionChat } from "~/app/v0/@seller/transaction/ui/TransactionChat";
+import { TransactionMessage } from "~/app/v0/@seller/transaction/ui/TransactionMessage";
+import { TransactionToolbar } from "~/app/v0/@seller/transaction/ui/TransactionToolbar";
 
 export namespace Transaction {
 	export interface Props extends Container.Props, MarkSuspense.Props {
