@@ -1,5 +1,3 @@
-import { VisibilityContext } from "@use-pico/client/context";
-import { createNoopVisibilityStore } from "@use-pico/client/store";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { tUserSideEnum } from "@zbav-se.me/sdk/api/public";
@@ -106,10 +104,6 @@ export const Transaction: FC<Transaction.Props> = ({
 						<TransactionMessage transaction={transaction} />
 						<TransactionToolbar transaction={transaction} />
 					</TransactionEntryList>
-
-					<VisibilityContext value={createNoopVisibilityStore()}>
-						ListingSheet or sthing
-					</VisibilityContext>
 				</Container>
 
 				<TransactionChat transaction={transaction} />
