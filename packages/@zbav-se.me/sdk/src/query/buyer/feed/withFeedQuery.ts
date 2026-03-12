@@ -73,4 +73,7 @@ export const withFeedQuery = withEntityQuery<
 			}),
 		);
 	},
+	async patchCollectionFn(_data) {
+		throw new Error("Feed collection patch is not supported.");
+	},
 });

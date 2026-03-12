@@ -56,4 +56,7 @@ export const withCategoryQuery = withEntityQuery<
 	async patchFn(_data) {
 		throw new Error("Category patch is not supported.");
 	},
+	async patchCollectionFn(_data) {
+		throw new Error("Category collection patch is not supported.");
+	},
 });

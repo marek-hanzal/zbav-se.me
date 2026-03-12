@@ -5,9 +5,11 @@ import {
 	apiInboxCount,
 	apiInboxFetch,
 	apiInboxPatch,
+	apiInboxPatchCollection,
 	type tInbox,
 	type tInboxCountQuery,
 	type tInboxPatch,
+	type tInboxPatchCollection,
 	type tInboxQuery,
 } from "../../../api/user";
 
@@ -18,7 +20,8 @@ export const withInboxQuery = withEntityQuery<
 	tInboxCountQuery,
 	tInboxPatch,
 	never,
-	never
+	never,
+	tInboxPatchCollection
 >({
 	keys: () => [
 		"inbox",
@@ -50,14 +53,21 @@ export const withInboxQuery = withEntityQuery<
 		);
 	},
 	async createFn(_data) {
-		throw new Error("Inbox create is not supported by this query wrapper.");
+		throw new Error("Inbox create is not supported.");
 	},
 	async deleteFn(_data) {
-		throw new Error("Inbox delete is not supported by this query wrapper.");
+		throw new Error("Inbox delete is not supported.");
 	},
 	async patchFn(data) {
 		return withApi(
 			apiInboxPatch({
+				body: data,
+			}),
+		);
+	},
+	async patchCollectionFn(data) {
+		return withApi(
+			apiInboxPatchCollection({
 				body: data,
 			}),
 		);

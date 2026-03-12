@@ -52,6 +52,7 @@ export namespace withEntityQuery {
 		TPatchRequest,
 		TCreateRequest,
 		TDeleteRequest,
+		TPatchCollectionRequest = never,
 	> {
 		/**
 		 * Base query key prefix for this entity resource.
@@ -78,6 +79,10 @@ export namespace withEntityQuery {
 		 * Patches an entity and returns server-updated entity payload.
 		 */
 		patchFn(data: TPatchRequest): Promise<TEntity>;
+		/**
+		 * Patches a collection of entities and returns the server-updated entities.
+		 */
+		patchCollectionFn(data: TPatchCollectionRequest): Promise<TEntity[]>;
 		/**
 		 * Delete mutation.
 		 */
@@ -196,6 +201,7 @@ export const withEntityQuery = <
 	TPatchRequest,
 	TCreateRequest,
 	TDeleteRequest,
+	TPatchCollectionRequest = never,
 >({
 	keys,
 	toIdKey,
@@ -205,6 +211,7 @@ export const withEntityQuery = <
 	createFn,
 	deleteFn,
 	patchFn,
+	patchCollectionFn,
 }: withEntityQuery.Props<
 	TEntity,
 	TFetchRequest,
@@ -212,7 +219,8 @@ export const withEntityQuery = <
 	TCountRequest,
 	TPatchRequest,
 	TCreateRequest,
-	TDeleteRequest
+	TDeleteRequest,
+	TPatchCollectionRequest
 >) => {
 	/**
 	 * Internal key builder.
@@ -405,6 +413,30 @@ export const withEntityQuery = <
 	}
 
 	/**
+	 * Internal patch-collection pipeline shared by hook and non-hook mutation entry points.
+	 *
+	 * Performs:
+	 * 1. server patch request
+	 * 2. canonical fetch cache update for every returned entity
+	 * 3. optional invalidation
+	 */
+	async function $patchCollectionFn(
+		queryClient: QueryClient,
+		request: TPatchCollectionRequest,
+		invalidate?: withEntityQuery.Invalidator.Type[],
+	) {
+		const result = await patchCollectionFn(request);
+
+		for (const item of result) {
+			$updateFn(queryClient, item);
+		}
+
+		await invalidator(queryClient, invalidate);
+
+		return result;
+	}
+
+	/**
 	 * Primary synchronization mutation for entity updates.
 	 *
 	 * Writes the server-returned entity into canonical fetch cache immediately, which
@@ -425,6 +457,35 @@ export const withEntityQuery = <
 				});
 
 				const result = await $patchFn(queryClient, request, invalidate);
+
+				await onPostMutation?.({
+					variables: request,
+					result,
+				});
+
+				return result;
+			},
+			meta: meta as Record<string, unknown>,
+			...$opts,
+		});
+	}
+
+	/**
+	 * Bulk patch mutation that writes every returned entity into canonical fetch cache.
+	 */
+	function usePatchCollectionMutation<TContext = unknown>(
+		opts?: withEntityQuery.MutationOptions<TPatchCollectionRequest, TEntity[], Error, TContext>,
+	) {
+		const queryClient = useQueryClient();
+		const { invalidate, onPreMutation, onPostMutation, meta, ...$opts } = opts || {};
+
+		return useMutation({
+			async mutationFn(request) {
+				await onPreMutation?.({
+					variables: request,
+				});
+
+				const result = await $patchCollectionFn(queryClient, request, invalidate);
 
 				await onPostMutation?.({
 					variables: request,
@@ -592,6 +653,7 @@ export const withEntityQuery = <
 		//
 		createFn: $createFn,
 		patchFn: $patchFn,
+		patchCollectionFn: $patchCollectionFn,
 		deleteFn: $deleteFn,
 		//
 		invalidator,
@@ -601,6 +663,7 @@ export const withEntityQuery = <
 		useCountQuery,
 		//
 		usePatchMutation,
+		usePatchCollectionMutation,
 		useCreateMutation,
 		useDeleteMutation,
 		//

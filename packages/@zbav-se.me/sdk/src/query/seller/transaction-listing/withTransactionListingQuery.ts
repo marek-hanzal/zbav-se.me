@@ -56,4 +56,7 @@ export const withTransactionListingQuery = withEntityQuery<
 	async patchFn(_data) {
 		throw new Error("Transaction listing patch is not supported.");
 	},
+	async patchCollectionFn(_data) {
+		throw new Error("Transaction listing collection patch is not supported.");
+	},
 });

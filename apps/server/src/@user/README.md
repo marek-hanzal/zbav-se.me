@@ -45,6 +45,7 @@ This domain handles all operations on user-owned, private data. Everything in th
 - **Fetch** - Resolve one inbox item
 - **Count** - Count inbox items for active/archived sections
 - **Patch** - Mark one inbox item as archived/read
+- **Patch Collection** - Patch multiple inbox items resolved by one `InboxQuery`
 - **Archive** - Bulk archive selected items using `InboxQuery`
 - Inbox contracts are discriminated by root `type`, not by payload-only unions
 - Inbox is the source of truth for unread state, badge counts, grouped unread counts by `reference`, and similar "needs attention" signals across the app.

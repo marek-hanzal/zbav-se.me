@@ -734,6 +734,19 @@ export type tInboxPatch = {
 };
 
 /**
+ * Patch inbox items resolved by query
+ */
+export type tInboxPatchCollection = {
+    patch: {
+        /**
+         * Archive timestamp
+         */
+        archivedAt?: string;
+    };
+    query: tInboxQuery;
+};
+
+/**
  * Allowed extensions
  */
 export const tAllowedExtensionsEnum = {
@@ -1599,6 +1612,34 @@ export type tApiInboxPatchResponse = {
 };
 
 export type apiInboxPatchResponse = tApiInboxPatchResponse[keyof tApiInboxPatchResponse];
+
+export type tApiInboxPatchCollectionRequest = {
+    /**
+     * Inbox collection patch payload
+     */
+    body?: tInboxPatchCollection;
+    path?: never;
+    query?: never;
+    url: '/api/user/inbox/patch-collection';
+};
+
+export type apiInboxPatchCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiInboxPatchCollectionError = apiInboxPatchCollectionErrors[keyof apiInboxPatchCollectionErrors];
+
+export type tApiInboxPatchCollectionResponse = {
+    /**
+     * Patched inbox items
+     */
+    200: Array<tInbox>;
+};
+
+export type apiInboxPatchCollectionResponse = tApiInboxPatchCollectionResponse[keyof tApiInboxPatchCollectionResponse];
 
 export type tApiS3PresignRequest = {
     body: {

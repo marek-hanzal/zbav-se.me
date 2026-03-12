@@ -1078,6 +1078,27 @@ export const sInboxPatch = {
     ]
 } as const;
 
+export const sInboxPatchCollection = {
+    type: 'object',
+    properties: {
+        patch: {
+            type: 'object',
+            properties: {
+                archivedAt: {
+                    type: 'string'
+                }
+            }
+        },
+        query: {
+            $ref: '#/components/schemas/InboxQuery'
+        }
+    },
+    required: [
+        'patch',
+        'query'
+    ]
+} as const;
+
 export const sAllowedExtensionsEnum = {
     type: 'string',
     enum: [

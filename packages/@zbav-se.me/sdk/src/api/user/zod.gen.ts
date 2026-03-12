@@ -695,6 +695,22 @@ export const zInboxPatch = z.object({
 export type zInboxPatch = z.infer<typeof zInboxPatch>;
 
 /**
+ * Patch inbox items resolved by query
+ */
+export const zInboxPatchCollection = z.object({
+    patch: z.object({
+        archivedAt: z.string().register(z.globalRegistry, {
+            description: 'Archive timestamp'
+        }).optional()
+    }),
+    query: zInboxQuery
+}).register(z.globalRegistry, {
+    description: 'Patch inbox items resolved by query'
+});
+
+export type zInboxPatchCollection = z.infer<typeof zInboxPatchCollection>;
+
+/**
  * Allowed extensions
  */
 export const zAllowedExtensionsEnum = z.enum([
@@ -1455,6 +1471,23 @@ export type zapiInboxPatchRequest = z.infer<typeof zApiInboxPatchData>;
 export const zApiInboxPatchResponse = zInbox;
 
 export type zapiInboxPatchResponse = z.infer<typeof zApiInboxPatchResponse>;
+
+export const zApiInboxPatchCollectionData = z.object({
+    body: zInboxPatchCollection.optional(),
+    path: z.never().optional(),
+    query: z.never().optional()
+});
+
+export type zapiInboxPatchCollectionRequest = z.infer<typeof zApiInboxPatchCollectionData>;
+
+/**
+ * Patched inbox items
+ */
+export const zApiInboxPatchCollectionResponse = z.array(zInbox).register(z.globalRegistry, {
+    description: 'Patched inbox items'
+});
+
+export type zapiInboxPatchCollectionResponse = z.infer<typeof zApiInboxPatchCollectionResponse>;
 
 export const zApiS3PresignData = z.object({
     body: z.object({

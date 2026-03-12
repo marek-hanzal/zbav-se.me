@@ -56,4 +56,7 @@ export const withFeedFavouriteQuery = withEntityQuery<
 	async patchFn(_data) {
 		throw new Error("Feed favourite patch is not supported.");
 	},
+	async patchCollectionFn(_data) {
+		throw new Error("Feed favourite collection patch is not supported.");
+	},
 });

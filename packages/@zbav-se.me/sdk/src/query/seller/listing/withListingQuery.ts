@@ -57,9 +57,12 @@ export const withListingQuery = withEntityQuery<
 		);
 	},
 	async deleteFn(_data) {
-		throw new Error("Listing delete is not supported by this query wrapper.");
+		throw new Error("Listing delete is not supported.");
 	},
 	async patchFn(_data) {
-		throw new Error("Listing patch is not supported by this query wrapper.");
+		throw new Error("Listing patch is not supported.");
+	},
+	async patchCollectionFn(_data) {
+		throw new Error("Listing collection patch is not supported.");
 	},
 });
