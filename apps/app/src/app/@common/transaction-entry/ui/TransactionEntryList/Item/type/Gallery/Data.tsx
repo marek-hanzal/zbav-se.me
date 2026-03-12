@@ -8,15 +8,15 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { GalleryPreviewSheet } from "~/app/@common/gallery/ui/GalleryPreviewSheet";
-import { TypeContainer } from "./TypeContainer";
+import { TypeContainer } from "../TypeContainer";
 
-export namespace Gallery {
+export namespace Data {
 	export interface Props extends Container.Props {
 		transactionEntry: tTransactionEntryGallery;
 	}
 }
 
-export const Gallery: FC<Gallery.Props> = ({ transactionEntry, ...props }) => {
+export const Data: FC<Data.Props> = ({ transactionEntry, ...props }) => {
 	const locale = useLocale();
 	const { data: gallery } = withTransactionEntryGalleryFetchQuery.useSuspenseQuery({
 		where: {
@@ -43,8 +43,9 @@ export const Gallery: FC<Gallery.Props> = ({ transactionEntry, ...props }) => {
 				src={hero.url}
 				visible
 				ui={{
+					tone: "neutral",
 					theme: "light",
-					background: "alt",
+					background: "default",
 					round: "default",
 				}}
 				onClick={() => setIsGalleryOpen((prev) => !prev)}
