@@ -18,7 +18,7 @@ export const TransactionDetailInvalidate: FC<TransactionDetailInvalidate.Props> 
 	const { data: transaction } = withTransactionQuery.useFetchQuery(transactionId);
 
 	useEffect(() => {
-		const archiveUnreadFx = async () => {
+		const archiveFn = async () => {
 			try {
 				const inboxList = await withInboxQuery.patchCollectionFn(
 					queryClient,
@@ -89,7 +89,7 @@ export const TransactionDetailInvalidate: FC<TransactionDetailInvalidate.Props> 
 			}
 		};
 
-		void archiveUnreadFx();
+		void archiveFn();
 	}, [
 		queryClient,
 		transaction.id,

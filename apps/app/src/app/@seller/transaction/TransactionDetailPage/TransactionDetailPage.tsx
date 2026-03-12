@@ -26,6 +26,7 @@ export const TransactionDetailPage: FC<TransactionDetailPage.Props> = ({
 		>
 			<Suspense fallback={<TransactionPending />}>
 				<TransactionDetailInvalidate transactionId={transactionId} />
+
 				<Transaction
 					_suspense={"I know"}
 					transactionId={transactionId}
