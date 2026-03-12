@@ -1,5 +1,5 @@
 import { useLocale } from "@use-pico/client/hook";
-import { Container } from "@use-pico/client/ui/container";
+import type { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tTransactionEntryGallery } from "@zbav-se.me/sdk/api/user";
@@ -8,6 +8,7 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { GalleryPreviewSheet } from "~/app/@common/gallery/ui/GalleryPreviewSheet";
+import { TypeContainer } from "./TypeContainer";
 
 export namespace Gallery {
 	export interface Props extends Container.Props {
@@ -26,21 +27,16 @@ export const Gallery: FC<Gallery.Props> = ({ transactionEntry, ...props }) => {
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
-		<Container
+		<TypeContainer
+			direction={transactionEntry.direction}
+			framed={false}
 			ui={{
 				position: "relative",
+				theme: undefined,
+				background: undefined,
+				round: undefined,
 			}}
-			className={[
-				"w-2/3",
-				"h-48",
-				transactionEntry.direction === "out" ? "ml-auto" : undefined,
-				transactionEntry.direction === "system"
-					? [
-							"mx-auto",
-							"text-center",
-						]
-					: undefined,
-			]}
+			className={"h-48"}
 			{...props}
 		>
 			<HeroImage
@@ -77,6 +73,6 @@ export const Gallery: FC<Gallery.Props> = ({ transactionEntry, ...props }) => {
 				isOpen={isGalleryOpen}
 				onClose={() => setIsGalleryOpen(false)}
 			/>
-		</Container>
+		</TypeContainer>
 	);
 };
