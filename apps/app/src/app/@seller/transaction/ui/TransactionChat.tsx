@@ -52,7 +52,12 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 							loading={messageMutation.isPending}
 							left={
 								<TransactionMenuButton>
-									{() => <TransactionMenu transaction={transaction} />}
+									{(close) => (
+										<TransactionMenu
+											close={close}
+											transaction={transaction}
+										/>
+									)}
 								</TransactionMenuButton>
 							}
 						/>
@@ -70,7 +75,12 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 							}}
 						>
 							<TransactionMenuButton>
-								{() => <TransactionMenu transaction={transaction} />}
+								{(close) => (
+									<TransactionMenu
+										close={close}
+										transaction={transaction}
+									/>
+								)}
 							</TransactionMenuButton>
 
 							<Tx
@@ -99,7 +109,12 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 							}}
 						>
 							<TransactionMenuButton>
-								{() => <TransactionMenu transaction={transaction} />}
+								{(close) => (
+									<TransactionMenu
+										close={close}
+										transaction={transaction}
+									/>
+								)}
 							</TransactionMenuButton>
 
 							<Tx
@@ -132,7 +147,12 @@ export const TransactionChat: FC<TransactionChat.Props> = ({ transaction, ui, ..
 							loading={messageMutation.isPending}
 							left={
 								<TransactionMenuButton>
-									{() => <TransactionMenu transaction={transaction} />}
+									{(close) => (
+										<TransactionMenu
+											close={close}
+											transaction={transaction}
+										/>
+									)}
 								</TransactionMenuButton>
 							}
 						/>
