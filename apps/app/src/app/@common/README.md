@@ -164,4 +164,6 @@ When adding to `@common`:
 - Shared `ListItem` hero input now parses upload-compatible values first and otherwise renders the provided node content directly, so domain call-sites can keep the same row shell while swapping the left visual slot from image to status/icon UI.
 - `GalleryPreview` was extracted to active scope:
   - `@common/gallery/ui/GalleryPreview.tsx`
+- Shared warm-up cache now lives in active common scope:
+  - `@common/cache/WarmupCache.tsx`
 - `GalleryUploadContainer` abstraction was removed; gallery upload flow is now embedded directly at call-sites.
