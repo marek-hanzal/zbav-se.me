@@ -1,7 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tTransaction as tBuyerTransaction } from "@zbav-se.me/sdk/api/buyer";
-import type { tTransaction as tSellerTransaction } from "@zbav-se.me/sdk/api/seller";
+import type { tTransactionStatusEnum } from "@zbav-se.me/sdk/api/public";
 import { withTransactionEntryQuery } from "@zbav-se.me/sdk/query/user/transaction-entry";
 import { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC, ReactNode } from "react";
@@ -9,8 +8,7 @@ import { useCallback } from "react";
 import { match } from "ts-pattern";
 
 export namespace TransactionChat {
-	type Status = tBuyerTransaction["status"] | tSellerTransaction["status"];
-	export type mode = "chat" | "readonly";
+	export type Mode = "chat" | "readonly";
 
 	export interface Text {
 		closed: string;
@@ -22,12 +20,12 @@ export namespace TransactionChat {
 
 	export interface Transaction {
 		id: string;
-		status: Status;
+		status: tTransactionStatusEnum;
 	}
 
 	export interface Props extends Container.Props {
 		left?: ReactNode;
-		mode: mode;
+		mode: Mode;
 		text: Text;
 		transaction: Transaction;
 	}
