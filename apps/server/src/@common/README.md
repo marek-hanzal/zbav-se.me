@@ -19,7 +19,7 @@ The `@common` domain exists to:
 ### Transaction Context & Schemas
 - **TransactionContextFx** - Effect context for transaction configuration
 - **DefaultTransactionContext** - Default transaction settings (expires: 3 days, extend: 3 days)
-- **withTransactionContextFx** - Effect provider for transaction context
+- **withTransactionContextFx** - Runtime helper that injects transaction configuration directly
 - **TransactionFilterSchema**, **TransactionSortSchema**, **TransactionWhereSchema**, **TransactionQuerySchema** - Query/filter/sort schemas for transaction collection (used in `@buyer-user`, `@seller-user`)
 - Used across `@buyer-user`, `@seller-user`, `@user`, and `@public` domains
 
@@ -28,26 +28,14 @@ The `@common` domain exists to:
 
 ### S3 Operations
 - **S3ContextFx** - Effect context for S3 configuration (API endpoint, credentials, bucket)
-- **S3ContextLayer** - Effect layer provider for S3 context
-- **S3ContextLayerFx** - Effect layer factory for S3 context
+- **withS3Fx** - Runtime helper that injects S3 context directly for request-bound effects
 - **s3ClientFx** - Effect function to create MinIO S3 client
 - **s3PreSignFx** - Effect function to generate pre-signed URLs for S3 uploads
 - Used in `@user` and `@public` domains for file upload operations
 
-### Axiom Operations
-- **AxiomContextFx** - Effect context for Axiom configuration and request correlation (`token`, `dataset`, `traceId`, `root`)
-- **AxiomContextLayer** - Effect layer provider for Axiom context
-- **AxiomContextLayerFx** - Effect layer factory for Axiom context
-- **axiomClientFx** - Effect function to create Axiom client for log ingestion
-- **withLoggingFx** - Logging provider wrapper that binds request-level `traceId` and endpoint-level `root`
-- **traceLogFx** - Emits per-event trace logs (no aggregate `$trace` payload)
-- Reads from `SERVER_AXIOM_TOKEN` and `SERVER_AXIOM_DATASET` environment variables
-- Every emitted Axiom event includes `traceId` and `root` for correlation and grouping
-
 ### Upload Context
 - **UploadContextFx** - Effect context for upload configuration (CDN base URL)
-- **UploadContextLayer** - Effect layer provider for upload context
-- **UploadContextLayerFx** - Effect layer factory for upload context
+- Request/runtime wrappers use `Effect.provideService(...)` when no resource lifecycle is required
 - Used in `@user` domain for upload operations and S3 pre-signing
 
 ### User Event
@@ -88,6 +76,7 @@ Common resources are **open** in the sense that they can be used by **any** doma
 - Shared type definitions
 - Utility functions used across domains
 - Business logic that doesn't belong to a specific domain
+- Logging / tracing providers are intentionally absent here until a new observability design is introduced
 
 ## Related Domains
 

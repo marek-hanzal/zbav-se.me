@@ -4,7 +4,6 @@ import { Effect } from "effect";
 import { ignoreToggleFx } from "~/@buyer/ignore/fx/ignoreToggleFx";
 import { IgnoreToggleSchema } from "~/@buyer/ignore/schema/IgnoreToggleSchema";
 import { ListingSchema } from "~/@buyer/listing/schema/ListingSchema";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
@@ -12,7 +11,6 @@ import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
@@ -72,15 +70,8 @@ export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
 			summary: "Toggle ignore state on listing (add or remove)",
 		}),
 		async (c) => {
-			const axiomConfig = ServerAxiomSchema.parse(process.env);
-
 			return Effect.gen(function* () {
 				const user = c.get("user");
-
-				yield* Effect.annotateLogsScoped({
-					endpoint: "apiIgnoreToggle",
-					userId: user.id,
-				});
 
 				return c.json(
 					yield* zodGuardFx({
@@ -94,7 +85,6 @@ export const withToggleApiFx = Effect.fn("withToggleApiFx")(function* () {
 				);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig, "apiIgnoreToggle", c.get("traceId")),
 				withDateFx,
 				withCatchFx({
 					InvalidRequestErrorFx(e) {

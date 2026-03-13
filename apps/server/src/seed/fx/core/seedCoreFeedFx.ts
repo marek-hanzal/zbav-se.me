@@ -3,7 +3,7 @@ import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
+import { SeedProgressContextFx } from "~/seed/context/withSeedProgressFx";
 import { withSeedConcurrency } from "~/seed/fx/core/seedConcurrency";
 import { seedFeedInsertFx } from "~/seed/fx/core/seedFeedInsertFx";
 import { withRandomPastDate } from "~/seed/fx/time/seedTime";

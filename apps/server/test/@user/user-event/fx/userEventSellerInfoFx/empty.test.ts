@@ -4,7 +4,7 @@ import { userEventSellerInfoFx } from "~/@buyer/user-event/fx/userEventSellerInf
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { testabase } from "~test/testabase";
-import { withTestAxiomFx } from "~test/withTestAxiomFx";
+import { withTestRuntimeFx } from "~test/withTestRuntimeFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Empty user's info returns nothing", async () => {
@@ -14,13 +14,7 @@ describe("userEventSellerInfoFx", () => {
 			return yield* userEventSellerInfoFx({
 				userId: "test-user-id",
 			});
-		}).pipe(
-			withKyselyFx(kysely),
-			withDateFx,
-			withTestAxiomFx,
-			Effect.scoped,
-			Effect.runPromise,
-		);
+		}).pipe(withKyselyFx(kysely), withDateFx, withTestRuntimeFx, Effect.runPromise);
 
 		expect(result).toBeNull();
 	});

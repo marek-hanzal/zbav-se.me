@@ -7,7 +7,6 @@ import { listingFetchFx } from "~/@buyer/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/@buyer/listing-event/fx/listingEventCreateFx";
 import { inboxCreateFx } from "~/@user/inbox/fx/inboxCreateFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace favouriteToggleFx {
 	export interface Props extends FavouriteToggleSchema.Type {
@@ -21,17 +20,6 @@ export const favouriteToggleFx = Effect.fn("favouriteToggleFx")(function* ({
 	listingId,
 	toggle,
 }: favouriteToggleFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "favouriteToggleFx",
-		input: {
-			userId,
-			feedId,
-			listingId,
-			toggle,
-		},
-	});
-
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const listingUserId = yield* listingCheckIfOwnFx({

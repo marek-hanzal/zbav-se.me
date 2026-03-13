@@ -4,7 +4,6 @@ import { Effect } from "effect";
 import type { FlagCreateSchema } from "~/@buyer/flag/schema/FlagCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace flagCreateFx {
 	export interface Props extends FlagCreateSchema.Type {
@@ -16,15 +15,6 @@ export const flagCreateFx = Effect.fn("flagCreateFx")(function* ({
 	userId,
 	listingId,
 }: flagCreateFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "flagCreateFx",
-		input: {
-			userId,
-			listingId,
-		},
-	});
-
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 

@@ -14,7 +14,6 @@ import { userInteractionEventFx } from "~/@user/user-event/fx/userInteractionEve
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace transactionCreateFx {
 	export interface Props extends TransactionCreateSchema.Type {
@@ -27,16 +26,6 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 	listingId,
 	...data
 }: transactionCreateFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "transactionCreateFx",
-		input: {
-			userId,
-			listingId,
-			...data,
-		},
-	});
-
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
@@ -55,15 +44,6 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 			);
 
 			if (!listing) {
-				yield* traceLogFx({
-					level: "trace",
-					message: "transactionCreateFx",
-					error: {
-						resource: "listing",
-						resourceId: listingId,
-						message: "Listing not found",
-					},
-				});
 				return yield* new NotFoundErrorFx({
 					resource: "listing",
 					resourceId: listingId,
@@ -98,7 +78,6 @@ export const transactionCreateFx = Effect.fn("transactionCreateFx")(function* ({
 			);
 
 			yield* transactionUpdateStatusFx({
-				userId,
 				transactionId: id,
 				status: null,
 				request: "pending",

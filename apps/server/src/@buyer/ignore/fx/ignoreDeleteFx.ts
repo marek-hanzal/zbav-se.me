@@ -3,7 +3,6 @@ import { ignoreFetchFx } from "~/@buyer/ignore/fx/ignoreFetchFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace ignoreDeleteFx {
 	export interface Props {
@@ -16,15 +15,6 @@ export const ignoreDeleteFx = Effect.fn("ignoreDeleteFx")(function* ({
 	userId,
 	listingId,
 }: ignoreDeleteFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "ignoreDeleteFx",
-		input: {
-			userId,
-			listingId,
-		},
-	});
-
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

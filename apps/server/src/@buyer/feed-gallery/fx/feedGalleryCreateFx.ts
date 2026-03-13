@@ -8,7 +8,6 @@ import { galleryItemInsertFx } from "~/@user/gallery-item/fx/galleryItemInsertFx
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace feedGalleryCreateFx {
@@ -33,13 +32,6 @@ export const feedGalleryCreateFx = Effect.fn("feedGalleryCreateFx")(function* ({
 			});
 
 			if (uploadIds.length === 0) {
-				yield* traceLogFx({
-					level: "trace",
-					message: "feedGalleryCreateFx",
-					error: {
-						message: "At least one upload is required",
-					},
-				});
 				return yield* new InvalidRequestErrorFx({
 					message: "At least one upload is required",
 				});

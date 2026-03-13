@@ -1,8 +1,10 @@
 import { Effect } from "effect";
-import type { LocationContext } from "~/@session/location/context/LocationContextFx";
-import { LocationContextLayer } from "~/@session/location/context/LocationContextLayer";
+import {
+	type LocationContext,
+	LocationContextFx,
+} from "~/@session/location/context/LocationContextFx";
 
 export const withLocationFx =
 	(context: LocationContext) =>
 	<A, E, R>(eff: Effect.Effect<A, E, R>) =>
-		eff.pipe(Effect.provide(LocationContextLayer(context)));
+		eff.pipe(Effect.provideService(LocationContextFx, context));

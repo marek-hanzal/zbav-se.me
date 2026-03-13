@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { describe, expect, it } from "vitest";
 import { thumbCreateFx } from "~/@buyer/thumb/fx/thumbCreateFx";
 import { transactionCreateFx } from "~/@buyer/transaction/fx/transactionCreateFx";
-import { withTransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
+import { withTransactionContextFx } from "~/@common/transaction/context/withTransactionContextFx";
 import { withUploadFx } from "~/@common/upload/context/withUploadFx";
 import { listingCreateFx } from "~/@seller/listing/fx/listingCreateFx";
 import { categoryFetchFx } from "~/@session/category/fx/categoryFetchFx";
@@ -16,7 +16,7 @@ import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
 import { testabase } from "~test/testabase";
-import { withTestAxiomFx } from "~test/withTestAxiomFx";
+import { withTestRuntimeFx } from "~test/withTestRuntimeFx";
 
 interface ListingFixture {
 	listingId: string;
@@ -31,7 +31,7 @@ const withInboxRuntimeFx = (database: Awaited<ReturnType<typeof testabase>>) => 
 		eff.pipe(
 			withKyselyFx(database),
 			withDateFx,
-			withTestAxiomFx,
+			withTestRuntimeFx,
 			withTransactionContextFx(),
 			withLocationFx({
 				api: "https://api.geoapify.com",
@@ -41,7 +41,6 @@ const withInboxRuntimeFx = (database: Awaited<ReturnType<typeof testabase>>) => 
 			withUploadFx({
 				cdn: "https://cdn.zbav-se.me",
 			}),
-			Effect.scoped,
 		);
 };
 

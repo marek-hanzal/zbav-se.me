@@ -1,7 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { userExPatchFx } from "~/@user/user-ex/fx/userExPatchFx";
@@ -10,7 +9,6 @@ import { UserExSchema } from "~/@user/user-ex/schema/UserExSchema";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
@@ -64,15 +62,8 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 			summary: "Update user extended information",
 		}),
 		async (c) => {
-			const axiomConfig = ServerAxiomSchema.parse(process.env);
-
 			return Effect.gen(function* () {
 				const user = c.get("user");
-
-				yield* Effect.annotateLogsScoped({
-					endpoint: "apiUserExPatch",
-					userId: user.id,
-				});
 
 				return c.json(
 					yield* zodGuardFx({
@@ -86,7 +77,6 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 				);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig, "apiUserExPatch", c.get("traceId")),
 				withCatchFx({
 					RuntimeErrorFx(e) {
 						return c.json(noticeError(e), 500);

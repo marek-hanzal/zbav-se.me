@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { userExPatchFx } from "~/@user/user-ex/fx/userExPatchFx";
-import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
+import { SeedProgressContextFx } from "~/seed/context/withSeedProgressFx";
 import LocationQueries from "~/seed/data/location.json";
 import { seedCoreFeedFx } from "~/seed/fx/core/seedCoreFeedFx";
 import { seedCoreGalleryFx } from "~/seed/fx/core/seedCoreGalleryFx";

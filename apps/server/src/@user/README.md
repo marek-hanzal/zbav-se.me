@@ -119,6 +119,7 @@ This domain handles all operations on user-owned, private data. Everything in th
 - Requires authentication AND user context
 - All endpoints must use `{scope: {userId}}` when available
 - All data is user-private
+- Runtime logging / tracing hooks are intentionally kept out of user handlers and effects
 - **Can be accessed by**: Only more specialized domains (`@buyer-user`, `@seller-user`)
 - **Cannot be accessed by**: `@session`, `@buyer-session`, `@seller-session` (these are less specialized)
 - **Can import from**: `@common`, `@session`

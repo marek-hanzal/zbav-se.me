@@ -8,7 +8,6 @@ import { galleryItemInsertFx } from "~/@user/gallery-item/fx/galleryItemInsertFx
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace draftCreateFx {
 	export interface Props extends DraftCreateSchema.Type {
@@ -21,16 +20,6 @@ export const draftCreateFx = Effect.fn("draftCreateFx")(function* ({
 	uploadIds,
 	...data
 }: draftCreateFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "draftCreateFx",
-		input: {
-			userId,
-			...data,
-			uploadIds,
-		},
-	});
-
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;

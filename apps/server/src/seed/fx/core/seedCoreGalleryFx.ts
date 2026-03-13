@@ -2,7 +2,7 @@ import { rangedom, sample } from "@use-pico/common/rangedom";
 import { Effect } from "effect";
 import { galleryInsertFx } from "~/@user/gallery/fx/galleryInsertFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
+import { SeedProgressContextFx } from "~/seed/context/withSeedProgressFx";
 import { withSeedConcurrency } from "~/seed/fx/core/seedConcurrency";
 import { seedGalleryItemBulkInsertFx } from "~/seed/fx/core/seedGalleryItemBulkInsertFx";
 import { withRandomPastDate } from "~/seed/fx/time/seedTime";

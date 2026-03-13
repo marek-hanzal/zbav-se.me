@@ -25,7 +25,6 @@ export const toTimeDiff = ({
 	const target = DateTime.fromISO(time).setLocale(locale);
 
 	if (!target.isValid) {
-		console.warn("Invalid target", time);
 		return "- invalid time -";
 	}
 

@@ -11,7 +11,6 @@ import { userEventCollectionFx } from "~/@common/user-event/fx/userEventCollecti
 import type { ActivityEnumSchema } from "~/@common/user-event/schema/ActivityEnumSchema";
 import type { LoadEnumSchema } from "~/@common/user-event/schema/LoadEnumSchema";
 import type { UserEventTableSchema } from "~/database/@table/UserEventTableSchema";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace userEventBuyerInfoFx {
 	export interface Props {
@@ -487,14 +486,6 @@ const computeScore = (input: {
 export const userEventBuyerInfoFx = Effect.fn("userEventBuyerInfoFx")(function* ({
 	userId,
 }: userEventBuyerInfoFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "userEventBuyerInfoFx",
-		input: {
-			userId,
-		},
-	});
-
 	const cutoff = 90;
 
 	const source = yield* userEventCollectionFx({

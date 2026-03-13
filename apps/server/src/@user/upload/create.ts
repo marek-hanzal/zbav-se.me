@@ -1,7 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withUploadFx } from "~/@common/upload/context/withUploadFx";
@@ -12,7 +11,6 @@ import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -74,16 +72,10 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 			summary: "Create a new upload",
 		}),
 		async (c) => {
-			const axiomConfig = ServerAxiomSchema.parse(process.env);
 			const cdnConfig = ServerCdnSchema.parse(process.env);
 
 			return Effect.gen(function* () {
 				const user = c.get("user");
-
-				yield* Effect.annotateLogsScoped({
-					endpoint: "apiUploadCreate",
-					userId: user.id,
-				});
 
 				return c.json(
 					yield* zodGuardFx({
@@ -101,7 +93,6 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				withUploadFx({
 					cdn: cdnConfig.SERVER_CONTENT_CDN,
 				}),
-				withLoggingFx(axiomConfig, "apiUploadCreate", c.get("traceId")),
 				withCatchFx({
 					InvalidRequestErrorFx(e) {
 						return c.json(noticeError(e), 400);

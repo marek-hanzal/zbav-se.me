@@ -34,6 +34,7 @@ This domain unifies former seller session and seller user capabilities behind `/
 - Mounted at `/api/seller/*`.
 - Can import from: `@common`, `@session`, `@user`.
 - Must not import from buyer domains.
+- Runtime logging / tracing hooks are intentionally kept out of seller handlers and effects.
 
 ## Related Domains
 

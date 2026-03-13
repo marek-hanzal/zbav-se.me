@@ -1,7 +1,6 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { transactionListingCollectionFx } from "~/@seller/transaction-listing/fx/transactionListingCollectionFx";
 import { TransactionListingQuerySchema } from "~/@seller/transaction-listing/schema/TransactionListingQuerySchema";
@@ -9,7 +8,6 @@ import { TransactionListingSchema } from "~/@seller/transaction-listing/schema/T
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 const CollectionSchema = z.array(TransactionListingSchema);
@@ -58,15 +56,8 @@ export const withCollectionApiFx = Effect.fn("withTransactionListingCollectionAp
 				"Fetch a collection of listings that have transactions based on the provided query",
 		}),
 		async (c) => {
-			const axiomConfig = ServerAxiomSchema.parse(process.env);
-
 			return Effect.gen(function* () {
 				const user = c.get("user");
-
-				yield* Effect.annotateLogsScoped({
-					endpoint: "apiTransactionListingCollection",
-					userId: user.id,
-				});
 
 				return c.json(
 					yield* zodGuardFx({
@@ -81,7 +72,6 @@ export const withCollectionApiFx = Effect.fn("withTransactionListingCollectionAp
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiTransactionListingCollection", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withCatchFx({
 					ZodErrorFx({ zod }) {

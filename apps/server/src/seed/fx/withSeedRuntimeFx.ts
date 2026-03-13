@@ -1,19 +1,19 @@
-import { DialectContextLayer } from "@use-pico/common/database";
+import { DialectContextFx } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
-import { S3ContextLayer } from "~/@common/s3/context/S3ContextLayer";
-import { withTransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
+import { withS3Fx } from "~/@common/s3/context/withS3Fx";
+import { withTransactionContextFx } from "~/@common/transaction/context/withTransactionContextFx";
 import { withUploadFx } from "~/@common/upload/context/withUploadFx";
-import { LocationContextLayer } from "~/@session/location/context/LocationContextLayer";
-import { KyselyContextLayerFx } from "~/database/context/KyselyContextLayerFx";
+import { withLocationFx } from "~/@session/location/fx/withLocationFx";
+import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { database } from "~/database/kysely";
 import { ServerCdnSchema } from "~/schema/env/ServerCdnSchema";
 import { ServerDatabaseSchema } from "~/schema/env/ServerDatabaseSchema";
 import { ServerGeoapifySchema } from "~/schema/env/ServerGeoapifySchema";
 import { ServerS3Schema } from "~/schema/env/ServerS3Schema";
-import { SeedProgressContextLayer } from "~/seed/context/SeedProgressContextFx";
+import { withSeedProgressFx } from "~/seed/context/withSeedProgressFx";
 
 export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 	const databaseConfig = ServerDatabaseSchema.parse(process.env);
@@ -38,35 +38,28 @@ export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 				}),
 		);
 
-		const kyselyContext = KyselyContextLayerFx(
-			database.pipe(
-				Effect.provide(
-					DialectContextLayer(
-						new PostgresDialect({
-							pool,
-						}),
-					),
-				),
+		const kysely = yield* database.pipe(
+			Effect.provideService(
+				DialectContextFx,
+				new PostgresDialect({
+					pool,
+				}),
 			),
 		);
 
 		return yield* effect.pipe(
-			Effect.provide(SeedProgressContextLayer),
-			Effect.provide(
-				LocationContextLayer({
-					api: "https://api.geoapify.com",
-					autocomplete: "/v1/geocode/autocomplete",
-					geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,
-				}),
-			),
-			Effect.provide(
-				S3ContextLayer({
-					api: s3Config.SERVER_S3_API,
-					key: s3Config.SERVER_S3_KEY,
-					secret: s3Config.SERVER_S3_SECRET,
-					bucket: s3Config.SERVER_S3_BUCKET,
-				}),
-			),
+			withSeedProgressFx,
+			withLocationFx({
+				api: "https://api.geoapify.com",
+				autocomplete: "/v1/geocode/autocomplete",
+				geoapifyToken: geoapifyConfig.SERVER_GEOAPIFY_TOKEN,
+			}),
+			withS3Fx({
+				api: s3Config.SERVER_S3_API,
+				key: s3Config.SERVER_S3_KEY,
+				secret: s3Config.SERVER_S3_SECRET,
+				bucket: s3Config.SERVER_S3_BUCKET,
+			}),
 			withUploadFx({
 				cdn: cdnConfig.SERVER_CONTENT_CDN,
 			}),
@@ -75,7 +68,7 @@ export const withSeedRuntimeFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 				expires: 3,
 				extend: 3,
 			}),
-			Effect.provide(kyselyContext),
+			Effect.provideService(KyselyContextFx, kysely),
 		);
 	});
 };

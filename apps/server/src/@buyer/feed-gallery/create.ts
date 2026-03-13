@@ -3,7 +3,6 @@ import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { feedGalleryCreateFx } from "~/@buyer/feed-gallery/fx/feedGalleryCreateFx";
 import { FeedGalleryCreateSchema } from "~/@buyer/feed-gallery/schema/FeedGalleryCreateSchema";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
@@ -12,7 +11,6 @@ import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
@@ -74,15 +72,8 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 			summary: "Create or update a gallery for a feed.",
 		}),
 		async (c) => {
-			const axiomConfig = ServerAxiomSchema.parse(process.env);
-
 			return Effect.gen(function* () {
 				const user = c.get("user");
-
-				yield* Effect.annotateLogsScoped({
-					endpoint: "apiFeedGalleryCreate",
-					userId: user.id,
-				});
 
 				return c.json(
 					yield* zodGuardFx({
@@ -96,7 +87,6 @@ export const withCreateApiFx = Effect.fn("withCreateApiFx")(function* () {
 				);
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
-				withLoggingFx(axiomConfig, "apiFeedGalleryCreate", c.get("traceId")),
 				//
 				withDateFx,
 				withCatchFx({

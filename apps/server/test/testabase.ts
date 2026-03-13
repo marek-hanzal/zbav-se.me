@@ -1,4 +1,4 @@
-import { DialectContextLayer } from "@use-pico/common/database";
+import { DialectContextFx } from "@use-pico/common/database";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { PostgresDialect, sql } from "kysely";
@@ -10,15 +10,14 @@ export const testabase = async (id: string = genId()) => {
 
 	return Effect.gen(function* () {
 		const { kysely } = yield* database.pipe(
-			Effect.provide(
-				DialectContextLayer(
-					new PostgresDialect({
-						pool: new Pool({
-							connectionString: `${process.env.SERVER_DATABASE_URL}/postgres`,
-							max: 3,
-						}),
+			Effect.provideService(
+				DialectContextFx,
+				new PostgresDialect({
+					pool: new Pool({
+						connectionString: `${process.env.SERVER_DATABASE_URL}/postgres`,
+						max: 3,
 					}),
-				),
+				}),
 			),
 		);
 
@@ -29,15 +28,14 @@ export const testabase = async (id: string = genId()) => {
 		yield* Effect.promise(async () => kysely.destroy());
 
 		return yield* database.pipe(
-			Effect.provide(
-				DialectContextLayer(
-					new PostgresDialect({
-						pool: new Pool({
-							connectionString: `${process.env.SERVER_DATABASE_URL}/${db}`,
-							max: 3,
-						}),
+			Effect.provideService(
+				DialectContextFx,
+				new PostgresDialect({
+					pool: new Pool({
+						connectionString: `${process.env.SERVER_DATABASE_URL}/${db}`,
+						max: 3,
 					}),
-				),
+				}),
 			),
 		);
 	}).pipe(Effect.runPromise);

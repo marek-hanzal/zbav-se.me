@@ -1,4 +1,4 @@
-import { MigrationContextLayer, withDatabaseFx } from "@use-pico/common/database";
+import { MigrationContextFx, withDatabaseFx } from "@use-pico/common/database";
 import { Effect } from "effect";
 import { runAuthMigration } from "~/auth/runAuthMigration";
 import type { Database } from "~/database/Database";
@@ -11,4 +11,4 @@ export const database = withDatabaseFx<Database>({
 	async onPreMigration({ dialect }) {
 		await runAuthMigration(dialect);
 	},
-}).pipe(Effect.provide(MigrationContextLayer(migrations)));
+}).pipe(Effect.provideService(MigrationContextFx, migrations));

@@ -1,6 +1,6 @@
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { S3ContextLayer } from "~/@common/s3/context/S3ContextLayer";
+import { withS3Fx } from "~/@common/s3/context/withS3Fx";
 import { s3PreSignFx } from "~/@common/s3/fx/s3PreSignFx";
 import { withUploadFx } from "~/@common/upload/context/withUploadFx";
 import { S3PreSignRequestSchema } from "~/@user/s3/schema/S3PreSignRequestSchema";
@@ -73,14 +73,12 @@ export const toolS3PreSign: McpToolDefinition.Definition<
 			path: input.path,
 			extension: input.extension,
 		}).pipe(
-			Effect.provide(
-				S3ContextLayer({
-					api: s3Config.SERVER_S3_API,
-					key: s3Config.SERVER_S3_KEY,
-					secret: s3Config.SERVER_S3_SECRET,
-					bucket: s3Config.SERVER_S3_BUCKET,
-				}),
-			),
+			withS3Fx({
+				api: s3Config.SERVER_S3_API,
+				key: s3Config.SERVER_S3_KEY,
+				secret: s3Config.SERVER_S3_SECRET,
+				bucket: s3Config.SERVER_S3_BUCKET,
+			}),
 			withUploadFx({
 				cdn: cdnConfig.SERVER_CONTENT_CDN,
 			}),

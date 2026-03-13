@@ -2,7 +2,6 @@ import { Effect } from "effect";
 import type { TransactionEntryKindEnumSchema } from "~/database/@enum/TransactionEntryKindEnumSchema";
 import type { TransactionSideEnumSchema } from "~/database/@enum/TransactionSideEnumSchema";
 import type { TransactionStatusEnumSchema } from "~/database/@enum/TransactionStatusEnumSchema";
-import { traceLogFx } from "~/effect/traceLogFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 /**
@@ -401,12 +400,6 @@ export namespace transactionTransitionFx {
 export const transactionTransitionFx = Effect.fn("transactionTransitionFx")(function* (
 	props: transactionTransitionFx.Props,
 ) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "transactionTransitionFx",
-		input: props,
-	});
-
 	const allowedTransitions = Transitions.Machine[props.status ?? "null"];
 	const transition = allowedTransitions.find(
 		(transition) => transition.request === props.request && transition.side === props.side,

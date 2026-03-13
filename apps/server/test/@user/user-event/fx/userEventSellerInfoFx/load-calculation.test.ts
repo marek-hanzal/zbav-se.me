@@ -1,4 +1,4 @@
-import { DateContextLayer } from "@use-pico/common/date";
+import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
@@ -8,7 +8,7 @@ import { auth } from "~/auth/auth";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { testabase } from "~test/testabase";
-import { withTestAxiomFx } from "~test/withTestAxiomFx";
+import { withTestRuntimeFx } from "~test/withTestRuntimeFx";
 
 describe("userEventSellerInfoFx", () => {
 	it("Load calculation - active transactions without end events", async () => {
@@ -75,13 +75,11 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return t1Create;
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return t1Create;
+					},
+				}),
 			);
 
 			// Transaction 2: Ended
@@ -93,13 +91,11 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return t2Create;
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return t2Create;
+					},
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -110,13 +106,11 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.closed",
 				isTerminal: true,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return t2Closed;
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return t2Closed;
+					},
+				}),
 			);
 
 			// Transaction 3: Active
@@ -128,13 +122,11 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return t3Create;
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return t3Create;
+					},
+				}),
 			);
 
 			// Transaction 4: Active
@@ -146,13 +138,11 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return t4Create;
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return t4Create;
+					},
+				}),
 			);
 
 			// Transaction 5: Ended
@@ -164,13 +154,11 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return t5Create;
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return t5Create;
+					},
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -181,25 +169,17 @@ describe("userEventSellerInfoFx", () => {
 				event: "transaction.rejected",
 				isTerminal: true,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now() {
-							return t5Rejected;
-						},
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now() {
+						return t5Rejected;
+					},
+				}),
 			);
 
 			return yield* userEventSellerInfoFx({
 				userId: sellerId,
 			});
-		}).pipe(
-			withKyselyFx(database),
-			withDateFx,
-			withTestAxiomFx,
-			Effect.scoped,
-			Effect.runPromise,
-		);
+		}).pipe(withKyselyFx(database), withDateFx, withTestRuntimeFx, Effect.runPromise);
 
 		expect(result).not.toBeNull();
 		if (!result) return;
@@ -245,28 +225,20 @@ describe("userEventSellerInfoFx", () => {
 					event: "transaction.create",
 					isTerminal: false,
 				}).pipe(
-					Effect.provide(
-						DateContextLayer({
-							now() {
-								return baseTime.plus({
-									days: i * 10,
-								});
-							},
-						}),
-					),
+					Effect.provideService(DateContextFx, {
+						now() {
+							return baseTime.plus({
+								days: i * 10,
+							});
+						},
+					}),
 				);
 			}
 
 			return yield* userEventSellerInfoFx({
 				userId: sellerId,
 			});
-		}).pipe(
-			withKyselyFx(database),
-			withDateFx,
-			withTestAxiomFx,
-			Effect.scoped,
-			Effect.runPromise,
-		);
+		}).pipe(withKyselyFx(database), withDateFx, withTestRuntimeFx, Effect.runPromise);
 
 		expect(result).not.toBeNull();
 		if (!result) return;

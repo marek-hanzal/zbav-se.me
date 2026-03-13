@@ -3,7 +3,7 @@ import { Effect } from "effect";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { SeedProgressContextFx } from "~/seed/context/SeedProgressContextFx";
+import { SeedProgressContextFx } from "~/seed/context/withSeedProgressFx";
 import Cons from "~/seed/data/listing-cons.json";
 import Descriptions from "~/seed/data/listing-description.json";
 import Pros from "~/seed/data/listing-pros.json";

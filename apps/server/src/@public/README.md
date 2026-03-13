@@ -66,6 +66,7 @@ This domain provides endpoints that don't require authentication. It includes sy
 - No authentication required
 - Publicly accessible
 - Some endpoints may be restricted by IP or environment (cron, janitor, migration)
+- Runtime logging / tracing hooks are intentionally kept out of public handlers and effects
 - **Can import from**: `@common` only
 - **Cannot import from**: Any authenticated domain (`@session`, `@user`, `@buyer-session`, `@seller-session`, `@buyer-user`, `@seller-user`)
 

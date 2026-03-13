@@ -94,11 +94,6 @@ export const withFetchFx = Effect.fn("withFetchFx")(function* <
 	});
 
 	if (!result) {
-		yield* Effect.annotateLogsScoped({
-			error: "NotFoundError",
-			"withFetchFx.resource": resource,
-		});
-
 		return yield* new NotFoundErrorFx({
 			resource,
 			resourceId: JSON.stringify({

@@ -5,7 +5,6 @@ import { withListingQueryBuilderFx } from "~/@buyer/listing/db/withListingQueryB
 import type { ListingCountQuerySchema } from "~/@buyer/listing/schema/ListingCountQuerySchema";
 import type { ListingFilterSchema } from "~/@buyer/listing/schema/ListingFilterSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace listingCountFx {
 	export interface Props extends ListingCountQuerySchema.Type {
@@ -21,18 +20,6 @@ export const listingCountFx = Effect.fn("listingCountFx")(function* ({
 	scope,
 	meta,
 }: listingCountFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "listingCountFx",
-		input: {
-			userId,
-			filter,
-			where,
-			scope,
-			meta,
-		},
-	});
-
 	const hasFilter = !!(filter && Object.keys(filter).length > 0);
 	const hasWhere = !!(where && Object.keys(where).length > 0);
 	const hasScope = !!(scope && Object.keys(scope).length > 0);

@@ -1,8 +1,7 @@
 import { Effect } from "effect";
-import type { UploadContext } from "~/@common/upload/context/UploadContextFx";
-import { UploadContextLayer } from "~/@common/upload/context/UploadContextLayer";
+import { type UploadContext, UploadContextFx } from "~/@common/upload/context/UploadContextFx";
 
 export const withUploadFx =
 	(context: UploadContext) =>
 	<A, E, R>(eff: Effect.Effect<A, E, R>) =>
-		eff.pipe(Effect.provide(UploadContextLayer(context)));
+		eff.pipe(Effect.provideService(UploadContextFx, context));

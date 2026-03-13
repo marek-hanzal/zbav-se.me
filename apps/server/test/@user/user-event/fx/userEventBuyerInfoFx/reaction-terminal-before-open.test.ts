@@ -1,4 +1,4 @@
-import { DateContextLayer } from "@use-pico/common/date";
+import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
@@ -8,7 +8,7 @@ import { auth } from "~/auth/auth";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { testabase } from "~test/testabase";
-import { withTestAxiomFx } from "~test/withTestAxiomFx";
+import { withTestRuntimeFx } from "~test/withTestRuntimeFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("Reaction: seller terminal before open counts as terminal reaction", async () => {
@@ -51,11 +51,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => tCreate,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => tCreate,
+				}),
 			);
 
 			// terminal before any open event exists
@@ -67,11 +65,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.closed",
 				isTerminal: true,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => tSellerClose,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => tSellerClose,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -82,11 +78,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t2Create,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t2Create,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -97,23 +91,15 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.rejected",
 				isTerminal: true,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t2SellerReject,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t2SellerReject,
+				}),
 			);
 
 			return yield* userEventBuyerInfoFx({
 				userId: buyerId,
 			});
-		}).pipe(
-			withKyselyFx(database),
-			withDateFx,
-			withTestAxiomFx,
-			Effect.scoped,
-			Effect.runPromise,
-		);
+		}).pipe(withKyselyFx(database), withDateFx, withTestRuntimeFx, Effect.runPromise);
 
 		expect(result).not.toBeNull();
 		if (!result) return;

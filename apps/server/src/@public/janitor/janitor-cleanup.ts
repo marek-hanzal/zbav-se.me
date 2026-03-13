@@ -1,14 +1,12 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
-import { S3ContextLayer } from "~/@common/s3/context/S3ContextLayer";
+import { withS3Fx } from "~/@common/s3/context/withS3Fx";
 import { cleanupFx } from "~/@public/janitor/cleanup/cleanupFx";
 import { CleanupSchema } from "~/@public/janitor/schema/CleanupSchema";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { ServerS3Schema } from "~/schema/env/ServerS3Schema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
@@ -45,16 +43,10 @@ export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(func
 			],
 		}),
 		async (c) => {
-			const axiomConfig = ServerAxiomSchema.parse(process.env);
-
 			try {
 				const s3Config = ServerS3Schema.parse(process.env);
 
 				return await Effect.gen(function* () {
-					yield* Effect.annotateLogsScoped({
-						endpoint: "apiJanitorCleanup",
-					});
-
 					return c.json(
 						yield* zodGuardFx({
 							schema: z.array(CleanupSchema),
@@ -65,19 +57,15 @@ export const withJanitorCleanupApiFx = Effect.fn("withJanitorCleanupApiFx")(func
 				}).pipe(
 					withKyselyFx(c.get("kysely")),
 					withDateFx,
-					Effect.provide(
-						S3ContextLayer({
-							api: s3Config.SERVER_S3_API,
-							key: s3Config.SERVER_S3_KEY,
-							secret: s3Config.SERVER_S3_SECRET,
-							bucket: s3Config.SERVER_S3_BUCKET,
-						}),
-					),
-					withLoggingFx(axiomConfig, "apiJanitorCleanup", c.get("traceId")),
+					withS3Fx({
+						api: s3Config.SERVER_S3_API,
+						key: s3Config.SERVER_S3_KEY,
+						secret: s3Config.SERVER_S3_SECRET,
+						bucket: s3Config.SERVER_S3_BUCKET,
+					}),
 					Effect.runPromise,
 				);
-			} catch (e) {
-				console.error(e);
+			} catch {
 				return c.json<NoticeSchema.Type, 500>(
 					{
 						type: "error",

@@ -7,7 +7,6 @@ export const withPublicHono = () => {
 		Variables: {
 			user: auth.User | null;
 			kysely: KyselyContext;
-			traceId: string;
 		};
 	}>();
 };

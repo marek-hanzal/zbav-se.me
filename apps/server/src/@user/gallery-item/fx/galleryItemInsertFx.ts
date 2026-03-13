@@ -5,7 +5,6 @@ import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import type { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace galleryItemInsertFx {
 	export interface Props extends galleryItemCreateFx.Props {
@@ -23,17 +22,6 @@ export const galleryItemInsertFx = Effect.fn("galleryItemInsertFx")(function* ({
 	check = true,
 	...data
 }: galleryItemInsertFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "galleryItemInsertFx",
-		input: {
-			userId,
-			galleryId,
-			...data,
-			check,
-		},
-	});
-
 	const { kysely } = yield* KyselyContextFx;
 	const dateContext = yield* DateContextFx;
 

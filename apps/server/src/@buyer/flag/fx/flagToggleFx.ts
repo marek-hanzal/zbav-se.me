@@ -6,7 +6,6 @@ import { listingCheckIfOwnFx } from "~/@buyer/listing/fx/listingCheckIfOwnFx";
 import { listingFetchFx } from "~/@buyer/listing/fx/listingFetchFx";
 import { listingEventCreateFx } from "~/@buyer/listing-event/fx/listingEventCreateFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace flagToggleFx {
 	export interface Props extends FlagToggleSchema.Type {
@@ -19,16 +18,6 @@ export const flagToggleFx = Effect.fn("flagToggleFx")(function* ({
 	toggle,
 	listingId,
 }: flagToggleFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "flagToggleFx",
-		input: {
-			userId,
-			toggle,
-			listingId,
-		},
-	});
-
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			yield* listingCheckIfOwnFx({

@@ -4,7 +4,6 @@ import { withFeedQueryBuilderFx } from "~/@buyer/feed/db/withFeedQueryBuilderFx"
 import type { FeedFilterSchema } from "~/@buyer/feed/schema/FeedFilterSchema";
 import type { FeedQuerySchema } from "~/@buyer/feed/schema/FeedQuerySchema";
 import { withFeedFavouriteSelectFx } from "~/@buyer/feed-favourite/db/withFeedFavouriteSelectFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace feedFavouriteFetchFx {
 	export interface Props extends FeedQuerySchema.Type {
@@ -20,17 +19,6 @@ export const feedFavouriteFetchFx = Effect.fn("feedFavouriteFetchFx")(function* 
 	sort,
 	userId,
 }: feedFavouriteFetchFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "feedFavouriteFetchFx",
-		input: {
-			filter,
-			where,
-			scope,
-			sort,
-		},
-	});
-
 	return yield* withFetchFx({
 		resource: "feed-favourite",
 		selectFx: withFeedFavouriteSelectFx({

@@ -4,7 +4,6 @@ import { withInboxQueryBuilderFx } from "~/@user/inbox/db/withInboxQueryBuilderF
 import { withInboxSelectFx } from "~/@user/inbox/db/withInboxSelectFx";
 import type { InboxFilterSchema } from "~/@user/inbox/schema/InboxFilterSchema";
 import type { InboxQuerySchema } from "~/@user/inbox/schema/InboxQuerySchema";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace inboxFetchFx {
 	export interface Props extends InboxQuerySchema.Type {
@@ -18,17 +17,6 @@ export const inboxFetchFx = Effect.fn("inboxFetchFx")(function* ({
 	scope,
 	sort,
 }: inboxFetchFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "inboxFetchFx",
-		input: {
-			filter,
-			where,
-			scope,
-			sort,
-		},
-	});
-
 	return yield* withFetchFx({
 		resource: "inbox",
 		selectFx: withInboxSelectFx({

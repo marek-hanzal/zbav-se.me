@@ -4,12 +4,10 @@ import { Effect } from "effect";
 import { FeedQuerySchema } from "~/@buyer/feed/schema/FeedQuerySchema";
 import { feedFavouriteCollectionFx } from "~/@buyer/feed-favourite/fx/feedFavouriteCollectionFx";
 import { FeedFavouriteItemSchema } from "~/@buyer/feed-favourite/schema/FeedFavouriteItemSchema";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 const CollectionSchema = z.array(FeedFavouriteItemSchema);
@@ -58,15 +56,8 @@ export const withFeedFavouriteCollectionApiFx = Effect.fn("withFeedFavouriteColl
 					"Fetch a collection of feed items from favourites based on the provided query",
 			}),
 			async (c) => {
-				const axiomConfig = ServerAxiomSchema.parse(process.env);
-
 				return Effect.gen(function* () {
 					const user = c.get("user");
-
-					yield* Effect.annotateLogsScoped({
-						endpoint: "apiFeedFavouriteCollection",
-						userId: user.id,
-					});
 
 					return c.json(
 						yield* zodGuardFx({
@@ -83,7 +74,6 @@ export const withFeedFavouriteCollectionApiFx = Effect.fn("withFeedFavouriteColl
 					);
 				}).pipe(
 					withKyselyFx(c.get("kysely")),
-					withLoggingFx(axiomConfig, "apiFeedFavouriteCollection", c.get("traceId")),
 					withCatchFx({
 						ZodErrorFx({ zod }) {
 							return c.json(noticeZodError(zod), 500);

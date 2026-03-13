@@ -5,7 +5,6 @@ import { UploadContextFx } from "~/@common/upload/context/UploadContextFx";
 import type { UploadCreateSchema } from "~/@user/upload/schema/UploadCreateSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 import { InvalidRequestErrorFx } from "~/error/InvalidRequestErrorFx";
 
 export namespace uploadCreateFx {
@@ -19,28 +18,11 @@ export const uploadCreateFx = Effect.fn("uploadCreateFx")(function* ({
 	url,
 	...data
 }: uploadCreateFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "uploadCreateFx",
-		input: {
-			userId,
-			url,
-			...data,
-		},
-	});
-
 	const { kysely } = yield* KyselyContextFx;
 	const uploadContext = yield* UploadContextFx;
 	const dateContext = yield* DateContextFx;
 
 	if (!url.startsWith(uploadContext.cdn)) {
-		yield* traceLogFx({
-			level: "trace",
-			message: "uploadCreateFx",
-			error: {
-				message: "Only content from the CDN can be uploaded",
-			},
-		});
 		return yield* new InvalidRequestErrorFx({
 			message: "Only content from the CDN can be uploaded",
 		});

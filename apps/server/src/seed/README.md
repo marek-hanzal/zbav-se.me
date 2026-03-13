@@ -44,7 +44,7 @@ Location warmup queries are loaded from `src/seed/data/location.json` (copied fr
   (no public API exposure) when this is required for benchmark throughput.
   Those insert Fx must stay in `src/seed` and must not leak into API handlers.
 - Seed user creation via Better Auth uses a fixed password `12345678`.
-- CLI progress rendering is implemented with `terminal-kit` behind `SeedProgressContextFx`
+- CLI progress rendering is implemented with `terminal-kit` behind `withSeedProgressFx`
 - Console output uses colored progress and formatted final reports (no raw JSON dump)
 - Core report shows generated deltas for the current run
 - Core seed records are backdated with randomized timestamps across the last 2 years

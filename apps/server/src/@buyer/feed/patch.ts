@@ -4,7 +4,6 @@ import { Effect } from "effect";
 import { feedPatchFx } from "~/@buyer/feed/fx/feedPatchFx";
 import { FeedPatchSchema } from "~/@buyer/feed/schema/FeedPatchSchema";
 import { FeedSchema } from "~/@buyer/feed/schema/FeedSchema";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
@@ -12,7 +11,6 @@ import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
@@ -65,15 +63,8 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 			summary: "Update an existing feed item",
 		}),
 		async (c) => {
-			const axiomConfig = ServerAxiomSchema.parse(process.env);
-
 			return Effect.gen(function* () {
 				const user = c.get("user");
-
-				yield* Effect.annotateLogsScoped({
-					endpoint: "apiFeedPatch",
-					userId: user.id,
-				});
 
 				return c.json(
 					yield* zodGuardFx({
@@ -90,7 +81,6 @@ export const withPatchApiFx = Effect.fn("withPatchApiFx")(function* () {
 			}).pipe(
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
-				withLoggingFx(axiomConfig, "apiFeedPatch", c.get("traceId")),
 				withCatchFx({
 					NotFoundErrorFx() {
 						return c.json(NotFoundNotice, 404);

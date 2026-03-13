@@ -1,4 +1,4 @@
-import { DateContextLayer } from "@use-pico/common/date";
+import { DateContextFx } from "@use-pico/common/date";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
@@ -8,7 +8,7 @@ import { auth } from "~/auth/auth";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { testabase } from "~test/testabase";
-import { withTestAxiomFx } from "~test/withTestAxiomFx";
+import { withTestRuntimeFx } from "~test/withTestRuntimeFx";
 
 describe("userEventBuyerInfoFx", () => {
 	it("Improved buyer - bad behavior earlier, good behavior recently", async () => {
@@ -99,11 +99,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t1Create,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t1Create,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -114,11 +112,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.open",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t1Open,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t1Open,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -129,11 +125,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.closed",
 				isTerminal: true,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t1Close,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t1Close,
+				}),
 			);
 
 			// tx-2 expired
@@ -145,11 +139,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t2Create,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t2Create,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -160,11 +152,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.open",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t2Open,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t2Open,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -175,11 +165,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.expired",
 				isTerminal: true,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t2Expired,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t2Expired,
+				}),
 			);
 
 			// tx-3 good
@@ -191,11 +179,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t3Create,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t3Create,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -206,11 +192,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.open",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t3Open,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t3Open,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -221,11 +205,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t3Msg,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t3Msg,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -236,11 +218,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.success",
 				isTerminal: true,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t3Success,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t3Success,
+				}),
 			);
 
 			// tx-4 good
@@ -252,11 +232,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t4Create,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t4Create,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -267,11 +245,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.open",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t4Open,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t4Open,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -282,11 +258,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t4Msg,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t4Msg,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -297,11 +271,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.success",
 				isTerminal: true,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t4Success,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t4Success,
+				}),
 			);
 
 			// tx-5 good + recent activity
@@ -313,11 +285,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.create",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t5Create,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t5Create,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -328,11 +298,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.open",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t5Open,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t5Open,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -343,11 +311,9 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.message",
 				isTerminal: false,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t5Msg,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t5Msg,
+				}),
 			);
 
 			yield* userEventCreateFx({
@@ -358,23 +324,15 @@ describe("userEventBuyerInfoFx", () => {
 				event: "transaction.closed",
 				isTerminal: true,
 			}).pipe(
-				Effect.provide(
-					DateContextLayer({
-						now: () => t5Close,
-					}),
-				),
+				Effect.provideService(DateContextFx, {
+					now: () => t5Close,
+				}),
 			);
 
 			return yield* userEventBuyerInfoFx({
 				userId: buyerId,
 			});
-		}).pipe(
-			withKyselyFx(database),
-			withDateFx,
-			withTestAxiomFx,
-			Effect.scoped,
-			Effect.runPromise,
-		);
+		}).pipe(withKyselyFx(database), withDateFx, withTestRuntimeFx, Effect.runPromise);
 
 		expect(result).not.toBeNull();
 		if (!result) return;

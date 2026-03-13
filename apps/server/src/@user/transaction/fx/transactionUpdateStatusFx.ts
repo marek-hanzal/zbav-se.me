@@ -6,7 +6,6 @@ import type { TransactionSideEnumSchema } from "~/database/@enum/TransactionSide
 import type { TransactionStatusEnumSchema } from "~/database/@enum/TransactionStatusEnumSchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace transactionUpdateStatusFx {
 	export interface Props {
@@ -14,10 +13,6 @@ export namespace transactionUpdateStatusFx {
 		 * Target transaction identifier whose status is being updated.
 		 */
 		transactionId: string;
-		/**
-		 * Acting user performing the transition.
-		 */
-		userId: string;
 		/**
 		 * Current transaction status we are processing.
 		 */
@@ -37,23 +32,10 @@ export namespace transactionUpdateStatusFx {
 
 export const transactionUpdateStatusFx = Effect.fn("transactionUpdateStatusFx")(function* ({
 	transactionId,
-	userId,
 	status,
 	request,
 	target,
 }: transactionUpdateStatusFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "transactionUpdateStatusFx",
-		input: {
-			transactionId,
-			userId,
-			status,
-			request,
-			target,
-		},
-	});
-
 	yield* transactionTransitionFx({
 		status,
 		request,

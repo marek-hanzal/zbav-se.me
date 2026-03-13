@@ -3,16 +3,14 @@ import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { transactionCloseFx } from "~/@buyer/transaction/fx/transactionCloseFx";
 import { TransactionSchema } from "~/@buyer/transaction/schema/TransactionSchema";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
-import { withTransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
+import { withTransactionContextFx } from "~/@common/transaction/context/withTransactionContextFx";
 import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 const TransactionCloseParamsSchema = z
@@ -76,16 +74,9 @@ export const withCloseApiFx = Effect.fn("withCloseApiFx")(function* () {
 			summary: "Close a listing transaction",
 		}),
 		async (c) => {
-			const axiomConfig = ServerAxiomSchema.parse(process.env);
-
 			return Effect.gen(function* () {
 				const user = c.get("user");
 				const { transactionId } = c.req.valid("param");
-
-				yield* Effect.annotateLogsScoped({
-					endpoint: "apiTransactionClose",
-					userId: user.id,
-				});
 
 				return c.json(
 					yield* zodGuardFx({
@@ -98,7 +89,6 @@ export const withCloseApiFx = Effect.fn("withCloseApiFx")(function* () {
 					200,
 				);
 			}).pipe(
-				withLoggingFx(axiomConfig, "apiTransactionClose", c.get("traceId")),
 				withKyselyFx(c.get("kysely")),
 				withDateFx,
 				withTransactionContextFx(),

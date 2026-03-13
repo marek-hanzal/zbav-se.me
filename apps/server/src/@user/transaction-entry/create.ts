@@ -1,11 +1,10 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { zodGuardFx } from "@use-pico/common/schema";
 import { Effect } from "effect";
-import { withLoggingFx } from "~/@common/axiom/fx/withLoggingFx";
 import { NotFoundNotice } from "~/@common/notice/NotFoundNotice";
 import { noticeError } from "~/@common/notice/noticeError";
 import { noticeZodError } from "~/@common/notice/noticeZodError";
-import { withTransactionContextFx } from "~/@common/transaction/context/TransactionContextFx";
+import { withTransactionContextFx } from "~/@common/transaction/context/withTransactionContextFx";
 import { transactionEntryCreateFx } from "~/@user/transaction-entry/fx/transactionEntryCreateFx";
 import { GallerySchema } from "~/@user/transaction-entry/schema/TransactionEntryCreateSchema/GallerySchema";
 import { LocationSchema } from "~/@user/transaction-entry/schema/TransactionEntryCreateSchema/LocationSchema";
@@ -17,7 +16,6 @@ import { withDateFx } from "~/database/fx/withDateFx";
 import { withKyselyFx } from "~/database/fx/withKyselyFx";
 import { withCatchFx } from "~/effect/withCatchFx";
 import { RoutesContextFx } from "~/route/context/RoutesContextFx";
-import { ServerAxiomSchema } from "~/schema/env/ServerAxiomSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 
 const CreateSchema = z
@@ -91,15 +89,8 @@ export const withTransactionEntryCreateApiFx = Effect.fn("withTransactionEntryCr
 				summary: "Create one transaction entry",
 			}),
 			async (c) => {
-				const axiomConfig = ServerAxiomSchema.parse(process.env);
-
 				return Effect.gen(function* () {
 					const user = c.get("user");
-
-					yield* Effect.annotateLogsScoped({
-						endpoint: "apiTransactionEntryCreate",
-						userId: user.id,
-					});
 
 					return c.json(
 						yield* zodGuardFx({
@@ -112,7 +103,6 @@ export const withTransactionEntryCreateApiFx = Effect.fn("withTransactionEntryCr
 						201,
 					);
 				}).pipe(
-					withLoggingFx(axiomConfig, "apiTransactionEntryCreate", c.get("traceId")),
 					withKyselyFx(c.get("kysely")),
 					withDateFx,
 					withTransactionContextFx(),

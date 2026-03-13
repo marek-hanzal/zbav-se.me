@@ -7,7 +7,6 @@ import type { InboxQuerySchema } from "~/@user/inbox/schema/InboxQuerySchema";
 import { KyselyContextFx } from "~/database/context/KyselyContextFx";
 import { tryDbFx } from "~/database/fx/tryDbFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { traceLogFx } from "~/effect/traceLogFx";
 
 export namespace inboxArchiveFx {
 	export interface Props extends InboxQuerySchema.Type {
@@ -22,18 +21,6 @@ export const inboxArchiveFx = Effect.fn("inboxArchiveFx")(function* ({
 	scope,
 	sort,
 }: inboxArchiveFx.Props) {
-	yield* traceLogFx({
-		level: "trace",
-		message: "inboxArchiveFx",
-		input: {
-			cursor,
-			filter,
-			where,
-			scope,
-			sort,
-		},
-	});
-
 	return yield* withTransactionFx(
 		Effect.gen(function* () {
 			const { kysely } = yield* KyselyContextFx;
