@@ -29,6 +29,9 @@ Maps to server API: `/api/seller/*`.
 - Seller top-level transaction list now lives in active scope at `@seller/transaction-listing/*` instead of the remaining `v0` stack.
 - Seller transaction detail now imports shared transaction-entry timeline rendering from active common scope at `@common/transaction-entry/*` instead of the old `v0` common stack.
 - Seller transaction detail root component, message, toolbar, menu, chat, and status stacks now live in active scope at `@seller/transaction/ui/*`; the shared bottom-sheet trigger button now lives in `@common/transaction/ui/TransactionMenuButton.tsx`.
+- Seller transaction detail now suspends at the page/route boundary:
+  - `@seller/transaction/TransactionDetailPage/TransactionDetailPage.tsx` publicly acknowledges `MarkSuspense.Props`
+  - `@seller/transaction/TransactionDetailPage/TransactionDetailPendingPage.tsx` is the route-level pending shell
 - Seller listing aggregate rows now use Inbox-driven unread counts grouped by listing `reference`; badge and unread emphasis must come from Inbox rather than local transaction counters.
 - Seller listing-detail transaction rows now also surface Inbox-driven unread state per transaction, using unread `buyer-message` rows whose `reference[]` contains the transaction id.
 - Opening a seller transaction detail now bulk-archives matching unread inbox rows for that transaction `reference`, so unread badges clear from both transaction and listing aggregates without requiring an extra Inbox tap.

@@ -7,8 +7,8 @@ import { GalleryUploadButton } from "~/app/@common/gallery/ui/GalleryUploadButto
 import { MessageButtonUi } from "~/app/@common/transaction/ui";
 import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 import { LocationButton } from "~/app/@common/transaction-entry/ui/button/LocationButton";
-import { PackageButton } from "~/app/v0/@common/package/ui/PackageButton";
-import { PersonalButton } from "~/app/v0/@common/personal/ui/PersonalButton";
+import { PackageButton } from "~/app/@common/transaction-entry/ui/button/PackageButton";
+import { PersonalButton } from "~/app/@common/transaction-entry/ui/button/PersonalButton";
 
 export namespace DisputeMessage {
 	export interface Props extends Container.Props {

@@ -8,7 +8,7 @@ import { GalleryUploadButton } from "~/app/@common/gallery/ui/GalleryUploadButto
 import { MessageButtonUi } from "~/app/@common/transaction/ui";
 import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 import { LocationButton } from "~/app/@common/transaction-entry/ui/button/LocationButton";
-import { PersonalButton } from "~/app/v0/@common/personal/ui/PersonalButton";
+import { PersonalButton } from "~/app/@common/transaction-entry/ui/button/PersonalButton";
 
 export namespace OpenMessage {
 	export interface Props extends Container.Props {
