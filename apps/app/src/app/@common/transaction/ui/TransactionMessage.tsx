@@ -8,18 +8,30 @@ export namespace TransactionMessage {
 	type Status = tBuyerTransaction["status"] | tSellerTransaction["status"];
 
 	export interface Props extends Container.Props {
+		closed?: ReactNode;
 		dispute?: ReactNode;
+		expired?: ReactNode;
 		open?: ReactNode;
 		pending?: ReactNode;
+		rejected?: ReactNode;
+		resolved?: ReactNode;
+		sold?: ReactNode;
 		status: Status;
+		success?: ReactNode;
 	}
 }
 
 export const TransactionMessage: FC<TransactionMessage.Props> = ({
+	closed,
 	dispute,
+	expired,
 	open,
 	pending,
+	rejected,
+	resolved,
+	sold,
 	status,
+	success,
 	ui,
 	...props
 }) => {
@@ -27,7 +39,12 @@ export const TransactionMessage: FC<TransactionMessage.Props> = ({
 		.with("pending", () => pending ?? null)
 		.with("open", () => open ?? null)
 		.with("dispute", () => dispute ?? null)
-		.with("rejected", "resolved", "sold", "expired", "success", "closed", () => null)
+		.with("rejected", () => rejected ?? null)
+		.with("resolved", () => resolved ?? null)
+		.with("sold", () => sold ?? null)
+		.with("expired", () => expired ?? null)
+		.with("success", () => success ?? null)
+		.with("closed", () => closed ?? null)
 		.exhaustive();
 
 	return message ? (

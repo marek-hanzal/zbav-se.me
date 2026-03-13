@@ -9,6 +9,7 @@ import { match } from "ts-pattern";
 
 export namespace TransactionChat {
 	type Status = tBuyerTransaction["status"] | tSellerTransaction["status"];
+	export type Mode = "chat" | "readonly";
 
 	export interface Text {
 		closed: string;
@@ -25,7 +26,7 @@ export namespace TransactionChat {
 
 	export interface Props extends Container.Props {
 		left?: ReactNode;
-		resolved: "chat" | "readonly";
+		resolved: TransactionChat.Mode;
 		text: Text;
 		transaction: Transaction;
 	}

@@ -2,7 +2,7 @@ import type { Container } from "@use-pico/client/ui/container";
 import { Group } from "@use-pico/client/ui/group";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import type { FC } from "react";
-import { MessageButtonUi } from "~/app/@common/transaction/ui";
+import { MessageButtonUi } from "~/app/@common/transaction/ui/MessageButtonUi";
 import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 import { BuyerInfoButton } from "~/app/@seller/transaction/~public/BuyerInfoButton";
 import { AcceptButton } from "../button/AcceptButton";

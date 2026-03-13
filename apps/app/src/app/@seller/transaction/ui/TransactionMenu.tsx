@@ -1,11 +1,9 @@
 import { Container } from "@use-pico/client/ui/container";
 import type { tTransaction } from "@zbav-se.me/sdk/api/seller";
 import type { FC } from "react";
-import {
-	type TransactionMenuButton,
-	TransactionMessage,
-	TransactionToolbar,
-} from "~/app/@common/transaction/ui";
+import type { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
+import { TransactionMessage } from "~/app/@common/transaction/ui/TransactionMessage";
+import { TransactionToolbar } from "~/app/@common/transaction/ui/TransactionToolbar";
 import { DisputeMessage } from "./status/DisputeMessage";
 import { DisputeToolbar } from "./status/DisputeToolbar";
 import { OpenMessage } from "./status/OpenMessage";

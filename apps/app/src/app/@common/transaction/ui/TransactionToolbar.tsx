@@ -9,18 +9,30 @@ export namespace TransactionToolbar {
 	type Status = tBuyerTransaction["status"] | tSellerTransaction["status"];
 
 	export interface Props extends Container.Props {
+		closed?: ReactNode;
 		dispute?: ReactNode;
+		expired?: ReactNode;
 		open?: ReactNode;
+		pending?: ReactNode;
+		rejected?: ReactNode;
 		resolved?: ReactNode;
+		sold?: ReactNode;
 		status: Status;
+		success?: ReactNode;
 	}
 }
 
 export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
+	closed,
 	dispute,
+	expired,
 	open,
+	pending,
+	rejected,
 	resolved,
+	sold,
 	status,
+	success,
 	ui,
 	...props
 }) => {
@@ -28,7 +40,12 @@ export const TransactionToolbar: FC<TransactionToolbar.Props> = ({
 		.with("open", () => open ?? null)
 		.with("resolved", () => resolved ?? null)
 		.with("dispute", () => dispute ?? null)
-		.with("pending", "rejected", "sold", "expired", "success", "closed", () => null)
+		.with("pending", () => pending ?? null)
+		.with("rejected", () => rejected ?? null)
+		.with("sold", () => sold ?? null)
+		.with("expired", () => expired ?? null)
+		.with("success", () => success ?? null)
+		.with("closed", () => closed ?? null)
 		.exhaustive();
 
 	return toolbar ? (

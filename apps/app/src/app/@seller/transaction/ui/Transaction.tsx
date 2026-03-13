@@ -7,7 +7,8 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef } from "react";
 import { useUpload } from "~/app/@common/gallery/hook/useUpload";
 import { ListingPrice } from "~/app/@common/listing/ui/ListingPrice";
-import { TransactionChat, TransactionMenuButton } from "~/app/@common/transaction/ui";
+import { TransactionChat } from "~/app/@common/transaction/ui/TransactionChat";
+import { TransactionMenuButton } from "~/app/@common/transaction/ui/TransactionMenuButton";
 import { TransactionEntryList } from "~/app/@common/transaction-entry/ui/TransactionEntryList";
 import { TransactionMenu } from "./TransactionMenu";
 
