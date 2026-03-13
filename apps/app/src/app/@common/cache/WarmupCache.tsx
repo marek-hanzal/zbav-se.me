@@ -1,13 +1,16 @@
+import { useQueryClient } from "@tanstack/react-query";
 import type { MarkSuspense } from "@use-pico/client/type";
 import type {
 	tListingQuery as tBuyerListingQuery,
 	tTransactionQuery as tBuyerTransactionQuery,
+	tFeed,
 	tFeedCountQuery,
 	tFeedQuery,
 } from "@zbav-se.me/sdk/api/buyer";
 import type {
 	tDraftQuery,
 	tListingQuery as tSellerListingQuery,
+	tTransactionQuery as tSellerTransactionQuery,
 	tTransactionListingQuery,
 } from "@zbav-se.me/sdk/api/seller";
 import type { tInboxCountQuery, tInboxQuery } from "@zbav-se.me/sdk/api/user";
@@ -16,6 +19,7 @@ import { withListingQuery as withBuyerListingQuery } from "@zbav-se.me/sdk/query
 import { withTransactionQuery as withBuyerTransactionQuery } from "@zbav-se.me/sdk/query/buyer/transaction";
 import { withDraftQuery } from "@zbav-se.me/sdk/query/seller/draft";
 import { withListingQuery as withSellerListingQuery } from "@zbav-se.me/sdk/query/seller/listing";
+import { withTransactionQuery as withSellerTransactionQuery } from "@zbav-se.me/sdk/query/seller/transaction";
 import { withTransactionListingQuery } from "@zbav-se.me/sdk/query/seller/transaction-listing";
 import { withInboxQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
@@ -28,6 +32,8 @@ export namespace WarmupCache {
 }
 
 export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
+	const queryClient = useQueryClient();
+
 	/**
 	 * Inbox warm-up
 	 */
@@ -154,12 +160,34 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				type: "search",
 			},
 		} satisfies tFeedCountQuery;
+		const { data: defaultFeedIds } = withFeedQuery.useCollectionQuery(defaultFeedQuery);
+		const [defaultFeedId] = defaultFeedIds;
+		const defaultFeed = defaultFeedId
+			? queryClient.getQueryData<tFeed>([
+					"feed",
+					"fetch",
+					{
+						where: {
+							id: defaultFeedId,
+						},
+					},
+				])
+			: undefined;
+		const defaultListingQuery: tBuyerListingQuery = defaultFeed?.query ?? {};
+		const defaultListingCollectionQuery: tBuyerListingQuery = {
+			...defaultListingQuery,
+			cursor: {
+				page: 0,
+				size: 256,
+			},
+		};
 
-		withFeedQuery.useCollectionQuery(defaultFeedQuery);
 		withFeedQuery.useCollectionQuery(searchFeedQuery);
 		withFeedQuery.useCollectionQuery(query);
 		withFeedQuery.useCountQuery(countQuery);
 		withFeedQuery.useCountQuery(searchCountQuery);
+		withBuyerListingQuery.useCollectionQuery(defaultListingCollectionQuery);
+		withBuyerListingQuery.useCountQuery(defaultListingQuery);
 	}
 
 	/**
@@ -208,6 +236,18 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 	 * Seller transaction listing warm-up
 	 */
 	{
+		const transactionQuery = {
+			sort: [
+				{
+					field: "status",
+					order: "asc",
+				},
+				{
+					field: "updatedAt",
+					order: "desc",
+				},
+			],
+		} satisfies tSellerTransactionQuery;
 		const activeQuery = {
 			filter: {
 				active: true,
@@ -238,9 +278,12 @@ export const WarmupCache: FC<WarmupCache.Props> = ({ _suspense }) => {
 				},
 			],
 		} satisfies tTransactionListingQuery;
+
+		withSellerTransactionQuery.useCollectionQuery(transactionQuery);
+		withSellerTransactionQuery.useCountQuery({});
+
 		withTransactionListingQuery.useCollectionQuery(activeQuery);
 		withTransactionListingQuery.useCollectionQuery(inactiveQuery);
-
 		withTransactionListingQuery.useCountQuery({});
 	}
 
